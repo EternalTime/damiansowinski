@@ -88,6 +88,11 @@
       "id": "c_metric",
       "kind": "family",
       "text": "A black hole with an acceleration where this one has a spin. Plebański and Demiański put both, and the cosmological constant, into one family of solutions [kamran2009, plebanski1976]."
+    },
+    {
+      "id": "kerr_taub_nut",
+      "kind": "family",
+      "text": "Kerr's black hole with a NUT parameter where this one has a cosmological constant. Carter's separable family holds both [carter1968separable, bini2003]."
     }
   ],
   "references": [
@@ -112,7 +117,8 @@
     "dias2018",
     "booth1999",
     "kamran2009",
-    "plebanski1976"
+    "plebanski1976",
+    "bini2003"
   ],
   "coordinates": [
     {

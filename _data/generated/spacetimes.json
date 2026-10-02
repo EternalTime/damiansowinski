@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 104,
+  "count": 105,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -5091,6 +5091,11 @@
           "id": "dilaton_black_hole",
           "kind": "family",
           "text": "The charged black hole of string theory. Fay Dowker, Jerome Gauntlett, David Kastor, and Jennie Traschen wrote the C-metric for a pair of them in 1994, oppositely charged and accelerating apart [dowker1994]."
+        },
+        {
+          "id": "kerr_taub_nut",
+          "kind": "family",
+          "text": "A rotating black hole with a NUT parameter and no acceleration. Jerry Griffiths and Jiří Podolský's form of the Plebański-Demiański family reduces to it when the acceleration is switched off, and to the C-metric when the spin and the twist are [griffiths2005]."
         }
       ],
       "references": [
@@ -14017,6 +14022,11 @@
           "id": "mass_inflation",
           "kind": "family",
           "text": "A charged spherical hole crossed by two streams of radiation, the model Eric Poisson and Werner Israel built in 1989 for the inside of a rotating one. Its mass function grows without limit at the inner horizon [poisson1989]."
+        },
+        {
+          "id": "kerr_taub_nut",
+          "kind": "generalisation",
+          "text": "Kerr's black hole given a NUT parameter $l$ beside its spin. At $l = 0$ it is Kerr's metric, and for $|l| > |a|$ the ring singularity is gone [griffiths2005]."
         }
       ],
       "references": [
@@ -14238,6 +14248,11 @@
           "id": "c_metric",
           "kind": "family",
           "text": "A black hole with an acceleration where this one has a spin. Plebański and Demiański put both, and the cosmological constant, into one family of solutions [kamran2009, plebanski1976]."
+        },
+        {
+          "id": "kerr_taub_nut",
+          "kind": "family",
+          "text": "Kerr's black hole with a NUT parameter where this one has a cosmological constant. Carter's separable family holds both [carter1968separable, bini2003]."
         }
       ],
       "references": [
@@ -14262,7 +14277,8 @@
         "dias2018",
         "booth1999",
         "kamran2009",
-        "plebanski1976"
+        "plebanski1976",
+        "bini2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_de_sitter.json",
@@ -14895,6 +14911,11 @@
           "id": "israel_wilson_perjes",
           "kind": "family",
           "text": "With charge equal to mass, Kerr and Newman's metric is one spinning source of Israel, Wilson, and Perjés's fields, which hold any number of such sources in balance [hartle1972, perjes1971]."
+        },
+        {
+          "id": "kerr_taub_nut",
+          "kind": "family",
+          "text": "Kerr's black hole with a NUT parameter where this one has a charge. Marek Demiański and Ezra Newman's electrovacuum solutions of 1966 carry both, and a magnetic charge too [manko2006]."
         }
       ],
       "references": [
@@ -14921,7 +14942,8 @@
         "etesi2002",
         "sen1992",
         "hartle1972",
-        "perjes1971"
+        "perjes1971",
+        "manko2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_newman.json",
@@ -15007,6 +15029,599 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{\\dfrac{48G^2M^2}{c^4}\\left(r^6 - 15a^2r^4\\cos^2\\theta + 15a^4r^2\\cos^4\\theta - a^6\\cos^6\\theta\\right) - \\dfrac{96GM\\,r_Q^2r}{c^2}\\left(r^4 - 10a^2r^2\\cos^2\\theta + 5a^4\\cos^4\\theta\\right) + 8r_Q^4\\left(7r^4 - 34a^2r^2\\cos^2\\theta + 7a^4\\cos^4\\theta\\right)}{\\left(r^2 + a^2\\cos^2\\theta\\right)^6}"
+        }
+      ]
+    },
+    {
+      "id": "kerr_taub_nut",
+      "name": "Kerr-Taub-NUT Black Hole",
+      "short_name": "Kerr-Taub-NUT",
+      "description": "Kerr's rotating black hole with a NUT parameter, the vacuum solution Marek Demiański and Ezra Newman found in 1966. It is Kerr's metric at $l = 0$ and the Taub-NUT metric at $a = 0$, it carries Misner strings along its axis, and for $|l| > |a|$ it has no curvature singularity.",
+      "tags": [
+        "vacuum",
+        "rotating",
+        "rotating black hole",
+        "black hole",
+        "stationary",
+        "axisymmetric",
+        "angular momentum",
+        "mass",
+        "NUT parameter",
+        "gravitomagnetic",
+        "closed timelike curves",
+        "ergosphere",
+        "frame dragging",
+        "ring singularity",
+        "curvature singularity",
+        "horizon",
+        "event horizon",
+        "Cauchy horizon",
+        "Petrov type D",
+        "separable",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit; the mass enters as the length $m = GM/c^2$, and the rotation parameter $a$ and the NUT parameter $l$ are lengths.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "special_case",
+          "text": "Kerr-Taub-NUT with the twist taken out, $l = 0$. The Misner strings go with it, and the ring singularity settles back on the equator."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "special_case",
+          "text": "Kerr-Taub-NUT with the spin switched off, $a = 0$ [bini2003]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Both the spin and the twist switched off, $a = l = 0$."
+        },
+        {
+          "id": "kerr_newman",
+          "kind": "family",
+          "text": "Kerr's black hole with an electric charge where this one has a twist. Demiański and Newman's solutions of 1966 include the black hole that carries both [manko2006]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "family",
+          "text": "Kerr's black hole with a cosmological constant where this one has a twist. Both belong to the family Carter found by asking the Hamilton-Jacobi equation to separate [carter1968separable, bini2003]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "A black hole with an acceleration where this one has a twist. Plebański and Demiański's family of 1976 holds spin, twist, and acceleration together, and in Jerry Griffiths and Jiří Podolský's form of it Kerr-Taub-NUT is what is left when the acceleration vanishes [plebanski1976, griffiths2005]."
+        }
+      ],
+      "references": [
+        "adamo2014",
+        "nut1963",
+        "kerr1963",
+        "manko2006",
+        "bini2003",
+        "newman1965janis",
+        "erbin2016",
+        "chakraborty2018",
+        "carter1968separable",
+        "plebanski1976",
+        "griffiths2005",
+        "mukherjee2019",
+        "grenzebach2014",
+        "misner1963",
+        "bonnor1969",
+        "bordo2019",
+        "miller1973",
+        "mathgenealogymiller",
+        "emond2022"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_taub_nut.json",
+      "charts": [
+        {
+          "id": "boyer_lindquist",
+          "name": "Boyer-Lindquist",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_+, \\infty)",
+            "\\theta \\in (0, \\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}\\text{)}",
+            "\\theta = 0,\\, \\pi \\;\\text{(the Misner strings)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation parameter, a length; at $a = 0$ the metric is the Taub-NUT metric"
+            },
+            {
+              "symbol": "l",
+              "description": "NUT parameter, a length, the gravitomagnetic monopole moment; at $l = 0$ the metric is Kerr's"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + \\left(l + a\\cos\\theta\\right)^2",
+              "description": "Vanishes only on the ring $r = 0$, $\\cos\\theta = -l/a$, which exists for $|l| \\le |a|$"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr + a^2 - l^2",
+              "description": "Its roots are the horizons, which exist for $a^2 \\le m^2 + l^2$"
+            },
+            {
+              "symbol": "\\chi = a\\sin^2\\theta - 2l\\cos\\theta",
+              "description": "Equal to $-2l$ on the northern half of the axis and to $2l$ on the southern half, each a Misner string"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ of Boyer and Lindquist's kind, with $t$ carrying dimensions of time and a Misner string on each half of the axis, and write $\\Sigma$, $\\Delta$, and $\\chi$ as the parameters define them. The horizons are at $r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(c\\,dt - \\chi\\,d\\phi\\right)^2 + \\dfrac{\\Sigma}{\\Delta}dr^2 + \\Sigma\\,d\\theta^2 + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(a\\,c\\,dt - \\left(r^2 + a^2 + l^2\\right)d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\Delta - a^2\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\Delta\\chi - a\\left(r^2 + a^2 + l^2\\right)\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "\\dfrac{\\Delta\\chi - a\\left(r^2 + a^2 + l^2\\right)\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\Sigma}{\\Delta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(r^2 + a^2 + l^2\\right)^2\\sin^2\\theta - \\Delta\\chi^2}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(r^6 - 15r^4\\left(l + a\\cos\\theta\\right)^2 + 15r^2\\left(l + a\\cos\\theta\\right)^4 - \\left(l + a\\cos\\theta\\right)^6\\right) + 4mlr\\left(l + a\\cos\\theta\\right)\\left(3r^4 - 10r^2\\left(l + a\\cos\\theta\\right)^2 + 3\\left(l + a\\cos\\theta\\right)^4\\right)\\right)}{\\Sigma^6}"
+        },
+        {
+          "id": "one_string",
+          "name": "One Misner String",
+          "coordinates": [
+            "t_N",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t_N \\in (-\\infty, \\infty)",
+            "r \\in (r_+, \\infty)",
+            "\\theta \\in [0, \\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}\\text{)}",
+            "\\theta = \\pi \\;\\text{(the Misner string)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation parameter, a length; at $a = 0$ the metric is the Taub-NUT metric"
+            },
+            {
+              "symbol": "l",
+              "description": "NUT parameter, a length, the gravitomagnetic monopole moment; at $l = 0$ the metric is Kerr's"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + \\left(l + a\\cos\\theta\\right)^2",
+              "description": "Vanishes only on the ring $r = 0$, $\\cos\\theta = -l/a$, which exists for $|l| \\le |a|$"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr + a^2 - l^2",
+              "description": "Its roots are the horizons, which exist for $a^2 \\le m^2 + l^2$"
+            },
+            {
+              "symbol": "\\chi = a\\sin^2\\theta + 2l\\left(1 - \\cos\\theta\\right)",
+              "description": "Vanishes on the northern half of the axis and is $4l$ on the southern half, the one Misner string"
+            }
+          ],
+          "convention": "We use coordinates $(t_N, r, \\theta, \\phi)$ with $t_N = t + 2l\\phi/c$, the time in which the northern half of the axis is regular and one Misner string lies along $\\theta = \\pi$, and write $\\Sigma$, $\\Delta$, and $\\chi$ as the parameters define them. The horizons are at $r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}$. We take components in the chart $x^0 = ct_N$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t_N}$ means $d(ct_N)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(c\\,dt_N - \\chi\\,d\\phi\\right)^2 + \\dfrac{\\Sigma}{\\Delta}dr^2 + \\Sigma\\,d\\theta^2 + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(a\\,c\\,dt_N - \\left(r^2 + \\left(a + l\\right)^2\\right)d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t_N",
+                "t_N"
+              ],
+              "value": "-\\dfrac{\\Delta - a^2\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "t_N",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\Delta\\chi - a\\left(r^2 + \\left(a + l\\right)^2\\right)\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t_N"
+              ],
+              "value": "\\dfrac{\\Delta\\chi - a\\left(r^2 + \\left(a + l\\right)^2\\right)\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\Sigma}{\\Delta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(r^2 + \\left(a + l\\right)^2\\right)^2\\sin^2\\theta - \\Delta\\chi^2}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(r^6 - 15r^4\\left(l + a\\cos\\theta\\right)^2 + 15r^2\\left(l + a\\cos\\theta\\right)^4 - \\left(l + a\\cos\\theta\\right)^6\\right) + 4mlr\\left(l + a\\cos\\theta\\right)\\left(3r^4 - 10r^2\\left(l + a\\cos\\theta\\right)^2 + 3\\left(l + a\\cos\\theta\\right)^4\\right)\\right)}{\\Sigma^6}"
+        },
+        {
+          "id": "kerr_ingoing",
+          "name": "Ingoing Kerr",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\tilde\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi)",
+            "\\tilde\\phi \\in [0, 2\\pi)",
+            "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}\\text{)}",
+            "\\theta = \\pi \\;\\text{(the Misner string)}",
+            "\\Sigma = 0 \\;\\text{(the ring singularity, present for } |l| \\le |a|\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation parameter, a length; at $a = 0$ the metric is the Taub-NUT metric"
+            },
+            {
+              "symbol": "l",
+              "description": "NUT parameter, a length, the gravitomagnetic monopole moment; at $l = 0$ the metric is Kerr's"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + \\left(l + a\\cos\\theta\\right)^2",
+              "description": "Vanishes only on the ring $r = 0$, $\\cos\\theta = -l/a$, which exists for $|l| \\le |a|$"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr + a^2 - l^2",
+              "description": "Its roots are the horizons, which exist for $a^2 \\le m^2 + l^2$"
+            },
+            {
+              "symbol": "\\chi = a\\sin^2\\theta + 2l\\left(1 - \\cos\\theta\\right)",
+              "description": "Vanishes on the northern half of the axis and is $4l$ on the southern half, the one Misner string"
+            }
+          ],
+          "convention": "We use ingoing Kerr coordinates $(v, r, \\theta, \\tilde\\phi)$ built on the time $t_N = t + 2l\\phi/c$ in which the northern half of the axis is regular, with the advanced time $v = c\\,t_N + r_*$ a length, $dr_*/dr = (r^2 + (a + l)^2)/\\Delta$ and $r_* = 0$ at $r = 0$, and $d\\tilde\\phi = d\\phi + a\\,dr/\\Delta$, and write $\\Sigma$, $\\Delta$, and $\\chi$ as the parameters define them. The horizons are at $r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}$.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(dv - \\chi\\,d\\tilde\\phi\\right)^2 + 2\\,dr\\left(dv - \\chi\\,d\\tilde\\phi\\right) + \\Sigma\\,d\\theta^2 + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(a\\,dv - \\left(r^2 + \\left(a + l\\right)^2\\right)d\\tilde\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\dfrac{r^2 + \\left(l + a\\cos\\theta\\right)^2 - 2l\\left(l + a\\cos\\theta\\right) - 2m\\,r}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "v",
+                "\\tilde\\phi"
+              ],
+              "value": "-\\dfrac{2\\left(\\cos\\theta - 1\\right)\\left(r\\left(l\\,r - m\\,a - m\\,l\\right) - \\left(l + a\\cos\\theta\\right)\\left(a\\,l + l^2 + m\\,r\\right)\\right)}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "v"
+              ],
+              "value": "-\\dfrac{2\\left(\\cos\\theta - 1\\right)\\left(r\\left(l\\,r - m\\,a - m\\,l\\right) - \\left(l + a\\cos\\theta\\right)\\left(a\\,l + l^2 + m\\,r\\right)\\right)}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tilde\\phi"
+              ],
+              "value": "\\left(\\cos\\theta - 1\\right)\\left(\\left(l + a\\cos\\theta\\right) + a + l\\right)"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "r"
+              ],
+              "value": "\\left(\\cos\\theta - 1\\right)\\left(\\left(l + a\\cos\\theta\\right) + a + l\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "\\tilde\\phi"
+              ],
+              "value": "-\\dfrac{\\left(\\cos\\theta - 1\\right)\\left(\\left(\\cos\\theta + 1\\right)\\left(r^2 + a^2 + 2a\\,l + l^2\\right)^2 - \\Delta\\,\\chi\\left(\\left(l + a\\cos\\theta\\right) + a + l\\right)\\right)}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(r^6 - 15r^4\\left(l + a\\cos\\theta\\right)^2 + 15r^2\\left(l + a\\cos\\theta\\right)^4 - \\left(l + a\\cos\\theta\\right)^6\\right) + 4mlr\\left(l + a\\cos\\theta\\right)\\left(3r^4 - 10r^2\\left(l + a\\cos\\theta\\right)^2 + 3\\left(l + a\\cos\\theta\\right)^4\\right)\\right)}{\\Sigma^6}"
+        },
+        {
+          "id": "kerr_outgoing",
+          "name": "Outgoing Kerr",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\tilde\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi)",
+            "\\tilde\\phi \\in [0, 2\\pi)",
+            "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}\\text{)}",
+            "\\theta = \\pi \\;\\text{(the Misner string)}",
+            "\\Sigma = 0 \\;\\text{(the ring singularity, present for } |l| \\le |a|\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation parameter, a length; at $a = 0$ the metric is the Taub-NUT metric"
+            },
+            {
+              "symbol": "l",
+              "description": "NUT parameter, a length, the gravitomagnetic monopole moment; at $l = 0$ the metric is Kerr's"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + \\left(l + a\\cos\\theta\\right)^2",
+              "description": "Vanishes only on the ring $r = 0$, $\\cos\\theta = -l/a$, which exists for $|l| \\le |a|$"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr + a^2 - l^2",
+              "description": "Its roots are the horizons, which exist for $a^2 \\le m^2 + l^2$"
+            },
+            {
+              "symbol": "\\chi = a\\sin^2\\theta + 2l\\left(1 - \\cos\\theta\\right)",
+              "description": "Vanishes on the northern half of the axis and is $4l$ on the southern half, the one Misner string"
+            }
+          ],
+          "convention": "We use outgoing Kerr coordinates $(u, r, \\theta, \\tilde\\phi)$ built on the time $t_N = t + 2l\\phi/c$ in which the northern half of the axis is regular, with the retarded time $u = c\\,t_N - r_*$ a length, $dr_*/dr = (r^2 + (a + l)^2)/\\Delta$ and $r_* = 0$ at $r = 0$, and $d\\tilde\\phi = d\\phi - a\\,dr/\\Delta$, and write $\\Sigma$, $\\Delta$, and $\\chi$ as the parameters define them. The horizons are at $r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}$.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(du - \\chi\\,d\\tilde\\phi\\right)^2 - 2\\,dr\\left(du - \\chi\\,d\\tilde\\phi\\right) + \\Sigma\\,d\\theta^2 + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(a\\,du - \\left(r^2 + \\left(a + l\\right)^2\\right)d\\tilde\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{r^2 + \\left(l + a\\cos\\theta\\right)^2 - 2l\\left(l + a\\cos\\theta\\right) - 2m\\,r}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "\\tilde\\phi"
+              ],
+              "value": "-\\dfrac{2\\left(\\cos\\theta - 1\\right)\\left(r\\left(l\\,r - m\\,a - m\\,l\\right) - \\left(l + a\\cos\\theta\\right)\\left(a\\,l + l^2 + m\\,r\\right)\\right)}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "u"
+              ],
+              "value": "-\\dfrac{2\\left(\\cos\\theta - 1\\right)\\left(r\\left(l\\,r - m\\,a - m\\,l\\right) - \\left(l + a\\cos\\theta\\right)\\left(a\\,l + l^2 + m\\,r\\right)\\right)}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tilde\\phi"
+              ],
+              "value": "-\\left(\\cos\\theta - 1\\right)\\left(\\left(l + a\\cos\\theta\\right) + a + l\\right)"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "r"
+              ],
+              "value": "-\\left(\\cos\\theta - 1\\right)\\left(\\left(l + a\\cos\\theta\\right) + a + l\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "\\tilde\\phi"
+              ],
+              "value": "-\\dfrac{\\left(\\cos\\theta - 1\\right)\\left(\\left(\\cos\\theta + 1\\right)\\left(r^2 + a^2 + 2a\\,l + l^2\\right)^2 - \\Delta\\,\\chi\\left(\\left(l + a\\cos\\theta\\right) + a + l\\right)\\right)}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(r^6 - 15r^4\\left(l + a\\cos\\theta\\right)^2 + 15r^2\\left(l + a\\cos\\theta\\right)^4 - \\left(l + a\\cos\\theta\\right)^6\\right) + 4mlr\\left(l + a\\cos\\theta\\right)\\left(3r^4 - 10r^2\\left(l + a\\cos\\theta\\right)^2 + 3\\left(l + a\\cos\\theta\\right)^4\\right)\\right)}{\\Sigma^6}"
+        },
+        {
+          "id": "plebanski",
+          "name": "Plebański-Demiański",
+          "coordinates": [
+            "\\tau",
+            "q",
+            "p",
+            "\\sigma"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "q \\in \\left(m + \\sqrt{m^2 + l^2 - a^2},\\, \\infty\\right)",
+            "p \\in (l - a, l + a)",
+            "\\sigma \\in (-\\infty, \\infty)",
+            "(\\tau, \\sigma) \\sim \\left(\\tau - \\dfrac{2\\pi\\left(a^2 + l^2\\right)}{a},\\, \\sigma - \\dfrac{2\\pi}{a}\\right) \\;\\text{(one turn of } \\phi\\text{)}",
+            "Q = 0 \\;\\text{(the horizons } q_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}\\text{)}",
+            "P = 0 \\;\\text{(the axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation parameter, a length; at $a = 0$ the metric is the Taub-NUT metric"
+            },
+            {
+              "symbol": "l",
+              "description": "NUT parameter, a length, the gravitomagnetic monopole moment; at $l = 0$ the metric is Kerr's"
+            },
+            {
+              "symbol": "Q = q^2 - 2mq + a^2 - l^2",
+              "description": "Its roots are the horizons, which exist for $a^2 \\le m^2 + l^2$"
+            },
+            {
+              "symbol": "P = a^2 - \\left(p - l\\right)^2",
+              "description": "Vanishes on the axis, $p = l \\pm a$"
+            }
+          ],
+          "convention": "We use the coordinates $(\\tau, q, p, \\sigma)$ of Plebański and Demiański, with $q = r$, $p = l + a\\cos\\theta$, $\\sigma = -\\phi/a$, and $\\tau = ct - (a^2 + l^2)\\phi/a$ a length that stands as the time, and write $Q$ and $P$ as the parameters define them. The horizons are at $q_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}$.",
+          "line_element": "ds^2 = -\\dfrac{Q}{p^2 + q^2}\\left(d\\tau - p^2\\,d\\sigma\\right)^2 + \\dfrac{p^2 + q^2}{Q}dq^2 + \\dfrac{p^2 + q^2}{P}dp^2 + \\dfrac{P}{p^2 + q^2}\\left(d\\tau + q^2\\,d\\sigma\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{q^2 + p^2 - 2l\\,p - 2m\\,q}{q^2 + p^2}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\sigma"
+              ],
+              "value": "\\dfrac{2l\\,q^2\\,p + a^2\\,q^2 - l^2\\,q^2 + a^2\\,p^2 - l^2\\,p^2 - 2m\\,q\\,p^2}{q^2 + p^2}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\tau"
+              ],
+              "value": "\\dfrac{2l\\,q^2\\,p + a^2\\,q^2 - l^2\\,q^2 + a^2\\,p^2 - l^2\\,p^2 - 2m\\,q\\,p^2}{q^2 + p^2}"
+            },
+            {
+              "indices": [
+                "q",
+                "q"
+              ],
+              "value": "\\dfrac{q^2 + p^2}{Q}"
+            },
+            {
+              "indices": [
+                "p",
+                "p"
+              ],
+              "value": "-\\dfrac{q^2 + p^2}{\\left(p + a - l\\right)\\left(p - a - l\\right)}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "-\\dfrac{q^4\\,p^2 - 2l\\,q^4\\,p - a^2\\,q^4 + l^2\\,q^4 + q^2\\,p^4 + a^2\\,p^4 - l^2\\,p^4 - 2m\\,q\\,p^4}{q^2 + p^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(q^6 - 15q^4p^2 + 15q^2p^4 - p^6\\right) + 4mlqp\\left(3q^4 - 10q^2p^2 + 3p^4\\right)\\right)}{\\left(p^2 + q^2\\right)^6}"
         }
       ]
     },
@@ -24783,6 +25398,11 @@
           "id": "sultana_dyer",
           "kind": "conformal",
           "text": "Schwarzschild's metric multiplied by the square of the scale factor of a universe of dust, which leaves every light ray where it was and sets the horizon growing with the universe [sultana2005]."
+        },
+        {
+          "id": "kerr_taub_nut",
+          "kind": "generalisation",
+          "text": "Schwarzschild's black hole with a spin $a$ and a NUT parameter $l$ at once. With $a = l = 0$ it is Schwarzschild's metric."
         }
       ],
       "references": [
@@ -28674,6 +29294,11 @@
           "id": "israel_wilson_perjes",
           "kind": "family",
           "text": "Give NUT space a charge of radius $\\sqrt{m^2 + l^2}$ and it is one source of complex mass in Israel, Wilson, and Perjés's fields [hartle1972, brill1964]."
+        },
+        {
+          "id": "kerr_taub_nut",
+          "kind": "generalisation",
+          "text": "Taub-NUT set spinning. Marek Demiański and Ezra Newman's solution of 1966 carries a spin $a$ beside the twist $l$, and at $a = 0$ it is this metric [bini2003]."
         }
       ],
       "references": [
@@ -28696,7 +29321,8 @@
         "plebanski1976",
         "griffiths2005",
         "hartle1972",
-        "brill1964"
+        "brill1964",
+        "bini2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",

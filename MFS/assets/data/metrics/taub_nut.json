@@ -66,6 +66,11 @@
       "id": "israel_wilson_perjes",
       "kind": "family",
       "text": "Give NUT space a charge of radius $\\sqrt{m^2 + l^2}$ and it is one source of complex mass in Israel, Wilson, and Perjés's fields [hartle1972, brill1964]."
+    },
+    {
+      "id": "kerr_taub_nut",
+      "kind": "generalisation",
+      "text": "Taub-NUT set spinning. Marek Demiański and Ezra Newman's solution of 1966 carries a spin $a$ beside the twist $l$, and at $a = 0$ it is this metric [bini2003]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "plebanski1976",
     "griffiths2005",
     "hartle1972",
-    "brill1964"
+    "brill1964",
+    "bini2003"
   ],
   "coordinates": [
     {

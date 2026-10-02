@@ -749,6 +749,19 @@ def kds_rstar(sign):
     return primitive([1.0, 0.0, KDS[sign][1] ** 2], kds_delta(sign))
 
 
+# Kerr-Taub-NUT as its diagrams draw it, (m, a, l), in units of m.
+KTN = (1.0, 1.0, 1.25)
+
+
+def ktn_rstar():
+    """Kerr-Taub-NUT's r_* on the half of the axis that is regular, dr_*/dr = (r^2 + (a + l)^2)/Delta
+    with Delta = r^2 - 2mr + a^2 - l^2 and r_* = 0 at r = 0, as the Kerr charts fix it:
+    v = c t_N + r_* and u = c t_N - r_*. The integrand is 1 + (2mr + 2l(a + l))/Delta."""
+    m, a, l = KTN
+    rest = primitive([2 * m, 2 * l * (a + l)], [1.0, -2 * m, a * a - l * l])
+    return lambda r: np.asarray(r, dtype=float) + rest(r)
+
+
 def kds_schild(sign):
     """c(tau - t) of Kerr-de Sitter's Kerr-Schild chart, d/dr of it r_s r/((1 - Lambda r^2/3) Delta_r),
     zero at r = 0."""
@@ -1461,6 +1474,8 @@ FLAT = {
        for system, scale in (("kerr_ingoing", 1), ("kerr_outgoing", -1))},
     **{("kerr_de_sitter", "kerr_schild", "axis" + suffix): (lambda sign=sign: _kds(sign, kds_schild))
        for sign, suffix in (("de_sitter", ""), ("anti_de_sitter", "_ads"))},
+    ("kerr_taub_nut", "boyer_lindquist", "principal"): lambda: one("kerr_taub_nut", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
+    ("kerr_taub_nut", "boyer_lindquist", "above"): lambda: kerr_above("kerr_taub_nut"),
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),
@@ -2004,6 +2019,11 @@ HIDDEN = {
     ("coleman_de_luccia", "into_flat"): "a bubble with another vacuum inside than the anti-de Sitter space whose moments are embedded",
     **{("coleman_de_luccia", system, "out_of_flat"): "the region outside the light cone of the bubble's centre, which no moment of the open universe inside meets"
        for system in ("wall", "static_outside")},
+    **{("kerr_taub_nut", system, "axis"): "the regular half of the axis, which the embedded equatorial plane does not meet"
+       for system in ("one_string", "kerr_ingoing", "kerr_outgoing")},
+    **{("kerr_taub_nut", view): "the regular half of the axis, which the embedded equatorial plane does not meet"
+       for view in ("axis", "ingoing", "outgoing")},
+    ("kerr_taub_nut", "plebanski", "principal"): "the moment of constant t is a surface on which tau changes with sigma, the coordinate the drawing leaves out",
     ("frw", "comoving_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "comoving_spherical", "through"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "conformal_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",

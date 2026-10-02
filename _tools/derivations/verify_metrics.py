@@ -777,6 +777,30 @@ DIMENSIONS = {
         "\\tau": "T", "r": "L", "\\theta": "1", "\\psi": "1", "r_s": "L", "a": "L", "\\Lambda": "1/L**2",
         "\\Xi": "1", "\\rho": "L", "\\Delta_r": "L**2", "\\Delta_\\theta": "1",
     },
+    # Kerr's black hole with a NUT parameter. The mass enters as the length m = GM/c^2, as on the
+    # Taub-NUT page, and a and l are lengths. Sigma and Delta are areas and chi a length. The Kerr
+    # times v and u are lengths. In Plebanski and Demianski's chart q and p are lengths, tau is a
+    # length that stands as the time, and sigma is an inverse length, so that p^2 sigma is a length.
+    ("kerr_taub_nut", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "l": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2", "\\chi": "L",
+    },
+    ("kerr_taub_nut", "one_string"): {
+        "t_N": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "l": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2", "\\chi": "L",
+    },
+    ("kerr_taub_nut", "kerr_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "m": "L", "a": "L", "l": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2", "\\chi": "L",
+    },
+    ("kerr_taub_nut", "kerr_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "m": "L", "a": "L", "l": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2", "\\chi": "L",
+    },
+    ("kerr_taub_nut", "plebanski"): {
+        "\\tau": "L", "q": "L", "p": "L", "\\sigma": "1/L", "m": "L", "a": "L", "l": "L",
+        "Q": "L**2", "P": "L**2",
+    },
     # The Kaluza-Klein monopole has one length, m, with G nowhere in the line element. Gross
     # and Perry's fifth coordinate x_5 is a length of period 16 pi m, and the Hopf angle psi is a pure
     # number.

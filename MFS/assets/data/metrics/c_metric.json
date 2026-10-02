@@ -86,6 +86,11 @@
       "id": "dilaton_black_hole",
       "kind": "family",
       "text": "The charged black hole of string theory. Fay Dowker, Jerome Gauntlett, David Kastor, and Jennie Traschen wrote the C-metric for a pair of them in 1994, oppositely charged and accelerating apart [dowker1994]."
+    },
+    {
+      "id": "kerr_taub_nut",
+      "kind": "family",
+      "text": "A rotating black hole with a NUT parameter and no acceleration. Jerry Griffiths and Jiří Podolský's form of the Plebański-Demiański family reduces to it when the acceleration is switched off, and to the C-metric when the spin and the twist are [griffiths2005]."
     }
   ],
   "references": [

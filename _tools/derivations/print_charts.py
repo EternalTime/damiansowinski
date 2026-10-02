@@ -9,7 +9,7 @@ damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nord
 black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
-israel_wilson_perjes and sultana_dyer, and Godel's cylindrical chart.
+israel_wilson_perjes, sultana_dyer and kerr_taub_nut, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -7841,6 +7841,372 @@ def kerr_de_sitter_riemann(math, chart, forms):
 
 
 CHARTS["kerr_de_sitter"] = [lambda s=s: kerr_de_sitter(s) for s in KDS_CHARTS]
+
+
+# -- Kerr-Taub-NUT ----------------------------------------------------------------------
+
+KTN_CHARTS = ["boyer_lindquist", "one_string", "kerr_ingoing", "kerr_outgoing", "plebanski"]
+KTN_SIGMA = "\\Sigma = r^2 + \\left(l + a\\cos\\theta\\right)^2"
+KTN_DELTA = "\\Delta = r^2 - 2mr + a^2 - l^2"
+# The twist one form's coefficient: with both strings in place, and with the northern half of
+# the axis regular, where it vanishes at theta = 0.
+KTN_CHI = {"boyer_lindquist": "\\chi = a\\sin^2\\theta - 2l\\cos\\theta",
+           "one_string": "\\chi = a\\sin^2\\theta + 2l\\left(1 - \\cos\\theta\\right)"}
+# The charts in which the northern half of the axis is regular: the time is shifted by 2 l phi.
+KTN_NORTH = ("one_string", "kerr_ingoing", "kerr_outgoing")
+KTN_PLEBANSKI = ["m", "a", "l", "Q = q^2 - 2mq + a^2 - l^2", "P = a^2 - \\left(p - l\\right)^2"]
+
+
+def kerr_taub_nut_parameters(system):
+    if system == "plebanski":
+        return KTN_PLEBANSKI
+    return ["m", "a", "l", KTN_SIGMA, KTN_DELTA, KTN_CHI["one_string" if system in KTN_NORTH else "boyer_lindquist"]]
+
+
+class KerrTaubNutForms(KerrDeSitterForms):
+    """How a value of Kerr-Taub-NUT is written: in Sigma, Delta, chi and l + a cos(theta).
+
+    The checker hands every value back as a rational function of r, a, l, m, sin(theta) and
+    cos(theta). It is factored as Kerr-de Sitter's values are, with each factor that is a multiple
+    of Sigma, Delta or chi written by its name and (r + p)(r - p) written r^2 - p^2 for
+    p = l + a cos(theta), and every sum left over is written in the shortest of: as it stands in
+    the cosine or in the sine; as a polynomial in r and p, the combination the curvature depends
+    on; grouped by the powers of chi; grouped by the powers of m; and, with 2mr written as
+    r^2 + a^2 - l^2 - Delta, grouped by the powers of Delta."""
+
+    def __init__(self, reader, north=False):
+        self.r, self.theta = reader.symbol["r"], reader.symbol["\\theta"]
+        self.m, self.a, self.l = (reader.parameters[k] for k in ("m", "a", "l"))
+        self.s, self.c = sp.sin(self.theta), sp.cos(self.theta)
+        self.C = sp.Symbol("KTN_cos")
+        self.Sigma, self.Delta, self.chi = sp.Symbol("Sigma", positive=True), sp.Symbol("Delta"), sp.Symbol("chi")
+        self.P = sp.Symbol("KTN_p")
+        r, a, l, C = self.r, self.a, self.l, self.C
+        self.radial = r ** 2 - 2 * self.m * r + a ** 2 - l ** 2
+        self.twist = sp.expand(a * (1 - C ** 2) + 2 * l * (1 - C) if north else a * (1 - C ** 2) - 2 * l * C)
+        self.named = [(self.Sigma, sp.expand(r ** 2 + (l + a * C) ** 2)), (self.Delta, self.radial),
+                      (self.chi, self.twist)]
+        self.reader, self.hand, self.point = reader, [], {}
+        self.overrides = {self.P: "\\left(l + a\\cos\\theta\\right)", self.Sigma: "\\Sigma"}
+
+    def printer(self):
+        return {"lead": [self.r, self.P, self.a, self.l, self.c, self.s], "rising": [self.m], "flip": False,
+                "overrides": self.overrides,
+                "factors": [self.m, self.a, self.l, self.r, self.P, self.Sigma, self.Delta, self.chi]}
+
+    def name_of(self, base):
+        base = sp.expand(base)
+        for placeholder, polynomial in self.named:
+            ratio = sp.cancel(base / polynomial)
+            if ratio.is_Number:
+                return ratio * placeholder
+        ratio = sp.cancel(base / (self.l + self.a * self.C))
+        return ratio * self.P if ratio.is_Number else None
+
+    def by_hand(self, texts):
+        """Values written by hand, each a text the chart's reader reads: where `pretty` meets one
+        of them, or its negative, it writes that text, which the chart then reads back and
+        compares with the value as it does every other."""
+        point = {self.r: sp.Rational(17, 5), self.theta: sp.Rational(7, 9), self.m: sp.Rational(11, 13),
+                 self.a: sp.Rational(3, 7), self.l: sp.Rational(5, 11)}
+        self.point = point
+        self.hand = []
+        for k, text in enumerate(texts):
+            placeholder = sp.Symbol(f"KTN_hand_{k}")
+            self.hand.append((placeholder, sp.N(self.reader(text).subs(point), 40)))
+            self.overrides[placeholder] = text
+
+    def pretty(self, value):
+        value = sp.sympify(value)
+        if self.hand and value != 0 and not value.free_symbols - set(self.point):
+            at = sp.N(value.subs(self.point), 40)
+            for placeholder, number in self.hand:
+                for sign in (1, -1):
+                    if abs(at - sign * number) < sp.Float(10) ** -30 * abs(number):
+                        return sign * placeholder
+        return super().pretty(value)
+
+    def twisted(self, base):
+        """The sum as a polynomial in r and p = l + a cos(theta), or None where it is not one."""
+        out = sp.expand(base.subs(self.C, (self.P - self.l) / self.a))
+        return out if sp.denom(sp.together(out)).is_Number else None
+
+    def product(self, value, depth=0):
+        """A rational function of r, a, l, m, the cosine and sin(theta), factored: a pair of
+        factors whose product is a difference of two squares in r and p is written as that
+        difference, and the rest as Kerr-de Sitter's are."""
+        powers = {}
+        number = sp.Integer(1)
+        # The generators are named in one order, so that the factoring takes the same course, and the
+        # same time, whatever order a run's hashes would have put them in.
+        gens = [g for g in (self.r, self.C, self.s, self.a, self.l, self.m, self.P, self.chi, self.Delta)
+                if value.has(g)]
+        for f in sp.Mul.make_args(sp.factor(value, *gens)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            if base.is_Number:
+                number *= base ** k
+            else:
+                powers[base] = powers.get(base, 0) + k
+        sums = [b for b in powers if b.is_Add and self.name_of(b) is None]
+        merged = sp.Integer(1)
+        for i, one in enumerate(sums):
+            for other in sums[i + 1:]:
+                k = min(powers[one], powers[other], key=abs) if powers[one] * powers[other] > 0 else 0
+                both = self.twisted(sp.expand(one * other)) if k else None
+                if both is not None and len(sp.Add.make_args(both)) == 2 and not both.has(self.a):
+                    powers[one] -= k
+                    powers[other] -= k
+                    first, second = sp.Add.make_args(both)
+                    if first.could_extract_minus_sign():
+                        first, second = second, first
+                    merged *= sp.Add(first, second, evaluate=False) ** k
+        C, s = self.C, self.s
+        for base, sign in ((sp.expand(1 - C ** 2), 1), (sp.expand(C ** 2 - 1), -1)):
+            k = powers.pop(base, 0)
+            if k:
+                powers[s] = powers.get(s, 0) + 2 * k
+                number *= sp.Integer(sign) ** k
+        factors = []
+        for base, k in powers.items():
+            if k == 0:
+                continue
+            if base.is_Add:
+                named = self.name_of(base)
+                base = named if named is not None else self.regrouped(base, depth)
+            if (base ** k).is_Number:
+                number *= base ** k
+            else:
+                factors.append(base ** k)
+        # Every factor multiplied in one step, the number last and held in front of a lone sum: a
+        # number multiplied onto a sum alone is carried into it.
+        rest = sp.Mul(*factors) * merged
+        number, rest = (number * rest.as_coeff_Mul()[0], rest.as_coeff_Mul()[1])
+        return sp.Mul(number, rest, evaluate=False) if rest.is_Add and number != 1 else sp.Mul(number, rest)
+
+    def by_twist(self, base):
+        """The sum grouped by the powers of chi, or None where a coefficient is not a polynomial.
+        Every power of the cosine above the first is written by a cos^2 = a - 2 l cos - chi for the
+        chart with two strings, and a + 2l - 2 l cos - chi for the chart with one, which leaves
+        each coefficient linear in the cosine."""
+        C, a = self.C, self.a
+        rule = sp.expand(C ** 2 + (self.twist - self.chi) / a)    # what cos^2 equals: twist = chi
+        assert not rule.has(C ** 2)
+        left = sp.Poly(sp.expand(base), C)
+        while left.degree() > 1:
+            top = left.degree()
+            left = sp.Poly(sp.expand(left.as_expr() - left.LC() * C ** top + left.LC() * C ** (top - 2) * rule), C)
+        expression = sp.together(left.as_expr())
+        if not sp.denom(expression).is_Number:
+            return None
+        polynomial = sp.Poly(sp.expand(expression), self.chi)
+        terms = [(coefficient, self.chi ** k) for (k,), coefficient in polynomial.terms()]
+        if len(terms) < 2:
+            return None
+        return self.summed([(self.product(remainder, 2), power) for remainder, power in terms])
+
+    def regrouped(self, base, depth):
+        candidates = [base, self.in_sine(base)]
+        twisted = self.twisted(base)
+        if twisted is not None:
+            candidates.append(twisted)
+            if depth == 0:
+                polynomial = sp.Poly(twisted, self.P)
+                if len(polynomial.terms()) > 1:
+                    candidates.append(self.summed([(sp.factor(coefficient, self.r, self.a, self.l, self.m), self.P ** k)
+                                                   for (k,), coefficient in polynomial.terms()]))
+        if depth <= 1:
+            grouped = self.by_twist(base)
+            if grouped is not None:
+                candidates.append(grouped)
+            polynomial = sp.Poly(base, self.m)
+            if len(polynomial.terms()) > 1:
+                candidates.append(self.summed([(self.product(coefficient, 1), self.m ** k)
+                                               for (k,), coefficient in polynomial.terms()]))
+            if base.has(self.m):
+                swapped = sp.expand(base.subs(self.m, (self.radial + 2 * self.m * self.r - self.Delta) / (2 * self.r)))
+                if sp.denom(sp.together(swapped)).is_Number:
+                    candidates.append(self.summed([(self.product(coefficient, 1), self.Delta ** k)
+                                                   for (k,), coefficient in sp.Poly(swapped, self.Delta).terms()]))
+        return min(candidates, key=lambda e: len(str(e)))
+
+
+def kerr_taub_nut_plebanski_pretty(reader):
+    """A value of Plebanski's chart, a rational function of p, q, m, a and l: factored, with each
+    factor that is a multiple of Q or P written by its name and p^2 + q^2 kept whole."""
+    q, p = reader.symbol["q"], reader.symbol["p"]
+    m, a, l = (reader.parameters[k] for k in ("m", "a", "l"))
+    Q, P = sp.Symbol("Q"), sp.Symbol("P")
+    named = [(Q, q ** 2 - 2 * m * q + a ** 2 - l ** 2), (P, sp.expand(a ** 2 - (p - l) ** 2))]
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        out = sp.Integer(1)
+        for f in sp.Mul.make_args(sp.factor(sp.together(value), q, p, a, l, m)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            for placeholder, polynomial in named:
+                ratio = sp.cancel(base / polynomial) if base.is_Add else None
+                if ratio is not None and ratio.is_Number:
+                    base = ratio * placeholder
+                    break
+            out *= base ** k
+        return out
+
+    return pretty, {"lead": [q, p, a, l], "rising": [m], "flip": False, "factors": [m, a, l, q, p, Q, P]}
+
+
+def kerr_taub_nut_line(system, c):
+    """The line element of a chart, with c the text that stands before the differential of its
+    time: empty in the chart x^0 = ct, and c where the time is the named one."""
+    if system == "plebanski":
+        return ("ds^2 = -\\dfrac{Q}{p^2 + q^2}\\left(d\\tau - p^2\\,d\\sigma\\right)^2 + \\dfrac{p^2 + q^2}{Q}dq^2"
+                " + \\dfrac{p^2 + q^2}{P}dp^2 + \\dfrac{P}{p^2 + q^2}\\left(d\\tau + q^2\\,d\\sigma\\right)^2")
+    area = "\\left(r^2 + \\left(a + l\\right)^2\\right)" if system in KTN_NORTH else "\\left(r^2 + a^2 + l^2\\right)"
+    time, angle = {"boyer_lindquist": (c + "dt", "\\phi"), "one_string": (c + "dt_N", "\\phi"),
+                   "kerr_ingoing": ("dv", "\\tilde\\phi"), "kerr_outgoing": ("du", "\\tilde\\phi")}[system]
+    principal = "\\left(" + time + " - \\chi\\,d" + angle + "\\right)"
+    tetrad = ("\\Sigma\\,d\\theta^2 + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(a\\," + time + " - " + area + "d" + angle
+              + "\\right)^2")
+    if system in ("kerr_ingoing", "kerr_outgoing"):
+        sign = "+" if system == "kerr_ingoing" else "-"
+        return "ds^2 = -\\dfrac{\\Delta}{\\Sigma}" + principal + "^2 " + sign + " 2\\,dr" + principal + " + " + tetrad
+    return "ds^2 = -\\dfrac{\\Delta}{\\Sigma}" + principal + "^2 + \\dfrac{\\Sigma}{\\Delta}dr^2 + " + tetrad
+
+
+def kerr_taub_nut(system):
+    """Kerr's black hole with a NUT parameter, Demianski and Newman's solution, in five charts:
+    Boyer and Lindquist's, with a Misner string on each half of the axis; the same with the time
+    shifted by 2l phi, which leaves the northern half regular; the ingoing and outgoing Kerr
+    charts of that second form, along the two principal null congruences; and Plebanski and Demianski's chart, in
+    which the mass with q and the NUT parameter with p enter alike. kerr_taub_nut_check holds
+    each to being a vacuum, to the Kretschmann scalar 48 Re((m + il)^2/(r + i(l + a cos(theta)))^6)
+    in the chart's own coordinates, and each after the first to being the first pulled back.
+    kerr_taub_nut.md beside this file is the derivation."""
+    time, radius, polar, angle, name = {
+        "boyer_lindquist": ("t", "r", "\\theta", "\\phi", "Boyer-Lindquist"),
+        "one_string": ("t_N", "r", "\\theta", "\\phi", "One Misner String"),
+        "kerr_ingoing": ("v", "r", "\\theta", "\\tilde\\phi", "Ingoing Kerr"),
+        "kerr_outgoing": ("u", "r", "\\theta", "\\tilde\\phi", "Outgoing Kerr"),
+        "plebanski": ("\\tau", "q", "p", "\\sigma", "Plebański-Demiański")}[system]
+    coords = [time, radius, polar, angle]
+    parameters = kerr_taub_nut_parameters(system)
+    reader = vm.Reader(coords, parameters, ())
+    timed = time in ("t", "t_N")
+    if system == "plebanski":
+        pretty, printer = kerr_taub_nut_plebanski_pretty(reader)
+        domains = ["\\tau \\in (-\\infty, \\infty)", "q \\in \\left(m + \\sqrt{m^2 + l^2 - a^2},\\, \\infty\\right)", "p \\in (l - a, l + a)",
+                   "\\sigma \\in (-\\infty, \\infty)",
+                   "(\\tau, \\sigma) \\sim \\left(\\tau - \\dfrac{2\\pi\\left(a^2 + l^2\\right)}{a},\\, \\sigma - \\dfrac{2\\pi}{a}\\right)"
+                   " \\;\\text{(one turn of } \\phi\\text{)}",
+                   "Q = 0 \\;\\text{(the horizons } q_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}\\text{)}",
+                   "P = 0 \\;\\text{(the axis)}"]
+        kretschmann = ("\\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(q^6 - 15q^4p^2 + 15q^2p^4 - p^6\\right)"
+                       " + 4mlqp\\left(3q^4 - 10q^2p^2 + 3p^4\\right)\\right)}{\\left(p^2 + q^2\\right)^6}")
+    else:
+        forms = KerrTaubNutForms(reader, north=system in KTN_NORTH)
+        pretty, printer = forms.pretty, forms.printer()
+        if system in ("boyer_lindquist", "one_string"):
+            # d_r g_phiphi and d_theta g_phiphi, written in the names: with w = r^2 + a^2 + l^2 (and
+            # r^2 + (a + l)^2 where the northern axis is regular), Sigma + a chi = w and
+            # d_theta chi = 2 (l + a cos(theta)) sin(theta).
+            w = "\\left(r^2 + \\left(a + l\\right)^2\\right)" if system in KTN_NORTH else "\\left(r^2 + a^2 + l^2\\right)"
+            radial_part = ("r" + w + "\\left(\\Sigma - a\\chi\\right)\\sin^2\\theta - \\left(r - m\\right)\\Sigma\\chi^2"
+                           " + r\\Delta\\chi^2")
+            polar_part = ("\\left(\\Sigma\\left(" + w + "^2\\cos\\theta - 2\\Delta\\chi\\left(l + a\\cos\\theta\\right)\\right)"
+                          " + a\\left(l + a\\cos\\theta\\right)\\left(" + w + "^2\\sin^2\\theta - \\Delta\\chi^2\\right)\\right)\\sin\\theta")
+            forms.by_hand(["\\dfrac{\\Delta\\left(" + radial_part + "\\right)}{\\Sigma^3}",
+                           "\\dfrac{" + radial_part + "}{\\Sigma^2}",
+                           "\\dfrac{" + polar_part + "}{\\Sigma^3}",
+                           "\\dfrac{" + polar_part + "}{\\Sigma^2}"])
+            radial = ["r \\in (r_+, \\infty)"]
+            polar_domain = "\\theta \\in (0, \\pi)" if system == "boyer_lindquist" else "\\theta \\in [0, \\pi)"
+            notes = ["\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}\\text{)}",
+                     ("\\theta = 0,\\, \\pi \\;\\text{(the Misner strings)}" if system == "boyer_lindquist"
+                      else "\\theta = \\pi \\;\\text{(the Misner string)}")]
+        else:
+            radial = ["r \\in (-\\infty, \\infty)"]
+            polar_domain = "\\theta \\in [0, \\pi)"
+            notes = ["\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}\\text{)}",
+                     "\\theta = \\pi \\;\\text{(the Misner string)}",
+                     "\\Sigma = 0 \\;\\text{(the ring singularity, present for } |l| \\le |a|\\text{)}"]
+        domains = [time + " \\in (-\\infty, \\infty)"] + radial + [polar_domain, angle + " \\in [0, 2\\pi)"] + notes
+        kretschmann = ("\\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(r^6 - 15r^4\\left(l + a\\cos\\theta\\right)^2"
+                       " + 15r^2\\left(l + a\\cos\\theta\\right)^4 - \\left(l + a\\cos\\theta\\right)^6\\right)"
+                       " + 4mlr\\left(l + a\\cos\\theta\\right)\\left(3r^4 - 10r^2\\left(l + a\\cos\\theta\\right)^2"
+                       " + 3\\left(l + a\\cos\\theta\\right)^4\\right)\\right)}{\\Sigma^6}")
+    spec = {
+        "metric_id": "kerr_taub_nut",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": kerr_taub_nut_line(system, "c\\," if timed else "")},
+        "chart_line_element": kerr_taub_nut_line(system, ""),
+        "printer": printer,
+        "pretty": pretty,
+        "bracketed": pretty,
+        "check": lambda chart: kerr_taub_nut_check(chart, system),
+        "kretschmann": kretschmann,
+    }
+    if system in ("boyer_lindquist", "one_string"):
+        area = "\\left(r^2 + \\left(a + l\\right)^2\\right)" if system in KTN_NORTH else "\\left(r^2 + a^2 + l^2\\right)"
+        cross = "\\dfrac{\\Delta\\chi - a" + area + "\\sin^2\\theta}{\\Sigma}"
+        up = "\\dfrac{\\Delta\\chi - a" + area + "\\sin^2\\theta}{\\Sigma\\Delta\\sin^2\\theta}"
+        spec["components"] = {
+            "metric_components": {(time, time): "-\\dfrac{\\Delta - a^2\\sin^2\\theta}{\\Sigma}",
+                                  (time, angle): cross, (angle, time): cross,
+                                  (angle, angle): "\\dfrac{" + area + "^2\\sin^2\\theta - \\Delta\\chi^2}{\\Sigma}"},
+            "inverse_metric_components": {
+                (time, time): "-\\dfrac{" + area + "^2\\sin^2\\theta - \\Delta\\chi^2}{\\Sigma\\Delta\\sin^2\\theta}",
+                (time, angle): up, (angle, time): up,
+                (angle, angle): "\\dfrac{\\Delta - a^2\\sin^2\\theta}{\\Sigma\\Delta\\sin^2\\theta}"}}
+    return spec
+
+
+def kerr_taub_nut_jacobian(chart, system):
+    """d(Boyer-Lindquist coordinate)/d(the chart's), in the chart x^0 = ct of both."""
+    if system == "one_string":
+        # c t = c t_N - 2 l phi
+        l = chart.reader.parameters["l"]
+        return sp.Matrix([[1, 0, 0, -2 * l], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+    if system in ("kerr_ingoing", "kerr_outgoing"):
+        # dv = c dt + (r^2 + a^2 + l^2) dr/Delta and d(phi~) = d(phi) + a dr/Delta, and their mirror for u
+        r = chart.symbols[1]
+        a, l, Delta = (chart.reader.parameters[k] for k in ("a", "l", "Delta"))
+        sign = 1 if system == "kerr_ingoing" else -1
+        # The Kerr charts are built on the time t_N, c t_N = c t + 2 l phi, so
+        # c dt = dv - (r^2 + a^2 + l^2) dr/Delta - 2 l d(phi~).
+        return sp.Matrix([[1, -sign * (r ** 2 + a ** 2 + l ** 2) / Delta, 0, -2 * l], [0, 1, 0, 0], [0, 0, 1, 0],
+                          [0, -sign * a / Delta, 0, 1]])
+    # r = q, cos(theta) = (p - l)/a, phi = -a sigma and c t = tau - (a^2 + l^2) sigma
+    p = chart.symbols[2]
+    a, l, P = (chart.reader.parameters[k] for k in ("a", "l", "P"))
+    return sp.Matrix([[1, 0, 0, -(a ** 2 + l ** 2)], [0, 1, 0, 0], [0, 0, -1 / sp.sqrt(P), 0], [0, 0, 0, -a]])
+
+
+def kerr_taub_nut_check(chart, system):
+    geo, g = chart.geo, chart.geo.g
+    if any(value != 0 for row in geo.ricci_ll() for value in row):
+        raise AssertionError(f"kerr_taub_nut/{system}: the Ricci tensor does not vanish")
+    if system == "boyer_lindquist":
+        return
+    spec = kerr_taub_nut("boyer_lindquist")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    at = dict(zip(source.symbols, chart.symbols))
+    if system == "plebanski":
+        a, l = (chart.reader.parameters[k] for k in ("a", "l"))
+        p = chart.symbols[2]
+        cosine = (p - l) / a
+        at = {source.symbols[1]: chart.symbols[1],
+              sp.sin(source.symbols[2]): sp.sqrt(1 - cosine ** 2), sp.cos(source.symbols[2]): cosine}
+    jacobian = kerr_taub_nut_jacobian(chart, system)
+    pulled = jacobian.T * source.geo.g.subs(at, simultaneous=True) * jacobian
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"kerr_taub_nut/{system}: the Boyer-Lindquist chart pulled back misses slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["kerr_taub_nut"] = [lambda s=s: kerr_taub_nut(s) for s in KTN_CHARTS]
 
 
 # -- The black string ------------------------------------------------------------------

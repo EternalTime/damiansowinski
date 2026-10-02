@@ -1,5 +1,5 @@
 {
-  "version": "e8723180c449b262",
+  "version": "f5176bd679eb4255",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -19756,6 +19756,173 @@
         "eprint": "0812.5088",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/1126-6708/2009/03/070"
+      }
+    },
+    "adamo2014": {
+      "type": "article",
+      "fields": {
+        "title": "The Kerr-Newman metric: A Review",
+        "author": "Adamo, Tim and Newman, Ezra T.",
+        "journal": "Scholarpedia",
+        "volume": "9",
+        "number": "10",
+        "pages": "31791",
+        "year": "2014",
+        "doi": "10.4249/scholarpedia.31791",
+        "eprint": "1410.6626",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1410.6626"
+      }
+    },
+    "miller1973": {
+      "type": "article",
+      "fields": {
+        "title": "Global analysis of the Kerr-Taub-NUT metric",
+        "author": "Miller, J. G.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "14",
+        "number": "4",
+        "pages": "486--494",
+        "year": "1973",
+        "doi": "10.1063/1.1666343",
+        "url": "https://doi.org/10.1063/1.1666343"
+      }
+    },
+    "mathgenealogymiller": {
+      "type": "misc",
+      "fields": {
+        "title": "James Gilbert Miller",
+        "author": "{Mathematics Genealogy Project}",
+        "howpublished": "Department of Mathematics, North Dakota State University; record 29415, consulted 2 October 2026",
+        "year": "2026",
+        "url": "https://www.mathgenealogy.org/id.php?id=29415"
+      }
+    },
+    "manko2006": {
+      "type": "article",
+      "fields": {
+        "title": "Singular sources in Demiański-Newman spacetimes",
+        "author": "Manko, V. S. and Martín, J. and Ruiz, E.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "13",
+        "pages": "4473--4484",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/13/011",
+        "eprint": "gr-qc/0603002",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0603002"
+      }
+    },
+    "bini2003": {
+      "type": "article",
+      "fields": {
+        "title": "Massless field perturbations and gravitomagnetism in the Kerr-Taub-NUT spacetime",
+        "author": "Bini, D. and Cherubini, C. and Jantzen, R. T. and Mashhoon, B.",
+        "journal": "Physical Review D",
+        "volume": "67",
+        "number": "8",
+        "pages": "084013",
+        "year": "2003",
+        "doi": "10.1103/PhysRevD.67.084013",
+        "eprint": "gr-qc/0301080",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0301080"
+      }
+    },
+    "mukherjee2019": {
+      "type": "article",
+      "fields": {
+        "title": "On some novel features of the Kerr-Newman-NUT spacetime",
+        "author": "Mukherjee, Sajal and Chakraborty, Sumanta and Dadhich, Naresh",
+        "journal": "The European Physical Journal C",
+        "volume": "79",
+        "number": "2",
+        "pages": "161",
+        "year": "2019",
+        "doi": "10.1140/epjc/s10052-019-6662-2",
+        "eprint": "1807.02216",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1807.02216"
+      }
+    },
+    "grenzebach2014": {
+      "type": "article",
+      "fields": {
+        "title": "Photon regions and shadows of Kerr-Newman-NUT black holes with a cosmological constant",
+        "author": "Grenzebach, Arne and Perlick, Volker and Lämmerzahl, Claus",
+        "journal": "Physical Review D",
+        "volume": "89",
+        "number": "12",
+        "pages": "124004",
+        "year": "2014",
+        "doi": "10.1103/PhysRevD.89.124004",
+        "eprint": "1403.5234",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1403.5234"
+      }
+    },
+    "chakraborty2018": {
+      "type": "article",
+      "fields": {
+        "title": "Does the gravitomagnetic monopole exist? A clue from a black hole x-ray binary",
+        "author": "Chakraborty, Chandrachur and Bhattacharyya, Sudip",
+        "journal": "Physical Review D",
+        "volume": "98",
+        "number": "4",
+        "pages": "043021",
+        "year": "2018",
+        "doi": "10.1103/PhysRevD.98.043021",
+        "eprint": "1712.01156",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1712.01156"
+      }
+    },
+    "bordo2019": {
+      "type": "article",
+      "fields": {
+        "title": "The first law for rotating NUTs",
+        "author": "Ballon Bordo, Alvaro and Gray, Finnian and Hennigar, Robie A. and Kubizňák, David",
+        "journal": "Physics Letters B",
+        "volume": "798",
+        "pages": "134972",
+        "year": "2019",
+        "doi": "10.1016/j.physletb.2019.134972",
+        "eprint": "1905.06350",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1905.06350"
+      }
+    },
+    "emond2022": {
+      "type": "article",
+      "fields": {
+        "title": "Amplitudes from Coulomb to Kerr-Taub-NUT",
+        "author": "Emond, William T. and Huang, Yu-tin and Kol, Uri and Moynihan, Nathan and O'Connell, Donal",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "5",
+        "pages": "055",
+        "year": "2022",
+        "doi": "10.1007/JHEP05(2022)055",
+        "eprint": "2010.07861",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2010.07861"
+      }
+    },
+    "erbin2016": {
+      "type": "article",
+      "fields": {
+        "title": "Deciphering and generalizing Demiański-Janis-Newman algorithm",
+        "author": "Erbin, Harold",
+        "journal": "General Relativity and Gravitation",
+        "volume": "48",
+        "number": "5",
+        "pages": "56",
+        "year": "2016",
+        "doi": "10.1007/s10714-016-2054-1",
+        "eprint": "1411.2909",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1411.2909"
       }
     }
   }

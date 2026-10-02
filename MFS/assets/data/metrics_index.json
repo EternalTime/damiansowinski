@@ -499,7 +499,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "f06a0bd85bd32a9d",
+    "version": "cf82d29dd0b4bb09",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
@@ -1374,7 +1374,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "18cac568c4d31c02",
+    "version": "c762fb03293b0348",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1419,7 +1419,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "784feea18ac3af50",
+    "version": "f094c982c454fc6f",
     "diagrams": "7dc03a9eedf6e5a2",
     "conformal": "4f803c414fba5da6",
     "embedding": "f1315ee1ffa48ebb"
@@ -1455,10 +1455,45 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a492e946a6a4dcf7",
+    "version": "6aab7ad6c0f9b571",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "76f39633ed5e928c",
     "embedding": "21f2586270043652"
+  },
+  {
+    "id": "kerr_taub_nut",
+    "name": "Kerr-Taub-NUT",
+    "tags": [
+      "vacuum",
+      "rotating",
+      "rotating black hole",
+      "black hole",
+      "stationary",
+      "axisymmetric",
+      "angular momentum",
+      "mass",
+      "NUT parameter",
+      "gravitomagnetic",
+      "closed timelike curves",
+      "ergosphere",
+      "frame dragging",
+      "ring singularity",
+      "curvature singularity",
+      "horizon",
+      "event horizon",
+      "Cauchy horizon",
+      "Petrov type D",
+      "separable",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "29ac4e244fa381dd",
+    "diagrams": "442206dfc206d069",
+    "conformal": "8508e743b0676aa7",
+    "embedding": "f046af1ffaff68d9"
   },
   {
     "id": "khan_penrose",
@@ -2450,7 +2485,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "11e13cc61a9a3694",
+    "version": "a840d20a11e76b09",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2815,7 +2850,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "58a4ed6d94f0b8a5",
+    "version": "5fcce987d9d8a609",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078"
   },
