@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 118,
+  "count": 119,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -76,6 +76,11 @@
           "id": "kaluza_klein_black_hole",
           "kind": "family",
           "text": "A black string moving around a small fifth dimension is a charged black hole to four dimensions. At the speed of light it is a wave of this kind in five dimensions [horowitz2012]."
+        },
+        {
+          "id": "hotta_tanaka",
+          "kind": "limit_source",
+          "text": "Aichelburg and Sexl's boost done to the Schwarzschild-de Sitter black hole. Its shock is a sphere of fixed area on a cosmological horizon, and this plane is its limit as the cosmological constant goes to zero [hotta1993, podolsky1999nonexpanding]."
         }
       ],
       "references": [
@@ -104,7 +109,8 @@
         "garfinkle1990",
         "khan1971",
         "podolsky1998impulsive",
-        "horowitz2012"
+        "horowitz2012",
+        "podolsky1999nonexpanding"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/aichelburg_sexl.json",
@@ -7391,6 +7397,11 @@
           "id": "kundt_waves",
           "kind": "generalisation",
           "text": "Gravitational waves of type N that cross de Sitter space on fronts shaped as hemispheres. With the profile switched off the metric is de Sitter space [bicak1999, griffiths2004]."
+        },
+        {
+          "id": "hotta_tanaka",
+          "kind": "locally_same",
+          "text": "De Sitter space with an impulsive gravitational wave on one cosmological horizon, the field of two massless particles. Off that horizon it is de Sitter space [hotta1993]."
         }
       ],
       "references": [
@@ -7429,7 +7440,8 @@
         "mazur2004",
         "kiselev2003",
         "bicak1999",
-        "griffiths2004"
+        "griffiths2004",
+        "hotta1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -13472,6 +13484,460 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "hotta_tanaka",
+      "name": "Hotta-Tanaka Shock Wave",
+      "short_name": "Hotta-Tanaka",
+      "description": "The gravitational field of two massless particles in de Sitter space, the Schwarzschild-de Sitter black hole boosted to the speed of light with its energy held fixed. Spacetime is de Sitter on either side of a single null cone, a cosmological horizon, which carries an impulsive gravitational wave on a sphere of constant area with one particle at each pole.",
+      "tags": [
+        "gravitational wave",
+        "shock wave",
+        "impulsive wave",
+        "massless particle",
+        "ultrarelativistic",
+        "boosted black hole",
+        "null source",
+        "cosmological constant",
+        "positive cosmological constant",
+        "de Sitter",
+        "cosmological horizon",
+        "Kundt class",
+        "Petrov type N",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "Einstein space"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The de Sitter radius $a$ is a length, with $\\Lambda = 3/a^2$, and we keep factors of $G$ and $c$ explicit. We read the Dirac delta $\\delta$ as the limit of a pulse even about the shock, a prime on it a derivative with respect to its argument. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "aichelburg_sexl",
+          "kind": "limit",
+          "text": "The limit $a \\to \\infty$, in which the cosmological constant goes to zero and the sphere flattens into a plane with one particle on it [hotta1993, podolsky1999nonexpanding]."
+        },
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "limit_source",
+          "text": "Hotta and Tanaka boosted this black hole. The shock is its limit as the boost goes to the speed of light and the mass to zero, with the energy held fixed [hotta1993]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "locally_same",
+          "text": "De Sitter space on either side of the shock. Cut along a cosmological horizon and joined again with a warp, it becomes this wave [podolsky1999nonexpanding]."
+        },
+        {
+          "id": "siklos",
+          "kind": "family",
+          "text": "The waves of anti-de Sitter space with plane fronts. The same boost done to the Schwarzschild-anti-de Sitter black hole gives an impulsive member of that family, with one null particle on a hyperboloidal front [podolsky1998impulsive]."
+        }
+      ],
+      "references": [
+        "aichelburg1971",
+        "hotta1993",
+        "podolsky1998impulsive",
+        "sfetsos1995",
+        "dray1985",
+        "thooft1987",
+        "hotta1993quantum",
+        "podolsky1997",
+        "kundt1961",
+        "siklos1985",
+        "podolsky1999nonexpanding",
+        "penrose1972impulsive",
+        "podolsky2001",
+        "gao2000",
+        "leblond2002",
+        "aalsma2020",
+        "aalsma2021"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hotta_tanaka.json",
+      "charts": [
+        {
+          "id": "conformally_flat",
+          "name": "Conformally Flat",
+          "coordinates": [
+            "\\eta",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, 0)",
+            "\\rho \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = -\\eta \\;\\text{(the shock)}",
+            "\\theta \\in \\{0, \\pi\\} \\;\\text{on the shock (the two null particles)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "E",
+              "description": "Energy of each of the two null particles, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as the mass $M$ of the Schwarzschild-de Sitter black hole goes to zero and its boost $V$ to $c$"
+            },
+            {
+              "symbol": "a",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/a^2$; the wave front is a sphere of area $4\\pi a^2$"
+            }
+          ],
+          "convention": "We use Hotta and Tanaka's coordinates $(\\eta, \\rho, \\theta, \\phi)$, with the conformal time $\\eta$ and the comoving radius $\\rho$ both lengths, $\\eta$ increasing to the future, and $\\theta$ measured from the line joining the two particles. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{a^2}{\\eta^2}\\left(-d\\eta^2 + d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + \\dfrac{4GE}{c^4}\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(\\eta + \\rho)\\left(d\\eta + d\\rho\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\left(\\dfrac{a^2}{\\eta^2} - \\dfrac{4GE\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(\\eta + \\rho)}{c^4}\\right)"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\rho"
+              ],
+              "value": "\\dfrac{4GE\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(\\eta + \\rho)}{c^4}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\eta"
+              ],
+              "value": "\\dfrac{4GE\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(\\eta + \\rho)}{c^4}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{a^2}{\\eta^2} + \\dfrac{4GE\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(\\eta + \\rho)}{c^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{a^2\\,\\rho^2}{\\eta^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{a^2\\,\\rho^2\\sin^2\\theta}{\\eta^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{a^2}",
+          "kretschmann": "K = \\dfrac{24}{a^4}"
+        },
+        {
+          "id": "global",
+          "name": "Global Conformal",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (0, \\pi)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\chi = \\eta \\;\\text{(the shock)}",
+            "\\theta \\in \\{0, \\pi\\} \\;\\text{on the shock (the two null particles)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "E",
+              "description": "Energy of each of the two null particles, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as the mass $M$ of the Schwarzschild-de Sitter black hole goes to zero and its boost $V$ to $c$"
+            },
+            {
+              "symbol": "a",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/a^2$; the wave front is a sphere of area $4\\pi a^2$"
+            }
+          ],
+          "convention": "We use coordinates $(\\eta, \\chi, \\theta, \\phi)$, all angles, with $\\eta$ the conformal time, increasing to the future, $\\chi$ the polar angle on the sphere $S^3$ of space, and $\\theta$ measured from the line joining the two particles. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{a^2}{\\sin^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + \\dfrac{4GEa}{c^4}\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(\\eta - \\chi)\\left(d\\eta - d\\chi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\left(a^2\\csc^2\\eta - \\dfrac{4GE\\,a\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(\\eta - \\chi)}{c^4}\\right)"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\chi"
+              ],
+              "value": "-\\dfrac{4GE\\,a\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(\\eta - \\chi)}{c^4}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{4GE\\,a\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(\\eta - \\chi)}{c^4}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2\\csc^2\\eta + \\dfrac{4GE\\,a\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(\\eta - \\chi)}{c^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi\\csc^2\\eta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\csc^2\\eta\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{a^2}",
+          "kretschmann": "K = \\dfrac{24}{a^4}"
+        },
+        {
+          "id": "kruskal",
+          "name": "Kruskal",
+          "coordinates": [
+            "u",
+            "v",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "-a^2 < uv < a^2",
+            "u = 0 \\;\\text{(the shock)}",
+            "\\theta \\in \\{0, \\pi\\} \\;\\text{on the shock (the two null particles)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "E",
+              "description": "Energy of each of the two null particles, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as the mass $M$ of the Schwarzschild-de Sitter black hole goes to zero and its boost $V$ to $c$"
+            },
+            {
+              "symbol": "a",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/a^2$; the wave front is a sphere of area $4\\pi a^2$"
+            }
+          ],
+          "convention": "We use the null coordinates $u$ and $v$, both lengths and both increasing to the future, with $\\theta$ measured from the line joining the two particles. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{4a^4}{\\left(a^2 - uv\\right)^2}du\\,dv + \\dfrac{a^2\\left(a^2 + uv\\right)^2}{\\left(a^2 - uv\\right)^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{8GE}{c^4}\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(u)\\,du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{8GE\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(u)}{c^4}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{2a^4}{\\left(a^2 - uv\\right)^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{2a^4}{\\left(a^2 - uv\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{a^2\\left(a^2 + uv\\right)^2}{\\left(a^2 - uv\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{a^2\\left(a^2 + uv\\right)^2\\sin^2\\theta}{\\left(a^2 - uv\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{a^2}",
+          "kretschmann": "K = \\dfrac{24}{a^4}"
+        },
+        {
+          "id": "null_cylindrical",
+          "name": "Null Cylindrical",
+          "coordinates": [
+            "u",
+            "v",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "uv < 4a^2 + \\rho^2",
+            "u = 0 \\;\\text{(the shock)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "E",
+              "description": "Energy of each of the two null particles, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as the mass $M$ of the Schwarzschild-de Sitter black hole goes to zero and its boost $V$ to $c$"
+            },
+            {
+              "symbol": "a",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/a^2$; the wave front is a sphere of area $4\\pi a^2$"
+            }
+          ],
+          "convention": "We use the null coordinates $u$ and $v$, both lengths, with $\\rho$ and $\\phi$ polar coordinates on the stereographic projection of the wave front from one particle, which puts the other at $\\rho = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{-du\\,dv + d\\rho^2 + \\rho^2d\\phi^2 - \\dfrac{4GE}{c^4}\\left(\\left(1 - \\dfrac{\\rho^2}{4a^2}\\right)\\ln\\left(\\dfrac{\\rho^2}{4a^2}\\right) + 2 + \\dfrac{\\rho^2}{2a^2}\\right)\\delta(u)\\,du^2}{\\left(1 + \\dfrac{\\rho^2 - uv}{4a^2}\\right)^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{16GE\\,a^2\\left(8a^2 + 2\\rho^2 + \\left(4a^2 - \\rho^2\\right)\\ln\\left(\\dfrac{\\rho^2}{4a^2}\\right)\\right)\\delta(u)}{c^4\\left(4a^2 + \\rho^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{8a^4}{\\left(4a^2 - uv + \\rho^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{8a^4}{\\left(4a^2 - uv + \\rho^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{16a^4}{\\left(4a^2 - uv + \\rho^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{16a^4\\,\\rho^2}{\\left(4a^2 - uv + \\rho^2\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{a^2}",
+          "kretschmann": "K = \\dfrac{24}{a^4}"
+        },
+        {
+          "id": "kundt",
+          "name": "Kundt",
+          "coordinates": [
+            "u",
+            "w",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "w \\in (0, \\infty)",
+            "\\theta \\in (0, \\pi)",
+            "\\phi \\in (-\\pi/2, \\pi/2)",
+            "u = 0 \\;\\text{(the shock)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "E",
+              "description": "Energy of each of the two null particles, the limit of $Mc^2/\\sqrt{1 - V^2/c^2}$ as the mass $M$ of the Schwarzschild-de Sitter black hole goes to zero and its boost $V$ to $c$"
+            },
+            {
+              "symbol": "a",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/a^2$; the wave front is a sphere of area $4\\pi a^2$"
+            }
+          ],
+          "convention": "We use the null coordinates $u$ and $w$, both lengths, with $w$ running along the rays of each wave front $u = \\text{constant}$, half of a sphere of radius $a$, and $\\theta$ measured from the line joining the two particles. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\sin^2\\theta\\cos^2\\phi\\left(-2\\,du\\,dw + \\dfrac{w^2}{a^2}du^2\\right) + a^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{4GE}{c^4}\\sin\\theta\\cos\\phi\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\delta(u)\\,du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{w^2\\cos^2\\phi\\sin^2\\theta}{a^2} + \\dfrac{4GE\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)\\cos\\phi\\sin\\theta\\,\\delta(u)}{c^4}"
+            },
+            {
+              "indices": [
+                "u",
+                "w"
+              ],
+              "value": "-\\cos^2\\phi\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "w",
+                "u"
+              ],
+              "value": "-\\cos^2\\phi\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{a^2}",
+          "kretschmann": "K = \\dfrac{24}{a^4}"
         }
       ]
     },
@@ -30875,6 +31341,11 @@
           "id": "kiselev",
           "kind": "generalisation",
           "text": "Kottler's $\\Lambda r^2/3$ replaced by a power of the radius, $(r_q/r)^{3w+1}$, for matter around the hole whose pressure averages to $w$ times its energy density. At $w = -1$ it is Kottler's term with $\\Lambda = 3/r_q^2$ [kiselev2003]."
+        },
+        {
+          "id": "hotta_tanaka",
+          "kind": "limit",
+          "text": "This black hole boosted to the speed of light, a limit taken with the mass going to zero and the energy held fixed. The field ends up on a sphere riding a cosmological horizon, with a massless particle at each pole [hotta1993]."
         }
       ],
       "references": [
@@ -30898,7 +31369,8 @@
         "carrera2010",
         "romans1992",
         "akcay2011",
-        "kiselev2003"
+        "kiselev2003",
+        "hotta1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_de_sitter.json",
@@ -31679,6 +32151,11 @@
           "id": "kundt_waves",
           "kind": "generalisation",
           "text": "The wider family of Ozsváth, Robinson, and Rózga, sorted by the sign of one invariant. Siklos's waves are the case where it vanishes, and where it is positive the fronts roll round an envelope, as the fronts of Kundt's waves do [ozsvath1985, bicak1999, griffiths2004]."
+        },
+        {
+          "id": "hotta_tanaka",
+          "kind": "family",
+          "text": "An impulsive wave of the same kind with a positive cosmological constant: a sphere of fixed area in de Sitter space with a null particle at each pole [hotta1993, podolsky1998impulsive]."
         }
       ],
       "references": [
@@ -31700,7 +32177,8 @@
         "donos2010",
         "son2008",
         "duval2009",
-        "griffiths2004"
+        "griffiths2004",
+        "hotta1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/siklos.json",

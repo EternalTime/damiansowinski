@@ -726,6 +726,20 @@ A black hole that forms and then radiates itself away, built by William Hiscock 
 - chart Outgoing Vaidya: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Flat Double Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -du\,dv + \dfrac{(v - u)^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Hotta-Tanaka Shock Wave
+
+The gravitational field of two massless particles in de Sitter space, the Schwarzschild-de Sitter black hole boosted to the speed of light with its energy held fixed. Spacetime is de Sitter on either side of a single null cone, a cosmological horizon, which carries an impulsive gravitational wave on a sphere of constant area with one particle at each pole.
+
+- id: `hotta_tanaka`
+- tags: gravitational wave, shock wave, impulsive wave, massless particle, ultrarelativistic, boosted black hole, null source, cosmological constant, positive cosmological constant, de Sitter, cosmological horizon, Kundt class, Petrov type N, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, Einstein space
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/hotta_tanaka.json
+- chart Conformally Flat: coordinates $(\eta, \rho, \theta, \phi)$, $$ds^2 = \dfrac{a^2}{\eta^2}\left(-d\eta^2 + d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right) + \dfrac{4GE}{c^4}\left(\cos\theta\,\ln\left(\dfrac{1 + \cos\theta}{1 - \cos\theta}\right) - 2\right)\delta(\eta + \rho)\left(d\eta + d\rho\right)^2$$
+- chart Global Conformal: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = \dfrac{a^2}{\sin^2\eta}\left(-d\eta^2 + d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right) + \dfrac{4GEa}{c^4}\left(\cos\theta\,\ln\left(\dfrac{1 + \cos\theta}{1 - \cos\theta}\right) - 2\right)\delta(\eta - \chi)\left(d\eta - d\chi\right)^2$$
+- chart Kruskal: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -\dfrac{4a^4}{\left(a^2 - uv\right)^2}du\,dv + \dfrac{a^2\left(a^2 + uv\right)^2}{\left(a^2 - uv\right)^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{8GE}{c^4}\left(\cos\theta\,\ln\left(\dfrac{1 + \cos\theta}{1 - \cos\theta}\right) - 2\right)\delta(u)\,du^2$$
+- chart Null Cylindrical: coordinates $(u, v, \rho, \phi)$, $$ds^2 = \dfrac{-du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{4GE}{c^4}\left(\left(1 - \dfrac{\rho^2}{4a^2}\right)\ln\left(\dfrac{\rho^2}{4a^2}\right) + 2 + \dfrac{\rho^2}{2a^2}\right)\delta(u)\,du^2}{\left(1 + \dfrac{\rho^2 - uv}{4a^2}\right)^2}$$
+- chart Kundt: coordinates $(u, w, \theta, \phi)$, $$ds^2 = \sin^2\theta\cos^2\phi\left(-2\,du\,dw + \dfrac{w^2}{a^2}du^2\right) + a^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{4GE}{c^4}\sin\theta\cos\phi\left(\cos\theta\,\ln\left(\dfrac{1 + \cos\theta}{1 - \cos\theta}\right) - 2\right)\delta(u)\,du^2$$
+
 ### Israel-Wilson-Perjés Spinning Charged Sources
 
 Majumdar and Papapetrou's balanced charges set spinning: the stationary electrovacuum fields built from a complex solution of Laplace's equation, found by Zoltán Perjés in 1971 and by Werner Israel and Gordon Wilson in 1972. Every source carries a charge equal to its mass, and the family holds Kerr and Newman's spinning body with that charge, a naked singularity, and a charged NUT space.

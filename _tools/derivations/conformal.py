@@ -14738,6 +14738,136 @@ def aichelburg_sexl(ck, src):
     return [v]
 
 
+HT_JUMP = -0.5      # the jump in v of a ray crossing Hotta and Tanaka's shock on its equator, in units of 8GE/c^4 = a
+
+
+def hotta_tanaka(ck, src):
+    """The plane theta = pi/2 through the equator of the wave front, in units of 8GE/c^4 = a = 1.
+    Off the shock the metric on it is de Sitter's, -4 du dv/(1 - uv)^2 in the Kruskal chart and
+    (-d eta^2 + d chi^2)/sin^2(eta) in the global chart, with u = tan((eta - chi)/2) and
+    v = -cot((eta + chi)/2). A ray moving left crosses the shock u = 0 with v changed by
+    Delta v = (2GE/c^4)(cos(theta) ln((1 + cos theta)/(1 - cos theta)) - 2) = -1/2, which is the
+    published geodesic equation's v'' = -Gamma^v_uu u'^2 integrated twice across it. So
+    p = arctan(u) - pi/4 and q = arctan(v - Delta v theta(u)) + pi/4 draw the region ahead of
+    the shock as the half of de Sitter's square under its diagonal, with X = chi and
+    T = eta - pi/2, and carry every ray moving left across the shock as one line of constant q.
+    Behind the shock future infinity uv = 1 is then the curve T = arctan(u) + arctan(1/u + 1/2),
+    above T = pi/2, and the pole chi = 0 the curve X = pi/2 + arctan(1/2 - 1/u) - arctan(u): the
+    drawing is taller than de Sitter's square, and a ray that leaves the pole chi = pi after
+    eta = 0 reaches the pole chi = 0, which no such ray of de Sitter space does. The plane is
+    totally geodesic, the published Gamma^theta of both charts vanishing on it, the shock's too."""
+    params = {"G": 1, "E": "1/8", "a": 1}
+    kruskal = Plane(src, "hotta_tanaka", "kruskal", ("u", "v"), EQUATOR, params, off_shock=True)
+    globe = Plane(src, "hotta_tanaka", "global", ("\\eta", "\\chi"), EQUATOR, params, off_shock=True)
+
+    def before(u, v):
+        return np.arctan(np.asarray(u, dtype=float)) - Q4, np.arctan(np.asarray(v, dtype=float)) + Q4
+
+    def after(u, v):
+        return np.arctan(np.asarray(u, dtype=float)) - Q4, np.arctan(np.asarray(v, dtype=float) - HT_JUMP) + Q4
+
+    def null(eta, chi):
+        return np.tan((eta - chi) / 2), -1 / np.tan((eta + chi) / 2)
+
+    def inside(sign, n=4000):
+        """Random events of the Kruskal plane on one side of the shock, |uv| < 1."""
+        u = sign * np.exp(ck.uniform(-3, 3, n))
+        return u, ck.uniform(-0.98, 0.98, n) / u
+    for name, fmap, sign in (("ahead of the shock", before, -1), ("behind the shock", after, 1)):
+        u, v = inside(sign)
+        ck.chart(f"Hotta-Tanaka, Kruskal, {name}", kruskal, fmap, u, v, lambda u, v: (1, 1))
+        chi = ck.uniform(0.02, PI - 0.02)
+        eta = chi + sign * ck.uniform(0.02, 1, chi.size) * np.where(sign < 0, chi, PI - chi)
+        ck.chart(f"Hotta-Tanaka, global, {name}", globe, lambda e, c, fmap=fmap: fmap(*null(e, c)), eta, chi,
+                 lambda e, c: (1, 0))
+    ck.limit("Hotta-Tanaka: ahead of the shock the drawing is de Sitter's square, X = chi and T = eta - pi/2",
+             np.concatenate(xt(*before(*null(eta := ck.uniform(0.1, 1.5, 200), chi := eta + ck.uniform(0.05, 1.5, 200))))),
+             np.concatenate([chi, eta - HALF]), 1e-9)
+    # The jump from the published geodesic equation: v'' = -A delta'(u) u'^2 with A the coefficient of
+    # delta'(u) in Gamma^v_uu, integrated twice across u = 0, gives Delta v = -A.
+    metric, entry, R = nr.load("hotta_tanaka", "kruskal")
+    src.note("hotta_tanaka", "kruskal", ["christoffel"])
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    at = {R.c: 1, R.parameters["G"]: 1, R.parameters["E"]: sp.Rational(1, 8), R.parameters["a"]: 1,
+          names["theta"]: sp.pi / 2}
+    ull = entry["christoffel"]["variants"]["ull"]["nonzero"]
+    gamma = next(c for c in ull if c["indices"] == ["v", "u", "u"])
+    A = sp.expand(R(gamma["value"]).subs(at)).coeff(sp.DiracDelta(names["u"], 1))
+    ck.limit("Hotta-Tanaka: -Gamma^v_uu integrated twice across the shock is the jump -1/2", [-float(A)], [HT_JUMP], 1e-12)
+    for system in ("kruskal", "global"):
+        _, chart, S = nr.load("hotta_tanaka", system)
+        src.note("hotta_tanaka", system, ["christoffel"])
+        on = {S.symbol["\\theta"]: sp.pi / 2}
+        off = [c["indices"] for c in chart["christoffel"]["variants"]["ull"]["nonzero"]
+               if c["indices"][0] in ("\\theta", "\\phi") and not {"\\theta", "\\phi"} & set(c["indices"][1:])
+               and sp.simplify(S(c["value"]).subs(on)) != 0]
+        ck.limit(f"Hotta-Tanaka, {system}: no published Christoffel symbol turns a ray out of the plane theta = pi/2",
+                 [len(off)], [0], 0.5)
+    w = ck.uniform(-20, 20, 200)
+    ck.limit("Hotta-Tanaka: a ray moving left keeps its q across the shock",
+             before(np.full_like(w, -1e-12), w)[1], after(np.full_like(w, 1e-12), w + HT_JUMP)[1], 1e-9)
+    u = np.exp(np.linspace(-6, 6, 400))
+    ck.limit("Hotta-Tanaka: behind the shock future infinity uv = 1 lies above T = pi/2",
+             [float(np.min(xt(*after(u, 1 / u))[1]) > HALF)], [1.0], 0.5)
+    # A ray that leaves the pole chi = pi at eta_s has v = -cot((eta_s + pi)/2) = tan(eta_s/2) ahead of the
+    # shock and v - 1/2 behind it, and reaches the pole chi = 0, uv = -1 with u > 0, where v < 0.
+    eta_s = np.linspace(0.01, 0.9, 50)
+    ck.limit("Hotta-Tanaka: a ray leaving the pole chi = pi between eta = 0 and 2 arctan(1/2) reaches the pole chi = 0",
+             [float(np.all(np.tan(eta_s / 2) + HT_JUMP < 0)), float(np.tan(math.atan(0.5)) + HT_JUMP)], [1.0, 0.0], 1e-9)
+
+    corner = xt(*after(1e9, 1e-9))
+    box = [-0.35, PI + 0.35, -HALF - 0.3, float(corner[1]) + 0.3]
+    v = View("shock", "The shock on its equator", box)
+    us = np.exp(np.linspace(-9, 9, 400))
+    pole = np.column_stack(xt(*after(us, -1 / us)))
+    scri = np.column_stack(xt(*after(us, 1 / us)))
+    ahead = [[0, -HALF], [PI, -HALF], [PI, HALF]]
+    behind = [[0, -HALF]] + pole.tolist() + scri[::-1].tolist() + [[PI, HALF]]
+    for cls in ("region", "cover"):
+        v.fill(cls, ahead)
+        v.fill(cls, behind)
+    for c in (-2, -1, -0.5):
+        s = spread(-1 / abs(c), 1 / abs(c), 300, 8)
+        v.curve("null", *before(np.full_like(s, c), s))
+    for c in (0.5, 1, 2):
+        s = spread(-1 / c, 1 / c, 300, 8)
+        v.curve("null", *after(np.full_like(s, c), s))
+    for c in (-2, -1, -0.5, 0.5, 1, 2):
+        # v = c ahead of the shock, and the same ray behind it, where its v is c + Delta v.
+        u = -spread(0, 1 / abs(c), 300, 10)[::-1]
+        v.curve("null", *before(u, np.full_like(u, c)))
+        landed = c + HT_JUMP
+        if landed != 0:
+            u = spread(0, 1 / abs(landed), 300, 10)
+            v.curve("null", *after(u, np.full_like(u, landed)))
+    for fmap, sign in ((before, -1), (after, 1)):
+        u = sign * spread(0, np.inf, 300, 10)
+        v.curve("horizon", *fmap(u, np.zeros_like(u)))
+    v.line("surface", [[[0, -HALF], [PI, HALF]]])
+    v.line("scri", [[[0, -HALF], [PI, -HALF]], scri.tolist()])
+    v.line("centre", [[[PI, -HALF], [PI, HALF]], pole.tolist()])
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "t", dy=5)
+    v.label_xt([float(scri[len(scri) // 2][0]), float(scri[len(scri) // 2][1])], "$\\mathscr{I}^+$", "b", dy=-5)
+    v.label_xt([PI, -0.6], "$\\chi = \\pi$", "l", dx=6)
+    v.label_xt([float(pole[len(pole) // 2][0]), float(pole[len(pole) // 2][1])], "$\\chi = 0$", "r", dx=-6)
+    v.label_xt([2.2, 0.63], "the shock", "tl", "small", dx=4, dy=3)
+    v.legend("null", "$u$ constant and $v$ constant at $\\pm a/2$, $\\pm a$ and $\\pm 2a$ ahead of the shock, light rays, "
+                     "each ray moving left drawn on across it")
+    v.legend("surface", "the shock $u = 0$, a light ray from $\\chi = 0$ on $\\mathscr{I}^-$ to $\\chi = \\pi$ on $\\mathscr{I}^+$")
+    v.legend("horizon", "the other cosmological horizon $v = 0$, broken by the shock")
+    v.legend("scri", "future and past infinity $\\mathscr{I}^\\pm$, spacelike")
+    v.legend("centre", "the poles $\\chi = 0$ and $\\chi = \\pi$ of the closed universe")
+    v.set(restriction="The plane $\\theta = \\pi/2$ only, through the equator of the wave front, each point in the "
+                      "diagram a single event.",
+          settings="$8GE/c^4 = a$, the unit of $u$ and $v$; $p = \\arctan(u/a) - \\pi/4$ and "
+                   "$q = \\arctan((v - \\Delta v\\,\\Theta(u))/a) + \\pi/4$, with $\\Delta v = -a/2$ and $\\Theta$ the unit step; each point marked is "
+                   "the sphere of the embedding diagram at the proper time $\\tau$ of its ring of particles.")
+    for m in slices.moments("hotta_tanaka"):
+        x = slices.hotta_tanaka_event("kruskal", None, *slices.hotta_tanaka_sphere(m.time))
+        v.slice(m, points=[(before if x[0] <= 0 else after)(*x)])
+    return [v]
+
+
 def light_beam(ck, src):
     """Three planes of Bonnor's beams on which nothing turns a light ray, each flat and each
     Minkowski's diamond, in units of the beam's radius R with l = 4R.
@@ -16248,6 +16378,7 @@ def lifshitz_spacetime(ck, src):
 DRAWN = {
     "lifshitz_spacetime": lifshitz_spacetime,
     "aichelburg_sexl": aichelburg_sexl,
+    "hotta_tanaka": hotta_tanaka,
     "kiselev": kiselev,
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "siklos": siklos,
@@ -16445,6 +16576,18 @@ CAPTIONS = {
         "The gradients of the two profiles cancel on this plane, so light sent against the beams along it stays "
         "midway between them, on the lines of constant $v + Au$. The lines of constant $u$ are light moving with "
         "the beams.",
+    ],
+    ("hotta_tanaka", "shock"): [
+        "The plane through the equator of the wave front ($\\theta = \\pi/2$), brought by "
+        "$p = \\arctan(u/a) - \\pi/4$ and $q = \\arctan((v - \\Delta v\\,\\Theta(u))/a) + \\pi/4$ of the Kruskal "
+        "chart into a finite drawing, with $\\Delta v = -4GE/c^4$ the jump of a ray moving left across the shock. "
+        "Ahead of the shock it is the half of de Sitter's square under the diagonal, with $\\chi$ across and "
+        "$\\eta$ up.",
+        "Every ray moving left keeps its $q$ across the shock and comes out advanced, so behind the shock future "
+        "infinity stands higher than the square's top edge, and the pole $\\chi = 0$ bends toward the shock. A ray "
+        "that leaves the pole $\\chi = \\pi$ before $\\eta = 2\\arctan(4GE/c^4a)$ reaches the pole $\\chi = 0$. "
+        "In de Sitter space a ray from one pole ends on $\\mathscr{I}^+$ before it reaches the other "
+        "[gao2000, leblond2002].",
     ],
     ("aichelburg_sexl", "shock"): [
         "The plane of $u$ and $v$ at distance $\\rho = \\rho_0/8$ from the axis the source moves along, brought by "

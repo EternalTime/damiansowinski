@@ -65,6 +65,11 @@
       "id": "kundt_waves",
       "kind": "generalisation",
       "text": "The wider family of Ozsváth, Robinson, and Rózga, sorted by the sign of one invariant. Siklos's waves are the case where it vanishes, and where it is positive the fronts roll round an envelope, as the fronts of Kundt's waves do [ozsvath1985, bicak1999, griffiths2004]."
+    },
+    {
+      "id": "hotta_tanaka",
+      "kind": "family",
+      "text": "An impulsive wave of the same kind with a positive cosmological constant: a sphere of fixed area in de Sitter space with a null particle at each pole [hotta1993, podolsky1998impulsive]."
     }
   ],
   "references": [
@@ -86,7 +91,8 @@
     "donos2010",
     "son2008",
     "duval2009",
-    "griffiths2004"
+    "griffiths2004",
+    "hotta1993"
   ],
   "coordinates": [
     {
