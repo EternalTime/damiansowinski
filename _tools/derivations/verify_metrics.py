@@ -314,6 +314,15 @@ DIMENSIONS = {
     ("zipoy_voorhees", "prolate_spheroidal"): {
         "t": "T", "x": "1", "y": "1", "\\phi": "1", "m": "L", "\\delta": "1", "f": "1", "h": "1",
     },
+    # m = GM/c^2 is a length and the quadrupole parameter q a pure number; L is the logarithm both
+    # charts name, and Weyl's two functions are pure numbers.
+    ("erez_rosen", "prolate_spheroidal"): {
+        "t": "T", "x": "1", "y": "1", "\\phi": "1", "m": "L", "q": "1", "L": "1", "\\psi": "1", "\\gamma": "1",
+    },
+    ("erez_rosen", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "q": "1", "L": "1", "\\psi": "1",
+        "\\gamma": "1",
+    },
     # m is half the mass as a length and b the dipole moment over the mass, a length; P, Q, Y
     # and Z are Bonnor's four polynomials, each an area.
     ("bonnor_magnetic_dipole", "spheroidal"): {
@@ -1692,6 +1701,10 @@ HELD = {
     # Weyl's two functions for the first Morgan-Morgan disc, polynomials in xi, eta and arccot(xi):
     # held, every value is written in them and their derivatives, as Weyl's chart writes it.
     ("morgan_morgan", "oblate_spheroidal"): ("psi", "gamma"),
+    # Weyl's two functions for Erez and Rosen's quadrupole, polynomials in the coordinates and in
+    # the logarithm of Schwarzschild's 1 - 2m/r: held, as the first Morgan-Morgan disc's are.
+    ("erez_rosen", "prolate_spheroidal"): ("psi", "gamma"),
+    ("erez_rosen", "spherical"): ("psi", "gamma"),
     # Wahlquist's h_1 and h_2, and Mars's U and V, each a function of one coordinate that holds
     # that coordinate bare beside its sine, so that its derivatives are algebraic in the function.
     ("wahlquist", "wahlquist"): ("h_1", "h_2"),
@@ -1723,6 +1736,34 @@ RATES = {
         "v": {"T": "\\dfrac{c\\left(1 + 2v\\left(v + u\\left(1 + uv\\right)\\right)\\right)}{2x}",
               "X": "-\\dfrac{v\\left(1 + 2uv\\right)}{x}",
               "Z": "\\dfrac{1 - 2v\\left(v - u\\left(1 + uv\\right)\\right)}{2x}"},
+    },
+    # Erez and Rosen's psi and gamma: psi's derivatives are polynomials in the logarithm L with
+    # rational coefficients, and gamma's are Weyl's quadrature. Written out and differentiated
+    # twice, gamma made the Kretschmann scalar of the prolate spheroidal chart run past 120 seconds.
+    ("erez_rosen", "prolate_spheroidal"): {
+        "psi": {"x": "\\dfrac{1}{x^2 - 1} + \\dfrac{q\\left(3y^2 - 1\\right)}{4}"
+                     "\\left(3x\\,L + \\dfrac{6x^2 - 4}{x^2 - 1}\\right)",
+                "y": "\\dfrac{3q\\,y}{4}\\left(\\left(3x^2 - 1\\right)L + 6x\\right)"},
+        "gamma": {"x": "\\dfrac{1 - y^2}{x^2 - y^2}\\left(x\\left(x^2 - 1\\right)\\left(\\partial_x\\psi\\right)^2"
+                       " - x\\left(1 - y^2\\right)\\left(\\partial_y\\psi\\right)^2"
+                       " - 2y\\left(x^2 - 1\\right)\\partial_x\\psi\\,\\partial_y\\psi\\right)",
+                  "y": "\\dfrac{x^2 - 1}{x^2 - y^2}\\left(y\\left(x^2 - 1\\right)\\left(\\partial_x\\psi\\right)^2"
+                       " - y\\left(1 - y^2\\right)\\left(\\partial_y\\psi\\right)^2"
+                       " + 2x\\left(1 - y^2\\right)\\partial_x\\psi\\,\\partial_y\\psi\\right)"},
+    },
+    ("erez_rosen", "spherical"): {
+        "psi": {"r": "\\dfrac{m}{r^2 - 2mr} + \\dfrac{q\\left(3\\cos^2\\theta - 1\\right)}{4m^2}"
+                     "\\left(3\\left(r - m\\right)L + \\dfrac{m\\left(6r^2 - 12mr + 2m^2\\right)}{r^2 - 2mr}\\right)",
+                "\\theta": "-\\dfrac{3q\\sin\\theta\\cos\\theta}{4m^2}"
+                         "\\left(\\left(3r^2 - 6mr + 2m^2\\right)L + 6m\\left(r - m\\right)\\right)"},
+        "gamma": {"r": "\\dfrac{\\sin\\theta}{r^2 - 2mr + m^2\\sin^2\\theta}\\left(\\left(r - m\\right)\\sin\\theta"
+                       "\\left(\\left(r^2 - 2mr\\right)\\left(\\partial_r\\psi\\right)^2"
+                       " - \\left(\\partial_\\theta\\psi\\right)^2\\right)"
+                       " + 2\\left(r^2 - 2mr\\right)\\cos\\theta\\,\\partial_r\\psi\\,\\partial_\\theta\\psi\\right)",
+                  "\\theta": "-\\dfrac{\\left(r^2 - 2mr\\right)\\sin\\theta}{r^2 - 2mr + m^2\\sin^2\\theta}"
+                           "\\left(\\cos\\theta\\left(\\left(r^2 - 2mr\\right)\\left(\\partial_r\\psi\\right)^2"
+                           " - \\left(\\partial_\\theta\\psi\\right)^2\\right)"
+                           " - 2\\left(r - m\\right)\\sin\\theta\\,\\partial_r\\psi\\,\\partial_\\theta\\psi\\right)"},
     },
 }
 

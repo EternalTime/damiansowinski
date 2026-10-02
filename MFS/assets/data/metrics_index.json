@@ -721,7 +721,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "dd1abea89336565a",
+    "version": "a16441d6dc573562",
     "diagrams": "8b39c6bef80d5718",
     "conformal": "573aa16b0b411fe4",
     "embedding": "a9676c6465fbce1c"
@@ -1036,6 +1036,36 @@
     "embedding": "8c16d5714cfa992a"
   },
   {
+    "id": "erez_rosen",
+    "name": "Erez-Rosen",
+    "tags": [
+      "vacuum",
+      "static",
+      "stationary",
+      "axisymmetric",
+      "Weyl class",
+      "harmonic function",
+      "mass",
+      "quadrupole",
+      "prolate spheroidal coordinates",
+      "curvature singularity",
+      "naked singularity",
+      "directional singularity",
+      "no-hair theorem",
+      "gravitational collapse",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "e13c93e2fb6b67f0",
+    "diagrams": "94462e128eea5d3d",
+    "conformal": "73d1aa078d3b894f",
+    "embedding": "e21547bef3d58f8e"
+  },
+  {
     "id": "fisher_jnw",
     "name": "Fisher-Janis-Newman-Winicour",
     "tags": [
@@ -1318,7 +1348,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b34c72bbc30d43f0",
+    "version": "900a459b24882cd0",
     "diagrams": "dfa07fae80435e7d",
     "conformal": "878abf6db42c0334",
     "embedding": "cc9efb7cafec7946"
@@ -1689,7 +1719,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5343bcdd0e18fcf1",
+    "version": "0fdc9bb0a99ffbdf",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -3102,7 +3132,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c737cacc1a87a58d",
+    "version": "f5614d662132cd7e",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3920,7 +3950,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b41e55dbc6cd78e6",
+    "version": "4ef8f5966f0b96f8",
     "diagrams": "c383ba43920e5b0b",
     "conformal": "f06e536b192c099c",
     "embedding": "633fa78640daea0a"

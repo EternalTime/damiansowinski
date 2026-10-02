@@ -4768,6 +4768,9 @@ class Slices(unittest.TestCase):
               *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
               *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
                 for k in ("oblate", "prolate")],
+              *[f"erez_rosen/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
+              *[f"conformal erez_rosen/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
+                for k in ("oblate", "prolate")],
               # The axis of Szekeres's cloud, which the embedded surface through the shells' equators meets
               # only at the centre.
               "szekeres/axisymmetric/north", "szekeres/axisymmetric/south",
@@ -5003,6 +5006,11 @@ class Slices(unittest.TestCase):
                     **{f"zipoy_voorhees/{s}/equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
                     **{f"conformal zipoy_voorhees/{s}_equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
+                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
+                    # So are Erez and Rosen's prolate and oblate masses.
+                    **{f"erez_rosen/{s}/equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
+                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
+                    **{f"conformal erez_rosen/{s}_equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
                     "majumdar_papapetrou/cartesian/tz": {"one_hole"},
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
@@ -5688,7 +5696,7 @@ class Slices(unittest.TestCase):
         if key == "bonnor_magnetic_dipole/spheroidal/strut":
             # The equatorial plane meets the axis between the holes at the one event theta = pi/2.
             return (lambda X: 0.0), [math.pi / 2]
-        if key.startswith("zipoy_voorhees/prolate_spheroidal/"):
+        if key.startswith(("zipoy_voorhees/prolate_spheroidal/", "erez_rosen/prolate_spheroidal/")):
             # The prolate spheroidal x is r/m - 1 of the circles the embedding reaches in r, at m = 1.
             return (lambda X: 0.0), [r - 1 for r in self.reach(surface)]
         if key.startswith("point_particle_2plus1/"):

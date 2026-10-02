@@ -385,8 +385,12 @@ class Plane:
     """
 
     def __init__(self, sources, metric_id, system_id, plane, fixed=None, params=None,
-                 functions=None, numeric=(), axis=None, quotient=None, off_shock=False, induced=False):
+                 functions=None, numeric=(), axis=None, quotient=None, off_shock=False, induced=False,
+                 kretschmann_fixed=None):
         metric, entry, reader = nr.load(metric_id, system_id)
+        # Fixed coordinate -> the value the Kretschmann scalar alone is taken at, where its printed
+        # form is 0/0 on the surface itself, as null_rays.py's rows declare it.
+        self.kretschmann_fixed = kretschmann_fixed or {}
         self.off_shock = off_shock
         sources.note(metric_id, system_id, BASE_FIELDS)
         self.sources, self.metric_id, self.system_id = sources, metric_id, system_id
@@ -467,7 +471,12 @@ class Plane:
         """The published Kretschmann scalar at points of the surface."""
         if self._K is None:
             self.sources.note(self.metric_id, self.system_id, ["kretschmann"])
-            K = self.prep(self.reader(nr.strip_lhs(self.entry["kretschmann"])), limit=False)
+            K = self.reader(nr.strip_lhs(self.entry["kretschmann"]))
+            if self.kretschmann_fixed:
+                if self.reader.held:
+                    K = K.subs(self.reader.held).doit()
+                K = K.subs({self.names[name]: sp.sympify(value) for name, value in self.kretschmann_fixed.items()})
+            K = self.prep(K, limit=False)
             self._K = self.lambdify([K])
         return self.call(self._K, x0, x1, fvals)[0]
 
@@ -14569,6 +14578,236 @@ def _zipoy_voorhees_captions():
     return out
 
 
+ER_OBLATE_PLANE_SCALE = 40.0   # the length l of the oblate equatorial plane's maps, in units of m
+
+
+def erez_rosen(ck, src):
+    """Erez and Rosen's quadrupole on its two totally geodesic planes of t and one radius, m = 1, for
+    the prolate q = 1 and the oblate q = -1/2, in each chart.
+
+    On the axis gamma = 0 and the metric is -e^{2 psi} c^2 dt^2 + m^2 e^{-2 psi} dx^2, with e^{2 psi} =
+    f^(1 + q (3x^2 - 1)/2) e^{3qx} and f = (x - 1)/(x + 1), so g_tt g_xx = -m^2 and x is an affine
+    parameter along every ray. At q = 1, e^{-2 psi} grows as (x - 1)^-2 toward x = 1, so x_*, its
+    integral from x = 2, runs from minus infinity to infinity and u, v = arctan((ct -+ x_*)/l) bring
+    the half axis into the whole diamond, null infinity on the right and on the left the edge x = 1,
+    which a ray reaches at t = +-infinity after a finite affine distance and where the Kretschmann
+    scalar is 3 e^6/(4 m^4): near x = 1 the axis is Zipoy and Voorhees's at delta = 2 with g_tt
+    scaled by e^3. At q = -1/2, e^{-2 psi} grows as (x - 1)^(-1/2), x_* is taken from x = 1, and the
+    same maps bring the half axis into Minkowski's triangle with x = 1 a timelike line on X = 0, where
+    the Kretschmann scalar diverges as (x - 1)^-3. On the equatorial plane c dt/dx =
+    m x e^{gamma - 2 psi}/sqrt(x^2 - 1), which grows as (x - 1)^(q^2/8 - 1), integrable for every
+    q != 0, so each plane is Minkowski's triangle with x = 1 a timelike singularity, where the
+    Kretschmann scalar diverges as (x - 1)^(-3/2) at q = 1 and as (x - 1)^(-21/8) at q = -1/2. The
+    oblate plane's x_* is 69.9 m already at x = 1.1, so its maps take l = 40 m. The tortoise
+    coordinates are null_rays.py's, by quadrature from the closed forms in floats. The spherical
+    chart draws the same planes, theta = 0 and theta = pi/2, with r = m(x + 1)."""
+    views = []
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    corners = (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6))
+    charts = (("prolate_spheroidal", "x", 1, {"y": "1", "phi": "0"}, {"y": "0", "phi": "0"}, "$y = 1$", "$y = 0$",
+               lambda r: f"{r - 1:g}"),
+              ("spherical", "r", 0, {"theta": "0", "phi": "0"}, {**EQUATOR, "phi": "0"}, "$\\theta = 0$",
+               "$\\theta = \\pi/2$", lambda r: f"{r:g}\\,m"))
+    values = {"prolate": {"m": 1, "q": 1}, "oblate": {"m": 1, "q": "-1/2"}}
+    shown = {"prolate": "$q = 1$", "oblate": "$q = -1/2$"}
+    stars = {(plane, shape): nr._erez_rosen_star(plane, q)
+             for plane in ("axis", "equator") for shape, q in (("prolate", 1.0), ("oblate", -0.5))}
+    for system, ra, shift, axis_fixed, eq_fixed, on_axis, on_plane, named in charts:
+        edge = f"{ra} = {named(2)}".replace("\\,m", "m")
+        for shape in ("prolate", "oblate"):
+            prolate = shape == "prolate"
+            moment = slices.moments("erez_rosen", shape)[0]
+            ell = CURZON_SCALE
+            plane_ell = CURZON_SCALE if prolate else ER_OBLATE_PLANE_SCALE
+
+            def axis_pq(t, r, shape=shape, ell=ell):
+                rs = stars[("axis", shape)](np.asarray(r, dtype=float) - 1)
+                t = np.asarray(t, dtype=float)
+                return np.arctan((t - rs) / ell), np.arctan((t + rs) / ell)
+
+            def plane_pq(t, r, shape=shape, ell=plane_ell):
+                return mink_pq(t, stars[("equator", shape)](np.asarray(r, dtype=float) - 1), ell)
+
+            # The spherical chart's Kretschmann scalar is 0/0 on the axis, so it is taken at theta = 10^-30.
+            axis = Plane(src, "erez_rosen", system, ("t", ra), axis_fixed, values[shape],
+                         kretschmann_fixed={"theta": "1e-30"} if system == "spherical" else None)
+            ck.chart(f"Erez-Rosen {system} {shape}, the axis", axis, lambda t, x: axis_pq(t, x + shift),
+                     ck.uniform(-20, 20, 300), ck.uniform(2.3 - shift, 20, 300), lambda t, x: (1, 0))
+            rr = np.array([2.5, 3.0, 5.0, 10.0])
+            g00, _, g11, *_ = axis.metric(np.zeros(4), rr - shift)
+            ck.limit(f"Erez-Rosen {system} {shape}: g_tt g_rr = -1 on the axis, so the radius is affine along its rays",
+                     g00 * g11, [-1.0] * 4, 1e-12)
+            K = axis.kretschmann
+            settings = f"{shown[shape]} and $m = 1$, the unit of every length, and $\\ell = {ell:g}\\,m$."
+            if prolate:
+                near = 2 + np.array([1e-2, 1e-4, 1e-6, 1e-9])
+                ck.finite(f"Erez-Rosen {system} prolate: the Kretschmann scalar is finite as r -> 2m on the axis",
+                          K(np.zeros(4), near - shift))
+                ck.limit(f"Erez-Rosen {system} prolate: the Kretschmann scalar is 3 e^6/(4 m^4) at r = 2m on the axis",
+                         K(np.zeros(1), near[-1:] - shift), [0.75 * math.exp(6)], 1e-2)
+                p, q = axis_pq(np.array([-3.0, 0.0, 3.0]), np.full(3, 2 + 1e-9))
+                ck.limit(f"Erez-Rosen {system} prolate: r -> 2m on the axis lands on X = -pi", q - p, [-PI] * 3, 1e-6)
+                v = View(f"{system}_axis_prolate", f"The axis, {shown[shape]}",
+                         [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+                v.fill("region", DIAMOND)
+                v.fill("cover", DIAMOND)
+                RS = (2.2, 2.5, 3, 4, 6, 10)
+                grid(v, "r", lambda r, t: axis_pq(t, r), RS, S_ALL)
+                grid(v, "t", lambda t, s: axis_pq(t, 2 + s), TS, spread(0, np.inf, 500, 9))
+                v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+                v.line("chartedge", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+                for at, text, anchor, dx, dy in corners:
+                    v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                    v.label_xt(at, text, anchor, dx=dx, dy=dy)
+                v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+                v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+                v.label_xt([-HALF, HALF], f"${edge}$", "br", dx=-5, dy=-3)
+                v.label_xt([-HALF, -HALF], f"${edge}$", "tr", dx=-5, dy=3)
+                label_on(v, axis_pq(0, 3), f"${ra} = {named(3)}$")
+                label_on(v, axis_pq(0, 6), f"${named(6)}$")
+                v.legend("cover", f"the half axis, which $t$ and ${ra}$ cover")
+                v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(r)}$" for r in RS[:-1]) + f" and ${named(RS[-1])}$")
+                v.legend("t", "$ct$ constant, in units of $m$")
+                v.legend("chartedge", f"${edge}$, which light reaches as $t \\to \\pm\\infty$, at a finite affine distance, "
+                                      "and where the Kretschmann scalar is $3e^6/(4m^4)$")
+            else:
+                ck.diverges(f"Erez-Rosen {system} oblate: the Kretschmann scalar diverges at r = 2m on the axis",
+                            K(0, 2 + 1e-3 - shift), K(0, 2 + 1e-4 - shift))
+                ck.limit(f"Erez-Rosen {system} oblate: r_* vanishes at r = 2m on the axis",
+                         stars[("axis", shape)](np.array([1.0])), [0.0], 1e-12)
+                v = View(f"{system}_axis_oblate", f"The axis, {shown[shape]}",
+                         [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+                v.fill("region", TRIANGLE)
+                v.fill("cover", TRIANGLE)
+                RS = (2.5, 3, 4, 6, 10)
+                grid(v, "r", lambda r, t: axis_pq(t, r), RS, S_ALL)
+                grid(v, "t", lambda t, s: axis_pq(t, 2 + s), TS, spread(0, np.inf, 300, 9))
+                v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+                v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+                for at, text, anchor, dx, dy in corners:
+                    v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                    v.label_xt(at, text, anchor, dx=dx, dy=dy)
+                v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+                v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+                v.label_xt([0, 0.25], f"${edge}$", "r", dx=-6)
+                label_on(v, axis_pq(0, 6), f"${named(6)}$")
+                v.legend("cover", f"the half axis, which $t$ and ${ra}$ cover")
+                v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(r)}$" for r in RS[:-1]) + f" and ${named(RS[-1])}$")
+                v.legend("t", "$ct$ constant, in units of $m$")
+                v.legend("singular", f"${edge}$, where the Kretschmann scalar on the axis diverges")
+            v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+            v.set(restriction=f"The half axis {on_axis} only, totally geodesic, each point in the diagram a single event.",
+                  settings=settings)
+            views.append(v)
+
+            eq = Plane(src, "erez_rosen", system, ("t", ra), eq_fixed, values[shape])
+            ck.chart(f"Erez-Rosen {system} {shape}, the equatorial plane", eq, lambda t, x: plane_pq(t, x + shift),
+                     ck.uniform(-20, 20, 200), ck.uniform(2.05 - shift, 20, 200), lambda t, x: (1, 0))
+            KE = eq.kretschmann
+            if prolate:
+                # It grows as the 3/2 power, so the second point is a hundred times nearer.
+                ck.diverges(f"Erez-Rosen {system} prolate: the Kretschmann scalar diverges at r = 2m in the equatorial plane",
+                            KE(0, 2 + 1e-8 - shift), KE(0, 2 + 1e-10 - shift))
+            else:
+                ck.diverges(f"Erez-Rosen {system} oblate: the Kretschmann scalar diverges at r = 2m in the equatorial plane",
+                            KE(0, 2 + 1e-4 - shift), KE(0, 2 + 1e-5 - shift))
+                ck.limit(f"Erez-Rosen {system} oblate: light from r = 2.1 m reaches r = 2m in the plane after ct = 69.9 m",
+                         stars[("equator", shape)](np.array([1.1])), [69.94], 1e-2)
+            v = View(f"{system}_equator_{shape}", f"The equatorial plane, {shown[shape]}",
+                     [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+            v.fill("region", TRIANGLE)
+            v.fill("cover", TRIANGLE)
+            RS = (2.1, 2.5, 4, 6, 10) if prolate else (2 + 1e-12, 2 + 1e-6, 2.001, 2.1, 3, 10)
+            ts = TS if prolate else tuple(10 * t for t in TS)
+            grid(v, "r", lambda r, t: plane_pq(t, r), RS, S_ALL)
+            grid(v, "t", lambda t, s: plane_pq(t, 2 + s), ts, spread(0, np.inf, 300, 9))
+            v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+            v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+            for at, text, anchor, dx, dy in corners:
+                v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                v.label_xt(at, text, anchor, dx=dx, dy=dy)
+            v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+            v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+            v.label_xt([0, 0.25], f"${edge}$", "r", dx=-6)
+            v.legend("cover", f"the half plane, which $t$ and ${ra}$ cover")
+            if prolate:
+                label_on(v, plane_pq(0, 6), f"${named(6)}$")
+                v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(r)}$" for r in RS[:-1]) + f" and ${named(RS[-1])}$")
+                v.legend("t", "$ct$ constant, in units of $m$")
+                v.legend("singular", f"${edge}$, where the Kretschmann scalar diverges and the circles about the axis "
+                                     "shrink to zero")
+            else:
+                label_on(v, plane_pq(0, 2.1), f"${ra} = {named(2.1)}$")
+                unit = "" if system == "prolate_spheroidal" else "\\,m"
+                v.legend("r", f"${ra}$ constant, at $10^{{-12}}{unit}$, $10^{{-6}}{unit}$, $10^{{-3}}{unit}$ and "
+                              f"$10^{{-1}}{unit}$ outside ${edge}$, and at ${named(3)}$ and ${named(10)}$")
+                v.legend("t", "$ct$ constant, every $20\\,m$ from $-80\\,m$ to $80\\,m$ and at $0$")
+                v.legend("singular", f"${edge}$, where the Kretschmann scalar diverges and the circles about the axis "
+                                     "grow without bound")
+            v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+            r = np.linspace(*moment.reach("spherical", "r"), 2)
+            v.slice(moment, [plane_pq(0 * r, r)])
+            v.set(restriction=f"The half plane of $t$ and ${ra}$ at {on_plane} and fixed $\\phi$ only, totally geodesic, "
+                              "each point in the diagram a single event.",
+                  settings=f"{shown[shape]} and $m = 1$, the unit of every length, and $\\ell = {plane_ell:g}\\,m$.")
+            views.append(v)
+    return views
+
+
+def _erez_rosen_captions():
+    """The eight captions of Erez and Rosen's quadrupole: the axis and the equatorial plane, prolate
+    and oblate, in each chart's own radius."""
+    out = {}
+    maps = ("the maps $u = \\arctan((ct - r_*)/\\ell)$ and $v = \\arctan((ct + r_*)/\\ell)$ bring it into ")
+    drawn = ", drawn with $T = u + v$ up and $X = v - u$ across."
+    event = "each point in the diagram a single event. "
+    for system in ("prolate_spheroidal", "spherical"):
+        if system == "prolate_spheroidal":
+            r, edge, off, axis, plane = "x", "x = 1", "x - 1", "$y = 1$", "$y = 0$"
+            on_axis, affine = "m^2e^{-2\\psi}dx^2", "g_{tt}g_{xx} = -m^2"
+            star = ("r_* = m\\int_{2}^{x} e^{-2\\psi}ds", "r_* = m\\int_{1}^{x} e^{-2\\psi}ds",
+                    "r_* = m\\int_{1}^{x} s\\,e^{\\gamma - 2\\psi}ds/\\sqrt{s^2 - 1}")
+            tenth = "$x = 1.1$"
+        else:
+            r, edge, off, axis, plane = "r", "r = 2m", "r - 2m", "$\\theta = 0$", "$\\theta = \\pi/2$"
+            on_axis, affine = "e^{-2\\psi}dr^2", "g_{tt}g_{rr} = -1"
+            star = ("r_* = \\int_{3m}^{r} e^{-2\\psi}ds", "r_* = \\int_{2m}^{r} e^{-2\\psi}ds",
+                    "r_* = \\int_{2m}^{r} (s - m)e^{\\gamma - 2\\psi}ds/\\sqrt{s^2 - 2ms}")
+            tenth = "$r = 2.1\\,m$"
+        out[f"{system}_axis_prolate"] = [
+            f"The half axis {axis} of the Erez-Rosen metric ($q = 1$, $m = 1$), " + event +
+            f"The metric on it is $-e^{{2\\psi}}c^2dt^2 + {on_axis}$, and with ${star[0]}$, which runs from "
+            f"$-\\infty$ at ${edge}$ to $\\infty$, " + maps + "the whole diamond" + drawn,
+            f"Since ${affine}$, ${r}$ is an affine parameter along every light ray, so a ray reaches ${edge}$, the two "
+            "edges on the left, after a finite affine distance, at $t \\to \\pm\\infty$. The Kretschmann scalar on the "
+            "axis is $3e^6/(4m^4)$ there.",
+        ]
+        out[f"{system}_axis_oblate"] = [
+            f"The half axis {axis} of the Erez-Rosen metric ($q = -1/2$, $m = 1$), " + event +
+            f"The metric on it is $-e^{{2\\psi}}c^2dt^2 + {on_axis}$, and with ${star[1]}$, which vanishes at "
+            f"${edge}$, " + maps + "Minkowski's triangle" + drawn,
+            f"The edge $X = 0$ is ${edge}$, a timelike singularity where the Kretschmann scalar on the axis diverges as "
+            f"$({off})^{{-3}}$ and which light from any event of the axis reaches in a finite time $t$.",
+        ]
+        out[f"{system}_equator_prolate"] = [
+            f"The half plane {plane} of $t$ and ${r}$ at fixed $\\phi$ of the Erez-Rosen metric ($q = 1$, $m = 1$), " + event +
+            f"With ${star[2]}$, which is finite at ${edge}$, " + maps + "Minkowski's triangle" + drawn,
+            f"The edge $X = 0$ is ${edge}$, a timelike singularity where the Kretschmann scalar diverges as "
+            f"$({off})^{{-3/2}}$, the circles about the axis shrink to zero, and light from any event of the plane "
+            "arrives in a finite time $t$. The axis meets the same surface at the edge of its diamond, where the "
+            "curvature is finite.",
+        ]
+        out[f"{system}_equator_oblate"] = [
+            f"The half plane {plane} of $t$ and ${r}$ at fixed $\\phi$ of the Erez-Rosen metric ($q = -1/2$, $m = 1$), " + event +
+            f"With ${star[2]}$, which is finite at ${edge}$, " + maps + "Minkowski's triangle" + drawn,
+            f"The edge $X = 0$ is ${edge}$, a timelike singularity where the Kretschmann scalar diverges as "
+            f"$({off})^{{-21/8}}$ and the circles about the axis grow without bound. Light from {tenth} takes "
+            "$70\\,m/c$ to reach it, so with $\\ell = 40\\,m$ most of the triangle lies within a tenth of $m$ of the "
+            "singularity.",
+        ]
+    return out
+
+
 def published_gthth(src, metric_id, system_id, params):
     """The published g_thetatheta of a spherical chart, c = 1, as a numpy function of (t, r) on
     the equator."""
@@ -17820,6 +18059,7 @@ DRAWN = {
     "morgan_morgan": morgan_morgan,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
+    "erez_rosen": erez_rosen,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
     "sultana_dyer": sultana_dyer,
@@ -17990,6 +18230,7 @@ CAPTIONS = {
     ],
     **{("bonnor_magnetic_dipole", view): text for view, text in _bonnor_dipole_captions().items()},
     **{("zipoy_voorhees", view): text for view, text in _zipoy_voorhees_captions().items()},
+    **{("erez_rosen", view): text for view, text in _erez_rosen_captions().items()},
     ("neugebauer_meinel", "weyl_axis"): [
         "The axis $\\rho = 0$ of the disc of $\\mu = 3$, from far below it to far above, each point in the diagram a "
         "single event. The metric on it is $-e^{2U}c^2dt^2 + e^{-2U}dz^2$, and with $z_* = \\int_0^z e^{-2U}dz$ the maps "

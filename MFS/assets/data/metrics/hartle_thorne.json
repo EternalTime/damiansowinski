@@ -59,6 +59,11 @@
       "id": "ppn_metric",
       "kind": "family",
       "text": "Lense and Thirring's weak field with numbers in front of its terms, so that other theories of gravity fit in it too. The dragging of frames comes with the factor $\\tfrac{1}{2}(1 + \\gamma + \\tfrac{1}{4}\\alpha_1)$, which is $1$ in general relativity [will2014]."
+    },
+    {
+      "id": "erez_rosen",
+      "kind": "family",
+      "text": "An exact static field with a mass and a quadrupole moment. To first order in its quadrupole parameter it is Hartle and Thorne's exterior without rotation, after a stretch by Zipoy and Voorhees's $\\delta$ and a change of coordinates [boshkayev2019]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "venkatraman2020",
     "bradley2000",
     "bardeen1969",
-    "will2014"
+    "will2014",
+    "boshkayev2019"
   ],
   "coordinates": [
     {

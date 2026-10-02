@@ -2411,6 +2411,13 @@ FLAT = {
     **{("zipoy_voorhees", "prolate_spheroidal", f"equator_{shape}"): lambda shape=shape: one(
         "zipoy_voorhees", lambda m: along(0.0, *(r - 1 for r in m.reach("spherical", "r"))), view_id=shape)
        for shape in ("oblate", "prolate")},
+    # Erez and Rosen's equatorial plane at t = 0 for each deformation, the same way.
+    **{("erez_rosen", "spherical", f"equator_{shape}"): lambda shape=shape: one(
+        "erez_rosen", lambda m: along(0.0, *m.reach("spherical", "r")), view_id=shape)
+       for shape in ("prolate", "oblate")},
+    **{("erez_rosen", "prolate_spheroidal", f"equator_{shape}"): lambda shape=shape: one(
+        "erez_rosen", lambda m: along(0.0, *(r - 1 for r in m.reach("spherical", "r"))), view_id=shape)
+       for shape in ("prolate", "oblate")},
     ("tolman_vii", "spherical", "radial"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "spherical", "through"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "tolman", "radial"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
@@ -2584,6 +2591,10 @@ HIDDEN = {
     **{("zipoy_voorhees", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     **{("zipoy_voorhees", f"{system}_axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
+       for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
+    **{("erez_rosen", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
+       for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
+    **{("erez_rosen", f"{system}_axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     **{("szekeres", "axisymmetric", half): "the axis of symmetry, which the embedded surface through the equators of the shells meets only at the centre r = 0"
        for half in ("north", "south")},

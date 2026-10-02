@@ -397,6 +397,10 @@ class Diagram:
     dust: dict = None               # scale factors solved as dust, see DustSolver
     reference: str = None           # label of the line where a dust solution starts, as TeX
     kretschmann: bool = True
+    kretschmann_fixed: dict = None  # fixed coordinate -> the value the Kretschmann scalar alone is taken at,
+                                    # where its printed form is 0/0 on the plane itself, as Erez and Rosen's
+                                    # is on the axis of their spherical chart, which writes
+                                    # (d psi/d theta)/sin(theta)
     mark_g00: bool = False
     mark_gtt: str = None            # mark g_tt = 0, named in the legend by this prose
     input: str = None               # the declared input, in prose, printed beside the diagram
@@ -3382,6 +3386,24 @@ DIAGRAMS = [
       for shape, d in (("oblate", "2"), ("prolate", "1/2"))
       for plane, name, fixed in (("axis", "The axis", {"y": "1", "phi": "0"}),
                                  ("equator", "The equatorial plane", {"y": "0", "phi": "0"}))],
+    # Erez and Rosen's quadrupole on its two totally geodesic planes, the axis and the equatorial
+    # plane, in each chart, for the prolate q = 1 and the oblate q = -1/2. The prolate equator's
+    # curvature diverges only as the 3/2 power, so its rows declare the edge singular. The spherical
+    # chart's Kretschmann scalar holds (d psi/d theta)/sin(theta), 0/0 on the axis, so its axial rows
+    # take it at theta = 10^-30, nearer the axis than any point of the drawing is to r = 2m.
+    *[Diagram("erez_rosen", "prolate_spheroidal", f"{plane}_{shape}", f"{name}, $q = {q}$", ("t", "x"),
+              (1, 5, -2, 2), "$x$", "$ct/m$", {"m": 1, "q": q}, fixed,
+              singular_zero="x - 1" if (plane, shape) == ("equator", "prolate") else None)
+      for shape, q in (("prolate", "1"), ("oblate", "-1/2"))
+      for plane, name, fixed in (("axis", "The axis", {"y": "1", "phi": "0"}),
+                                 ("equator", "The equatorial plane", {"y": "0", "phi": "0"}))],
+    *[Diagram("erez_rosen", "spherical", f"{plane}_{shape}", f"{name}, $q = {q}$", ("t", "r"), (2, 6, -2, 2),
+              "$r/m$", "$ct/m$", {"m": 1, "q": q}, fixed,
+              kretschmann_fixed={"theta": "1e-30"} if plane == "axis" else None,
+              singular_zero="r - 2" if (plane, shape) == ("equator", "prolate") else None)
+      for shape, q in (("prolate", "1"), ("oblate", "-1/2"))
+      for plane, name, fixed in (("axis", "The axis", {"theta": "0", "phi": "0"}),
+                                 ("equator", "The equatorial plane", {**EQUATOR}))],
     # Bonnor's magnetic dipole at m = 1 and b = 2 sqrt 2, so that k = sqrt(m^2 + b^2) = 3 and the two
     # black holes stand at r = 4m on the axis, on its three totally geodesic planes:
     # the axis beyond a hole, the equatorial plane, and the stretch of axis between the holes,
@@ -3812,6 +3834,57 @@ def _bonnor_dipole_captions():
             f"The two black holes are the edges {strut[3]}, where the cones close. Light sent along the strut from "
             f"{strut[4]} takes an infinite time $t$ to reach either hole, and the distance to each is infinite as "
             "well, the length of the throat of an extremal black hole.",
+        ],
+    }
+
+
+def _erez_rosen_captions(system):
+    """The four captions of one chart of Erez and Rosen's quadrupole: its axis and its equatorial
+    plane, prolate and oblate, in the chart's own radius."""
+    if system == "prolate_spheroidal":
+        r, edge, off, dr, m = "x", "x = 1", "x - 1", "dx", "m\\,"
+        f = "$f = (x - 1)/(x + 1)$"
+        axis, equator, mirror = "$y = 1$, $\\phi = 0$", "$y = 0$, $\\phi = 0$", "$y \\to -y$"
+        on_axis, slope = "m^2e^{-2\\psi}dx^2", "m\\,x\\,e^{\\gamma - 2\\psi}/\\sqrt{x^2 - 1}"
+        tenth = "$x = 1.1$"
+    else:
+        r, edge, off, dr, m = "r", "r = 2m", "r - 2m", "dr", ""
+        f = "$f = 1 - 2m/r$, and $x = r/m - 1$"
+        axis, equator, mirror = "$\\theta = 0$, $\\phi = 0$", "$\\theta = \\pi/2$, $\\phi = 0$", "$\\theta \\to \\pi - \\theta$"
+        on_axis, slope = "e^{-2\\psi}dr^2", "(r - m)\\,e^{\\gamma - 2\\psi}/\\sqrt{r^2 - 2mr}"
+        tenth = "$r = 2.1\\,m$"
+    comma = "," if system == "spherical" else " and"
+    turns = "and every rotation about the axis fixes the plane, so the rays are null geodesics."
+    reflects = f"and the reflection {mirror} fixes the plane, so the rays are null geodesics."
+    return {
+        "axis_prolate": [
+            f"The plane of $t$ and ${r}$ ({axis}) of the Erez-Rosen metric ($q = 1$, $m = 1$). The metric on it is "
+            f"$-e^{{2\\psi}}c^2dt^2 + {on_axis}$ with $e^{{2\\psi}} = f^{{(3x^2 + 1)/2}}e^{{3x}}${comma} {f}, so a ray has "
+            f"$c\\,dt/{dr} = \\pm {m}e^{{-2\\psi}}$, {turns}",
+            f"The cones close as $({off})^2$ toward ${edge}$, which a ray reaches only as $t \\to \\pm\\infty$, though "
+            f"after a finite affine distance, since ${r}$ is an affine parameter along it. The Kretschmann scalar stays "
+            f"finite on the axis and is $3e^6/(4m^4)$ at ${edge}$.",
+        ],
+        "equator_prolate": [
+            f"The plane of $t$ and ${r}$ ({equator}) of the Erez-Rosen metric ($q = 1$, $m = 1$). A ray has "
+            f"$c\\,dt/{dr} = \\pm {slope}$, {reflects}",
+            f"The cones close toward ${edge}$, where $c\\,dt/{dr}$ grows as $({off})^{{-7/8}}$, so every ingoing ray "
+            f"reaches it in a finite time $t$. The Kretschmann scalar diverges there as $({off})^{{-3/2}}$ and the "
+            "circles about the axis shrink to zero.",
+        ],
+        "axis_oblate": [
+            f"The plane of $t$ and ${r}$ ({axis}) of the Erez-Rosen metric ($q = -1/2$, $m = 1$). The metric on it is "
+            f"$-e^{{2\\psi}}c^2dt^2 + {on_axis}$ with $e^{{2\\psi}} = f^{{(5 - 3x^2)/4}}e^{{-3x/2}}${comma} {f}, so a ray "
+            f"has $c\\,dt/{dr} = \\pm {m}e^{{-2\\psi}}$, {turns}",
+            f"The cones close as $({off})^{{1/2}}$ toward ${edge}$, which every ingoing ray reaches in a finite time $t$ "
+            f"and where the Kretschmann scalar on the axis diverges as $({off})^{{-3}}$.",
+        ],
+        "equator_oblate": [
+            f"The plane of $t$ and ${r}$ ({equator}) of the Erez-Rosen metric ($q = -1/2$, $m = 1$). A ray has "
+            f"$c\\,dt/{dr} = \\pm {slope}$, {reflects}",
+            f"The cones close toward ${edge}$, where $c\\,dt/{dr}$ grows as $({off})^{{-31/32}}$: an ingoing ray reaches "
+            f"it in a finite time $t$, and light from {tenth} takes $70\\,m/c$ to do so. The Kretschmann scalar diverges "
+            f"there as $({off})^{{-21/8}}$ and the circles about the axis grow without bound.",
         ],
     }
 
@@ -7751,6 +7824,8 @@ CAPTIONS = {
     ],
     **{("zipoy_voorhees", system, view): text for system in ("spherical", "prolate_spheroidal")
        for view, text in _zipoy_voorhees_captions(system).items()},
+    **{("erez_rosen", system, view): text for system in ("prolate_spheroidal", "spherical")
+       for view, text in _erez_rosen_captions(system).items()},
     **{("bonnor_magnetic_dipole", "spheroidal", view): text for view, text in _bonnor_dipole_captions().items()},
     ("senovilla", "cylindrical", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Senovilla's universe ($a = 1$). The metric on it is "
@@ -8975,6 +9050,8 @@ class Chart:
             self.fn["gtt"] = self.lambdify(prep(g[0, 0]))
         self.principal = PrincipalPlane(self, g, prep, a, b) if spec.principal else None
         K = prep(reader(strip_lhs(entry["kretschmann"]))) if spec.kretschmann else sp.Integer(0)
+        if spec.kretschmann_fixed:
+            K = K.subs({by_plain[name]: number(value) for name, value in spec.kretschmann_fixed.items()})
         # Exponentials are gathered into one, so that e^(-4m/R) e^(2m^2 rho^2/R^4) overflows to
         # infinity near R = 0 and never to zero times infinity.
         self.fn["K"] = self.lambdify(sp.powsimp(K, combine="exp"))
@@ -10988,6 +11065,72 @@ def _zv_equator(r, oblate):
     return np.vectorize(one, otypes=[float])(np.asarray(r, float))
 
 
+def _erez_rosen_numbers(lnd, y, q):
+    """psi and gamma of Erez and Rosen's quadrupole at m = 1 as floats, from the closed forms in
+    x and y, at x = 1 + d with ln(d) given, so that a point too near x = 1 for x itself to hold
+    it in a float is still evaluated: L = ln(d) - ln(d + 2)."""
+    d = math.exp(lnd)
+    x, y2 = 1 + d, y * y
+    x2 = x * x
+    L = lnd - math.log(d + 2)
+    psi = L / 2 + q * (3 * y2 - 1) / 8 * ((3 * x2 - 1) * L + 6 * x)
+    # ln((x^2 - 1)/(x^2 - y^2)), which vanishes on the axis.
+    ratio = 0.0 if y2 == 1 else lnd + math.log(d + 2) - math.log(x2 - y2)
+    gamma = ((1 + q) ** 2 / 2 * ratio - 1.5 * q * (1 - y2) * (x * L + 2)
+             + 9 * q * q * (1 - y2) / 64 * (d * (d + 2) * (x2 + y2 - 9 * x2 * y2 - 1) * L * L
+                                            + 4 * x * (x2 + 7 * y2 - 9 * x2 * y2 - 5 / 3) * L
+                                            + 4 * (x2 + 4 * y2 - 9 * x2 * y2 - 4 / 3)))
+    return psi, gamma
+
+
+def _erez_rosen_star(plane, q):
+    """The tortoise coordinate x_* of Erez and Rosen's quadrupole at m = 1 along x on the axis
+    or in the equatorial plane, the integral of sqrt(-g_xx/g_tt): e^{-2 psi} on the axis and
+    e^{gamma - 2 psi} x/sqrt(x^2 - 1) in the plane. Toward x = 1 the first grows as
+    (x - 1)^(-1 - q) and the second as (x - 1)^(q^2/8 - 1), so the integral runs from x = 1
+    wherever it converges there, in the variable u = (x - 1)^(1/n) that makes the integrand
+    finite, n = 2 on the axis and 8/q^2 in the plane, and from x = 2 on the axis for q >= 0,
+    where it falls to minus infinity."""
+    y = 1.0 if plane == "axis" else 0.0
+
+    def slope(lnd):
+        psi, gamma = _erez_rosen_numbers(lnd, y, q)
+        if plane == "axis":
+            return math.exp(-2 * psi)
+        d = math.exp(lnd)
+        return math.exp(gamma - 2 * psi - 0.5 * (lnd + math.log(d + 2))) * (1 + d)
+
+    if plane == "axis" and q >= 0:
+        def one(x):
+            if x <= 1:
+                return -math.inf
+            # In w = ln(x - 1), where the integrand e^w e^{-2 psi} grows only as e^{-q w} toward x = 1.
+            return quad(lambda w: math.exp(w) * slope(w), 0.0, math.log(x - 1), epsabs=1e-13, epsrel=1e-13,
+                        limit=400)[0]
+    else:
+        n = 2.0 if plane == "axis" else 8 / (q * q)
+
+        def inner(u):
+            if u <= 0:
+                u = 1e-300
+            lnd = n * math.log(u)
+            return n * math.exp((n - 1) * math.log(u)) * slope(lnd) if lnd > -700 else n * math.exp(
+                (n - 1) * math.log(u) + math.log(slope(max(lnd, -1e6))))
+
+        def one(x):
+            if x <= 1:
+                return 0.0
+            top = (x - 1) ** (1 / n)
+            return quad(inner, 0.0, top, epsabs=1e-13, epsrel=1e-13, limit=400)[0]
+    return lambda x: np.vectorize(one, otypes=[float])(np.asarray(x, float))
+
+
+def _erez_rosen_forms(plane, q, shift, edge):
+    """t + x_* and t - x_* of one view, the spherical chart's r = m(x + 1) moved by `shift`."""
+    star = _erez_rosen_star(plane, q)
+    return (lambda t, r: t + star(r + shift), lambda t, r: t - star(r + shift), lambda t, r: r + shift > 1 + edge)
+
+
 def _bonnor_dipole_star(plane):
     """The tortoise coordinate of Bonnor's dipole at m = 1, b = 2 sqrt 2 on each of its three planes,
     in Bonnor's r and theta. On the axis beyond a hole dr_*/dr = (r^2 - 8)^2/((r - 4)^2 (r + 2)^2),
@@ -11905,6 +12048,12 @@ CLOSED_FORMS = {
        for system, shift in (("spherical", 0), ("prolate_spheroidal", 1))
        for shape in ("oblate", "prolate")
        for plane, star, edge in (("axis", _zv_axis, 0.1), ("equator", _zv_equator, 0.02))},
+    # The equatorial rays meet the edge with a slope that grows without bound, so they are compared
+    # from a fiftieth outside it, and the axial rays from a tenth, as Zipoy and Voorhees's are.
+    **{("erez_rosen", system, f"{plane}_{shape}"): _erez_rosen_forms(plane, q, shift, edge)
+       for system, shift in (("prolate_spheroidal", 0), ("spherical", -1))
+       for shape, q in (("prolate", 1.0), ("oblate", -0.5))
+       for plane, edge in (("axis", 0.1), ("equator", 0.02))},
     ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("senovilla", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("melvin", "ernst", "radial"):

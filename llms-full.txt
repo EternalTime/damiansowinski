@@ -605,6 +605,17 @@ A static, spherically symmetric traversable wormhole with zero redshift function
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2 dt^2 + dr^2 + (r^2 + \ell^2)\left(d\theta^2 + \sin^2\theta\, d\phi^2\right)$$
 
+### Erez-Rosen Quadrupole
+
+Schwarzschild's metric with a mass quadrupole added, a static vacuum field of Weyl's class found by G. Erez and Nathan Rosen in 1959. For every quadrupole parameter $q \neq 0$ a naked curvature singularity stands where the horizon was, which Doroshkevich, Zel'dovich, and Novikov used in 1965 to argue that a collapsing star sheds its quadrupole.
+
+- id: `erez_rosen`
+- tags: vacuum, static, stationary, axisymmetric, Weyl class, harmonic function, mass, quadrupole, prolate spheroidal coordinates, curvature singularity, naked singularity, directional singularity, no-hair theorem, gravitational collapse, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/erez_rosen.json
+- chart Prolate Spheroidal: coordinates $(t, x, y, \phi)$, $$ds^2 = -e^{2\psi}c^2dt^2 + m^2e^{-2\psi}\left(e^{2\gamma}\left(x^2 - y^2\right)\left(\dfrac{dx^2}{x^2 - 1} + \dfrac{dy^2}{1 - y^2}\right) + \left(x^2 - 1\right)\left(1 - y^2\right)d\phi^2\right)$$
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{2\psi}c^2dt^2 + e^{-2\psi}\left(e^{2\gamma}\left(r^2 - 2mr + m^2\sin^2\theta\right)\left(\dfrac{dr^2}{r^2 - 2mr} + d\theta^2\right) + \left(r^2 - 2mr\right)\sin^2\theta\,d\phi^2\right)$$
+
 ### Fisher-Janis-Newman-Winicour Scalar Field
 
 The static, spherically symmetric spacetime of a mass that also carries a massless scalar field, found by I. Z. Fisher in 1948 and found again by Allen Janis, Ezra Newman, and Jeffrey Winicour in 1968. For any scalar charge, however small, the sphere where Schwarzschild's horizon would stand has zero area and infinite curvature, and no horizon hides it.

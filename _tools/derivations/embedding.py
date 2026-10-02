@@ -11031,6 +11031,97 @@ def zipoy_voorhees(ck, src):
     return views
 
 
+ER_PROLATE, ER_OBLATE = {"m": 1, "q": 1}, {"m": 1, "q": "-1/2"}
+
+
+def erez_rosen(ck, src):
+    """The equatorial plane of Erez and Rosen's quadrupole at t = 0 in the spherical chart, m = 1, at
+    q = 1, prolate, and at q = -1/2, oblate.
+
+    On the equator, with x = r/m - 1 and f = 1 - 2m/r, e^{2 psi} = f^(1 - q (3x^2 - 1)/4) e^(-3qx/2),
+    so the circle of radius r has radius sqrt(r^2 - 2mr) e^(-psi) = r f^(q (3x^2 - 1)/8) e^(3qx/4) on
+    the surface, and g_rr = e^(2 gamma - 2 psi) (r - m)^2/(r^2 - 2mr). Toward r = 2m the circles go
+    as (r - 2m)^(q/4) and the distance between them as (r - 2m)^(q^2/8 - q/4 - 1/2) dr. At q = 1 the
+    circles shrink to zero there, faster than the distance in to them, and the slice has a
+    surface of revolution in flat space from r = 2.0279 m out, found here, where the circle has
+    radius 1.371 m. At q = -1/2 the circles are narrowest, 2.2867 m, at r = 2.1297 m, and grow
+    without bound toward r = 2m, and the surface runs in to r = 2.0288 m, a circle of radius
+    2.460 m. Inside each the circles change faster than the distance in to them, which is
+    checked. Where a surface lies level its chords are short, so it is written to nine decimals,
+    as Zipoy and Voorhees's is. The prolate spheroidal chart's equator, y = 0 with x = r/m - 1, is
+    checked to give the same surfaces."""
+    top = 6.0
+    views = []
+
+    def circle(q):
+        def radius(r):
+            x = r - 1
+            return r * (1 - 2 / r) ** (q * (3 * x * x - 1) / 8) * np.exp(3 * q * x / 4)
+        return radius
+    cases = (("prolate", "Prolate, $q = 1$", ER_PROLATE, (2.01, 2.1), 2.0279, circle(1.0)),
+             ("oblate", "Oblate, $q = -1/2$", ER_OBLATE, (2.01, 2.1), 2.0288, circle(-0.5)))
+    for vid, label, params, bracket, expected, radius in cases:
+        sl = Slice(src, "erez_rosen", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+        lo, hi = bracket
+        for _ in range(80):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if float(sl.defect_at(np.array([mid]))[0]) < 0 else (lo, mid)
+        stop = hi
+        ck.add(f"Erez-Rosen {vid}: the surface starts at r = {expected} m", abs(stop - expected), 1e-4)
+        ck.stops(f"Erez-Rosen {vid}, inside the first surface", sl, np.linspace(2 + 1e-6, stop, 202)[:-1])
+        size = 2 * float(sl.rho_at(top))
+        if vid == "oblate":
+            # The narrowest circle, where d rho/dr = 0, by bisection on the closed form.
+            a, b = 2.05, 2.5
+            for _ in range(80):
+                mid = 0.5 * (a + b)
+                a, b = (mid, b) if radius(mid + 1e-7) < radius(mid - 1e-7) else (a, mid)
+            neck = 0.5 * (a + b)
+            ck.add("Erez-Rosen oblate: the narrowest circle is at r = 2.1297 m", abs(neck - 2.1297), 1e-4)
+            marks = [(stop, "chartedge", None), (neck, "surface", f"$r = {neck:.2f}\\,m$"), (3.0, "r", None)]
+        else:
+            marks = [(stop, "chartedge", None), (3.0, "r", None)]
+        plane = Piece("plane", "sheet", sl, stop, top, 0.0, 1,
+                      (("stops", "the circles change faster than the distance in to them, and nothing in flat space "
+                                 "carries the slice on"),
+                       ("edge", "the surface runs on to $r \\to \\infty$")),
+                      marks + [(4.0, "r", None), (5.0, "r", None), (top, "r", "$6\\,m$")],
+                      size, digits=LORENTZ_DIGITS)
+        ck.isometry(f"Erez-Rosen {vid}, the equatorial plane", plane)
+        ck.radius(f"Erez-Rosen {vid}, the equatorial plane, r f^(q (3x^2 - 1)/8) e^(3qx/4)", plane, radius, size)
+        if vid == "oblate":
+            ck.add("Erez-Rosen oblate: the narrowest circle has radius 2.2867 m",
+                   abs(float(np.min(plane.rho)) - 2.2867) + abs(plane.at(neck)[0] - 2.2867), 1e-4)
+            ck.add("Erez-Rosen oblate: the first circle has radius 2.460 m", abs(plane.at(stop)[0] - 2.460), 1e-3)
+        else:
+            ck.add("Erez-Rosen prolate: the first circle has radius 1.371 m", abs(plane.at(stop)[0] - 1.371), 1e-3)
+            ck.exact("Erez-Rosen prolate: the circles grow with r throughout", bool(np.all(np.diff(plane.rho) > 0)))
+        other = Slice(src, "erez_rosen", "prolate_spheroidal", "x", "\\phi", {"t": 0, "y": 0}, params)
+        xs = plane.x[1:]
+        ck.add(f"Erez-Rosen {vid}, the prolate spheroidal chart's equator gives the same surface",
+               float(max(np.max(np.abs(other.rho_at(xs - 1) - sl.rho_at(xs))),
+                         np.max(np.abs(other.defect_at(xs - 1) - sl.defect_at(xs))))), 1e-9)
+        surface = Surface([plane])
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        ring_label(fig, [0, 0, 0], *plane.at(stop), f"${stop:.2f}\\,m$", side=-1)
+        if vid == "oblate":
+            ring_label(fig, [0, 0, 0], *plane.at(neck), f"$r = {neck:.2f}\\,m$", dx=10)
+        ring_label(fig, [0, 0, 0], *plane.at(top), "$6\\,m$")
+        fig.legend("fill", "cover", "the equatorial plane at $t = 0$, which $r$ and $\\phi$ cover")
+        fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$ and $6\\,m$")
+        if vid == "oblate":
+            fig.legend("line", "surface", f"the narrowest circle, of radius $2.29\\,m$, at $r = {neck:.2f}\\,m$")
+        fig.legend("line", "chartedge", f"$r = {stop:.2f}\\,m$, where the drawing stops")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        q = "1" if vid == "prolate" else "-1/2"
+        views.append(view(vid, label, "$m$", [surface], fig.done(),
+                          settings=f"$q = {q}$ and $m = 1$, the unit of every length.",
+                          stops=[f"Inside $r = {stop:.4f}\\,m$ the circles change faster than the distance in to them, "
+                                 "$g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat "
+                                 "space carries the slice on."]))
+    return views
+
+
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
 
 
@@ -12542,6 +12633,7 @@ DRAWN = {
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
+    "erez_rosen": erez_rosen,
     "robinson_trautman": robinson_trautman,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
@@ -13349,6 +13441,22 @@ CAPTIONS = {
         "$\\tfrac{81}{64}\\cdot 2\\pi\\ell$, Emparan's excess of angle $(1 + m^2/b^2)^2$, so the tip is a cone in "
         "Minkowski space, $dX^2 + dY^2 - dZ^2$. Farther out the surface stands in flat space and widens as Flamm's "
         "paraboloid does; the same plane at every moment is the same surface.",
+    ],
+    ("erez_rosen", "prolate"): [
+        "The equatorial plane of the Erez-Rosen metric at one moment ($q = 1$, $m = 1$), drawn as a surface in flat "
+        "space with every distance along it the metric distance. With $x = r/m - 1$ and $f = 1 - 2m/r$, the circle of "
+        "radius $r$ has circumference $2\\pi r f^{(3x^2 - 1)/8}e^{3x/4}$, which falls to zero as $r \\to 2m$.",
+        "The surface narrows all the way in toward the singularity at $r = 2m$ and lies level at $r = 2.03\\,m$, on a "
+        "circle of radius $1.37\\,m$, where the drawing stops; the same plane at every moment is the same surface.",
+    ],
+    ("erez_rosen", "oblate"): [
+        "The equatorial plane of the Erez-Rosen metric at one moment ($q = -1/2$, $m = 1$), drawn as a surface in flat "
+        "space with every distance along it the metric distance. With $x = r/m - 1$ and $f = 1 - 2m/r$, the circle of "
+        "radius $r$ has circumference $2\\pi r f^{-(3x^2 - 1)/16}e^{-3x/8}$, least, $2\\pi \\cdot 2.29\\,m$, at "
+        "$r = 2.13\\,m$, and growing without bound as $r \\to 2m$.",
+        "The surface narrows from far out to a neck at $r = 2.13\\,m$ and widens again toward the singularity at "
+        "$r = 2m$, until it lies level at $r = 2.03\\,m$, where the drawing stops; the same plane at every moment is "
+        "the same surface.",
     ],
     ("zipoy_voorhees", "oblate"): [
         "The equatorial plane of the Zipoy-Voorhees metric at one moment ($q = 1$, $m = 1$), drawn as a surface in flat "
