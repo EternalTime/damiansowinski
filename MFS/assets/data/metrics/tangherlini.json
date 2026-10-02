@@ -44,6 +44,11 @@
       "id": "kaluza_klein_monopole",
       "kind": "family",
       "text": "A second static vacuum solution of gravity in five dimensions. It has no horizon, and its 3-spheres are squashed and close smoothly at the centre [grossperry1983]."
+    },
+    {
+      "id": "black_string",
+      "kind": "family",
+      "text": "Schwarzschild's black hole stretched along a line, the other black hole of five dimensions. A long enough piece of it has less entropy than Tangherlini's round hole of the same mass, and it is unstable [gregorylaflamme1993]."
     }
   ],
   "references": [

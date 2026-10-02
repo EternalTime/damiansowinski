@@ -722,6 +722,17 @@ DIMENSIONS = {
     ("bardeen", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "g": "L",
     },
+    # The black string is Schwarzschild's black hole with the length z along the string added, and
+    # in six dimensions Tangherlini's of five with it; the advanced time v = ct + r_* is a length and
+    # the Kerr-Schild time T = (v - r)/c a time.
+    ("black_string", "static"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "z": "L", "r_s": "L"},
+    ("black_string", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "z": "L", "r_s": "L",
+    },
+    ("black_string", "kerr_schild"): {"T": "T", "r": "L", "\\theta": "1", "\\phi": "1", "z": "L", "r_s": "L"},
+    ("black_string", "static_six"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "z": "L", "r_h": "L",
+    },
     # Schwarzschild-anti-de Sitter keeps Schwarzschild's r_s and anti-de Sitter's radius, which the
     # entry calls L and the dimensional pass calls L as well, as for anti-de Sitter space itself.
     # The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.

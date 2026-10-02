@@ -205,6 +205,11 @@
       "id": "fisher_jnw",
       "kind": "generalisation",
       "text": "Schwarzschild's mass with a massless scalar field around it. However weak the field, the horizon shrinks to a point of infinite curvature with nothing to hide it [fisher1948, janis1968]."
+    },
+    {
+      "id": "black_string",
+      "kind": "composite",
+      "text": "Schwarzschild's black hole with one more direction of space added, along which nothing changes, so that the horizon is a cylinder. Ripples along it longer than about seven horizon radii grow [gregorylaflamme1993]."
     }
   ],
   "references": [
@@ -259,7 +264,8 @@
     "ayonbeato2000",
     "hayward2006",
     "fisher1948",
-    "janis1968"
+    "janis1968",
+    "gregorylaflamme1993"
   ],
   "coordinates": [
     {

@@ -2294,6 +2294,29 @@ class EmbeddingDiagrams(unittest.TestCase):
             for r, rho, z in piece("tangherlini", pid):
                 near(rho, r, f"Tangherlini's catenoid rho at {r}")
                 near(z, sign * math.acosh(r), f"Tangherlini's catenoid z at {r}")
+            # The black string across the string: Flamm's paraboloid in five dimensions, the catenoid in six.
+            for r, rho, z in piece("black_string", pid):
+                near(rho, r, f"the black string's paraboloid rho at {r}")
+                near(z, sign * 2 * math.sqrt(r - 1), f"the black string's paraboloid z at {r}")
+            for r, rho, z in piece("black_string", pid, view=2):
+                near(rho, r, f"the black string's catenoid rho at {r}")
+                near(z, sign * math.acosh(r), f"the black string's catenoid z at {r}")
+        # The black string's rippling horizon on a circle of length 10 r_s: at each moment the circle at z
+        # has the radius r_s (1 + a cos(2 pi z/10)), the ripple starts at a = 0.02 and grows as
+        # exp(0.0633 v), Gregory and Laflamme's rate at that wavelength, and every chord of the profile
+        # is as long as the step along z it spans, since the mode has no component along z.
+        ripple = self.embedding["black_string"]["views"][1]
+        self.assertEqual(ripple["id"], "ripple")
+        for surface in ripple["surfaces"]:
+            points = [tuple(point) for point in surface["pieces"][0]["points"]]
+            a = 0.02 * math.exp(0.0633 * surface["time"])
+            # The rate is quoted to four decimals, half a unit of the last over 42 r_s of v.
+            self.assertLess(abs(max(rho for _, rho, _ in points) - 1 - a), 3e-3 * a, surface["label"])
+            a = max(rho for _, rho, _ in points) - 1
+            for (x, rho, z), (x2, rho2, z2) in zip(points, points[1:]):
+                near(rho, 1 + a * math.cos(2 * math.pi * x / 10), f"the rippled horizon's rho at {x}, {surface['label']}")
+                self.assertLess(abs(math.hypot(rho2 - rho, z2 - z) - (x2 - x)), 2e-4 * (x2 - x), f"the chord at {x}")
+            self.assertEqual((points[0][0], points[-1][0]), (-5.0, 5.0))
         # The Kaluza-Klein monopole's cigar: the circle of the fifth dimension at r has radius
         # 8m sqrt(r/(r + 4m)), and the surface rises from the nut at dz/dr = 2 toward dz/dr = 1.
         cigar = piece("kaluza_klein_monopole", "cigar")
@@ -3208,7 +3231,8 @@ class StacksAndMovies(unittest.TestCase):
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
-              ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$"}
+              ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
+              ("black_string", "ripple"): "$v$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -4087,6 +4111,15 @@ class Slices(unittest.TestCase):
                     **{f"conformal tangherlini/{v}": {"six"} for v in ("spherical", "ingoing", "outgoing")},
                     "tangherlini/spherical_six/radial": {"five"},
                     "conformal tangherlini/six": {"five"},
+                    # The black string in five dimensions and in six are two spacetimes, each marked on
+                    # the drawings of its own charts, and its rippled horizon is the perturbed string, a
+                    # third, marked on none.
+                    **{f"black_string/{s}": {"ripple", "six"} for s in (
+                        "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
+                        "kerr_schild/radial")},
+                    **{f"conformal black_string/{v}": {"ripple", "six"} for v in ("static", "ingoing", "kerr_schild")},
+                    "black_string/static_six/radial": {"across", "ripple"},
+                    "conformal black_string/six": {"across", "ripple"},
                     "global_monopole/conical/radial": {"black_hole"},
                     "conformal global_monopole/conical": {"black_hole"},
                     # The threaded black hole's bifurcation sphere, its horizon view, lies at v -> -infinity and
@@ -4186,7 +4219,11 @@ class Slices(unittest.TestCase):
             return (lambda X: 0.0), [1.0]
         if key.startswith("string_black_hole/") and "eddington" not in key:
             return (lambda X: 0.0), list(self.reach(surface, "static"))
-        if key.startswith(("schwarzschild/eddington_finkelstein", "string_black_hole/eddington_finkelstein")):
+        if key == "black_string/kerr_schild/radial":
+            # The plane of the time and r is Schwarzschild's at r_s = 1: static t = 0 is cT = v - r = ln(r - 1).
+            return (lambda X: math.log(X - 1)), None
+        if key.startswith(("schwarzschild/eddington_finkelstein", "string_black_hole/eddington_finkelstein",
+                           "black_string/eddington_finkelstein")):
             sign = 1 if "ingoing" in key else -1
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * math.log(X - 1) + (0 if finkelstein else sign * X)), None
@@ -4525,7 +4562,8 @@ class Slices(unittest.TestCase):
                                 X, Y = X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)
                                 h = 2e-4 * (X1 - X0)
                                 slope = (abs(Y_of(min(X + h, X1)) - Y_of(max(X - h, X0 + 1e-9 if key.startswith(
-                                    ("schwarzschild/edd", "string_black_hole/edd", "oppenheimer_snyder/ext")) else X0))) / (2 * h)
+                                    ("schwarzschild/edd", "string_black_hole/edd", "oppenheimer_snyder/ext",
+                                     "black_string/edd", "black_string/kerr")) else X0))) / (2 * h)
                                          if X0 < X < X1 else 0)
                                 tol = 1e-4 * (Y1 - Y0) + slope * 1e-4 * (X1 - X0) + 1e-9
                                 self.assertLess(abs(Y - Y_of(X)), 3 * tol, f"{key} {mark['label']} at {u}")

@@ -401,6 +401,16 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `cosmological/plane`: the cosmological moment is the line $c\tau = 8r_s/3$; the static $t = 0$ between the horizons is $H\tau = e^{-HT_1(r)/c}$, $\rho = (r - r_s/2)/H\tau$, with $T_1$ the static time at $H\tau = 1$, and the moment inside $r_-$, where $\tau < 0$, is the one through $H\tau = -1/2$ on $r = 0.35\,r_s$, since the static time there is fixed only up to a constant.
 - `static`, `ingoing`, `outgoing` and `cosmological`, the maximal extension: the static moment between the horizons is the line $T = 0$ from $X = 0$ to $X = 2\pi$ on all four; the moment inside $r_-$ is the line $T = \pi$ above the black hole on the static and ingoing views and $T = -\pi$ below the white hole on the outgoing one, and on the cosmological view the curve of constant static time $cT = $ `slices.RNDS_INSIDE_T` below the white hole, through the inner bifurcation sphere; the cosmological moment is one curve through the white hole, the static region and the expanding region on all four.
 
+### The black string
+
+- The embedding has three views: across the string, the equator of the static moment $t = 0$ at $z = 0$, Flamm's paraboloid from the throat $r_s$ to $6\,r_s$ on both sheets; along the string, the rippling horizon at the advanced times $v = 0$, $14$, $28$ and $42\,r_s$; and across the string of six dimensions, the catenoid from $r_h$ to $6\,r_h$.
+- `static/radial`: the line $ct = 0$ from $r_s$ to $6\,r_s$.
+- `eddington_finkelstein_ingoing/finkelstein` and `/chart`: the curve $v = r + r_s\ln(r/r_s - 1)$, Schwarzschild's.
+- `kerr_schild/radial`: the curve $cT = v - r = r_s\ln(r/r_s - 1)$.
+- `static_six/radial`: the line $ct = 0$ from $r_h$ to $6\,r_h$, the moment of six dimensions alone.
+- `static`, `ingoing` and `kerr_schild`, the maximal extension: the line $T = 0$ through the bifurcation point from one exterior to the other; `six` the same for the moment of six dimensions.
+- The rippled horizon is the perturbed string, another spacetime than the one whose planes are drawn: not visible on any of them, and five dimensions and six are marked each on its own charts.
+
 ### Schwarzschild-de Sitter
 
 - The embedding is the equator of Kottler's static moment $t = 0$ at $\Lambda = 0.2/r_s^2$, $r$ from the throat $r_h = 1.085\,r_s$ to the widest circle $r_c = 3.215\,r_s$ and back to the next throat, through the cosmological bifurcation sphere into the next static region.

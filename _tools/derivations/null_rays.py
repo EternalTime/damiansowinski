@@ -238,6 +238,9 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 # Tangherlini's planes of the time and r hold every angle fixed, three in five dimensions and four in six.
 TANGHERLINI_FIVE = {"psi": "pi/2", "theta": "pi/2", "phi": "0"}
 TANGHERLINI_SIX = {"chi": "pi/2", **TANGHERLINI_FIVE}
+# The black string's planes of the time and r hold the angles and the length z along the string fixed.
+STRING_FIVE = {"theta": "pi/2", "phi": "0", "z": "0"}
+STRING_SIX = {"psi": "pi/2", **STRING_FIVE}
 # The Kaluza-Klein monopole's planes of t and its radius lie on the half axis theta = 0, where Gross and
 # Perry's potential vanishes and the embedding diagram's cigar stands.
 KK_AXIS = {"theta": "0", "phi": "0", "x_5": "0"}
@@ -837,6 +840,18 @@ DIAGRAMS = [
             tau="u + r", areal=True),
     Diagram("tangherlini", "spherical_six", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_h$", "$ct/r_h$", {"r_h": 1}, TANGHERLINI_SIX, orient="ingoing", areal=True),
+    Diagram("black_string", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, STRING_FIVE, orient="ingoing", areal=True),
+    Diagram("black_string", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 6, -3, 3), "$r/r_s$", "$(v - r)/r_s$", {"r_s": 1}, STRING_FIVE,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("black_string", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 6, 0, 6), "$r/r_s$", "$v/r_s$", {"r_s": 1}, STRING_FIVE,
+            tau="v - r", areal=True),
+    Diagram("black_string", "kerr_schild", "radial", "$T$ and $r$", ("T", "r"), (0, 6, -3, 3),
+            "$r/r_s$", "$cT/r_s$", {"r_s": 1}, STRING_FIVE, tau="T", areal=True),
+    Diagram("black_string", "static_six", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_h$", "$ct/r_h$", {"r_h": 1}, STRING_SIX, orient="ingoing", areal=True),
     Diagram("schwarzschild_ads", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
             "$r/L$", "$ct/L$", SADS, EQUATOR, orient="ingoing", areal=True),
     Diagram("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -1957,6 +1972,48 @@ CAPTIONS = {
         "The same plane of $u$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own coordinates. The outgoing family is "
         "$u = $ const and runs horizontally here, since $u$ is itself a null coordinate. The ingoing family "
         "turns vertical at $r_h$ and leans toward larger $r$ inside it.",
+    ],
+    ("black_string", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $z = 0$), the same at every angle and at every "
+        "$z$ along the string. It is Schwarzschild's plane: outside $r_s$ the cones narrow toward the vertical as "
+        "$r \\to r_s$, because $dt/dr = \\pm(1 - r_s/r)^{-1}$ diverges there. The Gregory-Laflamme instability "
+        "is a ripple along $z$, which is fixed on this plane.",
+        "Inside $r_s$ the same components make $r$ the time. We take the future from the ingoing "
+        "Eddington-Finkelstein chart, which runs smoothly across $r_s$, and this makes that region the black "
+        "hole, where every cone points to $r = 0$, a singular line along $z$. The Kretschmann scalar "
+        "$12r_s^2/r^6$ is finite at $r_s$ and diverges only at $r = 0$.",
+    ],
+    ("black_string", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $z = 0$), drawn with $v - r$ as the vertical "
+        "axis so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has "
+        "$dv/dr = 2(1 - r_s/r)^{-1}$, so it stands exactly vertical at $r_s$: each generator of the horizon is "
+        "an outgoing ray that stays where it is.",
+        "The cones cross $r_s$ smoothly and keep tipping. Inside, both edges of every future cone point to "
+        "smaller $r$, so every future directed ray on this plane ends at $r = 0$. The apparent horizon of a "
+        "rippled string, where the outgoing rays stop diverging, lies at $r_s$ plus a term that varies as a cosine along $z$.",
+    ],
+    ("black_string", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $z = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a null "
+        "coordinate. The outgoing family turns vertical at $r_s$ and leans back toward smaller $r$ inside it.",
+    ],
+    ("black_string", "kerr_schild", "radial"): [
+        "The plane of $T$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $z = 0$). The ingoing rays are the straight "
+        "lines $cT + r = $ const, at 45° as in flat space, and the outgoing family has "
+        "$c\\,dT/dr = (r + r_s)/(r - r_s)$, vertical at $r_s$. The surfaces of constant $T$ are spacelike at every "
+        "$r$ and cross the horizon, and Choptuik and his collaborators set the initial data of their evolutions "
+        "on one.",
+        "Inside $r_s$ both edges of every future cone point to smaller $r$, and every future directed ray on "
+        "this plane ends at $r = 0$.",
+    ],
+    ("black_string", "static_six", "radial"): [
+        "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$, $z = 0$) of the black string in six "
+        "dimensions, the same at every angle and at every $z$. It is the plane of the Schwarzschild-Tangherlini "
+        "black hole of five dimensions: the cones narrow toward the vertical as $r \\to r_h$, because "
+        "$dt/dr = \\pm(1 - r_h^2/r^2)^{-1}$ diverges there.",
+        "Inside $r_h$ the same components make $r$ the time, and we take the future as the ingoing rays carry it "
+        "across the horizon, which makes that region the black hole, where every cone points to $r = 0$. The "
+        "Kretschmann scalar $72r_h^4/r^8$ is finite at $r_h$ and diverges only at $r = 0$.",
     ],
     ("tangherlini", "spherical_six", "radial"): [
         "The plane of $t$ and $r$ ($\\chi = \\psi = \\theta = \\pi/2$, $\\phi = 0$) in six dimensions, the same "
@@ -6272,6 +6329,14 @@ CLOSED_FORMS = {
         (lambda u, r: u + 2 * _tangherlini_rstar(r), lambda u, r: u, _away(1.0)),
     ("tangherlini", "spherical_six", "radial"):
         (lambda t, r: t + _tangherlini_rstar(r, 6), lambda t, r: t - _tangherlini_rstar(r, 6), _away(1.0)),
+    ("black_string", "static", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), _away(1.0)),
+    ("black_string", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), _away(1.0)),
+    ("black_string", "kerr_schild", "radial"):
+        (lambda T, r: T + r, lambda T, r: T + r - 2 * _rstar(r, [1]), _away(1.0)),
+    ("black_string", "static_six", "radial"):
+        (lambda t, r: t + _tangherlini_rstar(r), lambda t, r: t - _tangherlini_rstar(r), _away(1.0)),
     ("global_monopole", "static", "radial"):
         (lambda t, r: t + _rstar(r, [GM_RH]) / 0.81, lambda t, r: t - _rstar(r, [GM_RH]) / 0.81,
          lambda t, r: np.abs(r - GM_RH) > 0.05),

@@ -2003,6 +2003,168 @@ def tangherlini(ck, src):
     return views
 
 
+def black_string(ck, src):
+    """The black string at r_s = 1 in five dimensions and at r_h = 1 in six.
+
+    Nothing depends on z, and on a plane of fixed angles and fixed z the metric is Schwarzschild's
+    in five dimensions and Tangherlini's of five in six, so the whole spacetime is that plane times
+    a sphere of radius r times the line of z: Kruskal and Szekeres's extension, compactified by
+    p = arctan U, q = arctan V. In five dimensions it is the Tower of the one root r_s,
+    U = -exp(-u/2), V = exp(v/2), UV = (1 - r) e^r, the coordinates Gregory and Laflamme judge
+    their perturbations regular in; in six the Tower of the roots +-r_h, UV = (1 - r)/(1 + r) e^(2r).
+    The ingoing coordinates are V = exp(v/2), U = (1 - r) e^r/V, one formula for every r > 0, and
+    the Kerr-Schild time T = v - r is carried through them, so both cover the exterior and the
+    black hole together.
+    """
+    five_fixed, six_fixed = {**EQUATOR, "z": 0}, {"psi": "pi/2", **EQUATOR, "z": 0}
+    sph = Plane(src, "black_string", "static", ("t", "r"), five_fixed, {"r_s": 1})
+    six = Plane(src, "black_string", "static_six", ("t", "r"), six_fixed, {"r_h": 1})
+    towers = {}
+    for name, plane, roots in (("five", sph, [1]), ("six", six, [1, -1])):
+        assert plane.g[0, 1] == 0 and sp.simplify(plane.g[0, 0] * plane.g[1, 1] + 1) == 0
+        T = towers[name] = Tower(-plane.g[0, 0], plane.x1, roots)
+        for cell, region, lo, hi, future in (("I", "exterior", 1.001, 8, (1, 0)), ("II", "black hole", 0.01, 0.999, (0, -1)),
+                                             ("IV", "white hole", 0.01, 0.999, (0, 1)),
+                                             ("I'", "other exterior", 1.001, 8, (-1, 0))):
+            ck.chart(f"black string, {name} dimensions, {region}", plane, lambda t, r, T=T, cell=cell: T.pq(cell, t, r),
+                     ck.uniform(-6, 6), ck.uniform(lo, hi), lambda t, r, future=future: future)
+    T5, T6 = towers["five"], towers["six"]
+    ck.limit("black string: the surface gravities are 1/2r_s in five dimensions and 1/r_h in six", [T5.kp, T6.kp], [0.5, 1], 1e-12)
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan((1 - r) * np.exp(r - w / 2)), atan_exp(w / 2)
+
+    def kerr_schild(T, r):
+        return ingoing(np.asarray(T, dtype=float) + np.asarray(r, dtype=float), r)
+    ein = Plane(src, "black_string", "eddington_finkelstein_ingoing", ("v", "r"), five_fixed, {"r_s": 1})
+    ck.chart("black string ingoing Eddington-Finkelstein", ein, ingoing,
+             ck.uniform(-15, 15), ck.uniform(0.01, 30), lambda w, r: (1, -60))
+    ks = Plane(src, "black_string", "kerr_schild", ("T", "r"), five_fixed, {"r_s": 1})
+    # The sum of the two future null directions of the plane, (1, -1) and (r + 1, r - 1), is timelike
+    # and future directed at every r, where the Kerr-Schild time's own direction is spacelike inside r_s.
+    ck.chart("black string Kerr-Schild", ks, kerr_schild,
+             ck.uniform(-15, 15), ck.uniform(0.01, 30), lambda T, r: (r + 2, r - 2))
+
+    rr = np.linspace(0.05, 5, 50)
+    for name, T, uv, plane in (("five", T5, lambda r: (1 - r) * np.exp(r), sph),
+                               ("six", T6, lambda r: (1 - r) / (1 + r) * np.exp(2 * r), six)):
+        p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+        ck.limit(f"black string, {name} dimensions: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+        p, q = T.pq("I", np.array([0.0]), np.array([1e8]))
+        ck.limit(f"black string, {name} dimensions: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)",
+                 point(p[0], q[0]), [PI, 0], 1e-3)
+        p, q = T.pq("I", np.array([1.5 / T.kp]), np.array([1 + 1e-12]))
+        ck.limit(f"black string, {name} dimensions: r -> the horizon at fixed t lands on the bifurcation point",
+                 point(p[0], q[0]), [0, 0], 1e-4)
+        for cell, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
+            pp, qq = T.pq(cell, 0.3 + 0 * rr[sel], rr[sel])
+            ck.limit(f"black string, {name} dimensions, {cell}: tan p tan q is Kruskal's UV, as a part of it",
+                     np.tan(pp) * np.tan(qq) / uv(rr[sel]), np.ones(int(sel.sum())), 1e-8)
+        K = plane.kretschmann
+        ck.diverges(f"black string, {name} dimensions: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+        ck.finite(f"black string, {name} dimensions: the Kretschmann scalar is finite at the horizon",
+                  K(np.zeros(3), np.array([0.999, 1, 1.001])))
+    ck.limit("black string: the ingoing and static coordinates put one event at one point",
+             ingoing(2.0 + 3 + np.log(2), 3.0), T5.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit("black string: the Kerr-Schild and static coordinates put one event at one point",
+             kerr_schild(2.0 + np.log(2), 3.0), T5.pq("I", 2.0, 3.0), 1e-12)
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    both = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]]
+    R_OUT, R_IN, TS = (1.05, 1.25, 1.5, 2, 3), (0.5, 0.75, 0.9), (-4, -2, -1, 0, 1, 2, 4)
+
+    def edges(v, rh):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([-Q4, Q4], f"$r = {rh}$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([-HALF, 0], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.legend("horizon", f"the horizon $r = {rh}$, a cylinder along $z$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$ of the plane, at every $z$")
+
+    def moment_of(T, view_id, system):
+        m = slices.moments("black_string", view_id)[0]
+        lo, hi = m.reach(system, "r")
+        ends = np.linspace(lo, hi, 2)
+        left, right = T.pq("I'", 0 * ends, ends[::-1]), T.pq("I", 0 * ends, ends)
+        return m, [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))]
+
+    t = spread(-np.inf, np.inf, 500, 9)
+
+    def static(vid, label, system, T, mark, named, rh):
+        v = View(vid, label, box, system)
+        v.fill("region", hexagon)
+        v.fill("cover", exterior)
+        for r in R_OUT:
+            v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+        out = spread(1, np.inf, 500, 14)
+        for tt in TS:
+            v.curve("t", *T.pq("I", np.full_like(out, tt), out))
+        edges(v, rh)
+        for r, text in named:
+            label_on(v, T.pq("I", 0.0, r), text)
+        v.legend("cover", f"the region that $t$ and $r > {rh}$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("t", f"$ct$ constant, in units of ${rh}$")
+        v.slice(*mark)
+        return v
+
+    five = moment_of(T5, "across", "static")
+    views = [static("static", "Schwarzschild", "static", T5, five, ((1.5, "$1.5\\,r_s$"), (3, "$3\\,r_s$")), "r_s")]
+
+    rr = spread(0, np.inf, 600, 14)
+    v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
+    v.fill("region", hexagon)
+    v.fill("cover", both)
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    for w in (-6, -4, -2, 0, 2, 4, 6):
+        v.curve("null", *ingoing(np.full_like(rr, w), rr))
+    edges(v, "r_s")
+    v.legend("cover", "the region that $v$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$v$ constant, an ingoing light ray")
+    v.slice(*five)
+    views.append(v)
+
+    v = View("kerr_schild", "Kerr-Schild", box, "kerr_schild")
+    v.fill("region", hexagon)
+    v.fill("cover", both)
+    for r in R_OUT + R_IN:
+        v.curve("r", *kerr_schild(t, np.full_like(t, r)))
+    for T0 in TS:
+        v.curve("t", *kerr_schild(np.full_like(rr, T0), rr))
+    edges(v, "r_s")
+    v.legend("cover", "the region that $T$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("t", "$cT$ constant, in units of $r_s$")
+    v.slice(*five)
+    views.append(v)
+
+    views.append(static("six", "Schwarzschild, six dimensions", "static_six", T6, moment_of(T6, "six", "static_six"),
+                        ((1.25, "$1.25\\,r_h$"), (2, "$2\\,r_h$")), "r_h"))
+    return views
+
+
 def global_monopole(ck, src):
     """Letelier's black hole in a cloud of strings at Delta = 0.19 and r_s = 1, and the monopole
     with no mass at its centre in the Barriola-Vilenkin chart.
@@ -9890,7 +10052,7 @@ DRAWN = {
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "bardeen": bardeen,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
-    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
+    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "interior_schwarzschild": interior_schwarzschild, "frw": frw,
@@ -10393,6 +10555,39 @@ CAPTIONS = {
         "The diagram has the regions of Schwarzschild's, as it does in every dimension $D \\ge 4$, since the plane "
         "of $t$ and $r$ has one horizon with nonzero surface gravity and a spacelike singularity at $r = 0$. The "
         "coordinates $t$ and $r > r_h$ cover the right exterior alone.",
+    ],
+    ("black_string", "static"): [
+        "The black string, maximally extended, each point in the diagram a 2-sphere of radius $r$ times the line "
+        "of $z$. On the plane of $t$ and $r$ the metric is Schwarzschild's, so the Kruskal coordinates "
+        "$U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$, with $u, v = ct \\mp r_*$ and $r_* = r + r_s\\ln|r/r_s - 1|$, make "
+        "it regular through $r = r_s$, where $UV = (1 - r/r_s)e^{r/r_s}$ vanishes. With $p = \\arctan U$ and "
+        "$q = \\arctan V$ the singularity $UV = 1$ lies on the straight lines $T = \\pm\\pi/2$.",
+        "The coordinates $t$ and $r > r_s$ cover the right exterior alone. The horizon is the pair of null lines "
+        "$U = 0$ and $V = 0$, each point of them a sphere of radius $r_s$ times the line, and the singularity "
+        "$r = 0$ is spacelike and runs the length of the string. Gregory and Laflamme set their perturbation on "
+        "a surface that ends on the future horizon, $U = 0$, clear of the point where the two lines cross.",
+    ],
+    ("black_string", "ingoing"): [
+        "The whole black string with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ on it, each point "
+        "in the diagram a 2-sphere of radius $r$ times the line of $z$. From $V = e^{v/2r_s}$ and "
+        "$U = (1 - r/r_s)e^{r/r_s}/V$, one formula for every $r > 0$, they cover the exterior and the black hole "
+        "together, and their lines of constant $v$ are ingoing light rays, which cross the horizon at 45° and end "
+        "at $r = 0$.",
+    ],
+    ("black_string", "kerr_schild"): [
+        "The whole black string with the Kerr-Schild coordinates $T$ and $r$ on it, each point in the diagram a "
+        "2-sphere of radius $r$ times the line of $z$. With $v = cT + r$ they cover the exterior and the black "
+        "hole, as the ingoing Eddington-Finkelstein coordinates do. Each surface of constant $T$ is spacelike: "
+        "it leaves $i^0$, crosses the future horizon, and ends at $r = 0$.",
+    ],
+    ("black_string", "six"): [
+        "The black string in six dimensions, maximally extended, each point in the diagram a 3-sphere of radius "
+        "$r$ times the line of $z$. The plane of $t$ and $r$ is that of the Schwarzschild-Tangherlini black hole "
+        "of five dimensions, with Kruskal coordinates $U = -e^{-u/r_h}$ and $V = e^{v/r_h}$, $u, v = ct \\mp r_*$, "
+        "$r_* = r + \\tfrac{1}{2}r_h\\ln|(r - r_h)/(r + r_h)|$, and $UV = e^{2r/r_h}(r_h - r)/(r_h + r)$. With "
+        "$p = \\arctan U$ and $q = \\arctan V$ the singularity $UV = 1$ lies on the straight lines "
+        "$T = \\pm\\pi/2$.",
+        "The coordinates $t$ and $r > r_h$ cover the right exterior alone.",
     ],
     ("global_monopole", "static"): [
         "Letelier's black hole in a cloud of strings, maximally extended ($\\Delta = 0.19$), each point in the "

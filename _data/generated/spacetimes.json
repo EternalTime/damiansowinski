@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 74,
+  "count": 75,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -2402,6 +2402,379 @@
           ],
           "ricci_scalar": "R = 2\\left(\\dfrac{a_1''}{a_1} + \\dfrac{a_2''}{a_2} + \\dfrac{a_3''}{a_3} + \\dfrac{a_1'\\,a_2'}{a_1\\,a_2} + \\dfrac{a_1'\\,a_3'}{a_1\\,a_3} + \\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)",
           "kretschmann": "K = 4\\left(\\left(\\dfrac{a_1''}{a_1}\\right)^2 + \\left(\\dfrac{a_2''}{a_2}\\right)^2 + \\left(\\dfrac{a_3''}{a_3}\\right)^2 + \\left(\\dfrac{a_1'\\,a_2'}{a_1\\,a_2}\\right)^2 + \\left(\\dfrac{a_1'\\,a_3'}{a_1\\,a_3}\\right)^2 + \\left(\\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "black_string",
+      "name": "Black String",
+      "short_name": "Black String",
+      "description": "Schwarzschild's black hole extended along one more direction of space, a static vacuum solution of gravity in five or more dimensions whose horizon is a cylinder. Ruth Gregory and Raymond Laflamme showed in 1993 that ripples along it longer than about seven horizon radii grow, and numerical evolutions of that instability end in a naked singularity.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "static",
+        "stationary",
+        "black string",
+        "black brane",
+        "p-brane",
+        "Gregory-Laflamme",
+        "Gregory-Laflamme instability",
+        "instability",
+        "Rayleigh-Plateau",
+        "black hole",
+        "horizon",
+        "event horizon",
+        "cylindrical horizon",
+        "singularity",
+        "curvature singularity",
+        "naked singularity",
+        "cosmic censorship",
+        "higher dimensions",
+        "extra dimensions",
+        "five-dimensional",
+        "six-dimensional",
+        "Kaluza-Klein",
+        "compact dimension",
+        "string theory",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "The horizon radius is fixed by the string's mass per unit length, $M/L$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The black string is Schwarzschild's black hole at every point of a line. Every slice of constant $z$ is Schwarzschild's spacetime [gregory2012]."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "family",
+          "text": "The other way to carry Schwarzschild's black hole into five dimensions, with a round horizon, a 3-sphere. It has more entropy than a long enough piece of string of the same mass [gregorylaflamme1993]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Another vacuum solution of five dimensions with one direction rolled into a circle. Seen from four dimensions the string is Schwarzschild's black hole and the monopole is a magnetic charge [gregory2012, grossperry1983]."
+        }
+      ],
+      "references": [
+        "gregory2012",
+        "horowitz1991",
+        "gregory1988",
+        "gregorylaflamme1993",
+        "gregory1994",
+        "gubser2002",
+        "lehner2010",
+        "cardoso2006",
+        "eggers1997",
+        "penrose1969",
+        "horowitz2001",
+        "wiseman2003",
+        "choptuik2003",
+        "marolf2005",
+        "emparan2003",
+        "figueras2016",
+        "figueras2023",
+        "grossperry1983"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Schwarzschild",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/(c^2L)$ for a length $L$ of string of mass $M$, with $G$ Newton's constant in five dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi, z)$, Schwarzschild's with the length $z$ along the string added, and $t$ carrying dimensions of time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = r_s \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/(c^2L)$ for a length $L$ of string of mass $M$, with $G$ Newton's constant in five dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi, z)$, with the advanced time $v = ct + r + r_s\\ln\\left|r/r_s - 1\\right|$ a length and $z$ the length along the string.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "kerr_schild",
+          "name": "Kerr-Schild",
+          "coordinates": [
+            "T",
+            "r",
+            "\\theta",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = r_s \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/(c^2L)$ for a length $L$ of string of mass $M$, with $G$ Newton's constant in five dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(T, r, \\theta, \\phi, z)$, with the time $T = (v - r)/c = t + (r_s/c)\\ln\\left|r/r_s - 1\\right|$ of the ingoing Eddington-Finkelstein chart carrying dimensions of time and $z$ the length along the string. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dT^2 + \\dfrac{2r_s}{r}c\\,dT\\,dr + \\left(1 + \\dfrac{r_s}{r}\\right)dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "T",
+                "r"
+              ],
+              "value": "\\dfrac{r_s}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "T"
+              ],
+              "value": "\\dfrac{r_s}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1 + \\dfrac{r_s}{r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "static_six",
+          "name": "Schwarzschild, Six Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_h, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_h",
+              "description": "Horizon radius, $r_h^2 = 8GM/(3\\pi c^2L)$ for a length $L$ of string of mass $M$, with $G$ Newton's constant in six dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\psi, \\theta, \\phi, z)$ in $D = 6$, the static chart of the Schwarzschild-Tangherlini black hole of five dimensions with the length $z$ along the string added, and $t$ carrying dimensions of time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_h^2}{r^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_h^2}{r^2}} + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right) + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_h^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_h^2}{r^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\psi\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{72r_h^4}{r^8}"
         }
       ]
     },
@@ -7362,6 +7735,11 @@
           "id": "tangherlini",
           "kind": "family",
           "text": "A second static vacuum solution of gravity in five dimensions. Its 3-spheres are round and surround a horizon, and the monopole's are squashed and close smoothly at the nut."
+        },
+        {
+          "id": "black_string",
+          "kind": "family",
+          "text": "Another vacuum solution of five dimensions with one direction rolled into a circle. Seen from four dimensions it is Schwarzschild's black hole, where the monopole is a magnetic charge [gregory2012]."
         }
       ],
       "references": [
@@ -7379,7 +7757,8 @@
         "gibbonsperry1984",
         "ruback1986",
         "bombelli1987",
-        "townsend1995"
+        "townsend1995",
+        "gregory2012"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -14699,6 +15078,11 @@
           "id": "fisher_jnw",
           "kind": "generalisation",
           "text": "Schwarzschild's mass with a massless scalar field around it. However weak the field, the horizon shrinks to a point of infinite curvature with nothing to hide it [fisher1948, janis1968]."
+        },
+        {
+          "id": "black_string",
+          "kind": "composite",
+          "text": "Schwarzschild's black hole with one more direction of space added, along which nothing changes, so that the horizon is a cylinder. Ripples along it longer than about seven horizon radii grow [gregorylaflamme1993]."
         }
       ],
       "references": [
@@ -14753,7 +15137,8 @@
         "ayonbeato2000",
         "hayward2006",
         "fisher1948",
-        "janis1968"
+        "janis1968",
+        "gregorylaflamme1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -15693,6 +16078,11 @@
           "id": "kaluza_klein_monopole",
           "kind": "family",
           "text": "A second static vacuum solution of gravity in five dimensions. It has no horizon, and its 3-spheres are squashed and close smoothly at the centre [grossperry1983]."
+        },
+        {
+          "id": "black_string",
+          "kind": "family",
+          "text": "Schwarzschild's black hole stretched along a line, the other black hole of five dimensions. A long enough piece of it has less entropy than Tangherlini's round hole of the same mass, and it is unstable [gregorylaflamme1993]."
         }
       ],
       "references": [

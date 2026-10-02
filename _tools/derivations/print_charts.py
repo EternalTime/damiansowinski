@@ -5,8 +5,8 @@ schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
-damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward and fisher_jnw, and
-Godel's cylindrical chart.
+damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw and
+black_string, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -6328,6 +6328,128 @@ def kerr_de_sitter_riemann(math, chart, forms):
 
 
 CHARTS["kerr_de_sitter"] = [lambda s=s: kerr_de_sitter(s) for s in KDS_CHARTS]
+
+
+# -- The black string ------------------------------------------------------------------
+
+BLACK_STRING_CHARTS = ["static", "eddington_finkelstein_ingoing", "kerr_schild", "static_six"]
+
+
+def black_string(system_id):
+    """The black string: Schwarzschild's black hole with the length z along the string added,
+    in Gregory and Laflamme's static chart, in their ingoing Eddington-Finkelstein chart, and in
+    the Kerr-Schild form of it that Choptuik and his collaborators start their evolutions from,
+    whose time T = (v - r)/c stays timelike across the horizon; and in six dimensions,
+    Tangherlini's black hole of five with z added. The static charts are checked to be
+    Schwarzschild's and Tangherlini's published metrics with dz^2 added, and the other two to be
+    the static chart pulled back. Every curvature component along z vanishes, so the Kretschmann
+    scalars are Schwarzschild's 12 r_s^2/r^6 and Tangherlini's 72 r_h^4/r^8. black_string.md
+    derives each chart."""
+    six = system_id == "static_six"
+    if six:
+        f, bare = "\\left(1 - \\dfrac{r_h^2}{r^2}\\right)", "1 - \\dfrac{r_h^2}{r^2}"
+        angles = ["\\psi", "\\theta", "\\phi"]
+        sphere = (" + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2"
+                  " + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right) + dz^2")
+        parameters, horizon = ["r_h"], "r_h"
+    else:
+        f, bare = "\\left(1 - \\dfrac{r_s}{r}\\right)", "1 - \\dfrac{r_s}{r}"
+        angles = ["\\theta", "\\phi"]
+        sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + dz^2"
+        parameters, horizon = ["r_s"], "r_s"
+    reals = " \\in (-\\infty, \\infty)"
+    domains = [a + " \\in [0, \\pi]" for a in angles[:-1]] + ["\\phi \\in [0, 2\\pi)", "z" + reals]
+    crossed = ["r = " + horizon + " \\;\\text{(the horizon)}"]
+    if system_id.startswith("static"):
+        coords = ["t", "r"] + angles + ["z"]
+        name = "Schwarzschild, Six Dimensions" if six else "Schwarzschild"
+        domains = ["t" + reals, "r \\in (" + horizon + ", \\infty)"] + domains
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        components = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                      "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}
+        check = black_string_product
+    elif system_id == "eddington_finkelstein_ingoing":
+        coords = ["v", "r"] + angles + ["z"]
+        name = "Ingoing Eddington-Finkelstein"
+        domains = ["v" + reals, "r \\in (0, \\infty)"] + domains + crossed
+        line = chart_line = "ds^2 = -" + f + "dv^2 + 2\\,dv\\,dr" + sphere
+        components = {"metric_components": {("v", "v"): "-" + f, ("v", "r"): "1", ("r", "v"): "1"},
+                      "inverse_metric_components": {("v", "r"): "1", ("r", "v"): "1", ("r", "r"): bare}}
+        check = black_string_pullback
+    else:
+        coords = ["T", "r"] + angles + ["z"]
+        name = "Kerr-Schild"
+        more = "\\left(1 + \\dfrac{r_s}{r}\\right)"
+        domains = ["T" + reals, "r \\in (0, \\infty)"] + domains + crossed
+        line = "ds^2 = -" + f + "c^2dT^2 + \\dfrac{2r_s}{r}c\\,dT\\,dr + " + more + "dr^2" + sphere
+        chart_line = "ds^2 = -" + f + "dT^2 + \\dfrac{2r_s}{r}dT\\,dr + " + more + "dr^2" + sphere
+        cross = "\\dfrac{r_s}{r}"
+        components = {"metric_components": {("T", "T"): "-" + f, ("T", "r"): cross, ("r", "T"): cross,
+                                            ("r", "r"): "1 + \\dfrac{r_s}{r}"},
+                      "inverse_metric_components": {("T", "T"): "-" + more, ("T", "r"): cross, ("r", "T"): cross,
+                                                    ("r", "r"): bare}}
+        check = black_string_pullback
+    probe = vm.Reader(coords, parameters, ())
+    r, rh = probe.symbol["r"], probe.parameters[horizon]
+    return {
+        "metric_id": "black_string",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"rising": [rh], "lead": [r, rh], "flip": False},
+        "components": components,
+        "kretschmann": "\\dfrac{72r_h^4}{r^8}" if six else "\\dfrac{12r_s^2}{r^6}",
+        "check": lambda chart, s=system_id: check(chart, s),
+        **({"rewrite": [("\\left(r + r_h\\right)\\left(r - r_h\\right)", "\\left(r^2 - r_h^2\\right)")]} if six else {}),
+    }
+
+
+def black_string_product(chart, system_id):
+    """The static chart is a black hole times a line: its components along z are those of dz^2,
+    nothing depends on z, and the rest is the published metric of Schwarzschild's black hole in
+    five dimensions and of Tangherlini's of five in six, slot by slot."""
+    n = len(chart.symbols) - 1
+    z = chart.symbols[n]
+    g = chart.geo.g
+    if g[n, n] != 1 or any(g[i, n] != 0 for i in range(n)) or g.has(z):
+        raise AssertionError(f"black_string: the {system_id} chart is not a product with the line of z")
+    source, system = ("tangherlini", "spherical") if system_id == "static_six" else ("schwarzschild", "spherical")
+    published = next(c for c in json.loads((METRICS / f"{source}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system)
+    if published["coords"] != chart.coords_tex[:n]:
+        raise AssertionError(f"black_string: {source}'s chart has other coordinates than the {system_id} chart")
+    there = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    for i in range(n):
+        for j in range(n):
+            text = there.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+            if vm.norm(chart.reader(text) - g[i, j]) != 0:
+                raise AssertionError(f"black_string: the {system_id} chart misses {source}'s published metric "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+def black_string_pullback(chart, system_id):
+    """J^T g J, with g the static chart and J the Jacobian of the map from `chart` into it, against
+    the metric of `chart` in every slot: ct = v - r_* for the advanced time, r_* = r + r_s ln|r/r_s - 1|,
+    and ct = cT - r_s ln|r/r_s - 1| for the Kerr-Schild time, so that c dt = dv - dr/f and
+    c dt = c dT - r_s dr/(r - r_s)."""
+    spec = black_string("static")
+    static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    r, rs = chart.symbols[1], chart.reader.parameters["r_s"]
+    slope = -r / (r - rs) if system_id == "eddington_finkelstein_ingoing" else -rs / (r - rs)
+    J = sp.eye(5)
+    J[0, 1] = slope
+    at = dict(zip(static.symbols[1:], chart.symbols[1:]))
+    at[static.reader.parameters["r_s"]] = rs
+    pulled = J.T * static.geo.g.subs(at) * J
+    for i in range(5):
+        for j in range(i, 5):
+            if vm.norm(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"black_string: the static chart pulled back misses the {system_id} chart "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["black_string"] = [lambda s=s: black_string(s) for s in BLACK_STRING_CHARTS]
 
 
 def write(spec):
