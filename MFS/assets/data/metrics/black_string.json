@@ -64,6 +64,11 @@
       "id": "black_saturn",
       "kind": "family",
       "text": "A black ring in orbit around a black hole. Where the ring is thin it is a black string bent into a circle, and it is expected to ripple as the string does [elvang2006, elvang2007]."
+    },
+    {
+      "id": "topological_star",
+      "kind": "generalisation",
+      "text": "The black string with a magnetic field through its spheres and a second radius $r_B$, where the circle shrinks to a point. Put $r_B$ outside the horizon and the horizon is gone: the string has become a star whose space ends on a bubble [bah2021]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "chamblin2000",
     "horowitz2012",
     "elvang2006",
-    "elvang2007"
+    "elvang2007",
+    "bah2021"
   ],
   "coordinates": [
     {

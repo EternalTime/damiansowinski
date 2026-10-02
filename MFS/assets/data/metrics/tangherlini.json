@@ -66,6 +66,11 @@
       "id": "black_saturn",
       "kind": "family",
       "text": "A black ring in balance around a spinning hole. With the two turning against each other it can match Tangherlini's hole in mass and in having no angular momentum, so in five dimensions those two numbers do not fix the black hole [elvang2007]."
+    },
+    {
+      "id": "topological_star",
+      "kind": "family",
+      "text": "A star with no horizon built from Tangherlini's black hole: give it a circle, exchange the circle with time, and hold the resulting bubble open with flux. With four large dimensions it is the topological star of five [bah2021]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "emparan2013",
     "grossperry1983",
     "boulware1985",
-    "elvang2007"
+    "elvang2007",
+    "bah2021"
   ],
   "coordinates": [
     {

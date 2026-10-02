@@ -438,6 +438,11 @@
       "id": "bowers_liang",
       "kind": "composite",
       "text": "A star of uniform density with unequal pressures, and Schwarzschild's vacuum outside it. Given enough pressure across the radius, its surface can lie at any radius outside $r_s$ [bowers1974]."
+    },
+    {
+      "id": "topological_star",
+      "kind": "dual",
+      "text": "A star of five dimensions with no horizon. Without its magnetic field it is Schwarzschild's metric with the time made into a circle, whose horizon has become a bubble where space ends [bah2021]."
     }
   ],
   "references": [
@@ -556,7 +561,8 @@
     "agnese1995",
     "bondi1962",
     "will2014",
-    "bowers1974"
+    "bowers1974",
+    "bah2021"
   ],
   "coordinates": [
     {

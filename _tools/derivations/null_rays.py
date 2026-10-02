@@ -1337,6 +1337,13 @@ TBH_CASES = (("flat", "$k = 0$", TBH_FLAT, (0, 3, -1.5, 1.5)),
 # 2 pi L in three, and z_0 = L^2/r_0 = L.
 SOLITON = {"r_0": 1, "L": 1}
 SOLITON_AT = {"tau": "0", "x": "0"}
+# The topological star as every one of its diagrams draws it, in units of r_B, at r_S = 3 r_B/4, where
+# the circle of the fifth dimension has the radius R_y = 2 sqrt(r_B^3/(r_B - r_S)) = 4 r_B; and its
+# black string with the two radii exchanged, as Bah and Heidmann's double Wick rotation exchanges
+# them, r_B = 3 r_S/4, in units of r_S.
+TS_STAR = {"r_S": "3/4", "r_B": 1}
+TS_STRING = {"r_S": 1, "r_B": "3/4"}
+TS_AT = {"theta": "pi/2", "phi": "0", "y": "0"}
 # Bardeen's regular black hole at g = r_s/3, below the extremal 2 r_s/(3 sqrt 3) = 0.385 r_s: two
 # horizons, r_- = 0.301 r_s and r_+ = 0.775 r_s, about a regular centre.
 BARDEEN = {"r_s": 1, "g": "1/3"}
@@ -2815,6 +2822,22 @@ DIAGRAMS = [
             "$r/L$", "$ct/L$", SOLITON, {**SOLITON_AT, "y": "0"}),
     Diagram("ads_soliton", "three_dimensional", "radial", "$t$ and $r$", ("t", "r"), (1, 4, -1.5, 1.5),
             "$r/L$", "$ct/L$", SOLITON, {"tau": "0"}),
+    # The star has no horizon, so its chart's t is a time everywhere. Space ends on the bubble
+    # r = r_B, the left edge of each plane of t and r, as the soliton's tip is of its planes.
+    # The chart about the bubble is drawn along the line through it. The black string and the
+    # extremal string are the same line element at r_S > r_B and at r_S = r_B.
+    Diagram("topological_star", "bah_heidmann", "radial", "$t$ and $r$", ("t", "r"), (1, 5, -2, 2),
+            "$r/r_B$", "$ct/r_B$", TS_STAR, TS_AT, areal=True),
+    Diagram("topological_star", "bubble", "through", "through the bubble", ("t", "\\rho"), (0, 4, -4, 4),
+            "$s$", "$ct/r_B$", TS_STAR, {"theta": "pi/2", "phi": "0", "psi": "0"}, mirror=True,
+            families=SIDEWAYS, cones=(4, 8)),
+    Diagram("topological_star", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0.75, 4.75, -2, 2), "$r/r_S$", "$(v - r)/r_S$", TS_STRING, TS_AT,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("topological_star", "extremal", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
+            "$\\rho/m$", "$ct/m$", {"m": 1}, TS_AT),
+    Diagram("topological_star", "einstein", "radial", "$t$ and $r$", ("t", "r"), (1, 5, -2, 2),
+            "$r/r_B$", "$ct/r_B$", TS_STAR, EQUATOR, areal=True),
     Diagram("global_monopole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", GM, EQUATOR, orient="ingoing", areal=True),
     Diagram("global_monopole", "conical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
@@ -6284,6 +6307,54 @@ CAPTIONS = {
         "Beyond $z_h$, $z$ is the time. We take the future toward larger $z$, which makes that region the "
         "black hole. The Kretschmann scalar $(12/L^4)(2 + z^6/z_h^6)$ is finite at $z_h$ and grows without "
         "bound as $z \\to \\infty$.",
+    ],
+    ("topological_star", "bah_heidmann", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $y = 0$) of the star ($r_S = 3r_B/4$), each "
+        "point in the plane a 2-sphere of area $4\\pi r^2$ at one point of the circle $y$. Space ends on the "
+        "bubble $r = r_B$, the left edge, where the circle has shrunk to a point and the rays, "
+        "$c\\,dt/dr = \\pm(1 - r_S/r)^{-1}(1 - r_B/r)^{-1/2}$, stand vertical. A ray that reaches the bubble "
+        "passes through it and leaves along the opposite side of the circle, $y = \\pi R_y$, so on this plane it "
+        "turns back.",
+        "Light from the bubble reaches $r = 2r_B$ at $ct = 5.92\\,r_B$, and a clock at rest on the bubble runs at "
+        "the rate $\\sqrt{1 - r_S/r_B} = 1/2$ of a clock far away. The Kretschmann scalar is greatest on the "
+        "bubble, $4.55/r_B^4$. The radius $r_S$, where a black string has its horizon, lies inside the bubble, "
+        "at no point of the spacetime.",
+    ],
+    ("topological_star", "bubble", "through"): [
+        "The line through the bubble ($\\theta = \\pi/2$, $\\phi = 0$) of the star ($r_S = 3r_B/4$), drawn "
+        "against the signed coordinate $s$: $s = \\rho$ on the right is $\\psi = 0$ and $s = -\\rho$ on the left "
+        "is $\\psi = \\pi$, the opposite side of the circle of the fifth dimension. Rays cross the bubble "
+        "smoothly, since $\\rho = 0$ is the origin of a plane in polar coordinates.",
+        "On the bubble a distance $r_B\\,d\\rho$ takes light the time $c\\,dt = 2r_B\\,d\\rho$, twice what it "
+        "takes far away, since clocks at rest there run at half the rate. A ray crosses from $\\rho = 4$ on one "
+        "side, where $r = 2r_B$, to $\\rho = 4$ on the other in $ct = 11.84\\,r_B$.",
+    ],
+    ("topological_star", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $y = 0$) of the black string "
+        "($r_B = 3r_S/4$), drawn with $v - r$ as the vertical axis, each point in the plane a 2-sphere of area "
+        "$4\\pi r^2$ at one point of the circle $y$. The ingoing rays are $v = $ const, and the outgoing family "
+        "has $dv/dr = 2(1 - r_S/r)^{-1}(1 - r_B/r)^{-1/2}$, so it stands vertical at the horizon $r_S$.",
+        "Inside the horizon both edges of every future cone point to smaller $r$, and every future directed "
+        "ray on this plane ends on the bubble $r = r_B$, the left edge, where the circle $y$ shrinks to a point and the "
+        "Kretschmann scalar is finite, $22.5/r_S^4$. Near the bubble the plane of $r$ and $y$ is a cone of flat "
+        "spacetime closing on its tip, Milne's universe of two dimensions run toward its beginning.",
+    ],
+    ("topological_star", "extremal", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$, $y = 0$) of the extremal string, each "
+        "point in the plane a 2-sphere of area $4\\pi(\\rho + m)^2$ at one point of the circle $y$. The rays, "
+        "$c\\,dt/d\\rho = \\pm(1 + m/\\rho)^{3/2}$, run at 45° far away and steepen without limit toward the left "
+        "edge $\\rho = 0$, the degenerate horizon, where $g_{tt}$ and $g_{yy}$ both vanish.",
+        "An ingoing ray reaches the horizon only as $t \\to \\infty$. Near $\\rho = 0$ the geometry is anti-de "
+        "Sitter space of three dimensions, of radius $2m$, times a sphere of radius $m$.",
+    ],
+    ("topological_star", "einstein", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the metric of four dimensions the star "
+        "reduces to ($r_S = 3r_B/4$), each point in the plane a 2-sphere of area $4\\pi r^{3/2}\\sqrt{r - r_B}$. "
+        "The rays are those of the star's own plane of $t$ and $r$, since on it the two metrics differ by the "
+        "factor $\\sqrt{1 - r_B/r}$ alone.",
+        "The spheres shrink to a point at the left edge $r = r_B$, where the Kretschmann scalar grows as $(r - r_B)^{-3}$ "
+        "and the scalar field $\\Phi = -\\tfrac{1}{4}\\ln(1 - r_B/r)$ grows without limit. Seen without its "
+        "fifth dimension, the smooth bubble is a naked singularity.",
     ],
     ("ads_soliton", "horowitz_myers", "radial"): [
         "The plane of $t$ and $r$ ($\\tau = 0$, $x = 0$) of the soliton ($r_0 = L$), the same at every $\\tau$ "
@@ -13683,6 +13754,27 @@ def _soliton_closed():
     return forms
 
 
+def _topological_star_closed():
+    """The closed forms of every view of the topological star: c t -+ r_* with Bah and Heidmann's
+    tortoise coordinate, slices.topological_star_rstar, at r = r_B + (r_B - r_S) rho^2/4 on the line
+    through the bubble; v and v - 2 r_* in the black string's ingoing chart; and c t -+ rho_* in the
+    extremal string's isotropic radius."""
+    star = lambda r: slices.topological_star_rstar(r, 0.75, 1.0)
+    string = lambda r: slices.topological_star_rstar(r, 1.0, 0.75)
+    plane = (lambda t, r: t + star(r), lambda t, r: t - star(r), _away(1.0))
+    return {
+        ("topological_star", "bah_heidmann", "radial"): plane,
+        ("topological_star", "einstein", "radial"): plane,
+        ("topological_star", "bubble", "through"):
+            (lambda t, x: t + star(1 + x ** 2 / 16), lambda t, x: t - star(1 + x ** 2 / 16), None),
+        ("topological_star", "eddington_finkelstein_ingoing", "finkelstein"):
+            (lambda v, r: v, lambda v, r: v - 2 * string(r), _away(1.0, 0.75)),
+        ("topological_star", "extremal", "radial"):
+            (lambda t, x: t + slices.extremal_string_rstar(x), lambda t, x: t - slices.extremal_string_rstar(x),
+             _away(0.0)),
+    }
+
+
 def _sds_away(x, r):
     return (np.abs(r - 1.0852) > 0.05) & (np.abs(r - 3.2146) > 0.05)
 
@@ -14039,6 +14131,7 @@ CLOSED_FORMS = {
         (lambda u, r: u + 2 * _hayward_rstar(r), lambda u, r: u, _hayward_away),
     **_tbh_closed(),
     **_soliton_closed(),
+    **_topological_star_closed(),
     ("reissner_nordstrom_ads", "static", "radial"):
         (lambda t, r: t + slices.rnads_rstar(r), lambda t, r: t - slices.rnads_rstar(r), _rnads_away),
     ("reissner_nordstrom_ads", "eddington_finkelstein_ingoing", "finkelstein"):

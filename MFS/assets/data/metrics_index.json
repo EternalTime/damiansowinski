@@ -134,7 +134,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "be2b89a830b33d32",
+    "version": "112fbefa05cab5af",
     "diagrams": "f8d136f5ed61d7d1",
     "conformal": "be0bf05b08f0c825",
     "embedding": "819ee1c2da820b20"
@@ -422,7 +422,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "16426bca90bb5db6",
+    "version": "783ea8e2004210db",
     "diagrams": "54fe7a1cf641db39",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "6f1faae1e35e650b"
@@ -2140,7 +2140,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "ae80a83e8da71813",
+    "version": "a3e16e65a3da6e9a",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -2944,7 +2944,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "d3a68abee9a8faa9",
+    "version": "81af41fbebb53697",
     "diagrams": "434dbc69f632abef",
     "conformal": "608160b20d1a5d0b",
     "embedding": "6358a5e6f5a871e8"
@@ -3717,7 +3717,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "882103aad9655f69",
+    "version": "0781f3bced9a809b",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -3987,7 +3987,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "99bbebfc612328f9",
+    "version": "3b6453c59f4826c0",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -4111,7 +4111,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "ce34ccc282263bf1",
+    "version": "27cac766a1f57a1c",
     "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
@@ -4620,6 +4620,55 @@
     "diagrams": "70598c77af726b80",
     "conformal": "243a2de40edb7f43",
     "embedding": "930f06c7003fad35"
+  },
+  {
+    "id": "topological_star",
+    "name": "Topological Star",
+    "tags": [
+      "static",
+      "stationary",
+      "five-dimensional",
+      "four-dimensional",
+      "soliton",
+      "no horizon",
+      "regular",
+      "black hole mimicker",
+      "microstate geometry",
+      "fuzzball",
+      "bubble",
+      "bolt",
+      "cigar",
+      "topology",
+      "magnetic charge",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "Kaluza-Klein",
+      "compact dimension",
+      "higher dimensions",
+      "black string",
+      "horizon",
+      "event horizon",
+      "extremal",
+      "orbifold",
+      "dilaton",
+      "Einstein-Maxwell-dilaton",
+      "naked singularity",
+      "photon sphere",
+      "quasinormal modes",
+      "echoes",
+      "Gregory-Laflamme instability",
+      "instability",
+      "string theory",
+      "mass",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "dd9377ce9791df20",
+    "diagrams": "56374ab8866166ca",
+    "conformal": "21c461f09f96be29",
+    "embedding": "30db83ef9fd21560"
   },
   {
     "id": "vaidya",

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 157,
+  "count": 158,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1731,6 +1731,11 @@
           "id": "schwarzschild_ads",
           "kind": "family",
           "text": "The round black hole of anti-de Sitter space, which trades places with anti-de Sitter space in Hawking and Page's phase transition. The flat black hole does the same with the soliton [hawking1983, surya2001]."
+        },
+        {
+          "id": "topological_star",
+          "kind": "family",
+          "text": "The same exchange of time and a circle in flat space of five dimensions, where the bubble needs magnetic flux to give it mass and hold it open [bah2021]."
         }
       ],
       "references": [
@@ -1751,7 +1756,8 @@
         "brendle2024",
         "surya2001",
         "nishioka2010",
-        "hawking1983"
+        "hawking1983",
+        "bah2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ads_soliton.json",
@@ -4975,6 +4981,11 @@
           "id": "black_saturn",
           "kind": "family",
           "text": "A black ring in orbit around a black hole. Where the ring is thin it is a black string bent into a circle, and it is expected to ripple as the string does [elvang2006, elvang2007]."
+        },
+        {
+          "id": "topological_star",
+          "kind": "generalisation",
+          "text": "The black string with a magnetic field through its spheres and a second radius $r_B$, where the circle shrinks to a point. Put $r_B$ outside the horizon and the horizon is gone: the string has become a star whose space ends on a bubble [bah2021]."
         }
       ],
       "references": [
@@ -4999,7 +5010,8 @@
         "chamblin2000",
         "horowitz2012",
         "elvang2006",
-        "elvang2007"
+        "elvang2007",
+        "bah2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
@@ -22678,6 +22690,11 @@
           "id": "cremmer_scherk",
           "kind": "family",
           "text": "Two extra dimensions rolled into a sphere that a monopole's gauge field holds at one radius, where the Kaluza-Klein monopole has one extra dimension, a circle, and no matter [horvath1977]."
+        },
+        {
+          "id": "topological_star",
+          "kind": "family",
+          "text": "A star held open by magnetic flux in the same five dimensions, whose circle shrinks to a point all over a sphere, the bubble. When the bubble's tip is a cone, its two poles carry monopole charges $k$ and $-k$ [bah2021]."
         }
       ],
       "references": [
@@ -22703,7 +22720,8 @@
         "gibbonshawking1979",
         "eguchihanson1979",
         "emparan2000",
-        "horvath1977"
+        "horvath1977",
+        "bah2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -31188,6 +31206,11 @@
           "id": "tilted_universes",
           "kind": "generalisation",
           "text": "Milne's universe with its particles aimed to miss the origin. Straight world lines that each pass one event at the distance $C$ fill a part of flat spacetime with a Cauchy horizon in it, Ellis and King's picture of the whimper [ellis1974]."
+        },
+        {
+          "id": "topological_star",
+          "kind": "family",
+          "text": "Inside Bah and Heidmann's black string, next to the bubble that ends it, the plane of $r$ and the circle is Milne's universe of two dimensions, a cone of flat spacetime closing on its tip [bah2021]."
         }
       ],
       "references": [
@@ -31218,7 +31241,8 @@
         "benoitlevy2012",
         "coleman1980",
         "bucher1995",
-        "ellis1974"
+        "ellis1974",
+        "bah2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/milne.json",
@@ -40217,6 +40241,11 @@
           "id": "bonnor_charged_dust",
           "kind": "composite",
           "text": "A star of charged dust at rest, with the extremal field, $r_q = r_s/2$, outside it. Its surface can lie as near the horizon as one likes, and the redshift of its centre is then as large as one likes [bonnor1975]."
+        },
+        {
+          "id": "topological_star",
+          "kind": "family",
+          "text": "A star from five dimensions with a mass, a magnetic charge, and no horizon. For some masses and charges the star, its black string, and Reissner and Nordström's black hole all exist, and the star is the widest of the three [bah2021]."
         }
       ],
       "references": [
@@ -40261,7 +40290,8 @@
         "gibbonsrasheed1995",
         "arnowitt1960",
         "krasinski2012",
-        "bonnor1975"
+        "bonnor1975",
+        "bah2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -42934,6 +42964,11 @@
           "id": "bowers_liang",
           "kind": "composite",
           "text": "A star of uniform density with unequal pressures, and Schwarzschild's vacuum outside it. Given enough pressure across the radius, its surface can lie at any radius outside $r_s$ [bowers1974]."
+        },
+        {
+          "id": "topological_star",
+          "kind": "dual",
+          "text": "A star of five dimensions with no horizon. Without its magnetic field it is Schwarzschild's metric with the time made into a circle, whose horizon has become a bubble where space ends [bah2021]."
         }
       ],
       "references": [
@@ -43052,7 +43087,8 @@
         "agnese1995",
         "bondi1962",
         "will2014",
-        "bowers1974"
+        "bowers1974",
+        "bah2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -44093,6 +44129,11 @@
           "id": "black_saturn",
           "kind": "family",
           "text": "A black ring in balance around a spinning hole. With the two turning against each other it can match Tangherlini's hole in mass and in having no angular momentum, so in five dimensions those two numbers do not fix the black hole [elvang2007]."
+        },
+        {
+          "id": "topological_star",
+          "kind": "family",
+          "text": "A star with no horizon built from Tangherlini's black hole: give it a circle, exchange the circle with time, and hold the resulting bubble open with flux. With four large dimensions it is the topological star of five [bah2021]."
         }
       ],
       "references": [
@@ -44116,7 +44157,8 @@
         "emparan2013",
         "grossperry1983",
         "boulware1985",
-        "elvang2007"
+        "elvang2007",
+        "bah2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tangherlini.json",
@@ -49832,6 +49874,463 @@
           ],
           "ricci_scalar": "R = -\\dfrac{12}{L^2}",
           "kretschmann": "K = \\dfrac{12\\mu^2}{r^6} + \\dfrac{24}{L^4}"
+        }
+      ]
+    },
+    {
+      "id": "topological_star",
+      "name": "Topological Star",
+      "short_name": "Topological Star",
+      "description": "A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2020 as the simplest topological star, on a line element that also describes a black string with the same bubble behind its horizon.",
+      "tags": [
+        "static",
+        "stationary",
+        "five-dimensional",
+        "four-dimensional",
+        "soliton",
+        "no horizon",
+        "regular",
+        "black hole mimicker",
+        "microstate geometry",
+        "fuzzball",
+        "bubble",
+        "bolt",
+        "cigar",
+        "topology",
+        "magnetic charge",
+        "electromagnetic field",
+        "Einstein-Maxwell",
+        "Kaluza-Klein",
+        "compact dimension",
+        "higher dimensions",
+        "black string",
+        "horizon",
+        "event horizon",
+        "extremal",
+        "orbifold",
+        "dilaton",
+        "Einstein-Maxwell-dilaton",
+        "naked singularity",
+        "photon sphere",
+        "quasinormal modes",
+        "echoes",
+        "Gregory-Laflamme instability",
+        "instability",
+        "string theory",
+        "mass",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "The radii $r_S$ and $r_B$ are lengths. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "black_string",
+          "kind": "special_case",
+          "text": "The star's line element with the bubble taken away. At $r_B = 0$ the circle keeps one size everywhere, and the line element is Schwarzschild's black hole at every point of it [bah2021]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "dual",
+          "text": "At $r_S = 0$ the star is a static bubble of nothing: Schwarzschild's metric with its time made into the circle $y$, and a new time added that feels no gravity [bah2021]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Kaluza and Klein's other smooth magnetic object, whose circle shrinks at a single point. When the tip of the star's bubble is a cone, its two poles carry monopole charges $k$ and $-k$ [bah2021]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The black hole of four dimensions with the same mass and magnetic charge, which Bah and Heidmann set beside the star for comparison. It is no solution of the star's own theory, whose reduction to four dimensions carries a scalar field as well [bah2021]."
+        },
+        {
+          "id": "milne",
+          "kind": "family",
+          "text": "Milne's universe in two dimensions, a wedge of flat spacetime with its points identified by a boost, is the shape of the black string's interior next to its bubble [bah2021]."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "family",
+          "text": "Schwarzschild's black hole in more dimensions. Bah and Heidmann build stars in $D + 1$ dimensions by giving Tangherlini's black hole a circle and exchanging that circle with time [bah2021, tangherlini1963]."
+        },
+        {
+          "id": "ads_soliton",
+          "kind": "family",
+          "text": "The same exchange of time and a circle done in anti-de Sitter space, where it needs no flux: the planar black hole's horizon becomes a tip where the circle closes [horowitz1998]."
+        }
+      ],
+      "references": [
+        "bah2021",
+        "mathur2005",
+        "gibbons2014",
+        "bena2013",
+        "witten1982kk",
+        "stotyn2011",
+        "miyamoto2006",
+        "horowitz1991",
+        "bah2021weyl",
+        "bah2022solitons",
+        "bah2022stability",
+        "gregorylaflamme1993",
+        "heidmann2023",
+        "dima2024",
+        "tangherlini1963",
+        "horowitz1998"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_star.json",
+      "charts": [
+        {
+          "id": "bah_heidmann",
+          "name": "Bah-Heidmann",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_B, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "y \\in \\left[0, 4\\pi\\sqrt{r_B^3/(r_B - r_S)}\\right)",
+            "r = r_B \\;\\text{(the bubble, where the circle } y \\text{ shrinks to a point)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_S",
+              "description": "Radius at which the horizon of a black string would stand, a length, here inside the bubble; the mass seen from four dimensions is $M = c^2(2r_S + r_B)/(4G)$, with $G$ Newton's constant there"
+            },
+            {
+              "symbol": "r_B",
+              "description": "Radius of the bubble, a length, where the circle $y$ shrinks to a point; the square of the magnetic charge is proportional to $r_Sr_B$"
+            }
+          ],
+          "convention": "We use Bah and Heidmann's coordinates $(t, r, \\theta, \\phi, y)$, with $t$ carrying dimensions of time and $y$ a length around the circle of the fifth dimension, and take components in the chart $x^0 = ct$. The circle has period $2\\pi R_y$ with $R_y = 2\\sqrt{r_B^3/(r_B - r_S)}$, which makes the bubble $r = r_B$ a regular point.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_S}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{\\left(1 - \\dfrac{r_S}{r}\\right)\\left(1 - \\dfrac{r_B}{r}\\right)} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\left(1 - \\dfrac{r_B}{r}\\right)dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_S}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_S}{r}\\right)^{-1}\\left(1 - \\dfrac{r_B}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1 - \\dfrac{r_B}{r}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{r_S\\,r_B}{2r^4}",
+          "kretschmann": "K = \\dfrac{48r^2\\left(r_S^2 + r_S\\,r_B + r_B^2\\right) - 120r\\,r_S\\,r_B\\left(r_S + r_B\\right) + 115r_S^2\\,r_B^2}{4r^8}"
+        },
+        {
+          "id": "bubble",
+          "name": "About the Bubble",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 2\\pi)",
+            "\\rho = 0 \\;\\text{(the bubble, the origin of the plane of } \\rho \\text{ and } \\psi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_S",
+              "description": "Radius at which the horizon of a black string would stand, a length, here inside the bubble; the mass seen from four dimensions is $M = c^2(2r_S + r_B)/(4G)$, with $G$ Newton's constant there"
+            },
+            {
+              "symbol": "r_B",
+              "description": "Radius of the bubble, a length, where the circle $\\psi$ shrinks to a point; the square of the magnetic charge is proportional to $r_Sr_B$"
+            },
+            {
+              "symbol": "r = r_B + \\tfrac{1}{4}\\left(r_B - r_S\\right)\\rho^2",
+              "description": "Bah and Heidmann's radius, a length, the areal radius of the spheres of $\\theta$ and $\\phi$"
+            }
+          ],
+          "convention": "We use $(t, \\rho, \\theta, \\phi, \\psi)$, with Bah and Heidmann's $\\rho = 2\\sqrt{(r - r_B)/(r_B - r_S)}$, a pure number that vanishes on the bubble, and the angle $\\psi = y/R_y$ around the circle of the fifth dimension, $R_y = 2\\sqrt{r_B^3/(r_B - r_S)}$. Here $t$ carries dimensions of time, and we take components in the chart $x^0 = ct$.",
+          "line_element": "ds^2 = -\\dfrac{\\left(r_B - r_S\\right)\\left(4 + \\rho^2\\right)}{4r}c^2dt^2 + \\dfrac{4r^2}{4 + \\rho^2}d\\rho^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{r_B^3\\rho^2}{r}d\\psi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(r_B - r_S\\right)\\left(4 + \\rho^2\\right)}{4r}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{4r^2}{4 + \\rho^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{r_B^3\\rho^2}{r}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{r_S\\,r_B}{2r^4}",
+          "kretschmann": "K = \\dfrac{48r^2\\left(r_S^2 + r_S\\,r_B + r_B^2\\right) - 120r\\,r_S\\,r_B\\left(r_S + r_B\\right) + 115r_S^2\\,r_B^2}{4r^8}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Black String, Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (r_B, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "y \\in [0, 2\\pi R_y)",
+            "r = r_S \\;\\text{(the horizon)}",
+            "r = r_B \\;\\text{(the bubble, where the circle } y \\text{ shrinks to a point)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_S",
+              "description": "Radius of the horizon of the black string, a length, here outside the bubble; the mass seen from four dimensions is $M = c^2(2r_S + r_B)/(4G)$, with $G$ Newton's constant there"
+            },
+            {
+              "symbol": "r_B",
+              "description": "Radius of the bubble, a length, where the circle $y$ shrinks to a point behind the horizon; the square of the magnetic charge is proportional to $r_Sr_B$"
+            }
+          ],
+          "convention": "We use $(v, r, \\theta, \\phi, y)$ for the black string, $r_S > r_B$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = (1 - r_S/r)^{-1}(1 - r_B/r)^{-1/2}$. The circle $y$ has period $2\\pi R_y$ for any length $R_y$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_S}{r}\\right)dv^2 + 2\\sqrt{\\dfrac{r}{r - r_B}}\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\left(1 - \\dfrac{r_B}{r}\\right)dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_S}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "\\sqrt{\\dfrac{r}{r - r_B}}"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "\\sqrt{\\dfrac{r}{r - r_B}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1 - \\dfrac{r_B}{r}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{r_S\\,r_B}{2r^4}",
+          "kretschmann": "K = \\dfrac{48r^2\\left(r_S^2 + r_S\\,r_B + r_B^2\\right) - 120r\\,r_S\\,r_B\\left(r_S + r_B\\right) + 115r_S^2\\,r_B^2}{4r^8}"
+        },
+        {
+          "id": "extremal",
+          "name": "Extremal, Isotropic",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "y \\in [0, 2\\pi R_y)",
+            "\\rho = 0 \\;\\text{(the degenerate horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "The common value of $r_S$ and $r_B$, a length; the mass seen from four dimensions is $M = 3c^2m/(4G)$, with $G$ Newton's constant there"
+            }
+          ],
+          "convention": "We use Bah and Heidmann's isotropic coordinates $(t, \\rho, \\theta, \\phi, y)$ for the extremal black string, $r_S = r_B = m$, with $\\rho = r - m$ a length and $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. The circle $y$ has period $2\\pi R_y$ for any length $R_y$.",
+          "line_element": "ds^2 = \\left(1 + \\dfrac{m}{\\rho}\\right)^{-1}\\left(-c^2dt^2 + dy^2\\right) + \\left(1 + \\dfrac{m}{\\rho}\\right)^2\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 + \\dfrac{m}{\\rho}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\left(1 + \\dfrac{m}{\\rho}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\left(1 + \\dfrac{m}{\\rho}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(\\rho + m\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(\\rho + m\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{m^2}{2\\left(\\rho + m\\right)^4}",
+          "kretschmann": "K = \\dfrac{m^2\\left(144\\rho^2 + 48\\rho\\,m + 19m^2\\right)}{4\\left(\\rho + m\\right)^8}"
+        },
+        {
+          "id": "einstein",
+          "name": "Einstein Metric, Four Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_B, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_B \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_S",
+              "description": "Radius at which the horizon of a black string would stand, a length; the mass is $M = c^2(2r_S + r_B)/(4G)$"
+            },
+            {
+              "symbol": "r_B",
+              "description": "Radius of the bubble of five dimensions, a length; the square of the magnetic charge is proportional to $r_Sr_B$"
+            }
+          ],
+          "convention": "We use $(t, r, \\theta, \\phi)$, Bah and Heidmann's coordinates without the circle, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. The metric is the Einstein metric of four dimensions, the metric of five on a surface of constant $y$ multiplied by $\\sqrt{1 - r_B/r}$.",
+          "line_element": "ds^2 = \\sqrt{1 - \\dfrac{r_B}{r}}\\left(-\\left(1 - \\dfrac{r_S}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{\\left(1 - \\dfrac{r_S}{r}\\right)\\left(1 - \\dfrac{r_B}{r}\\right)} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\sqrt{r - r_B}\\left(r - r_S\\right)}{r^{3/2}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^{3/2}}{\\sqrt{r - r_B}\\left(r - r_S\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^{3/2}\\sqrt{r - r_B}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^{3/2}\\sqrt{r - r_B}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3r_B^2\\left(r - r_S\\right)}{8r^{7/2}\\left(r - r_B\\right)^{3/2}}",
+          "kretschmann": "K = \\dfrac{768r^4\\,r_S^2 + 768r^4\\,r_S\\,r_B + 192r^4\\,r_B^2 - 3456r^3\\,r_S^2\\,r_B - 2496r^3\\,r_S\\,r_B^2 - 384r^3\\,r_B^3 + 6096r^2\\,r_S^2\\,r_B^2 + 2616r^2\\,r_S\\,r_B^3 + 207r^2\\,r_B^4 - 4824r\\,r_S^2\\,r_B^3 - 918r\\,r_S\\,r_B^4 + 1431r_S^2\\,r_B^4}{64r^7\\left(r - r_B\\right)^3}"
         }
       ]
     },

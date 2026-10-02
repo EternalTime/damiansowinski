@@ -5037,7 +5037,12 @@ class Slices(unittest.TestCase):
               "ads_soliton/five_dimensional/radial", "ads_soliton/three_dimensional/radial",
               # The plane 30 degrees from the string of Penrose's wave holds no event of the plane across it.
               "penrose_impulsive_wave/retarded/near",
-              "conformal ads_soliton/five_dimensional", "conformal ads_soliton/three_dimensional"}
+              "conformal ads_soliton/five_dimensional", "conformal ads_soliton/three_dimensional",
+              # The black string, the extremal string and the metric of four dimensions, other
+              # spacetimes than the topological star whose moment is embedded.
+              "topological_star/eddington_finkelstein_ingoing/finkelstein", "topological_star/extremal/radial",
+              "topological_star/einstein/radial", "conformal topological_star/black_string",
+              "conformal topological_star/extremal", "conformal topological_star/einstein"}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()
