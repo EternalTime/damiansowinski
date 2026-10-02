@@ -892,6 +892,25 @@ def _br(chart):
     return [Mark(equator, along(0.0, lo, hi)), Mark(sphere, points=[(0.0, 1.0)])]
 
 
+def _plebanski_hacyan(chart):
+    """Plebanski and Hacyan's moment t = 0 of the flat plane times a sphere: the equator along z from
+    -b to b, which the Rindler chart, ct = chi sinh(tau) and z = chi cosh(tau), covers only on
+    0 < chi < b of its moment tau = 0, and the sphere at the event z = b, chi = b. Anti-Nariai's
+    hyperbolic plane stands at the event tau = 0, chi = 1, which is t = 0, r = a cosh(1) of its
+    static chart."""
+    if chart in ("anti_nariai", "anti_nariai_static"):
+        static = chart == "anti_nariai_static"
+        label = "$t = 0$, $r = a\\cosh 1$" if static else "$\\tau = 0$, $\\chi = 1$"
+        sheet = moments("plebanski_hacyan", "hyperbolic_plane", label=label)[0]
+        return [Mark(sheet, points=[(0.0, math.cosh(1.0) if static else 1.0)])]
+    rindler = chart == "sphere_rindler"
+    equator = moments("plebanski_hacyan", "equator", label="$\\tau = 0$" if rindler else "$t = 0$")[0]
+    sphere = moments("plebanski_hacyan", "sphere",
+                     label="$\\tau = 0$, $\\chi = b$" if rindler else "$t = 0$, $z = b$")[0]
+    lo, hi = equator.reach("sphere", "z")
+    return [Mark(equator, along(0.0, 0.0 if rindler else lo, hi)), Mark(sphere, points=[(0.0, 1.0)])]
+
+
 def nhek_radius(y):
     """Bardeen and Horowitz's Poincare radius, in r_0, of the event at y on the moment tau = 0 of
     their global chart, where t = 0 too: r = sqrt(1 + y^2) + y."""
@@ -1877,6 +1896,10 @@ FLAT = {
     ("near_horizon_extreme_kerr", "global", "equator"): lambda: _nhek("global"),
     ("bertotti_robinson", "static", "radial"): lambda: _br("static"),
     ("bertotti_robinson", "poincare", "tx"): lambda: _br("poincare"),
+    ("plebanski_hacyan", "sphere", "tz"): lambda: _plebanski_hacyan("sphere"),
+    ("plebanski_hacyan", "sphere_rindler", "wedge"): lambda: _plebanski_hacyan("sphere_rindler"),
+    ("plebanski_hacyan", "anti_nariai", "wedge"): lambda: _plebanski_hacyan("anti_nariai"),
+    ("plebanski_hacyan", "anti_nariai_static", "radial"): lambda: _plebanski_hacyan("anti_nariai_static"),
     ("nariai", "static", "patch"): lambda: _nariai("static"),
     ("nariai", "global", "circle"): lambda: _nariai("global"),
     ("interior_schwarzschild", "spherical", "radial"): lambda: one("interior_schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
@@ -2122,6 +2145,12 @@ FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
 HIDDEN = {
+    ("plebanski_hacyan", "plane", "uw"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("plebanski_hacyan", "plane_null", "uv"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("plebanski_hacyan", "plane_static", "wedge"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("plebanski_hacyan", "plane"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("plebanski_hacyan", "plane_null"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("plebanski_hacyan", "plane_static"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",
     ("btz", "stationary", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",

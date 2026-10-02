@@ -84,6 +84,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "family",
       "text": "A pair of extremal black holes with opposite magnetic charges. Each of its poles opens into a throat, which is Bertotti and Robinson's universe once an outside field balances the pair [emparan2000]."
+    },
+    {
+      "id": "plebanski_hacyan",
+      "kind": "family",
+      "text": "The same uniform field with a cosmological constant, in the products where one factor is flat: a flat plane of time and space times a sphere, and anti-de Sitter space of two dimensions times a flat plane. In both the energy density of the field matches the cosmological constant [ortaggio2002direct]."
     }
   ],
   "references": [
@@ -109,7 +114,8 @@
     "griffiths1991",
     "romans1992",
     "breitenlohner1994",
-    "emparan2000"
+    "emparan2000",
+    "ortaggio2002direct"
   ],
   "coordinates": [
     {

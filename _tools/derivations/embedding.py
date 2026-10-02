@@ -6117,6 +6117,88 @@ def bertotti_robinson(ck, src):
     return views
 
 
+def plebanski_hacyan(ck, src):
+    """Plebanski and Hacyan's flat plane times a sphere of radius b = 1, and anti-Nariai's hyperbolic
+    plane of radius a = 1. The equator of the first at one moment is a line of the flat factor times a
+    great circle, dz^2 + b^2 dphi^2: rho = b and height z, a cylinder on which z is the distance
+    itself. Its sphere of theta and phi is the second view. Anti-Nariai's surface of theta and phi,
+    a^2(dtheta^2 + sinh^2 theta dphi^2), has circles that grow as cosh(theta), faster than the
+    distance out to them, so no surface of revolution in flat space carries it, which is checked;
+    in Minkowski space it is the sheet Z = a cosh(theta) - a of a hyperboloid, drawn to theta = 2
+    with the light cone it nears. The Lorentzian factors have no surface in flat space, and the
+    moment of anti-de Sitter space times the flat plane is itself a flat plane."""
+    name = "Plebanski-Hacyan"
+    sl = Slice(src, "plebanski_hacyan", "sphere", "z", "\\phi", {"t": 0, **EQUATOR}, {"b": 1})
+    size = 2.0
+    tube = Piece("cylinder", "sheet", sl, -1.0, 1.0, -1.0, 1,
+                 (("edge", "the cylinder runs on for ever toward $z \\to -\\infty$"),
+                  ("edge", "the cylinder runs on for ever toward $z \\to \\infty$")),
+                 [(k / 2, "r", None) for k in (-2, -1, 0, 1, 2)], size)
+    ck.isometry(f"{name}, the equator", tube)
+    ck.form(f"{name}, the cylinder at the height z", tube, lambda z: z, size)
+    ck.radius(f"{name}, the cylinder rho = b", tube, lambda z: np.ones_like(z), size)
+    equator = Surface([tube])
+    fig = figure_of([equator], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tube.at(0.0), "$z = 0$")
+    ring_label(fig, [0, 0, 0], *tube.at(1.0), "$b$")
+    ring_label(fig, [0, 0, 0], *tube.at(-1.0), "$-b$")
+    fig.legend("fill", "cover", "the equator at one moment, which $z$ and $\\phi$ cover")
+    fig.legend("line", "r", "$z$ constant, every $b/2$ from $-b$ to $b$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = "$b = 1$, the unit of every length."
+    views = [view("equator", "The equator", "$b$", [equator], fig.done(), settings=settings)]
+
+    sphere_slice = Slice(src, "plebanski_hacyan", "sphere", "\\theta", "\\phi", {"t": 0, "z": "1"}, {"b": 1})
+    ball = Piece("sphere", "sheet", sphere_slice, 0.0, math.pi, 0.0, 1,
+                 (("axis", "the pole $\\theta = 0$"), ("axis", "the pole $\\theta = \\pi$")),
+                 [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)], size)
+    ck.isometry(f"{name}, the sphere", ball)
+    ck.form(f"{name}, the sphere z = b(1 - cos theta)", ball, lambda c: 1 - np.cos(c), size)
+    ck.radius(f"{name}, the sphere rho = b sin theta", ball, np.sin, size)
+    sphere = Surface([ball])
+    fig = figure_of([sphere], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *ball.at(math.pi / 2), "$\\theta = \\pi/2$")
+    fig.legend("fill", "cover", "the sphere, which $\\theta$ and $\\phi$ cover but for its poles")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("sphere", "The sphere", "$b$", [sphere], fig.done(), settings=settings))
+
+    hz = Slice(src, "plebanski_hacyan", "anti_nariai", "\\theta", "\\phi", {"tau": 0, "chi": 1}, {"a": 1},
+               space="minkowski")
+    ck.stops(f"{name}, anti-Nariai's hyperbolic plane in flat space", hz, np.linspace(1e-3, 6, 400))
+    htop = 2.0
+    hsize = 2 * math.sinh(htop)
+    sheet = Piece("sheet", "sheet", hz, 0.0, htop, 0.0, 1,
+                  (("axis", "the point $\\theta = 0$"),
+                   ("edge", "the sheet runs on toward the light cone, to $\\theta \\to \\infty$")),
+                  [(th, "r", None) for th in (0.5, 1.0, 1.5, htop)], hsize)
+    cone = FormPiece("cone", hz, np.linspace(0.0, htop, 81), np.sinh, lambda th: np.sinh(th) - 1.0,
+                     (("apex", "the apex of the light cone, a distance $a$ below the point $\\theta = 0$"),
+                      ("edge", "the cone runs on")), hsize)
+    ck.isometry(f"{name}, anti-Nariai's hyperbolic plane", sheet)
+    ck.form(f"{name}, anti-Nariai's hyperbolic plane: the hyperboloid Z = a cosh(theta) - a", sheet,
+            lambda th: np.cosh(th) - 1, hsize)
+    ck.radius(f"{name}, anti-Nariai's hyperbolic plane: rho = a sinh(theta)", sheet, np.sinh, hsize)
+    ck.add(f"{name}, anti-Nariai's hyperbolic plane: from theta = 0 to theta = 2 is 2 a",
+           abs(hz.proper(0.0, htop) - htop), 1e-9)
+    hsurface = Surface([sheet, cone])
+    fig = figure_of([hsurface], {"sheet": "cover"}, hsize)
+    ring_label(fig, [0, 0, 0], *sheet.at(1.0), "$\\theta = 1$")
+    ring_label(fig, [0, 0, 0], *sheet.at(htop), "$2$")
+    fig.legend("fill", "cover", "the hyperbolic plane, which $\\theta$ and $\\phi$ cover but for the point $\\theta = 0$")
+    fig.legend("line", "r", "$\\theta$ constant, at $0.5$, $1$, $1.5$ and $2$, each a proper distance $a/2$ from the last")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears as "
+                                    "$\\theta \\to \\infty$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("hyperbolic_plane", "Anti-Nariai's hyperbolic plane", "$a$", [hsurface], fig.done(),
+                      settings="$a = 1$, the unit of every length. Every length along the sheet is measured with "
+                               "$dX^2 + dY^2 - dZ^2$.",
+                      stops=["At every $\\theta > 0$ the circles grow faster than the distance out to them, "
+                             "$g_{\\theta\\theta} < (\\partial_\\theta\\sqrt{g_{\\phi\\phi}})^2$, and no surface of "
+                             "revolution in flat space carries the hyperbolic plane; Minkowski space carries it."]))
+    return views
+
+
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m on the
 # axis, as their spacetime diagrams declare.
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
@@ -11321,6 +11403,7 @@ DRAWN = {
     "oppenheimer_snyder": oppenheimer_snyder,
     "tolman_bondi": tolman_bondi,
     "bertotti_robinson": bertotti_robinson,
+    "plebanski_hacyan": plebanski_hacyan,
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
     "israel_wilson_perjes": israel_wilson_perjes,
@@ -12421,6 +12504,28 @@ CAPTIONS = {
         "$r$, drawn as a surface in flat space with every distance along it the metric "
         "distance. It is the product's second factor, a sphere of radius $b$, the same at every $t$ and "
         "$r$, so a slice of constant $t$ is the line along the cylinder of the other view times this sphere.",
+    ],
+    ("plebanski_hacyan", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Plebański and Hacyan's flat plane times a sphere at one "
+        "moment of $t$ ($\\Lambda = 1/2b^2$), a cylinder of radius $b$ in flat space, "
+        "$dz^2 + b^2d\\phi^2$, with every distance along it the metric distance.",
+        "Every circle has the circumference $2\\pi b$ and the cylinder is flat, as Bertotti and Robinson's is, "
+        "but here $z$ is the distance along it, so two circles a coordinate step apart stay that far apart "
+        "at every $z$.",
+    ],
+    ("plebanski_hacyan", "sphere"): [
+        "The sphere of $\\theta$ and $\\phi$ of the same spacetime at one event of $t$ and $z$, radius "
+        "$b = 1/\\sqrt{2\\Lambda}$ and area $2\\pi/\\Lambda$, the same at every $t$ and $z$.",
+    ],
+    ("plebanski_hacyan", "hyperbolic_plane"): [
+        "The surface of $\\theta$ and $\\phi$ of the anti-Nariai universe at one event of $\\tau$ and $\\chi$ "
+        "($\\Lambda = -1/a^2$), the hyperbolic plane $a^2(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2)$, drawn in three "
+        "dimensional Minkowski space with every distance along it, measured with $dX^2 + dY^2 - dZ^2$, the metric "
+        "distance.",
+        "The circle a distance $a\\theta$ from the point $\\theta = 0$ has circumference $2\\pi a\\sinh\\theta$, "
+        "which grows faster than the distance out to it, as no surface of revolution in flat space allows. In "
+        "Minkowski space it is one sheet of the hyperboloid $(Z + a)^2 - X^2 - Y^2 = a^2$, nearing the light cone, "
+        "dashed. It takes the place Nariai's sphere has, at the same radius as the anti-de Sitter factor.",
     ],
     ("stockum_dust", "dust"): [
         "The plane $z = 0$ across Kornel Lanczos's cylinder of rotating dust at one moment of $t$, drawn "

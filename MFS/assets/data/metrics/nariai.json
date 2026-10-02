@@ -57,6 +57,11 @@
       "id": "kasner",
       "kind": "programme",
       "text": "Edward Kasner's vacuum of 1921, which expands along some axes and contracts along another. The same year he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1921, kasner1925]."
+    },
+    {
+      "id": "plebanski_hacyan",
+      "kind": "family",
+      "text": "The other products of two surfaces of constant curvature. Anti-Nariai trades de Sitter space for anti-de Sitter space and the sphere for a hyperbolic plane, and Plebański and Hacyan's two have one flat factor and a uniform electromagnetic field [ortaggio2002direct]."
     }
   ],
   "references": [
@@ -74,7 +79,8 @@
     "bousso1998proliferation",
     "cardoso2004",
     "romans1992",
-    "kasner1921"
+    "kasner1921",
+    "ortaggio2002direct"
   ],
   "coordinates": [
     {

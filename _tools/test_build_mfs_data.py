@@ -4558,6 +4558,11 @@ class Slices(unittest.TestCase):
               "myers_perry/boyer_lindquist_six/rotation",
               # Black Saturn's ring alone, a spacetime with no hole in it; the moment embedded is the Saturn's.
               "black_saturn/ring/outside", "black_saturn/ring/inside",
+              # Anti-de Sitter space of two dimensions times a flat plane, another spacetime than the two of
+              # Plebański and Hacyan's page whose surfaces are embedded; its moment is itself a flat plane.
+              "plebanski_hacyan/plane/uw", "plebanski_hacyan/plane_null/uv", "plebanski_hacyan/plane_static/wedge",
+              "conformal plebanski_hacyan/plane", "conformal plebanski_hacyan/plane_null",
+              "conformal plebanski_hacyan/plane_static",
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
               # Bonnor and Vaidya's leaving shell is the time reverse of the falling shell embedded, and the
@@ -4707,6 +4712,14 @@ class Slices(unittest.TestCase):
     # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
     # Barriola-Vilenkin drawings the monopole's.
     HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
+                    # The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and
+                    # each chart's drawings mark the surfaces of its own.
+                    **{where: {"hyperbolic_plane"} for where in (
+                        "plebanski_hacyan/sphere/tz", "plebanski_hacyan/sphere_rindler/wedge",
+                        "conformal plebanski_hacyan/sphere", "conformal plebanski_hacyan/sphere_rindler")},
+                    **{where: {"equator", "sphere"} for where in (
+                        "plebanski_hacyan/anti_nariai/wedge", "plebanski_hacyan/anti_nariai_static/radial",
+                        "conformal plebanski_hacyan/anti_nariai", "conformal plebanski_hacyan/anti_nariai_static")},
                     # Wahlquist's rotating body and Whittaker's sphere are two spacetimes, the second the
                     # first with no rotation, and each chart's drawings mark the moment of its own.
                     **{f"wahlquist/wahlquist/{v}": {"static"} for v in ("equator", "disc")},
@@ -5326,6 +5339,14 @@ class Slices(unittest.TestCase):
             if static:
                 return (lambda X: math.asinh(math.sinh(t) / math.sqrt(max(1 - X * X, 1e-300)))), None
             return (lambda X: t), None
+        if key.startswith("plebanski_hacyan/sphere"):
+            # The equator's moment t = 0 along z from -b to b, of which the Rindler chart covers
+            # 0 < chi < b on tau = 0, and the sphere at the event z = b, chi = b.
+            lo, hi = self.reach(surface) if mark["lines"] else (1, 1)
+            return (lambda X: 0.0), [lo, hi]
+        if key.startswith("plebanski_hacyan/anti_nariai"):
+            # The hyperbolic plane at the event tau = 0, chi = 1, which is r = a cosh(1) of the static chart.
+            return (lambda X: 0.0), [math.cosh(1.0) if "_static/" in key else 1.0]
         if key.startswith("bertotti_robinson"):
             lo, hi = self.reach(surface) if mark["lines"] else (1, 1)
             return (lambda X: 0.0), [lo, hi]

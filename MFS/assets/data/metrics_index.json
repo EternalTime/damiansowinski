@@ -68,7 +68,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "dacd82ca88f783d0",
+    "version": "a39392148ec12fff",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -301,7 +301,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "46ba56e5152fc4cd",
+    "version": "1161ca7d126a963e",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -631,7 +631,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "173afac89e74d978",
+    "version": "18c3aaadfddee6d6",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
@@ -2356,7 +2356,7 @@
       "Einstein space",
       "stationary"
     ],
-    "version": "952e52107e6d8be5",
+    "version": "b6adb1e0310f01cf",
     "diagrams": "37b04b7cf3bacecd",
     "conformal": "4fac9b552eb536ea",
     "embedding": "1199648bcf6666d8"
@@ -2498,6 +2498,37 @@
     "diagrams": "06b990c8be409307",
     "conformal": "b71dae1432ee5efb",
     "embedding": "df75b117652b95bd"
+  },
+  {
+    "id": "plebanski_hacyan",
+    "name": "Plebański-Hacyan",
+    "tags": [
+      "electrovacuum",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "cosmological constant",
+      "product spacetime",
+      "homogeneous",
+      "static",
+      "stationary",
+      "horizon",
+      "Killing horizon",
+      "anti-de Sitter",
+      "hyperbolic space",
+      "near-horizon limit",
+      "extremal",
+      "Petrov type D",
+      "Kundt class",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "a408aabb0b89c132",
+    "diagrams": "4fa9e29b17d51d20",
+    "conformal": "ec15d211d9118915",
+    "embedding": "b7a09dddf9867ddf"
   },
   {
     "id": "point_particle_2plus1",
@@ -2698,7 +2729,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e4b51235dd698342",
+    "version": "7a518f8bfd1b3f0d",
     "diagrams": "f6c6ac1947d0b4e9",
     "conformal": "639eea78631ca3e1",
     "embedding": "342b4919bb1495ae"
@@ -3337,7 +3368,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "070c7eab2a585151",
+    "version": "975fc07436f4acd4",
     "diagrams": "70598c77af726b80",
     "conformal": "243a2de40edb7f43",
     "embedding": "930f06c7003fad35"

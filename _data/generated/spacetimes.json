@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 116,
+  "count": 117,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -607,6 +607,11 @@
           "id": "schrodinger_spacetime",
           "kind": "generalisation",
           "text": "Anti-de Sitter space with one term in $dt^2$ added along a null direction, which leaves of its symmetries those of the free Schrödinger equation. Dam Thanh Son proposed it in 2008 as the dual of cold atoms [son2008]."
+        },
+        {
+          "id": "plebanski_hacyan",
+          "kind": "family",
+          "text": "Products that keep anti-de Sitter space of two dimensions as one factor, times a flat plane with a uniform electromagnetic field or times a hyperbolic plane with none [ortaggio2002direct]."
         }
       ],
       "references": [
@@ -649,7 +654,8 @@
         "horowitz1998",
         "kachru2008",
         "copsey2011",
-        "son2008"
+        "son2008",
+        "ortaggio2002direct"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -3062,6 +3068,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "family",
           "text": "A pair of extremal black holes with opposite magnetic charges. Each of its poles opens into a throat, which is Bertotti and Robinson's universe once an outside field balances the pair [emparan2000]."
+        },
+        {
+          "id": "plebanski_hacyan",
+          "kind": "family",
+          "text": "The same uniform field with a cosmological constant, in the products where one factor is flat: a flat plane of time and space times a sphere, and anti-de Sitter space of two dimensions times a flat plane. In both the energy density of the field matches the cosmological constant [ortaggio2002direct]."
         }
       ],
       "references": [
@@ -3087,7 +3098,8 @@
         "griffiths1991",
         "romans1992",
         "breitenlohner1994",
-        "emparan2000"
+        "emparan2000",
+        "ortaggio2002direct"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -6109,6 +6121,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "family",
           "text": "Two black holes of opposite charge at rest on one axis. Emparan placed that pair on top of the barrier under which a magnetic field creates the accelerating pair [emparan2000]."
+        },
+        {
+          "id": "plebanski_hacyan",
+          "kind": "family",
+          "text": "The anti-Nariai universe has a C-metric of its own. Óscar Dias and José Lemos found it in 2003 as a limit toward a degenerate horizon of the accelerating black holes with a negative cosmological constant [dias2003]."
         }
       ],
       "references": [
@@ -6136,7 +6153,8 @@
         "levicivita1919",
         "podolsky2008",
         "kamran2009",
-        "emparan2000"
+        "emparan2000",
+        "dias2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -23922,6 +23940,11 @@
           "id": "kasner",
           "kind": "programme",
           "text": "Edward Kasner's vacuum of 1921, which expands along some axes and contracts along another. The same year he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1921, kasner1925]."
+        },
+        {
+          "id": "plebanski_hacyan",
+          "kind": "family",
+          "text": "The other products of two surfaces of constant curvature. Anti-Nariai trades de Sitter space for anti-de Sitter space and the sphere for a hyperbolic plane, and Plebański and Hacyan's two have one flat factor and a uniform electromagnetic field [ortaggio2002direct]."
         }
       ],
       "references": [
@@ -23939,7 +23962,8 @@
         "bousso1998proliferation",
         "cardoso2004",
         "romans1992",
-        "kasner1921"
+        "kasner1921",
+        "ortaggio2002direct"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nariai.json",
@@ -25472,6 +25496,564 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{48m^2}{r^6}"
+        }
+      ]
+    },
+    {
+      "id": "plebanski_hacyan",
+      "name": "Plebański-Hacyan Spacetimes and Anti-Nariai",
+      "short_name": "Plebański-Hacyan",
+      "description": "The products of two surfaces of constant curvature that solve the Einstein-Maxwell equations with a cosmological constant beside Nariai's and Bertotti and Robinson's: a flat plane of time and space times a sphere, anti-de Sitter space of two dimensions times a flat plane, and the anti-Nariai universe, anti-de Sitter space of two dimensions times a hyperbolic plane. The first two hold a uniform electromagnetic field whose energy density matches the cosmological constant, and anti-Nariai is a vacuum.",
+      "tags": [
+        "electrovacuum",
+        "electromagnetic field",
+        "Einstein-Maxwell",
+        "cosmological constant",
+        "product spacetime",
+        "homogeneous",
+        "static",
+        "stationary",
+        "horizon",
+        "Killing horizon",
+        "anti-de Sitter",
+        "hyperbolic space",
+        "near-horizon limit",
+        "extremal",
+        "Petrov type D",
+        "Kundt class",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "nariai",
+          "kind": "family",
+          "text": "The product with both curvatures positive and equal, de Sitter space of two dimensions times a sphere, a vacuum with $\\Lambda > 0$ [nariai1950, ortaggio2002direct]. Anti-Nariai is its counterpart with $\\Lambda < 0$ and takes its name from it [ortaggio2002]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "Anti-de Sitter space of two dimensions times a sphere, the uniform electromagnetic field with no cosmological constant. Bruno Bertotti's solution of 1959 allowed one, with two surfaces whose type and radius depend on it and on the field [bertotti1959]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "limit_source",
+          "text": "The black holes of anti-de Sitter space with hyperbolic horizons. At the least mass that keeps a horizon, the limit toward that horizon is anti-Nariai [caldarelli2001extremal, cardoso2004]."
+        },
+        {
+          "id": "reissner_nordstrom_de_sitter",
+          "kind": "limit_source",
+          "text": "The charged black hole in de Sitter space. In the limit where its three horizons meet, the region between them is the flat plane times a sphere [cardoso2004]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Time and one direction of space form an anti-de Sitter space of two dimensions, of radius $a$, in the product with a flat plane and in anti-Nariai [ortaggio2002direct]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "A pair of accelerating black holes. Óscar Dias and José Lemos took the limit toward a degenerate horizon of the C-metric with $\\Lambda < 0$ and found the anti-Nariai C-metric, which is anti-Nariai when the acceleration vanishes [dias2003]."
+        }
+      ],
+      "references": [
+        "ortaggio2002direct",
+        "nariai1950",
+        "kasner1925",
+        "bertotti1959",
+        "robinson1959",
+        "plebanski1979exceptional",
+        "ortaggio2002",
+        "ginsparg1983",
+        "cardoso2004",
+        "caldarelli2001extremal",
+        "dias2003",
+        "podolsky2003kundt"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/plebanski_hacyan.json",
+      "charts": [
+        {
+          "id": "sphere",
+          "name": "Sphere",
+          "coordinates": [
+            "t",
+            "z",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Radius of every sphere, a length; it fixes the cosmological constant, $\\Lambda = 1/2b^2$, and the energy density $\\varepsilon$ of the uniform electromagnetic field, $8\\pi G\\varepsilon/c^4 = \\Lambda$"
+            }
+          ],
+          "convention": "We use coordinates $(t, z, \\theta, \\phi)$, with $t$ a time and $z$ a length along the flat factor. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dz^2 + b^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "b^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "b^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2}{b^2}",
+          "kretschmann": "K = \\dfrac{4}{b^4}"
+        },
+        {
+          "id": "sphere_rindler",
+          "name": "Sphere, Rindler",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\chi \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\chi = 0 \\;\\text{(the Rindler horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Radius of every sphere, a length; it fixes the cosmological constant, $\\Lambda = 1/2b^2$, and the energy density $\\varepsilon$ of the uniform electromagnetic field, $8\\pi G\\varepsilon/c^4 = \\Lambda$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$, with $\\tau$ a boost angle and $\\chi$ a length, related to the inertial chart by $ct = \\chi\\sinh\\tau$ and $z = \\chi\\cosh\\tau$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\chi^2d\\tau^2 + d\\chi^2 + b^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\chi^2"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "b^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "b^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2}{b^2}",
+          "kretschmann": "K = \\dfrac{4}{b^4}"
+        },
+        {
+          "id": "plane",
+          "name": "Plane",
+          "coordinates": [
+            "u",
+            "w",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "w \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "w = 0 \\;\\text{(a Killing horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Radius of the anti-de Sitter factor, a length; it fixes the cosmological constant, $\\Lambda = -1/2a^2$, and the energy density $\\varepsilon$ of the uniform electromagnetic field, $8\\pi G\\varepsilon/c^4 = -\\Lambda$"
+            }
+          ],
+          "convention": "We use coordinates $(u, w, x, y)$, all lengths, with $u$ a retarded time, $w$ along the rays of constant $u$, and $x$ and $y$ Cartesian on the flat plane. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -2\\,du\\,dw - \\dfrac{w^2}{a^2}du^2 + dx^2 + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{w^2}{a^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "w"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "w",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{a^2}",
+          "kretschmann": "K = \\dfrac{4}{a^4}"
+        },
+        {
+          "id": "plane_null",
+          "name": "Plane, Null",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "uv > -2a^2",
+            "uv = -2a^2 \\;\\text{(the timelike boundary at infinity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Radius of the anti-de Sitter factor, a length; it fixes the cosmological constant, $\\Lambda = -1/2a^2$, and the energy density $\\varepsilon$ of the uniform electromagnetic field, $8\\pi G\\varepsilon/c^4 = -\\Lambda$"
+            }
+          ],
+          "convention": "We use coordinates $(u, v, x, y)$, all lengths, with $u$ and $v$ null and $x$ and $y$ Cartesian on the flat plane; Plebański and Hacyan's $w$ is $v/(1 + uv/2a^2)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{2\\,du\\,dv}{\\left(1 + \\dfrac{uv}{2a^2}\\right)^2} + dx^2 + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\left(1 + \\dfrac{uv}{2a^2}\\right)^{-2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\left(1 + \\dfrac{uv}{2a^2}\\right)^{-2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{a^2}",
+          "kretschmann": "K = \\dfrac{4}{a^4}"
+        },
+        {
+          "id": "plane_static",
+          "name": "Plane, Static",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\chi \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\chi = 0 \\;\\text{(a Killing horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Radius of the anti-de Sitter factor, a length; it fixes the cosmological constant, $\\Lambda = -1/2a^2$, and the energy density $\\varepsilon$ of the uniform electromagnetic field, $8\\pi G\\varepsilon/c^4 = -\\Lambda$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\chi, x, y)$, with $\\tau$ and $\\chi$ dimensionless on the anti-de Sitter factor and $x$ and $y$ Cartesian lengths on the flat plane. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a^2\\left(-\\sinh^2\\chi\\,d\\tau^2 + d\\chi^2\\right) + dx^2 + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-a^2\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{a^2}",
+          "kretschmann": "K = \\dfrac{4}{a^4}"
+        },
+        {
+          "id": "anti_nariai",
+          "name": "Anti-Nariai",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\chi \\in (0, \\infty)",
+            "\\theta \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\chi = 0 \\;\\text{(a Killing horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Common radius of the anti-de Sitter factor and the hyperbolic plane, a length; it fixes the cosmological constant, $\\Lambda = -1/a^2$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$, all dimensionless, with $\\tau$ and $\\chi$ on the anti-de Sitter factor and $\\theta$ and $\\phi$ polar on the hyperbolic plane. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a^2\\left(-\\sinh^2\\chi\\,d\\tau^2 + d\\chi^2 + d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-a^2\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sinh^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4}{a^2}",
+          "kretschmann": "K = \\dfrac{8}{a^4}"
+        },
+        {
+          "id": "anti_nariai_static",
+          "name": "Anti-Nariai, Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (a, \\infty)",
+            "\\theta \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "r = a \\;\\text{(a Killing horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Common radius of the anti-de Sitter factor and the hyperbolic plane, a length; it fixes the cosmological constant, $\\Lambda = -1/a^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ a time, $r = a\\cosh\\chi$ a length, and $\\theta$ and $\\phi$ polar on the hyperbolic plane. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{r^2}{a^2} - 1\\right)c^2dt^2 + \\dfrac{dr^2}{\\dfrac{r^2}{a^2} - 1} + a^2\\left(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{r^2}{a^2} - 1\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(\\dfrac{r^2}{a^2} - 1\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sinh^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4}{a^2}",
+          "kretschmann": "K = \\dfrac{8}{a^4}"
+        },
+        {
+          "id": "exceptional",
+          "name": "Exceptional",
+          "coordinates": [
+            "u",
+            "w",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "w \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Radius of the anti-de Sitter factor, a length; it fixes the cosmological constant, $\\Lambda = -1/2a^2$, and the energy density $\\varepsilon$ of the uniform electromagnetic field, $8\\pi G\\varepsilon/c^4 = -\\Lambda$"
+            },
+            {
+              "symbol": "f = f(u)",
+              "description": "Any function of $u$, an inverse length; with $g$ it tilts the light cones across the flat plane, and with $f = g = 0$ the spacetime is the product of anti-de Sitter space of two dimensions and the plane"
+            },
+            {
+              "symbol": "g = g(u)",
+              "description": "Any function of $u$, an inverse length, the counterpart of $f$ along $y$"
+            }
+          ],
+          "convention": "We use coordinates $(u, w, x, y)$, all lengths, with $u$ a retarded time and $x$ and $y$ Cartesian. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -2\\,du\\,dw - \\left(\\dfrac{w^2}{a^2} + f\\,x + g\\,y\\right)du^2 + dx^2 + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(\\dfrac{w^2}{a^2} + f\\,x + g\\,y\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "w"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "w",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{a^2}",
+          "kretschmann": "K = \\dfrac{4}{a^4}"
         }
       ]
     },
@@ -27204,6 +27786,11 @@
           "id": "mass_inflation",
           "kind": "family",
           "text": "The same hole with no cosmological constant and radiation crossing it. There the tail dies off only as a power of time, and the inner horizon becomes a singularity [poisson1989, poisson1997]."
+        },
+        {
+          "id": "plebanski_hacyan",
+          "kind": "limit",
+          "text": "The limit of the ultracold hole, where all three horizons meet. The region between them becomes a flat plane of time and space times a sphere of radius $1/\\sqrt{2\\Lambda}$ [cardoso2004]."
         }
       ],
       "references": [
@@ -27231,7 +27818,8 @@
         "lake2015",
         "brill1994",
         "poisson1989",
-        "poisson1997"
+        "poisson1997",
+        "cardoso2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_de_sitter.json",
@@ -33878,6 +34466,11 @@
           "id": "ads_soliton",
           "kind": "dual",
           "text": "The flat hole with its time and one flat direction exchanged. Its horizon becomes a smooth tip, and its energy comes out negative [horowitz1998]."
+        },
+        {
+          "id": "plebanski_hacyan",
+          "kind": "limit",
+          "text": "The limit toward the horizon of the hyperbolic hole at its least mass, $\\mu = -2L/(3\\sqrt{3})$. It is anti-de Sitter space of two dimensions times a hyperbolic plane of radius $L/\\sqrt{3}$, the anti-Nariai universe [caldarelli2001extremal, cardoso2004]."
         }
       ],
       "references": [
@@ -33902,7 +34495,9 @@
         "hartnoll2008",
         "casini2011",
         "cai2002",
-        "horowitz1998"
+        "horowitz1998",
+        "caldarelli2001extremal",
+        "cardoso2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",

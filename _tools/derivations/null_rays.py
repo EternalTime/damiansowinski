@@ -305,6 +305,10 @@ RS_WALL = {"x_1": "0", "x_2": "0", "x_3": "0"}
 # time and the radius hold x and y fixed.
 LIFSHITZ = {"z": 2, "L": 1}
 LIFSHITZ_PLANE = {"x": "0", "y": "0"}
+# Plebanski and Hacyan's planes of the anti-de Sitter factor hold the flat plane's x and y fixed, and
+# anti-Nariai's hold a point of its hyperbolic plane off the pole theta = 0.
+PH_PLANE = {"x": "0", "y": "0"}
+PH_HYPERBOLIC = {"theta": "1", "phi": "0"}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -2446,6 +2450,25 @@ DIAGRAMS = [
             "$r\\sqrt{\\Lambda}$", "$ct\\sqrt{\\Lambda}$", {"Lambda": 1}, EQUATOR, families=SIDEWAYS),
     Diagram("nariai", "global", "circle", "$t$ and $\\chi$", ("t", "\\chi"), (0, 2 * math.pi, -2, 2),
             "$\\chi$", "$ct\\sqrt{\\Lambda}$", {"Lambda": 1}, EQUATOR, families=SIDEWAYS, periodic=("\\chi",)),
+    # Plebanski and Hacyan's products and anti-Nariai, each in units of its one radius. The flat factor
+    # in its inertial and Rindler charts, the anti-de Sitter factor in Plebanski and Hacyan's chart,
+    # which crosses its horizon w = 0, in the null chart, which ends on the boundary uv = -2a^2, and in
+    # the static chart, and anti-Nariai's two static charts at theta = 1 of its hyperbolic plane.
+    Diagram("plebanski_hacyan", "sphere", "tz", "$t$ and $z$", ("t", "z"), (-2, 2, -2, 2),
+            "$z/b$", "$ct/b$", {"b": 1}, EQUATOR, families=SIDEWAYS),
+    Diagram("plebanski_hacyan", "sphere_rindler", "wedge", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"),
+            (0, 3, -1.5, 1.5), "$\\chi/b$", "$\\tau$", {"b": 1}, EQUATOR, tau="tau"),
+    Diagram("plebanski_hacyan", "plane", "uw", "$u$ and $w$", ("u", "w"), (-2, 2, -2, 2),
+            "$w/a$", "$(u + w)/a$", {"a": 1}, PH_PLANE, to_display=FINKELSTEIN_OUT, orient="outgoing"),
+    Diagram("plebanski_hacyan", "plane_null", "uv", "$u$ and $v$", ("u", "v"), (-3, 3, -3, 3),
+            "$(v - u)/2a$", "$(u + v)/2a$", {"a": 1}, PH_PLANE, to_display=NULL_TO_TR, tau="u + v",
+            families=SIDEWAYS, where="2*a**2 + u*v", where_is_infinity=True),
+    Diagram("plebanski_hacyan", "plane_static", "wedge", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"),
+            (0, 3, -1.5, 1.5), "$\\chi$", "$\\tau$", {"a": 1}, PH_PLANE, tau="tau"),
+    Diagram("plebanski_hacyan", "anti_nariai", "wedge", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"),
+            (0, 3, -1.5, 1.5), "$\\chi$", "$\\tau$", {"a": 1}, PH_HYPERBOLIC, tau="tau"),
+    Diagram("plebanski_hacyan", "anti_nariai_static", "radial", "$t$ and $r$", ("t", "r"), (1, 4, -1.5, 1.5),
+            "$r/a$", "$ct/a$", {"a": 1}, PH_HYPERBOLIC),
     Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
             (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
@@ -5961,6 +5984,61 @@ CAPTIONS = {
         "infinite future, so observers at opposite points of the circle can never exchange a signal. The static "
         "patch is the region $\\sin\\chi > |\\tanh(\\sqrt{\\Lambda}\\,ct)|$, bounded by the four rays that leave $\\chi = 0$ and "
         "$\\chi = \\pi$ at $t = 0$.",
+    ],
+    ("plebanski_hacyan", "sphere", "tz"): [
+        "The plane of $t$ and $z$ ($\\theta = \\pi/2$, $\\phi = 0$), the flat factor $-c^2dt^2 + dz^2$ of "
+        "Plebański and Hacyan's product with $\\Lambda = 1/2b^2$, each point in the plane a 2-sphere of radius "
+        "$b$. The rays are at 45°, with $ct \\pm z$ constant along them.",
+        "The uniform field's gravity pulls and the cosmological constant pushes as hard, "
+        "$8\\pi G\\varepsilon/c^4 = \\Lambda$, so two particles at rest on a line of $z$ stay at rest and the "
+        "plane is flat.",
+    ],
+    ("plebanski_hacyan", "sphere_rindler", "wedge"): [
+        "The same plane in the Rindler chart ($\\theta = \\pi/2$, $\\phi = 0$), $-\\chi^2d\\tau^2 + d\\chi^2$, "
+        "the wedge $z > c|t|$, where an observer of constant $\\chi$ accelerates at $c^2/\\chi$. The cones close "
+        "toward $\\chi = 0$, the observer's horizon, which a ray takes infinite $\\tau$ to reach, "
+        "$\\tau \\pm \\ln\\chi$ constant along it.",
+        "Vitor Cardoso, Óscar Dias, and José Lemos reached the spacetime in this chart, as the limit of a charged "
+        "black hole in de Sitter space whose three horizons meet.",
+    ],
+    ("plebanski_hacyan", "plane", "uw"): [
+        "The plane of $u$ and $w$ ($x = y = 0$) in Plebański and Hacyan's chart, the anti-de Sitter factor "
+        "$-2\\,du\\,dw - (w^2/a^2)du^2$ of their product with $\\Lambda = -1/2a^2$, each point in the plane a "
+        "flat plane of $x$ and $y$. The rays of constant $u$ cross $w = 0$, and along the other family "
+        "$u - 2a^2/w$ is constant, so those take infinite $u$ to reach $w = 0$, a degenerate Killing horizon "
+        "where $\\partial_u$ turns null.",
+        "Both sides of the horizon are static: $w > 0$ is one Poincaré patch of the anti-de Sitter factor and "
+        "$w < 0$ the next.",
+    ],
+    ("plebanski_hacyan", "plane_null", "uv"): [
+        "The plane of $u$ and $v$ ($x = y = 0$) in the null chart, $-2\\,du\\,dv/(1 + uv/2a^2)^2$, conformal to "
+        "flat, so the rays are at 45° with $u$ or $v$ constant. The conformal factor diverges on the hyperbola "
+        "$uv = -2a^2$, the timelike boundary at infinity, which a ray reaches at finite $u$ and $v$ and at an "
+        "infinite value of its affine parameter.",
+    ],
+    ("plebanski_hacyan", "plane_static", "wedge"): [
+        "The plane of $\\tau$ and $\\chi$ ($x = y = 0$) in the static chart, "
+        "$a^2(-\\sinh^2\\chi\\,d\\tau^2 + d\\chi^2)$. The cones close toward $\\chi = 0$, a Killing horizon that "
+        "a ray takes infinite $\\tau$ to reach, $\\tau \\pm \\ln\\tanh(\\chi/2)$ constant along it, and open as "
+        "$\\sinh\\chi$ far away, where a ray reaches the boundary $\\chi \\to \\infty$ in a finite $\\tau$.",
+        "An observer at constant $\\chi$ accelerates at $c^2\\coth\\chi/a$, at least $c^2/a$ everywhere.",
+    ],
+    ("plebanski_hacyan", "anti_nariai", "wedge"): [
+        "The plane of $\\tau$ and $\\chi$ ($\\theta = 1$, $\\phi = 0$), the anti-de Sitter factor of the "
+        "anti-Nariai universe, $a^2(-\\sinh^2\\chi\\,d\\tau^2 + d\\chi^2)$, each point in the plane a hyperbolic "
+        "plane of radius $a$. The cones close toward the Killing horizon $\\chi = 0$, "
+        "$\\tau \\pm \\ln\\tanh(\\chi/2)$ constant along a ray, and a ray reaches the boundary "
+        "$\\chi \\to \\infty$ in a finite $\\tau$.",
+        "The anti-Nariai universe is a vacuum with $\\Lambda = -1/a^2$, and its hyperbolic plane has the radius "
+        "of its anti-de Sitter factor, as Nariai's sphere has the radius of its de Sitter factor.",
+    ],
+    ("plebanski_hacyan", "anti_nariai_static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = 1$, $\\phi = 0$) of the anti-Nariai universe in its static chart, "
+        "$-(r^2/a^2 - 1)c^2dt^2 + dr^2/(r^2/a^2 - 1)$, with $r = a\\cosh\\chi$. The cones close at $r = a$, "
+        "where $g^{rr}$ vanishes, a Killing horizon that a ray takes infinite $t$ to reach, "
+        "$ct \\pm (a/2)\\ln((r - a)/(r + a))$ constant along it.",
+        "The massless hyperbolic black hole of anti-de Sitter space has this $g_{tt}$ with $r$ its areal radius. "
+        "Here every surface of $\\theta$ and $\\phi$ has the one radius $a$.",
     ],
     ("interior_schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the "
@@ -10536,6 +10614,21 @@ CLOSED_FORMS = {
         (lambda t, r: t + np.arctanh(r), lambda t, r: t - np.arctanh(r), lambda t, r: np.abs(r) < 0.95),
     ("nariai", "global", "circle"):
         (lambda t, c: c + np.arctan(np.sinh(t)), lambda t, c: c - np.arctan(np.sinh(t)), None),
+    # Plebanski and Hacyan's products and anti-Nariai at unit radius: the flat factor's ct -+ z and
+    # tau -+ ln chi, the anti-de Sitter factor's u and u - 2/w in their own chart, u and v in the null
+    # chart, and tau -+ ln tanh(chi/2) or ct -+ (1/2) ln((r - 1)/(r + 1)) in the static charts.
+    ("plebanski_hacyan", "sphere", "tz"): (lambda t, z: t + z, lambda t, z: t - z, None),
+    ("plebanski_hacyan", "sphere_rindler", "wedge"):
+        (lambda T, X: T + np.log(X), lambda T, X: T - np.log(X), lambda T, X: X > 1e-3),
+    ("plebanski_hacyan", "plane", "uw"):
+        (lambda u, w: u - 2 / w, lambda u, w: u, lambda u, w: np.abs(w) > 0.05),
+    ("plebanski_hacyan", "plane_null", "uv"): (lambda u, v: v, lambda u, v: u, None),
+    **{("plebanski_hacyan", system, "wedge"):
+        (lambda T, X: T + np.log(np.tanh(X / 2)), lambda T, X: T - np.log(np.tanh(X / 2)), lambda T, X: X > 0.05)
+       for system in ("plane_static", "anti_nariai")},
+    ("plebanski_hacyan", "anti_nariai_static", "radial"):
+        (lambda t, r: t + 0.5 * np.log((r - 1) / (r + 1)), lambda t, r: t - 0.5 * np.log((r - 1) / (r + 1)),
+         lambda t, r: r > 1.05),
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     # The throat of extreme Kerr at r_0 = 1: each plane is conformal to a chart of AdS2, whose rays
