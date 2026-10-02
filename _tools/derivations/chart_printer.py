@@ -769,6 +769,9 @@ class Chart:
         self.reduce = reduce
         if reduce:
             self.geo = Reduced(self.geo, reduce, raw=pulse)
+        if self.reader.slow:
+            # A post-Newtonian chart keeps each component as far as its metric fixes it.
+            self.geo = vm.PostNewtonian(self.geo, self.reader)
         self.printer = Printer(self.symbols, **(printer_options or {}))
         self.pretty = pretty or sp.factor
         # The sum a value is printed as when it has to stand in a bracket with a minus in front:

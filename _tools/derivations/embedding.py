@@ -11831,6 +11831,60 @@ def hartle_thorne(ck, src):
                         "\\sin^2\\theta\\,d\\phi^2)$, so its equator is a plane."])]
 
 
+def ppn_metric(ck, src):
+    """The equator outside the declared body, R = 10m at beta = gamma = 1, at one moment of the
+    isotropic chart's time, from the surface out to 3R.
+
+    A moment of t is (1 + 2 gamma m/r)(dr^2 + r^2 dphi^2) on the equator, so the circle of the
+    isotropic radius r has the radius rho = sqrt(r (r + 2 gamma m)) and the surface rises as
+    dz/dr = sqrt(gamma m (2r + 3 gamma m)/(r (r + 2 gamma m))), both checked. beta stands only in
+    g_tt and moves nothing here, and at gamma = 0 the moment is a flat plane, which is checked
+    on the published metric and stated. Flamm's paraboloid of the same mass is drawn faintly
+    over the same circles, from the height of the surface, and the two are checked to lie
+    within 0.31 m of each other out to 3R. The dragging term of the rotating chart drops out of a
+    moment of constant t, so its equator is the same surface for every spin, which is checked."""
+    R, top = 10.0, 30.0
+    size = 2 * top
+    sl = Slice(src, "ppn_metric", "isotropic", "r", "\\phi", {"t": 0, **EQUATOR}, nr.PPN)
+    radii = (15.0, 20.0, 25.0)
+    ends = (("edge", "the surface of the body, $r = R$, inside which the slice runs on through the body"),
+            ("edge", "the surface runs on to $r \\to \\infty$"))
+    marks = [(R, "surface", "$r = R$")] + [(r, "r", None) for r in radii] + [(top, "r", None)]
+    ext = Piece("exterior", "sheet", sl, R, top, 0.0, 1, ends, marks, size)
+    rho = lambda r: np.sqrt(r * (r + 2))
+    rise = lambda r: np.sqrt((2 * r + 3) / (r * (r + 2)))
+    ck.isometry("The post-Newtonian metric, the exterior", ext)
+    ck.radius("The post-Newtonian metric, the exterior, rho = sqrt(r (r + 2 gamma m))", ext, rho, size)
+    ck.form("The post-Newtonian metric, dz/dr = sqrt(gamma m (2r + 3 gamma m)/(r (r + 2 gamma m)))", ext,
+            lambda r: np.array([quad(rise, R, float(x), epsabs=1e-12, epsrel=1e-12)[0] for x in np.ravel(r)]), size)
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 2})
+    flamm = Piece("flamm", "reference", outer, float(rho(R)), float(rho(top)), 0.0, 1,
+                  (("join", None), ("edge", None)), [], size, reference=True)
+    gap = float(np.max(np.abs(ext.z - np.interp(ext.rho, flamm.rho, flamm.z))))
+    ck.add("The post-Newtonian metric: the surface lies within 0.31 m of Flamm's out to 3R", gap, 0.31)
+    ck.add("The post-Newtonian metric: at 3R it is 0.30 m below Flamm's", abs(flamm.z[-1] - ext.z[-1] - 0.30), 0.005)
+    plane = Slice(src, "ppn_metric", "isotropic", "r", "\\phi", {"t": 0, **EQUATOR}, {**nr.PPN, "gamma": 0})
+    ck.plane("The post-Newtonian metric at gamma = 0", plane, np.linspace(R, 200, 400))
+    turning = Slice(src, "ppn_metric", "rotating", "r", "\\phi", {"t": 0, **EQUATOR}, nr.PPN_ROTATING)
+    spun = Piece("exterior", "sheet", turning, R, top, 0.0, 1, ends, marks, size)
+    ck.add("The post-Newtonian metric: the rotating body's equator is the same surface",
+           float(np.max(np.abs(spun.z - ext.z)) + np.max(np.abs(spun.rho - ext.rho))), 1e-12)
+    surface = Surface([ext, flamm])
+    fig = figure_of([surface], {"sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *ext.at(R), "$r = R$", dx=10)
+    ring_label(fig, [0, 0, 0], *ext.at(20.0), "$2R$")
+    ring_label(fig, [0, 0, 0], *ext.at(top), "$3R$")
+    fig.legend("fill", "cover", "the exterior $r > R$ at $t = 0$, which $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $15$, $20$, $25$, and $30\\,m$")
+    fig.legend("line", "surface", "the surface of the body, $r = R$")
+    fig.legend("line", "reference", "Flamm's paraboloid of the same mass, over the same circles")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings="$m = GM/c^2 = 1$, the unit of every length, $R = 10\\,m$, and $\\beta = \\gamma = 1$.",
+                 stops=["At $\\gamma = 0$ every moment of $t$ is flat, $dr^2 + r^2(d\\theta^2 + "
+                        "\\sin^2\\theta\\,d\\phi^2)$, so its equator is a plane."])]
+
+
 def wahlquist_stable(e, x):
     """e, which holds x beside its inverse sine or inverse hyperbolic sine in Wahlquist's h_1 or
     h_2, written so that nothing cancels at x = 0: with u = k x,
@@ -12091,6 +12145,7 @@ DRAWN = {
     "roberts": roberts,
     "hartle_thorne": hartle_thorne,
     "wahlquist": wahlquist,
+    "ppn_metric": ppn_metric,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -13641,6 +13696,16 @@ CAPTIONS = {
         "The cylinders narrow as $\\tau$ climbs toward $0$ and stop at the circumference $b$; in Misner space, "
         "where $b = 0$, they close up. The chronology horizon holds no closed null geodesic, and the closed "
         "timelike curves lie beyond it, in the wedge $X > c|T|$.",
+    ],
+    ("ppn_metric", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) outside the body at one moment of $t$ "
+        "($R = 10\\,m$, $\\beta = \\gamma = 1$), drawn as a surface in flat space with every distance along it "
+        "the metric distance. The moment is $(1 + 2\\gamma m/r)(dr^2 + r^2d\\phi^2)$, so the circle of isotropic "
+        "radius $r$ has the radius $\\sqrt{r(r + 2\\gamma m)}$ and the surface rises as "
+        "$dz/dr = \\sqrt{\\gamma m(2r + 3\\gamma m)/(r(r + 2\\gamma m))}$.",
+        "The slope is $\\gamma$'s doing alone: $\\beta$ stands only in $g_{tt}$, and the rotating body has this "
+        "same equator for every spin. The faint surface is Flamm's paraboloid of the same mass, from which this one "
+        "falls $0.30\\,m$ short by $3R$.",
     ],
     ("hartle_thorne", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) outside a slowly rotating star at one moment of $t$ "

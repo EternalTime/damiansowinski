@@ -328,6 +328,11 @@
       "id": "chandrasekhar_xanthopoulos",
       "kind": "generalisation",
       "text": "Two plane gravitational waves colliding head on. With their polarizations aligned, the region between the fronts is the inside of Schwarzschild's black hole, with $\\phi$ unrolled along the fronts [griffiths1991, ferrari1988]."
+    },
+    {
+      "id": "ppn_metric",
+      "kind": "generalisation",
+      "text": "Schwarzschild's far field with a number in front of each term, $\\beta$ on $m^2/r^2$ in $g_{tt}$ and $\\gamma$ on $m/r$ in the metric of space. Every test in the solar system measures those numbers, and at $\\beta = \\gamma = 1$ the field is Schwarzschild's [thornewill1971]."
     }
   ],
   "references": [
@@ -420,7 +425,8 @@
     "emparan2000",
     "israel1966",
     "griffiths1991",
-    "ferrari1988"
+    "ferrari1988",
+    "thornewill1971"
   ],
   "coordinates": [
     {

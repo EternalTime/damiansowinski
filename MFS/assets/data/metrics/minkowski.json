@@ -203,6 +203,11 @@
       "id": "chandrasekhar_xanthopoulos",
       "kind": "composite",
       "text": "Two plane gravitational waves colliding head on and ending on a horizon. Ahead of both of them spacetime is flat [griffiths1991]."
+    },
+    {
+      "id": "ppn_metric",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a slowly moving body in it and gravity weak, written so that every metric theory of gravity fits. Take the mass away, $m = 0$, and it is flat again [will2014]."
     }
   ],
   "references": [
@@ -268,7 +273,8 @@
     "astesiano2024",
     "podolskybelan2004",
     "israel1966",
-    "tippett2017"
+    "tippett2017",
+    "will2014"
   ],
   "coordinates": [
     {
