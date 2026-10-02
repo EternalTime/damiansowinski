@@ -63,6 +63,11 @@
       "id": "c_metric",
       "kind": "family",
       "text": "A black hole with an acceleration where this one has a twist. Plebański and Demiański's family of 1976 holds spin, twist, and acceleration together, and in Jerry Griffiths and Jiří Podolský's form of it Kerr-Taub-NUT is what is left when the acceleration vanishes [plebanski1976, griffiths2005]."
+    },
+    {
+      "id": "wahlquist",
+      "kind": "generalisation",
+      "text": "The Kerr-NUT metric with a rigidly rotating perfect fluid laid over it in the same region, which is how Wahlquist described his solution. With the fluid taken away his family is the Kerr-NUT vacuum [wahlquist1968, mars2001]."
     }
   ],
   "references": [
@@ -84,7 +89,9 @@
     "bordo2019",
     "miller1973",
     "mathgenealogymiller",
-    "emond2022"
+    "emond2022",
+    "wahlquist1968",
+    "mars2001"
   ],
   "coordinates": [
     {

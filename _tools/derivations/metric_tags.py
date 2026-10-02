@@ -216,6 +216,11 @@ REGIONS = {
         "why": "the flat space outside the mouths and the wormhole whose mouth is moved "
                "are two regions; short_throat is a mouth in its own rest frame",
     },
+    "wahlquist": {
+        "regions": [["wahlquist", "mars", "mars_ingoing"]],
+        "why": "whittaker is the fluid at rest, the limit of no rotation, which is static and "
+               "spherically symmetric where the rotating fluid is neither",
+    },
 }
 
 # Where the charts cannot decide a tag and the entry's history and sources do.

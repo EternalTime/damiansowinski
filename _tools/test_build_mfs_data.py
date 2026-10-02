@@ -4650,6 +4650,9 @@ class Slices(unittest.TestCase):
               # Painleve-Gullstrand line element, which agrees with Hartle and Thorne's to first order in the
               # spin and no further, while the moment embedded is one of Hartle and Thorne's t.
               "hartle_thorne/hartle_thorne/axis", "hartle_thorne/painleve_gullstrand/axis",
+              # Mars's angle is divided out along another Killing vector than the fluid's, and its circles
+              # each run through every moment of Wahlquist's t.
+              "wahlquist/mars/equator", "wahlquist/mars_ingoing/equator",
               "hartle_thorne/painleve_gullstrand/equator", "conformal hartle_thorne/painleve_gullstrand",
               # The hyperbolic hole of negative mass, another spacetime than the flat hole and the hyperbolic
               # hole without mass whose moments are embedded, and the Eddington-Finkelstein planes of the hole
@@ -4704,6 +4707,10 @@ class Slices(unittest.TestCase):
     # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
     # Barriola-Vilenkin drawings the monopole's.
     HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
+                    # Wahlquist's rotating body and Whittaker's sphere are two spacetimes, the second the
+                    # first with no rotation, and each chart's drawings mark the moment of its own.
+                    **{f"wahlquist/wahlquist/{v}": {"static"} for v in ("equator", "disc")},
+                    **{f"wahlquist/whittaker/{v}": {"rotating"} for v in ("radial", "through")},
                     # Bartnik and McKinnon's solitons with one, two and three zeros are three spacetimes
                     # of one line element, and every drawing but the embedding diagram is the first's.
                     **{f"{place}bartnik_mckinnon/{s}": {"n2", "n3"}

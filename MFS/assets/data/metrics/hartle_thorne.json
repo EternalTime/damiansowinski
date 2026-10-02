@@ -44,6 +44,11 @@
       "id": "tov",
       "kind": "family",
       "text": "The star before it turns. Hartle built his rotating star as a perturbation of this one, and Hartle and Thorne's field is the outside of the result [hartle1967]."
+    },
+    {
+      "id": "wahlquist",
+      "kind": "family",
+      "text": "A rotating fluid in closed form that no such exterior fits. Expanded to second order in its rotation, Wahlquist's interior cannot be joined to an asymptotically flat vacuum [bradley2000]."
     }
   ],
   "references": [
@@ -60,7 +65,8 @@
     "everitt2011",
     "schiff1960",
     "ciufolini2004",
-    "venkatraman2020"
+    "venkatraman2020",
+    "bradley2000"
   ],
   "coordinates": [
     {

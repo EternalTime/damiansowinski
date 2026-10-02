@@ -93,6 +93,11 @@
       "id": "kerr_taub_nut",
       "kind": "family",
       "text": "Kerr's black hole with a NUT parameter where this one has a cosmological constant. Carter's separable family holds both [carter1968separable, bini2003]."
+    },
+    {
+      "id": "wahlquist",
+      "kind": "generalisation",
+      "text": "Carter's hole with its cosmological constant traded for a rotating fluid whose $\\mu + 3p$ is constant. Where the fluid's density and pressure cancel, Wahlquist's family is Kerr-de Sitter [mars2001]."
     }
   ],
   "references": [
@@ -118,7 +123,8 @@
     "booth1999",
     "kamran2009",
     "plebanski1976",
-    "bini2003"
+    "bini2003",
+    "mars2001"
   ],
   "coordinates": [
     {

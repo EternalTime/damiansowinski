@@ -217,6 +217,7 @@ from functools import lru_cache
 from pathlib import Path
 
 import contourpy
+import mpmath
 import numpy as np
 import sympy as sp
 from scipy.integrate import quad, solve_ivp
@@ -1453,6 +1454,38 @@ HT_STAR = {"m": 1, "a": "1/4", "q": "1/4", "R": 6}
 HT_SIMPLE = {"m": 1, "a": "1/4", "R": 6}
 HT_AXIS = {"theta": "0", "phi": "0"}
 HT_CONE = "future cone of no angular momentum"
+# Wahlquist's fluid at k = 3/10 and b = 4/5, in units of r_0: eta_0 is the root of his h_2, where the
+# axis lies, gamma his c, which keeps the axis regular, and the surface of zero pressure crosses the
+# equatorial plane at xi = sin(X_s)/k, with X_s cot(X_s) = b^2 the surface of Whittaker's sphere.
+# wahlquist_body solves each from the published h_1 and h_2, and --verify holds these digits to it.
+WAHLQUIST_ETA0, WAHLQUIST_GAMMA = "1.02460115214", "1.02881004732"
+WAHLQUIST_XI_S, WAHLQUIST_Y_S, WAHLQUIST_X_S = "2.80977761761", "3.34237393369", "1.00271218011"
+WAHLQUIST = {"r_0": 1, "k": "3/10", "b": "4/5", "eta_0": WAHLQUIST_ETA0, "gamma": WAHLQUIST_GAMMA}
+WAHLQUIST_MARS = {"Q_0": 1, "nu_0": 1, "mu_0": "9/64", "a_1": 0, "a_2": 0, "beta": "3/10"}
+WAHLQUIST_STATIC = {"R_0": 1, "b": "4/5"}
+WAHLQUIST_CONE = "future cone of no angular momentum"
+
+
+def wahlquist_star(x, where):
+    """The tortoise coordinate of Wahlquist's fluid at the declared body, written out from his
+    formulas independently of the file: on the equatorial plane with phi divided out, the
+    quadrature of sqrt(g_xixi/N^2) from the ring, with N^2 = -g_tt + g_tphi^2/g_phiphi, and on
+    Whittaker's sphere the quadrature of 1/F from the centre."""
+    k, b = mpmath.mpf(3) / 10, mpmath.mpf(4) / 5
+    e0, g = mpmath.mpf(WAHLQUIST_ETA0), mpmath.mpf(WAHLQUIST_GAMMA)
+
+    def speed(s):
+        if where == "static":
+            return 1.0 / (1 + (1 - s / math.tan(s)) / 0.64) if s > 1e-6 else 1.0
+        # In thirty digits, which is what the subtractions near the ring want.
+        with mpmath.workdps(30):
+            s = mpmath.mpf(max(s, 1e-12))
+            h1 = 1 + s * s + (s / b ** 2) * (s - mpmath.sqrt(1 - k * k * s * s) * mpmath.asin(k * s) / k)
+            f = (h1 - 1) / (s * s)
+            drag = g * (s * s / (h1 - 1) - e0 ** 2)
+            around = g * g * s * s * h1 / (h1 - 1) - f * drag ** 2
+            return float(mpmath.sqrt(s * s / ((1 - k * k * s * s) * h1) / (f + (f * drag) ** 2 / around)))
+    return np.array([quad(speed, 0.0, float(v), epsabs=1e-12, epsrel=1e-12)[0] for v in np.ravel(x)]).reshape(np.shape(x))
 
 
 def ht_functions(r, a=0.25, q=0.25):
@@ -3087,6 +3120,30 @@ DIAGRAMS = [
     Diagram("schrodinger_spacetime", "poincare_6d", "middle", "$r = \\beta$", ("t", "\\xi"), SCHRODINGER_BOX,
             "$\\xi/\\beta$", "$ct/\\beta$", SCHRODINGER, {"x_1": "0", "x_2": "0", "x_3": "0", "r": "1"},
             orient="vector", families=SIDEWAYS),
+    # Wahlquist's fluid, drawn in its own rest frame at k = 3/10 and b = 4/5. The equatorial plane and
+    # the disc xi = 0 inside it are surfaces of mirror symmetry, so the rays of no angular momentum
+    # that start on one stay on it; phi is divided out of each, as on Hartle and Thorne's equator.
+    # Mars's two charts draw the same body at Q_0 = r_0^2, nu_0 = 1, a_1 = a_2 = 0, beta = k/r_0 and
+    # mu_0 = k^2/(b r_0)^2, and Whittaker's sphere is the body at rest with the same b.
+    Diagram("wahlquist", "wahlquist", "equator", "$t$ and $\\xi$ on the equatorial plane", ("t", "\\xi"),
+            (0, 3, -1.5, 1.5), "$\\xi$", "$ct/r_0$", WAHLQUIST, {"eta": "0"}, quotient="phi", cone=WAHLQUIST_CONE,
+            lines=(("surface", "r", WAHLQUIST_XI_S, "the surface of zero pressure"),)),
+    Diagram("wahlquist", "wahlquist", "disc", "$t$ and $\\eta$ on the disc", ("t", "\\eta"),
+            (0, 1.0246, -0.75, 0.75), "$\\eta$", "$ct/r_0$", WAHLQUIST, {"xi": "0"}, families=SIDEWAYS, quotient="phi",
+            cone=WAHLQUIST_CONE),
+    Diagram("wahlquist", "mars", "equator", "$\\tau$ and $y$ on the equatorial plane", ("\\tau", "y"),
+            (0, 3.6, -1.8, 1.8), "$y/r_0$", "$c\\tau/r_0$", WAHLQUIST_MARS, {"z": "0"}, tau="tau", quotient="sigma",
+            cone=WAHLQUIST_CONE, lines=(("surface", "r", WAHLQUIST_Y_S, "the surface of zero pressure"),)),
+    Diagram("wahlquist", "mars_ingoing", "equator", "$v$ and $y$ on the equatorial plane", ("v", "y"),
+            (0, 3.6, -1.8, 1.8), "$y/r_0$", "$(v - y)/r_0$", WAHLQUIST_MARS, {"z": "0"}, to_display=FINKELSTEIN_IN,
+            orient="ingoing", quotient="phi", cone=WAHLQUIST_CONE,
+            lines=(("surface", "r", WAHLQUIST_Y_S, "the surface of zero pressure"),)),
+    Diagram("wahlquist", "whittaker", "radial", "$t$ and $X$", ("t", "X"),
+            (0, 1.1, -0.55, 0.55), "$X$", "$ct/R_0$", WAHLQUIST_STATIC, EQUATOR,
+            lines=(("surface", "r", WAHLQUIST_X_S, "the surface of zero pressure, $X = X_s$"),)),
+    Diagram("wahlquist", "whittaker", "through", "through the centre", ("t", "X"),
+            (0, 1.1, -1.1, 1.1), "$x$", "$ct/R_0$", WAHLQUIST_STATIC, EQUATOR, mirror=True, families=SIDEWAYS,
+            cones=(4, 8), lines=(("surface", "r", WAHLQUIST_X_S, "the surface of zero pressure, $X = X_s$"),)),
 ]
 
 
@@ -3272,6 +3329,51 @@ LB_CAPTIONS = {
         4, "The profile grows as $\\ln\\rho$ without bound, so no ray sent against the beam escapes to "
            "infinity. One launched straight outward from here, with no angular momentum about the axis, turns back "
            "at a finite distance and falls into the beam."),
+    ("wahlquist", "wahlquist", "equator"): [
+        "The equatorial plane ($\\eta = 0$) drawn in $t$ and $\\xi$ with $\\phi$ divided out, from the ring "
+        "$\\xi = 0$ to the surface of zero pressure at $\\xi = 2.810$ ($k = 3/10$, $b = 4/5$). The fluid is at rest "
+        "in these coordinates, so its world lines are vertical. The null curves are the shadows on $t$ and $\\xi$ of "
+        "the null geodesics of zero angular momentum, each turning in $\\phi$ at "
+        "$d\\phi/d(ct) = -g_{t\\phi}/g_{\\phi\\phi}$, and each cone is the future cone of those directions.",
+        "Seen from the fluid, such a ray is carried round the axis at $0.049\\,c/r_0$ on the ring and at "
+        "$0.075\\,c/r_0$ at the surface. The cones open without bound toward the ring, where $g_{\\xi\\xi} = 0$, "
+        "and their edges are $d\\xi/d(ct) = \\pm 0.888/r_0$ at the surface.",
+    ],
+    ("wahlquist", "wahlquist", "disc"): [
+        "The disc $\\xi = 0$, the part of the equatorial plane inside the ring, drawn in $t$ and $\\eta$ with "
+        "$\\phi$ divided out, from the ring $\\eta = 0$ to the centre of the body on the axis, "
+        "$\\eta = \\eta_0 = 1.0246$ ($k = 3/10$, $b = 4/5$). The coordinate $\\eta$ runs across the disc as the "
+        "cosine of a polar angle does, so the cones close toward the centre, where $h_2 = 0$ and $g_{\\eta\\eta}$ "
+        "diverges while the distance from the ring stays finite, $1.035\\,r_0$.",
+        "The pressure is greatest at the centre, $p = 0.195\\,\\mu_0$, where $-g_{tt} = 1/\\eta_0^2 = 0.953$, and "
+        "a ray of zero angular momentum is carried round the axis there at $0.047\\,c/r_0$.",
+    ],
+    ("wahlquist", "mars", "equator"): [
+        "The equatorial plane ($z = 0$) drawn in $\\tau$ and $y$ with $\\sigma$ divided out, for the same body in Mars's constants ($Q_0 = r_0^2$, $\\nu_0 = 1$, $a_1 = a_2 = 0$, $\\beta = k/r_0$, $\\mu_0 = k^2/b^2r_0^2$), "
+        "from the ring $y = 0$ to the surface of zero pressure at $y = 3.342\\,r_0$. Here "
+        "$y = (r_0/k)\\arcsin(k\\xi)$, and $c\\tau = ct + \\gamma r_0\\eta_0^2\\phi$ and "
+        "$\\sigma = \\gamma\\phi/r_0$ mix Wahlquist's time and angle, so the circles divided out are those of "
+        "another Killing vector, and the rays are the null geodesics with no momentum along $\\sigma$.",
+    ],
+    ("wahlquist", "mars_ingoing", "equator"): [
+        "The equatorial plane ($z = 0$) drawn in $v$ and $y$ with $\\phi$ divided out, for the same body in Mars's constants ($Q_0 = r_0^2$, $\\nu_0 = 1$, $a_1 = a_2 = 0$, $\\beta = k/r_0$, $\\mu_0 = k^2/b^2r_0^2$), "
+        "with $v - y$ upward. The ingoing rays are the lines of constant $v$, the principal null congruence the "
+        "chart is built along, and it follows them through any zero of $V$. This body has none, $V \\ge Q_0$ "
+        "throughout the fluid, and the outgoing rays run from the ring to the surface of zero pressure at "
+        "$y = 3.342\\,r_0$.",
+    ],
+    ("wahlquist", "whittaker", "radial"): [
+        "The plane of $t$ and $X$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole fluid ($X \\in [0, X_s]$, "
+        "$b = 4/5$, $X_s = 1.0027$). The edges of the cones are $dX/d(ct) = \\pm F/R_0$: 45° at the centre, where "
+        "$F = 1$ and clocks run slowest, opening to $F = b^{-2} = 1.5625$ at the surface. The areal radius there is "
+        "$R_0\\sin X_s = 0.843\\,R_0$ and the proper radius $0.929\\,R_0$, and the central pressure is "
+        "$(1 - b^2)\\mu_0/2 = 0.18\\,\\mu_0$.",
+    ],
+    ("wahlquist", "whittaker", "through"): [
+        "The line through the centre of the sphere in the plane $\\theta = \\pi/2$ ($b = 4/5$): $x = X$ on the "
+        "right is $\\phi = 0$ and $x = -X$ on the left is $\\phi = \\pi$. Rays cross the centre smoothly, and "
+        "the cones are narrowest there.",
+    ],
 }
 
 def _roberts_captions():
@@ -10749,6 +10851,10 @@ CLOSED_FORMS.update({
         (lambda t, r: t + ht_star(r, 1.0), lambda t, r: t - ht_star(r, 1.0), None),
     ("hartle_thorne", "hartle_thorne", "equator"):
         (lambda t, r: t + ht_star(r, -0.5), lambda t, r: t - ht_star(r, -0.5), None),
+    ("wahlquist", "wahlquist", "equator"):
+        (lambda t, r: t + wahlquist_star(r, "equator"), lambda t, r: t - wahlquist_star(r, "equator"), lambda t, r: r > 0.02),
+    ("wahlquist", "whittaker", "radial"):
+        (lambda t, r: t + wahlquist_star(r, "static"), lambda t, r: t - wahlquist_star(r, "static"), None),
     ("hartle_thorne", "painleve_gullstrand", "axis"): (lambda t, r: t + pg_in(r), lambda t, r: t - pg_out(r), None),
     ("hartle_thorne", "painleve_gullstrand", "equator"): (lambda t, r: t + pg_in(r), lambda t, r: t - pg_out(r), None),
 })

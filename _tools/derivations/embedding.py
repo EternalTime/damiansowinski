@@ -11144,6 +11144,124 @@ def hartle_thorne(ck, src):
                         "\\sin^2\\theta\\,d\\phi^2)$, so its equator is a plane."])]
 
 
+def wahlquist_stable(e, x):
+    """e, which holds x beside its inverse sine or inverse hyperbolic sine in Wahlquist's h_1 or
+    h_2, written so that nothing cancels at x = 0: with u = k x,
+    arcsin(u) = (u - u^3 G(u))/sqrt(1 - u^2) and arsinh(u) = (u + u^3 H(u))/sqrt(1 + u^2), where
+    G = 1/3 + 2u^2/15 + ... and H = 1/3 - 2u^2/15 + ... are smooth, so that h_1 = 1 + xi^2 +
+    k^2 xi^4 G/b^2 and h_2 = 1 - eta^2 + k^2 eta^4 H/b^2 and the ring's 0/0 cancels as a ratio of
+    polynomials. G and H are then their own series below |u| = 1/20, to u^14, and their closed
+    forms above it."""
+    G, H = sp.Symbol("_G"), sp.Symbol("_H")
+    inverse = [a for a in e.atoms(sp.asin, sp.asinh) if a.has(x)]
+    if len({a.args[0] for a in inverse}) != 1:
+        raise AssertionError(f"{e} does not hold one inverse sine of the slice's coordinate")
+    u = inverse[0].args[0]
+    e = e.xreplace({sp.asin(u): (u - u ** 3 * G) / sp.sqrt(1 - u ** 2), sp.asinh(u): (u + u ** 3 * H) / sp.sqrt(1 + u ** 2)})
+    e = sp.factor(sp.cancel(sp.together(sp.powsimp(e))))
+    w = sp.Symbol("w")
+    closed = {G: (w - sp.sqrt(1 - w ** 2) * sp.asin(w)) / w ** 3, H: (sp.sqrt(1 + w ** 2) * sp.asinh(w) - w) / w ** 3}
+    smooth = {name: sp.Piecewise((sp.series(form, w, 0, 14).removeO().subs(w, u), sp.Abs(u) < sp.Rational(1, 20)),
+                                 (form.subs(w, u), True)) for name, form in closed.items()}
+    return e.xreplace(smooth)
+
+
+def wahlquist(ck, src):
+    """Wahlquist's fluid at k = 3/10 and b = 4/5, the body the spacetime diagrams draw, and
+    Whittaker's sphere with the same b, each on its equatorial plane at one moment of the fluid's
+    own time.
+
+    The rotating body: its equatorial plane is two coordinate surfaces of the spheroidal chart,
+    the disc xi = 0, which eta covers from the centre eta = eta_0 out to the ring eta = 0, and the
+    plane eta = 0 from the ring out to the surface of zero pressure, where k xi = sin(X_s), the
+    surface of Whittaker's sphere. The circles of phi have the circumference 2 pi sqrt(g_phiphi),
+    with the dragging term of the line element in it, since t is the time of the fluid and not
+    of a frame that does not turn. On the ring (h_1 - h_2)/(xi^2 + eta^2) is 0/0 as written and
+    1 in the limit, so each slice is read in the form wahlquist_stable writes, in which that
+    ratio cancels, and the disc to within 10^-9 of the axis, where h_2 = 0. The circle and the
+    tangent of the ring are checked from both sides, and
+    each piece against the profile written out here independently of the file.
+
+    The sphere: R_0^2 (dX^2/F + sin^2 X dphi^2), whose circles are R_0 sin X, checked, and
+    whose bowl climbs at dz/dX = R_0 sqrt(1/F - cos^2 X)."""
+    k, b = 0.3, 0.8
+    eta0, gamma, xi_s = float(nr.WAHLQUIST_ETA0), float(nr.WAHLQUIST_GAMMA), float(nr.WAHLQUIST_XI_S)
+    near, axis = 0.0, 1e-9
+    # eta_0 and gamma as exact fractions, so that sympy takes the tangent on the ring exactly.
+    body_of = {**nr.WAHLQUIST, "eta_0": nr.WAHLQUIST_ETA0.replace(".", "") + "/10**11",
+               "gamma": nr.WAHLQUIST_GAMMA.replace(".", "") + "/10**11"}
+
+    def circle(xi, eta):
+        """sqrt(g_phiphi) from Wahlquist's formulas as he wrote them, in forty digits, which is
+        what the subtractions near the ring want; on the ring itself, a point 10^-12 off it."""
+        def one(x, e):
+            with mpmath.workdps(40):
+                x, e = mpmath.mpf(float(x)), mpmath.mpf(float(e))
+                if x == 0 and e == 0:
+                    x = mpmath.mpf(10) ** -12
+                kk, bb, e0, g = mpmath.mpf(3) / 10, mpmath.mpf(4) / 5, mpmath.mpf(nr.WAHLQUIST_ETA0), mpmath.mpf(nr.WAHLQUIST_GAMMA)
+                h1 = 1 + x * x + (x / bb ** 2) * (x - mpmath.sqrt(1 - kk * kk * x * x) * mpmath.asin(kk * x) / kk)
+                h2 = 1 - e * e - (e / bb ** 2) * (e - mpmath.sqrt(1 + kk * kk * e * e) * mpmath.asinh(kk * e) / kk)
+                drag = (x * x * h2 + e * e * h1) / (h1 - h2) - e0 ** 2
+                lapse = (h1 - h2) / (x * x + e * e)
+                return float(g * mpmath.sqrt((x * x + e * e) * h1 * h2 / (h1 - h2) - lapse * drag ** 2))
+        return np.vectorize(one)(xi, eta)
+
+    plane = Slice(src, "wahlquist", "wahlquist", "\\xi", "\\phi", {"t": 0, "eta": 0}, body_of, rewrite=wahlquist_stable)
+    disc = Slice(src, "wahlquist", "wahlquist", "\\eta", "\\phi", {"t": 0, "xi": 0}, body_of, rewrite=wahlquist_stable)
+    size = 2 * float(circle(xi_s, 0.0))
+    inner = Piece("disc", "star", disc, near, eta0 - axis, 0.0, -1,
+                  (("join", "the ring $\\xi = \\eta = 0$"), ("axis", "the centre $\\eta = \\eta_0$, where the surface is smooth")),
+                  [(0.5, "r", None), (0.9, "r", None)], size)
+    outer = Piece("plane", "star", plane, near, xi_s, 0.0, 1,
+                  (("join", "the ring $\\xi = \\eta = 0$"), ("edge", "the surface of zero pressure, where the fluid ends")),
+                  [(near, "space", "the ring"), (1.0, "r", None), (2.0, "r", None), (xi_s, "surface", "the surface")], size)
+    body = Surface([inner, outer])
+    ck.isometry("Wahlquist, the disc", inner)
+    ck.isometry("Wahlquist, the plane outside the ring", outer)
+    ck.join("Wahlquist, the disc meets the plane on the ring", inner, near, outer, near)
+    ck.radius("Wahlquist, the circles of the disc", inner, lambda e: circle(0.0, e), size)
+    ck.radius("Wahlquist, the circles of the plane", outer, lambda x: circle(x, 0.0), size)
+    ck.add("Wahlquist: the surface crosses the equator where k xi = sin(X_s)",
+           abs(k * xi_s - math.sin(float(nr.WAHLQUIST_X_S))), 1e-10)
+
+    fig = figure_of([body], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *outer.at(near), "the ring", dx=10)
+    ring_label(fig, [0, 0, 0], *outer.at(xi_s), "$p = 0$")
+    fig.legend("fill", "star", "the fluid at $t = 0$ on its equatorial plane")
+    fig.legend("line", "space", "the ring $\\xi = \\eta = 0$, where the disc $\\xi = 0$ meets the plane $\\eta = 0$")
+    fig.legend("line", "r", "$\\eta = 0.5$ and $0.9$ on the disc, $\\xi = 1$ and $2$ outside it")
+    fig.legend("line", "surface", "the surface of zero pressure")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+
+    still = Slice(src, "wahlquist", "whittaker", "X", "\\phi", {"t": 0, "theta": "pi/2"}, nr.WAHLQUIST_STATIC)
+    x_s = float(nr.WAHLQUIST_X_S)
+    static_size = 2 * math.sin(x_s)
+    ball = Piece("star", "star", still, 0.0, x_s, 0.0, 1,
+                 (("axis", "the centre $X = 0$, where the surface is smooth"), ("edge", "the surface of zero pressure, where the fluid ends")),
+                 [(0.25, "r", None), (0.5, "r", None), (0.75, "r", None), (x_s, "surface", "$X = X_s$")], static_size)
+    sphere = Surface([ball])
+    ck.isometry("Whittaker, the sphere", ball)
+    ck.radius("Whittaker, the circles R_0 sin X", ball, np.sin, static_size)
+
+    def bowl(X):
+        return np.array([quad(lambda u: math.sqrt(max(1 / (1 + (1 - u / math.tan(u)) / b ** 2) - math.cos(u) ** 2, 0.0))
+                              if u > 0 else 0.0, 0.0, float(x), epsabs=1e-12, epsrel=1e-12)[0]
+                         for x in np.ravel(X)]).reshape(np.shape(X))
+    ck.form("Whittaker, the bowl dz/dX = R_0 sqrt(1/F - cos^2 X)", ball, bowl, static_size)
+    static = figure_of([sphere], {"star": "star"}, static_size, Camera(-90, 32))
+    ring_label(static, [0, 0, 0], *ball.at(x_s), "$X = X_s$", dx=10)
+    static.legend("fill", "star", "the fluid at $t = 0$ on its equatorial plane")
+    static.legend("line", "r", "$X$ constant, at $0.25$, $0.5$ and $0.75$")
+    static.legend("line", "surface", "the surface of zero pressure, $X = X_s$")
+    static.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("rotating", "The rotating body", "$r_0$", [body], fig.done(),
+                 settings="$r_0 = 1$, the unit of every length, $k = 3/10$, and $b = 4/5$, where $\\eta_0 = 1.0246$ "
+                          "and $\\gamma = 1.0288$."),
+            view("static", "Whittaker's sphere", "$R_0$", [sphere], static.done(),
+                 settings="$R_0 = 1$, the unit of every length, and $b = 4/5$, where $X_s = 1.0027$.")]
+
+
 def flat_slices(ck, src, metric_id, system_id, time="t"):
     """Check that every slice of constant `time` of a coordinate system is flat: its spatial
     metric has no cross term and no component that depends on a spatial coordinate, so at
@@ -11278,6 +11396,7 @@ DRAWN = {
     "fisher_jnw": fisher_jnw,
     "roberts": roberts,
     "hartle_thorne": hartle_thorne,
+    "wahlquist": wahlquist,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -13117,6 +13236,23 @@ CAPTIONS = {
         "The radius $r = \\sin\\chi$ covers one hemisphere and ends at the equator $r = 1$, where "
         "$g_{rr} = a^2/(1 - kr^2)$ diverges while the distance across it stays finite. The other "
         "hemisphere is the same cap turned over.",
+    ],
+    ("wahlquist", "rotating"): [
+        "The equatorial plane of the rotating fluid at one moment of its own time $t$ ($k = 3/10$, $b = 4/5$), with "
+        "every distance along it the metric distance. Inside the ring it is the disc $\\xi = 0$, which $\\eta$ covers "
+        "from the centre $\\eta = \\eta_0$ out to the ring $\\eta = 0$, and outside it the plane $\\eta = 0$, which "
+        "$\\xi$ covers from the ring to the surface of zero pressure at $\\xi = 2.810$. The two meet on the ring with "
+        "one tangent.",
+        "The ring has the circumference $2\\pi \\times 1.028\\,r_0$ and lies $1.035\\,r_0$ from the centre, and the "
+        "surface of zero pressure has $2\\pi \\times 2.959\\,r_0$ and lies $3.310\\,r_0$ from it. Along the axis the "
+        "pole is $3.332\\,r_0$ from the centre, so this body is longer through its poles than across its equator, "
+        "the prolate shape that Bradley, Fodor, Marklund, and Perjés remarked on.",
+    ],
+    ("wahlquist", "static"): [
+        "The equatorial plane of Whittaker's sphere at one moment ($b = 4/5$), the same fluid at rest, with every "
+        "distance along it the metric distance. Its metric is $R_0^2(dX^2/F + \\sin^2X\\,d\\phi^2)$, a bowl with "
+        "the circles $R_0\\sin X$ that climbs at $dz/dX = R_0\\sqrt{1/F - \\cos^2X}$, level at the centre and "
+        "steepest at the surface $X_s = 1.0027$, where the circle is $2\\pi \\times 0.843\\,R_0$.",
     ],
 }
 
