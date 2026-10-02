@@ -370,6 +370,22 @@ class Diagram:
                                     # momentum"
 
 
+# Coleman and De Luccia's two bubbles, thin walled, in units of the curvature radius l: rho(xi) of
+# the wall chart on both sides of the wall, continuous, with rho' dropping across it.
+CDL_INTO_FLAT = "Piecewise((xi, xi < Rational(4, 5)), (sin(xi - Rational(4, 5) + asin(Rational(4, 5))), True))"
+CDL_OUT_OF_FLAT = "Piecewise((sinh(xi), xi < log(3)), (xi - log(3) + Rational(4, 3), True))"
+# The wall in the static chart of the anti-de Sitter space inside it, which it leaves at ct = pi l/2.
+CDL_ADS_WALL = "Piecewise((sqrt(Rational(16, 9) + Rational(25, 9)*tan(t)**2), t < pi/2), (10**9, True))"
+CDL_INPUT = {
+    "into_flat": "A thin wall between a false vacuum of positive energy, de Sitter space of radius $\\ell$, "
+                 "and a true vacuum of zero energy, born with the radius $\\bar\\rho = 4\\ell/5$, where "
+                 "$\\partial_\\xi\\rho$ drops from $1$ to $3/5$.",
+    "out_of_flat": "A thin wall between a false vacuum of zero energy and a true vacuum of negative energy, "
+                   "anti-de Sitter space of radius $\\ell$, born with the radius $\\bar\\rho = 4\\ell/3$, where "
+                   "$\\partial_\\xi\\rho$ drops from $5/3$ to $1$.",
+}
+
+
 def _alcubierre_profile():
     return ("(tanh(4*(sqrt((x - 2*t)**2 + y**2 + z**2) + 1))"
             " - tanh(4*(sqrt((x - 2*t)**2 + y**2 + z**2) - 1)))/(2*tanh(4))")
@@ -1466,6 +1482,42 @@ DIAGRAMS = [
     Diagram("randall_sundrum", "two_walls", "tphi", "$t$ and $\\phi$", ("t", "\\phi"), (-math.pi, math.pi, -4, 4),
             "$\\phi$", "$kct$", {"k": 1, "r_c": "1/2"}, RS_WALL, families=SIDEWAYS, cones=(6, 7),
             periodic=("\\phi",), lines=(("shell", "r", "0", "the wall of positive tension, $\\phi = 0$"),)),
+    # Coleman and De Luccia's bubble with a thin wall, in units of the curvature radius l of the
+    # vacuum that has one. Decay into flat space: de Sitter space outside, Minkowski space inside,
+    # CDL's rho_0 = l, so the wall is at rho_bar = 4l/5 and rho' drops from 1 to 3/5 across it.
+    # Decay of flat space: Minkowski space outside, anti-de Sitter space inside, rho_0 = l, the
+    # wall at rho_bar = 4l/3, where rho' drops from 5/3 to 1. coleman_de_luccia.md derives both.
+    Diagram("coleman_de_luccia", "wall", "into_flat", "decay into flat space", ("\\psi", "\\xi"), (0, 3, -2, 2),
+            "$\\xi/\\ell$", "$\\psi$", {}, EQUATOR, tau="psi", functions={"rho": CDL_INTO_FLAT},
+            lines=(("shell", "r", "4/5", "the wall, $\\rho = \\bar\\rho$"),), input=CDL_INPUT["into_flat"]),
+    Diagram("coleman_de_luccia", "wall", "out_of_flat", "decay of flat space", ("\\psi", "\\xi"), (0, 3, -2, 2),
+            "$\\xi/\\ell$", "$\\psi$", {}, EQUATOR, tau="psi", functions={"rho": CDL_OUT_OF_FLAT},
+            lines=(("shell", "r", "log(3)", "the wall, $\\rho = \\bar\\rho$"),), input=CDL_INPUT["out_of_flat"]),
+    Diagram("coleman_de_luccia", "open", "zero", "zero vacuum energy", ("\\tau", "\\chi"), (0, 3, 0, 3),
+            "$\\chi$", "$c\\tau/\\ell$", {}, EQUATOR, tau="tau", functions={"a": "tau"},
+            input="A new vacuum of zero energy, $a = c\\tau$, with $\\ell$ any length."),
+    Diagram("coleman_de_luccia", "open", "positive", "positive vacuum energy", ("\\tau", "\\chi"), (0, 3, 0, 3),
+            "$\\chi$", "$c\\tau/\\ell$", {}, EQUATOR, tau="tau", functions={"a": "sinh(tau)"},
+            input="A new vacuum of positive energy, $a = \\ell\\sinh(c\\tau/\\ell)$ with $\\ell = \\sqrt{3/\\Lambda}$."),
+    Diagram("coleman_de_luccia", "open", "negative", "negative vacuum energy", ("\\tau", "\\chi"),
+            (0, 3, 0, math.pi), "$\\chi$", "$c\\tau/\\ell$", {}, EQUATOR, tau="tau", functions={"a": "sin(tau)"},
+            input="A new vacuum of negative energy, $a = \\ell\\sin(c\\tau/\\ell)$ with $\\ell = \\sqrt{-3/\\Lambda}$."),
+    Diagram("coleman_de_luccia", "open_conformal", "negative", "negative vacuum energy", ("\\eta", "\\chi"),
+            (0, 3, -3, 3), "$\\chi$", "$\\eta$", {}, EQUATOR, tau="eta", functions={"a": "1/cosh(eta)"},
+            input="A new vacuum of negative energy, $a = \\ell/\\cosh\\eta$ with $\\ell = \\sqrt{-3/\\Lambda}$, "
+                  "for the Kretschmann scalar."),
+    Diagram("coleman_de_luccia", "static_inside", "into_flat", "decay into flat space", ("t", "r"), (0, 4, 0, 4),
+            "$r/\\ell$", "$ct/\\ell$", {"Lambda_T": 0}, EQUATOR, areal=True,
+            functions={"r_w": "sqrt(Rational(16, 25) + t**2)"}, input=CDL_INPUT["into_flat"]),
+    Diagram("coleman_de_luccia", "static_inside", "out_of_flat", "decay of flat space", ("t", "r"),
+            (0, 5, 0, math.pi), "$r/\\ell$", "$ct/\\ell$", {"Lambda_T": -3}, EQUATOR, areal=True,
+            functions={"r_w": CDL_ADS_WALL}, input=CDL_INPUT["out_of_flat"]),
+    Diagram("coleman_de_luccia", "static_outside", "into_flat", "decay into flat space", ("t", "r"), (0, 2, 0, 3),
+            "$r/\\ell$", "$ct/\\ell$", {"Lambda_F": 3}, EQUATOR, orient="outgoing", areal=True,
+            functions={"r_w": "sqrt(Rational(16, 25) + Rational(9, 25)*tanh(t)**2)"}, input=CDL_INPUT["into_flat"]),
+    Diagram("coleman_de_luccia", "static_outside", "out_of_flat", "decay of flat space", ("t", "r"), (0, 5, 0, 4),
+            "$r/\\ell$", "$ct/\\ell$", {"Lambda_F": 0}, EQUATOR, areal=True,
+            functions={"r_w": "sqrt(Rational(16, 9) + t**2)"}, input=CDL_INPUT["out_of_flat"]),
     Diagram("anti_de_sitter", "static_global", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/L$", "$ct/L$", {"L": 1}, EQUATOR, areal=True),
     Diagram("anti_de_sitter", "static_global", "through", "through the centre", ("t", "r"),
@@ -3501,6 +3553,102 @@ CAPTIONS = {
         "the chart covers the inside $R < cT$ of the future light cone of the event $T = R = 0$.",
         "Each comoving particle moves along the straight line $R = cT\\tanh\\chi$ from that event, and "
         "each moment of constant $t$ is the hyperbola $c^2T^2 - R^2 = c^2t^2$.",
+    ],
+    ("coleman_de_luccia", "wall", "into_flat"): [
+        "The plane of $\\psi$ and $\\xi$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the light cone of the bubble's "
+        "centre, for a decay into flat space, in units of the de Sitter radius $\\ell$. The metric on it is "
+        "$d\\xi^2 - \\rho^2d\\psi^2$, so the edges of the cones are $d\\xi/d\\psi = \\pm\\rho$: they close toward "
+        "the light cone $\\xi = 0$, which a ray reaches only as $\\psi \\to \\pm\\infty$, and they are widest "
+        "where $\\rho$ is greatest, on de Sitter's equator.",
+        "The wall is the line $\\xi = 4\\ell/5$, at rest in these coordinates, with flat space to its left, "
+        "$\\rho = \\xi$, and de Sitter space to its right, $\\rho = \\ell\\sin((\\xi - \\xi_0)/\\ell)$ with "
+        "$\\xi_0 = 4\\ell/5 - \\ell\\arcsin(4/5)$. A ray crosses the wall with a kink, since $\\rho$ is continuous "
+        "and its slope is not. On the far side $\\rho$ falls to zero again at $\\xi = 3.01\\,\\ell$, the light "
+        "cone of the event opposite the bubble's centre.",
+    ],
+    ("coleman_de_luccia", "wall", "out_of_flat"): [
+        "The plane of $\\psi$ and $\\xi$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the light cone of the bubble's "
+        "centre, for a decay of flat space, in units of the anti-de Sitter radius $\\ell$. The metric on it is "
+        "$d\\xi^2 - \\rho^2d\\psi^2$, so the edges of the cones are $d\\xi/d\\psi = \\pm\\rho$, and they close "
+        "toward the light cone $\\xi = 0$, which a ray reaches only as $\\psi \\to \\pm\\infty$.",
+        "The wall is the line $\\xi = \\ell\\ln 3$, at rest in these coordinates, with anti-de Sitter space to its "
+        "left, $\\rho = \\ell\\sinh(\\xi/\\ell)$, and flat space to its right, where $\\rho$ grows by one for each "
+        "unit of $\\xi$. To the right the plane is Rindler's: an observer at fixed $\\xi$ accelerates away from "
+        "the bubble at $c^2/\\rho$ and the wall, which accelerates at $c^2/\\bar\\rho$ on the flat side, never "
+        "reaches that observer.",
+    ],
+    ("coleman_de_luccia", "open", "zero"): [
+        "The plane of $\\tau$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) inside a bubble whose new vacuum has "
+        "zero energy, with $\\ell$ any length. The edges of the cones are $d\\chi/d(c\\tau) = \\pm 1/a$ with "
+        "$a = c\\tau$, so $\\ln\\tau \\pm \\chi$ is constant along a ray and the cones open out toward $\\tau = 0$.",
+        "The whole line $\\tau = 0$ is the light cone of the bubble's centre, where $a$ vanishes and the curvature "
+        "stays finite. This universe is Milne's, flat space in hyperbolic slices, and the wall lies beyond the "
+        "light cone, outside the plane.",
+    ],
+    ("coleman_de_luccia", "open", "positive"): [
+        "The plane of $\\tau$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) inside a bubble whose new vacuum has "
+        "positive energy, in units of its de Sitter radius $\\ell$. The edges of the cones are "
+        "$d\\chi/d(c\\tau) = \\pm 1/a$ with $a = \\ell\\sinh(c\\tau/\\ell)$, so $\\ln\\tanh(c\\tau/2\\ell) \\pm \\chi$ "
+        "is constant along a ray.",
+        "The cones open out toward the light cone $\\tau = 0$ and close as the universe inflates, and a ray that "
+        "leaves $\\chi = 0$ at the time $\\tau_1$ never passes $\\chi = -\\ln\\tanh(c\\tau_1/2\\ell)$, its event "
+        "horizon. The Kretschmann scalar is $24/\\ell^4$ everywhere.",
+    ],
+    ("coleman_de_luccia", "open", "negative"): [
+        "The plane of $\\tau$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) inside a bubble whose new vacuum has "
+        "negative energy, in units of its anti-de Sitter radius $\\ell$. The edges of the cones are "
+        "$d\\chi/d(c\\tau) = \\pm 1/a$ with $a = \\ell\\sin(c\\tau/\\ell)$, so $\\ln\\tan(c\\tau/2\\ell) \\pm \\chi$ "
+        "is constant along a ray, and the cones are narrowest at $c\\tau = \\pi\\ell/2$, where the universe is "
+        "largest.",
+        "The scale factor returns to zero at $c\\tau = \\pi\\ell$, the top edge. In this exact solution the "
+        "Kretschmann scalar is $24/\\ell^4$ there as everywhere, a coordinate singularity like the one at "
+        "$\\tau = 0$, and Coleman and De Luccia argued that any small disturbance of the field makes it a true "
+        "singularity, a crunch.",
+    ],
+    ("coleman_de_luccia", "open_conformal", "negative"): [
+        "The plane of the conformal time $\\eta$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the bubble. "
+        "The metric on it is $a^2(-d\\eta^2 + d\\chi^2)$; the scale factor multiplies both terms and drops out of "
+        "the null condition, so the rays are straight 45° lines whatever $a(\\eta)$ is.",
+        "For a new vacuum of negative energy $\\eta = \\ln\\tan(c\\tau/2\\ell)$ and $a = \\ell/\\cosh\\eta$: the "
+        "light cone of the bubble's centre is $\\eta \\to -\\infty$, the universe is largest at $\\eta = 0$, and "
+        "the return of $a$ to zero is $\\eta \\to \\infty$.",
+    ],
+    ("coleman_de_luccia", "static_inside", "into_flat"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the wall for a decay into flat space, "
+        "from the moment $t = 0$ the bubble appears, in units of the de Sitter radius $\\ell$ of the vacuum "
+        "outside. The metric is Minkowski's, so every ray is a straight 45° line, and the chart ends at the wall, "
+        "the hyperbola $r_w^2 = \\bar\\rho^2 + c^2t^2$ with $\\bar\\rho = 4\\ell/5$.",
+        "The wall starts at rest and approaches the light cone $r = ct$ of the bubble's centre, with the "
+        "acceleration $c^2/\\bar\\rho$ seen from this side. An outgoing ray that leaves the centre after $t = 0$ "
+        "never catches it.",
+    ],
+    ("coleman_de_luccia", "static_inside", "out_of_flat"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the wall for a decay of flat space, "
+        "from the moment $t = 0$ the bubble appears, in the static coordinates of the anti-de Sitter space "
+        "inside, in units of its radius $\\ell$. The edges of the cones are $dr/d(ct) = \\pm(1 + r^2/\\ell^2)$, so "
+        "$ct \\pm \\ell\\arctan(r/\\ell)$ is constant along a ray.",
+        "The chart ends at the wall, $r_w^2 = \\bar\\rho^2 + (\\ell^2 + \\bar\\rho^2)\\tan^2(ct/\\ell)$ with "
+        "$\\bar\\rho = 4\\ell/3$, which runs out to infinite $r$ at $ct = \\pi\\ell/2$. The open universe inside "
+        "the bubble is the region above the ray $ct = \\ell\\arctan(r/\\ell)$ from the centre, and its moment "
+        "$\\tau$ is the curve $\\sqrt{\\ell^2 + r^2}\\cos(ct/\\ell) = \\ell\\cos(c\\tau/\\ell)$.",
+    ],
+    ("coleman_de_luccia", "static_outside", "into_flat"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the wall for a decay into flat space, "
+        "from the moment $t = 0$ the bubble appears, in the static coordinates of the de Sitter space outside, "
+        "in units of its radius $\\ell$. The cones close at the cosmological horizon $r = \\ell$ of an observer "
+        "at the bubble's centre, where $g^{rr}$ vanishes.",
+        "The chart begins at the wall, $r_w^2 = \\bar\\rho^2 + (\\ell^2 - \\bar\\rho^2)\\tanh^2(ct/\\ell)$ with "
+        "$\\bar\\rho = 4\\ell/5$, which starts at rest and reaches the horizon only as $t \\to \\infty$. Beyond "
+        "the horizon $t$ is spacelike, and the cones point along the outgoing rays to larger $r$.",
+    ],
+    ("coleman_de_luccia", "static_outside", "out_of_flat"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the wall for a decay of flat space, "
+        "from the moment $t = 0$ the bubble appears, in units of the anti-de Sitter radius $\\ell$ of the vacuum "
+        "inside. The metric is Minkowski's, so every ray is a straight 45° line, and the chart begins at the "
+        "wall, the hyperbola $r_w^2 = \\bar\\rho^2 + c^2t^2$ with $\\bar\\rho = 4\\ell/3$.",
+        "An observer at rest at the radius $R$ meets the wall at $ct = \\sqrt{R^2 - \\bar\\rho^2}$, and a light ray sent "
+        "inward from the wall at the moment it appears reaches that observer at $ct = R - \\bar\\rho$, so for a "
+        "distant observer the warning comes a time $\\bar\\rho^2/2Rc$ ahead of the wall.",
     ],
     ("domain_wall", "planar", "tz"): [
         "The plane of $t$ and $z$ ($x = y = 0$), the same at every $x$ and $y$, in units of $1/k$. The "
@@ -7207,6 +7355,21 @@ def _ds_radius(rho):
     return (2.04 + 0.04 * np.cosh(np.asarray(rho, float))) / 2.08
 
 
+def cdl_conformal_distance(xi, bubble):
+    """X(xi), the integral of d xi/rho across the thin wall of each declared bubble of Coleman
+    and De Luccia, l = 1, with psi -+ X constant along the rays of the wall chart. Decay into
+    flat space: ln xi inside the wall at 4/5 and ln tan((xi - xi_0)/2) + ln(8/5) outside it, since
+    tan(arcsin(4/5)/2) = 1/2. Decay of flat space: ln tanh(xi/2) inside the wall at ln 3, where
+    it is ln(1/2), and ln(xi - ln 3 + 4/3) + ln(3/8) outside it."""
+    xi = np.asarray(xi, dtype=float)
+    with np.errstate(all="ignore"):
+        if bubble == "into_flat":
+            angle = xi - 0.8 + math.asin(0.8)
+            return np.where(xi < 0.8, np.log(xi), np.log(np.tan(angle / 2)) + math.log(1.6))
+        return np.where(xi < math.log(3), np.log(np.tanh(xi / 2)),
+                        np.log(xi - math.log(3) + 4 / 3) + math.log(3 / 8))
+
+
 def _tsw_lstar(l):
     """The tortoise coordinate of the thin shell wormhole's chart through the throat, r_s = 1 and
     a = 5/4, zero at the throat: dl_*/dl = (a + |l|)/(a + |l| - r_s)."""
@@ -7387,6 +7550,28 @@ CLOSED_FORMS = {
     ("randall_sundrum", "poincare", "tz"): (lambda t, z: t + z, lambda t, z: t - z, None),
     ("randall_sundrum", "two_walls", "tphi"):
         (lambda t, f: t + np.sign(f) * np.expm1(np.abs(f) / 2), lambda t, f: t - np.sign(f) * np.expm1(np.abs(f) / 2), None),
+    ("coleman_de_luccia", "wall", "into_flat"):
+        (lambda psi, xi: psi + cdl_conformal_distance(xi, "into_flat"),
+         lambda psi, xi: psi - cdl_conformal_distance(xi, "into_flat"), lambda psi, xi: (xi > 0.05) & (xi < 2.95)),
+    ("coleman_de_luccia", "wall", "out_of_flat"):
+        (lambda psi, xi: psi + cdl_conformal_distance(xi, "out_of_flat"),
+         lambda psi, xi: psi - cdl_conformal_distance(xi, "out_of_flat"), lambda psi, xi: xi > 0.05),
+    ("coleman_de_luccia", "open", "zero"):
+        (lambda tau, c: np.log(tau) + c, lambda tau, c: np.log(tau) - c, lambda tau, c: tau > 0.02),
+    ("coleman_de_luccia", "open", "positive"):
+        (lambda tau, c: np.log(np.tanh(tau / 2)) + c, lambda tau, c: np.log(np.tanh(tau / 2)) - c,
+         lambda tau, c: tau > 0.02),
+    ("coleman_de_luccia", "open", "negative"):
+        (lambda tau, c: np.log(np.tan(tau / 2)) + c, lambda tau, c: np.log(np.tan(tau / 2)) - c,
+         lambda tau, c: (tau > 0.02) & (tau < math.pi - 0.02)),
+    ("coleman_de_luccia", "open_conformal", "negative"): (lambda eta, c: eta + c, lambda eta, c: eta - c, None),
+    ("coleman_de_luccia", "static_inside", "into_flat"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("coleman_de_luccia", "static_inside", "out_of_flat"):
+        (lambda t, r: t + np.arctan(r), lambda t, r: t - np.arctan(r), None),
+    ("coleman_de_luccia", "static_outside", "into_flat"):
+        (lambda t, r: t + 0.5 * np.log(np.abs((1 + r) / (1 - r))),
+         lambda t, r: t - 0.5 * np.log(np.abs((1 + r) / (1 - r))), lambda t, r: np.abs(r - 1) > 0.05),
+    ("coleman_de_luccia", "static_outside", "out_of_flat"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("domain_wall", "planar", "tz"):
         (lambda t, z: t - np.sign(z) * np.log(1 - np.abs(z)), lambda t, z: t + np.sign(z) * np.log(1 - np.abs(z)),
          lambda t, z: np.abs(z) < 0.95),

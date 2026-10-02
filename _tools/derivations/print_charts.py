@@ -7,7 +7,7 @@ robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, 
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
-som_raychaudhuri and point_particle_2plus1, and Godel's cylindrical chart.
+som_raychaudhuri, point_particle_2plus1 and coleman_de_luccia, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -8070,6 +8070,271 @@ def som_raychaudhuri_pullback(chart):
 
 
 CHARTS["som_raychaudhuri"] = [lambda s=s: som_raychaudhuri(s) for s in SR_CHARTS]
+# -- Coleman-De Luccia -------------------------------------------------------------------
+
+CDL_CHARTS = ["wall", "open", "open_conformal", "static_inside", "static_outside"]
+CDL_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+CDL_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+CDL_OPEN = "\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)"
+CDL_WALL = "\\left(-d\\psi^2 + \\cosh^2\\psi\\,d\\theta^2 + \\cosh^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def coleman_de_luccia(system):
+    """The five charts of the bubble of Coleman and De Luccia, a spacetime with the symmetry
+    O(3,1) of the Lorentz group about the event the bubble is centred on.
+
+    Outside that event's light cone it is their (4.1), d xi^2 + rho(xi)^2 times the unit
+    hyperboloid with spacelike normal, de Sitter space of three dimensions, written here in the
+    rapidity psi and the sphere's angles; rho is left free, as they leave it, so the chart
+    holds for a wall of any thickness and its G^xi_xi is their (3.4). Inside the future light
+    cone it is their (4.2), the open Robertson-Walker universe with rho(i tau) for its scale
+    factor, in the proper time and in the conformal time of Bucher, Goldhaber and Turok. On
+    either side of a thin wall the spacetime is a vacuum with a cosmological constant, and its
+    static chart about the bubble's centre is the chart of Blau, Guendelman and Guth and of
+    Berezin, Kuzmin and Tkachev, with the wall on the curve r = r_w(t).
+
+    coleman_de_luccia_check holds each chart to the others before it is written, and
+    coleman_de_luccia.md derives them."""
+    lam = {"static_inside": "\\Lambda_T", "static_outside": "\\Lambda_F"}.get(system)
+    charts = {
+        "wall": {
+            "name": "Outside the Light Cone", "coords": ["\\psi", "\\xi", "\\theta", "\\phi"],
+            "parameters": ["\\rho = \\rho(\\xi)"],
+            "domains": ["\\psi \\in (-\\infty, \\infty)", "\\xi \\in (0, \\infty)"] + CDL_ANGLES + [
+                "\\xi = 0 \\;\\text{(the light cone of the bubble's centre)}"],
+            "line": "ds^2 = d\\xi^2 + \\rho^2" + CDL_WALL},
+        "open": {
+            "name": "Open Universe", "coords": ["\\tau", "\\chi", "\\theta", "\\phi"],
+            "parameters": ["a = a(\\tau)"],
+            "domains": ["\\tau \\in (0, \\infty)", "\\chi \\in [0, \\infty)"] + CDL_ANGLES + [
+                "\\tau = 0 \\;\\text{(the light cone of the bubble's centre)}"],
+            "line": "ds^2 = -c^2d\\tau^2 + a^2" + CDL_OPEN,
+            "chart": "ds^2 = -d\\tau^2 + a^2" + CDL_OPEN},
+        "open_conformal": {
+            "name": "Open Universe, Conformal Time", "coords": ["\\eta", "\\chi", "\\theta", "\\phi"],
+            "parameters": ["a = a(\\eta)"],
+            "domains": ["\\eta \\in (-\\infty, \\infty)", "\\chi \\in [0, \\infty)"] + CDL_ANGLES + [
+                "\\eta \\to -\\infty \\;\\text{(the light cone of the bubble's centre)}"],
+            "line": "ds^2 = a^2\\left(-d\\eta^2 + d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2"
+                    " + \\sinh^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)"},
+    }
+    if lam:
+        inside = system == "static_inside"
+        f = "\\left(1 - \\dfrac{" + lam + " r^2}{3}\\right)"
+        bare = "1 - \\dfrac{" + lam + " r^2}{3}"
+        charts[system] = {
+            "name": "Static, Inside the Wall" if inside else "Static, Outside the Wall",
+            "coords": ["t", "r", "\\theta", "\\phi"], "parameters": [lam, "r_w = r_w(t)"],
+            "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, r_w]" if inside else "r \\in [r_w, \\infty)"]
+            + CDL_ANGLES + ["r = r_w \\;\\text{(the wall)}"],
+            "line": "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + CDL_SPHERE,
+            "chart": "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + CDL_SPHERE,
+            "components": {
+                "metric_components": {("t", "t"): "-" + f, ("r", "r"): "\\dfrac{3}{3 - " + lam + " r^2}"},
+                "inverse_metric_components": {("t", "t"): "-\\dfrac{3}{3 - " + lam + " r^2}", ("r", "r"): bare}},
+            "kretschmann": "\\dfrac{8" + lam + "^2}{3}"}
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    spec = {
+        "metric_id": "coleman_de_luccia",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line"]},
+        "chart_line_element": chart.get("chart", chart["line"]),
+        "check": lambda c: coleman_de_luccia_check(c, system),
+    }
+    for key in ("components", "kretschmann"):
+        if key in chart:
+            spec[key] = chart[key]
+    if lam:
+        spec["printer"] = {"lead": [probe.parameters[vm.Reader._plain(lam)], probe.symbol["r"]]}
+        return spec
+    function = probe.parameters["rho" if system == "wall" else "a"]
+    spec["printer"] = {"lead": [function], **({} if system == "wall" else {"primed": ["a"]})}
+    spec["pretty"] = coleman_de_luccia_pretty(probe.symbol["\\psi" if system == "wall" else "\\chi"])
+    if system == "open":
+        # The curvature of a moment, which the printer leaves as a bracketed sum of exponentials.
+        expanded = ("\\left(\\dfrac{\\left(a'\\right)^2{s}}{2} - \\dfrac{e^{-2\\chi}\\left(a'\\right)^2{s}}{4}"
+                    " - \\dfrac{e^{2\\chi}\\left(a'\\right)^2{s}}{4} + \\dfrac{e^{-2\\chi}{t}}{4} + \\dfrac{e^{2\\chi}{t}}{4}"
+                    " - \\dfrac{{u}}{2}\\right)")
+        factored = "\\left(a' + 1\\right)\\left(a' - 1\\right)\\sinh^2\\chi"
+        spec["rewrite"] = []
+        for s, t, u, tail in (("", "", "1", ""), ("\\,\\sin^2\\theta", "\\sin^2\\theta", "\\sin^2\\theta", "\\sin^2\\theta")):
+            text = expanded.replace("{s}", s).replace("{t}", t).replace("{u}", u)
+            spec["rewrite"] += [("-" + text, factored + tail), (text, "-" + factored + tail)]
+    if system == "wall":
+        # The curvature of the hyperboloids, 1 - rho'^2, as CDL's (3.4) writes it.
+        spec["ricci_scalar"] = ("\\dfrac{6\\left(1 - \\left(\\partial_\\xi\\rho\\right)^2"
+                                " - \\rho\\,\\partial_\\xi^2\\rho\\right)}{\\rho^2}")
+    return spec
+
+
+def coleman_de_luccia_pretty(angle):
+    """chart_printer.hyperbolic in `angle`, with every derivative of the free function held as a
+    symbol while the hyperbolic functions are reduced, since a Derivative is no generator of a
+    polynomial."""
+    hyperbolic = cp.hyperbolic(angle)
+
+    def pretty(value):
+        value = sp.sympify(value)
+        held = {d: sp.Dummy(f"d{i}") for i, d in enumerate(sorted(
+            value.atoms(sp.Derivative) | value.atoms(sp.core.function.AppliedUndef), key=sp.default_sort_key))}
+        back = {v: k for k, v in held.items()}
+        return hyperbolic(value.xreplace(held)).xreplace(back)
+    return pretty
+
+
+def coleman_de_luccia_vacua(length):
+    """(the name of the vacuum, Lambda, rho(xi) of the wall chart) for a vacuum of zero,
+    positive and negative energy, with `length` the curvature radius sqrt(3/|Lambda|):
+    CDL's rho = xi, their (4.5) and their (4.11)."""
+    xi = sp.Symbol("xi", real=True)
+    return xi, [("zero", sp.Integer(0), xi), ("positive", 3 / length ** 2, length * sp.sin(xi / length)),
+                ("negative", -3 / length ** 2, length * sp.sinh(xi / length))]
+
+
+def coleman_de_luccia_junction():
+    """Israel's condition on the wall chart, against CDL's bubble radii. The published
+    G^psi_psi = (2 rho rho'' + rho'^2 - 1)/rho^2 is singular on a thin wall only through rho'',
+    and a wall of surface energy density and tension sigma has T^psi_psi = -sigma delta(xi - xi_w),
+    so rho' drops across it by k rho_bar, k = 4 pi G sigma/c^4. With rho' = sqrt(1 - Lambda rho^2/3)
+    in each vacuum that is one equation for rho_bar, and CDL's (3.15) and (3.18) solve it, with
+    their rho_0 = 3 sigma/epsilon and their Lambda the length (kappa epsilon/3)^(-1/2), for
+    which k = rho_0/(2 Lambda^2)."""
+    r0, L = sp.symbols("rho_0 L", positive=True)
+    k = r0 / (2 * L ** 2)
+    into_flat = r0 / (1 + (r0 / (2 * L)) ** 2)          # de Sitter outside, Minkowski inside
+    out_of_flat = r0 / (1 - (r0 / (2 * L)) ** 2)        # Minkowski outside, anti-de Sitter inside
+    # 1 - sqrt(1 - rho^2/L^2) = k rho, with the root written out: it is (4L^2 - rho_0^2)/(4L^2 + rho_0^2),
+    # positive while the wall lies on the near side of de Sitter's equator.
+    first = sp.simplify((1 - k * into_flat) ** 2 - (1 - into_flat ** 2 / L ** 2))
+    second = sp.simplify((1 + k * out_of_flat) ** 2 - (1 + out_of_flat ** 2 / L ** 2))
+    if first != 0 or second != 0:
+        raise AssertionError(f"coleman_de_luccia: the junction misses CDL's radii by {first} and {second}")
+
+
+def coleman_de_luccia_wall_radius(lam, rho_bar, t):
+    """The wall's areal radius in the static chart of a vacuum of cosmological constant `lam`,
+    at the chart time x^0 = ct: r_w^2 = rho_bar^2 + (1 - lam rho_bar^2/3) tanh^2(sqrt(lam/3) ct)/(lam/3),
+    the hyperboloid rho = rho_bar."""
+    h = sp.sqrt(lam / 3)
+    return sp.sqrt(rho_bar ** 2 + (1 - lam * rho_bar ** 2 / 3) * sp.tanh(h * t) ** 2 / h ** 2)
+
+
+def coleman_de_luccia_check(chart, system):
+    """Each chart against the others, before it is written.
+
+    wall            with rho of each vacuum its Einstein tensor is -Lambda g, and with rho = xi
+                    its Riemann tensor vanishes; the junction gives CDL's bubble radii;
+    open            the wall chart continued through the light cone, xi = i c tau,
+                    psi = chi + i pi/2 and rho = i a, their (4.2);
+    open_conformal  the open chart pulled back along c d tau = a d eta;
+    static          each vacuum's wall chart is the static chart pulled back along
+                    r = rho cosh psi with tanh(sqrt(Lambda/3) ct) = sqrt(Lambda/3) rho sinh psi/rho',
+                    and the curve r = r_w(t) carries the metric rho_bar^2 times the unit
+                    hyperboloid's, so it is the wall."""
+    def miss(what):
+        raise AssertionError(f"coleman_de_luccia: {what}")
+
+    def wall_chart():
+        spec = coleman_de_luccia("wall")
+        return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+    def tiny(value, point):
+        return abs(complex(sp.sympify(value).xreplace(point).evalf(40))) < 1e-25
+
+    length = sp.Symbol("ell", positive=True)
+    if system == "wall":
+        coleman_de_luccia_junction()
+        rho = chart.reader.parameters["rho"]
+        xi = chart.symbols[1]
+        G = chart.geo.einstein_ll()
+        riemann = chart.geo.riemann_llll()
+        own, vacua = coleman_de_luccia_vacua(length)
+        for name, lam, profile in vacua:
+            profile = profile.subs(own, xi)
+            for i, j in itertools.product(range(4), repeat=2):
+                left = (G[i][j] + lam * chart.geo.g[i, j]).subs(rho, profile).doit()
+                if sp.simplify(left.rewrite(sp.exp)) != 0:
+                    miss(f"the wall chart with the {name} vacuum's rho is no vacuum of Lambda = {lam}")
+            if name == "zero" and any(sp.simplify(vm._at(riemann, index).subs(rho, profile).doit().rewrite(sp.exp)) != 0
+                                      for index in vm._indices(4, 4)):
+                miss("the wall chart with rho = xi is not flat")
+        return
+    if system == "open":
+        wall = wall_chart()
+        psi, xi = wall.symbols[0], wall.symbols[1]
+        tau, chi = chart.symbols[0], chart.symbols[1]
+        a = chart.reader.parameters["a"]
+        continued = wall.geo.g.subs(wall.reader.parameters["rho"], sp.I * a).subs(
+            {psi: chi + sp.I * sp.pi / 2}, simultaneous=True)
+        # d xi = i d(c tau) and d psi = d chi.
+        J = sp.diag(1, sp.I, 1, 1)
+        order = [1, 0, 2, 3]                # the open chart's (tau, chi) are the wall chart's (xi, psi)
+        for i, j in itertools.product(range(4), repeat=2):
+            value = continued[order[i], order[j]] * (J[order[i], order[i]] * J[order[j], order[j]])
+            if sp.simplify((value - chart.geo.g[i, j]).rewrite(sp.exp)) != 0:
+                miss(f"the wall chart continued through the light cone misses the open chart in slot {i}{j}")
+        return
+    if system == "open_conformal":
+        spec = coleman_de_luccia("open")
+        proper = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        a = chart.reader.parameters["a"]
+        at = dict(zip(proper.symbols[1:], chart.symbols[1:]))
+        at[proper.reader.parameters["a"]] = a
+        J = sp.diag(a, 1, 1, 1)
+        pulled = J.T * proper.geo.g.subs(at) * J
+        if any(vm.norm(pulled[i, j] - chart.geo.g[i, j]) != 0 for i in range(4) for j in range(4)):
+            miss("the open chart pulled back along c d tau = a d eta misses the conformal time chart")
+        return
+    # A static chart: the wall chart of each vacuum is its pullback, at random points in forty digits.
+    wall = wall_chart()
+    psi, xi = wall.symbols[0], wall.symbols[1]
+    lam_symbol = chart.reader.parameters["Lambda_T" if system == "static_inside" else "Lambda_F"]
+    t, r = chart.symbols[0], chart.symbols[1]
+    rng = random.Random(1980)
+    own, vacua = coleman_de_luccia_vacua(length)
+    for name, lam, profile in vacua:
+        profile = profile.subs(own, xi)
+        slope = sp.diff(profile, xi)
+        if name == "zero":
+            time_of = profile * sp.sinh(psi)
+        elif name == "positive":
+            time_of = length * sp.atanh(profile * sp.sinh(psi) / (length * slope))
+        else:
+            time_of = length * sp.atan(profile * sp.sinh(psi) / (length * slope))
+        radius = profile * sp.cosh(psi)
+        J = sp.eye(4)
+        J[0, 0], J[0, 1] = sp.diff(time_of, psi), sp.diff(time_of, xi)
+        J[1, 0], J[1, 1] = sp.diff(radius, psi), sp.diff(radius, xi)
+        pulled = J.T * chart.geo.g.subs({t: time_of, r: radius, lam_symbol: lam}, simultaneous=True) * J
+        target = wall.geo.g.subs(wall.reader.parameters["rho"], profile).subs(
+            dict(zip(wall.symbols[2:], chart.symbols[2:])))
+        for _ in range(4):
+            # Inside de Sitter's static patch, where its time is real: rho sinh psi < L rho'.
+            point = {length: sp.Rational(rng.randint(120, 200), 100), xi: sp.Rational(rng.randint(10, 60), 100),
+                     psi: sp.Rational(rng.randint(-40, 40), 100), chart.symbols[2]: sp.Rational(rng.randint(30, 150), 100)}
+            for i, j in itertools.product(range(4), repeat=2):
+                if not tiny(pulled[i, j] - target[i, j], point):
+                    miss(f"the {name} vacuum's wall chart is not the {system} chart pulled back, slot {i}{j}")
+    # The curve r = r_w(t) has the metric of the hyperboloid rho = rho_bar: with r_w = rho_bar cosh psi,
+    # (f - r_w'^2/f) dt^2 = rho_bar^2 d psi^2 = rho_bar^2 r_w'^2 dt^2/(r_w^2 - rho_bar^2).
+    rho_bar = sp.Symbol("rho_bar", positive=True)
+    lam = sp.Symbol("lam", real=True)
+    wall_r = coleman_de_luccia_wall_radius(lam, rho_bar, t)
+    f = 1 - lam * wall_r ** 2 / 3
+    rate = sp.diff(wall_r, t)
+    gap = f - rate ** 2 / f - rho_bar ** 2 * rate ** 2 / (wall_r ** 2 - rho_bar ** 2)
+    for value in (sp.Rational(3, 4), -sp.Rational(5, 3), sp.Rational(1, 10 ** 12)):
+        point = {lam: value, rho_bar: sp.Rational(7, 10), t: sp.Rational(3, 5)}
+        if abs(complex(gap.xreplace(point).evalf(60))) > 1e-20:
+            miss(f"the curve r = r_w(t) is not the hyperboloid rho = rho_bar at Lambda = {value}")
+    flat = sp.sqrt(rho_bar ** 2 + t ** 2)
+    if abs(complex((wall_r - flat).xreplace({lam: sp.Rational(1, 10 ** 30), rho_bar: sp.Rational(7, 10),
+                                              t: sp.Rational(3, 5)}).evalf(60))) > 1e-20:
+        miss("r_w does not reduce to the hyperbola rho_bar^2 + c^2 t^2 at Lambda = 0")
+
+
+CHARTS["coleman_de_luccia"] = [lambda s=s: coleman_de_luccia(s) for s in CDL_CHARTS]
 
 # -- Point particles in three dimensions ----------------------------------------------------
 

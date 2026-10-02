@@ -85,6 +85,11 @@
       "id": "randall_sundrum",
       "kind": "composite",
       "text": "Two pieces of anti-de Sitter space of five dimensions joined mirror to mirror along a flat wall, which keeps gravity four dimensional beside a fifth dimension of infinite size [randall1999b]."
+    },
+    {
+      "id": "coleman_de_luccia",
+      "kind": "composite",
+      "text": "A bubble of anti-de Sitter space growing in a vacuum of higher energy. Seen from inside it is an open universe that falls back on itself after a time $\\pi L/c$ [coleman1980]."
     }
   ],
   "references": [
@@ -117,7 +122,8 @@
     "rooman1998",
     "aminneborg1996",
     "mann1997",
-    "randall1999b"
+    "randall1999b",
+    "coleman1980"
   ],
   "coordinates": [
     {

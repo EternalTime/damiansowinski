@@ -69,7 +69,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "39a7b68f78c8bbea",
+    "version": "1a918516dac3cc2c",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -366,6 +366,37 @@
     "embedding": "8cf5301ea3792cef"
   },
   {
+    "id": "coleman_de_luccia",
+    "name": "Coleman-De Luccia",
+    "tags": [
+      "vacuum decay",
+      "false vacuum",
+      "bubble",
+      "thin shell",
+      "matched solution",
+      "cosmology",
+      "cosmological",
+      "open universe",
+      "hyperbolic space",
+      "inflation",
+      "de Sitter",
+      "anti-de Sitter",
+      "cosmological constant",
+      "spherically symmetric",
+      "time-dependent",
+      "dynamical",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "0ad2114b3507dc18",
+    "diagrams": "df6268c48408964f",
+    "conformal": "c502811813a25858",
+    "embedding": "eb3e037703b01e9d"
+  },
+  {
     "id": "curzon_chazy",
     "name": "Curzon-Chazy",
     "tags": [
@@ -450,7 +481,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ab465dabea154100",
+    "version": "49967dbc2b642df4",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -636,7 +667,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "aeab76bba39cedd2",
+    "version": "84728b303e41b4a5",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1382,7 +1413,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b94ef65ac67a7a04",
+    "version": "f3112b049cac44aa",
     "diagrams": "434dbc69f632abef",
     "conformal": "608160b20d1a5d0b",
     "embedding": "6358a5e6f5a871e8"
@@ -1404,7 +1435,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "14df2836225ee701",
+    "version": "07c4cba3085edcf2",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2479,7 +2510,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8984d8c26b5f64b6",
+    "version": "ed846e094f957614",
     "diagrams": "d5e2884c8c7af71d",
     "conformal": "4d7dd21af4c45eda",
     "embedding": "93b27ed492458d6f"

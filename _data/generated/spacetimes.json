@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 84,
+  "count": 85,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -561,6 +561,11 @@
           "id": "randall_sundrum",
           "kind": "composite",
           "text": "Two pieces of anti-de Sitter space of five dimensions joined mirror to mirror along a flat wall, which keeps gravity four dimensional beside a fifth dimension of infinite size [randall1999b]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "composite",
+          "text": "A bubble of anti-de Sitter space growing in a vacuum of higher energy. Seen from inside it is an open universe that falls back on itself after a time $\\pi L/c$ [coleman1980]."
         }
       ],
       "references": [
@@ -593,7 +598,8 @@
         "rooman1998",
         "aminneborg1996",
         "mann1997",
-        "randall1999b"
+        "randall1999b",
+        "coleman1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -3511,6 +3517,387 @@
       ]
     },
     {
+      "id": "coleman_de_luccia",
+      "name": "Coleman-De Luccia Bubble",
+      "short_name": "Coleman-De Luccia",
+      "description": "The spacetime of a false vacuum decaying, found by Sidney Coleman and Frank De Luccia in 1980. A bubble of lower vacuum energy appears by quantum tunnelling, its wall accelerates outward toward the speed of light, and the inside of the bubble is an open universe with no singularity at its start.",
+      "tags": [
+        "vacuum decay",
+        "false vacuum",
+        "bubble",
+        "thin shell",
+        "matched solution",
+        "cosmology",
+        "cosmological",
+        "open universe",
+        "hyperbolic space",
+        "inflation",
+        "de Sitter",
+        "anti-de Sitter",
+        "cosmological constant",
+        "spherically symmetric",
+        "time-dependent",
+        "dynamical",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "milne",
+          "kind": "piece",
+          "text": "The inside of a bubble whose new vacuum has zero energy. With $a = c\\tau$ the open universe inside is Milne's, flat space in hyperbolic slices [bucher1995]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "piece",
+          "text": "The false vacuum of positive energy outside the wall, written around the bubble's centre with $\\rho = \\ell\\sin(\\xi/\\ell)$ [coleman1980]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "piece",
+          "text": "The inside of a bubble whose new vacuum has negative energy. Coleman and De Luccia argued that the smallest disturbance makes it collapse [coleman1980]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "The side of the wall where the vacuum energy is zero: the inside of the bubble if our vacuum is what a decay left behind, the outside if ours is the false one [coleman1980]."
+        },
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "The inside of every bubble is an open Friedmann universe, $k = -1$, and its $a = 0$ is the light cone of the bubble's centre, a coordinate singularity [coleman1980, bucher1995]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "A thin wall with the same flat vacuum on both sides. Its world volume is a hyperboloid as well, de Sitter space of three dimensions [caldwell1996]."
+        }
+      ],
+      "references": [
+        "coleman1977",
+        "coleman1980",
+        "voloshin1974",
+        "callan1977",
+        "parke1983",
+        "abbott1985",
+        "guth1981",
+        "guth1983",
+        "gott1982",
+        "bucher1995",
+        "susskind2007",
+        "freivogel2006",
+        "blau1987",
+        "berezin1987",
+        "israel1966",
+        "farhi1987",
+        "feeney2011",
+        "degrassi2012",
+        "caldwell1996"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/coleman_de_luccia.json",
+      "charts": [
+        {
+          "id": "wall",
+          "name": "Outside the Light Cone",
+          "coordinates": [
+            "\\psi",
+            "\\xi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\psi \\in (-\\infty, \\infty)",
+            "\\xi \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\xi = 0 \\;\\text{(the light cone of the bubble's centre)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\rho = \\rho(\\xi)",
+              "description": "Radius of curvature of the hyperboloid at $\\xi$, a length, zero on the light cone $\\xi = 0$, where $\\partial_\\xi\\rho = 1$. In a vacuum of cosmological constant $\\Lambda$, with $\\ell = \\sqrt{3/|\\Lambda|}$, it is $\\xi$ for $\\Lambda = 0$, $\\ell\\sin(\\xi/\\ell)$ for $\\Lambda > 0$, and $\\ell\\sinh(\\xi/\\ell)$ for $\\Lambda < 0$. Across a thin wall of surface energy density $\\sigma$, on the hyperboloid of radius $\\bar\\rho$, $\\rho$ is continuous and $\\partial_\\xi\\rho$ drops by $4\\pi G\\sigma\\bar\\rho/c^4$"
+            }
+          ],
+          "convention": "We use Coleman and De Luccia's coordinates outside the light cone of the event the bubble is centred on: $\\xi$ is the proper distance along the curves of constant $\\psi$, $\\theta$, and $\\phi$, zero on that light cone, and $\\psi$, $\\theta$, and $\\phi$ are coordinates on the hyperboloid of events at one $\\xi$. The rapidity $\\psi$ is a pure number, itself the chart's $x^0$, and we leave the function $\\rho(\\xi)$ free. In the geodesic equations a dot is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = d\\xi^2 + \\rho^2\\left(-d\\psi^2 + \\cosh^2\\psi\\,d\\theta^2 + \\cosh^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "-\\rho^2"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho^2\\cosh^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2\\cosh^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\left(1 - \\left(\\partial_\\xi\\rho\\right)^2 - \\rho\\,\\partial_\\xi^2\\rho\\right)}{\\rho^2}",
+          "kretschmann": "K = \\dfrac{12\\rho^2\\left(\\partial_\\xi^2\\rho\\right)^2 - 24\\left(\\partial_\\xi\\rho\\right)^2 + 12\\left(\\partial_\\xi\\rho\\right)^4 + 12}{\\rho^4}"
+        },
+        {
+          "id": "open",
+          "name": "Open Universe",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (0, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tau = 0 \\;\\text{(the light cone of the bubble's centre)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\tau)",
+              "description": "Scale factor of the open universe inside the bubble, a length, zero on the light cone $\\tau = 0$, where $a' = 1$. In a vacuum of cosmological constant $\\Lambda$, with $\\ell = \\sqrt{3/|\\Lambda|}$, it is $c\\tau$ for $\\Lambda = 0$, $\\ell\\sinh(c\\tau/\\ell)$ for $\\Lambda > 0$, and $\\ell\\sin(c\\tau/\\ell)$ for $\\Lambda < 0$, which returns to zero at $c\\tau = \\pi\\ell$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$ inside the future light cone of the event the bubble is centred on, with $\\tau$ the proper time since that light cone along the comoving world lines and $\\chi$ a rapidity, a pure number. We leave the scale factor $a(\\tau)$ free. We take components in the chart $x^0 = c\\tau$, a prime is the derivative along that chart time, $a' = da/d(c\\tau)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + a^2\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sinh^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a\\,a'' + 6\\left(a'\\right)^2 - 6}{a^2}",
+          "kretschmann": "K = \\dfrac{12a^2\\left(a''\\right)^2 - 24\\left(a'\\right)^2 + 12\\left(a'\\right)^4 + 12}{a^4}"
+        },
+        {
+          "id": "open_conformal",
+          "name": "Open Universe, Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\eta \\to -\\infty \\;\\text{(the light cone of the bubble's centre)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Scale factor of the open universe inside the bubble, a length. In a vacuum of cosmological constant $\\Lambda$, with $\\ell = \\sqrt{3/|\\Lambda|}$, it is $\\ell e^{\\eta}$ for $\\Lambda = 0$, $-\\ell/\\sinh\\eta$ on $\\eta < 0$ for $\\Lambda > 0$, and $\\ell/\\cosh\\eta$ for $\\Lambda < 0$"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$ of the open universe inside the bubble, a pure number with $a\\,d\\eta = c\\,d\\tau$ for the proper time $\\tau$ of the comoving world lines, and the comoving $\\chi$, $\\theta$, and $\\phi$. The conformal time is itself the chart's $x^0$, and we leave the scale factor $a(\\eta)$ free. A prime is $d/d\\eta$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a^2\\left(-d\\eta^2 + d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sinh^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a'' - 6a}{a^3}",
+          "kretschmann": "K = \\dfrac{12a^4 + 12a^2\\left(a''\\right)^2 - 24a^2\\left(a'\\right)^2 - 24a\\left(a'\\right)^2\\,a'' + 24\\left(a'\\right)^4}{a^8}"
+        },
+        {
+          "id": "static_inside",
+          "name": "Static, Inside the Wall",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, r_w]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_w \\;\\text{(the wall)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda_T",
+              "description": "Cosmological constant of the true vacuum, inside the wall, of either sign, carrying an inverse length squared"
+            },
+            {
+              "symbol": "r_w = r_w(t)",
+              "description": "Areal radius of the wall, a length, with $r_w^2 = \\bar\\rho^2 + \\left(1 - \\Lambda_T\\bar\\rho^2/3\\right)\\tanh^2\\left(\\sqrt{\\Lambda_T/3}\\,ct\\right)/(\\Lambda_T/3)$ for a wall born at rest with the radius $\\bar\\rho$ at $t = 0$; that is $\\bar\\rho^2 + c^2t^2$ at $\\Lambda_T = 0$, and the hyperbolic tangent is a tangent for $\\Lambda_T < 0$"
+            }
+          ],
+          "convention": "We use the static coordinates $(t, r, \\theta, \\phi)$ of the true vacuum about the bubble's centre, with $t$ carrying dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{\\Lambda_T r^2}{3}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{\\Lambda_T r^2}{3}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{\\Lambda_T r^2}{3}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{3}{3 - \\Lambda_T r^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda_T",
+          "kretschmann": "K = \\dfrac{8\\Lambda_T^2}{3}"
+        },
+        {
+          "id": "static_outside",
+          "name": "Static, Outside the Wall",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_w, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_w \\;\\text{(the wall)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda_F",
+              "description": "Cosmological constant of the false vacuum, outside the wall, of either sign, carrying an inverse length squared"
+            },
+            {
+              "symbol": "r_w = r_w(t)",
+              "description": "Areal radius of the wall, a length, with $r_w^2 = \\bar\\rho^2 + \\left(1 - \\Lambda_F\\bar\\rho^2/3\\right)\\tanh^2\\left(\\sqrt{\\Lambda_F/3}\\,ct\\right)/(\\Lambda_F/3)$ for a wall born at rest with the radius $\\bar\\rho$ at $t = 0$; that is $\\bar\\rho^2 + c^2t^2$ at $\\Lambda_F = 0$, and the hyperbolic tangent is a tangent for $\\Lambda_F < 0$"
+            }
+          ],
+          "convention": "We use the static coordinates $(t, r, \\theta, \\phi)$ of the false vacuum about the bubble's centre, with $t$ carrying dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{\\Lambda_F r^2}{3}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{\\Lambda_F r^2}{3}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{\\Lambda_F r^2}{3}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{3}{3 - \\Lambda_F r^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda_F",
+          "kretschmann": "K = \\dfrac{8\\Lambda_F^2}{3}"
+        }
+      ]
+    },
+    {
       "id": "curzon_chazy",
       "name": "Curzon-Chazy Particle",
       "short_name": "Curzon-Chazy",
@@ -4181,6 +4568,11 @@
           "id": "domain_wall",
           "kind": "family",
           "text": "A domain wall is a de Sitter space of one dimension fewer. In the flat space on either side the wall is the hyperboloid $X^2 + Y^2 + Z^2 = 1/k^2 + c^2T^2$, and the metric induced on it is de Sitter's in $2 + 1$ dimensions [ipser1984, caldwell1996]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "composite",
+          "text": "De Sitter space with a bubble of lower vacuum energy growing in it, the way a false vacuum decays [coleman1980]."
         }
       ],
       "references": [
@@ -4212,7 +4604,8 @@
         "kastor1993",
         "mazur2015",
         "ipser1984",
-        "caldwell1996"
+        "caldwell1996",
+        "coleman1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -5795,6 +6188,11 @@
           "id": "schwarzschild",
           "kind": "family",
           "text": "The vacuum around a single mass. Albert Einstein and Ernst Straus cut a ball out of a Friedmann universe of dust in 1945 and put Schwarzschild's solution for the mass removed in its place, so a system inside the hole does not feel the expansion [einstein1945, carrera2010]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "composite",
+          "text": "A bubble of new vacuum with an open Friedmann universe inside it, $k = -1$, and no singularity at its start [coleman1980, bucher1995]."
         }
       ],
       "references": [
@@ -5843,7 +6241,9 @@
         "mcvittie1933",
         "kaloper2010",
         "einstein1945",
-        "carrera2010"
+        "carrera2010",
+        "coleman1980",
+        "bucher1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -12228,6 +12628,11 @@
           "id": "minkowski",
           "kind": "locally_same",
           "text": "Milne's universe is the inside of one event's future light cone in Minkowski space, in the coordinates of particles flying out from that event [robertson1933]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "composite",
+          "text": "A bubble of new vacuum growing in an old one. When the new vacuum has zero energy the inside of the bubble is a Milne universe, with the wall beyond its light cone [coleman1980, bucher1995]."
         }
       ],
       "references": [
@@ -12255,7 +12660,9 @@
         "vaudrevange2007",
         "khoury2002",
         "turok2004",
-        "benoitlevy2012"
+        "benoitlevy2012",
+        "coleman1980",
+        "bucher1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/milne.json",
@@ -12627,6 +13034,11 @@
           "id": "point_particle_2plus1",
           "kind": "locally_same",
           "text": "Minkowski space of three dimensions with a wedge removed along a particle's world line. In a world with two dimensions of space that missing wedge is all the gravity a mass has [deser1984]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "composite",
+          "text": "A false vacuum decaying by a bubble. Flat space is the inside of the bubble where the old vacuum had positive energy, and the outside of it where flat space is the one decaying [coleman1980]."
         }
       ],
       "references": [
@@ -12682,7 +13094,8 @@
         "pitowsky1990",
         "randall1999a",
         "som1968",
-        "deser1984"
+        "deser1984",
+        "coleman1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -22907,6 +23320,11 @@
           "id": "randall_sundrum",
           "kind": "family",
           "text": "A wall with three dimensions of space in anti-de Sitter space of five, flat and at rest because its tension is tuned to the cosmological constant on either side [randall1999a, cvetic1997]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "family",
+          "text": "A wall between two vacua of different energy, the skin of a bubble of new vacuum. It rides a hyperboloid too [coleman1980]."
         }
       ],
       "references": [
@@ -22925,7 +23343,8 @@
         "cvetic1992",
         "saikawa2017",
         "harari1990",
-        "randall1999a"
+        "randall1999a",
+        "coleman1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json",

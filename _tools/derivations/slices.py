@@ -667,6 +667,15 @@ def _milne_inertial(m):
     return [np.column_stack([np.sqrt(m.time ** 2 + R * R), R])]
 
 
+def _cdl_static(m):
+    """A moment c tau of the open universe inside Coleman and De Luccia's anti-de Sitter bubble in
+    the static chart inside the wall, l = 1: r = sin(c tau) sinh(chi) and
+    ct = atan2(sqrt(sin^2(c tau) + r^2), cos(c tau)), out to the chi the embedding reaches."""
+    hi = math.sin(m.time) * math.sinh(m.reach("open", "\\chi")[1])
+    r = np.linspace(0.0, hi, N)
+    return [np.column_stack([np.arctan2(np.sqrt(math.sin(m.time) ** 2 + r * r), math.cos(m.time)), r])]
+
+
 def _wall_inertial(m):
     """A moment kct of the domain wall's global chart in the inertial chart of the side z < 0, k = 1:
     cT = (1 - |z|) sinh(kct) and R = (1 - |z|) cosh(kct), the line cT = |R| tanh(kct) through the
@@ -1346,6 +1355,13 @@ FLAT = {
     ("milne", "comoving_spherical", "radial"): lambda: one("milne", lambda m: along(m.time, 0.0, math.sinh(m.reach("comoving_hyperbolic", "\\chi")[1]))),
     ("milne", "logarithmic_time", "radial"): lambda: one("milne", lambda m: along(math.log(m.time), *m.reach("comoving_hyperbolic", "\\chi"))),
     ("milne", "inertial", "through"): lambda: one("milne", _milne_inertial),
+    # A moment c tau of the open universe inside the anti-de Sitter bubble, l = 1, reaches chi from 0
+    # to its edge: eta = ln tan(c tau/2) in the conformal time, and in the static chart inside the
+    # wall the curve sqrt(1 + r^2) cos(ct) = cos(c tau) with r = sin(c tau) sinh(chi).
+    ("coleman_de_luccia", "open", "negative"): lambda: one("coleman_de_luccia", lambda m: along(m.time, *m.reach("open", "\\chi"))),
+    ("coleman_de_luccia", "open_conformal", "negative"): lambda: one(
+        "coleman_de_luccia", lambda m: along(math.log(math.tan(m.time / 2)), *m.reach("open", "\\chi"))),
+    ("coleman_de_luccia", "static_inside", "out_of_flat"): lambda: one("coleman_de_luccia", _cdl_static),
     # A moment kct of the domain wall's global chart meets the plane x = y = 0 of the planar chart
     # along t = const, every z, and in the inertial chart of the side z < 0 it is the cone
     # cT = R tanh(kct) from the centre at T = 0 out to the wall, across the centre on either side.
@@ -1550,6 +1566,12 @@ HIDDEN = {
        for system in ("static", "ingoing", "outgoing", "hyperbolic")},
     **{("topological_black_hole", f"eddington_finkelstein_{way}", "massless"): "the bifurcation surface of the hyperbolic hole without mass lies off both Eddington-Finkelstein charts, and the string's moment is the flat hole's"
        for way in ("ingoing", "outgoing")},
+    **{("coleman_de_luccia", system, view): "a bubble with another vacuum inside than the anti-de Sitter space whose moments are embedded"
+       for system, view in (("wall", "into_flat"), ("open", "zero"), ("open", "positive"), ("static_inside", "into_flat"),
+                            ("static_outside", "into_flat"))},
+    ("coleman_de_luccia", "into_flat"): "a bubble with another vacuum inside than the anti-de Sitter space whose moments are embedded",
+    **{("coleman_de_luccia", system, "out_of_flat"): "the region outside the light cone of the bubble's centre, which no moment of the open universe inside meets"
+       for system in ("wall", "static_outside")},
     ("frw", "comoving_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "comoving_spherical", "through"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "conformal_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",

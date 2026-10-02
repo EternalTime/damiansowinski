@@ -49,6 +49,11 @@
       "id": "randall_sundrum",
       "kind": "family",
       "text": "A wall with three dimensions of space in anti-de Sitter space of five, flat and at rest because its tension is tuned to the cosmological constant on either side [randall1999a, cvetic1997]."
+    },
+    {
+      "id": "coleman_de_luccia",
+      "kind": "family",
+      "text": "A wall between two vacua of different energy, the skin of a bubble of new vacuum. It rides a hyperboloid too [coleman1980]."
     }
   ],
   "references": [
@@ -67,7 +72,8 @@
     "cvetic1992",
     "saikawa2017",
     "harari1990",
-    "randall1999a"
+    "randall1999a",
+    "coleman1980"
   ],
   "coordinates": [
     {
