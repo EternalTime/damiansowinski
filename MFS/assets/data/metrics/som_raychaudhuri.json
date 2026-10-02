@@ -1,0 +1,4339 @@
+{
+  "id": "som_raychaudhuri",
+  "name": "Som-Raychaudhuri Rotating Universe",
+  "short_name": "Som-Raychaudhuri",
+  "description": "A homogeneous universe of charged dust in rigid rotation, held in a uniform magnetic field along the axis of rotation. Its line element is the shortest of Gödel's kind, and the circles about any world line of the dust are closed timelike curves beyond $r = c/\\Omega$.",
+  "tags": [
+    "dust",
+    "charged",
+    "magnetic field",
+    "rotating",
+    "closed timelike curves",
+    "causality violation",
+    "cosmological",
+    "cosmology",
+    "exact solution",
+    "non-vacuum",
+    "stationary",
+    "homogeneous",
+    "cylindrical symmetry",
+    "axial symmetry",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and $\\Omega$ is the angular velocity of the dust, so $c/\\Omega$ is the one length of the solution. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Fill all of space with dust, give every grain an electric charge, and set the whole cloud turning rigidly about an axis. What does gravity make of it? M. M. Som finished his doctorate under Amal Kumar Raychaudhuri in Calcutta in 1967, and in 1968 the two of them put that question to the Einstein-Maxwell equations [mathgenealogysom, som1968]. Willem Jacob van Stockum had solved the same problem for dust without charge in 1937 [vanstockum1937]. With charge, Som and Raychaudhuri found a family of solutions in which the Lorentz force on the dust vanishes everywhere and the ratio of charge density to mass density may take any value, and they remarked that these solutions \"do not seem to have any classical analogue\" [som1968].¶One member of the family is about as simple as a rotating universe gets: its dust has the same density of mass and of charge everywhere, and its line element is that of flat space with $\\Omega r^2d\\phi/c$ added to $c\\,dt$, where $\\Omega$ is the rate of rotation [paiva2011]. Stand on any grain and look outward: the circle around you at $r = c/\\Omega$ is null, so light led around it by mirrors arrives back at the moment it left, and every circle beyond it is a closed timelike curve, a path a rocket can follow back to the very event it started from [drukker2004]. The universe is the same at every event, so every grain of the dust sits at the center of such a circle [reboucas1983].¶Kurt Gödel's universe of 1949 is rotating dust too, with closed timelike curves through every event [godel1949]. The first step toward relating the two was Raychaudhuri's own: with S. N. Guha Thakurta he worked out, in 1980, a condition that a metric of Gödel's kind must satisfy to be homogeneous [raychaudhuri1980]. Three years later, in Rio de Janeiro, Marcelo Rebouças and Jayme Tiomno proved that the condition is also sufficient, and that two numbers label every such universe: the vorticity $\\Omega$ and a second parameter $m$ [reboucas1983]. Gödel's universe has $m^2 = 2\\Omega^2$ and Som and Raychaudhuri's has $m = 0$, and at $m^2 = 4\\Omega^2$ Rebouças and Tiomno found \"a completely causal space-time-homogeneous rotating universe\" [reboucas1983, boyda2003].¶Can a traveler here really reach the past? By 1975 Som was supervising a doctorate in Rio de Janeiro, Antonio Teixeira's [mathgenealogysom], and in 1987 Teixeira, Rebouças, and F. M. Paiva studied the geodesics and the causality of what they called the homogeneous Som-Raychaudhuri universe [paiva1987]. Every body in free fall moves on a helix about some line parallel to the axis, which is a circle seen from above: light crossing the axis at right angles circles at radius $c/2\\Omega$, and matter circles closer in [paiva2011]. So light sent out from a grain never gets farther from it than $c/\\Omega$, and no geodesic returns to its own past [paiva2011, drukker2004]. The trip takes a rocket: circle opposite to the rotation at radius $r$ and speed $V$ with $Vr > c^2/\\Omega$, and each lap ends before it began [paiva2011].¶String theory arrived at the same universe from another direction: Gary Horowitz and Arkady Tseytlin, hunting for exact solutions, wrote down the spacetime of a uniform magnetic field and noted that it \"describes a rotating universe\": the line element is Som and Raychaudhuri's [horowitz1995]. Jorge Russo and Tseytlin then solved for the spectrum of a closed string moving in it [russo1995]. Jerome Gauntlett, Jan Gutowski, Christopher Hull, Stathis Pakis, and Harvey Reall found a supersymmetric universe of Gödel's kind in five dimensions [gauntlett2003], and Edward Boyda, Surya Ganguli, Petr Hořava, and Uday Varadarajan observed that Som and Raychaudhuri's metric is \"a closer analog of the string theory Gödel universe than Gödel's solution itself\" [boyda2003].¶Why would nobody inside see the trouble? Boyda and his collaborators answered with holography: the screen that bounds what an observer riding the dust can see is a surface of finite size around her, and the closed timelike curves are \"either hidden behind the holographic screen, or broken by it into causal pieces\" [boyda2003]. Nadav Drukker, Bartomeu Fiol, and Joan Simón, and independently Yasuaki Hikida and Soo-Jong Rey, recognized an old friend in the motion: a particle here moves as an electron does in a uniform magnetic field, on Larmor circles, with Landau levels for its quantum states [drukker2004, hikida2003]. Drukker, Fiol, and Simón also showed that in the supergravity versions of this universe a supertube wrapped around a closed timelike curve has modes with negative kinetic terms, and they built a wall of supertubes around a region that looks like the same universe inside and holds no closed timelike curve [drukker2003].",
+  "related": [
+    {
+      "id": "godel",
+      "kind": "family",
+      "text": "Kurt Gödel's rotating dust of 1949, homogeneous as this universe is. Marcelo Rebouças and Jayme Tiomno's family of homogeneous rotating universes holds both, Gödel's at $m^2 = 2\\Omega^2$ and this one at $m = 0$ [godel1949, reboucas1983]."
+    },
+    {
+      "id": "stockum_dust",
+      "kind": "family",
+      "text": "Willem Jacob van Stockum's cylinder of rotating dust without charge. Its line element is this one's with $R = c/\\Omega$ and a factor $e^{-r^2/R^2}$ on $dr^2 + dz^2$ [vanstockum1937]."
+    },
+    {
+      "id": "spinning_string",
+      "kind": "family",
+      "text": "A spinning string adds the constant $a\\,d\\phi$ to $c\\,dt$ where this universe adds $\\Omega r^2d\\phi/c$. Harald Soleng's frame for a string of finite thickness, $(c\\,dt + M\\,d\\phi)^2$ with $M(r)$ free, is this universe at $M = \\Omega r^2/c$ with circles of circumference $2\\pi r$, where his heat flow vanishes [soleng1994]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "The dust at rest, $\\Omega = 0$, where the density vanishes and the line element is flat space in cylindrical coordinates."
+    }
+  ],
+  "references": [
+    "mathgenealogysom",
+    "som1968",
+    "vanstockum1937",
+    "paiva2011",
+    "drukker2004",
+    "reboucas1983",
+    "godel1949",
+    "raychaudhuri1980",
+    "boyda2003",
+    "paiva1987",
+    "horowitz1995",
+    "russo1995",
+    "gauntlett2003",
+    "hikida2003",
+    "drukker2003",
+    "soleng1994"
+  ],
+  "coordinates": [
+    {
+      "id": "cylindrical",
+      "name": "Cylindrical",
+      "coords": [
+        "t",
+        "r",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in [0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)",
+        "r = c/\\Omega \\;\\text{(the circle of constant } t, r, z \\text{ is null)}",
+        "r > c/\\Omega \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\Omega",
+          "description": "Angular velocity of the dust, the vorticity of its world lines; the circle of constant $t$, $r$, and $z$ is null at $r = c/\\Omega$"
+        }
+      ],
+      "convention": "We use Som and Raychaudhuri's cylindrical coordinates $(t, r, \\phi, z)$ about one world line of the dust, with $t$ carrying dimensions of time, $r$ the proper distance from that world line, and $\\phi$ periodic in $2\\pi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{\\Omega r^2}{c}\\,d\\phi\\right)^2 + dr^2 + r^2d\\phi^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-\\dfrac{\\Omega\\,r^2}{c}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-\\dfrac{\\Omega\\,r^2}{c}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{r^2\\left(c^2 - \\Omega^2\\,r^2\\right)}{c^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{\\Omega^2\\,r^2 - c^2}{c^2}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-\\dfrac{\\Omega}{c}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-\\dfrac{\\Omega}{c}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,r}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,r}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,r^3}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,r^3}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega\\,r}{c}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega\\,r}{c}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(2\\Omega^2\\,r^2 - c^2\\right)}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega}{c\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega}{c\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{c^2 - \\Omega^2\\,r^2}{c^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{c^2 - \\Omega^2\\,r^2}{c^2\\,r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\Omega\\,r}{c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega\\,r}{c}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega\\,r}{c}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega\\,r}{c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega\\,r}{c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega\\,r}{c}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(2\\Omega^2\\,r^2 - c^2\\right)}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(2\\Omega^2\\,r^2 - c^2\\right)}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r\\left(2\\Omega^2\\,r^2 - c^2\\right)}{c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 - c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 - c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{3\\Omega^2}{c^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,r^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,r^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,r^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,r^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 3c^2\\right)}{c^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + c^2\\right)}{c^4}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,r^2}{c^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(\\Omega^2\\,r^2 + c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\Omega^3}{c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^3}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2\\Omega^2}{c^2}",
+      "kretschmann": "K = \\dfrac{44\\Omega^4}{c^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,r^2\\left(3\\Omega^2\\,r^2 + c^2\\right)}{c^4}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2\\left(\\Omega^2\\,r^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\Omega^3}{c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^3}{c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,r^2}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 - c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 - c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,r^2\\left(2\\Omega^2\\,r^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\,r^2\\left(2\\Omega^2\\,r^2 + c^2\\right)}{3c^4}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,r^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\,r^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\,r^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,r^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,r^2}{3c^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,r^2\\left(\\Omega^2\\,r^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\,r^2\\left(2\\Omega^2\\,r^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,r^2\\left(2\\Omega^2\\,r^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,r^2\\left(2\\Omega^2\\,r^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\,r^2\\left(2\\Omega^2\\,r^2 + c^2\\right)}{3c^4}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2\\Omega^2\\,r}{c^2}\\dot{t}\\dot{r} + \\dfrac{2\\Omega^3\\,r^3}{c^3}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{r} + \\dfrac{2\\Omega\\,r}{c}\\dot{t}\\dot{\\phi} + \\dfrac{r\\left(2\\Omega^2\\,r^2 - c^2\\right)}{c^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{2\\Omega}{c\\,r}\\dot{t}\\dot{r} + \\dfrac{2\\left(c^2 - \\Omega^2\\,r^2\\right)}{c^2\\,r}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{z} = 0"
+      ]
+    },
+    {
+      "id": "cartesian",
+      "name": "Cartesian",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\Omega",
+          "description": "Angular velocity of the dust, the vorticity of its world lines"
+        }
+      ],
+      "convention": "We use the Cartesian coordinates $(t, x, y, z)$ of Drukker, Fiol, and Simón, with $t$ carrying dimensions of time, $x = r\\cos\\phi$, and $y = r\\sin\\phi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{\\Omega}{c}\\left(x\\,dy - y\\,dx\\right)\\right)^2 + dx^2 + dy^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "t",
+            "x"
+          ],
+          "value": "\\dfrac{\\Omega\\,y}{c}"
+        },
+        {
+          "indices": [
+            "x",
+            "t"
+          ],
+          "value": "\\dfrac{\\Omega\\,y}{c}"
+        },
+        {
+          "indices": [
+            "t",
+            "y"
+          ],
+          "value": "-\\dfrac{\\Omega\\,x}{c}"
+        },
+        {
+          "indices": [
+            "y",
+            "t"
+          ],
+          "value": "-\\dfrac{\\Omega\\,x}{c}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{c^2 - \\Omega^2\\,y^2}{c^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "\\dfrac{\\Omega^2\\,x\\,y}{c^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "\\dfrac{\\Omega^2\\,x\\,y}{c^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{c^2 - \\Omega^2\\,x^2}{c^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{\\Omega^2\\,x^2 + \\Omega^2\\,y^2 - c^2}{c^2}"
+        },
+        {
+          "indices": [
+            "t",
+            "x"
+          ],
+          "value": "\\dfrac{\\Omega\\,y}{c}"
+        },
+        {
+          "indices": [
+            "x",
+            "t"
+          ],
+          "value": "\\dfrac{\\Omega\\,y}{c}"
+        },
+        {
+          "indices": [
+            "t",
+            "y"
+          ],
+          "value": "-\\dfrac{\\Omega\\,x}{c}"
+        },
+        {
+          "indices": [
+            "y",
+            "t"
+          ],
+          "value": "-\\dfrac{\\Omega\\,x}{c}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,x}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,x}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,x}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,x}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,y}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2\\,y}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,y}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,y}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^3\\left(x^2 - y^2\\right)}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^3\\left(x^2 - y^2\\right)}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega}{c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega}{c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega}{c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega}{c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,x}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,y}{c^2}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega}{c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega}{c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega}{c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega}{c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,y}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,y}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,x}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\,y}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,x}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\,x}{c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^2\\left(\\Omega^2\\,y^2 - c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\left(\\Omega^2\\,y^2 - c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^2\\left(\\Omega^2\\,x^2 - c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\left(\\Omega^2\\,x^2 - c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^2\\left(\\Omega^2\\,x^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\left(\\Omega^2\\,x^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\left(\\Omega^2\\,y^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^2\\left(\\Omega^2\\,y^2 + 3c^2\\right)}{c^4}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^2\\left(\\Omega^2\\,x^2 + \\Omega^2\\,y^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\left(\\Omega^2\\,x^2 + \\Omega^2\\,y^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^2\\left(\\Omega^2\\,x^2 + \\Omega^2\\,y^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^2\\left(\\Omega^2\\,x^2 + \\Omega^2\\,y^2 + 3c^2\\right)}{c^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(\\Omega^2\\,y^2 + c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(\\Omega^2\\,x^2 + c^2\\right)}{c^4}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,x}{c^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(\\Omega^2\\,x^2 + \\Omega^2\\,y^2 + c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2\\Omega^2}{c^2}",
+      "kretschmann": "K = \\dfrac{44\\Omega^4}{c^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{3\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{3\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^2\\left(3\\Omega^2\\,y^2 + c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{3\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{3\\Omega^4\\,x\\,y}{c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^2\\left(3\\Omega^2\\,x^2 + c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^2\\left(\\Omega^2\\,x^2 + \\Omega^2\\,y^2 + 3c^2\\right)}{c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\Omega^2}{c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\Omega^2}{c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(\\Omega^2\\,y^2 - c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(\\Omega^2\\,y^2 - c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(\\Omega^2\\,x^2 - c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(\\Omega^2\\,x^2 - c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(\\Omega^2\\,x^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(\\Omega^2\\,x^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(\\Omega^2\\,y^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(\\Omega^2\\,y^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,y^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,y^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,x^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,x^2 + c^2\\right)}{3c^4}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^2}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,y}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\Omega^3\\,x}{3c^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(\\Omega^2\\,x^2 + \\Omega^2\\,y^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(\\Omega^2\\,x^2 + \\Omega^2\\,y^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(\\Omega^2\\,x^2 + \\Omega^2\\,y^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(\\Omega^2\\,x^2 + \\Omega^2\\,y^2 + 2c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,y^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,y^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,y^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,y^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\Omega^4\\,x\\,y}{3c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,x^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,x^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,x^2 + c^2\\right)}{3c^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\Omega^2\\left(2\\Omega^2\\,x^2 + c^2\\right)}{3c^4}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2\\Omega^2\\,x}{c^2}\\dot{t}\\dot{x} + \\dfrac{2\\Omega^2\\,y}{c^2}\\dot{t}\\dot{y} - \\dfrac{2\\Omega^3\\,x\\,y}{c^3}\\dot{x}^2 + \\dfrac{2\\Omega^3\\left(x^2 - y^2\\right)}{c^3}\\dot{x}\\dot{y} + \\dfrac{2\\Omega^3\\,x\\,y}{c^3}\\dot{y}^2 = 0",
+        "\\ddot{x} + \\dfrac{2\\Omega}{c}\\dot{t}\\dot{y} - \\dfrac{2\\Omega^2\\,y}{c^2}\\dot{x}\\dot{y} + \\dfrac{2\\Omega^2\\,x}{c^2}\\dot{y}^2 = 0",
+        "\\ddot{y} - \\dfrac{2\\Omega}{c}\\dot{t}\\dot{x} + \\dfrac{2\\Omega^2\\,y}{c^2}\\dot{x}^2 - \\dfrac{2\\Omega^2\\,x}{c^2}\\dot{x}\\dot{y} = 0",
+        "\\ddot{z} = 0"
+      ]
+    }
+  ]
+}

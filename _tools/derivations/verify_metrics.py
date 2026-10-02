@@ -816,6 +816,10 @@ DIMENSIONS = {
     ("kastor_traschen", "comoving"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "H": "1/T", "a": "1", "V": "1", "\\Omega": "1",
     },
+    # Som and Raychaudhuri's universe keeps c, and its Omega is the angular velocity of the dust,
+    # so that Omega r^2/c is a length beside c dt.
+    ("som_raychaudhuri", "cylindrical"): {"t": "T", "r": "L", "\\phi": "1", "z": "L", "\\Omega": "1/T"},
+    ("som_raychaudhuri", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1/T"},
     # Schwarzschild-anti-de Sitter keeps Schwarzschild's r_s and anti-de Sitter's radius, which the
     # entry calls L and the dimensional pass calls L as well, as for anti-de Sitter space itself.
     # The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.

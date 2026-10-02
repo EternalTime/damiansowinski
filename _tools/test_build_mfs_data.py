@@ -2689,6 +2689,17 @@ class EmbeddingDiagrams(unittest.TestCase):
             s = math.sinh(r)
             near(rho, math.sqrt(2) * s * math.sqrt(max(1 - s * s, 0)), f"Godel rho at {r}")
         self.assertAlmostEqual(dust[-1][0], math.asinh(2 ** -0.25), places=12)
+        # Som and Raychaudhuri's circles about one world line, of radius r sqrt(1 - r^2) in units of
+        # c/Omega, which the drawing follows to r = sqrt(3)/2, at the height the quadrature of
+        # dz/dr = r sqrt((3 - 4r^2)/(1 - r^2)) has in closed form.
+        dust = piece("som_raychaudhuri", "dust")
+        for r, rho, z in dust:
+            near(rho, r * math.sqrt(1 - r * r), f"Som-Raychaudhuri rho at {r}")
+            w = math.sqrt(max(3 - 4 * r * r, 0) / (4 - 4 * r * r))
+            near(z, (math.sqrt(3) - math.sqrt((1 - r * r) * max(3 - 4 * r * r, 0))) / 2
+                 - (math.atanh(math.sqrt(3) / 2) - math.atanh(w)) / 4, f"Som-Raychaudhuri z at {r}")
+        self.assertAlmostEqual(dust[-1][0], math.sqrt(3) / 2, places=12)
+        self.assertAlmostEqual(max(rho for _, rho, _ in dust), 0.5, places=6)
         for r, rho, z in piece("cosmic_string", "exterior", view=1):
             near(rho, 0.9 * r, f"cone rho at {r}")
             near(z, math.sqrt(0.19) * r, f"cone z at {r}")
@@ -3914,8 +3925,8 @@ class TurningLightConeFigures(unittest.TestCase):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
         self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
-                                   "kerr_newman/dragging", "near_horizon_extreme_kerr/dragging", "spinning_string/tipping",
-                                   "stockum_dust/tipping", "wormhole_time_machine/trip"})
+                                   "kerr_newman/dragging", "near_horizon_extreme_kerr/dragging", "som_raychaudhuri/tipping",
+                                   "spinning_string/tipping", "stockum_dust/tipping", "wormhole_time_machine/trip"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -4127,7 +4138,8 @@ class Slices(unittest.TestCase):
               "myers_perry/boyer_lindquist_six/rotation",
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
-              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "conformal frw/flat", "conformal frw/open",
+              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond",
+              "conformal frw/flat", "conformal frw/open",
               "misner/rindler/plane", "conformal misner/rindler",
               # Gott's region of closed timelike curves, which no moment of Grant's Milne time meets,
               # and the centre of momentum chart about the strings.
@@ -4629,7 +4641,8 @@ class Slices(unittest.TestCase):
             if key.endswith("/brinkmann/plane"):
                 return (lambda X: -math.sqrt(X * X - 2 * t)), None
             return (lambda X: t - 1.5 if key.endswith("/vacuum_core/off_centre") else t), None
-        if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "minkowski/rindler")):
+        if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "som_raychaudhuri/cylindrical",
+                           "minkowski/rindler")):
             return (lambda X: 0.0), None
         if key == "spinning_string/helical/outside":
             # One turn of the helix c tau = a phi~/b = r_c phi~, drawn against r phi~ at r = 3 r_c/2.
@@ -4877,7 +4890,7 @@ class Slices(unittest.TestCase):
                         continue
                     for ring in rings + rims:
                         self.assertLess(max(ring) - min(ring), 2e-3 * max(ring), where)
-                    if metric_id == "godel":
+                    if metric_id in ("godel", "som_raychaudhuri"):
                         self.assertAlmostEqual(rims[0][0], self.reach(surface)[1], delta=1e-3, msg=where)
                     if metric_id in ("kerr", "kerr_newman"):
                         self.assertAlmostEqual(min(r[0] for r in rings), self.reach(surface)[0], delta=1e-3, msg=where)
@@ -5639,6 +5652,73 @@ class KastorTraschen(unittest.TestCase):
         for r, rho, z in points:
             self.assertAlmostEqual(rho, r / 2 + 1, delta=1e-6)
             self.assertAlmostEqual(z, throat(r) - throat(points[0][0]), delta=2e-4)
+
+
+class SomRaychaudhuri(unittest.TestCase):
+    """Som and Raychaudhuri's published diagrams against their metric, from the numbers in the
+    files, in units of r_c = c/Omega: on the cylinder of t and phi at radius r the null curves are
+    c dt = r (1 - r) dphi and c dt = -r (1 + r) dphi, and the circle of constant t and r is null at
+    r = 1."""
+
+    @classmethod
+    def setUpClass(cls):
+        data = json.loads((build.DIAGRAMS_DIR / "som_raychaudhuri.json").read_text(encoding="utf-8"))
+        cls.views = {(system, v["id"]): v for system, views in data["systems"].items() for v in views}
+        cls.figure = data["projections"]["cylindrical"][0]
+
+    def slopes(self, view):
+        """d(ct)/d(r phi) of every ray from end to end, by family; a ray is straight, and its points
+        are rounded to a ten thousandth of the drawing, so a ray shorter than a tenth is passed over."""
+        X0, X1, Y0, Y1 = view["box"]
+        found = {}
+        for family, lines in view["rays"].items():
+            for line in lines:
+                (ua, wa), (ub, wb) = line[0], line[-1]
+                if abs(ub - ua) > 0.1:
+                    found.setdefault(family, []).append((wb - wa) * (Y1 - Y0) / ((ub - ua) * (X1 - X0)))
+        return found
+
+    def test_the_rays_of_each_cylinder_are_the_null_lines_of_the_metric(self):
+        for view, r in (("inside", 0.5), ("beyond", 1.5)):
+            found = self.slopes(self.views["cylindrical", view])
+            self.assertEqual(len(found), 2, view)
+            want = {1 - r, -(1 + r)}
+            for family, slopes in found.items():
+                nearest = min(want, key=lambda k: abs(k - slopes[0]))
+                want.discard(nearest)
+                for k in slopes:
+                    self.assertAlmostEqual(k, nearest, delta=2e-3, msg=f"{view} {family}")
+                # -(c dt + r^2 dphi)^2 + r^2 dphi^2 = 0 with c dt = k r dphi.
+                self.assertAlmostEqual(-(nearest * r + r * r) ** 2 + r * r, 0.0, places=12)
+            self.assertEqual(want, set(), view)
+
+    def test_beyond_the_null_circle_both_families_run_down_in_t_toward_plus_phi(self):
+        inside = self.slopes(self.views["cylindrical", "inside"])
+        beyond = self.slopes(self.views["cylindrical", "beyond"])
+        self.assertEqual(sorted(k[0] > 0 for k in inside.values()), [False, True])
+        self.assertTrue(all(k[0] < 0 for k in beyond.values()))
+
+    def test_the_rays_of_the_plane_of_t_and_x_run_at_45_degrees(self):
+        for slopes in self.slopes(self.views["cartesian", "tx"]).values():
+            for k in slopes:
+                self.assertAlmostEqual(abs(k), 1.0, delta=2e-3)
+
+    def test_the_figure_draws_the_null_circle_at_r_c_and_every_cone_null(self):
+        turn = self.figure["turn"]
+        critical = [line["points"] for line in turn["lines"] if line["class"] == "critical"]
+        self.assertEqual(len(critical), 1)
+        for X, Y, T in critical[0]:
+            self.assertAlmostEqual(math.hypot(X, Y), 1.0, delta=1e-5)
+            self.assertAlmostEqual(T, 0.0, delta=1e-9)
+        # A generator (dX, dY, dT) at (X, Y) is null: with r^2 dphi = X dY - Y dX,
+        # -(dT + X dY - Y dX)^2 + dX^2 + dY^2 = 0.
+        self.assertEqual(len(turn["cones"]), 13)
+        for cone in turn["cones"]:
+            X, Y, T = cone["apex"]
+            for x, y, t in cone["rim"]:
+                dX, dY, dT = x - X, y - Y, t - T
+                size = dX * dX + dY * dY + dT * dT
+                self.assertAlmostEqual((-(dT + X * dY - Y * dX) ** 2 + dX * dX + dY * dY) / size, 0.0, delta=2e-4)
 
 
 if __name__ == "__main__":

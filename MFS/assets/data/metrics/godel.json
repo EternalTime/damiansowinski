@@ -48,6 +48,11 @@
       "id": "ori_time_machine",
       "kind": "family",
       "text": "A time machine made to start at a definite moment, inside a finite region of vacuum. Amos Ori set it against Gödel's universe, which holds its closed timelike curves from the start [ori2005]."
+    },
+    {
+      "id": "som_raychaudhuri",
+      "kind": "family",
+      "text": "Charged dust in rigid rotation, homogeneous as Gödel's universe is, with a line element one term away from flat space. It is the member $m = 0$ of the family in which Gödel's is $m^2 = 2\\Omega^2$ [som1968, reboucas1983]."
     }
   ],
   "references": [
@@ -70,7 +75,8 @@
     "stephenson2008",
     "earman1993",
     "rooman1998",
-    "ori2005"
+    "ori2005",
+    "som1968"
   ],
   "coordinates": [
     {

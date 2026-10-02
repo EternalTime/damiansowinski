@@ -51,8 +51,8 @@ evenly along its four edges.
 
 Every curve drawn is a null curve, its tangent null. It is also a null geodesic, the path
 a light ray takes, only if nothing accelerates it out of the plane, Gamma^A_ab k^a k^b = 0
-for every fixed coordinate A. The planes in DIAGRAMS pass that test, except Godel's, whose
-caption says its null curves are not null geodesics.
+for every fixed coordinate A. The planes in DIAGRAMS pass that test, except Godel's and Som and
+Raychaudhuri's planes of t and x, whose captions say their null curves are not null geodesics.
 
 
 Rays that leave the plane
@@ -1701,6 +1701,18 @@ DIAGRAMS = [
             tuple(s * math.pi * 3 * GODEL_RC / 2 for s in (-1, 1, -1, 1)), "$r\\phi$", "$t$", {"omega": 1},
             {"r": "3*asinh(1)/2", "z": "0"}, to_display=((0, 3 * GODEL_RC / 2), (1, 0)), orient="vector",
             families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    # Som and Raychaudhuri's cylinders of t and phi about one world line of the dust, in units of
+    # r_c = c/Omega, where the block of t and phi is van Stockum's with R = r_c.
+    Diagram("som_raychaudhuri", "cylindrical", "inside", "$t$ and $\\phi$ at $r = r_c/2$", ("t", "\\phi"),
+            (-math.pi / 2, math.pi / 2, -math.pi / 2, math.pi / 2), "$r\\phi/r_c$", "$ct/r_c$", {"Omega": 1},
+            {"r": "1/2", "z": "0"}, to_display=((0, 0.5), (1, 0)), orient="vector", families=SIDEWAYS,
+            cones=(5, 5), periodic=("\\phi",)),
+    Diagram("som_raychaudhuri", "cylindrical", "beyond", "$t$ and $\\phi$ at $r = 3r_c/2$", ("t", "\\phi"),
+            (-3 * math.pi / 2, 3 * math.pi / 2, -3 * math.pi / 2, 3 * math.pi / 2), "$r\\phi/r_c$", "$ct/r_c$",
+            {"Omega": 1}, {"r": "3/2", "z": "0"}, to_display=((0, 1.5), (1, 0)), orient="vector",
+            families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    Diagram("som_raychaudhuri", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x/r_c$", "$ct/r_c$",
+            {"Omega": 1}, {"y": "0", "z": "0"}, orient="vector", families=SIDEWAYS),
     Diagram("tov", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 16, -8, 8),
             "$r\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, areal=True, star=POLYTROPE,
             input=POLYTROPE_INPUT),
@@ -4267,6 +4279,43 @@ CAPTIONS = {
         "$(3 - \\sqrt{2})\\pi$ after each turn. None of the curves drawn here is a null geodesic: light "
         "launched along one moving to $+\\phi$ is turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and "
         "$\\Gamma^r{}_{\\phi\\phi}$, and light launched along one moving to $-\\phi$ is turned away from it.",
+    ],
+    ("som_raychaudhuri", "cylindrical", "inside"): [
+        "The cylinder of $t$ and $\\phi$ ($r = r_c/2$, $z = 0$, $r_c = c/\\Omega$) about the axis $r = 0$, the "
+        "world line of one particle of the dust. It is opened along the line $\\phi = \\pm\\pi$ and drawn "
+        "with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is the "
+        "same at every point, so its null curves are straight: $c\\,dt = r(1 - r/r_c)\\,d\\phi$ moving to "
+        "$+\\phi$, which is $c\\,dt = \\tfrac{1}{4}r_c\\,d\\phi$ here, and $c\\,dt = -r(1 + r/r_c)\\,d\\phi$ "
+        "moving to $-\\phi$, which is $c\\,dt = -\\tfrac{3}{4}r_c\\,d\\phi$. The cross term tilts every cone "
+        "toward $+\\phi$, and a curve moving that way covers three times the $\\phi$ in a given $t$ that one "
+        "moving the other way does.",
+        "At this radius the curve moving to $+\\phi$ is a null geodesic: $\\Gamma^r{}_{t\\phi}$ and "
+        "$\\Gamma^r{}_{\\phi\\phi}$ cancel along it, and light sent that way circles the axis at "
+        "$r = r_c/2$, a Larmor orbit of radius $c/2\\Omega$. The curve moving to $-\\phi$ is not a geodesic, "
+        "and light launched along it is turned away from the axis. The horizontal lines, circles of constant "
+        "$t$, lie outside every cone and are spacelike.",
+    ],
+    ("som_raychaudhuri", "cylindrical", "beyond"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 3r_c/2$, $z = 0$, $r_c = c/\\Omega$), opened along "
+        "$\\phi = \\pm\\pi$ in the same way. Beyond $r_c$ the coefficient $g_{\\phi\\phi} = r^2(1 - r^2/r_c^2)$ "
+        "is negative, and the cones have tipped over past the horizontal: the null curve moving to $+\\phi$, "
+        "$c\\,dt = -\\tfrac{3}{4}r_c\\,d\\phi$, goes down in $t$, while the one moving to $-\\phi$, "
+        "$c\\,dt = -\\tfrac{15}{4}r_c\\,d\\phi$, climbs steeply. Every horizontal line, run toward $+\\phi$, "
+        "points into the future cones, so the circle of constant $t$, $r$, and $z$ is a closed timelike curve.",
+        "The curve moving to $+\\phi$ comes round to its own $\\phi$ at a $t$ earlier by $3\\pi r_c/2c$ after "
+        "each turn. None of the curves drawn here is a null geodesic: light launched along one moving to "
+        "$+\\phi$ is turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and $\\Gamma^r{}_{\\phi\\phi}$, and light "
+        "launched along one moving to $-\\phi$ is turned away from it.",
+    ],
+    ("som_raychaudhuri", "cartesian", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$), in units of $r_c = c/\\Omega$. The surfaces $t = $ const are "
+        "spacelike only within $r_c$ of the axis, where $g^{tt} = (x^2 + y^2)/r_c^2 - 1$ is negative, so the "
+        "cones are oriented by $\\partial_t$, the direction of the dust's world lines, which is timelike everywhere.",
+        "The metric on this plane is $-c^2dt^2 + dx^2$, so the curves drawn are null and run at 45°. Light "
+        "launched along one is turned out of the plane into $y$, since $\\Gamma^y{}_{tx} = -\\Omega/c$ is not "
+        "zero, and its path projects onto the plane of $x$ and $y$ as a circle of radius $r_c/2$. The closed "
+        "timelike curves circle each world line of the dust beyond $r_c$, through $y$ as well as $x$, so they "
+        "cross this plane.",
     ],
     ("tov", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through a star of fluid with a polytrope "
@@ -7362,6 +7411,7 @@ CLOSED_FORMS = {
     ("near_horizon_extreme_kerr", "near_nhek", "equator"):
         (lambda t, r: t + np.log(1 - 1 / r), lambda t, r: t - np.log(1 - 1 / r), lambda t, r: r > 1.02),
     ("godel", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("som_raychaudhuri", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     # Inside Schwarzschild's horizon dr/dT = +-T/(1 - T), so r +- (T + ln(1 - T)) is constant.
     ("kantowski_sachs", "schwarzschild_interior", "Tr"):
         (lambda T, r: r - T - np.log(1 - T), lambda T, r: r + T + np.log(1 - T), lambda T, r: T < 0.95),
@@ -7423,6 +7473,9 @@ CYLINDERS = {
     ("stockum_dust", "cylindrical", "beyond"): (-3.75, -0.75),
     ("godel", "cylindrical", "inside"): (-(3 - math.sqrt(2)) / 2, (math.sqrt(2) - 1) / 2),
     ("godel", "cylindrical", "beyond"): (-(17 - math.sqrt(2)) / 2, -(3 - math.sqrt(2)) / 2),
+    # Som and Raychaudhuri's block of t and phi is van Stockum's, with R = c/Omega.
+    ("som_raychaudhuri", "cylindrical", "inside"): (-0.75, 0.25),
+    ("som_raychaudhuri", "cylindrical", "beyond"): (-3.75, -0.75),
 }
 # The spinning string's cylinders: k = -(b r + a) moving left and b r - a moving right, with
 # b r = 0.45 inside and 1.35 outside, in the proper radius and rescaled radius charts, and
@@ -7496,6 +7549,8 @@ TURNING = {
     ("stockum_dust", "cylindrical", "beyond"): ("away", "toward"),
     ("godel", "cylindrical", "inside"): ("away", "geodesic"),
     ("godel", "cylindrical", "beyond"): ("away", "toward"),
+    ("som_raychaudhuri", "cylindrical", "inside"): ("away", "geodesic"),
+    ("som_raychaudhuri", "cylindrical", "beyond"): ("away", "toward"),
     # The spinning string is flat, so light launched along a circle about it leaves for larger r.
     **{("spinning_string", system, view): ("away", "away")
        for system in ("proper_radius", "helical") for view in ("inside", "outside")},

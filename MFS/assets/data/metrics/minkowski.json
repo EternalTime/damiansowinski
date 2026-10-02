@@ -145,6 +145,11 @@
       "id": "randall_sundrum",
       "kind": "composite",
       "text": "A stack of Minkowski spaces along a fifth dimension, each scaled by $e^{-k|y|}$ with its distance $y$ from a wall [randall1999a]."
+    },
+    {
+      "id": "som_raychaudhuri",
+      "kind": "generalisation",
+      "text": "Flat spacetime with $\\Omega r^2d\\phi/c$ added to $c\\,dt$: a homogeneous universe of charged dust in rigid rotation, with closed timelike curves beyond $r = c/\\Omega$ [som1968]."
     }
   ],
   "references": [
@@ -198,7 +203,8 @@
     "visser1989prd",
     "earman1993",
     "pitowsky1990",
-    "randall1999a"
+    "randall1999a",
+    "som1968"
   ],
   "coordinates": [
     {

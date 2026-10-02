@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 82,
+  "count": 83,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -6680,6 +6680,11 @@
           "id": "ori_time_machine",
           "kind": "family",
           "text": "A time machine made to start at a definite moment, inside a finite region of vacuum. Amos Ori set it against Gödel's universe, which holds its closed timelike curves from the start [ori2005]."
+        },
+        {
+          "id": "som_raychaudhuri",
+          "kind": "family",
+          "text": "Charged dust in rigid rotation, homogeneous as Gödel's universe is, with a line element one term away from flat space. It is the member $m = 0$ of the family in which Gödel's is $m^2 = 2\\Omega^2$ [som1968, reboucas1983]."
         }
       ],
       "references": [
@@ -6702,7 +6707,8 @@
         "stephenson2008",
         "earman1993",
         "rooman1998",
-        "ori2005"
+        "ori2005",
+        "som1968"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/godel.json",
@@ -10880,6 +10886,11 @@
           "id": "spinning_string",
           "kind": "family",
           "text": "A string with spin, flat everywhere off its axis. Its closed timelike curves lie close in, where van Stockum's cylinder has them far out [deser1992time]."
+        },
+        {
+          "id": "som_raychaudhuri",
+          "kind": "family",
+          "text": "The same rigidly rotating dust given an electric charge. The factor $e^{-r^2/R^2}$ goes from the line element, and the universe is homogeneous [som1968, reboucas1983]."
         }
       ],
       "references": [
@@ -10893,7 +10904,9 @@
         "vanloo2004",
         "wack2014timebomber",
         "godel1949",
-        "deser1992time"
+        "deser1992time",
+        "som1968",
+        "reboucas1983"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stockum_dust.json",
@@ -12593,6 +12606,11 @@
           "id": "randall_sundrum",
           "kind": "composite",
           "text": "A stack of Minkowski spaces along a fifth dimension, each scaled by $e^{-k|y|}$ with its distance $y$ from a wall [randall1999a]."
+        },
+        {
+          "id": "som_raychaudhuri",
+          "kind": "generalisation",
+          "text": "Flat spacetime with $\\Omega r^2d\\phi/c$ added to $c\\,dt$: a homogeneous universe of charged dust in rigid rotation, with closed timelike curves beyond $r = c/\\Omega$ [som1968]."
         }
       ],
       "references": [
@@ -12646,7 +12664,8 @@
         "visser1989prd",
         "earman1993",
         "pitowsky1990",
-        "randall1999a"
+        "randall1999a",
+        "som1968"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -19451,6 +19470,248 @@
       ]
     },
     {
+      "id": "som_raychaudhuri",
+      "name": "Som-Raychaudhuri Rotating Universe",
+      "short_name": "Som-Raychaudhuri",
+      "description": "A homogeneous universe of charged dust in rigid rotation, held in a uniform magnetic field along the axis of rotation. Its line element is the shortest of Gödel's kind, and the circles about any world line of the dust are closed timelike curves beyond $r = c/\\Omega$.",
+      "tags": [
+        "dust",
+        "charged",
+        "magnetic field",
+        "rotating",
+        "closed timelike curves",
+        "causality violation",
+        "cosmological",
+        "cosmology",
+        "exact solution",
+        "non-vacuum",
+        "stationary",
+        "homogeneous",
+        "cylindrical symmetry",
+        "axial symmetry",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and $\\Omega$ is the angular velocity of the dust, so $c/\\Omega$ is the one length of the solution. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "godel",
+          "kind": "family",
+          "text": "Kurt Gödel's rotating dust of 1949, homogeneous as this universe is. Marcelo Rebouças and Jayme Tiomno's family of homogeneous rotating universes holds both, Gödel's at $m^2 = 2\\Omega^2$ and this one at $m = 0$ [godel1949, reboucas1983]."
+        },
+        {
+          "id": "stockum_dust",
+          "kind": "family",
+          "text": "Willem Jacob van Stockum's cylinder of rotating dust without charge. Its line element is this one's with $R = c/\\Omega$ and a factor $e^{-r^2/R^2}$ on $dr^2 + dz^2$ [vanstockum1937]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "A spinning string adds the constant $a\\,d\\phi$ to $c\\,dt$ where this universe adds $\\Omega r^2d\\phi/c$. Harald Soleng's frame for a string of finite thickness, $(c\\,dt + M\\,d\\phi)^2$ with $M(r)$ free, is this universe at $M = \\Omega r^2/c$ with circles of circumference $2\\pi r$, where his heat flow vanishes [soleng1994]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The dust at rest, $\\Omega = 0$, where the density vanishes and the line element is flat space in cylindrical coordinates."
+        }
+      ],
+      "references": [
+        "mathgenealogysom",
+        "som1968",
+        "vanstockum1937",
+        "paiva2011",
+        "drukker2004",
+        "reboucas1983",
+        "godel1949",
+        "raychaudhuri1980",
+        "boyda2003",
+        "paiva1987",
+        "horowitz1995",
+        "russo1995",
+        "gauntlett2003",
+        "hikida2003",
+        "drukker2003",
+        "soleng1994"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/som_raychaudhuri.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = c/\\Omega \\;\\text{(the circle of constant } t, r, z \\text{ is null)}",
+            "r > c/\\Omega \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Omega",
+              "description": "Angular velocity of the dust, the vorticity of its world lines; the circle of constant $t$, $r$, and $z$ is null at $r = c/\\Omega$"
+            }
+          ],
+          "convention": "We use Som and Raychaudhuri's cylindrical coordinates $(t, r, \\phi, z)$ about one world line of the dust, with $t$ carrying dimensions of time, $r$ the proper distance from that world line, and $\\phi$ periodic in $2\\pi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{\\Omega r^2}{c}\\,d\\phi\\right)^2 + dr^2 + r^2d\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\Omega\\,r^2}{c}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{\\Omega\\,r^2}{c}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\left(c^2 - \\Omega^2\\,r^2\\right)}{c^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\Omega^2}{c^2}",
+          "kretschmann": "K = \\dfrac{44\\Omega^4}{c^4}"
+        },
+        {
+          "id": "cartesian",
+          "name": "Cartesian",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Omega",
+              "description": "Angular velocity of the dust, the vorticity of its world lines"
+            }
+          ],
+          "convention": "We use the Cartesian coordinates $(t, x, y, z)$ of Drukker, Fiol, and Simón, with $t$ carrying dimensions of time, $x = r\\cos\\phi$, and $y = r\\sin\\phi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{\\Omega}{c}\\left(x\\,dy - y\\,dx\\right)\\right)^2 + dx^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "x"
+              ],
+              "value": "\\dfrac{\\Omega\\,y}{c}"
+            },
+            {
+              "indices": [
+                "x",
+                "t"
+              ],
+              "value": "\\dfrac{\\Omega\\,y}{c}"
+            },
+            {
+              "indices": [
+                "t",
+                "y"
+              ],
+              "value": "-\\dfrac{\\Omega\\,x}{c}"
+            },
+            {
+              "indices": [
+                "y",
+                "t"
+              ],
+              "value": "-\\dfrac{\\Omega\\,x}{c}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{c^2 - \\Omega^2\\,y^2}{c^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "\\dfrac{\\Omega^2\\,x\\,y}{c^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "\\dfrac{\\Omega^2\\,x\\,y}{c^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{c^2 - \\Omega^2\\,x^2}{c^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\Omega^2}{c^2}",
+          "kretschmann": "K = \\dfrac{44\\Omega^4}{c^4}"
+        }
+      ]
+    },
+    {
       "id": "spinning_string",
       "name": "Spinning Cosmic String",
       "short_name": "Spinning Cosmic String",
@@ -19517,6 +19778,11 @@
           "id": "string_wave",
           "kind": "family",
           "text": "The straight string given a wave where this one is given spin. Its curvature scalars vanish as well, while the spacetime is curved wherever the wave passes [kaloper1997, anderson1999]."
+        },
+        {
+          "id": "som_raychaudhuri",
+          "kind": "family",
+          "text": "Soleng's thick string with $M = \\Omega r^2/c$ and $\\rho = r$ all the way out, a homogeneous universe of charged dust in rigid rotation. Its closed timelike curves lie outside $r = c/\\Omega$, where the string's lie inside $r_c$ [soleng1994, som1968]."
         }
       ],
       "references": [
@@ -19543,7 +19809,8 @@
         "banados1992",
         "cornish1994",
         "kaloper1997",
-        "anderson1999"
+        "anderson1999",
+        "som1968"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/spinning_string.json",

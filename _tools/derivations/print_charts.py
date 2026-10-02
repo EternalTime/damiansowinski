@@ -6,7 +6,8 @@ khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_sh
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
-black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum and witten_black_hole, and Godel's cylindrical chart.
+black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole and
+som_raychaudhuri, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -7948,6 +7949,127 @@ def witten_black_hole_check(chart, system):
 
 
 CHARTS["witten_black_hole"] = [lambda s=s: witten_black_hole(s) for s in WITTEN_CHARTS]
+
+# -- Som and Raychaudhuri's rotating universe ---------------------------------------------
+
+SR_CHARTS = ("cylindrical", "cartesian")
+
+
+def som_raychaudhuri(system):
+    """Som and Raychaudhuri's homogeneous universe of charged dust in rigid rotation, with Omega
+    the angular velocity of the dust, in two charts:
+
+    cylindrical  the form of Reboucas and Tiomno's linear class, H = Omega r^2 and D = r, about one
+                 world line of the dust: Paiva and Teixeira's (1), Boyda and his collaborators'
+                 (2.12) at m = 0, Drukker, Fiol and Simon's (2.8);
+    cartesian    x = r cos(phi), y = r sin(phi), in which Omega r^2 dphi is Omega (x dy - y dx):
+                 Drukker, Fiol and Simon's (2.13).
+
+    The cylindrical chart is checked against its source, charged dust at rest in a uniform magnetic
+    field with no Lorentz force on it, and the Cartesian chart to be the cylindrical one pulled
+    back. som_raychaudhuri.md is the derivation."""
+    reals = "(-\\infty, \\infty)"
+    charts = {
+        "cylindrical": {
+            "name": "Cylindrical", "coords": ["t", "r", "\\phi", "z"],
+            "domains": ["t \\in " + reals, "r \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
+                        "r = c/\\Omega \\;\\text{(the circle of constant } t, r, z \\text{ is null)}",
+                        "r > c/\\Omega \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"],
+            "line_element": ("ds^2 = -\\left(c\\,dt + \\dfrac{\\Omega r^2}{c}\\,d\\phi\\right)^2"
+                             " + dr^2 + r^2d\\phi^2 + dz^2")},
+        "cartesian": {
+            "name": "Cartesian", "coords": ["t", "x", "y", "z"],
+            "domains": ["t \\in " + reals, "x \\in " + reals, "y \\in " + reals, "z \\in " + reals],
+            "line_element": ("ds^2 = -\\left(c\\,dt + \\dfrac{\\Omega}{c}\\left(x\\,dy - y\\,dx\\right)\\right)^2"
+                             " + dx^2 + dy^2 + dz^2")},
+    }
+    chart = charts[system]
+    parameters = ["\\Omega"]
+    probe = vm.Reader(chart["coords"], parameters, ())
+    spec = {
+        "metric_id": "som_raychaudhuri",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": parameters, "line_element": chart["line_element"]},
+        # The chart coordinate is x^0 = ct, so c dt is the chart's dt.
+        "chart_line_element": chart["line_element"].replace("c\\,dt", "dt"),
+        "printer": {"lead": [probe.parameters["Omega"]]},
+        # c^2 - Omega^2 r^2 is the sum that changes sign on the null circle, so it is left whole.
+        "pretty": lambda value: sp.factor_terms(sp.together(sp.expand(value))),
+        "check": som_raychaudhuri_source if system == "cylindrical" else som_raychaudhuri_pullback,
+    }
+    if system == "cylindrical":
+        # The doubled Christoffel symbol of the phi equation keeps its 2 in front of the bracket.
+        spec["geodesics"] = [
+            "\\ddot{t} + \\dfrac{2\\Omega^2\\,r}{c^2}\\dot{t}\\dot{r} + \\dfrac{2\\Omega^3\\,r^3}{c^3}\\dot{r}\\dot{\\phi} = 0",
+            "\\ddot{r} + \\dfrac{2\\Omega\\,r}{c}\\dot{t}\\dot{\\phi} + \\dfrac{r\\left(2\\Omega^2\\,r^2 - c^2\\right)}{c^2}\\dot{\\phi}^2 = 0",
+            "\\ddot{\\phi} - \\dfrac{2\\Omega}{c\\,r}\\dot{t}\\dot{r} + \\dfrac{2\\left(c^2 - \\Omega^2\\,r^2\\right)}{c^2\\,r}\\dot{r}\\dot{\\phi} = 0",
+            "\\ddot{z} = 0"]
+    return spec
+
+
+def som_raychaudhuri_source(chart):
+    """The cylindrical chart against its source. In the frame of the dust, e^0 = dt + (Omega r^2/c)
+    dphi, e^1 = dr, e^2 = r dphi, e^3 = dz with t the chart's x^0, the Einstein tensor is
+    G^a_b = (Omega^2/c^2) diag(-3, 1, 1, -1). A magnetic field B along z, F = B e^1 ^ e^2, has
+    8 pi T^a_b = B^2 diag(-1, 1, 1, -1) in Gaussian units with G = c = 1, so B = Omega leaves
+    2 Omega^2 of energy density and no stress: dust of density Omega^2/4 pi G. The field is closed,
+    its divergence is a current along the dust's four-velocity, charge density Omega B/2 pi c,
+    and the Lorentz force F^mu_nu J^nu on that current vanishes."""
+    t, r, phi, z = chart.symbols
+    Om, c = chart.reader.parameters["Omega"], chart.reader.c
+    e = sp.Matrix([[1, 0, Om * r ** 2 / c, 0], [0, 1, 0, 0], [0, 0, r, 0], [0, 0, 0, 1]])
+    eta = sp.diag(-1, 1, 1, 1)
+    if (e.T * eta * e - chart.geo.g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+        raise AssertionError("som_raychaudhuri: the dust's frame is not orthonormal")
+    lowered = chart.geo.einstein_ll()
+    G = chart.geo.ginv * sp.Matrix(4, 4, lambda i, j: lowered[i][j])
+    frame = (e * G * e.inv()).applyfunc(sp.simplify)
+    if frame != (Om ** 2 / c ** 2) * sp.diag(-3, 1, 1, -1):
+        raise AssertionError(f"som_raychaudhuri: the Einstein tensor in the dust's frame is {frame}")
+    B = sp.Symbol("B", positive=True)
+    F = sp.zeros(4, 4)
+    F[1, 2], F[2, 1] = B * r, -B * r                       # F = B e^1 ^ e^2 = B r dr ^ dphi, closed
+    mixed = chart.geo.ginv * F                              # F^mu_nu
+    up = mixed * chart.geo.ginv                             # F^{mu nu}
+    FF = sum(F[i, j] * up[i, j] for i in range(4) for j in range(4))
+    # 4 pi T^mu_nu = F^{mu a} F_{nu a} - delta^mu_nu F.F/4
+    T = (-(up * F) - sp.eye(4) * FF / 4).applyfunc(sp.simplify)
+    stress = (e * T * e.inv()).applyfunc(sp.simplify)
+    if stress != (B ** 2 / 2) * sp.diag(-1, 1, 1, -1):
+        raise AssertionError(f"som_raychaudhuri: the magnetic field's stress in the dust's frame is {stress}")
+    rest = (frame - 2 * stress.subs(B, Om / c)).applyfunc(sp.simplify)
+    if rest != (Om ** 2 / c ** 2) * sp.diag(-2, 0, 0, 0):
+        raise AssertionError(f"som_raychaudhuri: the field leaves {rest}, which is not dust")
+    if sp.simplify(chart.geo.g.det() + r ** 2) != 0:
+        raise AssertionError("som_raychaudhuri: the determinant of the metric is not -r^2")
+    root = r
+    J = [sp.simplify(sum(sp.diff(root * up[m, n], chart.symbols[n]) for n in range(4)) / root) for m in range(4)]
+    if J[1:] != [0, 0, 0] or sp.simplify(J[0] ** 2 - (2 * Om * B / c) ** 2) != 0:
+        raise AssertionError(f"som_raychaudhuri: the current {J} is not 2 Omega B/c along the dust")
+    force = [sp.simplify(sum(mixed[m, n] * J[n] for n in range(4))) for m in range(4)]
+    if force != [0, 0, 0, 0]:
+        raise AssertionError(f"som_raychaudhuri: the Lorentz force on the dust is {force}")
+
+
+def som_raychaudhuri_pullback(chart):
+    """J^T g J, with g the cylindrical chart's metric and J the Jacobian of r = sqrt(x^2 + y^2),
+    phi = atan2(y, x), against the Cartesian chart's metric in every slot."""
+    spec = som_raychaudhuri("cylindrical")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    t, x, y, z = chart.symbols
+    image = [t, sp.sqrt(x ** 2 + y ** 2), sp.atan2(y, x), z]
+    at = {source.reader.parameters["Omega"]: chart.reader.parameters["Omega"]}
+    at.update(dict(zip(source.symbols, image)))
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = J.T * source.geo.g.subs(at, simultaneous=True) * J
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"som_raychaudhuri: the cylindrical chart pulled back misses the Cartesian "
+                                     f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["som_raychaudhuri"] = [lambda s=s: som_raychaudhuri(s) for s in SR_CHARTS]
 
 
 def write(spec):
