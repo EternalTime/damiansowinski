@@ -2257,6 +2257,13 @@ FLAT = {
     ("elliptic_de_sitter", "kruskal", "plane"): lambda: _eds("kruskal"),
     ("elliptic_de_sitter", "static", "radial"): lambda: _eds("static"),
     ("elliptic_de_sitter", "planar", "tx"): lambda: _eds("planar"),
+    # The RP3 geon's moment t = 0 at r_s = 1, from the throat out to the areal radius the embedding reaches:
+    # T = 0 of Kruskal's chart with X = sqrt(r - 1) e^(r/2), and the isotropic radius of each r.
+    ("rp3_geon", "kruskal", "plane"): lambda: one("rp3_geon", lambda m: along(
+        0.0, *(math.sqrt(r - 1) * math.exp(r / 2) for r in m.reach("schwarzschild", "r")))),
+    ("rp3_geon", "schwarzschild", "radial"): lambda: one("rp3_geon", lambda m: along(0.0, *m.reach("schwarzschild", "r"))),
+    ("rp3_geon", "isotropic", "radial"): lambda: one("rp3_geon", lambda m: along(
+        0.0, *(_ds_isotropic(r) for r in m.reach("schwarzschild", "r")))),
     ("einstein_static", "hyperspherical", "radial"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
     ("einstein_static", "hyperspherical", "through"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
     ("einstein_static", "static_areal", "radial"): lambda: one("einstein_static", _es_areal),

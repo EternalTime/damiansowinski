@@ -363,6 +363,11 @@
       "id": "born_infeld_charge",
       "kind": "generalisation",
       "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
+    },
+    {
+      "id": "rp3_geon",
+      "kind": "locally_same",
+      "text": "Schwarzschild's black hole with its second exterior folded onto the first, opposite points of each sphere made one. Outside the horizon nothing changes, and no light sent in from far away comes back out through the fold [friedman1993]."
     }
   ],
   "references": [
@@ -464,7 +469,8 @@
     "belinskii1979",
     "deruelle2011",
     "hoffmann1935",
-    "gibbonsrasheed1995"
+    "gibbonsrasheed1995",
+    "friedman1993"
   ],
   "coordinates": [
     {

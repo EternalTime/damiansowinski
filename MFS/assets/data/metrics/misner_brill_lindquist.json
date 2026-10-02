@@ -88,6 +88,11 @@
       "id": "lindquist_wheeler_lattice",
       "kind": "family",
       "text": "A whole universe of such holes. Put $N$ of them on a three sphere in place of flat space and the same construction gives one moment of Lindquist and Wheeler's lattice exactly [wheeler1983, clifton2012]."
+    },
+    {
+      "id": "rp3_geon",
+      "kind": "programme",
+      "text": "The one hole of this data with its two sheets made one through the opposite points of the throat, which Misner and Wheeler wrote down in 1957. It grows into a black hole with a single exterior [misner1957, friedman1993]."
     }
   ],
   "references": [
@@ -118,7 +123,8 @@
     "wheeler1955",
     "marolf2009",
     "wheeler1983",
-    "clifton2012"
+    "clifton2012",
+    "friedman1993"
   ],
   "coordinates": [
     {
