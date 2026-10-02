@@ -3172,6 +3172,182 @@ def hayward(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Mass inflation
+
+MI_ELL = 0.1            # the length the outgoing label is measured in about the event horizon
+
+
+def mass_inflation(ck, src):
+    """Ori's model of mass inflation, at the numbers of ori_shell.py, in units of the final mass
+    m_0: the charged hole of r_q = 0.96 m_0 from the ingoing ray v = 0 on, with Price's tail falling
+    in from v_0 = 10 m_0 and one thin shell running outward inside it.
+
+    Each side of the shell is the ingoing chart with its own advanced time and mass function. An
+    ingoing ray crosses the shell once, so the advanced time w it has before the shell names it
+    on both sides, and q = (pi/2) tanh((w - v_0)/20 m_0) puts the Cauchy horizon, w -> infinity, on
+    the line of future null infinity. An outgoing ray is named by where it began: the radius r_a at
+    which it crosses the first ingoing ray, w = 0, or, behind the shell, the ingoing ray w_s on
+    which it left the singularity r = 0, as minus the advanced time elapsed there since the first
+    ray. With x that name less the event horizon's, p = -arctan(sgn(x) ln(1 + |x|/ell)), ell =
+    m_0/10, which puts the event horizon on p = 0, past null infinity on p = -pi/2, and the shell
+    on one line of constant p. Before the shell ori_shell.label_before carries every ray back
+    along dr/dv = f/2, and behind it ori_shell.born does, in the regular form it states.
+
+    Checked: both maps against the published metric, the mass behind the shell as numbers; the
+    two sides put the shell on one line; dm_2/f_2 = dm_1/f_1 along the shell; the event horizon
+    ends on r_+ = 1.28 m_0; m_2 grows as w^(-12) exp(kappa w), Ori's law; the Kretschmann scalar
+    diverges toward the Cauchy horizon behind the shell and toward r = 0, and stays finite toward
+    the Cauchy horizon before the shell, where the mass stays m_0."""
+    import ori_shell as ori
+    name = "Mass inflation"
+    S = ori.shell()
+    wa = ori.V_START
+    v2a = float(S.v2_at(wa))
+    L_shell = float(S.radius(wa))
+    L_eh = float(ori.event_horizon(wa))
+
+    def Px(x):
+        x = np.asarray(x, dtype=float)
+        return -np.arctan(np.sign(x) * np.log1p(np.abs(x) / MI_ELL))
+
+    def P(L):
+        return Px(np.asarray(L, dtype=float) - L_eh)
+
+    def Qf(w):
+        return HALF * np.tanh((np.asarray(w, dtype=float) - ori.V0) / 20)
+
+    def before(w, r):
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        return Px(ori.offset_before(w, r, wa)), Qf(w)
+
+    def name_behind(w, r):
+        crossed, value = ori.born(w, r)
+        return np.where(crossed, value, -(S.v2_at(np.minimum(value, ori.V_END)) - v2a))
+
+    def behind(w, r):
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        return P(name_behind(w, r)), Qf(w)
+
+    def behind_chart(v2, r):
+        return behind(S.v1_at(np.minimum(v2, -1e-300)), r)
+
+    one = Plane(src, "mass_inflation", "ingoing", ("v", "r"), EQUATOR, nr.MI, functions={"m": nr.MI_MASS})
+    two = Plane(src, "mass_inflation", "ingoing", ("v", "r"), EQUATOR, nr.MI, numeric=["m"])
+
+    def m2(v2, r):
+        m = S.mass_behind(v2)
+        dm = S.influx_behind(v2)
+        return {"m": (m, dm, np.zeros_like(m))}
+
+    def falling(m):
+        # d_v - (1 + |f|) d_r is timelike and future directed at every radius of the ingoing chart.
+        return lambda w, r: (1, -(1 + np.abs(ori.f(m(w), r))))
+    w = ck.uniform(0.5, 40, 600)
+    ck.chart(f"{name}, before the shell", one, before, w, S.radius(w) + ck.uniform(0.01, 5, 600),
+             falling(ori.mass_before))
+    v2 = -np.exp(ck.uniform(math.log(1e-3), math.log(-v2a * 0.98), 300))
+    ck.chart(f"{name}, behind the shell", two, behind_chart, v2,
+             S.radius_behind(v2) * ck.uniform(0.03, 0.97, 300), falling(S.mass_behind), fvals=m2)
+
+    w = np.array([2.0, 9.0, 14.0, 22.0])
+    R = S.radius(w)
+    ck.limit(f"{name}: the two sides put the shell on one line of constant p",
+             np.concatenate([before(w, R)[0], behind(w, R)[0]]), np.full(8, P(L_shell)), 1e-6)
+    ck.limit(f"{name}: one outgoing ray from the first ingoing ray has one name before the shell, by its radius "
+             "and by its distance from the event horizon",
+             ori.label_before(w, R + 0.3, wa) - L_eh, ori.offset_before(w, R + 0.3, wa), 1e-8)
+    ck.limit(f"{name}: dm_2/f_2 = dm_1/f_1 along the shell", [S.consistent()], [0], 1e-4)
+    at = np.array([0.0, 6.0, 12.0, 30.0])
+    ck.limit(f"{name}: the event horizon is an outgoing ray, carried from each of four advanced times to 60 m_0 "
+             "later, and ends on r_+ = 1.28 m_0",
+             np.append(ori.label_before(at + 60, ori.event_horizon(at + 60), wa), ori.event_horizon(390.0)),
+             [L_eh] * 4 + [ori.R_PLUS], 1e-9)
+    ck.limit(f"{name}: a ray a hair inside the event horizon has fallen below r = m_0 by 200 m_0 of advanced time, "
+             "and one a hair outside has passed 10 m_0",
+             [min(0.0, 1.0 - ori.outgoing_before(wa, L_eh - 1e-6, 200.0)),
+              min(0.0, ori.outgoing_before(wa, L_eh + 1e-6, 200.0) - 10.0)], [0, 0], 1e-12)
+    slope = float(S._by_v1["lnm2"](80.0, 1))
+    ck.limit(f"{name}: behind the shell the mass grows as w^(-12) exp(kappa w), to 0.01/m_0 in the rate at w = 80 m_0",
+             [slope], [ori.KAPPA - ori.P / 80.0], 1e-2)
+    near = S.v2_at(80.0)
+    ck.diverges(f"{name}: the Kretschmann scalar diverges toward the Cauchy horizon behind the shell, a hundred "
+                "times closer", two.kretschmann(100 * near, 0.6, m2), two.kretschmann(near, 0.6, m2))
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", two.kretschmann(-3.0, 1e-2, m2),
+                two.kretschmann(-3.0, 1e-3, m2))
+    ck.finite(f"{name}: the Kretschmann scalar is finite toward the Cauchy horizon before the shell",
+              one.kretschmann(np.array([40.0, 80.0, 300.0]), np.full(3, 1.0)))
+
+    qa = float(Qf(wa))
+    p_shell, p_corner = float(P(L_shell)), float(P(0.0))
+    ws = np.concatenate([np.linspace(wa, 40, 200), np.linspace(40, ori.V_END, 60)[1:]])
+    far = np.concatenate([ws, np.linspace(ori.V_END, 200, 40)[1:]])
+    # r = 0 behind the shell, from the first ray to the Cauchy horizon.
+    p0 = P(-(S.v2_at(ws) - v2a))
+    p_top = float(P(v2a))
+    v = View("shell", "Ori's shell", [-2.3, PI + 0.4, -2.65, 3.3])
+    exterior = [point(-HALF, qa), point(-HALF, HALF), point(0, HALF), point(0, qa)]
+    inside_one = [point(0, qa), point(0, HALF), point(p_shell, HALF), point(p_shell, qa)]
+    inside_two = ([point(p_shell, qa), point(p_shell, HALF), point(p_top, HALF)]
+                  + [point(a, b) for a, b in zip(p0[::-1], Qf(ws)[::-1])])
+    for polygon in (exterior, inside_one, inside_two):
+        v.fill("region", polygon)
+    v.fill("cover", exterior)
+    v.fill("cover", inside_one)
+    v.fill("cover2", inside_two)
+    radii_one, radii_two = (0.8, 1.0, 1.2, 1.5, 2.0, 3.0, 6.0), (0.25, 0.5, 0.65, 0.9, 1.05)
+    Rs = S.radius(ws)
+    for r in radii_one:
+        keep = S.radius(np.minimum(far, ori.V_END)) < r
+        v.curve("r", *before(far[keep], np.full(keep.sum(), r)))
+    for r in radii_two:
+        keep = Rs > r
+        v.curve("r2", *behind(ws[keep], np.full(keep.sum(), r)))
+    # The apparent horizons: the outer one before the shell, the inner one behind it.
+    inner = ori.horizons(S.mass_behind_at(ws))[0]
+    v.curve("apparent", *before(far, ori.horizons(ori.mass_before(far))[1]))
+    # The inner one closes on r = 0 as the mass grows, and is drawn while it is wider than m_0/50,
+    # then on to where the Cauchy horizon meets r = 0, which both reach together.
+    wide = inner > 0.02
+    pi_, qi_ = behind(ws[wide], inner[wide])
+    v.curve("apparent", np.append(pi_, p_top), np.append(qi_, HALF))
+    q0 = float(Qf(ori.V0))
+    p_r0_at_v0 = float(P(-(S.v2_at(ori.V0) - v2a)))
+    v.segment("null", (-HALF, q0), (p_r0_at_v0, q0))
+    v.segment("surface", (p_shell, qa), (p_shell, HALF))
+    v.segment("event", (0, qa), (0, HALF))
+    v.segment("horizon", (0, HALF), (p_shell, HALF))
+    v.segment("singular", (p_shell, HALF), (p_top, HALF), zig=True)
+    v.curve("singular", p0, Qf(ws), zig=True)
+    v.segment("scri", (-HALF, HALF), (0, HALF))
+    v.segment("scri", (-HALF, qa), (-HALF, HALF))
+    v.segment("chartedge", (-HALF, qa), (p_corner, qa))
+    for pq, text, anchor, dx, dy in (((-HALF, HALF), "$i^0$", "l", 6, 0), ((0, HALF), "$i^+$", "bl", 6, -4)):
+        v.point("infinity", pq)
+        v.label(pq, text, anchor, dx=dx, dy=dy)
+    v.label((-HALF / 2, HALF), "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+    v.label((-HALF, (qa + HALF) / 2), "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label(((p_shell + p_top) / 2, HALF), "Cauchy horizon", "bl", "small", dx=4, dy=-3)
+    v.label((0, (qa + q0) / 2), "event horizon", "tl", "small", dx=4, dy=3)
+    v.label((p_shell, (qa + q0) / 2), "the shell", "br", "small", dx=-4, dy=-3)
+    v.legend("cover", "before the shell, and outside the hole")
+    v.legend("cover2", "behind the shell")
+    v.legend("r", "$r$ constant before the shell: $0.8$, $1$, $1.2$, $1.5$, $2$, $3$ and $6\\,m_0$")
+    v.legend("r2", "$r$ constant behind it: $0.25$, $0.5$, $0.65$, $0.9$ and $1.05\\,m_0$")
+    v.legend("null", "the ingoing ray $v_0$, where the tail begins")
+    v.legend("surface", "the shell, an outgoing light ray")
+    v.legend("event", "the event horizon")
+    v.legend("apparent", "the apparent horizons, where $g^{rr} = 0$")
+    v.legend("horizon", "the Cauchy horizon before the shell, where the mass function stays $m_0$")
+    v.legend("singular", "the Cauchy horizon behind the shell and $r = 0$, where the Kretschmann scalar diverges")
+    v.legend("chartedge", "the first ingoing ray drawn, $10\\,m_0$ of advanced time before $v_0$")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(settings="$r_q = 0.96\\,m_0$, with $m_0$ the final mass and the unit of every length, so that the hole "
+                   "left behind has $r_+ = 1.28\\,m_0$, $r_- = 0.72\\,m_0$, and the surface gravity "
+                   "$\\kappa = 0.54/m_0$ at $r_-$.",
+          input=nr.MI_BEHIND_INPUT)
+    return [v]
+
+
 # ---------------------------------------------------------------- Majumdar-Papapetrou
 
 def clip_polygon(pts, T0, T1):
@@ -17434,7 +17610,7 @@ DRAWN = {
     "domain_wall": domain_wall,
     "randall_sundrum": randall_sundrum,
     "coleman_de_luccia": coleman_de_luccia,
-    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "bardeen": bardeen,
+    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
@@ -18612,6 +18788,20 @@ CAPTIONS = {
         "and closes at $v = 5.04\\,m_0$. Inside it the lines of constant $r$ are spacelike. Every outgoing ray "
         "reaches $\\mathscr{I}^+$, so the spacetime has no event horizon, and the Kretschmann scalar is finite "
         "at every event, the centre included.",
+    ],
+    ("mass_inflation", "shell"): [
+        "A charged black hole ($r_q = 0.96\\,m_0$) with the tail of its collapse falling in and Ori's shell running "
+        "outward inside it, from the ingoing ray $10\\,m_0$ before the tail begins, each point in the diagram a "
+        "2-sphere of radius $r$. An ingoing ray keeps one name on both sides of the shell, the advanced time $w$ it has "
+        "before the shell, and $q = (\\pi/2)\\tanh((w - v_0)/20m_0)$ puts the Cauchy horizon, $w \\to \\infty$, "
+        "on the line of future null infinity. An outgoing ray is named by the radius at which it crosses the first "
+        "ingoing ray, or by when it leaves $r = 0$, and $p$ is zero on the event horizon. We find both names by "
+        "integrating $dr/dv = g^{rr}/2$ back along the ray on its own side of the shell.",
+        "Before the shell the mass function settles to $m_0$, and the Kretschmann scalar stays finite toward the "
+        "Cauchy horizon. Behind it the mass grows as $w^{-12}e^{\\kappa w}$ and the Kretschmann scalar diverges "
+        "toward the Cauchy horizon, which the lines of constant $r$ still reach at $r > 0$: the singularity is null "
+        "and weak. The inner apparent horizon peels away from the Cauchy horizon and shrinks to $r = 0$, where the "
+        "timelike singularity of Reissner-Nordström's solution remains.",
     ],
     ("rn_metric", "malament_hogarth"): [
         "The same tower with one event beyond the Cauchy horizon $r_-$ marked on it. "

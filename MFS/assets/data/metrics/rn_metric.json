@@ -114,6 +114,11 @@
       "id": "kiselev",
       "kind": "family",
       "text": "A black hole whose metric function takes any power of $r$ where Reissner-Nordström's has the charge's $1/r^2$. The charge term is its case $w = 1/3$ with the sign reversed [kiselev2003, visser2020]."
+    },
+    {
+      "id": "mass_inflation",
+      "kind": "generalisation",
+      "text": "The same hole with radiation crossing its interior. Eric Poisson and Werner Israel sent two streams of light through it in 1989 and found the mass function growing without limit at the inner horizon [poisson1989]."
     }
   ],
   "references": [

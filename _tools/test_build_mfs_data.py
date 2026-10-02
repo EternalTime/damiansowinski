@@ -2679,6 +2679,31 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertGreater(mass, 3 * math.sqrt(3 * ell2) / 4 - 1e-9)
                 self.assertLess(abs(r ** 3 - 2 * mass * r * r + 2 * mass * ell2), 1e-5, f"Hayward's horizon at v - r = {T}")
         self.assertGreater(trapped, 10)
+        # The tail falling into the charged hole, r_q = 0.96 m_0: each slice of constant v - r climbs at
+        # dz/dr = sqrt(2m/r - r_q^2/r^2) with the mass of each circle's own advanced time, from the
+        # circle where that vanishes, and marks the two apparent horizons, the roots of
+        # r^2 - 2m r + r_q^2, which move from 0.78 and 1.18 m_0 to 0.72 and 1.28 m_0.
+        def tail_mass(v):
+            return 1 - (10 / max(v, 10.0)) ** 11 / 50
+        frames = self.embedding["mass_inflation"]["views"][0]["movie"]["frames"]
+        self.assertEqual((frames[0]["value"], frames[-1]["value"]), (7.5, 16.5))
+        for frame in frames:
+            T, points = frame["value"], frame["pieces"][0]["points"]
+            self.assertEqual(points[-1][2], 0)
+            start = points[0][0]
+            self.assertLess(abs(2 * tail_mass(T + start) * start - 0.9216), 3e-4, f"mass inflation at v - r = {T}")
+            for (r0, _, z0), (r1, _, z1) in zip(points, points[1:]):
+                mid = (r0 + r1) / 2
+                if r1 - r0 > 1e-3:
+                    slope = math.sqrt(2 * tail_mass(T + mid) / mid - 0.9216 / mid ** 2)
+                    self.assertLess(abs((z1 - z0) / (r1 - r0) - slope), 2e-2 * (1 + slope), f"mass inflation dz/dr at {mid}")
+            horizons = sorted(ring["x"] for ring in frame["rings"] if ring["class"] == "horizon")
+            self.assertEqual(len(horizons), 2, f"mass inflation at v - r = {T}")
+            for r in horizons:
+                self.assertLess(abs(r * r - 2 * tail_mass(T + r) * r + 0.9216), 1e-9)
+        first = sorted(r["x"] for r in frames[0]["rings"] if r["class"] == "horizon")
+        last = sorted(r["x"] for r in frames[-1]["rings"] if r["class"] == "horizon")
+        self.assertEqual([round(x, 2) for x in first + last], [0.78, 1.18, 0.72, 1.28])
         # On Kerr's equator the throat's circumference radius is 2GM/c^2 whatever the spin, and
         # Kerr-Newman's charge pulls it in to 2GM/c^2 - r_Q^2/r+, at a = 0.6 and r_Q = 0.5.
         self.assertAlmostEqual(piece("kerr", "exterior")[0][1], 2.0, places=6)
@@ -3494,6 +3519,7 @@ class StacksAndMovies(unittest.TestCase):
               ("kastor_traschen", "two_holes"): "$c\\tau$",
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
               ("photon_rocket", "burn"): "$cu + r$", ("hayward", "history"): "$v - r$",
+              ("mass_inflation", "tail"): "$v - r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("ori_time_machine", "throat"): "$t$", ("senovilla", "universe"): "$act$",
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
@@ -4522,6 +4548,9 @@ class Slices(unittest.TestCase):
               # homothetic chart draws a mass and a charge that grow with the advanced time, another spacetime.
               "bonnor_vaidya/eddington_finkelstein_outgoing/shell", "conformal bonnor_vaidya/leaving",
               "bonnor_vaidya/homothetic/scaling",
+              # Behind Ori's shell the mass function is another one, and the conformal diagram draws the
+              # shell: the moments embedded are the tail's alone.
+              "mass_inflation/ingoing/behind", "conformal mass_inflation/shell",
               "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond",
               "conformal frw/flat", "conformal frw/open",
               "misner/rindler/plane", "conformal misner/rindler",
@@ -5011,7 +5040,7 @@ class Slices(unittest.TestCase):
                 return (r + 3 * math.log(abs(1 - 7 * r / 12)) - 1.2 * math.log(abs(1 - 7 * r / 6))
                         + 0.2 * math.log(1 + 7 * r / 4))
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
-        if key == "hayward/evaporating/history":
+        if key in ("hayward/evaporating/history", "mass_inflation/ingoing/tail"):
             # A slice of constant v - r, level against v - r.
             return (lambda X: t), list(self.reach(surface))
         if key.startswith("global_monopole/eddington_finkelstein"):

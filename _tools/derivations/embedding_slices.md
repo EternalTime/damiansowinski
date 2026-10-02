@@ -208,6 +208,12 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `exterior/radial`: the line $t = 0$ from the shell to the box's edge.
 - `interior`, `interior_tortoise` and `exterior`, the half diamond: the line $T = 0$ from the centre through the shell to $r = 4\,r_s$, the same on each.
 
+### Mass inflation
+
+- The embedding is the equator on slices of constant $v - r$, a movie from $7.5$ to $16.5\,m_0$ with four of its moments marked, for the tail falling in alone: $r$ from the level circle $r_q^2/2m$ to $4\,m_0$.
+- `ingoing/tail`, drawn against $v - r$: each moment is a level line, over every $r$ the embedding reaches.
+- `ingoing/behind` and the conformal diagram draw Ori's shell and the region behind it, where the mass function is another one, and carry no moment.
+
 ### Kasner
 
 - The embedding is the plane $y = 0$ at $t = 1/4$, $1/2$, $1$ and $2$.

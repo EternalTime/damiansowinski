@@ -101,6 +101,11 @@
       "id": "siklos",
       "kind": "family",
       "text": "Kaigorodov's wave in anti-de Sitter space of four dimensions has a version in three, and it is the extreme BTZ black hole [cvetic1999]."
+    },
+    {
+      "id": "mass_inflation",
+      "kind": "family",
+      "text": "A charged hole in four dimensions crossed by two streams of radiation, whose mass function grows without limit at its inner horizon [poisson1989]. The charged spinning hole in three dimensions does the same [chan1996]."
     }
   ],
   "references": [
@@ -125,7 +130,9 @@
     "damour2007",
     "aminneborg1996",
     "matschull1999",
-    "cvetic1999"
+    "cvetic1999",
+    "poisson1989",
+    "chan1996"
   ],
   "coordinates": [
     {

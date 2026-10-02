@@ -139,7 +139,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "2fd5c08dd0f894d0",
+    "version": "d3869b535dfc69cd",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -178,7 +178,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6643db1b0a98786f",
+    "version": "8374b9aefc52b72a",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572"
@@ -354,7 +354,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bb7e25c1d9b37f54",
+    "version": "b28cef5f6e2ffda1",
     "diagrams": "2122349c176f47ed",
     "conformal": "f82fe13ee8206113",
     "embedding": "c306446463337712"
@@ -986,7 +986,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "422025d5b731f5a1",
+    "version": "a639c4dcb6c64693",
     "diagrams": "bd41935318270b6a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3"
@@ -1145,7 +1145,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "929f8c7b4da689e6",
+    "version": "18cac568c4d31c02",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1428,6 +1428,45 @@
     "diagrams": "ed541b2735366dcf",
     "conformal": "69af72b1ccf43777",
     "embedding": "04c50f64f4cf864e"
+  },
+  {
+    "id": "mass_inflation",
+    "name": "Mass Inflation",
+    "tags": [
+      "mass inflation",
+      "black hole interior",
+      "inner horizon",
+      "Cauchy horizon",
+      "strong cosmic censorship",
+      "null singularity",
+      "curvature singularity",
+      "blueshift",
+      "charged black hole",
+      "black hole",
+      "charged",
+      "electric charge",
+      "electromagnetic field",
+      "null dust",
+      "accreting",
+      "Vaidya",
+      "thin shell",
+      "double null coordinates",
+      "apparent horizon",
+      "event horizon",
+      "horizon",
+      "causal structure",
+      "time-dependent",
+      "spherically symmetric",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "616b8fb53f9ae289",
+    "diagrams": "b920fffead7f2fe8",
+    "conformal": "43d2fa3533d022a9",
+    "embedding": "097ceae878d9ed12"
   },
   {
     "id": "mcvittie",
@@ -1965,7 +2004,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bbc4a79e06dc8ad4",
+    "version": "8e268a80e63ea90e",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -2054,7 +2093,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ad9078d2f0f37b4f",
+    "version": "e4b51235dd698342",
     "diagrams": "f6c6ac1947d0b4e9",
     "conformal": "639eea78631ca3e1",
     "embedding": "342b4919bb1495ae"
@@ -2643,7 +2682,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "941b00727e062bf4",
+    "version": "1bd7f68c0a79b305",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"

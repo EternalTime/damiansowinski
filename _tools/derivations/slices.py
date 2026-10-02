@@ -1749,6 +1749,9 @@ FLAT = {
     ("c_metric", "spherical", "inner"): lambda: _c_metric(False),
     ("c_metric", "spherical", "outer"): lambda: _c_metric(False),
     ("c_metric", "hong_teo", "inner"): lambda: _c_metric(True),
+    # The tail falling into the charged hole: v - r = w, every r the embedding reaches.
+    ("mass_inflation", "ingoing", "tail"): lambda: one(
+        "mass_inflation", lambda m: [[(m.time + r, r) for r in m.reach("ingoing", "r")]]),
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): lambda: one(
         "vaidya", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]]),
     # The same slices of Bonnor and Vaidya's charged shell.
@@ -1793,6 +1796,8 @@ HIDDEN = {
     ("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell"): "the leaving shell, the time reverse of the falling shell embedded",
     ("bonnor_vaidya", "leaving"): "the leaving shell, the time reverse of the falling shell embedded",
     ("bonnor_vaidya", "homothetic", "scaling"): "the collapse of a mass and a charge that grow with the advanced time, another spacetime than the shell embedded",
+    ("mass_inflation", "ingoing", "behind"): "behind Ori's shell, where the mass function is another one than the tail's, whose moments are embedded",
+    ("mass_inflation", "shell"): "Ori's shell and the region behind it, another spacetime than the tail falling in alone, whose moments are embedded",
     **{("curzon_chazy", system, "axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"
        for system in ("weyl", "spherical")},
     **{("curzon_chazy", f"{system}_axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"

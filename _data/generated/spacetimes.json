@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 95,
+  "count": 96,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -1175,6 +1175,11 @@
           "id": "siklos",
           "kind": "family",
           "text": "Kaigorodov's wave in anti-de Sitter space of four dimensions has a version in three, and it is the extreme BTZ black hole [cvetic1999]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "family",
+          "text": "A charged hole in four dimensions crossed by two streams of radiation, whose mass function grows without limit at its inner horizon [poisson1989]. The charged spinning hole in three dimensions does the same [chan1996]."
         }
       ],
       "references": [
@@ -1199,7 +1204,9 @@
         "damour2007",
         "aminneborg1996",
         "matschull1999",
-        "cvetic1999"
+        "cvetic1999",
+        "poisson1989",
+        "chan1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -1495,6 +1502,11 @@
           "id": "gravastar",
           "kind": "family",
           "text": "Gliner's vacuum with $p = -\\rho$ as the whole interior of a collapsed star, held under a thin shell with no horizon [mazur2004, gliner1966]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "family",
+          "text": "Ori's model of a charged hole with radiation crossing it, whose mass function grows without limit at the inner horizon. Carried over to Bardeen's metric it gives an exponentially growing mass at the inner horizon as well [carballorubio2021]."
         }
       ],
       "references": [
@@ -1518,7 +1530,8 @@
         "carballorubio2018",
         "poisson1990",
         "simpson2019",
-        "mazur2004"
+        "mazur2004",
+        "carballorubio2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bardeen.json",
@@ -3338,6 +3351,11 @@
           "id": "schwarzschild",
           "kind": "special_case",
           "text": "No charge and a constant mass. The metric is then Schwarzschild's in Eddington-Finkelstein coordinates, with $r_s = 2m$."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "special_case",
+          "text": "The same metric with the charge held constant, read inside a black hole. With a second stream of light running outward there, the mass function grows without limit at the inner horizon [poisson1989]."
         }
       ],
       "references": [
@@ -3354,7 +3372,8 @@
         "israel1986",
         "sullivan1980",
         "kehle2022",
-        "poisson1990"
+        "poisson1990",
+        "poisson1989"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bonnor_vaidya.json",
@@ -9826,6 +9845,11 @@
           "id": "gravastar",
           "kind": "family",
           "text": "A ball of de Sitter space under a thin shell with Schwarzschild's vacuum outside, a collapsed star with a de Sitter core and no horizon [mazur2004]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "family",
+          "text": "Ori's model of a charged hole with radiation crossing it, whose mass function grows without limit at the inner horizon. Carried over to Hayward's metric it gives an exponentially growing mass at the inner horizon as well [carballorubio2021]."
         }
       ],
       "references": [
@@ -9847,7 +9871,8 @@
         "carballorubio2018",
         "vagnozzi2023",
         "simpson2019",
-        "mazur2004"
+        "mazur2004",
+        "carballorubio2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hayward.json",
@@ -11358,6 +11383,11 @@
           "id": "string_black_hole",
           "kind": "family",
           "text": "Schwarzschild's black hole with a cosmic string through it. Ruth Gregory, David Kubizňák, and Danielle Wills put the string through a Kerr black hole in 2013 and found its effect conical in a frame turning with the hole [gregory2013]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "family",
+          "text": "A charged spherical hole crossed by two streams of radiation, the model Eric Poisson and Werner Israel built in 1989 for the inside of a rotating one. Its mass function grows without limit at the inner horizon [poisson1989]."
         }
       ],
       "references": [
@@ -14051,6 +14081,309 @@
           ],
           "ricci_scalar": "R = -\\dfrac{6\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega - \\partial_t^2\\Omega\\right)}{\\Omega^3}",
           "kretschmann": "K = \\dfrac{2\\left(\\left(3\\left(\\partial_t\\Omega\\right)^2 + \\left(\\partial_x\\Omega\\right)^2 + \\left(\\partial_y\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_t^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 + 3\\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_x^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 + 3\\left(\\partial_y\\Omega\\right)^2 - \\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_y^2\\Omega\\right)^2 + \\left(\\left(\\partial_t\\Omega\\right)^2 - \\left(\\partial_x\\Omega\\right)^2 - \\left(\\partial_y\\Omega\\right)^2 + 3\\left(\\partial_z\\Omega\\right)^2 - 2\\Omega\\,\\partial_z^2\\Omega\\right)^2\\right) + 16\\left(\\left(2\\partial_x\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_x\\partial_y\\Omega\\right)^2 + \\left(2\\partial_x\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_x\\partial_z\\Omega\\right)^2 + \\left(2\\partial_y\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_y\\partial_z\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_x\\Omega - \\Omega\\,\\partial_t\\partial_x\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_y\\Omega - \\Omega\\,\\partial_t\\partial_y\\Omega\\right)^2 - \\left(2\\partial_t\\Omega\\,\\partial_z\\Omega - \\Omega\\,\\partial_t\\partial_z\\Omega\\right)^2\\right) + 4\\Omega^2\\left(\\partial_x^2\\Omega + \\partial_y^2\\Omega + \\partial_z^2\\Omega - \\partial_t^2\\Omega\\right)^2}{\\Omega^8}"
+        }
+      ]
+    },
+    {
+      "id": "mass_inflation",
+      "name": "Mass Inflation Inside a Charged Black Hole",
+      "short_name": "Mass Inflation",
+      "description": "The inside of a charged black hole crossed by two streams of radiation, one falling in and one running outward. Eric Poisson and Werner Israel found in 1989 that the mass function then grows without limit at the inner horizon, which turns the Cauchy horizon of the Reissner-Nordström solution into a null curvature singularity, and Amos Ori gave the exact solution in 1991.",
+      "tags": [
+        "mass inflation",
+        "black hole interior",
+        "inner horizon",
+        "Cauchy horizon",
+        "strong cosmic censorship",
+        "null singularity",
+        "curvature singularity",
+        "blueshift",
+        "charged black hole",
+        "black hole",
+        "charged",
+        "electric charge",
+        "electromagnetic field",
+        "null dust",
+        "accreting",
+        "Vaidya",
+        "thin shell",
+        "double null coordinates",
+        "apparent horizon",
+        "event horizon",
+        "horizon",
+        "causal structure",
+        "time-dependent",
+        "spherically symmetric",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We work in units with $G = c = 1$, so every coordinate with a dimension is a length, and so are the mass function $m$ and the charge radius $r_q$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "The charged black hole with nothing falling in. With $m$ constant the ingoing chart is the Reissner-Nordström metric in advanced time, whose inner horizon is the Cauchy horizon that mass inflation makes singular [poisson1989]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "special_case",
+          "text": "The same stream of light with no charge on the hole. At $r_q = 0$ the ingoing chart is Vaidya's metric in advanced time, and William Bonnor and Vaidya gave the charged form in 1970 [bonnor1970]."
+        },
+        {
+          "id": "bonnor_vaidya",
+          "kind": "generalisation",
+          "text": "The charged Vaidya metric with the charge free to change along with the mass. With the charge held constant its ingoing chart is the one each side of Ori's shell is written in [bonnor1970]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The rotating black hole, whose inner horizon the charged model was built to imitate. Amos Ori argued in 1992 that it carries the same weak null singularity [poisson1989, ori1992]."
+        },
+        {
+          "id": "hayward",
+          "kind": "family",
+          "text": "A regular black hole, with an inner horizon of its own. Raúl Carballo-Rubio and his collaborators carried Ori's shell over to it in 2021 and found the mass growing exponentially there too [carballorubio2021]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "family",
+          "text": "Another regular black hole with two horizons. Ori's shell gives it an exponentially growing mass at the inner one as well [carballorubio2021]."
+        },
+        {
+          "id": "reissner_nordstrom_de_sitter",
+          "kind": "family",
+          "text": "The charged hole in a universe with a positive cosmological constant. There the tail dies off exponentially, and Patrick Brady and Eric Poisson found in 1992 that the Cauchy horizon is stable where its surface gravity is no greater than the cosmological horizon's [brady1992, poisson1997]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The rotating black hole in three dimensions, which has an inner horizon too. J. S. F. Chan, K. C. K. Chan, and Robert Mann gave its charged form a Vaidya mass in 1996 and found the mass function diverging in the same way [chan1996]."
+        }
+      ],
+      "references": [
+        "poisson1989",
+        "poisson1997",
+        "penrose1968",
+        "brady1999",
+        "price1972",
+        "simpson1973",
+        "hiscock1981charged",
+        "bonnor1970",
+        "bonanno1995",
+        "poisson1990",
+        "dray1985shells",
+        "redmount1985",
+        "ori1991inflation",
+        "brady1995",
+        "hod1998",
+        "dafermos2005",
+        "ori1992",
+        "brady1992",
+        "carballorubio2021",
+        "chan1996"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mass_inflation.json",
+      "charts": [
+        {
+          "id": "ingoing",
+          "name": "Ingoing Charged Vaidya",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r^2 - 2mr + r_q^2 = 0 \\;\\text{(the apparent horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass function of advanced time, a length, $m = GM/c^2$; $m_0$ is the final mass in the drawings and $v_0$ the advanced time their tail begins at"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G/(4\\pi\\epsilon_0 c^4)$ for the charge $Q$; $r_\\pm = m_0 \\pm \\sqrt{m_0^2 - r_q^2}$ are the horizons of the hole left behind and $\\kappa = \\sqrt{m_0^2 - r_q^2}/r_-^2$ the surface gravity of the inner one"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v$ constant along each ingoing radial light ray and $r$ the areal radius. The mass is a function $m(v)$, and behind an outgoing shell the chart has its own $v$ and its own $m(v)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{r_q^2}{r^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{r_q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8\\left(6m^2r^2 - 12mr_q^2r + 7r_q^4\\right)}{r^8}"
+        },
+        {
+          "id": "double_null",
+          "name": "Double Null",
+          "coordinates": [
+            "u",
+            "v",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r = r(u,v)",
+              "description": "Areal radius, a function of the two null coordinates"
+            },
+            {
+              "symbol": "\\sigma = \\sigma(u,v)",
+              "description": "Function that sets the metric of the plane of $u$ and $v$, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(u, v, \\theta, \\phi)$, with $u$ and $v$ any two null coordinates on the plane of radial motion, both lengths and both growing toward the future. The mass function $m$ is defined by $1 - 2m/r + r_q^2/r^2 = -2e^{-2\\sigma}\\,\\partial_u r\\,\\partial_v r$, and no component assumes a field equation. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -2e^{2\\sigma}du\\,dv + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-e^{2\\sigma}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-e^{2\\sigma}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(2r^2\\,\\partial_u\\partial_v\\sigma + 4r\\,\\partial_u\\partial_v r + 2\\partial_u r\\,\\partial_v r + e^{2\\sigma}\\right)e^{-2\\sigma}}{r^2}",
+          "kretschmann": "K = \\dfrac{4\\left(4r^4\\left(\\partial_u\\partial_v\\sigma\\right)^2 + 16r^2\\,\\partial_u r\\,\\partial_v r\\,\\partial_u\\sigma\\,\\partial_v\\sigma - 8r^2\\,\\partial_u r\\,\\partial_u\\sigma\\,\\partial_v^2 r - 8r^2\\,\\partial_v r\\,\\partial_v\\sigma\\,\\partial_u^2 r + 4r^2\\,\\partial_u^2 r\\,\\partial_v^2 r + 4r^2\\left(\\partial_u\\partial_v r\\right)^2 + 4\\left(\\partial_u r\\right)^2\\left(\\partial_v r\\right)^2 + 4e^{2\\sigma}\\partial_u r\\,\\partial_v r + e^{4\\sigma}\\right)e^{-4\\sigma}}{r^4}"
+        },
+        {
+          "id": "advanced",
+          "name": "Advanced Time and Areal Radius",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "h = 0 \\;\\text{(the apparent horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "g = g(v,r)",
+              "description": "Function of advanced time and radius, a pure number, negative; Brady and Smith's $g$"
+            },
+            {
+              "symbol": "h = h(v,r)",
+              "description": "Function of advanced time and radius, a pure number; Brady and Smith's $\\bar{g}$, with $g^{rr} = h/g$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with $v$ an advanced time and $r$ the areal radius. The mass function $m$ is defined by $1 - 2m/r + r_q^2/r^2 = h/g$, so $g = -1$ and $h = -(1 - 2m/r + r_q^2/r^2)$ with $m = m(v)$ is the ingoing chart, and no component assumes a field equation. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -gh\\,dv^2 - 2g\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-g\\,h"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "-g"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "-g"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{r^2\\,g^2\\,\\partial_r^2 h + r^2\\,g\\,h\\,\\partial_r^2 g + r^2\\,g\\,\\partial_r g\\,\\partial_r h - 2r^2\\,g\\,\\partial_v\\partial_r g - r^2\\,h\\left(\\partial_r g\\right)^2 + 2r^2\\,\\partial_v g\\,\\partial_r g + 4r\\,g^2\\,\\partial_r h - 2g^3 + 2g^2\\,h}{r^2\\,g^3}",
+          "kretschmann": "K = \\dfrac{r^4\\,g^4\\left(\\partial_r^2 h\\right)^2 + 2r^4\\,g^3\\,h\\,\\partial_r^2 g\\,\\partial_r^2 h + 2r^4\\,g^3\\,\\partial_r g\\,\\partial_r h\\,\\partial_r^2 h - 4r^4\\,g^3\\,\\partial_r^2 h\\,\\partial_v\\partial_r g + r^4\\,g^2\\,h^2\\left(\\partial_r^2 g\\right)^2 - 2r^4\\,g^2\\,h\\left(\\partial_r g\\right)^2\\,\\partial_r^2 h + 2r^4\\,g^2\\,h\\,\\partial_r g\\,\\partial_r h\\,\\partial_r^2 g - 4r^4\\,g^2\\,h\\,\\partial_r^2 g\\,\\partial_v\\partial_r g + 4r^4\\,g^2\\,\\partial_v g\\,\\partial_r g\\,\\partial_r^2 h + r^4\\,g^2\\left(\\partial_r g\\right)^2\\left(\\partial_r h\\right)^2 - 4r^4\\,g^2\\,\\partial_r g\\,\\partial_r h\\,\\partial_v\\partial_r g + 4r^4\\,g^2\\left(\\partial_v\\partial_r g\\right)^2 - 2r^4\\,g\\,h^2\\left(\\partial_r g\\right)^2\\,\\partial_r^2 g + 4r^4\\,g\\,h\\,\\partial_v g\\,\\partial_r g\\,\\partial_r^2 g - 2r^4\\,g\\,h\\left(\\partial_r g\\right)^3\\,\\partial_r h + 4r^4\\,g\\,h\\left(\\partial_r g\\right)^2\\,\\partial_v\\partial_r g + 4r^4\\,g\\,\\partial_v g\\left(\\partial_r g\\right)^2\\,\\partial_r h - 8r^4\\,g\\,\\partial_v g\\,\\partial_r g\\,\\partial_v\\partial_r g + r^4\\,h^2\\left(\\partial_r g\\right)^4 - 4r^4\\,h\\,\\partial_v g\\left(\\partial_r g\\right)^3 + 4r^4\\left(\\partial_v g\\right)^2\\left(\\partial_r g\\right)^2 + 4r^2\\,g^4\\left(\\partial_r h\\right)^2 + 8r^2\\,g^3\\,\\partial_r g\\,\\partial_v h + 4r^2\\,g^2\\,h^2\\left(\\partial_r g\\right)^2 - 8r^2\\,g^2\\,h\\,\\partial_v g\\,\\partial_r g + 4g^6 - 8g^5\\,h + 4g^4\\,h^2}{r^4\\,g^6}"
         }
       ]
     },
@@ -19580,6 +19913,11 @@
           "id": "kiselev",
           "kind": "family",
           "text": "A black hole whose metric function takes any power of $r$ where Reissner-Nordström's has the charge's $1/r^2$. The charge term is its case $w = 1/3$ with the sign reversed [kiselev2003, visser2020]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "generalisation",
+          "text": "The same hole with radiation crossing its interior. Eric Poisson and Werner Israel sent two streams of light through it in 1989 and found the mass function growing without limit at the inner horizon [poisson1989]."
         }
       ],
       "references": [
@@ -20067,6 +20405,11 @@
           "id": "reissner_nordstrom_ads",
           "kind": "family",
           "text": "The charged black hole with a negative cosmological constant. At $r_q = r_s/2$, where this one is lukewarm, that one is supersymmetric and a naked singularity [romans1992]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "family",
+          "text": "The same hole with no cosmological constant and radiation crossing it. There the tail dies off only as a power of time, and the inner horizon becomes a singularity [poisson1989, poisson1997]."
         }
       ],
       "references": [
@@ -20092,7 +20435,9 @@
         "hintz2017",
         "dias2018rough",
         "lake2015",
-        "brill1994"
+        "brill1994",
+        "poisson1989",
+        "poisson1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_de_sitter.json",
@@ -26284,6 +26629,11 @@
           "id": "bonnor_vaidya",
           "kind": "generalisation",
           "text": "Vaidya's star shedding charge as well as mass. William Bonnor and Vaidya let the charge inside each sphere depend on the retarded time too, and with no charge their metric is Vaidya's [bonnor1970]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "generalisation",
+          "text": "Vaidya's ingoing metric with a charge on the hole, which gives it an inner horizon. A second stream running outward makes the mass function grow without limit there [poisson1989]."
         }
       ],
       "references": [
@@ -26311,7 +26661,8 @@
         "hellaby1994",
         "bonnor1969light",
         "podolsky2005",
-        "wang1997collapse"
+        "wang1997collapse",
+        "poisson1989"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",

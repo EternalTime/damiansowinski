@@ -67,6 +67,11 @@
       "id": "gravastar",
       "kind": "family",
       "text": "Gliner's vacuum with $p = -\\rho$ as the whole interior of a collapsed star, held under a thin shell with no horizon [mazur2004, gliner1966]."
+    },
+    {
+      "id": "mass_inflation",
+      "kind": "family",
+      "text": "Ori's model of a charged hole with radiation crossing it, whose mass function grows without limit at the inner horizon. Carried over to Bardeen's metric it gives an exponentially growing mass at the inner horizon as well [carballorubio2021]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "carballorubio2018",
     "poisson1990",
     "simpson2019",
-    "mazur2004"
+    "mazur2004",
+    "carballorubio2021"
   ],
   "coordinates": [
     {
