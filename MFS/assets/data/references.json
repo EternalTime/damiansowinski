@@ -1,5 +1,5 @@
 {
-  "version": "bebd8ead83d83bed",
+  "version": "f49dba5f17a3d277",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -11867,6 +11867,206 @@
         "year": "2010",
         "doi": "10.12942/lrr-2010-2",
         "url": "https://doi.org/10.12942/lrr-2010-2"
+      }
+    },
+    "newman1963": {
+      "type": "article",
+      "fields": {
+        "title": "A Class of Null Flat-Space Coordinate Systems",
+        "author": "Newman, Ezra T. and Unti, T. W. J.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "4",
+        "number": "12",
+        "pages": "1467--1469",
+        "year": "1963",
+        "doi": "10.1063/1.1703927",
+        "url": "https://doi.org/10.1063/1.1703927"
+      }
+    },
+    "bonnor1994": {
+      "type": "article",
+      "fields": {
+        "title": "The photon rocket",
+        "author": "Bonnor, W. B.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "11",
+        "number": "8",
+        "pages": "2007--2012",
+        "year": "1994",
+        "doi": "10.1088/0264-9381/11/8/008",
+        "url": "https://doi.org/10.1088/0264-9381/11/8/008"
+      }
+    },
+    "damour1995": {
+      "type": "article",
+      "fields": {
+        "title": "Photon rockets and gravitational radiation",
+        "author": "Damour, Thibault",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "12",
+        "number": "3",
+        "pages": "725--737",
+        "year": "1995",
+        "doi": "10.1088/0264-9381/12/3/011",
+        "eprint": "gr-qc/9412063",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9412063"
+      }
+    },
+    "bonnor1996": {
+      "type": "article",
+      "fields": {
+        "title": "Another photon rocket",
+        "author": "Bonnor, W. B.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "13",
+        "number": "2",
+        "pages": "277--282",
+        "year": "1996",
+        "doi": "10.1088/0264-9381/13/2/015",
+        "url": "https://doi.org/10.1088/0264-9381/13/2/015"
+      }
+    },
+    "dain1996": {
+      "type": "article",
+      "fields": {
+        "title": "Photon rockets and the Robinson-Trautman geometries",
+        "author": "Dain, Sergio and Moreschi, Osvaldo M. and Gleiser, Reinaldo J.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "13",
+        "number": "5",
+        "pages": "1155--1160",
+        "year": "1996",
+        "doi": "10.1088/0264-9381/13/5/026",
+        "eprint": "gr-qc/0203064",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0203064"
+      }
+    },
+    "vondergonna1998": {
+      "type": "article",
+      "fields": {
+        "title": "Pure and gravitational radiation",
+        "author": "von der G\\\"onna, U. and Kramer, D.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "1",
+        "pages": "215--223",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/1/016",
+        "eprint": "gr-qc/9711001",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9711001"
+      }
+    },
+    "cornish2000": {
+      "type": "article",
+      "fields": {
+        "title": "Robinson-Trautman radiating metrics with zero news and photon rockets",
+        "author": "Cornish, F. H. J.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "17",
+        "number": "18",
+        "pages": "3945--3950",
+        "year": "2000",
+        "doi": "10.1088/0264-9381/17/18/425",
+        "url": "https://doi.org/10.1088/0264-9381/17/18/425"
+      }
+    },
+    "carlip2000": {
+      "type": "article",
+      "fields": {
+        "title": "Aberration and the speed of gravity",
+        "author": "Carlip, S.",
+        "journal": "Physics Letters A",
+        "volume": "267",
+        "number": "2-3",
+        "pages": "81--87",
+        "year": "2000",
+        "doi": "10.1016/S0375-9601(00)00101-8",
+        "eprint": "gr-qc/9909087",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9909087"
+      }
+    },
+    "gurses2002": {
+      "type": "article",
+      "fields": {
+        "title": "Accelerated charge Kerr-Schild metrics in D dimensions",
+        "author": "G\\\"urses, Metin and Sarıoğlu, \\\"Ozg\\\"ur",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "19",
+        "number": "16",
+        "pages": "4249--4261",
+        "year": "2002",
+        "doi": "10.1088/0264-9381/19/16/302",
+        "eprint": "gr-qc/0203097",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0203097"
+      }
+    },
+    "podolsky2006": {
+      "type": "article",
+      "fields": {
+        "title": "Robinson-Trautman spacetimes in higher dimensions",
+        "author": "Podolsk\\'y, Jiř\\'i and Ortaggio, Marcello",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "20",
+        "pages": "5785--5797",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/20/002",
+        "eprint": "gr-qc/0605136",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0605136"
+      }
+    },
+    "podolsky2008": {
+      "type": "article",
+      "fields": {
+        "title": "Photon rockets in the (anti-)de Sitter universe",
+        "author": "Podolsk\\'y, Jiř\\'i",
+        "journal": "Physical Review D",
+        "volume": "78",
+        "number": "4",
+        "pages": "044029",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.78.044029",
+        "eprint": "0806.2966",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0806.2966"
+      }
+    },
+    "podolsky2011": {
+      "type": "article",
+      "fields": {
+        "title": "Photon rockets moving arbitrarily in any dimension",
+        "author": "Podolsk\\'y, Jiř\\'i",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "20",
+        "number": "3",
+        "pages": "335--360",
+        "year": "2011",
+        "doi": "10.1142/S0218271811018846",
+        "eprint": "1006.1583",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1006.1583"
+      }
+    },
+    "hogan2020": {
+      "type": "article",
+      "fields": {
+        "title": "Kerr analogue of {Kinnersley}'s field of an arbitrarily accelerating point mass",
+        "author": "Hogan, Peter A. and Puetzfeld, Dirk",
+        "journal": "Physical Review D",
+        "volume": "102",
+        "number": "4",
+        "pages": "044044",
+        "year": "2020",
+        "doi": "10.1103/PhysRevD.102.044044",
+        "eprint": "2007.04685",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2007.04685"
       }
     }
   }

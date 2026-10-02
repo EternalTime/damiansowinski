@@ -50,6 +50,11 @@
       "id": "c_metric",
       "kind": "special_case",
       "text": "Two black holes accelerating apart, a member of the family of type D [robinson1962, griffiths2009]."
+    },
+    {
+      "id": "photon_rocket",
+      "kind": "special_case",
+      "text": "A member with pure radiation in place of the vacuum, whose fronts stay round while the body accelerates on the recoil of its light. Its news function vanishes, so it sends out no gravitational waves [dain1996, cornish2000]."
     }
   ],
   "references": [
@@ -74,7 +79,9 @@
     "bicak1995",
     "macedo2008",
     "rezzolla2010",
-    "brinkmann1925"
+    "brinkmann1925",
+    "dain1996",
+    "cornish2000"
   ],
   "coordinates": [
     {

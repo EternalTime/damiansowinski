@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 61,
+  "count": 62,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -2143,6 +2143,11 @@
           "id": "levi_civita",
           "kind": "programme",
           "text": "Tullio Levi-Civita found the static form of the C-metric in 1918, a year before his field of a line of mass [griffiths2009, levicivita1919]."
+        },
+        {
+          "id": "photon_rocket",
+          "kind": "family",
+          "text": "An accelerating spacetime of type D with a regular axis. It needs no string, since the recoil of the light it shines does the pushing [podolsky2008]."
         }
       ],
       "references": [
@@ -2167,7 +2172,8 @@
         "griffiths2005",
         "aryal1986",
         "achucarro1995",
-        "levicivita1919"
+        "levicivita1919",
+        "podolsky2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -9702,6 +9708,253 @@
       ]
     },
     {
+      "id": "photon_rocket",
+      "name": "Kinnersley Photon Rocket",
+      "short_name": "Photon Rocket",
+      "description": "The field of a point mass that accelerates by shining light unevenly, found by William Kinnersley in 1969. Its mass and its acceleration are arbitrary functions of retarded time, the light is null dust that streams out brightest behind it, and no gravitational waves reach infinity.",
+      "tags": [
+        "null dust",
+        "pure radiation",
+        "radiating",
+        "accelerating",
+        "acceleration",
+        "rocket",
+        "recoil",
+        "point mass",
+        "time-dependent",
+        "dynamical",
+        "Kerr-Schild",
+        "Robinson-Trautman",
+        "algebraically special",
+        "Petrov type D",
+        "null congruence",
+        "shear-free",
+        "twist-free",
+        "expanding",
+        "retarded time",
+        "Newman-Unti coordinates",
+        "gravitational radiation",
+        "news function",
+        "asymptotically flat",
+        "axisymmetric",
+        "white hole",
+        "singularity",
+        "curvature singularity",
+        "non-vacuum",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The mass function is $m = GM/c^2$, a length.",
+      "related": [
+        {
+          "id": "vaidya",
+          "kind": "special_case",
+          "text": "The rocket with its engine off and its lamp still on. With $\\alpha = 0$ the light leaves evenly in all directions and the metric is Vaidya's shining star [podolsky2008]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The rocket gone dark. With $\\alpha = 0$ and $m$ constant no light leaves, and the metric is Schwarzschild's in retarded time [podolsky2008]."
+        },
+        {
+          "id": "robinson_trautman",
+          "kind": "generalisation",
+          "text": "The rocket's wave fronts are Robinson and Trautman's, round spheres that expand without shear or twist, with pure radiation let into their vacuum [dain1996]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "The other accelerating spacetime of type D among Robinson and Trautman's. Its black holes are pulled along by a cosmic string or pushed by a strut, and the rocket pushes itself with light [podolsky2008]."
+        }
+      ],
+      "references": [
+        "bonnor1994",
+        "kinnersley1969",
+        "vaidya1951",
+        "carlip2000",
+        "newman1963",
+        "podolsky2011",
+        "podolsky2008",
+        "damour1995",
+        "bonnor1996",
+        "dain1996",
+        "robinson1962",
+        "vondergonna1998",
+        "cornish2000",
+        "gurses2002",
+        "podolsky2006",
+        "hogan2020"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/photon_rocket.json",
+      "charts": [
+        {
+          "id": "rectilinear",
+          "name": "Rectilinear",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(u)",
+              "description": "Mass function of retarded time, the length $GM(u)/c^2$; the radiation has positive density in every direction where $\\partial_u m \\le -3|\\alpha|m$"
+            },
+            {
+              "symbol": "\\alpha = \\alpha(u)",
+              "description": "Proper acceleration of the rocket over $c^2$, an inverse length, positive toward $\\theta = \\pi$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$ for a rocket that moves along a line, with the retarded time $u$ carrying dimensions of time, $r$ an affine length along the rays, and $\\theta$ the angle of a ray in the rocket's rest frame, measured from the direction opposite to its acceleration. We take components in the chart $x^0 = cu$, so $\\partial_u m = c^{-1}dm/du$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} - 2\\alpha r\\cos\\theta\\right)c^2du^2 - 2c\\,du\\,dr + r^2\\left(d\\theta + \\alpha\\sin\\theta\\,c\\,du\\right)^2 + r^2\\sin^2\\theta\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{\\alpha^2\\,r^3\\sin^2\\theta + 2\\alpha\\,r^2\\cos\\theta + 2m - r}{r}"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "\\theta"
+              ],
+              "value": "\\alpha\\,r^2\\sin\\theta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "u"
+              ],
+              "value": "\\alpha\\,r^2\\sin\\theta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48m^2}{r^6}"
+        },
+        {
+          "id": "robinson_trautman",
+          "name": "Robinson-Trautman",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(u)",
+              "description": "Mass function of retarded time, the length $GM(u)/c^2$"
+            },
+            {
+              "symbol": "U_1 = U_1(u)",
+              "description": "Component of the rocket's four-velocity over $c$ along the first axis of the background inertial frame, the polar axis $\\theta = 0$"
+            },
+            {
+              "symbol": "U_2 = U_2(u)",
+              "description": "Component of the rocket's four-velocity over $c$ along the second axis, $\\theta = \\pi/2$ and $\\phi = 0$"
+            },
+            {
+              "symbol": "U_3 = U_3(u)",
+              "description": "Component of the rocket's four-velocity over $c$ along the third axis, $\\theta = \\pi/2$ and $\\phi = \\pi/2$"
+            },
+            {
+              "symbol": "p = \\sqrt{1 + U_1^2 + U_2^2 + U_3^2} - U_1\\cos\\theta - U_2\\sin\\theta\\cos\\phi - U_3\\sin\\theta\\sin\\phi",
+              "description": "Dimensionless function fixing the metric $r^2p^{-2}(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2)$ of each wave front, a round sphere of radius $r$; its first term is the time component of the four-velocity over $c$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$ for a rocket in arbitrary motion, with the retarded time $u$ carrying dimensions of time, $r$ an affine length along the rays, and $\\theta$ and $\\phi$ the polar angles of a ray's direction in the inertial frame of the flat background. We take components in the chart $x^0 = cu$, so $\\partial_u p = c^{-1}\\partial p/\\partial u$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} - \\dfrac{2r\\,\\partial_u p}{p}\\right)c^2du^2 - 2c\\,du\\,dr + \\dfrac{r^2}{p^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{2p\\,m - p\\,r + 2r^2\\,\\partial_u p}{p\\,r}"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2}{p^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\sin^2\\theta}{p^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48m^2}{r^6}"
+        }
+      ]
+    },
+    {
       "id": "pp_wave",
       "name": "pp-wave Plane Gravitational Waves",
       "short_name": "pp-wave",
@@ -10113,6 +10366,11 @@
           "id": "c_metric",
           "kind": "special_case",
           "text": "Two black holes accelerating apart, a member of the family of type D [robinson1962, griffiths2009]."
+        },
+        {
+          "id": "photon_rocket",
+          "kind": "special_case",
+          "text": "A member with pure radiation in place of the vacuum, whose fronts stay round while the body accelerates on the recoil of its light. Its news function vanishes, so it sends out no gravitational waves [dain1996, cornish2000]."
         }
       ],
       "references": [
@@ -10137,7 +10395,9 @@
         "bicak1995",
         "macedo2008",
         "rezzolla2010",
-        "brinkmann1925"
+        "brinkmann1925",
+        "dain1996",
+        "cornish2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/robinson_trautman.json",
@@ -10449,6 +10709,11 @@
           "id": "gowdy",
           "kind": "generalisation",
           "text": "Inside the horizon $r$ is a time, and with $t$ wrapped into a circle the region is a polarised Gowdy spacetime on $S^2 \\times S^1$, Obregón and Ryan's Kerr example with the spin switched off [obregon1998]."
+        },
+        {
+          "id": "photon_rocket",
+          "kind": "generalisation",
+          "text": "Schwarzschild's mass with a lamp and a direction to go in. It shines unevenly, loses mass, and accelerates on the recoil of its own light [kinnersley1969, podolsky2008]."
         }
       ],
       "references": [
@@ -10494,7 +10759,9 @@
         "morris1988",
         "visser1989nuclphysb",
         "ellis1973",
-        "obregon1998"
+        "obregon1998",
+        "kinnersley1969",
+        "podolsky2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -13115,6 +13382,11 @@
           "id": "oppenheimer_snyder",
           "kind": "family",
           "text": "Collapse with no radiation. Vaidya carried Oppenheimer and Snyder's collapsing star over in 1966 to matter that radiates as it falls [vaidya1966]."
+        },
+        {
+          "id": "photon_rocket",
+          "kind": "generalisation",
+          "text": "Vaidya's star shining more to one side than the other. The recoil of the light accelerates it, at a rate William Kinnersley left free in 1969 [kinnersley1969, podolsky2008]."
         }
       ],
       "references": [
@@ -13130,7 +13402,8 @@
         "hiscock1981",
         "kuroda1984",
         "papapetrou1985",
-        "dwivedi1989"
+        "dwivedi1989",
+        "podolsky2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",

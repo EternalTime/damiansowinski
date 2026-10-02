@@ -2235,6 +2235,14 @@ class EmbeddingDiagrams(unittest.TestCase):
                 whole = piece("vaidya", "whole", number)
                 for r, rho, z in whole:
                     near(z, 2 * math.sqrt(r) - 4, f"Vaidya z at {r}")
+        # The photon rocket's slices of constant cu + r at theta = pi/2: before the light of the burn
+        # reaches them, z^2 = 8 m_0 r, and once it has passed the rim, z^2 = 8 m r with m = m_0 e^(-6/5),
+        # the mass the burn leaves; the rim r = 12 m_0 stands at z = 0.
+        rocket = self.embedding["photon_rocket"]["views"][0]["surfaces"]
+        for number, mass in ((0, 1.0), (len(rocket) - 1, math.exp(-1.2))):
+            for r, rho, z in piece("photon_rocket", "whole", number):
+                near(rho, r, f"photon rocket rho at {r}")
+                near(z, 2 * math.sqrt(2 * mass) * (math.sqrt(r) - math.sqrt(12)), f"photon rocket z at {r}")
         # Oppenheimer-Snyder's dust is a cap of a sphere of radius a out to chi0 = pi/4 at every
         # moment, and at the release, the first moment, the outside is Flamm's paraboloid.
         for number in range(len(self.embedding["oppenheimer_snyder"]["views"][0]["surfaces"])):
@@ -2959,6 +2967,7 @@ class StacksAndMovies(unittest.TestCase):
               ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
               ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
+              ("photon_rocket", "burn"): "$cu + r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
@@ -3473,7 +3482,11 @@ class Slices(unittest.TestCase):
                 for k in ("oblate", "prolate")],
               # The axis of Szekeres's cloud, which the embedded surface through the shells' equators meets
               # only at the centre.
-              "szekeres/axisymmetric/north", "szekeres/axisymmetric/south"}
+              "szekeres/axisymmetric/north", "szekeres/axisymmetric/south",
+              # The axis of the photon rocket's flight, which the embedded surface of the rays that leave
+              # the rocket sideways meets only at r = 0.
+              *[f"photon_rocket/{s}/{half}" for s in ("rectilinear", "robinson_trautman") for half in ("behind", "ahead")],
+              "conformal photon_rocket/behind", "conformal photon_rocket/ahead"}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()

@@ -62,6 +62,11 @@
       "id": "levi_civita",
       "kind": "programme",
       "text": "Tullio Levi-Civita found the static form of the C-metric in 1918, a year before his field of a line of mass [griffiths2009, levicivita1919]."
+    },
+    {
+      "id": "photon_rocket",
+      "kind": "family",
+      "text": "An accelerating spacetime of type D with a regular axis. It needs no string, since the recoil of the light it shines does the pushing [podolsky2008]."
     }
   ],
   "references": [
@@ -86,7 +91,8 @@
     "griffiths2005",
     "aryal1986",
     "achucarro1995",
-    "levicivita1919"
+    "levicivita1919",
+    "podolsky2008"
   ],
   "coordinates": [
     {
