@@ -1020,6 +1020,7 @@ The arrow keys turn it by 15 degrees once the drawing has the focus, which a cli
 
 The page plays a movie as `wireMovie()` in `_layouts/mfs.html` says: it plays once drawn and only while it is on the screen, keeping each frame once drawn at the figure's own camera, and a reader who asks for reduced motion finds it paused on its first frame.
 `movieFrame()` in `MFS/assets/turn.js` is the frame shown at each moment of playing, by the movie's `seconds`, forward and back for every movie, and the tests run it in Node.
+The page has one player, `wireMovie()` in `_layouts/mfs.html`, which every figure with a movie is wired to and which asks `movieFrame()` at every picture; the tests run it in Node too, with a clock and a play button of their own, for every movie the files hold, and hold the frames it hands the figure to that order, a pause included.
 The button in the top left corner of its frame, in the reset's size and colours and pink while pressed, plays and pauses it, and the label below the drawing names the frame shown.
 The movies of FRW and the Milne universe do not turn under the hand, and every other movie turns while it plays.
 Nothing in that label moves as the movie plays, as the captain asked on 1 October 2026.
