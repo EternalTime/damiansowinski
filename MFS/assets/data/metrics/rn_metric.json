@@ -139,6 +139,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "limit_source",
       "text": "Two extremal Reissner-Nordström black holes of opposite magnetic charge on one axis. In the limit $b \\to \\infty$ the two are infinitely far apart and each is the extremal hole alone [emparan2000]."
+    },
+    {
+      "id": "nordstrom_scalar",
+      "kind": "programme",
+      "text": "Nordström's own theory of gravity, a scalar field on flat spacetime, which he set out in 1913 before he took up Einstein's [nordstrom1913]."
     }
   ],
   "references": [
@@ -176,7 +181,8 @@
     "breitenlohner1994",
     "volkov1999",
     "brill1963",
-    "emparan2000"
+    "emparan2000",
+    "nordstrom1913"
   ],
   "coordinates": [
     {

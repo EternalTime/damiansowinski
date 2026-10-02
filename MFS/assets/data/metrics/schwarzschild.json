@@ -333,6 +333,11 @@
       "id": "ppn_metric",
       "kind": "generalisation",
       "text": "Schwarzschild's far field with a number in front of each term, $\\beta$ on $m^2/r^2$ in $g_{tt}$ and $\\gamma$ on $m/r$ in the metric of space. Every test in the solar system measures those numbers, and at $\\beta = \\gamma = 1$ the field is Schwarzschild's [thornewill1971]."
+    },
+    {
+      "id": "nordstrom_scalar",
+      "kind": "programme",
+      "text": "The field of a point mass in the scalar theory Einstein's displaced. Nordström's metric is $(1 - GM/c^2r)^2$ times Minkowski's: the same redshift to first order, light that goes straight, and a perihelion that turns backwards [deruelle2011]."
     }
   ],
   "references": [
@@ -426,7 +431,8 @@
     "israel1966",
     "griffiths1991",
     "ferrari1988",
-    "thornewill1971"
+    "thornewill1971",
+    "deruelle2011"
   ],
   "coordinates": [
     {

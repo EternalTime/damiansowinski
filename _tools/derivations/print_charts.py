@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
-charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
+charts of tov, malament_hogarth, nordstrom_scalar, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, ads_soliton, milne, einstein_rosen_waves, nariai, aichelburg_sexl, hotta_tanaka,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy, bonnor_rotating_dust,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, gott_time_machine, zipoy_voorhees, szekeres,
@@ -18049,6 +18049,221 @@ def cx_check(chart, system, points=8):
 
 
 CHARTS["chandrasekhar_xanthopoulos"] = [lambda s=s: chandrasekhar_xanthopoulos(s) for s in CX_CHARTS]
+
+
+# -- Nordstrom's scalar gravity ------------------------------------------------------------
+
+NORDSTROM_CHARTS = ("conformal", "spherical", "uniform", "dust")
+NORDSTROM_REALS = "(-\\infty, \\infty)"
+NORDSTROM_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+NORDSTROM_SPHERE = "r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def nordstrom_scalar(system):
+    """Nordstrom's second theory of 1913 as Einstein and Fokker wrote it in 1914: the metric is a
+    conformal factor Phi^2 times Minkowski's in a preferred chart, and R = 24 pi G T/c^4. The
+    conformal chart leaves Phi free, as their equation for ds^2 does. The spherical chart is the
+    field outside a static spherical body, Phi = 1 - m/r with m = GM/c^2, Deruelle's (9.15) and
+    Deruelle and Sasaki's (3.8). The uniform chart is the homogeneous static field of Giulini's
+    section 4.1, Phi linear in z, with z counted from the plane where Phi vanishes. The dust chart
+    is the universe of Sundrum's section 9, Phi = 1 - c^2t^2/L^2. nordstrom_scalar.md derives each."""
+    flat = "-{c2}dt^2 + "
+    if system == "conformal":
+        coords = ["t", "x", "y", "z"]
+        parameters = ["\\Phi = \\Phi(t,x,y,z)"]
+        probe = vm.Reader(coords, parameters, ())
+        Phi = probe.parameters["Phi"]
+        box = "\\partial_x^2\\Phi + \\partial_y^2\\Phi + \\partial_z^2\\Phi - \\partial_t^2\\Phi"
+        d = {c: f"\\partial_{c}\\Phi" for c in "txyz"}
+
+        def A(a):
+            # 2 Phi^2 times the diagonal Schouten component: 4(d_a P)^2 - 2 P d_a^2 P - eta_aa (dP)^2.
+            text = ""
+            for c in "txyz":
+                k = (4 if c == a else 0) - (-1 if a == "t" else 1) * (-1 if c == "t" else 1)
+                body = ("" if abs(k) == 1 else str(abs(k))) + f"\\left({d[c]}\\right)^2"
+                text += (("-" if k < 0 else "") + body) if not text else ((" - " if k < 0 else " + ") + body)
+            return "\\left(" + text + f" - 2\\Phi\\,\\partial_{a}^2\\Phi" + "\\right)^2"
+
+        def B(a, b):
+            return f"\\left(2{d[a]}\\,{d[b]} - \\Phi\\,\\partial_{a}\\partial_{b}\\Phi\\right)^2"
+
+        line = "ds^2 = \\Phi^2\\left(" + flat + "dx^2 + dy^2 + dz^2\\right)"
+        return {
+            "metric_id": "nordstrom_scalar",
+            "system": {"id": "conformal", "name": "Einstein-Fokker", "coords": coords,
+                       "domains": [f"{c} \\in {NORDSTROM_REALS}" for c in coords] + ["\\Phi > 0"],
+                       "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+            "chart_line_element": line.replace("{c2}", ""),
+            "printer": {"lead": [Phi], "collect": lambda poly, printer: cp.collect_by(poly, [Phi], printer)},
+            "ricci_scalar": "-\\dfrac{6\\left(" + box + "\\right)}{\\Phi^3}",
+            # K = 8 P_ab P^ab + 4 (P^a_a)^2 for a conformally flat metric, P the Schouten tensor.
+            "kretschmann": (
+                "\\dfrac{2\\left(" + " + ".join(A(a) for a in "txyz") + "\\right)"
+                " + 16\\left(" + " + ".join(B(a, b) for a, b in (("x", "y"), ("x", "z"), ("y", "z")))
+                + " - " + " - ".join(B("t", b) for b in "xyz") + "\\right)"
+                " + 4\\Phi^2\\left(" + box + "\\right)^2}{\\Phi^8}"),
+            "check": lambda chart: nordstrom_scalar_check(chart, system),
+        }
+    if system == "spherical":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["m"]
+        factor = "\\left(1 - \\dfrac{m}{r}\\right)^2"
+        line = "ds^2 = " + factor + "\\left(" + flat + "dr^2 + " + NORDSTROM_SPHERE + "\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "nordstrom_scalar",
+            "system": {"id": "spherical", "name": "Point Mass", "coords": coords,
+                       "domains": ["t \\in " + NORDSTROM_REALS, "r \\in (m, \\infty)"] + NORDSTROM_ANGLES
+                                  + ["r = m \;\\text{(curvature singularity, where } \\Phi = 0\\text{)}"],
+                       "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+            "chart_line_element": line.replace("{c2}", ""),
+            "printer": {"lead": [probe.symbol["r"], probe.parameters["m"]]},
+            "components": {
+                "metric_components": {("t", "t"): "-" + factor, ("r", "r"): factor},
+                "inverse_metric_components": {("t", "t"): "-\\left(1 - \\dfrac{m}{r}\\right)^{-2}",
+                                              ("r", "r"): "\\left(1 - \\dfrac{m}{r}\\right)^{-2}"}},
+            "kretschmann": "\\dfrac{8m^2\\left(6r^2 - 4mr + m^2\\right)}{\\left(r - m\\right)^8}",
+            "check": lambda chart: nordstrom_scalar_check(chart, system),
+        }
+    if system == "uniform":
+        coords, parameters = ["t", "x", "y", "z"], ["a"]
+        factor = "\\dfrac{a^2z^2}{c^4}"
+        line = "ds^2 = " + factor + "\\left(" + flat + "dx^2 + dy^2 + dz^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "nordstrom_scalar",
+            "system": {"id": "uniform", "name": "Uniform Field", "coords": coords,
+                       "domains": ["t \\in " + NORDSTROM_REALS, "x \\in " + NORDSTROM_REALS, "y \\in " + NORDSTROM_REALS,
+                                   "z \\in (0, \\infty)",
+                                   "z = 0 \;\\text{(curvature singularity, where } \\Phi = 0\\text{)}"],
+                       "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+            "chart_line_element": line.replace("{c2}", ""),
+            "printer": {"lead": [probe.parameters["a"], probe.symbol["z"]]},
+            "components": {
+                "metric_components": {("t", "t"): "-" + factor, **{(s, s): factor for s in "xyz"}},
+                "inverse_metric_components": {("t", "t"): "-\\dfrac{c^4}{a^2z^2}",
+                                              **{(s, s): "\\dfrac{c^4}{a^2z^2}" for s in "xyz"}}},
+            "kretschmann": "\\dfrac{24c^8}{a^4z^8}",
+            "check": lambda chart: nordstrom_scalar_check(chart, system),
+        }
+    coords, parameters = ["t", "r", "\\theta", "\\phi"], ["L"]
+    line = "ds^2 = \\left(1 - \\dfrac{{c2}t^2}{L^2}\\right)^2\\left(" + flat + "dr^2 + " + NORDSTROM_SPHERE + "\\right)"
+    probe = vm.Reader(coords, parameters, ())
+    t, L, c = probe.symbol["t"], probe.parameters["L"], probe.c
+    Q = sp.Symbol("Q")
+
+    def pretty(value):
+        # Every value is a rational function of ct and L whose only factor that vanishes is
+        # L^2 - c^2t^2, L^2 times the conformal factor, written whole wherever it stands.
+        def split(side):
+            power = 0
+            while True:
+                quotient, remainder = sp.div(sp.expand(side), sp.expand(L ** 2 - c ** 2 * t ** 2), t)
+                if remainder != 0:
+                    return sp.factor(side), power
+                side, power = quotient, power + 1
+
+        (numerator, up), (denominator, down) = (split(side) for side in sp.fraction(sp.together(value)))
+        return numerator / denominator * Q ** (up - down)
+
+    factor = "\\left(1 - \\dfrac{c^2t^2}{L^2}\\right)"
+    return {
+        "metric_id": "nordstrom_scalar",
+        "system": {"id": "dust", "name": "Dust Universe", "coords": coords,
+                   "domains": ["t \\in (-L/c, L/c)", "r \\in [0, \\infty)"] + NORDSTROM_ANGLES
+                              + ["t = \\pm L/c \\;\\text{(curvature singularities, where } \\Phi = 0\\text{)}"],
+                   "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+        "chart_line_element": line.replace("{c2}", ""),
+        "printer": {"lead": [L, t, Q], "factors": [L, c, t, probe.symbol["r"]],
+                    "overrides": {Q: "\\left(L^2 - c^2t^2\\right)"}},
+        "time": "t",
+        "pretty": pretty,
+        # The factor stands without its brackets where it is the whole of a denominator.
+        "rewrite": [("{\\left(L^2 - c^2t^2\\right)}", "{L^2 - c^2t^2}"), ("c\\,t", "ct"), ("c^2\\,t^2", "c^2t^2"),
+                    ("c^4\\,t^4", "c^4t^4"), ("L^2\\,c^2", "L^2c^2")],
+        "components": {
+            "metric_components": {("t", "t"): "-" + factor + "^2", ("r", "r"): factor + "^2"},
+            "inverse_metric_components": {("t", "t"): "-" + factor + "^{-2}", ("r", "r"): factor + "^{-2}"}},
+        "ricci_scalar": "-\\dfrac{12L^4}{\\left(L^2 - c^2t^2\\right)^3}",
+        "check": lambda chart: nordstrom_scalar_check(chart, system),
+    }
+
+
+def nordstrom_scalar_check(chart, system):
+    """Each chart against the theory. The conformal chart has no Weyl tensor and the Ricci scalar
+    -6 box Phi/Phi^3, Einstein and Fokker's field equation R = 24 pi G T/c^4 written in the
+    preferred chart, so a vacuum is a solution of the wave equation. Each other chart is the
+    conformal chart at its own Phi, pulled back, and its Phi solves the field equation: the point
+    mass and the uniform field are vacua, R = 0, with a Ricci tensor that does not vanish, and the
+    dust universe has R Phi^3 constant, the density of dust at rest falling as the volume grows.
+    The point mass has Deruelle and Sasaki's R_ab R^ab, their (3.9), and the post-Newtonian
+    parameters gamma = -1 and beta = 1/2; a body at rest in the uniform field at the height
+    c^2/a, where Phi = 1, weighs a; and a galaxy at rest in the dust universe is in free fall."""
+    geo = chart.geo
+    g = geo.g
+    weyl = geo.weyl_llll()
+    if any(vm.norm(vm._at(weyl, index)) != 0 for index in vm._indices(4, 4)):
+        raise AssertionError(f"nordstrom_scalar: the {system} chart is not conformally flat")
+    scalar = geo.ricci_scalar()
+    if system == "conformal":
+        t, x, y, z = chart.symbols
+        Phi = chart.reader.parameters["Phi"]
+        box = sum(sp.diff(Phi, s, 2) for s in (x, y, z)) - sp.diff(Phi, t, 2)
+        if vm.norm(scalar + 6 * box / Phi ** 3) != 0:
+            raise AssertionError("nordstrom_scalar: R is not -6 box Phi/Phi^3")
+        return
+    source = nordstrom_scalar("conformal")
+    there = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    T, X, Y, Z = there.symbols
+    P = chart.reader.parameters
+    c = chart.reader.c
+    if system == "uniform":
+        t, x, y, z = chart.symbols
+        image, factor = [t, x, y, z], P["a"] * z / c ** 2
+    else:
+        t, r, theta, phi = chart.symbols
+        image = [t, r * sp.sin(theta) * sp.cos(phi), r * sp.sin(theta) * sp.sin(phi), r * sp.cos(theta)]
+        factor = 1 - P["m"] / r if system == "spherical" else 1 - t ** 2 / P["L"] ** 2
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = (J.T * sp.diag(-1, 1, 1, 1) * J).applyfunc(sp.simplify) * factor ** 2
+    if (pulled - g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+        raise AssertionError(f"nordstrom_scalar: the {system} chart is not the conformal chart at its own Phi")
+    ricci = geo.ricci_ll()
+    ginv = geo.ginv
+    squared = sp.simplify(sum(ginv[i, i] * ginv[j, j] * vm._at(ricci, (i, j)) ** 2 for i in range(4) for j in range(4)))
+    if system in ("spherical", "uniform"):
+        if vm.norm(scalar) != 0:
+            raise AssertionError(f"nordstrom_scalar: the {system} chart is not a vacuum of the theory, R = 0")
+        if squared == 0:
+            raise AssertionError(f"nordstrom_scalar: the Ricci tensor of the {system} chart vanishes")
+        if sp.simplify(geo.kretschmann() - 2 * squared) != 0:
+            raise AssertionError(f"nordstrom_scalar: K is not 2 R_ab R^ab in the {system} chart")
+    gamma = geo.christoffel_ull()
+    if system == "spherical":
+        m = P["m"]
+        if sp.simplify(squared - 4 * m ** 2 * (m ** 2 - 4 * m * r + 6 * r ** 2) / (r - m) ** 8) != 0:
+            raise AssertionError("nordstrom_scalar: R_ab R^ab is not Deruelle and Sasaki's (3.9)")
+        # -g_tt = 1 - 2U + 2 beta U^2 and g_rr = 1 + 2 gamma U in the isotropic radius, U = m/r.
+        U = sp.Symbol("U", positive=True)
+        lapse = sp.series((-g[0, 0]).subs(r, m / U), U, 0, 3).removeO()
+        space = sp.series(g[1, 1].subs(r, m / U), U, 0, 2).removeO()
+        if (sp.Poly(lapse, U).all_coeffs() != [1, -2, 1]) or (sp.Poly(space, U).all_coeffs() != [-2, 1]):
+            raise AssertionError("nordstrom_scalar: the point mass does not have beta = 1/2 and gamma = -1")
+    elif system == "uniform":
+        a = P["a"]
+        # The acceleration of a body at rest: Gamma^z_tt u^t u^t with u^t = 1/Phi, measured by sqrt(g_zz).
+        weight = sp.simplify(gamma[3][0][0] / factor ** 2 * factor)
+        if sp.simplify(weight.subs(z, c ** 2 / a) - a / c ** 2) != 0:
+            raise AssertionError("nordstrom_scalar: a body at rest at z = c^2/a does not weigh a")
+    else:
+        L = P["L"]
+        if sp.simplify(scalar * factor ** 3 + 12 / L ** 2) != 0:
+            raise AssertionError("nordstrom_scalar: R Phi^3 is not -12/L^2 in the dust universe")
+        if any(sp.simplify(gamma[i][0][0]) != 0 for i in range(1, 4)):
+            raise AssertionError("nordstrom_scalar: a galaxy at rest in the dust universe is not in free fall")
+
+
+CHARTS["nordstrom_scalar"] = [lambda s=s: nordstrom_scalar(s) for s in NORDSTROM_CHARTS]
 
 
 def write(spec):

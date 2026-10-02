@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 124,
+  "count": 125,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -10891,6 +10891,11 @@
           "id": "sultana_dyer",
           "kind": "generalisation",
           "text": "The flat universe of dust with a black hole in it from the big bang on: Schwarzschild's metric times $a^2$, with $a \\propto \\eta^2$ [sultana2005]."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "family",
+          "text": "The flat universe in Nordström's scalar theory of gravity. His field equation gives dust the scale factor $1 - \\eta^2/\\eta_0^2$ in conformal time, with $\\eta_0$ a constant, a universe that expands from a bang and falls back into a crunch [sundrum2003]."
         }
       ],
       "references": [
@@ -10943,7 +10948,8 @@
         "coleman1980",
         "bucher1995",
         "senovilla1996",
-        "sultana2005"
+        "sultana2005",
+        "sundrum2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -21962,6 +21968,11 @@
           "id": "minkowski",
           "kind": "conformal",
           "text": "Earman and Norton's toy example of 1993 is Minkowski space with one event removed and the metric multiplied by a factor that grows without bound toward it [earman1993]. Its light cones are Minkowski's, and Minkowski space itself is globally hyperbolic, so it lacks the property."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "family",
+          "text": "The same line element with a field equation for the factor. In Nordström's theory of gravity $\\Omega$ is the gravitational potential, fixed by the matter [einstein1914fokker]."
         }
       ],
       "references": [
@@ -21971,7 +21982,8 @@
         "etesi2002",
         "shagrir2003",
         "welch2008",
-        "manchak2010"
+        "manchak2010",
+        "einstein1914fokker"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json",
@@ -23280,6 +23292,11 @@
           "id": "ppn_metric",
           "kind": "generalisation",
           "text": "Flat spacetime with a slowly moving body in it and gravity weak, written so that every metric theory of gravity fits. Take the mass away, $m = 0$, and it is flat again [will2014]."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "conformal",
+          "text": "Gravity as one factor on Minkowski's metric. Nordström's field multiplies it by $\\Phi^2$, which changes what clocks and rods measure and leaves every light cone where it was [einstein1914fokker]."
         }
       ],
       "references": [
@@ -23346,7 +23363,8 @@
         "podolskybelan2004",
         "israel1966",
         "tippett2017",
-        "will2014"
+        "will2014",
+        "einstein1914fokker"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -27082,6 +27100,313 @@
       ]
     },
     {
+      "id": "nordstrom_scalar",
+      "name": "Nordström's Scalar Theory of Gravity",
+      "short_name": "Nordström Scalar Gravity",
+      "description": "Gravity as one scalar field on flat spacetime, which Einstein and Fokker rewrote as a conformally flat spacetime whose curvature scalar is fixed by the trace of the stress-energy tensor of matter. Light keeps the cones of Minkowski space while clocks and rods change from place to place.",
+      "tags": [
+        "scalar gravity",
+        "alternative theory of gravity",
+        "scalar field",
+        "conformally flat",
+        "four-dimensional",
+        "Lorentzian",
+        "idealized model",
+        "curvature singularity",
+        "naked singularity",
+        "no horizon",
+        "point mass",
+        "cosmology",
+        "dust"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The conformal factor $\\Phi$ is a pure number, Nordström's potential divided by its value far from every mass.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "conformal",
+          "text": "Every spacetime of Nordström's theory is $\\Phi^2$ times Minkowski's metric and keeps its light cones. With no matter anywhere $\\Phi = 1$, and it is Minkowski space [einstein1914fokker]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "programme",
+          "text": "Einstein's answer to the same question, the field outside a spherical mass. To first order in $GM/c^2r$ the two slow clocks alike. Schwarzschild's field bends light and advances a perihelion by six times what Nordström's takes away [deruelle2011]."
+        },
+        {
+          "id": "ppn_metric",
+          "kind": "generalisation",
+          "text": "The weak field of a body with a number in front of every term. Nordström's point mass sits at $\\gamma = -1$ and $\\beta = 1/2$ [deruelle2011]."
+        },
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "Nordström's universe of dust is a flat Friedmann-Lemaître-Robertson-Walker metric in conformal time, with the scale factor $1 - c^2t^2/L^2$ his field equation picks for dust [sundrum2003]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "programme",
+          "text": "Nordström's other spacetime. By 1918 he had taken up Einstein's theory and found in it the field of a charged mass [nordstrom1918]."
+        },
+        {
+          "id": "malament_hogarth",
+          "kind": "family",
+          "text": "Minkowski's metric times a free conformal factor again. There the factor is chosen to stretch one world line without end, and here a field equation fixes it [einstein1914fokker]."
+        }
+      ],
+      "references": [
+        "norton1992",
+        "norton2007",
+        "einstein1912",
+        "einstein1913",
+        "nordstrom1913",
+        "einstein1914fokker",
+        "deruelle2011",
+        "einstein1915field",
+        "nordstrom1914",
+        "deruellesasaki2011",
+        "giulini2008",
+        "sundrum2003",
+        "einstein1915perihelion",
+        "dyson1920",
+        "nordstrom1914unify",
+        "kaluza1921",
+        "ravndal2004",
+        "nordstrom1918"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nordstrom_scalar.json",
+      "charts": [
+        {
+          "id": "conformal",
+          "name": "Einstein-Fokker",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\Phi > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Phi = \\Phi(t,x,y,z)",
+              "description": "Conformal factor, dimensionless and positive. It obeys Einstein and Fokker's field equation $R = 24\\pi G\\,T/c^4$, where $T$ is the trace of the stress-energy tensor of matter, so in a vacuum it solves the wave equation $\\partial_x^2\\Phi + \\partial_y^2\\Phi + \\partial_z^2\\Phi - \\partial_t^2\\Phi = 0$"
+            }
+          ],
+          "convention": "We use Einstein and Fokker's preferred coordinates $(t, x, y, z)$, in which light travels at $c$ everywhere, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths. We take components in the chart $x^0 = ct$, where $\\partial_t = c^{-1}\\partial/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\Phi^2\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\Phi^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\Phi^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\Phi^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\Phi^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6\\left(\\partial_x^2\\Phi + \\partial_y^2\\Phi + \\partial_z^2\\Phi - \\partial_t^2\\Phi\\right)}{\\Phi^3}",
+          "kretschmann": "K = \\dfrac{2\\left(\\left(3\\left(\\partial_t\\Phi\\right)^2 + \\left(\\partial_x\\Phi\\right)^2 + \\left(\\partial_y\\Phi\\right)^2 + \\left(\\partial_z\\Phi\\right)^2 - 2\\Phi\\,\\partial_t^2\\Phi\\right)^2 + \\left(\\left(\\partial_t\\Phi\\right)^2 + 3\\left(\\partial_x\\Phi\\right)^2 - \\left(\\partial_y\\Phi\\right)^2 - \\left(\\partial_z\\Phi\\right)^2 - 2\\Phi\\,\\partial_x^2\\Phi\\right)^2 + \\left(\\left(\\partial_t\\Phi\\right)^2 - \\left(\\partial_x\\Phi\\right)^2 + 3\\left(\\partial_y\\Phi\\right)^2 - \\left(\\partial_z\\Phi\\right)^2 - 2\\Phi\\,\\partial_y^2\\Phi\\right)^2 + \\left(\\left(\\partial_t\\Phi\\right)^2 - \\left(\\partial_x\\Phi\\right)^2 - \\left(\\partial_y\\Phi\\right)^2 + 3\\left(\\partial_z\\Phi\\right)^2 - 2\\Phi\\,\\partial_z^2\\Phi\\right)^2\\right) + 16\\left(\\left(2\\partial_x\\Phi\\,\\partial_y\\Phi - \\Phi\\,\\partial_x\\partial_y\\Phi\\right)^2 + \\left(2\\partial_x\\Phi\\,\\partial_z\\Phi - \\Phi\\,\\partial_x\\partial_z\\Phi\\right)^2 + \\left(2\\partial_y\\Phi\\,\\partial_z\\Phi - \\Phi\\,\\partial_y\\partial_z\\Phi\\right)^2 - \\left(2\\partial_t\\Phi\\,\\partial_x\\Phi - \\Phi\\,\\partial_t\\partial_x\\Phi\\right)^2 - \\left(2\\partial_t\\Phi\\,\\partial_y\\Phi - \\Phi\\,\\partial_t\\partial_y\\Phi\\right)^2 - \\left(2\\partial_t\\Phi\\,\\partial_z\\Phi - \\Phi\\,\\partial_t\\partial_z\\Phi\\right)^2\\right) + 4\\Phi^2\\left(\\partial_x^2\\Phi + \\partial_y^2\\Phi + \\partial_z^2\\Phi - \\partial_t^2\\Phi\\right)^2}{\\Phi^8}"
+        },
+        {
+          "id": "spherical",
+          "name": "Point Mass",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (m, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = m \\;\\text{(curvature singularity, where } \\Phi = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the body as a length, $m = GM/c^2$, where $M$ is its gravitational mass; half the Schwarzschild radius of the same mass"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ centred on a static spherical body, with $t$ carrying dimensions of time and $r$ the radius of the flat background, so that $\\Phi = 1 - m/r$ and the sphere at $r$ has the area $4\\pi(r - m)^2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{m}{r}\\right)^2\\left(-c^2dt^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{m}{r}\\right)^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{m}{r}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r - m\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r - m\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8m^2\\left(6r^2 - 4mr + m^2\\right)}{\\left(r - m\\right)^8}"
+        },
+        {
+          "id": "uniform",
+          "name": "Uniform Field",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "z = 0 \\;\\text{(curvature singularity, where } \\Phi = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Proper acceleration of a body at rest at the height $z = c^2/a$, where $\\Phi = 1$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $z$ the height above the plane where the conformal factor $\\Phi = az/c^2$ vanishes. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{a^2z^2}{c^4}\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{a^2z^2}{c^4}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{a^2z^2}{c^4}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{a^2z^2}{c^4}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{a^2z^2}{c^4}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24c^8}{a^4z^8}"
+        },
+        {
+          "id": "dust",
+          "name": "Dust Universe",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-L/c, L/c)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "t = \\pm L/c \\;\\text{(curvature singularities, where } \\Phi = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Light travel distance of half the span of the universe in the inertial time, $L = c/\\sqrt{2\\pi G\\rho_0}$, where $\\rho_0$ is the density of the dust at its greatest expansion, $t = 0$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ in which the dust is at rest, with $t$ the inertial time of the flat background, carrying dimensions of time, and $r$ a comoving radius. The conformal factor $\\Phi = 1 - c^2t^2/L^2$ is the scale factor. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{c^2t^2}{L^2}\\right)^2\\left(-c^2dt^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{c^2t^2}{L^2}\\right)^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{c^2t^2}{L^2}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2\\left(L^2 - c^2t^2\\right)^2}{L^4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\left(L^2 - c^2t^2\\right)^2\\sin^2\\theta}{L^4}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12L^4}{\\left(L^2 - c^2t^2\\right)^3}",
+          "kretschmann": "K = \\dfrac{48L^8\\left(L^4 + 2L^2c^2t^2 + 5c^4t^4\\right)}{\\left(L^2 - c^2t^2\\right)^8}"
+        }
+      ]
+    },
+    {
       "id": "oppenheimer_snyder",
       "name": "Oppenheimer-Snyder Gravitational Collapse",
       "short_name": "Oppenheimer-Snyder",
@@ -27682,6 +28007,11 @@
           "id": "minkowski",
           "kind": "special_case",
           "text": "The body taken away. At $m = 0$ every number in front of every term has nothing left to multiply, and the metric is flat."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "special_case",
+          "text": "Nordström's scalar theory as a point of the plane. At $\\gamma = -1$ and $\\beta = 1/2$ the metric is the weak field of his point mass, which bends no light [deruelle2011]."
         }
       ],
       "references": [
@@ -27702,7 +28032,8 @@
         "bertotti2003",
         "williams2004",
         "schiff1960",
-        "everitt2011"
+        "everitt2011",
+        "deruelle2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ppn_metric.json",
@@ -30064,6 +30395,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "limit_source",
           "text": "Two extremal Reissner-Nordström black holes of opposite magnetic charge on one axis. In the limit $b \\to \\infty$ the two are infinitely far apart and each is the extremal hole alone [emparan2000]."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "programme",
+          "text": "Nordström's own theory of gravity, a scalar field on flat spacetime, which he set out in 1913 before he took up Einstein's [nordstrom1913]."
         }
       ],
       "references": [
@@ -30101,7 +30437,8 @@
         "breitenlohner1994",
         "volkov1999",
         "brill1963",
-        "emparan2000"
+        "emparan2000",
+        "nordstrom1913"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -32384,6 +32721,11 @@
           "id": "ppn_metric",
           "kind": "generalisation",
           "text": "Schwarzschild's far field with a number in front of each term, $\\beta$ on $m^2/r^2$ in $g_{tt}$ and $\\gamma$ on $m/r$ in the metric of space. Every test in the solar system measures those numbers, and at $\\beta = \\gamma = 1$ the field is Schwarzschild's [thornewill1971]."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "programme",
+          "text": "The field of a point mass in the scalar theory Einstein's displaced. Nordström's metric is $(1 - GM/c^2r)^2$ times Minkowski's: the same redshift to first order, light that goes straight, and a perihelion that turns backwards [deruelle2011]."
         }
       ],
       "references": [
@@ -32477,7 +32819,8 @@
         "israel1966",
         "griffiths1991",
         "ferrari1988",
-        "thornewill1971"
+        "thornewill1971",
+        "deruelle2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

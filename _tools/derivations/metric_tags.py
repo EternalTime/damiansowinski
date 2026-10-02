@@ -147,6 +147,11 @@ REGIONS = {
         "why": "kerr_ingoing runs on through the horizon into one of the extensions, where Kerr's "
                "metric is stationary; where the waves have passed both Killing vectors are spacelike",
     },
+    "nordstrom_scalar": {
+        "regions": [["conformal"]],
+        "why": "spherical, uniform and dust are three solutions of the theory, a point mass, a uniform "
+               "field and a universe of dust, each with symmetries its general spacetime lacks",
+    },
     "black_saturn": {
         "regions": [["weyl", "polar"]],
         "why": "ring is the black ring alone, the Saturn with its hole taken away",
