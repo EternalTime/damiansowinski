@@ -213,6 +213,11 @@
       "id": "nordstrom_scalar",
       "kind": "conformal",
       "text": "Gravity as one factor on Minkowski's metric. Nordström's field multiplies it by $\\Phi^2$, which changes what clocks and rods measure and leaves every light cone where it was [einstein1914fokker]."
+    },
+    {
+      "id": "charged_shell",
+      "kind": "composite",
+      "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. With more charge than rest mass it falls through both horizons, turns, and leaves into another exterior [delacruz1967]."
     }
   ],
   "references": [
@@ -280,7 +285,9 @@
     "israel1966",
     "tippett2017",
     "will2014",
-    "einstein1914fokker"
+    "einstein1914fokker",
+    "israel1966",
+    "delacruz1967"
   ],
   "coordinates": [
     {

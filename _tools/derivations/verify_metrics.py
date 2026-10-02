@@ -1344,6 +1344,27 @@ DIMENSIONS = {
     ("israel_shell", "exterior_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\mu": "L", "R": "L",
     },
+    # The charged shell of dust: flat space inside in the time T of its centre, Reissner-Nordstrom's
+    # field outside in its static time t, in the advanced and retarded times v and u, both lengths,
+    # and in the isotropic radius rho, where a = r_s/4 + r_q/2 and b = r_s/4 - r_q/2. R, the areal
+    # radius of the shell, epsilon, its isotropic radius, and mu = G m/c^2, the rest mass of the dust as a length, enter the domains and the
+    # shell's motion alone.
+    ("charged_shell", "interior"): {
+        "T": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "\\mu": "L", "R": "L",
+    },
+    ("charged_shell", "exterior"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "\\mu": "L", "R": "L",
+    },
+    ("charged_shell", "exterior_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "\\mu": "L", "R": "L",
+    },
+    ("charged_shell", "exterior_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "\\mu": "L", "R": "L",
+    },
+    ("charged_shell", "exterior_isotropic"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "a": "L", "b": "L", "\\mu": "L",
+        "\\epsilon": "L",
+    },
     # The gravastar: a ball of de Sitter space of radius L inside a thin shell at the areal radius
     # R, Schwarzschild's vacuum of radius r_s outside. C is a name for the number that makes g_tt
     # continuous across the shell, and the tortoise coordinate x of the interior is a length.

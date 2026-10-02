@@ -520,7 +520,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b28cef5f6e2ffda1",
+    "version": "cad68d90c8607122",
     "diagrams": "2122349c176f47ed",
     "conformal": "f82fe13ee8206113",
     "embedding": "c306446463337712"
@@ -708,6 +708,48 @@
     "diagrams": "1684108756c10324",
     "conformal": "065779d03ab6d15d",
     "embedding": "3437f058dfb1c91b"
+  },
+  {
+    "id": "charged_shell",
+    "name": "Charged Shell",
+    "tags": [
+      "dust",
+      "thin shell",
+      "charged",
+      "electric charge",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "gravitational collapse",
+      "bounce",
+      "matched solution",
+      "junction conditions",
+      "black hole",
+      "charged black hole",
+      "extremal",
+      "isotropic coordinates",
+      "point particle",
+      "mass",
+      "curvature singularity",
+      "timelike singularity",
+      "horizon",
+      "event horizon",
+      "Cauchy horizon",
+      "inner horizon",
+      "maximal extension",
+      "time-dependent",
+      "spherically symmetric",
+      "asymptotically flat",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "25316b6866e3ee9d",
+    "diagrams": "58591b53cadf5579",
+    "conformal": "67014d080f0dd52b",
+    "embedding": "2c30edaa0cee4bdc"
   },
   {
     "id": "coleman_de_luccia",
@@ -1531,7 +1573,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "eceb39abf39a98d4",
+    "version": "7c3dfe8a0b6ec0d6",
     "diagrams": "c5dd1a29c82d4852",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b"
@@ -2187,7 +2229,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f4177233ad9ca8ce",
+    "version": "b3958c32ca0826f7",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -2243,7 +2285,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "797428e936f9a614",
+    "version": "80895799cc1f747a",
     "diagrams": "b920fffead7f2fe8",
     "conformal": "43d2fa3533d022a9",
     "embedding": "097ceae878d9ed12"
@@ -2358,7 +2400,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "6336ff62dd3a2a91",
+    "version": "4226d873ece9165d",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2982,7 +3024,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "377707cc49c3c381",
+    "version": "839a1137fc4c9ae4",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
