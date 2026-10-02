@@ -726,6 +726,18 @@ A black hole that forms and then radiates itself away, built by William Hiscock 
 - chart Outgoing Vaidya: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Flat Double Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -du\,dv + \dfrac{(v - u)^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Israel's Collapsing Shell of Dust
+
+A thin spherical shell of dust falling under its own weight, with flat spacetime inside it and Schwarzschild's vacuum outside. Werner Israel solved its motion in 1966 with the junction conditions he wrote for a surface that carries matter. The event horizon forms at the centre of the flat interior before the shell arrives.
+
+- id: `israel_shell`
+- tags: dust, thin shell, gravitational collapse, matched solution, junction conditions, black hole, mass, curvature singularity, horizon, event horizon, time-dependent, spherically symmetric, asymptotically flat, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/israel_shell.json
+- chart Flat Interior: coordinates $(T, r, \theta, \phi)$, $$ds^2 = -c^2dT^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein Exterior: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Israel-Wilson-Perjés Spinning Charged Sources
 
 Majumdar and Papapetrou's balanced charges set spinning: the stationary electrovacuum fields built from a complex solution of Laplace's equation, found by Zoltán Perjés in 1971 and by Werner Israel and Gordon Wilson in 1972. Every source carries a charge equal to its mass, and the family holds Kerr and Newman's spinning body with that charge, a naked singularity, and a charged NUT space.

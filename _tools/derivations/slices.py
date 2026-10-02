@@ -724,6 +724,31 @@ def _bm_radial(which, r):
     return float(getattr(bartnik_mckinnon.soliton(1), which)(r)[0])
 
 
+def _israel_shell(view):
+    """Israel's shell of dust: each moment is the slice v - r = w of the ingoing chart over the piece
+    read in it, outside the shell, and the moment of the flat time T at which that slice meets the
+    shell over the piece read in the interior chart, from the centre to the shell. In
+    Schwarzschild's chart the slice is ct = w + r - r_*, r_* = r + ln(r - 1) at r_s = 1, over its
+    part outside r_s. Once the shell has reached the centre no moment meets the interior."""
+    import israel_shell as shell
+
+    def lines(m):
+        try:
+            lo, hi = m.reach("interior" if view in ("radial", "through") else "exterior_ingoing", "r")
+        except ValueError:
+            return []
+        if view in ("radial", "through"):
+            T = float(shell.inner_time(shell.s_of_slice(m.time)))
+            return along(T, lo, hi)
+        if view == "ingoing":
+            return [[(m.time + r, r) for r in (lo, hi)]]
+        lo = max(lo, 1.0)
+        # Crowded toward r_s, where the slice climbs to ct = +infinity.
+        r = lo + (hi - lo) * np.geomspace(1e-12, 1.0, N) if lo == 1.0 else np.linspace(lo, hi, N)
+        return [[(m.time + x - float(shell.tortoise(x)), x) for x in r]]
+    return [Mark(m, found) for m in moments("israel_shell") for found in [lines(m)] if found]
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -2103,6 +2128,11 @@ FLAT = {
         "mass_inflation", lambda m: [[(m.time + r, r) for r in m.reach("ingoing", "r")]]),
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): lambda: one(
         "vaidya", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]]),
+    # Israel's shell of dust: the flat moment inside the shell, and v - r = w outside it.
+    ("israel_shell", "interior", "radial"): lambda: _israel_shell("radial"),
+    ("israel_shell", "interior", "through"): lambda: _israel_shell("through"),
+    ("israel_shell", "exterior", "radial"): lambda: _israel_shell("schwarzschild"),
+    ("israel_shell", "exterior_ingoing", "shell"): lambda: _israel_shell("ingoing"),
     # The same slices of Bonnor and Vaidya's charged shell.
     ("bonnor_vaidya", "eddington_finkelstein_ingoing", "shell"): lambda: one(
         "bonnor_vaidya", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]]),

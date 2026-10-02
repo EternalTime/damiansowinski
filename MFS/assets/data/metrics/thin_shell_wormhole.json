@@ -2710,6 +2710,11 @@
       "id": "gravastar",
       "kind": "family",
       "text": "A thin shell round a ball of de Sitter space, in place of a throat. Struck by a wave, a compact one answers as the wormhole does, with a black hole's first ringdown and then a train of echoes [cardoso2016prd]."
+    },
+    {
+      "id": "israel_shell",
+      "kind": "family",
+      "text": "The shell of dust Werner Israel tried his junction conditions on in 1966, falling in on flat space [israel1966]."
     }
   ],
   "references": [

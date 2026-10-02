@@ -67,6 +67,11 @@
       "id": "boson_star",
       "kind": "family",
       "text": "A black hole mimicker made of a scalar field, smooth all the way through, with a regular centre and no horizon [liebling2023]."
+    },
+    {
+      "id": "israel_shell",
+      "kind": "family",
+      "text": "A thin shell of dust with flat space inside and nothing to hold it up, so it falls and makes a black hole [israel1966]."
     }
   ],
   "references": [

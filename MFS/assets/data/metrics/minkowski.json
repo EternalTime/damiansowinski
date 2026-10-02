@@ -183,6 +183,11 @@
       "id": "bonnor_rotating_dust",
       "kind": "generalisation",
       "text": "Flat spacetime filled with a thin cloud of rigidly rotating dust that has angular momentum and no total mass. With the rotation set to zero, $a = 0$, the dust is gone and the spacetime is flat [bonnor1977cloud, astesiano2024]."
+    },
+    {
+      "id": "israel_shell",
+      "kind": "composite",
+      "text": "The space inside a collapsing shell of dust, which stays flat until the shell reaches the centre [israel1966]."
     }
   ],
   "references": [
@@ -245,7 +250,8 @@
     "kiselev2003",
     "martindussaud2019",
     "bonnor1977cloud",
-    "astesiano2024"
+    "astesiano2024",
+    "israel1966"
   ],
   "coordinates": [
     {
