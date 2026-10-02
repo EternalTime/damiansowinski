@@ -902,6 +902,34 @@ def _israel_shell(view):
     return [Mark(m, found) for m in moments("israel_shell") for found in [lines(m)] if found]
 
 
+def _charged_shell(view):
+    """The charged shell of dust: each moment of the falling shell is the slice v - r = w of the
+    ingoing chart over the piece read in it, outside the shell, and the moment of the flat time T at
+    which that slice meets the shell over the piece read in the interior chart. In the static
+    chart the slice is ct = w + r - r_*, drawn outside r_+ and, once the shell is inside r_-, inside
+    r_-; in the outgoing chart it is u = w + r - 2r_* inside r_-, the one region the two null
+    charts share."""
+    import charged_shell as shell
+
+    def lines(m):
+        lo, hi = m.reach("interior" if view in ("radial", "through") else "exterior_ingoing", "r")
+        if view in ("radial", "through"):
+            return along(float(shell.inner_time(shell.eta_of_slice(m.time))), lo, hi)
+        if view == "ingoing":
+            return [[(m.time + r, r) for r in (lo, hi)]]
+        if view == "outside":
+            # Crowded toward r_+, where the slice climbs to ct = +infinity.
+            r = near(shell.RP, hi) if lo <= shell.RP else np.linspace(lo, hi, N)
+            return [[(m.time + x - float(shell.tortoise(x)), x) for x in r]]
+        if lo >= shell.RM:
+            return []
+        # Inside r_-, crowded toward it, where r_* runs off to +infinity.
+        r = shell.RM - (shell.RM - lo) * np.geomspace(1e-9, 1.0, N)[::-1]
+        twice = 2 if view == "outgoing" else 1
+        return [[(m.time + x - twice * float(shell.tortoise(x)), x) for x in r]]
+    return [Mark(m, found) for m in moments("charged_shell", "bounce") for found in [lines(m)] if found]
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -2614,6 +2642,16 @@ FLAT = {
     ("israel_shell", "interior", "through"): lambda: _israel_shell("through"),
     ("israel_shell", "exterior", "radial"): lambda: _israel_shell("schwarzschild"),
     ("israel_shell", "exterior_ingoing", "shell"): lambda: _israel_shell("ingoing"),
+    # The charged shell of dust: the flat moment inside the shell and v - r = w outside it, and the
+    # balanced shell's moment t = 0 in the isotropic chart.
+    ("charged_shell", "interior", "radial"): lambda: _charged_shell("radial"),
+    ("charged_shell", "interior", "through"): lambda: _charged_shell("through"),
+    ("charged_shell", "exterior", "radial"): lambda: _charged_shell("outside"),
+    ("charged_shell", "exterior", "inside"): lambda: _charged_shell("inside"),
+    ("charged_shell", "exterior_ingoing", "shell"): lambda: _charged_shell("ingoing"),
+    ("charged_shell", "exterior_outgoing", "shell"): lambda: _charged_shell("outgoing"),
+    ("charged_shell", "exterior_isotropic", "point"): lambda: one(
+        "charged_shell", lambda m: along(0.0, *m.reach("exterior_isotropic", "\\rho")), view_id="point"),
     # The same slices of Bonnor and Vaidya's charged shell.
     ("bonnor_vaidya", "eddington_finkelstein_ingoing", "shell"): lambda: one(
         "bonnor_vaidya", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]]),

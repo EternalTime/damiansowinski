@@ -748,6 +748,17 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `exterior_ingoing/shell`, drawn against $v - r$: level lines from the shell, or from $r = 0$, to $4\,r_s$.
 - The conformal views: each moment through the flat map inside the shell and the ingoing chart's map outside it, met at the shell.
 
+### The charged shell
+
+- The embedding's first view is four moments of the falling shell, $v - r = -1.5$, $-0.5$, $0$ and $1\,r_s$ of the ingoing chart outside the shell, each carried on inside the shell as the moment of the flat time $T$ at which it meets the shell: the shell outside $r_+$, between the horizons, just past its turn, and climbing back toward $r_-$.
+- `interior/radial` and `interior/through`: level lines $T = T(w)$ from the centre to the shell.
+- `exterior/radial`: the curves $ct = w + r - r_*$ outside $r_+$, which leave the drawing toward $r_+$.
+- `exterior/inside`: the same curves inside $r_-$, for the two moments at which the shell is inside $r_-$; the first two are not visible.
+- `exterior_ingoing/shell`, drawn against $v - r$: level lines from the shell to $2\,r_s$.
+- `exterior_outgoing/shell`, drawn against $u + r$: the curves $u + r = w + 2r - 2r_*$ inside $r_-$, the one region the two null charts share, for the same two moments.
+- The first four conformal views: each moment through the flat map inside the shell and the ingoing chart's map outside it, met at the shell.
+- The second view is the balanced shell at rest, another spacetime of the same page, at $t = 0$: a level line from the shell out on `exterior_isotropic/point`, and the level line $T = 0$ of the fifth conformal view; no drawing of the falling shell marks it, and its own mark no moment of the falling shell.
+
 ### Vaidya
 
 - The embedding is four moments of constant $v - r$ in the ingoing chart, $-3$, $-1.5$, $-0.5$ and $1\,r_s$, since a moment of constant $v$ is a light cone; each runs from $r = 0$ to $4\,r_s$, flat inside the shell, which falls along $v = 0$ and so crosses the moment at $r = -(v - r)$, and Flamm's paraboloid moved in by $r_s$ outside it.
@@ -815,6 +826,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Lifshitz | line in each static chart and on each plane of $t$ and $x$, curve in each null chart | not visible: $t$ left out | six curves |
 | Wahlquist | line on each view of Wahlquist's chart and of Whittaker's; not visible on Mars's two | none | none drawn |
 | Israel's shell | level lines inside the shell and against $v - r$, curves in Schwarzschild's chart | none | four curves |
+| The charged shell | level lines inside the shell, against $v - r$ and in the isotropic chart; curves in the static chart and against $u + r$ | none | four curves, and a level line for the shell at rest |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
 
 As drawn in 4de26cc, the Krasnikov tube's slice is a line, Reissner-Nordström's are two lines, and Vaidya's ingoing view carries all four lines.

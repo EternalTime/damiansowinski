@@ -154,6 +154,11 @@
       "id": "born_infeld_charge",
       "kind": "generalisation",
       "text": "This charge with a limit on its field. Born and Infeld's electrodynamics keeps the field of a point charge finite, so the energy of the field is finite too, and the charge is a black hole with one horizon or two, or a particle with no horizon and a conical point at its centre [hoffmann1935, gibbonsrasheed1995]."
+    },
+    {
+      "id": "charged_shell",
+      "kind": "composite",
+      "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. Shrunk to a point at rest it is Arnowitt, Deser, and Misner's point charge, with a finite mass set by its charge alone [arnowitt1960]."
     }
   ],
   "references": [
@@ -195,7 +200,8 @@
     "markov1970",
     "nordstrom1913",
     "hoffmann1935",
-    "gibbonsrasheed1995"
+    "gibbonsrasheed1995",
+    "arnowitt1960"
   ],
   "coordinates": [
     {

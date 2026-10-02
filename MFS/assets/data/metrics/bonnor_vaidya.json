@@ -59,6 +59,11 @@
       "id": "mass_inflation",
       "kind": "special_case",
       "text": "The same metric with the charge held constant, read inside a black hole. With a second stream of light running outward there, the mass function grows without limit at the inner horizon [poisson1989]."
+    },
+    {
+      "id": "charged_shell",
+      "kind": "limit_source",
+      "text": "The shell of charged dust, of which a shell of charged light is the limit of no rest mass. The dust turns round at $(q^2 - \\mu^2)/(2m - 2\\mu)$ for a rest mass $\\mu$, which tends to $q^2/2m$ [gao2008]."
     }
   ],
   "references": [
@@ -76,7 +81,8 @@
     "sullivan1980",
     "kehle2022",
     "poisson1990",
-    "poisson1989"
+    "poisson1989",
+    "gao2008"
   ],
   "coordinates": [
     {

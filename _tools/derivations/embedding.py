@@ -5955,6 +5955,152 @@ def israel_shell(ck, src):
                        "diagram.")]
 
 
+def charged_shell(ck, src):
+    """The charged shell of dust in two views.
+
+    The shell its other diagrams draw, r_s = 1, r_q = 12/25 and mu = 1/5, whose motion
+    charged_shell.py holds, as a movie. The moments are Vaidya's: outside the shell, slices of
+    constant v - r = w of the ingoing chart, spacelike everywhere, on which the published metric
+    pulls back to (1 + r_s/r - r_q^2/r^2) dr^2 + r^2 dphi^2 with v = w + r, so
+    dz/dr = sqrt(r_s r - r_q^2)/r and z = 2 s - 2 r_q arctan(s/r_q) with s = sqrt(r_s r - r_q^2),
+    which exists for r >= r_q^2/r_s, below the shell's least radius; inside it, the moment of the
+    flat time T at which the slice meets the shell, a flat disc, which is checked. The shell is the
+    circle r = R(w) where the two meet, and it folds the surface by the angle whose tangent is
+    sqrt(r_s R - r_q^2)/R. The event horizon, T - r = U_h inside the shell and r = r_+ outside it,
+    is r = T - U_h on the disc while the shell is outside r_+. The shell turns at w = -0.015 and
+    climbs back toward r_-, which it reaches only as w runs off to infinity.
+
+    The balanced shell at rest, b = 0 and mu = a = 1, at the isotropic radius 1: the moment t = 0
+    of the isotropic chart, on which the areal radius is rho + a and
+    z = 2 s + ln((s - 1)/(s + 1)) with s = sqrt(2r/a - 1), the throat of the extreme field, cut off at
+    the shell by a flat disc. The throat below the shell is drawn on as a reference, down to the
+    isotropic radius 1/64."""
+    shell = nr.cshell
+    top = 2.0
+    size = 2 * top
+    NEAR_FOLD = 1e-3
+    rq = shell.RQ
+    rim = ("edge", "the surface runs on to $r \\to \\infty$")
+    u_h = float(shell.inner_retarded(-shell.ETA_P))
+
+    def height(r):
+        root = np.sqrt(np.asarray(r, dtype=float) - rq * rq)
+        return 2 * root - 2 * rq * np.arctan(root / rq)
+
+    def moment(w):
+        where = f"charged shell, v - r = {w:g}"
+        hole = Slice(src, "charged_shell", "exterior_ingoing", "r", "\\phi", {"theta": "pi/2"}, nr.CHARGED,
+                     along={"v": f"{w!r} + r"})
+        eta = float(shell.eta_of_slice(w))
+        R, T = float(shell.radius(eta)), float(shell.inner_time(eta))
+        ck.add(f"{where}, the shell is on the slice", abs(float(shell.advanced(eta)) - R - w), 1e-11)
+        flat = Slice(src, "charged_shell", "interior", "r", "\\phi", {"theta": "pi/2", "T": repr(T)}, nr.CHARGED)
+        ck.plane(f"{where}, inside the shell", flat, np.linspace(1e-3 * R, R, 200))
+        horizon = T - u_h
+        # The shell's circle is marked a thousandth of r_s inside the fold: on the fold itself, whether
+        # the wall in front of it hides it would hang on the last digit the file keeps.
+        inside = Piece("inside", "sheet", flat, 0.0, R, 0.0, 1,
+                       (("axis", "the centre $r = 0$, where space is flat throughout"),
+                        ("crease", "the shell of charged dust, where the surface folds")),
+                       [(R - NEAR_FOLD, "surface", None)]
+                       + ([(horizon, "horizon", None)] if 0 < horizon < R - 2 * NEAR_FOLD else []), size)
+        outside = Piece("outside", "sheet", hole, R, top, 0.0, 1, (("crease", "the shell"), rim),
+                        [(h, "horizon", None) for h in (shell.RM, shell.RP) if R < h - 1e-9]
+                        + [(r, "r", None) for r in (1.0, 1.5, top) if r > R], size)
+        # The rim of the drawing, r = 2 r_s, stands at z = 0 at every moment.
+        shift = -outside.z[-1]
+        inside.z, outside.z = inside.z + shift, outside.z + shift
+        ck.add(f"{where}, the two sides meet at the shell: one point",
+               float(np.max(np.abs(np.array(inside.at(R)) - outside.at(R)))), JOIN)
+        ck.form(f"{where}, outside the shell z = 2s - 2 r_q arctan(s/r_q), s = sqrt(r_s r - r_q^2)", outside,
+                lambda r, R=R, shift=shift: height(r) - height(R) + shift, size)
+        tangent = outside.sl.slope(R, "+")
+        ck.add(f"{where}, the fold at the shell is sqrt(r_s R - r_q^2)/R",
+               abs(float(tangent[1] / tangent[0]) / (math.sqrt(R - rq * rq) / R) - 1), 1e-6)
+        for piece in (inside, outside):
+            ck.isometry(f"{where}, {piece.id}", piece)
+        return Surface([inside, outside], label=f"$v - r = {w:g}\\,r_s$", time=w)
+
+    # A frame every r_s/32 of v - r. The shell crosses r_+ at w = -0.66 and r_- at w = -0.25, and turns
+    # between the frames -1/32 and 0.
+    frames = [moment(-1.5 + k / 32) for k in range(81)]
+    ck.add("charged shell: it is on r_+ at v - r = -0.662", abs(float(shell.radius_on_slice(-0.6618957148773874)) - shell.RP), 1e-9)
+    ck.add("charged shell: it turns at v - r = -0.0147", abs(float(shell.slice_time(0.0)) + 0.014706366575392094), 1e-9)
+    # The moments marked on the other diagrams: the shell outside r_+, between the horizons, just past
+    # the turn, and on its way back up to r_-.
+    surfaces = [frames[k] for k in (0, 32, 48, 80)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the slice, flat inside the shell and of constant $v - r$ outside it")
+    fig.legend("line", "r", "$r$ constant, at $1$, $1.5$ and $2\\,r_s$")
+    fig.legend("line", "surface", "the shell of charged dust, where the surface folds")
+    fig.legend("line", "horizon", "the horizons $r_+$ and $r_-$ outside the shell, and inside it the event horizon, "
+                                  "which forms at the centre at $cT = -1.17\\,r_s$ and grows through flat space to "
+                                  "meet the shell at $r_+$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    bounce = view("bounce", "The fall and the turn", "$r_s$", surfaces, fig.done(),
+                  movie=movie(frames, "$v - r$", [f.time for f in frames]),
+                  settings="$r_s = 1$, the unit of every length, $r_q = 0.48\\,r_s$, and $\\mu = 0.2\\,r_s$; each "
+                           "moment is a slice of constant $v - r$ outside the shell and of constant $T$ inside it.",
+                  input="The shell that comes in from infinity and turns round at $R = 0.317\\,r_s$, as in the "
+                        "conformal diagram.")
+
+    # The balanced shell at rest, in units of a.
+    eps, reach = 1.0, 3.0
+    R = eps + 1
+    psize = 2 * (reach + 1)
+    field = Slice(src, "charged_shell", "exterior_isotropic", "\\rho", "\\phi", {"t": 0, **EQUATOR}, nr.CHARGED_POINT)
+    disc = Slice(src, "charged_shell", "interior", "r", "\\phi", {"theta": "pi/2", "T": "0"},
+                 {"r_s": 2, "r_q": 1, "mu": 1})
+    ck.plane("charged shell, the balanced shell: inside it", disc, np.linspace(1e-3, R, 200))
+
+    def throat_height(rho):
+        root = np.sqrt(2 * (np.asarray(rho, dtype=float) + 1) - 1)
+        return 2 * root + np.log((root - 1) / (root + 1))
+    throat = Piece("throat", "reference", field, 1 / 64, eps, 0.0, 1,
+                   (("stops", "the throat runs on down without end, to $\\rho \\to 0$"), ("join", None)),
+                   [(1 / 64, "reference", None), (1 / 16, "reference", None), (1 / 4, "reference", None)], psize,
+                   reference=True)
+    outside = Piece("outside", "sheet", field, eps, reach, 0.0, 1,
+                    (("crease", "the shell, $\\rho = \\epsilon$"), ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                    [(2.0, "r", None), (reach, "r", None)], psize)
+    inside = Piece("inside", "sheet", disc, 0.0, R, 0.0, 1,
+                   (("axis", "the centre $r = 0$, where space is flat"), ("crease", "the shell")),
+                   [(R - NEAR_FOLD, "surface", None)], psize)
+    shift = -outside.z[-1]
+    outside.z = outside.z + shift
+    inside.z = inside.z + outside.z[0]
+    throat.z = throat.z + (outside.z[0] - throat.z[-1])
+    ck.add("charged shell, the balanced shell: the two sides meet in one circle",
+           float(np.max(np.abs(np.array(inside.at(R)) - outside.at(eps)))), JOIN)
+    ck.add("charged shell, the balanced shell: the throat below it joins on",
+           float(np.max(np.abs(np.array(throat.at(eps)) - outside.at(eps)))), JOIN)
+    ck.form("charged shell, the balanced shell: outside z = 2s + ln((s - 1)/(s + 1)), s = sqrt(2r/a - 1)", outside,
+            lambda rho: throat_height(rho) - throat_height(reach), psize)
+    ck.form("charged shell, the balanced shell: the throat is the same surface", throat,
+            lambda rho: throat_height(rho) - throat_height(reach), psize)
+    tangent = outside.sl.slope(eps, "+")
+    ck.add("charged shell, the balanced shell: the fold is sqrt(2R/a - 1)/(R/a - 1)",
+           abs(float(tangent[1] / tangent[0]) / (math.sqrt(2 * R - 1) / (R - 1)) - 1), 1e-6)
+    for piece in (inside, outside):
+        ck.isometry(f"charged shell, the balanced shell, {piece.id}", piece)
+    surface = Surface([inside, outside, throat])
+    fig = figure_of([surface], {"sheet": "cover"}, psize, Camera(-90, 30))
+    ring_label(fig, [0, 0, 0], *outside.at(reach), "$4\\,a$")
+    ring_label(fig, [0, 0, 0], *outside.at(2.0), "$3\\,a$")
+    ring_label(fig, [0, 0, 0], *inside.at(R - NEAR_FOLD), "the shell", dx=10)
+    fig.legend("fill", "cover", "the slice $t = 0$: a flat disc inside the shell and the extreme field's throat outside it")
+    fig.legend("line", "r", "the areal radius constant, at $3$ and $4\\,a$")
+    fig.legend("line", "surface", "the shell at rest, $\\rho = \\epsilon = a$, of areal radius $2a$")
+    fig.legend("line", "reference", "the throat below the shell, down to $\\rho = a/64$, with $\\rho = a/4$ and $a/16$ "
+                                    "marked on the way")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    point = view("point", "The point charge", "$a$", [surface], fig.done(),
+                 settings="$a = 1$, the unit of every length, $b = 0$, and $\\mu = a$, so that $r_q = r_s/2 = a$; "
+                          "the shell is at rest at $\\epsilon = a$.",
+                 input="The balanced shell at rest, as in the isotropic spacetime diagram.")
+    return [bounce, point]
+
+
 def bonnor_vaidya(ck, src):
     """The charged shell the other diagrams draw: the ingoing chart with m = q = 0 for v < 0 and
     m = M = 1, q = 24/25 for v > 0. A slice of constant v is null, so the moments are slices of
@@ -12736,6 +12882,7 @@ DRAWN = {
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
     "israel_shell": israel_shell,
+    "charged_shell": charged_shell,
     "bonnor_vaidya": bonnor_vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "semiclosed_world": semiclosed_world,
@@ -13825,6 +13972,31 @@ CAPTIONS = {
         "shrinks the funnels shrink with it and keep their angle $\\psi$. The shells nearest the throat reach "
         "$r = 0$ first, at $c\\tau = \\pi r_s/2$, and from then on each funnel ends in a point. The expansion "
         "before $\\tau = 0$ is the same run of moments in reverse.",
+    ],
+    ("charged_shell", "bounce"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of charged dust that falls in from "
+        "infinity and turns round, from $v - r = -1.5\\,r_s$ to $r_s$, each moment drawn as a surface in flat space "
+        "with every distance along it the metric distance. Outside the shell the moments are slices of constant "
+        "$v - r$, which are spacelike everywhere, between the horizons as well, and carry the metric "
+        "$(1 + r_s/r - r_q^2/r^2)\\,dr^2 + r^2d\\phi^2$. Inside the shell space is flat and the surface is a level "
+        "disc, and the mass of the shell folds the surface where the two meet, at a slope "
+        "$\\sqrt{r_sR - r_q^2}/R$.",
+        "The event horizon forms at the centre at $cT = -1.17\\,r_s$, before the shell arrives, and grows through "
+        "the flat disc at the speed of light to meet the shell at $r_+$. The shell goes on through $r_-$, stops at "
+        "$R = 0.317\\,r_s$ at $v - r = -0.015\\,r_s$, and climbs back toward $r_-$, which it reaches only as "
+        "$v \\to \\infty$. The disc at the bottom of the well stays flat throughout, and the charged field's "
+        "singularity has no place on any slice.",
+    ],
+    ("charged_shell", "point"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of space at $t = 0$ around the balanced shell, "
+        "$\\mu = r_q = r_s/2 = a$, at rest at the isotropic radius $\\epsilon = a$, drawn as a surface in flat "
+        "space with every distance along it the metric distance. Outside the shell the surface is the throat of "
+        "the extreme field, $z = 2s + \\ln((s - 1)/(s + 1))$ with $s = \\sqrt{2r/a - 1}$, which narrows toward the "
+        "radius $a$ and never reaches it. The shell cuts the throat off with a flat disc.",
+        "Arnowitt, Deser, and Misner's point charge is the limit $\\epsilon \\to 0$ at fixed charge. The disc "
+        "then sinks down the throat, its radius $\\epsilon + a$ closing on $a$ and its depth growing as "
+        "$a\\ln(1/\\epsilon)$, while the mass seen from outside stays the same. The three circles on the throat "
+        "below the shell are where it would sit at $\\epsilon = a/4$, $a/16$, and $a/64$.",
     ],
     ("oppenheimer_snyder", "collapse"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a star of dust collapsing from rest, as the dust's own time "

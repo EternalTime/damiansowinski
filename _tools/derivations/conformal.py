@@ -10791,6 +10791,287 @@ def israel_shell(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the charged shell of dust
+
+def charged_shell(ck, src):
+    """The charged shell its other diagrams draw, r_s = 1, r_q = 12/25 and mu = 1/5, whose motion
+    charged_shell.py holds, and the balanced shell at rest.
+
+    Inside the falling shell p, q = Phi(T -+ r) with Phi(w) = arctan(w/L), Minkowski's own
+    compactification, which puts the centre on the straight line X = 0. Outside, each ray keeps the
+    p or the q it has where it crosses the shell: every outgoing ray outside the shell left it
+    once, and every ingoing ray meets it once, so both are continuous on the shell and the whole of
+    the outside lies in Minkowski's triangle. The length L is T + R of the shell where it comes
+    back to r_-, so the inner horizon's two branches are p = -pi/4 and q = pi/4. The ingoing chart
+    covers the first exterior, the region between the horizons and the region inside r_- beside
+    the shell; the outgoing chart that last region, the next region between the horizons and the
+    next exterior, by the same map turned over in time; and the static chart the three regions
+    where f > 0. Beyond the Cauchy horizon q = pi/4 lies the other region inside r_-, with the
+    field's timelike singularity, entered through its static time.
+
+    The balanced shell, b = 0 and mu = a = 1, at rest at the isotropic radius 1, is Minkowski's
+    triangle by p, q = arctan((ct -+ x)/x_R): the lapse is N = 1/2 on the shell from both sides, so
+    x = r/N inside it and x_R + rho_* - rho_*(1) outside, with rho_* = rho + 2 ln rho - 1/rho."""
+    shell = nr.cshell
+    name = "charged shell"
+    inner = Plane(src, "charged_shell", "interior", ("T", "r"), EQUATOR, nr.CHARGED)
+    static = Plane(src, "charged_shell", "exterior", ("t", "r"), EQUATOR, nr.CHARGED)
+    hole = Plane(src, "charged_shell", "exterior_ingoing", ("v", "r"), EQUATOR, nr.CHARGED)
+    leaving = Plane(src, "charged_shell", "exterior_outgoing", ("u", "r"), EQUATOR, nr.CHARGED)
+    inside, ingoing, outgoing, beyond = (shell.conformal_inside, shell.conformal_ingoing, shell.conformal_outgoing,
+                                         shell.conformal_beyond)
+    rp, rm, eta_p, eta_m = shell.RP, shell.RM, shell.ETA_P, shell.ETA_M
+
+    def falling(t, r):
+        """The static chart outside r_+ of the first exterior, and inside r_-."""
+        return ingoing(np.asarray(t, dtype=float) + shell.tortoise(r), r)
+
+    def rising(t, r):
+        """The static chart outside r_+ of the next exterior."""
+        return outgoing(np.asarray(t, dtype=float) - shell.tortoise(r), r)
+
+    T = ck.uniform(-12, 12)
+    ck.chart(f"{name}, flat inside", inner, inside, T, ck.uniform(0.02, 0.98) * shell.radius_at_inner_time(T),
+             lambda T, r: (1, 0))
+    v = ck.uniform(-12, 4)
+    ck.chart(f"{name}, Reissner-Nordstrom outside in the ingoing chart", hole, ingoing, v,
+             shell.radius_at_advanced(v) + ck.uniform(0.02, 12), lambda v, r: (1, -60))
+    u = ck.uniform(-4, 12)
+    ck.chart(f"{name}, Reissner-Nordstrom outside in the outgoing chart", leaving, outgoing, u,
+             shell.radius_at_retarded(u) + ck.uniform(0.02, 12), lambda u, r: (1, 60))
+    t = ck.uniform(-10, 3)
+    ck.chart(f"{name}, the static chart outside r_+ of the first exterior", static, falling, t,
+             shell.radius_at_outer_time(t) + ck.uniform(0.02, 12), lambda t, r: (1, 0))
+    t = ck.uniform(-3, 10)
+    ck.chart(f"{name}, the static chart outside r_+ of the next exterior", static, rising, t,
+             shell.radius_at_outer_time_leaving(t) + ck.uniform(0.02, 12), lambda t, r: (1, 0))
+    t = ck.uniform(-1.5, 1.5)
+    low = shell.radius_at_static_time_inside(t)
+    ck.chart(f"{name}, the static chart inside r_-", static, falling, t, low + ck.uniform(0.05, 0.95) * (rm - low),
+             lambda t, r: (1, 0))
+    t = ck.uniform(-3, 3)
+    ck.chart(f"{name}, the static chart beyond the Cauchy horizon", static, beyond, t, ck.uniform(0.02, rm - 0.01),
+             lambda t, r: (1, 0))
+    eta = ck.uniform(-9, eta_m - 1e-3, 400)
+    R = shell.radius(eta)
+    ck.limit(f"{name}: the two sides put the falling shell at one place",
+             np.concatenate(inside(shell.inner_time(eta), R)), np.concatenate(ingoing(shell.advanced(eta), R)), 1e-8)
+    ck.limit(f"{name}: the two sides put the leaving shell at one place",
+             np.concatenate(inside(shell.inner_time(-eta), R)), np.concatenate(outgoing(shell.retarded(-eta), R)), 1e-8)
+    ck.limit(f"{name}: one proper time on both sides, gamma^2 - Rdot^2 = (beta^2 - Rdot^2)/f",
+             shell.gamma(R, 1, shell.RQ, shell.MU) ** 2 - shell.speed(eta) ** 2,
+             (shell.beta(R, 1, shell.RQ, shell.MU) ** 2 - shell.speed(eta) ** 2) / (1 - 1 / R + shell.RQ ** 2 / R ** 2), 1e-9)
+    rr, vv = ck.uniform(shell.R_TURN + 0.005, rm - 0.002, 60), ck.uniform(0.4, 3, 60)
+    ok = rr > shell.radius_at_advanced(vv) + 1e-3
+    ck.limit(f"{name}: the two null charts agree inside r_-", np.concatenate(ingoing(vv[ok], rr[ok])),
+             np.concatenate(outgoing(vv[ok] - 2 * shell.tortoise(rr[ok]), rr[ok])), 1e-8)
+    p_h = float(shell.phi(shell.inner_retarded(-eta_p)))
+    ck.limit(f"{name}: r_+ is one null line p outside the shell", ingoing(ck.uniform(0.0, 20, 100), np.full(100, rp))[0], p_h, 1e-9)
+    ck.limit(f"{name}: r_- is the null line p = -pi/4 where the shell goes in",
+             ingoing(ck.uniform(0.2, 3, 100), np.full(100, rm))[0], -Q4, 1e-9)
+    ck.limit(f"{name}: the Cauchy horizon is the null line q = pi/4", ingoing(np.array([60.0, 200.0]), np.array([2.0, 0.5]))[1], Q4, 1e-6)
+    ck.limit(f"{name}: the singularity beyond it runs from the first i+ to the next i-",
+             np.concatenate(beyond(np.array([-80.0, 80.0]), np.zeros(2))), [p_h, -Q4, Q4, -p_h], 1e-6)
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0 beyond the Cauchy horizon",
+                static.kretschmann(0.0, 1e-2), static.kretschmann(0.0, 1e-3))
+    ck.finite(f"{name}: r = 0 inside the shell is a regular centre", inner.kretschmann(ck.uniform(-9, 9, 20), np.full(20, 1e-6)))
+
+    # The shell from i^- to the i^+ of the next exterior.
+    along = np.sinh(np.linspace(-np.arcsinh(shell.FAR), np.arcsinh(shell.FAR), 1601))
+    sp_, sq_ = inside(shell.inner_time(along), shell.radius(along))
+
+    def stretch(lo, hi):
+        """The shell's points between two values of eta, ends included."""
+        e = np.concatenate([[lo], along[(along > lo) & (along < hi)], [hi]])
+        return [point(a, b) for a, b in zip(*inside(shell.inner_time(e), shell.radius(e)))]
+
+    def on_shell(eta):
+        return tuple(float(x) for x in inside(shell.inner_time(eta), shell.radius(eta)))
+    i_minus, i_zero, i_plus = (-HALF, -HALF), (-HALF, Q4), (p_h, Q4)
+    next_minus, next_zero, next_plus = (-Q4, -p_h), (-Q4, HALF), (HALF, HALF)
+    fold = (-Q4, Q4)                                   # where the two branches of the inner horizon cross
+    ts = spread(-np.inf, np.inf, 600, 9)
+    sing_p, sing_q = beyond(ts, np.zeros_like(ts))
+    singular = [point(a, b) for a, b in zip(sing_p, sing_q)]
+    whole = [[0, -PI]] + stretch(-shell.FAR, shell.FAR) + [[0, PI]]
+    flat_region = whole
+    out_region = whole + [point(*next_zero), point(*next_minus)] + singular[::-1] + [point(*i_plus), point(*i_zero)]
+    first = [[0, -PI]] + stretch(-shell.FAR, -eta_p) + [point(*i_plus), point(*i_zero)]
+    within = stretch(-eta_m, eta_m) + [point(*fold)]
+    second = stretch(eta_p, shell.FAR) + [[0, PI], point(*next_zero), point(*next_minus)]
+    covers = {"interior": [flat_region],
+              "exterior": [first, within, second],
+              "exterior_ingoing": [[[0, -PI]] + stretch(-shell.FAR, eta_m) + [point(*i_plus), point(*i_zero)]],
+              "exterior_outgoing": [stretch(-eta_m, shell.FAR) + [[0, PI], point(*next_zero), point(*next_minus)]]}
+
+    def r_inside(r):
+        T = spread(float(shell.inner_time(shell.eta_of_radius(r, 1))), np.inf, 400, 10)
+        return [inside(-T[::-1], np.full_like(T, r)), inside(T, np.full_like(T, r))]
+
+    def T_inside(T):
+        r = np.linspace(0, float(shell.radius_at_inner_time(T)), 200)
+        return inside(np.full_like(r, T), r)
+
+    def r_outside(r):
+        """A sphere outside the shell: from the shell on the way in to i^+ or the Cauchy horizon, and,
+        outside r_-, from the next i^- or the inner horizon to the shell on the way out."""
+        v_in = float(shell.advanced(shell.eta_of_radius(r, -1)))
+        if r < rm:
+            v = np.linspace(v_in, float(shell.advanced(shell.eta_of_radius(r, 1))), 400)
+            return [ingoing(v, np.full_like(v, r))]
+        v = spread(v_in, np.inf, 700, 11)
+        p, q = ingoing(v, np.full_like(v, r))
+        return [(p, q), (-q[::-1], -p[::-1])]
+
+    def t_outside(t, region):
+        if region == "III":
+            r = np.linspace(float(shell.radius_at_static_time_inside(t)), rm, 300)
+            return falling(np.full_like(r, t), r)
+        if region == "I":
+            r = spread(float(shell.radius_at_outer_time(t)), np.inf, 500, 12)
+            return falling(np.full_like(r, t), r)
+        r = spread(float(shell.radius_at_outer_time_leaving(t)), np.inf, 500, 12)
+        return rising(np.full_like(r, t), r)
+
+    views = []
+    labels = (("interior", "Flat interior"), ("exterior", "Reissner-Nordström exterior"),
+              ("exterior_ingoing", "Ingoing exterior"), ("exterior_outgoing", "Outgoing exterior"))
+    radii_out = (0.34, 0.45, 0.55, 1.0, 2.0, 4.0)
+    for vid, label in labels:
+        v = View(vid, label, [-0.35, 3 * Q4 + 0.35, -PI - 0.25, PI + 0.25], vid)
+        v.fill("region", out_region)
+        v.fill("region", flat_region)
+        for polygon in covers[vid]:
+            v.fill("cover", polygon)
+        for r in (0.5, 1.0, 2.0):
+            for branch in r_inside(r):
+                v.curve("r2", *branch)
+        for time in (-2, -1, -0.5, 0, 0.5, 1, 2):
+            v.curve("t2", *T_inside(time))
+        for r in radii_out:
+            for branch in r_outside(r):
+                v.curve("r", *branch)
+        for r in (0.1, 0.25):
+            v.curve("r", *beyond(ts, np.full_like(ts, r)))
+        if vid == "exterior":
+            for time in (-2, -1, 0, 1):
+                v.curve("t", *t_outside(time, "I"))
+                v.curve("t", *t_outside(-time, "I'"))
+            for time in (-0.5, 0, 0.5):
+                v.curve("t", *t_outside(time, "III"))
+        v.curve("surface", sp_, sq_)
+        v.segment("event", (p_h, p_h), i_plus)
+        v.segment("horizon", on_shell(-eta_m), next_minus)
+        v.segment("horizon", i_plus, (Q4, Q4))
+        v.segment("horizon", next_minus, on_shell(eta_p))
+        v.segment("centre", i_minus, next_plus)
+        v.curve("singular", sing_p, sing_q, zig=True, tol=0.01)
+        v.segment("scri", i_minus, i_zero)
+        v.segment("scri", i_zero, i_plus)
+        v.segment("scri", next_minus, next_zero)
+        v.segment("scri", next_zero, next_plus)
+        for pq, text, anchor, dx, dy in ((i_minus, "$i^-$", "t", 0, 6), (i_zero, "$i^0$", "l", 6, 0),
+                                         (i_plus, "$i^+$", "l", 7, 0), (next_minus, "$i^-$", "l", 7, 0),
+                                         (next_zero, "$i^0$", "l", 6, 0), (next_plus, "$i^+$", "b", 0, -6)):
+            v.point("infinity", pq)
+            v.label(pq, text, anchor, dx=dx, dy=dy)
+        v.label(((p_h - HALF) / 2, Q4), "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+        v.label((-HALF, -Q4 / 2), "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label((Q4 / 2, HALF), "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+        v.label((-Q4, (HALF - p_h) / 2), "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        far = float(shell.eta_of_radius(1.5, -1))
+        v.label(on_shell(far), "the shell", "tl", "small", dx=5, dy=3)
+        v.label((p_h, (p_h + Q4) / 2 - 0.25), "event horizon", "tl", "small", dx=5, dy=3)
+        v.label(fold, "$r_-$", "l", "small", dx=7)
+        v.label_xt([float(np.max(sing_q - sing_p)), 0], "$r = 0$", "l", dx=8)
+        v.legend("cover", {"interior": "inside the shell, $r \\le R$, which $T$ and $r$ cover: flat",
+                           "exterior": "outside the shell where $1 - r_s/r + r_q^2/r^2 > 0$: three regions, each "
+                                       "with a static $t$ of its own",
+                           "exterior_ingoing": "outside the shell as far as the advanced time $v$ reaches: the first "
+                                               "exterior, between the horizons, and inside $r_-$",
+                           "exterior_outgoing": "outside the shell from where the retarded time $u$ begins: inside "
+                                                "$r_-$, between the next horizons, and the next exterior"}[vid])
+        v.legend("surface", "the shell of charged dust $r = R$, from $i^-$ of one exterior to $i^+$ of the next")
+        v.legend("r", "$r$ constant outside: $0.34$, $0.45$, $0.55$, $1$, $2$ and $4\\,r_s$, and $0.1$ and "
+                      "$0.25\\,r_s$ beyond the Cauchy horizon")
+        v.legend("r2", "$r$ constant inside: $0.5$, $1$ and $2\\,r_s$")
+        v.legend("t2", "$cT$ constant inside: $0$, $\\pm 0.5$, $\\pm 1$ and $\\pm 2\\,r_s$")
+        if vid == "exterior":
+            v.legend("t", "$ct$ constant outside: every $r_s$ in each exterior, and $0$ and $\\pm 0.5\\,r_s$ inside $r_-$")
+        v.legend("event", "the event horizon, from the centre at $cT = -1.17\\,r_s$ to $i^+$")
+        v.legend("horizon", "$r = r_-$, whose branch from $i^+$ is the Cauchy horizon and runs on to the centre, "
+                            "and $r = r_+$ of the next exterior")
+        v.legend("centre", "$r = 0$ inside the shell, a regular centre throughout")
+        v.legend("singular", "$r = 0$ of the charged field beyond the Cauchy horizon, a timelike singularity")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$ of the first exterior and of the next")
+        v.set(input="The shell with $r_q = 0.48\\,r_s$ and $\\mu = 0.2\\,r_s$, which turns round at $R = 0.317\\,r_s$.")
+        # Each moment: the flat time T at which the slice v - r = w meets the shell, from the centre to
+        # the shell, and v - r = w from the shell out, as far as the embedding reaches.
+        for m in slices.moments("charged_shell", "bounce"):
+            em = float(shell.eta_of_slice(m.time))
+            r_in = np.linspace(0, float(shell.radius(em)), 200)
+            lo, hi = m.reach("exterior_ingoing", "r")
+            r_out = lo + (hi - lo) * np.linspace(0, 1, 400) ** 2
+            v.slice(m, [inside(np.full_like(r_in, float(shell.inner_time(em))), r_in), ingoing(m.time + r_out, r_out)])
+        views.append(v)
+
+    # The balanced shell at rest, in units of a.
+    eps, lapse = 1.0, 0.5
+    xR = (eps + 1) / lapse
+    still = Plane(src, "charged_shell", "interior", ("T", "r"), EQUATOR, {"r_s": 2, "r_q": 1, "mu": 1})
+    field = Plane(src, "charged_shell", "exterior_isotropic", ("t", "\\rho"), EQUATOR, nr.CHARGED_POINT)
+
+    def star(rho):
+        rho = np.asarray(rho, dtype=float)
+        return rho + 2 * np.log(rho) - 1 / rho
+
+    def held(T, r):
+        return mink_pq(np.asarray(T, dtype=float) / lapse, np.asarray(r, dtype=float) / lapse, xR)
+
+    def around(t, rho):
+        return mink_pq(t, xR + star(rho) - star(eps), xR)
+    ck.limit(f"{name}, balanced: the lapse is one value on the shell from both sides",
+             [math.sqrt(-float(field.g[0, 0].subs(field.x1, eps)))], [lapse], 1e-12)
+    ck.chart(f"{name}, balanced: flat inside", still, held, ck.uniform(-4, 4), ck.uniform(0.01, eps + 0.99), lambda T, r: (1, 0))
+    ck.chart(f"{name}, balanced: the extreme field outside in the isotropic chart", field, around, ck.uniform(-20, 20),
+             ck.uniform(eps + 0.01, 30), lambda t, rho: (1, 0))
+    ck.limit(f"{name}, balanced: the two sides put the shell at one place",
+             np.concatenate(held(lapse * S_ALL, np.full_like(S_ALL, eps + 1))), np.concatenate(around(S_ALL, np.full_like(S_ALL, eps))), 1e-12)
+    ps, qs = around(S_ALL, np.full_like(S_ALL, eps))
+    tube = [[0, -PI]] + [point(a, b) for a, b in zip(ps, qs)] + [[0, PI]]
+    outside_region = [[PI, 0]] + [point(a, b) for a, b in zip(ps[::-1], qs[::-1])]
+    v = View("exterior_isotropic", "Isotropic exterior", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "exterior_isotropic")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", outside_region)
+    for r in (0.5, 1.0, 1.5):
+        v.curve("r2", *held(lapse * S_ALL, np.full_like(S_ALL, r)))
+    for rho in (2.0, 4.0, 9.0):
+        v.curve("r", *around(S_ALL, np.full_like(S_ALL, rho)))
+    radial_in = np.linspace(0, eps + 1, 60)
+    radial_out = eps + np.exp(np.linspace(-8, 9, 300)) - math.exp(-8)
+    for time in (-12, -6, -3, 0, 3, 6, 12):
+        v.curve("t", *held(np.full_like(radial_in, lapse * time), radial_in))
+        v.curve("t", *around(np.full_like(radial_out, time), radial_out))
+    v.curve("surface", ps, qs)
+    triangle_edges(v)
+    label_on(v, around(0, eps), "$\\rho = \\epsilon$")
+    v.legend("cover", "outside the shell, $\\rho \\ge \\epsilon$, which $t$ and $\\rho$ cover: the extreme field")
+    v.legend("r", "$\\rho$ constant outside, at $2$, $4$ and $9\\,a$")
+    v.legend("r2", "$r$ constant inside, at $0.5$, $1$ and $1.5\\,a$")
+    v.legend("t", "$ct$ constant, every $3\\,a$ and at $\\pm 12\\,a$, one $t$ on both sides")
+    v.legend("surface", "the shell at rest, $\\rho = \\epsilon = a$")
+    v.legend("centre", "$r = 0$, a regular centre")
+    v.set(settings="$a = 1$, the unit of every length, $b = 0$, and $\\mu = a$.",
+          input="The balanced shell at rest at the isotropic radius $\\epsilon = a$, where the clocks of the flat "
+                "interior run at half the rate of those far away.")
+    moment = slices.moments("charged_shell", "point")[0]
+    lo, hi = moment.reach("exterior_isotropic", "\\rho")
+    rho = lo + np.geomspace(1e-6, hi - lo, 200)
+    v.slice(moment, [held(0 * radial_in, radial_in), around(0 * rho, rho)])
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Hiscock
 
 HISCOCK_STEP = 0.002
@@ -18399,7 +18680,7 @@ DRAWN = {
     "einstein_cluster": einstein_cluster,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
-    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
+    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
@@ -21407,6 +21688,49 @@ CAPTIONS = {
         "$i^+$, and every one of them is spacelike. The lines bend where they cross the ingoing ray "
         "$v = 0.52\\,r_s$, the last to meet the shell, because $q$, chosen to make the centre and the singularity "
         "straight, has zero slope on one side of that ray and infinite slope on the other.",
+    ],
+    ("charged_shell", "interior"): [
+        "A spacetime in which a spherical shell of charged dust falls in from infinity, turns round, and leaves "
+        "into another exterior ($r_q = 0.48\\,r_s$, $\\mu = 0.2\\,r_s$), each point in the diagram a 2-sphere of "
+        "radius $r$. Inside the shell the metric is flat, placed by $p, q = \\arctan((cT \\mp r)/L)$ with "
+        "the length $L = 0.504\\,r_s$, which puts the centre on the straight line $X = 0$. Outside it the metric is "
+        "Reissner-Nordström's, and each light ray keeps the $p$ or the $q$ it has where it crosses the shell, so "
+        "the shell is one curve from both sides.",
+        "The event horizon forms at the centre at $cT = -1.17\\,r_s$ and meets the shell at $r_+$. The shell "
+        "crosses $r_-$, turns round at $R = 0.317\\,r_s$, and comes out through the $r_-$ and the $r_+$ of the "
+        "next exterior, a proper time $0.79\\,r_s/c$ after it went in through the first $r_+$. The coordinates "
+        "$T$ and $r$ cover the region inside the shell, from one $i^-$ to the other $i^+$.",
+    ],
+    ("charged_shell", "exterior"): [
+        "The same shell in Reissner-Nordström's static coordinates, which cover the three regions outside the shell "
+        "where $t$ is a time: the first exterior, the region inside $r_-$ where the shell turns, and the next "
+        "exterior. Each region has a $t$ of its own, which runs to infinity on the horizons that bound it. "
+        "Beyond the Cauchy horizon the same coordinates cover one region more, in which the lines of constant "
+        "$r$ close on the singularity.",
+    ],
+    ("charged_shell", "exterior_ingoing"): [
+        "The same shell in the ingoing coordinates $v$ and $r$, which follow it from $i^-$ through $r_+$ and "
+        "$r_-$ to the turn and back up to $r_-$, where $v \\to \\infty$. A line of constant $r$ between the "
+        "horizons starts on the shell and ends at $i^+$, and every one of them is spacelike. Light from the "
+        "whole future of the first exterior arrives along the Cauchy horizon, $q = \\pi/4$, which the shell "
+        "crosses on its way out.",
+    ],
+    ("charged_shell", "exterior_outgoing"): [
+        "The same shell in the outgoing coordinates $u$ and $r$, which begin on the inner horizon where the "
+        "shell went in, $u \\to -\\infty$, and follow it from the turn out through $r_-$ and $r_+$ to the $i^+$ of "
+        "the next exterior. Between those horizons the lines of constant $r$ run from that exterior's $i^-$ to "
+        "the shell, and $r$ grows along every future directed curve. An observer in the next exterior sees the "
+        "shell come out of a white hole.",
+    ],
+    ("charged_shell", "exterior_isotropic"): [
+        "A spacetime in which the balanced shell, $\\mu = r_q = r_s/2 = a$, stays at rest at the isotropic radius "
+        "$\\epsilon = a$, each point in the diagram a 2-sphere. The tortoise coordinate $x$ is $r/N$ inside "
+        "the shell, for the lapse $N = \\epsilon/(\\epsilon + a)$, and $\\rho + 2a\\ln(\\rho/a) - a^2/\\rho$ plus a "
+        "constant outside it. With $x_R = (\\epsilon + a)/N$ its value on the shell, "
+        "$p, q = \\arctan((ct \\mp x)/x_R)$ is Minkowski's triangle.",
+        "The shell is outside $r = a$, so the spacetime has no horizon and every ray from the centre reaches "
+        "$\\mathscr{I}^+$. As $\\epsilon \\to 0$ the lapse on the shell falls to zero and a ray takes ever longer "
+        "to cross the throat, which is Arnowitt, Deser, and Misner's point charge.",
     ],
     ("vaidya", "shell"): [
         "A spacetime into which a spherical shell of null dust of mass $M$ falls along $v = 0$, each point in the "
