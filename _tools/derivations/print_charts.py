@@ -2963,6 +2963,112 @@ def zipoy_voorhees_charts():
 CHARTS["zipoy_voorhees"] = zipoy_voorhees_charts
 
 
+# -- Bonnor's magnetic dipole ------------------------------------------------------------
+
+def bonnor_magnetic_dipole(system):
+    """Bonnor's magnetic dipole, the static solution of the Einstein-Maxwell equations he made
+    from Kerr's in 1966, in his own chart, where r and theta are Boyer and Lindquist's and the
+    metric is written in his four polynomials P, Q, Y and Z. Every value is factored and printed
+    in those names, with cos(theta) the one angle the polynomials are written in and each
+    numerator collected by its powers. bonnor_magnetic_dipole_check holds the chart to the
+    Einstein-Maxwell equations with the dipole's potential and to Zipoy and Voorhees's published
+    metric at b = 0, and bonnor_magnetic_dipole.md beside this file is the derivation, with the
+    two charts that are not published."""
+    if system == "spheroidal":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        parameters = ["m", "b", "P = r^2 - 2mr - b^2\\cos^2\\theta",
+                      "Q = \\left(r - m\\right)^2 - \\left(m^2 + b^2\\right)\\cos^2\\theta",
+                      "Y = r^2 - b^2\\cos^2\\theta", "Z = r^2 - 2mr - b^2"]
+
+        def line(c2):
+            return (f"ds^2 = -\\dfrac{{P^2}}{{Y^2}}{c2}dt^2 + \\dfrac{{P^2Y^2}}{{Q^3}}\\left(\\dfrac{{dr^2}}{{Z}} + d\\theta^2\\right)"
+                    " + \\dfrac{Y^2Z\\sin^2\\theta}{P^2}d\\phi^2")
+        probe = vm.Reader(coords, parameters, ())
+        r, th = probe.symbol["r"], probe.symbol["\\theta"]
+        m, b = probe.parameters["m"], probe.parameters["b"]
+        s, c = sp.sin(th), sp.cos(th)
+        named = [(sp.Symbol("BP"), r ** 2 - 2 * m * r - b ** 2 * c ** 2, "P"),
+                 (sp.Symbol("BQ"), (r - m) ** 2 - (m ** 2 + b ** 2) * c ** 2, "Q"),
+                 (sp.Symbol("BY"), r ** 2 - b ** 2 * c ** 2, "Y"),
+                 (sp.Symbol("BZ"), r ** 2 - 2 * m * r - b ** 2, "Z")]
+        factors = named_factors(named, [(r - b * c, r + b * c, named[2][0]), (1 + c, 1 - c, s ** 2)])
+
+        def pretty(value):
+            # sin^2 as 1 - cos^2, so that cos(theta) is the one angle every factor is written in.
+            def cos_only(e):
+                n = int(e.exp)
+                return s ** (n % 2) * (1 - c ** 2) ** (n // 2)
+            return factors(sp.sympify(value).replace(lambda e: e.is_Pow and e.base == s and e.exp.is_Integer, cos_only))
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in \\left(m + \\sqrt{m^2 + b^2},\\, \\infty\\right)",
+                   "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "Z = 0 \\;\\text{(the axis between the black holes, with the strut)}",
+                   "Z = 0,\\; \\theta = 0,\\, \\pi \\;\\text{(the two horizons)}"]
+        name = "Bonnor"
+        printer = {"lead": [r, m, b, c, s], "factors": [m, b, r] + [p for p, _, _ in named] + [c, s],
+                   "collect": lambda poly, pr: cp.collect_by(poly, [c], pr)}
+        metric = {("t", "t"): "-\\dfrac{P^2}{Y^2}", ("r", "r"): "\\dfrac{P^2Y^2}{Q^3Z}",
+                  ("\\theta", "\\theta"): "\\dfrac{P^2Y^2}{Q^3}", ("\\phi", "\\phi"): "\\dfrac{Y^2Z\\sin^2\\theta}{P^2}"}
+        inverse = {("t", "t"): "-\\dfrac{Y^2}{P^2}", ("r", "r"): "\\dfrac{Q^3Z}{P^2Y^2}",
+                   ("\\theta", "\\theta"): "\\dfrac{Q^3}{P^2Y^2}", ("\\phi", "\\phi"): "\\dfrac{P^2}{Y^2Z\\sin^2\\theta}"}
+    return {
+        "metric_id": "bonnor_magnetic_dipole",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {**printer, "overrides": {p: text for p, _, text in named}},
+        "pretty": pretty,
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": lambda chart: bonnor_magnetic_dipole_check(chart, system),
+    }
+
+
+def bonnor_magnetic_dipole_potential(chart):
+    """A_phi of the dipole in the chart x^0 = ct, in units of length: 2mbr sin^2(theta)/P."""
+    r, th = chart.symbols[1], chart.symbols[2]
+    m, b = chart.reader.parameters["m"], chart.reader.parameters["b"]
+    return 2 * m * b * r * sp.sin(th) ** 2 / chart.reader.parameters["P"]
+
+
+def bonnor_magnetic_dipole_check(chart, system):
+    """Each chart solves the Einstein-Maxwell equations, G_mn = 2(F_ma F_n^a - g_mn F^2/4) with
+    F = dA and A = A_phi dphi the dipole's potential, and Maxwell's equations; the Ricci scalar
+    vanishes; and at b = 0 Bonnor's chart is the published spherical chart of zipoy_voorhees at
+    q = 1, Darmois's solution."""
+    geo, X = chart.geo, chart.symbols
+    A = [0, 0, 0, bonnor_magnetic_dipole_potential(chart)]
+    F = sp.Matrix(4, 4, lambda i, j: sp.diff(A[j], X[i]) - sp.diff(A[i], X[j]))
+    up = geo.ginv * F * geo.ginv
+    square = sum(F[i, j] * up[i, j] for i in range(4) for j in range(4))
+    einstein = geo.einstein_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            stress = 2 * (sum(F[i, a] * F[j, c] * geo.ginv[a, c] for a in range(4) for c in range(4))
+                          - geo.g[i, j] * square / 4)
+            if vm.norm(einstein[i][j] - stress) != 0:
+                raise AssertionError(f"bonnor_magnetic_dipole: the {system} chart misses the Einstein-Maxwell "
+                                     f"equations in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    root = sp.sqrt(-geo.g.det())
+    for j in range(4):
+        if vm.norm(sum(sp.diff(root * up[i, j], X[i]) for i in range(4))) != 0:
+            raise AssertionError(f"bonnor_magnetic_dipole: the {system} chart misses Maxwell's equations")
+    if vm.norm(geo.ricci_scalar()) != 0:
+        raise AssertionError(f"bonnor_magnetic_dipole: the Ricci scalar of the {system} chart does not vanish")
+    zv = json.loads((METRICS / "zipoy_voorhees.json").read_text(encoding="utf-8"))
+    spherical = next(s for s in zv["coordinates"] if s["id"] == "spherical")
+    reader = vm.Reader(spherical["coords"], [p["symbol"] for p in spherical["parameters"]], ())
+    at = {reader.symbol[n]: chart.reader.symbol[n] for n in spherical["coords"]}
+    at.update({reader.parameters["m"]: chart.reader.parameters["m"], reader.parameters["q"]: 1})
+    b = chart.reader.parameters["b"]
+    for entry in spherical["metric_components"]:
+        i, j = (spherical["coords"].index(n) for n in entry["indices"])
+        if vm.norm(reader(entry["value"]).subs(at, simultaneous=True) - geo.g[i, j].subs(b, 0)) != 0:
+            raise AssertionError("bonnor_magnetic_dipole: at b = 0 the metric misses Zipoy and Voorhees's at q = 1 "
+                                 f"in slot {entry['indices']}")
+
+
+CHARTS["bonnor_magnetic_dipole"] = lambda: bonnor_magnetic_dipole("spheroidal")
+
+
 # -- A black hole threaded by a cosmic string ------------------------------------------
 
 def string_black_hole(system_id):
@@ -14778,7 +14884,7 @@ def misner_brill_lindquist(system_id):
     if system_id in ("cartesian", "charged"):
         coords = ["x", "y", "z"]
         domains = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)", "z \\in (-\\infty, \\infty)",
-                   "(x, y, z) \\neq \\mathbf{x}_1, \\mathbf{x}_2 \;\\text{(the far ends of the two throats)}"]
+                   "(x, y, z) \\neq \\mathbf{x}_1, \\mathbf{x}_2 \\;\\text{(the far ends of the two throats)}"]
         if system_id == "cartesian":
             name, parameters = "Brill-Lindquist", ["\\psi = \\psi(x,y,z)"]
             line = "ds^2 = \\psi^4\\left(" + TWO_HOLE_FLAT[system_id] + "\\right)"
@@ -14789,7 +14895,7 @@ def misner_brill_lindquist(system_id):
     elif system_id == "cylindrical":
         coords, name, parameters = ["\\rho", "\\phi", "z"], "Cylindrical", ["\\psi = \\psi(\\rho,z)"]
         domains = ["\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in (-\\infty, \\infty)",
-                   "(\\rho, z) \\neq (0, \\pm a) \;\\text{(the far ends of the two throats)}"]
+                   "(\\rho, z) \\neq (0, \\pm a) \\;\\text{(the far ends of the two throats)}"]
         line = "ds^2 = \\psi^4\\left(" + TWO_HOLE_FLAT[system_id] + "\\right)"
         spec["ricci_scalar"] = ("-\\dfrac{8\\left(\\rho\\,\\partial_\\rho^2\\psi + \\rho\\,\\partial_z^2\\psi"
                                 " + \\partial_\\rho\\psi\\right)}{\\psi^5\\,\\rho}")
@@ -14797,14 +14903,14 @@ def misner_brill_lindquist(system_id):
         coords, name = ["\\mu", "\\eta", "\\phi"], "Misner Bispherical"
         parameters = ["a", "\\Psi = \\Psi(\\mu,\\eta)"]
         domains = ["\\mu \\in (-\\infty, \\infty)", "\\eta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
-                   "(\\mu, \\eta) \\neq (0, 0) \;\\text{(spatial infinity)}"]
+                   "(\\mu, \\eta) \\neq (0, 0) \\;\\text{(spatial infinity)}"]
         line = "ds^2 = a^2\\Psi^4\\left(d\\mu^2 + d\\eta^2 + \\sin^2\\eta\\,d\\phi^2\\right)"
         spec["ricci_scalar"] = ("-\\dfrac{2\\left(4\\partial_\\mu^2\\Psi + 4\\partial_\\eta^2\\Psi"
                                 " + 4\\cot\\eta\\,\\partial_\\eta\\Psi - \\Psi\\right)}{a^2\\,\\Psi^5}")
     else:
         coords, name, parameters = ["r", "\\theta", "\\phi"], "One Hole", ["r_s"]
         domains = ["r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
-                   "r = r_s/4 \;\\text{(the throat)}"]
+                   "r = r_s/4 \\;\\text{(the throat)}"]
         line = ("ds^2 = \\left(1 + \\dfrac{r_s}{4r}\\right)^4\\left(dr^2 + r^2\\left(d\\theta^2"
                 " + \\sin^2\\theta\\,d\\phi^2\\right)\\right)")
     probe = vm.Reader(coords, parameters, ())

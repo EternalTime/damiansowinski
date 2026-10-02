@@ -390,6 +390,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `weyl_midplane`, the triangle: the curve $p, q = \arctan(\mp\rho_*/\ell)$ over the same stretch; `weyl_axis_between`, the diamond of the strut: its centre.
 - `weyl_axis_outside`: nothing, since the plane does not meet the axis above the upper hole, which `HIDDEN` records.
 
+### Bonnor's magnetic dipole
+
+- The embedding is one moment: the equatorial plane at $t = 0$, from the strut at $r = 4\,m$ to $10\,m$.
+- `spheroidal/equator`, the plane of $t$ and $r$: the line $ct = 0$ from $r = 4\,m$ to the edge of the box at $8\,m$.
+- `spheroidal/strut`, the plane of $t$ and $\theta$: the one event $t = 0$, $\theta = \pi/2$, where the plane meets the axis between the holes, the tip of the cone.
+- `spheroidal_equator`, the triangle: the curve $p, q = \arctan(\mp r_*/\ell)$ over the same stretch; `spheroidal_strut`, the diamond of the strut: its centre.
+- `spheroidal/axis` and `spheroidal_axis`: nothing, since the plane does not meet the axis beyond a hole, which `HIDDEN` records.
+
 ### Zipoy-Voorhees
 
 - The embedding is two moments of two spacetimes: the equatorial plane at $t = 0$ in the spherical chart for the oblate $q = 1$, from $r = 2.5161\,m$ to $6\,m$, and for the prolate $q = -1/2$, from $r = 2.0020\,m$ to $6\,m$.

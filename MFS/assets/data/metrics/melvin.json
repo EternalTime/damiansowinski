@@ -61,6 +61,11 @@
       "id": "boson_star",
       "kind": "family",
       "text": "Wheeler's geon carried from light to a scalar field with mass, where it makes a star: a ball of field held together by its own gravity, which Kaup named a Klein-Gordon geon [kaup1968]."
+    },
+    {
+      "id": "bonnor_magnetic_dipole",
+      "kind": "programme",
+      "text": "Bonnor's magnetic dipole of 1966, a pair of black holes with opposite magnetic charges. Melvin's field along the axis of the pair pulls the two apart and takes the place of the strut between them [emparan2000]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "bertotti1959",
     "robinson1959",
     "bonnor1969light",
-    "kaup1968"
+    "kaup1968",
+    "emparan2000"
   ],
   "coordinates": [
     {

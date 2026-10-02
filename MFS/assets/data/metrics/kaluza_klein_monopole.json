@@ -77,6 +77,11 @@
       "id": "eguchi_hanson",
       "kind": "family",
       "text": "Gibbons and Hawking's space with two centres and no constant in its potential; the monopole's four dimensions of space have one centre and the constant $1$. It has no circle of fixed size far away, and its boundary there is a 3-sphere with opposite points identified [gibbonshawking1979, eguchihanson1979]."
+    },
+    {
+      "id": "bonnor_magnetic_dipole",
+      "kind": "family",
+      "text": "The static pair of opposite magnetic charges in Einstein-Maxwell theory. Gross and Perry's monopole and antimonopole pair is its counterpart in Kaluza-Klein theory [grossperry1983, emparan2000]."
     }
   ],
   "references": [
@@ -100,7 +105,8 @@
     "randall1999b",
     "horowitz2012",
     "gibbonshawking1979",
-    "eguchihanson1979"
+    "eguchihanson1979",
+    "emparan2000"
   ],
   "coordinates": [
     {

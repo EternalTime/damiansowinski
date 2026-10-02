@@ -134,6 +134,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "One moment of two charged black holes at rest, each with a throat like the one on the slice $t = 0$ of Reissner and Nordström's hole [brill1963]."
+    },
+    {
+      "id": "bonnor_magnetic_dipole",
+      "kind": "limit_source",
+      "text": "Two extremal Reissner-Nordström black holes of opposite magnetic charge on one axis. In the limit $b \\to \\infty$ the two are infinitely far apart and each is the extremal hole alone [emparan2000]."
     }
   ],
   "references": [
@@ -170,7 +175,8 @@
     "larsen2000",
     "breitenlohner1994",
     "volkov1999",
-    "brill1963"
+    "brill1963",
+    "emparan2000"
   ],
   "coordinates": [
     {

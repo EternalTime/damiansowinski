@@ -1,5 +1,5 @@
 {
-  "version": "c6af7b1b573c5774",
+  "version": "7fd02528fd4b3f0e",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -21766,6 +21766,142 @@
         "eprint": "1607.05251",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1607.05251"
+      }
+    },
+    "bonnor1966": {
+      "type": "article",
+      "fields": {
+        "title": "An exact solution of the {Einstein-Maxwell} equations referring to a magnetic dipole",
+        "author": "Bonnor, W. B.",
+        "journal": "Zeitschrift f\\\"ur Physik",
+        "volume": "190",
+        "number": "4",
+        "pages": "444--445",
+        "year": "1966",
+        "doi": "10.1007/BF01327262",
+        "url": "https://doi.org/10.1007/BF01327262"
+      }
+    },
+    "ward1975": {
+      "type": "article",
+      "fields": {
+        "title": "An analysis of {Bonnor}'s dipole solution",
+        "author": "Ward, J. P.",
+        "journal": "International Journal of Theoretical Physics",
+        "volume": "12",
+        "number": "5",
+        "pages": "273--285",
+        "year": "1975",
+        "doi": "10.1007/BF01810421",
+        "url": "https://doi.org/10.1007/BF01810421"
+      }
+    },
+    "chandrasekhar1989": {
+      "type": "article",
+      "fields": {
+        "title": "Two black holes attached to strings",
+        "author": "Chandrasekhar, Subrahmanyan and Xanthopoulos, Basilis C.",
+        "journal": "Proceedings of the Royal Society of London. A. Mathematical and Physical Sciences",
+        "volume": "423",
+        "number": "1865",
+        "pages": "387--400",
+        "year": "1989",
+        "doi": "10.1098/rspa.1989.0061",
+        "url": "https://doi.org/10.1098/rspa.1989.0061"
+      }
+    },
+    "davidson1994": {
+      "type": "article",
+      "fields": {
+        "title": "Finite magnetic flux tube as a black and white dihole",
+        "author": "Davidson, Aharon and Gedalin, Edward",
+        "journal": "Physics Letters B",
+        "volume": "339",
+        "number": "4",
+        "pages": "304--308",
+        "year": "1994",
+        "doi": "10.1016/0370-2693(94)90623-8",
+        "eprint": "gr-qc/9408006",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(94)90623-8"
+      }
+    },
+    "manko1994": {
+      "type": "article",
+      "fields": {
+        "title": "Metric of two arbitrary {Kerr-Newman} sources located on the symmetry axis",
+        "author": "Manko, V. S. and Mart\\'in, J. and Ruiz, E.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "35",
+        "number": "12",
+        "pages": "6644--6657",
+        "year": "1994",
+        "doi": "10.1063/1.530698",
+        "url": "https://doi.org/10.1063/1.530698"
+      }
+    },
+    "emparan2000": {
+      "type": "article",
+      "fields": {
+        "title": "Black diholes",
+        "author": "Emparan, Roberto",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "10",
+        "pages": "104009",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.104009",
+        "eprint": "hep-th/9906160",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.61.104009"
+      }
+    },
+    "emparanteo2001": {
+      "type": "article",
+      "fields": {
+        "title": "Macroscopic and microscopic description of black diholes",
+        "author": "Emparan, Roberto and Teo, Edward",
+        "journal": "Nuclear Physics B",
+        "volume": "610",
+        "number": "1-2",
+        "pages": "190--214",
+        "year": "2001",
+        "doi": "10.1016/S0550-3213(01)00319-4",
+        "eprint": "hep-th/0104206",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0550-3213(01)00319-4"
+      }
+    },
+    "bonnor2002": {
+      "type": "article",
+      "fields": {
+        "title": "The magnetic dipole interaction in {Einstein-Maxwell} theory",
+        "author": "Bonnor, W. B.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "19",
+        "number": "1",
+        "pages": "149--153",
+        "year": "2002",
+        "doi": "10.1088/0264-9381/19/1/309",
+        "eprint": "gr-qc/0203047",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/19/1/309"
+      }
+    },
+    "kovar2013": {
+      "type": "article",
+      "fields": {
+        "title": "Regular and chaotic orbits near a massive magnetic dipole",
+        "author": "Kovář, Jiří and Kopáček, Ondřej and Karas, Vladimír and Kojima, Yasufumi",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "30",
+        "number": "2",
+        "pages": "025010",
+        "year": "2013",
+        "doi": "10.1088/0264-9381/30/2/025010",
+        "eprint": "1301.1831",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/30/2/025010"
       }
     }
   }

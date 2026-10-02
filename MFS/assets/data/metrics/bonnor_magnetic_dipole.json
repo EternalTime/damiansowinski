@@ -1,0 +1,2315 @@
+{
+  "id": "bonnor_magnetic_dipole",
+  "name": "Bonnor's Magnetic Dipole",
+  "short_name": "Bonnor Dipole",
+  "description": "The static field of a mass with a magnetic dipole moment, the solution of the Einstein-Maxwell equations William Bonnor found in 1966. Roberto Emparan showed in 2000 that its two poles are extremal black holes with opposite magnetic charges, held apart by a strut on the axis between them.",
+  "tags": [
+    "electrovacuum",
+    "Einstein-Maxwell",
+    "electromagnetic field",
+    "magnetic field",
+    "magnetic dipole",
+    "static",
+    "stationary",
+    "axisymmetric",
+    "black hole",
+    "charged black hole",
+    "multiple black holes",
+    "extremal",
+    "degenerate horizon",
+    "horizon",
+    "event horizon",
+    "conical singularity",
+    "mass",
+    "quadrupole",
+    "asymptotically flat",
+    "Petrov type I",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The parameter $m$ is a length, and the mass $M$ has $GM/c^2 = 2m$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "What does gravity make of a bar magnet, a body with a mass, a north pole, and a south pole? An exact answer came from William Bonnor in 1966, a static solution of the Einstein-Maxwell equations with an axis of symmetry, set out in two pages [bonnor1966]. Seen from far away it is a body of mass $2m$ with a magnetic dipole moment $2mb$, in units with $G = c = 1$, and with $m = 0$ it is flat space [emparan2000]. Bonnor made it with a rule that turns a stationary vacuum solution into a static one with a magnetic field, the twist of the spinning source traded for the magnetic potential [bonnor2002]. Kerr's black hole is what goes into the rule, and the dipole keeps Kerr's two functions with the sign of $a^2$ reversed, $r^2 - 2mr - b^2$ and $r^2 - b^2\\cos^2\\theta$ [davidson1994, emparanteo2001].¶With $b = 0$ the dipole moment vanishes, and the mass that remains has higher multipoles and a naked singularity, so Schwarzschild's black hole is no member of the family [emparan2000]. The quadrupole moment of the mass is $2m(b^2 - m^2)$, fixed by the mass and the dipole moment, and it changes sign at $b = m$ [kovar2013]. In J. P. Ward's analysis of 1975 the source is a pair of magnetic poles of opposite sign that share the mass equally and stand a coordinate distance $2b$ apart [ward1975, kovar2013]. Bonnor saw that his metric is singular on the surface $r = r_+ = m + \\sqrt{m^2 + b^2}$, where $r^2 - 2mr - b^2$ vanishes [emparan2000]. Where does that surface lie?¶Roberto Emparan's answer of 2000 is that the surface is a stretch of the axis itself: the rotations about the axis leave every point of $r = r_+$ where it is, and $\\theta$ runs along the stretch from one pole to the other [emparan2000]. A small circle around that stretch is too long for its radius, by the factor $(1 + m^2/b^2)^2$ [emparan2000]. The extra angle is a strut, a rod under pressure that keeps the two poles from falling together [emparan2000]. The period of $\\phi$ can be chosen to make the stretch smooth, and then angle is missing around the axis beyond each pole, as around a cosmic string that pulls the pole outward with tension $\\tfrac{1}{4}\\left(1 - b^4/(m^2 + b^2)^2\\right)$ [emparan2000]. For $b$ much larger than $m$ the tension is $m^2/2b^2$, the inverse square law for two poles a distance of order $b$ apart [emparan2000].¶Close to either end of the stretch the geometry is the throat of an extremal Reissner-Nordström black hole, with a horizon drawn out along the axis into a prolate spheroid [emparan2000]. Each pole is therefore a black hole, the two carry the magnetic charges $\\pm mr_+/b$, and Emparan named the pair a dihole [emparan2000, emparanteo2001]. The stretch between the holes is infinitely long because each throat is [emparan2000]. The horizons, he wrote, had \"gone unnoticed in all previous literature\" [emparan2000]. The same spacetime had turned up in 1989 in other coordinates, in the hands of Subrahmanyan Chandrasekhar and Basilis Xanthopoulos, as two black holes of equal mass and opposite charge with a string along the axis that \"provides support for the black holes\", and neither of them recognised Bonnor's dipole in it [chandrasekhar1989, emparanteo2001].¶Can the strut be taken away? Two holes with charges of the same sign can stand in balance, their gravity pulling and their charges pushing, as in the solutions of Majumdar and Papapetrou, and between opposite charges both forces pull [emparan2000]. The push has to come from outside, and Emparan supplied it with a Harrison transformation, which sets the dihole in a magnetic field along its axis that far away is Melvin's magnetic universe [emparan2000]. Frederick Ernst had removed the conical singularity of the C-metric the same way in 1976 [ernst1976, emparan2000]. With the field set to $B = 2m/(r_+ + b)^2$ the whole axis is smooth, each horizon is a round sphere, and each throat is exactly Bertotti and Robinson's [emparan2000]. Emparan expected the balance to be unstable, with the dihole sitting on top of the barrier under which a magnetic field creates pairs of black holes [emparan2000].¶In 2001 Emparan and Edward Teo drew a pair of black holes of equal mass and opposite charge, with horizons that are not degenerate, out of the general solution of Vladimir Manko, Jesús Martín, and Eduardo Ruiz, and checked that Bonnor's dipole is the limit in which the horizons become degenerate [emparanteo2001, manko1994]. A dilaton joined the dipole in 1994 in the solution of Aharon Davidson and Edward Gedalin, which in Kaluza-Klein theory is the monopole and antimonopole pair of David Gross and Malcolm Perry [davidson1994, grossperry1983, emparan2000]. Test particles sent through the dipole by Jiří Kovář, Ondřej Kopáček, Vladimír Karas, and Yasufumi Kojima in 2013 can circle on stable orbits that hover off the equatorial plane, some of them geodesics [kovar2013]. Their motion is not integrable, and it turns chaotic as the energy of the particle is raised [kovar2013].",
+  "related": [
+    {
+      "id": "zipoy_voorhees",
+      "kind": "special_case",
+      "text": "The dipole with $b = 0$, which is Zipoy and Voorhees's deformed mass at $q = 1$: a mass with a quadrupole and no magnet [emparan2000]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "The spinning black hole Bonnor's rule starts from. The rule trades Kerr's twist for a magnetic potential, and the dipole keeps Kerr's two functions with $a^2$ turned into $-b^2$ [bonnor2002, davidson1994]."
+    },
+    {
+      "id": "rn_metric",
+      "kind": "limit",
+      "text": "Each pole on its own. In the limit $b \\to \\infty$ the poles are infinitely far apart, and the neighbourhood of each is an extremal Reissner-Nordström black hole [emparan2000]."
+    },
+    {
+      "id": "majumdar_papapetrou",
+      "kind": "family",
+      "text": "Extremal black holes with charges of one sign, which balance with no strut. Give two of them opposite charges and both forces pull, which is Bonnor's dipole [emparan2000]."
+    },
+    {
+      "id": "melvin",
+      "kind": "programme",
+      "text": "The magnetic universe, which Bonnor found in 1954. Set in its field by a Harrison transformation, the dipole loses its strut at one field strength [bonnor1954, emparan2000]."
+    },
+    {
+      "id": "bertotti_robinson",
+      "kind": "family",
+      "text": "The throat of an extremal charged black hole. Each pole of the dipole opens into such a throat, and with the pair balanced by an outside field it is exactly Bertotti and Robinson's [emparan2000]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "family",
+      "text": "Two black holes that accelerate apart. The dipole is the same pair at rest, and Emparan placed it on top of the barrier under which a magnetic field creates the accelerating pair [emparan2000]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "A mass with no multipole beyond the monopole. The dipole with $b = 0$ keeps a quadrupole and a naked singularity, so it is not Schwarzschild's black hole [emparan2000]."
+    },
+    {
+      "id": "curzon_chazy",
+      "kind": "family",
+      "text": "The Weyl field of a point mass. In Weyl's coordinates each black hole of the dipole is a single point of the axis as well [emparanteo2001]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "Gross and Perry's monopole of Kaluza-Klein theory. Their monopole and antimonopole pair is the dipole's counterpart in that theory [grossperry1983, emparan2000]."
+    }
+  ],
+  "references": [
+    "bonnor1966",
+    "emparan2000",
+    "bonnor2002",
+    "davidson1994",
+    "emparanteo2001",
+    "kovar2013",
+    "ward1975",
+    "chandrasekhar1989",
+    "ernst1976",
+    "manko1994",
+    "grossperry1983",
+    "bonnor1954"
+  ],
+  "coordinates": [
+    {
+      "id": "spheroidal",
+      "name": "Bonnor",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in \\left(m + \\sqrt{m^2 + b^2},\\, \\infty\\right)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "Z = 0 \\;\\text{(the axis between the black holes, with the strut)}",
+        "Z = 0,\\; \\theta = 0,\\, \\pi \\;\\text{(the two horizons)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Half the mass as a length: the mass $M$ at spatial infinity has $GM/c^2 = 2m$"
+        },
+        {
+          "symbol": "b",
+          "description": "Dipole length, $b > 0$: the magnetic dipole moment is $2mb$ in units with $G = c = 1$, and the two black holes carry the magnetic charges $\\pm m\\left(m + \\sqrt{m^2 + b^2}\\right)/b$"
+        },
+        {
+          "symbol": "P = r^2 - 2mr - b^2\\cos^2\\theta",
+          "description": "Bonnor's first polynomial, an area, equal to $Z + b^2\\sin^2\\theta$; the magnetic potential is $A_\\phi = 2mbr\\sin^2\\theta/P$ in units with $G = c = 1$"
+        },
+        {
+          "symbol": "Q = \\left(r - m\\right)^2 - \\left(m^2 + b^2\\right)\\cos^2\\theta",
+          "description": "Bonnor's second polynomial, an area, equal to $Z + \\left(m^2 + b^2\\right)\\sin^2\\theta$"
+        },
+        {
+          "symbol": "Y = r^2 - b^2\\cos^2\\theta",
+          "description": "Bonnor's third polynomial, an area, equal to $P + 2mr$"
+        },
+        {
+          "symbol": "Z = r^2 - 2mr - b^2",
+          "description": "Bonnor's fourth polynomial, an area, which vanishes at $r = m + \\sqrt{m^2 + b^2}$, the axis between the two black holes"
+        }
+      ],
+      "convention": "We use Bonnor's coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ a length, in which Weyl's canonical coordinates are $\\rho = \\sqrt{Z}\\sin\\theta$ and $z = (r - m)\\cos\\theta$, and write $P$, $Q$, $Y$, and $Z$ for his four polynomials in $r$ and $\\cos\\theta$. The length $b$ is the ratio of the magnetic dipole moment to the mass. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -\\dfrac{P^2}{Y^2}c^2dt^2 + \\dfrac{P^2Y^2}{Q^3}\\left(\\dfrac{dr^2}{Z} + d\\theta^2\\right) + \\dfrac{Y^2Z\\sin^2\\theta}{P^2}d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{P^2}{Y^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{P^2Y^2}{Q^3Z}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{P^2Y^2}{Q^3}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{Y^2Z\\sin^2\\theta}{P^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{Y^2}{P^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{Q^3Z}{P^2Y^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{Q^3}{P^2Y^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{P^2}{Y^2Z\\sin^2\\theta}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(b^2\\cos^2\\theta + r^2\\right)}{P\\,Y}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\left(b^2\\cos^2\\theta + r^2\\right)}{P\\,Y}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4m\\,b^2\\,r\\sin\\theta\\cos\\theta}{P\\,Y}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{4m\\,b^2\\,r\\sin\\theta\\cos\\theta}{P\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\,Q^3\\,Z\\left(b^2\\cos^2\\theta + r^2\\right)}{P\\,Y^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{b^4\\left(r - m\\right)\\left(m^2 + b^2\\right)\\cos^6\\theta + b^2\\left(2m^2\\,r^3 - 2b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 + 2m^4\\,r - 11m^2\\,b^2\\,r - b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^4\\theta - \\left(3m^2\\,r^5 - b^2\\,r^5 - 11m^3\\,r^4 + 3m\\,b^2\\,r^4 + 10m^4\\,r^3 - 8m^2\\,b^2\\,r^3 - 2b^4\\,r^3 + 8m^3\\,b^2\\,r^2 + 4m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 2m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^2\\theta - r^2\\left(r - m\\right)\\left(2m\\,r^3 - 9m^2\\,r^2 + b^2\\,r^2 + 10m^3\\,r - 4m\\,b^2\\,r + 6m^2\\,b^2\\right)}{P\\,Q\\,Y\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(b^4\\left(m^2 + b^2\\right)\\cos^4\\theta + 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P\\,Q\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(b^4\\left(m^2 + b^2\\right)\\cos^4\\theta + 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P\\,Q\\,Y}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(b^4\\left(m^2 + b^2\\right)\\cos^4\\theta + 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P\\,Q\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{Z\\left(b^2\\left(4m^2\\,r + b^2\\,r - 2m^3 + m\\,b^2\\right)\\cos^4\\theta - 2\\left(2m^2\\,r^3 + b^2\\,r^3 - 3m^3\\,r^2 - 2m\\,b^2\\,r^2 + m^2\\,b^2\\,r - m^3\\,b^2\\right)\\cos^2\\theta + r^2\\left(r - m\\right)\\left(r^2 - 4m\\,r + 6m^2\\right)\\right)}{P\\,Q\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{Q^3\\,Z\\left(b^4\\left(r - m\\right)\\cos^4\\theta - 2b^2\\left(r^3 - m\\,r^2 - m^2\\,r - m\\,b^2\\right)\\cos^2\\theta + r^2\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^5\\,Y}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4m\\,b^2\\,r\\,Q^3\\sin\\theta\\cos\\theta}{P\\,Y^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right) - 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - b^4\\left(m^2 + b^2\\right)\\cos^4\\theta\\right)\\sin\\theta\\cos\\theta}{P\\,Q\\,Y\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{b^2\\left(4m^2\\,r + b^2\\,r - 2m^3 + m\\,b^2\\right)\\cos^4\\theta - 2\\left(2m^2\\,r^3 + b^2\\,r^3 - 3m^3\\,r^2 - 2m\\,b^2\\,r^2 + m^2\\,b^2\\,r - m^3\\,b^2\\right)\\cos^2\\theta + r^2\\left(r - m\\right)\\left(r^2 - 4m\\,r + 6m^2\\right)}{P\\,Q\\,Y}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{b^2\\left(4m^2\\,r + b^2\\,r - 2m^3 + m\\,b^2\\right)\\cos^4\\theta - 2\\left(2m^2\\,r^3 + b^2\\,r^3 - 3m^3\\,r^2 - 2m\\,b^2\\,r^2 + m^2\\,b^2\\,r - m^3\\,b^2\\right)\\cos^2\\theta + r^2\\left(r - m\\right)\\left(r^2 - 4m\\,r + 6m^2\\right)}{P\\,Q\\,Y}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{Q^3\\,Z\\left(b^4\\cos^4\\theta - 2b^2\\,r\\left(r - 3m\\right)\\cos^2\\theta + r\\left(r^3 - 2m\\,r^2 - 4m\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^5\\,Y}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{b^4\\left(r - m\\right)\\cos^4\\theta - 2b^2\\left(r^3 - m\\,r^2 - m^2\\,r - m\\,b^2\\right)\\cos^2\\theta + r^2\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)}{P\\,Y\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{b^4\\left(r - m\\right)\\cos^4\\theta - 2b^2\\left(r^3 - m\\,r^2 - m^2\\,r - m\\,b^2\\right)\\cos^2\\theta + r^2\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)}{P\\,Y\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(b^4\\cos^4\\theta - 2b^2\\,r\\left(r - 3m\\right)\\cos^2\\theta + r\\left(r^3 - 2m\\,r^2 - 4m\\,b^2\\right)\\right)\\cot\\theta}{P\\,Y}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(b^4\\cos^4\\theta - 2b^2\\,r\\left(r - 3m\\right)\\cos^2\\theta + r\\left(r^3 - 2m\\,r^2 - 4m\\,b^2\\right)\\right)\\cot\\theta}{P\\,Y}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,P\\left(b^2\\cos^2\\theta + r^2\\right)}{Y^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\,P\\left(b^2\\cos^2\\theta + r^2\\right)}{Y^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\,P\\left(b^2\\cos^2\\theta + r^2\\right)}{Y^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4m\\,b^2\\,r\\,P\\sin\\theta\\cos\\theta}{Y^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{4m\\,b^2\\,r\\,P\\sin\\theta\\cos\\theta}{Y^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4m\\,b^2\\,r\\,P\\sin\\theta\\cos\\theta}{Y^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{P\\,Y\\left(b^4\\left(r - m\\right)\\left(m^2 + b^2\\right)\\cos^6\\theta + b^2\\left(2m^2\\,r^3 - 2b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 + 2m^4\\,r - 11m^2\\,b^2\\,r - b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^4\\theta - \\left(3m^2\\,r^5 - b^2\\,r^5 - 11m^3\\,r^4 + 3m\\,b^2\\,r^4 + 10m^4\\,r^3 - 8m^2\\,b^2\\,r^3 - 2b^4\\,r^3 + 8m^3\\,b^2\\,r^2 + 4m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 2m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^2\\theta - r^2\\left(r - m\\right)\\left(2m\\,r^3 - 9m^2\\,r^2 + b^2\\,r^2 + 10m^3\\,r - 4m\\,b^2\\,r + 6m^2\\,b^2\\right)\\right)}{Q^4\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{P\\,Y\\left(b^4\\left(m^2 + b^2\\right)\\cos^4\\theta + 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{Q^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{P\\,Y\\left(b^4\\left(m^2 + b^2\\right)\\cos^4\\theta + 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{Q^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{P\\,Y\\left(b^4\\left(m^2 + b^2\\right)\\cos^4\\theta + 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{Q^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{P\\,Y\\left(b^2\\left(4m^2\\,r + b^2\\,r - 2m^3 + m\\,b^2\\right)\\cos^4\\theta - 2\\left(2m^2\\,r^3 + b^2\\,r^3 - 3m^3\\,r^2 - 2m\\,b^2\\,r^2 + m^2\\,b^2\\,r - m^3\\,b^2\\right)\\cos^2\\theta + r^2\\left(r - m\\right)\\left(r^2 - 4m\\,r + 6m^2\\right)\\right)}{Q^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{P\\,Y\\left(b^2\\left(4m^2\\,r + b^2\\,r - 2m^3 + m\\,b^2\\right)\\cos^4\\theta - 2\\left(2m^2\\,r^3 + b^2\\,r^3 - 3m^3\\,r^2 - 2m\\,b^2\\,r^2 + m^2\\,b^2\\,r - m^3\\,b^2\\right)\\cos^2\\theta + r^2\\left(r - m\\right)\\left(r^2 - 4m\\,r + 6m^2\\right)\\right)}{Q^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{P\\,Y\\left(b^2\\left(4m^2\\,r + b^2\\,r - 2m^3 + m\\,b^2\\right)\\cos^4\\theta - 2\\left(2m^2\\,r^3 + b^2\\,r^3 - 3m^3\\,r^2 - 2m\\,b^2\\,r^2 + m^2\\,b^2\\,r - m^3\\,b^2\\right)\\cos^2\\theta + r^2\\left(r - m\\right)\\left(r^2 - 4m\\,r + 6m^2\\right)\\right)}{Q^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{Y\\left(b^4\\left(r - m\\right)\\cos^4\\theta - 2b^2\\left(r^3 - m\\,r^2 - m^2\\,r - m\\,b^2\\right)\\cos^2\\theta + r^2\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{Y\\left(b^4\\left(r - m\\right)\\cos^4\\theta - 2b^2\\left(r^3 - m\\,r^2 - m^2\\,r - m\\,b^2\\right)\\cos^2\\theta + r^2\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{Y\\left(b^4\\left(r - m\\right)\\cos^4\\theta - 2b^2\\left(r^3 - m\\,r^2 - m^2\\,r - m\\,b^2\\right)\\cos^2\\theta + r^2\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{P\\,Y\\left(b^4\\left(m^2 + b^2\\right)\\cos^4\\theta + 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{Q^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{Y\\,Z\\left(b^4\\cos^4\\theta - 2b^2\\,r\\left(r - 3m\\right)\\cos^2\\theta + r\\left(r^3 - 2m\\,r^2 - 4m\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{Y\\,Z\\left(b^4\\cos^4\\theta - 2b^2\\,r\\left(r - 3m\\right)\\cos^2\\theta + r\\left(r^3 - 2m\\,r^2 - 4m\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{Y\\,Z\\left(b^4\\cos^4\\theta - 2b^2\\,r\\left(r - 3m\\right)\\cos^2\\theta + r\\left(r^3 - 2m\\,r^2 - 4m\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 37m^3\\,r^4 - 35m\\,b^2\\,r^4 + 32m^4\\,r^3 + 33m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 9m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 25m\\,b^2\\,r^4 + 18m^4\\,r^3 - 87m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 111m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 32m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 37m^3\\,r^4 - 35m\\,b^2\\,r^4 + 32m^4\\,r^3 + 33m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 9m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 25m\\,b^2\\,r^4 + 18m^4\\,r^3 - 87m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 111m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 32m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\left(6b^6\\,r\\left(m^2 + b^2\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 6m^3\\,r^2 + 27m\\,b^2\\,r^2 + 4m^4\\,r - 26m^2\\,b^2\\,r - 9b^4\\,r + 2m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 24m^3\\,r^4 + 5m\\,b^2\\,r^4 + 8m^4\\,r^3 - 28m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 22m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 15m\\,b^2\\,r^4 + 12m^4\\,r^3 - 42m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 50m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\left(6b^6\\,r\\left(m^2 + b^2\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 6m^3\\,r^2 + 27m\\,b^2\\,r^2 + 4m^4\\,r - 26m^2\\,b^2\\,r - 9b^4\\,r + 2m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 24m^3\\,r^4 + 5m\\,b^2\\,r^4 + 8m^4\\,r^3 - 28m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 22m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 15m\\,b^2\\,r^4 + 12m^4\\,r^3 - 42m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 50m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 37m^3\\,r^4 - 35m\\,b^2\\,r^4 + 32m^4\\,r^3 + 33m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 9m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 25m\\,b^2\\,r^4 + 18m^4\\,r^3 - 87m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 111m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 32m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 37m^3\\,r^4 - 35m\\,b^2\\,r^4 + 32m^4\\,r^3 + 33m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 9m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 25m\\,b^2\\,r^4 + 18m^4\\,r^3 - 87m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 111m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 32m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\,Z\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\,Z\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\,Z\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - 2m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 14m^3\\,r^2 + 23m\\,b^2\\,r^2 + 4m^4\\,r - 34m^2\\,b^2\\,r - 9b^4\\,r + 10m^3\\,b^2 + 3m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 20m^3\\,r^4 + m\\,b^2\\,r^4 + 8m^4\\,r^3 - 12m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 6m^3\\,b^2\\,r^2 + 37m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 24m^2\\,b^4\\,r + 6m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 11m\\,b^2\\,r^4 + 12m^4\\,r^3 - 34m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 42m^3\\,b^2\\,r^2 - 25m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 6m\\,b^2\\,r - 6m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\,Z\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - 2m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 14m^3\\,r^2 + 23m\\,b^2\\,r^2 + 4m^4\\,r - 34m^2\\,b^2\\,r - 9b^4\\,r + 10m^3\\,b^2 + 3m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 20m^3\\,r^4 + m\\,b^2\\,r^4 + 8m^4\\,r^3 - 12m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 6m^3\\,b^2\\,r^2 + 37m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 24m^2\\,b^4\\,r + 6m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 11m\\,b^2\\,r^4 + 12m^4\\,r^3 - 34m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 42m^3\\,b^2\\,r^2 - 25m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 6m\\,b^2\\,r - 6m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\,Z^2\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\,Z^2\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\left(6b^6\\,r\\left(m^2 + b^2\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 6m^3\\,r^2 + 27m\\,b^2\\,r^2 + 4m^4\\,r - 26m^2\\,b^2\\,r - 9b^4\\,r + 2m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 24m^3\\,r^4 + 5m\\,b^2\\,r^4 + 8m^4\\,r^3 - 28m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 22m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 15m\\,b^2\\,r^4 + 12m^4\\,r^3 - 42m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 50m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\left(6b^6\\,r\\left(m^2 + b^2\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 6m^3\\,r^2 + 27m\\,b^2\\,r^2 + 4m^4\\,r - 26m^2\\,b^2\\,r - 9b^4\\,r + 2m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 24m^3\\,r^4 + 5m\\,b^2\\,r^4 + 8m^4\\,r^3 - 28m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 22m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 15m\\,b^2\\,r^4 + 12m^4\\,r^3 - 42m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 50m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\,Z\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\,Z\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 21m^3\\,r^4 - 19m\\,b^2\\,r^4 + m^2\\,b^2\\,r^3 - 15b^4\\,r^3 - 7m^3\\,b^2\\,r^2 + 25m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 9m\\,b^2\\,r^4 + 18m^4\\,r^3 - 23m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 31m^3\\,b^2\\,r^2 - 13m\\,b^4\\,r^2 + 28m^2\\,b^4\\,r - 8m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 21m^3\\,r^4 - 19m\\,b^2\\,r^4 + m^2\\,b^2\\,r^3 - 15b^4\\,r^3 - 7m^3\\,b^2\\,r^2 + 25m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 9m\\,b^2\\,r^4 + 18m^4\\,r^3 - 23m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 31m^3\\,b^2\\,r^2 - 13m\\,b^4\\,r^2 + 28m^2\\,b^4\\,r - 8m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Q^3\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\,Q^3\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - 2m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 14m^3\\,r^2 + 23m\\,b^2\\,r^2 + 4m^4\\,r - 34m^2\\,b^2\\,r - 9b^4\\,r + 10m^3\\,b^2 + 3m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 20m^3\\,r^4 + m\\,b^2\\,r^4 + 8m^4\\,r^3 - 12m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 6m^3\\,b^2\\,r^2 + 37m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 24m^2\\,b^4\\,r + 6m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 11m\\,b^2\\,r^4 + 12m^4\\,r^3 - 34m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 42m^3\\,b^2\\,r^2 - 25m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 6m\\,b^2\\,r - 6m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - 2m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 14m^3\\,r^2 + 23m\\,b^2\\,r^2 + 4m^4\\,r - 34m^2\\,b^2\\,r - 9b^4\\,r + 10m^3\\,b^2 + 3m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 20m^3\\,r^4 + m\\,b^2\\,r^4 + 8m^4\\,r^3 - 12m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 6m^3\\,b^2\\,r^2 + 37m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 24m^2\\,b^4\\,r + 6m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 11m\\,b^2\\,r^4 + 12m^4\\,r^3 - 34m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 42m^3\\,b^2\\,r^2 - 25m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 6m\\,b^2\\,r - 6m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 21m^3\\,r^4 - 19m\\,b^2\\,r^4 + m^2\\,b^2\\,r^3 - 15b^4\\,r^3 - 7m^3\\,b^2\\,r^2 + 25m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 9m\\,b^2\\,r^4 + 18m^4\\,r^3 - 23m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 31m^3\\,b^2\\,r^2 - 13m\\,b^4\\,r^2 + 28m^2\\,b^4\\,r - 8m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 21m^3\\,r^4 - 19m\\,b^2\\,r^4 + m^2\\,b^2\\,r^3 - 15b^4\\,r^3 - 7m^3\\,b^2\\,r^2 + 25m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 9m\\,b^2\\,r^4 + 18m^4\\,r^3 - 23m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 31m^3\\,b^2\\,r^2 - 13m\\,b^4\\,r^2 + 28m^2\\,b^4\\,r - 8m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 37m^3\\,r^4 - 35m\\,b^2\\,r^4 + 32m^4\\,r^3 + 33m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 9m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 25m\\,b^2\\,r^4 + 18m^4\\,r^3 - 87m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 111m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 32m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 37m^3\\,r^4 - 35m\\,b^2\\,r^4 + 32m^4\\,r^3 + 33m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 9m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 25m\\,b^2\\,r^4 + 18m^4\\,r^3 - 87m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 111m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 32m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 37m^3\\,r^4 - 35m\\,b^2\\,r^4 + 32m^4\\,r^3 + 33m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 9m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 25m\\,b^2\\,r^4 + 18m^4\\,r^3 - 87m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 111m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 32m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 37m^3\\,r^4 - 35m\\,b^2\\,r^4 + 32m^4\\,r^3 + 33m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 9m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 25m\\,b^2\\,r^4 + 18m^4\\,r^3 - 87m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 111m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 32m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 40m\\,b^2\\,r^2 - 62m^2\\,b^2\\,r + 28m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 28m^3\\,r^2 - 24m\\,b^2\\,r^2 - 8m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 2m^3\\,r + 16m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(6b^6\\,r\\left(m^2 + b^2\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 6m^3\\,r^2 + 27m\\,b^2\\,r^2 + 4m^4\\,r - 26m^2\\,b^2\\,r - 9b^4\\,r + 2m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 24m^3\\,r^4 + 5m\\,b^2\\,r^4 + 8m^4\\,r^3 - 28m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 22m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 15m\\,b^2\\,r^4 + 12m^4\\,r^3 - 42m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 50m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(6b^6\\,r\\left(m^2 + b^2\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 6m^3\\,r^2 + 27m\\,b^2\\,r^2 + 4m^4\\,r - 26m^2\\,b^2\\,r - 9b^4\\,r + 2m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 24m^3\\,r^4 + 5m\\,b^2\\,r^4 + 8m^4\\,r^3 - 28m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 22m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 15m\\,b^2\\,r^4 + 12m^4\\,r^3 - 42m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 50m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\left(6b^6\\,r\\left(m^2 + b^2\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 6m^3\\,r^2 + 27m\\,b^2\\,r^2 + 4m^4\\,r - 26m^2\\,b^2\\,r - 9b^4\\,r + 2m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 24m^3\\,r^4 + 5m\\,b^2\\,r^4 + 8m^4\\,r^3 - 28m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 22m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 15m\\,b^2\\,r^4 + 12m^4\\,r^3 - 42m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 50m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\left(6b^6\\,r\\left(m^2 + b^2\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 6m^3\\,r^2 + 27m\\,b^2\\,r^2 + 4m^4\\,r - 26m^2\\,b^2\\,r - 9b^4\\,r + 2m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 24m^3\\,r^4 + 5m\\,b^2\\,r^4 + 8m^4\\,r^3 - 28m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 22m^3\\,b^2\\,r^2 + 41m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 15m\\,b^2\\,r^4 + 12m^4\\,r^3 - 42m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 50m^3\\,b^2\\,r^2 - 29m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 60m^2\\,b^4\\,r - 24m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{Q^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{Q^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{Q^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{Q^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - 2m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 14m^3\\,r^2 + 23m\\,b^2\\,r^2 + 4m^4\\,r - 34m^2\\,b^2\\,r - 9b^4\\,r + 10m^3\\,b^2 + 3m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 20m^3\\,r^4 + m\\,b^2\\,r^4 + 8m^4\\,r^3 - 12m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 6m^3\\,b^2\\,r^2 + 37m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 24m^2\\,b^4\\,r + 6m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 11m\\,b^2\\,r^4 + 12m^4\\,r^3 - 34m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 42m^3\\,b^2\\,r^2 - 25m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 6m\\,b^2\\,r - 6m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - 2m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 14m^3\\,r^2 + 23m\\,b^2\\,r^2 + 4m^4\\,r - 34m^2\\,b^2\\,r - 9b^4\\,r + 10m^3\\,b^2 + 3m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 20m^3\\,r^4 + m\\,b^2\\,r^4 + 8m^4\\,r^3 - 12m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 6m^3\\,b^2\\,r^2 + 37m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 24m^2\\,b^4\\,r + 6m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 11m\\,b^2\\,r^4 + 12m^4\\,r^3 - 34m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 42m^3\\,b^2\\,r^2 - 25m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 6m\\,b^2\\,r - 6m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - 2m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 14m^3\\,r^2 + 23m\\,b^2\\,r^2 + 4m^4\\,r - 34m^2\\,b^2\\,r - 9b^4\\,r + 10m^3\\,b^2 + 3m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 20m^3\\,r^4 + m\\,b^2\\,r^4 + 8m^4\\,r^3 - 12m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 6m^3\\,b^2\\,r^2 + 37m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 24m^2\\,b^4\\,r + 6m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 11m\\,b^2\\,r^4 + 12m^4\\,r^3 - 34m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 42m^3\\,b^2\\,r^2 - 25m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 6m\\,b^2\\,r - 6m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - 2m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 14m^3\\,r^2 + 23m\\,b^2\\,r^2 + 4m^4\\,r - 34m^2\\,b^2\\,r - 9b^4\\,r + 10m^3\\,b^2 + 3m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 20m^3\\,r^4 + m\\,b^2\\,r^4 + 8m^4\\,r^3 - 12m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 6m^3\\,b^2\\,r^2 + 37m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 24m^2\\,b^4\\,r + 6m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 11m\\,b^2\\,r^4 + 12m^4\\,r^3 - 34m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 42m^3\\,b^2\\,r^2 - 25m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 6m\\,b^2\\,r - 6m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,Z\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\,Z\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,Z\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,Z\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Z\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\,Z\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Z\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,Z\\left(r^3\\left(3m^2\\,r^3 - 9b^2\\,r^3 - 6m^3\\,r^2 + 32m\\,b^2\\,r^2 - 46m^2\\,b^2\\,r + 20m^3\\,b^2\\right) + b^2\\,r\\left(15m^2\\,r^3 + 15b^2\\,r^3 - 20m^3\\,r^2 - 24m\\,b^2\\,r^2 + 8m^2\\,b^2\\,r - 4m^3\\,b^2\\right)\\cos^2\\theta - b^4\\left(15m^2\\,r^2 + 3b^2\\,r^2 - 10m^3\\,r + 8m\\,b^2\\,r - 6m^2\\,b^2\\right)\\cos^4\\theta - 3b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 21m^3\\,r^4 - 19m\\,b^2\\,r^4 + m^2\\,b^2\\,r^3 - 15b^4\\,r^3 - 7m^3\\,b^2\\,r^2 + 25m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 9m\\,b^2\\,r^4 + 18m^4\\,r^3 - 23m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 31m^3\\,b^2\\,r^2 - 13m\\,b^4\\,r^2 + 28m^2\\,b^4\\,r - 8m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 21m^3\\,r^4 - 19m\\,b^2\\,r^4 + m^2\\,b^2\\,r^3 - 15b^4\\,r^3 - 7m^3\\,b^2\\,r^2 + 25m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 9m\\,b^2\\,r^4 + 18m^4\\,r^3 - 23m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 31m^3\\,b^2\\,r^2 - 13m\\,b^4\\,r^2 + 28m^2\\,b^4\\,r - 8m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 21m^3\\,r^4 - 19m\\,b^2\\,r^4 + m^2\\,b^2\\,r^3 - 15b^4\\,r^3 - 7m^3\\,b^2\\,r^2 + 25m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 9m\\,b^2\\,r^4 + 18m^4\\,r^3 - 23m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 31m^3\\,b^2\\,r^2 - 13m\\,b^4\\,r^2 + 28m^2\\,b^4\\,r - 8m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 21m^3\\,r^4 - 19m\\,b^2\\,r^4 + m^2\\,b^2\\,r^3 - 15b^4\\,r^3 - 7m^3\\,b^2\\,r^2 + 25m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 9m\\,b^2\\,r^4 + 18m^4\\,r^3 - 23m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 31m^3\\,b^2\\,r^2 - 13m\\,b^4\\,r^2 + 28m^2\\,b^4\\,r - 8m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\left(r^4 + r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\left(r^4 - r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^2\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\left(b^4\\cos^6\\theta + b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta + r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - r^4\\right)}{P^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\,Z\\left(r^4 + r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\left(b^4\\cos^6\\theta + b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - r^4\\right)}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4m^2\\,b^2\\,Q^3\\left(b^4\\cos^6\\theta + b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - r^4\\right)}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\left(r^4 - r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4m^2\\,b^2\\,Q^3\\left(r^4 - r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\,Q^3\\,Z\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\,Q^3\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^4\\,Y^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\left(r^4 + r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^6\\,Z\\left(r^4 - r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^6\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\,Q^6\\,Z\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^6\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\,Q^6\\,Z\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^6\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^6\\left(b^4\\cos^6\\theta + b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta + r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - r^4\\right)}{P^6\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\left(r^4 + r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)\\csc^2\\theta}{P^2\\,Y^6\\,Z}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{64m^2\\,Q^5\\left(r^8\\left(3r^8 - 36m\\,r^7 + 183m^2\\,r^6 - 9b^2\\,r^6 - 504m^3\\,r^5 + 84m\\,b^2\\,r^5 + 795m^4\\,r^4 - 327m^2\\,b^2\\,r^4 + 9b^4\\,r^4 - 684m^5\\,r^3 + 654m^3\\,b^2\\,r^3 - 54m\\,b^4\\,r^3 + 252m^6\\,r^2 - 672m^4\\,b^2\\,r^2 + 140m^2\\,b^4\\,r^2 + 288m^5\\,b^2\\,r - 172m^3\\,b^4\\,r + 86m^4\\,b^4\\right) - r^6\\left(12m^2\\,r^8 - 12b^2\\,r^8 - 102m^3\\,r^7 + 126m\\,b^2\\,r^7 + 327m^4\\,r^6 - 576m^2\\,b^2\\,r^6 - 45b^4\\,r^6 - 468m^5\\,r^5 + 1452m^3\\,b^2\\,r^5 + 348m\\,b^4\\,r^5 + 252m^6\\,r^4 - 2094m^4\\,b^2\\,r^4 - 1068m^2\\,b^4\\,r^4 + 54b^6\\,r^4 + 1572m^5\\,b^2\\,r^3 + 1646m^3\\,b^4\\,r^3 - 270m\\,b^6\\,r^3 - 432m^6\\,b^2\\,r^2 - 1274m^4\\,b^4\\,r^2 + 592m^2\\,b^6\\,r^2 + 440m^5\\,b^4\\,r - 616m^3\\,b^6\\,r + 272m^4\\,b^6\\right)\\cos^2\\theta - b^2\\,r^4\\left(6m^2\\,r^8 + 87b^2\\,r^8 - 90m^3\\,r^7 - 690m\\,b^2\\,r^7 + 402m^4\\,r^6 + 2199m^2\\,b^2\\,r^6 + 81b^4\\,r^6 - 708m^5\\,r^5 - 3480m^3\\,b^2\\,r^5 - 480m\\,b^4\\,r^5 + 432m^6\\,r^4 + 2617m^4\\,b^2\\,r^4 + 959m^2\\,b^4\\,r^4 - 135b^6\\,r^4 - 568m^5\\,b^2\\,r^3 - 916m^3\\,b^4\\,r^3 + 540m\\,b^6\\,r^3 - 248m^6\\,b^2\\,r^2 + 512m^4\\,b^4\\,r^2 - 968m^2\\,b^6\\,r^2 - 328m^5\\,b^4\\,r + 816m^3\\,b^6\\,r - 300m^4\\,b^6\\right)\\cos^4\\theta + b^4\\,r^2\\left(126m^2\\,r^8 + 150b^2\\,r^8 - 780m^3\\,r^7 - 780m\\,b^2\\,r^7 + 1569m^4\\,r^6 + 1314m^2\\,b^2\\,r^6 + 45b^4\\,r^6 - 912m^5\\,r^5 - 704m^3\\,b^2\\,r^5 - 120m\\,b^4\\,r^5 - 248m^6\\,r^4 + 52m^4\\,b^2\\,r^4 - 304m^2\\,b^4\\,r^4 - 180b^6\\,r^4 - 312m^5\\,b^2\\,r^3 + 588m^3\\,b^4\\,r^3 + 540m\\,b^6\\,r^3 - 48m^6\\,b^2\\,r^2 - 140m^4\\,b^4\\,r^2 - 752m^2\\,b^6\\,r^2 - 200m^5\\,b^4\\,r + 472m^3\\,b^6\\,r - 128m^4\\,b^6\\right)\\cos^6\\theta - b^6\\left(204m^2\\,r^8 + 75b^2\\,r^8 - 780m^3\\,r^7 + 636m^4\\,r^6 - 761m^2\\,b^2\\,r^6 - 45b^4\\,r^6 + 208m^5\\,r^5 + 720m^3\\,b^2\\,r^5 + 300m\\,b^4\\,r^5 - 48m^6\\,r^4 + 359m^4\\,b^2\\,r^4 - 891m^2\\,b^4\\,r^4 - 135b^6\\,r^4 - 244m^5\\,b^2\\,r^3 + 610m^3\\,b^4\\,r^3 + 270m\\,b^6\\,r^3 - 12m^6\\,b^2\\,r^2 - 80m^4\\,b^4\\,r^2 - 268m^2\\,b^6\\,r^2 - 24m^5\\,b^4\\,r + 100m^3\\,b^6\\,r - 14m^4\\,b^6\\right)\\cos^8\\theta + b^8\\left(96m^2\\,r^6 - 48b^2\\,r^6 - 90m^3\\,r^5 + 426m\\,b^2\\,r^5 - 197m^4\\,r^4 - 660m^2\\,b^2\\,r^4 - 81b^4\\,r^4 - 68m^5\\,r^3 - 84m^3\\,b^2\\,r^3 + 276m\\,b^4\\,r^3 - 12m^6\\,r^2 + 14m^4\\,b^2\\,r^2 - 412m^2\\,b^4\\,r^2 - 54b^6\\,r^2 - 36m^5\\,b^2\\,r + 98m^3\\,b^4\\,r + 54m\\,b^6\\,r - 30m^4\\,b^4 - 32m^2\\,b^6\\right)\\cos^{10}\\theta + b^{10}\\left(18m^2\\,r^4 + 63b^2\\,r^4 - 102m^3\\,r^3 - 174m\\,b^2\\,r^3 - 2m^4\\,r^2 + 39m^2\\,b^2\\,r^2 + 45b^4\\,r^2 + 12m^5\\,r - 16m^3\\,b^2\\,r - 72m\\,b^4\\,r + 21m^4\\,b^2 + 43m^2\\,b^4 + 9b^6\\right)\\cos^{12}\\theta - b^{12}\\left(m^2 + b^2\\right)\\left(18r^2 + 5m^2 + 9b^2\\right)\\cos^{14}\\theta\\right)}{P^8\\,Y^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\left(r^4 + r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\left(r^4 - r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^2\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\left(b^4\\cos^6\\theta + b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta + r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - r^4\\right)}{P^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\,Z\\left(r^4 + r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\left(b^4\\cos^6\\theta + b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - r^4\\right)}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4m^2\\,b^2\\,Q^3\\left(b^4\\cos^6\\theta + b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - r^4\\right)}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\left(r^4 - r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4m^2\\,b^2\\,Q^3\\left(r^4 - r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\,Q^3\\,Z\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\,Q^3\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^4\\,Y^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\left(r^4 + r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^6\\,Z\\left(r^4 - r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)}{P^6\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\,Q^6\\,Z\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^6\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{16m^2\\,b^2\\,r\\,Q^6\\,Z\\left(b^2\\cos^2\\theta + r^2\\right)\\sin\\theta\\cos\\theta}{P^6\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^6\\left(b^4\\cos^6\\theta + b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta + r^2\\left(5r^2 - 8m\\,r - 6b^2\\right)\\cos^2\\theta - r^4\\right)}{P^6\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4m^2\\,b^2\\,Q^3\\left(r^4 + r^2\\left(3r^2 - 8m\\,r - 2b^2\\right)\\cos^2\\theta - b^2\\left(2r^2 - b^2\\right)\\cos^4\\theta - b^4\\cos^6\\theta\\right)\\csc^2\\theta}{P^2\\,Y^6\\,Z}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6m\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{6m\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{6m\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{6m\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6m\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{6m\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6m\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{6m\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6m\\,Q^2\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{6m\\,Q^2\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\,Z\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\,Z\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6m\\,Q^2\\,Z^2\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{6m\\,Q^2\\,Z^2\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{6m\\,Q^2\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{6m\\,Q^2\\left(b^6\\left(m^2 + b^2\\right)\\cos^6\\theta + b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6m\\,Q^2\\,Z\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{6m\\,Q^2\\,Z\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,Q^2\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\,Q^2\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^6\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Q^3\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\,Q^3\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{P^2\\,Y^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{P^2\\,Q\\,Y^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)}{Q\\,Y^4\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6m\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{6m\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{6m\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{6m\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{6m\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{6m\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{6m\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{6m\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin\\theta\\cos\\theta}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)}{Q\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2m\\,Q^3\\,Z\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{Q^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{Q^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{Q^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(b^6\\left(3r - m\\right)\\cos^6\\theta - b^4\\left(5r^3 - 13m\\,r^2 - 2m^2\\,r - 2m\\,b^2\\right)\\cos^4\\theta + b^2\\,r^2\\left(r^3 - 7m\\,r^2 + 8m^2\\,r - 4m\\,b^2\\right)\\cos^2\\theta + r^4\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)}{Q^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\left(2b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(8m^2\\,r^3 - 7b^2\\,r^3 - 10m^3\\,r^2 + 25m\\,b^2\\,r^2 + 4m^4\\,r - 30m^2\\,b^2\\,r - 9b^4\\,r + 6m^3\\,b^2 + m\\,b^4\\right)\\cos^6\\theta - b^2\\left(10m^2\\,r^5 + 3b^2\\,r^5 - 22m^3\\,r^4 + 3m\\,b^2\\,r^4 + 8m^4\\,r^3 - 20m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + 14m^3\\,b^2\\,r^2 + 39m\\,b^4\\,r^2 + 4m^4\\,b^2\\,r - 20m^2\\,b^4\\,r + 4m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(4m^2\\,r^5 - 3b^2\\,r^5 - 14m^3\\,r^4 + 13m\\,b^2\\,r^4 + 12m^4\\,r^3 - 38m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 46m^3\\,b^2\\,r^2 - 27m\\,b^4\\,r^2 - 8m^4\\,b^2\\,r + 52m^2\\,b^4\\,r - 20m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(r^4 - 6m\\,r^3 + 14m^2\\,r^2 - 3b^2\\,r^2 - 12m^3\\,r + 8m\\,b^2\\,r - 8m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6m\\,Z\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{6m\\,Z\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6m\\,Z\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{6m\\,Z\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{6m\\,Z\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6m\\,Z\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{6m\\,Z\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{6m\\,Z\\left(r^3\\left(m^2\\,r^3 - 3b^2\\,r^3 - 2m^3\\,r^2 + 12m\\,b^2\\,r^2 - 18m^2\\,b^2\\,r + 8m^3\\,b^2\\right) + b^2\\,r^3\\left(m^2 + b^2\\right)\\left(5r - 8m\\right)\\cos^2\\theta - b^4\\left(5m^2\\,r^2 + b^2\\,r^2 - 2m^3\\,r + 4m\\,b^2\\,r - 2m^2\\,b^2\\right)\\cos^4\\theta - b^6\\left(m^2 + b^2\\right)\\cos^6\\theta\\right)\\sin^3\\theta\\cos\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2m\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2m\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\,Z\\left(b^6\\left(m^2 + b^2\\right)\\left(3r - m\\right)\\cos^8\\theta + b^4\\left(13m^2\\,r^3 + b^2\\,r^3 - 23m^3\\,r^2 + 5m\\,b^2\\,r^2 + 2m^4\\,r - 27m^2\\,b^2\\,r - 9b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^6\\theta - b^2\\left(11m^2\\,r^5 + 9b^2\\,r^5 - 29m^3\\,r^4 - 27m\\,b^2\\,r^4 + 16m^4\\,r^3 + 17m^2\\,b^2\\,r^3 - 15b^4\\,r^3 + m^3\\,b^2\\,r^2 + 33m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 16m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^4\\theta - r^2\\left(5m^2\\,r^5 - 3b^2\\,r^5 - 19m^3\\,r^4 + 17m\\,b^2\\,r^4 + 18m^4\\,r^3 - 55m^2\\,b^2\\,r^3 + 3b^4\\,r^3 + 71m^3\\,b^2\\,r^2 - 21m\\,b^4\\,r^2 - 16m^4\\,b^2\\,r + 44m^2\\,b^4\\,r - 16m^3\\,b^4\\right)\\cos^2\\theta + r^4\\left(r - m\\right)\\left(2r^4 - 12m\\,r^3 + 25m^2\\,r^2 - 3b^2\\,r^2 - 18m^3\\,r + 10m\\,b^2\\,r - 10m^2\\,b^2\\right)\\right)\\sin^2\\theta}{P^4\\,Q}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{4m\\left(b^2\\cos^2\\theta + r^2\\right)}{P\\,Y}\\dot{t}\\dot{r} + \\dfrac{8m\\,b^2\\,r\\sin\\theta\\cos\\theta}{P\\,Y}\\dot{t}\\dot{\\theta} = 0",
+        "\\ddot{r} + \\dfrac{2m\\,Q^3\\,Z\\left(b^2\\cos^2\\theta + r^2\\right)}{P\\,Y^5}\\dot{t}^2 + \\dfrac{b^4\\left(r - m\\right)\\left(m^2 + b^2\\right)\\cos^6\\theta + b^2\\left(2m^2\\,r^3 - 2b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 + 2m^4\\,r - 11m^2\\,b^2\\,r - b^4\\,r + 3m^3\\,b^2 - m\\,b^4\\right)\\cos^4\\theta - \\left(3m^2\\,r^5 - b^2\\,r^5 - 11m^3\\,r^4 + 3m\\,b^2\\,r^4 + 10m^4\\,r^3 - 8m^2\\,b^2\\,r^3 - 2b^4\\,r^3 + 8m^3\\,b^2\\,r^2 + 4m\\,b^4\\,r^2 + 2m^4\\,b^2\\,r - 2m^2\\,b^4\\,r + 2m^3\\,b^4\\right)\\cos^2\\theta - r^2\\left(r - m\\right)\\left(2m\\,r^3 - 9m^2\\,r^2 + b^2\\,r^2 + 10m^3\\,r - 4m\\,b^2\\,r + 6m^2\\,b^2\\right)}{P\\,Q\\,Y\\,Z}\\dot{r}^2 + \\dfrac{2\\left(b^4\\left(m^2 + b^2\\right)\\cos^4\\theta + 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P\\,Q\\,Y}\\dot{r}\\dot{\\theta} - \\dfrac{Z\\left(b^2\\left(4m^2\\,r + b^2\\,r - 2m^3 + m\\,b^2\\right)\\cos^4\\theta - 2\\left(2m^2\\,r^3 + b^2\\,r^3 - 3m^3\\,r^2 - 2m\\,b^2\\,r^2 + m^2\\,b^2\\,r - m^3\\,b^2\\right)\\cos^2\\theta + r^2\\left(r - m\\right)\\left(r^2 - 4m\\,r + 6m^2\\right)\\right)}{P\\,Q\\,Y}\\dot{\\theta}^2 - \\dfrac{Q^3\\,Z\\left(b^4\\left(r - m\\right)\\cos^4\\theta - 2b^2\\left(r^3 - m\\,r^2 - m^2\\,r - m\\,b^2\\right)\\cos^2\\theta + r^2\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)\\right)\\sin^2\\theta}{P^5\\,Y}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{4m\\,b^2\\,r\\,Q^3\\sin\\theta\\cos\\theta}{P\\,Y^5}\\dot{t}^2 + \\dfrac{\\left(r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right) - 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - b^4\\left(m^2 + b^2\\right)\\cos^4\\theta\\right)\\sin\\theta\\cos\\theta}{P\\,Q\\,Y\\,Z}\\dot{r}^2 + \\dfrac{2b^2\\left(4m^2\\,r + b^2\\,r - 2m^3 + m\\,b^2\\right)\\cos^4\\theta - 4\\left(2m^2\\,r^3 + b^2\\,r^3 - 3m^3\\,r^2 - 2m\\,b^2\\,r^2 + m^2\\,b^2\\,r - m^3\\,b^2\\right)\\cos^2\\theta + 2r^2\\left(r - m\\right)\\left(r^2 - 4m\\,r + 6m^2\\right)}{P\\,Q\\,Y}\\dot{r}\\dot{\\theta} + \\dfrac{\\left(b^4\\left(m^2 + b^2\\right)\\cos^4\\theta + 2b^2\\left(r - m\\right)\\left(m^2\\,r - b^2\\,r + 2m\\,b^2\\right)\\cos^2\\theta - r\\left(3m^2\\,r^3 - b^2\\,r^3 - 6m^3\\,r^2 + 6m\\,b^2\\,r^2 - 12m^2\\,b^2\\,r + 4m^3\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P\\,Q\\,Y}\\dot{\\theta}^2 - \\dfrac{Q^3\\,Z\\left(b^4\\cos^4\\theta - 2b^2\\,r\\left(r - 3m\\right)\\cos^2\\theta + r\\left(r^3 - 2m\\,r^2 - 4m\\,b^2\\right)\\right)\\sin\\theta\\cos\\theta}{P^5\\,Y}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2b^4\\left(r - m\\right)\\cos^4\\theta - 4b^2\\left(r^3 - m\\,r^2 - m^2\\,r - m\\,b^2\\right)\\cos^2\\theta + 2r^2\\left(r^3 - 5m\\,r^2 + 6m^2\\,r + 2m\\,b^2\\right)}{P\\,Y\\,Z}\\dot{r}\\dot{\\phi} + \\dfrac{2\\left(b^4\\cos^4\\theta - 2b^2\\,r\\left(r - 3m\\right)\\cos^2\\theta + r\\left(r^3 - 2m\\,r^2 - 4m\\,b^2\\right)\\right)\\cot\\theta}{P\\,Y}\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

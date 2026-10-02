@@ -274,6 +274,11 @@ DIMENSIONS = {
     ("zipoy_voorhees", "prolate_spheroidal"): {
         "t": "T", "x": "1", "y": "1", "\\phi": "1", "m": "L", "\\delta": "1", "f": "1", "h": "1",
     },
+    # m is half the mass as a length and b the dipole moment over the mass, a length; P, Q, Y
+    # and Z are Bonnor's four polynomials, each an area.
+    ("bonnor_magnetic_dipole", "spheroidal"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "b": "L", "P": "L^2", "Q": "L^2", "Y": "L^2", "Z": "L^2",
+    },
     # Fisher, Janis, Newman and Winicour's b is a length and gamma a pure number; f and h are the
     # ratios the charts name. Bronnikov's harmonic coordinate u is an inverse length, e^{-2ku} = 1 - b/r.
     ("fisher_jnw", "spherical"): {

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 113,
+  "count": 114,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3057,6 +3057,11 @@
           "id": "bartnik_mckinnon",
           "kind": "limit_source",
           "text": "Balls of Yang-Mills field with a regular centre, one for each number $n$ of zeros of the field. In the limit $n \\to \\infty$ the metric at the edge of their core tends to AdS$_2 \\times$ S$^2$ [breitenlohner1994]."
+        },
+        {
+          "id": "bonnor_magnetic_dipole",
+          "kind": "family",
+          "text": "A pair of extremal black holes with opposite magnetic charges. Each of its poles opens into a throat, which is Bertotti and Robinson's universe once an outside field balances the pair [emparan2000]."
         }
       ],
       "references": [
@@ -3081,7 +3086,8 @@
         "bell1974",
         "griffiths1991",
         "romans1992",
-        "breitenlohner1994"
+        "breitenlohner1994",
+        "emparan2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -4672,6 +4678,189 @@
       ]
     },
     {
+      "id": "bonnor_magnetic_dipole",
+      "name": "Bonnor's Magnetic Dipole",
+      "short_name": "Bonnor Dipole",
+      "description": "The static field of a mass with a magnetic dipole moment, the solution of the Einstein-Maxwell equations William Bonnor found in 1966. Roberto Emparan showed in 2000 that its two poles are extremal black holes with opposite magnetic charges, held apart by a strut on the axis between them.",
+      "tags": [
+        "electrovacuum",
+        "Einstein-Maxwell",
+        "electromagnetic field",
+        "magnetic field",
+        "magnetic dipole",
+        "static",
+        "stationary",
+        "axisymmetric",
+        "black hole",
+        "charged black hole",
+        "multiple black holes",
+        "extremal",
+        "degenerate horizon",
+        "horizon",
+        "event horizon",
+        "conical singularity",
+        "mass",
+        "quadrupole",
+        "asymptotically flat",
+        "Petrov type I",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The parameter $m$ is a length, and the mass $M$ has $GM/c^2 = 2m$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "zipoy_voorhees",
+          "kind": "special_case",
+          "text": "The dipole with $b = 0$, which is Zipoy and Voorhees's deformed mass at $q = 1$: a mass with a quadrupole and no magnet [emparan2000]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The spinning black hole Bonnor's rule starts from. The rule trades Kerr's twist for a magnetic potential, and the dipole keeps Kerr's two functions with $a^2$ turned into $-b^2$ [bonnor2002, davidson1994]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "limit",
+          "text": "Each pole on its own. In the limit $b \\to \\infty$ the poles are infinitely far apart, and the neighbourhood of each is an extremal Reissner-Nordström black hole [emparan2000]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Extremal black holes with charges of one sign, which balance with no strut. Give two of them opposite charges and both forces pull, which is Bonnor's dipole [emparan2000]."
+        },
+        {
+          "id": "melvin",
+          "kind": "programme",
+          "text": "The magnetic universe, which Bonnor found in 1954. Set in its field by a Harrison transformation, the dipole loses its strut at one field strength [bonnor1954, emparan2000]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "The throat of an extremal charged black hole. Each pole of the dipole opens into such a throat, and with the pair balanced by an outside field it is exactly Bertotti and Robinson's [emparan2000]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "Two black holes that accelerate apart. The dipole is the same pair at rest, and Emparan placed it on top of the barrier under which a magnetic field creates the accelerating pair [emparan2000]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "A mass with no multipole beyond the monopole. The dipole with $b = 0$ keeps a quadrupole and a naked singularity, so it is not Schwarzschild's black hole [emparan2000]."
+        },
+        {
+          "id": "curzon_chazy",
+          "kind": "family",
+          "text": "The Weyl field of a point mass. In Weyl's coordinates each black hole of the dipole is a single point of the axis as well [emparanteo2001]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Gross and Perry's monopole of Kaluza-Klein theory. Their monopole and antimonopole pair is the dipole's counterpart in that theory [grossperry1983, emparan2000]."
+        }
+      ],
+      "references": [
+        "bonnor1966",
+        "emparan2000",
+        "bonnor2002",
+        "davidson1994",
+        "emparanteo2001",
+        "kovar2013",
+        "ward1975",
+        "chandrasekhar1989",
+        "ernst1976",
+        "manko1994",
+        "grossperry1983",
+        "bonnor1954"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bonnor_magnetic_dipole.json",
+      "charts": [
+        {
+          "id": "spheroidal",
+          "name": "Bonnor",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in \\left(m + \\sqrt{m^2 + b^2},\\, \\infty\\right)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "Z = 0 \\;\\text{(the axis between the black holes, with the strut)}",
+            "Z = 0,\\; \\theta = 0,\\, \\pi \\;\\text{(the two horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Half the mass as a length: the mass $M$ at spatial infinity has $GM/c^2 = 2m$"
+            },
+            {
+              "symbol": "b",
+              "description": "Dipole length, $b > 0$: the magnetic dipole moment is $2mb$ in units with $G = c = 1$, and the two black holes carry the magnetic charges $\\pm m\\left(m + \\sqrt{m^2 + b^2}\\right)/b$"
+            },
+            {
+              "symbol": "P = r^2 - 2mr - b^2\\cos^2\\theta",
+              "description": "Bonnor's first polynomial, an area, equal to $Z + b^2\\sin^2\\theta$; the magnetic potential is $A_\\phi = 2mbr\\sin^2\\theta/P$ in units with $G = c = 1$"
+            },
+            {
+              "symbol": "Q = \\left(r - m\\right)^2 - \\left(m^2 + b^2\\right)\\cos^2\\theta",
+              "description": "Bonnor's second polynomial, an area, equal to $Z + \\left(m^2 + b^2\\right)\\sin^2\\theta$"
+            },
+            {
+              "symbol": "Y = r^2 - b^2\\cos^2\\theta",
+              "description": "Bonnor's third polynomial, an area, equal to $P + 2mr$"
+            },
+            {
+              "symbol": "Z = r^2 - 2mr - b^2",
+              "description": "Bonnor's fourth polynomial, an area, which vanishes at $r = m + \\sqrt{m^2 + b^2}$, the axis between the two black holes"
+            }
+          ],
+          "convention": "We use Bonnor's coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ a length, in which Weyl's canonical coordinates are $\\rho = \\sqrt{Z}\\sin\\theta$ and $z = (r - m)\\cos\\theta$, and write $P$, $Q$, $Y$, and $Z$ for his four polynomials in $r$ and $\\cos\\theta$. The length $b$ is the ratio of the magnetic dipole moment to the mass. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{P^2}{Y^2}c^2dt^2 + \\dfrac{P^2Y^2}{Q^3}\\left(\\dfrac{dr^2}{Z} + d\\theta^2\\right) + \\dfrac{Y^2Z\\sin^2\\theta}{P^2}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{P^2}{Y^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{P^2Y^2}{Q^3Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{P^2Y^2}{Q^3}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{Y^2Z\\sin^2\\theta}{P^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{64m^2\\,Q^5\\left(r^8\\left(3r^8 - 36m\\,r^7 + 183m^2\\,r^6 - 9b^2\\,r^6 - 504m^3\\,r^5 + 84m\\,b^2\\,r^5 + 795m^4\\,r^4 - 327m^2\\,b^2\\,r^4 + 9b^4\\,r^4 - 684m^5\\,r^3 + 654m^3\\,b^2\\,r^3 - 54m\\,b^4\\,r^3 + 252m^6\\,r^2 - 672m^4\\,b^2\\,r^2 + 140m^2\\,b^4\\,r^2 + 288m^5\\,b^2\\,r - 172m^3\\,b^4\\,r + 86m^4\\,b^4\\right) - r^6\\left(12m^2\\,r^8 - 12b^2\\,r^8 - 102m^3\\,r^7 + 126m\\,b^2\\,r^7 + 327m^4\\,r^6 - 576m^2\\,b^2\\,r^6 - 45b^4\\,r^6 - 468m^5\\,r^5 + 1452m^3\\,b^2\\,r^5 + 348m\\,b^4\\,r^5 + 252m^6\\,r^4 - 2094m^4\\,b^2\\,r^4 - 1068m^2\\,b^4\\,r^4 + 54b^6\\,r^4 + 1572m^5\\,b^2\\,r^3 + 1646m^3\\,b^4\\,r^3 - 270m\\,b^6\\,r^3 - 432m^6\\,b^2\\,r^2 - 1274m^4\\,b^4\\,r^2 + 592m^2\\,b^6\\,r^2 + 440m^5\\,b^4\\,r - 616m^3\\,b^6\\,r + 272m^4\\,b^6\\right)\\cos^2\\theta - b^2\\,r^4\\left(6m^2\\,r^8 + 87b^2\\,r^8 - 90m^3\\,r^7 - 690m\\,b^2\\,r^7 + 402m^4\\,r^6 + 2199m^2\\,b^2\\,r^6 + 81b^4\\,r^6 - 708m^5\\,r^5 - 3480m^3\\,b^2\\,r^5 - 480m\\,b^4\\,r^5 + 432m^6\\,r^4 + 2617m^4\\,b^2\\,r^4 + 959m^2\\,b^4\\,r^4 - 135b^6\\,r^4 - 568m^5\\,b^2\\,r^3 - 916m^3\\,b^4\\,r^3 + 540m\\,b^6\\,r^3 - 248m^6\\,b^2\\,r^2 + 512m^4\\,b^4\\,r^2 - 968m^2\\,b^6\\,r^2 - 328m^5\\,b^4\\,r + 816m^3\\,b^6\\,r - 300m^4\\,b^6\\right)\\cos^4\\theta + b^4\\,r^2\\left(126m^2\\,r^8 + 150b^2\\,r^8 - 780m^3\\,r^7 - 780m\\,b^2\\,r^7 + 1569m^4\\,r^6 + 1314m^2\\,b^2\\,r^6 + 45b^4\\,r^6 - 912m^5\\,r^5 - 704m^3\\,b^2\\,r^5 - 120m\\,b^4\\,r^5 - 248m^6\\,r^4 + 52m^4\\,b^2\\,r^4 - 304m^2\\,b^4\\,r^4 - 180b^6\\,r^4 - 312m^5\\,b^2\\,r^3 + 588m^3\\,b^4\\,r^3 + 540m\\,b^6\\,r^3 - 48m^6\\,b^2\\,r^2 - 140m^4\\,b^4\\,r^2 - 752m^2\\,b^6\\,r^2 - 200m^5\\,b^4\\,r + 472m^3\\,b^6\\,r - 128m^4\\,b^6\\right)\\cos^6\\theta - b^6\\left(204m^2\\,r^8 + 75b^2\\,r^8 - 780m^3\\,r^7 + 636m^4\\,r^6 - 761m^2\\,b^2\\,r^6 - 45b^4\\,r^6 + 208m^5\\,r^5 + 720m^3\\,b^2\\,r^5 + 300m\\,b^4\\,r^5 - 48m^6\\,r^4 + 359m^4\\,b^2\\,r^4 - 891m^2\\,b^4\\,r^4 - 135b^6\\,r^4 - 244m^5\\,b^2\\,r^3 + 610m^3\\,b^4\\,r^3 + 270m\\,b^6\\,r^3 - 12m^6\\,b^2\\,r^2 - 80m^4\\,b^4\\,r^2 - 268m^2\\,b^6\\,r^2 - 24m^5\\,b^4\\,r + 100m^3\\,b^6\\,r - 14m^4\\,b^6\\right)\\cos^8\\theta + b^8\\left(96m^2\\,r^6 - 48b^2\\,r^6 - 90m^3\\,r^5 + 426m\\,b^2\\,r^5 - 197m^4\\,r^4 - 660m^2\\,b^2\\,r^4 - 81b^4\\,r^4 - 68m^5\\,r^3 - 84m^3\\,b^2\\,r^3 + 276m\\,b^4\\,r^3 - 12m^6\\,r^2 + 14m^4\\,b^2\\,r^2 - 412m^2\\,b^4\\,r^2 - 54b^6\\,r^2 - 36m^5\\,b^2\\,r + 98m^3\\,b^4\\,r + 54m\\,b^6\\,r - 30m^4\\,b^4 - 32m^2\\,b^6\\right)\\cos^{10}\\theta + b^{10}\\left(18m^2\\,r^4 + 63b^2\\,r^4 - 102m^3\\,r^3 - 174m\\,b^2\\,r^3 - 2m^4\\,r^2 + 39m^2\\,b^2\\,r^2 + 45b^4\\,r^2 + 12m^5\\,r - 16m^3\\,b^2\\,r - 72m\\,b^4\\,r + 21m^4\\,b^2 + 43m^2\\,b^4 + 9b^6\\right)\\cos^{12}\\theta - b^{12}\\left(m^2 + b^2\\right)\\left(18r^2 + 5m^2 + 9b^2\\right)\\cos^{14}\\theta\\right)}{P^8\\,Y^8}"
+        }
+      ]
+    },
+    {
       "id": "bonnor_rotating_dust",
       "name": "Bonnor's Rotating Dust Cloud",
       "short_name": "Bonnor Rotating Dust",
@@ -5915,6 +6104,11 @@
           "id": "kerr_taub_nut",
           "kind": "family",
           "text": "A rotating black hole with a NUT parameter and no acceleration. Jerry Griffiths and Jiří Podolský's form of the Plebański-Demiański family reduces to it when the acceleration is switched off, and to the C-metric when the spin and the twist are [griffiths2005]."
+        },
+        {
+          "id": "bonnor_magnetic_dipole",
+          "kind": "family",
+          "text": "Two black holes of opposite charge at rest on one axis. Emparan placed that pair on top of the barrier under which a magnetic field creates the accelerating pair [emparan2000]."
         }
       ],
       "references": [
@@ -5941,7 +6135,8 @@
         "achucarro1995",
         "levicivita1919",
         "podolsky2008",
-        "kamran2009"
+        "kamran2009",
+        "emparan2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -6510,6 +6705,11 @@
           "id": "morgan_morgan",
           "kind": "limit_source",
           "text": "Static discs of counterrotating dust, Weyl fields built on the Newtonian potential of a disc. In the limit of the disc shrunk to a point at fixed mass the field is the Curzon-Chazy particle's, which itself arises as the metric of a counterrotating disc [bicak1993]."
+        },
+        {
+          "id": "bonnor_magnetic_dipole",
+          "kind": "family",
+          "text": "Bonnor's pair of extremal black holes. In Weyl's coordinates each of the two is a single point of the axis, as the Curzon-Chazy particle is [emparanteo2001]."
         }
       ],
       "references": [
@@ -6535,7 +6735,8 @@
         "neugebauer2009",
         "bonnor1977cloud",
         "astesiano2024",
-        "bicak1993"
+        "bicak1993",
+        "emparanteo2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/curzon_chazy.json",
@@ -14244,6 +14445,11 @@
           "id": "eguchi_hanson",
           "kind": "family",
           "text": "Gibbons and Hawking's space with two centres and no constant in its potential; the monopole's four dimensions of space have one centre and the constant $1$. It has no circle of fixed size far away, and its boundary there is a 3-sphere with opposite points identified [gibbonshawking1979, eguchihanson1979]."
+        },
+        {
+          "id": "bonnor_magnetic_dipole",
+          "kind": "family",
+          "text": "The static pair of opposite magnetic charges in Einstein-Maxwell theory. Gross and Perry's monopole and antimonopole pair is its counterpart in Kaluza-Klein theory [grossperry1983, emparan2000]."
         }
       ],
       "references": [
@@ -14267,7 +14473,8 @@
         "randall1999b",
         "horowitz2012",
         "gibbonshawking1979",
-        "eguchihanson1979"
+        "eguchihanson1979",
+        "emparan2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -15442,6 +15649,11 @@
           "id": "bonnor_rotating_dust",
           "kind": "family",
           "text": "A cloud of rotating dust whose field far away is Kerr's frame dragging term alone: angular momentum with no mass [bonnor1977cloud, bratek2007]."
+        },
+        {
+          "id": "bonnor_magnetic_dipole",
+          "kind": "family",
+          "text": "A static magnet made from Kerr's metric. Bonnor's rule trades the twist of the spinning hole for a magnetic potential and turns $a^2$ into $-b^2$ [bonnor2002, davidson1994]."
         }
       ],
       "references": [
@@ -15493,7 +15705,9 @@
         "kramer1980",
         "neugebauer2009",
         "bonnor1977cloud",
-        "bratek2007"
+        "bratek2007",
+        "bonnor2002",
+        "davidson1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -18930,6 +19144,11 @@
           "id": "misner_brill_lindquist",
           "kind": "family",
           "text": "One moment of two black holes at rest with any masses and charges, which Dieter Brill and Richard Lindquist found in 1963. Where every charge equals its mass, their slice is a moment of Majumdar and Papapetrou's holes [brill1963]."
+        },
+        {
+          "id": "bonnor_magnetic_dipole",
+          "kind": "family",
+          "text": "Two extremal black holes of opposite charge. Gravity and the charges both pull, so a strut on the axis holds the pair apart [emparan2000]."
         }
       ],
       "references": [
@@ -18961,7 +19180,8 @@
         "neugebauer2009",
         "gibbonshawking1978",
         "ishihara2006",
-        "brill1963"
+        "brill1963",
+        "emparan2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -19843,6 +20063,11 @@
           "id": "boson_star",
           "kind": "family",
           "text": "Wheeler's geon carried from light to a scalar field with mass, where it makes a star: a ball of field held together by its own gravity, which Kaup named a Klein-Gordon geon [kaup1968]."
+        },
+        {
+          "id": "bonnor_magnetic_dipole",
+          "kind": "programme",
+          "text": "Bonnor's magnetic dipole of 1966, a pair of black holes with opposite magnetic charges. Melvin's field along the axis of the pair pulls the two apart and takes the place of the strut between them [emparan2000]."
         }
       ],
       "references": [
@@ -19870,7 +20095,8 @@
         "bertotti1959",
         "robinson1959",
         "bonnor1969light",
-        "kaup1968"
+        "kaup1968",
+        "emparan2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
@@ -25748,6 +25974,11 @@
           "id": "misner_brill_lindquist",
           "kind": "family",
           "text": "One moment of two charged black holes at rest, each with a throat like the one on the slice $t = 0$ of Reissner and Nordström's hole [brill1963]."
+        },
+        {
+          "id": "bonnor_magnetic_dipole",
+          "kind": "limit_source",
+          "text": "Two extremal Reissner-Nordström black holes of opposite magnetic charge on one axis. In the limit $b \\to \\infty$ the two are infinitely far apart and each is the extremal hole alone [emparan2000]."
         }
       ],
       "references": [
@@ -25784,7 +26015,8 @@
         "larsen2000",
         "breitenlohner1994",
         "volkov1999",
-        "brill1963"
+        "brill1963",
+        "emparan2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -28036,6 +28268,11 @@
           "id": "misner_brill_lindquist",
           "kind": "family",
           "text": "One moment of a space with two Schwarzschild black holes at rest in it, made by adding their two conformal factors. With one hole it is the slice $t = 0$ of Schwarzschild's spacetime in isotropic coordinates [brill1963, cook2000]."
+        },
+        {
+          "id": "bonnor_magnetic_dipole",
+          "kind": "family",
+          "text": "Bonnor's mass with a magnetic dipole moment. With the dipole switched off it keeps a quadrupole and a naked singularity, so Schwarzschild's black hole is not among its cases [emparan2000]."
         }
       ],
       "references": [
@@ -28124,7 +28361,8 @@
         "zhou1991",
         "lemos1993",
         "brill1963",
-        "cook2000"
+        "cook2000",
+        "emparan2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -35080,6 +35318,11 @@
           "id": "morgan_morgan",
           "kind": "family",
           "text": "Static discs of counterrotating dust in Weyl's class. Zipoy and Voorhees's metric also arises as the metric of a counterrotating disc [bicak1993]."
+        },
+        {
+          "id": "bonnor_magnetic_dipole",
+          "kind": "generalisation",
+          "text": "Bonnor's mass with a magnetic dipole moment. With the dipole switched off, $b = 0$, it is the deformed mass at $q = 1$ [emparan2000]."
         }
       ],
       "references": [
@@ -35102,7 +35345,8 @@
         "maciejewski2013",
         "chowdhury2012",
         "abdikamalov2019",
-        "bicak1993"
+        "bicak1993",
+        "emparan2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/zipoy_voorhees.json",

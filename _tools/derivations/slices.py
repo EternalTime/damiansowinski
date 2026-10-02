@@ -1469,6 +1469,13 @@ def _morgan_morgan_centre():
     return [Mark(m, points=[(0.0, 0.0)])]
 
 
+def _bonnor_dipole_strut():
+    """The equatorial plane of Bonnor's dipole at t = 0 meets the axis between the two black holes
+    at one event, t = 0 and theta = pi/2, the tip of the embedded cone."""
+    m = moments("bonnor_magnetic_dipole", "equator", label="$t = 0$, the equatorial plane")[0]
+    return [Mark(m, points=[(0.0, math.pi / 2)])]
+
+
 KT_LABEL = "$c\\tau = -8m/3$"     # the moment of one of Kastor and Traschen's holes that is embedded, H tau = 1/2
 KT_TAU = -8 / 3
 
@@ -2010,13 +2017,17 @@ FLAT = {
     ("morgan_morgan", "oblate_spheroidal", "disc"): lambda: one("morgan_morgan", lambda m: along(0.0, 0.0, 1.0)),
     ("morgan_morgan", "oblate_spheroidal", "plane"): lambda: one(
         "morgan_morgan", lambda m: along(0.0, 0.0, math.sqrt(m.reach("weyl", "\\rho")[1] ** 2 - 1))),
-    # The plane z = 0 at t = 0, where the spherical chart's r is Weyl's rho.
+    # The equatorial plane of Bonnor's dipole at t = 0, and the one event where it meets the axis between the holes.
+    ("bonnor_magnetic_dipole", "spheroidal", "equator"): lambda: one(
+        "bonnor_magnetic_dipole", lambda m: along(0.0, *m.reach("spheroidal", "r"))),
+    ("bonnor_magnetic_dipole", "spheroidal", "strut"): _bonnor_dipole_strut,
     # Bonnor's dust cloud: the moment t = 0 of the plane z = 0 outside the null circle, along the
     # radius of each equatorial view and the whole line t = 0 of the circle at 3a/2.
     **{("bonnor_rotating_dust", system, "equator"): lambda: one(
         "bonnor_rotating_dust", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")))
        for system in ("cylindrical", "spherical")},
     ("bonnor_rotating_dust", "cylindrical", "outside"): lambda: one("bonnor_rotating_dust", _bonnor_circle(1.5)),
+    # The plane z = 0 at t = 0, where the spherical chart's r is Weyl's rho.
     ("curzon_chazy", "weyl", "equator"): lambda: one("curzon_chazy", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("curzon_chazy", "spherical", "equator"): lambda: one("curzon_chazy", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("mcvittie", "isotropic", "radial"): lambda: one("mcvittie", lambda m: along(m.time, *m.reach("isotropic", "r"))),
@@ -2138,6 +2149,8 @@ HIDDEN = {
        for system in ("cylindrical", "spherical")},
     **{("curzon_chazy", f"{system}_axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"
        for system in ("weyl", "spherical")},
+    ("bonnor_magnetic_dipole", "spheroidal", "axis"): "the axis beyond a hole, which the embedded equatorial plane does not meet",
+    ("bonnor_magnetic_dipole", "spheroidal_axis"): "the axis beyond a hole, which the embedded equatorial plane does not meet",
     ("double_kerr", "weyl_axis_outside"): "the axis above the upper hole, which the embedded plane z = 0 does not meet",
     **{("zipoy_voorhees", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},

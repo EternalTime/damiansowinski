@@ -313,6 +313,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "One moment of a space with two Schwarzschild black holes at rest in it, made by adding their two conformal factors. With one hole it is the slice $t = 0$ of Schwarzschild's spacetime in isotropic coordinates [brill1963, cook2000]."
+    },
+    {
+      "id": "bonnor_magnetic_dipole",
+      "kind": "family",
+      "text": "Bonnor's mass with a magnetic dipole moment. With the dipole switched off it keeps a quadrupole and a naked singularity, so Schwarzschild's black hole is not among its cases [emparan2000]."
     }
   ],
   "references": [
@@ -401,7 +406,8 @@
     "zhou1991",
     "lemos1993",
     "brill1963",
-    "cook2000"
+    "cook2000",
+    "emparan2000"
   ],
   "coordinates": [
     {

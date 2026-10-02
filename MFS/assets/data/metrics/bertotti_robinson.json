@@ -79,6 +79,11 @@
       "id": "bartnik_mckinnon",
       "kind": "limit_source",
       "text": "Balls of Yang-Mills field with a regular centre, one for each number $n$ of zeros of the field. In the limit $n \\to \\infty$ the metric at the edge of their core tends to AdS$_2 \\times$ S$^2$ [breitenlohner1994]."
+    },
+    {
+      "id": "bonnor_magnetic_dipole",
+      "kind": "family",
+      "text": "A pair of extremal black holes with opposite magnetic charges. Each of its poles opens into a throat, which is Bertotti and Robinson's universe once an outside field balances the pair [emparan2000]."
     }
   ],
   "references": [
@@ -103,7 +108,8 @@
     "bell1974",
     "griffiths1991",
     "romans1992",
-    "breitenlohner1994"
+    "breitenlohner1994",
+    "emparan2000"
   ],
   "coordinates": [
     {

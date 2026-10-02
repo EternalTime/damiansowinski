@@ -377,6 +377,16 @@ The exact gravitational field of a steady beam of light, which William Bonnor fo
 - chart Null Cylindrical, Inside the Beam: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -2\,du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8\pi G\epsilon}{c^4}\rho^2\,du^2$$
 - chart Null Cylindrical, Outside the Beam: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -2\,du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8\pi G\epsilon}{c^4}R^2\left(1 + 2\ln\left(\dfrac{\rho}{R}\right)\right)du^2$$
 
+### Bonnor's Magnetic Dipole
+
+The static field of a mass with a magnetic dipole moment, the solution of the Einstein-Maxwell equations William Bonnor found in 1966. Roberto Emparan showed in 2000 that its two poles are extremal black holes with opposite magnetic charges, held apart by a strut on the axis between them.
+
+- id: `bonnor_magnetic_dipole`
+- tags: electrovacuum, Einstein-Maxwell, electromagnetic field, magnetic field, magnetic dipole, static, stationary, axisymmetric, black hole, charged black hole, multiple black holes, extremal, degenerate horizon, horizon, event horizon, conical singularity, mass, quadrupole, asymptotically flat, Petrov type I, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bonnor_magnetic_dipole.json
+- chart Bonnor: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{P^2}{Y^2}c^2dt^2 + \dfrac{P^2Y^2}{Q^3}\left(\dfrac{dr^2}{Z} + d\theta^2\right) + \dfrac{Y^2Z\sin^2\theta}{P^2}d\phi^2$$
+
 ### Bonnor's Rotating Dust Cloud
 
 A stationary, axially symmetric cloud of dust in rigid rotation that thins out to nothing in every direction, found by William Bonnor in 1977. Its total mass is zero, its centre is a singularity of negative mass, and the circles about the axis inside a torus around the centre are closed timelike curves.

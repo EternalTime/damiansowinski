@@ -301,7 +301,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "70548250bddf9b44",
+    "version": "46ba56e5152fc4cd",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -420,6 +420,41 @@
     "diagrams": "8e7a66b826371e27",
     "conformal": "4c22fa7d37693c09",
     "embedding": "7035de7d63ab26a4"
+  },
+  {
+    "id": "bonnor_magnetic_dipole",
+    "name": "Bonnor Dipole",
+    "tags": [
+      "electrovacuum",
+      "Einstein-Maxwell",
+      "electromagnetic field",
+      "magnetic field",
+      "magnetic dipole",
+      "static",
+      "stationary",
+      "axisymmetric",
+      "black hole",
+      "charged black hole",
+      "multiple black holes",
+      "extremal",
+      "degenerate horizon",
+      "horizon",
+      "event horizon",
+      "conical singularity",
+      "mass",
+      "quadrupole",
+      "asymptotically flat",
+      "Petrov type I",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "9e3d31a9e8d033fc",
+    "diagrams": "ac928ca1efc2f4d5",
+    "conformal": "5a2e7ecd5c36aed6",
+    "embedding": "2e2e3d2fe70fcce0"
   },
   {
     "id": "bonnor_rotating_dust",
@@ -596,7 +631,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "cf82d29dd0b4bb09",
+    "version": "173afac89e74d978",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
@@ -654,7 +689,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b41a596c769d4563",
+    "version": "dd1abea89336565a",
     "diagrams": "8b39c6bef80d5718",
     "conformal": "573aa16b0b411fe4",
     "embedding": "a9676c6465fbce1c"
@@ -1414,7 +1449,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "bee72c713de77720",
+    "version": "713fe0d4599e08a9",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -1539,7 +1574,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8ff47c2752b3a43b",
+    "version": "5c3269a18304b5a3",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1866,7 +1901,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5e24c87ae16ff69a",
+    "version": "f4177233ad9ca8ce",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -1983,7 +2018,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a7975dc1fb347f7f",
+    "version": "1c48156ae2caa6fb",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "edd5386c486f11df",
     "embedding": "86969fc37532f407"
@@ -2540,7 +2575,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "482ff0aee31d5793",
+    "version": "c9efea697d58adc5",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -2762,7 +2797,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2d83ee77f213ef79",
+    "version": "f346570d6df9c464",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3463,7 +3498,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "923b83b779212a53",
+    "version": "b41e55dbc6cd78e6",
     "diagrams": "c383ba43920e5b0b",
     "conformal": "f06e536b192c099c",
     "embedding": "633fa78640daea0a"
