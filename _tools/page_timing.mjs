@@ -67,12 +67,18 @@
    1 October 2026. Each spacetime is opened as a reader does it, from the list searched and
    scrolled, and in each state the contents must read exactly the headings of the page as
    drawn, in its order, with the list slid out of the panel and out of the keyboard's reach.
-   An entry must bring its section to the top of what shows of the spacetime, under the name
-   where the name stays in sight, or as far up as the page scrolls. "‹ All spacetimes" must
-   bring the list back with the search as it was typed and the list where it was scrolled to,
-   and the open spacetime's name in the list must bring its contents back without drawing it
-   again. Last, the page is opened at the address of a spacetime, ?spacetime= and its id,
-   and must come up on that spacetime with its contents showing and nothing having slid.
+   The two views must never stand in the panel together: one starts to slide in only once the
+   other is out, and both leave to the left and come in from it. An entry must bring its
+   section to the top of what shows of the spacetime, under the name where the name stays in
+   sight, or as far up as the page scrolls, and must then be the one entry marked as being
+   read, in the pink of the open spacetime's name in the list and otherwise set as the rest
+   are; scrolled to each section in turn and to halfway through it, the page must mark that
+   section's entry and no other. "‹ All spacetimes" must send the spacetime's page out with
+   its contents, and bring the list back, only once both are out, with the search as it was
+   typed and the list where it was scrolled to, and the open spacetime's name in the list must
+   bring its contents and its page back without drawing it again. Last, the page is opened at
+   the address of a spacetime, ?spacetime= and its id, and must come up on that spacetime
+   with its contents showing and the list never having slid.
 
    It prints one line per chart, slowest last, then every page error and console error the
    page raised and every label that moved, and exits non-zero if any chart missed the budget
@@ -110,9 +116,32 @@ onError(message => errors.push(`${opened}: ${message}`));
    task that blocked the page for more than 50ms, which is what the browser calls a long task,
    and keep every error the page raises. */
 await send('Page.addScriptToEvaluateOnNewDocument', { source: `
-  window.__mfsTiming = { busy: 0, long: [], errors: [], slides: 0 };
+  window.__mfsTiming = { busy: 0, long: [], errors: [], slides: 0, listSlides: 0, pageSlides: 0, crossed: [] };
+  /* Every slide of the list panel's two views: a view that starts to slide while the other
+     stands in the panel or is still sliding has crossed it, and one that comes in from
+     anywhere but the panel's left has come the wrong way. */
   document.addEventListener('transitionrun', function (e) {
-    if (e.target.classList && e.target.classList.contains('mfs-pane') && e.propertyName === 'transform') window.__mfsTiming.slides++;
+    if (e.target.id === 'mfs-content-panel' && e.propertyName === 'transform') window.__mfsTiming.pageSlides++;
+    if (!(e.target.classList && e.target.classList.contains('mfs-pane') && e.propertyName === 'transform')) return;
+    var t = window.__mfsTiming, pane = e.target;
+    t.slides++;
+    if (pane.id === 'mfs-list-pane') t.listSlides++;
+    var other = document.getElementById(pane.id === 'mfs-list-pane' ? 'mfs-toc-pane' : 'mfs-list-pane');
+    var room = document.getElementById('mfs-panes').getBoundingClientRect();
+    var o = other.getBoundingClientRect();
+    if (o.right > room.left + 0.5 && o.left < room.right - 0.5) t.crossed.push(pane.id + ' began to slide with ' + other.id + ' in the panel');
+    // The list comes back only once the spacetime's page has left as well.
+    var page = document.getElementById('mfs-content-panel');
+    if (pane.id === 'mfs-list-pane' && !pane.classList.contains('mfs-pane-off') &&
+        (page.getAnimations().length || page.getBoundingClientRect().left < window.innerWidth - 0.5)) {
+      t.crossed.push('the list began to slide in with the page of the spacetime still in sight');
+    }
+    // Where the slide starts is read from the slide itself: this may run frames into it.
+    var slide = pane.getAnimations().filter(function (a) { return a.transitionProperty === 'transform'; })[0];
+    var from = slide ? slide.effect.getKeyframes()[0].transform : 'nowhere';
+    if (!pane.classList.contains('mfs-pane-off') && from !== 'translateX(-100%)') {
+      t.crossed.push(pane.id + ' began to slide in from ' + from + ', not from the left of the panel');
+    }
   }, true);
   window.addEventListener('error', function (e) {
     window.__mfsTiming.errors.push(e.message + (e.filename ? ' (' + e.filename + ':' + e.lineno + ')' : ''));
@@ -400,9 +429,19 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
   /* Which of the list panel's two views shows, once any slide has ended: the one asked for
      fills the panel inside its padding and answers the keyboard, and the other stands wholly
      outside it, hidden and inert. */
-  window.__mfsShowing = function (contents) {
-    var list = document.getElementById('mfs-list-pane'), toc = document.getElementById('mfs-toc-pane'), out = [];
-    [list, toc].forEach(function (pane) { pane.getAnimations().forEach(function (a) { a.finish(); }); });
+  window.__mfsShowing = async function (contents) {
+    var list = document.getElementById('mfs-list-pane'), toc = document.getElementById('mfs-toc-pane');
+    var out = [];
+    // One view leaves and then the other comes, the list after the spacetime's page has left
+    // too, so each slide is waited out until none follows.
+    function over() {}
+    for (var quiet = 0, n = 0; quiet < 2 && n < 50; n++) {
+      var slides = list.getAnimations().concat(toc.getAnimations(), document.getElementById('mfs-content-panel').getAnimations());
+      quiet = slides.length ? 0 : quiet + 1;
+      await Promise.all(slides.map(function (a) { return a.finished.then(over, over); }));
+      await new Promise(function (r) { setTimeout(r, 0); });
+    }
+    out = out.concat(window.__mfsTiming.crossed.splice(0));
     var room = document.getElementById('mfs-panes').getBoundingClientRect();
     var shown = contents ? toc : list, off = contents ? list : toc;
     var what = contents ? 'the contents' : 'the list', other = contents ? 'the list' : 'the contents';
@@ -410,11 +449,39 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
     if (Math.abs(a.left - room.left) > 0.5 || Math.abs(a.right - room.right) > 0.5) out.push(what + ' do not fill the panel, from ' + a.left.toFixed(1) + ' to ' + a.right.toFixed(1));
     if (shown.inert || getComputedStyle(shown).visibility !== 'visible') out.push(what + ' are out of reach');
     if (b.right > room.left + 0.5 && b.left < room.right - 0.5) out.push(other + ' still stand in the panel, from ' + b.left.toFixed(1) + ' to ' + b.right.toFixed(1));
+    if (b.right > room.left + 0.5) out.push(other + ' stand to the right of the panel, not to its left');
     if (!off.inert || getComputedStyle(off).visibility !== 'hidden') out.push(other + ' can still be reached');
     return out;
   };
+  /* The entry marked as being read: one and no more, the one at index want where one is
+     asked for, pink as the open spacetime's name is in the list, and otherwise set exactly
+     as an entry that is not marked. */
+  window.__mfsCurrent = function (want) {
+    var entries = [].slice.call(document.querySelectorAll('#mfs-toc .mfs-toc-entry')), out = [];
+    var marked = entries.filter(function (e) { return e.classList.contains('mfs-toc-current'); });
+    if (marked.length !== 1) return ['the contents mark ' + marked.length + ' entries as being read'];
+    var at = entries.indexOf(marked[0]);
+    if (want !== undefined && at !== want) {
+      out.push('the contents mark "' + marked[0].textContent + '", not "' + entries[want].textContent + '"');
+    }
+    if (marked[0].getAttribute('aria-current') !== 'true' || document.querySelectorAll('#mfs-toc [aria-current]').length !== 1) {
+      out.push('the entry being read is not the one named to a screen reader');
+    }
+    var name = document.querySelector('.mfs-result-active');
+    var a = getComputedStyle(marked[0]), plain = entries.filter(function (e) { return e !== marked[0]; })[0];
+    if (name && a.color !== getComputedStyle(name).color) out.push('the entry being read is ' + a.color + ', not ' + getComputedStyle(name).color + ' as the open spacetime in the list');
+    if (plain) {
+      var b = getComputedStyle(plain);
+      if (a.color === b.color) out.push('the entry being read is the colour of the rest');
+      ['backgroundColor', 'backgroundImage', 'fontWeight', 'fontSize', 'fontStyle', 'textDecorationLine', 'textShadow', 'boxShadow',
+       'filter', 'borderTopWidth', 'outlineStyle', 'padding', 'transitionDuration', 'animationName'].forEach(function (k) {
+        if (a[k] !== b[k]) out.push('the entry being read differs from the rest in ' + k + ': ' + a[k] + ', not ' + b[k]);
+      });
+    }
+    return out;
+  };
   /* The contents against the headings of the page as drawn, and the contents showing. */
-  window.__mfsContents = function () {
+  window.__mfsContents = async function () {
     function texts(selector) {
       return [].map.call(document.querySelectorAll(selector), function (el) { return el.textContent.trim(); });
     }
@@ -422,7 +489,7 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
     if (!heads.length || heads.join('|') !== entries.join('|')) {
       out.push('the contents read ' + JSON.stringify(entries) + ', not the headings ' + JSON.stringify(heads));
     }
-    return out.concat(window.__mfsShowing(true));
+    return out.concat(await window.__mfsShowing(true), window.__mfsCurrent());
   };
   window.__mfsSettled = function () {
     return document.fonts.ready.then(function () {
@@ -475,8 +542,10 @@ function timed(action, chart) {
                        elements: panel.getElementsByTagName('*').length };
         window.__mfsSettled().then(function () {
           result.moved = stop();
+          return window.__mfsContents();
+        }).then(function (contents) {
           result.margins = window.__mfsMargins(panel).concat(window.__mfsReadable(panel), window.__mfsGlow(document.documentElement), window.__mfsPink(),
-            window.__mfsSizes(), window.__mfsPanelEdges(), window.__mfsContents());
+            window.__mfsSizes(), window.__mfsPanelEdges(), contents);
           resolve(result);
         });
       }, 0); }); });
@@ -616,8 +685,10 @@ function opening(id) {
 }
 
 /* Press the last, the middle and the first entry of the contents and hold each section to its
-   place, then the link back and hold the list to how it was left, then the open spacetime's
-   name, which must bring the contents back over the same page. The search is left empty. */
+   place and its entry to being the one marked, then scroll to each section and to halfway
+   through it and hold the mark to it, then the link back and hold the list to how it was left,
+   then the open spacetime's name, which must bring the contents back over the same page. The
+   search is left empty. */
 async function contents() {
   const found = await evaluate(`(async function () {
     var out = [], kept = window.__mfsList, panel = document.getElementById('mfs-content-panel');
@@ -656,9 +727,50 @@ async function contents() {
       if (Math.abs(section - top) > 1 && !(end && section > top)) {
         out.push('the entry "' + entries[i].textContent + '" leaves its section at ' + section.toFixed(1) + ', not ' + top.toFixed(1));
       }
+      window.__mfsCurrent(i).forEach(function (m) { out.push('after the entry "' + entries[i].textContent + '" was pressed, ' + m); });
     }
+    /* Where each section stands in what scrolls, measured here from the page: scrolled to a
+       section's top, and to halfway to the next one's, that section is the one being read.
+       Sections the scroll ends before reaching are left to the presses above. */
+    function line() {
+      var head = panel.querySelector('.mfs-header');
+      if (!head.classList.contains('mfs-header-loose')) return head.getBoundingClientRect().bottom;
+      return phone ? 0 : panel.getBoundingClientRect().top + panel.clientTop + parseFloat(getComputedStyle(panel).paddingTop);
+    }
+    function frames() { return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); }); }
+    async function scrollTo(y) {
+      if (phone) window.scrollTo({ top: y, behavior: 'instant' }); else panel.scrollTo({ top: y, behavior: 'instant' });
+      await frames();
+    }
+    await scrollTo(0);
+    var far = (phone ? document.documentElement.scrollHeight - window.innerHeight : panel.scrollHeight - panel.clientHeight) - 4;
+    var tops = labels.map(function (l) { return at() + (l.closest('.mfs-section') || l).getBoundingClientRect().top - line(); });
+    window.__mfsCurrent(0).forEach(function (m) { out.push('at the top of the page, ' + m); });
+    var held = 0;
+    for (var j = 0; j < tops.length; j++) {
+      var next = j + 1 < tops.length ? tops[j + 1] : far;
+      var places = [tops[j], (tops[j] + Math.min(next, far)) / 2];
+      for (var q = 0; q < places.length; q++) {
+        if (places[q] < 0 || places[q] > far || next - tops[j] < 8) continue;
+        await scrollTo(places[q]);
+        // The name over the page may come loose or stick as it scrolls, which moves the line.
+        var here = labels.map(function (l) { return (l.closest('.mfs-section') || l).getBoundingClientRect().top - line(); });
+        var reading = 0;
+        here.forEach(function (h, n) { if (h <= 0.5) reading = n; });
+        if (here.some(function (h) { return h > 0.5 && h < 3.5; })) continue;
+        held++;
+        window.__mfsCurrent(reading).forEach(function (m) { out.push('scrolled to ' + places[q].toFixed(0) + ', in "' + entries[reading].textContent + '", ' + m); });
+      }
+    }
+    if (tops.length > 1 && !held) out.push('no place in the page was found at which to hold the entry being read');
+    await scrollTo(0);
+    var slidesBefore = window.__mfsTiming.pageSlides;
     document.getElementById('mfs-toc-back').click();
-    out = out.concat(window.__mfsShowing(false));
+    if (!still && !panel.getAnimations().length) out.push('the page of the spacetime did not start to slide out with its contents');
+    out = out.concat(await window.__mfsShowing(false));
+    if (panel.getAnimations().length || panel.getBoundingClientRect().left < window.innerWidth - 0.5) out.push('the page of the spacetime is still in sight with the list back');
+    if (still && window.__mfsTiming.pageSlides !== slidesBefore) out.push('the page of the spacetime slid out under reduced motion');
+    if (new URLSearchParams(location.search).get('spacetime')) out.push('the address still names the spacetime with the list back');
     if (input.value !== kept.value) out.push('the list came back with the search ' + JSON.stringify(input.value) + ', not ' + JSON.stringify(kept.value));
     if (Math.abs(results.scrollTop - kept.scroll) > 0.5) out.push('the list came back scrolled to ' + results.scrollTop + ', not ' + kept.scroll);
     if (!document.querySelector('.mfs-result-active')) out.push('the list came back without the open spacetime marked');
@@ -667,27 +779,32 @@ async function contents() {
     var page = panel.querySelector('.mfs-header');
     document.querySelector('.mfs-result-active').click();
     if (panel.querySelector('.mfs-header') !== page) out.push('the open spacetime was drawn again from the list');
-    out = out.concat(window.__mfsContents());
+    out = out.concat(await window.__mfsContents());
+    await Promise.all(panel.getAnimations().map(function (a) { return a.finished.catch(function () {}); }));
+    await frames();
+    if (Math.abs(panel.getBoundingClientRect().right - window.innerWidth) > 0.5 || panel.style.pointerEvents !== 'all') out.push('the page of the spacetime did not come back with its contents');
+    if (!new URLSearchParams(location.search).get('spacetime')) out.push('the address does not name the spacetime that came back');
     if (phone) { window.scrollTo(0, 0); await settled(); }
     return out;
   })()`);
   for (const m of found) errors.push(`${opened}: ${m}`);
 }
 
-/* Open the page at a spacetime's own address: it must come up on that spacetime, its contents
-   showing from the start, with no slide between the two views. */
+/* Open the page at a spacetime's own address: it must come up on that spacetime with its
+   contents showing, and the list must never have slid: it is out from the start. */
 async function direct(id) {
   opened = `${id} by its address`;
   await send('Page.navigate', { url: `${base}/MFS/?spacetime=${id}` });
   let found = null;
   for (let i = 0; i < LIMIT_S * 10 && !found; i++) {
     await sleep(100);
-    found = await evaluate(`(function () {
+    found = await evaluate(`(async function () {
       var t = window.__mfsTiming, panel = document.getElementById('mfs-content-panel');
       if (!(t && t.ready && panel && panel.querySelector('.mfs-header') && t.busy === 0 &&
             /^translateX\\(0(px)?\\)$/.test(panel.style.transform))) return null;
-      var out = window.__mfsContents();
-      if (t.slides) out.push('the contents slid in, ' + t.slides + ' slides');
+      var out = await window.__mfsContents();
+      if (t.listSlides) out.push('the list slid, ' + t.listSlides + ' times');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches && t.slides) out.push('the views slid, ' + t.slides + ' times, under reduced motion');
       var active = document.querySelector('.mfs-result-active');
       if (!active || active.dataset.id !== ${JSON.stringify(id)}) out.push('the list marks ' + (active ? active.dataset.id : 'nothing'));
       if (new URLSearchParams(location.search).get('spacetime') !== ${JSON.stringify(id)}) out.push('the address reads ' + location.search);
