@@ -2360,10 +2360,11 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertLess(abs(bardeen_f(horizon)), 1e-12, f"Bardeen {pid} ends on a horizon")
                 self.assertEqual(points[0][0], 0.0 if view else horizon, pid)
                 for (r0, _, z0), (r1, _, z1) in zip(points, points[1:]):
-                    middle = 0.5 * (r0 + r1)
-                    if abs(middle - horizon) > 0.02 and r1 - r0 > 1e-9:
-                        slope = math.sqrt(1 / bardeen_f(middle) - 1)
-                        self.assertLess(abs(abs(z1 - z0) / (r1 - r0) - slope), 2e-3 * (1 + slope), f"Bardeen {pid} at {middle}")
+                    if min(abs(r0 - horizon), abs(r1 - horizon)) > 0.02:
+                        # Simpson's rule for the rise along the chord, which lies clear of the horizon.
+                        slopes = [math.sqrt(max(1 / bardeen_f(r) - 1, 0.0)) for r in (r0, 0.5 * (r0 + r1), r1)]
+                        rise = (r1 - r0) * (slopes[0] + 4 * slopes[1] + slopes[2]) / 6
+                        self.assertLess(abs(abs(z1 - z0) - rise), 1e-3 * rise + 2e-7, f"Bardeen {pid} from {r0} to {r1}")
         cap = piece("bardeen", "inside", view=1)
         a = (1 / 3) ** 1.5
         for r, _, z in cap[1:]:
