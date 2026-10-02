@@ -859,6 +859,14 @@ def _fjnw_reach(m, of_r):
     return [of_r(1 / (1 - math.exp(-u))) for u in (hi, lo)]
 
 
+def _bd_reach(m, of_r):
+    """The embedding of Brans and Dicke's equator is read in the harmonic chart at k = r_0 = 1, where
+    e^(-2u) = 1 - 2 r_0/r: the radii r it reaches, least first, each carried to a chart's own radial
+    coordinate by of_r."""
+    lo, hi = m.reach("harmonic", "u")
+    return [of_r(2 / (1 - math.exp(-2 * u))) for u in (hi, lo)]
+
+
 def witten(chart):
     """The moment t = 0 of Witten's black hole outside the horizon, the meridian theta = 0 of his
     cigar, as far as the embedding reaches in his proper distance r, at lambda = m = 1: level in
@@ -1263,6 +1271,19 @@ def _ab_metrics(system, view):
             raise KeyError((system, view))
         out.append(Mark(m, lines))
     return out
+
+
+def _cremmer_scherk(view):
+    """Cremmer and Scherk's moment t = 0. On the plane of t and x the cylinder is the line along x
+    from -a to a and the sphere the event x = a. On the plane of t and phi, which stands at x = 0,
+    the cylinder is its ring x = 0, the whole line t = 0 round phi; the sphere stands at x = a, off
+    that plane."""
+    equator = moments("cremmer_scherk", "equator")[0]
+    if view == "circle":
+        return [Mark(equator, along(0.0, 0.0, 2 * math.pi), label="$t = 0$, $x = 0$")]
+    sphere = moments("cremmer_scherk", "sphere", label="$t = 0$, $x = a$")[0]
+    lo, hi = equator.reach("cartesian", "x")
+    return [Mark(equator, along(0.0, lo, hi)), Mark(sphere, points=[(0.0, 1.0)])]
 
 
 def nhek_radius(y):
@@ -2027,6 +2048,18 @@ def _rt_fronts():
     return [Mark(m, [[(m.time, 0.0), (m.time, 100.0)]]) for m in moments("robinson_trautman", "fronts")]
 
 
+BONDI_SPHERE = "the sphere $cu = 10\\,m_0$, $r = 10\\,m_0$"
+
+
+def _bondi_sphere(inverse=False):
+    """Bondi and Sachs's sphere of the world tube at the middle of the burst, cu = 10 m_0 and
+    r = 10 m_0: one event of each plane of u and r, or of u and l = 1/r."""
+    def marks():
+        (m,) = moments("bondi_sachs", "sphere", label=BONDI_SPHERE)
+        return [Mark(m, points=[(10.0, 0.1 if inverse else 10.0)])]
+    return marks
+
+
 def string_wave_V(u, X):
     """V of the moving string chart on the surface v = 0 of the isotropic chart, at the line X, for
     the pulse A = exp(-4u^2)/2: 2(X - A)A' + int_0^u A'^2, where A'^2 = 16u^2 exp(-8u^2) and its
@@ -2116,6 +2149,9 @@ FLAT = {
     ("kerr_taub_nut", "boyer_lindquist", "principal"): lambda: one("kerr_taub_nut", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_taub_nut", "boyer_lindquist", "above"): lambda: kerr_above("kerr_taub_nut"),
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
+    ("bondi_sachs", "bondi", "equator"): _bondi_sphere(),
+    ("bondi_sachs", "bondi", "axis"): _bondi_sphere(),
+    ("bondi_sachs", "compactified", "equator"): _bondi_sphere(inverse=True),
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
@@ -2226,6 +2262,15 @@ FLAT = {
         "fisher_jnw", lambda m: along(0.0, *_fjnw_reach(m, lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2))),
     ("fisher_jnw", "harmonic", "radial"): lambda: one(
         "fisher_jnw", lambda m: along(0.0, *(u / 2 for u in m.reach("harmonic", "u")))),
+    # Brans and Dicke's sphere at omega = 6 and C = -1/4: the moment t = 0 as far as the embedding
+    # reaches, from the singularity out, in the isotropic radius, which its plane draws in units of
+    # B = r_0/2, in Campanelli and Lousto's r, and in the harmonic coordinate.
+    ("brans_dicke_sphere", "isotropic", "radial"): lambda: one(
+        "brans_dicke_sphere", lambda m: along(0.0, *_bd_reach(m, lambda r: r - 1 + math.sqrt(r * (r - 2))))),
+    ("brans_dicke_sphere", "spherical", "radial"): lambda: one(
+        "brans_dicke_sphere", lambda m: along(0.0, *_bd_reach(m, lambda r: r))),
+    ("brans_dicke_sphere", "harmonic", "radial"): lambda: one(
+        "brans_dicke_sphere", lambda m: along(0.0, *m.reach("harmonic", "u"))),
     # The exponential metric at m = 1: the moment t = 0 from r = m/3 on the far side of the throat to
     # r = 6m on the near side, in the isotropic radius, on the Cartesian line through r = 0, in the
     # areal radius R = r e^(m/r), which covers the near side from the throat R = e m out, and in u = 1/r.
@@ -2474,6 +2519,27 @@ FLAT = {
     ("majumdar_papapetrou", "cylindrical", "radial"): lambda: one(
         "majumdar_papapetrou", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_holes"),
     ("majumdar_papapetrou", "cartesian", "tz"): _mp_axis,
+    # Bonnor's stars: each sphere's equator lies on the plane of t and r of its own chart, and the
+    # sphere of 1975's on the two exterior planes as well, the areal radius being r + m; the cloud's
+    # on its own plane and on the harmonic chart's line through its centre; and the spheroid's
+    # equatorial plane meets its axis at one event, the centre of the disc u = 0.
+    ("bonnor_charged_dust", "sphere_1975", "radial"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *m.reach("sphere_1975", "r")), view_id="star"),
+    ("bonnor_charged_dust", "sphere_1975", "through"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *m.reach("sphere_1975", "r")), view_id="star"),
+    ("bonnor_charged_dust", "sphere_1965", "radial"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *m.reach("sphere_1965", "r")), view_id="star_1965"),
+    ("bonnor_charged_dust", "exterior", "radial"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *m.reach("exterior", "r")), view_id="star"),
+    ("bonnor_charged_dust", "exterior_areal", "radial"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *(r + 1 for r in m.reach("exterior", "r"))), view_id="star"),
+    ("bonnor_charged_dust", "quasi_black_hole", "radial"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *m.reach("quasi_black_hole", "r")), view_id="cloud"),
+    ("bonnor_charged_dust", "harmonic", "tx"): lambda: one(
+        "bonnor_charged_dust", lambda m: across(0.0, *m.reach("quasi_black_hole", "r")), view_id="cloud"),
+    ("bonnor_charged_dust", "spheroid_interior", "axis"): lambda: [
+        Mark(moments("bonnor_charged_dust", "spheroid", label="$t = 0$, $u = 0$")[0], points=[(0.0, 0.0)])],
+    ("bonnor_charged_dust", "spheroid_exterior", "axis"): lambda: [],
     ("israel_wilson_perjes", "cylindrical", "midplane"): lambda: one(
         "israel_wilson_perjes", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_sources"),
     ("israel_wilson_perjes", "spheroidal", "axis"): lambda: one(
@@ -2494,6 +2560,8 @@ FLAT = {
     ("near_horizon_extreme_kerr", "global", "equator"): lambda: _nhek("global"),
     ("bertotti_robinson", "static", "radial"): lambda: _br("static"),
     ("bertotti_robinson", "poincare", "tx"): lambda: _br("poincare"),
+    ("cremmer_scherk", "cartesian", "tx"): lambda: _cremmer_scherk("tx"),
+    ("cremmer_scherk", "cartesian", "circle"): lambda: _cremmer_scherk("circle"),
     ("plebanski_hacyan", "sphere", "tz"): lambda: _plebanski_hacyan("sphere"),
     ("plebanski_hacyan", "sphere_rindler", "wedge"): lambda: _plebanski_hacyan("sphere_rindler"),
     ("plebanski_hacyan", "anti_nariai", "wedge"): lambda: _plebanski_hacyan("anti_nariai"),

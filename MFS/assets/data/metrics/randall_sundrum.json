@@ -69,6 +69,11 @@
       "id": "lifshitz_spacetime",
       "kind": "family",
       "text": "Fill the space beside the wall with an anisotropic fluid and time and space warp at different rates, the scaling of Lifshitz spacetime, as Peter Koroteev and Maxim Libanov found in 2007 [koroteev2008]."
+    },
+    {
+      "id": "cremmer_scherk",
+      "kind": "family",
+      "text": "Compactification as Randall and Sundrum's title means it: extra dimensions rolled into a small sphere, in a solution of gravity with gauge fields in six dimensions [cremmer1976, horvath1977]."
     }
   ],
   "references": [
@@ -88,7 +93,9 @@
     "maldacena1998",
     "gubser2001",
     "atlas2021",
-    "koroteev2008"
+    "koroteev2008",
+    "cremmer1976",
+    "horvath1977"
   ],
   "coordinates": [
     {

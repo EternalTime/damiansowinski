@@ -71,6 +71,11 @@
       "id": "misner_zapolsky",
       "kind": "family",
       "text": "A star from the same list of Tolman's whose density is infinite at the centre and falls as $1/r^2$. Its pressure there is a third of its energy density, the ratio that holds for radiation [tolman1939]."
+    },
+    {
+      "id": "bonnor_charged_dust",
+      "kind": "family",
+      "text": "A star of dust held up by electric repulsion, with no pressure. The redshift of its centre has no bound [bonnor1975]."
     }
   ],
   "references": [
@@ -91,7 +96,8 @@
     "bohmerlobo2008",
     "raghoonundun2015",
     "whittaker1968",
-    "wahlquist1968"
+    "wahlquist1968",
+    "bonnor1975"
   ],
   "coordinates": [
     {

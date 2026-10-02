@@ -313,6 +313,10 @@ LIFSHITZ_PLANE = {"x": "0", "y": "0"}
 # anti-Nariai's hold a point of its hyperbolic plane off the pole theta = 0.
 PH_PLANE = {"x": "0", "y": "0"}
 PH_HYPERBOLIC = {"theta": "1", "phi": "0"}
+# Cremmer and Scherk's plane of the time and x holds the other flat dimensions and a point of the
+# sphere's equator fixed, and their plane of the time and phi one point of the flat dimensions.
+CS_LARGE = {"y": "0", "z": "0", "theta": "pi/2", "phi": "0"}
+CS_EQUATOR = {"x": "0", "y": "0", "z": "0", "theta": "pi/2"}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -956,6 +960,70 @@ ROCKET_INPUT = ("A burn from $u = 0$ to $cu = 10\\,m_0$ along the first axis, wi
                 "$2/5$, a speed of $0.38\\,c$. The mass is $m = m_0e^{-3w}$ from the mass $m_0$ at the start, the least loss that keeps the density "
                 "of the radiation positive in every direction, and ends at $0.30\\,m_0$.")
 RT_FRONTS = {"epsilon": "4/5"}
+
+# Bondi and Sachs's metric is drawn for a weak burst from a source that does not rotate: its
+# quadrupole moment makes one swing, Q = q sin^6(pi u/T) for 0 <= u <= T, the shear is
+# sigma = d_u^2 Q sin^2 theta, and V, beta, U and gamma are Bondi, van der Burg and Metzner's
+# expansion in 1/r through the orders they give, in units G = c = m_0 = 1 with m_0 the mass
+# before the burst. bondi_sachs.md Step 3 writes the expansion out, and burst_checks holds it to
+# the published Ricci tensor.
+BURST = {"T": 20, "q": "1/4", "R": 10}
+
+
+def bondi_burst(T=BURST["T"], q=BURST["q"]):
+    """The declared burst: V, beta, U and gamma of Bondi's chart as expressions in u, r and theta,
+    Schwarzschild's before u = 0, with the shear sigma and the mass aspect M, and beside them the
+    mass radiated, 8/15 of the integral of the square of d_u^3 Q, which is the mean over the
+    sphere of what M loses."""
+    u, r, th, w = sp.symbols("u r theta w", real=True)
+    T, q = sp.sympify(T), sp.sympify(q)
+    Q = q * sp.sin(sp.pi * w / T) ** 6
+
+    def integral(f):
+        F = sp.integrate(sp.expand(f.rewrite(sp.exp)), w)
+        F = sp.expand(sp.expand(F.rewrite(sp.exp)).rewrite(sp.cos))
+        return sp.expand(F - F.subs(w, 0))
+    A1, a = sp.diff(Q, w), sp.diff(Q, w, 2)
+    E = integral(sp.diff(a, w) ** 2)
+    F, I2, J = integral(E), integral(a ** 2), integral(a * E)
+    G = integral(F)
+    s, x = sp.sin(th), sp.cos(th)
+    P2 = (3 * x ** 2 - 1) / 2
+
+    def branch(Q, A1, a, E, F, G, I2, J):
+        # The mass aspect M, Bondi's N and the coefficient of 1/r^3 in gamma, each carried along u
+        # from Schwarzschild's values by Bondi's three supplementary equations.
+        sigma = a * s ** 2
+        M = 1 + 4 * a * P2 - E * s ** 4
+        n1, n3 = 4 * A1, sp.Rational(4, 3) * F - 2 * a ** 2
+        N = n1 * s * x + n3 * s ** 3 * x
+        C3 = ((A1 / 2 + Q) * s ** 2 + 2 * I2 * s ** 2 * P2 - J * s ** 6 / 2
+              + (G / 3 - I2 / 2) * s ** 2 * (s ** 2 - 2 * x ** 2))
+        dN = n1 * (2 * x ** 2 - s ** 2) + n3 * (4 * s ** 2 * x ** 2 - s ** 4)
+        return {"V": r - 2 * M - (dN - a ** 2 * s ** 2 * (16 * x ** 2 + s ** 2 / 2)) / r,
+                "beta": -sigma ** 2 / (4 * r ** 2),
+                "U": -4 * a * s * x / r ** 2 + (2 * N + 10 * a ** 2 * s ** 3 * x) / r ** 3,
+                "gamma": sigma / r + C3 / r ** 3, "sigma": sigma, "M": M}
+    zero = sp.Integer(0)
+    before = branch(*[zero] * 8)
+    during = {k: v.subs(w, u) for k, v in branch(Q, A1, a, E, F, G, I2, J).items()}
+    ET, FT, late = E.subs(w, T), F.subs(w, T), u - T
+    after = branch(zero, zero, zero, ET, FT + ET * late, G.subs(w, T) + FT * late + ET * late ** 2 / 2,
+                   I2.subs(w, T), J.subs(w, T))
+    whole = {k: sp.Piecewise((before[k], u < 0), (during[k], u < T), (after[k], True)) for k in before}
+    return whole, {"radiated": sp.Rational(8, 15) * ET, "shear": a.subs(w, u), "news": sp.diff(a, w).subs(w, u)}
+
+
+_BURST, BURST_FACTS = bondi_burst()
+BONDI_BURST = {k: str(_BURST[k]) for k in ("V", "beta", "U", "gamma")}
+BONDI_BURST_INVERSE = {k: str(_BURST[k].subs(sp.Symbol("r", real=True), 1 / sp.Symbol("ell", real=True)))
+                       for k in ("V", "beta", "U", "gamma")}
+BURST_INPUT = ("A burst from a source of mass $m_0$ whose quadrupole moment makes one swing, "
+               "$Q = \\tfrac{1}{4}m_0^3\\sin^6(\\pi cu/20m_0)$ from $u = 0$ to $cu = 20\\,m_0$: the shear is "
+               "$\\sigma = \\partial_u^2Q\\,\\sin^2\\theta$, and $V$, $\\beta$, $U$, and $\\gamma$ are Bondi, van der Burg, "
+               "and Metzner's expansion in $1/r$ through the orders they give, $\\gamma$ and $U$ through $r^{-3}$, "
+               "$\\beta$ through $r^{-2}$, and $V$ through $r^{-1}$. The Ricci tensor those orders leave is $1.4\\%$ of the "
+               "curvature at $r = 10\\,m_0$ and falls as $1/r$ beyond it.")
 RT_INPUT = ("The first front $f(0, \\theta)^2 = f_0^2\\left(1 - \\epsilon^2\\cos^2\\theta\\right)$ at "
             "$\\epsilon = 4/5$, with $f_0^2 = \\ln\\left((1 + \\epsilon)/(1 - \\epsilon)\\right)/(2\\epsilon)$ so that "
             "every front has the area $4\\pi r^2$, and after it the solution of the Robinson-Trautman equation, "
@@ -1395,6 +1463,14 @@ def _mirror_rows():
     return rows
 
 
+# Brans and Dicke's static sphere at omega = 6 and C = -1/4, where lambda = 1 and every power is
+# rational: twice the scalar charge of a body of weak gravity, whose C = -1/8 confines the difference
+# from Schwarzschild's metric to within a few thousandths of the singular radius. In Campanelli and
+# Lousto's letters m = 1/lambda - 1 = 0 and n = 1 - (C + 1)/lambda = 1/4, and in the harmonic chart
+# b = (C + 2)k/2 lambda = 7k/8 and s = kC/lambda = -k/4.
+BRANS_DICKE = {"B": 1, "C": "-1/4", "lambda": 1}
+BRANS_DICKE_SPHERICAL = {"r_0": 1, "m": 0, "n": "1/4"}
+BRANS_DICKE_HARMONIC = {"k": 1, "b": "7/8", "s": "-1/4"}
 # Roberts's collapsing scalar field for its three outcomes: p = 9/10, where the field disperses, the
 # threshold p = 1, and p = 2, where it makes a black hole. Nothing in it sets a scale, so lengths
 # are in any unit ell.
@@ -1432,6 +1508,15 @@ HAYWARD_INPUT = ("$m(v) = m_0\\sin^2(\\pi v/4m_0)$ from $v = 0$ to $2\\,m_0$, $m
                  "negative energy evaporates it.")
 
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m.
+# Bonnor's stars at m = 1: both spheres at r_0 = 2m, the spheroid at a = m and u_0 = 1, and Lemos and
+# Weinberg's cloud at b = m/2, which the harmonic chart is drawn with too.
+BCD_STAR = {"m": 1, "r_0": 2}
+BCD_SPHEROID = {"m": 1, "a": 1, "u_0": 1}
+BCD_CLOUD = {"m": 1, "b": "1/2"}
+BCD_CLOUD_U = "1 + 1/sqrt(x**2 + y**2 + z**2 + 1/4)"
+BCD_CLOUD_INPUT = ("Lemos and Weinberg's cloud of mass parameter $m$ and core length $b = m/2$: "
+                   "$U = 1 + m/\\sqrt{x^2 + y^2 + z^2 + b^2}$.")
+BCD_AXIS = {"theta": "pi/2", "phi": "0"}
 MP_TWO = "1 + 1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2)"
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
 MP_TWO_INPUT = ("Two holes, each of mass parameter $m$, on the axis at $z = \\pm 2m$: "
@@ -2753,6 +2838,17 @@ DIAGRAMS = [
     Diagram("fisher_jnw", "harmonic", "radial", "$t$ and $u$", ("t", "u"), (0, 4, -4, 4),
             "$ku$", "$ct/k$", FJNW_HARMONIC, EQUATOR, families=("outgoing", "ingoing"), areal=True,
             areal_contours=(0.5, 1.0, 2.0, 4.0)),
+    # Brans and Dicke's static sphere on its plane of the time and the radial coordinate in each of its
+    # three charts, at omega = 6 and C = -1/4: from the singularity out in Brans's isotropic radius, whose
+    # singularity is B, and in Campanelli and Lousto's r, whose singularity is 2 r_0, and from spatial
+    # infinity u = 0 in toward the singularity u = infinity in Bronnikov's harmonic u.
+    Diagram("brans_dicke_sphere", "isotropic", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (1, 5, -2, 2),
+            "$\\rho/B$", "$ct/B$", BRANS_DICKE, EQUATOR, areal=True, inside=True),
+    Diagram("brans_dicke_sphere", "spherical", "radial", "$t$ and $r$", ("t", "r"), (2, 6, -2, 2),
+            "$r/r_0$", "$ct/r_0$", BRANS_DICKE_SPHERICAL, EQUATOR, areal=True),
+    Diagram("brans_dicke_sphere", "harmonic", "radial", "$t$ and $u$", ("t", "u"), (0, 4, -4, 4),
+            "$ku$", "$ct/k$", BRANS_DICKE_HARMONIC, EQUATOR, families=("outgoing", "ingoing"), areal=True,
+            areal_contours=(1.0, 1.5, 2.0, 4.0)),
     # The exponential metric of Papapetrou and Yilmaz at m = 1, on its plane of the time and the radial
     # coordinate in each chart: the isotropic radius from the singular horizon r = 0 through the throat
     # r = m, the line through r = 0 in the Cartesian chart, the areal radius from the throat R = e m
@@ -3315,6 +3411,13 @@ DIAGRAMS = [
             input=LW_INPUT + " The radius $a(\\tau)$ is solved from this spacetime's own $G^\\chi{}_\\chi = 0$, at rest "
                              "with $a = a_m$ at $\\tau = 0$, which is the lattice's own "
                              "$\\dot{a}^2 = a_m/a - 1$."),
+    # Cremmer and Scherk's Minkowski space times a sphere, in units of the sphere's radius: a plane of the
+    # time and one flat dimension, and the plane of the time and the sphere's equator, which closes on itself.
+    Diagram("cremmer_scherk", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2),
+            "$x/a$", "$ct/a$", {"a": 1}, CS_LARGE, families=SIDEWAYS),
+    Diagram("cremmer_scherk", "cartesian", "circle", "$t$ and $\\phi$", ("t", "\\phi"),
+            (0, 2 * math.pi, -math.pi, math.pi), "$\\phi$", "$ct/a$", {"a": 1}, CS_EQUATOR, families=SIDEWAYS,
+            periodic=("\\phi",)),
     Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
             (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
@@ -3346,6 +3449,29 @@ DIAGRAMS = [
             (0, 1, -0.5, 0.5), "$r/r_b$", "$ct/r_b$", {"r_b": 1}, EQUATOR, areal=True),
     Diagram("misner_zapolsky", "power_law", "radial", "$t$ and $r$", ("t", "r"),
             (0, 2, -1, 1), "$r/a$", "$ct/a$", {"n": 1, "a": 1}, EQUATOR, areal=True),
+    # Bonnor's stars of charged dust, m = 1 the unit: the two spheres at r_0 = 2m with their exterior
+    # in both radii, the spheroid at a = m and u_0 = 1 along its axis of symmetry, and Lemos and
+    # Weinberg's cloud at b = m/2 in its own chart and as the harmonic chart's declared U.
+    Diagram("bonnor_charged_dust", "harmonic", "tx", "through the cloud", ("t", "x"), (-3, 3, -3, 3),
+            "$x/m$", "$ct/m$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS,
+            functions={"U": BCD_CLOUD_U}, input=BCD_CLOUD_INPUT),
+    Diagram("bonnor_charged_dust", "sphere_1965", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 2, -2, 2), "$r/m$", "$ct/m$", BCD_STAR, EQUATOR, areal=True),
+    Diagram("bonnor_charged_dust", "sphere_1975", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 2, -2, 2), "$r/m$", "$ct/m$", BCD_STAR, EQUATOR, areal=True),
+    Diagram("bonnor_charged_dust", "sphere_1975", "through", "through the centre", ("t", "r"),
+            (0, 2, -2, 2), "$x/m$", "$ct/m$", BCD_STAR, EQUATOR,
+            mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
+    Diagram("bonnor_charged_dust", "exterior", "radial", "$t$ and $r$", ("t", "r"),
+            (2, 6, -2, 2), "$r/m$", "$ct/m$", BCD_STAR, EQUATOR, areal=True),
+    Diagram("bonnor_charged_dust", "exterior_areal", "radial", "$t$ and $R$", ("t", "R"),
+            (3, 7, -2, 2), "$R/m$", "$ct/m$", BCD_STAR, EQUATOR, areal=True),
+    Diagram("bonnor_charged_dust", "spheroid_interior", "axis", "the axis", ("t", "u"),
+            (0, 1, -1, 1), "$u$", "$ct/m$", BCD_SPHEROID, BCD_AXIS),
+    Diagram("bonnor_charged_dust", "spheroid_exterior", "axis", "the axis", ("t", "u"),
+            (1, 2.5, -1.5, 1.5), "$u$", "$ct/m$", BCD_SPHEROID, BCD_AXIS),
+    Diagram("bonnor_charged_dust", "quasi_black_hole", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 4, -4, 4), "$r/m$", "$ct/m$", BCD_CLOUD, EQUATOR, areal=True),
     Diagram("kerr", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
             "$r/(GM/c^2)$", "$ct/(GM/c^2)$", {"G": 1, "M": 1, "a": "9/10"},
             {"theta": "0", "phi": "0"}, orient="ingoing"),
@@ -4261,6 +4387,25 @@ DIAGRAMS = [
             "$r/m$", "$(cu + r)/m$", {}, EQUATOR, to_display=FINKELSTEIN_OUT, orient="outgoing",
             fronts=RT_FRONTS, input=RT_INPUT, singular_runs=True,
             lines=(("shell", "x0", "0", "the first front, $u = 0$"),)),
+    # Bondi's chart for the declared burst, on the equator and on the axis: sigma is even about the
+    # equator and vanishes on the axis, so U and every Gamma^theta of the plane vanish on both and
+    # the null curves drawn are null geodesics. The expansion in 1/r is for large r, so the views
+    # start at the world tube r = 10 m_0. The chart of l = 1/r runs to future null infinity, l = 0.
+    Diagram("bondi_sachs", "bondi", "equator", "the equator", ("u", "r"), (10, 40, 10, 60),
+            "$r/m_0$", "$(cu + r)/m_0$", {}, EQUATOR, to_display=FINKELSTEIN_OUT, orient="outgoing",
+            functions=BONDI_BURST, input=BURST_INPUT,
+            lines=(("shell", "x0", "0", "the burst starts, $u = 0$"),
+                   ("shell", "x0", "20", "the burst ends, $cu = 20\\,m_0$"))),
+    Diagram("bondi_sachs", "bondi", "axis", "the axis", ("u", "r"), (10, 40, 10, 60),
+            "$r/m_0$", "$(cu + r)/m_0$", {}, {"theta": "0", "phi": "0"}, to_display=FINKELSTEIN_OUT,
+            orient="outgoing", functions=BONDI_BURST, input=BURST_INPUT, kretschmann=False,
+            lines=(("shell", "x0", "0", "the burst starts, $u = 0$"),
+                   ("shell", "x0", "20", "the burst ends, $cu = 20\\,m_0$"))),
+    Diagram("bondi_sachs", "compactified", "equator", "the equator", ("u", "\\ell"), (0, 12.5, -2, 22),
+            "$100\\,m_0\\ell$", "$cu/m_0$", {}, EQUATOR, to_display=((0, 100), (1, 0)), orient="outgoing",
+            families=("outgoing", "ingoing"), functions=BONDI_BURST_INVERSE, input=BURST_INPUT,
+            lines=(("shell", "x0", "0", "the burst starts, $u = 0$"),
+                   ("shell", "x0", "20", "the burst ends, $cu = 20\\,m_0$"))),
     # Kinnersley's photon rocket on the two halves of the axis it flies along, where sin(theta) = 0
     # kills g_u theta and every Gamma^theta of the plane, so the null curves are null geodesics.
     # The rectilinear chart measures theta in the rocket's rest frame from the direction opposite
@@ -6487,6 +6632,44 @@ CAPTIONS = {
         "time and reaches the singularity $1.6\\,k/c$ after passing $ku = 1$. The faint vertical lines are "
         "the spheres of areal radius $4k$, $2k$, $k$, and $k/2$, at $ku = 0.28$, $0.64$, $1.5$, and $2.8$.",
     ],
+    ("brans_dicke_sphere", "isotropic", "radial"): [
+        "The plane of $t$ and the isotropic radius $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for "
+        "$\\omega = 6$ and $C = -1/4$, where $\\lambda = 1$, each point in the plane a 2-sphere. The edges of "
+        "the cones are $d\\rho/d(ct) = \\pm h^{(C + 2)/\\lambda - 1}\\left(1 + B/\\rho\\right)^{-2}$ with "
+        "$h = (\\rho - B)/(\\rho + B)$, and $ct \\mp r_*$ is constant along a ray, for the tortoise coordinate "
+        "$r_*$ with $dr_*/d\\rho = h^{1 - (C + 2)/\\lambda}\\left(1 + B/\\rho\\right)^2$ and $r_* = 0$ at "
+        "$\\rho = B$.",
+        "At $C = 0$ the cones are Schwarzschild's in isotropic coordinates, which close as $h$ on the horizon "
+        "$\\rho = B$. Here they close as $h^{3/4}$, on a sphere of zero area where the Kretschmann scalar "
+        "diverges, and the power below $1$ makes $r_*$ finite there: a ray moving in from $\\rho = 3B$ "
+        "reaches the singularity after $29\\,B/c$, and a ray leaves it for infinity at every moment. A body "
+        "of weak gravity has $C = -1/8$ at this $\\omega$, half the scalar charge drawn, and the power is "
+        "$0.94$.",
+    ],
+    ("brans_dicke_sphere", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $m = 0$ and $n = 1/4$, which "
+        "is $\\omega = 6$ with Schwarzschild's $g_{tt}$, each point in the plane a 2-sphere of area "
+        "$4\\pi r^2A^{n}$ with $A = 1 - 2r_0/r$. The edges of the cones are "
+        "$dr/d(ct) = \\pm A^{(m - n + 2)/2}$, so $ct \\mp r_*$ is constant along a ray, for the tortoise "
+        "coordinate $r_*$ with $dr_*/dr = A^{-(m - n + 2)/2}$ and $r_* = 0$ at $r = 2r_0$.",
+        "The power of $A$ is $7/8$ where Schwarzschild's is $1$, so at $r = 3r_0$ the cones are $15$ percent "
+        "wider than Schwarzschild's. They close only on $r = 2r_0$, where the spheres have zero area and the "
+        "Kretschmann scalar diverges. A ray moving in from $r = 4r_0$ reaches that singularity after the "
+        "finite time $18\\,r_0/c$, and a ray leaves it for infinity at every moment, so no horizon hides "
+        "it. At $m = n = 0$ the time is infinite and $r = 2r_0$ is Schwarzschild's horizon.",
+    ],
+    ("brans_dicke_sphere", "harmonic", "radial"): [
+        "The plane of $t$ and $u$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $b = 7k/8$ and $s = -k/4$, "
+        "which is $\\omega = 6$. Spatial infinity is $u = 0$, the singularity is $u \\to \\infty$, and the "
+        "logarithm of the scalar field grows in proportion to $u$. The edges of the cones are "
+        "$du/d(ct) = \\pm e^{-2bu}\\sinh^2(ku)/k^2$, and $ct \\pm r_*$ is constant along a ray, for the "
+        "tortoise coordinate $r_*$ with $dr_*/du = -k^2e^{2bu}/\\sinh^2(ku)$.",
+        "The cones close as $u^2$ toward $u = 0$, which a ray reaches only as $t \\to \\pm\\infty$, and open as "
+        "$e^{2(k - b)u}/4k^2$ at large $u$. A ray moving toward larger $u$ runs through all of it in a finite "
+        "time and reaches the singularity $13\\,k/c$ after passing $ku = 1$. The faint vertical lines are "
+        "the spheres of areal radius $4k$, $2k$, $1.5\\,k$, and $k$, at $ku = 0.31$, $0.83$, $1.4$, and "
+        "$2.8$.",
+    ],
     ("exponential_metric", "isotropic", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $m = 1$), each point in the plane a 2-sphere of area "
         "$4\\pi r^2e^{2m/r}$. The metric on it is $e^{-2m/r}\\left(-c^2dt^2 + dr_*^2\\right)$ with "
@@ -7993,6 +8176,21 @@ CAPTIONS = {
         "The massless hyperbolic black hole of anti-de Sitter space has this $g_{tt}$ with $r$ its areal radius. "
         "Here every surface of $\\theta$ and $\\phi$ has the one radius $a$.",
     ],
+    ("cremmer_scherk", "cartesian", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$, $\\theta = \\pi/2$, $\\phi = 0$) of Cremmer and Scherk's "
+        "solution, one of the three flat dimensions against time, each point in the plane a flat plane of $y$ "
+        "and $z$ times a 2-sphere of radius $a$. The rays are at 45°, with $ct \\pm x$ constant along them.",
+        "Light sent along the large dimensions travels as it does in special relativity, at any radius of the "
+        "sphere.",
+    ],
+    ("cremmer_scherk", "cartesian", "circle"): [
+        "The plane of $t$ and $\\phi$ ($x = y = z = 0$, $\\theta = \\pi/2$), the equator of the sphere "
+        "against time, $-c^2dt^2 + a^2d\\phi^2$, with $\\phi = 0$ and $2\\pi$ one line. The rays are at 45°, "
+        "with $ct \\pm a\\phi$ constant along them.",
+        "A ray sent round the equator is back where it started after the time $2\\pi a/c$, having gone nowhere "
+        "in $x$, $y$, and $z$. To an observer in the large dimensions a neutral scalar wave on the sphere is a "
+        "particle at rest, of mass $\\hbar\\sqrt{J(J + 1)}/ac$ for integer $J$.",
+    ],
     ("interior_schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the "
         "chart ($r \\in [0, R]$), for a star with $R = 1.5\\,r_s$. The cones are "
@@ -8005,6 +8203,59 @@ CAPTIONS = {
         "The line through the centre of the star in the plane $\\theta = \\pi/2$: $x = r$ "
         "on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the "
         "centre smoothly, and the cones are narrowest there.",
+    ],
+    ("bonnor_charged_dust", "harmonic", "tx"): [
+        "The plane of $t$ and $x$ through the centre of the cloud ($y = z = 0$), which light launched along the "
+        "line never leaves, since $U$ is spherically symmetric. Its rays are null geodesics with "
+        "$dx/dt = \\pm c/U^2$, which is $c/9$ at the centre, where $U = 3$, and tends to $c$ far out.",
+    ],
+    ("bonnor_charged_dust", "sphere_1965", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole of Bonnor's sphere of 1965 "
+        "($r \\in [0, r_0]$, $r_0 = 2m$). The rays are null geodesics with $dr/dt = \\pm c/U^2$, and the cones "
+        "are narrowest at the centre, where $U^2 = (1 + m/r_0)^3 = 3.375$ and the redshift is greatest. Beyond "
+        "$r_0$ the rays go on into the exterior, where $U = 1 + m/r$.",
+    ],
+    ("bonnor_charged_dust", "sphere_1975", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole of Bonnor and Wickramasuriya's "
+        "sphere ($r \\in [0, r_0]$, $r_0 = 2m$). The rays are null geodesics with $dr/dt = \\pm c/U^2$, and the "
+        "cones are narrowest at the centre, where $U = 1 + 3m/(2r_0) = 1.75$. They stay open for every $r_0 > 0$ "
+        "and narrow without limit as $r_0$ goes to zero, where the redshift of the centre, $3m/(2r_0)$, has no "
+        "bound.",
+    ],
+    ("bonnor_charged_dust", "sphere_1975", "through"): [
+        "The line through the centre of Bonnor and Wickramasuriya's sphere in the plane $\\theta = \\pi/2$ "
+        "($r_0 = 2m$): $x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross "
+        "the centre smoothly, and the cones are narrowest there.",
+    ],
+    ("bonnor_charged_dust", "exterior", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside a sphere of coordinate radius "
+        "$r_0 = 2m$, the same at every other angle by spherical symmetry. The rays are null geodesics with "
+        "$dt/dr = \\pm(1 + m/r)^2/c$, the rays of the extremal Reissner-Nordström field, whose horizon "
+        "$r = 0$ lies inside the star, where this metric does not hold.",
+    ],
+    ("bonnor_charged_dust", "exterior_areal", "radial"): [
+        "The plane of $t$ and $R$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the same sphere, whose surface is at "
+        "the areal radius $R = r_0 + m = 3m$. The rays are null geodesics with $dt/dR = \\pm(1 - m/R)^{-2}/c$. "
+        "The horizon of the field, $R = m$, lies inside the star, where this metric does not hold.",
+    ],
+    ("bonnor_charged_dust", "spheroid_interior", "axis"): [
+        "The plane of $t$ and $u$ on the axis of symmetry ($\\theta = \\pi/2$) inside the spheroid ($a = m$, "
+        "$u_0 = 1$), where the height above the central disc is $z = a\\sinh u$. Light launched along the axis "
+        "stays on it, and its rays are null geodesics with $du/dt = \\pm c/(aU^2\\cosh u)$. The cones are "
+        "narrowest in $z$ at the disc $u = 0$, where $U = 1.87$.",
+    ],
+    ("bonnor_charged_dust", "spheroid_exterior", "axis"): [
+        "The plane of $t$ and $u$ on the axis of symmetry ($\\theta = \\pi/2$) outside the spheroid ($a = m$, "
+        "$u_0 = 1$), where the height above the central disc is $z = a\\sinh u$. The rays are null geodesics "
+        "with $du/dt = \\pm c/(aU^2\\cosh u)$, so equal steps of $u$ take longer and longer as $z$ grows "
+        "like $e^u$.",
+    ],
+    ("bonnor_charged_dust", "quasi_black_hole", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Lemos and Weinberg's cloud ($b = m/2$), "
+        "the same at every other angle by spherical symmetry. The rays are null geodesics with "
+        "$dr/dt = \\pm c/U^2$, which is $c/9$ at the centre, where $U = 1 + m/b = 3$. As $b$ goes to zero the "
+        "cones inside $r \\approx b$ close, and outside it they tend to those of the extremal black hole, "
+        "$dt/dr = \\pm(1 + m/r)^2/c$.",
     ],
     ("tolman_vii", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the chart "
@@ -9635,6 +9886,38 @@ CAPTIONS = {
         "from the first front on, and inside it they gain $r$ and every future cone points to larger $r$, a "
         "white hole with $r = 0$ in its past. By $cu = 3m$ the fronts are round to within $0.2\\%$, and "
         "this plane and the axis's are both Schwarzschild's in outgoing coordinates.",
+    ],
+    ("bondi_sachs", "bondi", "equator"): [
+        "The plane of $u$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) outside the world tube "
+        "$r = 10\\,m_0$, drawn with $cu + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. "
+        "Each outgoing ray is one point of every sphere its cone crosses, and $r$ is the luminosity distance along it. "
+        "The shear is even about the equator, so $U$ vanishes here and the null curves drawn are null geodesics.",
+        "The ingoing rays obey $dr/d(cu) = -V/2r$. Before the burst $V = r - 2m_0$ and the plane is Schwarzschild's in "
+        "outgoing coordinates. The cones between $u = 0$ and $cu = 20\\,m_0$ carry the news, which reaches "
+        "$\\partial_u\\sigma = \\pm 0.019$ on the equator, and the shear swings between $-0.037\\,m_0$ and "
+        "$0.019\\,m_0$, a strain $\\sigma/r$ of four parts in a thousand at the world tube. The mass aspect on the "
+        "equator ends at $0.9981\\,m_0$, and the Bondi mass, its mean over the sphere, at $0.9990\\,m_0$.",
+    ],
+    ("bondi_sachs", "bondi", "axis"): [
+        "The plane of $u$ and $r$ on the axis of symmetry ($\\theta = 0$) outside the world tube $r = 10\\,m_0$, drawn "
+        "with $cu + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. The shear "
+        "$\\sigma = \\partial_u^2Q\\,\\sin^2\\theta$ vanishes on the axis with $\\gamma$, $\\beta$, and $U$, so the null "
+        "curves drawn are null geodesics and the plane's metric is $-(V/r)\\,c^2du^2 - 2c\\,du\\,dr$.",
+        "No waves leave along the axis of an axisymmetric source, and the mass aspect there, "
+        "$M = m_0 + 4\\,\\partial_u^2Q$, ends where it began. During the burst it swings between $0.85\\,m_0$ and "
+        "$1.08\\,m_0$ with the quadrupole moment, and the ingoing rays, $dr/d(cu) = -V/2r$, run faster or slower "
+        "with it. Before the burst and after it this plane is Schwarzschild's of the mass $m_0$.",
+    ],
+    ("bondi_sachs", "compactified", "equator"): [
+        "The plane of $u$ and $\\ell = 1/r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$), from $r = 8\\,m_0$ out to "
+        "future null infinity, the edge $\\ell = 0$. The outgoing rays are the horizontal lines $u$ constant, and each "
+        "reaches $\\ell = 0$ at the retarded time it left the source. The ingoing rays obey "
+        "$d\\ell/d(cu) = \\ell^3V/2$, which vanishes at $\\ell = 0$: there the future cone closes onto the edge, so "
+        "null infinity is itself a surface made of light rays.",
+        "The news arrives on the stretch of the edge between $u = 0$ and $cu = 20\\,m_0$. Along the edge "
+        "$\\gamma/\\ell \\to \\sigma$ and $(1/\\ell - V)/2 \\to M$, so the shear and the mass aspect are read "
+        "off the first two terms of the metric there, and the Bondi mass falls from $m_0$ to $0.9990\\,m_0$ "
+        "across the burst.",
     ],
     ("photon_rocket", "rectilinear", "behind"): [
         "The plane of $u$ and $r$ on the axis behind the rocket ($\\theta = 0$), drawn with $cu + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. Each outgoing ray left the rocket at the retarded time $u$, and $r$ is the affine distance along it. On the axis $\\sin\\theta = 0$ removes $g_{u\\theta}$ and every $\\Gamma^\\theta$ of the plane, so the null curves drawn are null geodesics.",
@@ -13152,6 +13435,16 @@ def _witten_xstar(x):
     return np.log(np.abs(np.expm1(2 * np.asarray(x, float)))) / 2
 
 
+def _bd_rstar(r):
+    """The tortoise coordinate of Brans and Dicke's sphere at m = 0, n = 1/4 and r_0 = 1, zero at the
+    singularity r = 2: dr_*/dr = A^(-sigma) with A = 1 - 2/r and sigma = (m - n + 2)/2 = 7/8, so
+    r_* = 2 A^(1 - sigma) 2F1(2, 1 - sigma; 2 - sigma; A)/(1 - sigma)."""
+    from scipy.special import hyp2f1
+    sigma = 7 / 8
+    A = np.clip(1 - 2 / np.asarray(r, float), 0.0, None)
+    return 2 * A ** (1 - sigma) * hyp2f1(2, 1 - sigma, 2 - sigma, A) / (1 - sigma)
+
+
 def _fjnw_rstar(r):
     """The tortoise coordinate of Fisher, Janis, Newman and Winicour's metric at gamma = 1/2 and b = 1,
     zero at the singularity: dr_*/dr = (1 - 1/r)^(-1/2)."""
@@ -13615,6 +13908,17 @@ CLOSED_FORMS = {
     ("fisher_jnw", "harmonic", "radial"):
         (lambda t, u: t - 2 * _fjnw_rstar(1 / (1 - np.exp(-2 * u))), lambda t, u: t + 2 * _fjnw_rstar(1 / (1 - np.exp(-2 * u))),
          lambda t, u: u > 0.05),
+    # Brans and Dicke's sphere at omega = 6 and C = -1/4: with r_0 = 1 the tortoise coordinate is _bd_rstar(r); the
+    # isotropic chart counts lengths in B = r_0/2, where r/r_0 = rho (1 + 1/rho)^2/2, and the harmonic
+    # chart has k = r_0 and r = 2/(1 - e^(-2u)), which falls as u grows.
+    ("brans_dicke_sphere", "isotropic", "radial"):
+        (lambda t, rho: t + 2 * _bd_rstar(rho * (1 + 1 / rho) ** 2 / 2),
+         lambda t, rho: t - 2 * _bd_rstar(rho * (1 + 1 / rho) ** 2 / 2), lambda t, rho: rho > 1.001),
+    ("brans_dicke_sphere", "spherical", "radial"):
+        (lambda t, r: t + _bd_rstar(r), lambda t, r: t - _bd_rstar(r), lambda t, r: r > 2.001),
+    ("brans_dicke_sphere", "harmonic", "radial"):
+        (lambda t, u: t - _bd_rstar(2 / (1 - np.exp(-2 * u))), lambda t, u: t + _bd_rstar(2 / (1 - np.exp(-2 * u))),
+         lambda t, u: u > 0.05),
     # The exponential metric at m = 1: on every plane the metric is e^(-2/r)(-dt^2 + dr_*^2) with the
     # tortoise coordinate of the Curzon-Chazy particle's axis, r_* = r e^(2/r) - 2 Ei(2/r), at the
     # isotropic radius |x| on the Cartesian line, -1/W(-1/R) in the areal radius, and 1/u.
@@ -13818,6 +14122,9 @@ CLOSED_FORMS = {
     ("plebanski_hacyan", "anti_nariai_static", "radial"):
         (lambda t, r: t + 0.5 * np.log((r - 1) / (r + 1)), lambda t, r: t - 0.5 * np.log((r - 1) / (r + 1)),
          lambda t, r: r > 1.05),
+    # Cremmer and Scherk's flat dimensions and the equator of their sphere at unit radius: ct -+ x and ct -+ phi.
+    ("cremmer_scherk", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("cremmer_scherk", "cartesian", "circle"): (lambda t, f: t + f, lambda t, f: t - f, None),
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     # The throat of extreme Kerr at r_0 = 1: each plane is conformal to a chart of AdS2, whose rays
@@ -14356,6 +14663,37 @@ def _e12_forms():
 
 
 CLOSED_FORMS.update(_e12_forms())
+def _bcd_quadrature(speed, start):
+    """The integral of a positive speed from `start`, at each value handed in."""
+    from scipy.integrate import quad
+    return lambda x: np.vectorize(lambda v: quad(speed, start, v, epsabs=1e-12, epsrel=1e-12)[0])(np.asarray(x, dtype=float))
+
+
+def _bcd_forms():
+    """What ct keeps along each family of each view of Bonnor's stars, t -+ the integral of U^2 times
+    the flat length, at m = 1: A^2 r - 2AB r^3/3 + B^2 r^5/5 with A = 7/4 and B = 1/16 in the sphere of
+    1975; (27/sqrt 8) arctan(r/sqrt 8) in the sphere of 1965; r + 2 ln r - 1/r outside, which is
+    R + 2 ln(R - 1) - 1/(R - 1) in the areal radius; r + 2 arsinh(2r) + 2 arctan(2r) in the cloud at
+    b = 1/2; and on the spheroid's axis the quadrature of U^2 cosh u."""
+    alpha, C0 = math.atan(1 / math.sinh(1.0)), math.cosh(1.0)
+    A, B = 1.75, 1 / 16
+    sphere = lambda r: A * A * r - 2 * A * B * r ** 3 / 3 + B * B * r ** 5 / 5            # noqa: E731
+    older = lambda r: 27 / math.sqrt(8) * np.arctan(r / math.sqrt(8))                     # noqa: E731
+    cloud = lambda r: r + 2 * np.arcsinh(2 * r) + 2 * np.arctan(2 * r)                    # noqa: E731
+    inside = _bcd_quadrature(lambda u: (1 + alpha + (1 - u ** 4) / (4 * C0)) ** 2 * math.cosh(u), 0.0)
+    outside = _bcd_quadrature(lambda u: (1 + math.atan(1 / math.sinh(u))) ** 2 * math.cosh(u), 1.0)
+    out = {}
+    for where, F in ((("harmonic", "tx"), cloud), (("sphere_1965", "radial"), older),
+                     (("sphere_1975", "radial"), sphere), (("sphere_1975", "through"), sphere),
+                     (("exterior", "radial"), lambda r: r + 2 * np.log(r) - 1 / r),
+                     (("exterior_areal", "radial"), lambda R: R + 2 * np.log(R - 1) - 1 / (R - 1)),
+                     (("spheroid_interior", "axis"), inside), (("spheroid_exterior", "axis"), outside),
+                     (("quasi_black_hole", "radial"), cloud)):
+        out[("bonnor_charged_dust", *where)] = (lambda t, x, F=F: t + F(x), lambda t, x, F=F: t - F(x), None)
+    return out
+
+
+CLOSED_FORMS.update(_bcd_forms())
 
 
 def verify(metrics=()):

@@ -355,6 +355,19 @@ DIMENSIONS = {
     ("fisher_jnw", "harmonic"): {
         "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "m": "L", "k": "L",
     },
+    # Brans and Dicke's static sphere: B is a length and C and lambda pure numbers in Brans's
+    # isotropic chart; r_0 is a length and m and n pure numbers in Campanelli and Lousto's; and
+    # Bronnikov's harmonic coordinate u is an inverse length, with k, b and s lengths. h and A are
+    # the ratios the charts name.
+    ("brans_dicke_sphere", "isotropic"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "B": "L", "C": "1", "\\lambda": "1", "h": "1",
+    },
+    ("brans_dicke_sphere", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "m": "1", "n": "1", "A": "1",
+    },
+    ("brans_dicke_sphere", "harmonic"): {
+        "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "k": "L", "b": "L", "s": "L",
+    },
     # The exponential metric of Papapetrou and Yilmaz: m = GM/c^2 is a length, the Cartesian chart
     # names its isotropic radius, the areal chart holds the isotropic radius r(R) as a length, and
     # Bronnikov's harmonic coordinate u = 1/r is an inverse length.
@@ -369,6 +382,14 @@ DIMENSIONS = {
     },
     ("exponential_metric", "harmonic"): {
         "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "m": "L",
+    },
+    # Bondi and Sachs's radiating metric: r is the luminosity distance and l = 1/r; V stands beside r
+    # and is a length, U beside d(theta)/d(cu) and is an inverse length, beta and gamma are exponents.
+    ("bondi_sachs", "bondi"): {
+        "u": "T", "r": "L", "\\theta": "1", "\\phi": "1", "V": "L", "\\beta": "1", "U": "1/L", "\\gamma": "1",
+    },
+    ("bondi_sachs", "compactified"): {
+        "u": "T", "\\ell": "1/L", "\\theta": "1", "\\phi": "1", "V": "L", "\\beta": "1", "U": "1/L", "\\gamma": "1",
     },
     # The moving mirror of Fulling and Davies: the null coordinates are lengths, the mirror's position
     # z, its ray-tracing function p and the inverse f are lengths, and kappa is an inverse length.
@@ -832,6 +853,8 @@ DIMENSIONS = {
     ("plebanski_hacyan", "anti_nariai"): {"\\tau": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
     ("plebanski_hacyan", "anti_nariai_static"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "L"},
     ("plebanski_hacyan", "exceptional"): {"u": "L", "w": "L", "x": "L", "y": "L", "a": "L", "f": "1/L", "g": "1/L"},
+    # Cremmer and Scherk's Minkowski space times a sphere: a is the sphere's radius.
+    ("cremmer_scherk", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\theta": "1", "\\phi": "1", "a": "L"},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
@@ -972,6 +995,33 @@ DIMENSIONS = {
     },
     ("majumdar_papapetrou", "isotropic"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
+    },
+    # Bonnor's stars of charged dust. The potential U is a pure number, as Majumdar and Papapetrou's
+    # is; the mass parameter m = GM/c^2, the radius r_0, the focal radius a and Lemos and Weinberg's
+    # core length b are lengths, and the spheroidal u and its surface u_0 are pure numbers.
+    ("bonnor_charged_dust", "harmonic"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "U": "1",
+    },
+    ("bonnor_charged_dust", "sphere_1965"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "r_0": "L", "U": "1",
+    },
+    ("bonnor_charged_dust", "sphere_1975"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "r_0": "L", "U": "1",
+    },
+    ("bonnor_charged_dust", "exterior"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "r_0": "L",
+    },
+    ("bonnor_charged_dust", "exterior_areal"): {
+        "t": "T", "R": "L", "\\theta": "1", "\\phi": "1", "m": "L", "r_0": "L",
+    },
+    ("bonnor_charged_dust", "spheroid_interior"): {
+        "t": "T", "u": "1", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "u_0": "1", "U": "1",
+    },
+    ("bonnor_charged_dust", "spheroid_exterior"): {
+        "t": "T", "u": "1", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "u_0": "1", "U": "1",
+    },
+    ("bonnor_charged_dust", "quasi_black_hole"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "b": "L", "U": "1",
     },
     # Israel, Wilson and Perjes's W = |U| is a pure number, as Majumdar and Papapetrou's U is, and
     # omega stands beside c dt, so it is a length; the spin a and the NUT parameter l are lengths too.
@@ -1993,6 +2043,10 @@ HELD = {
     # The isotropic radius of the exponential metric's areal chart, Lambert's function of m/R:
     # held, a value is a rational function of r, R and m.
     ("exponential_metric", "areal"): ("r",),
+    # The potential U of each of Bonnor's stars that names it: held, a value is a rational function
+    # of U and the coordinates, as the line element is.
+    **{("bonnor_charged_dust", chart): ("U",) for chart in
+       ("sphere_1965", "sphere_1975", "spheroid_interior", "spheroid_exterior", "quasi_black_hole")},
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2054,6 +2108,13 @@ RATES = {
     # dm/dr is the energy of the field in a shell, r_q^2/(r^2 + W), which is 4 pi G r^2 rho/c^4.
     **{("born_infeld_charge", chart): {"m": {"r": "\\dfrac{r_q^2}{r^2 + W}"}}
        for chart in ("static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing")},
+    # The slope of the potential of each of Bonnor's stars: the flat Laplacian of U is
+    # -4 pi G rho U^3/c^2, so the slope is the mass inside, and each is rational in U and the coordinates.
+    ("bonnor_charged_dust", "sphere_1965"): {"U": {"r": "-\\dfrac{m\\,r\\,U^3}{\\left(r_0 + m\\right)^3}"}},
+    ("bonnor_charged_dust", "sphere_1975"): {"U": {"r": "-\\dfrac{m\\,r}{r_0^3}"}},
+    ("bonnor_charged_dust", "spheroid_interior"): {"U": {"u": "-\\dfrac{m\\,u^3}{a\\,u_0^3\\cosh u_0}"}},
+    ("bonnor_charged_dust", "spheroid_exterior"): {"U": {"u": "-\\dfrac{m}{a\\cosh u}"}},
+    ("bonnor_charged_dust", "quasi_black_hole"): {"U": {"r": "-\\dfrac{r\\left(U - 1\\right)^3}{m^2}"}},
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across

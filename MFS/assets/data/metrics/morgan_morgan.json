@@ -57,6 +57,11 @@
       "id": "neugebauer_meinel",
       "kind": "family",
       "text": "A disc of dust that all turns one way, rigidly, solved exactly by Neugebauer and Meinel. The two discs agree in Newton's limit, and in this one the rotation drags the frames [bardeen1969, neugebauer1995]."
+    },
+    {
+      "id": "bonnor_charged_dust",
+      "kind": "family",
+      "text": "Dust held up by its charge, in a sphere or a spheroid. Flattened to a disc the spheroid keeps a finite redshift, as these discs do, and shrunk at a fixed shape its redshift has no limit [bonnor1975]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "klein2001",
     "bonnor1968",
     "semerak2001",
-    "kofron2023"
+    "kofron2023",
+    "bonnor1975"
   ],
   "coordinates": [
     {

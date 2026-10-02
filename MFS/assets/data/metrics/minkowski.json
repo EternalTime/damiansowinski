@@ -243,6 +243,16 @@
       "id": "einstein_1912_static",
       "kind": "generalisation",
       "text": "Flat spacetime with a speed of light that varies from place to place, Einstein's static gravity of 1912. Its uniform field is Minkowski space in Rindler's coordinates [einstein1912]."
+    },
+    {
+      "id": "cremmer_scherk",
+      "kind": "family",
+      "text": "Minkowski space with a sphere of one radius at every point, a solution of gravity with gauge fields in six dimensions [horvath1977]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "generalisation",
+      "text": "Flat spacetime on its outgoing light cones with four functions added, the form of the metric far from an isolated body that radiates. Its symmetries far away are Poincaré's and the supertranslations besides [bondi1962, sachs1962bms]."
     }
   ],
   "references": [
@@ -316,7 +326,10 @@
     "brill1959",
     "hruska2019",
     "fulling1976",
-    "davies1977"
+    "davies1977",
+    "horvath1977",
+    "bondi1962",
+    "sachs1962bms"
   ],
   "coordinates": [
     {

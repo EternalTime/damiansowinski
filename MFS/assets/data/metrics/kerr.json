@@ -190,6 +190,11 @@
       "id": "erez_rosen",
       "kind": "family",
       "text": "A static mass with a quadrupole moment $q$. Quevedo and Mashhoon set it spinning, and their metric is Kerr's at $q = 0$ [boshkayev2019]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "generalisation",
+      "text": "The form the metric of an isolated body takes on its outgoing light cones. Kerr's black hole is a member with no news, written in such coordinates by S. J. Fletcher and A. W. C. Lun in 2003 [sachs1962, fletcher2003]."
     }
   ],
   "references": [
@@ -249,7 +254,9 @@
     "chandrasekhar1986",
     "griffiths1991",
     "belinskii1979",
-    "boshkayev2019"
+    "boshkayev2019",
+    "sachs1962",
+    "fletcher2003"
   ],
   "coordinates": [
     {

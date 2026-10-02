@@ -418,6 +418,16 @@
       "id": "distorted_schwarzschild",
       "kind": "generalisation",
       "text": "Schwarzschild's black hole with distant matter pulling on it. The quadrupole tidal field bends the horizon out of round and leaves it regular, and at $q = 0$ the metric is Schwarzschild's [doroshkevich1965, geroch1982]."
+    },
+    {
+      "id": "brans_dicke_sphere",
+      "kind": "generalisation",
+      "text": "The field outside a static body in Brans and Dicke's theory, where a scalar field sets the strength of gravity. With the scalar charge $C = 0$ it is Schwarzschild's metric, and with any other the horizon gives way to a singularity [bransdicke1961, agnese1995]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric in outgoing coordinates with four functions set free, the form the metric of an isolated body takes far away once it radiates. The mass aspect $M(u, \\theta)$ takes the place of $r_s/2$ and falls when gravitational waves leave [bondi1962]."
     }
   ],
   "references": [
@@ -531,7 +541,10 @@
     "davies1977",
     "good2016",
     "gibbons1977action",
-    "geroch1982"
+    "geroch1982",
+    "bransdicke1961",
+    "agnese1995",
+    "bondi1962"
   ],
   "coordinates": [
     {

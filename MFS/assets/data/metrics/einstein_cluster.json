@@ -76,6 +76,11 @@
       "id": "morgan_morgan",
       "kind": "family",
       "text": "The same support within one plane: a static disc of dust on circular orbits, half the grains circling each way. Morgan and Morgan cite Einstein's paper [morgan1969]."
+    },
+    {
+      "id": "bonnor_charged_dust",
+      "kind": "family",
+      "text": "A star of dust held up by its electric charge. Bonnor and Wickramasuriya set it beside Einstein's cluster as a body of well understood matter, and its surface can lie as near its horizon as one likes [bonnor1975]."
     }
   ],
   "references": [
@@ -96,7 +101,8 @@
     "ruffini1969",
     "bartnik1988",
     "volkov1999",
-    "morgan1969"
+    "morgan1969",
+    "bonnor1975"
   ],
   "coordinates": [
     {

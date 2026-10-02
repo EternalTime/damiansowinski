@@ -74,6 +74,11 @@
       "id": "kaluza_klein_black_hole",
       "kind": "family",
       "text": "The charged holes of Kaluza and Klein's theory, where the scalar field couples with strength $\\sqrt{3}$ and records the length of a fifth dimension. Their extremal limit has a horizon of zero area too, unless both charges are present [horowitz2012]."
+    },
+    {
+      "id": "brans_dicke_sphere",
+      "kind": "family",
+      "text": "The dilaton's ancestor. Brans and Dicke put a scalar field beside the metric in 1961, and the gravity of bosonic string theory at low energy is their theory with $\\omega = -1$ [bransdicke1961, faraoni2016]."
     }
   ],
   "references": [
@@ -94,7 +99,9 @@
     "mizuno2018",
     "kocherlakota2021",
     "duff1994",
-    "horowitz2012"
+    "horowitz2012",
+    "bransdicke1961",
+    "faraoni2016"
   ],
   "coordinates": [
     {

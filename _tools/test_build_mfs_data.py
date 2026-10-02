@@ -5082,6 +5082,9 @@ class Slices(unittest.TestCase):
                         "small_universes/torus_conformal/cell", "small_universes/torus_conformal/images",
                         "conformal small_universes/torus", "conformal small_universes/torus_conformal")},
                     "small_universes/horn/along": {"torus"}, "conformal small_universes/horn": {"torus"},
+                    # Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the
+                    # time and phi.
+                    "cremmer_scherk/cartesian/circle": {"sphere"},
                     # The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and
                     # each chart's drawings mark the surfaces of its own.
                     **{where: {"hyperbolic_plane"} for where in (
@@ -5277,6 +5280,17 @@ class Slices(unittest.TestCase):
                        for place, join in (("", "/"), ("conformal ", "_"))
                        for s in ("prolate_spheroidal", "spherical", "weyl") for plane in ("axis", "equator")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
+                    # Bonnor's two spheres, Lemos and Weinberg's cloud and the spheroid are four stars of one
+                    # line element, each chart's drawings marking its own; the exterior is drawn with the sphere
+                    # of 1975, and the spheroid's equatorial plane meets its axis inside the spheroid alone.
+                    **{f"{place}bonnor_charged_dust/{s}": {"star", "star_1965", "cloud", "spheroid"} - own
+                       for own, charts in (({"star"}, ("sphere_1975", "exterior", "exterior_areal")),
+                                           ({"star_1965"}, ("sphere_1965",)),
+                                           ({"cloud"}, ("quasi_black_hole", "harmonic")),
+                                           ({"spheroid"}, ("spheroid_interior",)), (set(), ("spheroid_exterior",)))
+                       for chart in charts
+                       for place, s in [("conformal ", chart)] + [("", f"{chart}/{v}") for v in (
+                           "radial", "through", "tx", "axis")]},
                     "majumdar_papapetrou/cartesian/tz": {"one_hole"},
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
@@ -5396,6 +5410,13 @@ class Slices(unittest.TestCase):
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]
+        if key.startswith("bondi_sachs/"):
+            # The sphere cu = 10 m_0, r = 10 m_0 is one event of each plane: r = 10 and cu + r = 20 on
+            # Bondi's axes, 100 m_0 l = 10 and cu = 10 on the chart of l = 1/r.
+            self.assertEqual((mark["lines"], len(mark["points"])), ([], 1), key)
+            X0, X1 = view["box"][:2]
+            self.assertAlmostEqual(X0 + mark["points"][0][0] * (X1 - X0), 10.0, delta=2e-3, msg=key)
+            return (lambda X: 10.0 if key.endswith("compactified/equator") else 20.0), [10.0]
         if key.startswith("hotta_tanaka/"):
             # The event where the sphere through the ring meets the view's plane, 15 degrees from a
             # particle or on the equator, rho = a/4 or 2a in the null cylindrical chart.
@@ -6010,6 +6031,13 @@ class Slices(unittest.TestCase):
             if static:
                 return (lambda X: math.asinh(math.sinh(t) / math.sqrt(max(1 - X * X, 1e-300)))), None
             return (lambda X: t), None
+        if key == "cremmer_scherk/cartesian/tx":
+            # The cylinder's moment t = 0 along x from -a to a, and the sphere at the event x = a.
+            lo, hi = self.reach(surface) if mark["lines"] else (1, 1)
+            return (lambda X: 0.0), [lo, hi]
+        if key == "cremmer_scherk/cartesian/circle":
+            # The cylinder's ring x = 0 at t = 0, the whole circle of phi.
+            return (lambda X: 0.0), [0.0, 2 * math.pi]
         if key.startswith("plebanski_hacyan/sphere"):
             # The equator's moment t = 0 along z from -b to b, of which the Rindler chart covers
             # 0 < chi < b on tau = 0, and the sphere at the event z = b, chi = b.
@@ -6104,6 +6132,16 @@ class Slices(unittest.TestCase):
         if key == "kaluza_klein_monopole/taub_nut/radial":
             # The Taub-NUT radius is rho = r + 2m, at m = 1, of the circles the cigar reaches in r.
             return (lambda X: 0.0), [r + 2 for r in self.reach(surface)]
+        if key.startswith("brans_dicke_sphere/"):
+            # The embedding is read in the harmonic chart at k = r_0 = 1, where e^(-2u) = 1 - 2 r_0/r: the
+            # harmonic plane draws that u, the spherical plane the radii r reached, and the isotropic
+            # plane, in units of B = r_0/2, the radius r - 1 + sqrt(r(r - 2)).
+            lo, hi = self.reach(surface)
+            if key == "brans_dicke_sphere/harmonic/radial":
+                return (lambda X: 0.0), [lo, hi]
+            of_r = {"spherical": lambda r: r,
+                    "isotropic": lambda r: r - 1 + math.sqrt(r * (r - 2))}[key.split("/")[1]]
+            return (lambda X: 0.0), [of_r(2 / (1 - math.exp(-2 * u))) for u in (hi, lo)]
         if key.startswith("fisher_jnw/"):
             # The embedding is read in the harmonic chart at k = 1/2 and b = 1, where e^(-u) = 1 - b/r: the
             # harmonic plane draws ku at k = 1, half of that u, and the other three the radii r reached, as
@@ -6235,6 +6273,12 @@ class Slices(unittest.TestCase):
                 "schwarzschild": [lo, hi],
                 "isotropic": [(r - 0.5 + math.sqrt(r * (r - 1))) / 2 for r in (lo, hi)],
             }[key.split("/")[1]]
+        if key == "bonnor_charged_dust/spheroid_interior/axis":
+            # The spheroid's equatorial plane meets its axis at the centre of the disc, the event t = 0, u = 0.
+            return (lambda X: 0.0), [0.0]
+        if key == "bonnor_charged_dust/exterior_areal/radial":
+            # The areal radius is the isotropic radius the embedding reads plus m, at m = 1.
+            return (lambda X: 0.0), [x + 1 for x in self.reach(surface, "exterior")]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
@@ -6419,6 +6463,19 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((tp + tq) / 2 - t), 2e-4 * scale, where)
                             self.assertLessEqual(lo - 2e-4 * scale, (tq - tp) / 2, where)
                             self.assertLessEqual((tq - tp) / 2, hi + 2e-4 * scale, where)
+                    elif metric_id == "bondi_sachs":
+                        # The sphere cu = 10 m_0, r = 10 m_0 is one event of the axis: on the cone
+                        # p = arctan(10/40) and on the world tube the view draws.
+                        ((X, T),) = points
+                        self.assertLess(abs((T - X) / 2 - math.atan(0.25)), 2e-4, where)
+                        tube = next(layer["points"] for layer in view["layers"] if layer["class"] == "boundary")
+
+                        def off(a, b):
+                            (ax, ay), (bx, by) = a, b
+                            k = ((X - ax) * (bx - ax) + (T - ay) * (by - ay)) / ((bx - ax) ** 2 + (by - ay) ** 2)
+                            k = min(max(k, 0.0), 1.0)
+                            return math.hypot(X - ax - k * (bx - ax), T - ay - k * (by - ay))
+                        self.assertLess(min(off(a, b) for a, b in zip(tube, tube[1:])), 5e-3, where)
                     elif metric_id == "domain_wall":
                         # Each side is Minkowski's triangle cut at the wall X = pi/2, the side z > 0
                         # mirrored in it, and the moment kct runs along cT = R tanh(kct) on both.
