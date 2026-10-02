@@ -2343,6 +2343,113 @@ def tolman_vii(ck, src):
                  settings="$r_s = 1$, the unit of every length, and $R = 2\\,r_s$, so $\\beta = 1/4$.")]
 
 
+def misner_zapolsky(ck, src):
+    """Three moments. The areal chart's equator at t = 0: g_rr = 7/4 and g_phiphi = r^2, so
+    dz/dr = sqrt(3)/2, a cone whose apex is the centre, where the density is infinite. A cone is
+    flat away from its apex, and this one is a flat sheet with a wedge of 2 pi (1 - 2/sqrt(7)),
+    87.9 degrees, cut out. The Tolman V star, in units of r_b, with r_s = r_b/2: g_rr = 1/Z with Z = 4/7 -
+    (r/r_b)^(7/3)/14, so dz/dr = sqrt((1 - Z)/Z), sqrt(3)/2 at the apex and 1 at the surface,
+    where Flamm's paraboloid of the schwarzschild entry has the same slope. The Tolman VI star
+    with r_s = 3 r_b/7: g_rr = 7/4 all the way out, the same cone cut off at r_b, where Flamm's
+    paraboloid has dz/dr = sqrt(r_s/(r_b - r_s)) = sqrt(3)/2 too. Each star's piece is checked
+    against its dz/dr by quadrature, and the vacuum paraboloid is drawn on under each star, down to
+    the throat the star does not have. The fourth moment is Tolman's exponent at n = 1, the
+    stiffest fluid, whose g_rr = 1 + 2n - n^2 = 2 makes a cone at 45 degrees."""
+    slope = math.sqrt(3) / 2
+    size, top = 6.0, 3.0
+    core = Slice(src, "misner_zapolsky", "areal", "r", "\\phi", {"t": 0, **EQUATOR}, {"a": 1})
+    apex = Piece("cone", "star", core, 0.0, top, 0.0, 1,
+                 (("apex", "the centre $r = 0$, where the density is infinite"),
+                  ("edge", "the cone runs on to $r \\to \\infty$")),
+                 [(r, "r", None) for r in (1.0, 2.0)] + [(top, "r", None)], size)
+    ck.isometry("Misner-Zapolsky, the cone", apex)
+    ck.form("Misner-Zapolsky, the cone z = sqrt(3) r/2", apex, lambda r: slope * r, size)
+    ck.radius("Misner-Zapolsky, the cone rho = r", apex, lambda r: r, size)
+    cone = Surface([apex])
+    fig = figure_of([cone], {"star": "star"}, size, Camera(-90, 20))
+    ring_label(fig, [0, 0, 0], *apex.at(1.0), "$r = a$", side=-1, clear=True)
+    ring_label(fig, [0, 0, 0], *apex.at(top), "$3a$", side=-1)
+    fig.legend("fill", "star", "the equatorial plane, a cone that climbs at $dz/dr = \\sqrt{3}/2$")
+    fig.legend("line", "r", "$r$ constant, at $a$, $2a$ and $3a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("core", "The sphere of radiation", "$a$", [cone], fig.done(),
+                  settings="$a = 1$, the unit of every length.")]
+
+    # Each star in units of its own radius, r_b = 1, so r_s = 1/2 for solution V and 3/7 for VI.
+    stars = (("tolman_v", "The Tolman V star", "1/2", "$r_s = r_b/2$",
+              lambda r: math.sqrt((1 - (4 / 7 - r ** (7 / 3) / 14)) / (4 / 7 - r ** (7 / 3) / 14))),
+             ("tolman_vi", "The Tolman VI star", "3/7", "$r_s = 3r_b/7$", lambda r: slope))
+    for system, label, rs_text, stated, climb in stars:
+        R, top = 1.0, 2.5
+        size = 2 * top
+        rs = float(sp.Rational(rs_text))
+        inner = Slice(src, "misner_zapolsky", system, "r", "\\phi", {"t": 0, **EQUATOR}, {"r_b": 1})
+        outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": rs_text})
+        vacuum = Piece("vacuum", "reference", outer, rs, R, 0.0, 1,
+                       (("throat", "the throat $r = r_s$ of the vacuum, which the star replaces"), ("join", None)),
+                       [(rs, "reference", None)], size, reference=True)
+        zR = vacuum.at(R)[1]
+        ext = Piece("exterior", "sheet", outer, R, top, zR, 1,
+                    (("join", "the surface of the star, $r = r_b$"),
+                     ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                    [(R, "surface", "$r = r_b$")] + [(r, "r", None) for r in (1.5, 2.0)] + [(top, "r", None)], size)
+        star = Piece("star", "star", inner, 0.0, R, 0.0, 1,
+                     (("apex", "the centre $r = 0$, where the density is infinite"),
+                      ("join", "the surface of the star, $r = r_b$")),
+                     [(r, "r", None) for r in (0.25, 0.5, 0.75)], size)
+        # The star is built from its apex and moved up to meet the exterior at r_b.
+        star.z = star.z + (zR - star.z[-1])
+        surface = Surface([star, ext, vacuum])
+        ck.isometry(f"Misner-Zapolsky, the {system} star", star)
+        ck.isometry(f"Misner-Zapolsky, the {system} exterior", ext)
+        ck.join(f"Misner-Zapolsky, the {system} star meets the exterior at r_b", star, R, ext, R)
+
+        def height(r, climb=climb, z0=star.z[0]):
+            return z0 + np.array([quad(climb, 0.0, float(x), epsabs=1e-12, epsrel=1e-12)[0] for x in np.ravel(r)]
+                                 ).reshape(np.shape(r))
+        ck.form(f"Misner-Zapolsky, the {system} star climbs at its own dz/dr", star, height, size)
+        ck.form(f"Misner-Zapolsky, the {system} exterior is Flamm's", ext,
+                lambda r, rs=rs: 2 * np.sqrt(rs * (r - rs)), size)
+        ck.add(f"Misner-Zapolsky, the {system} star and Flamm's paraboloid have one slope at r_b",
+               abs(climb(R) - math.sqrt(rs / (R - rs))), 1e-12)
+
+        fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+        ring_label(fig, [0, 0, 0], *ext.at(R), "$r = r_b$", dx=10)
+        ring_label(fig, [0, 0, 0], *ext.at(top), "$2.5\\,r_b$")
+        ring_label(fig, [0, 0, 0], *vacuum.at(rs), "$r_s$", side=-1, dx=8)
+        fig.legend("fill", "star", "the star, $r \\le r_b$")
+        fig.legend("fill", "cover", "the exterior, Flamm's paraboloid")
+        fig.legend("line", "r", "$r$ constant, at $0.25$, $0.5$ and $0.75\\,r_b$ inside and $1.5$, $2$ and "
+                                "$2.5\\,r_b$ outside")
+        fig.legend("line", "surface", "the surface of the star, $r = r_b$")
+        fig.legend("line", "reference", "the vacuum paraboloid inside $r_b$, down to its throat at the "
+                                        "Schwarzschild radius " + stated)
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(system, label, "$r_b$", [surface], fig.done(),
+                          settings="$r_b = 1$, the unit of every length, so that " + stated + "."))
+
+    # Tolman's exponent at n = 1, the stiffest fluid: g_rr = 1 + 2n - n^2 = 2, a cone at 45 degrees.
+    size, top = 6.0, 3.0
+    stiff = Slice(src, "misner_zapolsky", "power_law", "r", "\\phi", {"t": 0, **EQUATOR}, {"n": 1, "a": 1})
+    apex = Piece("cone", "star", stiff, 0.0, top, 0.0, 1,
+                 (("apex", "the centre $r = 0$, where the density is infinite"),
+                  ("edge", "the cone runs on to $r \\to \\infty$")),
+                 [(r, "r", None) for r in (1.0, 2.0)] + [(top, "r", None)], size)
+    ck.isometry("Misner-Zapolsky, the stiff cone", apex)
+    ck.form("Misner-Zapolsky, the stiff cone z = r", apex, lambda r: r, size)
+    ck.radius("Misner-Zapolsky, the stiff cone rho = r", apex, lambda r: r, size)
+    cone = Surface([apex])
+    fig = figure_of([cone], {"star": "star"}, size, Camera(-90, 20))
+    ring_label(fig, [0, 0, 0], *apex.at(1.0), "$r = a$", side=-1, clear=True)
+    ring_label(fig, [0, 0, 0], *apex.at(top), "$3a$", side=-1)
+    fig.legend("fill", "star", "the equatorial plane, a cone that climbs at $dz/dr = 1$")
+    fig.legend("line", "r", "$r$ constant, at $a$, $2a$ and $3a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("stiff", "The stiffest fluid", "$a$", [cone], fig.done(),
+                      settings="$n = 1$, and $a = 1$, the unit of every length."))
+    return views
+
+
 def tov(ck, src):
     """The declared neutron star: the polytrope p = K rho_0^2 at K = 100 and central rho_0 =
     1.28e-3, G = c = M_sun = 1, which null_rays.StarSolver solves from this spacetime's own
@@ -13519,6 +13626,7 @@ DRAWN = {
     "interior_schwarzschild": interior_schwarzschild,
     "gravastar": gravastar,
     "tolman_vii": tolman_vii,
+    "misner_zapolsky": misner_zapolsky,
     "tov": tov,
     "boson_star": boson_star,
     "einstein_cluster": einstein_cluster,
@@ -13922,6 +14030,43 @@ CAPTIONS = {
         "The field thins out exponentially and never ends, so the ring at the radius $R_{99}$ marks the sphere "
         "that holds 99% of the mass. Far outside it the surface is Flamm's paraboloid for the star's mass, "
         "drawn dashed on down to the throat it would have at $r_s = 2GM/c^2$, where $\\mu r_s = 1.27$.",
+    ],
+    ("misner_zapolsky", "core"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the sphere of radiation at one moment of $t$, drawn as a "
+        "surface in flat space with every distance along it the metric distance. On it $g_{rr} = 7/4$ at every "
+        "radius, so the surface climbs at $dz/dr = \\sqrt{3}/2$: a cone, with the infinite density at its apex.",
+        "A cone is flat everywhere but at its apex: this one is a flat sheet with a wedge of "
+        "$2\\pi(1 - 2/\\sqrt{7})$, about $88°$, cut out and the edges joined. The circle of circumference "
+        "$2\\pi r$ lies at a distance $\\sqrt{7}\\,r/2$ from the apex, and magnified by any factor the cone is "
+        "the same cone.",
+    ],
+    ("misner_zapolsky", "tolman_v"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the Tolman V star at one moment of $t$, "
+        "drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "$g_{rr} = 1/Z$, so the surface climbs at $dz/dr = \\sqrt{(1 - Z)/Z}$: at $\\sqrt{3}/2$ from the apex, "
+        "as the cone of pure radiation does, and steepening to $1$ at the surface of the star.",
+        "At $r = r_b$ the star meets Flamm's paraboloid of the Schwarzschild radius $r_s = r_b/2$ in one circle "
+        "with one tangent plane. The density there "
+        "is still positive, so the curvature of the surface jumps across that circle, from positive inside to "
+        "negative outside.",
+    ],
+    ("misner_zapolsky", "tolman_vi"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the Tolman VI star at one moment of $t$, drawn as a surface in flat space with every distance along it the metric distance. "
+        "On it $g_{rr} = 7/4$ all the way to the surface of the star, so the star is the cone of pure radiation "
+        "cut off at $r_b$.",
+        "Flamm's paraboloid climbs at $dz/dr = \\sqrt{r_s/(r - r_s)}$, which for the Schwarzschild radius "
+        "$r_s = 3r_b/7$ of this star is, at $r = r_b$, the cone's "
+        "$\\sqrt{3}/2$, so the two meet in one circle with one tangent plane. The slice follows the density "
+        "alone, which is $3c^2/56\\pi Gr^2$ as in pure radiation; the pressure is lower, and falls to zero at "
+        "$r_b$.",
+    ],
+    ("misner_zapolsky", "stiff"): [
+        "The equatorial plane ($\\theta = \\pi/2$) at one moment of $t$ for the stiffest fluid, $n = 1$, where "
+        "$p = \\rho c^2$ and sound travels at the speed of light. On it $g_{rr} = 1 + 2n - n^2 = 2$, so the "
+        "surface climbs at $dz/dr = 1$: a cone at $45°$, steeper than the cone of radiation.",
+        "The stiffer the fluid, the more mass it holds inside a given radius: $2Gm/c^2r$ is $1/2$ here and "
+        "$3/7$ for radiation, and the wedge cut from the flat sheet grows to $2\\pi(1 - 1/\\sqrt{2})$, about "
+        "$105°$.",
     ],
     ("tov", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a neutron star at one moment of $t$, drawn as a "

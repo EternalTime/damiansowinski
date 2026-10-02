@@ -2693,6 +2693,14 @@ FLAT = {
     ("boson_star", "areal", "radial"): lambda: one("boson_star", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("boson_star", "areal", "through"): lambda: one("boson_star", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("boson_star", "isotropic", "radial"): lambda: one("boson_star", _boson_star_isotropic),
+    ("misner_zapolsky", "areal", "radial"): lambda: one(
+        "misner_zapolsky", lambda m: along(0.0, *m.reach("areal", "r")), view_id="core"),
+    ("misner_zapolsky", "tolman_v", "radial"): lambda: one(
+        "misner_zapolsky", lambda m: along(0.0, *m.reach("tolman_v", "r")), view_id="tolman_v"),
+    ("misner_zapolsky", "tolman_vi", "radial"): lambda: one(
+        "misner_zapolsky", lambda m: along(0.0, *m.reach("tolman_vi", "r")), view_id="tolman_vi"),
+    ("misner_zapolsky", "power_law", "radial"): lambda: one(
+        "misner_zapolsky", lambda m: along(0.0, *m.reach("power_law", "r")), view_id="stiff"),
     ("tov", "spherical", "radial"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # Bartnik and McKinnon's soliton with one zero at t = 0, from its centre to the edge of its embedding

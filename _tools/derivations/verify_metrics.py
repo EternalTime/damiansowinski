@@ -1514,6 +1514,14 @@ DIMENSIONS = {
     ("taub_nut", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L",
     },
+    # The star of infinite central density. The length a sets the rate of t, r_b is the radius of
+    # a star, Z = g^rr and Tolman's exponent n are pure numbers.
+    ("misner_zapolsky", "areal"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "L"},
+    ("misner_zapolsky", "tolman_v"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_b": "L", "Z": "1",
+    },
+    ("misner_zapolsky", "tolman_vi"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_b": "L"},
+    ("misner_zapolsky", "power_law"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "n": "1", "a": "L"},
     # Tolman's solution VII. Lattimer and Prakash's compactness beta = GM/(Rc^2) is a pure number,
     # and so are Z = g^rr and the phase psi; Tolman's R and A are lengths and his B and C numbers.
     ("tolman_vii", "spherical"): {
@@ -1828,6 +1836,8 @@ HELD = {
     # and whose derivative along r is algebraic.
     ("tolman_vii", "spherical"): ("psi",),
     ("tolman_vii", "tolman"): ("psi",),
+    # Z = g^rr of Tolman's solution V at n = 1/2 holds r^(7/3), and its slope is (7Z - 4)/(3r).
+    ("misner_zapolsky", "tolman_v"): ("Z",),
     # Weyl's two functions for the first Morgan-Morgan disc, polynomials in xi, eta and arccot(xi):
     # held, every value is written in them and their derivatives, as Weyl's chart writes it.
     ("morgan_morgan", "oblate_spheroidal"): ("psi", "gamma"),
@@ -1907,6 +1917,7 @@ RATES = {
                            " - \\left(\\partial_\\theta\\psi\\right)^2\\right)"
                            " - 2\\left(r - m\\right)\\sin\\theta\\,\\partial_r\\psi\\,\\partial_\\theta\\psi\\right)"},
     },
+    ("misner_zapolsky", "tolman_v"): {"Z": {"r": "\\dfrac{7Z - 4}{3r}"}},
     # dm/dr is the energy of the field in a shell, r_q^2/(r^2 + W), which is 4 pi G r^2 rho/c^4.
     **{("born_infeld_charge", chart): {"m": {"r": "\\dfrac{r_q^2}{r^2 + W}"}}
        for chart in ("static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing")},

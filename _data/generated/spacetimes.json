@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 140,
+  "count": 141,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -28265,6 +28265,316 @@
       ]
     },
     {
+      "id": "misner_zapolsky",
+      "name": "Misner-Zapolsky Star of Infinite Central Density",
+      "short_name": "Misner-Zapolsky",
+      "description": "A static sphere of fluid as stiff as light, $p = \\rho c^2/3$, whose density is infinite at the centre and falls as $1/r^2$. Tolman and Oppenheimer and Volkoff found it in 1939, and it is the core that models of neutron stars approach as their central density grows without limit.",
+      "tags": [
+        "perfect fluid",
+        "radiation",
+        "equation of state",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "stellar interior",
+        "neutron star",
+        "maximum mass",
+        "instability",
+        "self-similar",
+        "homothetic",
+        "curvature singularity",
+        "timelike singularity",
+        "naked singularity",
+        "no horizon",
+        "matched solution",
+        "mass",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "tov",
+          "kind": "generalisation",
+          "text": "The equations of equilibrium for a star with any equation of state. Fed $p = \\rho c^2/3$ and an infinite central density they have one solution, $m = 3c^2r/14G$, which Oppenheimer and Volkoff wrote down in the paper that introduced them [oppenheimer1939]."
+        },
+        {
+          "id": "tolman_vii",
+          "kind": "family",
+          "text": "The seventh of Richard Tolman's eight solutions, a star whose density falls as $1 - r^2/R^2$ from a finite value at the centre. The stars here are his fifth and sixth, which he built for an infinite one [tolman1939]."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "family",
+          "text": "The star of uniform density, solution III on Tolman's list. Its central pressure is infinite only at $R = \\frac{9}{8}r_s$, while the density of this star is infinite at the centre whatever its size [tolman1939, schwarzschild1916b, buchdahl1959]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The vacuum outside the star. Tolman's fifth and sixth solutions meet it where their pressure vanishes, at $r_b = 2r_s$ for the fifth and $r_b = \\frac{7}{3}r_s$ for the sixth [tolman1939]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "programme",
+          "text": "The collapse this star points to. Oppenheimer and Volkoff ended their paper on stars too heavy for any equilibrium, whose nonstatic solutions were \"now being investigated\", and Oppenheimer and Hartland Snyder followed one through later that year [oppenheimer1939, oppenheimersnyder1939]."
+        }
+      ],
+      "references": [
+        "tolman1939",
+        "oppenheimer1939",
+        "dev2002",
+        "chandrasekhar1964prl",
+        "misner1964",
+        "chavanis2002",
+        "chavanis2008",
+        "meltzer1966",
+        "sorkin1981",
+        "schwarzschild1916b",
+        "buchdahl1959",
+        "oppenheimersnyder1939"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_zapolsky.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Blackbody Radiation Solution",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Any length; it fixes the rate of $t$, the proper time of a clock at rest at $r = a$. Whatever its value, the density is $\\rho = 3c^2/(56\\pi Gr^2)$, the pressure $p = \\rho c^2/3$, and the mass inside radius $r$ is $m = 3c^2r/(14G)$"
+            }
+          ],
+          "convention": "We use the limit that Tolman's solutions V and VI share with Oppenheimer and Volkoff's exact solution, in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The length $a$ is free, and $t$ is the proper time of a clock at rest at $r = a$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{r}{a}\\,c^2dt^2 + \\dfrac{7}{4}\\,dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r}{a}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{7}{4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{72}{49r^4}"
+        },
+        {
+          "id": "tolman_v",
+          "name": "Tolman V Star",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, r_b]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_b",
+              "description": "Radius of the star, where the pressure vanishes and Schwarzschild's vacuum begins, around the mass $M = c^2r_b/(4G)$; Tolman's constant of solution V is $R = 14^{3/7}r_b$"
+            },
+            {
+              "symbol": "Z = \\dfrac{4}{7} - \\dfrac{1}{14}\\left(\\dfrac{r}{r_b}\\right)^{7/3}",
+              "description": "The component $g^{rr} = 1 - 2Gm(r)/(c^2r)$, with $m(r)$ the mass inside radius $r$; it is $4/7$ at the centre and $1/2$ at the surface, and $\\partial_rZ = (7Z - 4)/(3r)$"
+            }
+          ],
+          "convention": "We use Tolman's solution V at his exponent $n = 1/2$, joined to Schwarzschild's vacuum, in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The star has radius $r_b$, and $t$ is the proper time of a clock at rest far from it. We write $Z$ for $g^{rr}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{r}{2r_b}\\,c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r}{2r_b}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\left(4 - 7Z\\right)}{3r^2}",
+          "kretschmann": "K = \\dfrac{4\\left(13Z^2 - 16Z + 6\\right)}{3r^4}"
+        },
+        {
+          "id": "tolman_vi",
+          "name": "Tolman VI Star",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, r_b]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_b",
+              "description": "Radius of the star, where the pressure vanishes and Schwarzschild's vacuum begins, around the mass $M = 3c^2r_b/(14G)$; Tolman's constants of solution VI are $A = 9/\\sqrt{112\\,r_b}$ and $B = A/(9r_b)$"
+            }
+          ],
+          "convention": "We use Tolman's solution VI at his exponent $n = 1/2$, joined to Schwarzschild's vacuum, in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The star has radius $r_b$, and $t$ is the proper time of a clock at rest far from it. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{r}{112r_b}\\left(9 - \\dfrac{r}{r_b}\\right)^2c^2dt^2 + \\dfrac{7}{4}\\,dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r\\left(9r_b - r\\right)^2}{112r_b^3}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{7}{4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{24}{7r\\left(9r_b - r\\right)}",
+          "kretschmann": "K = \\dfrac{72\\left(81r_b^2 - 30r_b\\,r + 5r^2\\right)}{49r^4\\left(9r_b - r\\right)^2}"
+        },
+        {
+          "id": "power_law",
+          "name": "Tolman's Exponent",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "Tolman's exponent in solution V, a pure number with $0 < n \\le 1$. The pressure is $p = n\\rho c^2/(2 - n)$ and the density $\\rho = n(2 - n)c^2/(8\\pi G(1 + 2n - n^2)r^2)$: $n = 1/2$ is radiation, and at $n = 1$ sound travels at the speed of light"
+            },
+            {
+              "symbol": "a",
+              "description": "Any length; it fixes the rate of $t$, the proper time of a clock at rest at $r = a$"
+            }
+          ],
+          "convention": "We use Tolman's solution V with his exponent $n$ free and his constant $R \\to \\infty$, in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The length $a$ is free, and $t$ is the proper time of a clock at rest at $r = a$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{r}{a}\\right)^{2n}c^2dt^2 + \\left(1 + 2n - n^2\\right)dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{r}{a}\\right)^{2n}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1 + 2n - n^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2n\\left(1 - 2n\\right)}{r^2\\left(1 + 2n - n^2\\right)}",
+          "kretschmann": "K = \\dfrac{4n^2\\left(7 - 6n + 2n^2\\right)}{r^4\\left(1 + 2n - n^2\\right)^2}"
+        }
+      ]
+    },
+    {
       "id": "mixmaster",
       "name": "Mixmaster Chaotic Cosmology",
       "short_name": "Mixmaster",
@@ -31521,6 +31831,11 @@
           "id": "lindquist_wheeler_lattice",
           "kind": "family",
           "text": "The collapsing star turned inside out: Schwarzschild's vacuum fills each cell of a closed universe, and the boundary of a cell falls along the radial geodesic that the star's surface follows here [lindquist1957]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "programme",
+          "text": "The static star of infinite central density that Oppenheimer and Volkoff found earlier in 1939. They called it unstable, and wrote that the nonstatic solutions for heavier stars were \"now being investigated\" [oppenheimer1939]."
         }
       ],
       "references": [
@@ -37709,6 +38024,11 @@
           "id": "ab_metrics",
           "kind": "family",
           "text": "Schwarzschild's field is A I in Ehlers and Kundt's table of the static vacuum fields of type D. The others have a hyperbolic or a flat plane where the sphere is, or have the time and the angle exchanged [hruska2019, martins1996]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "composite",
+          "text": "A star of radiation with an infinite central density. Tolman's fifth and sixth solutions carry Schwarzschild's vacuum outside a surface at $r_b = 2r_s$ and at $r_b = \\frac{7}{3}r_s$ [tolman1939]."
         }
       ],
       "references": [
@@ -38073,6 +38393,11 @@
           "id": "wahlquist",
           "kind": "family",
           "text": "A ball of fluid that rotates, in closed form. At rest it is Whittaker's sphere, whose $\\mu + 3p$ is uniform as the energy density of Schwarzschild's star is [whittaker1968, wahlquist1968]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "family",
+          "text": "A star from the same list of Tolman's whose density is infinite at the centre and falls as $1/r^2$. Its pressure there is a third of its energy density, the ratio that holds for radiation [tolman1939]."
         }
       ],
       "references": [
@@ -42758,6 +43083,11 @@
           "id": "tolman_bondi",
           "kind": "programme",
           "text": "Richard Tolman's other spacetime, dust expanding or collapsing in spherical symmetry with a density that varies with radius, from 1934 [tolman1934]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "family",
+          "text": "Tolman's fifth and sixth solutions at $n = 1/2$, stars whose density and pressure are infinite at the centre in the ratio that holds for radiation. Grown without limit, both approach one metric, which he suggested \"might be called the blackbody radiation solution\" [tolman1939]."
         }
       ],
       "references": [
@@ -43168,6 +43498,11 @@
           "id": "bartnik_mckinnon",
           "kind": "special_case",
           "text": "The static sphere whose matter is a Yang-Mills field, $e^{2\\Phi} = \\sigma^2(1 - 2m/r)$. It has no surface, its stress along the radius differs from its stress across it, and its two functions are known only numerically [bartnik1988, volkov1999]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "special_case",
+          "text": "The star at the end of the sequence, with $p = \\rho c^2/3$ and an infinite central density, where the equations have the exact solution $m = 3r/14$. Oppenheimer and Volkoff called it \"a unique unstable singular solution\" [oppenheimer1939]."
         }
       ],
       "references": [

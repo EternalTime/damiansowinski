@@ -73,6 +73,11 @@
       "id": "bartnik_mckinnon",
       "kind": "special_case",
       "text": "The static sphere whose matter is a Yang-Mills field, $e^{2\\Phi} = \\sigma^2(1 - 2m/r)$. It has no surface, its stress along the radius differs from its stress across it, and its two functions are known only numerically [bartnik1988, volkov1999]."
+    },
+    {
+      "id": "misner_zapolsky",
+      "kind": "special_case",
+      "text": "The star at the end of the sequence, with $p = \\rho c^2/3$ and an infinite central density, where the equations have the exact solution $m = 3r/14$. Oppenheimer and Volkoff called it \"a unique unstable singular solution\" [oppenheimer1939]."
     }
   ],
   "references": [

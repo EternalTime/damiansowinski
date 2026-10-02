@@ -388,6 +388,11 @@
       "id": "ab_metrics",
       "kind": "family",
       "text": "Schwarzschild's field is A I in Ehlers and Kundt's table of the static vacuum fields of type D. The others have a hyperbolic or a flat plane where the sphere is, or have the time and the angle exchanged [hruska2019, martins1996]."
+    },
+    {
+      "id": "misner_zapolsky",
+      "kind": "composite",
+      "text": "A star of radiation with an infinite central density. Tolman's fifth and sixth solutions carry Schwarzschild's vacuum outside a surface at $r_b = 2r_s$ and at $r_b = \\frac{7}{3}r_s$ [tolman1939]."
     }
   ],
   "references": [

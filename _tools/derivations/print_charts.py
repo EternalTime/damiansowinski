@@ -13,7 +13,7 @@ einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluz
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
-kopczynski_trautman, brill_waves and ab_metrics, and Godel's cylindrical chart.
+kopczynski_trautman, brill_waves, ab_metrics and misner_zapolsky, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -14189,6 +14189,196 @@ def tolman_vii_check(chart, system, rate):
 
 
 CHARTS["tolman_vii"] = [lambda s=s: tolman_vii(s) for s in TOLMAN_VII_CHARTS]
+
+
+# -- The star of infinite central density (Tolman, Oppenheimer and Volkoff, Misner and Zapolsky) --
+
+MISNER_ZAPOLSKY_CHARTS = ("areal", "tolman_v", "tolman_vi", "power_law")
+MISNER_ZAPOLSKY_Z = "Z = \\dfrac{4}{7} - \\dfrac{1}{14}\\left(\\dfrac{r}{r_b}\\right)^{7/3}"
+
+
+def misner_zapolsky(system):
+    """The static sphere of fluid with p = rho c^2/3 and infinite central density, in the four
+    forms its sources write, all in the areal radius. `areal` is the limit Tolman's solutions V
+    and VI share, his section 8, and Oppenheimer and Volkoff's exact solution (22): g_tt = -r/a
+    and g_rr = 7/4, with a any length. `tolman_v` is Tolman's (7.1), solution V at n = 1/2, with
+    his R and B written by the radius r_b of the star, R = 14^(3/7) r_b by his (7.6) and
+    B^2 = 1/(2 r_b) by (7.8): g_tt = -r/(2 r_b), g^rr = Z = 4/7 - (r/r_b)^(7/3)/14. `tolman_vi`
+    is his (8.1), solution VI at n = 1/2, with B/A = 1/(9 r_b) by (8.6) and A^2 = 81/(112 r_b) by
+    (8.8): g_tt = -r (9 - r/r_b)^2/(112 r_b), g_rr = 7/4. `power_law` is solution V, his (4.5),
+    with n free and R -> infinity: g_tt = -(r/a)^(2n), g_rr = 1 + 2n - n^2.
+
+    Z holds a power 7/3 of r, so it is held as a function of r with the slope (7Z - 4)/(3r),
+    vm.HELD and vm.RATES, and every value of that chart is a rational function of r, r_b and Z.
+    misner_zapolsky_check holds each chart to its source before anything is written, and
+    misner_zapolsky.md is the derivation."""
+    coords = ["t", "r", "\\theta", "\\phi"]
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    whole = ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles
+    star = ["t \\in (-\\infty, \\infty)", "r \\in (0, r_b]"] + angles
+    extra = {}
+    if system == "areal":
+        name, parameters, domains = "Blackbody Radiation Solution", ["a"], whole
+        line = "ds^2 = -\\dfrac{r}{a}\\,{c}dt^2 + \\dfrac{7}{4}\\,dr^2" + sphere
+        extra["kretschmann"] = "\\dfrac{72}{49r^4}"
+    elif system == "tolman_v":
+        name, parameters, domains = "Tolman V Star", ["r_b", MISNER_ZAPOLSKY_Z], star
+        line = "ds^2 = -\\dfrac{r}{2r_b}\\,{c}dt^2 + \\dfrac{dr^2}{Z}" + sphere
+        probe = vm.Reader(coords, parameters, (), held=("Z",))
+        r, Z = probe.symbol["r"], probe.parameters["Z"]
+
+        def reduce(value):
+            # The slope of Z is (7Z - 4)/(3r), so no derivative of Z is left.
+            value = sp.sympify(value)
+            while value.has(sp.Derivative):
+                for d in sorted(value.atoms(sp.Derivative), key=lambda d: -d.derivative_count):
+                    if d.expr != Z:
+                        raise AssertionError(f"misner_zapolsky: {d} is no derivative of Z")
+                    value = value.xreplace({d: sp.diff((7 * Z - 4) / (3 * r), r, d.derivative_count - 1)})
+                value = value.doit()
+            return vm.norm(value)
+        extra["reduce"] = reduce
+        extra["components"] = {"metric_components": {("r", "r"): "\\dfrac{1}{Z}"},
+                               "inverse_metric_components": {("r", "r"): "Z"}}
+        extra["ricci_scalar"] = "\\dfrac{4\\left(4 - 7Z\\right)}{3r^2}"
+        extra["kretschmann"] = "\\dfrac{4\\left(13Z^2 - 16Z + 6\\right)}{3r^4}"
+    elif system == "tolman_vi":
+        name, parameters, domains = "Tolman VI Star", ["r_b"], star
+        line = ("ds^2 = -\\dfrac{r}{112r_b}\\left(9 - \\dfrac{r}{r_b}\\right)^2{c}dt^2 + \\dfrac{7}{4}\\,dr^2"
+                + sphere)
+        extra["kretschmann"] = ("\\dfrac{72\\left(81r_b^2 - 30r_b\\,r + 5r^2\\right)}"
+                                "{49r^4\\left(9r_b - r\\right)^2}")
+    else:
+        name, parameters, domains = "Tolman's Exponent", ["n", "a"], whole
+        line = ("ds^2 = -\\left(\\dfrac{r}{a}\\right)^{2n}{c}dt^2 + \\left(1 + 2n - n^2\\right)dr^2" + sphere)
+        extra["components"] = {
+            "metric_components": {("t", "t"): "-\\left(\\dfrac{r}{a}\\right)^{2n}"},
+            "inverse_metric_components": {("t", "t"): "-\\left(\\dfrac{r}{a}\\right)^{-2n}"}}
+    probe = vm.Reader(coords, parameters, (), held=("Z",) if system == "tolman_v" else ())
+    lead = [probe.parameters[k] for k in ("n", "a", "r_b") if k in probe.parameters] + [probe.symbol["r"]]
+    state = {}
+    printer = {"lead": lead}
+
+    def check(chart):
+        state["printer"] = chart.printer
+        misner_zapolsky_check(chart, system)
+
+    if system == "power_law":
+        # Every value is a rational function of n and r times a power 2n of the one ratio r/a.
+        extra["pretty"] = named_powers({"\\left(\\dfrac{r}{a}\\right)": {probe.symbol["r"]: 1, probe.parameters["a"]: -1}},
+                                       state)
+        # g_rr = 1 + 2n - n^2 is written as the line element writes it, in rising powers of n.
+        printer = {"rising": [probe.parameters["n"]], "lead": lead[1:]}
+    return {
+        "metric_id": "misner_zapolsky",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line.replace("{c}", "c^2")},
+        "chart_line_element": line.replace("{c}", ""),
+        "printer": printer,
+        "check": check,
+        **extra,
+    }
+
+
+def misner_zapolsky_check(chart, system):
+    """Each chart against its source, before anything is written. The matter is a perfect fluid
+    at rest, G^r_r = G^theta_theta = G^phi_phi. `areal`: 8 pi G rho/c^2 = 3/(7r^2) and the
+    pressure a third of it, Oppenheimer and Volkoff's (22), so the Ricci scalar vanishes; g^rr =
+    1 - 2m/r with m = 3r/14; and r d/dr + (ct/2) d/d(ct) is a homothety, L g = 2g. `tolman_v`:
+    Tolman's (7.2) and (7.3) with R = 14^(3/7) r_b, a pressure that vanishes at r_b, and
+    Schwarzschild's published g_tt and g_rr there with r_s = r_b/2, his (7.9). `tolman_vi`: his
+    (8.2) and (8.3) with B/A = 1/(9 r_b), a pressure that vanishes at r_b, and Schwarzschild's
+    published g_tt and g_rr there with r_s = 3r_b/7, his (8.9). `power_law`: his (4.5) at
+    R -> infinity, so p/rho = n/(2 - n), and the areal chart at n = 1/2. Each star tends to the
+    areal chart at its centre: g_rr -> 7/4, and g_tt/r to a constant."""
+    r = chart.symbols[1]
+    p = chart.reader.parameters
+    reduce = chart.reduce or vm.norm
+    geo, g = chart.geo, chart.geo.g
+    G = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+    for a in range(4):
+        for b in range(4):
+            if a != b and reduce(G[a][b]) != 0:
+                raise AssertionError(f"misner_zapolsky: the {system} chart has a stress off the diagonal")
+    if reduce(G[1][1] - G[2][2]) != 0 or reduce(G[2][2] - G[3][3]) != 0:
+        raise AssertionError(f"misner_zapolsky: the {system} chart is not a perfect fluid at rest")
+    density, pressure = -G[0][0], G[1][1]
+
+    def gone(e):
+        positive = {s: sp.Symbol(s.name + "_positive", positive=True) for s in sp.sympify(e).free_symbols}
+        return sp.simplify(sp.powsimp(sp.powdenest(sp.sympify(e).subs(positive), force=True), force=True)) == 0
+
+    def schwarzschild(rs, at):
+        reader, symbols, there = kaluza_klein_published("schwarzschild", "spherical")
+        same = {symbols[1]: at, reader.parameters["r_s"]: rs}
+        return there[0, 0].subs(same), there[1, 1].subs(same)
+
+    if system == "areal":
+        if vm.norm(density - 3 / (7 * r ** 2)) != 0 or vm.norm(pressure - density / 3) != 0:
+            raise AssertionError("misner_zapolsky: the areal chart is not rho = 3/(56 pi r^2) with p = rho/3")
+        if vm.norm(1 / g[1, 1] - (1 - 2 * (3 * r / 14) / r)) != 0:
+            raise AssertionError("misner_zapolsky: the mass inside r is not 3r/14")
+        if vm.norm(geo.ricci_scalar()) != 0:
+            raise AssertionError("misner_zapolsky: the Ricci scalar of radiation does not vanish")
+        # The homothety xi = (ct/2) d/d(ct) + r d/dr: L_xi g = 2g, slot by slot.
+        x = chart.symbols
+        xi = [x[0] / 2, r, 0, 0]
+        for i in range(4):
+            for j in range(4):
+                lie = (sum(xi[k] * sp.diff(g[i, j], x[k]) for k in range(4))
+                       + sum(g[k, j] * sp.diff(xi[k], x[i]) + g[i, k] * sp.diff(xi[k], x[j]) for k in range(4)))
+                if vm.norm(lie - 2 * g[i, j]) != 0:
+                    raise AssertionError("misner_zapolsky: the areal chart has no homothety r d/dr + (t/2) d/dt")
+        return
+    if system == "power_law":
+        n = p["n"]
+        if not gone(density - n * (2 - n) / ((1 + 2 * n - n ** 2) * r ** 2)):
+            raise AssertionError("misner_zapolsky: the density of the power law chart is not Tolman's (4.5)")
+        if not gone(pressure - n ** 2 / ((1 + 2 * n - n ** 2) * r ** 2)):
+            raise AssertionError("misner_zapolsky: the pressure of the power law chart is not Tolman's (4.5)")
+        first = misner_zapolsky("areal")
+        source = cp.Chart(first["system"]["coords"], first["system"]["parameters"], first["chart_line_element"])
+        there = source.geo.g.subs({source.symbols[1]: r, source.reader.parameters["a"]: p["a"]}, simultaneous=True)
+        there = there.subs(dict(zip(source.symbols[2:], chart.symbols[2:])))
+        for i in range(4):
+            if not gone((g[i, i] - there[i, i]).subs(n, sp.Rational(1, 2))):
+                raise AssertionError("misner_zapolsky: the power law chart at n = 1/2 is not the areal chart")
+        return
+    rb = p["r_b"]
+    if system == "tolman_v":
+        Z = p["Z"]
+        explicit = chart.reader.held[Z]
+        if vm.norm(sp.diff(explicit, r) - (7 * explicit - 4) / (3 * r)) != 0:
+            raise AssertionError("misner_zapolsky: the slope of Z is not (7Z - 4)/(3r)")
+        R = 14 ** sp.Rational(3, 7) * rb
+        third = (r / R) ** sp.Rational(1, 3)
+        wanted_density = 3 / (7 * r ** 2) + 10 * third / (3 * R ** 2)
+        wanted_pressure = 1 / (7 * r ** 2) - 2 * third / R ** 2
+        out = lambda e: reduce(e).subs(Z, explicit)  # noqa: E731
+        if not gone(out(density) - wanted_density) or not gone(out(pressure) - wanted_pressure):
+            raise AssertionError("misner_zapolsky: the Tolman V star misses his (7.2) or (7.3)")
+        at_surface, rs, centre = explicit.subs(r, rb), rb / 2, sp.Rational(4, 7)
+        if not gone(wanted_pressure.subs(r, rb)):
+            raise AssertionError("misner_zapolsky: the pressure of the Tolman V star does not vanish at r_b")
+        inside = (g[0, 0].subs(r, rb), 1 / at_surface)
+        at_centre = sp.limit(explicit, r, 0)
+    else:
+        wanted_pressure = 9 * (rb - r) / (7 * r ** 2 * (9 * rb - r))
+        if vm.norm(density - 3 / (7 * r ** 2)) != 0 or vm.norm(pressure - wanted_pressure) != 0:
+            raise AssertionError("misner_zapolsky: the Tolman VI star misses his (8.2) or (8.3)")
+        rs, centre = 3 * rb / 7, sp.Rational(4, 7)
+        inside = (g[0, 0].subs(r, rb), g[1, 1].subs(r, rb))
+        at_centre = 1 / g[1, 1]
+    outside = schwarzschild(rs, rb)
+    if not gone(inside[0] - outside[0]) or not gone(inside[1] - outside[1]):
+        raise AssertionError(f"misner_zapolsky: the {system} star does not meet Schwarzschild's published metric "
+                             "at its surface")
+    if not gone(at_centre - centre) or sp.limit(g[0, 0] / r, r, 0) in (0, sp.oo, -sp.oo):
+        raise AssertionError(f"misner_zapolsky: the {system} star does not tend to the areal chart at its centre")
+
+
+CHARTS["misner_zapolsky"] = [lambda s=s: misner_zapolsky(s) for s in MISNER_ZAPOLSKY_CHARTS]
 # -- The Kiselev black hole ---------------------------------------------------------------
 
 KISELEV_CHARTS = ("static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "linear",

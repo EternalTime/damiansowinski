@@ -2628,6 +2628,39 @@
     "embedding": "0c96027fa617beeb"
   },
   {
+    "id": "misner_zapolsky",
+    "name": "Misner-Zapolsky",
+    "tags": [
+      "perfect fluid",
+      "radiation",
+      "equation of state",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "stellar interior",
+      "neutron star",
+      "maximum mass",
+      "instability",
+      "self-similar",
+      "homothetic",
+      "curvature singularity",
+      "timelike singularity",
+      "naked singularity",
+      "no horizon",
+      "matched solution",
+      "mass",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "965c74521b210a74",
+    "diagrams": "2c65ad1429b364b5",
+    "conformal": "3e3154576237c154",
+    "embedding": "70179775226b526c"
+  },
+  {
     "id": "mixmaster",
     "name": "Mixmaster",
     "tags": [
@@ -2933,7 +2966,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8006061f6afe05bf",
+    "version": "b4356b8920af8bba",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -3509,7 +3542,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "acccc91418096808",
+    "version": "4c685f85dc4fd975",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3532,7 +3565,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "f369170993219319",
+    "version": "c9f23da4c45951b1",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978"
@@ -3982,7 +4015,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0c8ffce85193ca75",
+    "version": "321ee30e0ba28c55",
     "diagrams": "54dd0e9e7887701d",
     "conformal": "0f87c7ddfbce658d",
     "embedding": "80461874aabb5765"
@@ -4029,7 +4062,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "eeb73341d65edb46",
+    "version": "2317b3f2016caa20",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89"

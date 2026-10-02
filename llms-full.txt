@@ -1240,6 +1240,19 @@ One moment of a spacetime with two black holes at rest in it, the initial data C
 - chart One Hole: coordinates $(r, \theta, \phi)$, $$ds^2 = \left(1 + \dfrac{r_s}{4r}\right)^4\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Charged: coordinates $(x, y, z)$, $$ds^2 = \chi^2\psi^2\left(dx^2 + dy^2 + dz^2\right)$$
 
+### Misner-Zapolsky Star of Infinite Central Density
+
+A static sphere of fluid as stiff as light, $p = \rho c^2/3$, whose density is infinite at the centre and falls as $1/r^2$. Tolman and Oppenheimer and Volkoff found it in 1939, and it is the core that models of neutron stars approach as their central density grows without limit.
+
+- id: `misner_zapolsky`
+- tags: perfect fluid, radiation, equation of state, static, stationary, spherically symmetric, stellar interior, neutron star, maximum mass, instability, self-similar, homothetic, curvature singularity, timelike singularity, naked singularity, no horizon, matched solution, mass, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/misner_zapolsky.json
+- chart Blackbody Radiation Solution: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r}{a}\,c^2dt^2 + \dfrac{7}{4}\,dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Tolman V Star: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r}{2r_b}\,c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Tolman VI Star: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r}{112r_b}\left(9 - \dfrac{r}{r_b}\right)^2c^2dt^2 + \dfrac{7}{4}\,dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Tolman's Exponent: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(\dfrac{r}{a}\right)^{2n}c^2dt^2 + \left(1 + 2n - n^2\right)dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Mixmaster Chaotic Cosmology
 
 A spatially homogeneous Bianchi type IX cosmology whose approach to the singularity consists of an infinite, chaotic sequence of Kasner oscillations. It is the prototype of chaotic cosmological dynamics near a singularity.
