@@ -1382,6 +1382,12 @@ KASNER_SCALAR_FIVE_INPUT = ("Exponents $s_5 = 2q/(\\sqrt{6} - q)$ and $(s_1, s_2
                             "$s_1 = (\\sqrt{6}\\,p_1 - q)/(\\sqrt{6} - q)$ and likewise, at "
                             "$(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$ and $q = 10/13$: "
                             "$(s_1, s_2, s_3, s_5) = (-0.234, -0.009, 0.327, 0.916)$, which sum to 1, as do their squares.")
+# Kasner's universe with a magnetic field along z, at the exponents Kasner's own diagrams draw and
+# b = 1, where the length along the field is greatest at t = 1; Rosen's chart in units of ell.
+KASNER_MAGNETIC = {"p_1": "-2/7", "p_2": "3/7", "p_3": "6/7", "b": 1}
+KASNER_MAGNETIC_INPUT = ("Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ at early times, a point on the Kasner "
+                         "circle, and $b = 1$: at late times the exponents are $(10/19, 15/19, -6/19)$.")
+ROSEN_INPUT = "The axisymmetric universe, exponents $(0, 0, 1)$, with $\\ell$ the unit of $x$ and $z$."
 EXPONENTIAL = {"m": 1}          # the exponential metric of Papapetrou and Yilmaz, in units of m = GM/c^2
 # The moving mirror of Fulling and Davies, in units of 1/kappa: Carlitz and Willey's mirror, which
 # radiates thermally at every time, the mirror of Good, Anderson and Evans, which creates particles
@@ -3732,6 +3738,17 @@ DIAGRAMS = [
             KASNER_SCALAR_FIVE, {"y": "0", "z": "0", "w": "0"}, tau="T", families=SIDEWAYS, input=KASNER_SCALAR_FIVE_INPUT),
     Diagram("kasner_scalar", "kaluza_klein", "Tw", "$T$ and $w$", ("T", "w"), (-1.2, 1.2, 0, 2.4), "$w$", "$cT$",
             KASNER_SCALAR_FIVE, {"x": "0", "y": "0", "z": "0"}, tau="T", families=SIDEWAYS, input=KASNER_SCALAR_FIVE_INPUT),
+    # Kasner's universe with a magnetic field: an axis across the field and the axis along it in
+    # Kasner's time, and the same two in Rosen's time for the axisymmetric universe, whose chart
+    # ends at eta = pi.
+    Diagram("kasner_magnetic", "kasner_time", "tx", "$t$ and $x$", ("t", "x"), (-1, 1, 0, 2), "$x$", "$ct$",
+            KASNER_MAGNETIC, {"y": "0", "z": "0"}, families=SIDEWAYS, input=KASNER_MAGNETIC_INPUT),
+    Diagram("kasner_magnetic", "kasner_time", "tz", "$t$ and $z$", ("t", "z"), (-1, 1, 0, 2), "$z$", "$ct$",
+            KASNER_MAGNETIC, {"x": "0", "y": "0"}, families=SIDEWAYS, input=KASNER_MAGNETIC_INPUT),
+    Diagram("kasner_magnetic", "rosen", "etax", "$\\eta$ and $x$", ("\\eta", "x"), (-1.6, 1.6, 0, 3.2),
+            "$x/\\ell$", "$\\eta$", {"ell": 1}, {"y": "0", "z": "0"}, tau="eta", families=SIDEWAYS, input=ROSEN_INPUT),
+    Diagram("kasner_magnetic", "rosen", "etaz", "$\\eta$ and $z$", ("\\eta", "z"), (-1.6, 1.6, 0, 3.2),
+            "$z/\\ell$", "$\\eta$", {"ell": 1}, {"x": "0", "y": "0"}, tau="eta", families=SIDEWAYS, input=ROSEN_INPUT),
     Diagram("bianchi", "type_i_cartesian", "tx", "$t$ and $x$", ("t", "x"), (-1, 1, 0, 2),
             "$x\\;[c/\\bar H]$", "$ct\\;[c/\\bar H]$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS,
             dust=BIANCHI_DUST, reference="$a_i = 1$",
@@ -8699,6 +8716,32 @@ CAPTIONS = {
         "In the plane of $t$ and $x$ the same singularity closes the cones, since the "
         "scale factor there, $t^{-2/7}$, grows as $t \\to 0$.",
     ],
+    ("kasner_magnetic", "kasner_time", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$, $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, $b = 1$), an axis across "
+        "the field. The factor $(1 + b^2t^{2p_3})^2$ multiplies $c^2dt^2$ and $dx^2$ alike, so the cones are those "
+        "of Kasner's vacuum, $dx/dt = \\pm t^{2/7}$, and they close up as $t \\to 0$. The Kretschmann scalar "
+        "diverges at $t = 0$, the singularity.",
+    ],
+    ("kasner_magnetic", "kasner_time", "tz"): [
+        "The plane of $t$ and $z$ ($x = y = 0$, $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, $b = 1$), the axis along "
+        "the field. The edges of the cones are $dz/dt = \\pm(1 + b^2t^{12/7})^2\\,t^{-6/7}$: they open out flat "
+        "toward the singularity, as in Kasner's vacuum, are narrowest at $t = 3^{-7/12}$, about $0.53$, and open "
+        "again afterward. The length along the field, $t^{6/7}/(1 + b^2t^{12/7})$, is greatest at $t = 1$ and "
+        "shrinks from then on.",
+    ],
+    ("kasner_magnetic", "rosen", "etax"): [
+        "The plane of $\\eta$ and $x$ ($y = z = 0$) of the axisymmetric universe, an axis across the field. The "
+        "edges of the cones are $dx/d\\eta = \\pm\\ell/(1 + \\cos\\eta)$, and $x \\pm \\ell\\tan(\\eta/2)$ is "
+        "constant along a ray, which reaches $\\eta = \\pi$, the infinite future, only at unbounded $x$. The "
+        "curvature is finite on $\\eta = 0$, where the Kretschmann scalar is $5120/\\ell^4$.",
+    ],
+    ("kasner_magnetic", "rosen", "etaz"): [
+        "The plane of $\\eta$ and $z$ ($x = y = 0$) of the axisymmetric universe, the axis along the field. The "
+        "edges of the cones are $dz/d\\eta = \\pm\\ell/((1 + \\cos\\eta)^2\\sin\\eta)$, flat at both ends of the "
+        "chart, where the length along $z$, $\\sin\\eta$, goes to zero. Near $\\eta = 0$ the plane is flat, "
+        "$-\\ell^2d\\eta^2/16 + \\eta^2dz^2$, the coordinates of Milne's universe, and a ray reaches "
+        "$\\eta = 0$ only at unbounded $z$.",
+    ],
     ("kasner_scalar", "synchronous", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$, $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, $q = 10/13$), the axis "
         "that shrinks most slowly. The scale factor $t^{2/13}$ goes to zero at the singularity, so the cones open "
@@ -13060,6 +13103,17 @@ def _exponential_isotropic(R):
     return -1 / lambertw(-1 / np.maximum(R, math.e)).real
 
 
+def _magnetic_z(t):
+    """The integral of (1 + t^(12/7))^2 t^(-6/7), the coordinate a ray along the field has covered."""
+    return 7 * t ** (1 / 7) + 14 / 13 * t ** (13 / 7) + 7 / 25 * t ** (25 / 7)
+
+
+def _rosen_z(eta):
+    """The integral of 1/((1 + cos(eta))^2 sin(eta)), in s = tan(eta/2)."""
+    s = np.tan(eta / 2)
+    return (np.log(s) + s ** 2 + s ** 4 / 4) / 4
+
+
 # The exponents along x and w of the vacuum of five dimensions the scalar Kasner diagrams draw.
 _KS_S1 = (2 * math.sqrt(6) - 10) / (13 * math.sqrt(6) - 10)
 _KS_S5 = 20 / (13 * math.sqrt(6) - 10)
@@ -14472,6 +14526,18 @@ CLOSED_FORMS = {
         (lambda t, z: z + 7 * t ** (1 / 7), lambda t, z: z - 7 * t ** (1 / 7), lambda t, z: t > 1e-3),
     # Kasner's universe with a scalar field: along an axis of exponent p a ray keeps x +- t^(1 - p)/(1 - p),
     # which is x +- e^(-(1 - p) tau)/(1 - p) in the logarithmic time at ell = 1.
+    # Kasner's universe with a magnetic field: across the field a ray keeps x +- t^(9/7) 7/9, as in
+    # the vacuum; along it dz/dt = +-(1 + t^(12/7))^2 t^(-6/7), whose integral is three powers of t.
+    # In Rosen's chart at ell = 1, with s = tan(eta/2), x +- s and z +- (ln s + s^2 + s^4/4)/4.
+    ("kasner_magnetic", "kasner_time", "tx"):
+        (lambda t, x: x + t ** (9 / 7) * 7 / 9, lambda t, x: x - t ** (9 / 7) * 7 / 9, lambda t, x: t > 1e-3),
+    ("kasner_magnetic", "kasner_time", "tz"):
+        (lambda t, z: z + _magnetic_z(t), lambda t, z: z - _magnetic_z(t), lambda t, z: t > 1e-3),
+    ("kasner_magnetic", "rosen", "etax"):
+        (lambda eta, x: x + np.tan(eta / 2), lambda eta, x: x - np.tan(eta / 2), lambda eta, x: eta < 3.0),
+    ("kasner_magnetic", "rosen", "etaz"):
+        (lambda eta, z: z + _rosen_z(eta), lambda eta, z: z - _rosen_z(eta),
+         lambda eta, z: (eta > 0.02) & (eta < 3.0)),
     ("kasner_scalar", "synchronous", "tx"):
         (lambda t, x: x + t ** (11 / 13) * 13 / 11, lambda t, x: x - t ** (11 / 13) * 13 / 11, lambda t, x: t > 1e-3),
     ("kasner_scalar", "synchronous", "tz"):

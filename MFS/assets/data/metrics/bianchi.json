@@ -74,6 +74,11 @@
       "id": "tilted_universes",
       "kind": "special_case",
       "text": "Bianchi universes whose matter drifts through the surfaces of homogeneity. A. R. King and George Ellis worked out in 1973 how the expansion, the rotation, and the shear of such matter go with the group type [king1973]."
+    },
+    {
+      "id": "kasner_magnetic",
+      "kind": "special_case",
+      "text": "Bianchi type I holding a uniform magnetic field and no matter, the universe Gerald Rosen found in 1962 [rosen1962, jacobs1969]."
     }
   ],
   "references": [
@@ -93,7 +98,9 @@
     "tafel1973",
     "kopczynski1973",
     "zeldovich1984",
-    "king1973"
+    "king1973",
+    "rosen1962",
+    "jacobs1969"
   ],
   "coordinates": [
     {

@@ -1061,6 +1061,17 @@ An anisotropic vacuum cosmology that expands along some axes while contracting a
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/kasner.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + t^{2p_1} dx^2 + t^{2p_2} dy^2 + t^{2p_3} dz^2$$
 
+### Kasner Universe with a Magnetic Field
+
+Kasner's anisotropic universe threaded by a uniform magnetic field along one axis, with no matter in it. The tension of the field pulls that axis to nothing at both ends of time, and the universe passes from one Kasner vacuum at early times to another at late times.
+
+- id: `kasner_magnetic`
+- tags: electrovacuum, electromagnetic field, magnetic field, anisotropic, cosmology, Kasner, Bianchi classification, spatially homogeneous, homogeneous, curvature singularity, spacelike singularity, big bang, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kasner_magnetic.json
+- chart Kasner's time: coordinates $(t, x, y, z)$, $$ds^2 = \left(1 + b^2t^{2p_3}\right)^2\left(-c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2\right) + \dfrac{t^{2p_3}}{\left(1 + b^2t^{2p_3}\right)^2}dz^2$$
+- chart Rosen (axisymmetric): coordinates $(\eta, x, y, z)$, $$ds^2 = -\dfrac{\ell^2}{\left(1 + \cos\eta\right)^4}d\eta^2 + \dfrac{dx^2 + dy^2}{\left(1 + \cos\eta\right)^2} + \sin^2\eta\,dz^2$$
+
 ### Kasner Universe with a Scalar Field
 
 Kasner's anisotropic universe filled with a massless scalar field, which is also a fluid whose pressure equals its energy density. The field loosens Kasner's second condition, so all three axes can shrink together toward the singularity, and the oscillations of the vacuum come to a stop.

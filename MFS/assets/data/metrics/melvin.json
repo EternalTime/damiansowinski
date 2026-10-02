@@ -71,6 +71,11 @@
       "id": "distorted_schwarzschild",
       "kind": "family",
       "text": "Schwarzschild's black hole in the gravitational field of distant matter, as Ernst's is in a magnetic field: a regular horizon in surroundings that never flatten out [fairhurst2001]."
+    },
+    {
+      "id": "kasner_magnetic",
+      "kind": "dual",
+      "text": "Melvin's universe with its radius continued to imaginary values, which turns the radius into a time. The static bundle of field lines becomes an expanding universe with a uniform field along one axis, the solution Gerald Rosen found in 1962 [kastor2015, rosen1962]."
     }
   ],
   "references": [
@@ -100,7 +105,9 @@
     "bonnor1969light",
     "kaup1968",
     "emparan2000",
-    "fairhurst2001"
+    "fairhurst2001",
+    "kastor2015",
+    "rosen1962"
   ],
   "coordinates": [
     {

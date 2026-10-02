@@ -9949,6 +9949,63 @@ def kasner_scalar(ck, src):
                  input=given)]
 
 
+def kasner_magnetic(ck, src):
+    """The plane y = 0 of Kasner's universe with a magnetic field at t = 1/4, 1/2, 1 and 2, at the
+    exponents (-2/7, 3/7, 6/7) and b = 1 the spacetime diagrams declare, each flat,
+    f^2 t^(2 p_1) dx^2 + t^(2 p_3) dz^2/f^2 with f = 1 + b^2 t^(2 p_3), with the ring of particles at
+    rest on x^2 + z^2 = l^2, which the published Christoffel symbols keep at rest: the ellipse of
+    semi-axes f t^p_1 l across the field and t^p_3 l/f along it, the second greatest at t = 1."""
+    p = (sp.Rational(-2, 7), sp.Rational(3, 7), sp.Rational(6, 7))
+    ck.exact("Kasner with a magnetic field: the exponents sum to 1, and so do their squares",
+             sum(p) == 1 and sum(k * k for k in p) == 1)
+    at_rest(ck, src, "kasner_magnetic", "kasner_time")
+    params = {"p_1": "-2/7", "p_2": "3/7", "p_3": "6/7", "b": 1}
+
+    def axes(t):
+        f = 1 + t ** (12 / 7)
+        return f * t ** (-2 / 7), t ** (6 / 7) / f
+    named = ("1/4", "1/2", "1", "2")
+    # The movie runs through the moments at a steady t, a frame every 0.05 of it.
+    moments, keys = ring_moments([float(sp.Rational(s)) for s in named], 0.05,
+                                 lambda k: (f"$t = {named[k]}$", float(sp.Rational(named[k])), {"t": named[k], "y": 0}, None),
+                                 lambda t: (f"$t = {t:g}$", t, {"t": repr(t), "y": 0}, None))
+    frames = ring_sequence(ck, src, "Kasner with a magnetic field", "kasner_magnetic", "kasner_time", moments, 4.0, params)
+    surfaces = [frames[i] for i in keys]
+    for s, (_, time, _, _) in zip(frames, moments):
+        P = s.curves[0].points
+        a = np.linspace(0, 2 * math.pi, 361)
+        across, along = axes(time)
+        want = np.column_stack([across * np.cos(a), along * np.sin(a)])
+        ck.add(f"Kasner with a magnetic field, t = {time}: the ellipse of semi-axes f t^p_1 and t^p_3/f",
+               float(np.max(np.abs(P[:, :2] - want))), 1e-12)
+    ck.add("Kasner with a magnetic field: the length along the field is greatest at t = 1",
+           abs(max(np.linspace(0.25, 2, 701), key=lambda t: axes(t)[1]) - 1.0), 2e-3)
+
+    def plane(u, a, b):
+        sl = FlatPlane(src, "kasner_magnetic", "kasner_time", "x", "z", {"t": repr(float(u)), "y": 0}, params)
+        return float(np.max(np.abs(sl.scale - [a, b])))
+    tube = stack(ck, "Kasner with a magnetic field", surfaces, axes, 1.5, plane, 8.0,
+                 "the ring's world tube runs on before $t = 1/4$ and after $t = 2$")
+    tube_fig = stack_figure(tube, 8.0, "$t$", [
+        ("fill", "cover", "the ring at every moment from $t = 1/4$ to $t = 2$, each at the height of its time"),
+        ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
+        ("line", "axis", "the axis of time, through the centre of the ring")])
+    fig, played = ring_movie(frames, 8.0, "$t$")
+    fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
+    fig.legend("line", "particles", "a ring of particles at rest in the chart on $x^2 + z^2 = \\ell^2$, with twelve of "
+                                    "them marked: an ellipse reaching $(1 + b^2t^{2p_3})\\,t^{p_1}\\ell$ along $x$ and "
+                                    "$t^{p_3}\\ell/(1 + b^2t^{2p_3})$ along $z$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = ("$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, $b = 1$, and $t$ in the unit of time in which the powers are "
+                "evaluated, with $\\ell$ the radius of the ring in the chart's coordinates, the unit of every length.")
+    given = ("Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ at early times and $b = 1$, as in the spacetime diagrams.")
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings, input=given,
+                 height="$t$, a height of $1.5\\,\\ell$ for each unit of $t$"),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings,
+                 input=given)]
+
+
 def bianchi(ck, src):
     """The plane y = 0 at four moments of the dust the spacetime diagram declares, solved from
     this spacetime's own G^x_x = G^y_y = G^z_z = 0 by null_rays.DustSolver: flat at each,
@@ -15023,6 +15080,7 @@ DRAWN = {
     "mixmaster": mixmaster,
     "kasner": kasner,
     "kasner_scalar": kasner_scalar,
+    "kasner_magnetic": kasner_magnetic,
     "bianchi": bianchi,
     "pp_wave": pp_wave, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "chandrasekhar_xanthopoulos": chandrasekhar_xanthopoulos,
@@ -17178,6 +17236,12 @@ CAPTIONS = {
         "moment from $t = 1/4$ to $t = 2$ an ellipse at the height of its time. Its cross section reaches "
         "$t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$, so the tube narrows along $x$ as it widens along $z$.",
     ],
+    ("kasner_magnetic", "tube"): [
+        "The world tube of a ring of particles at rest in the chart ($(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, "
+        "$b = 1$), each moment from $t = 1/4$ to $t = 2$ an ellipse at the height of its time. Along the field, "
+        "$z$, its cross section widens until $t = 1$ and narrows afterward, and across the field it narrows "
+        "until $t = 5^{-7/12}$, about $0.39$, and then widens.",
+    ],
     ("kasner_scalar", "tube"): [
         "The world tube of a ring of particles at rest in the chart ($(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, "
         "$q = 10/13$), each moment from $t = 1/4$ to $t = 2$ an ellipse at the height of its time. Its cross "
@@ -17330,6 +17394,18 @@ CAPTIONS = {
         "contracts while $y$ and $z$ expand, so toward the singularity at $t = 0$ every sphere of particles is drawn "
         "out into a needle along $x$. Edward Kasner found the solution in 1921: its exponents sum to $1$, so volumes "
         "grow as $t$, and the vacuum field equations require their squares to sum to $1$ as well.",
+    ],
+    ("kasner_magnetic", "ring"): [
+        "The plane $y = 0$ of Kasner's universe with a magnetic field along $z$ as $t$ runs from $1/4$ to $2$, each "
+        "moment drawn as a surface in flat space with every distance along it the metric distance. At every "
+        "moment the plane is flat, Euclid's plane with its axes scaled, so the drawing is a flat disc, and the "
+        "uneven expansion shows in a ring of particles at rest in the chart, which stay at rest because the "
+        "metric has no $\\Gamma^i{}_{tt}$.",
+        "The ring is the circle $x^2 + z^2 = \\ell^2$ of the chart, and at time $t$ the ellipse reaching "
+        "$(1 + b^2t^{2p_3})\\,t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell/(1 + b^2t^{2p_3})$ along $z$. With "
+        "$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ and $b = 1$ the length along the field grows as in Kasner's vacuum, "
+        "reaches $\\ell/2$ at $t = 1$, and shrinks, while the tension of the field takes over. In Kasner's "
+        "vacuum, $b = 0$, the same length grows without bound.",
     ],
     ("kasner_scalar", "ring"): [
         "The plane $y = 0$ of Kasner's universe with a scalar field as $t$ runs from $1/4$ to $2$, each moment "
