@@ -40,6 +40,11 @@
       "id": "minkowski",
       "kind": "special_case",
       "text": "The waves gone quiet. With $\\psi = 0$ and $\\gamma = 0$ the metric is Minkowski's in cylindrical coordinates."
+    },
+    {
+      "id": "senovilla",
+      "kind": "family",
+      "text": "The same cylindrical symmetry filled with radiation. Senovilla's metric is diagonal with a conformally flat plane of $t$ and $\\rho$, as Einstein and Rosen's is, and it has no singularity anywhere [senovilla1990, fernandezjambrina2002]."
     }
   ],
   "references": [
@@ -65,7 +70,9 @@
     "ashtekar1996",
     "levicivita1919",
     "gowdy1971",
-    "gowdy2014"
+    "gowdy2014",
+    "senovilla1990",
+    "fernandezjambrina2002"
   ],
   "coordinates": [
     {

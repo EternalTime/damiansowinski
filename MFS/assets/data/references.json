@@ -1,5 +1,5 @@
 {
-  "version": "837b0f4c53593edc",
+  "version": "622e47a2f17fa447",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -16808,6 +16808,154 @@
         "eprint": "1205.6497",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1205.6497"
+      }
+    },
+    "senovilla1990": {
+      "type": "article",
+      "fields": {
+        "title": "New class of inhomogeneous cosmological perfect-fluid solutions without big-bang singularity",
+        "author": "Senovilla, Jos\\'e M. M.",
+        "journal": "Physical Review Letters",
+        "volume": "64",
+        "number": "19",
+        "pages": "2219--2221",
+        "year": "1990",
+        "doi": "10.1103/PhysRevLett.64.2219",
+        "url": "https://doi.org/10.1103/PhysRevLett.64.2219"
+      }
+    },
+    "maddox1990": {
+      "type": "article",
+      "fields": {
+        "title": "Another gravitational solution found",
+        "author": "Maddox, John",
+        "journal": "Nature",
+        "volume": "345",
+        "number": "6272",
+        "pages": "201",
+        "year": "1990",
+        "doi": "10.1038/345201a0",
+        "url": "https://doi.org/10.1038/345201a0"
+      }
+    },
+    "chinea1992": {
+      "type": "article",
+      "fields": {
+        "title": "Singularity-free space-time",
+        "author": "Chinea, F. J. and Fern\\'andez-Jambrina, L. and Senovilla, J. M. M.",
+        "journal": "Physical Review D",
+        "volume": "45",
+        "number": "2",
+        "pages": "481--486",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.45.481",
+        "eprint": "gr-qc/0403075",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0403075"
+      }
+    },
+    "ruiz1992": {
+      "type": "article",
+      "fields": {
+        "title": "General class of inhomogeneous perfect-fluid solutions",
+        "author": "Ruiz, Eduardo and Senovilla, Jos\\'e M. M.",
+        "journal": "Physical Review D",
+        "volume": "45",
+        "number": "6",
+        "pages": "1995--2005",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.45.1995",
+        "url": "https://doi.org/10.1103/PhysRevD.45.1995"
+      }
+    },
+    "senovilla1996": {
+      "type": "article",
+      "fields": {
+        "title": "Towards realistic singularity-free cosmological models",
+        "author": "Senovilla, Jos\\'e M. M.",
+        "journal": "Physical Review D",
+        "volume": "53",
+        "number": "4",
+        "pages": "1799--1807",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.53.1799",
+        "url": "https://doi.org/10.1103/PhysRevD.53.1799"
+      }
+    },
+    "senovilla1998": {
+      "type": "article",
+      "fields": {
+        "title": "Singularity Theorems and Their Consequences",
+        "author": "Senovilla, Jos\\'e M. M.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "30",
+        "number": "5",
+        "pages": "701--848",
+        "year": "1998",
+        "doi": "10.1023/A:1018801101244",
+        "eprint": "1801.04912",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1801.04912"
+      }
+    },
+    "hawkingpenrose1970": {
+      "type": "article",
+      "fields": {
+        "title": "The singularities of gravitational collapse and cosmology",
+        "author": "Hawking, Stephen W. and Penrose, Roger",
+        "journal": "Proceedings of the Royal Society of London. A. Mathematical and Physical Sciences",
+        "volume": "314",
+        "number": "1519",
+        "pages": "529--548",
+        "year": "1970",
+        "doi": "10.1098/rspa.1970.0021",
+        "url": "https://doi.org/10.1098/rspa.1970.0021"
+      }
+    },
+    "raychaudhuri1998": {
+      "type": "article",
+      "fields": {
+        "title": "Theorem for Nonrotating Singularity-Free Universes",
+        "author": "Raychaudhuri, A. K.",
+        "journal": "Physical Review Letters",
+        "volume": "80",
+        "number": "4",
+        "pages": "654--655",
+        "year": "1998",
+        "doi": "10.1103/PhysRevLett.80.654",
+        "url": "https://doi.org/10.1103/PhysRevLett.80.654"
+      }
+    },
+    "fernandezjambrina2002": {
+      "type": "article",
+      "fields": {
+        "title": "A wide family of singularity-free cosmological models",
+        "author": "Fern\\'andez-Jambrina, L. and Gonz\\'alez-Romero, L. M.",
+        "journal": "Physical Review D",
+        "volume": "66",
+        "number": "2",
+        "pages": "024027",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.66.024027",
+        "eprint": "gr-qc/0402119",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0402119"
+      }
+    },
+    "senovilla2007": {
+      "type": "article",
+      "fields": {
+        "title": "A singularity theorem based on spatial averages",
+        "author": "Senovilla, J. M. M.",
+        "journal": "Pramana",
+        "volume": "69",
+        "number": "1",
+        "pages": "31--47",
+        "year": "2007",
+        "doi": "10.1007/s12043-007-0109-2",
+        "eprint": "gr-qc/0610127",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0610127"
       }
     }
   }

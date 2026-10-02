@@ -72,6 +72,11 @@
       "id": "coleman_de_luccia",
       "kind": "composite",
       "text": "A bubble of new vacuum with an open Friedmann universe inside it, $k = -1$, and no singularity at its start [coleman1980, bucher1995]."
+    },
+    {
+      "id": "senovilla",
+      "kind": "family",
+      "text": "A universe of radiation arranged around an axis, with a bounce where the big bang would be. One class of metrics, with a function of time for a scale factor and four parameters, holds it and every Friedmann-Lemaître-Robertson-Walker universe [senovilla1996]."
     }
   ],
   "references": [
@@ -122,7 +127,8 @@
     "einstein1945",
     "carrera2010",
     "coleman1980",
-    "bucher1995"
+    "bucher1995",
+    "senovilla1996"
   ],
   "coordinates": [
     {

@@ -3493,7 +3493,7 @@ class StacksAndMovies(unittest.TestCase):
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
               ("photon_rocket", "burn"): "$cu + r$", ("hayward", "history"): "$v - r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
-              ("ori_time_machine", "throat"): "$t$",
+              ("ori_time_machine", "throat"): "$t$", ("senovilla", "universe"): "$act$",
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$",
@@ -4747,6 +4747,9 @@ class Slices(unittest.TestCase):
         if key.startswith("einstein_rosen_waves/"):
             # A moment ct = T, drawn against rho and ct in both charts, out to the embedding's reach.
             return (lambda X: t), list(self.reach(surface))
+        if key == "senovilla/cylindrical/radial":
+            # A moment act = T, drawn against a rho and act, out to the embedding's reach.
+            return (lambda X: t), list(self.reach(surface))
         if key == "gowdy/areal/plane":
             # A moment of the areal time, drawn against theta and t, once round the torus.
             return (lambda X: t), list(self.reach(surface))
@@ -5083,7 +5086,7 @@ class Slices(unittest.TestCase):
                         eta = bisect(lambda e: e - math.sin(e) - t, 0, 2 * math.pi)
                         self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
                         self.assertEqual(sorted(X for X, _ in points), [0, round(math.pi, 4)], where)
-                    elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "gowdy"):
+                    elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "gowdy", "senovilla"):
                         lo, hi = self.reach(surface)
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2

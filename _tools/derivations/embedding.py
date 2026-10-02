@@ -7276,6 +7276,62 @@ def gowdy(ck, src):
                  input=nr.GOWDY_INPUT)]
 
 
+SENOVILLA_LIGHT = math.acosh(2) / 3      # the radius of the one circular light ray, cosh(3a rho) = 2
+
+
+def senovilla(ck, src):
+    """The plane z = 0 of Senovilla's universe at the moments act = -1 to 1, in units of 1/a:
+    g_rhorho = cosh^4(act) cosh^2(3a rho) and g_phiphi = cosh^4(act) sinh^2(3a rho)/(9a^2 cosh^(2/3)(3a rho)),
+    so the circle at rho has radius cosh^2(act) sinh(3a rho)/(3a cosh^(1/3)(3a rho)) and the surface
+    climbs at dz/drho = cosh^2(act) sqrt(cosh^2 - (2 cosh^2 + 1)^2/(9 cosh^(8/3))), cosh that of 3a rho.
+    The square root is real at every rho, since 3 cosh^(7/3) >= 2 cosh^2 + 1 with equality on the axis,
+    so every moment embeds whole, which is checked, and starts level. Time enters only through the
+    factor cosh^2(act), so every moment is the moment of the bounce enlarged by it, which is checked
+    point by point: the surface shrinks until t = 0 and grows again. Far out the radius grows as the
+    2/3 power of the distance from the axis, so the surface opens ever more slowly."""
+    top, last = 1.0, 1.0
+    size = 2 * math.cosh(last) ** 2 * math.sinh(3 * top) / (3 * math.cosh(3 * top) ** (1 / 3))
+
+    def radius(x, T):
+        return math.cosh(T) ** 2 * np.sinh(3 * x) / (3 * np.cosh(3 * x) ** (1 / 3))
+
+    def moment(T):
+        where = f"Senovilla, act = {T:g}"
+        sl = Slice(src, "senovilla", "cylindrical", "\\rho", "\\phi", {"t": repr(T), "z": 0}, {"a": 1})
+        ck.add(f"{where}: the moment embeds whole",
+               float(max(0.0, -np.min(sl.defect_at(np.linspace(1e-6, 3 * top, 901))))), 0.0)
+        whole = Piece("whole", "sheet", sl, 0.0, top, 0.0, 1,
+                      (("axis", "the axis $\\rho = 0$, where the surface starts level"),
+                       ("edge", "the surface runs on, its circles growing as the $2/3$ power of the distance "
+                                "from the axis, to $\\rho \\to \\infty$")),
+                      [(0.2, "r", None), (SENOVILLA_LIGHT, "surface", None), (0.6, "r", None), (0.8, "r", None),
+                       (top, "chartedge", None)], size)
+        ck.isometry(where, whole)
+        ck.radius(f"{where}, cosh^2(act) sinh(3a rho)/(3a cosh^(1/3)(3a rho))", whole, lambda x, T=T: radius(x, T), size)
+        return Surface([whole], label=f"$act = {T:g}$", time=T)
+
+    times, keys = movie_values([-1.0, -0.5, 0.0, 0.5, 1.0], 0.05)
+    times = [round(T, 9) for T in times]
+    frames = [moment(T) for T in times]
+    surfaces = [frames[i] for i in keys]
+    # Every moment is the moment of the bounce enlarged by cosh^2(act), at each circle it marks.
+    bounce = frames[keys[2]].pieces[0]
+    for T, frame in zip(times, frames):
+        piece, k = frame.pieces[0], math.cosh(T) ** 2
+        off = max(abs(piece.at(x)[1] - k * bounce.at(x)[1]) for x, _, _ in piece.marks)
+        ck.add(f"Senovilla, act = {T:g}: the bounce's surface enlarged by cosh^2(act)", float(off) / size, FORM)
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the plane $z = 0$ of the moment, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $0.2/a$, $0.6/a$ and $0.8/a$")
+    fig.legend("line", "surface", "the circle $\\cosh(3a\\rho) = 2$, the one circular path of light")
+    fig.legend("line", "chartedge", "$\\rho = 1/a$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("universe", "A moment of $t$", "$1/a$", surfaces, fig.done(),
+                 movie=movie(frames, "$act$", times),
+                 settings="$a = 1$, so that $1/a$ is the unit of every length; each moment is a slice of constant "
+                          "$t$ and $z$.")]
+
+
 MELVIN_ERNST = {"r_s": 1, "B": sp.Rational(1, 2)}   # Ernst's hole at B r_s = 1/2, its widest circle at r = 4 r_s
 
 
@@ -8607,6 +8663,7 @@ DRAWN = {
     "majumdar_papapetrou": majumdar_papapetrou,
     "kastor_traschen": kastor_traschen,
     "melvin": melvin,
+    "senovilla": senovilla,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
     "damour_solodukhin": damour_solodukhin,
@@ -9147,6 +9204,16 @@ CAPTIONS = {
         "$2\\pi r(1 - 2m/r)^{1/4}$, which falls to zero as $r \\to 2m$.",
         "The surface narrows all the way in toward the singularity at $r = 2m$ and lies level at $r = 2.002\\,m$, on a "
         "circle of radius $0.36\\,m$, where the drawing stops; the same plane at every moment is the same surface.",
+    ],
+    ("senovilla", "universe"): [
+        "The plane $z = 0$ of Senovilla's universe from $act = -1$ to $1$, each moment drawn as a surface in flat "
+        "space with every distance along it the metric distance. The metric on it is "
+        "$\\cosh^4(act)\\left(\\cosh^2(3a\\rho)\\,d\\rho^2 + \\sinh^2(3a\\rho)\\,d\\phi^2/9a^2\\cosh^{2/3}(3a\\rho)\\right)$, so the "
+        "circle at $\\rho$ has radius $\\cosh^2(act)\\sinh(3a\\rho)/3a\\cosh^{1/3}(3a\\rho)$, and on the axis the surface "
+        "starts level.",
+        "Time enters through the factor $\\cosh^2(act)$ alone, so every moment has one shape: the surface shrinks until "
+        "the bounce at $t = 0$, and then grows. Far from the axis a circle's radius grows as the $2/3$ power of its "
+        "distance from the axis, and the surface opens ever more slowly.",
     ],
     ("melvin", "universe"): [
         "The plane $z = 0$ of Melvin's universe at one moment ($B = 1$), drawn as a surface in flat space with "

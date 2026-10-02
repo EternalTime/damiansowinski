@@ -1831,6 +1831,13 @@ DIAGRAMS = [
     Diagram("melvin", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
             "$B\\rho$", "$Bct$", {"B": 1}, {"phi": "0", "z": "0"},
             lines=(("surface", "r", "2", "the Melvin radius $\\rho = 2/B$, where the circles about the axis are widest"),)),
+    # Senovilla's plane of t and rho, conformally flat, so its rays are at 45 degrees through the
+    # bounce t = 0, with the radius cosh(3a rho) = 2 of the one circular light ray and the event
+    # where the density is greatest.
+    Diagram("senovilla", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 2, -1.5, 1.5),
+            "$a\\rho$", "$act$", {"a": 1}, {"phi": "0", "z": "0"},
+            lines=(("surface", "r", "acosh(2)/3", "the radius $\\cosh(3a\\rho) = 2$ of the one circular path of light"),),
+            points=(("mark", ("0", "0"), "the event on the axis where the density is greatest, at the bounce $t = 0$"),)),
     Diagram("melvin", "ernst", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1, "B": "1/2"}, EQUATOR, orient="ingoing",
             lines=(("surface", "r", "4", "$r = 2/B$, the widest circle of the equator"),)),
@@ -4587,6 +4594,16 @@ CAPTIONS = {
     ],
     **{("zipoy_voorhees", system, view): text for system in ("spherical", "prolate_spheroidal")
        for view, text in _zipoy_voorhees_captions(system).items()},
+    ("senovilla", "cylindrical", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Senovilla's universe ($a = 1$). The metric on it is "
+        "$\\cosh^4(act)\\cosh^2(3a\\rho)(-c^2dt^2 + d\\rho^2)$, and the factor drops out of the null condition, so the "
+        "rays are at 45°, each ingoing ray meeting an outgoing one on the axis $\\rho = 0$. No Christoffel symbol "
+        "turns them out of the plane, so they are null geodesics, and the Kretschmann scalar is finite everywhere "
+        "on it.",
+        "The fluid's world lines are the vertical lines. It contracts before $t = 0$ and expands after it, and its "
+        "density, $15a^2c^4/(8\\pi G\\cosh^4(act)\\cosh^4(3a\\rho))$, is greatest at the marked event and falls away "
+        "from it in every direction.",
+    ],
     ("melvin", "cylindrical", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Melvin's universe ($B = 1$). The metric on it is "
         "$(1 + B^2\\rho^2/4)^2(-c^2dt^2 + d\\rho^2)$, and the factor drops out of the null condition, so the rays are "
@@ -7657,6 +7674,7 @@ CLOSED_FORMS = {
        for shape in ("oblate", "prolate")
        for plane, star, edge in (("axis", _zv_axis, 0.1), ("equator", _zv_equator, 0.02))},
     ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("senovilla", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("melvin", "ernst", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
     ("levi_civita", "weyl", "radial"):

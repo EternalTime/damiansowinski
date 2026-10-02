@@ -574,6 +574,11 @@ DIMENSIONS = {
     ("near_horizon_extreme_kerr", "near_nhek"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "k": "L",
     },
+    # Senovilla's a is an inverse length, so act and 3a rho are pure numbers; g_phiphi carries the
+    # area 1/(9a^2) and z is a length.
+    ("senovilla", "cylindrical"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "a": "1/L",
+    },
     # The travelling wave on a string: u = ct - z and v = ct + z are lengths, so no coordinate is a
     # time and the profile F is a pure number, as is b = 1 - 4G mu/c^2. The string's displacements
     # A(u) and B(u) are lengths, as are the isotropic x and y, their distance rho from the string
@@ -1162,7 +1167,12 @@ def _canonical(expression):
     present, since cos^2 = 1 - sin^2, and a square root w of b, since w^2 = b. The
     numerator N is a polynomial in the generators, and the denominator is kept as a
     product of powers of irreducible, normalised factors. _Fraction explains how that is
-    kept canonical. A root above the square is left to the general simplifier.
+    kept canonical. A root above the square, w with w^q = b, as the cube root in Senovilla's
+    cosh^(-2/3), is a generator of the same kind, reduced to powers below q in the numerator;
+    below the line it may stand only as a factor of its own, 1/w = w^(q-1)/b, and a sum that
+    holds one there is left to the general simplifier. Such roots are taken as independent of
+    one another, which the roots of distinct irreducible factors are; were two of them not,
+    a value that vanishes could be left standing, and none that does not could be lost.
     """
     for function, rewrite in _IN_SIN_COS_EXP.items():
         if expression.has(function):
@@ -1201,29 +1211,29 @@ def _canonical(expression):
     for sign in [g for g in generators if g.func is sp.sign]:
         algebraic.append((sign, sp.Integer(1)))
     for base, q in radicals.items():
-        if q != 2:
-            raise NotImplementedError(f"a root of {base} above the square")
-        root = sp.I if base == -1 else sp.sqrt(base)
-        if not (root.is_Pow or root is sp.I):
-            raise NotImplementedError(f"sqrt({base}) does not stay a power")
+        if base == -1 and q != 2:
+            raise NotImplementedError("a root of -1 above the square")
+        root = sp.I if base == -1 else sp.root(base, q)
+        if not (root is sp.I or (root.is_Pow and (q == 2 or root.base == base))):
+            raise NotImplementedError(f"the root {q} of {base} does not stay a power")
         generators.add(root)
-        algebraic.append((root, base))
+        algebraic.append((root, base, q))
     # A radicand that holds another algebraic generator is reduced before that one is,
     # so the conjugates it leaves behind can still be reduced on the inner one.
-    roots = [root for root, _ in algebraic]
+    roots = [pair[0] for pair in algebraic]
     algebraic.sort(key=lambda pair: -sum(1 for root in roots if sp.sympify(pair[1]).has(root)))
 
     ring = PolyRing(sorted(generators, key=sp.default_sort_key), sp.QQ, "lex")
     index = {symbol: i for i, symbol in enumerate(ring.symbols)}
-    reader = _FractionReader(ring, index)
+    reader = _FractionReader(ring, index, radicals)
     value = reader(expression)
-    relations = [(index[root], reader(base)) for root, base in algebraic]
+    relations = [(index[pair[0]], reader(pair[1]), pair[2] if len(pair) == 3 else 2) for pair in algebraic]
     for _ in range(2 * len(relations) + 2):
-        if not any(value.holds(i) for i, _ in relations):
+        if not any(value.holds(i, q) for i, _, q in relations):
             break
-        for i, base in relations:
-            if value.holds(i):
-                value = value.reduce(i, base)
+        for i, base, q in relations:
+            if value.holds(i, q):
+                value = value.reduce(i, base, q)
     else:
         raise NotImplementedError("the algebraic generators do not settle")
     value = value.cancelled()
@@ -1351,9 +1361,10 @@ def _collect_generators(expression, generators, radicals):
 class _FractionReader:
     """An expression, read into a _Fraction over the given ring."""
 
-    def __init__(self, ring, index):
+    def __init__(self, ring, index, radicals=None):
         self.ring = ring
         self.index = index
+        self.radicals = radicals or {}
         self.factored = {}
 
     def generator(self, symbol):
@@ -1379,8 +1390,9 @@ class _FractionReader:
         if expression.is_Pow and expression.exp.is_Integer:
             return self(expression.base) ** int(expression.exp)
         if expression.is_Pow and expression.exp.is_Rational:
-            root = sp.I if expression.base == -1 else sp.sqrt(expression.base)
-            return self.generator(root) ** int(expression.exp * 2)
+            q = self.radicals.get(expression.base, 2)
+            root = sp.I if expression.base == -1 else sp.root(expression.base, q)
+            return self.generator(root) ** int(expression.exp * q)
         if expression is sp.I:
             return self.generator(sp.I)
         if _is_transcendental_power(expression):
@@ -1472,14 +1484,16 @@ class _Fraction:
             numerator = numerator * factor ** multiplicity
         return _Fraction(self.reader, numerator, factors)
 
-    def holds(self, i):
-        """Whether generator i is still anywhere it should not be."""
-        return (self.numerator.degree(i) > 1
+    def holds(self, i, q=2):
+        """Whether generator i, a root of order q, is still anywhere it should not be."""
+        return (self.numerator.degree(i) > q - 1
                 or any(factor.degree(i) > 0 for factor in self.denominator))
 
-    def reduce(self, i, base):
-        """Fold generator i, w with w^2 = base, out of every denominator factor and down
-        to at most its first power in the numerator."""
+    def reduce(self, i, base, q=2):
+        """Fold generator i, w with w^q = base, out of every denominator factor and down
+        to powers below q in the numerator."""
+        if q != 2:
+            return self._reduce_root(i, base, q)
         free = {f: k for f, k in self.denominator.items() if f.degree(i) <= 0}
         out = _Fraction(self.reader, self.reader.ring.one, free)
         for factor, multiplicity in self.denominator.items():
@@ -1499,6 +1513,21 @@ class _Fraction:
             out = out * reciprocal ** multiplicity
         numerator = _fold(self.reader, self.numerator, i, base)
         return out * numerator
+
+    def _reduce_root(self, i, base, q):
+        """The same for a root above the square, which may stand below the line only as a
+        factor of its own: 1/w = w^(q-1)/base."""
+        w = self.reader.ring.gens[i]
+        free = {f: k for f, k in self.denominator.items() if f.degree(i) <= 0}
+        out = _Fraction(self.reader, self.reader.ring.one, free)
+        for factor, multiplicity in self.denominator.items():
+            if factor.degree(i) <= 0:
+                continue
+            if factor != w:
+                raise NotImplementedError(f"a root above the square stands in the sum {factor.as_expr()} "
+                                          "below a fraction line")
+            out = out * (_Fraction(self.reader, w ** (q - 1), {}) * base.inverse()) ** multiplicity
+        return out * _fold(self.reader, self.numerator, i, base, q)
 
     def cancelled(self):
         numerator = self.numerator
@@ -1528,8 +1557,8 @@ def _split(polynomial, i):
     return ring.from_dict(parts[0]), ring.from_dict(parts[1])
 
 
-def _fold(reader, polynomial, i, base):
-    """polynomial with every w^k, w the generator i, replaced by w^(k mod 2) base^(k div 2)."""
+def _fold(reader, polynomial, i, base, q=2):
+    """polynomial with every w^k, w the generator i, replaced by w^(k mod q) base^(k div q)."""
     by_degree = {}
     for monomial, coefficient in polynomial.terms():
         free = monomial[:i] + (0,) + monomial[i + 1:]
@@ -1537,8 +1566,8 @@ def _fold(reader, polynomial, i, base):
     terms = []
     w = reader.ring.gens[i]
     for k, part in by_degree.items():
-        term = _Fraction(reader, polynomial.ring.from_dict(part) * w ** (k % 2), {})
-        terms.append(term * base ** (k // 2) if k > 1 else term)
+        term = _Fraction(reader, polynomial.ring.from_dict(part) * w ** (k % q), {})
+        terms.append(term * base ** (k // q) if k >= q else term)
     return _Fraction.sum(terms, reader)
 
 
@@ -1612,8 +1641,9 @@ def expand_braced_call(text, command, replacement):
 
 def powered_trig_calls(text, names):
     """Turn trig ** n (argument) into (trig(argument))**n, the argument a balanced bracket,
-    which is how \\cosh^2\\left(\\sqrt{\\Lambda}\\,t\\right) reads once the brackets are bare."""
-    pattern = re.compile(r"\b(" + names + r")\s*\*\*\s*\(?\s*(\d+)\s*\)?\s*\(")
+    which is how \\cosh^2\\left(\\sqrt{\\Lambda}\\,t\\right) reads once the brackets are bare.
+    The power may be negative or a fraction, as Senovilla's \\cosh^{-2/3}(3a\\rho) is."""
+    pattern = re.compile(r"\b(" + names + r")\s*\*\*\s*\(?\s*(-?\d+(?:\s*/\s*\d+)?)\s*\)?\s*\(")
     while True:
         found = pattern.search(text)
         if not found:
@@ -1627,7 +1657,7 @@ def powered_trig_calls(text, names):
         else:
             raise LatexError(f"unbalanced bracket after {found.group(1)} in {text!r}")
         body = text[opening + 1:closing]
-        text = f"{text[:found.start()]}({found.group(1)}({body}))**{found.group(2)}{text[closing + 1:]}"
+        text = f"{text[:found.start()]}({found.group(1)}({body}))**({found.group(2)}){text[closing + 1:]}"
 
 
 PARTIAL = re.compile(

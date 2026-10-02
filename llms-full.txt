@@ -1022,6 +1022,16 @@ The Schwarzschild black hole in $D \ge 4$ spacetime dimensions, the static vacuu
 - chart Ingoing Eddington-Finkelstein, Five Dimensions: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_h^2}{r^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 - chart Hyperspherical, Six Dimensions: coordinates $(t, r, \chi, \psi, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_h^3}{r^3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_h^3}{r^3}} + r^2\left(d\chi^2 + \sin^2\chi\,d\psi^2 + \sin^2\chi\sin^2\psi\,d\theta^2 + \sin^2\chi\sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 
+### Senovilla Universe With No Singularity
+
+A universe filled with radiation and arranged around an axis, which contracts, is densest at one moment, and expands again, with no big bang and no singularity anywhere, found by José Senovilla in 1990. It satisfies the energy conditions and is globally hyperbolic, and the singularity theorems leave it alone because it has no closed trapped surface and its expansion falls to zero far from the axis.
+
+- id: `senovilla`
+- tags: perfect fluid, radiation, non-vacuum, cosmology, cosmological, inhomogeneous, cylindrical symmetry, geodesically complete, no singularity, bounce, singularity theorems, globally hyperbolic, comoving, time-dependent, dynamical, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/senovilla.json
+- chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = \cosh^4(act)\cosh^2(3a\rho)\left(-c^2dt^2 + d\rho^2\right) + \dfrac{\cosh^4(act)\sinh^2(3a\rho)}{9a^2\cosh^{2/3}(3a\rho)}d\phi^2 + \dfrac{dz^2}{\cosh^2(act)\cosh^{2/3}(3a\rho)}$$
+
 ### Simpson-Visser Black Bounce
 
 Schwarzschild's metric with $\sqrt{r^2 + a^2}$ written for the areal radius, which Alex Simpson and Matt Visser proposed in 2019. One length $a$ carries it from Schwarzschild's black hole through a regular black hole, whose inside bounces into another universe, and a one way wormhole to a traversable wormhole.

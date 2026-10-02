@@ -8359,6 +8359,53 @@ def melvin(ck, src):
     return views
 
 
+def senovilla(ck, src):
+    """Senovilla's half plane of fixed phi and z, totally geodesic.
+
+    The metric on it is cosh^4(act) cosh^2(3a rho)(-c^2dt^2 + drho^2), and the factor changes no null
+    direction, so p, q = arctan((ct -+ rho)a) bring it into Minkowski's half diamond with the axis on
+    X = 0. Along a radial light ray d rho/d lambda = h/(cosh^4(act) cosh^2(3a rho)), case 3 of section 2
+    of Chinea, Fernandez-Jambrina and Senovilla, so the affine parameter grows without bound toward
+    every far edge, which is the half plane's null infinity. No edge is singular: the published
+    Kretschmann scalar is checked finite on the axis and all over the plane, greatest at the bounce on
+    the axis, where it is 792 a^4."""
+    cyl = Plane(src, "senovilla", "cylindrical", ("t", "\\rho"), {"phi": "0", "z": "0"}, {"a": 1})
+    ck.chart("Senovilla cylindrical", cyl, mink_pq, ck.uniform(-2.5, 2.5), ck.uniform(0.01, 2.5), lambda t, r: (1, 0))
+    K = cyl.kretschmann
+    ck.finite("Senovilla: the Kretschmann scalar is finite on the axis rho = 0",
+              K(ck.uniform(-3, 3, 50), np.full(50, 1e-6)))
+    ck.limit("Senovilla: the Kretschmann scalar at the bounce on the axis is 792 a^4",
+             K(np.zeros(1), np.full(1, 1e-9)), [792.0], 1e-6)
+    everywhere = K(ck.uniform(-3, 3, 400), ck.uniform(0, 3, 400))
+    ck.finite("Senovilla: the Kretschmann scalar is finite all over the plane", everywhere)
+    ck.limit("Senovilla: the Kretschmann scalar is nowhere greater than at the bounce on the axis",
+             [max(0.0, float(np.max(everywhere)) - 792.0)], [0.0])
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS, RS = (-4, -2, -1, 0, 1, 2, 4), (1, 2, 4)
+    v = View("cylindrical", "Cylindrical", box, "cylindrical")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda r, t: mink_pq(t, r), RS, S_ALL)
+    grid(v, "surface", lambda r, t: mink_pq(t, r), (math.acosh(2) / 3,), S_ALL)
+    grid(v, "t", mink_pq, TS, S_POS)
+    triangle_edges(v, centre="$\\rho = 0$")
+    v.point("mark", (0, 0))
+    v.legend("cover", "the whole spacetime, which $t$ and $\\rho$ cover")
+    v.legend("r", "$\\rho$ constant, in units of $1/a$")
+    v.legend("surface", "the radius $\\cosh(3a\\rho) = 2$ of the one circular path of light")
+    v.legend("t", "$act$ constant")
+    v.legend("centre", "the axis $\\rho = 0$")
+    v.legend("mark", "the event on the axis where the density is greatest, at the bounce $t = 0$")
+    for m in slices.moments("senovilla"):
+        r = np.linspace(*m.reach("cylindrical", "\\rho"), 60)
+        v.slice(m, [mink_pq(m.time + 0 * r, r)])
+    v.set(restriction="The half plane of fixed $\\phi$ and $z$ only, totally geodesic, each point in the diagram a "
+                      "circle around the axis times a line along it.",
+          settings="$a = 1$, the scale of $p = \\arctan((ct - \\rho)a)$ and $q = \\arctan((ct + \\rho)a)$.")
+    return [v]
+
+
 def levi_civita(ck, src):
     """Levi-Civita's half plane of fixed phi and z at sigma = 1/4, in Weyl's coordinates and in
     the Kasner form.
@@ -11925,7 +11972,7 @@ DRAWN = {
     "majumdar_papapetrou": majumdar_papapetrou,
     "kastor_traschen": kastor_traschen,
     "robinson_trautman": robinson_trautman,
-    "melvin": melvin,
+    "melvin": melvin, "senovilla": senovilla,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
     "damour_solodukhin": damour_solodukhin,
@@ -13620,6 +13667,15 @@ CAPTIONS = {
         "orbits shrink to a circle at the poles $\\theta = 0$ and $\\theta = \\pi$, and the two diagonals, where "
         "the gradient of their area is null, cut the square into the regions where it is timelike, below "
         "and above, and spacelike, left and right.",
+    ],
+    ("senovilla", "cylindrical"): [
+        "The half plane of $t$ and $\\rho$ of Senovilla's universe at fixed $\\phi$ and $z$, totally geodesic. The metric "
+        "on it is $\\cosh^4(act)\\cosh^2(3a\\rho)(-c^2dt^2 + d\\rho^2)$, and a conformal factor changes no null direction, "
+        "so $p, q = \\arctan((ct \\mp \\rho)a)$ bring it into Minkowski's half diamond, with the regular axis $\\rho = 0$ "
+        "on its left edge.",
+        "Every edge but the axis is at infinity: a light ray reaches $\\rho \\to \\infty$ only at an infinite value of its "
+        "affine parameter, and the fluid reaches $t \\to \\pm\\infty$ only after an infinite proper time. The Kretschmann "
+        "scalar is finite on the whole half plane and greatest at the marked event, where it is $792\\,a^4$.",
     ],
     ("melvin", "cylindrical"): [
         "The half plane of $t$ and $\\rho$ of Melvin's universe at fixed $\\phi$ and $z$, totally geodesic. The metric "
