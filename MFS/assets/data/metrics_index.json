@@ -331,7 +331,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "f131895678c2b9b6",
+    "version": "fc1a50b5b067cdbc",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -845,6 +845,41 @@
     "diagrams": "df6268c48408964f",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
+  },
+  {
+    "id": "cremmer_scherk",
+    "name": "Cremmer-Scherk",
+    "tags": [
+      "static",
+      "stationary",
+      "six-dimensional",
+      "higher dimensions",
+      "Kaluza-Klein",
+      "compact dimension",
+      "spontaneous compactification",
+      "product spacetime",
+      "homogeneous",
+      "Einstein-Yang-Mills",
+      "Yang-Mills field",
+      "gauge field",
+      "magnetic monopole",
+      "Dirac quantisation",
+      "cosmological constant",
+      "positive cosmological constant",
+      "string theory",
+      "grand unification",
+      "no horizon",
+      "regular",
+      "geodesically complete",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "c00cd865a18242b5",
+    "diagrams": "48060486c9b55dec",
+    "conformal": "f7ef5892e08fb949",
+    "embedding": "90144612e008c71d"
   },
   {
     "id": "curzon_chazy",
@@ -1843,7 +1878,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "713fe0d4599e08a9",
+    "version": "e474ed7214e2ce1d",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -2586,7 +2621,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "a70785365ff320b5",
+    "version": "7cdf7003e115b0c3",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -3155,7 +3190,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a408aabb0b89c132",
+    "version": "43e098149891e543",
     "diagrams": "4fa9e29b17d51d20",
     "conformal": "ec15d211d9118915",
     "embedding": "b7a09dddf9867ddf"
@@ -3239,7 +3274,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "dafe0d6f896cadcc",
+    "version": "dd08ac3dac8a3a08",
     "diagrams": "f78be2d481dc49b2",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"

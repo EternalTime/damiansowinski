@@ -1237,6 +1237,19 @@ def _ab_metrics(system, view):
     return out
 
 
+def _cremmer_scherk(view):
+    """Cremmer and Scherk's moment t = 0. On the plane of t and x the cylinder is the line along x
+    from -a to a and the sphere the event x = a. On the plane of t and phi, which stands at x = 0,
+    the cylinder is its ring x = 0, the whole line t = 0 round phi; the sphere stands at x = a, off
+    that plane."""
+    equator = moments("cremmer_scherk", "equator")[0]
+    if view == "circle":
+        return [Mark(equator, along(0.0, 0.0, 2 * math.pi), label="$t = 0$, $x = 0$")]
+    sphere = moments("cremmer_scherk", "sphere", label="$t = 0$, $x = a$")[0]
+    lo, hi = equator.reach("cartesian", "x")
+    return [Mark(equator, along(0.0, lo, hi)), Mark(sphere, points=[(0.0, 1.0)])]
+
+
 def nhek_radius(y):
     """Bardeen and Horowitz's Poincare radius, in r_0, of the event at y on the moment tau = 0 of
     their global chart, where t = 0 too: r = sqrt(1 + y^2) + y."""
@@ -2466,6 +2479,8 @@ FLAT = {
     ("near_horizon_extreme_kerr", "global", "equator"): lambda: _nhek("global"),
     ("bertotti_robinson", "static", "radial"): lambda: _br("static"),
     ("bertotti_robinson", "poincare", "tx"): lambda: _br("poincare"),
+    ("cremmer_scherk", "cartesian", "tx"): lambda: _cremmer_scherk("tx"),
+    ("cremmer_scherk", "cartesian", "circle"): lambda: _cremmer_scherk("circle"),
     ("plebanski_hacyan", "sphere", "tz"): lambda: _plebanski_hacyan("sphere"),
     ("plebanski_hacyan", "sphere_rindler", "wedge"): lambda: _plebanski_hacyan("sphere_rindler"),
     ("plebanski_hacyan", "anti_nariai", "wedge"): lambda: _plebanski_hacyan("anti_nariai"),

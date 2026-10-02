@@ -7334,6 +7334,51 @@ def plebanski_hacyan(ck, src):
     return views
 
 
+def cremmer_scherk(ck, src):
+    """Cremmer and Scherk's Minkowski space times a sphere of radius a = 1. One flat dimension and the
+    sphere's equator at one moment, dx^2 + a^2 dphi^2, is a cylinder: rho = a at the height x, on which
+    x is the distance itself, Duff's hosepipe with the flat dimension for its length. The sphere of
+    theta and phi at one event is the second view. The other two flat dimensions add nothing a
+    surface can show, and the spacetime is static, so one moment is every moment."""
+    name = "Cremmer-Scherk"
+    sl = Slice(src, "cremmer_scherk", "cartesian", "x", "\\phi", {"t": 0, "y": 0, "z": 0, "theta": "pi/2"}, {"a": 1})
+    size = 2.0
+    tube = Piece("cylinder", "sheet", sl, -1.0, 1.0, -1.0, 1,
+                 (("edge", "the cylinder runs on for ever toward $x \\to -\\infty$"),
+                  ("edge", "the cylinder runs on for ever toward $x \\to \\infty$")),
+                 [(k / 2, "r", None) for k in (-2, -1, 0, 1, 2)], size)
+    ck.isometry(f"{name}, a flat dimension and the equator", tube)
+    ck.form(f"{name}, the cylinder at the height x", tube, lambda x: x, size)
+    ck.radius(f"{name}, the cylinder rho = a", tube, lambda x: np.ones_like(x), size)
+    equator = Surface([tube])
+    fig = figure_of([equator], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tube.at(0.0), "$x = 0$")
+    ring_label(fig, [0, 0, 0], *tube.at(1.0), "$a$")
+    ring_label(fig, [0, 0, 0], *tube.at(-1.0), "$-a$")
+    fig.legend("fill", "cover", "one flat dimension and the sphere's equator at one moment, which $x$ and $\\phi$ cover")
+    fig.legend("line", "r", "$x$ constant, every $a/2$ from $-a$ to $a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = "$a = 1$, the unit of every length."
+    views = [view("equator", "The equator", "$a$", [equator], fig.done(), settings=settings)]
+
+    sphere_slice = Slice(src, "cremmer_scherk", "cartesian", "\\theta", "\\phi",
+                         {"t": 0, "x": "1", "y": 0, "z": 0}, {"a": 1})
+    ball = Piece("sphere", "sheet", sphere_slice, 0.0, math.pi, 0.0, 1,
+                 (("axis", "the pole $\\theta = 0$"), ("axis", "the pole $\\theta = \\pi$")),
+                 [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)], size)
+    ck.isometry(f"{name}, the sphere", ball)
+    ck.form(f"{name}, the sphere at the height a(1 - cos theta)", ball, lambda c: 1 - np.cos(c), size)
+    ck.radius(f"{name}, the sphere rho = a sin theta", ball, np.sin, size)
+    sphere = Surface([ball])
+    fig = figure_of([sphere], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *ball.at(math.pi / 2), "$\\theta = \\pi/2$")
+    fig.legend("fill", "cover", "the sphere, which $\\theta$ and $\\phi$ cover but for its poles")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("sphere", "The sphere", "$a$", [sphere], fig.done(), settings=settings))
+    return views
+
+
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m on the
 # axis, as their spacetime diagrams declare.
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
@@ -13644,6 +13689,7 @@ DRAWN = {
     "tolman_bondi": tolman_bondi,
     "bertotti_robinson": bertotti_robinson,
     "plebanski_hacyan": plebanski_hacyan,
+    "cremmer_scherk": cremmer_scherk,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
@@ -15000,6 +15046,19 @@ CAPTIONS = {
     ("plebanski_hacyan", "sphere"): [
         "The sphere of $\\theta$ and $\\phi$ of the same spacetime at one event of $t$ and $z$, radius "
         "$b = 1/\\sqrt{2\\Lambda}$ and area $2\\pi/\\Lambda$, the same at every $t$ and $z$.",
+    ],
+    ("cremmer_scherk", "equator"): [
+        "One flat dimension and the equator of the sphere ($y = z = 0$, $\\theta = \\pi/2$) of Cremmer and "
+        "Scherk's solution at one moment of $t$, a cylinder of radius $a$ in flat space, $dx^2 + a^2d\\phi^2$, "
+        "with every distance along it the metric distance.",
+        "From far away the cylinder is a line, the dimension $x$, and close up each point of the line is a "
+        "circle of circumference $2\\pi a$, one great circle of the sphere that stands at every point of the "
+        "three flat dimensions.",
+    ],
+    ("cremmer_scherk", "sphere"): [
+        "The sphere of $\\theta$ and $\\phi$ of the same spacetime at one event of $t$, $x$, $y$, and $z$, "
+        "radius $a$ and area $4\\pi a^2 = 2\\pi/\\Lambda$, the same at every event. The monopole's field "
+        "crosses it at right angles with one strength everywhere.",
     ],
     ("plebanski_hacyan", "hyperbolic_plane"): [
         "The surface of $\\theta$ and $\\phi$ of the anti-Nariai universe at one event of $\\tau$ and $\\chi$ "

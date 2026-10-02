@@ -5056,6 +5056,9 @@ class Slices(unittest.TestCase):
                     # each drawing marking the moments of its own.
                     "nordstrom_scalar/spherical/radial": {"dust"}, "conformal nordstrom_scalar/spherical": {"dust"},
                     "nordstrom_scalar/dust/radial": {"point_mass"}, "conformal nordstrom_scalar/dust": {"point_mass"},
+                    # Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the
+                    # time and phi.
+                    "cremmer_scherk/cartesian/circle": {"sphere"},
                     # The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and
                     # each chart's drawings mark the surfaces of its own.
                     **{where: {"hyperbolic_plane"} for where in (
@@ -5939,6 +5942,13 @@ class Slices(unittest.TestCase):
             if static:
                 return (lambda X: math.asinh(math.sinh(t) / math.sqrt(max(1 - X * X, 1e-300)))), None
             return (lambda X: t), None
+        if key == "cremmer_scherk/cartesian/tx":
+            # The cylinder's moment t = 0 along x from -a to a, and the sphere at the event x = a.
+            lo, hi = self.reach(surface) if mark["lines"] else (1, 1)
+            return (lambda X: 0.0), [lo, hi]
+        if key == "cremmer_scherk/cartesian/circle":
+            # The cylinder's ring x = 0 at t = 0, the whole circle of phi.
+            return (lambda X: 0.0), [0.0, 2 * math.pi]
         if key.startswith("plebanski_hacyan/sphere"):
             # The equator's moment t = 0 along z from -b to b, of which the Rindler chart covers
             # 0 < chi < b on tau = 0, and the sphere at the event z = b, chi = b.

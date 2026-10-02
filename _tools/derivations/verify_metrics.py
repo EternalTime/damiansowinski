@@ -792,6 +792,8 @@ DIMENSIONS = {
     ("plebanski_hacyan", "anti_nariai"): {"\\tau": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
     ("plebanski_hacyan", "anti_nariai_static"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "L"},
     ("plebanski_hacyan", "exceptional"): {"u": "L", "w": "L", "x": "L", "y": "L", "a": "L", "f": "1/L", "g": "1/L"},
+    # Cremmer and Scherk's Minkowski space times a sphere: a is the sphere's radius.
+    ("cremmer_scherk", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\theta": "1", "\\phi": "1", "a": "L"},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",

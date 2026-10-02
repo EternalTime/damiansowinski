@@ -13,7 +13,7 @@ einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluz
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
-kopczynski_trautman, brill_waves, ab_metrics and datt_ruban_t_models, and Godel's cylindrical chart.
+kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models and cremmer_scherk, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -19307,6 +19307,69 @@ def plebanski_hacyan_check(chart, system):
 
 
 CHARTS["plebanski_hacyan"] = [lambda s=s: plebanski_hacyan(s) for s in PH_CHARTS]
+
+
+# -- Cremmer-Scherk spontaneous compactification ----------------------------------------
+
+def cremmer_scherk():
+    """Minkowski space times a sphere of radius a in six dimensions, Horvath, Palla, Cremmer and
+    Scherk's (2), ds^2 = -dx_0^2 + sum dx_i^2 + R_0^2 (dtheta^2 + sin^2 theta dphi^2), with their
+    R_0 written a. Cremmer and Scherk's papers of 1976 and 1977 are behind a paywall, and the
+    paper of the four restates their solution in the Abelian gauge of Wu and Yang.
+    cremmer_scherk_check holds the chart to the field equations of that paper: a monopole field
+    F = B a^2 sin(theta) dtheta ^ dphi on the sphere, with 8 pi G B^2 = 1/a^2, solves Maxwell's
+    equations and G_mu_nu + Lambda g_mu_nu = 8 pi G T_mu_nu with Lambda = 1/2a^2, which is their
+    (4), V_0 = e^2/(k (8 pi G)^2) and R_0^2 = 8 pi G k/e^2, since B = sqrt(k)/(e a^2) and
+    Lambda = 8 pi G V_0/2. cremmer_scherk.md records the source and the reading of (4)."""
+    coords = ["t", "x", "y", "z", "\\theta", "\\phi"]
+    domains = [PH_LINE.format(c) for c in coords[:4]] + PH_SPHERE_DOMAINS
+    line = ("ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 + a^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")
+    probe = vm.Reader(coords, ["a"], ())
+    return {"metric_id": "cremmer_scherk", "check": cremmer_scherk_check,
+            "system": {"id": "cartesian", "name": "Cartesian", "coords": coords, "domains": domains,
+                       "parameters": ["a"], "line_element": line},
+            "chart_line_element": line.replace("c^2dt^2", "dt^2"),
+            "printer": {"lead": [probe.parameters["a"]], "flip": False},
+            "ricci_scalar": "\\dfrac{2}{a^2}", "kretschmann": "\\dfrac{4}{a^4}"}
+
+
+def cremmer_scherk_check(chart):
+    """The monopole field on the sphere and the cosmological constant solve the field equations.
+    With F_theta_phi = B a^2 sin(theta), a field of the one strength B at every point, Maxwell's
+    equations d_mu(sqrt(-g) F^mu^nu) = 0 hold, the stress F_mu_alpha F_nu^alpha - g_mu_nu F^2/4
+    is (B^2/2) diag(-1, -1, -1, -1, 1, 1) with one index raised, and at 8 pi G B^2 = 1/a^2 and
+    Lambda = 1/2a^2 the Einstein tensor is 8 pi G T - Lambda: -1/a^2 on the four flat dimensions
+    and nothing on the sphere."""
+    a = chart.reader.parameters["a"]
+    theta = chart.symbols[4]
+    g, ginv = chart.geo.g, chart.geo.ginv
+    B = sp.Symbol("B", positive=True)
+    F = sp.zeros(6, 6)
+    F[4, 5], F[5, 4] = B * a ** 2 * sp.sin(theta), -B * a ** 2 * sp.sin(theta)
+    Fup = ginv * F * ginv.T
+    root = a ** 2 * sp.sin(theta)                     # sqrt(-g) in the chart x^0 = ct, on 0 < theta < pi
+    if sp.simplify(g.det() + root ** 2) != 0:
+        raise AssertionError("cremmer_scherk: sqrt(-g) is not a^2 sin(theta)")
+    for nu in range(6):
+        if sp.simplify(sum(sp.diff(root * Fup[mu, nu], chart.symbols[mu]) for mu in range(6))) != 0:
+            raise AssertionError(f"cremmer_scherk: the monopole field misses Maxwell's equation {chart.coords_tex[nu]}")
+    square = sum(F[i, j] * Fup[i, j] for i in range(6) for j in range(6))
+    stress = (F * ginv * F.T - g * square / 4) * ginv          # T_mu^nu
+    Lambda = 1 / (2 * a ** 2)
+    mixed = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    for i in range(6):
+        for j in range(6):
+            field = sp.simplify(stress[i, j].subs(B, 1 / a))    # 8 pi G T_mu^nu at 8 pi G B^2 = 1/a^2
+            wanted = (sp.Rational(-1, 2) if i < 4 else sp.Rational(1, 2)) / a ** 2 if i == j else 0
+            if sp.simplify(field - wanted) != 0:
+                raise AssertionError(f"cremmer_scherk: the monopole's stress in slot {i}{j} is not B^2/2 diag(-1, -1, -1, -1, 1, 1)")
+            if vm.norm(mixed[i][j] + (Lambda if i == j else 0) - field) != 0:
+                raise AssertionError(f"cremmer_scherk: the field equations fail in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+            if vm.norm(mixed[i][j] - ((-1 / a ** 2 if i < 4 else 0) if i == j else 0)) != 0:
+                raise AssertionError(f"cremmer_scherk: the Einstein tensor misses -1/a^2 on the flat dimensions in slot {i}{j}")
+
+
+CHARTS["cremmer_scherk"] = cremmer_scherk
 # -- Tippett and Tsang's time machine ---------------------------------------------------
 
 TIPPETT_TSANG_CHARTS = ["cartesian", "polar", "interior", "rindler"]

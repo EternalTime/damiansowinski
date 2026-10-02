@@ -123,7 +123,7 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "misner_brill_lindquist", "brill_waves",
-             "kundt_waves", "wahlquist", "tippett_tsang"}
+             "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous"}
 
 
 # ---------------------------------------------------------------- the drawing
@@ -7989,6 +7989,41 @@ def plebanski_hacyan(ck, src):
 
 
 # ---------------------------------------------------------------- wormholes
+
+def cremmer_scherk(ck, src):
+    """Cremmer and Scherk's Minkowski space times a sphere, drawn by the plane of t and x at unit
+    radius of the sphere: the metric on it is -c^2 dt^2 + dx^2 with x over the whole line, so it is
+    the full diamond, p, q = arctan((ct -+ x)/a), as the plane y = z = 0 of Minkowski space is. Each
+    point of the diamond is a flat plane of y and z times a sphere of radius a."""
+    name = "cremmer_scherk"
+    fixed = {"y": "0", "z": "0", "theta": "pi/2", "phi": "0"}
+    pl = Plane(src, name, "cartesian", ("t", "x"), fixed, {"a": 1})
+    ck.chart("Cremmer-Scherk, the plane of t and x", pl, mink_pq, ck.uniform(-20, 20), ck.uniform(-20, 20),
+             lambda t, x: (1, 0))
+    p, q = mink_pq(np.array([0.0, 0.0]), np.array([1e12, -1e12]))
+    ck.limit("Cremmer-Scherk: x -> +-infinity at fixed t lands on the two corners i^0", q - p, [PI, -PI], 1e-9)
+    p, q = mink_pq(np.array([1e12, -1e12]), np.array([0.0, 0.0]))
+    ck.limit("Cremmer-Scherk: t -> +-infinity at fixed x lands on i^+ and i^-", p + q, [PI, -PI], 1e-9)
+    ck.finite("Cremmer-Scherk: the curvature is the same everywhere",
+              pl.kretschmann(ck.uniform(-5, 5, 50), ck.uniform(-5, 5, 50)))
+
+    equator = slices.moments(name, "equator")[0]
+    ball = slices.moments(name, "sphere")[0]
+    lo, hi = equator.reach("cartesian", "x")
+    along_x = np.linspace(lo, hi, 3)
+    v = View("cartesian", "Cartesian", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "cartesian")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda x, t: mink_pq(t, x), (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+    grid(v, "t", mink_pq, (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+    diamond_edges(v)
+    v.legend("cover", "the whole plane, which $t$ and $x$ cover")
+    v.legend("r", "$x$ constant, at $0$, $\\pm a$, $\\pm 2a$, and $\\pm 4a$")
+    v.legend("t", "$ct$ constant, at the same values")
+    v.slice(equator, [mink_pq(0 * along_x, along_x)])
+    v.slice(ball, points=[mink_pq(0.0, 1.0)], label="$t = 0$, $x = a$")
+    return [v]
+
 
 def ellis_bronnikov(ck, src):
     """The metric on the plane of t and r is -c^2dt^2 + dr^2 with r over the whole line:
@@ -19938,7 +19973,7 @@ DRAWN = {
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
-    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
+    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
@@ -21723,6 +21758,14 @@ CAPTIONS = {
         "The whole Bertotti-Robinson spacetime with the Poincaré coordinates $t$ "
         "and $x$ on it. They cover the same wedge as the throat coordinates, with "
         "$x = b^2/r$.",
+    ],
+    ("cremmer_scherk", "cartesian"): [
+        "The plane of $t$ and $x$ ($y = z = 0$) of Cremmer and Scherk's solution, each point in the diagram a "
+        "flat plane of $y$ and $z$ times a 2-sphere of radius $a$. The metric on the plane is "
+        "$-c^2dt^2 + dx^2$ with $x$ over the whole line, and $p, q = \\arctan((ct \\mp x)/a)$ bring it into "
+        "the full diamond.",
+        "The four large dimensions have the causal structure of Minkowski space, with a null infinity at each "
+        "end of $x$. The sphere adds none: light sent round it stays at one point of the diamond.",
     ],
     ("plebanski_hacyan", "sphere"): [
         "Plebański and Hacyan's product of a flat plane with a sphere ($\\Lambda = 1/2b^2$), each point in "
