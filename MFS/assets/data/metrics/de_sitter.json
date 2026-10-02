@@ -56,6 +56,11 @@
       "id": "nariai",
       "kind": "family",
       "text": "Another vacuum with a positive cosmological constant, the product of de Sitter space of two dimensions and a sphere of the same radius [ortaggio2002]."
+    },
+    {
+      "id": "bardeen",
+      "kind": "composite",
+      "text": "A black hole with de Sitter space at its centre. Inside its inner horizon Bardeen's metric approaches de Sitter's static patch, which keeps the centre regular [ansoldi2008]."
     }
   ],
   "references": [
@@ -76,7 +81,8 @@
     "riess1998",
     "perlmutter1999",
     "hawking1973",
-    "ortaggio2002"
+    "ortaggio2002",
+    "ansoldi2008"
   ],
   "coordinates": [
     {

@@ -71,6 +71,11 @@
       "id": "simpson_visser",
       "kind": "family",
       "text": "A regular black hole with the same tower of universes, two horizons to each black hole, and another asymptotically flat region where this one has its timelike singularity [simpson2019]."
+    },
+    {
+      "id": "bardeen",
+      "kind": "family",
+      "text": "Reissner-Nordström with the singularity taken out. James Bardeen put in place of $1 - r_s/r + r_q^2/r^2$ a function that is regular at $r = 0$, and kept both horizons [borde1994]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "horowitz1992",
     "earman1993",
     "romans1992",
-    "simpson2019"
+    "simpson2019",
+    "borde1994"
   ],
   "coordinates": [
     {
