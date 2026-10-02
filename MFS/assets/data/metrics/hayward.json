@@ -74,6 +74,11 @@
       "id": "mass_inflation",
       "kind": "family",
       "text": "Ori's model of a charged hole with radiation crossing it, whose mass function grows without limit at the inner horizon. Carried over to Hayward's metric it gives an exponentially growing mass at the inner horizon as well [carballorubio2021]."
+    },
+    {
+      "id": "hiscock",
+      "kind": "family",
+      "text": "The evaporating hole Hayward took the surface of pair creation from, with negative energy falling in and positive energy going out. Hiscock's keeps its singularity, and the last point of it is naked [hayward2006, hiscock1981]."
     }
   ],
   "references": [

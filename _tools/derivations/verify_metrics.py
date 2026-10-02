@@ -976,6 +976,18 @@ DIMENSIONS = {
     ("thin_shell_wormhole", "throat"): {
         "t": "T", "\\ell": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "L",
     },
+    # Hiscock's evaporating black hole in his own units, G = c = 1: the null times v and u are
+    # lengths and so is the mass m = GM/c^2, a function of one of them, so that a dot on m carries
+    # no dimension. R, the areal radius of the surface of pair creation, enters the domains alone.
+    ("hiscock", "ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "R": "L",
+    },
+    ("hiscock", "outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "R": "L",
+    },
+    ("hiscock", "flat"): {
+        "u": "L", "v": "L", "\\theta": "1", "\\phi": "1",
+    },
     # The gravastar: a ball of de Sitter space of radius L inside a thin shell at the areal radius
     # R, Schwarzschild's vacuum of radius r_s outside. C is a name for the number that makes g_tt
     # continuous across the shell, and the tortoise coordinate x of the interior is a length.

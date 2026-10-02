@@ -669,6 +669,28 @@ def witten(chart):
     return [Mark(m, [np.column_stack([sign * np.log(np.expm1(2 * x)) / 2, x])])]
 
 
+def _hiscock(view):
+    """Hiscock's evaporating hole: each moment is the slice v - r = T over the pieces read in the
+    ingoing chart and the slice u + r = null_rays.hiscock_outer_time(T) over those read in the
+    outgoing chart, whose part beyond the last ray, u > 8, is the flat space after the hole in its
+    double null chart, u = T - r and v = T + r."""
+    import null_rays as nr
+
+    def lines(m):
+        try:
+            lo, hi = m.reach("outgoing" if view == "after" else view, "r")
+        except ValueError:
+            return []
+        if view == "ingoing":
+            return [[(m.time + r, r) for r in np.linspace(lo, hi, 200)]]
+        outer = nr.hiscock_outer_time(m.time)
+        if view == "outgoing":
+            return [[(outer - r, r) for r in np.linspace(lo, hi, 200)]]
+        hi = min(hi, (m.time - nr.HISCOCK_V0) / 2)
+        return [[(m.time - r, m.time + r) for r in np.linspace(lo, hi, 50)]] if hi > lo else []
+    return [Mark(m, found) for m in moments("hiscock") for found in [lines(m)] if found]
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -1421,6 +1443,9 @@ FLAT = {
     ("hayward", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _hayward(-1),
     ("hayward", "eddington_finkelstein_outgoing", "chart"): lambda: _hayward(-1),
     # v - r = T, every r the embedding reaches.
+    ("hiscock", "ingoing", "history"): lambda: _hiscock("ingoing"),
+    ("hiscock", "outgoing", "history"): lambda: _hiscock("outgoing"),
+    ("hiscock", "flat", "after"): lambda: _hiscock("after"),
     ("hayward", "evaporating", "history"): lambda: one(
         "hayward", lambda m: [[(m.time + r, r) for r in m.reach("evaporating", "r")]], view_id="history"),
     ("reissner_nordstrom_ads", "static", "radial"): lambda: _rnads(),
@@ -1915,6 +1940,7 @@ HIDDEN = {
     ("bonnor_vaidya", "homothetic", "scaling"): "the collapse of a mass and a charge that grow with the advanced time, another spacetime than the shell embedded",
     ("mass_inflation", "ingoing", "behind"): "behind Ori's shell, where the mass function is another one than the tail's, whose moments are embedded",
     ("mass_inflation", "shell"): "Ori's shell and the region behind it, another spacetime than the tail falling in alone, whose moments are embedded",
+    ("hiscock", "ingoing", "shells"): "the simplest model, a hole made and removed by two shells, another spacetime than the one embedded",
     **{("curzon_chazy", system, "axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"
        for system in ("weyl", "spherical")},
     **{("curzon_chazy", f"{system}_axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"

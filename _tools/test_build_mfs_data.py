@@ -3174,7 +3174,10 @@ class EmbeddingDiagrams(unittest.TestCase):
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
         # Hayward's hole forms from flat space and leaves flat space behind: the first and the last
         # moments of its movie, before the radiation reaches the rim and after the last of it has left.
-        flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5)}
+        # Hiscock's hole leaves flat space behind as well: at the last moment of its movie the flat disc
+        # inside the last ray has reached r = 3m_0/2 and the mass still inside the rim is under m_0/20.
+        flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5),
+                        ("hiscock", "history", 5)}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -3520,6 +3523,7 @@ class StacksAndMovies(unittest.TestCase):
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
               ("photon_rocket", "burn"): "$cu + r$", ("hayward", "history"): "$v - r$",
               ("mass_inflation", "tail"): "$v - r$",
+              ("hiscock", "history"): "$v - r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("ori_time_machine", "throat"): "$t$", ("senovilla", "universe"): "$act$",
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
@@ -4537,6 +4541,8 @@ class Slices(unittest.TestCase):
     # a moment of space.
     HIDDEN = {# The region x < 0 of Siklos's chart, another region than the one whose wave front is embedded.
               "siklos/kaigorodov_stationary/plane",
+              # Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.
+              "hiscock/ingoing/shells",
               "btz/stationary/rotating", "btz/eddington_finkelstein_ingoing/rotating",
               "btz/eddington_finkelstein_outgoing/rotating", "conformal btz/rotating",
               # Myers and Perry's plane of rotation in six dimensions, which the embedded transverse plane
@@ -4843,7 +4849,13 @@ class Slices(unittest.TestCase):
                        for s in ("double_null", "advanced", "areal", "diagonal", "scaling") for case in ROBERTS_P}}
     # The surfaces of a view that a drawing does not mark though it marks the view's others: the areal
     # chart of the black bounce is drawn on the side r > 0, where the moments of r < 0 do not lie.
-    HIDDEN_SURFACES = {"simpson_visser/areal/bounce": {("inside", 3), ("inside", 4)}}
+    # Each chart of Hiscock's hole holds part of the spacetime: the ingoing chart ends at v_0 = 8, so the
+    # last moment, v - r = 11, has no part in it; the outgoing chart begins on the surface of pair creation,
+    # which the moments before v - r = -1 do not reach; and the flat space after the hole holds only the last.
+    HIDDEN_SURFACES = {"simpson_visser/areal/bounce": {("inside", 3), ("inside", 4)},
+                       "hiscock/ingoing/history": {("history", 5)},
+                       "hiscock/outgoing/history": {("history", 0), ("history", 1)},
+                       "hiscock/flat/after": {("history", k) for k in range(5)}}
 
     def reach(self, surface, system=None, reference=False):
         xs = [x for piece in surface["pieces"] if "points" in piece and (reference or not piece.get("reference"))
@@ -5094,6 +5106,21 @@ class Slices(unittest.TestCase):
         if key in ("hayward/evaporating/history", "mass_inflation/ingoing/tail"):
             # A slice of constant v - r, level against v - r.
             return (lambda X: t), list(self.reach(surface))
+        if key == "hiscock/ingoing/history":
+            # A slice of constant v - r, level against v - r, over the pieces read in the ingoing chart.
+            return (lambda X: t), list(self.reach(surface, "ingoing"))
+        if key in ("hiscock/outgoing/history", "hiscock/flat/after"):
+            # Outside the surface of pair creation the moment is the slice u + r = T', level against
+            # u + r, that meets v - r = t on the surface: there r = 3N and u = v - 18N with
+            # N = cos^2(pi (v - 2)/12), so T' = v - 15N at the root of v - 3N = t, and T' = t once the
+            # hole is gone, t >= 8. The flat space after the hole holds its part inside the last ray
+            # u_0 = 8, r < (t - 8)/2, where (u + v)/2 = t.
+            if key == "hiscock/flat/after":
+                return (lambda X: t), [0.0, (t - 8) / 2]
+            mass = lambda v: math.cos(math.pi * (v - 2) / 12) ** 2
+            meets = bisect(lambda v: v - 3 * mass(v) - t, 2, 8) if t < 8 else None
+            outer = t if meets is None else meets - 15 * mass(meets)
+            return (lambda X: outer), list(self.reach(surface, "outgoing"))
         if key.startswith("global_monopole/eddington_finkelstein"):
             # Letelier's black hole at Delta = 0.19 and r_s = 1: r_* = r/0.81 + ln|0.81 r - 1|/0.81^2,
             # and the static t = 0 is v = r_* and u = -r_*, drawn against v - r and u + r or against v and u.
@@ -5763,6 +5790,17 @@ class Slices(unittest.TestCase):
                         # views, and through the one below them on the outgoing view, whose chart covers it.
                         height = -math.pi if view["id"] == "outgoing" else math.pi
                         self.assertTrue(all(abs(T - height) < 2e-4 for _, T in points), where)
+                    elif metric_id == "hiscock":
+                        # Both rays of every event are traced, so the slice is held to what needs no tracing:
+                        # it runs outward with its ingoing rays arriving later and later, never left of the
+                        # first centre, and a moment before the shell reaches the centre, t < 0, starts on
+                        # that centre, X = 0, at p = q = arctan((t + 1)/3).
+                        qs = [(T + X) / 2 for X, T in points]
+                        self.assertTrue(all(b > a for a, b in zip(qs, qs[1:])), where)
+                        self.assertTrue(all(X >= -1e-9 for X, _ in points), where)
+                        if t < 0:
+                            X, T = points[0]
+                            self.assertLess(abs(X) + abs(T - 2 * math.atan((t + 1) / 3)), 5e-3, where)
                     elif metric_id == "hayward" and mark["view"] == "history":
                         # q = arctan((v - 4)/4) and p the same function of the advanced time v_0 at which the
                         # outgoing ray left the centre: the slice v - r = t starts on the centre, X = 0, at

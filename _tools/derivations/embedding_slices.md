@@ -573,6 +573,15 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `static`, `ingoing` and `outgoing`, the conformal diagram: the outside moment is the line $T = 0$ through the outer bifurcation point across both exteriors; the inside moment is the line through the inner bifurcation point above them, $T = \pi$, on the static and ingoing views, whose charts cover an inner region there, and the line $T = -\pi$ through the inner bifurcation point below on the outgoing view, whose chart covers an inner region there.
 - `history`, the conformal diagram: each moment is the curve $v - r = T$ from the centre on $X = 0$ out to $r = 6\,m_0$.
 
+### Hiscock
+
+- The embedding is one view, a movie of the model the other diagrams declare, in units of the shell's mass $m_0$: the slices $v - r = T$ from $T = -5$ to $11\,m_0$, $r$ from $0$ to $6\,m_0$, read in the ingoing chart inside the surface of pair creation and, from $T = -1$ on, in the outgoing chart outside it as the slice $u + r = T'$ that meets it there, $T' = v - 15N(v)$ with $v - 3N(v) = T$; from $T = 8$ on the whole slice is $u + r = T$.
+- `ingoing/history`, drawn against $v - r$: the moments $-5$ and $-2\,m_0$ are level lines across the box, and $1$, $4$ and $7\,m_0$ level lines from $r = 0$ to the surface of pair creation; the moment $11\,m_0$ has no part in this chart.
+- `ingoing/shells` marks nothing: the simplest model, two shells, is another spacetime than the one embedded.
+- `outgoing/history`, drawn against $u + r$: the moments $1$, $4$ and $7\,m_0$ are level lines $u + r = T'$ from the surface of pair creation out, and $11\,m_0$ a level line from the centre; the first two moments have no part in this chart.
+- `flat/after`: the moment $11\,m_0$ is the level line $(u + v)/2 = 11\,m_0$ from the centre to the last ray $u_0$, at $r = 3m_0/2$.
+- `history`, the conformal diagram: each moment is one curve from the centre or the singularity out to $r = 6\,m_0$, through the ingoing chart's map inside the surface of pair creation and the outgoing chart's outside it.
+
 ### Siklos waves
 
 - The embedding has one view in units of $L$: the wave front $u = v = 0$, read on the disc of the chart of Ozsváth, Robinson and Rózga out to the circle a proper distance $2L$ from its centre, $\xi^2 + \eta^2 = 4L^2\tanh^2 1$.
@@ -677,6 +686,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | thin shell wormhole | line, line | none | line, line |
 | Tolman-Bondi | not visible | none | none drawn |
 | TOV | line, line | none | line |
+| Hiscock | level lines in each chart that holds the moment; not visible on the two shells | none | six curves |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
 
 As drawn in 4de26cc, the Krasnikov tube's slice is a line, Reissner-Nordström's are two lines, and Vaidya's ingoing view carries all four lines.

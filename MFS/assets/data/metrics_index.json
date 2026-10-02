@@ -1027,10 +1027,49 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a639c4dcb6c64693",
+    "version": "3f528a176f8af517",
     "diagrams": "bd41935318270b6a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3"
+  },
+  {
+    "id": "hiscock",
+    "name": "Hiscock",
+    "tags": [
+      "black hole evaporation",
+      "Hawking radiation",
+      "Vaidya",
+      "null dust",
+      "negative energy",
+      "energy condition violation",
+      "matched solution",
+      "thin shell",
+      "black hole",
+      "mass",
+      "horizon",
+      "event horizon",
+      "apparent horizon",
+      "Cauchy horizon",
+      "curvature singularity",
+      "naked singularity",
+      "cosmic censorship",
+      "gravitational collapse",
+      "radiating",
+      "retarded time",
+      "time-dependent",
+      "spherically symmetric",
+      "asymptotically flat",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "1f5a3e3f8f430e37",
+    "diagrams": "59e4a2b1e790cfcd",
+    "conformal": "a8c68e67ec52e67a",
+    "embedding": "920063a794e7f34b"
   },
   {
     "id": "kaluza_klein_black_hole",
@@ -1666,7 +1705,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "f250c6f2336c91f4",
+    "version": "fb14cd3c24e680cc",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2279,7 +2318,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "90ddaac8ec9bf89f",
+    "version": "a18a79531beec970",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2770,7 +2809,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "3953a2031d1999e5",
+    "version": "12387afe5059c7a7",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"

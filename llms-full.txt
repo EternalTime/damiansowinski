@@ -621,6 +621,18 @@ A black hole with two horizons and a regular centre, Schwarzschild's metric far 
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2mr^2}{r^3 + 2m\ell^2}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Forming and Evaporating: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2mr^2}{r^3 + 2m\ell^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Hiscock's Evaporating Black Hole
+
+A black hole that forms and then radiates itself away, built by William Hiscock in 1981 from Vaidya's metric. Inside a surface just outside the apparent horizon negative energy falls in and lowers the mass, and outside it positive energy carries the same mass off to infinity. The event horizon ends after a finite time, and the last point of the singularity is naked.
+
+- id: `hiscock`
+- tags: black hole evaporation, Hawking radiation, Vaidya, null dust, negative energy, energy condition violation, matched solution, thin shell, black hole, mass, horizon, event horizon, apparent horizon, Cauchy horizon, curvature singularity, naked singularity, cosmic censorship, gravitational collapse, radiating, retarded time, time-dependent, spherically symmetric, asymptotically flat, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/hiscock.json
+- chart Ingoing Vaidya: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Vaidya: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Flat Double Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -du\,dv + \dfrac{(v - u)^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Kaluza-Klein Black Holes
 
 The charged black holes of gravity in five dimensions with the fifth dimension a small circle, vacuum solutions that four dimensions see as black holes with an electric charge, a magnetic charge, or both, and a scalar field. The electric hole is Schwarzschild's black string set moving around the circle, and Gary Gibbons and David Wiltshire classified the family in 1986.

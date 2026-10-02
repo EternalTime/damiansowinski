@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 98,
+  "count": 99,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -10272,6 +10272,11 @@
           "id": "mass_inflation",
           "kind": "family",
           "text": "Ori's model of a charged hole with radiation crossing it, whose mass function grows without limit at the inner horizon. Carried over to Hayward's metric it gives an exponentially growing mass at the inner horizon as well [carballorubio2021]."
+        },
+        {
+          "id": "hiscock",
+          "kind": "family",
+          "text": "The evaporating hole Hayward took the surface of pair creation from, with negative energy falling in and positive energy going out. Hiscock's keeps its singularity, and the last point of it is naked [hayward2006, hiscock1981]."
         }
       ],
       "references": [
@@ -10566,6 +10571,276 @@
           ],
           "ricci_scalar": "R = -\\dfrac{24m^2\\,\\ell^2\\left(r^3 - 4m\\,\\ell^2\\right)}{\\left(r^3 + 2m\\,\\ell^2\\right)^3}",
           "kretschmann": "K = \\dfrac{48m^2\\left(r^{12} - 8m\\,\\ell^2\\,r^9 + 72m^2\\,\\ell^4\\,r^6 - 16m^3\\,\\ell^6\\,r^3 + 32m^4\\,\\ell^8\\right)}{\\left(r^3 + 2m\\,\\ell^2\\right)^6}"
+        }
+      ]
+    },
+    {
+      "id": "hiscock",
+      "name": "Hiscock's Evaporating Black Hole",
+      "short_name": "Hiscock",
+      "description": "A black hole that forms and then radiates itself away, built by William Hiscock in 1981 from Vaidya's metric. Inside a surface just outside the apparent horizon negative energy falls in and lowers the mass, and outside it positive energy carries the same mass off to infinity. The event horizon ends after a finite time, and the last point of the singularity is naked.",
+      "tags": [
+        "black hole evaporation",
+        "Hawking radiation",
+        "Vaidya",
+        "null dust",
+        "negative energy",
+        "energy condition violation",
+        "matched solution",
+        "thin shell",
+        "black hole",
+        "mass",
+        "horizon",
+        "event horizon",
+        "apparent horizon",
+        "Cauchy horizon",
+        "curvature singularity",
+        "naked singularity",
+        "cosmic censorship",
+        "gravitational collapse",
+        "radiating",
+        "retarded time",
+        "time-dependent",
+        "spherically symmetric",
+        "asymptotically flat",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass is the length $m = GM/c^2$ and the null times are lengths, so no factor of $c$ or $G$ stands in a component. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "vaidya",
+          "kind": "piece",
+          "text": "Both halves of the model. Vaidya's ingoing metric with a falling mass shrinks the hole, and his outgoing metric carries the radiation away [hiscock1981outgoing]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The hole between its birth and the start of the evaporation, and the field far away until the first of the radiation passes [lubbe2009]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "The space inside the collapsing shell, and the space left once the last of the radiation has gone by [martindussaud2019]."
+        },
+        {
+          "id": "hayward",
+          "kind": "family",
+          "text": "The same pair of streams, negative energy in and positive energy out, around a black hole with a regular centre. Hayward built it by \"adapting an idea of Hiscock\", and it leaves neither a singularity nor an event horizon [hayward2006]."
+        }
+      ],
+      "references": [
+        "hawking1974",
+        "hawking1975",
+        "martindussaud2019",
+        "hiscock1981",
+        "davies1976",
+        "vaidya1951",
+        "vaidya1953",
+        "guo2023",
+        "lubbe2009",
+        "hiscock1981outgoing",
+        "kuroda1984evaporating",
+        "hayward2006",
+        "bianchi2015",
+        "hiscock1982shell"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hiscock.json",
+      "charts": [
+        {
+          "id": "ingoing",
+          "name": "Ingoing Vaidya",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in [0, R]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the surface of pair creation)}",
+            "r = 2m \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass function of advanced time, a length, $m = GM/c^2$: zero before the hole forms, falling while negative energy flows in, and zero once the hole is gone; $m_0$ is its greatest value in the drawings"
+            },
+            {
+              "symbol": "R = R(v)",
+              "description": "Areal radius of the surface where the pairs are created, a length, with $R > 2m$ while the hole evaporates; the outgoing radiation lies beyond it"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v$ constant along ingoing light rays and $r$ the areal radius. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48m^2}{r^6}"
+        },
+        {
+          "id": "outgoing",
+          "name": "Outgoing Vaidya",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the surface of pair creation)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(u)",
+              "description": "Mass function of retarded time, a length, $m = GM/c^2$, the mass measured by a distant observer at the retarded time $u$; on the surface of pair creation it equals the mass inside; $m_0$ is its greatest value in the drawings"
+            },
+            {
+              "symbol": "R = R(u)",
+              "description": "Areal radius of the surface where the pairs are created, a length, with $R > 2m$ while the hole evaporates; the ingoing negative energy lies inside it"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u$ constant along outgoing light rays and $r$ the areal radius. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48m^2}{r^6}"
+        },
+        {
+          "id": "flat",
+          "name": "Flat Double Null",
+          "coordinates": [
+            "u",
+            "v",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (u, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "v = u \\;\\text{(the centre)}"
+          ],
+          "parameters": [],
+          "convention": "We use coordinates $(u, v, \\theta, \\phi)$, the retarded and advanced times of flat space, with the areal radius $r = (v - u)/2$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du\\,dv + \\dfrac{(v - u)^2}{4}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{(v - u)^2}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{(v - u)^2}{4}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
         }
       ]
     },
@@ -16316,6 +16591,11 @@
           "id": "kiselev",
           "kind": "conformal",
           "text": "Kiselev's matter at $w = -2/3$ with no black hole is the part $\\tau + \\rho > 0$ of Minkowski space rescaled by $4r_q^2/(\\tau + \\rho)^2$ [kiselev2003]."
+        },
+        {
+          "id": "hiscock",
+          "kind": "composite",
+          "text": "A black hole that forms from a shell of light and radiates itself away. Flat space lies inside the shell before the hole forms and is all that is left once it has gone [martindussaud2019]."
         }
       ],
       "references": [
@@ -16375,7 +16655,8 @@
         "coleman1980",
         "oshiro1994",
         "brady1994",
-        "kiselev2003"
+        "kiselev2003",
+        "martindussaud2019"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -22676,6 +22957,11 @@
           "id": "kiselev",
           "kind": "generalisation",
           "text": "Schwarzschild's metric with one more term, $-(r_q/r)^{3w+1}$, for matter around the hole whose pressure averages to $w$ times its energy density. At $w = 0$ the term is one more mass [kiselev2003]."
+        },
+        {
+          "id": "hiscock",
+          "kind": "composite",
+          "text": "A black hole that forms and evaporates. Schwarzschild's metric is the hole between the collapse and the start of the evaporation [lubbe2009]."
         }
       ],
       "references": [
@@ -22752,7 +23038,8 @@
         "mazur2004",
         "visser2004",
         "tolman1939",
-        "kiselev2003"
+        "kiselev2003",
+        "lubbe2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -27703,6 +27990,11 @@
           "id": "boulware_deser",
           "kind": "family",
           "text": "The black hole of Einstein-Gauss-Bonnet gravity in five dimensions. Tsutomu Kobayashi made its mass a function of $v$ in 2005, a Vaidya solution of that theory [kobayashi2005]."
+        },
+        {
+          "id": "hiscock",
+          "kind": "composite",
+          "text": "A black hole that evaporates, made of both of Vaidya's metrics. Negative energy falls in along the ingoing one and shrinks the hole, and the outgoing one carries the mass away [hiscock1981outgoing]."
         }
       ],
       "references": [
@@ -27732,7 +28024,8 @@
         "podolsky2005",
         "wang1997collapse",
         "poisson1989",
-        "kobayashi2005"
+        "kobayashi2005",
+        "hiscock1981outgoing"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
