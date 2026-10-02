@@ -102,6 +102,11 @@
       "id": "eih_many_bodies",
       "kind": "family",
       "text": "Many bodies with no charge to hold them apart. They orbit, and their field is known to the first order beyond Newton, where Majumdar and Papapetrou's is exact [einstein1938]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "Parallel three-branes of string theory stand at rest by the same balance, with a harmonic function of the six dimensions across them [dufflu1991, gibbons1995]."
     }
   ],
   "references": [
@@ -138,7 +143,9 @@
     "arnowitt1960",
     "bonnor1975",
     "lemos2004",
-    "einstein1938"
+    "einstein1938",
+    "dufflu1991",
+    "gibbons1995"
   ],
   "coordinates": [
     {

@@ -109,6 +109,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `cartesian/circle`, the plane of $t$ and $\phi$ at $x = y = z = 0$: the cylinder meets it in its ring $x = 0$, the whole line $ct = 0$ from $\phi = 0$ to $2\pi$. The sphere stands at $x = a$, off this plane, and is not marked.
 - `cartesian`, the diamond of the plane of $t$ and $x$: the line $T = 0$ from $x = -a$ to $a$ and the point at $x = a$.
 
+### The three-brane and its throat
+
+- The embedding has two views at the moment $t = 0$, of two spacetimes: the three-brane's surface of $\rho$ and $\phi$ in the isotropic chart, $\rho$ from $L/20$ to $3L$, and the throat's cylinder of $\sigma$ and $\phi$ in the chart of the proper distance, $\sigma$ from $-L$ to $L$.
+- `isotropic/radial`, `areal/radial` and `horizon/radial`: the line $ct = 0$ over that stretch, which is $r = (\rho^4 + L^4)^{1/4}$ in the areal radius and $w = \rho/r$. The throat's cylinder is not marked.
+- `throat/radial` and `throat_proper/radial`: the line $ct = 0$ from $\sigma = -L$ to $L$, which is $r = L/e$ to $eL$. The three-brane's surface is not marked.
+- The conformal views of the three-brane: the line $T = 0$ of the exterior, $X = 2\arctan(\rho_*/L)$. The conformal views of the throat: the line $T = 0$ of the wedge.
+
 ### Near-horizon extreme Kerr
 
 - The embedding has two views at the moment $\tau = 0$ of the global chart: the equator, $y$ from $-2.25$ to $2.25$ with $\phi$, and the sphere of $\theta$ and $\phi$ at one event, drawn at $y = 0$.
@@ -816,6 +823,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Bertotti-Robinson | line and point, twice | none | line and point, twice |
 | Plebański-Hacyan | line and point, twice; point, twice; none on the three views of the product with a flat plane | none | line and point, twice; point, twice; none on the three views of the product with a flat plane |
 | Cremmer-Scherk | line and point; line on the plane of the time and $\phi$ | none | line and point |
+| three-brane | line, five times | none | line, five times |
 | Bianchi I | four lines | none | none drawn |
 | cosmic string | none | whole drawing | line, line |
 | de Sitter | line, line, curve | none | line, line |

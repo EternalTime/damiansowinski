@@ -869,6 +869,14 @@ DIMENSIONS = {
     ("plebanski_hacyan", "exceptional"): {"u": "L", "w": "L", "x": "L", "y": "L", "a": "L", "f": "1/L", "g": "1/L"},
     # Cremmer and Scherk's Minkowski space times a sphere: a is the sphere's radius.
     ("cremmer_scherk", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\theta": "1", "\\phi": "1", "a": "L"},
+    # The three-brane: L is the radius of its throat, and H, Gibbons, Horowitz and Townsend's w and
+    # the five angles of the sphere are pure numbers.
+    **{("three_brane_throat", chart): {
+        "t": "T", "x": "L", "y": "L", "z": "L", radial: unit, "\\alpha": "1", "\\beta": "1", "\\psi": "1",
+        "\\theta": "1", "\\phi": "1", "L": "L", **extra}
+       for chart, radial, unit, extra in (("isotropic", "\\rho", "L", {"H": "1"}), ("areal", "r", "L", {}),
+                                          ("horizon", "w", "1", {"r": "L"}), ("throat", "r", "L", {}),
+                                          ("throat_proper", "\\sigma", "L", {}))},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
@@ -2109,6 +2117,9 @@ HELD = {
     # Maitra's two functions, each a logarithm of 1 + s beside powers of the root s: held, a value
     # is a rational function of r, a, s, k and e^gamma.
     ("maitra_dust", "cylindrical"): ("k", "gamma"),
+    # The areal radius of the three-brane on Gibbons, Horowitz and Townsend's chart, a fourth root
+    # of 1 - w^4: held, a value is a rational function of w and r.
+    ("three_brane_throat", "horizon"): ("r",),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2185,6 +2196,9 @@ RATES = {
         "k": {"r": "\\dfrac{2r}{a\\left(1 + s\\right)}"},
         "gamma": {"r": "-\\dfrac{2r}{a^2\\left(1 + s\\right)^2}"},
     },
+    # r = L (1 - w^4)^(-1/4), so dr/dw = w^3 r/(1 - w^4): L is the constant of integration, and the
+    # line element is written in w and r alone, so the two have no relation a value could hold.
+    ("three_brane_throat", "horizon"): {"r": {"w": "\\dfrac{w^3r}{1 - w^4}"}},
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across

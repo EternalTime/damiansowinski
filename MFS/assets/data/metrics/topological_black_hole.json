@@ -82,6 +82,11 @@
       "id": "ab_metrics",
       "kind": "special_case",
       "text": "The hyperbolic and the flat hole without the cosmological constant, $L \\to \\infty$, are A II and A III of Ehlers and Kundt's table, with $\\mu = -b$ [hruska2019]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "A three-brane of string theory heated a little above its least mass has this black hole, in five dimensions, in its throat [maldacena1998]."
     }
   ],
   "references": [
@@ -109,7 +114,8 @@
     "horowitz1998",
     "caldarelli2001extremal",
     "cardoso2004",
-    "hruska2019"
+    "hruska2019",
+    "maldacena1998"
   ],
   "coordinates": [
     {

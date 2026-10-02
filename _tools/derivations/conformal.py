@@ -8027,6 +8027,188 @@ def cremmer_scherk(ck, src):
     return [v]
 
 
+def three_brane_throat(ck, src):
+    """The three-brane at L = 1 on its plane of the time and the radial coordinate, and its throat.
+    On the isotropic chart g_tt g_rho_rho = -1, so a radial light ray has d(rho_*)/d(rho) = g_rho_rho
+    = sqrt(1 + 1/rho^4), nr._three_brane_rstar, taken odd in rho. The horizon rho = 0 is at
+    rho_* -> -infinity, and behind it lies a region isometric to the exterior, Gibbons, Horowitz and
+    Townsend's w -> -w, in which rho_* continues as an odd function, so that the v of the exterior
+    is the u of the mirror region. With u, v = t -+ rho_*, every region is a copy of one of two
+    cells, shifted by (k pi, k pi):
+
+        E_k   exterior          p = k pi + arctan u,        q = k pi + arctan v
+        M_k   behind a horizon  p = (k + 1) pi + arctan v,  q = k pi + arctan u
+
+    with u and v those of the region's own radius. Each null coordinate runs on across a horizon, q
+    from E_k into M_k and p from M_k into E_(k+1), so the map is continuous there, and the tower
+    has no singularity: their Figure 1. The areal radius and w are carried to rho, rho^4 = r^4 - 1
+    and rho = w (1 - w^4)^(-1/4). The throat alone is the product of anti-de Sitter space with a
+    sphere, and its plane of t and r is the Poincare wedge of the strip of AdS2, poincare_pq(t, 1/r),
+    with r = e^sigma on the chart of the proper distance."""
+    name = "three_brane_throat"
+    fixed = dict(nr.TB_PLANE)
+    rs = nr._three_brane_rstar
+    charts = (("isotropic", "Isotropic", "\\rho", lambda x: np.asarray(x, dtype=float), (0.25, 0.5, 1.0, 2.0, 4.0),
+               0.0, np.inf, ck.uniform(1e-2, 40)),
+              ("areal", "Areal Radius", "r", lambda x: (np.asarray(x, dtype=float) ** 4 - 1) ** 0.25,
+               (1.02, 1.1, 1.5, 2.0, 4.0), 1.0, np.inf, ck.uniform(1.0001, 40)),
+              ("horizon", "Gibbons-Horowitz-Townsend", "w",
+               lambda x: np.asarray(x, dtype=float) / (1 - np.asarray(x, dtype=float) ** 4) ** 0.25,
+               (0.2, 0.4, 0.6, 0.8, 0.95), 0.0, 1.0, ck.uniform(1e-2, 0.999)))
+    moment = slices.moments(name, "brane")[0]
+    views = []
+    for system, label, symbol, rho_of, radii, lo, hi, sample in charts:
+        pl = Plane(src, name, system, ("t", symbol), fixed, {"L": 1})
+
+        def E(k, rho_of=rho_of):
+            return lambda t, x: (k * PI + np.arctan(np.asarray(t, dtype=float) - rs(rho_of(x))),
+                                 k * PI + np.arctan(np.asarray(t, dtype=float) + rs(rho_of(x))))
+
+        def M(k, rho_of=rho_of):
+            return lambda t, x: ((k + 1) * PI + np.arctan(np.asarray(t, dtype=float) + rs(rho_of(x))),
+                                 k * PI + np.arctan(np.asarray(t, dtype=float) - rs(rho_of(x))))
+
+        ck.chart(f"three-brane, {system}, exterior", pl, E(0), ck.uniform(-20, 20), sample, lambda t, x: (1, 0))
+        ck.chart(f"three-brane, {system}, behind the horizon", pl, M(0), ck.uniform(-20, 20), sample,
+                 lambda t, x: (1, 0))
+        if system == "isotropic":
+            x = np.array([0.05, 0.3, 1.0, 2.5, 20.0])
+            h = 1e-6 * x
+            g00, g01, g11 = pl.metric(np.zeros_like(x), x)[:3]
+            ck.limit("three-brane: d rho_*/d rho is the published g_rho_rho, and g_tt g_rho_rho = -1",
+                     np.concatenate([(rs(x + h) - rs(x - h)) / (2 * h) / g11, g00 * g11]), [1.0] * 5 + [-1.0] * 5, 1e-6)
+            ck.limit("three-brane: rho_* is odd in rho, -L^2/rho + rho^3/6L^2 toward the horizon",
+                     rs(np.array([1e-2, 3e-2])) + 1 / np.array([1e-2, 3e-2]) - np.array([1e-2, 3e-2]) ** 3 / 6, [0.0, 0.0], 1e-9)
+            ts = np.array([-6.0, 0.0, 6.0])
+            p, q = E(0)(ts, np.full(3, 1e-9))
+            ck.limit("three-brane: rho -> 0 at fixed t lands on the corner X = -pi, T = 0", np.concatenate(xt(p, q)),
+                     [-PI] * 3 + [0.0] * 3, 1e-6)
+            p, q = M(0)(ts, np.full(3, 1e-9))
+            ck.limit("three-brane: behind the horizon, rho -> 0 at fixed t lands on the corner X = 0, T = pi",
+                     np.concatenate(xt(p, q)), [0.0] * 3 + [PI] * 3, 1e-6)
+            p, q = M(0)(ts, np.full(3, 1e12))
+            ck.limit("three-brane: behind the horizon, rho -> infinity lands on a second i^0, X = -2 pi, T = pi",
+                     np.concatenate(xt(p, q)), [-2 * PI] * 3 + [PI] * 3, 1e-6)
+            # One ingoing ray, v fixed, crosses the future horizon at the same point from both sides.
+            v0 = 0.7
+            x_out, x_in = np.array([1e-7]), np.array([1e-7])
+            out = xt(*E(0)(v0 - rs(x_out), x_out))
+            behind = xt(*M(0)(v0 + rs(x_in), x_in))
+            ck.limit("three-brane: an ingoing ray meets the horizon at one point from outside and from behind it",
+                     np.concatenate(out), np.concatenate(behind), 1e-6)
+            ck.finite("three-brane: the Kretschmann scalar is finite at the horizon, 80/L^4",
+                      pl.kretschmann(np.zeros(2), np.array([1e-6, 1e-3])))
+            ck.limit("three-brane: the Kretschmann scalar at the horizon is 80/L^4",
+                     pl.kretschmann(np.zeros(1), np.array([1e-6])), [80.0], 1e-6)
+
+        box = [-2 * PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+        T0, T1 = box[2], box[3]
+        v = View(system, label, box, system)
+
+        def cell_polygon(kind, k):
+            base = 2 * k * PI
+            if kind == "E":
+                pts = [[0, base - PI], [-PI, base], [0, base + PI], [PI, base]]
+            else:
+                pts = [[-PI, base], [0, base + PI], [-PI, base + 2 * PI], [-2 * PI, base + PI]]
+            return clip_polygon(pts, T0, T1)
+
+        def clipped(p, q):
+            X, T = xt(p, q)
+            bad = (T < T0) | (T > T1)
+            return np.where(bad, np.nan, p), np.where(bad, np.nan, q)
+
+        cells = [("M", -1), ("E", 0), ("M", 0), ("E", 1), ("M", 1)]
+        for kind, k in cells:
+            v.fill("region", cell_polygon(kind, k))
+        v.fill("cover", cell_polygon("E", 0))
+        times = (-3.0, -1.0, 0.0, 1.0, 3.0)
+        t = spread(-np.inf, np.inf, 500, 10)
+        xs = spread(lo, hi, 600, 16)
+        for kind, k in cells:
+            fmap = E(k) if kind == "E" else M(k)
+            for x in radii:
+                v.curve("r", *clipped(*fmap(t, np.full_like(t, x))))
+            for tt in times:
+                v.curve("t", *clipped(*fmap(np.full_like(xs, tt), xs)))
+        # The horizons and null infinity, each an edge of a cell.
+        for k in (0, 1):
+            base = 2 * k * PI
+            v.line("horizon", [[[-PI, base], [0, base + PI]], [[0, base - PI], [-PI, base]]])
+            v.line("scri", [[[0, base + PI], [PI, base]], [[PI, base], [0, base - PI]]])
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(PI, 4), round(base, 4)]})
+            v.label_xt([PI, base], "$i^0$", "l", dx=6)
+            v.label_xt([3 * Q4, base + Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+            v.label_xt([3 * Q4, base - Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=3)
+            v.label_xt([HALF, base + 0.45], "exterior", cls="region")
+        v.line("scri", [[[-PI, 0], [-2 * PI, PI]], [[-2 * PI, PI], [-PI, 2 * PI]],
+                        [[-2 * PI, -PI], [-PI, 0]], [[-PI, 2 * PI], [-2 * PI, 3 * PI]]])
+        for T in (-PI, PI, 3 * PI):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(-2 * PI, 4), round(T, 4)]})
+            v.label_xt([-2 * PI, T], "$i^0$", "r", dx=-6)
+        v.label_xt([-3 * HALF, PI + 0.45], "mirror region", cls="region")
+        v.label_xt([-7 * Q4, PI + Q4], "$\\mathscr{I}^+$", "br", dx=-4, dy=-3)
+        v.label_xt([-7 * Q4, PI - Q4], "$\\mathscr{I}^-$", "tr", dx=-4, dy=3)
+        for at, text, anchor, dx in (((0, PI), "$i^\\pm$", "l", 6), ((0, -PI), "$i^-$", "l", 6), ((0, 3 * PI), "$i^+$", "l", 6),
+                                     ((-PI, 0), "$i^\\pm$", "r", -6), ((-PI, 2 * PI), "$i^\\pm$", "r", -6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(list(at), text, anchor, dx=dx)
+        v.set(fade={"top": 0.9, "bottom": 0.9})
+        edge = {"isotropic": "the horizon $\\rho = 0$", "areal": "the horizon $r = L$", "horizon": "the horizon $w = 0$"}[system]
+        tex = "\\rho" if system == "isotropic" else symbol
+        unit = "" if system == "horizon" else ", in units of $L$"
+        v.legend("cover", f"one exterior, which $t$ and ${tex}$ cover")
+        v.legend("r", f"${tex}$ constant, at {listed(radii)}{unit}, in every region")
+        v.legend("t", "$t$ constant")
+        v.legend("horizon", edge)
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        a, b = moment.reach("isotropic", "\\rho")
+        rr = np.geomspace(a, b, 400)
+        v.slice(moment, [(np.arctan(-rs(rr)), np.arctan(rs(rr)))])
+        v.set(settings="$L = 1$, the unit of every length.")
+        views.append(v)
+
+    alone = slices.moments(name, "throat")[0]
+    T0, T1 = -1.1 * PI, 1.1 * PI
+    box = [-HALF - 0.55, HALF + 0.55, T0, T1]
+    for system, label, symbol, z_of, values in (
+            ("throat", "Throat", "r", lambda r: 1.0 / np.asarray(r, dtype=float), (0.25, 0.5, 1, 2, 4)),
+            ("throat_proper", "Throat, Proper Distance", "\\sigma", lambda s: np.exp(-np.asarray(s, dtype=float)),
+             (-1.5, -0.75, 0, 0.75, 1.5))):
+        pl = Plane(src, name, system, ("t", symbol), fixed, {"L": 1})
+        sample = ck.uniform(0.01, 20) if system == "throat" else ck.uniform(-4, 3)
+        ck.chart(f"three-brane, {system}", pl, lambda t, x, z_of=z_of: poincare_pq(t, z_of(x)), ck.uniform(-10, 10),
+                 sample, lambda t, x: (1, 0))
+        ck.limit(f"three-brane, {system}: the Kretschmann scalar is 80/L^4 everywhere",
+                 pl.kretschmann(np.array([0.0, 1.0, -2.0]), np.array([0.3, 1.0, 1.7])), [80.0] * 3, 1e-9)
+        v = View(system, label, box, system)
+        strip(v, True, T0, T1)
+        v.fill("cover", [[-HALF, 0], [HALF, -PI], [HALF, PI]])
+        for c in values:
+            v.curve("r", *poincare_pq(S_ALL, np.full_like(S_ALL, float(z_of(c)))))
+        grid(v, "t", poincare_pq, (-4, -2, -1, 0, 1, 2, 4), S_POS)
+        v.line("chartedge", [[[-HALF, 0], [HALF, PI]], [[-HALF, 0], [HALF, -PI]]])
+        if system == "throat":
+            label_on(v, poincare_pq(0, 1.0), "$r = L$")
+            v.legend("cover", "the wedge that $t$ and $r$ cover")
+            v.legend("r", "$r$ constant, from $L/4$ to $4L$")
+            v.legend("chartedge", "$r = 0$, the Poincaré horizon, where $t$ and $r$ end")
+        else:
+            label_on(v, poincare_pq(0, 1.0), "$\\sigma = 0$")
+            v.legend("cover", "the wedge that $t$ and $\\sigma$ cover, the same as that of $t$ and $r$")
+            v.legend("r", "$\\sigma$ constant, every $3L/4$ from $-3L/2$ to $3L/2$")
+            v.legend("chartedge", "$\\sigma \\to -\\infty$, the Poincaré horizon, where $t$ and $\\sigma$ end")
+        v.legend("t", "$ct$ constant")
+        v.legend("boundary", "the conformal boundary, timelike")
+        v.set(fade={"top": 0.7, "bottom": 0.7})
+        a, b = alone.reach("throat_proper", "\\sigma")
+        c = np.exp(-np.linspace(a, b, 2))
+        v.slice(alone, [poincare_pq(0 * c, c)])
+        v.set(settings="$L = 1$, the unit of every length.")
+        views.append(v)
+    return views
+
+
 def ellis_bronnikov(ck, src):
     """The metric on the plane of t and r is -c^2dt^2 + dr^2 with r over the whole line:
     the full diamond, p, q = arctan((ct -+ r)/l), drawn at l = 1."""
@@ -21661,7 +21843,7 @@ DRAWN = {
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
-    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
+    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "three_brane_throat": three_brane_throat, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
@@ -23455,6 +23637,43 @@ CAPTIONS = {
         "The whole Bertotti-Robinson spacetime with the Poincaré coordinates $t$ "
         "and $x$ on it. They cover the same wedge as the throat coordinates, with "
         "$x = b^2/r$.",
+    ],
+    ("three_brane_throat", "isotropic"): [
+        "The three-brane on its plane of $t$ and $\\rho$ ($x = y = z = 0$, one point of the sphere), maximally "
+        "extended, each point in the diagram a flat sheet of $x$, $y$, and $z$ times a 5-sphere. The extension "
+        "is a tower of exteriors that repeats up and down without end, alternately on the right and on the "
+        "left, with no singularity in it.",
+        "We place each region by $p = \\arctan(u/L)$ and $q = \\arctan(v/L)$ with $u, v = ct \\mp \\rho_*$, "
+        "where the tortoise coordinate $\\rho_*$ has $d\\rho_*/d\\rho = \\sqrt{1 + L^4/\\rho^4}$, shifted by "
+        "$\\pi$ from one region to the next. The horizon is degenerate, and $\\rho_*$ runs to $-\\infty$ on it "
+        "as $-L^2/\\rho$.",
+        "The coordinates $t$ and $\\rho > 0$ cover one exterior. Behind each horizon lies a mirror image of the "
+        "exterior, with a null infinity of its own. The moment $t = 0$ runs from spatial infinity down the "
+        "infinitely long throat toward the corner $X = -\\pi$, $T = 0$, where the past and future horizons "
+        "meet at an infinite distance.",
+    ],
+    ("three_brane_throat", "areal"): [
+        "The same tower with the areal radius $r$ on it, each point in the diagram a flat sheet of $x$, $y$, and "
+        "$z$ times a 5-sphere of radius $r$. The radius falls from infinity to $L$ at each horizon and rises "
+        "again behind it, so no sphere of the three-brane is smaller than $L$.",
+    ],
+    ("three_brane_throat", "horizon"): [
+        "The same tower with Gibbons, Horowitz, and Townsend's $w$ on it, which runs from $1$ at infinity to "
+        "$0$ at the horizon. Behind the horizon $w$ is negative, and the mirror region is this exterior under "
+        "$w \\to -w$, with its infinity at $w = -1$.",
+    ],
+    ("three_brane_throat", "throat"): [
+        "The throat alone on its plane of $t$ and $r$, each point in the diagram a flat sheet of $x$, $y$, and "
+        "$z$ times a 5-sphere of radius $L$. The metric on the plane is "
+        "$-\\frac{r^2}{L^2}c^2dt^2 + \\frac{L^2}{r^2}dr^2$, an anti-de Sitter space of two dimensions and "
+        "radius $L$, whose conformal diagram is a strip.",
+        "The coordinates $t$ and $r$ cover a Poincaré wedge of the strip. The limit that keeps the throat alone "
+        "has traded the flat region of the three-brane for the timelike boundary at $r \\to \\infty$, and "
+        "$r = 0$ is the Poincaré horizon, across which the strip continues.",
+    ],
+    ("three_brane_throat", "throat_proper"): [
+        "The same strip with the proper distance $\\sigma = L\\ln(r/L)$ on it. The lines of constant "
+        "$\\sigma$ are those of constant $r$, and the horizon lies at $\\sigma \\to -\\infty$.",
     ],
     ("cremmer_scherk", "cartesian"): [
         "The plane of $t$ and $x$ ($y = z = 0$) of Cremmer and Scherk's solution, each point in the diagram a "
