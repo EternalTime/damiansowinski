@@ -1960,6 +1960,10 @@ EC_CHI0 = math.asin(1 / math.sqrt(3))
 EDS_EDGE = "the equator $\\chi = \\pi/2$, glued to itself with the time reversed"
 
 
+# The RP3 geon: the edge of the half of Kruskal's plane its chart covers.
+RP3_EDGE = "the edge $X = 0$, glued to itself by the antipodal map of the sphere"
+
+
 DIAGRAMS = [
     *[Diagram("hotta_tanaka", "conformally_flat", view, f"$\\theta = {tex}$", ("\\eta", "\\rho"), (0, 4, -4.3, -0.3),
               "$\\rho/a$", "$\\eta/a$", HT, {"theta": theta, "phi": "0"}, tau="eta", delta=AS_PULSE, step=0.0005,
@@ -2788,6 +2792,18 @@ DIAGRAMS = [
             "$r/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, orient="outgoing", cones=(8, 7), areal=True),
     Diagram("elliptic_de_sitter", "planar", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -1, 3),
             "$x/\\ell$", "$ct/\\ell$", {"ell": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
+    # The RP3 geon at r_s = 1: Kruskal's plane on the half X >= 0, whose edge X = 0 is glued to itself by the
+    # antipodal map of the sphere, hatched beyond the singularities T^2 - X^2 = 1, with both horizons marked;
+    # Schwarzschild's chart of the one exterior; and the isotropic chart on its one sheet rho > r_s/4.
+    Diagram("rp3_geon", "kruskal", "plane", "$T$ and $X$", ("T", "X"), (0, 3, -1.5, 1.5),
+            "$X$", "$T$", {"r_s": 1}, EQUATOR, families=SIDEWAYS, tau="T",
+            where="1 + X**2 - T**2", singular_zero="1 + X**2 - T**2",
+            lines=(("surface", "r", "0", RP3_EDGE),),
+            marked=(("event", {"x0": "0", "r": "0"}, "both", "the horizons, $X = |T|$"),)),
+    Diagram("rp3_geon", "schwarzschild", "radial", "$t$ and $r$", ("t", "r"), (0.5, 6, -2.75, 2.75),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, where="r - 1"),
+    Diagram("rp3_geon", "isotropic", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 3, -1.5, 1.5),
+            "$\\rho/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, where="4*rho - 1"),
     Diagram("einstein_static", "hyperspherical", "radial", "$t$ and $\\chi$", ("t", "\\chi"),
             (0, math.pi, 0, math.pi), "$\\chi$", "$ct/R$", {"R": 1}, EQUATOR),
     Diagram("einstein_static", "hyperspherical", "through", "through the pole", ("t", "\\chi"),
@@ -6387,6 +6403,34 @@ CAPTIONS = {
         "A ray covers only a finite comoving distance however long it runs, $x = \\pm\\ell e^{-ct/\\ell} + $ const, "
         "so an observer at $x = 0$ has an event horizon. The chart holds one point of every antipodal pair off the "
         "null surface $t \\to -\\infty$, so it covers the whole space but that surface.",
+    ],
+    ("rp3_geon", "kruskal", "plane"): [
+        "The plane of $T$ and $X$ ($\\theta = \\pi/2$, $\\phi = 0$) on the half $X \\ge 0$. On it "
+        "$ds^2 = (4r_s^3/r)e^{-r/r_s}(-dT^2 + dX^2)$, so light runs at 45°. The horizons are the rays $X = |T|$ "
+        "from the middle of the left edge, the exterior lies to their right, and the singularities are the "
+        "hyperbola $T^2 - X^2 = 1$, in the future and in the past.",
+        "The left edge $X = 0$ is glued to itself, the event at $T$ on one side of the sphere being the event at "
+        "$T$ on the opposite side, so each of its points is a projective plane of area $2\\pi r^2$, half the "
+        "sphere's. A ray that reaches the edge moving left continues from it moving right, at $\\phi = \\pi$ on "
+        "the far side of the sphere, with its future cone still pointing up.",
+    ],
+    ("rp3_geon", "schwarzschild", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the one exterior, the same at every "
+        "other angle. The edges of the cones are $dr/d(ct) = \\pm(1 - r_s/r)$, so $ct \\mp r_*$ is constant "
+        "along a ray, with $r_* = r + r_s\\ln(r/r_s - 1)$.",
+        "The cones close toward $r = r_s$, where $g^{rr} = 0$, and a ray moving in reaches it only as "
+        "$t \\to \\infty$. The metric out here is the same at every $t$, and of the moments $t = $ const only "
+        "$t = 0$ extends to a smooth slice of the whole spacetime, the moment $T = 0$ of Kruskal's coordinates.",
+    ],
+    ("rp3_geon", "isotropic", "radial"): [
+        "The plane of $t$ and the isotropic radius $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$). The areal "
+        "radius is $r = \\rho(1 + r_s/4\\rho)^2$, least at $\\rho = r_s/4$, where it is $r_s$. The edges of "
+        "the cones are $d\\rho/d(ct) = \\pm 16\\rho^2(4\\rho - r_s)/(4\\rho + r_s)^3$, so $ct \\mp r_*$ is "
+        "constant along a ray, with $r_* = r + r_s\\ln(r/r_s - 1)$.",
+        "The cones close on $\\rho = r_s/4$, where $g_{tt} = 0$. In Kruskal's spacetime the inversion "
+        "$\\rho \\to r_s^2/16\\rho$ carries this sheet onto a second one inside $\\rho = r_s/4$; in the geon "
+        "the two are one sheet, and the sphere $\\rho = r_s/4$ of the moment $t = 0$ has its opposite points "
+        "identified.",
     ],
     ("einstein_static", "hyperspherical", "radial"): [
         "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every other angle by "
@@ -12059,6 +12103,14 @@ CLOSED_FORMS = {
         (lambda t, r: t + 0.5 * np.log(np.abs((1 + r) / (1 - r))),
          lambda t, r: t - 0.5 * np.log(np.abs((1 + r) / (1 - r))), lambda t, r: np.abs(r - 1) > 0.05),
     ("elliptic_de_sitter", "planar", "tx"): (lambda t, x: x - np.exp(-t), lambda t, x: x + np.exp(-t), None),
+    # The RP3 geon at r_s = 1: T -+ X in Kruskal's plane, Schwarzschild's r_* in the exterior, and the same
+    # r_* of the areal radius rho (1 + 1/4 rho)^2 in the isotropic chart.
+    ("rp3_geon", "kruskal", "plane"): (lambda T, X: T + X, lambda T, X: T - X, None),
+    ("rp3_geon", "schwarzschild", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: r > 1.05),
+    ("rp3_geon", "isotropic", "radial"):
+        (lambda t, r: t + _rstar(r * (1 + 1 / (4 * r)) ** 2, [1]),
+         lambda t, r: t - _rstar(r * (1 + 1 / (4 * r)) ** 2, [1]), lambda t, r: 4 * r - 1 > 0.2),
     ("einstein_static", "hyperspherical", "radial"): (lambda t, c: t + c, lambda t, c: t - c, None),
     ("einstein_static", "hyperspherical", "through"): (lambda t, c: t + c, lambda t, c: t - c, None),
     ("einstein_static", "static_areal", "radial"):

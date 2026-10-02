@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 132,
+  "count": 133,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -10633,6 +10633,11 @@
           "id": "born_infeld_charge",
           "kind": "programme",
           "text": "Hoffmann's particle of the same year, a point charge of Born and Infeld's electrodynamics whose whole mass is the energy of its field. Einstein and Rosen pointed out to him the conical point left at its centre [hoffmann1935, tahvildarzadeh2011]."
+        },
+        {
+          "id": "rp3_geon",
+          "kind": "locally_same",
+          "text": "The bridge folded in half. Misner and Wheeler made each point of one sheet the same as the opposite point of the other, which leaves one sheet and a bridge that leads back into it [misner1957]."
         }
       ],
       "references": [
@@ -11219,6 +11224,11 @@
           "id": "misner",
           "kind": "family",
           "text": "Flat space with events identified under a boost, as de Sitter space is here under the antipodal map. Misner's identification makes closed timelike curves, and the antipodal one makes none [misner1967, parikh2003]."
+        },
+        {
+          "id": "rp3_geon",
+          "kind": "family",
+          "text": "A black hole folded by the antipodal map with the direction of time kept, so that it has one exterior and still tells future from past. Folding Kruskal's spacetime with time reversed, as de Sitter space is folded here, is the elliptic interpretation Gibbons examined [gibbons1986elliptic, louko1998]."
         }
       ],
       "references": [
@@ -11231,7 +11241,8 @@
         "parikh2003",
         "spradlin2003",
         "aguirre2003",
-        "misner1967"
+        "misner1967",
+        "louko1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/elliptic_de_sitter.json",
@@ -25885,6 +25896,11 @@
           "id": "lindquist_wheeler_lattice",
           "kind": "family",
           "text": "A whole universe of such holes. Put $N$ of them on a three sphere in place of flat space and the same construction gives one moment of Lindquist and Wheeler's lattice exactly [wheeler1983, clifton2012]."
+        },
+        {
+          "id": "rp3_geon",
+          "kind": "programme",
+          "text": "The one hole of this data with its two sheets made one through the opposite points of the throat, which Misner and Wheeler wrote down in 1957. It grows into a black hole with a single exterior [misner1957, friedman1993]."
         }
       ],
       "references": [
@@ -25915,7 +25931,8 @@
         "wheeler1955",
         "marolf2009",
         "wheeler1983",
-        "clifton2012"
+        "clifton2012",
+        "friedman1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_brill_lindquist.json",
@@ -33820,6 +33837,272 @@
       ]
     },
     {
+      "id": "rp3_geon",
+      "name": "RP³ Geon",
+      "short_name": "RP³ Geon",
+      "description": "Schwarzschild's black hole with its second exterior folded onto the first: the Kruskal events $(T, X, \\theta, \\phi)$ and $(T, -X, \\pi - \\theta, \\phi + \\pi)$ are one event. Outside the horizon it is Schwarzschild's spacetime, and behind it the black hole and the white hole are each half of Kruskal's. Space at the moment of time symmetry is real projective space with a point removed, and the spacetime is orientable in time and in space.",
+      "tags": [
+        "black hole",
+        "white hole",
+        "geon",
+        "topological geon",
+        "topology",
+        "real projective space",
+        "antipodal identification",
+        "topological censorship",
+        "single exterior",
+        "Kruskal extension",
+        "maximal extension",
+        "wormhole",
+        "throat",
+        "Einstein-Rosen bridge",
+        "time symmetric",
+        "initial data",
+        "geometrodynamics",
+        "globally hyperbolic",
+        "Hawking radiation",
+        "Hawking temperature",
+        "black hole entropy",
+        "black hole thermodynamics",
+        "horizon",
+        "event horizon",
+        "curvature singularity",
+        "causal structure",
+        "mass",
+        "asymptotically flat",
+        "isotropic coordinates",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "vacuum",
+        "static",
+        "stationary",
+        "spherically symmetric"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and we keep factors of $c$ explicit. An event is a pair of points of Kruskal's manifold, $(T, X, \\theta, \\phi)$ and $(T, -X, \\pi - \\theta, \\phi + \\pi)$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "locally_same",
+          "text": "The geon's one exterior is Schwarzschild's, metric and all, and Kruskal's full extension of it covers the geon twice. Behind the horizon the geon has a fold where Kruskal's spacetime has a second exterior [friedman1993, louko1998]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "locally_same",
+          "text": "At the moment $t = 0$ the geon is Einstein and Rosen's bridge with its two sheets laid on top of each other and the opposite points of the bridge joined, as Misner and Wheeler built it [misner1957]."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "family",
+          "text": "The same antipodal fold made on de Sitter space, where it reverses time. Made on Kruskal's spacetime with time reversed it is Gibbons's elliptic interpretation of the black hole, and the geon is the fold that keeps time's direction [gibbons1986elliptic, louko1998]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "programme",
+          "text": "Wormhole data from Misner and Wheeler's programme of 1957. Its one hole in isotropic coordinates is the geon's moment $t = 0$ before the fold [misner1957]."
+        }
+      ],
+      "references": [
+        "kruskal1960",
+        "giulini2018",
+        "einstein1935",
+        "misner1957",
+        "louko1998",
+        "friedman1993",
+        "wheeler1955",
+        "sorkin1986",
+        "louko2010",
+        "gibbons1986elliptic",
+        "gannon1975",
+        "louko2005"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rp3_geon.json",
+      "charts": [
+        {
+          "id": "kruskal",
+          "name": "Kruskal",
+          "coordinates": [
+            "T",
+            "X",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "X \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "T^2 - X^2 < 1 \\;\\text{(where } r > 0\\text{)}",
+            "X = |T| \\;\\text{(the horizons)}",
+            "(T, 0, \\theta, \\phi) \\sim (T, 0, \\pi - \\theta, \\phi + \\pi) \\;\\text{(the antipodal identification)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, with $M$ the mass measured at infinity; the horizons are $X = |T|$ and the singularities $T^2 - X^2 = 1$"
+            },
+            {
+              "symbol": "r = r_s\\left(1 + \\mathrm{W}\\left(e^{-1}\\left(X^2 - T^2\\right)\\right)\\right)",
+              "description": "Areal radius, a length, the solution of $\\left(r/r_s - 1\\right)e^{r/r_s} = X^2 - T^2$, with $\\mathrm{W}$ the principal branch of Lambert's function, $\\mathrm{W}(x)\\,e^{\\mathrm{W}(x)} = x$; its derivatives are $\\partial_T r = -2r_s^2\\,T e^{-r/r_s}/r$ and $\\partial_X r = 2r_s^2\\,X e^{-r/r_s}/r$"
+            }
+          ],
+          "convention": "We use Kruskal's coordinates $(T, X, \\theta, \\phi)$, with $T$ and $X$ numbers, and outside $r_s$ they are $T = \\sqrt{r/r_s - 1}\\,e^{r/2r_s}\\sinh(ct/2r_s)$ and $X = \\sqrt{r/r_s - 1}\\,e^{r/2r_s}\\cosh(ct/2r_s)$ for Schwarzschild's $t$ and $r$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{4r_s^3}{r}e^{-r/r_s}\\left(-dT^2 + dX^2\\right) + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{4r_s^3}{r}e^{-r/r_s}"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "\\dfrac{4r_s^3}{r}e^{-r/r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "schwarzschild",
+          "name": "Schwarzschild Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, with $M$ the mass measured at infinity; both horizons lie at $r = r_s$, the future one at $t \\to \\infty$ and the past one at $t \\to -\\infty$"
+            }
+          ],
+          "convention": "We use Schwarzschild's coordinates $(t, r, \\theta, \\phi)$ on the one exterior, with $t$ carrying dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (r_s/4, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = r_s/4 \\;\\text{(the horizons, and the throat of the moment } t = 0\\text{)}",
+            "(0, r_s/4, \\theta, \\phi) \\sim (0, r_s/4, \\pi - \\theta, \\phi + \\pi) \\;\\text{(the antipodal identification)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, with $M$ the mass measured at infinity; the throat of the moment $t = 0$ is the sphere $\\rho = r_s/4$, whose areal radius is $r_s$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\rho$ the isotropic radius, a length, so the areal radius is $\\rho(1 + r_s/4\\rho)^2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{4\\rho - r_s}{4\\rho + r_s}\\right)^2c^2dt^2 + \\left(1 + \\dfrac{r_s}{4\\rho}\\right)^4\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{4\\rho - r_s}{4\\rho + r_s}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\left(1 + \\dfrac{r_s}{4\\rho}\\right)^4"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(4\\rho + r_s\\right)^4}{256\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(4\\rho + r_s\\right)^4\\sin^2\\theta}{256\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{\\rho^6}\\left(1 + \\dfrac{r_s}{4\\rho}\\right)^{-12}"
+        }
+      ]
+    },
+    {
       "id": "schrodinger_spacetime",
       "name": "Schrödinger Spacetime",
       "short_name": "Schrödinger Spacetime",
@@ -34710,6 +34993,11 @@
           "id": "born_infeld_charge",
           "kind": "generalisation",
           "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
+        },
+        {
+          "id": "rp3_geon",
+          "kind": "locally_same",
+          "text": "Schwarzschild's black hole with its second exterior folded onto the first, opposite points of each sphere made one. Outside the horizon nothing changes, and no light sent in from far away comes back out through the fold [friedman1993]."
         }
       ],
       "references": [
@@ -34811,7 +35099,8 @@
         "belinskii1979",
         "deruelle2011",
         "hoffmann1935",
-        "gibbonsrasheed1995"
+        "gibbonsrasheed1995",
+        "friedman1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

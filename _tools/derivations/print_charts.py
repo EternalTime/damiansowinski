@@ -11,8 +11,8 @@ som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, 
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
-wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov and
-born_infeld_charge, and Godel's cylindrical chart.
+wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
+born_infeld_charge and rp3_geon, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -19553,6 +19553,245 @@ def white_hole_check(chart, system):
 
 
 CHARTS["white_hole"] = [lambda s=s: white_hole(s) for s in WHITE_HOLE_CHARTS]
+
+
+# -- The RP3 geon ----------------------------------------------------------------------------
+
+RP3_GEON_CHARTS = ("kruskal", "schwarzschild", "isotropic")
+RP3_GEON_RADIUS = "r = r_s\\left(1 + \\mathrm{W}\\left(e^{-1}\\left(X^2 - T^2\\right)\\right)\\right)"
+RP3_GEON_GLUE = " \\;\\text{(the antipodal identification)}"
+# The involution J of Kruskal's manifold whose quotient is the geon, Louko and Marolf's (4.12a), as
+# the substitution of the Kruskal chart's coordinates in order: the reflection X -> -X with the
+# antipodal map of the sphere of theta and phi.
+RP3_GEON_INVOLUTION = lambda T, X, theta, phi: (T, -X, sp.pi - theta, phi + sp.pi)  # noqa: E731
+
+
+def rp3_geon(system):
+    """The RP3 geon, Kruskal's manifold with (T, X, theta, phi) and (T, -X, pi - theta, phi + pi) one
+    event: Misner and Wheeler, Ann. Phys. 2, 525 (1957), pages 593 and 594, for its moment of time
+    symmetry, Friedman, Schleich and Witt, Phys. Rev. Lett. 71, 1486 (1993), for the spacetime and
+    its name, and Louko and Marolf, Phys. Rev. D 58, 024007 (1998), section IV, whose charts these
+    are. Three charts: Kruskal's T and X, their (4.5) and (4.6), on the half X >= 0, whose edge
+    X = 0 is glued to itself by the antipodal map of the sphere, their (4.12a); Schwarzschild's
+    chart of the one exterior, their (4.9); and the isotropic chart Misner and Wheeler build the
+    moment of time symmetry in, their (234), (237) and (245) to (248), on the one sheet
+    rho > r_s/4. rp3_geon_check holds each to a vacuum and to the published chart of schwarzschild
+    carried along its map, the involution to being an isometry of Kruskal's chart with no fixed
+    point that keeps the directions of time and of space, and Misner and Wheeler's inversion to
+    being that involution on the moment T = 0. rp3_geon.md records each chart's source."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    time = "t \\in (-\\infty, \\infty)"
+
+    def check(chart):
+        return rp3_geon_check(chart, system)
+    if system == "kruskal":
+        coords, parameters = ["T", "X", "\\theta", "\\phi"], ["r_s", RP3_GEON_RADIUS]
+        factor = "\\dfrac{4r_s^3}{r}e^{-r/r_s}"
+        line = "ds^2 = " + factor + "\\left(-dT^2 + dX^2\\right) + r^2" + sphere
+        probe = vm.Reader(coords, parameters, (), held=("r",))
+        up = "\\dfrac{r}{4r_s^3}e^{r/r_s}"
+        return {
+            "metric_id": "rp3_geon",
+            "system": {"id": system, "name": "Kruskal", "coords": coords,
+                       "domains": ["T \\in (-\\infty, \\infty)", "X \\in [0, \\infty)"] + angles
+                       + ["T^2 - X^2 < 1 \\;\\text{(where } r > 0\\text{)}",
+                          "X = |T| \\;\\text{(the horizons)}",
+                          "(T, 0, \\theta, \\phi) \\sim (T, 0, \\pi - \\theta, \\phi + \\pi)" + RP3_GEON_GLUE],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [probe.parameters["r"], probe.parameters["r_s"]], "flip": False},
+            "reduce": rp3_geon_kruskal(probe),
+            "pretty": lambda value: value,
+            "components": {"metric_components": {("T", "T"): "-" + factor, ("X", "X"): factor},
+                           "inverse_metric_components": {("T", "T"): "-" + up, ("X", "X"): up}},
+            "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+            "check": check,
+        }
+    parameters = ["r_s"]
+    if system == "schwarzschild":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        f, bare = "\\left(1 - \\dfrac{r_s}{r}\\right)", "1 - \\dfrac{r_s}{r}"
+
+        def line(c2):
+            return "ds^2 = -" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "rp3_geon",
+            "system": {"id": system, "name": "Schwarzschild Exterior", "coords": coords,
+                       "domains": [time, "r \\in (r_s, \\infty)"] + angles + ["r = r_s \\;\\text{(the horizons)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"rising": [probe.parameters["r_s"]], "lead": [probe.symbol["r"], probe.parameters["r_s"]],
+                        "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                           "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}},
+            "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+            "check": check,
+        }
+    coords = ["t", "\\rho", "\\theta", "\\phi"]
+    lapse = "\\left(\\dfrac{4\\rho - r_s}{4\\rho + r_s}\\right)^2"
+    conformal = "\\left(1 + \\dfrac{r_s}{4\\rho}\\right)^4"
+
+    def line(c2):
+        return ("ds^2 = -" + lapse + c2 + "dt^2 + " + conformal + "\\left(d\\rho^2 + \\rho^2" + sphere + "\\right)")
+    probe = vm.Reader(coords, parameters, ())
+    return {
+        "metric_id": "rp3_geon",
+        "system": {"id": system, "name": "Isotropic", "coords": coords,
+                   "domains": [time, "\\rho \\in (r_s/4, \\infty)"] + angles
+                   + ["\\rho = r_s/4 \\;\\text{(the horizons, and the throat of the moment } t = 0\\text{)}",
+                      "(0, r_s/4, \\theta, \\phi) \\sim (0, r_s/4, \\pi - \\theta, \\phi + \\pi)" + RP3_GEON_GLUE],
+                   "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": [probe.symbol["\\rho"], probe.parameters["r_s"]], "flip": False},
+        "components": {"metric_components": {("t", "t"): "-" + lapse, ("\\rho", "\\rho"): conformal}},
+        "kretschmann": "\\dfrac{12r_s^2}{\\rho^6}\\left(1 + \\dfrac{r_s}{4\\rho}\\right)^{-12}",
+        "check": check,
+    }
+
+
+def rp3_geon_kruskal(reader):
+    """A `reduce` for Kruskal's chart of T and X, whose areal radius is held as a function r(T, X).
+    Its definition, (r/r_s - 1) e^(r/r_s) = X^2 - T^2, makes
+
+        d_T r = -2 r_s^2 T e^(-r/r_s)/r,    d_X r = 2 r_s^2 X e^(-r/r_s)/r,
+
+    by which every derivative of r is written. What is left holds r, e^(-r/r_s), T and X, with the
+    definition a relation among them, so the exponential is written (r - r_s)/(r_s (X^2 - T^2)),
+    after which r, T and X are free and a value that vanishes is exactly zero. The value is then
+    written back with the exponential: in the null combinations U = T - X and V = T + X every
+    product UV is (r_s - r) e^(r/r_s)/r_s, as white_hole_kruskal writes it, and the result is put
+    back in T and X. No value is then 0/0 on a horizon."""
+    T, X = reader.symbol["T"], reader.symbol["X"]
+    r, rs = reader.parameters["r"], reader.parameters["r_s"]
+    rates = {T: -2 * rs ** 2 * T * sp.exp(-r / rs) / r, X: 2 * rs ** 2 * X * sp.exp(-r / rs) / r}
+    rho, e = sp.Symbol("_rho", positive=True), sp.Symbol("_e", positive=True)
+    U, V = sp.symbols("_U _V")
+
+    def paired(poly):
+        """A polynomial in T and X with every product (T - X)(T + X) written by the exponential."""
+        out = sp.Integer(0)
+        for (a, b), coefficient in sp.Poly(sp.expand(poly.subs({T: (U + V) / 2, X: (V - U) / 2}, simultaneous=True)),
+                                           U, V).terms():
+            k = min(a, b)
+            out += coefficient * ((rs - rho) / (rs * e)) ** k * (T - X) ** (a - k) * (T + X) ** (b - k)
+        return out
+
+    def reduce(value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(reduce)
+        for _ in range(8):
+            derivatives = value.atoms(sp.Derivative)
+            if not derivatives:
+                break
+            written = {}
+            for d in derivatives:
+                (variable, order), *rest = d.variable_count
+                written[d] = sp.Derivative(rates[variable], (variable, order - 1), *rest).doit()
+            value = value.xreplace(written)
+        else:
+            raise AssertionError("rp3_geon: the derivatives of the areal radius do not settle")
+        # Powers of the exponential, of either sign, as powers of one symbol.
+        value = value.subs(r, rho)
+        value = value.replace(lambda x: isinstance(x, sp.exp), lambda x: e ** sp.cancel(-x.args[0] * rs / rho))
+        if any(not p.exp.is_Integer for p in value.atoms(sp.Pow) if p.base == e) or value.has(sp.exp):
+            raise AssertionError(f"rp3_geon: an exponential other than a power of e^(-r/r_s) in {value}")
+        free = sp.cancel(sp.together(value.subs(e, (rho - rs) / (rs * (X ** 2 - T ** 2)))))
+        if free == 0:
+            return sp.Integer(0)
+        num, den = sp.fraction(free)
+        forms = [sp.factor(free), sp.factor(sp.cancel(paired(num) / paired(den)))]
+        # A form that divides by T or X is 0/0 on a horizon, so one that does not is taken first.
+        best = min(forms, key=lambda form: (sp.fraction(form)[1].has(T, X), sp.count_ops(form)))
+        return best.subs(e, sp.exp(-r / rs)).subs(rho, r)
+
+    return reduce
+
+
+def rp3_geon_published(chart, image, jacobian):
+    """The published spherical chart of schwarzschild carried along areal radius = `image`, with
+    `jacobian` the derivatives of (x^0, r) along the chart's first two coordinates."""
+    published = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))
+                     ["coordinates"] if c["id"] == "spherical")
+    there = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    names = published["coords"]
+    matrix = sp.Matrix(4, 4, lambda i, j: there(values.get((names[i], names[j]), "0")))
+    swap = {there.symbol[n]: s for n, s in zip(names[2:], chart.symbols[2:])}
+    swap[there.parameters["r_s"]] = chart.reader.parameters["r_s"]
+    matrix = matrix.subs(swap).subs(there.symbol["r"], image)
+    J = sp.diag(jacobian, sp.eye(2))
+    return J.T * matrix * J
+
+
+def rp3_geon_check(chart, system):
+    """Each chart is a vacuum and the published chart of schwarzschild carried along its map: r
+    itself, the areal radius rho (1 + r_s/4 rho)^2 of the isotropic radius, and Louko and Marolf's
+    (4.8), T = sqrt(r/r_s - 1) e^(r/2r_s) sinh(ct/2r_s), X the same with cosh. The involution is an
+    isometry of Kruskal's chart: the metric holds X only through X^2, r and dX^2, and the antipodal
+    map is an isometry of the sphere. It has no fixed point, since no point of the sphere is its
+    own antipode; its Jacobian diag(1, -1, -1, 1) has determinant +1 and leaves d/dT alone, so the
+    quotient is orientable in space and in time. On the moment t = 0 the signed
+    X = (4 rho - r_s) e^(r/2r_s)/(4 sqrt(r_s rho)) changes sign under Misner and Wheeler's inversion
+    rho -> r_s^2/16 rho, which leaves the areal radius and the metric of the moment as they are."""
+    geo, g = chart.geo, chart.geo.g
+    rs = chart.reader.parameters["r_s"]
+    ricci = geo.ricci_ll()
+    if system == "kruskal":
+        if any(vm.norm(chart.reader.surface(ricci[a][b])) != 0 for a in range(4) for b in range(4)):
+            raise AssertionError("rp3_geon: Kruskal's chart is not a vacuum")
+        t, r = sp.Symbol("t", real=True), sp.Symbol("r", positive=True)
+        root = sp.sqrt(r / rs - 1) * sp.exp(r / (2 * rs))
+        T, X = root * sp.sinh(t / (2 * rs)), root * sp.cosh(t / (2 * rs))
+        if sp.simplify((X ** 2 - T ** 2 - (r / rs - 1) * sp.exp(r / rs)).rewrite(sp.exp)) != 0:
+            raise AssertionError("rp3_geon: the map from Schwarzschild's chart misses (r/r_s - 1) e^(r/r_s) = X^2 - T^2")
+        J = sp.Matrix([[sp.diff(T, t), sp.diff(T, r)], [sp.diff(X, t), sp.diff(X, r)]])
+        factor = 4 * rs ** 3 * sp.exp(-r / rs) / r
+        pulled = (J.T * sp.diag(-factor, factor) * J).applyfunc(lambda x: sp.simplify(x.rewrite(sp.exp)))
+        if any(sp.simplify(x) != 0 for x in sp.flatten(pulled - sp.diag(-(1 - rs / r), 1 / (1 - rs / r)))):
+            raise AssertionError("rp3_geon: Kruskal's chart is not Schwarzschild's pulled back")
+        # The involution: the published line element is unchanged by it, and it moves every point.
+        symbols = chart.symbols
+        image = RP3_GEON_INVOLUTION(*symbols)
+        radius = chart.reader.parameters["r"]
+        # r is a function of X^2 - T^2 alone, so it is its own image.
+        moved = g.subs(dict(zip(symbols, image)), simultaneous=True).subs(
+            radius.subs(dict(zip(symbols, image)), simultaneous=True), radius)
+        jac = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], symbols[j]))
+        if any(sp.simplify(x) != 0 for x in sp.flatten(jac.T * moved * jac - g)):
+            raise AssertionError("rp3_geon: the involution is not an isometry of Kruskal's chart")
+        if jac.det() != 1 or jac[0, 0] != 1:
+            raise AssertionError("rp3_geon: the involution does not keep the directions of space and of time")
+        theta, phi = symbols[2], symbols[3]
+        n = sp.Matrix([sp.sin(theta) * sp.cos(phi), sp.sin(theta) * sp.sin(phi), sp.cos(theta)])
+        if any(sp.simplify(x) != 0 for x in n + n.subs({theta: image[2], phi: image[3]}, simultaneous=True)):
+            raise AssertionError("rp3_geon: the involution's map of the sphere is not the antipodal map")
+        return
+    if any(vm.norm(vm._at(ricci, index)) != 0 for index in vm._indices(4, 2)):
+        raise AssertionError(f"rp3_geon: the {system} chart is not a vacuum")
+    x = chart.symbols[1]
+    areal = x if system == "schwarzschild" else x * (1 + rs / (4 * x)) ** 2
+    pulled = rp3_geon_published(chart, areal, sp.diag(1, sp.diff(areal, x)))
+    if any(sp.simplify(pulled[i, j] - g[i, j]) != 0 for i in range(4) for j in range(4)):
+        raise AssertionError(f"rp3_geon: the {system} chart is not Schwarzschild's published metric carried along its map")
+    if system == "isotropic":
+        inverted = rs ** 2 / (16 * x)
+        if sp.simplify(areal.subs(x, inverted) - areal) != 0:
+            raise AssertionError("rp3_geon: Misner and Wheeler's inversion changes the areal radius")
+        J = sp.diag(1, sp.diff(inverted, x), 1, 1)
+        if any(sp.simplify(v) != 0 for v in sp.flatten(J.T * g.subs(x, inverted) * J - g)):
+            raise AssertionError("rp3_geon: Misner and Wheeler's inversion is not an isometry of the isotropic chart")
+        signed = (4 * x - rs) * sp.exp(areal / (2 * rs)) / (4 * sp.sqrt(rs * x))
+        if sp.simplify(signed ** 2 - (areal / rs - 1) * sp.exp(areal / rs)) != 0:
+            raise AssertionError("rp3_geon: the moment t = 0 is not X^2 = (r/r_s - 1) e^(r/r_s) in the isotropic radius")
+        positive = {x: sp.Symbol("x_", positive=True), rs: sp.Symbol("rs_", positive=True)}
+        if sp.simplify((signed + signed.subs(x, inverted)).subs(positive)) != 0:
+            raise AssertionError("rp3_geon: Misner and Wheeler's inversion is not X -> -X on the moment t = 0")
+
+
+CHARTS["rp3_geon"] = [lambda s=s: rp3_geon(s) for s in RP3_GEON_CHARTS]
 
 
 # -- The lattice universe of Lindquist and Wheeler ------------------------------------------
