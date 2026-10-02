@@ -51,6 +51,11 @@
       "id": "minkowski",
       "kind": "special_case",
       "text": "The body taken away. At $m = 0$ every number in front of every term has nothing left to multiply, and the metric is flat."
+    },
+    {
+      "id": "exponential_metric",
+      "kind": "family",
+      "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$ and the post-Newtonian tests do not separate the two [boonserm2018]."
     }
   ],
   "references": [
@@ -71,7 +76,8 @@
     "bertotti2003",
     "williams2004",
     "schiff1960",
-    "everitt2011"
+    "everitt2011",
+    "boonserm2018"
   ],
   "coordinates": [
     {

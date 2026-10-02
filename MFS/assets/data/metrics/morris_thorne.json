@@ -72,6 +72,11 @@
       "id": "alcubierre",
       "kind": "family",
       "text": "A bubble that carries a ship faster than light, with no wormhole. Miguel Alcubierre wrote in 1994 that it needs exotic matter \"just as it happens with wormholes\" [alcubierre1994]."
+    },
+    {
+      "id": "exponential_metric",
+      "kind": "special_case",
+      "text": "A member written down in 1954 and recognised as a traversable wormhole in 2018, with $g_{tt} = -e^{-2m/r}$ in the isotropic radius $r$ and a throat of areal radius $e\\,m$ [papapetrou1954, boonserm2018]."
     }
   ],
   "references": [
@@ -93,7 +98,9 @@
     "nandi2022",
     "krasnikov2003",
     "simpson2019",
-    "alcubierre1994"
+    "alcubierre1994",
+    "papapetrou1954",
+    "boonserm2018"
   ],
   "coordinates": [
     {

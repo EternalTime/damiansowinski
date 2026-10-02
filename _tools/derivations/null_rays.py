@@ -1200,6 +1200,7 @@ ERB_CHARGED = {"r_s": 1, "r_q": "sqrt(3)/2"}
 # figures, in units of b; the harmonic chart in units of k = b/2, where m = gamma k.
 FJNW = {"b": 1, "gamma": "1/2"}
 FJNW_HARMONIC = {"m": "1/2", "k": 1}
+EXPONENTIAL = {"m": 1}          # the exponential metric of Papapetrou and Yilmaz, in units of m = GM/c^2
 # Roberts's collapsing scalar field for its three outcomes: p = 9/10, where the field disperses, the
 # threshold p = 1, and p = 2, where it makes a black hole. Nothing in it sets a scale, so lengths
 # are in any unit ell.
@@ -2388,6 +2389,20 @@ DIAGRAMS = [
     Diagram("fisher_jnw", "harmonic", "radial", "$t$ and $u$", ("t", "u"), (0, 4, -4, 4),
             "$ku$", "$ct/k$", FJNW_HARMONIC, EQUATOR, families=("outgoing", "ingoing"), areal=True,
             areal_contours=(0.5, 1.0, 2.0, 4.0)),
+    # The exponential metric of Papapetrou and Yilmaz at m = 1, on its plane of the time and the radial
+    # coordinate in each chart: the isotropic radius from the singular horizon r = 0 through the throat
+    # r = m, the line through r = 0 in the Cartesian chart, the areal radius from the throat R = e m
+    # out, and Bronnikov's harmonic u = 1/r from spatial infinity u = 0 through the throat u = 1/m.
+    Diagram("exponential_metric", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", EXPONENTIAL, EQUATOR, areal=True, areal_contours=(3.0, 4.0)),
+    Diagram("exponential_metric", "cartesian", "axis", "$t$ and $x$", ("t", "x"), (-4, 4, -4, 4),
+            "$x/m$", "$ct/m$", EXPONENTIAL, {"y": "0", "z": "0"}, families=("leftward", "rightward"),
+            lines=(("throat", "r", "-1", None), ("throat", "r", "1", None))),
+    Diagram("exponential_metric", "areal", "radial", "$t$ and $R$", ("t", "R"), (math.e, math.e + 4, -2, 2),
+            "$R/m$", "$ct/m$", EXPONENTIAL, EQUATOR, lines=(("throat", "r", repr(math.e), None),)),
+    Diagram("exponential_metric", "harmonic", "radial", "$t$ and $u$", ("t", "u"), (0, 4, -2, 2),
+            "$mu$", "$ct/m$", EXPONENTIAL, EQUATOR, families=("outgoing", "ingoing"), areal=True,
+            areal_contours=(3.0, 4.0)),
     # The slowly rotating star from its surface out. On the axis the dragging term vanishes and the
     # plane of t and r holds its rays; on the equator the rays of no angular momentum are those of
     # the plane with phi divided out. The weak field chart holds where m/r is small, and there
@@ -5600,6 +5615,48 @@ CAPTIONS = {
         "$e^{2(k - m)u}/4k^2$ at large $u$. A ray moving toward larger $u$ runs through all of it in a finite "
         "time and reaches the singularity $1.6\\,k/c$ after passing $ku = 1$. The faint vertical lines are "
         "the spheres of areal radius $4k$, $2k$, $k$, and $k/2$, at $ku = 0.28$, $0.64$, $1.5$, and $2.8$.",
+    ],
+    ("exponential_metric", "isotropic", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $m = 1$), each point in the plane a 2-sphere of area "
+        "$4\\pi r^2e^{2m/r}$. The metric on it is $e^{-2m/r}\\left(-c^2dt^2 + dr_*^2\\right)$ with "
+        "$r_* = r\\,e^{2m/r} - 2m\\,\\mathrm{Ei}(2m/r)$, so $ct \\mp r_*$ is constant along a ray, and no Christoffel "
+        "symbol turns the rays out of the plane, so they are null geodesics.",
+        "The cones stay open at the throat $r = m$, where $dr/d(ct) = \\pm e^{-2}$, and a ray from $r = 2m$ crosses it "
+        "after $4.2\\,m/c$, so there is no horizon. Beyond the throat the spheres grow again: the faint vertical lines "
+        "are the spheres of areal radius $3m$ and $4m$, one of each on either side. The cones close as $e^{-2m/r}$ "
+        "toward $r = 0$, which a ray reaches only as $t \\to \\pm\\infty$, though after a finite affine distance, since "
+        "$r$ is an affine parameter along it. The Kretschmann scalar goes to zero there, while "
+        "$R_{rr} = -2m^2/r^4$ along the ray grows without bound.",
+    ],
+    ("exponential_metric", "cartesian", "axis"): [
+        "The plane of $t$ and $x$ ($y = 0$, $z = 0$, $m = 1$), a line through $r = 0$ on which the isotropic radius is "
+        "$r = |x|$. The metric on it is $-e^{-2m/|x|}c^2dt^2 + e^{2m/|x|}dx^2$, the same on both halves, and no "
+        "Christoffel symbol turns the rays out of the plane, so they are null geodesics.",
+        "The halves $x > 0$ and $x < 0$ lie in one asymptotically flat region, on opposite sides of the wormhole's "
+        "mouth, and each has the throat at $|x| = m$. A ray moving toward $x = 0$ crosses the throat and the cones "
+        "then close on it as $e^{-2m/|x|}$, so no ray drawn passes from one half to the other. The far end of the "
+        "wormhole, $r = 0$, is the single point $x = 0$ of this line, and the spheres around it grow without bound "
+        "as they near it.",
+    ],
+    ("exponential_metric", "areal", "radial"): [
+        "The plane of $t$ and the areal radius $R$ ($\\theta = \\pi/2$, $\\phi = 0$, $m = 1$) on the near side of the "
+        "throat, each point in the plane a 2-sphere of area $4\\pi R^2$. The edges of the cones are "
+        "$dR/d(ct) = \\pm(1 - m/r)e^{-m/r}$, with $r$ the isotropic radius of the sphere $R$, and $ct \\mp r_*$ is "
+        "constant along a ray, with $r_* = r\\,e^{2m/r} - 2m\\,\\mathrm{Ei}(2m/r)$.",
+        "The cones close on the throat $R = e\\,m$, the left edge, where $g_{RR}$ diverges while $g_{tt} = -e^{-2}$ "
+        "stays finite. A ray reaches the throat after a finite time, $4.2\\,m/c$ from $R = 3.30\\,m$, and goes on "
+        "through it. The areal radius has its least value there and turns back, so it covers one side at a time, "
+        "and the far side takes the branch $\\mathrm{W}_{-1}$ of Lambert's function.",
+    ],
+    ("exponential_metric", "harmonic", "radial"): [
+        "The plane of $t$ and $u$ ($\\theta = \\pi/2$, $\\phi = 0$, $m = 1$), with $u = 1/r$ for the isotropic radius "
+        "$r$. Spatial infinity is $u = 0$, the throat is $u = 1/m$, and the singular horizon is $u \\to \\infty$. The "
+        "edges of the cones are $du/d(ct) = \\pm u^2e^{-2mu}$, and $ct \\pm r_*$ is constant along a ray, with "
+        "$r_* = r\\,e^{2m/r} - 2m\\,\\mathrm{Ei}(2m/r)$.",
+        "The cones close as $u^2$ toward $u = 0$ and as $e^{-2mu}$ at large $u$, and are widest on the throat, where "
+        "$du/d(ct) = \\pm e^{-2}/m^2$. A ray reaches neither end in a finite time $t$. The scalar field of negative "
+        "energy that sources the metric is proportional to $u$. The faint vertical lines are the spheres of areal "
+        "radius $3m$ and $4m$, one of each on either side of the throat.",
     ],
     ("hartle_thorne", "hartle_thorne", "axis"): [
         "The plane of $t$ and $r$ on the axis of rotation ($\\theta = 0$) from the surface of the star out "
@@ -10861,6 +10918,14 @@ def _curzon_axis(z):
     return z * np.exp(2 / z) - 2 * scipy_expi(2 / z)
 
 
+def _exponential_isotropic(R):
+    """The isotropic radius of the sphere of areal radius R on the near side of the exponential
+    metric's throat at m = 1, r = -1/W(-1/R) on the principal branch, where r e^(1/r) = R."""
+    from scipy.special import lambertw
+    R = np.asarray(R, float)
+    return -1 / lambertw(-1 / np.maximum(R, math.e)).real
+
+
 def _double_kerr_star(plane):
     """The tortoise coordinate of the pair on its axis or in its plane z = 0, the integral of
     e^gamma/f along the plane from a point of the same stretch: z = -6, 0 or 6 on the axis, each
@@ -11800,6 +11865,20 @@ CLOSED_FORMS = {
     ("fisher_jnw", "harmonic", "radial"):
         (lambda t, u: t - 2 * _fjnw_rstar(1 / (1 - np.exp(-2 * u))), lambda t, u: t + 2 * _fjnw_rstar(1 / (1 - np.exp(-2 * u))),
          lambda t, u: u > 0.05),
+    # The exponential metric at m = 1: on every plane the metric is e^(-2/r)(-dt^2 + dr_*^2) with the
+    # tortoise coordinate of the Curzon-Chazy particle's axis, r_* = r e^(2/r) - 2 Ei(2/r), at the
+    # isotropic radius |x| on the Cartesian line, -1/W(-1/R) in the areal radius, and 1/u.
+    ("exponential_metric", "isotropic", "radial"):
+        (lambda t, r: t + _curzon_axis(r), lambda t, r: t - _curzon_axis(r), lambda t, r: r > 0.35),
+    ("exponential_metric", "cartesian", "axis"):
+        (lambda t, x: t + np.sign(x) * _curzon_axis(np.abs(x)), lambda t, x: t - np.sign(x) * _curzon_axis(np.abs(x)),
+         lambda t, x: np.abs(x) > 0.35),
+    ("exponential_metric", "areal", "radial"):
+        (lambda t, R: t + _curzon_axis(_exponential_isotropic(R)), lambda t, R: t - _curzon_axis(_exponential_isotropic(R)),
+         lambda t, R: R > math.e + 0.01),
+    ("exponential_metric", "harmonic", "radial"):
+        (lambda t, u: t - _curzon_axis(1 / u), lambda t, u: t + _curzon_axis(1 / u),
+         lambda t, u: (u > 0.05) & (u < 1 / 0.35)),
     # Witten's black hole at lambda = m = 1: the tortoise coordinate is ln sinh r in his own chart,
     # ln|e^(2x) - 1|/2 in the charts of x and ln|w - 1|/2 in the dilaton chart, and it is sigma itself.
     ("witten_black_hole", "witten", "radial"):

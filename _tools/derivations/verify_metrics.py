@@ -333,6 +333,21 @@ DIMENSIONS = {
     ("fisher_jnw", "harmonic"): {
         "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "m": "L", "k": "L",
     },
+    # The exponential metric of Papapetrou and Yilmaz: m = GM/c^2 is a length, the Cartesian chart
+    # names its isotropic radius, the areal chart holds the isotropic radius r(R) as a length, and
+    # Bronnikov's harmonic coordinate u = 1/r is an inverse length.
+    ("exponential_metric", "isotropic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
+    },
+    ("exponential_metric", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "m": "L", "r": "L",
+    },
+    ("exponential_metric", "areal"): {
+        "t": "T", "R": "L", "\\theta": "1", "\\phi": "1", "m": "L", "r": "L",
+    },
+    ("exponential_metric", "harmonic"): {
+        "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "m": "L",
+    },
     # Roberts's collapsing scalar field: the null coordinates u and v are lengths and p a pure number.
     # Roberts's lambda, which the areal chart names, is a length, and Frolov's scaling coordinates are
     # pure numbers, counted in a length ell.
@@ -1704,6 +1719,9 @@ HELD = {
     # The areal radius of Kruskal's chart, Lambert's function of UV: held, a value is
     # written in r and e^(-r/r_s), as the line element is.
     ("white_hole", "exterior_kruskal"): ("r",),
+    # The isotropic radius of the exponential metric's areal chart, Lambert's function of m/R:
+    # held, a value is a rational function of r, R and m.
+    ("exponential_metric", "areal"): ("r",),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names

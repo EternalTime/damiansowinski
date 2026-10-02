@@ -1936,6 +1936,17 @@ FLAT = {
         "fisher_jnw", lambda m: along(0.0, *_fjnw_reach(m, lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2))),
     ("fisher_jnw", "harmonic", "radial"): lambda: one(
         "fisher_jnw", lambda m: along(0.0, *(u / 2 for u in m.reach("harmonic", "u")))),
+    # The exponential metric at m = 1: the moment t = 0 from r = m/3 on the far side of the throat to
+    # r = 6m on the near side, in the isotropic radius, on the Cartesian line through r = 0, in the
+    # areal radius R = r e^(m/r), which covers the near side from the throat R = e m out, and in u = 1/r.
+    ("exponential_metric", "isotropic", "radial"): lambda: one(
+        "exponential_metric", lambda m: along(0.0, *m.reach("isotropic", "r"))),
+    ("exponential_metric", "cartesian", "axis"): lambda: one(
+        "exponential_metric", lambda m: across(0.0, *m.reach("isotropic", "r"))),
+    ("exponential_metric", "areal", "radial"): lambda: one(
+        "exponential_metric", lambda m: along(0.0, math.e, (lambda r: r * math.exp(1 / r))(m.reach("isotropic", "r")[1]))),
+    ("exponential_metric", "harmonic", "radial"): lambda: one(
+        "exponential_metric", lambda m: along(0.0, *(1 / r for r in reversed(m.reach("isotropic", "r"))))),
     ("hartle_thorne", "hartle_thorne", "equator"): lambda: one(
         "hartle_thorne", lambda m: along(0.0, *m.reach("hartle_thorne", "r"))),
     # The post-Newtonian body: the moment t = 0 of the isotropic chart from the surface out, on the

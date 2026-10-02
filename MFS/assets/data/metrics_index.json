@@ -1030,10 +1030,42 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "083084e18f92d8bb",
+    "version": "040f2c06582c7094",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a"
+  },
+  {
+    "id": "exponential_metric",
+    "name": "Exponential Metric",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "no horizon",
+      "exotic matter",
+      "scalar field",
+      "phantom field",
+      "energy condition violation",
+      "asymptotically flat",
+      "isotropic coordinates",
+      "alternative theories of gravity",
+      "Yilmaz",
+      "Papapetrou",
+      "Lambert W function",
+      "singular horizon",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "86e4305d6c33cfef",
+    "diagrams": "650c940a33d88a1c",
+    "conformal": "c0043e438cd296ac",
+    "embedding": "d1d99538ce0bd31c"
   },
   {
     "id": "fisher_jnw",
@@ -1071,7 +1103,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c0bfc85f3b7fd524",
+    "version": "e06d389dbe0ceafd",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46"
@@ -2428,7 +2460,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "aa501cccf0152c92",
+    "version": "7fa9c4f17bd88e4e",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
@@ -2697,7 +2729,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f17949989678d037",
+    "version": "c7f53237c2faee33",
     "diagrams": "197eec2d67db791c",
     "conformal": "6588b3545cfd1a4f",
     "embedding": "7438e54f373b2e03"
@@ -3102,7 +3134,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c737cacc1a87a58d",
+    "version": "d25bb61cb3ed2be8",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

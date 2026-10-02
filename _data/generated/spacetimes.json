@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 128,
+  "count": 129,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -10400,6 +10400,11 @@
           "id": "einstein_rosen_bridge",
           "kind": "family",
           "text": "Einstein and Nathan Rosen's charged bridge with no mass has the same space, $dr^2 + (r^2 + \\ell^2)d\\Omega^2$ with the charge radius for $\\ell$, held open by a Maxwell field of negative energy. Its $g_{tt}$ vanishes at the throat, which is a horizon [einstein1935]."
+        },
+        {
+          "id": "exponential_metric",
+          "kind": "family",
+          "text": "Another wormhole of the same scalar field, this one with a mass. It is the branch $k = 0$ of the anti-Fisher family, in which Ellis's wormhole is the member with no mass, and its far side ends on a singular horizon [bronnikov2011]."
         }
       ],
       "references": [
@@ -10484,6 +10489,320 @@
       ]
     },
     {
+      "id": "exponential_metric",
+      "name": "Exponential Metric of Papapetrou and Yilmaz",
+      "short_name": "Exponential Metric",
+      "description": "A static, spherically symmetric metric whose components are exponentials of the Newtonian potential, with no horizon, offered in place of Schwarzschild's and later shown to be a traversable wormhole held open by a scalar field of negative energy.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "no horizon",
+        "exotic matter",
+        "scalar field",
+        "phantom field",
+        "energy condition violation",
+        "asymptotically flat",
+        "isotropic coordinates",
+        "alternative theories of gravity",
+        "Yilmaz",
+        "Papapetrou",
+        "Lambert W function",
+        "singular horizon",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass enters as the length $m = GM/c^2$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "The metric it was offered in place of. The two agree at first order in $m/r$, and Schwarzschild's horizon at $r = m/2$ in isotropic coordinates is replaced by a throat at $r = m$ [boonserm2018]."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "The same matter, a massless scalar field of negative energy, with the mass set to zero where the exponential metric has Bronnikov's constant $k$ set to zero. Both belong to the anti-Fisher family, and both have a throat [bronnikov2011]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "limit_source",
+          "text": "The same field with its energy positive, around a naked singularity. The exponential metric is its limit $\\gamma \\to \\infty$ with $\\gamma b = 2m$ held fixed, $(1 - 2m/\\gamma r)^\\gamma \\to e^{-2m/r}$, which takes the field's energy negative [makukov2018]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "generalisation",
+          "text": "The general traversable wormhole. The exponential metric is one, with a throat of areal radius $e\\,m$ and clocks beyond the throat running slow [boonserm2018]."
+        },
+        {
+          "id": "ppn_metric",
+          "kind": "family",
+          "text": "The weak field with a number in front of every term. Expanded in $m/r$, the exponential metric has $\\beta = \\gamma = 1$, the values of general relativity, so the classical tests cannot tell it from Schwarzschild's [yilmaz1958, boonserm2018]."
+        }
+      ],
+      "references": [
+        "boonserm2018",
+        "papapetrou1954",
+        "makukov2018",
+        "yilmaz1958",
+        "misner1999",
+        "alley1995",
+        "robertson1998",
+        "bronnikov2011",
+        "morris1988"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/exponential_metric.json",
+      "charts": [
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = m \\;\\text{(the throat)}",
+            "r \\to 0 \\;\\text{(the singular horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass as a length, $m = GM/c^2 > 0$"
+            }
+          ],
+          "convention": "We use isotropic coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so a dot on $t$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{-2m/r}c^2dt^2 + e^{2m/r}\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{-2m/r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "e^{2m/r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2e^{2m/r}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2e^{2m/r}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2m^2e^{-2m/r}}{r^4}",
+          "kretschmann": "K = \\dfrac{4m^2\\left(12r^2 - 16mr + 7m^2\\right)e^{-4m/r}}{r^8}"
+        },
+        {
+          "id": "cartesian",
+          "name": "Cartesian",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "r > 0 \\;\\text{(off the singular horizon)}",
+            "r = m \\;\\text{(the throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass as a length, $m = GM/c^2 > 0$"
+            },
+            {
+              "symbol": "r = \\sqrt{x^2 + y^2 + z^2}",
+              "description": "Isotropic radius, a length"
+            }
+          ],
+          "convention": "We use the Cartesian coordinates $(t, x, y, z)$ of the isotropic chart, with $t$ carrying dimensions of time and $r$ the isotropic radius, and take components in the chart $x^0 = ct$, so a dot on $t$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{-2m/r}c^2dt^2 + e^{2m/r}\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{-2m/r}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "e^{2m/r}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{2m/r}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2m/r}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2m^2e^{-2m/r}}{r^4}",
+          "kretschmann": "K = \\dfrac{4m^2\\left(12r^2 - 16mr + 7m^2\\right)e^{-4m/r}}{r^8}"
+        },
+        {
+          "id": "areal",
+          "name": "Areal (curvature coordinates)",
+          "coordinates": [
+            "t",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "R \\in (e\\,m, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "R = e\\,m \\;\\text{(the throat, } r = m\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass as a length, $m = GM/c^2 > 0$"
+            },
+            {
+              "symbol": "r = -\\dfrac{m}{\\mathrm{W}\\left(-m/R\\right)}",
+              "description": "Isotropic radius, a length, the solution of $re^{m/r} = R$ on the chart's side of the throat, with $\\mathrm{W}$ Lambert's function, $\\mathrm{W}(x)\\,e^{\\mathrm{W}(x)} = x$; its derivative is $\\partial_R r = r^2/\\left(R\\left(r - m\\right)\\right)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, R, \\theta, \\phi)$ with $R = re^{m/r}$ the areal radius, $t$ carrying dimensions of time, and $r$ the isotropic radius, a function of $R$. The chart covers one side of the throat $R = em$: $\\mathrm{W}$ is the principal branch of Lambert's function where $r > m$ and its branch $\\mathrm{W}_{-1}$ where $r < m$. We take components in the chart $x^0 = ct$, so a dot on $t$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{-2m/r}c^2dt^2 + \\dfrac{dR^2}{\\left(1 - \\dfrac{m}{r}\\right)^2} + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{-2m/r}"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\left(1 - \\dfrac{m}{r}\\right)^{-2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2m^2}{r^2\\,R^2}",
+          "kretschmann": "K = \\dfrac{4m^2\\left(12r^2 - 16mr + 7m^2\\right)}{r^4R^4}"
+        },
+        {
+          "id": "harmonic",
+          "name": "Harmonic",
+          "coordinates": [
+            "t",
+            "u",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "u \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "u \\to 0 \\;\\text{(spatial infinity)}",
+            "u = 1/m \\;\\text{(the throat)}",
+            "u \\to \\infty \\;\\text{(the singular horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass as a length, $m = GM/c^2 > 0$"
+            }
+          ],
+          "convention": "We use Bronnikov's harmonic coordinate $u = 1/r$, an inverse length, with $r$ the isotropic radius and $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so a dot on $t$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{-2m\\,u}c^2dt^2 + \\dfrac{e^{2m\\,u}}{u^2}\\left(\\dfrac{du^2}{u^2} + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{-2m\\,u}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{e^{2m\\,u}}{u^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{e^{2m\\,u}}{u^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{e^{2m\\,u}\\sin^2\\theta}{u^2}"
+            }
+          ],
+          "ricci_scalar": "R = -2m^2\\,u^4e^{-2m\\,u}",
+          "kretschmann": "K = 4m^2\\,u^6\\left(12 - 16m\\,u + 7m^2\\,u^2\\right)e^{-4m\\,u}"
+        }
+      ]
+    },
+    {
       "id": "fisher_jnw",
       "name": "Fisher-Janis-Newman-Winicour Scalar Field",
       "short_name": "Fisher-Janis-Newman-Winicour",
@@ -10548,6 +10867,11 @@
           "id": "boson_star",
           "kind": "family",
           "text": "A scalar field that holds together with no singularity. Give the field a mass and let its phase turn at a frequency $\\omega$, and gravity binds it into a star with a regular centre [liebling2023]."
+        },
+        {
+          "id": "exponential_metric",
+          "kind": "limit",
+          "text": "The limit $\\gamma \\to \\infty$ with $\\gamma b = 2m$ held fixed, where $f^\\gamma \\to e^{-2m/r}$. It takes the scalar field's energy negative, and the naked singularity opens into the throat of a wormhole [makukov2018]."
         }
       ],
       "references": [
@@ -10574,7 +10898,8 @@
         "eht2022metric",
         "chowdhury2012",
         "roberts1996",
-        "liebling2023"
+        "liebling2023",
+        "makukov2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -25406,6 +25731,11 @@
           "id": "alcubierre",
           "kind": "family",
           "text": "A bubble that carries a ship faster than light, with no wormhole. Miguel Alcubierre wrote in 1994 that it needs exotic matter \"just as it happens with wormholes\" [alcubierre1994]."
+        },
+        {
+          "id": "exponential_metric",
+          "kind": "special_case",
+          "text": "A member written down in 1954 and recognised as a traversable wormhole in 2018, with $g_{tt} = -e^{-2m/r}$ in the isotropic radius $r$ and a throat of areal radius $e\\,m$ [papapetrou1954, boonserm2018]."
         }
       ],
       "references": [
@@ -25427,7 +25757,9 @@
         "nandi2022",
         "krasnikov2003",
         "simpson2019",
-        "alcubierre1994"
+        "alcubierre1994",
+        "papapetrou1954",
+        "boonserm2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -28410,6 +28742,11 @@
           "id": "minkowski",
           "kind": "special_case",
           "text": "The body taken away. At $m = 0$ every number in front of every term has nothing left to multiply, and the metric is flat."
+        },
+        {
+          "id": "exponential_metric",
+          "kind": "family",
+          "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$ and the post-Newtonian tests do not separate the two [boonserm2018]."
         }
       ],
       "references": [
@@ -28430,7 +28767,8 @@
         "bertotti2003",
         "williams2004",
         "schiff1960",
-        "everitt2011"
+        "everitt2011",
+        "boonserm2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ppn_metric.json",
@@ -33138,6 +33476,11 @@
           "id": "belinski_zakharov",
           "kind": "family",
           "text": "Schwarzschild's black hole is two solitons on flat space with no rotation, in Belinski and Zakharov's inverse scattering method [belinskii1979]."
+        },
+        {
+          "id": "exponential_metric",
+          "kind": "family",
+          "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
         }
       ],
       "references": [
@@ -33236,7 +33579,8 @@
         "marolf2009",
         "novikov1965",
         "lindquist1957",
-        "belinskii1979"
+        "belinskii1979",
+        "boonserm2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
