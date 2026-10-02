@@ -12,8 +12,8 @@ schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
-born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon and
-kopczynski_trautman, and Godel's cylindrical chart.
+born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
+kopczynski_trautman and small_universes, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -21045,6 +21045,209 @@ def kopczynski_trautman_check(chart, system):
 
 
 CHARTS["kopczynski_trautman"] = [lambda s=s: kopczynski_trautman(s) for s in KT_CHARTS]
+
+
+# -- Ellis's small universes --------------------------------------------------------------------
+
+SMALL_CHARTS = ("torus", "torus_conformal", "hyperbolic", "horn")
+SMALL_REALS = "(-\\infty, \\infty)"
+SMALL_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+SMALL_PERIODS = ["L_1", "L_2", "L_3"]
+SMALL_CELL = [f"{x} \\in [0, {L})" for x, L in zip("xyz", SMALL_PERIODS)]
+SMALL_GROUP = ("(t, p) \\sim (t, \\gamma p) \\;\\text{(every } \\gamma \\text{ of a discrete group of isometries of "
+               "hyperbolic space that moves every point } p\\text{)}")
+SMALL_Q = sp.Symbol("SMALLQ")
+SMALL_RATE = "\\left(\\left(a'\\right)^2 - 1\\right)"
+SMALL_HYPERBOLIC = "d\\chi^2 + \\sinh^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def small_universes(system):
+    """Ellis's small universes: a Friedmann universe whose space is a quotient of flat or of
+    hyperbolic space by a discrete group of isometries with no fixed point. The local geometry is
+    Friedmann's, so each chart is his line element with the scale factor left free, and what the
+    quotient adds is in the domains: the periods L_1, L_2 and L_3 of the torus, and the group of the
+    hyperbolic forms. The torus is written in the comoving time and in the conformal time, and the
+    hyperbolic forms in the comoving chart about one observer, whose scale factor is the radius of
+    curvature of space, a length. The horn is Sokolov and Starobinsky's chart of hyperbolic space
+    by horospheres, their (2), whose flat coordinates y and z are periodic, their (11).
+    small_universes_check holds each to the published charts of `frw`; small_universes.md records
+    each chart's source."""
+    check = lambda chart: small_universes_check(chart, system)  # noqa: E731
+    if system == "torus":
+        coords, parameters = ["t", "x", "y", "z"], ["a = a(t)"] + SMALL_PERIODS
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "small_universes",
+            "system": {"id": system, "name": "Comoving Torus", "coords": coords,
+                       "domains": ["t \\in " + SMALL_REALS] + SMALL_CELL, "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)"},
+            "chart_line_element": "ds^2 = -dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+            "printer": {"primed": ["a"], "lead": [probe.parameters["a"]]},
+            "ricci_scalar": "6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2}{a^2}\\right)",
+            "kretschmann": "12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\dfrac{\\left(a'\\right)^4}{a^4}\\right)",
+            "check": check,
+        }
+    if system == "torus_conformal":
+        coords, parameters = ["\\eta", "x", "y", "z"], ["a = a(\\eta)"] + SMALL_PERIODS
+        line = "ds^2 = a^2\\left(-d\\eta^2 + dx^2 + dy^2 + dz^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        a, eta = probe.parameters["a"], probe.symbol["\\eta"]
+        return {
+            "metric_id": "small_universes",
+            "system": {"id": system, "name": "Conformal Time on the Torus", "coords": coords,
+                       "domains": ["\\eta \\in " + SMALL_REALS] + SMALL_CELL, "parameters": parameters,
+                       "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [sp.Derivative(a, (eta, 2)), sp.Derivative(a, eta), a]},
+            "check": check,
+        }
+    if system == "horn":
+        coords, parameters = ["t", "x", "y", "z"], ["a = a(t)", "b_2", "b_3"]
+        space = "dx^2 + e^{-2x}\\left(dy^2 + dz^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "small_universes",
+            "system": {"id": system, "name": "Horn", "coords": coords,
+                       "domains": ["t \\in " + SMALL_REALS, "x \\in " + SMALL_REALS, "y \\in [0, b_2)",
+                                   "z \\in [0, b_3)"],
+                       "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + a^2\\left(" + space + "\\right)"},
+            "chart_line_element": "ds^2 = -dt^2 + a^2\\left(" + space + "\\right)",
+            "printer": {"primed": ["a"], "lead": [probe.parameters["a"]], "overrides": {SMALL_Q: SMALL_RATE}},
+            "pretty": small_universes_pretty(probe, None),
+            "bracketed": lambda value: sp.expand(small_universes_pretty(probe, None)(value)),
+            "rewrite": [("\\left(" + SMALL_RATE + "e^{-2x}\\right)", "e^{-2x}" + SMALL_RATE),
+                        ("a\\,e^{-2x}a''", "a\\,a''\\,e^{-2x}"), ("a\\,e^{-2x}a'", "a\\,a'\\,e^{-2x}")],
+            "ricci_scalar": "6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)",
+            "kretschmann": "12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)^2\\right)",
+            "check": check,
+        }
+    coords, parameters = ["t", "\\chi", "\\theta", "\\phi"], ["a = a(t)"]
+    probe = vm.Reader(coords, parameters, ())
+    return {
+        "metric_id": "small_universes",
+        "system": {"id": system, "name": "Comoving Hyperbolic", "coords": coords,
+                   "domains": ["t \\in " + SMALL_REALS, "\\chi \\in [0, \\infty)"] + SMALL_ANGLES + [SMALL_GROUP],
+                   "parameters": parameters,
+                   "line_element": "ds^2 = -c^2dt^2 + a^2\\left(" + SMALL_HYPERBOLIC + "\\right)"},
+        "chart_line_element": "ds^2 = -dt^2 + a^2\\left(" + SMALL_HYPERBOLIC + "\\right)",
+        "printer": {"primed": ["a"], "lead": [probe.parameters["a"]],
+                    "overrides": {SMALL_Q: SMALL_RATE}},
+        "pretty": small_universes_pretty(probe),
+        "bracketed": lambda value: sp.expand(small_universes_pretty(probe)(value)),
+        # A product that leads with the bracket a'^2 - 1 is written with the bracket last.
+        "rewrite": [("\\left(" + SMALL_RATE + tail + "\\right)", tail + SMALL_RATE)
+                    for tail in ("\\sinh^2\\chi\\sin^2\\theta", "\\sinh^2\\chi")],
+        "ricci_scalar": "6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)",
+        "kretschmann": "12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)^2\\right)",
+        "check": check,
+    }
+
+
+
+
+def small_universes_pretty(probe, chi="\\chi"):
+    """A `pretty` for the hyperbolic charts: sinh(chi) and cosh(chi) by the printer's `hyperbolic`
+    where the chart has a chi, and the curvature of space with its expansion, a'^2 - 1, kept as the
+    one factor it is, which factoring would split into a' + 1 and a' - 1."""
+    hyperbolic = cp.hyperbolic(probe.symbol[chi]) if chi else sp.factor
+    rate = sp.Derivative(probe.parameters["a"], probe.symbol["t"])
+    D = sp.Symbol("SMALLD")
+
+    def pretty(value):
+        value = sp.sympify(value)
+        power = 0
+        while value != 0:
+            numerator = sp.fraction(sp.together(value))[0].xreplace({rate: D})
+            if sp.rem(sp.expand(numerator), D ** 2 - 1, D) != 0:
+                break
+            value, power = sp.cancel(sp.together(value / (rate ** 2 - 1))), power + 1
+        return hyperbolic(value) * SMALL_Q ** power
+    return pretty
+
+
+def small_universes_horn_map(chi, theta, phi):
+    """Sokolov and Starobinsky's (5): the horn's x, y and z at the point (chi, theta, phi) of the
+    spherical form of hyperbolic space, x = -ln(cosh(chi) - sinh(chi) cos(theta)) and
+    y, z = sin(theta) (cos(phi), sin(phi))/(coth(chi) - cos(theta))."""
+    below = sp.cosh(chi) / sp.sinh(chi) - sp.cos(theta)
+    return [-sp.log(sp.cosh(chi) - sp.sinh(chi) * sp.cos(theta)),
+            sp.sin(theta) * sp.cos(phi) / below, sp.sin(theta) * sp.sin(phi) / below]
+
+
+def small_universes_published(system):
+    """A published chart of `frw` as (its reader, its metric as a matrix)."""
+    published = next(c for c in json.loads((METRICS / "frw.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system)
+    there = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    names = published["coords"]
+    return there, sp.Matrix(4, 4, lambda i, j: there(values.get((names[i], names[j]), "0")))
+
+
+def small_universes_check(chart, system):
+    """Each chart is conformally flat and is a published chart of `frw` carried along a map: the
+    torus charts are the flat universe, k = 0, in the comoving and the conformal time, with
+    x = r sin(theta) cos(phi), y = r sin(theta) sin(phi) and z = r cos(theta); the hyperbolic chart
+    is the open universe, k = -1/l^2, with r = l sinh(chi) and its scale factor l times Friedmann's,
+    for every length l. The identifications of the torus are translations of x, y and z, which the
+    metric does not depend on, so each is an isometry, and it moves every point."""
+    geo, g = chart.geo, chart.geo.g
+    weyl = geo.weyl_llll()
+    if any(vm.norm(vm._at(weyl, index)) != 0 for index in vm._indices(4, 4)):
+        raise AssertionError(f"small_universes: the {system} chart is not conformally flat")
+    mine = chart.reader.parameters["a"]
+    time = chart.symbols[0]
+    if system == "horn":
+        # Conformally flat with the Einstein tensor of the open universe, so every component of the
+        # Riemann tensor is the hyperbolic chart's in a frame; and y and z are translated freely.
+        rate = sp.Derivative(mine, time)
+        lowered = geo.einstein_ll()
+        mixed = [[geo.ginv[i, i] * vm._at(lowered, (i, j)) for j in range(4)] for i in range(4)]
+        density = 3 * (rate ** 2 - 1) / mine ** 2
+        pressure = -(2 * mine * sp.Derivative(mine, (time, 2)) + rate ** 2 - 1) / mine ** 2
+        for i in range(4):
+            for j in range(4):
+                wanted = 0 if i != j else (-density if i == 0 else pressure)
+                if sp.simplify(vm._at(mixed, (i, j)) - wanted) != 0:
+                    raise AssertionError("small_universes: the horn's Einstein tensor is not the open universe's")
+        if any(g.has(x) for x in chart.symbols[2:]):
+            raise AssertionError("small_universes: a translation of y or z is no isometry of the horn")
+        # Sokolov and Starobinsky's (5) carries the spherical form of hyperbolic space onto the horn.
+        chi, theta, phi = sp.symbols("small_chi small_theta small_phi", positive=True)
+        image = small_universes_horn_map(chi, theta, phi)
+        J = sp.Matrix(3, 3, lambda i, j: sp.diff(image[i], [chi, theta, phi][j]))
+        space = (g[1:, 1:] / mine ** 2).subs(dict(zip(chart.symbols[1:], image)), simultaneous=True)
+        sphere = sp.diag(1, sp.sinh(chi) ** 2, sp.sinh(chi) ** 2 * sp.sin(theta) ** 2)
+        if any(sp.simplify(v.rewrite(sp.exp)) != 0 for v in sp.flatten(J.T * space * J - sphere)):
+            raise AssertionError("small_universes: the horn is not hyperbolic space carried along Sokolov and Starobinsky's (5)")
+        return
+    there, published = small_universes_published(
+        "conformal_spherical" if system == "torus_conformal" else "comoving_spherical")
+    theirs, k = there.parameters["a"], there.parameters["k"]
+    r, theta, phi = (there.symbol[n] for n in ("r", "\\theta", "\\phi"))
+    published = published.subs(there.symbol[there.coords[0]], time)
+    theirs = theirs.subs(there.symbol[there.coords[0]], time)
+    if system == "hyperbolic":
+        ell = sp.Symbol("small_ell", positive=True)
+        chi = chart.symbols[1]
+        carried = published.subs({k: -1 / ell ** 2, theirs: mine / ell}).subs(
+            {r: ell * sp.sinh(chi), theta: chart.symbols[2], phi: chart.symbols[3]})
+        J = sp.diag(1, ell * sp.cosh(chi), 1, 1)
+        if any(sp.simplify(x.rewrite(sp.exp)) != 0 for x in sp.flatten(J.T * carried * J - g)):
+            raise AssertionError("small_universes: the hyperbolic chart is not Friedmann's open universe carried along r = l sinh(chi)")
+        return
+    if any(g.has(x) for x in chart.symbols[1:]):
+        raise AssertionError(f"small_universes: a translation of the {system} chart is no isometry")
+    # The torus chart pulled back onto Friedmann's sphere of coordinates, at k = 0.
+    image = [time, r * sp.sin(theta) * sp.cos(phi), r * sp.sin(theta) * sp.sin(phi), r * sp.cos(theta)]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], [time, r, theta, phi][j]))
+    flat = published.subs({k: 0, theirs: mine})
+    if any(sp.simplify(x) != 0 for x in sp.flatten(J.T * g * J - flat)):
+        raise AssertionError(f"small_universes: the {system} chart is not Friedmann's flat universe pulled back")
+
+
+CHARTS["small_universes"] = [lambda s=s: small_universes(s) for s in SMALL_CHARTS]
 
 
 def write(spec):

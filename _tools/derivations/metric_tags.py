@@ -276,6 +276,10 @@ REGIONS = {
 
 # Where the charts cannot decide a tag and the entry's history and sources do.
 OVERRULED = {
+    ("small_universes", "spherically symmetric"): (
+        False, "the hyperbolic chart is spherical about one observer, and so is the local geometry, but the "
+               "identifications that close space leave only a discrete group of the rotations about any "
+               "point: the torus is globally anisotropic, and a closed hyperbolic space is not even homogeneous"),
     ("chandrasekhar_xanthopoulos", "stationary"): (
         False, "where both waves have passed r lies between Kerr's horizons and inside the ergosphere, "
                "|cos theta| <= (m - r)/sqrt(m^2 - a^2), an end of theta that is not read, and there "

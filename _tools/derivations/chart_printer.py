@@ -487,7 +487,8 @@ def hyperbolic(r):
         if d1 != 0:
             num, den = reduce(num * (d0 - d1 * C)), sp.expand(d0 ** 2 - d1 ** 2 * (1 + S ** 2))
         out = sp.factor(sp.cancel(sp.factor(num) / sp.factor(den)))
-        out = out.replace(lambda e: sp.expand(e - (S ** 2 + 1)) == 0, lambda e: C ** 2)
+        # A derivative of a free function holds a Tuple, which is no expression to compare.
+        out = out.replace(lambda e: isinstance(e, sp.Expr) and sp.expand(e - (S ** 2 + 1)) == 0, lambda e: C ** 2)
         # (S - 1)(S + 1) is read as the one factor S^2 - 1 it came from.
         powers = sp.Mul.make_args(out)
         pair = {}

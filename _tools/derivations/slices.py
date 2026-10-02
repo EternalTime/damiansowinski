@@ -961,6 +961,9 @@ def _penrose_wave(view):
     return out
 
 
+SMALL_NOW = 1.2 - 0.22 * math.log(11)      # the moment the small universes' horn is embedded at, in a_0
+
+
 def _kt_eta(t):
     """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l:
     eta = t 2F1(1/3, 1/2; 3/2; -t^2)."""
@@ -2670,6 +2673,16 @@ FLAT = {
         "kopczynski_trautman", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
     ("kopczynski_trautman", "conformal", "radial"): lambda: one(
         "kopczynski_trautman", lambda m: along(_kt_eta(m.time), *m.reach("comoving_spherical", "r"))),
+    # The small universes' torus: a moment meets the plane y = z = 0 along its whole circle of x, the line
+    # of that time across every cell, at the conformal time 2 (3t/2)^(1/3) in the conformal chart.
+    **{("small_universes", "torus", view): lambda: one(
+        "small_universes", lambda m: across(m.time, 0.0, BIG), view_id="torus") for view in ("cell", "images")},
+    **{("small_universes", "torus_conformal", view): lambda: one(
+        "small_universes", lambda m: across(2 * (1.5 * m.time) ** (1 / 3), 0.0, BIG), view_id="torus")
+       for view in ("cell", "images")},
+    # The horn is embedded at the moment its spacetime diagram starts the dust from, ct = 6/5 - (11/50) ln 11.
+    ("small_universes", "horn", "along"): lambda: one(
+        "small_universes", lambda m: along(SMALL_NOW, *m.reach("horn", "x")), view_id="horn"),
     ("oppenheimer_snyder", "interior_comoving", "through"): _os_interior,
     ("semiclosed_world", "comoving", "dust"): lambda: _scw_dust(False),
     ("semiclosed_world", "conformal", "dust"): lambda: _scw_dust(True),
@@ -2741,6 +2754,7 @@ FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
 HIDDEN = {
+    ("small_universes", "hyperbolic", "radial"): "a closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's",
     ("kundt_waves", "kundt", "front"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "near"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "far"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",

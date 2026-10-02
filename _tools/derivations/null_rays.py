@@ -847,6 +847,50 @@ BONNOR_DIPOLE = {"m": 1, "b": "2*sqrt(2)"}
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
 # Kopczynski and Trautman's spinning dust in its conformal time, in units of l: the published G^r_r
 # set to the pressure of the spins, -4/(3 l^2 a^6), from a = 1 at rest at eta = 0, on both sides of it.
+# Ellis's small universes: a cubic torus of dust, in units of its period L, with the scale factor one
+# when the Hubble radius is L, so a = (3ct/2L)^(2/3), the conformal time is 2L sqrt(a) and a = (eta/2L)^2.
+# We sit at x = 0, one galaxy at x = 3L/10, and both stand again every period.
+SMALL_TORUS = {"L_1": 1, "L_2": 1, "L_3": 1}
+SMALL_PLANE = {"y": "0", "z": "0"}
+SMALL_SOLVES = (("x", "x"), ("y", "y"), ("z", "z"))
+SMALL_INPUT = ("A cubic torus of dust, its three periods one length $L$: $a = (3ct/2L)^{2/3}$, checked to solve this "
+               "spacetime's own $G^x{}_x = 0$, so the Hubble radius $3ct/2$ is $L$ when $a = 1$.")
+SMALL_INPUT_CONFORMAL = ("A cubic torus of dust, its three periods one length $L$: $a = (\\eta/2L)^2$, checked to "
+                         "solve this spacetime's own $G^x{}_x = 0$, so the Hubble radius $\\eta/2$ is $L$ when $a = 1$.")
+SMALL_GALAXY = "one galaxy at rest at $x = 3L/10$, drawn at each of its places $x = (n + 3/10)L$ for integer $n$"
+SMALL_EDGES = "the faces of the cell, $x = nL$ for integer $n$, all one surface, and our own world line among them"
+
+
+# The hyperbolic small universes hold open dust: a = (11 a_0/50)(cosh(eta) - 1) and ct = (11 a_0/50)(sinh(eta) - eta),
+# started at the dashed line from a = a_0, the unit, and a' = 6/5, where eta = ln 11 and the density is 11/36 of the
+# critical one, so the dashed line is at ct = (6/5 - (11/50) ln 11) a_0. The Weeks space's cell about an observer
+# holds the sphere chi = 0.5192 and lies inside the sphere chi = 0.7525, Luminet and Roukema's table 1.
+SMALL_OPEN = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [1.2]}
+SMALL_HORN_DUST = {"funcs": ["a"], "eqs": [["x", "x"]], "rates": [1.2]}
+SMALL_NOW = "6/5 - 11*log(11)/50"
+SMALL_OPEN_INPUT = ("Dust: $a(t)$ solved from this spacetime's own {G} with the radius $a_0$ at the dashed line the "
+                    "unit of length, starting there from $a' = 6/5$, where the density is $11/36$ of the critical "
+                    "density and the conformal time since the bang is $\\ln 11$.")
+SMALL_HORN = {"b_2": "2*pi", "b_3": "2*pi"}
+SMALL_WEEKS_IN, SMALL_WEEKS_OUT = "0.5192", "0.7525"
+
+
+def _small_eta(t):
+    """The conformal time of the open dust at the time t since the bang, in units of a_0: the root of
+    (11/50)(sinh(eta) - eta) = t, by Newton's method from a start above it."""
+    t = np.atleast_1d(np.asarray(t, dtype=float))
+    eta = np.cbrt(6 * t * 50 / 11)
+    for _ in range(60):
+        eta = eta - (np.sinh(eta) - eta - t * 50 / 11) / np.maximum(np.cosh(eta) - 1, 1e-300)
+    return eta
+
+
+def _small_images(lo, hi):
+    """The lines of the unrolled torus between x = lo and hi: the faces of the cell and one galaxy's images."""
+    return (*(("surface", "r", str(n), SMALL_EDGES) for n in range(lo, hi + 1)),
+            *(("world", "r", f"{n} + 3/10", SMALL_GALAXY) for n in range(lo, hi)))
+
+
 KT_SPIN = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [0.0], "start": [1.0], "origin": "rest",
            "sources": ["-4/(3*a**6)"]}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
@@ -3433,6 +3477,45 @@ DIAGRAMS = [
             "$r/\\ell$", "$\\eta/\\ell$", {}, EQUATOR, tau="eta", areal=True, dust=KT_SPIN, reference="$a = 1$",
             input="The scale factor $a(\\eta)$ solved from this chart's own $G^r{}_r = -4/3\\ell^2a^6$, the pressure "
                   "of the spins, starting from $a = 1$ and $\\partial_\\eta a = 0$ at the dashed line."),
+    # Ellis's small universes: the torus of dust on one cell, its edges one line, and unrolled over six
+    # cells with our past light cone from the event at which the conformal time is 3L, where a = 9/4.
+    Diagram("small_universes", "torus", "cell", "one cell", ("t", "x"), (0, 1, 0, 1),
+            "$x/L$", "$ct/L$", SMALL_TORUS, SMALL_PLANE, families=SIDEWAYS, periodic=("x",),
+            functions={"a": "(3*t/2)**Rational(2, 3)"}, solves=SMALL_SOLVES, input=SMALL_INPUT),
+    Diagram("small_universes", "torus", "images", "unrolled", ("t", "x"), (-3, 3, 0, 3),
+            "$x/L$", "$ct/L$", SMALL_TORUS, SMALL_PLANE, families=SIDEWAYS, periodic=("x",),
+            functions={"a": "(3*t/2)**Rational(2, 3)"}, solves=SMALL_SOLVES, input=SMALL_INPUT,
+            lines=_small_images(-3, 3),
+            marked=(("past", {"x0": "9/4", "r": "0"}, "both", "our past light cone from $ct = 9L/4$", "past"),),
+            points=(("mark", ("9/4", "0"), "here and now, $x = 0$ at $ct = 9L/4$, where $a = 9/4$"),)),
+    Diagram("small_universes", "torus_conformal", "cell", "one cell", ("\\eta", "x"), (0, 1, 0, 2),
+            "$x/L$", "$\\eta/L$", SMALL_TORUS, SMALL_PLANE, tau="eta", families=SIDEWAYS, periodic=("x",),
+            functions={"a": "eta**2/4"}, solves=SMALL_SOLVES, input=SMALL_INPUT_CONFORMAL),
+    Diagram("small_universes", "torus_conformal", "images", "unrolled", ("\\eta", "x"), (-3, 3, 0, 3.5),
+            "$x/L$", "$\\eta/L$", SMALL_TORUS, SMALL_PLANE, tau="eta", families=SIDEWAYS, periodic=("x",),
+            functions={"a": "eta**2/4"}, solves=SMALL_SOLVES, input=SMALL_INPUT_CONFORMAL,
+            lines=_small_images(-3, 3),
+            marked=(("past", {"x0": "3", "r": "0"}, "both", "our past light cone from $\\eta = 3L$", "past"),),
+            points=(("mark", ("3", "0"), "here and now, $x = 0$ at $\\eta = 3L$, where $a = 9/4$"),)),
+    # The hyperbolic forms about one observer, with the two spheres of the Weeks space's cell, and the horn
+    # along its length, both of open dust.
+    Diagram("small_universes", "hyperbolic", "radial", "$t$ and $\\chi$", ("t", "\\chi"), (0, 1.5, 0, 1.5),
+            "$\\chi$", "$ct/a_0$", {}, EQUATOR, dust=SMALL_OPEN, reference="$a = a_0$",
+            input=SMALL_OPEN_INPUT.format(G="$G^\\chi{}_\\chi = 0$"),
+            lines=(("surface", "r", SMALL_WEEKS_IN,
+                    "the largest sphere about us inside one cell of the Weeks space, $\\chi = 0.5192$"),
+                   ("shell", "r", SMALL_WEEKS_OUT,
+                    "the smallest sphere about us that holds the whole cell, $\\chi = 0.7525$")),
+            marked=(("past", {"x0": SMALL_NOW, "r": "0"}, "both", "our past light cone from the dashed line", "past"),),
+            points=(("mark", (SMALL_NOW, "0"), "here and now, $\\chi = 0$ at the dashed line"),)),
+    Diagram("small_universes", "horn", "along", "along the horn", ("t", "x"), (0, 3, 0, 1.5),
+            "$x$", "$ct/a_0$", SMALL_HORN, {"y": "0", "z": "0"}, families=SIDEWAYS, dust=SMALL_HORN_DUST,
+            reference="$a = a_0$", input=SMALL_OPEN_INPUT.format(G="$G^x{}_x = 0$"),
+            lines=(("surface", "r", "log(pi*sqrt(11)/5)",
+                    "$x = \\ln(\\pi\\sqrt{11}/5)$, beyond which an observer on the dashed line has seen once round "
+                    "the circle of $y$"),),
+            marked=(("past", {"x0": SMALL_NOW, "r": "3/2"}, "both", "the past light cone of the event marked", "past"),),
+            points=(("mark", (SMALL_NOW, "3/2"), "an event at $x = 3/2$ on the dashed line"),)),
     Diagram("melvin", "ernst", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1, "B": "1/2"}, EQUATOR, orient="ingoing",
             lines=(("surface", "r", "4", "$r = 2/B$, the widest circle of the equator"),)),
@@ -8261,6 +8344,52 @@ CAPTIONS = {
         "both ends, so the universe is conformal to the whole of Minkowski space. The dotted curve is the Hubble "
         "sphere, where $|\\nabla R|^2 = 0$ for the areal radius $R = ar$.",
     ],
+    ("small_universes", "torus", "cell"): [
+        "The plane of $t$ and $x$ ($y = z = 0$) of a torus of dust, a cylinder drawn unrolled, its edges $x = 0$ "
+        "and $x = L$ one line. The edges of the cones are $dx/d(ct) = \\pm 1/a$, wide open near the big bang "
+        "$t = 0$, where the Kretschmann scalar diverges, and closing as the circle of $x$ grows.",
+        "A ray that leaves through one edge comes back in through the other. Light from the bang has crossed the "
+        "comoving distance $2L\\sqrt{a}$, so it has been once round the universe by $ct = L/12$, where $a = 1/4$, "
+        "and twice round by $ct = 2L/3$.",
+    ],
+    ("small_universes", "torus", "images"): [
+        "The same plane unrolled over six cells, every vertical line of a kind one world line drawn again each "
+        "period. Our past light cone from $ct = 9L/4$ reaches the bang at $x = \\pm 3L$, three cells away on each "
+        "side, so it crosses our own world line twice on each side and the galaxy's six times.",
+        "Each crossing is an image of the galaxy on the sky, in the direction of $+x$ or of $-x$, and each "
+        "shows it at a different age: the farther the image, the younger the galaxy. The nearest, at "
+        "$x = 3L/10$, shows it at $ct = 1.64\\,L$, and the farthest, at $x = -27L/10$, at $ct = 0.002\\,L$.",
+    ],
+    ("small_universes", "torus_conformal", "cell"): [
+        "The plane of the conformal time $\\eta$ and $x$ ($y = z = 0$), a cylinder drawn unrolled, its edges "
+        "$x = 0$ and $x = L$ one line. The metric on it is $a^2(-d\\eta^2 + dx^2)$, and $a^2$ drops out of the "
+        "null condition, so the rays are straight lines at 45° and each goes once round in the time $\\eta = L$.",
+    ],
+    ("small_universes", "torus_conformal", "images"): [
+        "The same plane unrolled over six cells, every vertical line of a kind one world line drawn again each "
+        "period. Our past light cone from $\\eta = 3L$ is two straight lines at 45° down to the bang at "
+        "$x = \\pm 3L$, the particle horizon, three periods away.",
+        "The image of the galaxy at the comoving distance $d$ shows it at the conformal time $3L - d$, when "
+        "the scale factor was $(3L - d)^2/4L^2$, so its light is redshifted by $1 + z = 9L^2/(3L - d)^2$: "
+        "$1.23$ for the nearest image, at $d = 3L/10$, and $100$ for the farthest, at $d = 27L/10$.",
+    ],
+    ("small_universes", "hyperbolic", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) of a hyperbolic universe of dust about one "
+        "observer, in units of the radius of curvature $a_0$ of space at the dashed line. The edges of the cones "
+        "are $d\\chi/d(ct) = \\pm 1/a$, wide open near the big bang $t = 0$, where the Kretschmann scalar diverges.",
+        "The two vertical lines are drawn for the smallest closed orientable hyperbolic space, the Weeks manifold, "
+        "of volume $0.9427\\,a^3$. Every event beyond $\\chi = 0.7525$ is an image of one nearer, and our past light cone "
+        "reaches the bang at $\\chi = \\ln 11 \\approx 2.40$, so it passes through many copies of the cell.",
+    ],
+    ("small_universes", "horn", "along"): [
+        "The plane of $t$ and $x$ ($y = z = 0$) of the horn, in units of the radius of curvature $a_0$ of space at "
+        "the dashed line, each point in the plane a 2-torus of area $a^2b_2b_3e^{-2x}$. The metric on it is "
+        "$-c^2dt^2 + a^2dx^2$, so the cones are those of the hyperbolic universe along any line through an observer.",
+        "The tori shrink toward $x \\to \\infty$ and grow toward $x \\to -\\infty$. Two images of one galaxy a "
+        "period of $y$ apart stand the distance $2a\\,\\mathrm{arsinh}(b_2e^{-x}/2)$ from each other, and light has "
+        "crossed $a\\ln 11$ by the dashed line, so an observer there has seen once round the circle of $y$ only "
+        "beyond $x = \\ln(\\pi\\sqrt{11}/5) \\approx 0.73$.",
+    ],
     ("melvin", "cylindrical", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Melvin's universe ($B = 1$). The metric on it is "
         "$(1 + B^2\\rho^2/4)^2(-c^2dt^2 + d\\rho^2)$, and the factor drops out of the null condition, so the rays are "
@@ -12627,6 +12756,16 @@ CLOSED_FORMS = {
     ("kopczynski_trautman", "comoving_spherical", "radial"):
         (lambda t, r: _kt_eta(t) + r, lambda t, r: _kt_eta(t) - r, None),
     ("kopczynski_trautman", "conformal", "radial"): (lambda e, r: e + r, lambda e, r: e - r, None),
+    # The small universes' open dust: the conformal time of the parametric solution, found by Newton's method.
+    ("small_universes", "hyperbolic", "radial"): (lambda t, c: _small_eta(t) + c, lambda t, c: _small_eta(t) - c,
+                                                  lambda t, c: t > 0.02),
+    ("small_universes", "horn", "along"): (lambda t, x: _small_eta(t) + x, lambda t, x: _small_eta(t) - x,
+                                           lambda t, x: t > 0.02),
+    # The small universes' torus of dust at L = 1: the conformal time is 2 sqrt(a) = 2 (3t/2)^(1/3).
+    **{("small_universes", "torus", view): (lambda t, x: 2 * np.cbrt(1.5 * t) + x, lambda t, x: 2 * np.cbrt(1.5 * t) - x,
+                                            lambda t, x: t > 0.02) for view in ("cell", "images")},
+    **{("small_universes", "torus_conformal", view): (lambda e, x: e + x, lambda e, x: e - x, None)
+       for view in ("cell", "images")},
     ("melvin", "ernst", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
     ("levi_civita", "weyl", "radial"):

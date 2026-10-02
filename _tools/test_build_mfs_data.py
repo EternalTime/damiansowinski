@@ -3606,7 +3606,7 @@ class StacksAndMovies(unittest.TestCase):
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
-              ("kopczynski_trautman", "universe"): "$ct$",
+              ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
@@ -4834,6 +4834,8 @@ class Slices(unittest.TestCase):
               # and anti-de Sitter space whose fronts are embedded.
               "kundt_waves/kundt/front", "kundt_waves/podolsky_belan/near", "kundt_waves/podolsky_belan/far",
               "kundt_waves/simplest_wave/front", "kundt_waves/simplest_wave/depth", "kundt_waves/kerr_schild/fronts",
+              # A closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's.
+              "small_universes/hyperbolic/radial",
               # Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.
               "hiscock/ingoing/shells",
               # Up to the shock the spheres through Hotta and Tanaka's ring meet the equatorial plane of the
@@ -5020,6 +5022,12 @@ class Slices(unittest.TestCase):
                     # each drawing marking the moments of its own.
                     "nordstrom_scalar/spherical/radial": {"dust"}, "conformal nordstrom_scalar/spherical": {"dust"},
                     "nordstrom_scalar/dust/radial": {"point_mass"}, "conformal nordstrom_scalar/dust": {"point_mass"},
+                    # The torus and the horn are two small universes, each drawing marking the moments of its own.
+                    **{where: {"horn"} for where in (
+                        "small_universes/torus/cell", "small_universes/torus/images",
+                        "small_universes/torus_conformal/cell", "small_universes/torus_conformal/images",
+                        "conformal small_universes/torus", "conformal small_universes/torus_conformal")},
+                    "small_universes/horn/along": {"torus"}, "conformal small_universes/horn": {"torus"},
                     # The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and
                     # each chart's drawings mark the surfaces of its own.
                     **{where: {"hyperbolic_plane"} for where in (
@@ -5333,6 +5341,14 @@ class Slices(unittest.TestCase):
         if key == "nordstrom_scalar/dust/radial":
             # A moment of the inertial time, from the centre to the galaxy at r = L.
             return (lambda X: t), list(self.reach(surface))
+        if key.startswith("small_universes/torus"):
+            # A moment of the torus meets the plane y = z = 0 along its whole circle of x: the line of its
+            # time across every cell, at the conformal time 2 (3t/2)^(1/3) on the conformal chart.
+            height = 2 * (1.5 * t) ** (1 / 3) if key.split("/")[1] == "torus_conformal" else t
+            return (lambda X: height), None
+        if key == "small_universes/horn/along":
+            # The horn is embedded at the moment a = a_0, ct = (6/5 - (11/50) ln 11) a_0, from its rim up.
+            return (lambda X: 1.2 - 0.22 * math.log(11)), list(self.reach(surface))
         if key.startswith("kopczynski_trautman/"):
             # A moment of the dust's time, out to the dust at r = l: the line of that time on the comoving
             # charts, through the centre on the Cartesian one, and of eta(t) on the conformal chart.
@@ -6524,6 +6540,13 @@ class Slices(unittest.TestCase):
                         # p, q = arctan((ct -+ r)/L), so tan p + tan q = 2ct/L on a moment of the inertial time.
                         for X, T in points:
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * t), 2e-3,
+                                            f"{where} at {(X, T)}")
+                    elif metric_id == "small_universes":
+                        # p, q = arctan(eta -+ x), so tan p + tan q = 2 eta: 2 (3t/2)^(1/3) on a moment of the
+                        # torus, and ln 11 on the moment the horn is embedded at.
+                        eta = math.log(11) if mark["view"] == "horn" else 2 * (1.5 * t) ** (1 / 3)
+                        for X, T in points:
+                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * eta), 2e-3,
                                             f"{where} at {(X, T)}")
                     elif metric_id == "kopczynski_trautman":
                         # p, q = arctan((eta -+ r)/l), so tan p + tan q = 2 eta(t)/l on a moment of the dust's time.
