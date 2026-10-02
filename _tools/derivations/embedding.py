@@ -4986,8 +4986,19 @@ def cosmic_string(ck, src):
             view("cone", "Gott's core", "$\\ell$", [surface], fig.done(), settings=settings)]
 
 
-def unrolling(ck, cone, fold, top, size, settings):
-    """The cone of an ideal string, cut along the meridian phi = 0 and unrolled onto the plane: a
+STRING_CONE = {"metric": "cosmic_string", "name": "cosmic string", "cone": "the ideal string's cone",
+               "apex": "the string itself, a conical singularity at $r = 0$",
+               "sheet": "the cone of an ideal string", "deficit": "8\\pi G\\mu/c^2",
+               "plain": "2 pi (1 - 4G mu/c^2) is 8 pi G mu/c^2 at mu = 1/40, G = 1", "angle": 8 * math.pi / 40,
+               "fold": "1 - 4G mu/c^2"}
+PARTICLE_CONE = {"metric": "point_particle_2plus1", "name": "point particle", "cone": "the particle's cone",
+                 "apex": "the particle, a conical singularity at $r = 0$",
+                 "sheet": "space around the particle, a cone", "deficit": "2\\pi(1 - \\alpha)",
+                 "plain": "2 pi (1 - alpha) is pi/2 at alpha = 3/4", "angle": math.pi / 2, "fold": "alpha", "step": 2}
+
+
+def unrolling(ck, cone, fold, top, size, settings, of=STRING_CONE):
+    """The cone of an ideal string, or of a point particle in three dimensions as `of` names it, cut along the meridian phi = 0 and unrolled onto the plane: a
     movie of cones of half angle alpha, sin(alpha) = 2 pi fold/(2 pi - d), each carrying the whole
     cone, every circle of it running round the axis through 2 pi - d, so that the cut's two
     edges stand d apart, from d = 0, the cone itself, to d = delta = 2 pi (1 - fold) = 8 pi G mu/c^2,
@@ -4998,14 +5009,16 @@ def unrolling(ck, cone, fold, top, size, settings):
     g_phiphi makes it, which is checked on every frame, as is the wedge of the last."""
     phi = np.linspace(0, 2 * math.pi, 361)
     delta = 2 * math.pi * (1 - fold)
-    ck.add("cosmic string: the deficit angle 2 pi (1 - 4G mu/c^2) is 8 pi G mu/c^2 at mu = 1/40, G = 1",
-           abs(delta - 8 * math.pi / 40), 1e-15)
+    name = of["name"]
+    ck.add(f"{name}: the deficit angle {of['plain']}", abs(delta - of["angle"]), 1e-15)
     whole = Piece("cone", "sheet", cone, 0.0, top, 0.0, 1,
-                  (("apex", "the string itself, a conical singularity at $r = 0$"), ("edge", "the cone runs on to $r \\to \\infty$")),
+                  (("apex", of["apex"]), ("edge", "the cone runs on to $r \\to \\infty$")),
                   [(1.0, "r", None), (2.0, "r", None)], size)
-    ck.isometry("cosmic string, the ideal string's cone", whole)
+    ck.isometry(f"{name}, {of['cone']}", whole)
     rs = np.array([0.0, 1.0, 2.0, top])
-    frames, openings = [], [math.radians(k) for k in range(37)]
+    # A frame for every degree of the string's 36, and for every `step` degrees of a wider wedge.
+    step = of.get("step", 1)
+    frames, openings = [], [math.radians(k) for k in range(0, round(math.degrees(delta)) + 1, step)]
     openings[-1] = delta
     for d in openings:
         sin_a = 1.0 if d == delta else 2 * math.pi * fold / (2 * math.pi - d)
@@ -5016,11 +5029,11 @@ def unrolling(ck, cone, fold, top, size, settings):
         def rows(u, s=sin_a, c=cos_a):
             u = np.asarray(u, dtype=float)
             return s * u, s * u, c * u
-        piece = EllipsesPiece("cone", "sheet", rs, v, rows, "cosmic_string", "conical",
+        piece = EllipsesPiece("cone", "sheet", rs, v, rows, of["metric"], "conical",
                               "the cone runs on to $r \\to \\infty$", size,
                               [("cut", "v", [v[0], v[-1]]), ("meridian", "v", list(v[15:-1:15])),
                                ("r", "u", [1.0, 2.0]), ("outline", "u", [top])], open_=True)
-        where = f"cosmic string, unrolled by {math.degrees(d):.2f} degrees"
+        where = f"{name}, unrolled by {math.degrees(d):.2f} degrees"
         N = piece.nodes()
         along = np.linalg.norm(np.diff(N, axis=0), axis=-1)
         ck.add(f"{where}: along each line from the apex, every distance is r", float(np.max(np.abs(along - np.diff(piece.u)[:, None]))),
@@ -5032,21 +5045,114 @@ def unrolling(ck, cone, fold, top, size, settings):
         label = f"$\\Delta\\phi = {math.degrees(d):.0f}°" + (" = \\delta$" if d == delta else "$")
         frames.append(Surface([piece], label=label, time=d))
     first, last = frames[0].pieces[0], frames[-1].pieces[0]
-    ck.add("cosmic string, unrolled: the first frame is the cone, rho = (1 - 4G mu/c^2) r and z = sqrt(1 - (1 - 4G mu/c^2)^2) r",
+    ck.add(f"{name}, unrolled: the first frame is the cone, rho = ({of['fold']}) r and z = sqrt(1 - ({of['fold']})^2) r",
            float(max(np.max(np.abs(first.A - fold * first.u)), np.max(np.abs(first.Zr - math.sqrt(1 - fold ** 2) * first.u)))),
            1e-6)
-    ck.add("cosmic string, unrolled: the last frame lies flat", float(np.max(np.abs(last.Zr))), 0.0)
-    ck.add("cosmic string, unrolled: the wedge the last frame lacks is the deficit angle 8 pi G mu/c^2",
-           abs(2 * math.pi - (last.v[-1] - last.v[0]) - 8 * math.pi / 40), 1e-12)
+    ck.add(f"{name}, unrolled: the last frame lies flat", float(np.max(np.abs(last.Zr))), 0.0)
+    ck.add(f"{name}, unrolled: the wedge the last frame lacks is the deficit angle",
+           abs(2 * math.pi - (last.v[-1] - last.v[0]) - of["angle"]), 1e-12)
     fig = movie_figure(frames, {"sheet": "cover"}, size, Camera(-90, 30))
-    fig.legend("fill", "cover", "the cone of an ideal string, cut along $\\phi = 0$ and unrolling onto the plane")
+    fig.legend("fill", "cover", of["sheet"] + ", cut along $\\phi = 0$ and unrolling onto the plane")
     fig.legend("line", "cut", "the two edges of the cut, which part by $\\Delta\\phi$, to the deficit angle $\\delta = "
-                              "8\\pi G\\mu/c^2$ where the cone lies flat")
+                              + of["deficit"] + "$ where the cone lies flat")
     fig.legend("line", "r", "$r$ constant, at $\\ell$ and $2\\ell$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return view("unroll", "The cone unrolled", "$\\ell$", [Surface([whole])], fig.done(),
                 movie=movie(frames, "$\\Delta\\phi$", [math.degrees(d) for d in openings]),
                 settings=settings)
+
+
+def point_particle_2plus1(ck, src):
+    """Space around a point particle in three dimensions at one moment of t: g_rr = 1 and
+    g_phiphi = alpha^2 r^2, so rho = alpha r and dz/dr = sqrt(1 - alpha^2), a cone of half angle
+    arcsin(alpha) with the particle at its apex. Drawn at alpha = 3/4, a particle of mass
+    c^2/16G, whose deficit angle is a right angle, with the cone laid flat beside it, a plane
+    missing a quarter, which is the wedge chart. Gott and Alpert's planet of the same mass,
+    a^2(dchi^2 + sin^2 chi dphi^2), is a cap of a sphere of radius a and meets the cone at chi_0
+    with one tangent, cos chi_0 = alpha, where the exterior's r = a tan chi_0; a is the unit of
+    length. The circumference radius and isotropic charts are checked to carry the same circles
+    at the same distances, R = alpha r and r = (ell/alpha)(rho/ell)^alpha with ell = a. The first
+    view is the ideal particle's cone unrolled onto the plane, as the cosmic string's is."""
+    fold = 0.75
+    chi0 = math.acos(fold)
+    join = math.tan(chi0)
+    top = 3.0
+    size = 2 * top
+    cone = Slice(src, "point_particle_2plus1", "conical", "r", "\\phi", {"t": 0}, {"alpha": "3/4"})
+    cap = Slice(src, "point_particle_2plus1", "planet", "\\chi", "\\phi", {"t": 0}, {"a": 1})
+    ideal = Piece("apex", "reference", cone, 0.0, join, 0.0, 1,
+                  (("apex", PARTICLE_CONE["apex"]), ("join", None)), [], size, reference=True)
+    zj = ideal.at(join)[1]
+    ext = Piece("exterior", "sheet", cone, join, top, zj, 1,
+                (("join", "the edge of the planet, $r = a\\tan\\chi_0$"), ("edge", "the cone runs on to $r \\to \\infty$")),
+                [(join, "surface", None)] + [(r, "r", None) for r in (1, 2)] + [(top, "r", None)], size)
+    core = Piece("core", "star", cap, 0.0, chi0, 0.0, 1,
+                 (("axis", "the centre $\\chi = 0$, where the cap is smooth"), ("join", "the edge of the planet, $\\chi = \\chi_0$")),
+                 [], size)
+    core.z = core.z + (zj - core.z[-1])
+    ck.isometry("point particle, the cone", ext)
+    ck.isometry("point particle, the cone to its apex", ideal)
+    ck.isometry("point particle, Gott and Alpert's planet", core)
+    ck.join("point particle, the planet meets the cone at chi_0", core, chi0, ext, join)
+    slope = math.sqrt(1 - fold ** 2)
+    ck.form("point particle, the cone z = sqrt(1 - alpha^2) r", ext, lambda r: slope * r, size)
+    ck.radius("point particle, the cone rho = alpha r", ext, lambda r: fold * r, size)
+    ck.form("point particle, the planet's cap z = a (1 - cos chi)", core, lambda c: core.z[0] + 1 - np.cos(c), size)
+    ck.radius("point particle, the planet's cap rho = a sin chi", core, np.sin, size)
+    isotropic = Slice(src, "point_particle_2plus1", "isotropic", "\\rho", "\\phi", {"t": 0}, {"alpha": "3/4", "ell": 1})
+    around = Slice(src, "point_particle_2plus1", "circumference", "R", "\\phi", {"t": 0}, {"alpha": "3/4"})
+    radii = np.array([0.5, 1.0, 2.0, 4.0])
+    circles = np.array([float(cone.rho_at(r)) for r in radii ** fold / fold])
+    ck.add("point particle: the isotropic chart's circle at rho is the cone's at r = (ell/alpha)(rho/ell)^alpha",
+           float(np.max(np.abs(np.array([float(isotropic.rho_at(x)) for x in radii]) - circles))), 1e-12)
+    ck.add("point particle: the circumference chart's circle at R is the cone's at r = R/alpha",
+           float(np.max(np.abs(np.array([float(around.rho_at(x)) for x in radii])
+                               - np.array([float(cone.rho_at(r)) for r in radii / fold])))), 1e-12)
+    surface = Surface([core, ext, ideal])
+
+    # Seen from 20 degrees up, below the 41 degree slope of the cone's wall, so that its inside shows.
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 20))
+    fig.mark("cut", 0, ext, 0.0)
+    ring_label(fig, [0, 0, 0], *ext.at(1.0), "$r = a$", side=-1, clear=True)
+    ring_label(fig, [0, 0, 0], *ext.at(top), "$3a$", side=-1)
+
+    # The cone laid flat beside it, a disc missing the wedge 2 pi (1 - alpha), at half the scale.
+    half = 0.5
+    E = np.vstack(fig.extent)
+    centre = np.array([E[:, 0].max() + 0.5 + half * top, 0.5 * (E[:, 1].min() + E[:, 1].max())])
+    gap = 2 * math.pi * (1 - fold)
+    first = gap / 2
+
+    def flat(r, psi):
+        return centre + half * np.column_stack([r * np.cos(psi), r * np.sin(psi)])
+    arc = np.linspace(first, first + 2 * math.pi * fold, 400)
+    fig.plain_fill("cover", np.vstack([flat(top, arc), flat(join, arc[::-1])]))
+    fig.plain_fill("wedge", np.vstack([centre, flat(top, np.linspace(first - gap, first, 60))]))
+    for k in range(1, 24):
+        psi = first + fold * 2 * math.pi * k / 24
+        fig.flat("meridian", flat(np.array([join, top]), np.array([psi, psi])))
+        if k % 2 == 0:
+            fig.flat("reference", flat(np.array([0, join]), np.array([psi, psi])))
+    for psi in (first, first + 2 * math.pi * fold):
+        fig.flat("cut", flat(np.array([0, top]), np.array([psi, psi])))
+    for r in (1.0, 2.0):
+        fig.flat("r", flat(r, arc))
+    fig.flat("outline", flat(top, arc))
+    fig.flat("surface", flat(join, arc))
+    fig.label(centre + [half * top * 0.62, 0], "$\\delta$", "c", "lab")
+    fig.label(centre + [0, half * top], "laid flat, at half the scale", "b", "small", dy=-6)
+    fig.legend("fill", "star", "Gott and Alpert's planet, $\\chi \\le \\chi_0$, a cap of a sphere of radius $a$")
+    fig.legend("fill", "cover", "space outside it, a cone of half angle $\\arcsin\\alpha$")
+    fig.legend("fill", "wedge", "the wedge $\\delta = 2\\pi(1 - \\alpha)$ the cone lacks, laid flat")
+    fig.legend("line", "cut", "the line the cone is cut along to lay it flat")
+    fig.legend("line", "r", "$r$ constant, at $a$, $2a$ and $3a$")
+    fig.legend("line", "surface", "the edge of the planet, $\\chi = \\chi_0$ and $r = a\\tan\\chi_0$")
+    fig.legend("line", "reference", "the cone inside the planet, down to its apex, where a point particle sits")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = ("$\\alpha = 3/4$, a mass of $c^2/16G$, so that $\\cos\\chi_0 = 3/4$ and $\\delta = 2\\pi(1 - \\alpha) = 90°$, "
+                "and $a = \\ell = 1$, the unit of every length.")
+    return [unrolling(ck, cone, fold, top, size, settings, PARTICLE_CONE),
+            view("cone", "Gott and Alpert's planet", "$a$", [surface], fig.done(), settings=settings)]
 
 
 def frw(ck, src):
@@ -8404,6 +8510,7 @@ DRAWN = {
     "kerr_newman": kerr_newman,
     "kerr_de_sitter": kerr_de_sitter,
     "cosmic_string": cosmic_string,
+    "point_particle_2plus1": point_particle_2plus1,
     "frw": frw,
     "milne": milne,
     "domain_wall": domain_wall,
@@ -9213,6 +9320,13 @@ CAPTIONS = {
         "without stretching, every distance from the apex and every circle keeping its length. Laid flat it is a "
         "plane missing the wedge between the cut's two edges, the deficit angle $\\delta = 8\\pi G\\mu/c^2 = 36°$.",
     ],
+    ("point_particle_2plus1", "unroll"): [
+        "Space around a point particle ($\\alpha = 3/4$) at one moment of $t$, a cone, cut along $\\phi = 0$ and "
+        "unrolled onto the plane without stretching, every distance from the apex and every circle keeping its "
+        "length. Laid flat it is a plane missing the wedge between the cut's two edges, the deficit angle "
+        "$\\delta = 2\\pi(1 - \\alpha) = 90°$, with the two edges one line. Eight such particles at rest close "
+        "space into the surface of a cube, one at each corner.",
+    ],
     ("kaluza_klein_monopole", "cigar"): [
         "The surface of $r$ and $x_5$ on the half axis $\\theta = 0$ of the Kaluza-Klein monopole at one moment "
         "of $t$, drawn as a surface in flat space with every distance along it the metric distance. On it the "
@@ -9397,6 +9511,17 @@ CAPTIONS = {
         "The surface is Flamm's paraboloid $z^2 = 4(r_s - r_d)(r - r_s)$, with its throat, the bifurcation sphere "
         "$r = r_s$, of radius $r_s - r_d$. At the extremal charge $r_d = r_s$ the throat closes to a point and the "
         "moment is a flat plane.",
+    ],
+    ("point_particle_2plus1", "cone"): [
+        "Space around a mass at one moment of $t$, drawn as a surface in flat space with every distance along it "
+        "the metric distance. The circle of radius $r$ about a point particle has circumference "
+        "$2\\pi\\alpha r$, short of $2\\pi r$, so the surface is a cone of half angle $\\arcsin\\alpha$, flat "
+        "everywhere but at its apex. Cut along a line from the apex and laid flat, it is a plane with a wedge of "
+        "angle $\\delta = 2\\pi(1 - \\alpha) = 8\\pi Gm/c^2$ missing.",
+        "Gott and Alpert's planet, dust of uniform density at rest, rounds the apex off. Its space is a cap of a "
+        "sphere of radius $a$, with $a^{-2} = 8\\pi G\\sigma/c^2$ and $\\sigma$ the planet's mass per unit area, and it "
+        "meets the cone with one tangent at $\\chi_0$, where $\\cos\\chi_0 = \\alpha$. A heavier planet covers "
+        "more of its sphere, and at $m = c^2/4G$ it is a hemisphere and the cone outside it a cylinder.",
     ],
     ("cosmic_string", "cone"): [
         "The plane $z = 0$ across a straight cosmic string at one moment of $t$, drawn as a surface in flat "

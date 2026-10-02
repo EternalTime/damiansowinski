@@ -91,6 +91,15 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `conical`, the half plane of the ideal string: the line $T = 0$ from the string to $r = 3\ell$, which is the reference cone together with the sheet.
 - `gott`, the half plane with the core, in the proper distance $\rho$: the line $T = 0$ from the axis to $\rho = \ell\chi_0 + 3\ell - \ell\tan\chi_0$, through the edge of the core.
 
+### Point particles in three dimensions
+
+- The embedding is space itself at one moment of $t$, drawn at $t = 0$ and $\alpha = 3/4$: the cone outside Gott and Alpert's planet from $r = a\tan\chi_0$ to $3a$, the planet, and under the planet the ideal particle's cone as a reference; the ideal particle's cone unrolled is the same moment.
+- `conical/radial` and `wedge/radial`: the line $t = 0$ from the particle to $r = 3a$; `circumference/radial`, the same to $R = \alpha r = 2.25\,a$; `isotropic/radial`, to $\rho = (\alpha r)^{1/\alpha} = 2.95\,a$ with $\ell = a$.
+- `planet/radial`: the line $t = 0$ from the centre to the edge $\chi_0$, the planet's moment alone.
+- The figure `beam` is space itself seen from overhead with $t$ left out, so the moment is the whole drawing.
+- The conformal views of the four charts of one particle: the line $T = 0$ from the particle to $r = 3a$; `planet`, in the proper distance from the centre, the line $T = 0$ through the edge of the planet.
+- Not visible on the two bodies' views, which are another spacetime, or on the moving particle's figure, whose moments of $t$ are not moments of the rest frame.
+
 ### The spinning string
 
 - The embedding is the plane $z = 0$ at the moment $t = 0$ outside the null circle, from $r = r_c$ to $5\,r_c$, read in the circumference radius chart, whose $R = \sqrt{b^2r^2 - a^2}$.
@@ -562,6 +571,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Morris-Thorne | line | none | line, line |
 | Natário | line | none | none drawn |
 | Oppenheimer-Snyder | four lines, four curves | none | four curves |
+| point particles in three dimensions | five lines; not visible on the two bodies' views | whole drawing; not visible on the moving wedge | five lines; not visible on the two bodies' view |
 | pp-wave | four null lines | none | none drawn |
 | Reissner-Nordström | two lines once redrawn at $r_q = 0.48\,r_s$ | none | two lines, twice |
 | Bardeen | two lines, two curves four times | none | two lines, three times |

@@ -983,6 +983,22 @@ DIMENSIONS = {
     ("hartle_thorne", "painleve_gullstrand"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "R": "L",
     },
+    # Three dimensions, where 4Gm/c^2 is a pure number, so alpha = 1 - 4Gm/c^2 is one too. The
+    # isotropic radius and the isotropic x and y are lengths, measured in the arbitrary length ell,
+    # as are the coordinate distances rho_1 and rho_2 from two particles at rest and half their
+    # separation d; the moving particle's v is a speed and its gamma a number.
+    ("point_particle_2plus1", "conical"): {"t": "T", "r": "L", "\\phi": "1", "\\alpha": "1"},
+    ("point_particle_2plus1", "wedge"): {"t": "T", "r": "L", "\\theta": "1", "\\alpha": "1"},
+    ("point_particle_2plus1", "circumference"): {"t": "T", "R": "L", "\\phi": "1", "\\alpha": "1"},
+    ("point_particle_2plus1", "planet"): {"t": "T", "\\chi": "1", "\\phi": "1", "a": "L", "\\chi_0": "1"},
+    ("point_particle_2plus1", "isotropic"): {"t": "T", "\\rho": "L", "\\phi": "1", "\\alpha": "1", "\\ell": "L"},
+    ("point_particle_2plus1", "two_bodies"): {
+        "t": "T", "x": "L", "y": "L", "\\alpha_1": "1", "\\alpha_2": "1", "d": "L", "\\ell": "L",
+        "\\rho_1": "L", "\\rho_2": "L", "\\Omega": "1",
+    },
+    ("point_particle_2plus1", "moving"): {
+        "t": "T", "x": "L", "y": "L", "\\alpha": "1", "v": "L/T", "\\gamma": "1",
+    },
 }
 
 # What a field carries when every coordinate is a length; the indices supply the rest.

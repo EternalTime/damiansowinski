@@ -6977,6 +6977,123 @@ def cosmic_string(ck, src):
     return views
 
 
+def point_particle_2plus1(ck, src):
+    """A point particle in three dimensions at alpha = 3/4, the particle its cone is embedded at.
+    The half plane of fixed angle is flat and totally geodesic, -c^2dt^2 + dr^2 in the proper
+    distance r from the particle, which is the conical chart's own radius and the wedge chart's,
+    and (ell/alpha)(rho/ell)^alpha in the isotropic chart, so p, q = arctan((ct -+ r)/ell) bring it
+    into Minkowski's half diamond, one view for each of those charts, the particle's world line
+    on its left edge. Two particles at rest are drawn on the plane through both, y = 0, where the
+    metric is -c^2dt^2 + Omega dx^2 and the proper distance s from the midpoint,
+    nr._two_particles_distance, runs over the whole line: Minkowski's diamond, with the two
+    world lines at s = +-1.198 d."""
+    fold = 0.75
+    charts = (("conical", "Conical", ("t", "r"), {"phi": "0"}, {"alpha": "3/4"}, lambda x: x,
+               "$r$", "$r$ constant, the proper distance from the particle"),
+              ("wedge", "Wedge removed", ("t", "r"), {"theta": "0"}, {"alpha": "3/4"}, lambda x: x,
+               "$r$", "$r$ constant, the proper distance from the particle"),
+              ("circumference", "Circumference radius", ("t", "R"), {"phi": "0"}, {"alpha": "3/4"},
+               lambda x: np.asarray(x, dtype=float) / fold, "$R$", "$R$ constant, at the proper distance $R/\\alpha$"),
+              ("isotropic", "Isotropic", ("t", "\\rho"), {"phi": "0"}, {"alpha": "3/4", "ell": 1},
+               lambda x: np.asarray(x, dtype=float) ** fold / fold,
+               "$\\rho$", "$\\rho$ constant, at the proper distance $(\\ell/\\alpha)(\\rho/\\ell)^\\alpha$"))
+    box = [-0.5, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS = (-4, -2, -1, 0, 1, 2, 4)
+    views = []
+    for system, label, plane, fixed, at, radius, name, r_legend in charts:
+        pl = Plane(src, "point_particle_2plus1", system, plane, fixed, at)
+        ck.chart(f"point particle, {system}", pl, lambda t, x, radius=radius: mink_pq(t, radius(x)),
+                 ck.uniform(-20, 20), ck.uniform(0.02, 20), lambda t, x: (1, 0))
+        v = View(system, label, box, system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda x, t, radius=radius: mink_pq(t, radius(x)), (0.5, 1, 2, 4), S_ALL)
+        grid(v, "t", mink_pq, TS, S_POS)
+        triangle_edges(v, centre=None, centre_class="surface")
+        v.label_xt([0, -0.4], "the particle", "r", "small", dx=-6)
+        v.legend("cover", f"the region that $t$ and {name} cover")
+        v.legend("r", r_legend)
+        v.legend("t", "$ct$ constant")
+        v.legend("surface", "the particle, a conical singularity")
+        v.set(settings="$\\alpha = 3/4$, and $\\ell = 1$, the unit of every length.",
+              restriction="The half plane of fixed $" + ("\\theta" if system == "wedge" else "\\phi")
+                          + "$ only, totally geodesic, each point in the diagram a circle around the particle.")
+        for m in slices.moments("point_particle_2plus1"):
+            r = np.linspace(*m.reach("conical", "r", reference=True), 2)
+            v.slice(m, [mink_pq(0 * r, r)])
+        views.append(v)
+
+    # Gott and Alpert's planet, in the proper distance s from its centre: a chi inside, and
+    # a chi_0 + r - a tan(chi_0) outside, the edge r = a tan(chi_0) being where the circles agree.
+    chi0 = float(np.arccos(fold))
+    shift = chi0 - np.tan(chi0)
+    cap = Plane(src, "point_particle_2plus1", "planet", ("t", "\\chi"), {"phi": "0"}, {"a": 1})
+    ck.chart("point particle, Gott and Alpert's planet", cap, mink_pq, ck.uniform(-20, 20), ck.uniform(0.001, chi0),
+             lambda t, c: (1, 0))
+    ck.finite("point particle: the curvature of the planet is finite at its centre",
+              cap.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    v = View("planet", "Uniform planet", [-0.35] + box[1:], "planet")
+    v.fill("region", TRIANGLE)
+    pc, qc = mink_pq(S_ALL, chi0)
+    edge = [point(p, q) for p, q in zip(pc, qc)]
+    v.fill("cover2", TRIANGLE)
+    v.fill("star", [[0, -PI]] + edge + [[0, PI]])
+    for c in (0.25, 0.5):
+        v.curve("r2", *mink_pq(S_ALL, c))
+    for r in (1, 2, 4):
+        v.curve("r", *mink_pq(S_ALL, r + shift))
+    grid(v, "t", mink_pq, TS, S_POS)
+    v.curve("surface", pc, qc)
+    triangle_edges(v, centre="$\\chi = 0$")
+    v.legend("star", "the planet, $\\chi \\le \\chi_0$, which $t$ and $\\chi$ cover")
+    v.legend("cover2", "the cone outside it")
+    v.legend("surface", "the edge of the planet, $\\chi = \\chi_0$")
+    v.legend("r2", "$\\chi$ constant")
+    v.legend("r", "$r$ constant, at $a$, $2a$ and $4a$")
+    v.legend("t", "$ct$ constant")
+    v.legend("centre", "$\\chi = 0$, a regular centre")
+    v.set(settings="$\\alpha = 3/4$, so that $\\cos\\chi_0 = 3/4$, and $a = 1$, the unit of every length.",
+          restriction="The half plane of fixed $\\phi$ only, in the proper distance from the center, each point in "
+                      "the diagram a circle around it.")
+    planet = slices.moments("point_particle_2plus1", "cone")[0]
+    if abs(planet.reach("planet", "\\chi")[1] - chi0) > 1e-12:
+        raise SystemExit("point particle: the embedding's planet is not the planet drawn here")
+    s_ = np.array([0.0, chi0, planet.reach("conical", "r", reference=True)[1] + shift])
+    v.slice(planet, [mink_pq(0 * s_, s_)])
+    views.append(v)
+
+    # Two particles at rest, on the line through both.
+    distance = nr._two_particles_distance
+    pl = Plane(src, "point_particle_2plus1", "two_bodies", ("t", "x"), {"y": "0"}, nr.TWO_PARTICLES)
+    # On y = 0 sympy writes Omega as 1/|sqrt(x - d) sqrt(x + d)|, whose roots numpy cannot take to the
+    # left of a particle; the same number is |x^2 - d^2|^(-1/2), which it can.
+    real = lambda e: e.replace(lambda u: isinstance(u, sp.Abs), lambda u: sp.sqrt(sp.Abs(sp.expand(u.args[0] ** 2))))
+    pl.g, pl.gi = pl.g.applyfunc(real), pl.gi.applyfunc(real)
+    pl._metric = pl.lambdify([pl.g[0, 0], pl.g[0, 1], pl.g[1, 1], pl.gi[0, 0], pl.gi[0, 1], pl.gi[1, 1]])
+    for name, lo, hi in (("between the particles", -0.98, 0.98), ("beyond the particle at d", 1.02, 20),
+                         ("beyond the particle at -d", -20, -1.02)):
+        ck.chart(f"point particles, two bodies, {name}", pl, lambda t, x: mink_pq(t, distance(x)),
+                 ck.uniform(-20, 20, 600), ck.uniform(lo, hi, 600), lambda t, x: (1, 0))
+    v = View("two_bodies", "Two bodies at rest", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "two_bodies")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    for x in (-4, -2, 0, 2, 4):
+        v.curve("r", *mink_pq(S_ALL, float(distance(x))))
+    for sign in (1, -1):
+        v.curve("surface", *mink_pq(S_ALL, sign * float(distance(1.0))))
+    grid(v, "t", mink_pq, TS, S_ALL)
+    diamond_edges(v)
+    v.legend("cover", "the region that $t$ and $x$ cover")
+    v.legend("surface", "the particles, at $x = \\pm d$, each a conical singularity")
+    v.legend("r", "$x$ constant, at $0$, $\\pm 2d$ and $\\pm 4d$")
+    v.legend("t", "$ct$ constant")
+    v.set(settings="$\\alpha_1 = \\alpha_2 = 3/4$ and $\\ell = d = 1$, the unit of every length.",
+          restriction="The plane $y = 0$ through both particles only, a plane of symmetry and so totally "
+                      "geodesic, each point in the diagram a single event.")
+    views.append(v)
+    return views
+
+
 def spinning_string(ck, src):
     """The half plane of fixed phi and z of the spinning string, flat and totally geodesic, at
     b = 0.9 and a = 0.9, so that the null circle r_c = a/b is the unit of length. With r the
@@ -11547,6 +11664,7 @@ DRAWN = {
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
+    "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "c_metric": c_metric,
@@ -12934,6 +13052,46 @@ CAPTIONS = {
         "The string's gravity is its deficit angle $\\delta = 8\\pi G\\mu/c^2$, which shows in "
         "the circles of constant $r$ around it: each has circumference $2\\pi(1 - 4G\\mu/c^2)\\,r$, "
         "short of $2\\pi r$ by $\\delta r$.",
+    ],
+    ("point_particle_2plus1", "conical"): [
+        "The half plane of $t$ and $r$ at fixed $\\phi$ ($\\alpha = 3/4$), totally geodesic. The metric on it is "
+        "$-c^2dt^2 + dr^2$, so $p, q = \\arctan((ct \\mp r)/\\ell)$, with $\\ell$ any length, bring it into "
+        "Minkowski's half diamond, with the particle at $r = 0$ in place of a regular centre.",
+        "The particle's gravity is its deficit angle $\\delta = 2\\pi(1 - \\alpha)$, which shows in the circles "
+        "of constant $r$ around it: each has circumference $2\\pi\\alpha r$, short of $2\\pi r$ by $\\delta r$.",
+    ],
+    ("point_particle_2plus1", "wedge"): [
+        "The half plane of $t$ and $r$ at fixed $\\theta$ ($\\alpha = 3/4$), totally geodesic. The metric on it is "
+        "$-c^2dt^2 + dr^2$, so $p, q = \\arctan((ct \\mp r)/\\ell)$ bring it into Minkowski's half diamond, with "
+        "the particle at $r = 0$ in place of a regular centre.",
+        "Each point is a circle around the particle on which $\\theta$ runs to $2\\pi\\alpha$, an arc of "
+        "Minkowski's circle with its two ends joined.",
+    ],
+    ("point_particle_2plus1", "circumference"): [
+        "The half plane of $t$ and $R$ at fixed $\\phi$ ($\\alpha = 3/4$), totally geodesic. The metric on it is "
+        "$-c^2dt^2 + dR^2/\\alpha^2$, which is $-c^2dt^2 + dr^2$ in the proper distance $r = R/\\alpha$ from the "
+        "particle, so $p, q = \\arctan((ct \\mp r)/\\ell)$ bring it into Minkowski's half diamond, with the "
+        "particle on its left edge.",
+    ],
+    ("point_particle_2plus1", "planet"): [
+        "The same half plane with Gott and Alpert's planet, which makes the centre regular. Inside the planet the "
+        "proper distance from the centre is $s = a\\chi$, and outside it is $a\\chi_0 + r - a\\tan\\chi_0$; the edge "
+        "of the planet, $r = a\\tan\\chi_0$, is where the circles inside and outside agree. In $s$ the metric on "
+        "the whole half plane is $-c^2dt^2 + ds^2$, and $p, q = \\arctan((ct \\mp s)/a)$ bring it into Minkowski's "
+        "half diamond.",
+    ],
+    ("point_particle_2plus1", "isotropic"): [
+        "The half plane of $t$ and $\\rho$ at fixed $\\phi$ ($\\alpha = 3/4$), totally geodesic. The metric on it is "
+        "$-c^2dt^2 + (\\rho/\\ell)^{2\\alpha - 2}d\\rho^2$, which is $-c^2dt^2 + dr^2$ in the proper distance "
+        "$r = (\\ell/\\alpha)(\\rho/\\ell)^\\alpha$ from the particle, so $p, q = \\arctan((ct \\mp r)/\\ell)$ bring "
+        "it into Minkowski's half diamond, with the particle on its left edge.",
+    ],
+    ("point_particle_2plus1", "two_bodies"): [
+        "The plane of $t$ and $x$ ($y = 0$) through two particles at rest ($\\alpha_1 = \\alpha_2 = 3/4$, "
+        "$\\ell = d$). The metric on it is $-c^2dt^2 + \\Omega\\,dx^2$, which is $-c^2dt^2 + ds^2$ in the proper "
+        "distance $s$ from the midpoint, $ds = |x^2/d^2 - 1|^{-1/4}dx$, so $p, q = \\arctan((ct \\mp s)/d)$ bring "
+        "it into Minkowski's diamond. The particles' world lines stand $2.40\\,d$ apart, and neither pulls on the "
+        "other.",
     ],
     ("spinning_string", "proper_radius"): [
         "The half plane of $t$ and $r$ at fixed $\\phi$ and $z$ ($b = 0.9$, $a = 0.9\\,r_c$), totally geodesic. The metric on it is $-c^2dt^2 + dr^2$, so $p, q = \\arctan((ct \\mp r)/r_c)$ bring it into Minkowski's half diamond, with the string on its left edge.",

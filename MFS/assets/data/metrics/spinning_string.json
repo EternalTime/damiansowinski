@@ -71,6 +71,11 @@
       "id": "som_raychaudhuri",
       "kind": "family",
       "text": "Soleng's thick string with $M = \\Omega r^2/c$ and $\\rho = r$ all the way out, a homogeneous universe of charged dust in rigid rotation. Its closed timelike curves lie outside $r = c/\\Omega$, where the string's lie inside $r_c$ [soleng1994, som1968]."
+    },
+    {
+      "id": "point_particle_2plus1",
+      "kind": "special_case",
+      "text": "A slice across the string with the spin taken away. Deser, Jackiw, and 't Hooft met the spinning string as a spinning particle in three dimensions, in the paper that gives the cones of the particles without spin [deser1984]."
     }
   ],
   "references": [

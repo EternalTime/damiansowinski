@@ -632,6 +632,10 @@ SPINNING = {"a": "9/10", "b": "9/10"}
 # transverse direction by the pulse A = (ell/2) exp(-4u^2/ell^2), B = 0. In the null conical chart
 # that is the profile F = -2 ell (b r/ell)^(1/b) A'' cos(phi), harmonic on the cone.
 STRING_WAVE = {"b": "1/2", "ell": 1}
+# A point particle in three dimensions of mass c^2/16G, whose deficit angle is a right angle, and
+# two of them at rest at x = +-d, with ell = d the unit of length.
+PARTICLE = {"alpha": "3/4"}
+TWO_PARTICLES = {"alpha_1": "3/4", "alpha_2": "3/4", "d": 1, "ell": 1}
 STRING_WAVE_PULSE = {"A": "exp(-4*u**2)/2", "B": "0"}
 STRING_WAVE_PROFILE = {"F": "-2*(r/2)**2*(32*u**2 - 4)*exp(-4*u**2)*cos(phi)"}
 STRING_WAVE_INPUT = ("The pulse $A = (\\ell/2)\\,e^{-4u^2/\\ell^2}$, $B = 0$ on a string with $b = 1/2$, whose cone "
@@ -1394,6 +1398,27 @@ DIAGRAMS = [
               functions={"rho": "sqrt((X - A)**2 + (Y - B)**2)", **STRING_WAVE_PULSE}, lines=STRING_WAVE_CREST,
               input=STRING_WAVE_INPUT)
       for view, label, X in (("behind", "$X = -\\ell/4$", "-1/4"), ("ahead", "$X = 3\\ell/4$", "3/4"))],
+    # Point particles in three dimensions, on the plane of t and the radius at alpha = 3/4: the
+    # conical chart and the chart with the wedge removed, where every ray runs at 45 degrees, and
+    # the isotropic chart, where ct -+ (ell/alpha)(rho/ell)^alpha are constant. Two particles at rest
+    # are drawn on the plane of t and x through both, y = 0, a plane of symmetry, between them and
+    # beyond one of them, each view ending on a particle, where a ray ends too.
+    Diagram("point_particle_2plus1", "conical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/\\ell$", "$ct/\\ell$", PARTICLE, {"phi": "0"}),
+    Diagram("point_particle_2plus1", "wedge", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/\\ell$", "$ct/\\ell$", PARTICLE, {"theta": "0"}),
+    Diagram("point_particle_2plus1", "circumference", "radial", "$t$ and $R$", ("t", "R"), (0, 4, -2, 2),
+            "$R/\\ell$", "$ct/\\ell$", PARTICLE, {"phi": "0"}),
+    # Gott and Alpert's planet of the same mass, cos(chi_0) = 3/4, from its centre to its edge.
+    Diagram("point_particle_2plus1", "planet", "radial", "$t$ and $\\chi$", ("t", "\\chi"),
+            (0, math.acos(0.75), -math.acos(0.75) / 2, math.acos(0.75) / 2),
+            "$\\chi$", "$ct/a$", {"a": 1, "chi_0": "acos(3/4)"}, {"phi": "0"}),
+    Diagram("point_particle_2plus1", "isotropic", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
+            "$\\rho/\\ell$", "$ct/\\ell$", {**PARTICLE, "ell": 1}, {"phi": "0"}),
+    Diagram("point_particle_2plus1", "two_bodies", "between", "between the particles", ("t", "x"), (-1, 1, -1, 1),
+            "$x/d$", "$ct/d$", TWO_PARTICLES, {"y": "0"}, families=SIDEWAYS),
+    Diagram("point_particle_2plus1", "two_bodies", "beyond", "beyond them", ("t", "x"), (1, 5, -2, 2),
+            "$x/d$", "$ct/d$", TWO_PARTICLES, {"y": "0"}, families=SIDEWAYS),
     Diagram("de_sitter", "static_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
             "$r\\sqrt{\\Lambda/3}$", "$ct\\sqrt{\\Lambda/3}$", {"Lambda": 3}, EQUATOR,
             orient="outgoing", cones=(8, 7), areal=True),
@@ -4429,6 +4454,54 @@ CAPTIONS = {
         "geodesics. The cones close at the horizon $r = r_s$, and inside it every cone points to $r = 0$, where the "
         "Kretschmann scalar diverges.",
     ],
+    ("point_particle_2plus1", "conical", "radial"): [
+        "The plane of $t$ and $r$ ($\\phi = 0$) around a point particle ($\\alpha = 3/4$), each point in the plane "
+        "a circle of circumference $2\\pi\\alpha r$ about the particle. The metric on the plane is "
+        "$-c^2dt^2 + dr^2$, so every ray runs at 45°, a null geodesic of the spacetime, and $\\alpha$ enters only "
+        "$g_{\\phi\\phi}$. The left edge, $r = 0$, is the particle's world line.",
+    ],
+    ("point_particle_2plus1", "wedge", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = 0$), one face of the missing wedge ($\\alpha = 3/4$), with the "
+        "particle's world line on its left edge. The line element is Minkowski's, so every ray runs at 45°, a null "
+        "geodesic of the spacetime, and the particle shows only in the range of $\\theta$, which closes at "
+        "$2\\pi\\alpha$.",
+    ],
+    ("point_particle_2plus1", "circumference", "radial"): [
+        "The plane of $t$ and $R$ ($\\phi = 0$) around a point particle ($\\alpha = 3/4$), each point in the plane "
+        "a circle of circumference $2\\pi R$ about the particle. The metric on the plane is "
+        "$-c^2dt^2 + dR^2/\\alpha^2$, so the rays are the straight lines $ct = \\pm R/\\alpha + $ const, null "
+        "geodesics of the spacetime, steeper than 45° because the circle at $R$ lies $R/\\alpha$ from the "
+        "particle.",
+    ],
+    ("point_particle_2plus1", "planet", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\phi = 0$) inside Gott and Alpert's planet, from its centre to its edge "
+        "at $\\chi_0$ ($\\cos\\chi_0 = 3/4$). The metric on it is $-c^2dt^2 + a^2d\\chi^2$, so every ray runs at "
+        "45° against $a\\chi$, a null geodesic of the spacetime, and the dust of the planet stays where it is: "
+        "$\\Gamma^\\chi{}_{tt} = 0$, so nothing at rest falls toward the centre.",
+    ],
+    ("point_particle_2plus1", "isotropic", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$) around a point particle ($\\alpha = 3/4$). The metric on it is "
+        "$-c^2dt^2 + (\\rho/\\ell)^{2\\alpha - 2}d\\rho^2$, so the rays are the curves "
+        "$ct = \\pm(\\ell/\\alpha)(\\rho/\\ell)^\\alpha + $ const, null geodesics of the spacetime, with cones "
+        "that close toward the particle and open wider than 45° beyond $\\rho = \\ell$.",
+        "The particle, $\\rho = 0$, lies at a finite proper distance, $(\\ell/\\alpha)(\\rho/\\ell)^\\alpha$ from "
+        "the circle at $\\rho$, and a ray reaches it in a finite time.",
+    ],
+    ("point_particle_2plus1", "two_bodies", "between"): [
+        "The plane of $t$ and $x$ ($y = 0$) between two particles at rest at $x = \\pm d$ "
+        "($\\alpha_1 = \\alpha_2 = 3/4$, $\\ell = d$), one on each edge. The metric on it is "
+        "$-c^2dt^2 + \\Omega\\,dx^2$ with $\\Omega = |x^2/d^2 - 1|^{-1/2}$, so the cones close toward each "
+        "particle, which a ray reaches in a finite time: the two are $2.40\\,d$ apart in proper distance. The "
+        "plane is one of symmetry, so no Christoffel symbol turns the rays out of it and they are null geodesics.",
+    ],
+    ("point_particle_2plus1", "two_bodies", "beyond"): [
+        "The plane of $t$ and $x$ ($y = 0$) beyond the particle at $x = d$, which is the left edge, the other "
+        "particle behind it at $x = -d$ ($\\alpha_1 = \\alpha_2 = 3/4$, $\\ell = d$). The metric on it is "
+        "$-c^2dt^2 + \\Omega\\,dx^2$ with $\\Omega = |x^2/d^2 - 1|^{-1/2}$, and the rays are null geodesics, with "
+        "cones that close toward the particle and open past 45° beyond $x = \\sqrt{2}\\,d$.",
+        "Far from both particles $\\Omega$ falls as $d/|x|$, the conformal factor of one particle with "
+        "$\\alpha = \\alpha_1 + \\alpha_2 - 1 = 1/2$, so the two masses add.",
+    ],
     ("levi_civita", "weyl", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Levi-Civita's cylinder ($\\sigma = 1/4$). The metric "
         "on it is $\\rho^{4\\sigma}(-c^2dt^2 + \\rho^{8\\sigma(\\sigma - 1)}d\\rho^2)$, so the rays are the curves "
@@ -7140,6 +7213,21 @@ def _tsw_lstar(l):
     return l + np.sign(l) * np.log(1 + 4 * np.abs(l))
 
 
+def _two_particles_distance(x):
+    """The proper distance from the midpoint along the line through two particles of alpha = 3/4 at
+    x = +-1, the integral of |s^2 - 1|^(-1/4): x F(1/4, 1/2; 3/2; x^2) between them, and beyond
+    either one the same at 1 plus the integral of (4/3)(2 + w^(4/3))^(-1/4) dw up to
+    w = (|x| - 1)^(3/4), which is s = 1 + w^(4/3) and has a smooth integrand."""
+    from scipy.integrate import quad
+    from scipy.special import hyp2f1
+    x = np.asarray(x, float)
+    a = np.abs(x)
+    between = np.minimum(a, 1.0)
+    out = between * hyp2f1(0.25, 0.5, 1.5, between ** 2)
+    beyond = np.vectorize(lambda w: quad(lambda v: 4 / 3 * (2 + v ** (4 / 3)) ** -0.25, 0, w, epsabs=1e-13, epsrel=1e-13)[0])
+    return np.sign(x) * (out + beyond(np.maximum(a - 1.0, 0.0) ** 0.75))
+
+
 CLOSED_FORMS = {
     # Bonnor's beam: a ray with the beam keeps ct - z, or u, and a null curve against it keeps
     # ct + z + A (ct - z), or v + A u, with A the declared profile's value on the plane.
@@ -7390,6 +7478,15 @@ CLOSED_FORMS = {
         (lambda t, r: t + 4 * r ** 0.25, lambda t, r: t - 4 * r ** 0.25, lambda t, r: r > 0.01),
     ("levi_civita", "kasner", "radial"):
         (lambda t, r: t + 3 * np.cbrt(r), lambda t, r: t - 3 * np.cbrt(r), lambda t, r: r > 0.01),
+    ("point_particle_2plus1", "conical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("point_particle_2plus1", "wedge", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("point_particle_2plus1", "circumference", "radial"): (lambda t, R: t + R / 0.75, lambda t, R: t - R / 0.75, None),
+    ("point_particle_2plus1", "planet", "radial"): (lambda t, chi: t + chi, lambda t, chi: t - chi, None),
+    ("point_particle_2plus1", "isotropic", "radial"):
+        (lambda t, r: t + r ** 0.75 / 0.75, lambda t, r: t - r ** 0.75 / 0.75, lambda t, r: r > 0.01),
+    **{("point_particle_2plus1", "two_bodies", view):
+        (lambda t, x: t + _two_particles_distance(x), lambda t, x: t - _two_particles_distance(x),
+         lambda t, x: np.abs(np.abs(x) - 1) > 0.01) for view in ("between", "beyond")},
     ("minkowski", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("minkowski", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("minkowski", "rindler", "tx"):

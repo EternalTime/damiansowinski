@@ -142,7 +142,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "ba5a5c95098e7a00",
+    "version": "c1a227caed5ef371",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -753,7 +753,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "daf69c7e618cd2a5",
+    "version": "8a1d399925aad9d2",
     "diagrams": "b4937a90691eba2b",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
@@ -1404,7 +1404,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "83561f1d7f6a40c2",
+    "version": "14df2836225ee701",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -1745,6 +1745,33 @@
     "diagrams": "06b990c8be409307",
     "conformal": "b71dae1432ee5efb",
     "embedding": "df75b117652b95bd"
+  },
+  {
+    "id": "point_particle_2plus1",
+    "name": "Point Particles in Three Dimensions",
+    "tags": [
+      "point particle",
+      "conical",
+      "angular deficit",
+      "flat",
+      "locally flat",
+      "three-dimensional gravity",
+      "lower-dimensional gravity",
+      "topological defect",
+      "gravitational lensing",
+      "circular symmetry",
+      "static",
+      "stationary",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "three-dimensional",
+      "idealized model"
+    ],
+    "version": "5c33e8cca6b9aa59",
+    "diagrams": "31e9dff1390f00d4",
+    "conformal": "354a17ef203ec712",
+    "embedding": "925f9f623e566c24"
   },
   {
     "id": "pp_wave",
@@ -2171,7 +2198,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "437e2a33caf6ab7c",
+    "version": "c07658d941b94ca4",
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"
@@ -2426,7 +2453,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "605212977dae5271",
+    "version": "8dcfd2c518197330",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
     "embedding": "aa10dc85dcfab188"

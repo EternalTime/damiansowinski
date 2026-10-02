@@ -91,6 +91,11 @@
       "id": "witten_black_hole",
       "kind": "family",
       "text": "A black hole in two dimensions, found in string theory. Times a circle, it is the string dual of the BTZ hole without rotation [horowitz1993]."
+    },
+    {
+      "id": "point_particle_2plus1",
+      "kind": "family",
+      "text": "With no cosmological constant a mass in three dimensions makes a cone and no black hole. Hans-Jürgen Matschull collided two such particles in anti-de Sitter space in 1999 and got this black hole [deser1984, matschull1999]."
     }
   ],
   "references": [
@@ -113,7 +118,8 @@
     "hawking1999rotation",
     "solodukhin2005",
     "damour2007",
-    "aminneborg1996"
+    "aminneborg1996",
+    "matschull1999"
   ],
   "coordinates": [
     {
