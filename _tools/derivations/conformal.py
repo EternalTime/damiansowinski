@@ -16593,6 +16593,82 @@ def hartle_thorne(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the post-Newtonian metric
+
+def ppn_metric(ck, src):
+    """The outside of the declared body, R = 10m at beta = gamma = 1, in the isotropic chart, in the
+    areal chart, and on the equator of the rotating chart, a = 2m, with phi divided out.
+
+    Each plane is static, -A c^2dt^2 + B dr^2, with a tortoise coordinate r_*, nr.ppn_star, that
+    vanishes at the surface and runs without bound, so p, q = arctan((ct -+ r_*)/R) give
+    Minkowski's triangle with the surface of the body on X = 0: there is no horizon, and the body,
+    which this field does not describe, lies beyond that edge. To first order
+    r_* = r - R + (1 + gamma) m ln(r/R), which is checked, and its logarithm is Shapiro's delay.
+    The moment the embedding diagram draws is t = 0 of each chart."""
+    planes = (
+        ("isotropic", "Isotropic", "isotropic", 10.0, EQUATOR, nr.PPN, None,
+         "$m = 1$, $R = 10\\,m$, and $\\beta = \\gamma = 1$; $p = \\arctan((ct - r_*)/R)$ and "
+         "$q = \\arctan((ct + r_*)/R)$, with $r_*$ the tortoise coordinate $dr_*/dr = \\sqrt{-g_{rr}/g_{tt}}$, "
+         "zero at the surface."),
+        ("areal", "Eddington (areal radius)", "areal", 11.0, EQUATOR, nr.PPN_AREAL, None,
+         "$m = 1$, $R = 11\\,m$, and $\\beta = \\gamma = 1$; $p = \\arctan((ct - r_*)/R)$ and "
+         "$q = \\arctan((ct + r_*)/R)$, with $r_*$ the tortoise coordinate $dr_*/dr = \\sqrt{-g_{rr}/g_{tt}}$, "
+         "zero at the surface."),
+        ("rotating", "Rotating body", "rotating", 10.0, {"theta": "pi/2"}, nr.PPN_ROTATING, "phi",
+         "$m = 1$, $R = 10\\,m$, $a = 2m$, $\\beta = \\gamma = 1$, and $\\alpha_1 = 0$; "
+         "$p = \\arctan((ct - r_*)/R)$ and $q = \\arctan((ct + r_*)/R)$, with $r_*$ the tortoise coordinate of "
+         "the metric orthogonal to the circles of $\\phi$, zero at the surface."),
+    )
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    views = []
+    for vid, label, plane_id, R, fixed, params, quotient, settings in planes:
+        plane = Plane(src, "ppn_metric", vid, ("t", "r"), fixed, params, **({"quotient": quotient} if quotient else {}))
+
+        def fmap(t, r, plane_id=plane_id, R=R):
+            return mink_pq(t, nr.ppn_star(r, plane_id), R)
+
+        ck.chart(f"The post-Newtonian metric, {label}", plane, fmap, ck.uniform(-100, 100), ck.uniform(R, 8 * R),
+                 lambda t, r: (1, 0))
+        r = ck.uniform(R, 8 * R)
+        g = plane.metric(0 * r, r)
+        h = 1e-5 * r
+        ck.limit(f"The post-Newtonian metric, {label}: the tortoise coordinate has dr_*/dr = sqrt(-g_rr/g_tt)",
+                 (nr.ppn_star(r + h, plane_id) - nr.ppn_star(r - h, plane_id)) / (2 * h), np.sqrt(-g[2] / g[0]), 1e-6)
+        ck.limit(f"The post-Newtonian metric, {label}: the map puts the surface r = R on X = 0",
+                 [point(*fmap(t, R))[0] for t in (-20.0, 0.0, 20.0)], np.zeros(3), 1e-12)
+        p, q = fmap(np.zeros(1), np.array([1e9]))
+        ck.limit(f"The post-Newtonian metric, {label}: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)",
+                 point(p[0], q[0]), [PI, 0], 1e-3)
+        far = np.array([1e3, 3e3, 1e4]) * R
+        ck.limit(f"The post-Newtonian metric, {label}: r_* is r - R + (1 + gamma) m ln(r/R) to first order",
+                 (nr.ppn_star(far, plane_id) - (far - R)) / (2 * np.log(far / R)), np.ones(3), 2e-2)
+        ck.finite(f"The post-Newtonian metric, {label}: the curvature is finite at the surface",
+                  plane.kretschmann(ck.uniform(-5, 5, 50), R + ck.uniform(1e-6, 1e-3, 50)))
+        radii, times = (1.5 * R, 2 * R, 3 * R, 6 * R), (-40, -20, -10, 0, 10, 20, 40)
+        v = View(vid, label, box, vid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda r, t, fmap=fmap: fmap(t, r), radii, S_ALL)
+        rr = R + np.concatenate([[0.0], np.exp(np.linspace(-6, 12, 300)) - np.exp(-6)])
+        for tt in times:
+            v.curve("t", *fmap(np.full_like(rr, float(tt)), rr))
+        triangle_edges(v, "$r = R$", "surface")
+        label_on(v, fmap(0, 2 * R), "$r = 2R$")
+        v.legend("cover", "the outside of the body, which $t$ and $r$ cover")
+        v.legend("r", "$r$ constant, at $3R/2$, $2R$, $3R$, and $6R$")
+        v.legend("t", "$ct$ constant, at $0$, $\\pm 10$, $\\pm 20$, and $\\pm 40\\,m$")
+        v.legend("surface", "the surface of the body, $r = R$")
+        moment = slices.moments("ppn_metric")[0]
+        lo, hi = moment.reach("isotropic", "r")
+        reach = np.linspace(lo, hi, 200) + (1.0 if vid == "areal" else 0.0)
+        v.slice(moment, [fmap(0 * reach, reach)])
+        v.set(settings=settings, **({"restriction": "The equatorial plane $\\theta = \\pi/2$ only, a totally "
+                                     "geodesic surface, each point in the diagram a circle about the axis. Light "
+                                     "rays of zero angular momentum run at 45 degrees."} if quotient else {}))
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Sultana and Dyer
 
 SD = {"r_s": 1, "eta_0": 3}     # the scale factor is one at eta = 3 r_s, as the other diagrams draw it
@@ -16963,6 +17039,7 @@ DRAWN = {
     "sultana_dyer": sultana_dyer,
     "photon_rocket": photon_rocket,
     "hartle_thorne": hartle_thorne,
+    "ppn_metric": ppn_metric,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -18643,6 +18720,32 @@ CAPTIONS = {
         "universes, each with its own $i^0$ and $\\mathscr{I}^\\pm$, joined at the throat $r = 0$, "
         "where the spheres are smallest. Light crosses the throat at 45°, as it does everywhere "
         "else, so the wormhole has no horizon.",
+    ],
+    ("ppn_metric", "isotropic"): [
+        "The outside of the body ($R = 10\\,m$, $\\beta = \\gamma = 1$) in the isotropic chart, each point in the "
+        "diagram a 2-sphere. With $r_*$ the tortoise coordinate of the plane of $t$ and $r$, zero at the surface, "
+        "$p, q = \\arctan((ct \\mp r_*)/R)$ bring it into Minkowski's triangle.",
+        "The left edge is the surface of the body, a timelike line, with the body beyond it. To first order "
+        "$r_* = r - R + (1 + \\gamma)m\\ln(r/R)$, so a line of constant $r$ stands further from the surface "
+        "than its radius alone would put it, by the logarithm of Shapiro's delay, and every outgoing ray "
+        "reaches $\\mathscr{I}^+$.",
+    ],
+    ("ppn_metric", "areal"): [
+        "The outside of the same body in the areal radius ($R = 11\\,m$, $\\beta = \\gamma = 1$), each point in "
+        "the diagram a 2-sphere of area $4\\pi r^2$. With $r_*$ the tortoise coordinate of the plane of $t$ and "
+        "$r$, zero at the surface, $p, q = \\arctan((ct \\mp r_*)/R)$ bring it into Minkowski's triangle.",
+        "The surface is the left edge, and the triangle is the isotropic chart's with each sphere named by its "
+        "area. The two charts agree on $g_{tt}$ through $m^2$ and on the metric of space through $m$, which "
+        "leaves the lines of constant $r$ of one a little off those of the other near the surface.",
+    ],
+    ("ppn_metric", "rotating"): [
+        "The equatorial plane outside the rotating body ($R = 10\\,m$, $a = 2m$, $\\beta = \\gamma = 1$, "
+        "$\\alpha_1 = 0$) with $\\phi$ divided out, each point in the diagram a circle about the axis. With $r_*$ "
+        "the tortoise coordinate of the metric orthogonal to the circles, zero at the surface, "
+        "$p, q = \\arctan((ct \\mp r_*)/R)$ bring it into Minkowski's triangle.",
+        "A ray of zero angular momentum runs at 45° here while it turns about the axis at "
+        "$d\\phi/d(ct) = 2\\Delta am/(r^3(1 + 2\\gamma m/r))$. The dragging changes the triangle only at the "
+        "square of $am/r^2$, so the lines of constant $r$ stand where the body at rest has them to the eye.",
     ],
     ("hartle_thorne", "hartle_thorne"): [
         "The equatorial plane outside a slowly rotating star ($R = 6\\,m$, $a = m/4$, $q = 4a^2$) with $\\phi$ "

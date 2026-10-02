@@ -1238,6 +1238,19 @@ Amos Ori's vacuum time machine core of 2005: a plane fronted gravitational wave 
 - chart Spacelike Foliation: coordinates $(t, x, y, z)$, $$ds^2 = dx^2 + dy^2 - 2\,dz\,dt + \left(e\left(x^2 + y^2\right) - t\right)dz^2 + 2\left(\left(2e - a\right)x\,dx + \left(2e + a\right)y\,dy\right)dz$$
 - chart Brinkmann: coordinates $(u, v, x, y)$, $$ds^2 = \dfrac{2a\left(x^2 - y^2\right)}{u^2}du^2 - 2\,du\,dv + dx^2 + dy^2$$
 
+### Parametrised Post-Newtonian Metric
+
+The weak gravitational field of a slowly moving body with a number in front of every term, so that each metric theory of gravity is a set of numbers and each experiment in the solar system measures a combination of them. General relativity is the point $\beta = \gamma = 1$, where the metric is Schwarzschild's far from the horizon.
+
+- id: `ppn_metric`
+- tags: static, stationary, spherically symmetric, post-Newtonian, PPN, weak field, approximate solution, tests of general relativity, solar system, light deflection, Shapiro delay, perihelion precession, Nordtvedt effect, alternative theories of gravity, Brans-Dicke, scalar field, isotropic coordinates, frame dragging, gravitomagnetic, rotating, angular momentum, mass, exterior, asymptotically flat, no horizon, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/ppn_metric.json
+- chart Eddington-Robertson-Schiff (isotropic): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{2\beta m^2}{r^2}\right)c^2dt^2 + \left(1 + \dfrac{2\gamma m}{r}\right)\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Standard post-Newtonian gauge (Cartesian): coordinates $(t, x, y, z)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{2\beta m^2}{r^2}\right)c^2dt^2 + \left(1 + \dfrac{2\gamma m}{r}\right)\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Eddington (areal radius): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{2\left(\beta - \gamma\right)m^2}{r^2}\right)c^2dt^2 + \left(1 + \dfrac{2\gamma m}{r}\right)dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
+- chart Rotating body (isotropic): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{2\beta m^2}{r^2}\right)c^2dt^2 + \left(1 + \dfrac{2\gamma m}{r}\right)\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right) - \dfrac{4\Delta am\sin^2\theta}{r}c\,dt\,d\phi$$
+
 ### Kinnersley Photon Rocket
 
 The field of a point mass that accelerates by shining light unevenly, found by William Kinnersley in 1969. Its mass and its acceleration are arbitrary functions of retarded time, the light is null dust that streams out brightest behind it, and no gravitational waves reach infinity.

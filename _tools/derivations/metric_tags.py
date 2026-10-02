@@ -468,7 +468,7 @@ def compute(metric_id, entry, seconds):
     symbols = [reader.symbol[name] for name in coords]
     # A chart kept to an order, as Hartle and Thorne's is to the second in the spin, has its
     # tensors cut to that order as the checker cuts them, and vanishes where they do.
-    geometry = vm.Geometry(g, symbols, seconds, reader if reader.order else None)
+    geometry = vm.geometry_of(g, symbols, seconds, reader)
     n = len(coords)
 
     def zero(expression):

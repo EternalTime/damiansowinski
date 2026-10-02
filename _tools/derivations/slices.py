@@ -1785,6 +1785,17 @@ FLAT = {
         "fisher_jnw", lambda m: along(0.0, *(u / 2 for u in m.reach("harmonic", "u")))),
     ("hartle_thorne", "hartle_thorne", "equator"): lambda: one(
         "hartle_thorne", lambda m: along(0.0, *m.reach("hartle_thorne", "r"))),
+    # The post-Newtonian body: the moment t = 0 of the isotropic chart from the surface out, on the
+    # line through the centre in the Cartesian chart, at the areal radius r + gamma m, and on the
+    # rotating chart's equator, which is the same surface for every spin.
+    ("ppn_metric", "isotropic", "radial"): lambda: one(
+        "ppn_metric", lambda m: along(0.0, *m.reach("isotropic", "r"))),
+    ("ppn_metric", "cartesian", "axis"): lambda: one(
+        "ppn_metric", lambda m: across(0.0, *m.reach("isotropic", "r"))),
+    ("ppn_metric", "areal", "radial"): lambda: one(
+        "ppn_metric", lambda m: along(0.0, *(r + 1 for r in m.reach("isotropic", "r")))),
+    ("ppn_metric", "rotating", "equator"): lambda: one(
+        "ppn_metric", lambda m: along(0.0, *m.reach("isotropic", "r"))),
     # Witten's black hole in two dimensions: the moment t = 0 outside the horizon in each chart, and
     # on both sides of it on the Kruskal plane.
     **{("witten_black_hole", chart, view): (lambda chart=chart: witten(chart))
@@ -2427,6 +2438,7 @@ HIDDEN = {
     ("near_horizon_extreme_kerr", "near_nhek"): "the patch ct > r_0^2/r of the Poincare chart, to the future of the ray that leaves the boundary at t = 0, which the moment tau = 0 embedded does not enter",
     **{("wahlquist", system, "equator"): "the plane with Mars's angle divided out, whose circles each run through every moment of Wahlquist's t"
        for system in ("mars", "mars_ingoing")},
+    ("ppn_metric", "rotating", "axis"): "the axis of rotation, which the embedded equatorial plane does not meet",
     **{("hartle_thorne", system, "axis"): "the axis of rotation, which the embedded equatorial plane does not meet"
        for system in ("hartle_thorne", "painleve_gullstrand")},
     ("hartle_thorne", "painleve_gullstrand", "equator"): "the Painleve-Gullstrand line element, which agrees with Hartle and Thorne's to first order in the spin and no further; the moment embedded is one of Hartle and Thorne's t",

@@ -7107,6 +7107,127 @@
   ],
   "sphere": null
  },
+ "ppn_metric/areal": {
+  "stamp": "1a0521fb1783495e",
+  "relations": {},
+  "orders": [
+   {
+    "m": 2
+   },
+   2,
+   "t"
+  ],
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "ppn_metric/cartesian": {
+  "stamp": "bfe5acf30f62e778",
+  "relations": {},
+  "orders": [
+   {
+    "m": 2
+   },
+   2,
+   "t"
+  ],
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ppn_metric/isotropic": {
+  "stamp": "96eab606f09685c8",
+  "relations": {},
+  "orders": [
+   {
+    "m": 2
+   },
+   2,
+   "t"
+  ],
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "ppn_metric/rotating": {
+  "stamp": "9fb2c60f52d1aceb",
+  "relations": {},
+  "orders": [
+   {
+    "m": 2,
+    "a": 1
+   },
+   2,
+   "t"
+  ],
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "randall_sundrum/conformal": {
   "stamp": "1b04dd79cf90d5d4",
   "relations": {},

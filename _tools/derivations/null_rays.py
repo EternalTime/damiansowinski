@@ -1595,6 +1595,13 @@ TEO_CONE = "future cone of no angular momentum"
 HT_STAR = {"m": 1, "a": "1/4", "q": "1/4", "R": 6}
 HT_SIMPLE = {"m": 1, "a": "1/4", "R": 6}
 HT_AXIS = {"theta": "0", "phi": "0"}
+# The post-Newtonian body at general relativity's point of the plane of beta and gamma, its surface
+# at ten times its mass; the areal chart's radius is the isotropic one plus gamma m, so the same
+# surface is at eleven there. The rotating chart is drawn at a = 2m and alpha_1 = 0, where Delta = 1.
+PPN = {"m": 1, "beta": 1, "gamma": 1, "R": 10}
+PPN_AREAL = {"m": 1, "beta": 1, "gamma": 1, "R": 11}
+PPN_ROTATING = {"m": 1, "a": 2, "beta": 1, "gamma": 1, "alpha_1": 0, "R": 10}
+PPN_SURFACE = "the surface of the body, $r = R$"
 HT_CONE = "future cone of no angular momentum"
 # Wahlquist's fluid at k = 3/10 and b = 4/5, in units of r_0: eta_0 is the root of his h_2, where the
 # axis lies, gamma his c, which keeps the axis regular, and the surface of zero pressure crosses the
@@ -1669,6 +1676,40 @@ def ht_star(r, P2):
     i = np.clip(np.searchsorted(grid, inside, side="right") - 1, 0, grid.size - 1)
     near = table[i] + 0.5 * (speed[i] + _ht_speed(inside, P2)) * (inside - grid[i])
     far = table[-1] + (r - top) + 2 * np.log(np.maximum(r, top + 1) - 2) - 2 * np.log(top - 2)
+    return np.where(r <= top, near, far)
+
+
+# The post-Newtonian body as it is drawn, m = 1 at beta = gamma = 1: the surface of each chart and
+# the speed dr_*/dr = sqrt(g_rr/(-g_tt)) of its tortoise coordinate, on the equator of the rotating
+# chart with phi divided out, where a = 2 and Delta = 1 put 16/(r^4 (1 + 2/r)) beside the lapse.
+PPN_PLANES = {
+    "isotropic": (10.0, lambda r: np.sqrt((1 + 2 / r) / (1 - 2 / r + 2 / r ** 2))),
+    "areal": (11.0, lambda r: np.sqrt((1 + 2 / r) / (1 - 2 / r))),
+    "rotating": (10.0, lambda r: (1 + 2 / r) / np.sqrt((1 - 2 / r + 2 / r ** 2) * (1 + 2 / r) + 16 / r ** 4)),
+}
+
+
+@lru_cache(maxsize=None)
+def _ppn_table(plane):
+    surface, speed = PPN_PLANES[plane]
+    r = surface + np.concatenate([[0.0], np.geomspace(1e-9, 1e4, 400001)])
+    v = speed(r)
+    return r, v, np.concatenate([[0.0], np.cumsum(0.5 * (v[1:] + v[:-1]) * np.diff(r))])
+
+
+def ppn_star(r, plane="isotropic"):
+    """The tortoise coordinate of the post-Newtonian body's plane of t and r as it is drawn, zero at
+    the surface: the quadrature of dr_*/dr by the trapezoid rule on a table and on the last part of a
+    cell. Past the table, 10^4 m beyond the surface, where m^2/r^2 is below 10^-8, it runs on as
+    r + (1 + gamma) m ln r, the first order whose logarithm is Shapiro's delay."""
+    r = np.asarray(r, dtype=float)
+    surface, speed = PPN_PLANES[plane]
+    grid, v, table = _ppn_table(plane)
+    top = grid[-1]
+    inside = np.clip(r, surface, top)
+    i = np.clip(np.searchsorted(grid, inside, side="right") - 1, 0, grid.size - 1)
+    near = table[i] + 0.5 * (v[i] + speed(inside)) * (inside - grid[i])
+    far = table[-1] + (r - top) + 2 * np.log(np.maximum(r, top) / top)
     return np.where(r <= top, near, far)
 
 
@@ -2217,6 +2258,22 @@ DIAGRAMS = [
     Diagram("hartle_thorne", "painleve_gullstrand", "equator", "$t$ and $r$ on the equator", ("t", "r"),
             (6, 14, -4, 4), "$r/m$", "$ct/m$", HT_SIMPLE, {"theta": "pi/2"}, quotient="phi", cone=HT_CONE,
             lines=(("surface", "r", "6", "the surface of the star, $r = R$"),)),
+    # The parametrised post-Newtonian metric from the surface of a body out, at beta = gamma = 1: the
+    # plane of the time and the isotropic radius, the same line through the body's centre in the
+    # Cartesian chart, with the body hatched, the plane of the time and the areal radius, and the
+    # rotating chart on its axis and on its equator with phi divided out.
+    Diagram("ppn_metric", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (10, 26, -8, 8),
+            "$r/m$", "$ct/m$", PPN, EQUATOR, lines=(("surface", "r", "10", PPN_SURFACE),)),
+    Diagram("ppn_metric", "cartesian", "axis", "$t$ and $x$", ("t", "x"), (-26, 26, -26, 26),
+            "$x/m$", "$ct/m$", PPN, {"y": "0", "z": "0"}, families=("leftward", "rightward"), where="x**2 - 100",
+            lines=(("surface", "r", "-10", "the surface of the body, $|x| = R$"), ("surface", "r", "10", None))),
+    Diagram("ppn_metric", "areal", "radial", "$t$ and $r$", ("t", "r"), (11, 27, -8, 8),
+            "$r/m$", "$ct/m$", PPN_AREAL, EQUATOR, lines=(("surface", "r", "11", PPN_SURFACE),)),
+    Diagram("ppn_metric", "rotating", "axis", "$t$ and $r$ on the axis", ("t", "r"), (10, 26, -8, 8),
+            "$r/m$", "$ct/m$", PPN_ROTATING, HT_AXIS, lines=(("surface", "r", "10", PPN_SURFACE),)),
+    Diagram("ppn_metric", "rotating", "equator", "$t$ and $r$ on the equator", ("t", "r"), (10, 26, -8, 8),
+            "$r/m$", "$ct/m$", PPN_ROTATING, {"theta": "pi/2"}, quotient="phi", cone=HT_CONE,
+            lines=(("surface", "r", "10", PPN_SURFACE),)),
     # Witten's black hole in two dimensions, the whole plane in each of its seven charts: outside the
     # horizon in his own proper distance and in the conformal chart, across it to the singularity in
     # the Schwarzschild gauge, in the dilaton chart and in both Eddington-Finkelstein charts, and
@@ -5284,6 +5341,56 @@ CAPTIONS = {
         "An observer falling from rest far away with no angular momentum moves inward at $\\sqrt{2m/r}\\,c$, "
         "midway between the two edges of every cone, and turns about the axis at the same $2amc/r^3$, "
         "which at the surface is a speed of $0.014\\,c$ around it.",
+    ],
+    ("ppn_metric", "isotropic", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) from the surface of the body out "
+        "($R = 10\\,m$, $\\beta = \\gamma = 1$), each point in the diagram a 2-sphere. The edges of the cones are "
+        "$dr/d(ct) = \\pm\\sqrt{(1 - 2m/r + 2\\beta m^2/r^2)/(1 + 2\\gamma m/r)}$, which is "
+        "$\\pm(1 - (1 + \\gamma)m/r)$ to first order in $m/r$.",
+        "The cones are narrowest at the surface, where $dr/d(ct) = \\pm 0.827$, and open to 45° far from the "
+        "body. To first order $ct \\mp \\left(r + (1 + \\gamma)m\\ln(r/R)\\right)$ is constant along a ray, and the "
+        "logarithm is the delay Shapiro proposed to measure: a signal sent in from $r = 26\\,m$ and reflected at "
+        "the surface comes back $3.9\\,m/c$ later than it would across flat spacetime.",
+    ],
+    ("ppn_metric", "cartesian", "axis"): [
+        "The plane of $t$ and $x$ ($y = z = 0$), a line through the centre of the body "
+        "($R = 10\\,m$, $\\beta = \\gamma = 1$), each point in the diagram a single event. The body fills "
+        "$|x| < R$, and the cones on either side of it have the edges "
+        "$dx/d(ct) = \\pm\\sqrt{(1 - 2m/r + 2\\beta m^2/r^2)/(1 + 2\\gamma m/r)}$ with $r = |x|$.",
+        "A ray moving away from the body starts at $0.827\\,c$ in these coordinates and has $0.927\\,c$ by "
+        "$|x| = 26\\,m$. The lapse $1 - 2m/r + 2\\beta m^2/r^2$ slows the clocks near the body and "
+        "$1 + 2\\gamma m/r$ stretches the rulers there, and the two narrow the cones together, each by $m/r$ "
+        "at first order where $\\gamma = 1$.",
+    ],
+    ("ppn_metric", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) from the surface of the body out "
+        "($R = 11\\,m$, $\\beta = \\gamma = 1$), each point in the diagram a 2-sphere of area $4\\pi r^2$. "
+        "The edges of the cones are "
+        "$dr/d(ct) = \\pm\\sqrt{(1 - 2m/r + 2(\\beta - \\gamma)m^2/r^2)/(1 + 2\\gamma m/r)}$.",
+        "The surface is the sphere drawn at $10\\,m$ in the isotropic radius, which is the areal radius less "
+        "$\\gamma m$. The cones there have $dr/d(ct) = \\pm 0.832$, where Schwarzschild's are $\\pm 0.818$ at the "
+        "same areal radius, and the term in $m^2$ drops out of $g_{tt}$ at $\\beta = \\gamma$.",
+    ],
+    ("ppn_metric", "rotating", "axis"): [
+        "The plane of $t$ and $r$ on the axis of rotation ($\\theta = 0$) from the surface of the body out "
+        "($R = 10\\,m$, $a = 2m$, $\\beta = \\gamma = 1$, $\\alpha_1 = 0$). The dragging of frames carries a "
+        "factor $\\sin^2\\theta$ and vanishes on the axis, so these rays are null geodesics that stay on it, "
+        "with the edges $dr/d(ct) = \\pm\\sqrt{(1 - 2m/r + 2\\beta m^2/r^2)/(1 + 2\\gamma m/r)}$ of the body "
+        "at rest.",
+        "The cones are narrowest at the surface, where $dr/d(ct) = \\pm 0.827$, and open to 45° far from the "
+        "body. The chart ends at $r = R$, where the body begins.",
+    ],
+    ("ppn_metric", "rotating", "equator"): [
+        "The plane of $t$ and $r$ on the equator ($\\theta = \\pi/2$) with $\\phi$ divided out, the metric "
+        "orthogonal to the circles of $\\phi$, from the surface of the body out ($R = 10\\,m$, $a = 2m$, "
+        "$\\beta = \\gamma = 1$, $\\alpha_1 = 0$). Its null curves are the shadows on $t$ and $r$ of the null "
+        "geodesics of zero angular momentum, each turning in $\\phi$ at "
+        "$d\\phi/d(ct) = 2\\Delta am/(r^3(1 + 2\\gamma m/r))$, and each cone is the future cone of the "
+        "directions of zero angular momentum.",
+        "At the surface such a ray is carried around the axis at $0.037\\,c$, the dragging of inertial frames, "
+        "whose strength $\\Delta$ is $1$ in general relativity. The edges of the cones there are "
+        "$dr/d(ct) = \\pm 0.827$, as on the axis to three figures, since the dragging enters them at the "
+        "square of $am/r^2$.",
     ],
     ("witten_black_hole", "witten", "radial"): [
         "The plane of $t$ and $r$, each point in the diagram a single event. The edges of the cones are "
@@ -8914,6 +9021,15 @@ def quotient_checks(chart, n=241):
     along a coordinate held fixed, and is counted as contributing nothing; one that multiplied a
     component that does not vanish would leave the check not finite, and the view refused.
     """
+    kept = vm.ORDERS.get((chart.spec.metric, chart.spec.system), ())
+    if len(kept) > 2:
+        # A post-Newtonian chart publishes its Christoffel symbols cut where its metric stops fixing
+        # them, so its lifted rays are geodesics by them only up to the terms left out, which are
+        # smaller by two powers of v/c. The check is made with v/c a hundredth of what is drawn,
+        # each small parameter scaled by that to the power of its order, where those terms are
+        # below GEODESIC and the dragging, one power of v/c down, is a hundred times above it.
+        scaled = {name: f"({chart.spec.params[name]})/{100 ** order}" for name, order in kept[0].items()}
+        chart = Chart(replace(chart.spec, params={**chart.spec.params, **scaled}))
     spec, q = chart.spec, chart.quotient
     r = np.linspace(spec.box[0], spec.box[1], n)[1:-1]
     x0 = np.full_like(r, 0.5)
@@ -11606,6 +11722,10 @@ CLOSED_FORMS.update({
         (lambda t, r: t + wahlquist_star(r, "equator"), lambda t, r: t - wahlquist_star(r, "equator"), lambda t, r: r > 0.02),
     ("wahlquist", "whittaker", "radial"):
         (lambda t, r: t + wahlquist_star(r, "static"), lambda t, r: t - wahlquist_star(r, "static"), None),
+    **{("ppn_metric", system, view): (lambda t, r, plane=plane: t + ppn_star(r, plane),
+                                      lambda t, r, plane=plane: t - ppn_star(r, plane), None)
+       for system, view, plane in (("isotropic", "radial", "isotropic"), ("areal", "radial", "areal"),
+                                   ("rotating", "axis", "isotropic"), ("rotating", "equator", "rotating"))},
     ("hartle_thorne", "painleve_gullstrand", "axis"): (lambda t, r: t + pg_in(r), lambda t, r: t - pg_out(r), None),
     ("hartle_thorne", "painleve_gullstrand", "equator"): (lambda t, r: t + pg_in(r), lambda t, r: t - pg_out(r), None),
 })
