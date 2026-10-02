@@ -6385,6 +6385,54 @@
   ],
   "sphere": null
  },
+ "kerr_melvin/boyer_lindquist": {
+  "stamp": "11c89f11e16e3fe7",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "kerr_melvin/rotating": {
+  "stamp": "8a23a575045347bc",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\tilde\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "kerr_newman/boyer_lindquist": {
   "stamp": "71c1db82e8b9c2b8",
   "relations": {},

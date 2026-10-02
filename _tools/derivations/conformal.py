@@ -93,6 +93,7 @@ from fractions import Fraction
 import sys
 import time
 from pathlib import Path
+from types import SimpleNamespace
 
 import mpmath
 import numpy as np
@@ -5123,23 +5124,31 @@ def kastor_traschen(ck, src):
     return [v]
 
 
-def kerr_axis(ck, src, metric_id, params, name):
+def kerr_axis(ck, src, metric_id, params, name, unit="GM/c^2", factor=1, kretschmann=True):
     """The symmetry axis theta = 0, where the published metric is, in the limit,
     -Delta/(r^2 + a^2) c^2dt^2 + (r^2 + a^2)/Delta dr^2, with g_tt g_rr = -1 checked: a tower
     with two simple roots and no singularity, r running through the ring's disc to a second
     asymptotically flat end at r -> -infinity. That is Carter's diagram of 1966.
+
+    `factor` is a constant the published metric of the axis carries in front of that one, as
+    Ernst and Wild's hole carries the value k of H on its axis, with g_tt g_rr = -factor^2
+    checked, and `unit` the length the legend counts r in. A chart whose published Kretschmann
+    scalar is 0/0 on the axis, as that hole's is, written in a function that vanishes there,
+    passes `kretschmann=False`, and its own tests hold the curvature at r = 0.
     """
     pl = Plane(src, metric_id, "boyer_lindquist", ("t", "r"), {"phi": "0"}, params, axis=("theta", "0"))
-    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+    factor = sp.sympify(factor)
+    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + factor ** 2) == 0
     roots = sorted([x for x in sp.solve(sp.numer(sp.together(pl.gi[1, 1])), pl.x1) if x.is_real], reverse=True)
-    T = Tower(-pl.g[0, 0], pl.x1, roots)
+    T = Tower(-pl.g[0, 0] / factor, pl.x1, roots)
     rp, rm = T.rf
     tower_checks(ck, f"{name} axis", pl, T, -40, 30)
     p, q = T.pq("III", np.array([0.0]), np.array([-1e9]))
     ck.limit(f"{name} axis: r -> -infinity at t = 0 lands on the far i0, (X, T) = (pi, pi)",
              point(p[0], q[0]), [PI, PI], 1e-3)
-    ck.finite(f"{name} axis: the Kretschmann scalar is finite at r = 0 on the axis",
-              pl.kretschmann(np.zeros(3), np.array([-1e-3, 0.0, 1e-3])))
+    if kretschmann:
+        ck.finite(f"{name} axis: the Kretschmann scalar is finite at r = 0 on the axis",
+                  pl.kretschmann(np.zeros(3), np.array([-1e-3, 0.0, 1e-3])))
 
     D = TowerDrawing(T, False, -np.inf)
     box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
@@ -5163,9 +5172,9 @@ def kerr_axis(ck, src, metric_id, params, name):
                       "surface; on the axis $r$ runs through the centre of the ring's disc to $r < 0$.")
     v.legend("cover", "the exterior $r > r_+$, which $t$ and $r$ cover")
     v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
-                  "in units of $GM/c^2$")
+                  f"in units of ${unit}$")
     v.legend("t", "$ct$ constant")
-    v.legend("horizon", f"the horizons on the axis, $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,GM/c^2$")
+    v.legend("horizon", f"the horizons on the axis, $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,{unit}$")
     v.legend("centre", "$r = 0$ on the axis, the centre of the ring's disc, where the curvature is finite")
     v.legend("scri", "null infinity, of $r \\to +\\infty$ and of $r \\to -\\infty$")
     # The moment of the embedding's equator meets the axis through the outer bifurcation point.
@@ -5191,9 +5200,15 @@ class EquatorTower(Tower):
     falling as 1/r^2 at infinity, by a Chebyshev series whose last terms must have died away.
     """
 
-    def __init__(self, plane):
+    def __init__(self, plane, factor=1):
+        """`factor` is a positive function of r the plane's metric carries in front of such a
+        one, as Ernst and Wild's equator carries H in front of Kerr's: it changes no null line,
+        so the tower is that of the metric with the factor divided out."""
         r = plane.x1
         assert plane.g[0, 1] == 0
+        if factor != 1:
+            plane = SimpleNamespace(x1=r, g=(plane.g / factor).applyfunc(sp.cancel),
+                                    gi=(plane.gi * factor).applyfunc(sp.cancel))
         delta = sp.Poly(sp.numer(sp.together(plane.gi[1, 1])), r)
         roots = sorted(delta.real_roots(), reverse=True)
         assert len(roots) == 2 and delta.degree() == 2, "the published g^rr has not two simple roots"
@@ -5224,7 +5239,7 @@ class EquatorTower(Tower):
         return super().rstar(r) + self.D(w)
 
 
-def kerr_equator(ck, src, metric_id, params, name):
+def kerr_equator(ck, src, metric_id, params, name, unit="GM/c^2", factor=None, kretschmann=True):
     """The equatorial plane theta = pi/2, a totally geodesic surface of t, r and phi, with phi
     divided out: the published metric there less g_t phi^2/g_phi phi, the metric on the circles
     about the axis, whose null lines are the light rays of no angular momentum. Its t is timelike
@@ -5232,9 +5247,14 @@ def kerr_equator(ck, src, metric_id, params, name):
     where the published Kretschmann scalar diverges: on this surface r = 0 is the ring, a
     timelike singularity in each region inside r_-, and nothing lies beyond it. That is Carter's
     extension of 1968, in which only the equatorial plane meets the singularity.
+
+    `factor` takes the plane and gives a positive function of r its metric carries in front of
+    such a one, as Ernst and Wild's equator carries H in front of Kerr's, and `unit` is the length
+    the legend counts r in. A chart whose published Kretschmann scalar does not evaluate in
+    seconds passes `kretschmann=False`, and its own tests hold the curvature at r = 0.
     """
     pl = Plane(src, metric_id, "boyer_lindquist", ("t", "r"), {"theta": "pi/2"}, params, quotient="phi")
-    T = EquatorTower(pl)
+    T = EquatorTower(pl, factor(pl) if factor else 1)
     rp, rm = T.rf
     tower_checks(ck, f"{name} equatorial plane", pl, T, 0.01, 15)
     rr = np.array([0.05, 0.3, 1.0, 2.0, 7.0])
@@ -5246,10 +5266,11 @@ def kerr_equator(ck, src, metric_id, params, name):
     p, q = T.pq("I", np.array([0.0]), np.array([1e9]))
     ck.limit(f"{name} equatorial plane: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)",
              point(p[0], q[0]), [PI, 0], 1e-3)
-    ck.diverges(f"{name} equatorial plane: the Kretschmann scalar diverges at r = 0, the ring",
-                pl.kretschmann(0, 1e-2), pl.kretschmann(0, 1e-3))
-    ck.finite(f"{name} equatorial plane: the Kretschmann scalar is finite at both horizons",
-              pl.kretschmann(np.zeros(2), np.array([rp, rm])))
+    if kretschmann:
+        ck.diverges(f"{name} equatorial plane: the Kretschmann scalar diverges at r = 0, the ring",
+                    pl.kretschmann(0, 1e-2), pl.kretschmann(0, 1e-3))
+        ck.finite(f"{name} equatorial plane: the Kretschmann scalar is finite at both horizons",
+                  pl.kretschmann(np.zeros(2), np.array([rp, rm])))
 
     D = TowerDrawing(T, True, 0.0)
     box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
@@ -5268,9 +5289,9 @@ def kerr_equator(ck, src, metric_id, params, name):
                       "the diagram a circle about the axis. Light rays of zero angular momentum run at 45 degrees.")
     v.legend("cover", "the exterior $r > r_+$, which $t$ and $r$ cover")
     v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
-                  "in units of $GM/c^2$")
+                  f"in units of ${unit}$")
     v.legend("t", "$ct$ constant")
-    v.legend("horizon", f"the horizons $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,GM/c^2$")
+    v.legend("horizon", f"the horizons $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,{unit}$")
     v.legend("singular", "$r = 0$, the ring, a timelike singularity, where the Kretschmann scalar diverges")
     v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
     # The moment of the embedding's equator lies in this surface, through the outer bifurcation circle.
@@ -5290,6 +5311,39 @@ def kerr(ck, src):
 def kerr_newman(ck, src):
     views = kerr_axis(ck, src, "kerr_newman", {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, "Kerr-Newman")
     views[0].set(settings="$a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$.")
+    return views
+
+
+def kerr_melvin(ck, src):
+    """Ernst and Wild's hole on its axis and on its equator with phi divided out, at a = 4m/5 and
+    B = 1/(4m). The metric of the axis is the constant k = 1 + a^2 m^2 B^4 times that of Kerr's
+    axis, and the metric orthogonal to the circles of the equator is H = (1 + B^2 A/(4 r^2))^2 times
+    Kerr's, each checked against the published metric; a factor changes no null line, so Carter's
+    two towers draw them. Along a ray of the equator the affine parameter grows as the integral of
+    H sqrt(A)/Delta, without bound, so its far edges are the null infinity of the plane, as those
+    of Ernst's hole are. The published Kretschmann scalar is written in P, which vanishes on the
+    axis, and in second derivatives that run to pages written out, so the curvature at r = 0, on
+    the axis and on the ring, is held by _tools/test_kerr_melvin.py."""
+    k = sp.Rational(401, 400)
+    views = kerr_axis(ck, src, "kerr_melvin", nr.KM, "Kerr-Melvin", unit="m", factor=k, kretschmann=False)
+
+    def factor(pl):
+        r = pl.x1
+        delta = r ** 2 - 2 * r + sp.Rational(16, 25)
+        H = sp.cancel(pl.g[1, 1] * delta / r ** 2)
+        A = (r ** 2 + sp.Rational(16, 25)) ** 2 - sp.Rational(16, 25) * delta
+        assert sp.simplify(H - (1 + A / (64 * r ** 2)) ** 2) == 0, "H on the equator is not (1 + B^2 A/(4 r^2))^2"
+        return H
+    views += kerr_equator(ck, src, "kerr_melvin", nr.KM, "Kerr-Melvin", unit="m", factor=factor, kretschmann=False)
+    for view in views:
+        view.set(settings="$a = 4m/5$ and $B = 1/(4m)$.")
+    views[0].set(restriction="The symmetry axis $\\theta = 0$ only, a totally geodesic surface, along which the "
+                             "magnetic field runs. The ring singularity is at $r = 0$ in the equatorial plane "
+                             "$\\theta = \\pi/2$, off this surface; on the axis $r$ runs through the centre of the "
+                             "ring's disc to $r < 0$.")
+    for item in views[1].legend_items:
+        if item[1] == "scri":
+            item[2] = "null infinity of the plane, $\\mathscr{I}^\\pm$"
     return views
 
 
@@ -21806,7 +21860,8 @@ DRAWN = {
     "ads_soliton": ads_soliton,
     "coleman_de_luccia": coleman_de_luccia,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
-    "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "de_sitter": de_sitter,
+    "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
+    "de_sitter": de_sitter,
     "elliptic_de_sitter": elliptic_de_sitter,
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
@@ -23403,6 +23458,23 @@ CAPTIONS = {
         "The equatorial plane $\\theta = \\pi/2$ of the maximally extended Kerr spacetime ($a = 0.9\\,GM/c^2$), "
         "each point in the diagram a circle about the axis, after Brandon Carter (1968). The ring singularity is "
         "the timelike edge $r = 0$ of each region inside $r_-$, and on the symmetry axis $r = 0$ is a regular point.",
+    ],
+    ("kerr_melvin", "axis"): [
+        "The symmetry axis $\\theta = 0$ of Ernst and Wild's black hole, maximally extended ($a = 4m/5$, "
+        "$B = 1/(4m)$): the surface the rotations leave fixed, and so totally geodesic. On it the metric is the "
+        "constant $k$ times that of Kerr's axis, $-\\frac{\\Delta}{r^2 + a^2}c^2dt^2 + \\frac{r^2 + a^2}{\\Delta}dr^2$, "
+        "so the two simple roots of $\\Delta$ give it Kerr's tower, which Brandon Carter drew in 1966.",
+        "As Kerr's does, the axis runs through the centre of the ring's disc into $r < 0$. The magnetic field "
+        "runs along it, and the coordinates $t$ and $r > r_+$ cover the exterior.",
+    ],
+    ("kerr_melvin", "equator"): [
+        "The equatorial plane $\\theta = \\pi/2$ of Ernst and Wild's black hole, maximally extended ($a = 4m/5$, "
+        "$B = 1/(4m)$), with $\\phi$ divided out, each point in the diagram a circle about the axis. The metric "
+        "orthogonal to the circles is $H$ times that of Kerr's equator, and a factor changes no null direction, so "
+        "Brandon Carter's diagram of 1968 draws it.",
+        "A light ray reaches $r \\to \\infty$ only at an infinite value of its affine parameter, so the far edges "
+        "are the null infinity of the plane, although the circles about the axis shrink to zero there. The ring "
+        "singularity is the timelike edge $r = 0$ of each region inside $r_-$.",
     ],
     ("kerr_newman", "axis"): [
         "The symmetry axis $\\theta = 0$ of the maximally extended Kerr-Newman spacetime, "

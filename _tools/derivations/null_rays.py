@@ -1116,6 +1116,16 @@ CX_KERR = {"m": 1, "a": "4/5"}
 # in units of m, so that r_+ = 9/4 and r_- = -1/4 and no ring singularity is left.
 KTN = {"m": 1, "a": 1, "l": "5/4"}
 
+# Ernst and Wild's Kerr hole in Melvin's universe as its diagrams draw it: a = 4m/5, so that the
+# horizons are r_+ = 8m/5 and r_- = 2m/5, in the field B = 1/(4m) of Ernst's hole on the melvin page,
+# where k = 401/400. KM_TURNING turns the second chart with the horizon, Omega = omega_+/k with
+# omega_+ = a/(2 m r_+) + a m B^4 (r_+ + m)/2 = 813/3200. KM_STRONG is the field B = 3/(4m) of the
+# figure of the ergoregion, strong enough that the tube beside the axis begins four m from the hole.
+KM = {"m": 1, "a": "4/5", "B": "1/4"}
+KM_TURNING = {**KM, "Omega": "813/3208"}
+KM_STRONG = {"m": 1, "a": "4/5", "B": "3/4"}
+KM_CONE = "future cone of no angular momentum"
+
 # The Aichelburg-Sexl shock on the plane of u and v at three distances from the source, in units
 # of 8GE/c^4 with rho_0 = 8GE/c^4: each ray moving left jumps along the shock by -ln(rho/rho_0),
 # ln 2, ln 8 and ln 32, the same step of ln 4 between neighbours. The delta is drawn as a pulse of
@@ -4100,6 +4110,19 @@ DIAGRAMS = [
     Diagram("melvin", "ernst", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1, "B": "1/2"}, EQUATOR, orient="ingoing",
             lines=(("surface", "r", "4", "$r = 2/B$, the widest circle of the equator"),)),
+    # Ernst and Wild's Kerr hole in Melvin's universe. The axis, whose plane of t and r is Kerr's
+    # times the constant k, and the equator with the circles of phi divided out, whose plane is
+    # Kerr's times H: the rays of both are Kerr's, and the field shows in the ergosurface. The
+    # second chart turns with the horizon, and its g_tt is negative from the horizon out on the equator.
+    Diagram("kerr_melvin", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", KM, {"theta": "0", "phi": "0"}, orient="ingoing"),
+    Diagram("kerr_melvin", "boyer_lindquist", "equator", "the equator, $\\phi$ divided out", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", KM, {"theta": "pi/2"}, orient="ingoing", quotient="phi",
+            mark_gtt="the ergosurface", cone=KM_CONE),
+    Diagram("kerr_melvin", "rotating", "radial", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", KM_TURNING, {"theta": "0", "tildephi": "0"}, orient="ingoing"),
+    Diagram("kerr_melvin", "rotating", "equator", "the equator, $\\tilde\\phi$ divided out", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", KM_TURNING, {"theta": "pi/2"}, orient="ingoing", quotient="tildephi", cone=KM_CONE),
     # Levi-Civita's plane of t and its radius at sigma = 1/4, where the Kasner exponents are
     # (2/3, 2/3, -1/3), in Weyl's coordinates and in the Kasner form, whose r is the proper distance.
     Diagram("levi_civita", "weyl", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
@@ -9706,6 +9729,52 @@ CAPTIONS = {
         "On the equator and on the axis no Christoffel symbol turns them out of the plane, so there they are null "
         "geodesics. The cones close at the horizon $r = r_s$, and inside it every cone points to $r = 0$, where the "
         "Kretschmann scalar diverges.",
+    ],
+    ("kerr_melvin", "boyer_lindquist", "radial"): [
+        "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$) of Ernst and Wild's black hole ($a = 4m/5$, "
+        "$B = 1/(4m)$). On the axis $H = k$ and $A = (r^2 + a^2)^2$, so the metric on the plane is the constant $k$ "
+        "times that of Kerr's axis, $-\\Delta\\,c^2dt^2/(r^2 + a^2) + (r^2 + a^2)\\,dr^2/\\Delta$, and the rays are "
+        "Kerr's, $dr/d(ct) = \\pm\\Delta/(r^2 + a^2)$. No Christoffel symbol turns them out of the plane, so they are "
+        "null geodesics. The cones close where $\\Delta$ vanishes, at $r_+ = 8m/5$ and at $r_- = 2m/5$, and between them "
+        "they point to smaller $r$, following the ingoing family.",
+        "The domain of the chart begins at $r_+$. The magnetic field runs along this axis and leaves the plane "
+        "Kerr's but for $k$; the ergoregion that reaches infinity lies off it, in a tube beside the axis, where "
+        "$g_{tt} > 0$.",
+    ],
+    ("kerr_melvin", "boyer_lindquist", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Ernst and Wild's black hole drawn in $t$ and $r$ with $\\phi$ "
+        "divided out ($a = 4m/5$, $B = 1/(4m)$): the metric orthogonal to the circles of $\\phi$, which is $H$ times "
+        "Kerr's. Its null curves are the shadows on $t$ and $r$ of the null geodesics of zero angular momentum, each "
+        "turning in $\\phi$ at $d\\phi/d(ct) = \\omega/k$, and each cone is the future cone of the directions of zero "
+        "angular momentum. They run at $dr/d(ct) = \\pm\\Delta/\\sqrt{A}$, as Kerr's do, and the cones close at "
+        "$r_+ = 8m/5$ and $r_- = 2m/5$.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = 1.942\\,m$, and between it and $r_+$ no observer "
+        "keeps $\\phi$ fixed. In Kerr's metric it stands at $r = 2m$, and the field draws it in. The dragging rate "
+        "$\\omega$ falls with $r$ as Kerr's does out to $r = 7.95\\,m$, where the circle of $\\phi$ is widest, and grows "
+        "beyond, as $3amB^4r/8$ far away. Inside $r_-$ every ray ends at $r = 0$, the ring, where the curvature grows "
+        "without bound.",
+    ],
+    ("kerr_melvin", "rotating", "radial"): [
+        "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$) of Ernst and Wild's black hole ($a = 4m/5$, "
+        "$B = 1/(4m)$). On the axis $H = k$ and $A = (r^2 + a^2)^2$, so the metric on the plane is the constant $k$ "
+        "times that of Kerr's axis, $-\\Delta\\,c^2dt^2/(r^2 + a^2) + (r^2 + a^2)\\,dr^2/\\Delta$, and the rays are "
+        "Kerr's, $dr/d(ct) = \\pm\\Delta/(r^2 + a^2)$. No Christoffel symbol turns them out of the plane, so they are "
+        "null geodesics. The cones close where $\\Delta$ vanishes, at $r_+ = 8m/5$ and at $r_- = 2m/5$, and between them "
+        "they point to smaller $r$, following the ingoing family.",
+        "The axis is fixed by the rotation, so the plane is the same for every rate $\\Omega$ at which the azimuth "
+        "turns, and the domain of the chart begins at $r_+$.",
+    ],
+    ("kerr_melvin", "rotating", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Ernst and Wild's black hole drawn in $t$ and $r$ with "
+        "$\\tilde\\phi$ divided out ($a = 4m/5$, $B = 1/(4m)$), for the azimuth that turns with the horizon, "
+        "$\\Omega = \\omega/k$ at $r_+$, which is $0.2534/m$. The metric orthogonal to the circles is the same for "
+        "every $\\Omega$, $H$ times Kerr's, so the rays are those of the chart at rest, $dr/d(ct) = \\pm\\Delta/\\sqrt{A}$, "
+        "each turning in $\\tilde\\phi$ at $d\\tilde\\phi/d(ct) = \\omega/k - \\Omega$, and each cone is the future cone "
+        "of the directions of zero angular momentum.",
+        "In this chart $\\partial_t$ is the null generator of the horizon, and on the equator $g_{tt}$ is negative "
+        "from $r_+$ all the way out: an observer can turn with the hole at every radius. Around Kerr's hole the same "
+        "observer would outrun light at $r = 2.87\\,m$; here $H$ grows as $B^4r^4/16$ and shrinks the circles before "
+        "that can happen.",
     ],
     ("point_particle_2plus1", "conical", "radial"): [
         "The plane of $t$ and $r$ ($\\phi = 0$) around a point particle ($\\alpha = 3/4$), each point in the plane "

@@ -76,6 +76,11 @@
       "id": "kasner_magnetic",
       "kind": "dual",
       "text": "Melvin's universe with its radius continued to imaginary values, which turns the radius into a time. The static bundle of field lines becomes an expanding universe with a uniform field along one axis, the solution Gerald Rosen found in 1962 [kastor2015, rosen1962]."
+    },
+    {
+      "id": "kerr_melvin",
+      "kind": "generalisation",
+      "text": "Ernst's black hole set spinning, by Ernst and Wild in 1976. At $a = 0$ their metric is Ernst's [ernst1976c]."
     }
   ],
   "references": [
