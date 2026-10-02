@@ -2021,6 +2021,207 @@ def tangherlini(ck, src):
     return views
 
 
+class StringHoleTower(Tower):
+    """A chart of the black holes of string theory off extremality, -f dt^2/P^2 + P dr^2/f on the
+    plane of t and r, whose tortoise coordinate is slices.sbc_rstar: A ln|r - r_0| at the event
+    horizon, with A = 1/2k and k its surface gravity, and -S(0) ln r at the inner horizon r = 0,
+    plus a smooth rest integrated by quadrature. The cells I, I', II and IV are Tower's, with II
+    running from r_0 down to r = 0, where r_* -> +infinity."""
+
+    def __init__(self, chart):
+        self.chart = chart
+        self.kp = slices.sbc_kappa(chart)
+        self.rf = [1.0, 0.0]
+
+    def rstar(self, r):
+        return slices.sbc_rstar(self.chart, r)
+
+
+def string_bh_three_four_charges(ck, src):
+    """Five views, one of each chart, at the parameters slices.SBC names.
+
+    Off extremality with unequal charges, the charts of three and of four charges: Kruskal's block
+    by p = -+arctan exp(-k u), q = +-arctan exp(k v) with u, v = ct -+ r_* and k the surface gravity
+    of the event horizon, drawn as far as the chart reaches, the exterior and the region between
+    the horizons, whose upper edges are the inner horizon r = 0. With the three charges equal the
+    areal chart is the Reissner-Nordstrom black hole of five dimensions, f = (1 - r_+^2/rho^2)
+    (1 - r_-^2/rho^2) with simple roots +-r_+ and +-r_-, and Tower draws the whole of it: at
+    r_0 = 3 r_q/4 the horizons are 5/4 and 1 and k_-/k_+ = (5/4)^3. The extreme charts have no
+    surface gravity; their exterior is the diamond p = arctan u, q = arctan v, as Majumdar and
+    Papapetrou's single hole is drawn, with the horizon r = 0 on its two left edges."""
+    five_fixed = {"psi": "pi/2", **EQUATOR}
+    P = slices.SBC
+    views = []
+    box = [-PI - 0.25, PI + 0.25, -PI - 0.25, PI + 0.25]
+    t = spread(-np.inf, np.inf, 500, 10)
+
+    # -- off extremality, unequal charges
+    for chart, label, fixed, words, inner, units in (
+            ("five_charges", "Three charges", five_fixed, "three charges", "$(r_1r_2r_3)^{1/3}$", "$r_1 = r_0/2$, $r_2 = r_0$, and $r_3 = 3r_0/2$"),
+            ("four_charges", "Four charges", EQUATOR, "four charges", "$(r_1r_2r_3r_4)^{1/4}$",
+             "$r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$, and $r_4 = 2r_0$")):
+        plane = Plane(src, "string_bh_three_four_charges", chart, ("t", "r"), fixed, P[chart])
+        assert plane.g[0, 1] == 0
+        Tw = StringHoleTower(chart)
+        name = f"string black hole, {words}"
+        span = 3 / Tw.kp
+        for cell, region, lo, hi, future in (("I", "exterior", 1.001, 8, (1, 0)), ("II", "black hole", 0.01, 0.999, (0, -1)),
+                                             ("IV", "white hole", 0.01, 0.999, (0, 1)),
+                                             ("I'", "other exterior", 1.001, 8, (-1, 0))):
+            ck.chart(f"{name}, {region}", plane, lambda tt, r, cell=cell, Tw=Tw: Tw.pq(cell, tt, r),
+                     ck.uniform(-span, span, 600), ck.uniform(lo, hi, 600), lambda tt, r, future=future: future)
+        q = slices.sbc_charges(chart)
+        S1 = float(np.sqrt(np.prod([1 + a * a for a in q]))) if chart == "five_charges" else float(np.sqrt(np.prod([1 + a for a in q])))
+        ck.limit(f"{name}: the surface gravity is r_0^2/S(r_0) in five dimensions and r_0/2S(r_0) in four",
+                 Tw.kp, 1 / S1 if chart == "five_charges" else 1 / (2 * S1), 1e-12)
+        pp, qq = Tw.pq("I", np.array([0.0]), np.array([1e8]))
+        ck.limit(f"{name}: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(pp[0], qq[0]), [PI, 0], 1e-3)
+        pp, qq = Tw.pq("I", np.array([1.5 / Tw.kp]), np.array([1 + 1e-12]))
+        ck.limit(f"{name}: r -> r_0 at fixed t lands on the bifurcation sphere", point(pp[0], qq[0]), [0, 0], 1e-4)
+        pp, qq = Tw.pq("II", np.array([0.0]), np.array([1e-30]))
+        ck.limit(f"{name}: r -> 0 at fixed t lands on the inner bifurcation sphere, (X, T) = (0, pi)",
+                 point(pp[0], qq[0]), [0, PI], 1e-3)
+        ck.finite(f"{name}: the Kretschmann scalar is finite at r_0 and toward the inner horizon r = 0",
+                  plane.kretschmann(np.zeros(5), np.array([1e-4, 1e-2, 0.999, 1, 1.001])))
+        D = TowerDrawing(Tw, False, 0.0)
+        times = [c / Tw.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+        rI = nice_all(even_radii(Tw, "I", 4, 1.0, np.inf), [1.0])
+        rII = nice_all(even_radii(Tw, "II", 4, 0.0, 1.0), [0.0, 1.0])
+        v = View(chart, label, box, chart)
+        cells = ("IV", "I", "I'", "II")
+        for cell in cells:
+            v.fill("region", D.polygon(cell))
+        for cell in ("I", "II"):
+            v.fill("cover", D.polygon(cell))
+        D.grid(v, "I", rI, times)
+        D.grid(v, "II", rII, times)
+        for cell in cells:
+            D.edges(v, cell)
+        for sx in (1, -1):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * PI, 4), 0.0]})
+            v.label_xt([sx * PI, 0], "$i^0$", "l" if sx > 0 else "r", dx=6 * sx)
+            for dT, text, anchor, dy in ((HALF, "$i^+$", "b", -2), (-HALF, "$i^-$", "t", 2)):
+                v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * HALF, 4), round(dT, 4)]})
+                v.label_xt([sx * HALF, dT], text, anchor + ("l" if sx > 0 else "r"), dx=5 * sx, dy=dy)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-3)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=3)
+            v.label_xt([sx * HALF, 0.3], "exterior", cls="region")
+        v.label_xt([0, HALF + 0.1], "black hole", cls="region")
+        v.label_xt([0, -HALF - 0.1], "white hole", cls="region")
+        v.label_xt([Q4, Q4], "$r = r_0$", "tl", "small", dx=5, dy=1)
+        v.label_xt([Q4, 3 * Q4], "$r = 0$", "bl", "small", dx=5, dy=-1)
+        v.legend("cover", "the exterior and the region between the horizons, which $t$ and $r > 0$ cover")
+        v.legend("r", f"$r$ constant: {listed(rI)} outside and {listed(rII)} between the horizons, in units of $r_0$")
+        v.legend("t", "$t$ constant")
+        v.legend("horizon", "the event horizon $r = r_0$ and the inner horizon $r = 0$, a sphere of circumference "
+                            f"radius {inner}")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        moment = slices.moments("string_bh_three_four_charges", chart)[0]
+        v.slice(moment, [through_bifurcation(Tw, ("I'", "I"), *moment.reach(chart, "r")[::-1])])
+        v.set(settings=f"$r_0 = 1$, the unit of every length, and {units}.")
+        views.append(v)
+
+    # -- three equal charges: the areal chart, the whole of the Reissner-Nordstrom tower of five dimensions
+    pl = Plane(src, "string_bh_three_four_charges", "five_areal", ("t", "\\rho"), five_fixed, P["five_areal"])
+    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+    Tw = Tower(-pl.g[0, 0], pl.x1, [sp.Rational(5, 4), 1, -sp.Rational(5, 4), -1])
+    rp, rm = Tw.rf[0], Tw.rf[1]
+    name = "string black hole, equal charges"
+    ck.chart(f"{name}, exterior", pl, lambda tt, r: Tw.pq("I", tt, r),
+             ck.uniform(-15, 15), ck.uniform(rp + 1e-3, 40), lambda tt, r: (1, 0))
+    ck.chart(f"{name}, between the horizons", pl, lambda tt, r: Tw.pq("II", tt, r),
+             ck.uniform(-15, 15), ck.uniform(rm + 1e-3, rp - 1e-3), lambda tt, r: (0, -1))
+    ck.chart(f"{name}, inside r-", pl, lambda tt, r: Tw.pq("III", tt, r),
+             ck.uniform(-15, 15), ck.uniform(0.01, rm - 1e-3), lambda tt, r: (-1, 0))
+    pp, qq = Tw.pq("III", np.array([-6.0, 0, 6]), np.full(3, 1e-12))
+    ck.limit(f"{name}: rho -> 0 lands on the vertical line X = pi/2", qq - pp, [HALF] * 3, 1e-9)
+    ck.limit(f"{name}: the surface gravities are (r_+^2 - r_-^2)/r_+^3 and (r_+^2 - r_-^2)/r_-^3",
+             [float(k) for k in Tw.kappa[:2]], [0.5625 / 1.25 ** 3, 0.5625], 1e-12)
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at rho = 0", pl.kretschmann(0, 1e-2), pl.kretschmann(0, 1e-3))
+    ck.finite(f"{name}: the Kretschmann scalar is finite at both horizons", pl.kretschmann(np.zeros(2), np.array([rp, rm])))
+    ck.limit(f"{name}: Tower's tortoise coordinate is slices.sbc_areal_rstar",
+             Tw.rstar(np.array([0.4, 1.1, 3.0])), slices.sbc_areal_rstar(np.array([0.4, 1.1, 3.0])), 1e-12)
+    D = TowerDrawing(Tw, True, 0.0)
+    tall = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / Tw.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(Tw, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(Tw, "II", 4, rm, rp), [rm, rp])
+    rIII = nice_all(even_radii(Tw, "III", 3, 0, rm, xmax=HALF), [0, rm])
+    grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
+    v = View("five_areal", "Equal charges", tall, "five_areal")
+    D.draw(v, grids, cover=[("I", False), ("II", False), ("III", False)])
+    D.labels(v, inner="$\\rho < r_q$")
+    v.set(fade={"top": 0.9, "bottom": 0.9})
+    v.legend("cover", "one exterior, one region between the horizons and one inside $r_q$, which $t$ and "
+                      "$\\rho > 0$ cover")
+    v.legend("r", f"$\\rho$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside, "
+                  "in units of $r_q$")
+    v.legend("t", "$t$ constant")
+    v.legend("horizon", "the horizons $r_+ = 5r_q/4$ and $r_- = r_q$, with $r_\\pm$ the radii $\\rho$ of the event "
+                        "horizon and the inner horizon")
+    v.legend("singular", "$\\rho = 0$, a timelike singularity, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    moment = slices.moments("string_bh_three_four_charges", "five_areal")[0]
+    v.slice(moment, [through_bifurcation(Tw, ("I'", "I"), *moment.reach("five_areal", "\\rho")[::-1])])
+    v.set(settings="$r_q = 1$, the unit of every length, and $r_0 = 3r_q/4$, so that $r_+ = 5r_q/4$, $r_- = r_q$, "
+                   "and, with $\\kappa_\\pm$ the surface gravities of the two horizons, "
+                   "$\\kappa_-/\\kappa_+ = (5/4)^3$.")
+    views.append(v)
+
+    # -- the extreme holes: the exterior alone, a diamond with the horizon on its two left edges
+    for chart, label, fixed, words, units in (
+            ("five_extreme", "Extreme, three charges", five_fixed, "extreme, three charges", "$r_1 = r_2/2$ and $r_3 = 2r_2$"),
+            ("four_extreme", "Extreme, four charges", EQUATOR, "extreme, four charges",
+             "$r_1 = r_2/2$, $r_3 = 3r_2/2$, and $r_4 = 2r_2$")):
+        plane = Plane(src, "string_bh_three_four_charges", chart, ("t", "r"), fixed, P[chart])
+        assert plane.g[0, 1] == 0
+        name = f"string black hole, {words}"
+
+        def E(tt, x, chart=chart):
+            rs = slices.sbc_rstar(chart, x)
+            tt = np.asarray(tt, dtype=float)
+            return np.arctan(tt - rs), np.arctan(tt + rs)
+        ck.chart(f"{name}, exterior", plane, E, ck.uniform(-20, 20, 600), ck.uniform(0.02, 40, 600), lambda tt, x: (1, 0))
+        pp, qq = E(np.array([-6.0, 0.0, 6.0]), np.full(3, 1e-9))
+        ck.limit(f"{name}: r -> 0 lands on the horizon p = pi/2", pp, [HALF] * 3, 1e-6)
+        pp, qq = E(np.array([0.0]), np.array([1e8]))
+        ck.limit(f"{name}: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(pp[0], qq[0]), [PI, 0], 1e-3)
+        ck.finite(f"{name}: the Kretschmann scalar is finite toward the horizon r = 0",
+                  plane.kretschmann(np.zeros(3), np.array([1e-4, 1e-3, 1e-2])))
+        v = View(chart, label, box, chart)
+        diamond = [[0, -PI], [-PI, 0], [0, PI], [PI, 0]]
+        v.fill("region", diamond)
+        v.fill("cover", diamond)
+        r_out = (0.2, 0.5, 1.0, 2.0)
+        for x in r_out:
+            v.curve("r", *E(t, np.full_like(t, x)))
+        xs = spread(0.0, np.inf, 600, 16)
+        for tt in (-3.0, -1.0, 0.0, 1.0, 3.0):
+            v.curve("t", *E(np.full_like(xs, tt), xs))
+        v.line("horizon", [[[-PI, 0], [0, PI]], [[0, -PI], [-PI, 0]]])
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx in (((PI, 0), "$i^0$", "l", 6), ((0, PI), "$i^+$", "l", 6), ((0, -PI), "$i^-$", "l", 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(list(at), text, anchor, dx=dx)
+        v.label_xt([3 * Q4 * 2 / 3 + 0.8, HALF], "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+        v.label_xt([3 * Q4 * 2 / 3 + 0.8, -HALF], "$\\mathscr{I}^-$", "tl", dx=4, dy=3)
+        v.label_xt([-HALF, HALF], "$r = 0$", "br", "small", dx=-5, dy=-1)
+        v.label_xt([HALF, 0.45], "exterior", cls="region")
+        v.legend("cover", "the exterior $r > 0$, which $t$ and $r$ cover")
+        v.legend("r", f"$r$ constant, at {listed(r_out)}, in units of $r_2$")
+        v.legend("t", "$t$ constant")
+        v.legend("horizon", "the horizon $r = 0$, across which the spacetime continues")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        moment = slices.moments("string_bh_three_four_charges", chart)[0]
+        lo, hi = moment.reach(chart, "r")
+        rr = np.geomspace(lo, hi, 400)
+        v.slice(moment, [E(np.zeros_like(rr), rr)])
+        v.set(settings=f"$r_2 = 1$, the unit of every length, and {units}.")
+        views.append(v)
+    order = ["five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme"]
+    return sorted(views, key=lambda view: order.index(view.d["id"]))
+
+
 BD = {"r_0": "13/12", "ell": "5/12"}
 BD_PLUS = {"r_0": 1, "ell": 1}
 
@@ -21865,7 +22066,7 @@ DRAWN = {
     "elliptic_de_sitter": elliptic_de_sitter,
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
-    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
+    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "string_bh_three_four_charges": string_bh_three_four_charges, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
@@ -22771,6 +22972,48 @@ CAPTIONS = {
         "The singularity $r = 0$ on $X = 0$ and the conformal boundary on $X = \\pi/2$ are both timelike, and no "
         "horizon lies between them: a light ray crosses from one to the other in the time $R/c$, and every "
         "observer sees the singularity.",
+    ],
+    ("string_bh_three_four_charges", "five_charges"): [
+        "The hole of three charges ($r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$) as far as $t$ and $r > 0$ reach, each "
+        "point in the diagram a 3-sphere. The Kruskal coordinates $U = -e^{-\\kappa u/c}$ and "
+        "$V = e^{\\kappa v/c}$, with $u, v = ct \\mp r_*$, $dr_*/dr = \\sqrt{H_1H_2H_3}/f$, and $\\kappa$ the surface "
+        "gravity of the event horizon, make the metric regular through $r = r_0$, and $p = \\arctan U$, "
+        "$q = \\arctan V$.",
+        "The black hole ends on the inner horizon $r = 0$, a pair of null lines where the 3-spheres have the radius "
+        "$(r_1r_2r_3)^{1/3}$ and the Kretschmann scalar is finite. The spacetime continues across it, as "
+        "Reissner and Nordström's does across its inner horizon.",
+    ],
+    ("string_bh_three_four_charges", "five_extreme"): [
+        "The exterior of the extreme hole of three charges ($r_1 = r_2/2$, $r_3 = 2r_2$), each point in the diagram "
+        "a 3-sphere, with $p, q = \\arctan((ct \\mp r_*)/r_2)$ and $dr_*/dr = \\sqrt{H_1H_2H_3}$. An extreme horizon "
+        "has no surface gravity, so the arctangent stands where Kruskal's exponential would.",
+        "The horizon $r = 0$ is the pair of null lines on the left, and every moment of $t$ runs down the throat to "
+        "their corner, an infinite distance away.",
+    ],
+    ("string_bh_three_four_charges", "five_areal"): [
+        "The hole of three equal charges ($r_0 = 3r_q/4$), maximally extended, each point in the diagram a 3-sphere "
+        "of radius $\\rho$: the Reissner-Nordström black hole of five dimensions. The exterior is drawn as Kruskal "
+        "draws it, and every region is written in the Kruskal coordinate of the event horizon.",
+        "Between the horizons $\\rho$ is the time, and inside $r_-$ the hole is static again, with a timelike "
+        "singularity at $\\rho = 0$ that an observer can avoid. The tower repeats without end, each exterior a "
+        "separate asymptotically flat region.",
+    ],
+    ("string_bh_three_four_charges", "four_charges"): [
+        "The hole of four charges ($r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$, $r_4 = 2r_0$) as far as $t$ and "
+        "$r > 0$ reach, each point in the diagram a 2-sphere. The Kruskal coordinates $U = -e^{-\\kappa u/c}$ and "
+        "$V = e^{\\kappa v/c}$, with $u, v = ct \\mp r_*$, $dr_*/dr = \\sqrt{H_1H_2H_3H_4}/f$, and $\\kappa$ the "
+        "surface gravity of the event horizon, make the metric regular through $r = r_0$, and $p = \\arctan U$, "
+        "$q = \\arctan V$.",
+        "The black hole ends on the inner horizon $r = 0$, a pair of null lines where the spheres have the radius "
+        "$(r_1r_2r_3r_4)^{1/4}$ and the Kretschmann scalar is finite. The spacetime continues across it, as "
+        "Reissner and Nordström's does across its inner horizon.",
+    ],
+    ("string_bh_three_four_charges", "four_extreme"): [
+        "The exterior of the extreme hole of four charges ($r_1 = r_2/2$, $r_3 = 3r_2/2$, $r_4 = 2r_2$), each point "
+        "in the diagram a 2-sphere, with $p, q = \\arctan((ct \\mp r_*)/r_2)$ and $dr_*/dr = \\sqrt{H_1H_2H_3H_4}$. "
+        "An extreme horizon has no surface gravity, so the arctangent stands where Kruskal's exponential would.",
+        "The horizon $r = 0$ is the pair of null lines on the left, and every moment of $t$ runs down the throat to "
+        "their corner, an infinite distance away.",
     ],
     ("tangherlini", "spherical"): [
         "The Schwarzschild-Tangherlini spacetime in five dimensions, maximally extended, each point in the diagram "

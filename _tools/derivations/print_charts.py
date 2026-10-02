@@ -16,8 +16,8 @@ born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, pet
 rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar,
 moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
-tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub and kerr_melvin, and Godel's
-cylindrical chart.
+tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin and
+string_bh_three_four_charges, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -26790,6 +26790,293 @@ def tilted_universes_check(chart, system):
 
 
 CHARTS["tilted_universes"] = [lambda s=s: tilted_universes(s) for s in TILTED_CHARTS]
+
+
+# -- The black holes of string theory with three and four charges ---------------------------
+
+SBC_S3 = "r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)"
+SBC_S2 = "r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+SBC_CHARTS = ["five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme"]
+
+
+def string_bh_charges(system):
+    """The black holes of string theory whose entropy was first counted. In five dimensions
+    Horowitz, Maldacena and Strominger's (2.7) and (2.8) is Tangherlini's metric with the time and
+    the space rescaled by powers of H_1 H_2 H_3, H_i = 1 + r_0^2 sinh^2(alpha_i)/r^2, their boosts
+    written here as the lengths r_i = r_0 sinh(alpha_i)\\; with r_0 = 0 it is Tseytlin's extreme hole,
+    his (31), whose horizon is r = 0\\; and with the three charges equal it is the Reissner-Nordstrom
+    black hole of five dimensions in the areal radius rho^2 = r^2 + r_q^2, Callan and Maldacena's
+    (2.1) with r_+^2 = r_0^2 + r_q^2 and r_-^2 = r_q^2. In four dimensions Horowitz, Lowe and
+    Maldacena's (2), after Cvetic and Youm, is Schwarzschild's metric rescaled by powers of
+    H_1 H_2 H_3 H_4, H_i = 1 + r_0 sinh^2(alpha_i)/r, with r_i = r_0 sinh^2(alpha_i), and Cvetic
+    and Youm's (9) is its extreme case. A chart that names f and the H_i holds them as functions
+    with the slopes vm.RATES declares, so each value is a rational function of them and r.
+    string_bh_charges_check holds every chart to its field equations and to the published charts
+    it reduces to\\; string_bh_three_four_charges.md records each chart's source."""
+    five = system.startswith("five")
+    n = 3 if five else 4
+    angles = ["\\psi", "\\theta", "\\phi"] if five else ["\\theta", "\\phi"]
+    domains = [a + " \\in [0, \\pi]" for a in angles[:-1]] + ["\\phi \\in [0, 2\\pi)"]
+    reals = "t \\in (-\\infty, \\infty)"
+    words = "Five Dimensions" if five else "Four Dimensions"
+    check = lambda chart: string_bh_charges_check(chart, system)  # noqa: E731
+    if system == "five_areal":
+        coords, parameters = ["t", "\\rho"] + angles, ["r_0", "r_q"]
+        outer = "\\left(1 - \\dfrac{r_0^2 + r_q^2}{\\rho^2}\\right)"
+        inner = "\\left(1 - \\dfrac{r_q^2}{\\rho^2}\\right)"
+
+        def line(c2):
+            return ("ds^2 = -" + outer + inner + c2 + "dt^2 + \\dfrac{d\\rho^2}{" + outer + inner + "} + "
+                    + SBC_S3.replace("r^2", "\\rho^2", 1))
+        probe = vm.Reader(coords, parameters, ())
+        rho, r0, rq = probe.symbol["\\rho"], probe.parameters["r_0"], probe.parameters["r_q"]
+        return {
+            "metric_id": "string_bh_three_four_charges",
+            "system": {"id": system, "name": "Equal Charges, Areal Radius, " + words, "coords": coords,
+                       "domains": [reals, "\\rho \\in (0, \\infty)"] + domains
+                       + ["\\rho = \\sqrt{r_0^2 + r_q^2} \\;\\text{(the event horizon)}",
+                          "\\rho = r_q \\;\\text{(the inner horizon)}", "\\rho = 0 \\;\\text{(singularity)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [rho, r0, rq], "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + outer + inner,
+                                                 ("\\rho", "\\rho"): outer + "^{-1}" + inner + "^{-1}"},
+                           "inverse_metric_components": {("t", "t"): "-" + outer + "^{-1}" + inner + "^{-1}",
+                                                         ("\\rho", "\\rho"): outer + inner}},
+            "check": check,
+        }
+    extreme = system.endswith("extreme")
+    power = "^2" if five else ""
+    names = ["H_%d" % i for i in range(1, n + 1)]
+    lengths = ([] if extreme else ["r_0"]) + ["r_%d" % i for i in range(1, n + 1)]
+    defined = ([] if extreme else ["f = 1 - \\dfrac{r_0%s}{r%s}" % (power, power)]) + [
+        "H_%d = 1 + \\dfrac{r_%d%s}{r%s}" % (i, i, power, power) for i in range(1, n + 1)]
+    coords, parameters = ["t", "r"] + angles, lengths + defined
+    product = "\\,".join(names)
+    radial = "dr^2" if extreme else "\\dfrac{dr^2}{f}"
+    if five:
+        def line(c2):
+            return ("ds^2 = -\\left(" + product + "\\right)^{-2/3}" + ("" if extreme else "f\\,") + c2 + "dt^2"
+                    " + \\left(" + product + "\\right)^{1/3}\\left(" + radial + " + " + SBC_S3 + "\\right)")
+    else:
+        def line(c2):
+            return ("ds^2 = -\\dfrac{" + ("" if extreme else "f\\,") + c2 + "dt^2}{\\sqrt{" + product + "}}"
+                    " + \\sqrt{" + product + "}\\left(" + radial + " + " + SBC_S2 + "\\right)")
+    key = ("string_bh_three_four_charges", system)
+    probe = vm.Reader(coords, parameters, (), held=vm.HELD[key], rates=vm.RATES[key])
+    r = probe.symbol["r"]
+    H = [probe.parameters[name] for name in names]
+    f = [] if extreme else [probe.parameters["f"]]
+    name = ("Extreme, " if extreme else "") + ("Three" if five else "Four") + " Charges, " + words
+    marks = (["r = 0 \\;\\text{(the horizon)}"] if extreme else
+             ["r = r_0 \\;\\text{(the event horizon)}", "r = 0 \\;\\text{(the inner horizon)}"])
+    return {
+        "metric_id": "string_bh_three_four_charges",
+        "system": {"id": system, "name": name, "coords": coords,
+                   "domains": [reals, "r \\in (0, \\infty)"] + domains + marks,
+                   "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": H + f + [r], "factors": [r] + f + H, "flip": False},
+        "reduce": lambda value: vm.norm(probe.by_rates(value)),
+        "check": check,
+    }
+
+
+def string_bh_charges_check(chart, system):
+    """Every chart against its field equations and against the published charts it reduces to.
+
+    The fields: n = D - 2 gauge fields A^i = q_i dt/(r^(D-3) H_i), with q_i^2 = r_i^2(r_i^2 + r_0^2)
+    in five dimensions and r_i(r_i + r_0) in four, and scalars X_i = H_i^{-1}(H_1 ... H_n)^{1/n},
+    whose product is 1, in the action R - (1/2)(d phi)^2 - (1/4) sum X_i^{-2} F_i^2 with
+    X_i = exp(-a_i . phi/2) and a_i . a_j = 4 delta_ij - 4/n. Slot by slot,
+    G_ab = (1/2) sum (d_a ln X_i d_b ln X_i - g_ab (d ln X_i)^2/2) + (1/2) sum X_i^{-2}(F_ac F_b^c - g_ab F^2/4),
+    d_a(sqrt(-g) X_i^{-2} F_i^ab) = 0, and box ln X_j = -X_j^{-2} F_j^2/2 + sum X_i^{-2} F_i^2/(2n).
+    With the charges equal every X_i is 1 and these are the Einstein-Maxwell equations.
+
+    The published charts: with no charge Tangherlini's and Schwarzschild's\\; with the charges equal
+    the areal chart, which is this spacetime's own, in five dimensions and rn_metric in four, and
+    Majumdar and Papapetrou's single hole at r_0 = 0\\; with two charges equal and two absent the
+    dilaton black hole\\; and with one charge the Einstein metric of the Kaluza-Klein black hole.
+    The area of the horizon is 2 pi^2 prod sqrt(r_0^2 + r_i^2) in five dimensions and
+    4 pi prod sqrt(r_0 + r_i) in four, Horowitz, Maldacena and Strominger's (2.9) and Horowitz,
+    Lowe and Maldacena's (5)."""
+    X = chart.symbols
+    P = chart.reader.parameters
+    g = sp.Matrix(chart.geo.g)
+    D = len(X)
+    rng = random.Random(11)
+
+    def published(metric_id, chart_id):
+        there = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == chart_id)
+        other = vm.Reader(there["coords"], [p["symbol"] for p in there["parameters"]], ())
+        return other, vm.metric_from_line_element(other, there["line_element"].replace("c^2", "").replace(
+            "d\\Omega^2", "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"), there["coords"])
+
+    def vanishes(e, what):
+        e = sp.sympify(e)
+        if e == 0:
+            return
+        free = sorted(e.free_symbols, key=str)
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 60), 100) for s in X[2:]}
+            at.update({s: sp.Rational(rng.randint(310, 390), 100) for s in free if s not in X[2:]})
+            at.update({s: sp.Rational(rng.randint(40, 90), 100) for s in free if str(s) == "r_0"})
+            if abs(sp.N(e.subs(at), 40)) > sp.Float(10) ** -30:
+                raise AssertionError(f"string_bh_three_four_charges: {what} fails on the {system} chart")
+
+    def against(metric_id, chart_id, mine, values, radius, what):
+        """This chart's metric `mine`, written out, equals the published chart at `values`, with the
+        published radius the expression `radius` of this chart's."""
+        other, theirs = published(metric_id, chart_id)
+        names = dict(zip([other.symbol[c] for c in other.coords], X))
+        names.update({other.parameters[k]: v for k, v in values.items()})
+        there = other.symbol[other.coords[1]]
+        names[there] = radius
+        jac = sp.diff(radius, X[1])
+        pulled = theirs.subs(names, simultaneous=True)
+        for i in range(D):
+            scale = jac ** 2 if i == 1 else 1
+            vanishes(pulled[i, i] * scale - mine[i, i], f"{what}, slot {i}{i}")
+
+    if system == "five_areal":
+        rho, r0, rq = X[1], P["r_0"], P["r_q"]
+        spec = string_bh_charges("five_charges")
+        key = ("string_bh_three_four_charges", "five_charges")
+        there = vm.Reader(spec["system"]["coords"], spec["system"]["parameters"], (), held=vm.HELD[key])
+        full = vm.metric_from_line_element(there, spec["chart_line_element"], spec["system"]["coords"]).xreplace(there.held)
+        r = sp.sqrt(rho ** 2 - rq ** 2)
+        at = dict(zip([there.symbol[c] for c in there.coords], X))
+        at[there.symbol["r"]] = r
+        at.update({there.parameters["r_0"]: r0, **{there.parameters[f"r_{i}"]: rq for i in (1, 2, 3)}})
+        pulled = full.subs(at, simultaneous=True)
+        jac = sp.diff(r, rho)
+        for i in range(5):
+            vanishes(pulled[i, i] * (jac ** 2 if i == 1 else 1) - g[i, i],
+                     f"the three charges equal, pulled back along r^2 = rho^2 - r_q^2, slot {i}{i}")
+        against("tangherlini", "spherical", g.subs(rq, 0), {"r_h": r0}, rho, "Tangherlini's black hole at r_q = 0")
+        # Einstein-Maxwell: G_ab = 2(F_ac F_b^c - g_ab F^2/4) with A = sqrt(3)/2 (r_+ r_-/rho^2) dt.
+        gi = sp.Matrix(chart.geo.ginv)
+        q2 = sp.Rational(3, 4) * rq ** 2 * (r0 ** 2 + rq ** 2)
+        F = sp.zeros(5, 5)
+        F[1, 0], F[0, 1] = -2 / rho ** 3, 2 / rho ** 3           # F/q, for A_t = q/rho^2
+        Fu = gi * F * gi
+        F2 = q2 * sum(F[a, b] * Fu[a, b] for a in range(5) for b in range(5))
+        G = sp.Matrix(chart.geo.einstein_ll())
+        for a in range(5):
+            for b in range(a, 5):
+                FF = q2 * sum(F[a, c] * F[b, d] * gi[c, d] for c in range(5) for d in range(5))
+                vanishes(G[a, b] - 2 * (FF - g[a, b] * F2 / 4), f"the Einstein-Maxwell equation {a}{b}")
+        return
+
+    five, extreme = system.startswith("five"), system.endswith("extreme")
+    n, k = (3, 2) if five else (4, 1)
+    key = ("string_bh_three_four_charges", system)
+    rated = vm.Reader(chart.coords_tex, [p for p in chart.reader.parameters], (), held=vm.HELD[key], rates=vm.RATES[key]) \
+        if False else None
+    held = chart.reader.held
+    r = X[1]
+    H = [P[f"H_{i}"] for i in range(1, n + 1)]
+    f = sp.Integer(1) if extreme else P["f"]
+    lengths = [P[f"r_{i}"] for i in range(1, n + 1)]
+    r0 = sp.Integer(0) if extreme else P["r_0"]
+    spec = string_bh_charges(system)
+    rated = vm.Reader(spec["system"]["coords"], spec["system"]["parameters"], (), held=vm.HELD[key], rates=vm.RATES[key])
+    back = dict(zip([rated.symbol[c] for c in rated.coords], X))
+    back.update({rated.parameters[name]: P[name] for name in rated.parameters})
+    forth = {v: k_ for k_, v in back.items()}
+
+    def settled(e):
+        """The expression with every slope of f and the H_i written by the declared rates."""
+        return rated.by_rates(sp.sympify(e).doit().xreplace(forth)).xreplace(back)
+
+    def zero(e, what):
+        # A value is a rational function of r, f and the H_i with roots of the H_i in front: three
+        # random points to thirty digits, each name standing as a number of its own.
+        e = settled(e)
+        if e == 0:
+            return
+        names = {fn: sp.Dummy(positive=True) for fn in e.atoms(AppliedUndef)}
+        e = e.xreplace(names)
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 60), 100) for s in X}
+            at.update({s: sp.Rational(rng.randint(120, 180), 100) for s in e.free_symbols - set(X)})
+            if abs(sp.N(e.subs(at), 40)) > sp.Float(10) ** -30:
+                raise AssertionError(f"string_bh_three_four_charges: {what} fails on the {system} chart")
+
+    gi = sp.Matrix(chart.geo.ginv)
+    product = sp.Mul(*H)
+    scalars = [product ** sp.Rational(1, n) / h for h in H]                 # X_i
+    dln = [[settled(sp.diff(sp.log(x), c)) for c in X] for x in scalars]
+    # q_i^2 = r_i^k (r_i^k + r_0^k) = r^(2k) (H_i - 1)(H_i - f), and A_i = q_i dt/(r^k H_i).
+    q2 = [r ** (2 * k) * (h - 1) * (h - f) for h in H]
+    fields = []
+    for h in H:
+        F = sp.zeros(D, D)
+        slope = settled(sp.diff(1 / (r ** k * h), r))
+        F[1, 0], F[0, 1] = slope, -slope                                  # F/q
+        fields.append(F)
+    ups = [gi * F * gi for F in fields]
+    squares = [q2[i] * sum(fields[i][a, b] * ups[i][a, b] for a in range(D) for b in range(D)) for i in range(n)]
+    weights = [x ** -2 for x in scalars]
+    G = sp.Matrix(chart.geo.einstein_ll())
+    for a in range(D):
+        for b in range(a, D):
+            stress = 0
+            for i in range(n):
+                grad2 = sum(gi[c, d] * dln[i][c] * dln[i][d] for c in range(D) for d in range(D))
+                FF = q2[i] * sum(fields[i][a, c] * fields[i][b, d] * gi[c, d] for c in range(D) for d in range(D))
+                stress += (dln[i][a] * dln[i][b] - g[a, b] * grad2 / 2) / 2
+                stress += weights[i] * (FF - g[a, b] * squares[i] / 4) / 2
+            zero(G[a, b] - stress, f"Einstein's equation {a}{b} with the gauge fields and the scalars")
+    angles = sp.sin(X[2]) ** 2 * sp.sin(X[3]) if five else sp.sin(X[2])
+    root = product ** sp.Rational(1, 3 if five else 2) * r ** (k + 1) * angles
+    zero(root ** 2 + g.det(), "sqrt(-g)")
+    for i in range(n):
+        for b in range(D):
+            zero(sum(sp.diff(root * weights[i] * ups[i][a, b], X[a]) for a in range(D)),
+                 f"Maxwell's equation {b} of the field {i + 1}")
+        box = sum(sp.diff(root * gi[a, a] * dln[i][a], X[a]) for a in range(D)) / root
+        zero(box + weights[i] * squares[i] / 2 - sum(weights[j] * squares[j] for j in range(n)) / (2 * n),
+             f"the equation of the scalar X_{i + 1}")
+
+    # From here on f and the H_i are their definitions.
+    out = g.xreplace(held).doit()
+    area = (2 * sp.pi ** 2 if five else 4 * sp.pi) * sp.sqrt(sp.Mul(*[r0 ** k + x ** k for x in lengths]))
+    sphere = sp.sqrt(sp.Mul(*[out[i, i] for i in range(2, D)])) / angles
+    rim = sp.limit(sphere, r, 0, "+") if extreme else sphere.subs(r, r0)
+    vanishes((2 * sp.pi ** 2 if five else 4 * sp.pi) * rim - area, "the area of the horizon")
+    none = {x: 0 for x in lengths}
+    if five and not extreme:
+        against("tangherlini", "spherical", out.subs(none), {"r_h": r0}, r, "Tangherlini's black hole with no charge")
+    if five and extreme:
+        spec = string_bh_charges("five_charges")
+        key = ("string_bh_three_four_charges", "five_charges")
+        there = vm.Reader(spec["system"]["coords"], spec["system"]["parameters"], (), held=vm.HELD[key])
+        full = vm.metric_from_line_element(there, spec["chart_line_element"], spec["system"]["coords"]).xreplace(there.held)
+        at = dict(zip([there.symbol[c] for c in there.coords], X))
+        at.update({there.parameters["r_0"]: 0, **{there.parameters[f"r_{i}"]: lengths[i - 1] for i in (1, 2, 3)}})
+        for i in range(5):
+            vanishes(full[i, i].subs(at, simultaneous=True) - out[i, i], f"the three charges at r_0 = 0, slot {i}{i}")
+    if not five:
+        rq = sp.Symbol("r_q", positive=True)
+        equal = {x: rq for x in lengths}
+        if extreme:
+            against("majumdar_papapetrou", "isotropic", out.subs(equal), {"m": rq}, r,
+                    "Majumdar and Papapetrou's single hole with the charges equal")
+        else:
+            against("schwarzschild", "spherical", out.subs(none), {"r_s": r0}, r, "Schwarzschild's black hole with no charge")
+            against("rn_metric", "spherical", out.subs(equal), {"r_s": r0 + 2 * rq, "r_q": sp.sqrt(rq * (rq + r0))},
+                    r + rq, "Reissner and Nordstrom's black hole with the charges equal")
+            two = {lengths[0]: rq, lengths[1]: rq, lengths[2]: 0, lengths[3]: 0}
+            against("dilaton_black_hole", "static", out.subs(two), {"r_s": r0 + rq, "r_d": rq}, r + rq,
+                    "the dilaton black hole with two charges equal and two absent")
+            one = {lengths[0]: rq, lengths[1]: 0, lengths[2]: 0, lengths[3]: 0}
+            against("kaluza_klein_black_hole", "einstein", out.subs(one), {"r_s": r0, "q": rq + r0}, r,
+                    "the Kaluza-Klein black hole with one charge")
+
+
+CHARTS["string_bh_three_four_charges"] = [lambda s=s: string_bh_charges(s) for s in SBC_CHARTS]
 
 
 def write(spec):

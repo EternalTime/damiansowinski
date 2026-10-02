@@ -331,7 +331,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "d8bc4875f4b97d7d",
+    "version": "22f6fe5316e75e81",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -1171,7 +1171,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d946899138bdda3f",
+    "version": "9039fc0dd72e086e",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc"
@@ -2144,7 +2144,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "32c246f1e279d351",
+    "version": "50fd6f45da9ac9d8",
     "diagrams": "90d54985332dcf14",
     "conformal": "47650710de79f09c",
     "embedding": "3daf392852ed147c"
@@ -2872,7 +2872,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cffc3436b1968416",
+    "version": "ff3eef7084a37e53",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -3323,7 +3323,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "83ef4e35af659089",
+    "version": "e8be4ccebc03778b",
     "diagrams": "fbe2465fce912260",
     "conformal": "1a4a12f584d5c79c",
     "embedding": "d6b5347d467d964c"
@@ -3791,7 +3791,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "882103aad9655f69",
+    "version": "2b9a9e10092ab33f",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -4185,7 +4185,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "ce34ccc282263bf1",
+    "version": "aa388258648a36a6",
     "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
@@ -4520,6 +4520,53 @@
     "diagrams": "f99505d95b083db0",
     "conformal": "577727a22f10c827",
     "embedding": "b79fedbd55cef742"
+  },
+  {
+    "id": "string_bh_three_four_charges",
+    "name": "Three and Four Charge Black Holes",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "hyperspherical symmetry",
+      "black hole",
+      "charged black hole",
+      "charged",
+      "string theory",
+      "black hole entropy",
+      "Bekenstein-Hawking entropy",
+      "black hole thermodynamics",
+      "brane",
+      "Strominger-Vafa",
+      "harmonic function",
+      "extremal",
+      "supersymmetric",
+      "dilaton",
+      "scalar field",
+      "electric charge",
+      "mass",
+      "horizon",
+      "event horizon",
+      "inner horizon",
+      "degenerate horizon",
+      "throat",
+      "curvature singularity",
+      "coordinate singularity",
+      "maximal extension",
+      "causal structure",
+      "asymptotically flat",
+      "higher dimensions",
+      "five-dimensional",
+      "four-dimensional",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "eaf50835bc479e4d",
+    "diagrams": "3ed264d5e1cddbce",
+    "conformal": "0d346a206bbd9515",
+    "embedding": "1154c266ff9d9f93"
   },
   {
     "id": "tilted_universes",
