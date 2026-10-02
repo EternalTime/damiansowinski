@@ -15,7 +15,7 @@ wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattic
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, petrov_homogeneous, rp3_geon,
 kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar, moving_mirror,
 gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild, cremmer_scherk,
-brans_dicke_sphere and bonnor_charged_dust, and Godel's cylindrical chart.
+brans_dicke_sphere, bonnor_charged_dust and maitra_dust, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -11304,6 +11304,185 @@ def som_raychaudhuri_pullback(chart):
 
 
 CHARTS["som_raychaudhuri"] = [lambda s=s: som_raychaudhuri(s) for s in SR_CHARTS]
+
+
+# -- Maitra's rotating dust ---------------------------------------------------------------
+
+MAITRA_S = "s = \\sqrt{1 + \\dfrac{4r^2}{a^2}}"
+MAITRA_K = "k = \\dfrac{a}{2}\\left(s - 1 - \\ln\\left(\\dfrac{s + 1}{2}\\right)\\right)"
+MAITRA_GAMMA = ("\\gamma = \\dfrac{1}{4} - \\dfrac{1}{2\\left(s + 1\\right)}"
+                " - \\dfrac{1}{2}\\ln\\left(\\dfrac{s + 1}{2}\\right)")
+
+
+def maitra_dust():
+    """Maitra's stationary, cylindrically symmetric dust in differential rotation, with no
+    cosmological constant, in his own chart: ds^2 = -(c dt - k dphi)^2 + r^2 dphi^2
+    + e^gamma (dr^2 + dz^2), where the block of t and phi has the determinant -r^2 and g_tt = -1.
+    Maitra's paper was not read; the functions are Krasinski's transcription of them (1998, his
+    (6.23) to (6.25), with m = -k, ln(dy/dr) = gamma/2 and the signature reversed) and Chan and
+    Santos's (2024, their (1), (45), (48) and (50), with x = 2r/a and c_1 = 1/a), which agree. The
+    one length a sets the density on the axis, 8 pi G rho/c^2 = 1/a^2. The chart names the root
+    s = sqrt(1 + 4r^2/a^2) and the two functions k and gamma, each of which holds a logarithm of
+    s + 1; the checker holds k and gamma as functions with the slopes k' = 2r/(a (s + 1)) and
+    gamma' = -k'^2/2r, vm.HELD and vm.RATES, having checked each slope against its definition, so
+    every value is a rational function of r, a, s, k and e^gamma. maitra_dust.md is the
+    derivation."""
+    coords = ["t", "r", "\\phi", "z"]
+    reals = "(-\\infty, \\infty)"
+    parameters = ["a", MAITRA_S, MAITRA_K, MAITRA_GAMMA]
+    probe = vm.Reader(coords, parameters, (), held=("k", "gamma"))
+    r, a, k, gamma = probe.symbol["r"], probe.parameters["a"], probe.parameters["k"], probe.parameters["gamma"]
+    root = sp.sqrt(1 + 4 * r ** 2 / a ** 2)
+    slopes = {k: 2 * r / (a * (1 + root)), gamma: -2 * r / (a ** 2 * (1 + root) ** 2)}
+    s = sp.Symbol("s", positive=True)
+    line = "ds^2 = -\\left(c\\,dt - k\\,d\\phi\\right)^2 + r^2d\\phi^2 + e^{\\gamma}\\left(dr^2 + dz^2\\right)"
+
+    def reduce(value):
+        # No derivative of k or gamma is left: each is written by its slope, which holds the root alone.
+        value = sp.sympify(value)
+        for d in sorted(value.atoms(sp.Derivative), key=lambda d: -d.derivative_count):
+            if d.expr not in slopes:
+                raise AssertionError(f"maitra_dust: {d} is no derivative of k or gamma")
+            value = value.xreplace({d: sp.diff(slopes[d.expr], r, d.derivative_count - 1)})
+        return vm.norm(value)
+
+    return {
+        "metric_id": "maitra_dust",
+        "system": {"id": "cylindrical", "name": "Cylindrical", "coords": coords,
+                   "domains": ["t \\in " + reals, "r \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals],
+                   "parameters": parameters, "line_element": line},
+        # The chart coordinate is x^0 = ct, so c dt is the chart's dt.
+        "chart_line_element": line.replace("c\\,dt", "dt"),
+        "printer": {"lead": [r, s, k, a], "factors": [a, r, s, k], "flip": False},
+        "pretty": maitra_pretty(r, a, k, gamma, s),
+        "reduce": reduce,
+        # The block of t and phi as the line element writes it, with its determinant -r^2.
+        "components": {
+            "metric_components": {("\\phi", "\\phi"): "r^2 - k^2"},
+            "inverse_metric_components": {("t", "t"): "-\\dfrac{r^2 - k^2}{r^2}", ("t", "\\phi"): "\\dfrac{k}{r^2}",
+                                          ("\\phi", "t"): "\\dfrac{k}{r^2}", ("\\phi", "\\phi"): "\\dfrac{1}{r^2}"}},
+        "check": maitra_dust_check,
+    }
+
+
+def maitra_pretty(r, a, k, gamma, s):
+    """A pretty printer for Maitra's chart, whose every value is a rational function of r, a, the
+    root sqrt(a^2 + 4r^2), k and e^gamma. The root is written a s, and every even power of r is
+    written by r^2 = a^2 (s^2 - 1)/4, so that r is left to the first power at most and no relation
+    holds among what is left: the value factors there, and s - 1 and s + 1 cancel. Where an r is
+    left below the line under an s - 1 above it, (s - 1)/r is written 4r/(a^2 (s + 1)), which is
+    finite on the axis as the value is."""
+    square = a ** 2 + 4 * r ** 2
+    K, E = sp.Symbol("MaitraK"), sp.Symbol("MaitraE", positive=True)
+
+    def even(poly):
+        return sum(c * (a ** 2 * (s ** 2 - 1) / 4) ** (n // 2) * r ** (n % 2)
+                   for (n,), c in sp.Poly(sp.expand(poly), r).terms())
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.replace(lambda p: p.is_Pow and p.exp.is_Rational and p.exp.q == 2
+                              and sp.expand(p.base - square) == 0, lambda p: (a * s) ** (2 * p.exp))
+        value = value.replace(lambda p: p.is_Pow and p.exp.is_Rational and p.exp.q == 2
+                              and sp.expand(p.base - square / a ** 2) == 0, lambda p: s ** (2 * p.exp))
+        value = value.replace(lambda f: isinstance(f, sp.exp) and f.args[0].has(gamma),
+                              lambda f: E ** sp.together(f.args[0] / gamma))
+        value = sp.together(value.subs(k, K))
+        if value.has(gamma) or any(not p.exp.is_Integer for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"maitra_dust: a root other than s, or a bare gamma, is left in {value}")
+        numerator, denominator = sp.fraction(value)
+        value = sp.factor(even(numerator) / even(denominator))
+        numerator, denominator = sp.fraction(value)
+        if sp.Poly(denominator, r).degree() == 1 and sp.rem(numerator, s - 1, s) == 0:
+            value = sp.factor(value * 4 * r ** 2 / (a ** 2 * (s - 1) * (s + 1)))
+        return value.subs({K: k, E: sp.exp(gamma)})
+
+    return pretty
+
+
+def maitra_dust_check(chart):
+    """The chart against its source and against what its sources say of it.
+
+    The source is dust: G_ab = R u_a u_b with every other slot zero, where R, the Ricci scalar, is
+    8 pi G rho/c^2 = 4 e^-gamma/(a^2 s (s + 1)^2), and the dust's velocity is u = v d_t + W d_phi
+    with W = -(1/a) sqrt(2/(s + 1)) and v = sqrt((s + 1)/2) + k W, Chan and Santos's (4), (6) and
+    (41) at f = 1. Its covariant components are u_t = -sqrt((s + 1)/2) and
+    u_phi = k sqrt((s + 1)/2) + r^2 W, so the three products are free of the nested root:
+    u_t^2 = (s + 1)/2, u_t u_phi = r^2/a - k (s + 1)/2 and u_phi^2 = (k sqrt((s + 1)/2) - sqrt(2)
+    r^2/(a sqrt(s + 1)))^2 = k^2 (s + 1)/2 - 2 k r^2/a + a^2... written out below. The dust falls
+    freely, Gamma^r_ab u^a u^b = 0, which with the root cleared is
+    2 Gamma^r_tphi ((s + 1)/2 - k/a) = Gamma^r_phiphi/a.
+
+    The determinant is -r^2 e^(2 gamma). The gradient of t is timelike at every radius,
+    g^tt = -(1 - k^2/r^2) < 0, since k' < 1 gives k < r: t is a time function, and no closed
+    timelike curve exists, Maitra's title. The axis is regular, g_phiphi/r^2 and e^gamma both 1
+    there, and to the second order in r the chart is the published dust of van Stockum at R = 2a
+    with the sense of phi reversed, Chan and Santos's remark under their (52). The mass per unit
+    length inside r, Whittaker's, is -r gamma'/4 = (s - 1)/(8 (s + 1)), their (51), which tends
+    to 1/8."""
+    geo, g = chart.geo, chart.geo.g
+    reader = chart.reader
+    t, r, phi, z = chart.symbols
+    a, k, gamma = (reader.parameters[n] for n in ("a", "k", "gamma"))
+    s = sp.sqrt(1 + 4 * r ** 2 / a ** 2)
+    slope_k, slope_gamma = 2 * r / (a * (1 + s)), -2 * r / (a ** 2 * (1 + s) ** 2)
+    if vm.norm(sp.diff(reader.held[k], r) - slope_k) != 0 or vm.norm(sp.diff(reader.held[gamma], r) - slope_gamma) != 0:
+        raise AssertionError("maitra_dust: the slopes of k and gamma are not 2r/(a (s + 1)) and -2r/(a^2 (s + 1)^2)")
+    if vm.norm(slope_gamma + slope_k ** 2 / (2 * r)) != 0:
+        raise AssertionError("maitra_dust: gamma' is not -k'^2/2r")
+    density = 4 * sp.exp(-gamma) / (a ** 2 * s * (s + 1) ** 2)
+    if vm.norm(geo.ricci_scalar() - density) != 0:
+        raise AssertionError("maitra_dust: the Ricci scalar is not 4 e^-gamma/(a^2 s (s + 1)^2)")
+    lowered = geo.einstein_ll()
+    dust = {(0, 0): (s + 1) / 2, (0, 2): r ** 2 / a - k * (s + 1) / 2,
+            (2, 2): k ** 2 * (s + 1) / 2 - 2 * k * r ** 2 / a + 2 * r ** 4 / (a ** 2 * (s + 1))}
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(lowered[i][j] - density * dust.get((i, j), 0)) != 0:
+                raise AssertionError(f"maitra_dust: the Einstein tensor is not dust's in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if vm.norm(dust[0, 0] * dust[2, 2] - dust[0, 2] ** 2) != 0:
+        raise AssertionError("maitra_dust: the three products of the dust's velocity are not one vector's")
+    christoffel = geo.christoffel_ull()
+    if christoffel[1][0][0] != 0 or vm.norm(2 * christoffel[1][0][2] * ((s + 1) / 2 - k / a) - christoffel[1][2][2] / a) != 0:
+        raise AssertionError("maitra_dust: the dust does not fall freely")
+    if vm.norm(g.det() + r ** 2 * sp.exp(2 * gamma)) != 0:
+        raise AssertionError("maitra_dust: the determinant is not -r^2 e^(2 gamma)")
+    if vm.norm(geo.ginv[0, 0] + (r ** 2 - k ** 2) / r ** 2) != 0:
+        raise AssertionError("maitra_dust: g^tt is not -(1 - k^2/r^2)")
+    if vm.norm(slope_k ** 2 - (s - 1) / (s + 1)) != 0:
+        raise AssertionError("maitra_dust: k'^2 is not (s - 1)/(s + 1), which is less than 1")
+    if vm.norm(-r * slope_gamma / 4 - (s - 1) / (8 * (s + 1))) != 0 or sp.limit(((s - 1) / (8 * (s + 1))).subs(a, 1), r, sp.oo) != sp.Rational(1, 8):
+        raise AssertionError("maitra_dust: the mass per unit length is not (s - 1)/(8 (s + 1)), tending to 1/8")
+    written = {k: reader.held[k], gamma: reader.held[gamma]}
+    for label, value, want in (("k", written[k], r ** 2 / (2 * a)), ("gamma", written[gamma], -r ** 2 / (4 * a ** 2))):
+        if sp.simplify(sp.series(value, r, 0, 4).removeO() - want) != 0:
+            raise AssertionError(f"maitra_dust: {label} does not begin as van Stockum's on the axis")
+    # Van Stockum's published dust at R = 2a, with phi reversed, to the second order in r.
+    there = next(c for c in json.loads((METRICS / "stockum_dust.json").read_text(encoding="utf-8"))["coordinates"]
+                 if c["id"] == "cylindrical")
+    other = vm.Reader(there["coords"], [p["symbol"] for p in there["parameters"]], ())
+    values = {tuple(e["indices"]): other(e["value"]) for e in there["metric_components"]}
+    names = dict(zip([other.symbol[c] for c in there["coords"]], chart.symbols))
+    flip = sp.diag(1, 1, -1, 1)
+    stockum = sp.Matrix(4, 4, lambda i, j: values.get((there["coords"][i], there["coords"][j]), sp.Integer(0)))
+    stockum = flip * stockum.subs(names).subs(other.parameters["R"], 2 * a) * flip
+    mine = g.subs(sp.exp(gamma), sp.exp(written[gamma])).subs(written)
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(sp.series(mine[i, j] - stockum[i, j], r, 0, 4).removeO()) != 0:
+                raise AssertionError(f"maitra_dust: the chart leaves van Stockum's published dust before the fourth "
+                                     f"order in r in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    for at in (sp.Rational(1, 7), 1, 5, 60, 4000):
+        radius = {r: at, a: 1}
+        twist = sp.N(written[k].subs(radius), 30)
+        if not 0 < twist < at:
+            raise AssertionError(f"maitra_dust: k is not between 0 and r at r = {at} a")
+
+
+CHARTS["maitra_dust"] = [maitra_dust]
 # -- Coleman-De Luccia -------------------------------------------------------------------
 
 CDL_CHARTS = ["wall", "open", "open_conformal", "static_inside", "static_outside"]

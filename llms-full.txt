@@ -1249,6 +1249,16 @@ A closed universe that holds nothing but $N$ equal masses, one at the centre of 
 - chart Lindquist-Wheeler Comoving: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + \dfrac{(\partial_\rho r)^2}{1 - \dfrac{r_s}{\rho}}d\rho^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Comparison Hypersphere: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Maitra's Rotating Dust
+
+A stationary, cylindrically symmetric universe of dust that turns faster near its axis than far from it, found by Samaresh C. Maitra in 1966. It has no cosmological constant and no closed timelike curves, and its density falls from $c^2/8\pi Ga^2$ on the axis toward zero far away.
+
+- id: `maitra_dust`
+- tags: dust, rotating, cylindrical symmetry, axisymmetric, cosmology, exact solution, stationary, inhomogeneous, geodesically complete, no singularity, regular, causal structure, frame dragging, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/maitra_dust.json
+- chart Cylindrical: coordinates $(t, r, \phi, z)$, $$ds^2 = -\left(c\,dt - k\,d\phi\right)^2 + r^2d\phi^2 + e^{\gamma}\left(dr^2 + dz^2\right)$$
+
 ### Majumdar-Papapetrou Extremal Black Holes
 
 Any number of extremal charged black holes at rest, the static electrovacuum solution Sudhansu Datta Majumdar and Achilles Papapetrou found independently in 1947. Between every pair of holes the electric repulsion balances the gravitational attraction exactly, so the holes stay at rest in any arrangement.

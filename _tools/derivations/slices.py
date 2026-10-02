@@ -2610,6 +2610,12 @@ FLAT = {
     ("godel", "cartesian", "tx"): lambda: one("godel", lambda m: across(0.0, 0.0, 2 * m.reach("cylindrical", "r")[1])),
     ("godel", "cylindrical", "inside"): lambda: one("godel", _godel_cylinder(math.asinh(1.0) / 2)),
     ("stockum_dust", "cylindrical", "inside"): lambda: one("stockum_dust", _godel_cylinder(0.5)),
+    # Maitra's plane z = 0 at t = 0, which the embedding draws from the axis to 6a: the line t = 0 of
+    # the plane of t and r, and of each cylinder inside that reach, every phi.
+    ("maitra_dust", "cylindrical", "radial"): lambda: one(
+        "maitra_dust", lambda m: along(0.0, *m.reach("cylindrical", "r"))),
+    ("maitra_dust", "cylindrical", "near"): lambda: one("maitra_dust", _godel_cylinder(1.0)),
+    ("maitra_dust", "cylindrical", "far"): lambda: one("maitra_dust", _godel_cylinder(5.0)),
     # Som and Raychaudhuri's plane y = 0 is phi = 0 and pi with the same t, where x = +-r.
     ("som_raychaudhuri", "cartesian", "tx"): lambda: one(
         "som_raychaudhuri", lambda m: across(0.0, 0.0, m.reach("cylindrical", "r")[1])),
