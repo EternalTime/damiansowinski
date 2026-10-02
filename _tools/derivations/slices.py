@@ -2515,6 +2515,8 @@ FLAT = {
         "kasner_scalar", lambda m: across(kasner_scalar_five(m.time), 0.0, BIG)),
     ("kasner_scalar", "kaluza_klein", "Tw"): lambda: one(
         "kasner_scalar", lambda m: across(kasner_scalar_five(m.time), 0.0, BIG)),
+    ("kasner_magnetic", "kasner_time", "tx"): lambda: one("kasner_magnetic", lambda m: across(m.time, 0.0, BIG)),
+    ("kasner_magnetic", "kasner_time", "tz"): lambda: one("kasner_magnetic", lambda m: across(m.time, 0.0, BIG)),
     ("bianchi", "type_i_cartesian", "tx"): lambda: one("bianchi", lambda m: across(m.time, 0.0, BIG)),
     ("kantowski_sachs", "comoving", "tr"): lambda: _kantowski_sachs("comoving"),
     ("kantowski_sachs", "dust", "etar"): lambda: _kantowski_sachs("dust"),
@@ -2864,6 +2866,8 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("kasner_magnetic", "rosen", "etax"): "the axisymmetric universe, exponents (0, 0, 1), another spacetime than the one embedded",
+    ("kasner_magnetic", "rosen", "etaz"): "the axisymmetric universe, exponents (0, 0, 1), another spacetime than the one embedded",
     ("datt_ruban_t_models", "comoving", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "ruban", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "areal", "expansion"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",

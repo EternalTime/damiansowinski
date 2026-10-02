@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 147,
+  "count": 148,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -4209,6 +4209,11 @@
           "id": "small_universes",
           "kind": "family",
           "text": "Friedmann universes whose space is a torus, which keeps the homogeneity of space and gives up its isotropy. Ya. B. Zel'dovich and A. A. Starobinskii put a universe that expands at three different rates on such a torus in 1984 [zeldovich1984]."
+        },
+        {
+          "id": "kasner_magnetic",
+          "kind": "special_case",
+          "text": "Bianchi type I holding a uniform magnetic field and no matter, the universe Gerald Rosen found in 1962 [rosen1962, jacobs1969]."
         }
       ],
       "references": [
@@ -4227,7 +4232,9 @@
         "terzis2009",
         "tafel1973",
         "kopczynski1973",
-        "zeldovich1984"
+        "zeldovich1984",
+        "rosen1962",
+        "jacobs1969"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json",
@@ -21104,6 +21111,11 @@
           "id": "ab_metrics",
           "kind": "dual",
           "text": "Kasner's universe with exponents $(-\\tfrac{1}{3}, \\tfrac{2}{3}, \\tfrac{2}{3})$ and a radius in the place of its time is A III of Ehlers and Kundt's table, which is Abraham Taub's plane symmetric vacuum [martins1996]."
+        },
+        {
+          "id": "kasner_magnetic",
+          "kind": "generalisation",
+          "text": "Kasner's universe with a uniform magnetic field along one axis. The field carries it from one set of Kasner exponents at early times to another at late times, and the exponent $p_3$ along the field becomes $-p_3/(1 + 2p_3)$ [kastor2015]."
         }
       ],
       "references": [
@@ -21125,7 +21137,8 @@
         "belinskii1978",
         "belinskii1973",
         "ferrando2006",
-        "martins1996"
+        "martins1996",
+        "kastor2015"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -21197,6 +21210,202 @@
       ]
     },
     {
+      "id": "kasner_magnetic",
+      "name": "Kasner Universe with a Magnetic Field",
+      "short_name": "Kasner with a Magnetic Field",
+      "description": "Kasner's anisotropic universe threaded by a uniform magnetic field along one axis, with no matter in it. The tension of the field pulls that axis to nothing at both ends of time, and the universe passes from one Kasner vacuum at early times to another at late times.",
+      "tags": [
+        "electrovacuum",
+        "electromagnetic field",
+        "magnetic field",
+        "anisotropic",
+        "cosmology",
+        "Kasner",
+        "Bianchi classification",
+        "spatially homogeneous",
+        "homogeneous",
+        "curvature singularity",
+        "spacelike singularity",
+        "big bang",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The magnetic field points along $z$.",
+      "related": [
+        {
+          "id": "kasner",
+          "kind": "special_case",
+          "text": "The universe with the field switched off. At $b = 0$ the metric is Kasner's vacuum, and with the field on it starts as one Kasner vacuum and ends as another [kastor2015]."
+        },
+        {
+          "id": "melvin",
+          "kind": "dual",
+          "text": "Melvin's static bundle of field lines with its radius continued to imaginary values, which turns the radius into a time. The continuation is this universe with the two axes across the field equal, exponents $(0, 0, 1)$ [kastor2015]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "family",
+          "text": "Kasner's universe with the other simple content, a massless scalar field or a stiff fluid. Kenneth Jacobs solved the two together in 1969, a stiff fluid and a magnetic field in one universe [jacobs1969]."
+        },
+        {
+          "id": "bianchi",
+          "kind": "generalisation",
+          "text": "This universe is Bianchi type I, flat space with three scale factors, holding a uniform magnetic field along one of its axes [jacobs1969]."
+        }
+      ],
+      "references": [
+        "thorne1967",
+        "zeldovich1965magnetic",
+        "rosen1962",
+        "rosen1964",
+        "jacobs1969",
+        "kastor2015",
+        "kasner1921",
+        "doroshkevich1966",
+        "jacobs1968",
+        "harrison1968",
+        "bkl1970",
+        "leblanc1997",
+        "barrow1997"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner_magnetic.json",
+      "charts": [
+        {
+          "id": "kasner_time",
+          "name": "Kasner's time",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "t \\to 0 \\;\\text{(the singularity, where } p_3 < 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p_1",
+              "description": "Exponent along $x$ at early times, with $p_1 + p_2 + p_3 = 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $y$ at early times, with $p_1^2 + p_2^2 + p_3^2 = 1$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$, the direction of the field, at early times, with $0 < p_3 \\le 1$. At late times the three exponents are $(p_1 + 2p_3)/(1 + 2p_3)$, $(p_2 + 2p_3)/(1 + 2p_3)$, and $-p_3/(1 + 2p_3)$"
+            },
+            {
+              "symbol": "b",
+              "description": "Strength of the field, a pure number: observers at rest measure a magnetic field $B = (2bp_3c/\\sqrt{G})\\,t^{p_3 - 1}/(1 + b^2t^{2p_3})^2$ along $z$, in Gaussian units. At $b = 0$ the metric is Kasner's vacuum"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of Kasner's vacuum at $b = 0$, and evaluate the powers of $t$ with $t$ in a fixed unit of time, so they are dimensionless and the lengths sit in $x$, $y$, and $z$. Every component assumes the two conditions on the exponents. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 + b^2t^{2p_3}\\right)^2\\left(-c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2\\right) + \\dfrac{t^{2p_3}}{\\left(1 + b^2t^{2p_3}\\right)^2}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 + b^2t^{2p_3}\\right)^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\left(1 + b^2t^{2p_3}\\right)^2t^{2p_1}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\left(1 + b^2t^{2p_3}\\right)^2t^{2p_2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{t^{2p_3}}{\\left(1 + b^2t^{2p_3}\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{16p_3^2\\left(1 - p_3 + 6p_3\\left(1 - p_3\\right)b^2t^{2p_3} + 2\\left(13p_3^2 - 2p_3 - 1\\right)b^4t^{4p_3} - 6p_3\\left(3p_3 + 1\\right)b^6t^{6p_3} + \\left(2p_3 + 1\\right)\\left(3p_3 + 1\\right)b^8t^{8p_3}\\right)}{c^4\\,t^4\\left(1 + b^2t^{2p_3}\\right)^8}"
+        },
+        {
+          "id": "rosen",
+          "name": "Rosen (axisymmetric)",
+          "coordinates": [
+            "\\eta",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in (0, \\pi)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\eta = 0 \\;\\text{(a coordinate singularity)}",
+            "\\eta \\to \\pi \\;\\text{(the infinite future)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "A length, which sets the field: observers at rest measure a magnetic field $B = (c^2/\\sqrt{G})(1 + \\cos\\eta)^2/\\ell$ along $z$, in Gaussian units, which is $4c^2/(\\sqrt{G}\\,\\ell)$ at $\\eta = 0$"
+            }
+          ],
+          "convention": "We use coordinates $(\\eta, x, y, z)$, with Rosen's time $\\eta$ a pure number, in the axisymmetric case, where the exponents of Kasner's time are $(0, 0, 1)$ and $\\tan(\\eta/2) = bt$ once $x$, $y$, and $z$ are rescaled. We take components in the chart $x^0 = \\eta$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{\\ell^2}{\\left(1 + \\cos\\eta\\right)^4}d\\eta^2 + \\dfrac{dx^2 + dy^2}{\\left(1 + \\cos\\eta\\right)^2} + \\sin^2\\eta\\,dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{\\ell^2}{\\left(1 + \\cos\\eta\\right)^4}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{1}{\\left(1 + \\cos\\eta\\right)^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{1}{\\left(1 + \\cos\\eta\\right)^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\sin^2\\eta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8\\left(7\\cos^2\\eta + 2\\cos\\eta + 1\\right)\\left(1 + \\cos\\eta\\right)^6}{\\ell^4}"
+        }
+      ]
+    },
+    {
       "id": "kasner_scalar",
       "name": "Kasner Universe with a Scalar Field",
       "short_name": "Kasner with a Scalar Field",
@@ -21254,6 +21463,11 @@
           "id": "fisher_jnw",
           "kind": "family",
           "text": "The same field equations, Einstein's with a massless scalar field, solved for a static sphere [janis1968]."
+        },
+        {
+          "id": "kasner_magnetic",
+          "kind": "family",
+          "text": "Kasner's universe with a magnetic field in place of the scalar field. Kenneth Jacobs put the two contents together in 1969, a stiff fluid and a field along one axis [jacobs1969]."
         }
       ],
       "references": [
@@ -21268,7 +21482,8 @@
         "andersson2001",
         "fournodavlos2023",
         "frenkel2020",
-        "janis1968"
+        "janis1968",
+        "jacobs1969"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner_scalar.json",
@@ -28368,6 +28583,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "programme",
           "text": "Bonnor's magnetic dipole of 1966, a pair of black holes with opposite magnetic charges. Melvin's field along the axis of the pair pulls the two apart and takes the place of the strut between them [emparan2000]."
+        },
+        {
+          "id": "kasner_magnetic",
+          "kind": "dual",
+          "text": "Melvin's universe with its radius continued to imaginary values, which turns the radius into a time. The static bundle of field lines becomes an expanding universe with a uniform field along one axis, the solution Gerald Rosen found in 1962 [kastor2015, rosen1962]."
         }
       ],
       "references": [
@@ -28396,7 +28616,9 @@
         "robinson1959",
         "bonnor1969light",
         "kaup1968",
-        "emparan2000"
+        "emparan2000",
+        "kastor2015",
+        "rosen1962"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
