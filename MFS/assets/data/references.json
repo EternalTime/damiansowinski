@@ -1,5 +1,5 @@
 {
-  "version": "27b59d212ade5b1d",
+  "version": "c6af7b1b573c5774",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -21495,6 +21495,277 @@
         "eprint": "2310.16669",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2310.16669"
+      }
+    },
+    "misner1960": {
+      "type": "article",
+      "fields": {
+        "title": "Wormhole Initial Conditions",
+        "author": "Misner, Charles W.",
+        "journal": "Physical Review",
+        "volume": "118",
+        "number": "4",
+        "pages": "1110--1111",
+        "year": "1960",
+        "doi": "10.1103/PhysRev.118.1110",
+        "url": "https://doi.org/10.1103/PhysRev.118.1110"
+      }
+    },
+    "brill1963": {
+      "type": "article",
+      "fields": {
+        "title": "Interaction Energy in Geometrostatics",
+        "author": "Brill, Dieter R. and Lindquist, Richard W.",
+        "journal": "Physical Review",
+        "volume": "131",
+        "number": "1",
+        "pages": "471--476",
+        "year": "1963",
+        "doi": "10.1103/PhysRev.131.471",
+        "url": "https://doi.org/10.1103/PhysRev.131.471"
+      }
+    },
+    "misner1963images": {
+      "type": "article",
+      "fields": {
+        "title": "The method of images in geometrostatics",
+        "author": "Misner, Charles W.",
+        "journal": "Annals of Physics",
+        "volume": "24",
+        "pages": "102--117",
+        "year": "1963",
+        "doi": "10.1016/0003-4916(63)90067-8",
+        "url": "https://doi.org/10.1016/0003-4916(63)90067-8"
+      }
+    },
+    "hahn1964": {
+      "type": "article",
+      "fields": {
+        "title": "The two-body problem in geometrodynamics",
+        "author": "Hahn, Susan G. and Lindquist, Richard W.",
+        "journal": "Annals of Physics",
+        "volume": "29",
+        "number": "2",
+        "pages": "304--331",
+        "year": "1964",
+        "doi": "10.1016/0003-4916(64)90223-4",
+        "url": "https://doi.org/10.1016/0003-4916(64)90223-4"
+      }
+    },
+    "gibbons1972": {
+      "type": "article",
+      "fields": {
+        "title": "The time symmetric initial value problem for black holes",
+        "author": "Gibbons, G. W.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "27",
+        "number": "2",
+        "pages": "87--102",
+        "year": "1972",
+        "doi": "10.1007/BF01645614",
+        "url": "https://doi.org/10.1007/BF01645614"
+      }
+    },
+    "cadez1974": {
+      "type": "article",
+      "fields": {
+        "title": "Apparent horizons in the two-black-hole problem",
+        "author": "Čadež, Andrej",
+        "journal": "Annals of Physics",
+        "volume": "83",
+        "number": "2",
+        "pages": "449--457",
+        "year": "1974",
+        "doi": "10.1016/0003-4916(74)90206-1",
+        "url": "https://doi.org/10.1016/0003-4916(74)90206-1"
+      }
+    },
+    "smarr1976": {
+      "type": "article",
+      "fields": {
+        "title": "Collision of two black holes: Theoretical framework",
+        "author": "Smarr, Larry and Čadež, Andrej and DeWitt, Bryce and Eppley, Kenneth",
+        "journal": "Physical Review D",
+        "volume": "14",
+        "number": "10",
+        "pages": "2443--2452",
+        "year": "1976",
+        "doi": "10.1103/PhysRevD.14.2443",
+        "url": "https://doi.org/10.1103/PhysRevD.14.2443"
+      }
+    },
+    "bishop1982": {
+      "type": "article",
+      "fields": {
+        "title": "The closed trapped region and the apparent horizon of two {Schwarzschild} black holes",
+        "author": "Bishop, N. T.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "14",
+        "number": "9",
+        "pages": "717--723",
+        "year": "1982",
+        "doi": "10.1007/BF00756083",
+        "url": "https://doi.org/10.1007/BF00756083"
+      }
+    },
+    "price1994": {
+      "type": "article",
+      "fields": {
+        "title": "Colliding black holes: The close limit",
+        "author": "Price, Richard H. and Pullin, Jorge",
+        "journal": "Physical Review Letters",
+        "volume": "72",
+        "number": "21",
+        "pages": "3297--3300",
+        "year": "1994",
+        "doi": "10.1103/PhysRevLett.72.3297",
+        "eprint": "gr-qc/9402039",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9402039"
+      }
+    },
+    "brandt1997": {
+      "type": "article",
+      "fields": {
+        "title": "A Simple Construction of Initial Data for Multiple Black Holes",
+        "author": "Brandt, Steven and Br{\\\"u}gmann, Bernd",
+        "journal": "Physical Review Letters",
+        "volume": "78",
+        "number": "19",
+        "pages": "3606--3609",
+        "year": "1997",
+        "doi": "10.1103/PhysRevLett.78.3606",
+        "eprint": "gr-qc/9703066",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9703066"
+      }
+    },
+    "alcubierre2000": {
+      "type": "article",
+      "fields": {
+        "title": "Test-beds and applications for apparent horizon finders in numerical relativity",
+        "author": "Alcubierre, M. and Brandt, S. and Br{\\\"u}gmann, B. and Gundlach, C. and Mass{\\'o}, J. and Seidel, E. and Walker, P.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "17",
+        "number": "11",
+        "pages": "2159--2190",
+        "year": "2000",
+        "doi": "10.1088/0264-9381/17/11/301",
+        "eprint": "gr-qc/9809004",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9809004"
+      }
+    },
+    "cook2000": {
+      "type": "article",
+      "fields": {
+        "title": "Initial Data for Numerical Relativity",
+        "author": "Cook, Gregory B.",
+        "journal": "Living Reviews in Relativity",
+        "volume": "3",
+        "number": "1",
+        "pages": "5",
+        "year": "2000",
+        "doi": "10.12942/lrr-2000-5",
+        "eprint": "gr-qc/0007085",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0007085"
+      }
+    },
+    "campanelli2006": {
+      "type": "article",
+      "fields": {
+        "title": "Accurate Evolutions of Orbiting Black-Hole Binaries without Excision",
+        "author": "Campanelli, M. and Lousto, C. O. and Marronetti, P. and Zlochower, Y.",
+        "journal": "Physical Review Letters",
+        "volume": "96",
+        "number": "11",
+        "pages": "111101",
+        "year": "2006",
+        "doi": "10.1103/PhysRevLett.96.111101",
+        "eprint": "gr-qc/0511048",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0511048"
+      }
+    },
+    "baker2006": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational-Wave Extraction from an Inspiraling Configuration of Merging Black Holes",
+        "author": "Baker, John G. and Centrella, Joan and Choi, Dae-Il and Koppitz, Michael and van Meter, James",
+        "journal": "Physical Review Letters",
+        "volume": "96",
+        "number": "11",
+        "pages": "111102",
+        "year": "2006",
+        "doi": "10.1103/PhysRevLett.96.111102",
+        "eprint": "gr-qc/0511103",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0511103"
+      }
+    },
+    "giulini2014": {
+      "type": "incollection",
+      "fields": {
+        "title": "Dynamical and {Hamiltonian} Formulation of General Relativity",
+        "author": "Giulini, Domenico",
+        "booktitle": "Springer Handbook of Spacetime",
+        "publisher": "Springer",
+        "pages": "323--362",
+        "year": "2014",
+        "doi": "10.1007/978-3-642-41992-8_17",
+        "eprint": "1505.01403",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1505.01403"
+      }
+    },
+    "giulini2018": {
+      "type": "incollection",
+      "fields": {
+        "title": "Matter from Space",
+        "author": "Giulini, Domenico",
+        "booktitle": "Beyond Einstein",
+        "series": "Einstein Studies",
+        "volume": "14",
+        "publisher": "Springer",
+        "pages": "363--399",
+        "year": "2018",
+        "doi": "10.1007/978-1-4939-7708-6_12",
+        "eprint": "0910.2574",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0910.2574"
+      }
+    },
+    "sperhake2015": {
+      "type": "article",
+      "fields": {
+        "title": "The numerical relativity breakthrough for binary black holes",
+        "author": "Sperhake, Ulrich",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "32",
+        "number": "12",
+        "pages": "124011",
+        "year": "2015",
+        "doi": "10.1088/0264-9381/32/12/124011",
+        "eprint": "1411.3997",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1411.3997"
+      }
+    },
+    "holst2016": {
+      "type": "article",
+      "fields": {
+        "title": "The emergence of gravitational wave science: 100 years of development of mathematical theory, detectors, numerical algorithms, and data analysis tools",
+        "author": "Holst, Michael and Sarbach, Olivier and Tiglio, Manuel and Vallisneri, Michele",
+        "journal": "Bulletin of the American Mathematical Society",
+        "volume": "53",
+        "number": "4",
+        "pages": "513--554",
+        "year": "2016",
+        "doi": "10.1090/bull/1544",
+        "eprint": "1607.05251",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1607.05251"
       }
     }
   }

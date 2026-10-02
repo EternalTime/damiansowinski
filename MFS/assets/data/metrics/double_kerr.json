@@ -58,6 +58,11 @@
       "id": "curzon_chazy",
       "kind": "family",
       "text": "Jean Chazy and H. E. J. Curzon each presented two point particles at rest on one axis, and the line joining the particles is singular as the axis between the two holes is [chazy1924, curzon1925, einstein1936twobody]."
+    },
+    {
+      "id": "misner_brill_lindquist",
+      "kind": "family",
+      "text": "Two black holes at rest with no strut between them, for one moment only: the slice of space from which Susan Hahn and Richard Lindquist first computed two holes colliding head on [brill1963, hahn1964, holst2016]."
     }
   ],
   "references": [
@@ -82,7 +87,10 @@
     "israel1972",
     "chazy1924",
     "curzon1925",
-    "einstein1936twobody"
+    "einstein1936twobody",
+    "brill1963",
+    "hahn1964",
+    "holst2016"
   ],
   "coordinates": [
     {

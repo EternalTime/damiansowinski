@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 112,
+  "count": 113,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -5265,6 +5265,11 @@
           "id": "bartnik_mckinnon",
           "kind": "family",
           "text": "A ball of Yang-Mills field held together by its own gravity, also known only numerically. It comes as a ladder of solitons counted by the zeros of the field, and every one of them is unstable [bartnik1988, volkov1999]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "programme",
+          "text": "Wheeler's geometrodynamics had a second way to get mass with no matter, the wormhole. Charles Misner's slice of 1960 has two masses at rest that are the two mouths of one wormhole in empty space [misner1957, misner1960]."
         }
       ],
       "references": [
@@ -5292,7 +5297,9 @@
         "einstein1939",
         "mazur2004",
         "bartnik1988",
-        "volkov1999"
+        "volkov1999",
+        "misner1957",
+        "misner1960"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/boson_star.json",
@@ -7806,6 +7813,11 @@
           "id": "curzon_chazy",
           "kind": "family",
           "text": "Jean Chazy and H. E. J. Curzon each presented two point particles at rest on one axis, and the line joining the particles is singular as the axis between the two holes is [chazy1924, curzon1925, einstein1936twobody]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "Two black holes at rest with no strut between them, for one moment only: the slice of space from which Susan Hahn and Richard Lindquist first computed two holes colliding head on [brill1963, hahn1964, holst2016]."
         }
       ],
       "references": [
@@ -7830,7 +7842,10 @@
         "israel1972",
         "chazy1924",
         "curzon1925",
-        "einstein1936twobody"
+        "einstein1936twobody",
+        "brill1963",
+        "hahn1964",
+        "holst2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/double_kerr.json",
@@ -9028,6 +9043,11 @@
           "id": "einstein_rosen_waves",
           "kind": "programme",
           "text": "The other spacetime that carries the two names. Einstein and Rosen found the cylindrical gravitational waves again in 1937, two years after the bridge [einstein1937]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "A slice of space with two bridges in it, each leading to a sheet of its own, which Dieter Brill and Richard Lindquist wrote down in 1963 [brill1963]. Charles Misner's slice of 1960 joins the two mouths to each other and makes a wormhole within one sheet [misner1960]."
         }
       ],
       "references": [
@@ -9047,7 +9067,9 @@
         "damour2007",
         "ellis1973",
         "bronnikov1973",
-        "einstein1937"
+        "einstein1937",
+        "brill1963",
+        "misner1960"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -14959,6 +14981,11 @@
           "id": "mcvittie",
           "kind": "family",
           "text": "A mass in an expanding universe filled with fluid, where the pressure piles up around the mass to keep the density even [kastor1993]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "Two uncharged black holes at rest in a universe with no cosmological constant. Only their first moment is in closed form, and the collision that follows is known from computer simulations [brill1963, sperhake2015]."
         }
       ],
       "references": [
@@ -14974,7 +15001,9 @@
         "nakao1995",
         "ida1998",
         "kastor1996",
-        "gibbons2010"
+        "gibbons2010",
+        "brill1963",
+        "sperhake2015"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kastor_traschen.json",
@@ -18896,6 +18925,11 @@
           "id": "eguchi_hanson",
           "kind": "family",
           "text": "A space of four dimensions with no time, built on the same sum of potentials $1/|\\mathbf{x} - \\mathbf{x}_i|$ over flat space, with two terms and no constant. Its two centres are regular points, the poles of a 2-sphere [gibbonshawking1978, ishihara2006]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "One moment of two black holes at rest with any masses and charges, which Dieter Brill and Richard Lindquist found in 1963. Where every charge equals its mass, their slice is a moment of Majumdar and Papapetrou's holes [brill1963]."
         }
       ],
       "references": [
@@ -18926,7 +18960,8 @@
         "kramer1980",
         "neugebauer2009",
         "gibbonshawking1978",
-        "ishihara2006"
+        "ishihara2006",
+        "brill1963"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -21014,6 +21049,367 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "misner_brill_lindquist",
+      "name": "Misner and Brill-Lindquist Initial Data for Two Black Holes",
+      "short_name": "Misner and Brill-Lindquist Data",
+      "description": "One moment of a spacetime with two black holes at rest in it, the initial data Charles Misner found in 1960 and Dieter Brill and Richard Lindquist in 1963. It is a single slice of space, three dimensions with no time, that satisfies Einstein's constraint equations for a moment at which nothing moves. Each hole is a throat that opens into another sheet of space, and what the holes do afterwards is known from computer simulations.",
+      "tags": [
+        "three-dimensional",
+        "conformally flat",
+        "Riemannian",
+        "no time",
+        "initial data",
+        "spatial slice",
+        "time symmetric",
+        "constraint equations",
+        "Hamiltonian constraint",
+        "Brill-Lindquist",
+        "Misner data",
+        "black hole",
+        "multiple black holes",
+        "binary black hole",
+        "black hole collision",
+        "wormhole",
+        "Einstein-Rosen bridge",
+        "throat",
+        "minimal surface",
+        "apparent horizon",
+        "puncture",
+        "harmonic function",
+        "superposition",
+        "method of images",
+        "bispherical coordinates",
+        "interaction energy",
+        "geometrodynamics",
+        "numerical relativity",
+        "mass",
+        "charged",
+        "electric charge",
+        "asymptotically flat",
+        "exact solution",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(+,+,+)",
+      "convention": "Every coordinate is spatial, so no component carries a factor of $c$, and a dot in the geodesic equations is a derivative with respect to arc length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. A mass $M$ enters as the length $GM/c^2$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "With a single hole the slice is the moment $t = 0$ of Schwarzschild's spacetime in isotropic coordinates, both of its exteriors and the throat between them [cook2000, giulini2014]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "Each throat of the slice is an Einstein-Rosen bridge, which is what Brill and Lindquist called their particles [brill1963]. One hole alone is a moment of the bridge."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Give the holes charge and Brill and Lindquist's slice is $\\chi^2\\psi^2$ times flat space. With $\\psi = 1$ every charge equals its mass, the interaction energy vanishes, and the slice is a moment of Majumdar and Papapetrou's holes, which stay as they are [brill1963, hartle1972]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "One charged hole of Brill and Lindquist's data is the moment $t = 0$ of the Reissner-Nordström black hole in isotropic coordinates [brill1963]."
+        },
+        {
+          "id": "double_kerr",
+          "kind": "family",
+          "text": "Two black holes on one axis in an exact spacetime, held apart for all time by a strut [kramer1980]. Here nothing holds the holes apart, and they are at rest for one moment only."
+        },
+        {
+          "id": "kastor_traschen",
+          "kind": "family",
+          "text": "Charged holes in an expanding universe, where an exact spacetime follows them as they fall together and merge [kastor1993, brill1994]. The collision of these uncharged holes is known from computer simulations [sperhake2015]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "programme",
+          "text": "Wheeler's other way to make a body out of fields and geometry alone was the geon, a ball of field held together by its own gravity [wheeler1955]. His wormholes with Misner make mass and charge out of empty space with a handle in it [misner1957]."
+        }
+      ],
+      "references": [
+        "misner1957",
+        "einstein1935",
+        "sperhake2015",
+        "cook2000",
+        "giulini2014",
+        "misner1960",
+        "price1994",
+        "giulini2018",
+        "misner1963images",
+        "brill1963",
+        "brandt1997",
+        "gibbons1972",
+        "alcubierre2000",
+        "bishop1982",
+        "cadez1974",
+        "holst2016",
+        "hahn1964",
+        "smarr1976",
+        "campanelli2006",
+        "baker2006",
+        "hartle1972",
+        "kramer1980",
+        "kastor1993",
+        "brill1994",
+        "wheeler1955"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_brill_lindquist.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Brill-Lindquist",
+          "coordinates": [
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "(x, y, z) \\neq \\mathbf{x}_1, \\mathbf{x}_2 \\;\\text{(the far ends of the two throats)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(x,y,z)",
+              "description": "The conformal factor, a pure number: $\\psi = 1 + \\alpha_1/|\\mathbf{x} - \\mathbf{x}_1| + \\alpha_2/|\\mathbf{x} - \\mathbf{x}_2|$ for holes at the points $\\mathbf{x}_1$ and $\\mathbf{x}_2$, with $\\alpha_1$ and $\\alpha_2$ lengths, harmonic away from them; no component assumes Laplace's equation"
+            }
+          ],
+          "convention": "We use Cartesian coordinates $(x, y, z)$ on the flat space the slice is conformal to, each a length.",
+          "line_element": "ds^2 = \\psi^4\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\psi^4"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\psi^4"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\psi^4"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{8\\left(\\partial_x^2\\psi + \\partial_y^2\\psi + \\partial_z^2\\psi\\right)}{\\psi^5}",
+          "kretschmann": "K = \\dfrac{32\\psi^2\\left(\\partial_x^2\\psi\\,\\partial_y^2\\psi + \\partial_x^2\\psi\\,\\partial_z^2\\psi + \\partial_y^2\\psi\\,\\partial_z^2\\psi + \\left(\\partial_x\\partial_y\\psi\\right)^2 + \\left(\\partial_x\\partial_z\\psi\\right)^2 + \\left(\\partial_x^2\\psi\\right)^2 + \\left(\\partial_y\\partial_z\\psi\\right)^2 + \\left(\\partial_y^2\\psi\\right)^2 + \\left(\\partial_z^2\\psi\\right)^2\\right) - 32\\psi\\left(6\\partial_x\\partial_y\\psi\\,\\partial_x\\psi\\,\\partial_y\\psi + 6\\partial_x\\partial_z\\psi\\,\\partial_x\\psi\\,\\partial_z\\psi + 6\\partial_y\\partial_z\\psi\\,\\partial_y\\psi\\,\\partial_z\\psi + 2\\left(\\partial_x\\psi\\right)^2\\,\\partial_x^2\\psi - \\left(\\partial_x\\psi\\right)^2\\,\\partial_y^2\\psi - \\left(\\partial_x\\psi\\right)^2\\,\\partial_z^2\\psi + 2\\left(\\partial_y\\psi\\right)^2\\,\\partial_y^2\\psi - \\left(\\partial_y\\psi\\right)^2\\,\\partial_z^2\\psi + 2\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi - \\partial_x^2\\psi\\left(\\partial_y\\psi\\right)^2 - \\partial_x^2\\psi\\left(\\partial_z\\psi\\right)^2 - \\partial_y^2\\psi\\left(\\partial_z\\psi\\right)^2\\right) + 96\\left(\\left(\\partial_x\\psi\\right)^2 + \\left(\\partial_y\\psi\\right)^2 + \\left(\\partial_z\\psi\\right)^2\\right)^2}{\\psi^{12}}"
+        },
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "(\\rho, z) \\neq (0, \\pm a) \\;\\text{(the far ends of the two throats)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(\\rho,z)",
+              "description": "The conformal factor, a pure number: $\\psi = 1 + \\alpha_1/\\sqrt{\\rho^2 + (z - a)^2} + \\alpha_2/\\sqrt{\\rho^2 + (z + a)^2}$ for holes at $z = \\pm a$ on the axis, with $a$, $\\alpha_1$, and $\\alpha_2$ lengths, harmonic away from them; no component assumes Laplace's equation"
+            }
+          ],
+          "convention": "We use cylindrical coordinates $(\\rho, \\phi, z)$ on the flat space the slice is conformal to, with $\\rho$ and $z$ lengths and both holes on the axis $\\rho = 0$, at $z = \\pm a$.",
+          "line_element": "ds^2 = \\psi^4\\left(d\\rho^2 + \\rho^2d\\phi^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\psi^4"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\psi^4"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\psi^4\\,\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{8\\left(\\rho\\,\\partial_\\rho^2\\psi + \\rho\\,\\partial_z^2\\psi + \\partial_\\rho\\psi\\right)}{\\psi^5\\,\\rho}",
+          "kretschmann": "K = \\dfrac{32\\psi^2\\left(\\rho^2\\,\\partial_\\rho^2\\psi\\,\\partial_z^2\\psi + \\rho\\,\\partial_\\rho\\psi\\,\\partial_\\rho^2\\psi + \\rho\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi + \\rho^2\\left(\\partial_\\rho\\partial_z\\psi\\right)^2 + \\rho^2\\left(\\partial_\\rho^2\\psi\\right)^2 + \\rho^2\\left(\\partial_z^2\\psi\\right)^2 + \\left(\\partial_\\rho\\psi\\right)^2\\right) - 32\\psi\\,\\rho\\left(6\\rho\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\,\\partial_\\rho^2\\psi\\left(\\partial_z\\psi\\right)^2 + 2\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_\\rho^2\\psi - \\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2\\psi + 2\\rho\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi - \\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - \\left(\\partial_\\rho\\psi\\right)^3\\right) + 96\\rho^2\\left(\\left(\\partial_\\rho\\psi\\right)^2 + \\left(\\partial_z\\psi\\right)^2\\right)^2}{\\psi^{12}\\rho^2}"
+        },
+        {
+          "id": "bispherical",
+          "name": "Misner Bispherical",
+          "coordinates": [
+            "\\mu",
+            "\\eta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\mu \\in (-\\infty, \\infty)",
+            "\\eta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(\\mu, \\eta) \\neq (0, 0) \\;\\text{(spatial infinity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Half the coordinate distance between the two poles $\\mu \\to \\pm\\infty$ of the coordinates, which stand at $z = \\pm a$ of the cylindrical chart"
+            },
+            {
+              "symbol": "\\Psi = \\Psi(\\mu,\\eta)",
+              "description": "The conformal factor on the cylinder of $\\mu$ and the 2-sphere, a pure number. Misner's is $\\Psi = \\sum_n \\left(\\cosh(\\mu + 2n\\mu_0) - \\cos\\eta\\right)^{-1/2}$ over every integer $n$, with $\\mu_0$ any positive number; Brill and Lindquist's is $\\Psi = \\left(\\cosh\\mu - \\cos\\eta\\right)^{-1/2} + \\left(\\alpha_1e^{\\mu/2} + \\alpha_2e^{-\\mu/2}\\right)/\\sqrt{2}\\,a$, with $\\alpha_1$ and $\\alpha_2$ lengths. No component assumes the equation $\\Psi$ solves"
+            }
+          ],
+          "convention": "We use Misner's bispherical coordinates $(\\mu, \\eta, \\phi)$, all pure numbers, with $\\rho = a\\sin\\eta/(\\cosh\\mu - \\cos\\eta)$ and $z = a\\sinh\\mu/(\\cosh\\mu - \\cos\\eta)$ in the cylindrical chart. There $\\psi = \\Psi\\sqrt{\\cosh\\mu - \\cos\\eta}$.",
+          "line_element": "ds^2 = a^2\\Psi^4\\left(d\\mu^2 + d\\eta^2 + \\sin^2\\eta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\mu",
+                "\\mu"
+              ],
+              "value": "\\Psi^4\\,a^2"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\Psi^4\\,a^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\Psi^4\\,a^2\\sin^2\\eta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(4\\partial_\\mu^2\\Psi + 4\\partial_\\eta^2\\Psi + 4\\cot\\eta\\,\\partial_\\eta\\Psi - \\Psi\\right)}{a^2\\,\\Psi^5}",
+          "kretschmann": "K = \\dfrac{4\\left(\\Psi^4\\sin^2\\eta - 4\\Psi^3\\left(\\partial_\\eta\\Psi\\,\\cos\\eta + \\partial_\\eta^2\\Psi\\,\\sin\\eta\\right)\\sin\\eta + 4\\Psi^2\\left(2\\partial_\\eta\\Psi\\,\\partial_\\eta^2\\Psi\\,\\sin\\eta\\cos\\eta + 2\\partial_\\eta\\Psi\\,\\partial_\\mu^2\\Psi\\,\\sin\\eta\\cos\\eta + 2\\partial_\\eta^2\\Psi\\,\\partial_\\mu^2\\Psi\\,\\sin^2\\eta - \\left(\\partial_\\eta\\Psi\\right)^2\\,\\sin^2\\eta + 2\\left(\\partial_\\eta^2\\Psi\\right)^2\\,\\sin^2\\eta - 2\\left(\\partial_\\mu\\Psi\\right)^2\\,\\sin^2\\eta + 2\\left(\\partial_\\mu\\partial_\\eta\\Psi\\right)^2\\,\\sin^2\\eta + 2\\left(\\partial_\\mu^2\\Psi\\right)^2\\,\\sin^2\\eta + 2\\left(\\partial_\\eta\\Psi\\right)^2\\right) - 8\\Psi\\left(6\\partial_\\eta\\Psi\\,\\partial_\\mu\\Psi\\,\\partial_\\mu\\partial_\\eta\\Psi\\,\\sin\\eta + 2\\left(\\partial_\\eta\\Psi\\right)^2\\,\\partial_\\eta^2\\Psi\\,\\sin\\eta - \\left(\\partial_\\eta\\Psi\\right)^2\\,\\partial_\\mu^2\\Psi\\,\\sin\\eta + 2\\left(\\partial_\\mu\\Psi\\right)^2\\,\\partial_\\mu^2\\Psi\\,\\sin\\eta - \\partial_\\eta\\Psi\\left(\\partial_\\mu\\Psi\\right)^2\\,\\cos\\eta - \\partial_\\eta^2\\Psi\\left(\\partial_\\mu\\Psi\\right)^2\\,\\sin\\eta - \\left(\\partial_\\eta\\Psi\\right)^3\\,\\cos\\eta\\right)\\sin\\eta + 24\\left(\\left(\\partial_\\eta\\Psi\\right)^2 + \\left(\\partial_\\mu\\Psi\\right)^2\\right)^2\\sin^2\\eta\\right)\\csc^2\\eta}{\\Psi^{12}\\,a^4}"
+        },
+        {
+          "id": "isotropic",
+          "name": "One Hole",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s/4 \\;\\text{(the throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "The Schwarzschild radius of the one hole, $r_s = 2GM/c^2$; the throat is the sphere $r = r_s/4$"
+            }
+          ],
+          "convention": "We use isotropic coordinates $(r, \\theta, \\phi)$ about a single hole, with $r$ a length. The conformal factor is $\\psi = 1 + r_s/4r$.",
+          "line_element": "ds^2 = \\left(1 + \\dfrac{r_s}{4r}\\right)^4\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\left(4r + r_s\\right)^4}{256r^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(4r + r_s\\right)^4}{256r^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(4r + r_s\\right)^4\\sin^2\\theta}{256r^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{100663296r_s^2\\,r^6}{\\left(4r + r_s\\right)^{12}}"
+        },
+        {
+          "id": "charged",
+          "name": "Charged",
+          "coordinates": [
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "(x, y, z) \\neq \\mathbf{x}_1, \\mathbf{x}_2 \\;\\text{(the far ends of the two throats)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\chi = \\chi(x,y,z)",
+              "description": "The first of Brill and Lindquist's two potentials, a pure number: $\\chi = 1 + \\alpha_1/|\\mathbf{x} - \\mathbf{x}_1| + \\alpha_2/|\\mathbf{x} - \\mathbf{x}_2|$ for holes at the points $\\mathbf{x}_1$ and $\\mathbf{x}_2$, with $\\alpha_1$ and $\\alpha_2$ lengths; no component assumes Laplace's equation"
+            },
+            {
+              "symbol": "\\psi = \\psi(x,y,z)",
+              "description": "The second potential, a pure number: $\\psi = 1 + \\beta_1/|\\mathbf{x} - \\mathbf{x}_1| + \\beta_2/|\\mathbf{x} - \\mathbf{x}_2|$, with $\\beta_1$ and $\\beta_2$ lengths. The electric field is $E_i = \\partial_i\\ln(\\chi/\\psi)$, and with $\\chi = \\psi$ the holes are neutral"
+            }
+          ],
+          "convention": "We use Cartesian coordinates $(x, y, z)$ on the flat space the slice is conformal to, each a length. The electric field is in Gaussian units with $G = c = 1$.",
+          "line_element": "ds^2 = \\chi^2\\psi^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\chi^2\\,\\psi^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\chi^2\\,\\psi^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\chi^2\\,\\psi^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4\\chi^2\\,\\psi\\left(\\partial_x^2\\psi + \\partial_y^2\\psi + \\partial_z^2\\psi\\right) - 2\\chi^2\\left(\\left(\\partial_x\\psi\\right)^2 + \\left(\\partial_y\\psi\\right)^2 + \\left(\\partial_z\\psi\\right)^2\\right) + 4\\chi\\,\\psi^2\\left(\\partial_x^2\\chi + \\partial_y^2\\chi + \\partial_z^2\\chi\\right) + 4\\chi\\,\\psi\\left(\\partial_x\\chi\\,\\partial_x\\psi + \\partial_y\\chi\\,\\partial_y\\psi + \\partial_z\\chi\\,\\partial_z\\psi\\right) - 2\\psi^2\\left(\\left(\\partial_x\\chi\\right)^2 + \\left(\\partial_y\\chi\\right)^2 + \\left(\\partial_z\\chi\\right)^2\\right)}{\\chi^4\\,\\psi^4}",
+          "kretschmann": "K = \\dfrac{8\\chi^4\\,\\psi^2\\left(\\partial_x^2\\psi\\,\\partial_y^2\\psi + \\partial_x^2\\psi\\,\\partial_z^2\\psi + \\partial_y^2\\psi\\,\\partial_z^2\\psi + \\left(\\partial_x\\partial_y\\psi\\right)^2 + \\left(\\partial_x\\partial_z\\psi\\right)^2 + \\left(\\partial_x^2\\psi\\right)^2 + \\left(\\partial_y\\partial_z\\psi\\right)^2 + \\left(\\partial_y^2\\psi\\right)^2 + \\left(\\partial_z^2\\psi\\right)^2\\right) - 16\\chi^4\\,\\psi\\left(2\\partial_x\\partial_y\\psi\\,\\partial_x\\psi\\,\\partial_y\\psi + 2\\partial_x\\partial_z\\psi\\,\\partial_x\\psi\\,\\partial_z\\psi + 2\\partial_y\\partial_z\\psi\\,\\partial_y\\psi\\,\\partial_z\\psi + \\left(\\partial_x\\psi\\right)^2\\,\\partial_x^2\\psi + \\left(\\partial_y\\psi\\right)^2\\,\\partial_y^2\\psi + \\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi\\right) + 12\\chi^4\\left(\\left(\\partial_x\\psi\\right)^2 + \\left(\\partial_y\\psi\\right)^2 + \\left(\\partial_z\\psi\\right)^2\\right)^2 + 8\\chi^3\\,\\psi^3\\left(2\\partial_x\\partial_y\\chi\\,\\partial_x\\partial_y\\psi + 2\\partial_x\\partial_z\\chi\\,\\partial_x\\partial_z\\psi + 2\\partial_x^2\\chi\\,\\partial_x^2\\psi + \\partial_x^2\\chi\\,\\partial_y^2\\psi + \\partial_x^2\\chi\\,\\partial_z^2\\psi + \\partial_x^2\\psi\\,\\partial_y^2\\chi + \\partial_x^2\\psi\\,\\partial_z^2\\chi + 2\\partial_y\\partial_z\\chi\\,\\partial_y\\partial_z\\psi + 2\\partial_y^2\\chi\\,\\partial_y^2\\psi + \\partial_y^2\\chi\\,\\partial_z^2\\psi + \\partial_y^2\\psi\\,\\partial_z^2\\chi + 2\\partial_z^2\\chi\\,\\partial_z^2\\psi\\right) - 16\\chi^3\\,\\psi^2\\left(\\partial_x\\chi\\,\\partial_x\\partial_y\\psi\\,\\partial_y\\psi + \\partial_x\\chi\\,\\partial_x\\partial_z\\psi\\,\\partial_z\\psi - \\partial_x\\chi\\,\\partial_x\\psi\\,\\partial_y^2\\psi - \\partial_x\\chi\\,\\partial_x\\psi\\,\\partial_z^2\\psi + 2\\partial_x\\partial_y\\chi\\,\\partial_x\\psi\\,\\partial_y\\psi + \\partial_x\\partial_y\\psi\\,\\partial_x\\psi\\,\\partial_y\\chi + 2\\partial_x\\partial_z\\chi\\,\\partial_x\\psi\\,\\partial_z\\psi + \\partial_x\\partial_z\\psi\\,\\partial_x\\psi\\,\\partial_z\\chi - \\partial_x^2\\psi\\,\\partial_y\\chi\\,\\partial_y\\psi - \\partial_x^2\\psi\\,\\partial_z\\chi\\,\\partial_z\\psi + \\partial_y\\chi\\,\\partial_y\\partial_z\\psi\\,\\partial_z\\psi - \\partial_y\\chi\\,\\partial_y\\psi\\,\\partial_z^2\\psi + 2\\partial_y\\partial_z\\chi\\,\\partial_y\\psi\\,\\partial_z\\psi + \\partial_y\\partial_z\\psi\\,\\partial_y\\psi\\,\\partial_z\\chi - \\partial_y^2\\psi\\,\\partial_z\\chi\\,\\partial_z\\psi + \\left(\\partial_x\\psi\\right)^2\\,\\partial_x^2\\chi + \\left(\\partial_y\\psi\\right)^2\\,\\partial_y^2\\chi + \\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\chi\\right) + 16\\chi^3\\,\\psi\\left(\\left(\\partial_x\\psi\\right)^2 + \\left(\\partial_y\\psi\\right)^2 + \\left(\\partial_z\\psi\\right)^2\\right)\\left(\\partial_x\\chi\\,\\partial_x\\psi + \\partial_y\\chi\\,\\partial_y\\psi + \\partial_z\\chi\\,\\partial_z\\psi\\right) + 8\\chi^2\\,\\psi^4\\left(\\partial_x^2\\chi\\,\\partial_y^2\\chi + \\partial_x^2\\chi\\,\\partial_z^2\\chi + \\partial_y^2\\chi\\,\\partial_z^2\\chi + \\left(\\partial_x\\partial_y\\chi\\right)^2 + \\left(\\partial_x\\partial_z\\chi\\right)^2 + \\left(\\partial_x^2\\chi\\right)^2 + \\left(\\partial_y\\partial_z\\chi\\right)^2 + \\left(\\partial_y^2\\chi\\right)^2 + \\left(\\partial_z^2\\chi\\right)^2\\right) - 16\\chi^2\\,\\psi^3\\left(\\partial_x\\chi\\,\\partial_x\\partial_y\\chi\\,\\partial_y\\psi + 2\\partial_x\\chi\\,\\partial_x\\partial_y\\psi\\,\\partial_y\\chi + \\partial_x\\chi\\,\\partial_x\\partial_z\\chi\\,\\partial_z\\psi + 2\\partial_x\\chi\\,\\partial_x\\partial_z\\psi\\,\\partial_z\\chi - \\partial_x\\chi\\,\\partial_x\\psi\\,\\partial_y^2\\chi - \\partial_x\\chi\\,\\partial_x\\psi\\,\\partial_z^2\\chi + \\partial_x\\partial_y\\chi\\,\\partial_x\\psi\\,\\partial_y\\chi + \\partial_x\\partial_z\\chi\\,\\partial_x\\psi\\,\\partial_z\\chi - \\partial_x^2\\chi\\,\\partial_y\\chi\\,\\partial_y\\psi - \\partial_x^2\\chi\\,\\partial_z\\chi\\,\\partial_z\\psi + \\partial_y\\chi\\,\\partial_y\\partial_z\\chi\\,\\partial_z\\psi + 2\\partial_y\\chi\\,\\partial_y\\partial_z\\psi\\,\\partial_z\\chi - \\partial_y\\chi\\,\\partial_y\\psi\\,\\partial_z^2\\chi + \\partial_y\\partial_z\\chi\\,\\partial_y\\psi\\,\\partial_z\\chi - \\partial_y^2\\chi\\,\\partial_z\\chi\\,\\partial_z\\psi + \\left(\\partial_x\\chi\\right)^2\\,\\partial_x^2\\psi + \\left(\\partial_y\\chi\\right)^2\\,\\partial_y^2\\psi + \\left(\\partial_z\\chi\\right)^2\\,\\partial_z^2\\psi\\right) + 40\\chi^2\\,\\psi^2\\left(\\partial_x\\chi\\,\\partial_x\\psi + \\partial_y\\chi\\,\\partial_y\\psi + \\partial_z\\chi\\,\\partial_z\\psi\\right)^2 - 16\\chi\\,\\psi^4\\left(2\\partial_x\\chi\\,\\partial_x\\partial_y\\chi\\,\\partial_y\\chi + 2\\partial_x\\chi\\,\\partial_x\\partial_z\\chi\\,\\partial_z\\chi + 2\\partial_y\\chi\\,\\partial_y\\partial_z\\chi\\,\\partial_z\\chi + \\left(\\partial_x\\chi\\right)^2\\,\\partial_x^2\\chi + \\left(\\partial_y\\chi\\right)^2\\,\\partial_y^2\\chi + \\left(\\partial_z\\chi\\right)^2\\,\\partial_z^2\\chi\\right) + 16\\chi\\,\\psi^3\\left(\\left(\\partial_x\\chi\\right)^2 + \\left(\\partial_y\\chi\\right)^2 + \\left(\\partial_z\\chi\\right)^2\\right)\\left(\\partial_x\\chi\\,\\partial_x\\psi + \\partial_y\\chi\\,\\partial_y\\psi + \\partial_z\\chi\\,\\partial_z\\psi\\right) + 12\\psi^4\\left(\\left(\\partial_x\\chi\\right)^2 + \\left(\\partial_y\\chi\\right)^2 + \\left(\\partial_z\\chi\\right)^2\\right)^2}{\\chi^8\\,\\psi^8}"
         }
       ]
     },
@@ -25347,6 +25743,11 @@
           "id": "bartnik_mckinnon",
           "kind": "limit_source",
           "text": "Balls of Yang-Mills field with a regular centre and no horizon, one for each number $n$ of zeros of the field. In the limit $n \\to \\infty$ their outside is the extreme hole, $r_q = r_s/2$, with a magnetic charge [breitenlohner1994, volkov1999]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "One moment of two charged black holes at rest, each with a throat like the one on the slice $t = 0$ of Reissner and Nordström's hole [brill1963]."
         }
       ],
       "references": [
@@ -25382,7 +25783,8 @@
         "visser2020",
         "larsen2000",
         "breitenlohner1994",
-        "volkov1999"
+        "volkov1999",
+        "brill1963"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -27629,6 +28031,11 @@
           "id": "morgan_morgan",
           "kind": "family",
           "text": "Static discs of counterrotating dust, Weyl fields as Schwarzschild's is. Lemos and Letelier set such a disc round Schwarzschild's black hole in an exact solution of the two together [lemos1993]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "One moment of a space with two Schwarzschild black holes at rest in it, made by adding their two conformal factors. With one hole it is the slice $t = 0$ of Schwarzschild's spacetime in isotropic coordinates [brill1963, cook2000]."
         }
       ],
       "references": [
@@ -27715,7 +28122,9 @@
         "liebling2023",
         "bartnik1988",
         "zhou1991",
-        "lemos1993"
+        "lemos1993",
+        "brill1963",
+        "cook2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

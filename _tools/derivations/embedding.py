@@ -120,6 +120,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 import build_mfs_data as build  # noqa: E402
 import boson_star as bs  # noqa: E402
+import two_holes  # noqa: E402
 import null_rays as nr  # noqa: E402
 import conformal  # noqa: E402
 from conformal import Sources  # noqa: E402
@@ -6310,6 +6311,184 @@ def kastor_traschen(ck, src):
     return views
 
 
+# Brill and Lindquist's two equal holes, alpha_1 = alpha_2 = alpha, the unit, at z = +-a: the half
+# separations a the movies stand at, and how far out each drawing runs.
+TWO_HOLE_KEYS = (0.5, 1.0, 1.5, 2.0)
+TWO_HOLE_STEP = 0.05
+TWO_HOLE_RIM = 1.15     # each far sheet is drawn out to this many times the radius of its throat's circle
+TWO_HOLE_TOP = 4.0
+TWO_HOLE_RINGS = (1.0, 2.0, 3.0)
+
+
+def misner_brill_lindquist(ck, src):
+    """Three surfaces of the slice, which is itself one moment, so no time is held fixed.
+
+    The sphere through both holes, eta = pi/2 of Misner's bispherical chart, rho^2 + z^2 = a^2, for
+    Brill and Lindquist's two equal holes of alpha = 1: its metric is a^2 Psi^4 (dmu^2 + dphi^2)
+    with Psi = cosh(mu)^(-1/2) + sqrt(2) cosh(mu/2)/a, so the circle at mu has the radius a Psi^2 and
+    dz/dmu = a Psi sqrt(Psi^2 - 4 Psi'^2), real since 2 Psi' = -tanh(mu) cosh(mu)^(-1/2) +
+    sqrt(2) sinh(mu/2)/a is less than Psi in size. Toward mu -> +-infinity, the two holes, the
+    radius grows as fast as the distance, d(rho)/ds -> 1: the surface flattens into the plane of the
+    sheet beyond each hole. Psi'' at mu = 0 is -1/2 + 1/(2 sqrt(2) a), so the circle mu = 0 is the
+    widest between two narrower ones while a > 1/sqrt(2) and the narrowest below. Each hole's
+    throat, the minimal sphere around it that two_holes.throat finds, cuts the surface in a circle,
+    and the surface is drawn in three pieces that join there, out to 1.15 times the
+    throat's circle on each far sheet, for a from 2 down to 1/2.
+
+    The plane z = 0 midway between the same holes, in the cylindrical chart: psi = 1 +
+    2/sqrt(rho^2 + a^2), the radius rho psi^2, dz/drho = psi sqrt(psi^2 - (psi + 2 rho psi')^2),
+    flat on the axis, with the circle where the apparent horizon cuts it marked for a below 1.532.
+
+    One hole, r_s = 1, in the isotropic chart: Flamm's paraboloid on both sheets as one piece, the
+    isotropic radius running through the throat r = r_s/4 from r_s/96 to 6 r_s."""
+    name = "two black holes"
+    critical = two_holes.critical()
+    ck.add(f"{name}: a surface surrounds both equal holes below the separation 1.532 in units of 2 alpha",
+           abs(critical - 1.532), 1e-3)
+    values, keys = movie_values(list(TWO_HOLE_KEYS), TWO_HOLE_STEP)
+    values = [round(v, 9) for v in values]
+
+    def psi_plane(a):
+        return lambda r: 1 + 2 / np.sqrt(r * r + a * a)
+
+    def Psi(a):
+        return lambda mu: np.cosh(mu) ** -0.5 + math.sqrt(2) * np.cosh(mu / 2) / a
+
+    def through(a):
+        A = Fraction(a).limit_denominator(1000)
+        sl = Slice(src, "misner_brill_lindquist", "bispherical", "\\mu", "\\phi", {"eta": "pi/2"}, {"a": str(A)},
+                   functions={"Psi": f"1/sqrt(cosh(mu) - cos(eta)) + sqrt(2)*cosh(mu/2)/({A})"})
+        z0 = two_holes.throat(a)
+        rho_t, z_t = two_holes.crossing(a, z0)
+        mu_t = math.atanh(z_t / a)
+        top = brentq(lambda mu: float(sl.rho_at(mu)) - TWO_HOLE_RIM * float(sl.rho_at(mu_t)), mu_t, 12.0, xtol=1e-12)
+        where = f"{name}, through both, a = {a:g}"
+        ck.add(f"{where}: the throat closes on the axis", abs(two_holes.throat_miss(a, z0)), 1e-6)
+        ck.add(f"{where}: the throat's circle lies on the sphere", abs(math.hypot(rho_t, z_t) - a), 1e-10)
+        ck.add(f"{where}: and at mu_t, rho = a/cosh(mu_t)", abs(a / math.cosh(mu_t) - rho_t), 1e-9)
+        h = sl.rise(0.0, mu_t)
+        marks = [(-mu_t, "throat", None), (0.0, "r", None), (mu_t, "throat", None)]
+        cut = two_holes.common_crossing(a)
+        if cut is not None:
+            mu_h = math.atanh(cut[1] / a)
+            ck.exact(f"{where}: the horizon cuts the sphere between the throats", 0 < mu_h < mu_t)
+            marks += [(-mu_h, "horizon", None), (mu_h, "horizon", None)]
+        middle = Piece("between", "sheet", sl, -mu_t, mu_t, -h, 1,
+                       (("join", "the throat of the hole at $z = -a$"), ("join", "the throat of the hole at $z = a$")),
+                       sorted(marks), size)
+        upper = Piece("beyond_upper", "sheet2", sl, mu_t, top, h, 1,
+                      (("join", "the throat of the hole at $z = a$"),
+                       ("edge", "the surface runs on to $\\mu \\to \\infty$, flattening into the plane of the sheet "
+                                "beyond that hole")),
+                      [(top, "r2", None)], size)
+        lower = Piece("beyond_lower", "sheet2", sl, -top, -mu_t, -h - sl.rise(-top, -mu_t), 1,
+                      (("edge", "the surface runs on to $\\mu \\to -\\infty$, flattening into the plane of the sheet "
+                                "beyond that hole"),
+                       ("join", "the throat of the hole at $z = -a$")),
+                      [(-top, "r2", None)], size)
+        for p in (lower, middle, upper):
+            ck.isometry(f"{where}, {p.id}", p)
+            ck.radius(f"{where}, {p.id}, rho = a Psi^2", p, lambda mu: a * Psi(a)(mu) ** 2, size)
+        ck.join(f"{where}, at the upper throat", middle, mu_t, upper, mu_t)
+        ck.join(f"{where}, at the lower throat", lower, -mu_t, middle, -mu_t)
+        mu = np.linspace(-top, top, 801)
+        ck.add(f"{where}: the circles nowhere outgrow the distance, 2|Psi'| < Psi",
+               float(max(0.0, np.max(np.abs(sl._drho(mu)) / np.sqrt(sl.gxx_at(mu)) - 1))), 0.0)
+        # The circle mu = 0 bulges out between two narrower ones while a > 1/sqrt(2), and is the narrowest below.
+        bulge = float(sl.rho_at(0.0)) > float(sl.rho_at(0.05))
+        ck.exact(f"{where}: the circle mu = 0 is wider than its neighbours exactly while a > 1/sqrt(2)",
+                 bulge == (a > 1 / math.sqrt(2)))
+        z_c = two_holes.common(a)
+        cut = two_holes.common_crossing(a)
+        if z_c is not None:
+            path, end = two_holes.curve(a, z_c, "common")
+            y = path(np.linspace(0, end, 400))
+            nearest = float(np.min(np.hypot(y[0], y[1])))
+            ck.add(f"{where}: the surface around both holes is nearest the centre at its waist",
+                   abs(nearest - math.hypot(*path(end)[:2])), 1e-9)
+            ck.exact(f"{where}: it cuts the sphere exactly while its waist is narrower than a",
+                     (cut is not None) == (nearest < a))
+        ck.exact(f"{where}: a surface surrounds both holes exactly while a < 1.532", (z_c is not None) == (a < critical))
+        return Surface([lower, middle, upper], label=f"$a = {a:.2f}\\,\\alpha$", time=a)
+
+    size = 2 * TWO_HOLE_RIM * 8.0
+    frames = [through(a) for a in values]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the part of the sphere in the sheet both holes share, between the two throats")
+    fig.legend("line", "throat", "the circles in which the two throats cut the sphere")
+    fig.legend("line", "r", "the circle $\\mu = 0$, halfway between the holes")
+    fig.legend("line", "horizon", "the circles in which the apparent horizon cuts the sphere, for $a$ from "
+                                  "$1.41$ to $1.53\\,\\alpha$")
+    fig.legend("line", "r2", "the rim on each far sheet, a circle $1.15$ times as wide as the throat's")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views = [view("through", "Through both throats", "$\\alpha$", [frames[i] for i in keys], fig.done(),
+                  movie=movie(frames, "$a$", values),
+                  settings="$\\alpha = 1$, the unit of every length and of $a$, with two equal holes "
+                           "($\\alpha_1 = \\alpha_2 = \\alpha$) at $z = \\pm a$, on the sphere $\\eta = \\pi/2$.")]
+
+    top = TWO_HOLE_TOP
+    size_plane = 2 * top * float(psi_plane(values[0])(top)) ** 2
+
+    def between(a):
+        A = Fraction(a).limit_denominator(1000)
+        sl = Slice(src, "misner_brill_lindquist", "cylindrical", "\\rho", "\\phi", {"z": 0},
+                   functions={"psi": f"1 + 1/sqrt(rho**2 + (z - ({A}))**2) + 1/sqrt(rho**2 + (z + ({A}))**2)"})
+        marks = [(r, "r", None) for r in TWO_HOLE_RINGS] + [(top, "r", None)]
+        where = f"{name}, the midplane, a = {a:g}"
+        waist = two_holes.waist(a)
+        if waist is not None:
+            marks.append((waist, "horizon", None))
+            ck.add(f"{where}: the horizon meets the midplane at right angles",
+                   abs(two_holes.common_miss(a, two_holes.common(a))), 1e-8)
+        plane = Piece("midplane", "sheet", sl, 0.0, top, 0.0, 1,
+                      (("axis", "the axis $\\rho = 0$, midway between the holes"),
+                       ("edge", "the surface runs on to $\\rho \\to \\infty$")), sorted(marks), size_plane)
+        ck.isometry(f"{where}", plane)
+        ck.radius(f"{where}, rho = rho psi^2", plane, lambda r: r * psi_plane(a)(r) ** 2, size_plane)
+        return Surface([plane], label=f"$a = {a:.2f}\\,\\alpha$", time=a)
+
+    frames = [between(a) for a in values]
+    fig = movie_figure(frames, {"sheet": "cover"}, size_plane, meridians=12)
+    fig.legend("fill", "cover", "the plane $z = 0$, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $1$, $2$, $3$, and $4$ times $\\alpha$")
+    fig.legend("line", "horizon", "the circle in which the apparent horizon cuts the plane, for $a < 1.53\\,\\alpha$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views.append(view("between", "Between the holes", "$\\alpha$", [frames[i] for i in keys], fig.done(),
+                      movie=movie(frames, "$a$", values),
+                      settings="$\\alpha = 1$, the unit of every length and of $a$, with two equal holes "
+                               "($\\alpha_1 = \\alpha_2 = \\alpha$) at $z = \\pm a$, so that "
+                               "$\\psi = 1 + 2\\alpha/\\sqrt{\\rho^2 + a^2}$ on the plane $z = 0$."))
+
+    sl = Slice(src, "misner_brill_lindquist", "isotropic", "r", "\\phi", dict(EQUATOR), {"r_s": 1})
+    out = 6.0
+    far = (out - 0.5 + math.sqrt(out * (out - 1))) / 2
+    near = 1 / (16 * far)
+    size_one = 2 * out
+    marks = ([(near, "r", None)] + [(1 / (16 * r), "r", None) for r in (2.0, 1.0, 0.5)] + [(0.25, "throat", None)]
+             + [(r, "r", None) for r in (0.5, 1.0, 2.0)] + [(far, "r", None)])
+    whole = Piece("both_sheets", "sheet", sl, near, far, -sl.rise(near, 0.25), 1,
+                  (("edge", "the second sheet runs on to $r \\to 0$, its own infinity"),
+                   ("edge", "the paraboloid runs on to $r \\to \\infty$")), marks, size_one)
+    ck.isometry(f"{name}, one hole", whole)
+    ck.radius(f"{name}, one hole, the radius r (1 + r_s/4r)^2", whole, lambda r: r * (1 + 1 / (4 * r)) ** 2, size_one)
+    ck.form(f"{name}, one hole, Flamm's z = +-2 sqrt(r_s (R - r_s))", whole,
+            lambda r: np.sign(r - 0.25) * 2 * np.sqrt(np.maximum(r * (1 + 1 / (4 * r)) ** 2 - 1, 0)), size_one)
+    ck.add(f"{name}, one hole: the inversion r -> r_s^2/16r carries the rim onto the rim",
+           abs(float(sl.rho_at(near)) - float(sl.rho_at(far))), 1e-12)
+    one = Surface([whole])
+    fig = figure_of([one], {"sheet": "cover"}, size_one)
+    ring_label(fig, [0, 0, 0], *whole.at(0.25), "$r = r_s/4$", dx=14)
+    ring_label(fig, [0, 0, 0], *whole.at(far), "$R = 6\\,r_s$")
+    fig.legend("fill", "cover", "both sheets, which $r > 0$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1/2$, $1$, $2$, and $5.49$ times $r_s$, and their images under "
+                            "$r \\to r_s^2/16r$ on the second sheet")
+    fig.legend("line", "throat", "the throat $r = r_s/4$, the smallest circle, of circumference radius $r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("one_hole", "One hole", "$r_s$", [one], fig.done(), system="isotropic",
+                      settings="$r_s = 1$, the unit of every length, and $\\psi = 1 + r_s/4r$."))
+    return views
+
+
 def stockum_dust(ck, src):
     """The plane z = 0 at one moment, R = 1: g_rr = e^(-r^2), g_phiphi = r^2 (1 - r^2). The
     circles grow out to r = R/sqrt(2) and shrink after, so the surface curls back toward the
@@ -10913,6 +11092,7 @@ DRAWN = {
     "black_saturn": black_saturn,
     "dilaton_black_hole": dilaton_black_hole,
     "majumdar_papapetrou": majumdar_papapetrou,
+    "misner_brill_lindquist": misner_brill_lindquist,
     "kastor_traschen": kastor_traschen,
     "melvin": melvin,
     "senovilla": senovilla,
@@ -11871,6 +12051,40 @@ CAPTIONS = {
         "make. As $\\tau \\to 0$ the circumference radius $\\rho U$ closes on $2m\\rho/\\sqrt{\\rho^2 + 4m^2}$, "
         "which stays below $2m$, so the plane folds up into the floor of a single throat of radius $2m$, that of a "
         "hole with the mass of both.",
+    ],
+    ("misner_brill_lindquist", "through"): [
+        "The coordinate sphere through both holes ($\\eta = \\pi/2$, which is $\\rho^2 + z^2 = a^2$) of Brill and "
+        "Lindquist's slice for two equal holes, drawn as a surface in flat space with every distance along it the "
+        "metric distance. On it the metric is $a^2\\Psi^4(d\\mu^2 + d\\phi^2)$ with "
+        "$\\Psi = (\\cosh\\mu)^{-1/2} + \\sqrt{2}\\,(\\alpha/a)\\cosh(\\mu/2)$, so the circle at $\\mu$ has the "
+        "circumference radius $a\\Psi^2$, and $dz/d\\mu = a\\Psi\\sqrt{\\Psi^2 - 4(\\partial_\\mu\\Psi)^2}$ is real "
+        "everywhere.",
+        "The surface runs from the far side of one throat to the far side of the other. Toward $\\mu \\to \\pm\\infty$ "
+        "it opens out and flattens into the plane of a second and a third sheet of space, one beyond each hole, and "
+        "the tinted middle lies in the sheet the two holes share. Each hole's throat, the smallest sphere around it, "
+        "cuts the surface in a marked circle.",
+        "As $a$ falls the holes draw together and the bulge between the throats shrinks, and below "
+        "$a = \\alpha/\\sqrt{2}$ the circle $\\mu = 0$ is the smallest on the surface. From $a = 1.53\\,\\alpha$ down "
+        "a third minimal surface surrounds both holes, the apparent horizon of a single black hole. It cuts the "
+        "sphere in two circles until $a = 1.41\\,\\alpha$, and below that the whole sphere lies inside it.",
+    ],
+    ("misner_brill_lindquist", "between"): [
+        "The plane $z = 0$ midway between two equal holes at $z = \\pm a$, drawn as a surface in flat space with "
+        "every distance along it the metric distance. On it $\\psi = 1 + 2\\alpha/\\sqrt{\\rho^2 + a^2}$, the circle "
+        "of coordinate radius $\\rho$ has the circumference radius $\\rho\\psi^2$, and "
+        "$dz/d\\rho = \\psi\\sqrt{\\psi^2 - (\\psi + 2\\rho\\,\\partial_\\rho\\psi)^2}$ is real, since "
+        "$\\psi + 2\\rho\\,\\partial_\\rho\\psi$ lies between $-\\psi$ and $\\psi$.",
+        "The surface is flat where it crosses the axis, halfway between the holes, and far out it rises as Flamm's "
+        "paraboloid of the total mass does, $dz/d\\rho \\to \\sqrt{8\\alpha/\\rho}$. As $a$ falls the dip at the "
+        "centre deepens. From $a = 1.53\\,\\alpha$ down the marked circle is where the apparent horizon, the "
+        "outermost minimal surface around both holes, cuts the plane.",
+    ],
+    ("misner_brill_lindquist", "one_hole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a single hole, drawn as a surface in flat space with every "
+        "distance along it the metric distance: Flamm's paraboloid, $z^2 = 4r_s(R - r_s)$ over the circumference "
+        "radius $R = r\\psi^2$. The isotropic radius covers both sheets. The throat is the circle $r = r_s/4$, of "
+        "circumference radius $r_s$, and the inversion $r \\to r_s^2/16r$ carries each sheet onto the other, so "
+        "$r \\to 0$ is the infinity of the second sheet.",
     ],
     ("majumdar_papapetrou", "one_hole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a single hole ($U = 1 + m/r$) at one moment of $t$, drawn as a "

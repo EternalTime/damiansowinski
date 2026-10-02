@@ -63,6 +63,11 @@
       "id": "mcvittie",
       "kind": "family",
       "text": "A mass in an expanding universe filled with fluid, where the pressure piles up around the mass to keep the density even [kastor1993]."
+    },
+    {
+      "id": "misner_brill_lindquist",
+      "kind": "family",
+      "text": "Two uncharged black holes at rest in a universe with no cosmological constant. Only their first moment is in closed form, and the collision that follows is known from computer simulations [brill1963, sperhake2015]."
     }
   ],
   "references": [
@@ -78,7 +83,9 @@
     "nakao1995",
     "ida1998",
     "kastor1996",
-    "gibbons2010"
+    "gibbons2010",
+    "brill1963",
+    "sperhake2015"
   ],
   "coordinates": [
     {

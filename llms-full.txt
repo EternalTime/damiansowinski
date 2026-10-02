@@ -1015,6 +1015,20 @@ Minkowski space identified under a boost, flat everywhere. A contracting univers
 - chart Milne: coordinates $(t, \chi, y, z)$, $$ds^2 = -c^2 dt^2 + c^2t^2\,d\chi^2 + dy^2 + dz^2$$
 - chart Rindler: coordinates $(\eta, \xi, y, z)$, $$ds^2 = -\xi^2 d\eta^2 + d\xi^2 + dy^2 + dz^2$$
 
+### Misner and Brill-Lindquist Initial Data for Two Black Holes
+
+One moment of a spacetime with two black holes at rest in it, the initial data Charles Misner found in 1960 and Dieter Brill and Richard Lindquist in 1963. It is a single slice of space, three dimensions with no time, that satisfies Einstein's constraint equations for a moment at which nothing moves. Each hole is a throat that opens into another sheet of space, and what the holes do afterwards is known from computer simulations.
+
+- id: `misner_brill_lindquist`
+- tags: three-dimensional, conformally flat, Riemannian, no time, initial data, spatial slice, time symmetric, constraint equations, Hamiltonian constraint, Brill-Lindquist, Misner data, black hole, multiple black holes, binary black hole, black hole collision, wormhole, Einstein-Rosen bridge, throat, minimal surface, apparent horizon, puncture, harmonic function, superposition, method of images, bispherical coordinates, interaction energy, geometrodynamics, numerical relativity, mass, charged, electric charge, asymptotically flat, exact solution, Einstein equations, idealized model
+- signature: (+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/misner_brill_lindquist.json
+- chart Brill-Lindquist: coordinates $(x, y, z)$, $$ds^2 = \psi^4\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Cylindrical: coordinates $(\rho, \phi, z)$, $$ds^2 = \psi^4\left(d\rho^2 + \rho^2d\phi^2 + dz^2\right)$$
+- chart Misner Bispherical: coordinates $(\mu, \eta, \phi)$, $$ds^2 = a^2\Psi^4\left(d\mu^2 + d\eta^2 + \sin^2\eta\,d\phi^2\right)$$
+- chart One Hole: coordinates $(r, \theta, \phi)$, $$ds^2 = \left(1 + \dfrac{r_s}{4r}\right)^4\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Charged: coordinates $(x, y, z)$, $$ds^2 = \chi^2\psi^2\left(dx^2 + dy^2 + dz^2\right)$$
+
 ### Mixmaster Chaotic Cosmology
 
 A spatially homogeneous Bianchi type IX cosmology whose approach to the singularity consists of an infinite, chaotic sequence of Kasner oscillations. It is the prototype of chaotic cosmological dynamics near a singularity.

@@ -5342,6 +5342,85 @@
   ],
   "sphere": null
  },
+ "misner_brill_lindquist/bispherical": {
+  "stamp": "ee990fb984bf871c",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "misner_brill_lindquist/cartesian": {
+  "stamp": "96bbb9774a84a201",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
+ "misner_brill_lindquist/charged": {
+  "stamp": "7ff58327ee6fa424",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
+ "misner_brill_lindquist/cylindrical": {
+  "stamp": "ee9714a0bbd132db",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "misner_brill_lindquist/isotropic": {
+  "stamp": "7315fb49da0adf25",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "mixmaster/euler_angles": {
   "stamp": "8f625cbe94562efd",
   "relations": {},

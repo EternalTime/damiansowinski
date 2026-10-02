@@ -836,6 +836,14 @@ DIMENSIONS = {
     ("eguchi_hanson", "two_centre"): {
         "\\rho": "L", "z": "L", "\\psi": "1", "\\tau": "L", "a": "L", "R_1": "L", "R_2": "L", "V": "1", "\\omega": "L",
     },
+    # Misner's and Brill and Lindquist's initial data are one moment, a Riemannian space of three
+    # dimensions: every coordinate is spatial. The conformal factors psi, chi and Psi are pure numbers,
+    # the bispherical coordinates are pure numbers, and their scale a and the one hole's r_s are lengths.
+    ("misner_brill_lindquist", "cartesian"): {"x": "L", "y": "L", "z": "L", "\\psi": "1"},
+    ("misner_brill_lindquist", "cylindrical"): {"\\rho": "L", "\\phi": "1", "z": "L", "\\psi": "1"},
+    ("misner_brill_lindquist", "bispherical"): {"\\mu": "1", "\\eta": "1", "\\phi": "1", "a": "L", "\\Psi": "1"},
+    ("misner_brill_lindquist", "isotropic"): {"r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L"},
+    ("misner_brill_lindquist", "charged"): {"x": "L", "y": "L", "z": "L", "\\chi": "1", "\\psi": "1"},
     # The Kaluza-Klein black holes keep three lengths: the horizon radius r_s and the charge
     # lengths q and p. The fifth coordinate y is a length, and so are the advanced time v = ct + ...
     # and its companion w along the circle.
