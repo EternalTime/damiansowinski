@@ -5272,6 +5272,17 @@ class Slices(unittest.TestCase):
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
                     **{f"conformal erez_rosen/{s}_equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
+                    # Bonnor's two spheres, Lemos and Weinberg's cloud and the spheroid are four stars of one
+                    # line element, each chart's drawings marking its own; the exterior is drawn with the sphere
+                    # of 1975, and the spheroid's equatorial plane meets its axis inside the spheroid alone.
+                    **{f"{place}bonnor_charged_dust/{s}": {"star", "star_1965", "cloud", "spheroid"} - own
+                       for own, charts in (({"star"}, ("sphere_1975", "exterior", "exterior_areal")),
+                                           ({"star_1965"}, ("sphere_1965",)),
+                                           ({"cloud"}, ("quasi_black_hole", "harmonic")),
+                                           ({"spheroid"}, ("spheroid_interior",)), (set(), ("spheroid_exterior",)))
+                       for chart in charts
+                       for place, s in [("conformal ", chart)] + [("", f"{chart}/{v}") for v in (
+                           "radial", "through", "tx", "axis")]},
                     "majumdar_papapetrou/cartesian/tz": {"one_hole"},
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
@@ -6242,6 +6253,12 @@ class Slices(unittest.TestCase):
                 "schwarzschild": [lo, hi],
                 "isotropic": [(r - 0.5 + math.sqrt(r * (r - 1))) / 2 for r in (lo, hi)],
             }[key.split("/")[1]]
+        if key == "bonnor_charged_dust/spheroid_interior/axis":
+            # The spheroid's equatorial plane meets its axis at the centre of the disc, the event t = 0, u = 0.
+            return (lambda X: 0.0), [0.0]
+        if key == "bonnor_charged_dust/exterior_areal/radial":
+            # The areal radius is the isotropic radius the embedding reads plus m, at m = 1.
+            return (lambda X: 0.0), [x + 1 for x in self.reach(surface, "exterior")]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))

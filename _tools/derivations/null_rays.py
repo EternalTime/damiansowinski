@@ -1503,6 +1503,15 @@ HAYWARD_INPUT = ("$m(v) = m_0\\sin^2(\\pi v/4m_0)$ from $v = 0$ to $2\\,m_0$, $m
                  "negative energy evaporates it.")
 
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m.
+# Bonnor's stars at m = 1: both spheres at r_0 = 2m, the spheroid at a = m and u_0 = 1, and Lemos and
+# Weinberg's cloud at b = m/2, which the harmonic chart is drawn with too.
+BCD_STAR = {"m": 1, "r_0": 2}
+BCD_SPHEROID = {"m": 1, "a": 1, "u_0": 1}
+BCD_CLOUD = {"m": 1, "b": "1/2"}
+BCD_CLOUD_U = "1 + 1/sqrt(x**2 + y**2 + z**2 + 1/4)"
+BCD_CLOUD_INPUT = ("Lemos and Weinberg's cloud of mass parameter $m$ and core length $b = m/2$: "
+                   "$U = 1 + m/\\sqrt{x^2 + y^2 + z^2 + b^2}$.")
+BCD_AXIS = {"theta": "pi/2", "phi": "0"}
 MP_TWO = "1 + 1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2)"
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
 MP_TWO_INPUT = ("Two holes, each of mass parameter $m$, on the axis at $z = \\pm 2m$: "
@@ -3435,6 +3444,29 @@ DIAGRAMS = [
             (0, 1, -0.5, 0.5), "$r/r_b$", "$ct/r_b$", {"r_b": 1}, EQUATOR, areal=True),
     Diagram("misner_zapolsky", "power_law", "radial", "$t$ and $r$", ("t", "r"),
             (0, 2, -1, 1), "$r/a$", "$ct/a$", {"n": 1, "a": 1}, EQUATOR, areal=True),
+    # Bonnor's stars of charged dust, m = 1 the unit: the two spheres at r_0 = 2m with their exterior
+    # in both radii, the spheroid at a = m and u_0 = 1 along its axis of symmetry, and Lemos and
+    # Weinberg's cloud at b = m/2 in its own chart and as the harmonic chart's declared U.
+    Diagram("bonnor_charged_dust", "harmonic", "tx", "through the cloud", ("t", "x"), (-3, 3, -3, 3),
+            "$x/m$", "$ct/m$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS,
+            functions={"U": BCD_CLOUD_U}, input=BCD_CLOUD_INPUT),
+    Diagram("bonnor_charged_dust", "sphere_1965", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 2, -2, 2), "$r/m$", "$ct/m$", BCD_STAR, EQUATOR, areal=True),
+    Diagram("bonnor_charged_dust", "sphere_1975", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 2, -2, 2), "$r/m$", "$ct/m$", BCD_STAR, EQUATOR, areal=True),
+    Diagram("bonnor_charged_dust", "sphere_1975", "through", "through the centre", ("t", "r"),
+            (0, 2, -2, 2), "$x/m$", "$ct/m$", BCD_STAR, EQUATOR,
+            mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
+    Diagram("bonnor_charged_dust", "exterior", "radial", "$t$ and $r$", ("t", "r"),
+            (2, 6, -2, 2), "$r/m$", "$ct/m$", BCD_STAR, EQUATOR, areal=True),
+    Diagram("bonnor_charged_dust", "exterior_areal", "radial", "$t$ and $R$", ("t", "R"),
+            (3, 7, -2, 2), "$R/m$", "$ct/m$", BCD_STAR, EQUATOR, areal=True),
+    Diagram("bonnor_charged_dust", "spheroid_interior", "axis", "the axis", ("t", "u"),
+            (0, 1, -1, 1), "$u$", "$ct/m$", BCD_SPHEROID, BCD_AXIS),
+    Diagram("bonnor_charged_dust", "spheroid_exterior", "axis", "the axis", ("t", "u"),
+            (1, 2.5, -1.5, 1.5), "$u$", "$ct/m$", BCD_SPHEROID, BCD_AXIS),
+    Diagram("bonnor_charged_dust", "quasi_black_hole", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 4, -4, 4), "$r/m$", "$ct/m$", BCD_CLOUD, EQUATOR, areal=True),
     Diagram("kerr", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
             "$r/(GM/c^2)$", "$ct/(GM/c^2)$", {"G": 1, "M": 1, "a": "9/10"},
             {"theta": "0", "phi": "0"}, orient="ingoing"),
@@ -8071,6 +8103,59 @@ CAPTIONS = {
         "The line through the centre of the star in the plane $\\theta = \\pi/2$: $x = r$ "
         "on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the "
         "centre smoothly, and the cones are narrowest there.",
+    ],
+    ("bonnor_charged_dust", "harmonic", "tx"): [
+        "The plane of $t$ and $x$ through the centre of the cloud ($y = z = 0$), which light launched along the "
+        "line never leaves, since $U$ is spherically symmetric. Its rays are null geodesics with "
+        "$dx/dt = \\pm c/U^2$, which is $c/9$ at the centre, where $U = 3$, and tends to $c$ far out.",
+    ],
+    ("bonnor_charged_dust", "sphere_1965", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole of Bonnor's sphere of 1965 "
+        "($r \\in [0, r_0]$, $r_0 = 2m$). The rays are null geodesics with $dr/dt = \\pm c/U^2$, and the cones "
+        "are narrowest at the centre, where $U^2 = (1 + m/r_0)^3 = 3.375$ and the redshift is greatest. Beyond "
+        "$r_0$ the rays go on into the exterior, where $U = 1 + m/r$.",
+    ],
+    ("bonnor_charged_dust", "sphere_1975", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole of Bonnor and Wickramasuriya's "
+        "sphere ($r \\in [0, r_0]$, $r_0 = 2m$). The rays are null geodesics with $dr/dt = \\pm c/U^2$, and the "
+        "cones are narrowest at the centre, where $U = 1 + 3m/(2r_0) = 1.75$. They stay open for every $r_0 > 0$ "
+        "and narrow without limit as $r_0$ goes to zero, where the redshift of the centre, $3m/(2r_0)$, has no "
+        "bound.",
+    ],
+    ("bonnor_charged_dust", "sphere_1975", "through"): [
+        "The line through the centre of Bonnor and Wickramasuriya's sphere in the plane $\\theta = \\pi/2$ "
+        "($r_0 = 2m$): $x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross "
+        "the centre smoothly, and the cones are narrowest there.",
+    ],
+    ("bonnor_charged_dust", "exterior", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside a sphere of coordinate radius "
+        "$r_0 = 2m$, the same at every other angle by spherical symmetry. The rays are null geodesics with "
+        "$dt/dr = \\pm(1 + m/r)^2/c$, the rays of the extremal Reissner-Nordström field, whose horizon "
+        "$r = 0$ lies inside the star, where this metric does not hold.",
+    ],
+    ("bonnor_charged_dust", "exterior_areal", "radial"): [
+        "The plane of $t$ and $R$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the same sphere, whose surface is at "
+        "the areal radius $R = r_0 + m = 3m$. The rays are null geodesics with $dt/dR = \\pm(1 - m/R)^{-2}/c$. "
+        "The horizon of the field, $R = m$, lies inside the star, where this metric does not hold.",
+    ],
+    ("bonnor_charged_dust", "spheroid_interior", "axis"): [
+        "The plane of $t$ and $u$ on the axis of symmetry ($\\theta = \\pi/2$) inside the spheroid ($a = m$, "
+        "$u_0 = 1$), where the height above the central disc is $z = a\\sinh u$. Light launched along the axis "
+        "stays on it, and its rays are null geodesics with $du/dt = \\pm c/(aU^2\\cosh u)$. The cones are "
+        "narrowest in $z$ at the disc $u = 0$, where $U = 1.87$.",
+    ],
+    ("bonnor_charged_dust", "spheroid_exterior", "axis"): [
+        "The plane of $t$ and $u$ on the axis of symmetry ($\\theta = \\pi/2$) outside the spheroid ($a = m$, "
+        "$u_0 = 1$), where the height above the central disc is $z = a\\sinh u$. The rays are null geodesics "
+        "with $du/dt = \\pm c/(aU^2\\cosh u)$, so equal steps of $u$ take longer and longer as $z$ grows "
+        "like $e^u$.",
+    ],
+    ("bonnor_charged_dust", "quasi_black_hole", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Lemos and Weinberg's cloud ($b = m/2$), "
+        "the same at every other angle by spherical symmetry. The rays are null geodesics with "
+        "$dr/dt = \\pm c/U^2$, which is $c/9$ at the centre, where $U = 1 + m/b = 3$. As $b$ goes to zero the "
+        "cones inside $r \\approx b$ close, and outside it they tend to those of the extremal black hole, "
+        "$dt/dr = \\pm(1 + m/r)^2/c$.",
     ],
     ("tolman_vii", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the chart "
@@ -14413,6 +14498,37 @@ def _e12_forms():
 
 
 CLOSED_FORMS.update(_e12_forms())
+def _bcd_quadrature(speed, start):
+    """The integral of a positive speed from `start`, at each value handed in."""
+    from scipy.integrate import quad
+    return lambda x: np.vectorize(lambda v: quad(speed, start, v, epsabs=1e-12, epsrel=1e-12)[0])(np.asarray(x, dtype=float))
+
+
+def _bcd_forms():
+    """What ct keeps along each family of each view of Bonnor's stars, t -+ the integral of U^2 times
+    the flat length, at m = 1: A^2 r - 2AB r^3/3 + B^2 r^5/5 with A = 7/4 and B = 1/16 in the sphere of
+    1975; (27/sqrt 8) arctan(r/sqrt 8) in the sphere of 1965; r + 2 ln r - 1/r outside, which is
+    R + 2 ln(R - 1) - 1/(R - 1) in the areal radius; r + 2 arsinh(2r) + 2 arctan(2r) in the cloud at
+    b = 1/2; and on the spheroid's axis the quadrature of U^2 cosh u."""
+    alpha, C0 = math.atan(1 / math.sinh(1.0)), math.cosh(1.0)
+    A, B = 1.75, 1 / 16
+    sphere = lambda r: A * A * r - 2 * A * B * r ** 3 / 3 + B * B * r ** 5 / 5            # noqa: E731
+    older = lambda r: 27 / math.sqrt(8) * np.arctan(r / math.sqrt(8))                     # noqa: E731
+    cloud = lambda r: r + 2 * np.arcsinh(2 * r) + 2 * np.arctan(2 * r)                    # noqa: E731
+    inside = _bcd_quadrature(lambda u: (1 + alpha + (1 - u ** 4) / (4 * C0)) ** 2 * math.cosh(u), 0.0)
+    outside = _bcd_quadrature(lambda u: (1 + math.atan(1 / math.sinh(u))) ** 2 * math.cosh(u), 1.0)
+    out = {}
+    for where, F in ((("harmonic", "tx"), cloud), (("sphere_1965", "radial"), older),
+                     (("sphere_1975", "radial"), sphere), (("sphere_1975", "through"), sphere),
+                     (("exterior", "radial"), lambda r: r + 2 * np.log(r) - 1 / r),
+                     (("exterior_areal", "radial"), lambda R: R + 2 * np.log(R - 1) - 1 / (R - 1)),
+                     (("spheroid_interior", "axis"), inside), (("spheroid_exterior", "axis"), outside),
+                     (("quasi_black_hole", "radial"), cloud)):
+        out[("bonnor_charged_dust", *where)] = (lambda t, x, F=F: t + F(x), lambda t, x, F=F: t - F(x), None)
+    return out
+
+
+CLOSED_FORMS.update(_bcd_forms())
 
 
 def verify(metrics=()):
