@@ -5283,6 +5283,13 @@ class Slices(unittest.TestCase):
                        for chart in charts
                        for place, s in [("conformal ", chart)] + [("", f"{chart}/{v}") for v in (
                            "radial", "through", "tx", "axis")]},
+                    # The five charts of the black holes of string theory are drawn at parameters of their
+                    # own, three and four charges, extreme and not, and the three charges equal: five
+                    # spacetimes of one family, each chart's drawings marking its own moment.
+                    **{f"{place}string_bh_three_four_charges/{chart}{view}":
+                       {"five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme"} - {chart}
+                       for chart in ("five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme")
+                       for place, view in (("conformal ", ""), ("", "/radial"))},
                     "majumdar_papapetrou/cartesian/tz": {"one_hole"},
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},

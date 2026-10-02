@@ -33,6 +33,7 @@ them, and `null_rays.py --slices` rewrites only the slices of every diagram file
 """
 
 import functools
+from fractions import Fraction
 import json
 import math
 import re
@@ -302,6 +303,102 @@ def kkbh_rstar(r, a=1.0):
     the Einstein metric of four dimensions alike."""
     with np.errstate(divide="ignore"):
         return kkbh_smooth(r, a) + math.sqrt(1 + a) * np.log(np.abs(np.asarray(r, dtype=float) - 1))
+
+
+# The black holes of string theory with three and four charges as every diagram draws them. Off
+# extremality r_0 is the unit and the charge radii are unequal; the extreme holes are drawn in
+# units of r_2; and the areal chart of three equal charges at r_0 = 3 r_q/4, so that its horizons
+# stand at 5 r_q/4 and r_q.
+SBC = {
+    "five_charges": {"r_0": 1, "r_1": "1/2", "r_2": 1, "r_3": "3/2"},
+    "five_extreme": {"r_1": "1/2", "r_2": 1, "r_3": 2},
+    "five_areal": {"r_0": "3/4", "r_q": 1},
+    "four_charges": {"r_0": 1, "r_1": "1/2", "r_2": 1, "r_3": "3/2", "r_4": 2},
+    "four_extreme": {"r_1": "1/2", "r_2": 1, "r_3": "3/2", "r_4": 2},
+}
+SBC_FIVE = {"psi": "pi/2", "theta": "pi/2", "phi": "0"}
+SBC_FOUR = {"theta": "pi/2", "phi": "0"}
+
+
+def sbc_charges(chart):
+    return [float(Fraction(str(v))) for k, v in sorted(SBC[chart].items()) if k not in ("r_0", "r_q")]
+
+
+@functools.lru_cache(maxsize=None)
+def _sbc_parts(chart):
+    """The tortoise coordinate of a chart of the black holes of string theory, r_* = the integral of
+    sqrt(-g_rr/g_tt), as its poles and a smooth rest. With S the root of the product of r^2 + r_i^2
+    in five dimensions and of r + r_i in four, dr_*/dr is S/(r(r^2 - 1)), S/r^3, S/(r(r - 1)) and
+    S/r^2 for the charts of three charges, the extreme three, four charges and the extreme four.
+    Each is L/D plus a smooth rest, with D that denominator and L the polynomial that carries the
+    poles, and the rest is (S^2 - L^2)/(D (S + L)), where S^2 - L^2 is a polynomial that the poles
+    divide exactly, so nothing is lost to cancellation near a pole. Returned: the rest as a
+    function, and the integral of L/D."""
+    q = sbc_charges(chart)
+    five, extreme = chart.startswith("five"), chart.endswith("extreme")
+    P = np.polynomial.Polynomial
+    x = P([0, 1])
+    square = P([1])
+    for a in q:
+        square = square * ((x * x + a * a) if five else (x + a))
+    S = lambda r: np.sqrt(square(r))                                        # noqa: E731
+    S0, S1 = float(S(0.0)), float(S(1.0))
+    if five and not extreme:
+        A, B = S1 / 2, -S0
+        L, D, cut = A * x * (x + 1) + B * (x * x - 1), x * (x * x - 1), x * (x - 1)
+        rest_den = lambda r: (r + 1) * (S(r) + L(r))                        # noqa: E731
+        poles = lambda r: A * np.log(np.abs(r - 1)) + B * np.log(r)         # noqa: E731
+        kappa = 1 / (2 * A)
+    elif five:
+        C = S0 * sum(1 / (a * a) for a in q) / 2
+        L, D, cut = P([S0, 0, C]), x ** 3, x ** 4
+        rest_den = lambda r: (S(r) + L(r)) / r                              # noqa: E731
+        poles = lambda r: -S0 / (2 * r * r) + C * np.log(r)                 # noqa: E731
+        kappa = 0.0
+    elif not extreme:
+        A, B = S1, -S0
+        L, D, cut = A * x + B * (x - 1), x * (x - 1), x * (x - 1)
+        rest_den = lambda r: S(r) + L(r)                                    # noqa: E731
+        poles = lambda r: A * np.log(np.abs(r - 1)) + B * np.log(r)         # noqa: E731
+        kappa = 1 / (2 * A)
+    else:
+        C = S0 * sum(1 / a for a in q) / 2
+        L, D, cut = P([S0, C]), x ** 2, x ** 2
+        rest_den = lambda r: S(r) + L(r)                                    # noqa: E731
+        poles = lambda r: -S0 / r + C * np.log(r)                           # noqa: E731
+        kappa = 0.0
+    top, remainder = divmod(square - L * L, cut)
+    assert np.max(np.abs(remainder.coef)) < 1e-9 * np.max(np.abs(top.coef)), chart
+    rest = lambda r: top(r) / rest_den(r)                                   # noqa: E731
+    return rest, poles, kappa
+
+
+def sbc_kappa(chart):
+    """The surface gravity of the event horizon in units of c^2/r_0: 1/sqrt((1 + r_1^2)(1 + r_2^2)(1 + r_3^2))
+    in five dimensions and 1/(2 sqrt((1 + r_1)(1 + r_2)(1 + r_3)(1 + r_4))) in four, the charge
+    radii in units of r_0, and zero for an extreme hole."""
+    return _sbc_parts(chart)[2]
+
+
+def sbc_rstar(chart, r):
+    """r_*(r) of a chart of the black holes of string theory at the parameters SBC draws it at, the
+    smooth rest integrated from r = 0 by quadrature."""
+    from scipy.integrate import quad
+    rest, poles, _ = _sbc_parts(chart)
+    r = np.asarray(r, dtype=float)
+    smooth = np.vectorize(lambda v: quad(rest, 0.0, v, epsabs=1e-13, epsrel=1e-13, limit=200)[0])(r)
+    with np.errstate(divide="ignore"):
+        return smooth + poles(r)
+
+
+def sbc_areal_rstar(rho):
+    """The tortoise coordinate of the areal chart at r_0 = 3/4, r_q = 1: horizons p = 5/4 and q = 1,
+    rho + (p^3 ln|(rho - p)/(rho + p)| - q^3 ln|(rho - q)/(rho + q)|)/(2(p^2 - q^2))."""
+    rho = np.asarray(rho, dtype=float)
+    p, q = 1.25, 1.0
+    with np.errstate(divide="ignore"):
+        return rho + (p ** 3 * np.log(np.abs((rho - p) / (rho + p)))
+                      - q ** 3 * np.log(np.abs((rho - q) / (rho + q)))) / (2 * (p * p - q * q))
 
 
 def kkbh_t(view_id):
@@ -2401,6 +2498,16 @@ FLAT = {
     ("global_monopole", "eddington_finkelstein_outgoing", "chart"): lambda: monopole_t(-1),
     # The dilaton black hole at r_d = r_s/2: the Einstein metric's moment on the static and
     # Eddington-Finkelstein planes, and each string metric's moment on its own plane.
+    ("string_bh_three_four_charges", "five_charges", "radial"): lambda: one(
+        "string_bh_three_four_charges", lambda m: along(0.0, *m.reach("five_charges", "r")), view_id="five_charges"),
+    ("string_bh_three_four_charges", "five_extreme", "radial"): lambda: one(
+        "string_bh_three_four_charges", lambda m: along(0.0, *m.reach("five_extreme", "r")), view_id="five_extreme"),
+    ("string_bh_three_four_charges", "five_areal", "radial"): lambda: one(
+        "string_bh_three_four_charges", lambda m: along(0.0, *m.reach("five_areal", "\\rho")), view_id="five_areal"),
+    ("string_bh_three_four_charges", "four_charges", "radial"): lambda: one(
+        "string_bh_three_four_charges", lambda m: along(0.0, *m.reach("four_charges", "r")), view_id="four_charges"),
+    ("string_bh_three_four_charges", "four_extreme", "radial"): lambda: one(
+        "string_bh_three_four_charges", lambda m: along(0.0, *m.reach("four_extreme", "r")), view_id="four_extreme"),
     ("dilaton_black_hole", "static", "radial"): lambda: one(
         "dilaton_black_hole", lambda m: along(0.0, *m.reach("static", "r")), view_id="einstein"),
     ("dilaton_black_hole", "eddington_finkelstein_ingoing", "finkelstein"): lambda: dilaton_t(1),

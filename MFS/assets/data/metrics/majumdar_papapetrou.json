@@ -97,6 +97,11 @@
       "id": "bonnor_charged_dust",
       "kind": "generalisation",
       "text": "Their metric with matter in it. Dust whose charge density equals its mass density is a source for $U$, and a ball of it can lie as near its own horizon as one likes [bonnor1975, lemos2004]."
+    },
+    {
+      "id": "string_bh_three_four_charges",
+      "kind": "family",
+      "text": "The same recipe with four harmonic functions under one square root. With the four charges equal it is a single hole of Majumdar and Papapetrou again [cvetic1996dyonic]."
     }
   ],
   "references": [
@@ -132,7 +137,8 @@
     "emparan2000",
     "arnowitt1960",
     "bonnor1975",
-    "lemos2004"
+    "lemos2004",
+    "cvetic1996dyonic"
   ],
   "coordinates": [
     {
