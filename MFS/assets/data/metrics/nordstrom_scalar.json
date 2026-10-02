@@ -51,6 +51,11 @@
       "id": "malament_hogarth",
       "kind": "family",
       "text": "Minkowski's metric times a free conformal factor again. There the factor is chosen to stretch one world line without end, and here a field equation fixes it [einstein1914fokker]."
+    },
+    {
+      "id": "einstein_1912_static",
+      "kind": "programme",
+      "text": "Einstein's own theory of 1912, the one Nordström set out to do without: a speed of light that varies from place to place over a space that stays flat [norton2007, einstein1912]."
     }
   ],
   "references": [

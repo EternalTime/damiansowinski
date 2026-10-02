@@ -97,6 +97,11 @@
       "id": "datt_ruban_t_models",
       "kind": "family",
       "text": "Dust joined to Schwarzschild's vacuum on a shell that stays inside the horizon: a tube of spheres of one radius, whose mass is the same however much dust it holds [ruban1968]."
+    },
+    {
+      "id": "misner_zapolsky",
+      "kind": "programme",
+      "text": "The static star of infinite central density that Oppenheimer and Volkoff found earlier in 1939. They called it unstable, and wrote that the nonstatic solutions for heavier stars were \"now being investigated\" [oppenheimer1939]."
     }
   ],
   "references": [

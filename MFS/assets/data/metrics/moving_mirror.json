@@ -1,0 +1,1212 @@
+{
+  "id": "moving_mirror",
+  "name": "The Moving Mirror of Fulling and Davies",
+  "short_name": "Moving mirror",
+  "description": "Flat spacetime in two dimensions that ends at a perfectly reflecting mirror on a chosen world line, with a massless quantum field to its right. A mirror that accelerates radiates, and one whose world line approaches a light ray sends out a steady thermal flux, Hawking's radiation with no curvature anywhere.",
+  "tags": [
+    "moving mirror",
+    "two-dimensional",
+    "flat",
+    "conformally flat",
+    "vacuum",
+    "Hawking radiation",
+    "Hawking temperature",
+    "dynamical Casimir effect",
+    "particle creation",
+    "quantum field theory in curved spacetime",
+    "boundary",
+    "horizon",
+    "black hole evaporation",
+    "information paradox",
+    "Page curve",
+    "Rindler",
+    "accelerating",
+    "Lambert W function",
+    "exact solution",
+    "Lorentzian",
+    "idealized model"
+  ],
+  "signature": "(-,+)",
+  "convention": "We keep factors of $c$ explicit.",
+  "history": "A mirror, to a quantum field, is a place where the field must vanish [good2013]. Gerald Moore worked out the quantum theory of light between two such mirrors in 1970, with the mirrors free to move, and found that the motion makes light: \"Photons can be created by the exciting effect of the moving mirrors on the zero-point field energy\" [moore1970]. Moore also ran the numbers, and the count of photons came out \"immeasurably small for nonrelativistic mirror trajectories\" [moore1970]. Bryce DeWitt, reviewing quantum fields in curved spacetime in 1975, listed \"Radiation from accelerating conductors\" between the Casimir effect and the particles made by black holes [dewitt1975].¶By then Stephen Hawking had found that black holes formed by collapse emit particles \"as if they were hot bodies\", at a temperature fixed by the surface gravity $\\kappa$ [hawking1975, good2016]. In Hawking's calculation the waves fall in through the centre of the collapsing star and come out the other side, and the last to get away before the horizon forms leave enormously stretched [wilczek1993]. Is the heat gravity's doing, or would anything that stretches waves that way glow? Paul Davies tried Hawking's procedure on flat spacetime, in the coordinates of a uniformly accelerated observer, and found that such an observer \"apparently sees a fixed surface radiate\" at the temperature $\\kappa/2\\pi$, with $\\kappa$ now the acceleration and $\\hbar = c = k_B = 1$ [davies1975].¶Davies and Stephen Fulling took the gravity out altogether: their spacetime is flat and has two dimensions, $ds^2 = -du\\,dv$ with $u = ct - x$ and $v = ct + x$, and it stops on the left at a mirror whose world line $x = z(t)$ is anyone's to choose [fulling1976, good2013]. A massless field lives to the right of the mirror, and a ray that comes in along $v$ goes out along the $u$ with $v = p(u)$, so the one function $p$ records all that the mirror does [good2013]. They found that an arbitrary trajectory \"exhibits a non-vanishing radiation flux\", an energy $F(u) = \\frac{\\hbar c^2}{24\\pi}\\left[\\tfrac{3}{2}\\left(p''/p'\\right)^2 - p'''/p'\\right]$ a second carried off to the right [fulling1976, good2016]. \"A uniformly accelerating mirror does not radiate\", they noted, and the flux is negative while the mirror's proper acceleration is increasing [fulling1976]. The change of coordinates $U = p(u)$ brings any mirror to rest at $U = v$, and its motion moves into a factor in front of the flat metric, $ds^2 = -dU\\,dv/p'$ [fulling1976, akal2021].¶Then they sent the mirror away for good, off to the left and faster all the time, so that its world line closes on a light ray $v = v_H$ [davies1977, good2016]. Light that arrives after that ray never catches the mirror, which makes the ray a horizon, and light that arrives just before it is reflected late and stretched without limit [wilczek1993, good2013]. Far to the right the flux settles to $\\hbar c^2\\kappa^2/48\\pi$, the glow of a body at the temperature $\\hbar c\\kappa/2\\pi k_B$, with the $\\kappa$ of the mirror's trajectory in the place of the hole's surface gravity [good2016]. Davies and Fulling, both at King's College London, showed that Hawking's derivation \"using ray-tracing is mathematically identical to the geometrical optics associated with a certain class of mirror trajectory\" [davies1977]. The mirror stands where the centre of the star stood, the place an ingoing wave turns into an outgoing one [wilczek1993].¶Which mirror is which black hole? Robert Carlitz and Raymond Willey's mirror of 1987, $p(u) = -e^{-\\kappa u}/\\kappa$, radiates thermally at every moment [carlitz1987, good2013, good2016]. In 2016 Michael Good, Paul Anderson, and Charles Evans found one, $z = -ct - \\mathrm{W}\\left(2e^{-2\\kappa ct}\\right)/2\\kappa$ with $\\mathrm{W}$ Lambert's function, whose particles are created exactly as they are when a shell of light collapses to a Schwarzschild black hole of radius $r_s = 1/2\\kappa$ [good2016]. A field bouncing off a mirror loses no information, so the mirror became a place to test Hawking's argument of 1976 that a black hole turns pure states into mixed ones [hawking1976, akal2021]. If the mirror's acceleration ever stops, Frank Wilczek argued in 1993, the radiation as a whole is in a pure state, however long it has passed for thermal [wilczek1993]. For a mirror that mimics a black hole forming and evaporating, Ibrahim Akal, Yuya Kusuki, Noburo Shiba, Tadashi Takayanagi, and Zixia Wei computed the entanglement entropy of the radiation in 2021, and it follows Page's curve [akal2021].¶Could anyone build one? Shaking a real mirror at 2 GHz through a nanometre would take 100 MW of mechanical power and yield about one photon a day [wilson2011]. C. M. Wilson and colleagues at Chalmers University of Technology ended a superconducting transmission line in a SQUID, a loop whose inductance sets the electrical length of the line, and changed that length \"at a few percent of the speed of light\" [wilson2011]. In 2011 they reported real photons coming out of the vacuum, with the correlations between frequencies that mark photons made in pairs [wilson2011]. Pisin Chen and Gerard Mourou proposed in 2017 to go after the black hole itself, with a plasma mirror that an X-ray pulse drives through a target of rising density, \"accelerated drastically and stopped abruptly\" [chen2017].",
+  "related": [
+    {
+      "id": "minkowski",
+      "kind": "locally_same",
+      "text": "The plane of $t$ and $x$ of Minkowski space, kept only to the right of the mirror's world line. Rindler's coordinates bring a uniformly accelerating mirror to rest, and that mirror does not radiate [fulling1976, davies1975]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "The black hole whose radiation the mirror imitates. A mirror on the world line $z = -ct - \\mathrm{W}\\left(2e^{-2\\kappa ct}\\right)/2\\kappa$ creates particles exactly as a shell of light collapsing to Schwarzschild's black hole does, with $\\kappa = 1/2r_s$ [good2016]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "family",
+      "text": "Vaidya's metric with all its mass arriving on one ray is a collapsing shell of light, flat inside and Schwarzschild's outside. The mirror of Good, Anderson, and Evans stands in for the centre of that shell [good2016]."
+    },
+    {
+      "id": "witten_black_hole",
+      "kind": "family",
+      "text": "The other solvable model of Hawking's radiation in two dimensions, a black hole that forms from a pulse of matter and radiates at a temperature that is the same for every mass [callan1992]. The mirror of Carlitz and Willey radiates at one temperature at every time [carlitz1987, good2016]."
+    }
+  ],
+  "references": [
+    "good2013",
+    "moore1970",
+    "dewitt1975",
+    "hawking1975",
+    "good2016",
+    "wilczek1993",
+    "davies1975",
+    "fulling1976",
+    "akal2021",
+    "davies1977",
+    "carlitz1987",
+    "hawking1976",
+    "wilson2011",
+    "chen2017",
+    "callan1992"
+  ],
+  "coordinates": [
+    {
+      "id": "inertial",
+      "name": "Inertial",
+      "coords": [
+        "t",
+        "x"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "x > z(t) \\;\\text{(to the right of the mirror)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "z = z(t)",
+          "description": "Position of the mirror at the time $t$, a length; its world line is timelike, $|dz/dt| < c$"
+        }
+      ],
+      "convention": "We use the coordinates $(t, x)$ of an inertial frame, with $t$ carrying dimensions of time and $x$ a length, and the mirror is at $x = z(t)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dx^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": []
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": []
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{x} = 0"
+      ]
+    },
+    {
+      "id": "null",
+      "name": "Null",
+      "coords": [
+        "u",
+        "v"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "v > p(u) \\;\\text{(to the right of the mirror)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "p = p(u)",
+          "description": "Ray tracing function, a length: the ray that arrives along $v = p(u)$ leaves the mirror along $u$; it increases with $u$ for a timelike mirror"
+        }
+      ],
+      "convention": "We use the null coordinates $u = ct - x$ and $v = ct + x$ of an inertial frame, both lengths, and the mirror is at $v = p(u)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -du\\,dv",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-2"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": []
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": []
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} = 0"
+      ]
+    },
+    {
+      "id": "mirror_rest",
+      "name": "Mirror at Rest",
+      "coords": [
+        "U",
+        "v"
+      ],
+      "domains": [
+        "p(-\\infty) < U < p(\\infty) \\;\\text{(the values the ray tracing function takes)}",
+        "v \\in (-\\infty, \\infty)",
+        "v > U \\;\\text{(to the right of the mirror)}",
+        "U = v \\;\\text{(the mirror)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "f = f(U)",
+          "description": "Inverse of the ray tracing function $p$, a length: the ray that arrives along $v$ leaves the mirror along $u = f(v)$; a prime is a derivative with respect to its argument, and $f' > 0$ for a timelike mirror"
+        }
+      ],
+      "convention": "We use the null coordinates $U = p(u)$ and $v = ct + x$, both lengths, with $u = ct - x = f(U)$ and $p$ the ray tracing function, so that the mirror is at rest at $U = v$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -f'\\,dU\\,dv",
+      "metric_components": [
+        {
+          "indices": [
+            "U",
+            "v"
+          ],
+          "value": "-\\dfrac{f'}{2}"
+        },
+        {
+          "indices": [
+            "v",
+            "U"
+          ],
+          "value": "-\\dfrac{f'}{2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "U",
+            "v"
+          ],
+          "value": "-\\dfrac{2}{f'}"
+        },
+        {
+          "indices": [
+            "v",
+            "U"
+          ],
+          "value": "-\\dfrac{2}{f'}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "U"
+                ],
+                "value": "\\dfrac{f''}{f'}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "U",
+                  "U"
+                ],
+                "value": "-\\dfrac{f''}{2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{U} + \\dfrac{f''}{f'}\\dot{U}^2 = 0",
+        "\\ddot{v} = 0"
+      ]
+    },
+    {
+      "id": "thermal",
+      "name": "Thermal Mirror",
+      "coords": [
+        "T",
+        "X"
+      ],
+      "domains": [
+        "T \\in (-\\infty, \\infty)",
+        "X \\in (0, \\infty)",
+        "X > cT \\;\\text{(the chart ends on } X = cT\\text{, where the inertial } u \\to \\infty\\text{)}",
+        "X = 0 \\;\\text{(the mirror)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\kappa",
+          "description": "Inverse length that sets the mirror's acceleration; the radiation it sends to the right has the temperature $\\hbar c\\kappa/2\\pi k_B$ at every time"
+        }
+      ],
+      "convention": "We use coordinates $(T, X)$ in which the mirror of Carlitz and Willey stands at $X = 0$, with $T$ carrying dimensions of time and $X$ a length: $cT - X = -e^{-\\kappa u}/\\kappa$ and $cT + X = v$, with $u = ct - x$ and $v = ct + x$ the null coordinates of an inertial frame. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+      "line_element": "ds^2 = \\dfrac{-c^2dT^2 + dX^2}{\\kappa\\left(X - cT\\right)}",
+      "metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-\\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "\\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-\\kappa\\left(X - cT\\right)"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "\\kappa\\left(X - cT\\right)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{1}{2\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{1}{2\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{1}{2\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{1}{2\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{1}{2\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{1}{2\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{1}{2\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{1}{2\\left(X - cT\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{T} + \\dfrac{1}{2\\left(X - cT\\right)}\\dot{T}^2 - \\dfrac{1}{X - cT}\\dot{T}\\dot{X} + \\dfrac{1}{2\\left(X - cT\\right)}\\dot{X}^2 = 0",
+        "\\ddot{X} - \\dfrac{1}{2\\left(X - cT\\right)}\\dot{T}^2 + \\dfrac{1}{X - cT}\\dot{T}\\dot{X} - \\dfrac{1}{2\\left(X - cT\\right)}\\dot{X}^2 = 0"
+      ]
+    },
+    {
+      "id": "collapse",
+      "name": "Collapse Mirror",
+      "coords": [
+        "T",
+        "X"
+      ],
+      "domains": [
+        "T \\in (-\\infty, \\infty)",
+        "X \\in (0, \\infty)",
+        "X > cT \\;\\text{(the chart ends on } X = cT\\text{, where the inertial } u \\to \\infty\\text{)}",
+        "X = 0 \\;\\text{(the mirror)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\kappa",
+          "description": "Inverse length that sets how fast the mirror's world line closes on the light ray $v = 0$; the radiation settles at late times to the temperature $\\hbar c\\kappa/2\\pi k_B$, that of a Schwarzschild black hole of radius $r_s = 1/2\\kappa$"
+        }
+      ],
+      "convention": "We use coordinates $(T, X)$ in which the mirror of Good, Anderson, and Evans stands at $X = 0$, with $T$ carrying dimensions of time and $X$ a length: $u = U - \\ln(-\\kappa U)/\\kappa$ for $U = cT - X$, and $cT + X = v$, with $u = ct - x$ and $v = ct + x$ the null coordinates of an inertial frame. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+      "line_element": "ds^2 = \\left(1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}\\right)\\left(-c^2dT^2 + dX^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-\\left(1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}\\right)"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-\\dfrac{\\kappa\\left(X - cT\\right)}{\\kappa\\left(X - cT\\right) + 1}"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "\\dfrac{\\kappa\\left(X - cT\\right)}{\\kappa\\left(X - cT\\right) + 1}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{1}{2\\kappa\\left(X - cT\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{T} + \\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}\\dot{T}^2 - \\dfrac{1}{\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}\\dot{T}\\dot{X} + \\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}\\dot{X}^2 = 0",
+        "\\ddot{X} - \\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}\\dot{T}^2 + \\dfrac{1}{\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}\\dot{T}\\dot{X} - \\dfrac{1}{2\\left(\\kappa\\left(X - cT\\right) + 1\\right)\\left(X - cT\\right)}\\dot{X}^2 = 0"
+      ]
+    },
+    {
+      "id": "rindler",
+      "name": "Rindler",
+      "coords": [
+        "\\eta",
+        "\\xi"
+      ],
+      "domains": [
+        "\\eta \\in (-\\infty, \\infty)",
+        "\\xi \\in (0, \\infty)",
+        "\\xi = 0 \\;\\text{(the mirror)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\kappa",
+          "description": "Inverse length; the mirror's proper acceleration is $c^2\\kappa$"
+        }
+      ],
+      "convention": "We use Rindler's coordinates $(\\eta, \\xi)$ in their conformal form, with $\\eta$ carrying dimensions of time and $\\xi$ a length: $ct = e^{\\kappa\\xi}\\sinh(\\kappa c\\eta)/\\kappa$ and $x = e^{\\kappa\\xi}\\cosh(\\kappa c\\eta)/\\kappa$ for the inertial $t$ and $x$, so that a uniformly accelerating mirror stands at $\\xi = 0$. We take components in the chart $x^0 = c\\eta$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\eta}$ means $d(c\\eta)/d\\lambda$.",
+      "line_element": "ds^2 = e^{2\\kappa\\xi}\\left(-c^2d\\eta^2 + d\\xi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-e^{2\\kappa\\xi}"
+        },
+        {
+          "indices": [
+            "\\xi",
+            "\\xi"
+          ],
+          "value": "e^{2\\kappa\\xi}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-e^{-2\\kappa\\xi}"
+        },
+        {
+          "indices": [
+            "\\xi",
+            "\\xi"
+          ],
+          "value": "e^{-2\\kappa\\xi}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\xi"
+                ],
+                "value": "\\kappa"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\xi",
+                  "\\eta"
+                ],
+                "value": "\\kappa"
+              },
+              {
+                "indices": [
+                  "\\xi",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\kappa"
+              },
+              {
+                "indices": [
+                  "\\xi",
+                  "\\xi",
+                  "\\xi"
+                ],
+                "value": "\\kappa"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\xi"
+                ],
+                "value": "-\\kappa\\,e^{2\\xi\\,\\kappa}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\xi",
+                  "\\eta"
+                ],
+                "value": "-\\kappa\\,e^{2\\xi\\,\\kappa}"
+              },
+              {
+                "indices": [
+                  "\\xi",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\kappa\\,e^{2\\xi\\,\\kappa}"
+              },
+              {
+                "indices": [
+                  "\\xi",
+                  "\\xi",
+                  "\\xi"
+                ],
+                "value": "\\kappa\\,e^{2\\xi\\,\\kappa}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\eta} + 2\\kappa\\,\\dot{\\eta}\\dot{\\xi} = 0",
+        "\\ddot{\\xi} + \\kappa\\,\\dot{\\eta}^2 + \\kappa\\,\\dot{\\xi}^2 = 0"
+      ]
+    }
+  ]
+}

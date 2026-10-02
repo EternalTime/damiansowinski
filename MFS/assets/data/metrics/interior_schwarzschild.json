@@ -66,6 +66,11 @@
       "id": "wahlquist",
       "kind": "family",
       "text": "A ball of fluid that rotates, in closed form. At rest it is Whittaker's sphere, whose $\\mu + 3p$ is uniform as the energy density of Schwarzschild's star is [whittaker1968, wahlquist1968]."
+    },
+    {
+      "id": "misner_zapolsky",
+      "kind": "family",
+      "text": "A star from the same list of Tolman's whose density is infinite at the centre and falls as $1/r^2$. Its pressure there is a third of its energy density, the ratio that holds for radiation [tolman1939]."
     }
   ],
   "references": [

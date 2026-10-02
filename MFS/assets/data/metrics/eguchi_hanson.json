@@ -58,6 +58,11 @@
       "id": "mixmaster",
       "kind": "family",
       "text": "A universe whose three axes on the 3-sphere all differ, as the axes of Belinskii, Gibbons, Page, and Pope's self dual metrics do. Of those, the only one with no singularity has two axes equal and is the Eguchi-Hanson space [belinskii1978bianchi, eguchihanson1979]."
+    },
+    {
+      "id": "gravitational_instantons",
+      "kind": "generalisation",
+      "text": "Gibbons and Hawking's metrics of many centres, which stand among the gravitational instantons of 1977 and 1978. The Eguchi-Hanson space is their case of two centres with no constant in the potential [gibbonshawking1979, eguchigilkeyhanson1980]."
     }
   ],
   "references": [
