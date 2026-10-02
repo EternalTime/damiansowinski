@@ -55,6 +55,11 @@
       "id": "neugebauer_meinel",
       "kind": "family",
       "text": "Dust in rigid rotation again, as a finite disc with flat space far away, solved exactly by Neugebauer and Meinel [neugebauer1995]."
+    },
+    {
+      "id": "petrov_homogeneous",
+      "kind": "piece",
+      "text": "The vacuum outside the cylinder when its surface is the null circle $r = R$. William Bonnor showed in 1979 that this exterior is Petrov's homogeneous vacuum [bonnor1979petrov]."
     }
   ],
   "references": [
@@ -74,7 +79,8 @@
     "reboucas1983",
     "bonnor1977cloud",
     "bratek2007",
-    "neugebauer1995"
+    "neugebauer1995",
+    "bonnor1979petrov"
   ],
   "coordinates": [
     {

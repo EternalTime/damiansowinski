@@ -208,6 +208,31 @@
       "id": "ppn_metric",
       "kind": "generalisation",
       "text": "Flat spacetime with a slowly moving body in it and gravity weak, written so that every metric theory of gravity fits. Take the mass away, $m = 0$, and it is flat again [will2014]."
+    },
+    {
+      "id": "nordstrom_scalar",
+      "kind": "conformal",
+      "text": "Gravity as one factor on Minkowski's metric. Nordström's field multiplies it by $\\Phi^2$, which changes what clocks and rods measure and leaves every light cone where it was [einstein1914fokker]."
+    },
+    {
+      "id": "charged_shell",
+      "kind": "composite",
+      "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. With more charge than rest mass it falls through both horizons, turns, and leaves into another exterior [delacruz1967]."
+    },
+    {
+      "id": "penrose_impulsive_wave",
+      "kind": "composite",
+      "text": "The inside and the outside of a light cone, glued back together with a warp. The cone carries a spherical gravitational wave one instant thick [penrose1972impulsive, podolsky2000snapping]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "One moment of a spacetime that is flat space with a gravitational wave on it and nothing else. Brill proved in 1959 that the wave's mass is positive and vanishes only when the slice is a moment of Minkowski's spacetime [brill1959]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a tachyon in it. At $b = 0$ A II and B I are the inside and the outside of the cone $T^2 = X^2 + Y^2$ about a spacelike line of Minkowski space [hruska2019]."
     }
   ],
   "references": [
@@ -274,7 +299,12 @@
     "podolskybelan2004",
     "israel1966",
     "tippett2017",
-    "will2014"
+    "will2014",
+    "einstein1914fokker",
+    "delacruz1967",
+    "podolsky2000snapping",
+    "brill1959",
+    "hruska2019"
   ],
   "coordinates": [
     {

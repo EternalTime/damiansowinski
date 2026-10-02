@@ -123,6 +123,11 @@
       "id": "hotta_tanaka",
       "kind": "locally_same",
       "text": "De Sitter space with an impulsive gravitational wave on one cosmological horizon, the field of two massless particles. Off that horizon it is de Sitter space [hotta1993]."
+    },
+    {
+      "id": "elliptic_de_sitter",
+      "kind": "locally_same",
+      "text": "Erwin Schrödinger's remedy of 1956 for observers whose horizons part them: every event of de Sitter space made one with the event opposite it on the hyperboloid. An observer then sees one event of every pair, and the space has no global direction of time [schrodinger1956, parikh2003]."
     }
   ],
   "references": [
@@ -162,7 +167,9 @@
     "kiselev2003",
     "bicak1999",
     "griffiths2004",
-    "hotta1993"
+    "hotta1993",
+    "schrodinger1956",
+    "parikh2003"
   ],
   "coordinates": [
     {

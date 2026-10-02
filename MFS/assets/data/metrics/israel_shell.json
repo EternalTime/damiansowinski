@@ -57,6 +57,11 @@
       "id": "gravastar",
       "kind": "family",
       "text": "A shell that stays put, with de Sitter space inside it where the falling shell has flat space [visser2004]."
+    },
+    {
+      "id": "charged_shell",
+      "kind": "generalisation",
+      "text": "Israel's shell given a charge, with Reissner-Nordström's field outside. With more charge than rest mass it turns round inside the inner horizon and leaves into another exterior [delacruz1967]."
     }
   ],
   "references": [

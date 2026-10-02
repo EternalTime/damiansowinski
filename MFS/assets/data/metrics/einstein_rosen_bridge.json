@@ -77,6 +77,21 @@
       "id": "lindquist_wheeler_lattice",
       "kind": "family",
       "text": "A closed universe of $N$ masses whose moment of greatest expansion has a bridge at every mass, each opening onto a sheet of its own [clifton2012]."
+    },
+    {
+      "id": "born_infeld_charge",
+      "kind": "programme",
+      "text": "Hoffmann's particle of the same year, a point charge of Born and Infeld's electrodynamics whose whole mass is the energy of its field. Einstein and Rosen pointed out to him the conical point left at its centre [hoffmann1935, tahvildarzadeh2011]."
+    },
+    {
+      "id": "rp3_geon",
+      "kind": "locally_same",
+      "text": "The bridge folded in half. Misner and Wheeler made each point of one sheet the same as the opposite point of the other, which leaves one sheet and a bridge that leads back into it [misner1957]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "family",
+      "text": "B I continued through $r = b$ is a bridge of the same kind, two asymptotically flat regions joined at a neck [hruska2019]."
     }
   ],
   "references": [
@@ -100,7 +115,10 @@
     "brill1963",
     "misner1960",
     "marolf2009",
-    "clifton2012"
+    "clifton2012",
+    "hoffmann1935",
+    "tahvildarzadeh2011",
+    "hruska2019"
   ],
   "coordinates": [
     {

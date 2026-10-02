@@ -64,6 +64,11 @@
       "id": "boson_star",
       "kind": "family",
       "text": "A scalar field that holds together with no singularity. Give the field a mass and let its phase turn at a frequency $\\omega$, and gravity binds it into a star with a regular centre [liebling2023]."
+    },
+    {
+      "id": "exponential_metric",
+      "kind": "limit",
+      "text": "The limit $\\gamma \\to \\infty$ with $\\gamma b = 2m$ held fixed, where $f^\\gamma \\to e^{-2m/r}$. It takes the scalar field's energy negative, and the naked singularity opens into the throat of a wormhole [makukov2018]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "eht2022metric",
     "chowdhury2012",
     "roberts1996",
-    "liebling2023"
+    "liebling2023",
+    "makukov2018"
   ],
   "coordinates": [
     {

@@ -101,6 +101,11 @@
       "id": "plebanski_hacyan",
       "kind": "family",
       "text": "The anti-Nariai universe has a C-metric of its own. Óscar Dias and José Lemos found it in 2003 as a limit toward a degenerate horizon of the accelerating black holes with a negative cosmological constant [dias2003]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "family",
+      "text": "Classes A and B of the table Ehlers and Kundt put the C-metric in. Their fields admit an isotropy group, and the fields of class C admit none [ehlerskundt1962, bicak2009]."
     }
   ],
   "references": [
@@ -129,7 +134,8 @@
     "podolsky2008",
     "kamran2009",
     "emparan2000",
-    "dias2003"
+    "dias2003",
+    "bicak2009"
   ],
   "coordinates": [
     {
