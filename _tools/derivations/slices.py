@@ -1072,6 +1072,8 @@ FLAT = {
         "fisher_jnw", lambda m: along(0.0, *_fjnw_reach(m, lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2))),
     ("fisher_jnw", "harmonic", "radial"): lambda: one(
         "fisher_jnw", lambda m: along(0.0, *(u / 2 for u in m.reach("harmonic", "u")))),
+    ("hartle_thorne", "hartle_thorne", "equator"): lambda: one(
+        "hartle_thorne", lambda m: along(0.0, *m.reach("hartle_thorne", "r"))),
     ("minkowski", "spherical", "radial"): lambda: one("minkowski", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # t = (u + v)/2 and r = (v - u)/2, so the moment is u = -r, v = r.
     ("minkowski", "spherical_null", "radial"): lambda: one(
@@ -1385,6 +1387,10 @@ HIDDEN = {
     ("myers_perry", "boyer_lindquist_six", "rotation"): "the plane of rotation in six dimensions, theta = pi/2, which the embedded transverse plane theta = 0 meets nowhere outside the horizon",
     ("near_horizon_extreme_kerr", "near_nhek", "equator"): "the patch ct > r_0^2/r of the Poincare chart, to the future of the ray that leaves the boundary at t = 0, which the moment tau = 0 embedded does not enter",
     ("near_horizon_extreme_kerr", "near_nhek"): "the patch ct > r_0^2/r of the Poincare chart, to the future of the ray that leaves the boundary at t = 0, which the moment tau = 0 embedded does not enter",
+    **{("hartle_thorne", system, "axis"): "the axis of rotation, which the embedded equatorial plane does not meet"
+       for system in ("hartle_thorne", "painleve_gullstrand")},
+    ("hartle_thorne", "painleve_gullstrand", "equator"): "the Painleve-Gullstrand line element, which agrees with Hartle and Thorne's to first order in the spin and no further; the moment embedded is one of Hartle and Thorne's t",
+    ("hartle_thorne", "painleve_gullstrand"): "the Painleve-Gullstrand line element, which agrees with Hartle and Thorne's to first order in the spin and no further; the moment embedded is one of Hartle and Thorne's t",
 }
 
 

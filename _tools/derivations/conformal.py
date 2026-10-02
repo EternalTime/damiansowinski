@@ -10488,6 +10488,84 @@ def photon_rocket(ck, src):
     return views
 
 
+def hartle_thorne(ck, src):
+    """The outside of the declared star, R = 6m, a = m/4 and q = 4a^2, on its equatorial plane with phi
+    divided out, in Hartle and Thorne's chart and in the Painleve-Gullstrand one.
+
+    Hartle and Thorne's line element completes the square in dphi, so the metric orthogonal to the
+    circles of phi is -F(1 - h_2) c^2dt^2 + (1 + j_2) dr^2/F on the equator, where P_2 = -1/2. Its
+    tortoise coordinate r_*, nr.ht_star, vanishes at the surface and runs without bound, so
+    p, q = arctan((ct -+ r_*)/R) give Minkowski's triangle with the surface of the star on X = 0:
+    there is no horizon, and the star, which this field does not describe, lies beyond that edge.
+
+    The Painleve-Gullstrand plane is -c^2dt^2 + (dr + sqrt(2m/r) c dt)^2 for every spin, whose
+    outgoing rays keep ct - nr.pg_out(r) and whose ingoing rays keep ct + nr.pg_in(r), both
+    vanishing at the surface, so p and q are the arctangents of those over R, the same triangle. The
+    moment the embedding diagram draws is one of Hartle and Thorne's t, marked on their view."""
+    ell = 6.0
+    ht = Plane(src, "hartle_thorne", "hartle_thorne", ("t", "r"), {"theta": "pi/2"}, nr.HT_STAR, quotient="phi")
+    pg = Plane(src, "hartle_thorne", "painleve_gullstrand", ("t", "r"), {"theta": "pi/2"}, nr.HT_SIMPLE, quotient="phi")
+
+    def ht_pq(t, r):
+        return mink_pq(t, nr.ht_star(r, -0.5), ell)
+
+    def pg_pq(t, r):
+        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan((t - nr.pg_out(r)) / ell), np.arctan((t + nr.pg_in(r)) / ell)
+
+    ck.chart("Hartle-Thorne, the equator", ht, ht_pq, ck.uniform(-60, 60), ck.uniform(6.0, 80), lambda t, r: (1, 0))
+    ck.chart("Hartle-Thorne, the Painleve-Gullstrand equator", pg, pg_pq, ck.uniform(-60, 60), ck.uniform(6.0, 80),
+             lambda t, r: (1, 0))
+    r = ck.uniform(6.0, 80)
+    g = ht.metric(0 * r, r)
+    h = 1e-5 * r
+    ck.limit("Hartle-Thorne: the tortoise coordinate has dr_*/dr = sqrt(-g_rr/g_tt)",
+             (nr.ht_star(r + h, -0.5) - nr.ht_star(r - h, -0.5)) / (2 * h), np.sqrt(-g[2] / g[0]), 1e-6)
+    ck.limit("Hartle-Thorne: both maps put the surface r = R on X = 0",
+             [point(*ht_pq(t, 6.0))[0] for t in (-20.0, 0.0, 20.0)] + [point(*pg_pq(t, 6.0))[0] for t in (-20.0, 0.0, 20.0)],
+             np.zeros(6), 1e-12)
+    for name, fmap in (("Hartle-Thorne", ht_pq), ("Painleve-Gullstrand", pg_pq)):
+        p, q = fmap(np.zeros(1), np.array([1e9]))
+        ck.limit(f"Hartle-Thorne, {name}: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)",
+                 point(p[0], q[0]), [PI, 0], 1e-3)
+    ck.finite("Hartle-Thorne: the curvature is finite at the surface",
+              ht.kretschmann(ck.uniform(-5, 5, 50), 6 + ck.uniform(1e-6, 1e-3, 50)))
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    radii, times = (9.0, 12.0, 18.0, 36.0), (-24, -12, -6, 0, 6, 12, 24)
+    restriction = ("The equatorial plane $\\theta = \\pi/2$ only, a totally geodesic surface, each point in the "
+                   "diagram a circle about the axis. Light rays of zero angular momentum run at 45 degrees.")
+    views = []
+    for vid, label, fmap, settings in (
+            ("hartle_thorne", "Hartle-Thorne", ht_pq,
+             "$m = 1$, $R = 6\\,m$, $a = m/4$, and $q = 4a^2$; $p = \\arctan((ct - r_*)/R)$ and "
+             "$q = \\arctan((ct + r_*)/R)$."),
+            ("painleve_gullstrand", "Painlevé-Gullstrand", pg_pq,
+             "$m = 1$, $R = 6\\,m$, and $a = m/4$; $p$ and $q$ are the arctangents of the retarded and the "
+             "advanced time over $R$, each zero where its ray meets the surface at $t = 0$.")):
+        v = View(vid, label, box, vid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda r, t, fmap=fmap: fmap(t, r), radii, S_ALL)
+        rr = 6 + np.concatenate([[0.0], np.exp(np.linspace(-6, 12, 300)) - np.exp(-6)])
+        for tt in times:
+            v.curve("t", *fmap(np.full_like(rr, float(tt)), rr))
+        triangle_edges(v, "$r = R$", "surface")
+        label_on(v, fmap(0, 12.0), "$r = 2R$")
+        v.legend("cover", "the outside of the star, which $t$ and $r$ cover")
+        v.legend("r", "$r$ constant, at $9$, $12$, $18$, and $36\\,m$")
+        v.legend("t", "$ct$ constant, at $0$, $\\pm 6$, $\\pm 12$, and $\\pm 24\\,m$")
+        v.legend("surface", "the surface of the star, $r = R$")
+        if vid == "hartle_thorne":
+            moment = slices.moments("hartle_thorne")[0]
+            reach = np.linspace(*moment.reach(vid, "r"), 200)
+            v.slice(moment, [fmap(0 * reach, reach)])
+        v.set(restriction=restriction, settings=settings)
+        views.append(v)
+    return views
+
+
+
 DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
@@ -10525,6 +10603,7 @@ DRAWN = {
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
     "photon_rocket": photon_rocket,
+    "hartle_thorne": hartle_thorne,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -11552,6 +11631,24 @@ CAPTIONS = {
         "universes, each with its own $i^0$ and $\\mathscr{I}^\\pm$, joined at the throat $r = 0$, "
         "where the spheres are smallest. Light crosses the throat at 45°, as it does everywhere "
         "else, so the wormhole has no horizon.",
+    ],
+    ("hartle_thorne", "hartle_thorne"): [
+        "The equatorial plane outside a slowly rotating star ($R = 6\\,m$, $a = m/4$, $q = 4a^2$) with $\\phi$ "
+        "divided out, each point in the diagram a circle about the axis. The metric orthogonal to the circles is "
+        "$-F(1 - h_2)c^2dt^2 + (1 + j_2)dr^2/F$, and with $r_*$ its tortoise coordinate, zero at the surface, "
+        "$p, q = \\arctan((ct \\mp r_*)/R)$ bring it into Minkowski's triangle.",
+        "The left edge is the surface of the star, a timelike line, with the star beyond it. The cones never "
+        "close on the way in, since $R > 2m$, so the diagram has no horizon and every outgoing ray reaches "
+        "$\\mathscr{I}^+$.",
+    ],
+    ("hartle_thorne", "painleve_gullstrand"): [
+        "The equatorial plane outside the same star ($R = 6\\,m$, $a = m/4$) with $\\phi$ divided out, in the "
+        "Painlevé-Gullstrand chart, each point in the diagram a circle about the axis. The metric orthogonal to the "
+        "circles is $-c^2dt^2 + \\left(dr + \\sqrt{2m/r}\\,c\\,dt\\right)^2$ for every spin, and the retarded and "
+        "advanced times of its rays bring it into the same triangle.",
+        "A line of constant $t$ is a moment of the observers who fall from rest far away. It leaves the surface of "
+        "the star later than the moment of Hartle and Thorne's $t$ through the same event at infinity, since "
+        "those observers' clocks run ahead by $\\int\\sqrt{2m/r}\\,dr/(c(1 - 2m/r))$.",
     ],
     ("teo_wormhole", "spherical_axis"): [
         "The axis of rotation of Teo's wormhole ($a = 1/4$), each point in the diagram a single event. On "

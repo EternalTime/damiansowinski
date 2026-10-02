@@ -77,6 +77,11 @@
       "id": "near_horizon_extreme_kerr",
       "kind": "special_case",
       "text": "Kerr spinning as fast as it can, seen from just outside the horizon. The region there is a throat without end, with four symmetries where Kerr has two [bardeen1999]."
+    },
+    {
+      "id": "hartle_thorne",
+      "kind": "generalisation",
+      "text": "The field outside a slowly rotating star, to second order in its spin. The star's quadrupole moment is free, and at Kerr's value, $Q = J^2/M$, the field is Kerr's metric to that order [hartlethorne1968]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "mazza2021",
     "carter1968separable",
     "myers1986",
-    "bardeen1999"
+    "bardeen1999",
+    "hartlethorne1968"
   ],
   "coordinates": [
     {

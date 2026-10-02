@@ -109,6 +109,25 @@ sides of each comparison, so what is checked is an identity along the surface. T
 exact rather than a sample: a rational parametrisation of an irreducible variety
 covers a dense subset of it, so an identity in the parameter is an identity on the
 whole surface. The parametrising symbol must not be a name the system already uses.
+
+
+Systems kept to an order
+------------------------
+
+A slowly rotating star's exterior is known as a series in its spin, and Hartle and Thorne's
+line element solves the vacuum equations through the second order of it and no further. Such
+a system claims its connection and curvature to that order only, and its Ricci tensor, zero
+to that order, is not zero beyond it.
+
+ORDERS below names, per system, the order each small parameter counts as and the highest
+order kept. Every tensor of such a system is built as a Taylor polynomial to that order,
+cut after each product, which gives the same polynomial as cutting the exact tensor and
+keeps every step small, and each comparison is made between the two sides' polynomials.
+A published metric component or inverse component may stand as the line element writes it,
+uncut, as Hartle and Thorne's (1 - 2j_2 P_2)/F does, and the drawings, which read both,
+then read a metric and its exact inverse. A published connection or curvature that carries a
+term beyond the order is a disagreement, so nothing of higher order is printed as if it were
+known.
 """
 
 import argparse
@@ -889,6 +908,20 @@ DIMENSIONS = {
         "v": "T", "r": "L", "\\theta": "1", "\\phi": "1",
         "G": "L**3/(M*T**2)", "m": "M",
     },
+    # Hartle and Thorne's exterior: the mass and the spin per unit mass are lengths and the
+    # quadrupole moment per unit mass an area, so that Kerr's value is q = a^2. R, the star's
+    # radius, enters the domain alone, and the rest are names for the functions of r and theta the
+    # line element is written in.
+    ("hartle_thorne", "hartle_thorne"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "q": "L**2", "R": "L",
+        "L": "1", "A": "1", "B": "1", "P_2": "1", "F": "1", "h_2": "1", "j_2": "1", "k_2": "1",
+    },
+    ("hartle_thorne", "lense_thirring"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "R": "L",
+    },
+    ("hartle_thorne", "painleve_gullstrand"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "R": "L",
+    },
 }
 
 # What a field carries when every coordinate is a length; the indices supply the rest.
@@ -929,6 +962,16 @@ PARAMETER_RELATIONS = {
         "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
         "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)",
     },
+}
+
+# The order each small parameter of a system counts as, and the highest order the system keeps.
+# See the header.
+ORDERS = {
+    # Hartle and Thorne's exterior: the spin is first order and the quadrupole moment second.
+    ("hartle_thorne", "hartle_thorne"): ({"a": 1, "q": 2}, 2),
+    # Lense and Thirring's field is linear in the source: the mass is first order, and the
+    # angular momentum, which enters as the product a m, comes with it.
+    ("hartle_thorne", "lense_thirring"): ({"m": 1}, 1),
 }
 
 GREEK = [
@@ -1556,7 +1599,7 @@ class Reader:
     typo in a published value becomes an error here rather than a silent new symbol.
     """
 
-    def __init__(self, coords, parameters, time_coords=frozenset(), relations=None):
+    def __init__(self, coords, parameters, time_coords=frozenset(), relations=None, kept=None):
         self.coords = list(coords)
         self.time_coords = set(time_coords)
         self.symbol = {}
@@ -1628,11 +1671,63 @@ class Reader:
             if name not in self.parameters:
                 raise LatexError(f"a relation is declared for {name!r}, which is not a parameter")
             self.relations[self.parameters[name]] = sp.sympify(value)
+        # A system kept to an order counts each of its small parameters as a power of one symbol.
+        self.order = None
+        if kept:
+            weights, highest = kept
+            stray = [name for name in weights if name not in self.parameters or not self.parameters[name].is_Symbol]
+            if stray:
+                raise LatexError(f"an order is declared for {stray}, which are not constants of the system")
+            small = sp.Dummy("epsilon", positive=True)
+            self.order = ({self.parameters[name]: small ** weight * self.parameters[name]
+                           for name, weight in weights.items()}, small, highest)
 
     def surface(self, expression):
-        """The expression on the surface the entry's constrained parameters live on."""
+        """The expression on the surface the entry's constrained parameters live on, and to
+        the order the system keeps."""
         expression = expression.subs(self.relations)
-        return expression.subs(self.held).doit() if self.held else expression
+        expression = expression.subs(self.held).doit() if self.held else expression
+        return self.truncated(expression) if self.order else expression
+
+    def truncated(self, expression):
+        """The Taylor polynomial of the expression through the order the system keeps, in
+        canonical form: each small parameter is scaled by its power of one symbol, and the
+        polynomial in that symbol is cut. A matrix is cut entry by entry. The expression is
+        differentiated as it stands and put in canonical form only once the symbol is set to
+        zero, where its denominators are those of the zeroth order: the canonical form of the
+        whole would factor every denominator, and one that holds the small parameters, as
+        Hartle and Thorne's 1 + 2h_2 P_2 does, does not factor in ten minutes."""
+        if self.order is None:
+            return norm(expression)
+        if isinstance(expression, sp.MatrixBase):
+            return expression.applyfunc(self.truncated)
+        scaled, small, highest = self.order
+        term = sp.sympify(expression).xreplace(scaled)
+        out = sp.Integer(0)
+        for k in range(highest + 1):
+            out += norm(term.subs(small, 0)) / sp.factorial(k)
+            term = sp.diff(term, small)
+        return norm(out)
+
+    def zeroth(self, g):
+        """A metric at zeroth order, every small parameter set to zero."""
+        scaled, small, _ = self.order
+        return norm(g.applyfunc(lambda e: e.xreplace(scaled).subs(small, 0)))
+
+    def inverse(self, g):
+        """The inverse of a metric to the order the system keeps, as the series
+        g_0^-1 - g_0^-1 d g_0^-1 + ..., with g_0 the metric at zeroth order and d the rest of
+        its polynomial, each term cut as it is formed."""
+        highest = self.order[2]
+        g = self.truncated(g)
+        zeroth = self.zeroth(g)
+        zeroth_inverse = norm(zeroth.adjugate() / zeroth.det())
+        rest = norm(g - zeroth)
+        out = term = zeroth_inverse
+        for _ in range(highest):
+            term = self.truncated(-term * rest * zeroth_inverse)
+            out += term
+        return norm(out)
 
     @staticmethod
     def _plain(name):
@@ -2055,14 +2150,20 @@ def _adjugate(matrix):
 class Geometry:
     """Every tensor the files publish, computed from g in the chart the coords name."""
 
-    def __init__(self, g, coords, seconds):
+    def __init__(self, g, coords, seconds, order=None):
         self.n = len(coords)
         self.coords = coords
         self.seconds = seconds
-        self.g = norm(g)
+        # A system kept to an order passes `order`, its Reader: the metric and the inverse are
+        # then their polynomials to that order, and every tensor is cut after each product.
+        self.settle = order.truncated if order else norm
+        self.g = self.settle(norm(g))
         # The adjugate over the determinant, which sympy's own inv() takes far longer to reach.
-        adjugate, determinant = _adjugate(self.g)
-        self.ginv = norm(adjugate / determinant)
+        if order:
+            self.ginv = order.inverse(self.g)
+        else:
+            adjugate, determinant = _adjugate(self.g)
+            self.ginv = norm(adjugate / determinant)
         self._cache = {}
         self.unavailable = {}
 
@@ -2090,7 +2191,7 @@ class Geometry:
             for mu in range(self.n):
                 for nu in range(self.n):
                     for rho in range(nu, self.n):
-                        value = norm(sum(
+                        value = self.settle(sum(
                             self.ginv[mu, alpha] * (
                                 sp.diff(self.g[alpha, rho], self.coords[nu])
                                 + sp.diff(self.g[alpha, nu], self.coords[rho])
@@ -2110,7 +2211,7 @@ class Geometry:
             for mu in range(self.n):
                 for nu in range(self.n):
                     for rho in range(self.n):
-                        out[mu][nu][rho] = norm(
+                        out[mu][nu][rho] = self.settle(
                             sum(self.g[mu, alpha] * gamma[alpha][nu][rho] for alpha in range(self.n))
                         )
             return out
@@ -2124,7 +2225,7 @@ class Geometry:
                 for nu in range(self.n):
                     for rho in range(self.n):
                         for sigma in range(rho + 1, self.n):
-                            value = norm(
+                            value = self.settle(
                                 sp.diff(gamma[mu][nu][sigma], self.coords[rho])
                                 - sp.diff(gamma[mu][nu][rho], self.coords[sigma])
                                 + sum(
@@ -2146,7 +2247,7 @@ class Geometry:
                 for nu in range(self.n):
                     for rho in range(self.n):
                         for sigma in range(self.n):
-                            out[mu][nu][rho][sigma] = norm(sum(
+                            out[mu][nu][rho][sigma] = self.settle(sum(
                                 self.g[mu, alpha] * upper[alpha][nu][rho][sigma]
                                 for alpha in range(self.n)
                             ))
@@ -2160,7 +2261,7 @@ class Geometry:
             out = self._zeros(2)
             for nu in range(self.n):
                 for sigma in range(nu, self.n):
-                    value = norm(sum(riemann[mu][nu][mu][sigma] for mu in range(self.n)))
+                    value = self.settle(sum(riemann[mu][nu][mu][sigma] for mu in range(self.n)))
                     out[nu][sigma] = value
                     out[sigma][nu] = value
             return out
@@ -2169,7 +2270,7 @@ class Geometry:
     def ricci_scalar(self):
         def build():
             ricci = self.ricci_ll()
-            return norm(sum(
+            return self.settle(sum(
                 self.ginv[a, b] * ricci[a][b] for a in range(self.n) for b in range(self.n)
             ))
         return self._timed("ricci_scalar", build)
@@ -2181,7 +2282,7 @@ class Geometry:
             out = self._zeros(2)
             for a in range(self.n):
                 for b in range(self.n):
-                    out[a][b] = norm(ricci[a][b] - scalar * self.g[a, b] / 2)
+                    out[a][b] = self.settle(ricci[a][b] - scalar * self.g[a, b] / 2)
             return out
         return self._timed("einstein_ll", build)
 
@@ -2190,7 +2291,7 @@ class Geometry:
             lower = self.riemann_llll()
             # One index at a time, so each component is a sum of n terms rather than n^4.
             upper = self.raise_indices(lower, 4, (0, 1, 2, 3))
-            return norm(sum(
+            return self.settle(sum(
                 lower[a][b][cc][d] * upper[a][b][cc][d]
                 for a in range(self.n) for b in range(self.n)
                 for cc in range(self.n) for d in range(self.n)
@@ -2215,7 +2316,7 @@ class Geometry:
                             trace = scalar * (
                                 self.g[a, cc] * self.g[d, b] - self.g[a, d] * self.g[cc, b]
                             ) / ((n - 1) * (n - 2))
-                            out[a][b][cc][d] = norm(riemann[a][b][cc][d] - correction + trace)
+                            out[a][b][cc][d] = self.settle(riemann[a][b][cc][d] - correction + trace)
             return out
         return self._timed("weyl_llll", build)
 
@@ -2231,7 +2332,7 @@ class Geometry:
                     swapped = list(index)
                     swapped[position] = alpha
                     total += self.ginv[index[position], alpha] * _at(source, swapped)
-                _put(out, index, norm(total))
+                _put(out, index, self.settle(total))
         return out
 
 
@@ -2291,8 +2392,15 @@ def variance_weight(variance, coords, index, time_coords):
     return exponent
 
 
-def compare_block(report, reader, where, published, computed, variance, coords, time_coords, c):
-    """Every published component against sympy, and every omitted one against zero."""
+def beyond_order(reader, value):
+    """Whether a published value of a system kept to an order carries a term beyond it."""
+    return reader.order is not None and norm(value - reader.truncated(value)) != 0
+
+
+def compare_block(report, reader, where, published, computed, variance, coords, time_coords, c, cut=True):
+    """Every published component against sympy, and every omitted one against zero. In a
+    system kept to an order a value has to be cut at it as well, unless `cut` is off, as it
+    is for the metric and its inverse, which may stand as the line element has them."""
     rank = len(variance)
     seen = set()
     for entry in published:
@@ -2307,10 +2415,13 @@ def compare_block(report, reader, where, published, computed, variance, coords, 
             continue
         seen.add(tuple(index))
         try:
-            value = reader.surface(reader(entry["value"]))
+            value = reader(entry["value"])
         except LatexError as error:
             report.skip(f"{where} {names}", str(error))
             continue
+        if cut and beyond_order(reader, value):
+            report.disagree(where, f"{names} published as {entry['value']} carries a term beyond the order kept")
+        value = reader.surface(value)
         expected = reader.surface(
             _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords))
         if norm(value - expected) != 0:
@@ -2351,10 +2462,13 @@ def off_support(expression, x):
 def compare_scalar(report, reader, where, published, computed):
     text, away = scalar_parts(published)
     try:
-        value = reader.surface(reader(text))
+        value = reader(text)
     except LatexError as error:
         report.skip(where, str(error))
         return
+    if beyond_order(reader, value):
+        report.disagree(where, f"published as {published.strip()} carries a term beyond the order kept")
+    value = reader.surface(value)
     computed = reader.surface(computed)
     if away is not None:
         if away not in reader.symbol:
@@ -2376,10 +2490,13 @@ def compare_geodesics(report, reader, where, published, gamma, coords, time_coor
     for equation in published:
         left, _, right = equation.partition("=")
         try:
-            residual = reader.surface(sp.expand(reader(left) - reader(right)))
+            residual = sp.expand(reader(left) - reader(right))
         except LatexError as error:
             report.skip(f"{where} {equation!r}", str(error))
             continue
+        if beyond_order(reader, residual):
+            report.disagree(where, f"{equation!r} carries a term beyond the order kept")
+        residual = reader.surface(residual)
         carried = [name for name in coords if residual.has(reader.ddot[name])]
         if len(carried) != 1:
             report.disagree(where, f"{equation!r} carries second derivatives of {carried}, expected one")
@@ -2419,7 +2536,7 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     parameters = [p["symbol"] for p in entry.get("parameters", [])]
     relations = PARAMETER_RELATIONS.get((metric_id, entry["id"]), {})
     try:
-        reader = Reader(coords, parameters, declaration, relations)
+        reader = Reader(coords, parameters, declaration, relations, ORDERS.get((metric_id, entry["id"])))
     except LatexError as error:
         report.skip(where, f"parameters unreadable: {error}")
         return
@@ -2439,14 +2556,15 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     except LatexError as error:
         report.skip(where, f"line element unreadable: {error}")
         return
-    if _adjugate(g)[1] == 0:
+    # A system kept to an order is a series about its zeroth order, which is what has to be a metric.
+    if _adjugate(reader.zeroth(g) if reader.order else g)[1] == 0:
         report.skip(where, "the line element gives a degenerate metric")
         return
 
     # Everything is computed with the bare coordinates and then weighted into the
     # x^0 = cT chart by compare_block, which is exact because the rescaling is linear.
     symbols = [reader.symbol[name] for name in coords]
-    geometry = Geometry(g, symbols, seconds)
+    geometry = Geometry(g, symbols, seconds, reader if reader.order else None)
     report.checked_systems += 1
     print(f"  {where}")
 
@@ -2467,8 +2585,8 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
         as_lists = [[matrix[i, j] for j in range(len(coords))] for i in range(len(coords))]
         report.guarded(label, seconds, lambda label=label, published=published,
                        as_lists=as_lists, variance=variance: compare_block(
-            report, reader, label, published, as_lists, variance, coords, declaration, c))
-    if norm(g * geometry.ginv) != sp.eye(len(coords)):
+            report, reader, label, published, as_lists, variance, coords, declaration, c, cut=False))
+    if reader.truncated(g * geometry.ginv) != sp.eye(len(coords)):
         report.disagree(where, "the published metric and inverse are not inverse to each other")
 
     blocks = [
