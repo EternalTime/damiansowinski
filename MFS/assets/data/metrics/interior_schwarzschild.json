@@ -51,6 +51,11 @@
       "id": "gravastar",
       "kind": "family",
       "text": "A ball of de Sitter space under a thin shell, with Schwarzschild's vacuum outside. Schwarzschild's star squeezed to $R = r_s$ is one, with the de Sitter radius $r_s$ [mazur2015]."
+    },
+    {
+      "id": "einstein_cluster",
+      "kind": "family",
+      "text": "A ball of the same uniform density and the same space inside, held up by the sideways motion of its particles with no pressure along the radius. Petros Florides found it in 1974 and called it \"a new interior Schwarzschild solution\" [florides1974, bohmerlobo2008]."
     }
   ],
   "references": [
@@ -66,7 +71,9 @@
     "oppenheimer1939",
     "oppenheimersnyder1939",
     "mazur2015",
-    "einstein1917"
+    "einstein1917",
+    "florides1974",
+    "bohmerlobo2008"
   ],
   "coordinates": [
     {

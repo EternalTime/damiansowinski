@@ -6321,7 +6321,7 @@ def reissner_nordstrom_ads(system_id):
     bare = f[6:-7]
     sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
     domains = ["r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
-               "r = r_- \;\\text{(inner horizon)}", "r = r_+ \;\\text{(event horizon)}"]
+               "r = r_- \\;\\text{(inner horizon)}", "r = r_+ \\;\\text{(event horizon)}"]
     if system_id == "static":
         coords = ["t", "r", "\\theta", "\\phi"]
         name = "Static Spherical"
@@ -9387,6 +9387,328 @@ SENOVILLA_GEODESICS = [
 
 
 CHARTS["senovilla"] = senovilla
+# -- Einstein's cluster --------------------------------------------------------------------
+
+EC_CHARTS = ["areal", "constant_speed", "isotropic", "uniform", "hyperspherical"]
+EC_SPHERE = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+EC_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+EC_RATIO = "\\left(\\dfrac{\\rho}{\\rho_0}\\right)"
+EC_UNIFORM_INSIDE = "1 - \\dfrac{r_s r^2}{R^3}"
+EC_UNIFORM_LAPSE = "\\left(1 - \\dfrac{r_s}{R}\\right)^{3/2}\\left(" + EC_UNIFORM_INSIDE + "\\right)^{-1/2}"
+EC_SPEED_RATIO = "\\left(\\dfrac{r}{R}\\right)"
+EC_SPEED_LAPSE = "\\dfrac{1}{1 + 2V^2}" + EC_SPEED_RATIO + "^{2V^2}"
+
+
+def einstein_cluster(system):
+    """Einstein's cluster of 1939, particles on circular geodesics in every direction with no
+    pressure along the radius, in five charts. The areal chart leaves the mass function free, as
+    Florides's (1974) and Böhmer and Harko's (2007) line elements do, and is Lake's (2006) with
+    his (8), m = r^2 Phi'/(1 + 2 r Phi'), which is G^r_r = 0: m is held as a function while the
+    tensors are built and every value is written in m and its derivative. Einstein's own example,
+    his section 7, has sigma constant, so every particle has one speed V: it is given in the
+    areal radius and in the isotropic radius of his (2a) with the a and b of his (18b).
+    Florides's cluster of uniform density is given in the areal radius and in the polar angle of
+    the three sphere its space is a cap of, Böhmer and Lobo's (13). einstein_cluster_check holds
+    every chart to G^r_r = 0 and to a stress across the radius of half the energy density times V^2, each closed
+    form to its mass function and to Schwarzschild's lapse at its surface, and each second chart
+    to being the first pulled back; einstein_cluster.md is the derivation."""
+    state = {}
+    extra = {}
+    if system == "areal":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Areal Radius"
+        parameters = ["\\Phi = \\Phi(r)", "m = \\dfrac{r^2\\,\\partial_r\\Phi}{1 + 2r\\,\\partial_r\\Phi}"]
+        domains = ["r \\in [0, \\infty)"] + EC_ANGLES + ["3m < r \\;\\text{(every particle slower than light)}"]
+        line = "ds^2 = -e^{2\\Phi}{c2}dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}}" + EC_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        r, Phi, m = probe.symbol["r"], probe.parameters["Phi"], probe.parameters["m"]
+        first = m / (r * (r - 2 * m))
+        second = sp.diff(first, r)
+
+        def reduce(value):
+            # The redshift function's slope is the one that leaves no pressure along the radius.
+            value = sp.sympify(value).subs(sp.Derivative(Phi, (r, 2)), second).subs(sp.Derivative(Phi, r), first)
+            return vm.norm(value)
+
+        dm = sp.Derivative(m, r)
+        extra = {"reduce": reduce,
+                 # The orthonormal frame of a static observer, as TOV's is written:
+                 # 4 A^2 + 8 B^2 + 8 C^2 + 4 D^2 with B = m/r^3 and D = 2m/r^3.
+                 "kretschmann": ("4\\left(\\dfrac{\\left(r - m\\right)\\partial_r m}{r^2\\left(r - 2m\\right)}"
+                                 " - \\dfrac{2m}{r^3}\\right)^2 + \\dfrac{8\\left(r\\,\\partial_r m - m\\right)^2}{r^6}"
+                                 " + \\dfrac{24m^2}{r^6}")}
+        printer = {"lead": [dm, r, m], "factors": [r, m, dm],
+                   "collect": lambda poly, pr: cp.collect_by(poly, [dm], pr)}
+    elif system == "constant_speed":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Constant Speed"
+        parameters = ["V", "R"]
+        domains = ["r \\in (0, R]"] + EC_ANGLES + ["r = 0 \\;\\text{(a curvature singularity)}"]
+        line = "ds^2 = -" + EC_SPEED_LAPSE + "{c2}dt^2 + \\left(1 + 2V^2\\right)dr^2" + EC_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        r, V, R = probe.symbol["r"], probe.parameters["V"], probe.parameters["R"]
+        extra = {"pretty": named_powers({EC_SPEED_RATIO: {r: 1, R: -1}}, state),
+                 "components": {"metric_components": {("t", "t"): "-" + EC_SPEED_LAPSE, ("r", "r"): "1 + 2V^2"},
+                                "inverse_metric_components": {
+                                    ("t", "t"): "-\\left(1 + 2V^2\\right)" + EC_SPEED_RATIO + "^{-2V^2}",
+                                    ("r", "r"): "\\dfrac{1}{1 + 2V^2}"}}}
+        printer = {"lead": [V, r, R], "factors": [V, r, R], "rising": [V]}
+    elif system == "isotropic":
+        coords, name = ["t", "\\rho", "\\theta", "\\phi"], "Isotropic (Einstein)"
+        # Einstein's a and b, his (2a), with the A and B of his (18b).
+        parameters = ["\\sigma", "\\rho_0",
+                      "a = \\left(1 + \\sigma\\right)^4" + EC_RATIO + "^{-4\\sigma/(1 + \\sigma)}",
+                      "b = \\left(\\dfrac{1 - \\sigma}{1 + \\sigma}\\right)^2" + EC_RATIO + "^{4\\sigma/(1 - \\sigma^2)}"]
+        domains = ["\\rho \\in (0, \\rho_0]"] + EC_ANGLES + ["\\rho = 0 \\;\\text{(a curvature singularity)}"]
+        line = ("ds^2 = -b\\,{c2}dt^2 + a\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2"
+                "\\right)\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        rho, sigma, rho0 = probe.symbol["\\rho"], probe.parameters["sigma"], probe.parameters["rho_0"]
+        extra = {"pretty": einstein_powers(rho, rho0, sigma, probe.parameters["a"], probe.parameters["b"], state)}
+        printer = {"lead": [sigma, rho, rho0], "factors": [sigma, rho, rho0], "rising": [sigma]}
+    elif system == "uniform":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Uniform Density (Florides)"
+        parameters = ["r_s", "R"]
+        domains = ["r \\in [0, R]"] + EC_ANGLES
+        line = "ds^2 = -" + EC_UNIFORM_LAPSE + "{c2}dt^2 + \\dfrac{dr^2}{" + EC_UNIFORM_INSIDE + "}" + EC_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        r, rs, R = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["R"]
+        extra = {"components": {"metric_components": {("t", "t"): "-" + EC_UNIFORM_LAPSE,
+                                                      ("r", "r"): "\\dfrac{1}{" + EC_UNIFORM_INSIDE + "}"},
+                                "inverse_metric_components": {("r", "r"): EC_UNIFORM_INSIDE}}}
+        extra["pretty"] = einstein_radicals(r, rs, R, state)
+        printer = {"lead": [R, r, rs], "factors": [rs, r, R]}
+    else:
+        coords, name = ["t", "\\chi", "\\theta", "\\phi"], "Hyperspherical"
+        parameters = ["a", "\\chi_0"]
+        domains = ["\\chi \\in [0, \\chi_0]"] + EC_ANGLES
+        line = ("ds^2 = -\\dfrac{\\cos^3\\chi_0}{\\cos\\chi}{c2}dt^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi"
+                "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        chi, a, chi0 = probe.symbol["\\chi"], probe.parameters["a"], probe.parameters["chi_0"]
+        printer = {"lead": [a, sp.cos(chi0), sp.cos(chi), sp.sin(chi)]}
+
+        def in_cosines(value):
+            # A denominator is a power of sin^2(chi) - 1, written as that power of -cos^2(chi).
+            numerator, denominator = sp.fraction(sp.factor(value))
+            if not (denominator.has(sp.sin(chi) + 1) or denominator.has(sp.sin(chi) - 1)):
+                return sp.factor(value)
+            denominator = sp.factor(sp.expand(sp.expand(denominator).replace(
+                lambda e: e.is_Pow and e.base == sp.sin(chi) and e.exp.is_Integer and e.exp >= 2,
+                lambda e: (1 - sp.cos(chi) ** 2) ** (e.exp // 2) * sp.sin(chi) ** (e.exp % 2))))
+            return sp.factor(numerator) / denominator
+
+        extra = {"pretty": in_cosines}
+
+    def check(chart):
+        state["printer"] = chart.printer
+        einstein_cluster_check(chart, system)
+
+    return {
+        "metric_id": "einstein_cluster",
+        "system": {"id": system, "name": name, "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+        "chart_line_element": line.replace("{c2}", ""),
+        "printer": printer,
+        "check": check,
+        **extra,
+    }
+
+
+def einstein_powers(rho, rho0, sigma, a, b, state):
+    """A pretty printer for Einstein's isotropic chart, whose every value is a rational function
+    of sigma times a whole power of rho and whole powers of his a and b: the power of rho/rho_0
+    is k + i e_a + j e_b with e_a = -4 sigma/(1 + sigma) and e_b = 4 sigma/(1 - sigma^2), so
+    (1 - sigma^2) times it is a quadratic in sigma whose coefficients are k, 4(j - i) and
+    4i - k. What is left once rho^k a^i b^j is divided out holds neither radius.
+    `state["printer"]` is the chart's printer, which the chart's check puts there."""
+    names = {}
+
+    def flat(value, positive):
+        return sp.powsimp(sp.powdenest(sp.together(value.subs(positive)), force=True), force=True)
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if not value.has(rho):
+            return sp.factor(value)
+        positive = {s: sp.Dummy(positive=True) for s in (rho, rho0, sigma)}
+        back = {v: k for k, v in positive.items()}
+        exponent = sp.Integer(0)
+        for f in sp.Mul.make_args(sp.factor(flat(value, positive))):
+            base, k = f.as_base_exp()
+            if base == positive[rho]:
+                exponent += k
+        exponent = exponent.subs(back)
+        quadratic = sp.Poly(sp.cancel(exponent * (1 - sigma ** 2)), sigma)
+        if quadratic.degree() > 2:
+            raise AssertionError(f"{value} is not one monomial in rho, a and b")
+        c0, c1, c2 = (quadratic.coeff_monomial(sigma ** n) for n in range(3))
+        k, i = c0, (c2 + c0) / 4
+        j = c1 / 4 + i
+        if not all(n.is_integer for n in (k, i, j)):
+            raise AssertionError(f"{value} is not rho^k a^i b^j: {k}, {i}, {j}")
+        rest = sp.simplify(flat(value / (rho ** k * a ** i * b ** j), positive)).subs(back)
+        if rest.has(rho) or rest.has(rho0):
+            raise AssertionError(f"{value} leaves {rest} beside rho^{k} a^{i} b^{j}")
+        printer = state["printer"]
+        out = sp.factor(rest) * rho ** k
+        for text, power in (("a", i), ("b", j)):
+            placeholder = names.setdefault(text, sp.Symbol(f"EINSTEIN{text.upper()}", positive=True))
+            printer.overrides[placeholder] = text
+            out *= placeholder ** power
+        return out
+
+    return pretty
+
+
+def einstein_radicals(r, rs, R, state):
+    """A pretty printer for the uniform cluster, whose every value is a rational function of r,
+    r_s and R times at most one power each of the radicals sqrt(R - r_s) and sqrt(R^3 - r_s r^2).
+    The checker's canonical form holds the second as i sqrt(r_s r^2 - R^3), a generator whose
+    square is R^3 - r_s r^2; here each radical is a placeholder with that square, even powers go
+    into the rational function, and what is left is written beside it, above or below the line.
+    `state["printer"]` is the chart's printer, which the chart's check puts there."""
+    inner, outer = R ** 3 - rs * r ** 2, R - rs
+    W, U = sp.Symbol("EINSTEINW", positive=True), sp.Symbol("EINSTEINU", positive=True)
+    texts = {W: "\\sqrt{R^3 - r_s r^2}", U: "\\sqrt{R - r_s}"}
+
+    def radical(power):
+        base, exponent = power.as_base_exp()
+        if not (exponent.is_Rational and exponent.q == 2):
+            return power
+        whole = (exponent.p - 1) // 2
+        if sp.expand(base - outer) == 0:
+            return outer ** whole * U
+        if sp.expand(base + inner) == 0:
+            # sqrt(-(R^3 - r_s r^2)) stands with an i beside it, and i times it is the radical.
+            return (-inner) ** whole * (-sp.I * W)
+        if sp.expand(base - inner) == 0:
+            return inner ** whole * W
+        raise AssertionError(f"{power} is a radical of neither R - r_s nor R^3 - r_s r^2")
+
+    def split(polynomial):
+        polynomial = sp.reduced(sp.expand(polynomial), [W ** 2 - inner, U ** 2 - outer], W, U)[1]
+        terms = sp.Poly(polynomial, W, U).terms()
+        if len(terms) != 1:
+            raise AssertionError(f"{polynomial} is not one product of the radicals")
+        (w, u), coefficient = terms[0]
+        return coefficient, w, u
+
+    def pretty(value):
+        value = sp.sympify(value).replace(lambda e: e.is_Pow, radical)
+        numerator, denominator = sp.fraction(sp.together(value))
+        top, w1, u1 = split(numerator)
+        bottom, w2, u2 = split(denominator)
+        rest = sp.factor(top / bottom)
+        if rest.has(sp.I):
+            raise AssertionError(f"{value} is not real")
+        printer = state["printer"]
+        printer.overrides.update(texts)
+        return rest * W ** (w1 - w2) * U ** (u1 - u2)
+
+    return pretty
+
+
+def einstein_cluster_mass(chart, system):
+    """The areal radius and the mass function of a chart of Einstein's cluster, in its own symbols."""
+    p, x = chart.reader.parameters, chart.symbols[1]
+    if system == "areal":
+        return x, p["m"]
+    if system == "constant_speed":
+        return x, p["V"] ** 2 * x / (1 + 2 * p["V"] ** 2)
+    if system == "isotropic":
+        s = p["sigma"]
+        r = (1 + s) ** 2 * x * (x / p["rho_0"]) ** (-2 * s / (1 + s))
+        return r, 2 * s * r / (1 + s) ** 2
+    if system == "uniform":
+        return x, p["r_s"] * x ** 3 / (2 * p["R"] ** 3)
+    r = p["a"] * sp.sin(x)
+    return r, r ** 3 / (2 * p["a"] ** 2)
+
+
+def einstein_cluster_check(chart, system):
+    """Every chart is a cluster. The areal radius r is the square root of g_theta theta and the
+    mass function is the Misner-Sharp mass r(1 - |grad r|^2)/2. G^r_r vanishes, so no pressure
+    acts along the radius; G^t_t = -2 m'/r^2 with the prime taken along the areal radius; and the
+    stress across the radius is half the energy density times V^2 with V^2 = m/(r - 2m), which is
+    2(r - 2m) G^theta_theta = -m G^t_t. Each closed form has Schwarzschild's lapse at its surface,
+    and the isotropic and hyperspherical charts are the constant speed and uniform charts pulled
+    back."""
+    geo, x = chart.geo, chart.symbols[1]
+    zero = (lambda v: 0 if einstein_cluster_same(v, 0, chart.reduce) else 1)
+    r, m = einstein_cluster_mass(chart, system)
+    g = chart.reader.surface(geo.g) if chart.reader.defined and not chart.reduce else geo.g
+    if not einstein_cluster_same(geo.g[2, 2], r ** 2):
+        raise AssertionError(f"einstein_cluster/{system}: the areal radius is not the one declared")
+    if not einstein_cluster_same(r * (1 - geo.ginv[1, 1] * sp.diff(r, x) ** 2) / 2, m, chart.reduce):
+        raise AssertionError(f"einstein_cluster/{system}: the mass function is not the Misner-Sharp mass")
+    mixed = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+    for i in range(4):
+        for j in range(4):
+            if i != j and zero(mixed[i][j]) != 0:
+                raise AssertionError(f"einstein_cluster/{system}: G^{i}_{j} does not vanish")
+    if zero(mixed[1][1]) != 0:
+        raise AssertionError(f"einstein_cluster/{system}: G^r_r does not vanish")
+    slope = sp.diff(m, x) / sp.diff(r, x)
+    if not einstein_cluster_same(mixed[0][0], -2 * slope / r ** 2, chart.reduce):
+        raise AssertionError(f"einstein_cluster/{system}: G^t_t is not -2m'/r^2")
+    for i in (2, 3):
+        if not einstein_cluster_same(2 * (r - 2 * m) * mixed[i][i], -m * mixed[0][0], chart.reduce):
+            raise AssertionError(f"einstein_cluster/{system}: the stress across the radius is not half the energy density times V^2")
+    p = chart.reader.parameters
+    if system != "areal":
+        # At its surface each closed form has Schwarzschild's lapse, 1 - 2m/r.
+        edge = {"constant_speed": "R", "isotropic": "rho_0", "uniform": "R", "hyperspherical": "chi_0"}[system]
+        if not einstein_cluster_same((g[0, 0] ** 2).subs(x, p[edge]), ((1 - 2 * m / r) ** 2).subs(x, p[edge])):
+            raise AssertionError(f"einstein_cluster/{system}: the lapse at the surface is not Schwarzschild's")
+    if system in ("isotropic", "hyperspherical"):
+        source_id = "constant_speed" if system == "isotropic" else "uniform"
+        spec = einstein_cluster(source_id)
+        source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        q = source.reader.parameters
+        if system == "isotropic":
+            s = p["sigma"]
+            at = {q["V"]: sp.sqrt(2 * s) / (1 - s), q["R"]: (1 + s) ** 2 * p["rho_0"]}
+        else:
+            at = {q["R"]: p["a"] * sp.sin(p["chi_0"]), q["r_s"]: p["a"] * sp.sin(p["chi_0"]) ** 3}
+        at[source.symbols[1]] = r
+        jacobian = sp.diff(r, x)
+        # The lapse is read as the line element writes it, on the principal branch of its radicals:
+        # the canonical form splits a radical over factors it does not order by sign.
+        lapse = -source.reader(EC_SPEED_LAPSE if system == "isotropic" else EC_UNIFORM_LAPSE)
+        for i in range(4):
+            pulled = (lapse if i == 0 else source.geo.g[i, i]).subs(at, simultaneous=True) * (jacobian ** 2 if i == 1 else 1)
+            if not einstein_cluster_same(pulled, g[i, i]):
+                raise AssertionError(f"einstein_cluster/{system}: not the {source_id} chart pulled back in slot {i}")
+
+
+def einstein_cluster_same(a, b, reduce=None):
+    """Whether two values agree: exactly where the canonical form settles it, and otherwise at
+    six points to forty digits, every symbol between 0.1 and 0.25, for the powers whose exponents
+    hold sigma, which the canonical form does not take, and for a radical the canonical form
+    has split over factors it does not order by sign. A value that holds a function is settled
+    by the canonical form alone."""
+    difference = sp.sympify(a) - sp.sympify(b)
+    if reduce:
+        return vm.norm(reduce(difference)) == 0
+    try:
+        if vm.norm(difference) == 0:
+            return True
+    except (TypeError, ValueError, sp.PolynomialError):
+        pass
+    if difference.atoms(sp.Function) - difference.atoms(sp.sin, sp.cos, sp.exp, sp.log):
+        return False
+    generator = random.Random(1)
+    symbols = sorted(difference.free_symbols, key=str)
+    scale = sp.sympify(a) if b == 0 else sp.sympify(b)
+    for _ in range(6):
+        point = {s: sp.Float(generator.uniform(0.1, 0.25), 40) for s in symbols}
+        size = abs(sp.N(scale.subs(point), 40)) if scale != 0 else 1
+        if abs(sp.N(difference.subs(point), 40)) > sp.Float(10) ** -30 * max(size, 1):
+            return False
+    return True
+
+
+CHARTS["einstein_cluster"] = [lambda s=s: einstein_cluster(s) for s in EC_CHARTS]
 
 
 # -- The gravastar ---------------------------------------------------------------------

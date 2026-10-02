@@ -4602,6 +4602,14 @@ class Slices(unittest.TestCase):
                     # each chart's drawings marking its own moment.
                     "melvin/cylindrical/radial": {"ernst"}, "conformal melvin/cylindrical": {"ernst"},
                     "melvin/ernst/radial": {"universe"}, "conformal melvin/ernst": {"universe"},
+                    # Einstein's cluster of constant speed, Florides's of uniform density and the declared
+                    # cluster with no surface are three spacetimes of one entry, each chart's drawings marking
+                    # the moment of its own.
+                    **{f"{place}einstein_cluster/{s}": {"speed", "uniform", "core"} - {own}
+                       for own, charts in (("core", ("areal",)), ("speed", ("constant_speed", "isotropic")),
+                                           ("uniform", ("uniform", "hyperspherical")))
+                       for chart in charts
+                       for place, s in [("conformal ", chart)] + [("", f"{chart}/{v}") for v in ("radial", "through")]},
                     # The dust universe and the inside of Schwarzschild's horizon are two members of
                     # the Kantowski-Sachs family, each marked on its own drawings.
                     "kantowski_sachs/comoving/tr": {"vacuum"}, "kantowski_sachs/dust/etar": {"vacuum"},

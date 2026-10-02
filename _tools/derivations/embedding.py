@@ -2055,6 +2055,111 @@ def interior_schwarzschild(ck, src):
                  settings="$r_s = 1$, the unit of every length, and $R = 1.5\\,r_s$.")]
 
 
+EC_V, EC_R = 0.5, 3.0                    # the speed and the radius, in r_s, of the two clusters with a surface
+# The cluster with no surface is the one the spacetime diagrams declare.
+EC_CORE, EC_CORE_INPUT = nr.EC_CORE, nr.EC_CORE_INPUT
+
+
+def einstein_cluster(ck, src):
+    """Three clusters, each in units of its Schwarzschild radius. Einstein's own, every particle
+    at the speed V = 1/2, so that m = r/6 at every radius and the surface is R = 3 r_s: inside,
+    g_rr = 1 + 2V^2 is constant, so the slice is a cone, z = sqrt(2) V r. Florides's cluster of
+    uniform density with the same mass and radius: g_rr = 1/(1 - r^2 r_s/R^3), a cap of a sphere
+    of radius a = sqrt(R^3/r_s), the cap of Schwarzschild's star. Outside both it is Flamm's
+    paraboloid from the schwarzschild entry, and at r = R both sides give g_rr = 1/(1 - r_s/R),
+    so each meets it with one tangent. The third has no surface: the areal chart with the declared
+    redshift function e^(2 Phi) = 1 - r_s/sqrt(r^2 + b^2) at b = 2 r_s, whose mass function
+    m = r^2 Phi'/(1 + 2 r Phi') the chart defines, with dz/dr = sqrt(2m/(r - 2m)); the vacuum
+    paraboloid of its whole mass is drawn beside it, set to meet it at the edge of the drawing."""
+    R, top = EC_R, 8.0
+    size = 2 * top
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1})
+    views = []
+    for vid, label, system, params, centre, legend, name in (
+            ("speed", "Constant speed", "constant_speed", {"V": "1/2", "R": "3"},
+             "the centre $r = 0$, the tip of the cone",
+             "the cluster, $r \\le R$, a cone", "constant speed"),
+            ("uniform", "Uniform density", "uniform", {"r_s": 1, "R": "3"},
+             "the centre $r = 0$, where the cap is smooth",
+             "the cluster, $r \\le R$, a cap of a sphere of radius $\\sqrt{R^3/r_s}$", "uniform")):
+        inner = Slice(src, "einstein_cluster", system, "r", "\\phi", {"t": 0, **EQUATOR}, params)
+        vacuum = Piece("vacuum", "reference", outer, 1.0, R, 0.0, 1,
+                       (("throat", "the throat $r = r_s$ of the vacuum, which the cluster replaces"), ("join", None)),
+                       [(1.0, "reference", None)], size, reference=True)
+        zR = vacuum.at(R)[1]
+        ext = Piece("exterior", "sheet", outer, R, top, zR, 1,
+                    (("join", "the surface of the cluster, $r = R$"),
+                     ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                    [(R, "surface", "$r = R$")] + [(r, "r", None) for r in (4, 6)] + [(top, "r", None)], size)
+        star = Piece("star", "star", inner, 0.0, R, 0.0, 1,
+                     (("apex" if vid == "speed" else "axis", centre), ("join", "the surface of the cluster, $r = R$")),
+                     [(r, "r", None) for r in (1.0, 2.0)], size)
+        # The cluster is built from its centre and moved up to meet the exterior at R.
+        star.z = star.z + (zR - star.z[-1])
+        surface = Surface([star, ext, vacuum])
+        ck.isometry(f"Einstein cluster, {name}, the cluster", star)
+        ck.isometry(f"Einstein cluster, {name}, the exterior", ext)
+        ck.join(f"Einstein cluster, {name}, the cluster meets the exterior at r = R", star, R, ext, R)
+        if vid == "speed":
+            ck.form("Einstein cluster, the cone z = sqrt(2) V r", star,
+                    lambda r: star.z[0] + math.sqrt(2) * EC_V * r, size)
+        else:
+            a = math.sqrt(R ** 3)
+            ck.form("Einstein cluster, the cap z = a - sqrt(a^2 - r^2)", star,
+                    lambda r: star.z[0] + a - np.sqrt(a * a - r * r), size)
+        ck.form(f"Einstein cluster, {name}, the exterior is Flamm's", ext, lambda r: 2 * np.sqrt(r - 1), size)
+
+        fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+        ring_label(fig, [0, 0, 0], *ext.at(R), "$r = R$", dx=10)
+        ring_label(fig, [0, 0, 0], *ext.at(6.0), "$6\\,r_s$")
+        ring_label(fig, [0, 0, 0], *ext.at(top), "$8\\,r_s$")
+        ring_label(fig, [0, 0, 0], *vacuum.at(1.0), "$r_s$", side=-1, dx=8)
+        fig.legend("fill", "star", legend)
+        fig.legend("fill", "cover", "the exterior, Flamm's paraboloid")
+        fig.legend("line", "r", "$r$ constant, at $1$ and $2\\,r_s$ inside and $4$, $6$ and $8\\,r_s$ outside")
+        fig.legend("line", "surface", "the surface of the cluster, $r = R$")
+        fig.legend("line", "reference", "the vacuum paraboloid inside $R$, down to its throat at $r_s$")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(vid, label, "$r_s$", [surface], fig.done(),
+                          settings=("$r_s = 1$, the unit of every length, $V = 1/2$, and $R = 3\\,r_s$." if vid == "speed"
+                                    else "$r_s = 1$, the unit of every length, and $R = 3\\,r_s$.")))
+
+    core = Slice(src, "einstein_cluster", "areal", "r", "\\phi", {"t": 0, **EQUATOR}, functions={"Phi": EC_CORE})
+    star = Piece("cluster", "star", core, 0.0, top, 0.0, 1,
+                 (("axis", "the centre $r = 0$, where the surface is level"),
+                  ("edge", "the cluster runs on to $r \\to \\infty$, where it approaches the vacuum paraboloid")),
+                 [(r, "r", None) for r in (2.0, 4.0, 6.0)] + [(top, "r", None)], size)
+    vacuum = Piece("vacuum", "reference", outer, 1.0, top, 0.0, 1,
+                   (("throat", "the throat $r = r_s$ of the vacuum of the same mass"), ("join", None)),
+                   [(1.0, "reference", None)], size, reference=True)
+    vacuum.z = vacuum.z + (star.z[-1] - vacuum.z[-1])
+    surface = Surface([star, vacuum])
+    ck.isometry("Einstein cluster, no surface, the cluster", star)
+    # The declared cluster's mass function, m = r^2 Phi'/(1 + 2r Phi'), read off the published g_rr.
+    x = sp.Symbol("x", positive=True)
+    lapse = 1 - 1 / sp.sqrt(x ** 2 + 4)
+    slope = sp.diff(sp.log(lapse) / 2, x)
+    mass = sp.lambdify(x, x ** 2 * slope / (1 + 2 * x * slope), "numpy")
+    grid = np.linspace(0.05, top, 400)
+    ck.add("Einstein cluster, no surface: g_rr = r/(r - 2m) with m = r^2 Phi'/(1 + 2r Phi')",
+           float(np.max(np.abs(core.gxx_at(grid) - grid / (grid - 2 * mass(grid))))), 1e-9)
+    ck.add("Einstein cluster, no surface: every particle slower than light, 3m < r",
+           float(np.max(3 * mass(grid) / grid)), 1.0)
+
+    fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *star.at(2.0), "$r = b$", dx=10)
+    ring_label(fig, [0, 0, 0], *star.at(6.0), "$6\\,r_s$")
+    ring_label(fig, [0, 0, 0], *star.at(top), "$8\\,r_s$")
+    ring_label(fig, [0, 0, 0], *vacuum.at(1.0), "$r_s$", side=-1, dx=8)
+    fig.legend("fill", "star", "the cluster, which has no surface")
+    fig.legend("line", "r", "$r$ constant, at $2$, $4$, $6$ and $8\\,r_s$")
+    fig.legend("line", "reference", "the vacuum paraboloid of the same mass, down to its throat at $r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("core", "No surface", "$r_s$", [surface], fig.done(),
+                      settings="$r_s = 1$, the unit of every length, and $b = 2\\,r_s$.", input=EC_CORE_INPUT))
+    return views
+
+
 def tov(ck, src):
     """The declared neutron star: the polytrope p = K rho_0^2 at K = 100 and central rho_0 =
     1.28e-3, G = c = M_sun = 1, which null_rays.StarSolver solves from this spacetime's own
@@ -9121,6 +9226,7 @@ DRAWN = {
     "interior_schwarzschild": interior_schwarzschild,
     "gravastar": gravastar,
     "tov": tov,
+    "einstein_cluster": einstein_cluster,
     "morris_thorne": morris_thorne,
     "ellis_bronnikov": ellis_bronnikov,
     "van_den_broeck": van_den_broeck,
@@ -9394,6 +9500,34 @@ CAPTIONS = {
         "\\sqrt{1 - r_s/R}\\right)$. Where $L^2 = R^3/r_s$ that density vanishes and the cap meets the paraboloid "
         "with one tangent plane, as the surface of Schwarzschild's star of uniform density does. The vacuum "
         "paraboloid would run on down to a throat at $r_s$, and the shell ends it above there.",
+    ],
+    ("einstein_cluster", "speed"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Einstein's cluster of constant speed ($V = 1/2$, $R = 3\\,r_s$) "
+        "at one moment of $t$, drawn as a surface in flat space with every distance along it the metric distance. "
+        "Inside, $g_{rr} = 1 + 2V^2$ is the same at every radius, so the slice is a cone that climbs at "
+        "$dz/dr = \\sqrt{2}\\,V$, with its tip at the centre, where the density grows as $1/r^2$. Outside it is "
+        "Flamm's paraboloid.",
+        "At $r = R$, $g_{rr} = 1/(1 - r_s/R)$ on both sides, so the cone meets the paraboloid in one circle with "
+        "one tangent plane. At $V = 1/2$ the mass function is $m = r/6$, so every particle circles at $r = 6m$, "
+        "the innermost stable orbit of the mass inside it.",
+    ],
+    ("einstein_cluster", "uniform"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Florides's cluster of uniform density ($R = 3\\,r_s$) at one "
+        "moment of $t$, drawn as a surface in flat space with every distance along it the metric distance. Inside, "
+        "$g_{rr} = 1/(1 - r_sr^2/R^3)$ is the metric of a sphere of radius $a = \\sqrt{R^3/r_s}$, so the slice is a "
+        "cap of that sphere, the cap of Karl Schwarzschild's liquid star of the same mass and radius. Outside it is "
+        "Flamm's paraboloid.",
+        "A slice of constant $t$ depends on the density alone, so the cluster and the liquid star share it, and "
+        "their stresses enter $g_{tt}$. The cluster of constant speed, with the same mass and radius, is flat "
+        "everywhere inside but at the tip of its cone.",
+    ],
+    ("einstein_cluster", "core"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a cluster with no surface "
+        "($e^{2\\Phi} = 1 - r_s/\\sqrt{r^2 + b^2}$, $b = 2\\,r_s$) at one moment of $t$, drawn as a surface in flat "
+        "space with every distance along it the metric distance. On it $g_{rr} = r/(r - 2m)$, so the surface climbs "
+        "at $dz/dr = \\sqrt{2m/(r - 2m)}$: level at the centre, where $m$ grows as $r^3$, and steepest near the "
+        "edge of the core. Far out $m$ approaches $r_s/2$ and the surface approaches Flamm's paraboloid of the "
+        "whole mass, drawn dashed.",
     ],
     ("tov", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a neutron star at one moment of $t$, drawn as a "

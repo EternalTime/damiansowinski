@@ -53,6 +53,11 @@
       "id": "tolman_bondi",
       "kind": "programme",
       "text": "Richard Tolman's other spacetime, dust expanding or collapsing in spherical symmetry with a density that varies with radius, from 1934 [tolman1934]. Five years later he gave the method for static spheres of fluid that Oppenheimer and Volkoff applied in the paper after his [tolman1939]."
+    },
+    {
+      "id": "einstein_cluster",
+      "kind": "special_case",
+      "text": "The star with no pressure along its radius, made of particles circling the centre in every direction. Einstein built it in 1939, the year of Tolman's and of Oppenheimer and Volkoff's papers, and its redshift function follows from its mass, $\\partial_r\\Phi = m/(r(r - 2m))$ [einstein1939, lake2006]."
     }
   ],
   "references": [
@@ -83,7 +88,9 @@
     "hartle1967",
     "hartlethorne1968",
     "santos1985",
-    "tolman1934"
+    "tolman1934",
+    "einstein1939",
+    "lake2006"
   ],
   "coordinates": [
     {

@@ -399,7 +399,9 @@ class Printer:
         if argument in self.arguments:
             return "(" + self.arguments[argument] + ")"
         if isinstance(argument, sp.Symbol):
-            return tex_name(argument.name) if argument.name in GREEK else " " + argument.name
+            # A Greek letter keeps its command with a subscript too, as the chi_0 of cos^3(chi_0).
+            name = tex_name(argument.name)
+            return name if name.startswith("\\") else " " + argument.name
         return "\\left(" + self.expr(argument) + "\\right)"
 
     def term(self, e, top=False):

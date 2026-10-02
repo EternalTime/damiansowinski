@@ -62,6 +62,11 @@
       "id": "btz",
       "kind": "family",
       "text": "The black hole of three dimensions. Robert Mann and Simon Ross showed in 1993 that dust collapsing under a negative cosmological constant can end as one [mann1993]."
+    },
+    {
+      "id": "einstein_cluster",
+      "kind": "programme",
+      "text": "Einstein's answer of the same year to the same question. His ball of particles on circular orbits cannot be made smaller than one and a half Schwarzschild radii, from which he concluded that Schwarzschild singularities \"do not exist in physical reality\" [einstein1939]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "szekeres1975collapse",
     "schwarzschild1916b",
     "vaidya1966",
-    "mann1993"
+    "mann1993",
+    "einstein1939"
   ],
   "coordinates": [
     {

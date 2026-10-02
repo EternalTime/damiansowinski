@@ -248,6 +248,11 @@
       "id": "einstein_rosen_bridge",
       "kind": "locally_same",
       "text": "Schwarzschild's exterior taken twice and joined at $r = r_s$ by the coordinate $u^2 = r - r_s$, which Einstein and Nathan Rosen read in 1935 as a particle [einstein1935]."
+    },
+    {
+      "id": "einstein_cluster",
+      "kind": "composite",
+      "text": "A ball of particles on circular orbits with Schwarzschild's vacuum outside. Einstein used it in 1939 to argue that matter cannot be packed inside $r = r_s$, since the particles would have to reach the speed of light at one and a half times that radius [einstein1939]."
     }
   ],
   "references": [
