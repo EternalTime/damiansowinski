@@ -58,6 +58,11 @@
       "id": "black_saturn",
       "kind": "limit_source",
       "text": "A Myers-Perry black hole with a black ring turning in balance around it. In the limit of a ring shrunk to nothing it is the hole with one spin again [elvang2007]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "Pomeransky derived the hole of five dimensions as two solitons, by Belinski and Zakharov's inverse scattering method [pomeransky2006]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "page2007",
     "murata2008",
     "grossperry1983",
-    "elvang2007"
+    "elvang2007",
+    "pomeransky2006"
   ],
   "coordinates": [
     {

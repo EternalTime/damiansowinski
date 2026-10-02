@@ -760,15 +760,34 @@ class Chart:
         self.random = random.Random(0)
         self.point = {}
 
+    def named_time(self, value):
+        """The value with a named time written as c times it, as the file prints it. A declared
+        function and its derivatives keep their arguments: P(t, z) is printed P, and its
+        derivative along x^0 as the reader reads the printed one, so only the time standing
+        bare is rewritten."""
+        value = sp.sympify(value)
+        if not self.bare:
+            return value
+        held = {}
+        for kind in (sp.Derivative, AppliedUndef):
+            for atom in sorted(value.atoms(kind), key=sp.default_sort_key):
+                held[atom] = sp.Dummy()
+            value = value.xreplace(held)
+        back = {dummy: atom for atom, dummy in held.items()}
+        value = value.subs(self.bare, simultaneous=True)
+        for _ in range(2):
+            value = value.xreplace(back)
+        return value
+
     def check(self, text, value):
-        difference = self.reader(text) - sp.sympify(value).subs(self.bare, simultaneous=True)
+        difference = self.reader(text) - self.named_time(value)
         if vm.norm(self.reduce(difference) if self.reduce else difference) != 0:
             raise AssertionError(f"printed {text!r} does not read back as {value}")
         return text
 
     def text(self, value):
         """The printed form of a value, checked by reading it back."""
-        return self.check(self.printer(self.pretty(sp.sympify(value).subs(self.bare, simultaneous=True))), value)
+        return self.check(self.printer(self.pretty(self.named_time(value))), value)
 
     def single_term(self, value):
         """A printed form of the value with no top level sum, so a leading minus negates it.
