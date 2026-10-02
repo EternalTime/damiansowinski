@@ -3436,6 +3436,73 @@ class StacksAndMovies(unittest.TestCase):
             self.assertEqual(order, (up + down + up + down)[:len(order)], str(name))
             self.assertGreaterEqual(len(order), 3 * (n - 1), str(name))
 
+    def frames_played(self, movies, ms, pause=None):
+        """The frames the page's own wireMovie() hands its figure of each movie, in order, over
+        `ms` milliseconds at sixty pictures a second, run in Node as the page runs it, with a
+        clock and a play button stood in for the browser's. With `pause` as [at, for], the reader
+        presses the button `at` milliseconds in and again `for` milliseconds later."""
+        if shutil.which("node") is None:
+            self.skipTest("Node is not installed, so the page's movie player cannot be run")
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        player = re.search(r"\n      var _movieObserver = null, _movieSeen = new Map\(\);\n"
+                           r"      function wireMovie\([\s\S]*?\n      \}\n", page)
+        self.assertIsNotNone(player, "no wireMovie()")
+        script = ("const MfsTurn = require(process.argv[1]);"
+                  "const [source, movies, ms, pause] = JSON.parse(require('fs').readFileSync(0));"
+                  "let queue = [];"
+                  "const window = {}, requestAnimationFrame = f => { queue.push(f); return queue.length; };"
+                  "const wireMovie = new Function('MfsTurn', 'window', 'requestAnimationFrame',"
+                  " source + '; return wireMovie;')(MfsTurn, window, requestAnimationFrame);"
+                  "process.stdout.write(JSON.stringify(movies.map(movie => {"
+                  "  queue = [];"
+                  "  const played = [], play = { addEventListener(_, f) { this.click = f; } };"
+                  "  const drawing = { isConnected: true, closest: () => ({ querySelector: () => play }) };"
+                  "  wireMovie(drawing, movie, k => played.push(k), () => {});"
+                  "  let pressed = 0;"
+                  "  for (let now = 1000; now <= 1000 + ms; now += 1000 / 60) {"
+                  "    if (pause && pressed < 2 && now - 1000 >= pause[0] + pressed * pause[1]) { play.click(); pressed++; }"
+                  "    const due = queue; queue = []; due.forEach(f => f(now));"
+                  "  }"
+                  "  return played;"
+                  "})));")
+        movies = [{"seconds": m["seconds"], "frames": [{"value": f["value"]} for f in m["frames"]]} for m in movies]
+        run = subprocess.run(["node", "-e", script, str(build.ROOT / "MFS" / "assets" / "turn.js")],
+                             input=json.dumps([player.group(0), movies, ms, pause]), capture_output=True, text=True,
+                             timeout=120)
+        self.assertEqual(run.returncode, 0, run.stderr[-2000:])
+        return json.loads(run.stdout)
+
+    def test_the_page_itself_plays_every_movie_forward_then_back(self):
+        # The path a reader's movie takes, wireMovie() in the page asking MfsTurn.movieFrame() at
+        # every picture, for every movie the files hold and not only the frames the rule names: a
+        # movie that played once and started again would hand its figure its first frame straight
+        # after its last.
+        movies = {key: v["movie"] for key, v in self.movies().items()}
+        self.assertEqual(set(movies), set(self.MOVIES))
+        ms = 3 * 1000 * max(m["seconds"] for m in movies.values()) + 2000
+        stood = 4321
+        straight = self.frames_played(list(movies.values()), ms)
+        shorter = self.frames_played(list(movies.values()), ms - stood)
+        paused = self.frames_played(list(movies.values()), ms, [3210, stood])
+        for (name, movie), played, short, held in zip(movies.items(), straight, shorter, paused):
+            n = len(movie["frames"])
+            up, down = list(range(n)), list(range(n - 2, 0, -1))
+            # It starts on its first frame, so the first it is handed is the second, and in three
+            # passes it is handed every frame on the way up, down and up again.
+            self.assertEqual(played, (up + down + up + down)[1:len(played) + 1], str(name))
+            self.assertGreaterEqual(len(played), 3 * (n - 1), str(name))
+            # Paused, it takes up where it stopped, so it loses the time it stood and no more.
+            self.assertEqual(held, played[:len(held)], str(name))
+            self.assertLessEqual(abs(len(held) - len(short)), 1, str(name))
+        # Every figure with a movie is wired to that one player, and nothing else in the page or
+        # the player keeps time for a movie.
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        self.assertEqual(re.findall(r"if \(movie\) (\w+)\(", page), ["wireMovie"])
+        self.assertEqual(len(re.findall(r"\bwireMovie\(", page)), 2, "the page plays a movie some other way")
+        player = (build.ROOT / "MFS" / "assets" / "turn.js").read_text(encoding="utf-8")
+        for clock in ("requestAnimationFrame", "setInterval", "setTimeout", "performance.now", "Date.now"):
+            self.assertNotIn(clock, player, "MfsTurn keeps time of its own")
+
     def test_the_page_plays_a_movie_and_holds_it_still_for_a_reader_who_asks(self):
         page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
         player = re.search(r"function wireMovie\([\s\S]*?\n      \}\n", page)
