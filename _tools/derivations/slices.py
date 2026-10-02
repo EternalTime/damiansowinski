@@ -1403,6 +1403,32 @@ def _btz(sign=0):
     return [Mark(m, [np.column_stack([sign * btz_rstar(r), r])])]
 
 
+def bathtub_shift(r):
+    """How far the Kerr-like chart's time runs ahead of the laboratory's for the drain the
+    diagrams draw, A = -1 and c = 1: T = t - ln(r^2 - 1)/2, from dT = dt + A r dr/(c^2r^2 - A^2)."""
+    r = np.asarray(r, dtype=float)
+    return -0.5 * np.log(r * r - 1)
+
+
+def _bathtub(system):
+    """The two moments of the draining bathtub on a plane of time and r. The laboratory's t = 0,
+    the flat plane, is a line of constant t in the laboratory chart and the curve T = -ln(r^2 - 1)/2
+    in the Kerr-like chart, outside the horizon; the Kerr-like chart's T = 0, the catenoid, is a line
+    of constant T there and the curve t = ln(r^2 - 1)/2 in the laboratory chart. Each curve runs
+    off toward the horizon, so its points crowd there."""
+    plane, = moments("draining_bathtub", "plane")
+    funnel, = moments("draining_bathtub", "funnel")
+    lo, hi = plane.reach("laboratory", "r")
+    flo, fhi = funnel.reach("kerr_like", "r")
+    if system == "laboratory":
+        r = near(flo, fhi)
+        return [Mark(plane, along(0.0, lo, hi)),
+                Mark(funnel, [np.column_stack([-bathtub_shift(r), r])], label="$T = 0$")]
+    r = near(flo, hi)
+    return [Mark(plane, [np.column_stack([bathtub_shift(r), r])]),
+            Mark(funnel, along(0.0, flo, fhi), label="$T = 0$")]
+
+
 def sads_rstar(r):
     """Schwarzschild-anti-de Sitter's tortoise coordinate at r_s = 2 and L = 1, where 1/f =
     r/((r - 1)(r^2 + r + 2)), as the Eddington-Finkelstein charts fix it, vanishing at r = 0:
@@ -2136,6 +2162,8 @@ FLAT = {
     ("bondi_sachs", "compactified", "equator"): _bondi_sphere(inverse=True),
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),
+    ("draining_bathtub", "laboratory", "drain"): lambda: _bathtub("laboratory"),
+    ("draining_bathtub", "kerr_like", "exterior"): lambda: _bathtub("kerr_like"),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
     ("btz", "eddington_finkelstein_outgoing", "static"): lambda: _btz(-1),
     ("reissner_nordstrom_de_sitter", "static", "radial"): lambda: _rnds("static"),
@@ -2988,6 +3016,8 @@ HIDDEN = {
     ("tippett_tsang", "interior", "tx"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("tippett_tsang", "rindler", "plane"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",
+    ("draining_bathtub", "laboratory", "spring"): "the spring, A > 0, another spacetime than the drain whose moments are embedded",
+    ("draining_bathtub", "vortex_filament", "drain"): "the vortex filament of four dimensions, another spacetime than the drain in the plane whose moments are embedded",
     ("btz", "stationary", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_outgoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
@@ -3793,6 +3823,20 @@ def checks():
     miss = max(abs(complex((pulled - g_x).subs({xx: a, thx: c})[i, j])) for a, c in zip(
         rng.uniform(0.2, 4, 20), rng.uniform(0.2, 2.9, 20)) for i in range(4) for j in range(4))
     report("NHEK: x = r_0^2/r pulls the Poincare chart back onto the inverse radius one", miss, 1e-10)
+    # The draining bathtub: t = T + ln(r^2 - 1)/2 and theta = phi + sqrt(3) ln((r^2 - 1)/r^2)/2, the map
+    # of Berti, Cardoso and Lemos's (16) integrated at A = -1 and B = sqrt 3, pulls the laboratory chart
+    # back onto the Kerr-like one in every slot.
+    drain = {"A": -1, "B": "sqrt(3)"}
+    g_lab, (tl, rl, thl) = metric("draining_bathtub", "laboratory", drain)
+    g_kl, (Tk, rk, phk) = metric("draining_bathtub", "kerr_like", drain)
+    image = [Tk + sp.log(rk ** 2 - 1) / 2, rk, phk + sp.sqrt(3) * sp.log((rk ** 2 - 1) / rk ** 2) / 2]
+    J = sp.Matrix(3, 3, lambda i, j: sp.diff(image[i], (Tk, rk, phk)[j]))
+    pulled = J.T * g_lab.subs(dict(zip((tl, rl, thl), image)), simultaneous=True) * J
+    miss = max(abs(complex((pulled - g_kl).subs(rk, a)[i, j])) for a in rng.uniform(1.05, 5, 20)
+               for i in range(3) for j in range(3))
+    report("Draining bathtub: t = T + ln(r^2 - 1)/2 pulls the laboratory chart back onto the Kerr-like one", miss, 1e-10)
+    miss = float(np.max(np.abs(bathtub_shift(np.array([1.5, 2.0, 4.0])) + 0.5 * np.log(np.array([1.25, 3.0, 15.0])))))
+    report("Draining bathtub: the laboratory's t = 0 is T = -ln(r^2 - 1)/2", miss, 1e-14)
     return failures
 
 

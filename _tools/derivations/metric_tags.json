@@ -3174,6 +3174,84 @@
   ],
   "sphere": null
  },
+ "draining_bathtub/kerr_like": {
+  "stamp": "892d2dbd70de5b0c",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "T",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "draining_bathtub/laboratory": {
+  "stamp": "4dbdbd5f655041fe",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\theta",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "draining_bathtub/vortex_filament": {
+  "stamp": "1a61a0f122a5a05f",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\theta",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "eguchi_hanson/eguchi_hanson": {
   "stamp": "d1e5685f3f1e7525",
   "relations": {},

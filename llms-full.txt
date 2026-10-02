@@ -655,6 +655,18 @@ Two Kerr black holes on one axis of symmetry, the stationary vacuum solution Die
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/double_kerr.json
 - chart Weyl-Lewis-Papapetrou: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -f\left(c\,dt - \omega\,d\phi\right)^2 + \dfrac{1}{f}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
 
+### The Draining Bathtub
+
+The spacetime that sound travels through in a fluid that swirls as it runs down a drain. Sound cannot stand still against the current inside $r = \sqrt{A^2 + B^2}/c$, an ergoregion, and cannot move outward inside $r = |A|/c$, a horizon, so the vortex is a rotating black hole for sound. It solves no field equation of gravity, and it has been built in a water tank.
+
+- id: `draining_bathtub`
+- tags: analogue gravity, acoustic black hole, acoustic metric, dumb hole, sound, fluid flow, vortex, black hole, white hole, rotating, rotating black hole, ergoregion, ergosphere, horizon, event horizon, superradiance, Hawking radiation, Painlevé-Gullstrand, laboratory experiment, no field equations, curvature singularity, circularly symmetric, axisymmetric, stationary, three-dimensional, four-dimensional, Lorentzian, idealized model
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/draining_bathtub.json
+- chart Laboratory: coordinates $(t, r, \theta)$, $$ds^2 = -c^2dt^2 + \left(dr - \dfrac{A}{r}dt\right)^2 + \left(r\,d\theta - \dfrac{B}{r}dt\right)^2$$
+- chart Kerr-like: coordinates $(T, r, \phi)$, $$ds^2 = -\left(1 - \dfrac{A^2 + B^2}{c^2r^2}\right)c^2dT^2 + \dfrac{dr^2}{1 - \dfrac{A^2}{c^2r^2}} - 2B\,dT\,d\phi + r^2d\phi^2$$
+- chart Vortex Filament: coordinates $(t, r, \theta, z)$, $$ds^2 = -c^2dt^2 + \left(dr - \dfrac{A}{r}dt\right)^2 + \left(r\,d\theta - \dfrac{B}{r}dt\right)^2 + dz^2$$
+
 ### Eguchi-Hanson Space
 
 A space of four dimensions with no time in it, the gravitational instanton Tohru Eguchi and Andrew Hanson found in 1978: a solution of Einstein's vacuum equations with Riemannian signature and self dual curvature. Space closes on a 2-sphere of radius $a/2$, the bolt, and far away it is flat space with every point identified with its opposite.

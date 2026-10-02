@@ -1,5 +1,5 @@
 {
-  "version": "b94bb502908510f0",
+  "version": "d8cfc811e1f04d06",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -26926,6 +26926,163 @@
         "eprint": "0802.0530",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.77.064003"
+      }
+    },
+    "visser1998": {
+      "type": "article",
+      "fields": {
+        "title": "Acoustic black holes: horizons, ergospheres and {Hawking} radiation",
+        "author": "Visser, Matt",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "6",
+        "pages": "1767--1791",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/6/024",
+        "eprint": "gr-qc/9712010",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/15/6/024"
+      }
+    },
+    "unruh1981": {
+      "type": "article",
+      "fields": {
+        "title": "Experimental Black-Hole Evaporation?",
+        "author": "Unruh, W. G.",
+        "journal": "Physical Review Letters",
+        "volume": "46",
+        "number": "21",
+        "pages": "1351--1353",
+        "year": "1981",
+        "doi": "10.1103/PhysRevLett.46.1351",
+        "url": "https://doi.org/10.1103/PhysRevLett.46.1351"
+      }
+    },
+    "unruh1995": {
+      "type": "article",
+      "fields": {
+        "title": "Sonic analogue of black holes and the effects of high frequencies on black hole evaporation",
+        "author": "Unruh, W. G.",
+        "journal": "Physical Review D",
+        "volume": "51",
+        "number": "6",
+        "pages": "2827--2838",
+        "year": "1995",
+        "doi": "10.1103/PhysRevD.51.2827",
+        "eprint": "gr-qc/9409008",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.51.2827"
+      }
+    },
+    "barcelo2005": {
+      "type": "article",
+      "fields": {
+        "title": "Analogue Gravity",
+        "author": "Barcel\\'o, Carlos and Liberati, Stefano and Visser, Matt",
+        "journal": "Living Reviews in Relativity",
+        "volume": "8",
+        "number": "1",
+        "pages": "12",
+        "year": "2005",
+        "doi": "10.12942/lrr-2005-12",
+        "eprint": "gr-qc/0505065",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.12942/lrr-2005-12"
+      }
+    },
+    "schutzhold2002": {
+      "type": "article",
+      "fields": {
+        "title": "Gravity wave analogues of black holes",
+        "author": "Sch\\\"utzhold, Ralf and Unruh, William G.",
+        "journal": "Physical Review D",
+        "volume": "66",
+        "number": "4",
+        "pages": "044019",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.66.044019",
+        "eprint": "gr-qc/0205099",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.66.044019"
+      }
+    },
+    "basak2003": {
+      "type": "article",
+      "fields": {
+        "title": "`Superresonance' from a rotating acoustic black hole",
+        "author": "Basak, Soumen and Majumdar, Parthasarathi",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "20",
+        "number": "18",
+        "pages": "3907--3913",
+        "year": "2003",
+        "doi": "10.1088/0264-9381/20/18/304",
+        "eprint": "gr-qc/0203059",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/20/18/304"
+      }
+    },
+    "berti2004": {
+      "type": "article",
+      "fields": {
+        "title": "Quasinormal modes and classical wave propagation in analogue black holes",
+        "author": "Berti, Emanuele and Cardoso, Vitor and Lemos, Jos\\'e P. S.",
+        "journal": "Physical Review D",
+        "volume": "70",
+        "number": "12",
+        "pages": "124006",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.70.124006",
+        "eprint": "gr-qc/0408099",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.70.124006"
+      }
+    },
+    "barcelo2004": {
+      "type": "article",
+      "fields": {
+        "title": "Causal structure of analogue spacetimes",
+        "author": "Barcel\\'o, Carlos and Liberati, Stefano and Sonego, Sebastiano and Visser, Matt",
+        "journal": "New Journal of Physics",
+        "volume": "6",
+        "pages": "186",
+        "year": "2004",
+        "doi": "10.1088/1367-2630/6/1/186",
+        "eprint": "gr-qc/0408022",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1367-2630/6/1/186"
+      }
+    },
+    "weinfurtner2011": {
+      "type": "article",
+      "fields": {
+        "title": "Measurement of Stimulated {Hawking} Emission in an Analogue System",
+        "author": "Weinfurtner, Silke and Tedford, Edmund W. and Penrice, Matthew C. J. and Unruh, William G. and Lawrence, Gregory A.",
+        "journal": "Physical Review Letters",
+        "volume": "106",
+        "number": "2",
+        "pages": "021302",
+        "year": "2011",
+        "doi": "10.1103/PhysRevLett.106.021302",
+        "eprint": "1008.1911",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.106.021302"
+      }
+    },
+    "torres2017": {
+      "type": "article",
+      "fields": {
+        "title": "Rotational superradiant scattering in a vortex flow",
+        "author": "Torres, Theo and Patrick, Sam and Coutant, Antonin and Richartz, Maur\\'icio and Tedford, Edmund W. and Weinfurtner, Silke",
+        "journal": "Nature Physics",
+        "volume": "13",
+        "number": "9",
+        "pages": "833--836",
+        "year": "2017",
+        "doi": "10.1038/nphys4151",
+        "eprint": "1612.06180",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1038/nphys4151"
       }
     }
   }
