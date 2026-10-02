@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 151,
+  "count": 152,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -3998,6 +3998,11 @@
           "id": "cremmer_scherk",
           "kind": "family",
           "text": "A sphere held open by a monopole's gauge field in six dimensions, with a cosmological constant chosen so that the other four dimensions are flat where Bertotti and Robinson's two are an anti-de Sitter space [horvath1977]."
+        },
+        {
+          "id": "string_bh_three_four_charges",
+          "kind": "limit_source",
+          "text": "The extreme black holes of string theory end in this throat, in the limit toward the horizon. Strominger and Vafa's hole of five dimensions has the same throat with a 3-sphere [strominger1996]."
         }
       ],
       "references": [
@@ -4026,7 +4031,8 @@
         "emparan2000",
         "podolskybelan2004",
         "ortaggio2002direct",
-        "horvath1977"
+        "horvath1977",
+        "strominger1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -11928,6 +11934,11 @@
           "id": "brans_dicke_sphere",
           "kind": "family",
           "text": "The dilaton's ancestor. Brans and Dicke put a scalar field beside the metric in 1961, and the gravity of bosonic string theory at low energy is their theory with $\\omega = -1$ [bransdicke1961, faraoni2016]."
+        },
+        {
+          "id": "string_bh_three_four_charges",
+          "kind": "generalisation",
+          "text": "The dilaton black hole is two equal charges out of four. With all four present the extreme hole has a horizon with an area [cvetic1996static, cvetic1996dyonic]."
         }
       ],
       "references": [
@@ -11950,7 +11961,9 @@
         "duff1994",
         "horowitz2012",
         "bransdicke1961",
-        "faraoni2016"
+        "faraoni2016",
+        "cvetic1996static",
+        "cvetic1996dyonic"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -21218,6 +21231,11 @@
           "id": "aichelburg_sexl",
           "kind": "family",
           "text": "The electric hole at the speed of light, $r_s = 0$ with $q$ held fixed, is a plane fronted wave in five dimensions with the profile $q/r$, the counterpart there of Aichelburg and Sexl's shock [horowitz2012]."
+        },
+        {
+          "id": "string_bh_three_four_charges",
+          "kind": "generalisation",
+          "text": "The Einstein metric of the Kaluza-Klein black hole is one charge out of four. String theory's hole of four dimensions has a harmonic function for each [cvetic1996static]."
         }
       ],
       "references": [
@@ -21235,7 +21253,8 @@
         "larsen2000",
         "emparan2006",
         "hovdebo2006",
-        "gibbons1988"
+        "gibbons1988",
+        "cvetic1996static"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_black_hole.json",
@@ -28815,6 +28834,11 @@
           "id": "bonnor_charged_dust",
           "kind": "generalisation",
           "text": "Their metric with matter in it. Dust whose charge density equals its mass density is a source for $U$, and a ball of it can lie as near its own horizon as one likes [bonnor1975, lemos2004]."
+        },
+        {
+          "id": "string_bh_three_four_charges",
+          "kind": "family",
+          "text": "The same recipe with four harmonic functions under one square root. With the four charges equal it is a single hole of Majumdar and Papapetrou again [cvetic1996dyonic]."
         }
       ],
       "references": [
@@ -28850,7 +28874,8 @@
         "emparan2000",
         "arnowitt1960",
         "bonnor1975",
-        "lemos2004"
+        "lemos2004",
+        "cvetic1996dyonic"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -33078,6 +33103,11 @@
           "id": "belinski_zakharov",
           "kind": "family",
           "text": "Pomeransky derived the hole of five dimensions as two solitons, by Belinski and Zakharov's inverse scattering method [pomeransky2006]."
+        },
+        {
+          "id": "string_bh_three_four_charges",
+          "kind": "family",
+          "text": "Two ways of dressing Tangherlini's hole of five dimensions: spin here, three charges there. Cvetič and Youm's rotating solution has both at once [cvetic1996rotating]."
         }
       ],
       "references": [
@@ -33099,7 +33129,8 @@
         "murata2008",
         "grossperry1983",
         "elvang2007",
-        "pomeransky2006"
+        "pomeransky2006",
+        "cvetic1996rotating"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/myers_perry.json",
@@ -38959,6 +38990,11 @@
           "id": "bonnor_charged_dust",
           "kind": "composite",
           "text": "A star of charged dust at rest, with the extremal field, $r_q = r_s/2$, outside it. Its surface can lie as near the horizon as one likes, and the redshift of its centre is then as large as one likes [bonnor1975]."
+        },
+        {
+          "id": "string_bh_three_four_charges",
+          "kind": "generalisation",
+          "text": "Reissner and Nordström's charge split into four kinds, each with a harmonic function of its own. With the four charges equal it is this black hole again [horowitz1996four]."
         }
       ],
       "references": [
@@ -39003,7 +39039,8 @@
         "gibbonsrasheed1995",
         "arnowitt1960",
         "krasinski2012",
-        "bonnor1975"
+        "bonnor1975",
+        "horowitz1996four"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -42811,6 +42848,11 @@
           "id": "black_saturn",
           "kind": "family",
           "text": "A black ring in balance around a spinning hole. With the two turning against each other it can match Tangherlini's hole in mass and in having no angular momentum, so in five dimensions those two numbers do not fix the black hole [elvang2007]."
+        },
+        {
+          "id": "string_bh_three_four_charges",
+          "kind": "generalisation",
+          "text": "Tangherlini's hole of five dimensions given three charges. Each charge rescales its time and its space by a power of a harmonic function of its own [horowitz1996]."
         }
       ],
       "references": [
@@ -42834,7 +42876,8 @@
         "emparan2013",
         "grossperry1983",
         "boulware1985",
-        "elvang2007"
+        "elvang2007",
+        "horowitz1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tangherlini.json",
@@ -46709,6 +46752,543 @@
           ],
           "ricci_scalar": "R = \\dfrac{2r^8 - 2r^8\\left(\\partial_l r\\right)^2 - 4r^9\\,\\partial_l^2 r + 18a^2\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2 - 18a^2\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 128a^2\\,r^7\\,b_0 + 448a^2\\,r^7\\,b_0\\cos^2\\theta - 64a^2\\,r^7\\,b_0\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 160a^2\\,r^8\\,b_0\\,\\partial_l^2 r\\,\\cos^2\\theta + 1152a^4\\,r^3\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 1152a^4\\,r^3\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 4608a^4\\,r^6\\,b_0^2\\cos^4\\theta - 1536a^4\\,r^6\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 1536a^4\\,r^7\\,b_0^2\\,\\partial_l^2 r\\,\\cos^4\\theta + 27648a^6\\,r^2\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 27648a^6\\,r^2\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 32768a^6\\,r^5\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 8192a^6\\,r^6\\,b_0^3\\,\\partial_l^2 r\\,\\cos^6\\theta + 294912a^8\\,r\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 294912a^8\\,r\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 262144a^8\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 131072a^8\\,r^5\\,b_0^4\\,\\partial_l^2 r\\,\\cos^8\\theta + 1179648a^{10}\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 1179648a^{10}\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta}{r^6\\left(r + 16a^2b_0\\cos^2\\theta\\right)^4}",
           "kretschmann": "K = \\dfrac{15307263442944a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{20}\\theta - 30614526885888a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta + 15307263442944a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 309237645312a^{18}\\,r^6\\,b_0^{12}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{18}\\theta - 309237645312a^{18}\\,r^6\\,b_0^{12}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 2783138807808a^{18}\\,r^5\\,b_0^{12}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{18}\\theta + 2783138807808a^{18}\\,r^5\\,b_0^{12}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 4638564679680a^{18}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta - 4638564679680a^{18}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 7653631721472a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta - 15307263442944a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 7653631721472a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 17179869184a^{16}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 68719476736a^{16}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 68719476736a^{16}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 154618822656a^{16}\\,r^7\\,b_0^{11}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 154618822656a^{16}\\,r^7\\,b_0^{11}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 1275605286912a^{16}\\,r^6\\,b_0^{11}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 1275605286912a^{16}\\,r^6\\,b_0^{11}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 1990717341696a^{16}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta - 1990717341696a^{16}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 1674231939072a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta - 3348463878144a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 1674231939072a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 6442450944a^{14}\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 25769803776a^{14}\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 25769803776a^{14}\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 33822867456a^{14}\\,r^8\\,b_0^{10}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 33822867456a^{14}\\,r^8\\,b_0^{10}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 253671505920a^{14}\\,r^7\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 253671505920a^{14}\\,r^7\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta - 24159191040a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{14}\\theta + 368427663360a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 21743271936a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta - 368427663360a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta - 4831838208a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 209278992384a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta - 418557984768a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 209278992384a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 1140850688a^{12}\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 4026531840a^{12}\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta - 536870912a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta + 4160749568a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 536870912a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 4227858432a^{12}\\,r^9\\,b_0^9\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 4227858432a^{12}\\,r^9\\,b_0^9\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 28538044416a^{12}\\,r^8\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta + 28538044416a^{12}\\,r^8\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta - 7700742144a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta + 38277218304a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 6190792704a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta - 38277218304a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta - 1207959552a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 16349921280a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta - 32699842560a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 16349921280a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 134217728a^{10}\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 335544320a^{10}\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta - 150994944a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 369098752a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 184549376a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 330301440a^{10}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 330301440a^{10}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 1981808640a^{10}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta + 1981808640a^{10}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta - 1009778688a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 2430074880a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 698351616a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 2430074880a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta - 113246208a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 817496064a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta - 1634992128a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 817496064a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 11796480a^8\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 15728640a^8\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta - 21495808a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 19136512a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 11796480a^8\\,r^{12}\\,b_0^4\\cos^8\\theta + 25165824a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 9437184a^8\\,r^{12}\\,b_0^4\\cos^6\\theta + 6291456a^8\\,r^{12}\\,b_0^4\\cos^4\\theta + 16515072a^8\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 16515072a^8\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 86704128a^8\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta + 86704128a^8\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta - 69599232a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 95846400a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 38928384a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 95846400a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta - 4718592a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 25546752a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta - 51093504a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 25546752a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 753664a^6\\,r^{15}\\,b_0^3\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 393216a^6\\,r^{14}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta - 1703936a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 589824a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 1179648a^6\\,r^{13}\\,b_0^3\\cos^6\\theta + 1572864a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 327680a^6\\,r^{13}\\,b_0^3\\cos^4\\theta - 262144a^6\\,r^{13}\\,b_0^3\\cos^2\\theta + 516096a^6\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 516096a^6\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 2322432a^6\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta + 2322432a^6\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta - 2654208a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 2267136a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 1069056a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 2267136a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta - 73728a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 456192a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta - 912384a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 456192a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 31744a^4\\,r^{16}\\,b_0^2\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 4096a^4\\,r^{15}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta - 69632a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 12288a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 92160a^4\\,r^{14}\\,b_0^2\\cos^4\\theta + 40960a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 45056a^4\\,r^{14}\\,b_0^2\\cos^2\\theta + 8192a^4\\,r^{14}\\,b_0^2 + 9216a^4\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 9216a^4\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 34560a^4\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta + 34560a^4\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^2\\theta - 52992a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 28800a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 11520a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 28800a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 3564a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta - 7128a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 3564a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4 + 768a^2\\,r^{17}\\,b_0\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 1280a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 256a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 1024a^2\\,r^{15}\\,b_0\\cos^2\\theta + 256a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^2 - 256a^2\\,r^{15}\\,b_0 + 72a^2\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 72a^2\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2 - 216a^2\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^2\\theta + 216a^2\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r - 432a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 144a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta - 144a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4 + 8r^{18}\\left(\\partial_l^2 r\\right)^2 - 8r^{16}\\left(\\partial_l r\\right)^2 + 4r^{16}\\left(\\partial_l r\\right)^4 + 4r^{16}}{r^{12}\\left(r + 16a^2b_0\\cos^2\\theta\\right)^8}"
+        }
+      ]
+    },
+    {
+      "id": "string_bh_three_four_charges",
+      "name": "Black Holes of String Theory with Three and Four Charges",
+      "short_name": "Three and Four Charge Black Holes",
+      "description": "The black holes of string theory whose entropy was first counted from their microscopic states: in five dimensions with three charges, Strominger and Vafa's hole and the family of Horowitz, Maldacena, and Strominger around it, and in four dimensions with four charges, the hole of Cvetič and Youm. Each charge enters the metric through a harmonic function of its own, and the horizon of the extreme hole has an area only when every charge is present.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "hyperspherical symmetry",
+        "black hole",
+        "charged black hole",
+        "charged",
+        "string theory",
+        "black hole entropy",
+        "Bekenstein-Hawking entropy",
+        "black hole thermodynamics",
+        "brane",
+        "Strominger-Vafa",
+        "harmonic function",
+        "extremal",
+        "supersymmetric",
+        "dilaton",
+        "scalar field",
+        "electric charge",
+        "mass",
+        "horizon",
+        "event horizon",
+        "inner horizon",
+        "degenerate horizon",
+        "throat",
+        "curvature singularity",
+        "coordinate singularity",
+        "maximal extension",
+        "causal structure",
+        "asymptotically flat",
+        "higher dimensions",
+        "five-dimensional",
+        "four-dimensional",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit and take every metric to be the Einstein metric, with the Ricci tensor the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The radius $r_0$ and the charge radii $r_i$ are lengths.",
+      "related": [
+        {
+          "id": "tangherlini",
+          "kind": "special_case",
+          "text": "The hole of five dimensions with no charge, $r_1 = r_2 = r_3 = 0$. Horowitz, Maldacena, and Strominger built the charged family by rescaling its time and its space by powers of $H_1H_2H_3$ [horowitz1996]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "The hole of four dimensions with its four charges equal. The scalar fields are then constant, and in the areal radius $r + r_1$ the metric is Reissner and Nordström's [horowitz1996four]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "special_case",
+          "text": "The hole of four dimensions with two of its charges equal and the other two absent [cvetic1996static]."
+        },
+        {
+          "id": "kaluza_klein_black_hole",
+          "kind": "special_case",
+          "text": "The hole of four dimensions with one charge alone, in its Einstein metric [cvetic1996static]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "One harmonic function where this spacetime has four. With its four charges equal the extreme hole of four dimensions is a single hole of Majumdar and Papapetrou, an extreme Reissner-Nordström black hole [cvetic1996dyonic]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "limit",
+          "text": "The throat of the extreme hole of four dimensions, the limit $r \\to 0$ with $t$ rescaled. Its 2-spheres stop shrinking at the radius $(r_1r_2r_3r_4)^{1/4}$, and Strominger and Vafa found the same throat with a 3-sphere in five dimensions [strominger1996]."
+        },
+        {
+          "id": "myers_perry",
+          "kind": "family",
+          "text": "Two things done to Tangherlini's hole of five dimensions: Myers and Perry set it spinning, and string theory gives it three charges. Cvetič and Youm's rotating solution has the charges and both spins at once [cvetic1996rotating]."
+        }
+      ],
+      "references": [
+        "strominger1996",
+        "horowitz1996four",
+        "bekenstein1973",
+        "hawking1975",
+        "polchinski1995",
+        "callan1996",
+        "tseytlin1996extreme",
+        "tseytlin1996harmonic",
+        "horowitz1996",
+        "cvetic1996rotating",
+        "cvetic1996dyonic",
+        "maldacena1996",
+        "johnson1996",
+        "cvetic1996static",
+        "strominger1998"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_bh_three_four_charges.json",
+      "charts": [
+        {
+          "id": "five_charges",
+          "name": "Three Charges, Five Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(the event horizon)}",
+            "r = 0 \\;\\text{(the inner horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Radius of the event horizon in the coordinate $r$, a length; the hole is extreme at $r_0 = 0$"
+            },
+            {
+              "symbol": "r_1",
+              "description": "Charge radius of the first charge, $r_1 = r_0\\sinh\\alpha_1$ for a boost $\\alpha_1$, a length"
+            },
+            {
+              "symbol": "r_2",
+              "description": "Charge radius of the second charge, $r_2 = r_0\\sinh\\alpha_2$ for a boost $\\alpha_2$, a length"
+            },
+            {
+              "symbol": "r_3",
+              "description": "Charge radius of the third charge, $r_3 = r_0\\sinh\\alpha_3$ for a boost $\\alpha_3$, a length"
+            },
+            {
+              "symbol": "f = 1 - \\dfrac{r_0^2}{r^2}",
+              "description": "Metric function of the hole with no charge, zero on the event horizon"
+            },
+            {
+              "symbol": "H_1 = 1 + \\dfrac{r_1^2}{r^2}",
+              "description": "Harmonic function of the first charge, a pure number"
+            },
+            {
+              "symbol": "H_2 = 1 + \\dfrac{r_2^2}{r^2}",
+              "description": "Harmonic function of the second charge, a pure number"
+            },
+            {
+              "symbol": "H_3 = 1 + \\dfrac{r_3^2}{r^2}",
+              "description": "Harmonic function of the third charge, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\psi, \\theta, \\phi)$ in $D = 5$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$. The mass is $M = \\pi c^2\\left(3r_0^2 + 2r_1^2 + 2r_2^2 + 2r_3^2\\right)/(8G)$, with $G$ Newton's constant in five dimensions.",
+          "line_element": "ds^2 = -\\left(H_1\\,H_2\\,H_3\\right)^{-2/3}f\\,c^2dt^2 + \\left(H_1\\,H_2\\,H_3\\right)^{1/3}\\left(\\dfrac{dr^2}{f} + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{f}{H_1^{2/3}\\,H_2^{2/3}\\,H_3^{2/3}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}}{f}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6H_1^2\\,H_2^2\\,H_3^2 - 2f\\,H_1^2\\,H_2^2\\,H_3 - 2H_1^2\\,H_2^2\\,H_3 - 2f\\,H_1^2\\,H_2^2 - 2f\\,H_1^2\\,H_2\\,H_3^2 - 2H_1^2\\,H_2\\,H_3^2 + 4f\\,H_1^2\\,H_2\\,H_3 - 2f\\,H_1^2\\,H_3^2 - 2f\\,H_1\\,H_2^2\\,H_3^2 - 2H_1\\,H_2^2\\,H_3^2 + 4f\\,H_1\\,H_2^2\\,H_3 + 4f\\,H_1\\,H_2\\,H_3^2 - 2f\\,H_2^2\\,H_3^2}{3r^2\\,H_1^{7/3}\\,H_2^{7/3}\\,H_3^{7/3}}",
+          "kretschmann": "K = \\dfrac{2052H_1^4\\,H_2^4\\,H_3^4 - 2016f\\,H_1^4\\,H_2^4\\,H_3^3 - 2016H_1^4\\,H_2^4\\,H_3^3 + 660f^2\\,H_1^4\\,H_2^4\\,H_3^2 + 2976f\\,H_1^4\\,H_2^4\\,H_3^2 + 660H_1^4\\,H_2^4\\,H_3^2 - 1200f^2\\,H_1^4\\,H_2^4\\,H_3 - 1200f\\,H_1^4\\,H_2^4\\,H_3 + 596f^2\\,H_1^4\\,H_2^4 - 2016f\\,H_1^4\\,H_2^3\\,H_3^4 - 2016H_1^4\\,H_2^3\\,H_3^4 + 1320f^2\\,H_1^4\\,H_2^3\\,H_3^3 + 3648f\\,H_1^4\\,H_2^3\\,H_3^3 + 1320H_1^4\\,H_2^3\\,H_3^3 - 1968f^2\\,H_1^4\\,H_2^3\\,H_3^2 - 1968f\\,H_1^4\\,H_2^3\\,H_3^2 + 656f^2\\,H_1^4\\,H_2^3\\,H_3 + 660f^2\\,H_1^4\\,H_2^2\\,H_3^4 + 2976f\\,H_1^4\\,H_2^2\\,H_3^4 + 660H_1^4\\,H_2^2\\,H_3^4 - 1968f^2\\,H_1^4\\,H_2^2\\,H_3^3 - 1968f\\,H_1^4\\,H_2^2\\,H_3^3 + 1464f^2\\,H_1^4\\,H_2^2\\,H_3^2 - 1200f^2\\,H_1^4\\,H_2\\,H_3^4 - 1200f\\,H_1^4\\,H_2\\,H_3^4 + 656f^2\\,H_1^4\\,H_2\\,H_3^3 + 596f^2\\,H_1^4\\,H_3^4 - 2016f\\,H_1^3\\,H_2^4\\,H_3^4 - 2016H_1^3\\,H_2^4\\,H_3^4 + 1320f^2\\,H_1^3\\,H_2^4\\,H_3^3 + 3648f\\,H_1^3\\,H_2^4\\,H_3^3 + 1320H_1^3\\,H_2^4\\,H_3^3 - 1968f^2\\,H_1^3\\,H_2^4\\,H_3^2 - 1968f\\,H_1^3\\,H_2^4\\,H_3^2 + 656f^2\\,H_1^3\\,H_2^4\\,H_3 + 1320f^2\\,H_1^3\\,H_2^3\\,H_3^4 + 3648f\\,H_1^3\\,H_2^3\\,H_3^4 + 1320H_1^3\\,H_2^3\\,H_3^4 - 2304f^2\\,H_1^3\\,H_2^3\\,H_3^3 - 2304f\\,H_1^3\\,H_2^3\\,H_3^3 + 1200f^2\\,H_1^3\\,H_2^3\\,H_3^2 - 1968f^2\\,H_1^3\\,H_2^2\\,H_3^4 - 1968f\\,H_1^3\\,H_2^2\\,H_3^4 + 1200f^2\\,H_1^3\\,H_2^2\\,H_3^3 + 656f^2\\,H_1^3\\,H_2\\,H_3^4 + 660f^2\\,H_1^2\\,H_2^4\\,H_3^4 + 2976f\\,H_1^2\\,H_2^4\\,H_3^4 + 660H_1^2\\,H_2^4\\,H_3^4 - 1968f^2\\,H_1^2\\,H_2^4\\,H_3^3 - 1968f\\,H_1^2\\,H_2^4\\,H_3^3 + 1464f^2\\,H_1^2\\,H_2^4\\,H_3^2 - 1968f^2\\,H_1^2\\,H_2^3\\,H_3^4 - 1968f\\,H_1^2\\,H_2^3\\,H_3^4 + 1200f^2\\,H_1^2\\,H_2^3\\,H_3^3 + 1464f^2\\,H_1^2\\,H_2^2\\,H_3^4 - 1200f^2\\,H_1\\,H_2^4\\,H_3^4 - 1200f\\,H_1\\,H_2^4\\,H_3^4 + 656f^2\\,H_1\\,H_2^4\\,H_3^3 + 656f^2\\,H_1\\,H_2^3\\,H_3^4 + 596f^2\\,H_2^4\\,H_3^4}{27r^4\\,H_1^{14/3}\\,H_2^{14/3}\\,H_3^{14/3}}"
+        },
+        {
+          "id": "five_extreme",
+          "name": "Extreme, Three Charges, Five Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_1",
+              "description": "Charge radius of the first charge, a length, with $r_1^2$ proportional to the charge"
+            },
+            {
+              "symbol": "r_2",
+              "description": "Charge radius of the second charge, a length, with $r_2^2$ proportional to the charge"
+            },
+            {
+              "symbol": "r_3",
+              "description": "Charge radius of the third charge, a length, with $r_3^2$ proportional to the charge"
+            },
+            {
+              "symbol": "H_1 = 1 + \\dfrac{r_1^2}{r^2}",
+              "description": "Harmonic function of the first charge, a pure number"
+            },
+            {
+              "symbol": "H_2 = 1 + \\dfrac{r_2^2}{r^2}",
+              "description": "Harmonic function of the second charge, a pure number"
+            },
+            {
+              "symbol": "H_3 = 1 + \\dfrac{r_3^2}{r^2}",
+              "description": "Harmonic function of the third charge, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\psi, \\theta, \\phi)$ in $D = 5$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$. The mass is $M = \\pi c^2\\left(r_1^2 + r_2^2 + r_3^2\\right)/(4G)$, with $G$ Newton's constant in five dimensions.",
+          "line_element": "ds^2 = -\\left(H_1\\,H_2\\,H_3\\right)^{-2/3}c^2dt^2 + \\left(H_1\\,H_2\\,H_3\\right)^{1/3}\\left(dr^2 + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{H_1^{2/3}\\,H_2^{2/3}\\,H_3^{2/3}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6H_1^2\\,H_2^2\\,H_3^2 - 4H_1^2\\,H_2^2\\,H_3 - 2H_1^2\\,H_2^2 - 4H_1^2\\,H_2\\,H_3^2 + 4H_1^2\\,H_2\\,H_3 - 2H_1^2\\,H_3^2 - 4H_1\\,H_2^2\\,H_3^2 + 4H_1\\,H_2^2\\,H_3 + 4H_1\\,H_2\\,H_3^2 - 2H_2^2\\,H_3^2}{3r^2\\,H_1^{7/3}\\,H_2^{7/3}\\,H_3^{7/3}}",
+          "kretschmann": "K = \\dfrac{2052H_1^4\\,H_2^4\\,H_3^4 - 4032H_1^4\\,H_2^4\\,H_3^3 + 4296H_1^4\\,H_2^4\\,H_3^2 - 2400H_1^4\\,H_2^4\\,H_3 + 596H_1^4\\,H_2^4 - 4032H_1^4\\,H_2^3\\,H_3^4 + 6288H_1^4\\,H_2^3\\,H_3^3 - 3936H_1^4\\,H_2^3\\,H_3^2 + 656H_1^4\\,H_2^3\\,H_3 + 4296H_1^4\\,H_2^2\\,H_3^4 - 3936H_1^4\\,H_2^2\\,H_3^3 + 1464H_1^4\\,H_2^2\\,H_3^2 - 2400H_1^4\\,H_2\\,H_3^4 + 656H_1^4\\,H_2\\,H_3^3 + 596H_1^4\\,H_3^4 - 4032H_1^3\\,H_2^4\\,H_3^4 + 6288H_1^3\\,H_2^4\\,H_3^3 - 3936H_1^3\\,H_2^4\\,H_3^2 + 656H_1^3\\,H_2^4\\,H_3 + 6288H_1^3\\,H_2^3\\,H_3^4 - 4608H_1^3\\,H_2^3\\,H_3^3 + 1200H_1^3\\,H_2^3\\,H_3^2 - 3936H_1^3\\,H_2^2\\,H_3^4 + 1200H_1^3\\,H_2^2\\,H_3^3 + 656H_1^3\\,H_2\\,H_3^4 + 4296H_1^2\\,H_2^4\\,H_3^4 - 3936H_1^2\\,H_2^4\\,H_3^3 + 1464H_1^2\\,H_2^4\\,H_3^2 - 3936H_1^2\\,H_2^3\\,H_3^4 + 1200H_1^2\\,H_2^3\\,H_3^3 + 1464H_1^2\\,H_2^2\\,H_3^4 - 2400H_1\\,H_2^4\\,H_3^4 + 656H_1\\,H_2^4\\,H_3^3 + 656H_1\\,H_2^3\\,H_3^4 + 596H_2^4\\,H_3^4}{27r^4\\,H_1^{14/3}\\,H_2^{14/3}\\,H_3^{14/3}}"
+        },
+        {
+          "id": "five_areal",
+          "name": "Equal Charges, Areal Radius, Five Dimensions",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = \\sqrt{r_0^2 + r_q^2} \\;\\text{(the event horizon)}",
+            "\\rho = r_q \\;\\text{(the inner horizon)}",
+            "\\rho = 0 \\;\\text{(singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Radius of the event horizon in the coordinate $r$ of the chart of three charges, a length; the hole is extreme at $r_0 = 0$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Common charge radius of the three equal charges, a length, and the radius of the inner horizon"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\psi, \\theta, \\phi)$ in $D = 5$ for three equal charges, $r_1 = r_2 = r_3 = r_q$, with $\\rho^2 = r^2 + r_q^2$ the areal radius and $t$ carrying dimensions of time. We take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_0^2 + r_q^2}{\\rho^2}\\right)\\left(1 - \\dfrac{r_q^2}{\\rho^2}\\right)c^2dt^2 + \\dfrac{d\\rho^2}{\\left(1 - \\dfrac{r_0^2 + r_q^2}{\\rho^2}\\right)\\left(1 - \\dfrac{r_q^2}{\\rho^2}\\right)} + \\rho^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_0^2 + r_q^2}{\\rho^2}\\right)\\left(1 - \\dfrac{r_q^2}{\\rho^2}\\right)"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\left(1 - \\dfrac{r_0^2 + r_q^2}{\\rho^2}\\right)^{-1}\\left(1 - \\dfrac{r_q^2}{\\rho^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\rho^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2r_q^2\\left(r_0^2 + r_q^2\\right)}{\\rho^6}",
+          "kretschmann": "K = \\dfrac{72\\rho^4\\,r_0^4 + 288\\rho^4\\,r_0^2\\,r_q^2 + 288\\rho^4\\,r_q^4 - 360\\rho^2\\,r_0^4\\,r_q^2 - 1080\\rho^2\\,r_0^2\\,r_q^4 - 720\\rho^2\\,r_q^6 + 508r_0^4\\,r_q^4 + 1016r_0^2\\,r_q^6 + 508r_q^8}{\\rho^{12}}"
+        },
+        {
+          "id": "four_charges",
+          "name": "Four Charges, Four Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(the event horizon)}",
+            "r = 0 \\;\\text{(the inner horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Radius of the event horizon in the coordinate $r$, a length; the hole is extreme at $r_0 = 0$"
+            },
+            {
+              "symbol": "r_1",
+              "description": "Charge radius of the first charge, $r_1 = r_0\\sinh^2\\alpha_1$ for a boost $\\alpha_1$, a length"
+            },
+            {
+              "symbol": "r_2",
+              "description": "Charge radius of the second charge, $r_2 = r_0\\sinh^2\\alpha_2$ for a boost $\\alpha_2$, a length"
+            },
+            {
+              "symbol": "r_3",
+              "description": "Charge radius of the third charge, $r_3 = r_0\\sinh^2\\alpha_3$ for a boost $\\alpha_3$, a length"
+            },
+            {
+              "symbol": "r_4",
+              "description": "Charge radius of the fourth charge, $r_4 = r_0\\sinh^2\\alpha_4$ for a boost $\\alpha_4$, a length"
+            },
+            {
+              "symbol": "f = 1 - \\dfrac{r_0}{r}",
+              "description": "Metric function of the hole with no charge, zero on the event horizon"
+            },
+            {
+              "symbol": "H_1 = 1 + \\dfrac{r_1}{r}",
+              "description": "Harmonic function of the first charge, a pure number"
+            },
+            {
+              "symbol": "H_2 = 1 + \\dfrac{r_2}{r}",
+              "description": "Harmonic function of the second charge, a pure number"
+            },
+            {
+              "symbol": "H_3 = 1 + \\dfrac{r_3}{r}",
+              "description": "Harmonic function of the third charge, a pure number"
+            },
+            {
+              "symbol": "H_4 = 1 + \\dfrac{r_4}{r}",
+              "description": "Harmonic function of the fourth charge, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ in $D = 4$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$. The mass is $M = c^2\\left(2r_0 + r_1 + r_2 + r_3 + r_4\\right)/(4G)$.",
+          "line_element": "ds^2 = -\\dfrac{f\\,c^2dt^2}{\\sqrt{H_1\\,H_2\\,H_3\\,H_4}} + \\sqrt{H_1\\,H_2\\,H_3\\,H_4}\\left(\\dfrac{dr^2}{f} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{f}{\\sqrt{H_1}\\sqrt{H_2}\\sqrt{H_3}\\sqrt{H_4}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\sqrt{H_1}\\sqrt{H_2}\\sqrt{H_3}\\sqrt{H_4}}{f}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,\\sqrt{H_1}\\sqrt{H_2}\\sqrt{H_3}\\sqrt{H_4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,\\sqrt{H_1}\\sqrt{H_2}\\sqrt{H_3}\\sqrt{H_4}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{f\\left(3H_1^2\\,H_2^2\\,H_3^2 - 2H_1^2\\,H_2^2\\,H_3\\,H_4 + 3H_1^2\\,H_2^2\\,H_4^2 - 2H_1^2\\,H_2\\,H_3^2\\,H_4 - 2H_1^2\\,H_2\\,H_3\\,H_4^2 + 3H_1^2\\,H_3^2\\,H_4^2 - 2H_1\\,H_2^2\\,H_3^2\\,H_4 - 2H_1\\,H_2^2\\,H_3\\,H_4^2 - 2H_1\\,H_2\\,H_3^2\\,H_4^2 + 3H_2^2\\,H_3^2\\,H_4^2\\right)}{8r^2\\,H_1^{5/2}\\,H_2^{5/2}\\,H_3^{5/2}\\,H_4^{5/2}}",
+          "kretschmann": "K = \\dfrac{512H_1^4\\,H_2^4\\,H_3^4\\,H_4^4 - 256f\\,H_1^4\\,H_2^4\\,H_3^4\\,H_4^3 - 256H_1^4\\,H_2^4\\,H_3^4\\,H_4^3 + 80f^2\\,H_1^4\\,H_2^4\\,H_3^4\\,H_4^2 + 320f\\,H_1^4\\,H_2^4\\,H_3^4\\,H_4^2 + 80H_1^4\\,H_2^4\\,H_3^4\\,H_4^2 - 136f^2\\,H_1^4\\,H_2^4\\,H_3^4\\,H_4 - 136f\\,H_1^4\\,H_2^4\\,H_3^4\\,H_4 + 71f^2\\,H_1^4\\,H_2^4\\,H_3^4 - 256f\\,H_1^4\\,H_2^4\\,H_3^3\\,H_4^4 - 256H_1^4\\,H_2^4\\,H_3^3\\,H_4^4 + 160f^2\\,H_1^4\\,H_2^4\\,H_3^3\\,H_4^3 + 384f\\,H_1^4\\,H_2^4\\,H_3^3\\,H_4^3 + 160H_1^4\\,H_2^4\\,H_3^3\\,H_4^3 - 216f^2\\,H_1^4\\,H_2^4\\,H_3^3\\,H_4^2 - 216f\\,H_1^4\\,H_2^4\\,H_3^3\\,H_4^2 + 60f^2\\,H_1^4\\,H_2^4\\,H_3^3\\,H_4 + 80f^2\\,H_1^4\\,H_2^4\\,H_3^2\\,H_4^4 + 320f\\,H_1^4\\,H_2^4\\,H_3^2\\,H_4^4 + 80H_1^4\\,H_2^4\\,H_3^2\\,H_4^4 - 216f^2\\,H_1^4\\,H_2^4\\,H_3^2\\,H_4^3 - 216f\\,H_1^4\\,H_2^4\\,H_3^2\\,H_4^3 + 170f^2\\,H_1^4\\,H_2^4\\,H_3^2\\,H_4^2 - 136f^2\\,H_1^4\\,H_2^4\\,H_3\\,H_4^4 - 136f\\,H_1^4\\,H_2^4\\,H_3\\,H_4^4 + 60f^2\\,H_1^4\\,H_2^4\\,H_3\\,H_4^3 + 71f^2\\,H_1^4\\,H_2^4\\,H_4^4 - 256f\\,H_1^4\\,H_2^3\\,H_3^4\\,H_4^4 - 256H_1^4\\,H_2^3\\,H_3^4\\,H_4^4 + 160f^2\\,H_1^4\\,H_2^3\\,H_3^4\\,H_4^3 + 384f\\,H_1^4\\,H_2^3\\,H_3^4\\,H_4^3 + 160H_1^4\\,H_2^3\\,H_3^4\\,H_4^3 - 216f^2\\,H_1^4\\,H_2^3\\,H_3^4\\,H_4^2 - 216f\\,H_1^4\\,H_2^3\\,H_3^4\\,H_4^2 + 60f^2\\,H_1^4\\,H_2^3\\,H_3^4\\,H_4 + 160f^2\\,H_1^4\\,H_2^3\\,H_3^3\\,H_4^4 + 384f\\,H_1^4\\,H_2^3\\,H_3^3\\,H_4^4 + 160H_1^4\\,H_2^3\\,H_3^3\\,H_4^4 - 240f^2\\,H_1^4\\,H_2^3\\,H_3^3\\,H_4^3 - 240f\\,H_1^4\\,H_2^3\\,H_3^3\\,H_4^3 + 116f^2\\,H_1^4\\,H_2^3\\,H_3^3\\,H_4^2 - 216f^2\\,H_1^4\\,H_2^3\\,H_3^2\\,H_4^4 - 216f\\,H_1^4\\,H_2^3\\,H_3^2\\,H_4^4 + 116f^2\\,H_1^4\\,H_2^3\\,H_3^2\\,H_4^3 + 60f^2\\,H_1^4\\,H_2^3\\,H_3\\,H_4^4 + 80f^2\\,H_1^4\\,H_2^2\\,H_3^4\\,H_4^4 + 320f\\,H_1^4\\,H_2^2\\,H_3^4\\,H_4^4 + 80H_1^4\\,H_2^2\\,H_3^4\\,H_4^4 - 216f^2\\,H_1^4\\,H_2^2\\,H_3^4\\,H_4^3 - 216f\\,H_1^4\\,H_2^2\\,H_3^4\\,H_4^3 + 170f^2\\,H_1^4\\,H_2^2\\,H_3^4\\,H_4^2 - 216f^2\\,H_1^4\\,H_2^2\\,H_3^3\\,H_4^4 - 216f\\,H_1^4\\,H_2^2\\,H_3^3\\,H_4^4 + 116f^2\\,H_1^4\\,H_2^2\\,H_3^3\\,H_4^3 + 170f^2\\,H_1^4\\,H_2^2\\,H_3^2\\,H_4^4 - 136f^2\\,H_1^4\\,H_2\\,H_3^4\\,H_4^4 - 136f\\,H_1^4\\,H_2\\,H_3^4\\,H_4^4 + 60f^2\\,H_1^4\\,H_2\\,H_3^4\\,H_4^3 + 60f^2\\,H_1^4\\,H_2\\,H_3^3\\,H_4^4 + 71f^2\\,H_1^4\\,H_3^4\\,H_4^4 - 256f\\,H_1^3\\,H_2^4\\,H_3^4\\,H_4^4 - 256H_1^3\\,H_2^4\\,H_3^4\\,H_4^4 + 160f^2\\,H_1^3\\,H_2^4\\,H_3^4\\,H_4^3 + 384f\\,H_1^3\\,H_2^4\\,H_3^4\\,H_4^3 + 160H_1^3\\,H_2^4\\,H_3^4\\,H_4^3 - 216f^2\\,H_1^3\\,H_2^4\\,H_3^4\\,H_4^2 - 216f\\,H_1^3\\,H_2^4\\,H_3^4\\,H_4^2 + 60f^2\\,H_1^3\\,H_2^4\\,H_3^4\\,H_4 + 160f^2\\,H_1^3\\,H_2^4\\,H_3^3\\,H_4^4 + 384f\\,H_1^3\\,H_2^4\\,H_3^3\\,H_4^4 + 160H_1^3\\,H_2^4\\,H_3^3\\,H_4^4 - 240f^2\\,H_1^3\\,H_2^4\\,H_3^3\\,H_4^3 - 240f\\,H_1^3\\,H_2^4\\,H_3^3\\,H_4^3 + 116f^2\\,H_1^3\\,H_2^4\\,H_3^3\\,H_4^2 - 216f^2\\,H_1^3\\,H_2^4\\,H_3^2\\,H_4^4 - 216f\\,H_1^3\\,H_2^4\\,H_3^2\\,H_4^4 + 116f^2\\,H_1^3\\,H_2^4\\,H_3^2\\,H_4^3 + 60f^2\\,H_1^3\\,H_2^4\\,H_3\\,H_4^4 + 160f^2\\,H_1^3\\,H_2^3\\,H_3^4\\,H_4^4 + 384f\\,H_1^3\\,H_2^3\\,H_3^4\\,H_4^4 + 160H_1^3\\,H_2^3\\,H_3^4\\,H_4^4 - 240f^2\\,H_1^3\\,H_2^3\\,H_3^4\\,H_4^3 - 240f\\,H_1^3\\,H_2^3\\,H_3^4\\,H_4^3 + 116f^2\\,H_1^3\\,H_2^3\\,H_3^4\\,H_4^2 - 240f^2\\,H_1^3\\,H_2^3\\,H_3^3\\,H_4^4 - 240f\\,H_1^3\\,H_2^3\\,H_3^3\\,H_4^4 + 168f^2\\,H_1^3\\,H_2^3\\,H_3^3\\,H_4^3 + 116f^2\\,H_1^3\\,H_2^3\\,H_3^2\\,H_4^4 - 216f^2\\,H_1^3\\,H_2^2\\,H_3^4\\,H_4^4 - 216f\\,H_1^3\\,H_2^2\\,H_3^4\\,H_4^4 + 116f^2\\,H_1^3\\,H_2^2\\,H_3^4\\,H_4^3 + 116f^2\\,H_1^3\\,H_2^2\\,H_3^3\\,H_4^4 + 60f^2\\,H_1^3\\,H_2\\,H_3^4\\,H_4^4 + 80f^2\\,H_1^2\\,H_2^4\\,H_3^4\\,H_4^4 + 320f\\,H_1^2\\,H_2^4\\,H_3^4\\,H_4^4 + 80H_1^2\\,H_2^4\\,H_3^4\\,H_4^4 - 216f^2\\,H_1^2\\,H_2^4\\,H_3^4\\,H_4^3 - 216f\\,H_1^2\\,H_2^4\\,H_3^4\\,H_4^3 + 170f^2\\,H_1^2\\,H_2^4\\,H_3^4\\,H_4^2 - 216f^2\\,H_1^2\\,H_2^4\\,H_3^3\\,H_4^4 - 216f\\,H_1^2\\,H_2^4\\,H_3^3\\,H_4^4 + 116f^2\\,H_1^2\\,H_2^4\\,H_3^3\\,H_4^3 + 170f^2\\,H_1^2\\,H_2^4\\,H_3^2\\,H_4^4 - 216f^2\\,H_1^2\\,H_2^3\\,H_3^4\\,H_4^4 - 216f\\,H_1^2\\,H_2^3\\,H_3^4\\,H_4^4 + 116f^2\\,H_1^2\\,H_2^3\\,H_3^4\\,H_4^3 + 116f^2\\,H_1^2\\,H_2^3\\,H_3^3\\,H_4^4 + 170f^2\\,H_1^2\\,H_2^2\\,H_3^4\\,H_4^4 - 136f^2\\,H_1\\,H_2^4\\,H_3^4\\,H_4^4 - 136f\\,H_1\\,H_2^4\\,H_3^4\\,H_4^4 + 60f^2\\,H_1\\,H_2^4\\,H_3^4\\,H_4^3 + 60f^2\\,H_1\\,H_2^4\\,H_3^3\\,H_4^4 + 60f^2\\,H_1\\,H_2^3\\,H_3^4\\,H_4^4 + 71f^2\\,H_2^4\\,H_3^4\\,H_4^4}{64r^4\\,H_1^5\\,H_2^5\\,H_3^5\\,H_4^5}"
+        },
+        {
+          "id": "four_extreme",
+          "name": "Extreme, Four Charges, Four Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_1",
+              "description": "Charge radius of the first charge, a length proportional to the charge"
+            },
+            {
+              "symbol": "r_2",
+              "description": "Charge radius of the second charge, a length proportional to the charge"
+            },
+            {
+              "symbol": "r_3",
+              "description": "Charge radius of the third charge, a length proportional to the charge"
+            },
+            {
+              "symbol": "r_4",
+              "description": "Charge radius of the fourth charge, a length proportional to the charge"
+            },
+            {
+              "symbol": "H_1 = 1 + \\dfrac{r_1}{r}",
+              "description": "Harmonic function of the first charge, a pure number"
+            },
+            {
+              "symbol": "H_2 = 1 + \\dfrac{r_2}{r}",
+              "description": "Harmonic function of the second charge, a pure number"
+            },
+            {
+              "symbol": "H_3 = 1 + \\dfrac{r_3}{r}",
+              "description": "Harmonic function of the third charge, a pure number"
+            },
+            {
+              "symbol": "H_4 = 1 + \\dfrac{r_4}{r}",
+              "description": "Harmonic function of the fourth charge, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ in $D = 4$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$. The mass is $M = c^2\\left(r_1 + r_2 + r_3 + r_4\\right)/(4G)$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{\\sqrt{H_1\\,H_2\\,H_3\\,H_4}} + \\sqrt{H_1\\,H_2\\,H_3\\,H_4}\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{\\sqrt{H_1}\\sqrt{H_2}\\sqrt{H_3}\\sqrt{H_4}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\sqrt{H_1}\\sqrt{H_2}\\sqrt{H_3}\\sqrt{H_4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,\\sqrt{H_1}\\sqrt{H_2}\\sqrt{H_3}\\sqrt{H_4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,\\sqrt{H_1}\\sqrt{H_2}\\sqrt{H_3}\\sqrt{H_4}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3H_1^2\\,H_2^2\\,H_3^2 - 2H_1^2\\,H_2^2\\,H_3\\,H_4 + 3H_1^2\\,H_2^2\\,H_4^2 - 2H_1^2\\,H_2\\,H_3^2\\,H_4 - 2H_1^2\\,H_2\\,H_3\\,H_4^2 + 3H_1^2\\,H_3^2\\,H_4^2 - 2H_1\\,H_2^2\\,H_3^2\\,H_4 - 2H_1\\,H_2^2\\,H_3\\,H_4^2 - 2H_1\\,H_2\\,H_3^2\\,H_4^2 + 3H_2^2\\,H_3^2\\,H_4^2}{8r^2\\,H_1^{5/2}\\,H_2^{5/2}\\,H_3^{5/2}\\,H_4^{5/2}}",
+          "kretschmann": "K = \\dfrac{512H_1^4\\,H_2^4\\,H_3^4\\,H_4^4 - 512H_1^4\\,H_2^4\\,H_3^4\\,H_4^3 + 480H_1^4\\,H_2^4\\,H_3^4\\,H_4^2 - 272H_1^4\\,H_2^4\\,H_3^4\\,H_4 + 71H_1^4\\,H_2^4\\,H_3^4 - 512H_1^4\\,H_2^4\\,H_3^3\\,H_4^4 + 704H_1^4\\,H_2^4\\,H_3^3\\,H_4^3 - 432H_1^4\\,H_2^4\\,H_3^3\\,H_4^2 + 60H_1^4\\,H_2^4\\,H_3^3\\,H_4 + 480H_1^4\\,H_2^4\\,H_3^2\\,H_4^4 - 432H_1^4\\,H_2^4\\,H_3^2\\,H_4^3 + 170H_1^4\\,H_2^4\\,H_3^2\\,H_4^2 - 272H_1^4\\,H_2^4\\,H_3\\,H_4^4 + 60H_1^4\\,H_2^4\\,H_3\\,H_4^3 + 71H_1^4\\,H_2^4\\,H_4^4 - 512H_1^4\\,H_2^3\\,H_3^4\\,H_4^4 + 704H_1^4\\,H_2^3\\,H_3^4\\,H_4^3 - 432H_1^4\\,H_2^3\\,H_3^4\\,H_4^2 + 60H_1^4\\,H_2^3\\,H_3^4\\,H_4 + 704H_1^4\\,H_2^3\\,H_3^3\\,H_4^4 - 480H_1^4\\,H_2^3\\,H_3^3\\,H_4^3 + 116H_1^4\\,H_2^3\\,H_3^3\\,H_4^2 - 432H_1^4\\,H_2^3\\,H_3^2\\,H_4^4 + 116H_1^4\\,H_2^3\\,H_3^2\\,H_4^3 + 60H_1^4\\,H_2^3\\,H_3\\,H_4^4 + 480H_1^4\\,H_2^2\\,H_3^4\\,H_4^4 - 432H_1^4\\,H_2^2\\,H_3^4\\,H_4^3 + 170H_1^4\\,H_2^2\\,H_3^4\\,H_4^2 - 432H_1^4\\,H_2^2\\,H_3^3\\,H_4^4 + 116H_1^4\\,H_2^2\\,H_3^3\\,H_4^3 + 170H_1^4\\,H_2^2\\,H_3^2\\,H_4^4 - 272H_1^4\\,H_2\\,H_3^4\\,H_4^4 + 60H_1^4\\,H_2\\,H_3^4\\,H_4^3 + 60H_1^4\\,H_2\\,H_3^3\\,H_4^4 + 71H_1^4\\,H_3^4\\,H_4^4 - 512H_1^3\\,H_2^4\\,H_3^4\\,H_4^4 + 704H_1^3\\,H_2^4\\,H_3^4\\,H_4^3 - 432H_1^3\\,H_2^4\\,H_3^4\\,H_4^2 + 60H_1^3\\,H_2^4\\,H_3^4\\,H_4 + 704H_1^3\\,H_2^4\\,H_3^3\\,H_4^4 - 480H_1^3\\,H_2^4\\,H_3^3\\,H_4^3 + 116H_1^3\\,H_2^4\\,H_3^3\\,H_4^2 - 432H_1^3\\,H_2^4\\,H_3^2\\,H_4^4 + 116H_1^3\\,H_2^4\\,H_3^2\\,H_4^3 + 60H_1^3\\,H_2^4\\,H_3\\,H_4^4 + 704H_1^3\\,H_2^3\\,H_3^4\\,H_4^4 - 480H_1^3\\,H_2^3\\,H_3^4\\,H_4^3 + 116H_1^3\\,H_2^3\\,H_3^4\\,H_4^2 - 480H_1^3\\,H_2^3\\,H_3^3\\,H_4^4 + 168H_1^3\\,H_2^3\\,H_3^3\\,H_4^3 + 116H_1^3\\,H_2^3\\,H_3^2\\,H_4^4 - 432H_1^3\\,H_2^2\\,H_3^4\\,H_4^4 + 116H_1^3\\,H_2^2\\,H_3^4\\,H_4^3 + 116H_1^3\\,H_2^2\\,H_3^3\\,H_4^4 + 60H_1^3\\,H_2\\,H_3^4\\,H_4^4 + 480H_1^2\\,H_2^4\\,H_3^4\\,H_4^4 - 432H_1^2\\,H_2^4\\,H_3^4\\,H_4^3 + 170H_1^2\\,H_2^4\\,H_3^4\\,H_4^2 - 432H_1^2\\,H_2^4\\,H_3^3\\,H_4^4 + 116H_1^2\\,H_2^4\\,H_3^3\\,H_4^3 + 170H_1^2\\,H_2^4\\,H_3^2\\,H_4^4 - 432H_1^2\\,H_2^3\\,H_3^4\\,H_4^4 + 116H_1^2\\,H_2^3\\,H_3^4\\,H_4^3 + 116H_1^2\\,H_2^3\\,H_3^3\\,H_4^4 + 170H_1^2\\,H_2^2\\,H_3^4\\,H_4^4 - 272H_1\\,H_2^4\\,H_3^4\\,H_4^4 + 60H_1\\,H_2^4\\,H_3^4\\,H_4^3 + 60H_1\\,H_2^4\\,H_3^3\\,H_4^4 + 60H_1\\,H_2^3\\,H_3^4\\,H_4^4 + 71H_2^4\\,H_3^4\\,H_4^4}{64r^4\\,H_1^5\\,H_2^5\\,H_3^5\\,H_4^5}"
         }
       ]
     },
