@@ -722,6 +722,44 @@ DK_OFF_RODS = "(z**2 - (2 - sqrt(6)/3)**2)*(z**2 - (2 + sqrt(6)/3)**2)"
 DK_SOLVES = (("t", "t"), ("\\rho", "\\rho"), ("z", "z"), ("\\phi", "\\phi"))
 
 
+# Every drawing of the Morgan-Morgan discs is the first disc of the family at m = a/5, in units
+# of the disc's radius a: the counter-rotating dust moves at 0.94 c at the rim, and it would
+# reach c there at m/a = 2/(3 pi) = 0.2122.
+MM = {"m": "1/5", "a": 1}
+
+
+def _morgan_morgan_weyl():
+    """psi and gamma of the first disc at a = 1 and m = 1/5 as strings in Weyl's rho and z,
+    through xi and eta^2 = 1 - rho^2/(a^2(1 + xi^2)), which are exact on the axis and in the
+    plane z = 0: on the disc xi = 0 and outside it eta = 0."""
+    xi = "sqrt((sqrt((rho**2 + z**2 - 1)**2 + 4*z**2) + rho**2 + z**2 - 1)/2)"
+    e2 = f"(1 - rho**2/(1 + ({xi})**2))"
+    al = f"(pi/2 - atan({xi}))"
+    psi = ("-Rational(3, 20)*((1 + E - X**2 + 3*X**2*E)*A - X*(3*E - 1))")
+    gamma = ("-Rational(9, 400)*(1 - E)*((1 + X**2)*(9*X**2*E + E - X**2 - 1)*A**2"
+             " - 2*X*(9*X**2*E + 7*E - X**2 + 1)*A + 9*X**2*E + 4*E - X**2 + 4)")
+    put = lambda text: text.replace("E", e2).replace("A", al).replace("X", f"({xi})")  # noqa: E731
+    return {"psi": put(psi), "gamma": put(gamma)}
+
+
+def _morgan_morgan_plane():
+    """psi and gamma of the first disc at a = 1 and m = 1/5 on the plane z = 0, as strings in rho
+    alone: on the disc, where xi = 0 and eta^2 = 1 - rho^2, and outside it, where eta = 0 and
+    xi = X = sqrt(rho^2 - 1). Both are continuous at the rim, with their first derivatives."""
+    X, A = "sqrt(rho**2 - 1)", "(pi/2 - atan(sqrt(rho**2 - 1)))"
+    psi_in = "-Rational(3, 40)*pi*(2 - rho**2)"
+    gamma_in = "-Rational(9, 1600)*rho**2*(16*(2 - rho**2) - pi**2*rho**2)"
+    psi_out = f"-Rational(3, 20)*((1 - {X}**2)*{A} + {X})"
+    gamma_out = f"-Rational(9, 400)*(4 - {X}**2 - 2*{X}*(1 - {X}**2)*{A} - (1 + {X}**2)**2*{A}**2)"
+    return {"psi": f"Piecewise(({psi_in}, rho < 1), ({psi_out}, True))",
+            "gamma": f"Piecewise(({gamma_in}, rho < 1), ({gamma_out}, True))"}
+
+
+MM_INPUT = ("The first disc of Morgan and Morgan's family at $m = a/5$, with $m = GM/c^2$ for a disc of mass $M$ and "
+            "radius $a$: $\\psi$ and $\\gamma$ are the two functions the oblate spheroidal chart defines, written in "
+            "$\\rho$ and $z$.")
+
+
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
 OS_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0], "origin": "reference"}
@@ -2748,6 +2786,23 @@ DIAGRAMS = [
     Diagram("double_kerr", "weyl", "midplane", "$t$ and $\\rho$ in the plane $z = 0$", ("t", "\\rho"), (0, 6, -3, 3),
             "$\\rho/m$", "$ct/m$", {}, {"phi": "0", "z": "0"}, kretschmann=False,
             functions=_double_kerr_pair(), solves=DK_SOLVES, input=DK_INPUT),
+    # The first Morgan-Morgan disc on its two totally geodesic planes. Weyl's chart draws the
+    # axis through the centre of the disc and the plane z = 0, disc and vacuum together; the oblate
+    # spheroidal chart draws the axis above the disc, the plane outside the rim, and the disc itself.
+    Diagram("morgan_morgan", "weyl", "axis", "$t$ and $z$ on the axis", ("t", "z"), (-3, 3, -3, 3),
+            "$z/a$", "$ct/a$", {}, {"rho": "0", "phi": "0"}, families=SIDEWAYS, kretschmann=False,
+            functions=_morgan_morgan_weyl(), input=MM_INPUT,
+            lines=(("shell", "r", "0", "the disc, $z = 0$"),)),
+    Diagram("morgan_morgan", "weyl", "plane", "$t$ and $\\rho$ in the plane $z = 0$", ("t", "\\rho"), (0, 4, -2, 2),
+            "$\\rho/a$", "$ct/a$", {}, {"phi": "0", "z": "0"}, kretschmann=False,
+            functions=_morgan_morgan_weyl(), input=MM_INPUT,
+            lines=(("shell", "r", "1", "the rim of the disc, $\\rho = a$"),)),
+    Diagram("morgan_morgan", "oblate_spheroidal", "axis", "$t$ and $\\xi$ on the axis", ("t", "\\xi"), (0, 4, -2, 2),
+            "$\\xi$", "$ct/a$", MM, {"eta": "1", "phi": "0"}),
+    Diagram("morgan_morgan", "oblate_spheroidal", "plane", "$t$ and $\\xi$ in the plane $\\eta = 0$", ("t", "\\xi"),
+            (0, 4, -2, 2), "$\\xi$", "$ct/a$", MM, {"eta": "0", "phi": "0"}),
+    Diagram("morgan_morgan", "oblate_spheroidal", "disc", "$t$ and $\\eta$ on the disc", ("t", "\\eta"),
+            (0, 1, -0.5, 0.5), "$\\eta$", "$ct/a$", MM, {"xi": "0", "phi": "0"}),
     # Zipoy and Voorhees's metric on its two totally geodesic planes, the axis and the equatorial
     # plane, in each chart, for the oblate q = 1 and the prolate q = -1/2. The prolate equator's
     # curvature diverges only as the 3/2 power, so its rows declare the edge singular.
@@ -6470,6 +6525,49 @@ CAPTIONS = {
         "The cones are narrowest on the axis, where $f = 5/41$ and $e^{\\gamma} = 3/4$, and open toward the cones of flat "
         "space far from the holes.",
     ],
+    ("morgan_morgan", "weyl", "axis"): [
+        "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of the first Morgan-Morgan disc ($m = a/5$), crossed by "
+        "the disc at its centre, $z = 0$. The metric on it is $-e^{2\\psi}c^2dt^2 + e^{-2\\psi}dz^2$, so a ray has "
+        "$c\\,dt/dz = \\pm e^{-2\\psi}$, and every rotation about the axis fixes the plane, so the rays are null geodesics.",
+        "The cones are narrowest at the centre of the disc, where $\\psi = -3\\pi m/4a$ and $c\\,dt/dz = \\pm 2.57$, "
+        "and their width has a corner there, since $\\partial_z\\psi$ jumps by $6m/a^2$ across the disc. Light from "
+        "the centre reaches infinity with the redshift $e^{3\\pi m/4a} - 1 = 0.60$.",
+    ],
+    ("morgan_morgan", "weyl", "plane"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of the first Morgan-Morgan disc ($m = a/5$), the disc on "
+        "$\\rho \\le a$ and vacuum beyond its rim. A ray has $c\\,dt/d\\rho = \\pm e^{\\gamma - 2\\psi}$, and the "
+        "reflection $z \\to -z$ fixes the plane, so the rays are null geodesics.",
+        "On the disc $\\psi = -(3\\pi m/8a)(2 - \\rho^2/a^2)$, and each stream of dust circles the axis with the speed "
+        "$V = c\\sqrt{k\\rho^2/(1 - k\\rho^2)}$ for $k = 3\\pi m/4a^3$, which is $0.94\\,c$ at the rim. The Kretschmann "
+        "scalar is finite on the disc and diverges at the rim as the inverse of the distance from it.",
+    ],
+    ("morgan_morgan", "oblate_spheroidal", "axis"): [
+        "The plane of $t$ and $\\xi$ ($\\eta = 1$, $\\phi = 0$) of the first Morgan-Morgan disc ($m = a/5$), the axis "
+        "above the disc, where $z = a\\xi$. The metric on it is $-e^{2\\psi}c^2dt^2 + a^2e^{-2\\psi}d\\xi^2$, so a ray "
+        "has $c\\,dt/d\\xi = \\pm a\\,e^{-2\\psi}$, and every rotation about the axis fixes the plane, so the rays are "
+        "null geodesics.",
+        "The cones are narrowest at the centre of the disc, $\\xi = 0$, where $\\psi = -3\\pi m/4a$ and "
+        "$c\\,dt/d\\xi = \\pm 2.57\\,a$, and open toward the cones of flat space as $\\xi$ grows. The Kretschmann scalar "
+        "is finite on the whole axis.",
+    ],
+    ("morgan_morgan", "oblate_spheroidal", "plane"): [
+        "The plane of $t$ and $\\xi$ ($\\eta = 0$, $\\phi = 0$) of the first Morgan-Morgan disc ($m = a/5$), the plane "
+        "of the disc outside its rim, where $\\rho = a\\sqrt{1 + \\xi^2}$. A ray has "
+        "$c\\,dt/d\\xi = \\pm a\\,\\xi\\,e^{\\gamma - 2\\psi}/\\sqrt{1 + \\xi^2}$, and the reflection $\\eta \\to -\\eta$ "
+        "fixes the plane, so the rays are null geodesics.",
+        "The rim is the edge $\\xi = 0$, where the Kretschmann scalar diverges as $1/\\xi^2$. The cones open flat "
+        "toward it because $\\rho - a$ grows as $a\\xi^2/2$ there, so that $g_{\\xi\\xi}$ vanishes on the rim while "
+        "the proper distance to it stays finite.",
+    ],
+    ("morgan_morgan", "oblate_spheroidal", "disc"): [
+        "The plane of $t$ and $\\eta$ ($\\xi = 0$, $\\phi = 0$) of the first Morgan-Morgan disc ($m = a/5$), the disc "
+        "itself from its rim, $\\eta = 0$, to its centre, $\\eta = 1$, where $\\rho = a\\sqrt{1 - \\eta^2}$. A ray has "
+        "$c\\,dt/d\\eta = \\pm a\\,\\eta\\,e^{\\gamma - 2\\psi}/\\sqrt{1 - \\eta^2}$, and the reflection through the disc "
+        "fixes the plane, so the rays are null geodesics.",
+        "On the disc $\\psi = -(3\\pi m/8a)(1 + \\eta^2)$ and the surface density of the dust is proportional to "
+        "$\\eta$. The Kretschmann scalar diverges at the rim as $1/\\eta^2$. The cones open flat toward the rim and "
+        "close toward the centre, where $\\eta$ is stationary in $\\rho$.",
+    ],
     **{("zipoy_voorhees", system, view): text for system in ("spherical", "prolate_spheroidal")
        for view, text in _zipoy_voorhees_captions(system).items()},
     ("senovilla", "cylindrical", "radial"): [
@@ -6948,8 +7046,10 @@ def load(metric_id, system_id):
     metric = json.loads((build.METRICS_DIR / f"{metric_id}.json").read_text(encoding="utf-8"))
     entry = next(e for e in metric["coordinates"] if e["id"] == system_id)
     declared = vm.DIMENSIONS[(metric_id, system_id)]
+    # A name the checker holds as a function, vm.HELD, is held here too, so that a published value
+    # which writes its derivatives is read; every drawing writes the definition back in.
     reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry.get("parameters", [])],
-                       vm.time_coordinates(declared, entry["coords"]))
+                       vm.time_coordinates(declared, entry["coords"]), held=vm.HELD.get((metric_id, system_id), ()))
     return metric, entry, reader
 
 
@@ -9194,6 +9294,44 @@ def _double_kerr_star(plane):
     return lambda x: np.vectorize(one, otypes=[float])(np.asarray(x, float))
 
 
+def _morgan_morgan_numbers(xi, eta):
+    """psi and gamma of the first Morgan-Morgan disc at a = 1 and m = 1/5 as floats, from the
+    closed forms in xi and eta, which no drawing of Weyl's chart uses."""
+    m, al, e2, x2 = 0.2, math.pi / 2 - math.atan(xi), eta * eta, xi * xi
+    psi = -0.75 * m * ((1 + e2 - x2 + 3 * x2 * e2) * al - xi * (3 * e2 - 1))
+    gamma = -9 * m * m * (1 - e2) / 16 * ((1 + x2) * (9 * x2 * e2 + e2 - x2 - 1) * al * al
+                                          - 2 * xi * (9 * x2 * e2 + 7 * e2 - x2 + 1) * al + 9 * x2 * e2 + 4 * e2 - x2 + 4)
+    return psi, gamma
+
+
+def _morgan_morgan_star(view):
+    """The tortoise coordinate of the first Morgan-Morgan disc along a view's spatial coordinate,
+    the integral of sqrt(-g_rr/g_tt) from the coordinate's zero: e^{-2 psi} along the axis, in z
+    or in xi, e^{gamma - 2 psi} along rho in the plane z = 0, and that times
+    xi/sqrt(1 + xi^2) or eta/sqrt(1 - eta^2) along xi outside the rim or eta on the disc."""
+    def slope(x):
+        if view == "weyl_axis":
+            psi, gamma = _morgan_morgan_numbers(abs(x), 1.0)
+            return math.exp(gamma - 2 * psi)
+        if view == "weyl_plane":
+            psi, gamma = (_morgan_morgan_numbers(0.0, math.sqrt(1 - x * x)) if x < 1
+                          else _morgan_morgan_numbers(math.sqrt(x * x - 1), 0.0))
+            return math.exp(gamma - 2 * psi)
+        if view == "axis":
+            psi, gamma = _morgan_morgan_numbers(x, 1.0)
+            return math.exp(gamma - 2 * psi)
+        if view == "plane":
+            psi, gamma = _morgan_morgan_numbers(x, 0.0)
+            return x * math.exp(gamma - 2 * psi) / math.sqrt(1 + x * x)
+        psi, gamma = _morgan_morgan_numbers(0.0, x)
+        return x * math.exp(gamma - 2 * psi) / math.sqrt(1 - x * x)
+
+    def one(x):
+        points = [1.0] if view == "weyl_plane" and x > 1 else None
+        return quad(slope, 0.0, x, epsabs=1e-12, epsrel=1e-12, limit=200, points=points)[0]
+    return lambda x: np.vectorize(one, otypes=[float])(np.asarray(x, float))
+
+
 def _double_kerr_off_poles(t, z):
     """Away from the rods and from within a twentieth of m of a pole, where the tortoise
     coordinate diverges."""
@@ -10066,6 +10204,13 @@ CLOSED_FORMS = {
                                       lambda t, z: t - _double_kerr_star("axis")(z), _double_kerr_off_poles),
     ("double_kerr", "weyl", "midplane"): (lambda t, r: t + _double_kerr_star("midplane")(r),
                                           lambda t, r: t - _double_kerr_star("midplane")(r), None),
+    ("morgan_morgan", "weyl", "axis"): (lambda t, z: t + _morgan_morgan_star("weyl_axis")(z),
+                                        lambda t, z: t - _morgan_morgan_star("weyl_axis")(z), None),
+    ("morgan_morgan", "weyl", "plane"): (lambda t, r: t + _morgan_morgan_star("weyl_plane")(r),
+                                         lambda t, r: t - _morgan_morgan_star("weyl_plane")(r), None),
+    **{("morgan_morgan", "oblate_spheroidal", view): (lambda t, x, v=view: t + _morgan_morgan_star(v)(x),
+                                                       lambda t, x, v=view: t - _morgan_morgan_star(v)(x), mask)
+       for view, mask in (("axis", None), ("plane", None), ("disc", lambda t, e: e < 0.999))},
     **{("curzon_chazy", system, "axis"): (lambda t, z: t + _curzon_axis(z), lambda t, z: t - _curzon_axis(z),
                                           lambda t, z: z > 0.35) for system in ("weyl", "spherical")},
     **{("curzon_chazy", system, "equator"): (lambda t, r: t + _curzon_plane(r), lambda t, r: t - _curzon_plane(r),

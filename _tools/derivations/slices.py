@@ -1462,6 +1462,13 @@ def _double_kerr_axis():
     return [Mark(m, points=[(0.0, 0.0)])]
 
 
+def _morgan_morgan_centre():
+    """The plane z = 0 of the first Morgan-Morgan disc, at t = 0, meets the axis at one event, the
+    centre of the disc: z = 0 in Weyl's chart and xi = 0 in the oblate spheroidal one."""
+    m = moments("morgan_morgan", "plane", label="$t = 0$, the centre of the disc")[0]
+    return [Mark(m, points=[(0.0, 0.0)])]
+
+
 KT_LABEL = "$c\\tau = -8m/3$"     # the moment of one of Kastor and Traschen's holes that is embedded, H tau = 1/2
 KT_TAU = -8 / 3
 
@@ -1995,6 +2002,14 @@ FLAT = {
     # The plane z = 0 midway between the two holes at t = 0, and the one event where it meets the axis.
     ("double_kerr", "weyl", "midplane"): lambda: one("double_kerr", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("double_kerr", "weyl", "axis"): _double_kerr_axis,
+    # The plane z = 0 of the first Morgan-Morgan disc at t = 0: Weyl's rho from the axis out, the
+    # oblate spheroidal chart's eta across the disc and its xi = sqrt(rho^2/a^2 - 1) outside the rim.
+    ("morgan_morgan", "weyl", "plane"): lambda: one("morgan_morgan", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
+    ("morgan_morgan", "weyl", "axis"): _morgan_morgan_centre,
+    ("morgan_morgan", "oblate_spheroidal", "axis"): _morgan_morgan_centre,
+    ("morgan_morgan", "oblate_spheroidal", "disc"): lambda: one("morgan_morgan", lambda m: along(0.0, 0.0, 1.0)),
+    ("morgan_morgan", "oblate_spheroidal", "plane"): lambda: one(
+        "morgan_morgan", lambda m: along(0.0, 0.0, math.sqrt(m.reach("weyl", "\\rho")[1] ** 2 - 1))),
     # The plane z = 0 at t = 0, where the spherical chart's r is Weyl's rho.
     # Bonnor's dust cloud: the moment t = 0 of the plane z = 0 outside the null circle, along the
     # radius of each equatorial view and the whole line t = 0 of the circle at 3a/2.

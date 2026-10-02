@@ -14378,6 +14378,206 @@ def bartnik_mckinnon_check(chart, system):
 
 
 CHARTS["bartnik_mckinnon"] = [lambda s=s: bartnik_mckinnon(s) for s in BARTNIK_MCKINNON_CHARTS]
+# -- The Morgan-Morgan discs -------------------------------------------------------------
+
+MM_WEYL_PARAMETERS = ["\\psi = \\psi(\\rho,z)", "\\gamma = \\gamma(\\rho,z)"]
+MM_ALPHA = "\\alpha = \\dfrac{\\pi}{2} - \\arctan(\\xi)"
+MM_PSI = ("\\psi = -\\dfrac{3m}{4a}\\left(\\left(1 + \\eta^2 - \\xi^2 + 3\\xi^2\\eta^2\\right)\\alpha"
+          " - \\xi\\left(3\\eta^2 - 1\\right)\\right)")
+MM_GAMMA = ("\\gamma = -\\dfrac{9m^2\\left(1 - \\eta^2\\right)}{16a^2}\\left(\\left(1 + \\xi^2\\right)"
+            "\\left(9\\xi^2\\eta^2 + \\eta^2 - \\xi^2 - 1\\right)\\alpha^2"
+            " - 2\\xi\\left(9\\xi^2\\eta^2 + 7\\eta^2 - \\xi^2 + 1\\right)\\alpha"
+            " + 9\\xi^2\\eta^2 + 4\\eta^2 - \\xi^2 + 4\\right)")
+MM_OBLATE_PARAMETERS = ["m", "a", MM_ALPHA, MM_PSI, MM_GAMMA]
+MM_HELD = ("psi", "gamma")
+
+
+def morgan_morgan(system):
+    """Morgan and Morgan's static discs of counter-rotating dust, members of Weyl's class,
+    ds^2 = -e^{2 psi} c^2 dt^2 + e^{-2 psi}(e^{2 gamma}(drho^2 + dz^2) + rho^2 dphi^2).
+
+    Weyl's chart leaves psi and gamma free functions of rho and z, as the double Kerr chart
+    leaves its three, and no component there assumes a field equation; its parameters state
+    the field equations and the family. The oblate spheroidal chart, rho = a sqrt((1 + xi^2)
+    (1 - eta^2)), z = a xi eta, in which the disc is the surface xi = 0, is the first disc of
+    the family in closed form: psi and gamma are names the chart defines, held as functions of
+    xi and eta while the tensors are built (vm.HELD), and `reduce` writes every derivative of
+    gamma by its quadrature and the second derivative of psi along xi by Laplace's equation,
+    which leaves psi's other derivatives with no relation among them, so the Ricci tensor is
+    exactly zero. morgan_morgan_check holds each chart to its source, and morgan_morgan.md
+    beside this file is the derivation."""
+    D = sp.Derivative
+    pretty = lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp")  # noqa: E731
+    if system == "weyl":
+        coords = ["t", "\\rho", "\\phi", "z"]
+
+        def line(c2):
+            return (f"ds^2 = -e^{{2\\psi}}{c2}dt^2 + e^{{-2\\psi}}\\left(e^{{2\\gamma}}\\left(d\\rho^2 + dz^2\\right)"
+                    " + \\rho^2d\\phi^2\\right)")
+        probe = vm.Reader(coords, MM_WEYL_PARAMETERS, ())
+        x, y = probe.symbol["\\rho"], probe.symbol["z"]
+        psi, gam = probe.parameters["psi"], probe.parameters["gamma"]
+        parameters, name, reduce = MM_WEYL_PARAMETERS, "Weyl", None
+        domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "z \\in (-\\infty, \\infty)", "z = 0,\\; \\rho \\le a \\;\\text{(the disc)}",
+                   "\\gamma = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"]
+        tail = [x]
+    else:
+        coords = ["t", "\\xi", "\\eta", "\\phi"]
+
+        def line(c2):
+            return (f"ds^2 = -e^{{2\\psi}}{c2}dt^2 + a^2e^{{-2\\psi}}\\left(e^{{2\\gamma}}\\left(\\xi^2 + \\eta^2\\right)"
+                    "\\left(\\dfrac{d\\xi^2}{1 + \\xi^2} + \\dfrac{d\\eta^2}{1 - \\eta^2}\\right)"
+                    " + \\left(1 + \\xi^2\\right)\\left(1 - \\eta^2\\right)d\\phi^2\\right)")
+        probe = vm.Reader(coords, MM_OBLATE_PARAMETERS, (), held=MM_HELD)
+        x, y = probe.symbol["\\xi"], probe.symbol["\\eta"]
+        psi, gam = probe.parameters["psi"], probe.parameters["gamma"]
+        parameters, name = MM_OBLATE_PARAMETERS, "Oblate Spheroidal"
+        reduce = morgan_morgan_reduce(x, y, psi, gam)
+        domains = ["t \\in (-\\infty, \\infty)", "\\xi \\in [0, \\infty)", "\\eta \\in [-1, 1]", "\\phi \\in [0, 2\\pi)",
+                   "\\xi = 0 \\;\\text{(the disc)}"]
+        tail = [probe.parameters["a"], x, y]
+    lead = [gam, psi]
+    for g in (gam, psi):
+        lead += [D(g, x), D(g, y)]
+    for g in (gam, psi):
+        lead += [D(g, (x, 2)), D(g, x, y), D(g, (y, 2))]
+    lead += tail
+    printer = {"lead": lead, "factors": lead}
+    if reduce:
+        # Each value of the first disc is a polynomial in psi's derivatives, grouped by them, and
+        # every coefficient is written in the three sums the line element has.
+        derivatives = [D(psi, (x, 2)), D(psi, x, y), D(psi, (y, 2)), D(psi, x), D(psi, y)]
+        named = [(sp.Symbol("MMH"), 1 - y ** 2, "1 - \\eta^2"), (sp.Symbol("MMX"), 1 + x ** 2, "1 + \\xi^2"),
+                 (sp.Symbol("MMS"), x ** 2 + y ** 2, "\\xi^2 + \\eta^2")]
+        factors = named_factors(named, [(1 + y, 1 - y, named[0][0])])
+        pretty = lambda value: sp.powsimp(factors(sp.sympify(value)), combine="exp")  # noqa: E731
+
+        def collect(base, p):
+            e, forward, back = cp.symbolize(sp.expand(base))
+            poly = sp.Poly(e, *[forward.get(g, g) for g in derivatives])
+            if poly.total_degree() == 0:
+                return p.sum_of(base)
+            terms = []
+            for monomial, coeff in sorted(poly.terms(), key=lambda mc: tuple(-k for k in mc[0])):
+                c, rest = factors(coeff.as_expr().xreplace(back)).as_coeff_Mul()
+                terms.append((c, rest * sp.Mul(*[g ** k for g, k in zip(derivatives, monomial)])))
+            return cp.Sum(terms)
+        printer.update({"collect": collect, "named": {q: text for q, _, text in named},
+                        "factors": [q for q, _, _ in named] + lead})
+    return {
+        "metric_id": "morgan_morgan",
+        "system": {"id": "weyl" if system == "weyl" else "oblate_spheroidal", "name": name, "coords": coords,
+                   "domains": domains, "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "reduce": reduce,
+        "check": morgan_morgan_check,
+    }
+
+
+def morgan_morgan_quadrature(x, y, px, py, oblate):
+    """Weyl's quadrature for gamma, its two first derivatives in those of psi: in Weyl's
+    coordinates rho and z, or in the oblate spheroidal xi and eta."""
+    if not oblate:
+        return x * (px ** 2 - py ** 2), 2 * x * px * py
+    return ((1 - y ** 2) / (x ** 2 + y ** 2) * (x * (1 + x ** 2) * px ** 2 - x * (1 - y ** 2) * py ** 2
+                                                  - 2 * y * (1 + x ** 2) * px * py),
+            (1 + x ** 2) / (x ** 2 + y ** 2) * (y * (1 + x ** 2) * px ** 2 - y * (1 - y ** 2) * py ** 2
+                                                  + 2 * x * (1 - y ** 2) * px * py))
+
+
+def morgan_morgan_laplace(x, y, psi, oblate):
+    """Laplace's equation for psi solved for its second derivative along the first coordinate."""
+    D = sp.Derivative
+    if not oblate:
+        return {D(psi, (x, 2)): -D(psi, x) / x - D(psi, (y, 2))}
+    return {D(psi, (x, 2)): -(2 * x * D(psi, x) + (1 - y ** 2) * D(psi, (y, 2)) - 2 * y * D(psi, y)) / (1 + x ** 2)}
+
+
+def morgan_morgan_reduce(x, y, psi, gam, oblate=True):
+    """`value` where Weyl's field equations hold: gamma's derivatives by its quadrature and that
+    quadrature's derivatives, then psi's second derivative along the first coordinate, and its
+    derivatives, by Laplace's equation."""
+    D = sp.Derivative
+    gx, gy = morgan_morgan_quadrature(x, y, D(psi, x), D(psi, y), oblate)
+    second = morgan_morgan_laplace(x, y, psi, oblate)
+    pxx = second[D(psi, (x, 2))]
+
+    def reduce(value):
+        value = sp.sympify(value)
+        value = value.subs({D(gam, (x, 2)): sp.diff(gx, x), D(gam, (y, 2)): sp.diff(gy, y),
+                            D(gam, x, y): sp.diff(gx, y)}).doit()
+        value = value.subs({D(gam, x): gx, D(gam, y): gy}).doit()
+        value = value.subs({D(psi, (x, 3)): sp.diff(pxx, x), D(psi, (x, 2), y): sp.diff(pxx, y)}).doit()
+        return value.subs(second).doit()
+    return reduce
+
+
+def morgan_morgan_check(chart):
+    """Weyl's chart: the field equations its parameters state make every Ricci component vanish,
+    and the quadrature is integrable where Laplace's equation holds. The oblate spheroidal
+    chart: it is Weyl's pulled back, the functions one value at an event; its psi solves
+    Laplace's equation, falls off as -m/r, and is Newton's potential of the surface density
+    (3M/2 pi a^2) sqrt(1 - rho^2/a^2); its gamma solves the quadrature and vanishes on the
+    axis; and the Ricci tensor is exactly zero."""
+    D = sp.Derivative
+    oblate = chart.coords_tex[1] == "\\xi"
+    x, y = (chart.symbols[1], chart.symbols[2]) if oblate else (chart.symbols[1], chart.symbols[3])
+    psi, gam = chart.reader.parameters["psi"], chart.reader.parameters["gamma"]
+    ricci = chart.geo.ricci_ll()
+    if not oblate:
+        on_shell = morgan_morgan_reduce(x, y, psi, gam, oblate=False)
+        for i in range(4):
+            for j in range(i, 4):
+                if not gowdy_vanishes(on_shell(ricci[i][j])):
+                    raise AssertionError(f"morgan_morgan: the stated field equations leave R_{chart.coords_tex[i]}"
+                                         f"{chart.coords_tex[j]} standing")
+        gx, gy = morgan_morgan_quadrature(x, y, D(psi, x), D(psi, y), False)
+        if not gowdy_vanishes((sp.diff(gx, y) - sp.diff(gy, x)).subs(morgan_morgan_laplace(x, y, psi, False)).doit()):
+            raise AssertionError("morgan_morgan: the quadrature for gamma is not integrable on Laplace's equation")
+        return
+    if any(vm.norm(sp.together(ricci[i][j])) != 0 for i in range(4) for j in range(4)):
+        raise AssertionError("morgan_morgan: the first disc's Ricci tensor does not vanish")
+    m, a = chart.reader.parameters["m"], chart.reader.parameters["a"]
+    P, G = chart.reader.held[psi], chart.reader.held[gam]
+    laplace = sp.diff((1 + x ** 2) * sp.diff(P, x), x) + sp.diff((1 - y ** 2) * sp.diff(P, y), y)
+    gx, gy = morgan_morgan_quadrature(x, y, sp.diff(P, x), sp.diff(P, y), True)
+    checks = {"Laplace's equation": laplace, "the quadrature along xi": sp.diff(G, x) - gx,
+              "the quadrature along eta": sp.diff(G, y) - gy, "gamma on the axis": G.subs(y, 1),
+              # d psi/dz across the disc is (1/(a eta)) d psi/d xi, and 4 pi G sigma = 2 c^2 d psi/dz.
+              "the surface density": sp.diff(P, x).subs(x, 0) / (a * y) - 3 * m * y / a ** 2,
+              "psi on the disc": P.subs(x, 0) + 3 * sp.pi * m * (1 + y ** 2) / (8 * a)}
+    for label, value in checks.items():
+        if vm.norm(value) != 0:
+            raise AssertionError(f"morgan_morgan: the first disc misses {label}")
+    # Far away r = a xi, and psi -> -m/r, gamma -> -m^2 sin^2(theta)/(2 r^2), Curzon and Chazy's.
+    far = sp.Symbol("far", positive=True)
+    if sp.limit(P.subs(x, far) * a * far, far, sp.oo) != -m:
+        raise AssertionError("morgan_morgan: psi does not fall off as -m/r")
+    if sp.simplify(sp.limit(G.subs(x, far) * (a * far) ** 2, far, sp.oo) + m ** 2 * (1 - y ** 2) / 2) != 0:
+        raise AssertionError("morgan_morgan: gamma does not fall off as the Curzon-Chazy particle's")
+    # Weyl's chart pulled back through rho = a sqrt((1 + xi^2)(1 - eta^2)), z = a xi eta.
+    spec = morgan_morgan("weyl")
+    weyl = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    p0, g0 = sp.symbols("p0 g0", real=True)
+    image = [chart.symbols[0], a * sp.sqrt((1 + x ** 2) * (1 - y ** 2)), chart.symbols[3], a * x * y]
+    at = dict(zip(weyl.symbols, image))
+    source = weyl.geo.g.subs({weyl.reader.parameters["psi"]: p0, weyl.reader.parameters["gamma"]: g0})
+    source = source.subs(at, simultaneous=True)
+    order = [chart.symbols[0], x, y, chart.symbols[3]]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], order[j]))
+    pulled = J.T * source * J
+    here = chart.geo.g.subs({psi: p0, gam: g0})
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - here[i, j]) != 0:
+                raise AssertionError(f"morgan_morgan: Weyl's chart pulled back misses the oblate spheroidal chart "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["morgan_morgan"] = [lambda s=s: morgan_morgan(s) for s in ("weyl", "oblate")]
 
 
 # -- Bonnor's rotating dust cloud ---------------------------------------------------------

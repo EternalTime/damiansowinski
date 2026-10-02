@@ -4932,6 +4932,9 @@ class Slices(unittest.TestCase):
         """The moment on a flat view as its drawn axes put it: Y as a function of X, and the
         ends a line of it may have short of the box."""
         t = surface.get("time")
+        if key == "morgan_morgan/oblate_spheroidal/plane":
+            # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
+            return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]
         if key.startswith("siklos/"):
             # Siklos's wave front u = v = 0, embedded on the disc out to the coordinate radius the profile
             # ends at: the event (0, 0) of a plane of u and v, and on Kaigorodov's planes the line of zero

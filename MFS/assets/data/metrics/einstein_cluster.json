@@ -71,6 +71,11 @@
       "id": "bartnik_mckinnon",
       "kind": "family",
       "text": "Another static ball with no surface, whose stress along the radius differs from its stress across it. It is made of Yang-Mills field and is known only numerically [bartnik1988, volkov1999]."
+    },
+    {
+      "id": "morgan_morgan",
+      "kind": "family",
+      "text": "The same support within one plane: a static disc of dust on circular orbits, half the grains circling each way. Morgan and Morgan cite Einstein's paper [morgan1969]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "tolman1939",
     "ruffini1969",
     "bartnik1988",
-    "volkov1999"
+    "volkov1999",
+    "morgan1969"
   ],
   "coordinates": [
     {

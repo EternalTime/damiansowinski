@@ -46,6 +46,11 @@
       "id": "bonnor_rotating_dust",
       "kind": "family",
       "text": "A cloud of rotating dust built on the potential of a point, as the Curzon-Chazy particle is. Its singularity at the origin is directional too: the curvature diverges along the axis and dies away in the equatorial plane [bonnor1977cloud, astesiano2024]."
+    },
+    {
+      "id": "morgan_morgan",
+      "kind": "limit_source",
+      "text": "Static discs of counterrotating dust, Weyl fields built on the Newtonian potential of a disc. In the limit of the disc shrunk to a point at fixed mass the field is the Curzon-Chazy particle's, which itself arises as the metric of a counterrotating disc [bicak1993]."
     }
   ],
   "references": [
@@ -70,7 +75,8 @@
     "kramer1980",
     "neugebauer2009",
     "bonnor1977cloud",
-    "astesiano2024"
+    "astesiano2024",
+    "bicak1993"
   ],
   "coordinates": [
     {

@@ -12453,6 +12453,198 @@ def bonnor_rotating_dust(ck, src):
     return views
 
 
+MORGAN_MORGAN_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of the disc's radius a
+
+
+def morgan_morgan(ck, src):
+    """The first Morgan-Morgan disc at m = a/5 on its two totally geodesic planes, in units of the
+    disc's radius a, with p, q = arctan((ct -+ x_*)/l) and x_* the tortoise coordinate of each plane.
+
+    Weyl's chart: the whole axis, on which the metric is -e^(2 psi)c^2dt^2 + e^(-2 psi)dz^2 and z_*
+    is odd in z, is Minkowski's diamond with the disc down its middle; the half plane z = 0, on
+    which rho_* is the integral of e^(gamma - 2 psi) from the axis, is Minkowski's triangle with
+    the axis on X = 0 and the rim a timelike line inside it. The oblate spheroidal chart: the axis
+    above the disc, eta = 1, is the triangle with the centre of the disc on X = 0; the plane
+    outside the rim, eta = 0, is the triangle with the rim on X = 0; and the disc itself, xi = 0,
+    is the strip between the rim, eta = 0, and the centre, eta = 1, drawn with l = a. The rim is
+    drawn as a singularity, with the published Kretschmann scalar checked to diverge there as
+    1/xi^2 and 1/eta^2, and the centre of the disc as regular, with the scalar checked finite.
+    psi and gamma of Weyl's chart are the closed forms of the oblate spheroidal chart written in
+    rho and z, and one event is checked to land on one point through both charts."""
+    ell = MORGAN_MORGAN_SCALE
+    stars = {view: nr._morgan_morgan_star(view) for view in ("weyl_axis", "weyl_plane", "axis", "plane", "disc")}
+    span = float(stars["disc"](1.0))
+    rim = float(stars["weyl_plane"](1.0))
+
+    def pq(view, scale=ell, shift=0.0):
+        def fmap(t, x):
+            xs = stars[view](x) + shift
+            t = np.asarray(t, dtype=float)
+            return np.arctan((t - xs) / scale), np.arctan((t + xs) / scale)
+        return fmap
+    weyl_axis_pq, weyl_plane_pq, axis_pq = pq("weyl_axis"), pq("weyl_plane"), pq("axis")
+    # Outside the rim rho_* = rho_*(a) + xi_*, and on the disc rho_* = rho_*(a) - eta_*.
+    plane_pq = pq("plane")
+
+    def disc_pq(t, eta):
+        es = span - stars["disc"](eta)
+        t = np.asarray(t, dtype=float)
+        return np.arctan((t - es)), np.arctan((t + es))
+
+    fns = nr._morgan_morgan_weyl()
+    w_axis = Plane(src, "morgan_morgan", "weyl", ("t", "z"), {"rho": "0", "phi": "0"}, {}, functions=fns)
+    w_plane = Plane(src, "morgan_morgan", "weyl", ("t", "\\rho"), {"phi": "0", "z": "0"}, {}, functions=fns)
+    o_axis = Plane(src, "morgan_morgan", "oblate_spheroidal", ("t", "\\xi"), {"eta": "1", "phi": "0"}, nr.MM)
+    o_plane = Plane(src, "morgan_morgan", "oblate_spheroidal", ("t", "\\xi"), {"eta": "0", "phi": "0"}, nr.MM)
+    o_disc = Plane(src, "morgan_morgan", "oblate_spheroidal", ("t", "\\eta"), {"xi": "0", "phi": "0"}, nr.MM)
+    name = "Morgan-Morgan"
+    ck.chart(f"{name} Weyl, the axis", w_axis, weyl_axis_pq, ck.uniform(-20, 20, 400), ck.uniform(-20, 20, 400),
+             lambda t, z: (1, 0))
+    ck.chart(f"{name} Weyl, the plane z = 0", w_plane, weyl_plane_pq, ck.uniform(-20, 20, 400),
+             np.concatenate([ck.uniform(0.02, 0.98, 200), ck.uniform(1.02, 20, 200)]), lambda t, r: (1, 0))
+    ck.chart(f"{name} oblate, the axis", o_axis, axis_pq, ck.uniform(-20, 20, 400), ck.uniform(0.02, 20, 400),
+             lambda t, x: (1, 0))
+    ck.chart(f"{name} oblate, the plane outside the rim", o_plane, plane_pq, ck.uniform(-20, 20, 400),
+             ck.uniform(0.05, 20, 400), lambda t, x: (1, 0))
+    # eta falls from the centre to the rim, so the drawn radius eta_*(1) - eta_* rises toward the rim.
+    ck.chart(f"{name} oblate, the disc", o_disc, disc_pq, ck.uniform(-6, 6, 400), ck.uniform(0.05, 0.95, 400),
+             lambda t, e: (1, 0))
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at the rim from outside, as 1/xi^2",
+                o_plane.kretschmann(0, 1e-4), o_plane.kretschmann(0, 1e-5))
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at the rim from the disc, as 1/eta^2",
+                o_disc.kretschmann(0, 1e-4), o_disc.kretschmann(0, 1e-5))
+    ck.limit(f"{name}: the Kretschmann scalar times xi^2 settles at the rim",
+             o_plane.kretschmann(0, 1e-5) * 1e-10 / (o_plane.kretschmann(0, 1e-4) * 1e-8), 1.0, 1e-3)
+    ck.finite(f"{name}: the Kretschmann scalar is finite on the axis down to the centre of the disc",
+              o_axis.kretschmann(np.zeros(4), np.array([1.0, 0.1, 1e-3, 1e-6])))
+    ck.finite(f"{name}: the Kretschmann scalar is finite on the disc toward its centre",
+              o_disc.kretschmann(np.zeros(3), np.array([0.5, 0.9, 0.999])))
+    # One event through both charts: z = a xi on the axis, rho = a sqrt(1 + xi^2) outside the rim.
+    x = np.array([0.3, 1.0, 2.5])
+    one = [np.max(np.abs(np.array(weyl_axis_pq(0.4, x)) - np.array(axis_pq(0.4, x)))),
+           np.max(np.abs(np.array(weyl_plane_pq(0.4, np.sqrt(1 + x * x))) - np.array(pq("plane", shift=rim)(0.4, x))))]
+    ck.limit(f"{name}: one event lands on one point through Weyl's chart and the oblate spheroidal chart", one, [0.0, 0.0], 1e-8)
+    ck.limit(f"{name}: the tortoise coordinate across the disc is the plane's out to the rim", span, rim, 1e-9)
+    g00, _, g11, *_ = w_axis.metric(np.zeros(3), np.array([-2.0, 0.0, 1.5]))
+    ck.limit(f"{name}: g_tt g_zz = -1 on the axis", g00 * g11, [-1.0] * 3, 1e-12)
+    ck.limit(f"{name}: psi = -3 pi m/4a at the centre of the disc", 0.5 * np.log(-g00[1]), -3 * PI * 0.2 / 4, 1e-12)
+
+    views = []
+    moment = slices.moments("morgan_morgan", "plane")[0]
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    settings = ("The first disc of the family at $m = a/5$, with the radius $a$ of the disc the unit of every length, "
+                f"and $\\ell = {ell:g}\\,a$.")
+    corners = (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6))
+    wide, half = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+
+    def triangle(v):
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in corners:
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+
+    v = View("weyl_axis", "The axis", wide, "weyl")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda z, t: weyl_axis_pq(t, z), (-4, -2, -1, 1, 2, 4), S_ALL)
+    grid(v, "surface", lambda z, t: weyl_axis_pq(t, z), (0,), S_ALL)
+    grid(v, "t", weyl_axis_pq, TS, spread(-np.inf, np.inf, 500, 9))
+    diamond_edges(v)
+    label_on(v, weyl_axis_pq(0, 2), "$z = 2\\,a$")
+    v.legend("cover", "the whole axis, which $t$ and $z$ cover")
+    v.legend("r", "$z$ constant, at $\\pm 1$, $\\pm 2$ and $\\pm 4\\,a$")
+    v.legend("t", "$ct$ constant, in units of $a$")
+    v.legend("surface", "$z = 0$, the centre of the disc")
+    v.slice(moment, points=[weyl_axis_pq(0.0, 0.0)], label="$t = 0$, the centre of the disc")
+    v.set(restriction="The axis $\\rho = 0$ only, totally geodesic, each point in the diagram a single event.", settings=settings)
+    views.append(v)
+
+    v = View("weyl_plane", "The plane $z = 0$", half, "weyl")
+    triangle(v)
+    grid(v, "r", lambda r, t: weyl_plane_pq(t, r), (0.5, 2, 4, 8), S_ALL)
+    grid(v, "t", weyl_plane_pq, TS, spread(0, np.inf, 300, 9))
+    v.line("centre", [[[0, -PI], [0, PI]]])
+    v.curve("singular", *weyl_plane_pq(S_ALL, np.full_like(S_ALL, 1.0)), zig=True)
+    v.label_xt([0, 0.25], "$\\rho = 0$", "r", dx=-6)
+    label_on(v, weyl_plane_pq(0, 1), "$\\rho = a$")
+    label_on(v, weyl_plane_pq(0, 4), "$4\\,a$")
+    v.legend("cover", "the half plane, which $t$ and $\\rho$ cover")
+    v.legend("r", "$\\rho$ constant, at $a/2$ on the disc and $2$, $4$ and $8\\,a$ outside")
+    v.legend("t", "$ct$ constant, in units of $a$")
+    v.legend("centre", "$\\rho = 0$, the axis, through the centre of the disc")
+    v.legend("singular", "$\\rho = a$, the rim of the disc, where the Kretschmann scalar diverges and the metric is continuous")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    r = np.linspace(*moment.reach("weyl", "\\rho"), 60)
+    v.slice(moment, [weyl_plane_pq(0 * r, r)])
+    v.set(restriction="The half plane of $t$ and $\\rho$ at $z = 0$ and fixed $\\phi$ only, totally geodesic, each point "
+                      "in the diagram a single event.", settings=settings)
+    views.append(v)
+
+    v = View("oblate_axis", "The axis", half, "oblate_spheroidal")
+    triangle(v)
+    grid(v, "r", lambda x, t: axis_pq(t, x), (1, 2, 4, 8), S_ALL)
+    grid(v, "t", axis_pq, TS, spread(0, np.inf, 300, 9))
+    v.line("surface", [[[0, -PI], [0, PI]]])
+    v.label_xt([0, 0.25], "$\\xi = 0$", "r", dx=-6)
+    label_on(v, axis_pq(0, 2), "$\\xi = 2$")
+    v.legend("cover", "the axis above the disc, which $t$ and $\\xi$ cover")
+    v.legend("r", "$\\xi$ constant, at $1$, $2$, $4$ and $8$")
+    v.legend("t", "$ct$ constant, in units of $a$")
+    v.legend("surface", "$\\xi = 0$, the centre of the disc, beyond which the axis runs on below the disc")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.slice(moment, points=[axis_pq(0.0, 0.0)], label="$t = 0$, the centre of the disc")
+    v.set(restriction="The half axis $\\eta = 1$ only, totally geodesic, each point in the diagram a single event.", settings=settings)
+    views.append(v)
+
+    v = View("oblate_plane", "The plane outside the rim", half, "oblate_spheroidal")
+    triangle(v)
+    grid(v, "r", lambda x, t: plane_pq(t, x), (1, 2, 4, 8), S_ALL)
+    grid(v, "t", plane_pq, TS, spread(0, np.inf, 300, 9))
+    v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+    v.label_xt([0, 0.25], "$\\xi = 0$", "r", dx=-6)
+    label_on(v, plane_pq(0, 2), "$\\xi = 2$")
+    v.legend("cover", "the plane of the disc outside its rim, which $t$ and $\\xi$ cover")
+    v.legend("r", "$\\xi$ constant, at $1$, $2$, $4$ and $8$")
+    v.legend("t", "$ct$ constant, in units of $a$")
+    v.legend("singular", "$\\xi = 0$, the rim of the disc, where the Kretschmann scalar diverges as $1/\\xi^2$")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    x = np.linspace(0.0, math.sqrt(moment.reach("weyl", "\\rho")[1] ** 2 - 1), 60)
+    v.slice(moment, [plane_pq(0 * x, x)])
+    v.set(restriction="The half plane of $t$ and $\\xi$ at $\\eta = 0$ and fixed $\\phi$ only, totally geodesic, each point "
+                      "in the diagram a single event.", settings=settings)
+    views.append(v)
+
+    # The disc: the strip 0 <= eta_*(1) - eta_* <= eta_*(1), the centre on X = 0 and the rim on its right.
+    edge = np.arctan(S_ALL - span), np.arctan(S_ALL + span)
+    X, T = xt(*edge)
+    lens = [[0.0, -PI]] + np.column_stack([X, T]).tolist() + [[0.0, PI]]
+    v = View("oblate_disc", "The disc", [-0.35, float(np.max(X)) + 0.6, -PI - 0.25, PI + 0.25], "oblate_spheroidal")
+    v.fill("region", lens)
+    v.fill("cover", lens)
+    grid(v, "r", lambda e, t: disc_pq(t, e), (0.9, 0.7, 0.4), S_ALL)
+    grid(v, "t", disc_pq, (-4, -2, -1, 0, 1, 2, 4), np.linspace(0.0, 1.0, 200))
+    v.line("centre", [[[0, -PI], [0, PI]]])
+    v.curve("singular", *edge, zig=True)
+    v.label_xt([0, 0.25], "$\\eta = 1$", "r", dx=-6)
+    label_on(v, disc_pq(0, 0.0), "$\\eta = 0$", anchor="l", dx=6, dy=0)
+    v.legend("cover", "the disc, which $t$ and $\\eta$ cover")
+    v.legend("r", "$\\eta$ constant, at $0.9$, $0.7$ and $0.4$")
+    v.legend("t", "$ct$ constant, in units of $a$")
+    v.legend("centre", "$\\eta = 1$, the centre of the disc")
+    v.legend("singular", "$\\eta = 0$, the rim of the disc, where the Kretschmann scalar diverges as $1/\\eta^2$")
+    e = np.linspace(0.0, 1.0, 60)
+    v.slice(moment, [disc_pq(0 * e, e)])
+    v.set(restriction="The disc $\\xi = 0$ at fixed $\\phi$ only, totally geodesic, each point in the diagram a single event.",
+          settings="The first disc of the family at $m = a/5$, with the radius $a$ of the disc the unit of every length, "
+                   "and $\\ell = a$.")
+    views.append(v)
+    return views
+
+
 DOUBLE_KERR_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of m
 
 
@@ -15744,6 +15936,7 @@ DRAWN = {
     "curzon_chazy": curzon_chazy,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
+    "morgan_morgan": morgan_morgan,
     "zipoy_voorhees": zipoy_voorhees,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
@@ -15925,6 +16118,51 @@ CAPTIONS = {
         "$p = \\arctan((ct - \\rho_*)/\\ell)$ and $q = \\arctan((ct + \\rho_*)/\\ell)$ bring it into the triangle of "
         "Minkowski space, drawn with $T = p + q$ up and $X = q - p$ across.",
         "The strut is the timelike line $\\rho = 0$ on the left, and no horizon crosses the plane.",
+    ],
+    ("morgan_morgan", "weyl_axis"): [
+        "The axis $\\rho = 0$ of the first Morgan-Morgan disc ($m = a/5$), each point in the diagram a single event. "
+        "The metric on it is $-e^{2\\psi}c^2dt^2 + e^{-2\\psi}dz^2$, and with $z_* = \\int_0^z e^{-2\\psi}dz'$ the maps "
+        "$p = \\arctan((ct - z_*)/\\ell)$ and $q = \\arctan((ct + z_*)/\\ell)$ bring it into the whole diamond, drawn "
+        "with $T = p + q$ up and $X = q - p$ across.",
+        "The axis crosses the disc at its centre, $z = 0$, where the curvature is finite, and runs to infinity on both "
+        "sides, so the diagram is that of a line of flat space. Since $g_{tt}g_{zz} = -1$, $z$ is an affine parameter "
+        "along every light ray.",
+    ],
+    ("morgan_morgan", "weyl_plane"): [
+        "The half plane $z = 0$ of $t$ and $\\rho$ at fixed $\\phi$ of the first Morgan-Morgan disc ($m = a/5$), each "
+        "point in the diagram a single event. The metric on it is $e^{-2\\psi}(-e^{4\\psi}c^2dt^2 + e^{2\\gamma}d\\rho^2)$, "
+        "and with $\\rho_* = \\int_0^\\rho e^{\\gamma - 2\\psi}d\\rho'$ the maps $p = \\arctan((ct - \\rho_*)/\\ell)$ and "
+        "$q = \\arctan((ct + \\rho_*)/\\ell)$ bring it into Minkowski's triangle.",
+        "The disc lies between the axis, on $X = 0$, and its rim, $\\rho = a$, a timelike line where the Kretschmann "
+        "scalar diverges as the inverse of the distance from it. The metric is continuous there, and light crosses the "
+        "rim from the disc to the vacuum outside in a finite time $t$.",
+    ],
+    ("morgan_morgan", "oblate_axis"): [
+        "The half axis $\\eta = 1$ of the first Morgan-Morgan disc ($m = a/5$), each point in the diagram a single "
+        "event. The metric on it is $-e^{2\\psi}c^2dt^2 + a^2e^{-2\\psi}d\\xi^2$, and with "
+        "$\\xi_* = a\\int_0^\\xi e^{-2\\psi}d\\xi'$ the maps $p = \\arctan((ct - \\xi_*)/\\ell)$ and "
+        "$q = \\arctan((ct + \\xi_*)/\\ell)$ bring it into Minkowski's triangle, drawn with $T = p + q$ up and "
+        "$X = q - p$ across.",
+        "The edge $X = 0$ is the centre of the disc, $\\xi = 0$, a regular point, where the Kretschmann scalar is "
+        "finite. The half axis below the disc, $\\eta = -1$, is the mirror image of this triangle in that edge.",
+    ],
+    ("morgan_morgan", "oblate_plane"): [
+        "The half plane $\\eta = 0$ of $t$ and $\\xi$ at fixed $\\phi$ of the first Morgan-Morgan disc ($m = a/5$), the "
+        "plane of the disc outside its rim, each point in the diagram a single event. With "
+        "$\\xi_* = a\\int_0^\\xi \\xi'e^{\\gamma - 2\\psi}d\\xi'/\\sqrt{1 + \\xi'^2}$, which vanishes at the rim, the maps "
+        "$p = \\arctan((ct - \\xi_*)/\\ell)$ and $q = \\arctan((ct + \\xi_*)/\\ell)$ bring it into Minkowski's triangle.",
+        "The edge $X = 0$ is the rim, $\\xi = 0$, a timelike singularity where the Kretschmann scalar diverges as "
+        "$1/\\xi^2$, the inverse of the distance from the rim. Light from any event of the plane reaches it in a finite "
+        "time $t$ and passes on into the disc.",
+    ],
+    ("morgan_morgan", "oblate_disc"): [
+        "The disc $\\xi = 0$ of the first Morgan-Morgan disc ($m = a/5$) in $t$ and $\\eta$ at fixed $\\phi$, each point "
+        "in the diagram a single event. With $\\eta_* = a\\int_\\eta^1 \\eta'e^{\\gamma - 2\\psi}d\\eta'/\\sqrt{1 - \\eta'^2}$, "
+        "which vanishes at the centre, the maps $p = \\arctan((ct - \\eta_*)/\\ell)$ and $q = \\arctan((ct + \\eta_*)/\\ell)$ "
+        "bring it into a strip of Minkowski's triangle.",
+        "The strip runs from the centre of the disc, on $X = 0$, to the rim, $\\eta = 0$, where the Kretschmann scalar "
+        "diverges as $1/\\eta^2$. Light crosses from the centre to the rim in $ct = 2.15\\,a$, and each stream of dust "
+        "stays on a vertical line, circling the axis.",
     ],
     ("curzon_chazy", "weyl_axis"): [
         "The half axis $\\rho = 0$, $z > 0$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "

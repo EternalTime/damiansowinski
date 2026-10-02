@@ -1025,6 +1025,17 @@ A spatially homogeneous Bianchi type IX cosmology whose approach to the singular
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/mixmaster.json
 - chart Euler Angles: coordinates $(t, \psi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a_1^2\left(\cos\psi\,d\theta + \sin\psi\sin\theta\,d\phi\right)^2 + a_2^2\left(\sin\psi\,d\theta - \cos\psi\sin\theta\,d\phi\right)^2 + a_3^2\left(d\psi + \cos\theta\,d\phi\right)^2$$
 
+### Morgan-Morgan Discs
+
+Static thin discs of dust in Weyl's class, found by Thomas Morgan and Lesley Morgan in 1969. Half the dust circles the axis one way and half the other, so a disc has no angular momentum, and the field around it is a static vacuum built on a Newtonian potential.
+
+- id: `morgan_morgan`
+- tags: vacuum, static, stationary, axisymmetric, Weyl class, harmonic function, thin disc, counterrotating, dust, thin shell, circular orbits, collisionless, tangential pressure, reflection symmetry, mass, no horizon, curvature singularity, ring singularity, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/morgan_morgan.json
+- chart Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -e^{2\psi}c^2dt^2 + e^{-2\psi}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+- chart Oblate Spheroidal: coordinates $(t, \xi, \eta, \phi)$, $$ds^2 = -e^{2\psi}c^2dt^2 + a^2e^{-2\psi}\left(e^{2\gamma}\left(\xi^2 + \eta^2\right)\left(\dfrac{d\xi^2}{1 + \xi^2} + \dfrac{d\eta^2}{1 - \eta^2}\right) + \left(1 + \xi^2\right)\left(1 - \eta^2\right)d\phi^2\right)$$
+
 ### Morris-Thorne Traversable Wormhole
 
 A static, spherically symmetric traversable wormhole engineered to have no horizon and tolerable tidal forces. Keeping its throat open requires exotic matter that violates the energy conditions.

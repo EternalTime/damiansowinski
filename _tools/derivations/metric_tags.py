@@ -228,6 +228,10 @@ OVERRULED = {
     ("double_kerr", "vacuum"): (
         True, "f, omega and gamma are left free; the two Kerr black holes are a solution of "
               "the vacuum equations, Ernst's equation for f and omega and a quadrature for gamma"),
+    ("morgan_morgan", "vacuum"): (
+        True, "psi and gamma are left free in Weyl's chart; off the disc the field is the solution "
+              "of the vacuum equations, Laplace's equation and a quadrature, that the oblate "
+              "spheroidal chart writes out for the first disc, whose Ricci tensor vanishes"),
     ("einstein_rosen_waves", "vacuum"): (
         True, "psi and gamma are left free in both charts; the waves are the solutions of "
               "the vacuum equations, a wave equation for psi and a quadrature for gamma"),
@@ -403,7 +407,8 @@ def compute(metric_id, entry, seconds):
     relations = vm.PARAMETER_RELATIONS.get((metric_id, entry["id"]), {})
     orders = vm.ORDERS.get((metric_id, entry["id"]))
     reader = vm.Reader(coords, [p["symbol"] for p in entry.get("parameters", [])],
-                       vm.time_coordinates(declared, coords), relations, orders)
+                       vm.time_coordinates(declared, coords), relations, orders,
+                       vm.HELD.get((metric_id, entry["id"]), ()))
     g = vm.metric_from_line_element(reader, entry["line_element"], coords)
     symbols = [reader.symbol[name] for name in coords]
     # A chart kept to an order, as Hartle and Thorne's is to the second in the spin, has its
