@@ -885,6 +885,18 @@ MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)*
 MP_TWO_INPUT = ("Two holes, each of mass parameter $m$, on the axis at $z = \\pm 2m$: "
                 "$U = 1 + m/\\sqrt{x^2 + y^2 + (z - 2m)^2} + m/\\sqrt{x^2 + y^2 + (z + 2m)^2}$.")
 
+# Israel, Wilson and Perjes's two sources of Hartle and Hawking's (4.21), U = 1 + (m - il)/r_1 + (m + il)/r_2
+# with r_1 and r_2 the distances from z = +2m and z = -2m on the axis, at m = 1 and l = 1/2: W = |U|, and
+# omega solves its equation with omega = 0 on the axis beyond the sources, where it is 4l(1 + m/d) = 3
+# between them; israel_wilson_perjes.md derives it.
+_IWP_R1, _IWP_R2 = "sqrt(rho**2 + (z - 2)**2)", "sqrt(rho**2 + (z + 2)**2)"
+IWP_TWO = {"W": f"sqrt((1 + 1/{_IWP_R1} + 1/{_IWP_R2})**2 + (1/{_IWP_R2} - 1/{_IWP_R1})**2/4)",
+           "omega": f"(z + 2)/{_IWP_R2} - (z - 2)/{_IWP_R1} - ((rho**2 + z**2 - 4)/({_IWP_R1}*{_IWP_R2}) - 1)/2"}
+IWP_TWO_INPUT = ("Two sources on the axis, $U = 1 + (m - il)/r_1 + (m + il)/r_2$ with $l = m/2$ and $r_1$ and $r_2$ "
+                 "the distances from $z = 2m$ and $z = -2m$, so that $W = |U|$ and $\\omega = 2l(z + 2m)/r_2 - "
+                 "2l(z - 2m)/r_1 - (l/2)\\left((\\rho^2 + z^2 - 4m^2)/(r_1r_2) - 1\\right)$, which vanishes on "
+                 "the axis beyond the sources.")
+
 # Two of Kastor and Traschen's holes, each of mass parameter m, the unit, at z = +-2m, falling
 # together at H = -3c/(32m), and one hole alone at H = -3c/(16m), the lukewarm hole; slices.py
 # holds the rates and the last ray of each plane to reach infinity, the event horizon there.
@@ -1997,6 +2009,16 @@ DIAGRAMS = [
             functions={"U": MP_TWO_CYLINDRICAL}, input=MP_TWO_INPUT),
     Diagram("majumdar_papapetrou", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/m$", "$ct/m$", {"m": 1}, EQUATOR, areal=True),
+    Diagram("israel_wilson_perjes", "cylindrical", "midplane", "the midplane", ("t", "\\rho"), (1, 7, -3, 3),
+            "$\\rho/m$", "$ct/m$", {}, {"z": "0"}, functions=IWP_TWO, input=IWP_TWO_INPUT, quotient="phi",
+            cone=BTZ_CONE),
+    Diagram("israel_wilson_perjes", "spheroidal", "axis", "the axis, through the ring", ("t", "r"), (-4, 4, -4, 4),
+            "$r/m$", "$ct/m$", {"m": 1, "a": 1}, {"theta": "0", "phi": "0"}, families=SIDEWAYS),
+    Diagram("israel_wilson_perjes", "spheroidal", "principal", "principal null rays, $t$ and $r$", ("t", "r"),
+            (-0.5, 4.5, -2.5, 2.5), "$r/m$", "$ct/m$", {"m": 1, "a": 1}, {"theta": "pi/2"},
+            principal=True, leaves=("phi",), cone=PRINCIPAL_CONE),
+    Diagram("israel_wilson_perjes", "spherical", "radial", "$t$ and $r$", ("t", "r"), (1, 6, -2.5, 2.5),
+            "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR),
     *_kt_rows(),
     Diagram("btz", "stationary", "static", "$J = 0$", ("t", "r"), (0, 3, -1.5, 1.5),
             "$r/\\ell$", "$ct/\\ell$", {"ell": 1, "M": 1, "J": 0}, {"phi": "0"}, orient="ingoing"),
@@ -4836,6 +4858,44 @@ CAPTIONS = {
         "$r = 0$ is the horizon, a sphere of areal radius $m$, since $g_{\\theta\\theta} = (r + m)^2$. Beyond it "
         "lies the interior of the extremal Reissner-Nordström black hole, $0 < R < m$ in the areal radius "
         "$R = r + m$. The Kretschmann scalar $8m^2(6r^2 + m^2)/(r + m)^8$ is finite at the horizon.",
+    ],
+    ("israel_wilson_perjes", "cylindrical", "midplane"): [
+        "The plane of $t$ and $\\rho$ midway between the two sources ($z = 0$), with $\\phi$ divided out. Its "
+        "rays are the null geodesics of no angular momentum, which the reflection $z \\to -z$ keeps in the "
+        "plane, and each turns about the axis at $d\\phi/dt = c\\,\\omega/(W^4\\rho^2 - \\omega^2)$ as it "
+        "moves in $\\rho$ at $d\\rho/dt = \\pm c\\,\\rho/\\sqrt{W^4\\rho^2 - \\omega^2}$.",
+        "There $W = 1 + 2m/s$ and $\\omega = 4m^2/s + 4m^3/s^2$ with $s = \\sqrt{\\rho^2 + 4m^2}$. Far out "
+        "$\\omega$ falls as $4m^2/\\rho$, the dragging of an angular momentum $l$ times the separation $4m$ "
+        "of the sources, and the cones open toward $45°$. The drawing begins at $\\rho = m$, and inside "
+        "$\\rho = 0.73\\,m$, where $W^4\\rho^2 = \\omega^2$, the circles of $\\phi$ are timelike.",
+    ],
+    ("israel_wilson_perjes", "spheroidal", "axis"): [
+        "The plane of $t$ and $r$ on the axis of rotation ($\\theta = 0$), which passes through the middle of "
+        "the ring, drawn for $a = m$. Its rays are null geodesics with "
+        "$dr/dt = \\pm c\\,(r^2 + a^2)/((r + m)^2 + a^2)$, which never vanishes, so no cone closes and every "
+        "ray runs the whole length of the axis: the source has no horizon.",
+        "Through the ring the axis runs on to negative $r$, a second asymptotically flat region, where the "
+        "mass is $-m$. The Kretschmann scalar is finite all along the axis, since the ring singularity, "
+        "$r = -m$, lies on the equator.",
+    ],
+    ("israel_wilson_perjes", "spheroidal", "principal"): [
+        "The equatorial plane ($\\theta = \\pi/2$) drawn in $t$ and $r$, with $\\phi$ left out, for "
+        "$a = m$. Its rays are the principal null congruence, along the two repeated principal null "
+        "directions of the Weyl tensor, and they are null geodesics. Each turns at "
+        "$d\\phi/dr = \\pm a/(r^2 + a^2)$ as it goes, and the curves drawn are the rays' projections, "
+        "$d(ct)/dr = \\pm((r + m)^2 + a^2)/(r^2 + a^2)$, the same at every $\\theta$.",
+        "No cone closes anywhere. The ingoing rays cross $r = 0$, the ring of radius $a$ in the flat "
+        "background where $U$ is infinite and $\\partial_t$ is null, and run on to the ring singularity at "
+        "$r = -m$, which no horizon hides. The drawing begins at $r = -m/2$, and inside $r = -0.60\\,m$ the "
+        "circles of $\\phi$ are timelike.",
+    ],
+    ("israel_wilson_perjes", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $l = m/2$. There "
+        "$dr/dt = \\pm c\\,(r - m)^2/(r^2 + l^2)$, so the cones close at $r = m$, where $g^{rr}$ has a double "
+        "zero, and an ingoing ray reaches it only as $t \\to +\\infty$.",
+        "$r = m$ is a degenerate horizon of area $4\\pi(m^2 + l^2)$. The twist sits in $g_{t\\phi}$, which "
+        "drops out of the metric on this plane, and no Christoffel symbol turns these null curves out of "
+        "it, so they are null geodesics, the paths light takes.",
     ],
     ("kastor_traschen", "cartesian", "tz"): [
         "The plane of $\\tau$ and $z$ on the axis through both holes ($x = y = 0$), which light launched along the "
@@ -8510,6 +8570,27 @@ def _mp_axis(z):
         return z - 1 / a - 1 / b + 2 * np.sign(a) * np.log(np.abs(a)) + 2 * np.sign(b) * np.log(np.abs(b)) + cross
 
 
+def _iwp_rstar(r):
+    """The tortoise coordinate of Israel, Wilson and Perjes's spinning source at m = a = 1, on its axis
+    and along its principal null rays: dr_*/dr = ((r + m)^2 + a^2)/(r^2 + a^2), so
+    r_* = r + m ln(r^2 + a^2) + (m^2/a) arctan(r/a)."""
+    r = np.asarray(r, dtype=float)
+    return r + np.log(r * r + 1) + np.arctan(r)
+
+
+def _iwp_midplane(rho):
+    """The quadrature of sqrt(W^4 rho^2 - omega^2)/rho from rho = 1 across the midplane of the two declared
+    sources, W = 1 + 2/s and omega = 4/s + 4/s^2 with s = sqrt(rho^2 + 4): what ct keeps, up to its sign,
+    along a null geodesic of no angular momentum."""
+    from scipy.integrate import quad
+
+    def integrand(x):
+        s = math.sqrt(x * x + 4)
+        return math.sqrt((1 + 2 / s) ** 4 * x * x - (4 / s + 4 / (s * s)) ** 2) / x
+
+    return np.vectorize(lambda x: quad(integrand, 1.0, x, epsabs=1e-12, epsrel=1e-12)[0])(np.asarray(rho, dtype=float))
+
+
 def _mp_midplane(x):
     """The integral of U^2 across the midplane of the same two holes, U = 1 + 2/sqrt(x^2 + 4):
     x + 4 arcsinh(x/2) + 2 arctan(x/2)."""
@@ -8801,6 +8882,15 @@ CLOSED_FORMS = {
         (_kt_label("axis", -1, True), _kt_label("axis", 1, True), _kt_every),
     ("kastor_traschen", "comoving", "tx"):
         (_kt_label("midplane", -1, True), _kt_label("midplane", 1, True), _kt_every),
+    ("israel_wilson_perjes", "cylindrical", "midplane"):
+        (lambda t, r: t + _iwp_midplane(r), lambda t, r: t - _iwp_midplane(r), None),
+    ("israel_wilson_perjes", "spheroidal", "axis"):
+        (lambda t, r: t + _iwp_rstar(r), lambda t, r: t - _iwp_rstar(r), None),
+    ("israel_wilson_perjes", "spheroidal", "principal"):
+        (lambda t, r: t + _iwp_rstar(r), lambda t, r: t - _iwp_rstar(r), None),
+    ("israel_wilson_perjes", "spherical", "radial"):
+        (lambda t, r: t + r + 2 * np.log(r - 1) - 1.25 / (r - 1), lambda t, r: t - r - 2 * np.log(r - 1) + 1.25 / (r - 1),
+         lambda t, r: r > 1.05),
     ("majumdar_papapetrou", "cartesian", "tz"):
         (lambda t, z: t + _mp_axis(z), lambda t, z: t - _mp_axis(z), lambda t, z: np.abs(np.abs(z) - 2) > 0.05),
     ("majumdar_papapetrou", "cartesian", "tx"):

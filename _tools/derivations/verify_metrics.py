@@ -679,6 +679,18 @@ DIMENSIONS = {
     ("majumdar_papapetrou", "isotropic"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
     },
+    # Israel, Wilson and Perjes's W = |U| is a pure number, as Majumdar and Papapetrou's U is, and
+    # omega stands beside c dt, so it is a length; the spin a and the NUT parameter l are lengths too.
+    ("israel_wilson_perjes", "cylindrical"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "W": "1", "\\omega": "L",
+    },
+    ("israel_wilson_perjes", "spheroidal"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L",
+        "\\Sigma_0": "L**2", "\\Sigma": "L**2",
+    },
+    ("israel_wilson_perjes", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L",
+    },
     # The rocket's mass function is the length GM/c^2 and its acceleration alpha an inverse
     # length; in the Robinson-Trautman chart the four-velocity over c and p are pure numbers.
     ("photon_rocket", "rectilinear"): {

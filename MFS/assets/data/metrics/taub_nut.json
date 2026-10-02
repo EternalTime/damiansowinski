@@ -61,6 +61,11 @@
       "id": "kerr",
       "kind": "family",
       "text": "Schwarzschild's metric with a spin $a$ where this one has the twist $l$. Jerzy Plebański and Marek Demiański's family of 1976 holds both, and Jerry Griffiths and Jiří Podolský worked out in 2005 how its parameters become $a$ and $l$ [plebanski1976, griffiths2005]."
+    },
+    {
+      "id": "israel_wilson_perjes",
+      "kind": "family",
+      "text": "Give NUT space a charge of radius $\\sqrt{m^2 + l^2}$ and it is one source of complex mass in Israel, Wilson, and Perjés's fields [hartle1972, brill1964]."
     }
   ],
   "references": [
@@ -81,7 +86,9 @@
     "mazur1986",
     "gowdy2014",
     "plebanski1976",
-    "griffiths2005"
+    "griffiths2005",
+    "hartle1972",
+    "brill1964"
   ],
   "coordinates": [
     {

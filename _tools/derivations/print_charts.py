@@ -8,7 +8,8 @@ kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
-einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation and kaluza_klein_black_hole, and Godel's cylindrical chart.
+einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole and
+israel_wilson_perjes, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -27,8 +28,8 @@ reads better than an expanded one, and each of those is checked against sympy he
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
-witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md and
-kaluza_klein_black_hole.md beside this file.
+witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
+kaluza_klein_black_hole.md and israel_wilson_perjes.md beside this file.
 """
 import argparse
 import itertools
@@ -11773,6 +11774,274 @@ def kaluza_klein_field_equations(chart, scalar, A):
 
 
 CHARTS["kaluza_klein_black_hole"] = [lambda s=s: kaluza_klein_black_hole(s) for s in KKBH_CHARTS]
+
+
+# -- Israel-Wilson-Perjes ----------------------------------------------------------------
+
+IWP_CHARTS = ["cylindrical", "spheroidal", "spherical"]
+IWP_SIGMA = "\\Sigma_0 = r^2 + a^2\\cos^2\\theta"
+IWP_PI = "\\Sigma = \\left(r + m\\right)^2 + a^2\\cos^2\\theta"
+
+
+class IwpForms(KerrDeSitterForms):
+    """How a value of the spinning source is written: factored, with the even powers of the sine
+    written in the cosine, each factor that is a multiple of Sigma_0 = r^2 + a^2 cos^2(theta) or of
+    Sigma = (r + m)^2 + a^2 cos^2(theta) written by its name, and every sum left over in the shortest
+    of three forms: as it stands in the cosine, in the sine, or in powers of r + m, which is
+    Boyer and Lindquist's radius."""
+
+    def __init__(self, reader):
+        self.r, self.theta = reader.symbol["r"], reader.symbol["\\theta"]
+        self.m, self.a = reader.parameters["m"], reader.parameters["a"]
+        self.s, self.c = sp.sin(self.theta), sp.cos(self.theta)
+        self.C = sp.Symbol("IWP_cos")
+        self.Sigma, self.Pi = sp.Symbol("Sigma_0", positive=True), sp.Symbol("Sigma", positive=True)
+        self.named = [(self.Sigma, self.r ** 2 + self.a ** 2 * self.C ** 2),
+                      (self.Pi, (self.r + self.m) ** 2 + self.a ** 2 * self.C ** 2)]
+
+    def printer(self):
+        return {"lead": [self.r, self.m, self.a, self.c, self.s], "flip": False,
+                "overrides": {self.Sigma: "\\Sigma_0", self.Pi: "\\Sigma"},
+                "factors": [self.a, self.m, self.r, self.Sigma, self.Pi]}
+
+    def regrouped(self, base, depth):
+        R = sp.Symbol("IWP_R")
+        shifted = sp.expand(base.subs(self.r, R - self.m)).subs(R, self.r + self.m)
+        return min([base, self.in_sine(base), shifted], key=lambda e: len(str(e)))
+
+
+def israel_wilson_perjes(system_id):
+    """Israel, Wilson and Perjes's stationary fields, -(c dt + omega)^2/|U|^2 + |U|^2 times flat
+    space with U a complex harmonic function and curl omega = 2 Im(conj(U) grad U), in three
+    charts: the cylindrical chart of sources strung along an axis, as Hartle and Hawking's (4.1)
+    with their (4.22), where W = |U| and omega = omega_phi are left free in every tensor, so no
+    component assumes a field equation; the oblate spheroidal chart of one source at an imaginary
+    place, U = 1 + m/(r + i a cos(theta)), which is Kerr and Newman's metric with charge equal to
+    mass in Boyer and Lindquist's radius r + m; and the spherical chart of one source of complex
+    mass, U = 1 + (m + i l)/(r - m), Hartle and Hawking's (4.12), Brill's charged NUT space with
+    q^2 = m^2 + l^2. israel_wilson_perjes_check holds the cylindrical chart to the Einstein-Maxwell
+    equations and each of the others to being it pulled back at its own U, and
+    israel_wilson_perjes.md records each chart's source."""
+    if system_id == "cylindrical":
+        coords, name = ["t", "\\rho", "\\phi", "z"], "Cylindrical"
+        parameters = ["W = W(\\rho,z)", "\\omega = \\omega(\\rho,z)"]
+        domains = ["\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in (-\\infty, \\infty)",
+                   "0 < W < \\infty"]
+        line = ("ds^2 = -\\dfrac{\\left({}dt + \\omega\\,d\\phi\\right)^2}{W^2}"
+                " + W^2\\left(d\\rho^2 + \\rho^2d\\phi^2 + dz^2\\right)")
+    elif system_id == "spheroidal":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Oblate Spheroidal"
+        parameters = ["m", "a", IWP_SIGMA, IWP_PI]
+        domains = ["r \\in (-\\infty, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "(r, \\theta) \\neq (-m, \\pi/2) \\;\\text{(the ring singularity)}"]
+        line = ("ds^2 = -\\dfrac{\\Sigma_0}{\\Sigma}\\left({}dt + \\dfrac{am\\left(2r + m\\right)\\sin^2\\theta}{\\Sigma_0}d\\phi\\right)^2"
+                " + \\Sigma\\left(\\dfrac{dr^2}{r^2 + a^2} + d\\theta^2\\right)"
+                " + \\dfrac{\\Sigma\\left(r^2 + a^2\\right)\\sin^2\\theta}{\\Sigma_0}d\\phi^2")
+    else:
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Spherical"
+        parameters = ["m", "l"]
+        domains = ["r \\in (m, \\infty)", "\\theta \\in (0, \\pi)", "\\phi \\in [0, 2\\pi)",
+                   "r = m \\;\\text{(the horizon)}"]
+        line = ("ds^2 = -\\dfrac{\\left(r - m\\right)^2}{r^2 + l^2}\\left({}dt + 2l\\cos\\theta\\,d\\phi\\right)^2"
+                " + \\dfrac{r^2 + l^2}{\\left(r - m\\right)^2}dr^2"
+                " + \\left(r^2 + l^2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")
+    probe = vm.Reader(coords, parameters, ())
+    spec = {
+        "metric_id": "israel_wilson_perjes",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line.replace("{}dt", "c\\,dt")},
+        "chart_line_element": line.replace("{}dt", "dt"),
+        "check": lambda chart: israel_wilson_perjes_check(chart, system_id),
+    }
+    if system_id == "cylindrical":
+        W = probe.parameters["W"]
+        spec["printer"] = {"lead": [W], "flip": False,
+                           "collect": lambda poly, printer: cp.collect_by(poly, [W], printer)}
+    elif system_id == "spheroidal":
+        forms = IwpForms(probe)
+        spec["printer"], spec["pretty"], spec["bracketed"] = forms.printer(), forms.pretty, forms.pretty
+        # Kerr and Newman's scalar at GM/c^2 = r_Q = m, in Boyer and Lindquist's radius r + m.
+        R = "\\left(r + m\\right)"
+        cos = {k: f"\\cos^{k}\\theta" for k in (2, 4, 6)}
+        spec["kretschmann"] = (
+            f"\\dfrac{{48m^2\\left({R}^6 - 15a^2{R}^4{cos[2]} + 15a^4{R}^2{cos[4]} - a^6{cos[6]}\\right)"
+            f" - 96m^3{R}\\left({R}^4 - 10a^2{R}^2{cos[2]} + 5a^4{cos[4]}\\right)"
+            f" + 8m^4\\left(7{R}^4 - 34a^2{R}^2{cos[2]} + 7a^4{cos[4]}\\right)}}{{\\Sigma^6}}")
+        # g_phi_phi and g^tt as Boyer and Lindquist's are written, A sin^2(theta)/Sigma and -A/(Sigma Delta).
+        A = f"\\left({R}^2 + a^2\\right)^2 - a^2\\left(r^2 + a^2\\right)\\sin^2\\theta"
+        spec["components"] = {
+            "metric_components": {("\\phi", "\\phi"): f"\\dfrac{{\\left({A}\\right)\\sin^2\\theta}}{{\\Sigma}}"},
+            "inverse_metric_components": {("t", "t"): f"-\\dfrac{{{A}}}{{\\Sigma\\left(r^2 + a^2\\right)}}"}}
+    else:
+        r, m, l = probe.symbol["r"], probe.parameters["m"], probe.parameters["l"]
+        spec["printer"] = {"lead": [r, m, l], "factors": [l, m, r]}
+        theta = probe.symbol["\\theta"]
+
+        def pretty(value):
+            # Each value factored with the even powers of the sine in the cosine, or as it stands if shorter.
+            value = sp.factor(sp.sympify(value))
+            cosine = sp.factor(value.replace(
+                lambda p: p.is_Pow and p.base == sp.sin(theta) and p.exp.is_Integer and p.exp > 1,
+                lambda p: sp.sin(theta) ** (int(p.exp) % 2) * (1 - sp.cos(theta) ** 2) ** (int(p.exp) // 2)))
+            return min([value, cosine], key=lambda e: len(str(e)))
+
+        spec["pretty"] = pretty
+        A = "\\left(r^2 + l^2\\right)^2\\sin^2\\theta - 4l^2\\left(r - m\\right)^2\\cos^2\\theta"
+        spec["components"] = {
+            "metric_components": {("\\phi", "\\phi"): "\\dfrac{" + A + "}{r^2 + l^2}"},
+            "inverse_metric_components": {
+                ("t", "t"): "-\\dfrac{" + A + "}{\\left(r - m\\right)^2\\left(r^2 + l^2\\right)\\sin^2\\theta}"}}
+    return spec
+
+
+def israel_wilson_perjes_fields(chart):
+    """The cylindrical chart on a solution: W = sqrt(P^2 + Q^2) for U = P + iQ, the derivatives
+    of omega by curl omega = 2(P grad Q - Q grad P), which is d_z omega = -2 rho (P d_rho Q -
+    Q d_rho P) and d_rho omega = 2 rho (P d_z Q - Q d_z P), and the second derivatives of P and Q
+    along z by Laplace's equation. Returns P, Q and the function that puts a value on the solution."""
+    t, rho, phi, z = chart.symbols
+    W, omega = chart.reader.parameters["W"], chart.reader.parameters["omega"]
+    P, Q = sp.Function("IWP_P")(rho, z), sp.Function("IWP_Q")(rho, z)
+    curl = {sp.Derivative(omega, z): -2 * rho * (P * sp.diff(Q, rho) - Q * sp.diff(P, rho)),
+            sp.Derivative(omega, rho): 2 * rho * (P * sp.diff(Q, z) - Q * sp.diff(P, z))}
+
+    def laplace(e):
+        for f in (P, Q):
+            e = e.subs(sp.Derivative(f, (z, 2)), -sp.Derivative(f, (rho, 2)) - sp.Derivative(f, rho) / rho)
+        return e
+
+    def on_shell(value):
+        value = sp.sympify(value)
+        # Each second derivative of omega is the derivative of a first, taken before any is replaced.
+        second = {d: None for d in value.atoms(sp.Derivative) if d.expr == omega and d.derivative_count == 2}
+        for d in second:
+            first = sp.Derivative(omega, d.variables[0])
+            second[d] = sp.diff(curl[first], d.variables[1])
+        value = value.subs(second).subs(curl).subs(W, sp.sqrt(P ** 2 + Q ** 2)).doit()
+        return sp.simplify(laplace(laplace(value)))
+
+    return P, Q, on_shell
+
+
+def israel_wilson_perjes_check(chart, system_id):
+    """The cylindrical chart against the Einstein-Maxwell equations, in units where
+    G = c = 4 pi epsilon_0 = 1: with Phi + i chi = 1/U, F_ti = d_i Phi and the magnetic part
+    F^ij = epsilon^ijk d_k chi / sqrt(-g), Hartle and Hawking's (4.4) to (4.6), the Einstein
+    tensor equals 2(F_ma F_n^a - g_mn F^2/4), dF = 0 and div F = 0 wherever U is harmonic and omega
+    solves its equation, and the integrability of that equation is Laplace's for U. Each of the
+    other charts against the cylindrical one pulled back at its own U, which is checked harmonic
+    with its omega in the flat metric of its own coordinates; the spheroidal chart is also the
+    published metric of kerr_newman at GM/c^2 = r_Q = m in the radius r + m, and the spherical
+    chart at l = 0 is the published isotropic chart of majumdar_papapetrou in the radius r - m."""
+    if system_id == "cylindrical":
+        israel_wilson_perjes_maxwell(chart)
+        return
+    t, r, theta, phi = chart.symbols
+    m = chart.reader.parameters["m"]
+    g = chart.geo.g
+    if system_id == "spheroidal":
+        a = chart.reader.parameters["a"]
+        U = 1 + m / (r + sp.I * a * sp.cos(theta))
+        radial, omega = r ** 2 + a ** 2, a * m * (2 * r + m) * sp.sin(theta) ** 2 / (r ** 2 + a ** 2 * sp.cos(theta) ** 2)
+        rho, z = sp.sqrt(radial) * sp.sin(theta), r * sp.cos(theta)
+    else:
+        l = chart.reader.parameters["l"]
+        U = 1 + (m + sp.I * l) / (r - m)
+        radial, omega = (r - m) ** 2, 2 * l * sp.cos(theta)
+        rho, z = (r - m) * sp.sin(theta), (r - m) * sp.cos(theta)
+    P, Q = sp.re(sp.expand_complex(U)), sp.im(sp.expand_complex(U))
+    # Flat space in these coordinates is (radial + rest)(dr^2/radial + dtheta^2) + radial sin^2 dphi^2,
+    # so an axisymmetric f is harmonic where d_r(radial d_r f) + d_theta(sin d_theta f)/sin vanishes.
+    for f in (P, Q):
+        laplacian = sp.diff(radial * sp.diff(f, r), r) + sp.diff(sp.sin(theta) * sp.diff(f, theta), theta) / sp.sin(theta)
+        if sp.simplify(laplacian) != 0:
+            raise AssertionError(f"israel_wilson_perjes/{system_id}: U is not harmonic")
+    twist = [P * sp.diff(Q, x) - Q * sp.diff(P, x) for x in (r, theta)]
+    if (sp.simplify(sp.diff(omega, theta) - 2 * sp.sin(theta) * radial * twist[0]) != 0
+            or sp.simplify(sp.diff(omega, r) + 2 * sp.sin(theta) * twist[1]) != 0):
+        raise AssertionError(f"israel_wilson_perjes/{system_id}: omega does not solve curl omega = 2 Im(conj(U) grad U)")
+    W2 = sp.simplify(P ** 2 + Q ** 2)
+    there = sp.Matrix([[-1 / W2, 0, -omega / W2, 0], [0, W2, 0, 0],
+                       [-omega / W2, 0, W2 * rho ** 2 - omega ** 2 / W2, 0], [0, 0, 0, W2]])
+    image = [t, rho, phi, z]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = J.T * there * J
+
+    def same(matrix, what, at=()):
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(matrix[i, j] - g[i, j].subs(at)) != 0:
+                    raise AssertionError(f"israel_wilson_perjes/{system_id}: the chart is not {what} in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    same(pulled, "the cylindrical chart pulled back")
+
+    def published(metric_id, published_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == published_id)
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        values = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        matrix = sp.Matrix(4, 4, lambda i, j: reader(values.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix.subs(dict(zip([reader.symbol[x] for x in entry["coords"]], [t, sp.Symbol("IWP_radius"), theta, phi])))
+
+    if system_id == "spheroidal":
+        reader, matrix = published("kerr_newman", "boyer_lindquist")
+        swaps = {reader.parameters["M"]: m * reader.c ** 2 / reader.parameters["G"], reader.parameters["r_Q"]: m,
+                 reader.parameters["a"]: chart.reader.parameters["a"]}
+        same(matrix.subs(swaps).subs(sp.Symbol("IWP_radius"), r + m), "Kerr and Newman's published metric at charge equal to mass")
+    else:
+        reader, matrix = published("majumdar_papapetrou", "isotropic")
+        same(matrix.subs(reader.parameters["m"], m).subs(sp.Symbol("IWP_radius"), r - m),
+             "Majumdar and Papapetrou's published single hole at l = 0", [(chart.reader.parameters["l"], 0)])
+
+
+def israel_wilson_perjes_maxwell(chart):
+    t, rho, phi, z = chart.symbols
+    P, Q, on_shell = israel_wilson_perjes_fields(chart)
+    omega = chart.reader.parameters["omega"]
+    g, gi = chart.geo.g, chart.geo.ginv
+    # d_rho d_z omega taken both ways differs by 2 rho (P lap Q - Q lap P), which Laplace's equation removes.
+    mixed = (sp.diff(-2 * rho * (P * sp.diff(Q, rho) - Q * sp.diff(P, rho)), rho)
+             - sp.diff(2 * rho * (P * sp.diff(Q, z) - Q * sp.diff(P, z)), z))
+    lap = [sp.diff(f, rho, 2) + sp.diff(f, rho) / rho + sp.diff(f, z, 2) for f in (P, Q)]
+    if sp.simplify(mixed + 2 * rho * (P * lap[1] - Q * lap[0])) != 0:
+        raise AssertionError("israel_wilson_perjes: the integrability of omega's equation is not Laplace's for U")
+    Phi, chi = P / (P ** 2 + Q ** 2), -Q / (P ** 2 + Q ** 2)
+    W = chart.reader.parameters["W"]
+    root = W ** 2 * rho
+    if vm.norm(g.det() + root ** 2) != 0:
+        raise AssertionError("israel_wilson_perjes: the determinant is not -W^4 rho^2")
+    X = chart.symbols
+    # The electric part is given lowered and the magnetic part raised, so the three F_ij are solved for.
+    unknown = sp.symbols("IWP_F12 IWP_F13 IWP_F23")
+    F = sp.zeros(4, 4)
+    for i in (1, 3):
+        F[0, i], F[i, 0] = sp.diff(Phi, X[i]), -sp.diff(Phi, X[i])
+    for (i, j), f in zip(((1, 2), (1, 3), (2, 3)), unknown):
+        F[i, j], F[j, i] = f, -f
+    Fu = gi * F * gi
+    # epsilon^{rho phi z} = 1: F^{rho phi} = d_z chi/root, F^{phi z} = d_rho chi/root, F^{z rho} = 0.
+    wanted = {(1, 2): sp.diff(chi, z) / root, (2, 3): sp.diff(chi, rho) / root, (1, 3): 0}
+    solved = sp.solve([Fu[i, j] - value for (i, j), value in wanted.items()], unknown, dict=True)[0]
+    F = F.subs(solved)
+    Fu = gi * F * gi
+    F2 = sum(F[a, b] * Fu[a, b] for a in range(4) for b in range(4))
+    einstein = chart.geo.einstein_ll()
+    for a in range(4):
+        for b in range(a, 4):
+            stress = 2 * (sum(F[a, c] * F[b, d] * gi[c, d] for c in range(4) for d in range(4)) - g[a, b] * F2 / 4)
+            if on_shell(einstein[a][b] - stress) != 0:
+                raise AssertionError(f"israel_wilson_perjes: G_{a}{b} is not the Maxwell stress on a solution")
+    for b in range(4):
+        if on_shell(sum(sp.diff(root * Fu[a, b], X[a]) for a in range(4)) / root) != 0:
+            raise AssertionError(f"israel_wilson_perjes: Maxwell's equation {b} fails on a solution")
+    for a, b, c in itertools.combinations(range(4), 3):
+        if on_shell(sp.diff(F[a, b], X[c]) + sp.diff(F[b, c], X[a]) + sp.diff(F[c, a], X[b])) != 0:
+            raise AssertionError("israel_wilson_perjes: dF does not vanish on a solution")
+
+
+CHARTS["israel_wilson_perjes"] = [lambda s=s: israel_wilson_perjes(s) for s in IWP_CHARTS]
 
 
 def write(spec):
