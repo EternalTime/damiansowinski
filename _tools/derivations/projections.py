@@ -822,6 +822,17 @@ CAPTIONS = {
         "A ray that starts outside the beam falls through the logarithm of the vacuum field, crosses the beam, "
         "and climbs as far out on the other side.",
     ],
+    ("schrodinger_spacetime", "global", "trap"): [
+        "The surface $X = 0$ of the global chart seen from the side, $V$ left out, with $cT$ across and $R$ up, "
+        "in units of $\\beta$ ($L = \\beta$, $\\omega = c/\\beta$). Each curve is a null geodesic launched at "
+        "$T = 0$ from the depth $R_0$ with $\\dot{R} = 0$, along the curve moving left of the plane of $T$ and "
+        "$V$ there. The trap turns it back: its depth swings between $R_0$ and $\\beta^2/R_0$ as "
+        "$R^2 = R_0^2\\cos^2\\omega T + (\\beta^4/R_0^2)\\sin^2\\omega T$, once in every $\\pi/\\omega$ of $T$, "
+        "and the ray launched at $R_0 = \\beta$ keeps its depth.",
+        "No ray reaches the boundary $R = 0$. The dashed lines are $\\omega T = \\pm\\pi/2$, the edges of the "
+        "Poincaré chart, whose $t = \\tan(\\omega T)/\\omega$ and $r = R/\\cos\\omega T$ both run to infinity there: "
+        "a ray leaves that chart at a finite value of its affine parameter, and in the global chart it swings on.",
+    ],
     ("wormhole_time_machine", "lorentz", "trip"): [
         "The slice $Y = 0$ of $T$, $Z$, and $X$ in the Lorentz frame of the left mouth, $T$ up, with the mouths "
         "drawn as their world lines. The left mouth rests at $Z = 0$, and the right one leaves $Z = 10\\,r_0$ "
@@ -1037,6 +1048,9 @@ FIGURES = [
     # Lifshitz spacetime at z = 2, as its flat views are drawn: light from one event at u = 2L.
     Projection("lifshitz_spacetime", "poincare", "rays", "light sent toward the boundary",
                lambda spec: lifshitz_rays(spec), nr.LIFSHITZ, {"y": "0"}, fields=("christoffel",)),
+    # Schrodinger spacetime's global chart at the values its flat views are drawn at, omega = c/beta.
+    Projection("schrodinger_spacetime", "global", "trap", "light in the trap", lambda spec: trap_rays(spec),
+               {**nr.SCHRODINGER, "omega": 1}, {"X": "0"}, fields=("christoffel",)),
     # Gott's closed timelike curve round both strings, at the values the flat views of Grant's
     # charts are drawn at: half deficit angle pi/3, v = 4c/5 and d = l/2.
     Projection("gott_time_machine", "centre_of_momentum", "loop", "a closed timelike curve round both strings",
@@ -1668,3 +1682,85 @@ def lifshitz_rays(spec, half_width=4.0, depth=3.0):
     fig.legend("line", "edge", "the boundary, $u = 0$")
     fig.legend("point", "string", "the event the rays leave, at $x = 0$ and $u = 2L$")
     return fig.done(pad=0.03), sl
+
+
+# ---------------------------------------------------------------- light in Schrodinger spacetime's trap
+
+def trap_rays(spec, depths=(1.0, 0.8, 0.6, 0.45, 0.35), span=math.pi):
+    """Null geodesics of Schrodinger spacetime's global chart on the surface X = 0, seen from the
+    side with V left out: cT across the page and R up it, at L = beta = 1 and omega = c/beta.
+
+    The reflection of X keeps every geodesic launched in the surface in it. Each ray is integrated
+    in T, V and R with the published Christoffel symbols, from T = 0 at the depth R_0 with no
+    velocity along R, along the null direction of the plane of T and V that is not d/dV,
+    dV = -(1/R^2 + R^2) dT/2, both ways until |T| = `span`. It is checked null against the
+    published metric all the way, to keep its momentum along V, g_TV dT/dlambda, and to follow
+    R^2 = R_0^2 cos^2 T + sin^2 T/R_0^2, which is the Poincare chart's r^2 = R_0^2 + t^2/R_0^2
+    carried along t = tan T and r = R/cos T; the ray at R_0 = 1 is checked to keep its depth."""
+    sl = Slice(spec.metric, spec.system, ("T", "V", "R"), "cartesian", spec.params, spec.fixed, spec.functions)
+    _, entry, reader = nr.load(spec.metric, spec.system)
+    names = entry["coords"]
+    keep = [names.index(c) for c in ("T", "V", "R")]
+    R_ = reader.symbol["R"]
+    gamma = {}
+    for c in entry["christoffel"]["variants"]["ull"]["nonzero"]:
+        ix = tuple(names.index(n) for n in c["indices"])
+        value = sl.prep(reader(c["value"]))
+        if value == 0:
+            continue
+        if not all(i in keep for i in ix[1:]):
+            # A symbol with X below multiplies the velocity along X, which a ray in the surface has none of.
+            continue
+        if ix[0] not in keep:
+            raise SystemExit(f"{key(spec)}: Gamma^{c['indices'][0]}_{c['indices'][1]}{c['indices'][2]} "
+                             "does not vanish on the surface, so a ray launched in it leaves it")
+        if value.free_symbols - {R_}:
+            raise SystemExit(f"{key(spec)}: a Christoffel symbol depends on more than R on the surface")
+        gamma[tuple(keep.index(i) for i in ix)] = sp.lambdify(R_, value, "numpy")
+
+    def rhs(_, w):
+        k = w[3:]
+        acc = np.zeros(3)
+        for (a, b, c), f in gamma.items():
+            acc[a] -= float(f(w[2])) * k[b] * k[c]
+        return np.concatenate([k, acc])
+
+    def trace(R0, sense):
+        start = [0.0, 0.0, R0, sense, -sense * (1 / R0 ** 2 + R0 ** 2) / 2, 0.0]
+
+        def leave(_, w):
+            return span - abs(w[0])
+        leave.terminal = True
+        sol = solve_ivp(rhs, (0, 400), start, events=leave, rtol=1e-12, atol=1e-12, method="DOP853", max_step=0.01)
+        T, V, R, kT, kV, kR = sol.y
+        if not abs(abs(T[-1]) - span) < 1e-9:
+            raise SystemExit(f"{key(spec)}: the ray from R = {R0} stops at T = {T[-1]:.3f}")
+        null = max(abs(float(k @ sl.metric((0.0, 0.0, r)) @ k)) for r, k in zip(R[::20], sol.y[3:].T[::20]))
+        if not null < 1e-9:
+            raise SystemExit(f"{key(spec)}: a ray misses null by {null:.1e}")
+        momentum = kT / R ** 2
+        if not np.ptp(momentum) < 1e-9:
+            raise SystemExit(f"{key(spec)}: a ray loses its momentum along V, by {np.ptp(momentum):.1e}")
+        miss = np.abs(R ** 2 - (R0 ** 2 * np.cos(T) ** 2 + np.sin(T) ** 2 / R0 ** 2)).max()
+        if not miss < 1e-8:
+            raise SystemExit(f"{key(spec)}: the ray from R = {R0} misses its closed form by {miss:.1e}")
+        return np.column_stack([T, R])
+
+    fig = Figure(spec.view, spec.label, Camera(-90, 90))
+    fig.flat()
+    flat = lambda P: np.column_stack([P, np.zeros(len(P))])
+    top = 1 / min(depths) + 0.15
+    fig.line("axis", flat(np.array([[-span, 0.0], [span, 0.0]])))
+    for edge in (-math.pi / 2, math.pi / 2):
+        fig.line("edge", flat(np.array([[edge, 0.0], [edge, top]])))
+    for R0 in depths:
+        back, on = trace(R0, -1), trace(R0, 1)
+        fig.line("below" if R0 == 1.0 else "above", flat(np.vstack([back[::-1], on[1:]])))
+    fig.label(np.array([-math.pi / 2, top, 0.0]), "$\\omega T = -\\pi/2$", "bc", cls="small", dy=-4)
+    fig.label(np.array([math.pi / 2, top, 0.0]), "$\\omega T = \\pi/2$", "bc", cls="small", dy=-4)
+    fig.label(np.array([span, 0.0, 0.0]), "$R = 0$", "br", cls="small", dy=-4)
+    fig.legend("line", "above", "light launched at $T = 0$ from $R_0 = 0.8$, $0.6$, $0.45$ and $0.35\\,\\beta$")
+    fig.legend("line", "below", "light launched from $R_0 = \\beta$, the bottom of the trap, which keeps its depth")
+    fig.legend("line", "edge", "the edges of the Poincaré chart, $\\omega T = \\pm\\pi/2$")
+    fig.legend("line", "axis", "the boundary $R = 0$")
+    return fig.done(pad=0.02), sl

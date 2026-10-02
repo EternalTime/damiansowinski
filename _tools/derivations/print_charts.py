@@ -8,6 +8,7 @@ kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
+schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer and kerr_taub_nut, and Godel's cylindrical chart.
 
@@ -11388,6 +11389,257 @@ def siklos_check(chart, system):
 
 
 CHARTS["siklos"] = [lambda s=s: siklos(s) for s in SIKLOS_CHARTS]
+
+
+# -- Schrodinger spacetime -----------------------------------------------------------------
+
+SCHRODINGER_CHARTS = ("poincare", "inverse_radius", "global", "dynamical_exponent", "poincare_5d", "poincare_6d")
+SCHRODINGER_H = "h = \\left(\\dfrac{\\beta}{r}\\right)^{2z - 2}"
+
+
+def schrodinger_spacetime(system):
+    """Schrodinger spacetime, anti-de Sitter space in null coordinates with a term in dt^2 added
+    that leaves of its symmetries those of the free Schrodinger equation, in six charts:
+
+    poincare            Son's (19) and Balasubramanian and McGreevy's (2.1) at z = 2 with one
+                        spatial direction, (L^2/r^2)(-(beta^2/r^2) c^2 dt^2 - 2c dt dxi + dx^2 + dr^2),
+                        with the beta of Herzog, Rangamani and Ross's (2.3), which a boost of t
+                        and xi sets to any value and which is zero for anti-de Sitter space;
+    inverse_radius      their (2.3) at nu = 1, with rho = L^2/r, the boundary at infinity;
+    global              Blau, Hartong and Rollier's (3.20), cT = (c/omega) tan(omega T), which
+                        is geodesically complete;
+    dynamical_exponent  Balasubramanian and McGreevy's (2.1) with the exponent z free, the term
+                        in dt^2 named h = (beta/r)^{2z - 2} and every value a polynomial in it;
+    poincare_5d         the first chart with two spatial directions, the one type IIB
+                        supergravity holds;
+    poincare_6d         with three, Son's own case.
+
+    schrodinger_check holds each chart to Einstein's equations with Lambda = -(d + 1)(d + 2)/2L^2
+    and a massive vector field, Son's (21) to (23), and each chart after the first to the first.
+    schrodinger_spacetime.md is the derivation."""
+    reals = "(-\\infty, \\infty)"
+    front = "\\dfrac{L^2}{r^2}"
+
+    def poincare(space, term, c, cc):
+        return ("ds^2 = " + front + "\\left(-" + term + cc + "dt^2 - 2" + c + "dt\\,d\\xi + "
+                + " + ".join("d" + s + "^2" for s in space) + " + dr^2\\right)")
+
+    beta_term = "\\dfrac{\\beta^2}{r^2}"
+    edge = "r = 0 \\;\\text{(the boundary)}"
+    if system in ("poincare", "poincare_5d", "poincare_6d", "dynamical_exponent"):
+        space = {"poincare": ["x"], "dynamical_exponent": ["x"], "poincare_5d": ["x_1", "x_2"],
+                 "poincare_6d": ["x_1", "x_2", "x_3"]}[system]
+        coords = ["t", "\\xi", *space, "r"]
+        domains = [c + " \\in " + reals for c in coords[:-1]] + ["r \\in (0, \\infty)", edge]
+        if system == "dynamical_exponent":
+            name, parameters = "General Dynamical Exponent", ["L", "\\beta", "z", SCHRODINGER_H]
+            term = "\\left(\\dfrac{\\beta}{r}\\right)^{2z - 2}"
+        else:
+            name = {"poincare": "Poincaré", "poincare_5d": "Poincaré, Five Dimensions",
+                    "poincare_6d": "Poincaré, Six Dimensions"}[system]
+            parameters, term = ["L", "\\beta"], beta_term
+        line, chart_line = poincare(space, term, "c\\,", "c^2"), poincare(space, term, "\\,", "")
+    elif system == "inverse_radius":
+        name, coords, parameters = "Inverse Radius", ["t", "\\xi", "x", "\\rho"], ["L", "\\beta"]
+        domains = [c + " \\in " + reals for c in coords[:-1]] + [
+            "\\rho \\in (0, \\infty)", "\\rho \\to \\infty \\;\\text{(the boundary)}"]
+
+        def inverse(c, cc):
+            return ("ds^2 = \\dfrac{\\rho^2}{L^2}\\left(-\\dfrac{\\beta^2\\rho^2}{L^4}" + cc + "dt^2 - 2" + c
+                    + "dt\\,d\\xi + dx^2\\right) + \\dfrac{L^2}{\\rho^2}d\\rho^2")
+        line, chart_line = inverse("c\\,", "c^2"), inverse("\\,", "")
+    else:
+        name, coords, parameters = "Global", ["T", "V", "X", "R"], ["L", "\\beta", "\\omega"]
+        domains = [c + " \\in " + reals for c in coords[:-1]] + [
+            "R \\in (0, \\infty)", "R = 0 \\;\\text{(the boundary)}"]
+
+        def trapped(c, cc, w2):
+            return ("ds^2 = \\dfrac{L^2}{R^2}\\left(-\\dfrac{\\beta^2}{R^2}" + cc + "dT^2 - " + w2
+                    + "\\left(R^2 + X^2\\right)dT^2 - 2" + c + "dT\\,dV + dX^2 + dR^2\\right)")
+        line = trapped("c\\,", "c^2", "\\omega^2")
+        chart_line = trapped("\\,", "", "\\dfrac{\\omega^2}{c^2}")
+    probe = vm.Reader(coords, parameters, ())
+    L, beta = probe.parameters["L"], probe.parameters["beta"]
+    radial = probe.symbol[coords[-1]]
+    n = len(coords)
+    spec = {
+        "metric_id": "schrodinger_spacetime",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": [*probe.symbol.values(), L, beta], "factors": [L, beta, *probe.symbol.values()],
+                    "flip": False},
+        "check": lambda chart: schrodinger_check(chart, system),
+        "ricci_scalar": "-\\dfrac{" + str(n * (n - 1)) + "}{L^2}",
+    }
+    if system == "global":
+        # Each value is written over one denominator with the numerator a sum by powers of beta,
+        # anti-de Sitter's part and the deformation's first and the trap's after it, and never as
+        # the product (omega R^2 + beta c)(omega R^2 - beta c) a factoring makes of it.
+        omega, c = probe.parameters["omega"], probe.c
+        X = probe.symbol["X"]
+
+        def over_one_denominator(value):
+            numerator, denominator = sp.fraction(sp.cancel(sp.together(sp.sympify(value))))
+            return sp.expand(numerator) / sp.factor(denominator)
+        spec["pretty"] = over_one_denominator
+        spec["printer"] = {"lead": [beta, omega, radial, X, L, c], "factors": [L, beta, omega, c, radial, X],
+                           "flip": False, "collect": lambda poly, pr: cp.collect_by(poly, [beta], pr)}
+        trap = "\\beta^2c^2 + \\omega^2R^2\\left(R^2 + X^2\\right)"
+        spec["components"] = {
+            "metric_components": {("T", "T"): "-\\dfrac{L^2\\left(" + trap + "\\right)}{c^2R^4}"},
+            "inverse_metric_components": {("V", "V"): "\\dfrac{" + trap + "}{L^2c^2}"}}
+    if system == "dynamical_exponent":
+        z = probe.parameters["z"]
+        H = sp.Symbol("SCHRODINGERH", positive=True)
+
+        def pretty(value):
+            # The checker hands every value back in r^{2z} and beta^{2z}. Here beta^{2z} is
+            # written h r^{2z} beta^2/r^2, after which every power of r^{2z} cancels and beta
+            # with it.
+            X = sp.Symbol("SCHRODINGERX", positive=True)
+
+            def power(e):
+                k = sp.expand(e.exp).coeff(z) / 2
+                rest = sp.expand(e.exp - 2 * z * k)
+                if e.base == beta:
+                    return (H * X * beta ** 2 / radial ** 2) ** k * beta ** rest
+                return X ** k * radial ** rest
+            v = sp.sympify(value).replace(
+                lambda e: e.is_Pow and e.base in (radial, beta) and e.exp.has(z), power)
+            v = sp.factor(sp.cancel(sp.together(v)))
+            if v.has(X) or v.has(beta) or any(p.exp.has(z) for p in v.atoms(sp.Pow)):
+                raise AssertionError(f"schrodinger_spacetime: {value} is not a polynomial in h over r, L and z")
+            return v
+        spec["pretty"] = pretty
+        spec["printer"] = {"lead": [H, *probe.symbol.values(), L, z], "factors": [z, L, *probe.symbol.values(), H],
+                           "flip": False, "overrides": {H: "h"},
+                           "collect": lambda poly, pr: cp.collect_by(poly, [H], pr)}
+    return spec
+
+
+def schrodinger_check(chart, system):
+    """Every chart solves Son's toy model, his (21) to (23), which Balasubramanian and McGreevy's
+    dust is: with d = n - 3 spatial directions and Lambda = -(d + 1)(d + 2)/2L^2, the tensor
+    G_ab + Lambda g_ab vanishes in every slot but the one of the time twice, where it is
+    (z - 1)(2z + d) h/r^2, and it is the stress tensor H_ac H_b^c - g_ab H^2/4 + m^2 (C_a C_b -
+    g_ab C^2/2) of the vector field C = -L sqrt((z - 1)/z) (beta^{z-1}/r^z) c dt, which solves
+    Proca's equation with m^2 = z(z + d)/L^2; z is 2 in every chart but the one that keeps it.
+    Each chart after the first is the first pulled back: along r = L^2/rho; along Blau, Hartong
+    and Rollier's (3.19), ct = (c/omega) tan(omega T), r = R/cos(omega T), x = X/cos(omega T) and
+    xi = V + (omega/2c)(R^2 + X^2) tan(omega T); at z = 2; and with every spatial direction but
+    the first left out. The Poincare chart is Siklos's published one at H = -beta^2/x^2, with his
+    u, v, x and y its ct, xi, r and x, and anti-de Sitter space's published Poincare chart at
+    beta = 0 along sqrt(2) ct' = ct + xi, sqrt(2) x' = xi - ct, and d/dxi is a null Killing vector
+    and a repeated principal null direction of the Weyl tensor."""
+    P = chart.reader.parameters
+    L, beta = P["L"], P["beta"]
+    x = chart.symbols
+    names = chart.coords_tex
+    n = len(x)
+    d = n - 3
+    g, ginv = chart.geo.g, chart.geo.ginv
+    z = P["z"] if "z" in P else sp.Integer(2)
+    # The term in dt^2, the one-form c dt of the Poincare chart and its radius, in this chart.
+    if system == "inverse_radius":
+        r = L ** 2 / x[-1]
+    else:
+        r = x[-1]
+    h = (beta / r) ** (2 * z - 2)
+    Lam = -sp.Rational((d + 1) * (d + 2), 2) / L ** 2
+    einstein = chart.geo.einstein_ll()
+    C = [-L * sp.sqrt((z - 1) / z) * beta ** (z - 1) / r ** z] + [0] * (n - 1)
+    Hdd = sp.Matrix(n, n, lambda a, b: sp.diff(C[b], x[a]) - sp.diff(C[a], x[b]))
+    Huu = ginv * Hdd * ginv
+    root = sp.sqrt(vm.norm(-g.det()))
+    Cu = ginv * sp.Matrix(C)
+    m2 = z * (z + d) / L ** 2
+    tidy = lambda e: sp.simplify(sp.powdenest(sp.powsimp(sp.expand_power_base(e, force=True)), force=True))  # noqa: E731
+    for b in range(n):
+        divergence = sum(sp.diff(root * Huu[a, b], x[a]) for a in range(n)) / root
+        if tidy(divergence - m2 * Cu[b]) != 0:
+            raise AssertionError(f"schrodinger_spacetime: the vector field of {system} misses Proca's equation "
+                                 f"in slot {names[b]}")
+    H2 = sum(Hdd[a, b] * Huu[a, b] for a in range(n) for b in range(n))
+    C2 = sum(C[a] * Cu[a] for a in range(n))
+    for a in range(n):
+        for b in range(n):
+            stress = (sum(Hdd[a, c] * Hdd[b, e] * ginv[c, e] for c in range(n) for e in range(n)) - g[a, b] * H2 / 4
+                      + m2 * (C[a] * C[b] - g[a, b] * C2 / 2))
+            dust = (z - 1) * (2 * z + d) * h / r ** 2 if a == b == 0 else 0
+            left = vm._at(einstein, (a, b)) + Lam * g[a, b]
+            if tidy(left - dust) != 0 or tidy(stress - dust) != 0:
+                raise AssertionError(f"schrodinger_spacetime: Einstein's equations with the vector field fail in "
+                                     f"slot {names[a]}{names[b]} of {system}")
+    # d/dxi, the second coordinate of every chart: null, Killing, and a repeated principal null direction.
+    if g[1, 1] != 0 or g.has(x[1]):
+        raise AssertionError(f"schrodinger_spacetime: the second coordinate of {system} is not a null Killing direction")
+    weyl = chart.geo.weyl_llll()
+    for a, b, c in itertools.product(range(n), repeat=3):
+        if vm.norm(vm._at(weyl, (a, b, c, 1))) != 0:
+            raise AssertionError(f"schrodinger_spacetime: d/dxi is not a repeated principal null direction in {system}")
+
+    def same(matrix, what, tidy=sp.simplify):
+        for i in range(matrix.shape[0]):
+            for j in range(i, matrix.shape[0]):
+                if tidy(matrix[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"schrodinger_spacetime: the {system} chart is not {what} in slot "
+                                         f"{names[i]}{names[j]}")
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        matrix = sp.Matrix(4, 4, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix, [reader.symbol[c] for c in entry["coords"]]
+
+    if system == "poincare":
+        t, xi, x1, rr = x
+        reader, matrix, (u, v, sx, sy) = published("siklos", "siklos")
+        at = {reader.parameters["H"]: -beta ** 2 / sx ** 2, reader.parameters["L"]: L}
+        matrix = matrix.subs(at).subs({u: t, v: xi, sx: rr, sy: x1}, simultaneous=True)
+        order = [0, 1, 3, 2]
+        same(sp.Matrix(4, 4, lambda i, j: matrix[order[i], order[j]]), "Siklos's published chart at H = -beta^2/x^2")
+        reader, matrix, there = published("anti_de_sitter", "poincare")
+        image = [(t + xi) / sp.sqrt(2), (xi - t) / sp.sqrt(2), x1, rr]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], x[j]))
+        pulled = J.T * matrix.subs(reader.parameters["L"], L).subs(dict(zip(there, image)), simultaneous=True) * J
+        same(pulled, "anti-de Sitter space's published Poincare chart at beta = 0", lambda e: sp.simplify(e.subs(beta, 0)))
+        return
+    source = schrodinger_spacetime("poincare")
+    first = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    old = first.geo.g.subs({first.reader.parameters["L"]: L, first.reader.parameters["beta"]: beta})
+    if system == "inverse_radius":
+        image = [x[0], x[1], x[2], L ** 2 / x[3]]
+    elif system == "global":
+        w = P["omega"] / chart.reader.c
+        T, V, X, R = x
+        image = [sp.tan(w * T) / w, V + w * (R ** 2 + X ** 2) * sp.tan(w * T) / 2, X / sp.cos(w * T), R / sp.cos(w * T)]
+    elif system == "dynamical_exponent":
+        same(old.subs(dict(zip(first.symbols, x))), "the Poincare chart at z = 2",
+             lambda e: sp.simplify(sp.powdenest(e.subs(P["z"], 2), force=True)))
+        return
+    else:
+        # The plane of the first spatial direction, every other one left out.
+        keep = [0, 1, 2, n - 1]
+        there = old.subs(dict(zip(first.symbols, [x[i] for i in keep])))
+        for i, a in enumerate(keep):
+            for j, b in enumerate(keep):
+                if sp.simplify(there[i, j] - g[a, b]) != 0:
+                    raise AssertionError(f"schrodinger_spacetime: {system} is not the Poincare chart on the plane "
+                                         f"of its first spatial direction in slot {names[a]}{names[b]}")
+        for a in range(3, n - 1):
+            for b in range(n):
+                if sp.simplify(g[a, b] - (g[2, 2] if a == b else 0)) != 0:
+                    raise AssertionError(f"schrodinger_spacetime: the spatial directions of {system} are not alike")
+        return
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], x[j]))
+    pulled = J.T * old.subs(dict(zip(first.symbols, image)), simultaneous=True) * J
+    same(pulled, "the Poincare chart pulled back", lambda e: sp.simplify(sp.trigsimp(e)))
+
+
+CHARTS["schrodinger_spacetime"] = [lambda s=s: schrodinger_spacetime(s) for s in SCHRODINGER_CHARTS]
 
 
 # -- Tolman's fluid spheres, solution VII -------------------------------------------------

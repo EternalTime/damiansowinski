@@ -259,7 +259,7 @@ class Slice:
                         raise SystemExit(f"{metric_id}/{system_id}: turning {x} into {turn} does not carry the "
                                          "metric onto itself, so the plane is no surface of revolution")
                 full = [e.subs(self.phi, 0) for e in full]
-            self.gxx, self.gxp, self.gpp = (sp.simplify(e) for e in full)
+            self.gxx, self.gxp, self.gpp = (self._without_angle(sp.simplify(e)) for e in full)
         else:
             i, j = entry["coords"].index(x), entry["coords"].index(phi)
             # The slice's tangent along x in the chart: 1 along x and d(expression)/dx along a moving
@@ -272,6 +272,14 @@ class Slice:
             gxp = sum(tangent[a] * g[a, j] for a in range(n))
             self.gxx, self.gxp, self.gpp = prep(gxx), prep(gxp), prep(g[j, j])
         self._surface(f"{metric_id}/{system_id} on the slice of {x} and {turn or phi}", rewrite)
+
+    def _without_angle(self, e):
+        """A component simplify() leaves the angle in, taken once more with sin^2 written as
+        1 - cos^2 and the fraction cancelled, which is what clears the angle from a rational
+        function of its sine and cosine, as on the hyperbolic plane swept about one of its points."""
+        if not e.has(self.phi):
+            return e
+        return sp.factor(sp.cancel(sp.together(e).subs(sp.sin(self.phi) ** 2, 1 - sp.cos(self.phi) ** 2)))
 
     def _surface(self, where, rewrite=None):
         """Check the slice is a surface of revolution, and make the functions of x it is drawn by."""
@@ -3835,6 +3843,106 @@ def ads_soliton(ck, src):
                  stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, "
                         "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of "
                         "revolution in flat space carries the surface; Minkowski space carries it."])]
+
+
+def schrodinger_spacetime(ck, src):
+    """The surface t = 0, xi = 0 of the Poincare chart, in units of L: (dx^2 + dr^2)/r^2, the
+    hyperbolic plane of curvature -1/L^2 as Poincare's half plane, at every beta and in every
+    chart, since the deformation stands in g_tt alone. It is swept about its point x = 0, r = L:
+    with zeta = tau e^{i phi} on the unit disc, x + i r = i (1 + zeta)/(1 - zeta) carries the
+    circle of radius tau about the centre of the disc onto the circle a proper distance
+    s = 2 artanh(tau) from that point, and the profile is the half line x = 0 from r = L down, where
+    tau = (r - L)/(r + L) and s = ln(r/L). The published metric pulled back along that map is
+    dr^2/r^2 + ((r^2 - 1)/2r)^2 d phi^2, so the circles have the radius sinh(s) and grow as cosh(s),
+    faster than the distance, which is checked: no surface of revolution in flat space carries the
+    plane, and in Minkowski space it is the sheet Z = cosh(s) - 1 of a hyperboloid, drawn to s = 2
+    with the light cone it nears.
+
+    The curves marked are lines of constant r, r = L/2, L and 2L, the depths of the planes the
+    spacetime diagrams draw at L = beta: horocycles through the one point of the rim where r is
+    infinite. Each is checked to lie on the sheet and to have between neighbouring points a chord,
+    measured with dX^2 + dY^2 - dZ^2, equal to the length of the same step of x in the published
+    metric, as a horocycle's is."""
+    name = "Schrodinger spacetime, the plane of x and r"
+    tau = "((r - 1)/(r + 1))"
+    D = f"(1 - 2*{tau}*cos(x) + {tau}**2)"
+    sl = Slice(src, "schrodinger_spacetime", "poincare", "r", "x", {"t": 0, "xi": 0}, {"L": 1, "beta": 1},
+               swept={"r": f"(1 - {tau}**2)/{D}", "x": f"-2*{tau}*sin(x)/{D}"}, space="minkowski")
+    reach = 2.0
+    top = math.exp(reach)
+    size = 2 * math.sinh(reach)
+    ck.stops(f"{name} in flat space", sl, np.exp(np.linspace(1e-3, reach, 400)))
+    sheet = Piece("sheet", "sheet", sl, 1.0, top, 0.0, 1,
+                  (("axis", "the point $x = 0$, $r = L$"),
+                   ("edge", "the sheet runs on toward the light cone, to the boundary $r = 0$ and to "
+                            "$r \\to \\infty$")),
+                  [(math.exp(d), "r", None) for d in (0.5, 1.0, 1.5, reach)], size,
+                  # The lines of constant r cross the sheet between its circles, so the profile is written
+                  # finely enough for a chord of it to follow the hyperboloid under them.
+                  knots=np.exp(np.linspace(0.0, reach, 97))[1:-1])
+    cone = FormPiece("cone", sl, np.exp(np.linspace(0.0, reach, 81)), lambda r: np.sinh(np.log(r)),
+                     lambda r: np.sinh(np.log(r)) - 1.0,
+                     (("apex", "the apex of the light cone, a distance $L$ below the point $x = 0$, $r = L$"),
+                      ("edge", "the cone runs on")), size)
+    ck.isometry(name, sheet)
+    ck.form(f"{name}: the hyperboloid Z = L cosh(s) - L", sheet, lambda r: np.cosh(np.log(r)) - 1, size)
+    ck.radius(f"{name}: rho = L sinh(s)", sheet, lambda r: np.sinh(np.log(r)), size)
+    ck.add(f"{name}: from the point to the last circle is 2 L", abs(sl.proper(1.0, top) - reach), 1e-9)
+
+    # The published g_xx at r = c measures a step of x along the line r = c.
+    _, entry, R = nr.load("schrodinger_spacetime", "poincare")
+    g = nr.published_matrix(R, entry, "metric_components")
+    names = {R._plain(n): sym for n, sym in R.symbol.items()}
+    gxx = sp.lambdify(names["r"], g[2, 2].subs(R.parameters["L"], 1), "numpy")
+    edge = math.tanh(reach / 2)
+    curves = []
+    for c in (0.5, 1.0, 2.0):
+        # Where the line r = c leaves the last circle, |zeta| = tanh(1), by bisection.
+        def radius(x):
+            w = complex(x, c)
+            return abs((w - 1j) / (w + 1j))
+        lo, hi = 0.0, 1.0
+        while radius(hi) < edge * (1 - 1e-9):
+            hi *= 2
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if radius(mid) < edge * (1 - 1e-9) else (lo, mid)
+        x = np.linspace(-lo, lo, 241)
+        w = x + 1j * c
+        zeta = (w - 1j) / (w + 1j)
+        t = np.abs(zeta)
+        ck.add(f"{name}, the line r = {c:g} L: the map carries it back onto r = {c:g} L",
+               float(np.max(np.abs((1j * (1 + zeta) / (1 - zeta)).imag - c))), 1e-12)
+        d = 2 * np.arctanh(t)
+        rho, Z = np.sinh(d), np.cosh(d) - 1
+        P = np.column_stack([rho * zeta.real / np.where(t > 0, t, 1.0), rho * zeta.imag / np.where(t > 0, t, 1.0), Z])
+        ck.on_piece(f"{name}, the line r = {c:g} L", sheet, P)
+        step = np.diff(P, axis=0)
+        chord = np.sqrt(step[:, 0] ** 2 + step[:, 1] ** 2 - step[:, 2] ** 2)
+        # Two points of a horocycle an arc a apart are a geodesic distance d apart with 2 sinh(d/2) = a,
+        # which is the chord of the hyperboloid between them, so each chord is the arc sqrt(g_xx) dx.
+        arc = math.sqrt(float(gxx(c))) * np.diff(x)
+        ck.add(f"{name}, the line r = {c:g} L: each step against the published metric",
+               float(np.max(np.abs(chord - arc))), 1e-9)
+        curves.append(Curve(sheet, "flow", P))
+    surface = Surface([sheet, cone], curves=curves)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(math.exp(1.0)), "$L$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$2L$")
+    fig.legend("fill", "cover", "the plane of $x$ and $r$ at one $t$ and one $\\xi$")
+    fig.legend("line", "r", "circles about the point $x = 0$, $r = L$, a proper distance $L/2$, $L$, $3L/2$ and "
+                            "$2L$ from it")
+    fig.legend("line", "flow", "$r$ constant, at $L/2$, $L$ and $2L$; the line $r = L$ passes through the "
+                               "point, and $r = L/2$ lies on the side of the boundary")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears "
+                                    "far from the point")
+    fig.legend("line", "meridian", "geodesics through the point, every $15°$")
+    return [view("plane", "The plane of $x$ and $r$", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, the unit of every length. Every length along the sheet is measured with "
+                          "$dX^2 + dY^2 - dZ^2$.",
+                 stops=["At every point but $x = 0$, $r = L$ the circles about it grow faster than the distance "
+                        "out to them, and no surface of revolution in flat space carries the plane; Minkowski "
+                        "space carries it."])]
 
 
 def hayward(ck, src):
@@ -10381,6 +10489,7 @@ DRAWN = {
     "topological_black_hole": topological_black_hole,
     "ads_soliton": ads_soliton,
     "siklos": siklos,
+    "schrodinger_spacetime": schrodinger_spacetime,
     "hayward": hayward,
     "mass_inflation": mass_inflation,
     "hiscock": hiscock,
@@ -10966,6 +11075,18 @@ CAPTIONS = {
         "the light cone, dashed, without reaching it. The curves are lines of constant $x$ of Siklos's chart, "
         "horocycles that all end at one point of the rim. There $x \\to \\infty$, where Kaigorodov's profile "
         "$x^3/L^3$ grows without limit, and every other point of the rim is the conformal boundary $x = 0$.",
+    ],
+    ("schrodinger_spacetime", "plane"): [
+        "The surface $t = 0$, $\\xi = 0$ of the Poincaré chart, the plane of the atoms' line $x$ and the depth "
+        "$r$, drawn as a surface in three dimensional Minkowski space with every distance along it, measured "
+        "with $dX^2 + dY^2 - dZ^2$, the metric distance. On it the metric is $(L^2/r^2)(dx^2 + dr^2)$ for every "
+        "$\\beta$, the hyperbolic plane of curvature $-1/L^2$: a circle about one of its points grows faster "
+        "than the distance out to it, as no surface of revolution in flat space allows.",
+        "In Minkowski space the plane is one sheet of the hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, and it nears "
+        "the light cone, dashed, without reaching it. The curves are lines of constant $r$, horocycles that all "
+        "end at one point at infinity, where $r \\to \\infty$; every other point at infinity is the boundary "
+        "$r = 0$. With $L = \\beta$ they are the depths $\\beta/2$, $\\beta$, and $2\\beta$ of the planes of $t$ "
+        "and $\\xi$ whose light cones are drawn.",
     ],
     ("topological_black_hole", "horizon"): [
         "The horizon $r = r_h$ of the hyperbolic hole at one moment of $t$ ($\\mu = 0$, $r_h = L$), drawn as a "

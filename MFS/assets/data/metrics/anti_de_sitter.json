@@ -117,6 +117,11 @@
       "id": "lifshitz_spacetime",
       "kind": "generalisation",
       "text": "The Poincaré chart with time rescaled by a power of its own, $t \\to \\lambda^z t$ while $x \\to \\lambda x$. For $z > 1$ the Poincaré horizon turns into a null singularity [kachru2008, copsey2011]."
+    },
+    {
+      "id": "schrodinger_spacetime",
+      "kind": "generalisation",
+      "text": "Anti-de Sitter space with one term in $dt^2$ added along a null direction, which leaves of its symmetries those of the free Schrödinger equation. Dam Thanh Son proposed it in 2008 as the dual of cold atoms [son2008]."
     }
   ],
   "references": [
@@ -158,7 +163,8 @@
     "charmousis2008",
     "horowitz1998",
     "kachru2008",
-    "copsey2011"
+    "copsey2011",
+    "son2008"
   ],
   "coordinates": [
     {

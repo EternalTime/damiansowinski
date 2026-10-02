@@ -1,5 +1,5 @@
 {
-  "version": "5998b25eb1e5e5b3",
+  "version": "a6b4152c1d0eceeb",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -20133,6 +20133,208 @@
         "eprint": "1105.5830",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1016/j.geomphys.2011.05.008"
+      }
+    },
+    "son2008": {
+      "type": "article",
+      "fields": {
+        "title": "Toward an {AdS}/cold atoms correspondence: A geometric realization of the {Schr\\\"odinger} symmetry",
+        "author": "Son, Dam Thanh",
+        "journal": "Physical Review D",
+        "volume": "78",
+        "number": "4",
+        "pages": "046003",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.78.046003",
+        "eprint": "0804.3972",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0804.3972"
+      }
+    },
+    "balasubramanian2008": {
+      "type": "article",
+      "fields": {
+        "title": "Gravity Duals for Nonrelativistic Conformal Field Theories",
+        "author": "Balasubramanian, Koushik and McGreevy, John",
+        "journal": "Physical Review Letters",
+        "volume": "101",
+        "number": "6",
+        "pages": "061601",
+        "year": "2008",
+        "doi": "10.1103/PhysRevLett.101.061601",
+        "eprint": "0804.4053",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0804.4053"
+      }
+    },
+    "hagen1972": {
+      "type": "article",
+      "fields": {
+        "title": "Scale and Conformal Transformations in {Galilean}-Covariant Field Theory",
+        "author": "Hagen, C. R.",
+        "journal": "Physical Review D",
+        "volume": "5",
+        "number": "2",
+        "pages": "377--388",
+        "year": "1972",
+        "doi": "10.1103/PhysRevD.5.377"
+      }
+    },
+    "niederer1972": {
+      "type": "article",
+      "fields": {
+        "title": "The maximal kinematical invariance group of the free {Schr\\\"odinger} equation",
+        "author": "Niederer, U.",
+        "journal": "Helvetica Physica Acta",
+        "volume": "45",
+        "number": "5",
+        "pages": "802--810",
+        "year": "1972",
+        "doi": "10.5169/seals-114417"
+      }
+    },
+    "ohara2002": {
+      "type": "article",
+      "fields": {
+        "title": "Observation of a Strongly Interacting Degenerate {Fermi} Gas of Atoms",
+        "author": "O'Hara, K. M. and Hemmer, S. L. and Gehm, M. E. and Granade, S. R. and Thomas, J. E.",
+        "journal": "Science",
+        "volume": "298",
+        "number": "5601",
+        "pages": "2179--2182",
+        "year": "2002",
+        "doi": "10.1126/science.1079107",
+        "eprint": "cond-mat/0212463",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/cond-mat/0212463"
+      }
+    },
+    "nishida2007": {
+      "type": "article",
+      "fields": {
+        "title": "Nonrelativistic conformal field theories",
+        "author": "Nishida, Yusuke and Son, Dam Thanh",
+        "journal": "Physical Review D",
+        "volume": "76",
+        "number": "8",
+        "pages": "086004",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.76.086004",
+        "eprint": "0706.3746",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0706.3746"
+      }
+    },
+    "hubeny2005": {
+      "type": "article",
+      "fields": {
+        "title": "Causal structures and holography",
+        "author": "Hubeny, Veronika E. and Rangamani, Mukund and Ross, Simon F.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2005",
+        "number": "07",
+        "pages": "037",
+        "year": "2005",
+        "doi": "10.1088/1126-6708/2005/07/037",
+        "eprint": "hep-th/0504034",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0504034"
+      }
+    },
+    "herzog2008": {
+      "type": "article",
+      "fields": {
+        "title": "Heating up {Galilean} holography",
+        "author": "Herzog, Christopher P. and Rangamani, Mukund and Ross, Simon F.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2008",
+        "number": "11",
+        "pages": "080",
+        "year": "2008",
+        "doi": "10.1088/1126-6708/2008/11/080",
+        "eprint": "0807.1099",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0807.1099"
+      }
+    },
+    "maldacena2008": {
+      "type": "article",
+      "fields": {
+        "title": "Comments on string theory backgrounds with non-relativistic conformal symmetry",
+        "author": "Maldacena, Juan and Martelli, Dario and Tachikawa, Yuji",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2008",
+        "number": "10",
+        "pages": "072",
+        "year": "2008",
+        "doi": "10.1088/1126-6708/2008/10/072",
+        "eprint": "0807.1100",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0807.1100"
+      }
+    },
+    "adams2008": {
+      "type": "article",
+      "fields": {
+        "title": "Hot spacetimes for cold atoms",
+        "author": "Adams, Allan and Balasubramanian, Koushik and McGreevy, John",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2008",
+        "number": "11",
+        "pages": "059",
+        "year": "2008",
+        "doi": "10.1088/1126-6708/2008/11/059",
+        "eprint": "0807.1111",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0807.1111"
+      }
+    },
+    "duval2009": {
+      "type": "article",
+      "fields": {
+        "title": "The geometry of {Schr\\\"odinger} symmetry in non-relativistic {CFT}",
+        "author": "Duval, C. and Hassa\\\"ine, M. and Horv\\'athy, P. A.",
+        "journal": "Annals of Physics",
+        "volume": "324",
+        "number": "5",
+        "pages": "1158--1167",
+        "year": "2009",
+        "doi": "10.1016/j.aop.2009.01.006",
+        "eprint": "0809.3128",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0809.3128"
+      }
+    },
+    "blau2009": {
+      "type": "article",
+      "fields": {
+        "title": "Geometry of {Schr\\\"odinger} space-times, global coordinates, and harmonic trapping",
+        "author": "Blau, Matthias and Hartong, Jelle and Rollier, Blaise",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2009",
+        "number": "07",
+        "pages": "027",
+        "year": "2009",
+        "doi": "10.1088/1126-6708/2009/07/027",
+        "eprint": "0904.3304",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0904.3304"
+      }
+    },
+    "blau2010": {
+      "type": "article",
+      "fields": {
+        "title": "Geometry of {Schr\\\"odinger} space-times {II}: particle and field probes of the causal structure",
+        "author": "Blau, Matthias and Hartong, Jelle and Rollier, Blaise",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2010",
+        "number": "7",
+        "pages": "069",
+        "year": "2010",
+        "doi": "10.1007/JHEP07(2010)069",
+        "eprint": "1005.0760",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1005.0760"
       }
     }
   }

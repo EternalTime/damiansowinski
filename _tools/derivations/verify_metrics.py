@@ -1299,6 +1299,28 @@ DIMENSIONS = {
     ("siklos", "kaigorodov_stationary"): {"u": "L", "v": "L", "y": "L", "\\rho": "L", "L": "L"},
     ("siklos", "kaigorodov_homogeneous"): {"U": "L", "X": "L", "y": "L", "Z": "1", "L": "L", "k": "1"},
     ("siklos", "kaigorodov_kundt"): {"U": "L", "V": "L", "x": "1", "y": "1", "L": "L"},
+    # Schrodinger spacetime: t is the time of the nonrelativistic theory and every other
+    # coordinate a length, the null xi included. beta is a length, so that beta^2/r^2 is pure, the
+    # dynamical exponent z a pure number and the term h = (beta/r)^{2z - 2} it names one too, and
+    # the trap's omega a frequency.
+    ("schrodinger_spacetime", "poincare"): {
+        "t": "T", "\\xi": "L", "x": "L", "r": "L", "L": "L", "\\beta": "L",
+    },
+    ("schrodinger_spacetime", "inverse_radius"): {
+        "t": "T", "\\xi": "L", "x": "L", "\\rho": "L", "L": "L", "\\beta": "L",
+    },
+    ("schrodinger_spacetime", "global"): {
+        "T": "T", "V": "L", "X": "L", "R": "L", "L": "L", "\\beta": "L", "\\omega": "1/T",
+    },
+    ("schrodinger_spacetime", "dynamical_exponent"): {
+        "t": "T", "\\xi": "L", "x": "L", "r": "L", "L": "L", "\\beta": "L", "z": "1", "h": "1",
+    },
+    ("schrodinger_spacetime", "poincare_5d"): {
+        "t": "T", "\\xi": "L", "x_1": "L", "x_2": "L", "r": "L", "L": "L", "\\beta": "L",
+    },
+    ("schrodinger_spacetime", "poincare_6d"): {
+        "t": "T", "\\xi": "L", "x_1": "L", "x_2": "L", "x_3": "L", "r": "L", "L": "L", "\\beta": "L",
+    },
 }
 
 # What a field carries when every coordinate is a length; the indices supply the rest.

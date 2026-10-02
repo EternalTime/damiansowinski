@@ -68,7 +68,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "78d114daaa560f13",
+    "version": "dacd82ca88f783d0",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -1702,7 +1702,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "75126ff1daf2ecd9",
+    "version": "f5218ff18b7daca4",
     "diagrams": "0f6e9fbd677331a1",
     "conformal": "5a36ce41d9009dbd",
     "embedding": "cd98817c46caeee2"
@@ -2267,7 +2267,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "386d61a98baa2d53",
+    "version": "8dc26652657730c1",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -2496,6 +2496,41 @@
     "embedding": "7b7a1d9f63195b3e"
   },
   {
+    "id": "schrodinger_spacetime",
+    "name": "Schrödinger Spacetime",
+    "tags": [
+      "anti-de Sitter",
+      "negative cosmological constant",
+      "cosmological constant",
+      "AdS/CFT",
+      "holography",
+      "Schrödinger symmetry",
+      "Galilean symmetry",
+      "cold atoms",
+      "pp-wave",
+      "Kundt class",
+      "Petrov type N",
+      "null Killing vector",
+      "null dust",
+      "homogeneous",
+      "causal structure",
+      "geodesically complete",
+      "string theory",
+      "higher dimensions",
+      "stationary",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "five-dimensional",
+      "six-dimensional",
+      "idealized model"
+    ],
+    "version": "cb9ab4728b401e4f",
+    "diagrams": "596e615f9373b24c",
+    "embedding": "2bcbcccd5666d405"
+  },
+  {
     "id": "schwarzschild",
     "name": "Schwarzschild Exterior",
     "tags": [
@@ -2698,7 +2733,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8b4e3af16d5cbe68",
+    "version": "b58cec06e817f6b3",
     "diagrams": "468d3b17b45fa67c",
     "conformal": "2735322746e26156",
     "embedding": "ad8fbfdcb04765f7"

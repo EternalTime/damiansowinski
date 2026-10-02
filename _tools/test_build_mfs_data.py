@@ -4164,11 +4164,12 @@ class TurningLightConeFigures(unittest.TestCase):
         # The cosmic string's beam lies in the plane t = 0 seen from straight above, drawn in the plane's
         # own flat coordinates, and the rays along Bonnor's beam of light in the plane y = 0 seen from the
         # side, t left out, so neither has another side; Lifshitz spacetime's rays lie in its plane y = 0
-        # seen the same way.
+        # seen the same way, and the light swinging in the trap of Schrodinger spacetime's global chart
+        # in its surface X = 0 seen from the side, V left out.
         still = {f"{name}/{figure['id']}" for name, data in diagram_files().items()
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
         self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
-                                 "point_particle_2plus1/beam"})
+                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap"})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -4622,6 +4623,9 @@ class Slices(unittest.TestCase):
               # Lifshitz spacetime's plane y = 0 with t left out, which every moment of the static spacetime
               # covers whole.
               "lifshitz_spacetime/poincare/rays",
+              # The surface X = 0 of Schrodinger spacetime's global chart with V left out, where a line of
+              # constant T holds every V and the embedded plane only V = 0.
+              "schrodinger_spacetime/global/trap",
               # The near-NHEK patch of the extreme Kerr throat, ct > r_0^2/r of the Poincare chart, which
               # the moment tau = 0 embedded does not enter.
               "near_horizon_extreme_kerr/near_nhek/equator", "conformal near_horizon_extreme_kerr/near_nhek",
@@ -4925,6 +4929,10 @@ class Slices(unittest.TestCase):
             of_x = {"kaigorodov_horospheric": lambda x: -math.log(x),
                     "kaigorodov_homogeneous": lambda x: math.log(x) / 2}.get(key.split("/")[1], lambda x: x)
             return (lambda X: 0.0), sorted(of_x(x) for x in ((2 - top) / (2 + top), (2 + top) / (2 - top)))
+        if key.startswith("schrodinger_spacetime/"):
+            # Schrodinger spacetime's plane of x and r, t = 0 and xi = 0, or T = 0 and V = 0: the event
+            # (0, 0) of a plane of the time and the null coordinate at one depth.
+            return (lambda X: 0.0), [0.0]
         if key.startswith("robinson_trautman/"):
             # The fronts of one retarded time differ only in size, so a moment is the whole
             # outgoing ray u = u_k, drawn against r and cu + r, from r = 0 to the box.

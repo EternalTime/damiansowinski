@@ -1369,6 +1369,14 @@ def _soliton(chart):
     return [Mark(m, along(0.0, 1 / soliton_radius(hi), 1 / soliton_radius(lo)))]
 
 
+def _schrodinger():
+    """Schrodinger spacetime's surface t = 0, xi = 0, the plane of x and r, which is T = 0, V = 0
+    of the global chart and the same hyperbolic plane for every dynamical exponent and in every
+    dimension. A plane of the time and the null coordinate at one depth meets it at the event (0, 0)."""
+    m, = moments("schrodinger_spacetime", "plane", label="$t = 0$, $\\xi = 0$")
+    return [Mark(m, points=[(0.0, 0.0)])]
+
+
 def _c_metric(y):
     """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
     axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
@@ -1903,6 +1911,13 @@ FLAT = {
        for system in ("kaigorodov", "kaigorodov_poincare", "kaigorodov_kundt")},
     ("siklos", "kaigorodov_horospheric", "depth"): lambda: _siklos(lambda x: -math.log(x)),
     ("siklos", "kaigorodov_homogeneous", "depth"): lambda: _siklos(lambda x: math.log(x) / 2),
+    # Schrodinger spacetime's plane of x and r: one event on each plane of the time and the null coordinate.
+    **{("schrodinger_spacetime", system, view): lambda: _schrodinger()
+       for system, views in (("poincare", ("near", "middle", "far")), ("inverse_radius", ("near", "middle", "far")),
+                             ("global", ("near", "middle", "far")),
+                             ("dynamical_exponent", ("one", "three_halves", "three")),
+                             ("poincare_5d", ("middle",)), ("poincare_6d", ("middle",)))
+       for view in views},
     # The wave front u = u_k, every v.
     ("pp_wave", "exact_plane_wave", "tz"): lambda: one("pp_wave", lambda m: [[(m.time, -BIG), (m.time, BIG)]]),
     **{("aichelburg_sexl", "null_cartesian", view): lambda: one("aichelburg_sexl", lambda m: [[(m.time, -BIG), (m.time, BIG)]])
@@ -2086,6 +2101,7 @@ HIDDEN = {
     ("light_beam", "midway"): "two beams side by side, another spacetime than the single beam whose wave fronts are embedded",
     ("light_beam", "cartesian", "lens"): "the plane y = 0 with t left out, which every wave front covers whole",
     ("lifshitz_spacetime", "poincare", "rays"): "the plane y = 0 with t left out, which every moment of the static spacetime covers whole",
+    ("schrodinger_spacetime", "global", "trap"): "the surface X = 0 with V left out, where a line of constant T holds every V and the embedded plane only V = 0",
     ("wormhole_time_machine", "wormhole", "speeding"): "the axis of the acceleration, theta = 0, which the embedded plane theta = pi/2 meets nowhere",
     ("wormhole_time_machine", "wormhole", "slowing"): "the axis of the acceleration, theta = 0, which the embedded plane theta = pi/2 meets nowhere",
     ("wormhole_time_machine", "short_throat", "radial"): "the mouth of the throat of zero length; the moment embedded is the smooth wormhole's",

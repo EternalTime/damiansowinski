@@ -78,6 +78,11 @@
       "id": "lifshitz_spacetime",
       "kind": "family",
       "text": "A spacetime whose null singularity is that of a singular plane wave, so strings falling into it behave as they do in one [horowitz2012lifshitz]."
+    },
+    {
+      "id": "schrodinger_spacetime",
+      "kind": "conformal",
+      "text": "A pp-wave whose profile falls as the inverse square of one transverse coordinate, multiplied by anti-de Sitter's conformal factor. It has the symmetries of the free Schrödinger equation [balasubramanian2008, duval2009]."
     }
   ],
   "references": [
@@ -113,7 +118,9 @@
     "podolsky1998",
     "tod1983",
     "chrusciel2006",
-    "horowitz2012lifshitz"
+    "horowitz2012lifshitz",
+    "balasubramanian2008",
+    "duval2009"
   ],
   "coordinates": [
     {
