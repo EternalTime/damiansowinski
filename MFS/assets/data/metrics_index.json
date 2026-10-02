@@ -905,6 +905,37 @@
     "embedding": "759b3c0dec35465e"
   },
   {
+    "id": "datt_ruban_t_models",
+    "name": "Datt-Ruban",
+    "tags": [
+      "dust",
+      "inhomogeneous",
+      "T-model",
+      "T-region",
+      "T-sphere",
+      "mass defect",
+      "Kantowski-Sachs",
+      "black hole interior",
+      "matched solution",
+      "curvature singularity",
+      "shell crossing",
+      "big bang",
+      "cosmology",
+      "comoving",
+      "time-dependent",
+      "spherically symmetric",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "75dfabb738ff3fc9",
+    "diagrams": "c8516d16841cd13d",
+    "conformal": "d1d7f8cc8abd9bb8",
+    "embedding": "13f67fcc322f9144"
+  },
+  {
     "id": "de_sitter",
     "name": "de Sitter",
     "tags": [
@@ -929,7 +960,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "cedc7108abbcf557",
+    "version": "5ccb8fc191ac1b00",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -1839,7 +1870,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "33393b57b2ce54ed",
+    "version": "c0cc0b17a6e8429f",
     "diagrams": "af83133484b3c126",
     "conformal": "5aa345afee4654d8",
     "embedding": "46d9d6d9484b8e00"
@@ -2805,7 +2836,7 @@
       "Einstein space",
       "stationary"
     ],
-    "version": "21e28660a29dd669",
+    "version": "832182e837e22a84",
     "diagrams": "37b04b7cf3bacecd",
     "conformal": "4fac9b552eb536ea",
     "embedding": "1199648bcf6666d8"
@@ -2933,7 +2964,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8006061f6afe05bf",
+    "version": "03e40d37dd62411d",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -3239,7 +3270,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "839a1137fc4c9ae4",
+    "version": "45cec185c9503b51",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -3509,7 +3540,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "acccc91418096808",
+    "version": "9c5cacc66f74405f",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3668,7 +3699,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "322cc87ee4caf25d",
+    "version": "92e520b8b6656c0b",
     "diagrams": "1bcf1f96aa6c51fa",
     "conformal": "1d994db28644e6d6",
     "embedding": "74242cc150b7e4a7"
@@ -3887,7 +3918,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d2065d7ad35a56df",
+    "version": "7bd0002630ad34ab",
     "diagrams": "99c54951a880e0fc",
     "embedding": "afe08c1a64cd8527"
   },
@@ -4005,7 +4036,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0db5b11f1a46b902",
+    "version": "191353ad8d63d18d",
     "diagrams": "b997809f786afa14",
     "embedding": "aefa04627c7f6154"
   },

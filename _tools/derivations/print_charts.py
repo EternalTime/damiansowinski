@@ -13,7 +13,7 @@ einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluz
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
-kopczynski_trautman, brill_waves and ab_metrics, and Godel's cylindrical chart.
+kopczynski_trautman, brill_waves, ab_metrics and datt_ruban_t_models, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -20462,6 +20462,460 @@ def rp3_geon_check(chart, system):
 
 
 CHARTS["rp3_geon"] = [lambda s=s: rp3_geon(s) for s in RP3_GEON_CHARTS]
+
+
+# -- The T-models of Datt and Ruban -------------------------------------------------------
+
+DR_CHARTS = ("comoving", "ruban", "areal", "de_sitter", "exterior_kruskal")
+DR_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+DR_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+DR_PARAMETRIC = "a = \\epsilon\\cot(\\eta/2) + 2\\mu\\left(1 - \\dfrac{\\eta}{2}\\cot(\\eta/2)\\right)"
+DR_AREAL = ("a = \\epsilon\\sqrt{\\dfrac{r_s}{T} - 1} + 2\\mu\\left(1 - \\sqrt{\\dfrac{r_s}{T} - 1}"
+            "\\,\\arcsin\\left(\\sqrt{\\dfrac{T}{r_s}}\\right)\\right)")
+DR_DE_SITTER = ("a = \\epsilon\\sinh(ct/\\ell) + \\mu\\left(\\left(\\dfrac{\\pi}{2} - \\arctan\\left(\\sinh(ct/\\ell)\\right)"
+                "\\right)\\sinh(ct/\\ell) - 1\\right)")
+
+
+def datt_ruban_t_models(system):
+    """The T-models of Datt, Z. Phys. 108, 314 (1938), and Ruban, JETP Lett. 8, 414 (1968) and Sov.
+    Phys. JETP 29, 1027 (1969): dust whose spheres have a radius that depends on the time alone,
+    -c^2dt^2 + a(t, r)^2 dr^2 + b(t)^2 dOmega^2, the spherical dust solution that Lemaitre, Tolman
+    and Bondi's family leaves out, and the Kantowski-Sachs dust universe with its scale factor
+    along the axis free to differ from shell to shell.
+
+    Five charts. The comoving chart leaves a and b free, so no component assumes a field equation.
+    Ruban's chart writes his solution without a cosmological constant in the cycloid's parameter,
+    his (2) of 1968 and (18) of 1969: b = r_s sin^2(eta/2), c dt = b d eta, and
+    a = epsilon cot(eta/2) + 2 mu (1 - (eta/2) cot(eta/2)), with mu(r) = (G/c^2) dM/dr the rest
+    mass per unit of r. The factor 2 is Krasinski's, Gen. Rel. Grav. 31, 1615 (1999), his (3) and
+    (4); Ruban's (18) prints M' where the field equations need 2M', and datt_ruban_check holds the
+    chart to the density 8 pi G rho/c^2 = 2 mu/(a b^2), which is the mass dM = (c^2/G) mu dr in a
+    shell. The areal chart takes the radius of the spheres for its time, Datt's own form as
+    Krasinski writes it and Plebanski and Krasinski's (19.101), where every derivative of a along
+    the time is rational in a. The de Sitter chart is Ruban's (19) of 1969, the T-model on de
+    Sitter space, b = l cosh(ct/l). Kruskal's chart is the vacuum outside a T-sphere, the white
+    hole's chart of the same name, on the side V >= U of the surface of the dust.
+    datt_ruban_t_models.md records each chart's source."""
+    def check(chart):
+        return datt_ruban_check(chart, system)
+    if system == "comoving":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["a = a(t,r)", "b = b(t)"]
+        probe = vm.Reader(coords, parameters, ())
+        a, b = probe.parameters["a"], probe.parameters["b"]
+        return {
+            "metric_id": "datt_ruban_t_models",
+            "system": {"id": system, "name": "Comoving", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in (-\\infty, \\infty)"] + DR_ANGLES,
+                       "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + a^2dr^2 + b^2" + DR_SPHERE},
+            "chart_line_element": "ds^2 = -dt^2 + a^2dr^2 + b^2" + DR_SPHERE,
+            "printer": {"primed": ["b"], "lead": [a, b]},
+            # The sphere's own curvature, which the printer leaves as a bracketed difference.
+            "rewrite": [("-\\left(-\\left(b'\\right)^2\\,\\sin^2\\theta - \\sin^2\\theta\\right)",
+                         "\\left(\\left(b'\\right)^2 + 1\\right)\\sin^2\\theta"),
+                        ("\\left(-\\left(b'\\right)^2\\,\\sin^2\\theta - \\sin^2\\theta\\right)",
+                         "-\\left(\\left(b'\\right)^2 + 1\\right)\\sin^2\\theta")],
+            # The scalars over the four frame curvatures, as the Kantowski-Sachs page writes them.
+            "ricci_scalar": ("2\\left(\\dfrac{\\partial_t^2 a}{a} + \\dfrac{2b''}{b} + \\dfrac{2b'\\,\\partial_t a}{a\\,b}"
+                             " + \\dfrac{\\left(b'\\right)^2 + 1}{b^2}\\right)"),
+            "kretschmann": ("4\\left(\\dfrac{\\partial_t^2 a}{a}\\right)^2 + 8\\left(\\dfrac{b''}{b}\\right)^2"
+                            " + 8\\left(\\dfrac{b'\\,\\partial_t a}{a\\,b}\\right)^2"
+                            " + 4\\left(\\dfrac{\\left(b'\\right)^2 + 1}{b^2}\\right)^2"),
+            "check": check,
+        }
+    if system == "ruban":
+        coords, parameters = ["\\eta", "r", "\\theta", "\\phi"], ["r_s", "\\epsilon", "\\mu = \\mu(r)", DR_PARAMETRIC]
+        line = ("ds^2 = r_s^2\\sin^4(\\eta/2)\\left(-d\\eta^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+                " + a^2dr^2")
+        probe = vm.Reader(coords, parameters, ())
+        eta, r = probe.symbol["\\eta"], probe.symbol["r"]
+        forms = DattRubanCycloid(probe)
+        return {
+            "metric_id": "datt_ruban_t_models",
+            "system": {"id": system, "name": "Ruban's Parametric Time", "coords": coords,
+                       "domains": ["\\eta \\in (0, 2\\pi)", "r \\in (-\\infty, \\infty)"] + DR_ANGLES
+                       + ["a > 0 \\;\\text{(where the density is positive)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [probe.parameters["a"], probe.parameters["r_s"], probe.parameters["epsilon"], eta,
+                                 probe.parameters["mu"]],
+                        "arguments": {eta / 2: "\\eta/2"}},
+            "reduce": forms.reduce, "pretty": forms.pretty,
+            "components": {"metric_components": {("r", "r"): "a^2"},
+                           "inverse_metric_components": {("r", "r"): "\\dfrac{1}{a^2}"}},
+            "check": check,
+        }
+    if system == "areal":
+        coords, parameters = ["T", "r", "\\theta", "\\phi"], ["r_s", "\\epsilon", "\\mu = \\mu(r)", DR_AREAL]
+        f = "\\left(\\dfrac{r_s}{T} - 1\\right)"
+        line = "ds^2 = -\\dfrac{dT^2}{\\dfrac{r_s}{T} - 1} + a^2dr^2 + T^2" + DR_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        T, rs = probe.symbol["T"], probe.parameters["r_s"]
+        a, mu = probe.parameters["a"], probe.parameters["mu"]
+        return {
+            "metric_id": "datt_ruban_t_models",
+            "system": {"id": system, "name": "Areal Time", "coords": coords,
+                       "domains": ["T \\in (0, r_s)", "r \\in (-\\infty, \\infty)"] + DR_ANGLES
+                       + ["a > 0 \\;\\text{(where the density is positive)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [a, rs, T, mu]},
+            "reduce": datt_ruban_rates(a, T, (2 * mu * T - rs * a) / (2 * T * (rs - T))),
+            "kretschmann": "\\dfrac{4\\left(3a^2\\,r_s^2 - 4a\\,r_s\\,T\\,\\mu + 3T^2\\,\\mu^2\\right)}{a^2\\,T^6}",
+            "components": {"metric_components": {("T", "T"): "-" + f + "^{-1}"},
+                           "inverse_metric_components": {("T", "T"): "-" + f}},
+            "check": check,
+        }
+    if system == "de_sitter":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["\\ell", "\\epsilon", "\\mu = \\mu(r)", DR_DE_SITTER]
+        # The components are printed in the chart x^0 = ct, so the definition is read with t for ct.
+        chart_parameters = [p.replace("(ct/", "(t/") for p in parameters]
+
+        def line(c, c2):
+            return "ds^2 = -" + c2 + "dt^2 + a^2dr^2 + \\ell^2\\cosh^2(" + c + "t/\\ell)" + DR_SPHERE
+        probe = vm.Reader(coords, chart_parameters, ())
+        t, ell = probe.symbol["t"], probe.parameters["ell"]
+        a, mu = probe.parameters["a"], probe.parameters["mu"]
+        x = t / ell
+        return {
+            "metric_id": "datt_ruban_t_models",
+            "system": {"id": system, "name": "Ruban's de Sitter T-Model", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in (-\\infty, \\infty)"] + DR_ANGLES
+                       + ["a > 0 \\;\\text{(where the density is positive)}"],
+                       "parameters": parameters, "line_element": line("c", "c^2")},
+            "chart_line_element": line("", ""),
+            "chart_parameters": chart_parameters,
+            "time": "t",
+            "printer": {"lead": [a, ell, mu], "arguments": {probe.c * t / ell: "ct/\\ell"}},
+            "reduce": datt_ruban_rates(a, t, (a * sp.cosh(x) ** 2 + mu) / (ell * sp.sinh(x) * sp.cosh(x)),
+                                       exponential=(x, probe.c * x)),
+            "pretty": datt_ruban_hyperbolic(probe.c * t / ell),
+            "ricci_scalar": "\\dfrac{2\\left(6a\\cosh^2(ct/\\ell) + \\mu\\right)}{a\\,\\ell^2\\cosh^2(ct/\\ell)}",
+            "kretschmann": ("\\dfrac{4\\left(6a^2\\cosh^4(ct/\\ell) + 2a\\,\\mu\\cosh^2(ct/\\ell) + 3\\mu^2\\right)}"
+                            "{a^2\\,\\ell^4\\cosh^4(ct/\\ell)}"),
+            "check": check,
+        }
+    spec = dict(white_hole("exterior_kruskal"), metric_id="datt_ruban_t_models", check=check)
+    spec["system"] = dict(spec["system"], name="Kruskal Exterior of a T-Sphere",
+                          domains=["U \\in (-\\infty, \\infty)", "V \\in [U, \\infty)"] + DR_ANGLES
+                          + ["V = U \\;\\text{(the surface of the dust)}", "UV < 1 \\;\\text{(where } r > 0\\text{)}",
+                             "V = 0 \\;\\text{(the past horizon)}", "U = 0 \\;\\text{(the future horizon)}"])
+    return spec
+
+
+class DattRubanCycloid:
+    """The `reduce` and the `pretty` of Ruban's chart, whose scale factor a is held as a function
+    of eta and r.
+
+    `reduce` writes a out, a = q t + 2 mu with t = cot(eta/2) and q = epsilon - mu eta, and every
+    value as a rational function of t, since sin^2(eta/2) = 1/(1 + t^2) and no odd power of the
+    sine stands alone. Nothing relates t, q and mu, so a value that vanishes for Ruban's a is
+    exactly zero. The derivative of a along r stays as it is printed, as in the other charts.
+
+    `pretty` writes a value in the scale factor wherever that leaves no cos(eta/2) below the
+    line, by q = (a - 2 mu)/t, which is every curvature component, and otherwise in q with the
+    factor q t + 2 mu written a, which is the connection. Each factor left is then written in the
+    sine of eta/2, with one cosine where an odd power of t leaves one, as q(1 + t^2) + 2 mu t is
+    (q + 2 mu sin(eta/2) cos(eta/2))/sin^2(eta/2)."""
+
+    def __init__(self, reader):
+        self.eta, self.r = reader.symbol["\\eta"], reader.symbol["r"]
+        self.a = reader.parameters["a"]
+        self.eps, self.mu = reader.parameters["epsilon"], reader.parameters["mu"]
+        self.t, self.Q = sp.Symbol("_t", real=True), sp.Symbol("_Q", real=True)
+        self.S, self.C = sp.Symbol("_S", positive=True), sp.Symbol("_C", real=True)
+        self.A, self.D = sp.Symbol("_A", positive=True), sp.Symbol("_D", real=True)
+        half = self.eta / 2
+        self.explicit = (self.eps - self.mu * self.eta) * sp.cot(half) + 2 * self.mu
+        self.trig = {sp.cot(half): self.t, sp.tan(half): 1 / self.t, sp.csc(half): 1 / self.S,
+                     sp.sec(half): 1 / (self.t * self.S), sp.sin(half): self.S, sp.cos(half): self.t * self.S,
+                     sp.sin(self.eta): 2 * self.t * self.S ** 2, sp.cos(self.eta): 1 - 2 * self.S ** 2}
+
+    def rational(self, value):
+        """The value as a cancelled fraction in t, q, mu and the derivative of a along r."""
+        value = sp.sympify(value).xreplace({sp.Derivative(self.a, self.r): self.D})
+        value = value.subs(self.a, self.explicit).doit().subs(self.trig)
+        if any(f.has(self.eta) for f in value.atoms(sp.Function) if f.func != self.mu.func):
+            raise AssertionError(f"datt_ruban_t_models: a function of eta other than those of eta/2 in {value}")
+
+        def even(side):
+            # The sine of eta/2 stands only in even powers, and sin^2(eta/2) = 1/(1 + t^2).
+            poly = sp.Poly(sp.expand(side), self.S)
+            if any(k % 2 for (k,) in poly.monoms()):
+                raise AssertionError(f"datt_ruban_t_models: an odd power of sin(eta/2) in {value}")
+            top = max((k for (k,) in poly.monoms()), default=0)
+            return sum(c * (1 + self.t ** 2) ** ((top - k) // 2) for (k,), c in poly.terms()), top // 2
+
+        num, den = sp.fraction(sp.together(value))
+        (num, m), (den, n) = even(num), even(den)
+        out = num * (1 + self.t ** 2) ** (n - m) / den
+        return sp.cancel(sp.together(out.subs(self.eps, self.Q + self.mu * self.eta)))
+
+    def back(self, value):
+        return value.subs({self.Q: self.eps - self.mu * self.eta, self.t: sp.cot(self.eta / 2),
+                           self.S: sp.sin(self.eta / 2), self.C: sp.cos(self.eta / 2), self.A: self.a}).xreplace({self.D: sp.Derivative(self.a, self.r)})
+
+    def reduce(self, value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(self.reduce)
+        return self.back(self.rational(value))
+
+    def in_sines(self, base):
+        """An irreducible factor in t as (its power of sin(eta/2) below the line, what stands above
+        it): the factor times S^n is homogeneous of even degree n in S and C = t S, and an even
+        power of C is written by C^2 = 1 - S^2, so that one cosine at most is left in a term. The
+        checker reads the functions of eta/2 alone, so no sin(eta) is written."""
+        if not base.has(self.t):
+            return 0, base
+        poly = sp.Poly(base, self.t)
+        n = poly.degree() + poly.degree() % 2
+        out = sp.Integer(0)
+        for (i,), coefficient in poly.terms():
+            j = n - i
+            if i % 2:
+                out += coefficient * self.C * self.S ** j * (1 - self.S ** 2) ** ((i - 1) // 2)
+            else:
+                out += coefficient * self.S ** j * (1 - self.S ** 2) ** (i // 2)
+        return n, sp.expand(out)
+
+    def pretty(self, value):
+        x = self.rational(value)
+        if x == 0:
+            return sp.Integer(0)
+        scale = self.Q * self.t + 2 * self.mu
+        # In the scale factor, wherever that leaves no t, which is cos(eta/2), below the line.
+        named = sp.cancel(sp.together(x.subs(self.Q, (self.A - 2 * self.mu) / self.t)))
+        below = sp.fraction(named)[1]
+        if x.has(self.Q) and (sp.Poly(below, self.t).eval(0) == 0 or sp.fraction(sp.cancel(below / self.t))[1] == 1
+                              and below.has(self.t) and sp.rem(below, self.t, self.t) == 0):
+            named = None
+        # The number in front is kept apart, so that it is not multiplied into a sum.
+        number, out, sines = sp.Integer(1), sp.Integer(1), 0
+        num, den = sp.fraction(named if named is not None else x)
+        for side, sign in ((num, 1), (den, -1)):
+            for factor in sp.Mul.make_args(sp.factor(side)):
+                base, power = factor.as_base_exp()
+                if base.is_Number:
+                    number *= base ** (sign * power)
+                    continue
+                if base == self.t:
+                    out *= self.t ** (sign * power)
+                    continue
+                own = next((s for s in (1, -1) if base.is_Add and sp.expand(base - s * scale) == 0), None)
+                if own is not None:
+                    number *= own ** (sign * power)
+                    out *= self.A ** (sign * power)
+                    continue
+                n, above = self.in_sines(base)
+                sines -= sign * power * n
+                content, above = sp.factor(above).as_coeff_Mul()
+                number *= content ** (sign * power)
+                out *= self.back(above) ** (sign * power)
+        return _keep_coeff(number, self.back(out * self.S ** sines))
+
+
+def datt_ruban_rates(a, time, rate, exponential=None):
+    """A `reduce` for a chart whose scale factor a is held as a function of the time and r and whose
+    derivative along the time is rational in a itself: every derivative of a along the time, to
+    any order, is written by `rate`, and its derivative along r stays as it is printed. With
+    `exponential`, the argument as the chart and as a printed value hold it, the hyperbolic
+    functions of that argument are written in its exponential, one generator with no relation,
+    so that a value which vanishes is exactly zero, and handed back in exponentials as the
+    checker's Geometry hands back a value."""
+    E = sp.Symbol("_E", positive=True)
+
+    def reduce(value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(reduce)
+        for _ in range(8):
+            derivatives = [d for d in value.atoms(sp.Derivative)
+                           if d.expr == a and any(v == time for v, _ in d.variable_count)]
+            if not derivatives:
+                break
+            written = {}
+            for d in derivatives:
+                counts = dict(d.variable_count)
+                rest = [(v, k) for v, k in d.variable_count if v != time]
+                written[d] = sp.Derivative(rate, (time, counts[time] - 1), *rest).doit()
+            value = value.xreplace(written)
+        else:
+            raise AssertionError("datt_ruban_t_models: the derivatives of the scale factor do not settle")
+        if exponential is None:
+            return sp.factor(sp.cancel(sp.together(value)))
+        # The argument as the chart holds it, x^0/l, or as a printed value holds it, ct/l.
+        arguments = {f.args[0] for f in value.atoms(sp.cosh, sp.sinh, sp.tanh, sp.coth, sp.exp)}
+        found = next((x for x in exponential if any(sp.expand(y / x).is_Integer for y in arguments)), exponential[0])
+        half = (E + 1 / E) / 2, (E - 1 / E) / 2
+        value = value.subs({sp.cosh(found): half[0], sp.sinh(found): half[1],
+                            sp.tanh(found): half[1] / half[0], sp.coth(found): half[0] / half[1]})
+        value = value.replace(lambda e: isinstance(e, sp.exp) and sp.expand(e.args[0] / found).is_Integer,
+                              lambda e: E ** sp.expand(e.args[0] / found))
+        if value.has(sp.exp, sp.cosh, sp.sinh):
+            raise AssertionError(f"datt_ruban_t_models: a function of another argument in {value}")
+        return sp.factor(sp.cancel(sp.together(value))).subs(E, sp.exp(found))
+
+    return reduce
+
+
+def datt_ruban_hyperbolic(argument):
+    """nariai_hyperbolic for a chart that holds functions: each function and each derivative of
+    one is held as a symbol while the value is written in the hyperbolic sine and cosine."""
+    pretty = nariai_hyperbolic(argument)
+
+    def held(value):
+        value = sp.sympify(value)
+        names = {}
+        for kind in (sp.Derivative, AppliedUndef):
+            for atom in sorted(value.atoms(kind), key=sp.default_sort_key):
+                names[atom] = sp.Dummy(positive=True)
+            value = value.xreplace(names)
+        back = {dummy: atom for atom, dummy in names.items()}
+        value = pretty(value)
+        # A sum is written in the cosine where that is shorter, as a sinh^2 + a + mu is a cosh^2 + mu.
+        sinh, cosh = sp.sinh(argument), sp.cosh(argument)
+        number, out = sp.Integer(1), sp.Integer(1)
+        for factor in sp.Mul.make_args(value):
+            base, power = factor.as_base_exp()
+            if base.is_Number:
+                number *= factor
+                continue
+            if base.is_Add and base.has(sinh):
+                content, other = sp.factor(sp.expand(base.subs(sinh ** 2, cosh ** 2 - 1))).as_coeff_Mul()
+                if sp.count_ops(other) < sp.count_ops(base):
+                    number, base = number * content ** power, other
+            out *= base ** power
+        for _ in range(2):
+            out = out.xreplace(back)
+        return _keep_coeff(number, out)
+    return held
+
+
+def datt_ruban_check(chart, system):
+    """What each chart is held to before it is written.
+
+    The comoving chart is the published comoving chart of kantowski_sachs slot for slot, with its
+    a free to depend on r as well. Ruban's chart is dust at rest in it, G^eta_eta = -2 mu/(a b^2)
+    with b = r_s sin^2(eta/2) and every other component of G^mu_nu zero, which is the rest mass
+    dM = (c^2/G) mu dr between two shells, and at mu = 1/2 it is the published dust chart of
+    kantowski_sachs along eta = 2 eta_K + pi with epsilon = pi/2 - kappa. The areal chart's
+    declared rate is the derivative of its a, the chart is dust of the same density, it is Ruban's
+    chart carried along T = r_s sin^2(eta/2) at random points in forty digits, at mu = 0 and
+    epsilon = 1 it is the published inside of Schwarzschild's horizon, and a surface of constant r
+    in it has the induced metric of that vacuum and no extrinsic curvature, whatever mu is: so
+    a T-sphere of any rest mass joins Schwarzschild's vacuum of the same r_s with no shell on the
+    surface. The de Sitter chart's rate is the derivative of its a, and G^mu_nu + (3/l^2) is dust
+    of density 2 mu/(a b^2) with b = l cosh(ct/l). Kruskal's chart is the white hole's, a vacuum
+    and Schwarzschild's chart pulled back, and its surface V = U has the induced metric
+    -dr^2/(r_s/r - 1) + r^2 dOmega^2, the same as the surface of the dust."""
+    geo, g, P = chart.geo, chart.geo.g, chart.reader.parameters
+    reduce = chart.reduce or vm.norm
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        n = len(entry["coords"])
+        matrix = sp.Matrix(n, n, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix, entry["coords"]
+
+    def dust(density, cosmological=0):
+        mixed = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+        for i in range(4):
+            for j in range(4):
+                want = (-density if i == j == 0 else 0) - (cosmological if i == j else 0)
+                if reduce(vm._at(mixed, (i, j)) - want) != 0:
+                    raise AssertionError(f"datt_ruban_t_models: G^a_b of the {system} chart is not dust's in slot {(i, j)}")
+
+    def rate_of(time, declared, window):
+        # The declared rate against the derivative of the chart's own a, at random points in forty
+        # digits, since the definition holds an arcsine or an arctangent of the time.
+        written = chart.reader.held[P["a"]]
+        residual = sp.diff(written, time) - declared.subs(P["a"], written)
+        rng = random.Random(1968)
+        for _ in range(6):
+            at = {symbol: sp.Float(rng.uniform(0.5, 2.0), 40) for symbol in residual.free_symbols}
+            at.update({function: sp.Float(rng.uniform(0.1, 2.0), 40) for function in residual.atoms(AppliedUndef)})
+            at[time] = sp.Float(rng.uniform(*window), 40)
+            if abs(sp.N(residual.subs(at), 40)) > sp.Float("1e-30"):
+                raise AssertionError(f"datt_ruban_t_models: the {system} chart's rate is not the derivative of its a")
+
+    if system == "comoving":
+        reader, matrix, coords = published("kantowski_sachs", "comoving")
+        names = {reader.symbol[c]: x for c, x in zip(coords, chart.symbols)}
+        there = matrix.subs({reader.parameters["a"]: P["a"], reader.parameters["b"]: P["b"]}).subs(names)
+        if there != g:
+            raise AssertionError("datt_ruban_t_models: the comoving chart is not Kantowski and Sachs's with a free in r")
+        return
+    if system == "ruban":
+        eta, r, theta = chart.symbols[:3]
+        rs, mu, a = P["r_s"], P["mu"], P["a"]
+        dust(2 * mu / (a * rs ** 2 * sp.sin(eta / 2) ** 4))
+        reader, matrix, coords = published("kantowski_sachs", "dust")
+        etaK, kappa, b0 = reader.symbol["\\eta"], reader.parameters["kappa"], reader.parameters["b_0"]
+        mine = g.subs(a, chart.reader.held[a]).subs({mu: sp.Rational(1, 2), P["epsilon"]: sp.pi / 2 - kappa, rs: b0})
+        mine = mine.subs(eta, 2 * etaK + sp.pi)
+        J = sp.diag(2, 1, 1, 1)
+        names = {reader.symbol[c]: x for c, x in zip(coords[1:], chart.symbols[1:])}
+        if any(sp.simplify(x) != 0 for x in sp.flatten(J.T * mine * J - matrix.subs(names))):
+            raise AssertionError("datt_ruban_t_models: Ruban's chart at mu = 1/2 is not the published Kantowski-Sachs dust")
+        return
+    if system == "areal":
+        T, r, theta = chart.symbols[:3]
+        rs, mu, eps, a = P["r_s"], P["mu"], P["epsilon"], P["a"]
+        rate_of(T, (2 * mu * T - rs * a) / (2 * T * (rs - T)), (0.05, 0.45))
+        dust(2 * mu / (a * T ** 2))
+        # Ruban's chart along T = r_s sin^2(eta/2), 0 < eta < pi, at random points.
+        ruban = datt_ruban_t_models("ruban")
+        there = cp.Chart(ruban["system"]["coords"], ruban["system"]["parameters"], ruban["chart_line_element"])
+        eta = there.symbols[0]
+        scale_there, scale_here = there.reader.held[there.reader.parameters["a"]], chart.reader.held[a]
+        rng = random.Random(1938)
+        for _ in range(6):
+            at = {"eta": sp.Float(rng.uniform(0.2, 3.0), 50), "rs": sp.Float(rng.uniform(0.5, 2.0), 50),
+                  "mu": sp.Float(rng.uniform(0.1, 2.0), 50), "eps": rng.choice([-1, 0, 1])}
+            radius = at["rs"] * sp.sin(at["eta"] / 2) ** 2
+            here = {T: radius, rs: at["rs"], mu: at["mu"], eps: at["eps"]}
+            other = {eta: at["eta"], there.reader.parameters["r_s"]: at["rs"], there.reader.parameters["mu"]: at["mu"],
+                     there.reader.parameters["epsilon"]: at["eps"]}
+            jacobian = at["rs"] * sp.sin(at["eta"] / 2) * sp.cos(at["eta"] / 2)      # dT/d eta
+            pairs = [(scale_here.subs(here), scale_there.subs(other)),
+                     (g[0, 0].subs(here) * jacobian ** 2, there.geo.g[0, 0].subs(other)),
+                     (g[2, 2].subs(here), there.geo.g[2, 2].subs(other))]
+            for mine, theirs in pairs:
+                if abs(sp.N(mine - theirs, 40)) > sp.Float("1e-30"):
+                    raise AssertionError("datt_ruban_t_models: the areal chart is not Ruban's along T = r_s sin^2(eta/2)")
+        reader, matrix, coords = published("kantowski_sachs", "schwarzschild_interior")
+        names = {reader.symbol[c]: x for c, x in zip(coords, chart.symbols)}
+        names[reader.parameters["r_s"]] = rs
+        vacuum = g.subs(a, chart.reader.held[a]).subs({mu: 0, eps: 1})
+        if any(sp.simplify(x) != 0 for x in sp.flatten(vacuum - matrix.subs(names))):
+            raise AssertionError("datt_ruban_t_models: the areal chart without dust is not the inside of Schwarzschild's horizon")
+        # A surface of constant r: its induced metric is the block of T, theta and phi, which holds
+        # no mu and no epsilon, and its extrinsic curvature is (1/2a) d_r of that block, which vanishes.
+        for i in (0, 2, 3):
+            if g[i, i].has(a, mu, eps) or sp.diff(g[i, i], r) != 0 or g[i, 1] != 0:
+                raise AssertionError("datt_ruban_t_models: a surface of constant r is not the vacuum's own")
+        return
+    if system == "de_sitter":
+        t = chart.symbols[0]
+        ell, mu, a = P["ell"], P["mu"], P["a"]
+        x = t / ell
+        rate_of(t, (a * sp.cosh(x) ** 2 + mu) / (ell * sp.sinh(x) * sp.cosh(x)), (0.3, 2.0))
+        dust(2 * mu / (a * ell ** 2 * sp.cosh(x) ** 2), 3 / ell ** 2)
+        return
+    white_hole_check(chart, system)
+    # On V = U, where (1 - r/r_s) e^(r/r_s) = U^2, the line element is -(4 r_s^3/r) e^(-r/r_s) dU^2 plus
+    # the sphere's, and 2U dU = -(r/r_s^2) e^(r/r_s) dr.
+    r, rs = sp.Symbol("r", positive=True), sp.Symbol("r_s", positive=True)
+    dU2 = (r * sp.exp(r / rs) / rs ** 2) ** 2 / (4 * (1 - r / rs) * sp.exp(r / rs))
+    if sp.simplify(-4 * rs ** 3 * sp.exp(-r / rs) / r * dU2 + 1 / (rs / r - 1)) != 0:
+        raise AssertionError("datt_ruban_t_models: the surface V = U of Kruskal's chart is not the dust's surface")
+
+
+CHARTS["datt_ruban_t_models"] = [lambda s=s: datt_ruban_t_models(s) for s in DR_CHARTS]
 
 
 # -- The lattice universe of Lindquist and Wheeler ------------------------------------------

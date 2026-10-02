@@ -887,6 +887,26 @@ DIMENSIONS = {
     ("rp3_geon", "isotropic"): {
         "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
     },
+    # The T-models of Datt and Ruban are the Kantowski-Sachs cylinder with its scale factor along
+    # the axis free to differ from shell to shell: r is a length along the axis, a a pure number and
+    # b the radius of the spheres. In Ruban's chart the cycloid's parameter eta is a pure number and
+    # mu, the rest mass per unit of r as a length, is one too; the areal chart's time T is the
+    # radius of the spheres, a length; and the de Sitter chart's ell is de Sitter's radius.
+    ("datt_ruban_t_models", "comoving"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "1", "b": "L",
+    },
+    ("datt_ruban_t_models", "ruban"): {
+        "\\eta": "1", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\epsilon": "1", "\\mu": "1", "a": "1",
+    },
+    ("datt_ruban_t_models", "areal"): {
+        "T": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\epsilon": "1", "\\mu": "1", "a": "1",
+    },
+    ("datt_ruban_t_models", "de_sitter"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\ell": "L", "\\epsilon": "1", "\\mu": "1", "a": "1",
+    },
+    ("datt_ruban_t_models", "exterior_kruskal"): {
+        "U": "1", "V": "1", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
+    },
     # Novikov's chart is Tolman's with no energy function: the shell label r is a length beside the
     # areal radius, F = 2GM(r)/c^2 is the Schwarzschild radius of the mass inside the shell, and b is
     # c times the moment the shell leaves the singularity, so q = ct - b is a length as well.
@@ -1851,6 +1871,7 @@ HELD = {
     ("rp3_geon", "kruskal"): ("r",),
     # The radius of AII in Kruskal's chart, the same function of UV.
     ("ab_metrics", "a2_kruskal"): ("r",),
+    ("datt_ruban_t_models", "exterior_kruskal"): ("r",),
     # The mass function of Born and Infeld's point charge, an incomplete elliptic integral of the
     # first kind whose derivative along r is algebraic, the energy of the field in a shell.
     ("born_infeld_charge", "static"): ("m",),

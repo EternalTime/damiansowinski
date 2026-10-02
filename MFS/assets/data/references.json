@@ -1,5 +1,5 @@
 {
-  "version": "1dc5e38d71d4a632",
+  "version": "2b1fe807ecd19dbb",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -25340,6 +25340,66 @@
         "eprint": "1808.03508",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.99.084037"
+      }
+    },
+    "ruban1968": {
+      "type": "article",
+      "fields": {
+        "title": "T-Models of \"Sphere\" in General Relativity Theory",
+        "author": "Ruban, V. A.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "2",
+        "pages": "369--373",
+        "year": "2001",
+        "note": "Reprint of Soviet Physics JETP Letters 8, 414-417 (1968)",
+        "doi": "10.1023/A:1002761519995",
+        "url": "https://doi.org/10.1023/A:1002761519995"
+      }
+    },
+    "ruban1969": {
+      "type": "article",
+      "fields": {
+        "title": "Spherically Symmetric T-Models in the General Theory of Relativity",
+        "author": "Ruban, V. A.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "2",
+        "pages": "375--394",
+        "year": "2001",
+        "note": "Reprint of Soviet Physics JETP 29, 1027-1034 (1969)",
+        "doi": "10.1023/A:1002779702615",
+        "url": "https://doi.org/10.1023/A:1002779702615"
+      }
+    },
+    "krasinski2001ruban": {
+      "type": "article",
+      "fields": {
+        "title": "Editor's Note: T-Models of \"Sphere\" in General Relativity Theory by V. A. Ruban and Spherically Symmetric T-Models in the General Theory of Relativity by V. A. Ruban",
+        "author": "Krasiński, Andrzej",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "2",
+        "pages": "363--367",
+        "year": "2001",
+        "doi": "10.1023/A:1002713618545",
+        "url": "https://doi.org/10.1023/A:1002713618545"
+      }
+    },
+    "krasinski2012": {
+      "type": "article",
+      "fields": {
+        "title": "The charged dust solution of {Ruban}: matching to {Reissner-Nordstr\\\"om} and shell crossings",
+        "author": "Krasiński, Andrzej and Giono, Gabriel",
+        "journal": "General Relativity and Gravitation",
+        "volume": "44",
+        "number": "1",
+        "pages": "239--251",
+        "year": "2012",
+        "doi": "10.1007/s10714-011-1274-7",
+        "eprint": "1107.4897",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-011-1274-7"
       }
     }
   }

@@ -10328,6 +10328,246 @@ def semiclosed_world(ck, src):
     return views
 
 
+class TSphere:
+    """Ruban's T-sphere, r_s = 1: his dust with epsilon = 1 and mu = 1/pi on the shells r <= 0, the
+    member symmetric in time, and Kruskal's manifold on the side V >= U of its surface.
+
+    Inside, the plane of eta and r has the metric -b^2 d eta^2 + a^2 dr^2 with b = sin^2(eta/2) and
+    a = (1 - eta/pi) cot(eta/2) + 2/pi, conformal to -d sigma^2 + dr^2 with d sigma = b d eta/a,
+    and sigma, counted from the greatest expansion eta = pi, runs only from -sigma_m to sigma_m,
+    sigma_m = (pi/2) 1.2189 = 1.9147, the Kantowski-Sachs dust's own conformal time in these
+    units. p = arctan(sigma - r) and q = arctan(sigma + r) send the half strip r <= 0 to the left
+    half of that universe's lens, X <= 0, with the surface r = 0 on the line X = 0.
+
+    The surface is the radial geodesic of the vacuum through the bifurcation sphere, U = V = w with
+    w = -cos(eta/2) exp(sin^2(eta/2)/2), which runs from -1 on the past singularity UV = 1 to 1 on
+    the future one. Outside, the drawing is P(U) and Q(V) with P = Q = f on [-1, 1], fixed by the
+    surface, f(w) = arctan sigma, and beyond it by the two singularities being the lines
+    T = +-T_1, T_1 = 2 arctan sigma_m: Q(V) = T_1 - f(1/V) for V > 1 and P(U) = -T_1 - f(1/U) for
+    U < -1. The horizons U = 0 and V = 0 are then the lines p = 0 and q = 0, which cross on the
+    surface at the origin, the moment of greatest expansion."""
+
+    MU = 1 / math.pi
+
+    def __init__(self):
+        eta = np.linspace(0, 2 * np.pi, 400001)
+        with np.errstate(all="ignore"):
+            a = (1 - self.MU * eta) / np.tan(eta / 2) + 2 * self.MU
+            rate = np.sin(eta / 2) ** 2 / a
+        rate[0] = rate[-1] = 0.0
+        sigma = cumulative_trapezoid(rate, eta, initial=0)
+        self.eta, self.sigma = eta, sigma - sigma[len(sigma) // 2]
+        self.sigma_m = float(self.sigma[-1])
+        self.top = 2 * math.atan(self.sigma_m)
+        w = -np.cos(eta / 2) * np.exp(np.sin(eta / 2) ** 2 / 2)
+        # w stalls below double precision at the two ends, so only the points that still move are kept.
+        keep = np.concatenate([[True], np.diff(w) > 0])
+        keep[np.argmax(w >= 1.0 - 1e-15):] &= False
+        self.w, self.f = np.concatenate([w[keep], [1.0]]), np.concatenate([np.arctan(self.sigma[keep]), [self.top / 2]])
+        self.w[0] = -1.0
+
+    def sigma_of(self, eta):
+        return np.interp(eta, self.eta, self.sigma)
+
+    def scale(self, eta):
+        return (1 - self.MU * eta) / np.tan(eta / 2) + 2 * self.MU
+
+    def inside(self, eta, r):
+        return mink_pq(self.sigma_of(eta), r)
+
+    def _f(self, w):
+        return np.interp(w, self.w, self.f)
+
+    def P(self, U):
+        U = np.asarray(U, dtype=float)
+        with np.errstate(divide="ignore"):
+            over = 1 / np.where(U == 0, 1e-300, U)
+        return np.where(U < -1, -self.top - self._f(over), self._f(U))
+
+    def Q(self, V):
+        V = np.asarray(V, dtype=float)
+        with np.errstate(divide="ignore"):
+            over = 1 / np.where(V == 0, 1e-300, V)
+        return np.where(V > 1, self.top - self._f(over), self._f(V))
+
+
+def datt_ruban_t_models(ck, src):
+    """A T-sphere in one view for each chart that covers a part of it, all on the one drawing TSphere
+    makes: the dust on the left, the half X <= 0 of the Kantowski-Sachs lens, ruled in Ruban's eta,
+    in the proper time t of the dust, and in the radius T of its spheres, which covers the
+    expansion; and Kruskal's manifold on the right of the surface, out to i0 at X = 2 T_1."""
+    b = TSphere()
+    name = "datt_ruban_t_models"
+    tube = {"r_s": 1, "epsilon": 1}
+    ruban = Plane(src, name, "ruban", ("\\eta", "r"), EQUATOR, tube, functions={"mu": "1/pi"})
+    areal = Plane(src, name, "areal", ("T", "r"), EQUATOR, tube, functions={"mu": "1/pi"})
+    comoving = Plane(src, name, "comoving", ("t", "r"), EQUATOR, numeric=["a", "b"])
+    krus = Plane(src, name, "exterior_kruskal", ("U", "V"), EQUATOR, {"r_s": 1})
+    times = (b.eta - np.sin(b.eta)) / 2
+
+    def eta_of(t):
+        return np.interp(t, times, b.eta)
+
+    def in_time(t, r):
+        return b.inside(eta_of(t), r)
+
+    def in_radius(T, r):
+        return b.inside(2 * np.arcsin(np.sqrt(T)), r)
+
+    def outside(U, V):
+        return b.P(U), b.Q(V)
+
+    def fvals(t, r):
+        e = eta_of(t)
+        return {"a": (b.scale(e), 0 * t, 0 * t), "b": (np.sin(e / 2) ** 2, 0 * t, 0 * t)}
+    ck.chart("T-sphere, the dust in Ruban's chart", ruban, b.inside, ck.uniform(0.1, 2 * PI - 0.1), ck.uniform(-10, 0),
+             lambda e, r: (1, 0))
+    ck.chart("T-sphere, the dust in its proper time", comoving, in_time, ck.uniform(0.02, PI - 0.02), ck.uniform(-10, 0),
+             lambda t, r: (1, 0), fvals)
+    ck.chart("T-sphere, the dust's expansion in the areal time", areal, in_radius, ck.uniform(0.02, 0.98), ck.uniform(-10, 0),
+             lambda T, r: (1, 0))
+    ck.chart("T-sphere, Kruskal's chart outside r_s", krus, outside, ck.uniform(-6, -0.05), ck.uniform(0.05, 6),
+             lambda U, V: (1, 1))
+    ck.chart("T-sphere, Kruskal's chart inside the black hole", krus, outside, ck.uniform(0.05, 0.6), ck.uniform(0.7, 1.4),
+             lambda U, V: (1, 1))
+    ck.limit("T-sphere: the conformal time to either singularity is pi/2 times the Kantowski-Sachs dust's",
+             [b.sigma_m, -b.sigma[0]], [HALF * KS_TAU] * 2, 1e-7)
+    ck.limit("T-sphere: the surface is U = V = -cos(eta/2) exp(sin^2(eta/2)/2), on which UV = (1 - b) e^b",
+             [w * w - (1 - np.sin(e / 2) ** 2) * np.exp(np.sin(e / 2) ** 2)
+              for e, w in ((e, -np.cos(e / 2) * np.exp(np.sin(e / 2) ** 2 / 2)) for e in (0.3, 2.0, PI, 4.5, 6.0))], [0] * 5, 1e-12)
+    ck.limit("T-sphere: the two sides agree on the surface, P(w) = Q(w) = arctan sigma",
+             [float(b.P(-np.cos(e / 2) * np.exp(np.sin(e / 2) ** 2 / 2)) - np.arctan(b.sigma_of(e))) for e in (0.5, 2.0, 4.0, 5.8)],
+             [0] * 4, 1e-7)
+    ck.limit("T-sphere: the future singularity outside is one line, P(1/V) + Q(V) = T_1",
+             [float(b.P(1 / V) + b.Q(V)) for V in (1.0, 1.5, 30.0, 1e5)], [b.top] * 4, 1e-9)
+    ck.limit("T-sphere: the past singularity outside is one line, P(U) + Q(1/U) = -T_1",
+             [float(b.P(U) + b.Q(1 / U)) for U in (-1.0, -1.5, -30.0, -1e5)], [-b.top] * 4, 1e-9)
+    ck.limit("T-sphere: the horizons U = 0 and V = 0 are p = 0 and q = 0, which cross on the surface",
+             [float(b.P(0.0)), float(b.Q(0.0)), b.sigma_of(PI)], [0, 0, 0], 1e-9)
+    ck.limit("T-sphere: the event horizon, p = 0, meets the bang at r = -sigma_m = -1.91 r_s",
+             [float(b.inside(0.0, -b.sigma_m)[0]), b.sigma_m], [0.0, 1.9147], 1e-4)
+    ck.limit("T-sphere: slices.novikov_sheets puts the surface where the dust is",
+             [float(b.P(slices.novikov_sheets(np.array([0.0]), t)[0])[0]) - float(np.arctan(b.sigma_of(slices.dr_eta(t))))
+              for t in (0.0, 0.6, 1.4)], [0] * 3, 1e-6)
+    for at, which in ((1e-2, "bang"), (2 * PI - 1e-2, "crunch")):
+        nearer = at / 10 if which == "bang" else 2 * PI - 1e-3
+        ck.diverges(f"T-sphere: the Kretschmann scalar diverges at the {which}", ruban.kretschmann(at, -0.5),
+                    ruban.kretschmann(nearer, -0.5))
+    ck.finite("T-sphere: the dust is regular at its greatest expansion", ruban.kretschmann(np.array([PI - 0.1, PI, PI + 0.1]), np.full(3, -0.5)))
+
+    T1 = b.top
+    S = -np.exp(np.linspace(-12, 12, 600))[::-1]            # r from far down the tube to the surface
+    S = np.concatenate([S, [0.0]])
+    crunch, bang = xt(*mink_pq(np.full_like(S, b.sigma_m), S)), xt(*mink_pq(np.full_like(S, -b.sigma_m), S))
+    dust = ([[-PI, 0.0]] + [list(at) for at in zip(*crunch)] + [list(at) for at in zip(*bang)][::-1])
+    iplus, iminus, i0 = [T1, T1], [T1, -T1], [2 * T1, 0]
+    vacuum = [[0, -T1], iminus, i0, iplus, [0, T1]]
+    ee = np.linspace(0, 2 * PI, 1601)
+    expansion = ([[-PI, 0.0]] + [list(at) for at in zip(*xt(*b.inside(np.full_like(S, PI), S)))]
+                 + [list(at) for at in zip(*bang)][::-1])
+
+    def base(vid, label, system, cover):
+        v = View(vid, label, [-PI - 0.3, 2 * T1 + 0.3, -T1 - 0.35, T1 + 0.35], system)
+        v.fill("region", vacuum)
+        v.fill("region", dust)
+        v.fill("star", dust)
+        v.fill("cover", cover)
+        return v
+
+    def edges(v):
+        # The horizons run on into the dust as the rays sigma = r and sigma = -r, to the bang and the crunch.
+        back = math.atan(2 * b.sigma_m)
+        v.line("event", [[[-back, -back], iplus]])
+        v.line("horizon", [[[-back, back], iminus]])
+        v.line("surface", [[[0, -T1], [0, T1]]])
+        v.curve("singular", *mink_pq(np.full_like(S, b.sigma_m), S), zig=True, tol=0.01)
+        v.curve("singular", *mink_pq(np.full_like(S, -b.sigma_m), S), zig=True, tol=0.01)
+        v.line("singular", [[[0, T1], iplus], [[0, -T1], iminus]], zig=True)
+        v.line("scri", [[iplus, i0], [iminus, i0]])
+        for at in (iplus, iminus, i0, [-PI, 0]):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(iplus, "$i^+$", "bl", dx=4, dy=-3)
+        v.label_xt(iminus, "$i^-$", "tl", dx=4, dy=3)
+        v.label_xt(i0, "$i^0$", "l", dx=6)
+        v.label_xt([1.5 * T1, T1 / 2], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([1.5 * T1, -T1 / 2], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([T1 / 2, T1], "$r = 0$", "b", dy=-8)
+        v.label_xt([T1 / 2, -T1], "$r = 0$", "t", dy=8)
+        v.label_xt([-1.3, 0.35], "dust", cls="region")
+        v.label_xt([0, -1.4], "$V = U$", "l", "small", dx=5)
+        v.legend("star", "the dust, a tube that runs on to the left for ever")
+        v.legend("surface", "the surface of the dust, a radial geodesic of the vacuum through the crossing of its horizons")
+        v.legend("event", "the event horizon, $U = 0$ outside, a ray that leaves the bang at $r = -1.91\\,r_s$ and crosses "
+                          "the surface at its greatest expansion")
+        v.legend("horizon", "the horizon of the white hole, $V = 0$ outside, its mirror image in time")
+        v.legend("singular", "the bang and the crunch of the dust and the two singularities outside, where the "
+                             "Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(settings="$r_s = 1$, the unit of every length, $\\epsilon = 1$ and $\\mu = 1/\\pi$ on every shell of the "
+                       "dust; $U$ and $V$ are Kruskal's coordinates outside it.")
+        # Each moment of the dust's proper time: inside, the line of constant eta along the stretch
+        # of the tube the embedding draws; outside, the shells released from rest with the dust.
+        for m in slices.moments(name):
+            lo, hi = m.reach("ruban", "r")
+            if abs(hi) > 1e-12 or abs(m.reach("comoving_synchronous", "r")[0]) > 1e-12:
+                raise SystemExit("T-sphere: the embedding's dust is not the dust drawn here")
+            rr = np.linspace(lo, hi, 201)
+            v.slice(m, [b.inside(np.full_like(rr, slices.dr_eta(m.time)), rr), outside(*slices.dr_shells(m))])
+
+    def rule(v, moments, shells=(-4, -2, -1, -0.5)):
+        for e in moments:
+            v.curve("t2", *b.inside(np.full_like(S, e), S))
+        for r in shells:
+            v.curve("r2", *b.inside(ee, np.full_like(ee, r)))
+
+    views = []
+    v = base("ruban", "Ruban's parametric time", "ruban", dust)
+    rule(v, [k * PI / 4 for k in range(1, 8)])
+    edges(v)
+    v.legend("cover", "the dust, which $\\eta$ and $r \\le 0$ cover")
+    v.legend("t2", "$\\eta$ constant, every $\\pi/4$")
+    v.legend("r2", "$r$ constant, the world lines of the dust, at $-r_s/2$, $-r_s$, $-2r_s$ and $-4r_s$")
+    views.append(v)
+
+    v = base("comoving", "Comoving", "comoving", dust)
+    rule(v, [float(eta_of(t)) for t in (PI / 8, PI / 4, 3 * PI / 8, PI / 2, 5 * PI / 8, 3 * PI / 4, 7 * PI / 8)])
+    edges(v)
+    v.legend("cover", "the dust, which $t$ and $r \\le 0$ cover")
+    v.legend("t2", "$t$ constant, the moments of the dust's own time, every $\\pi r_s/8c$")
+    v.legend("r2", "$r$ constant, the world lines of the dust, at $-r_s/2$, $-r_s$, $-2r_s$ and $-4r_s$")
+    views.append(v)
+
+    v = base("areal", "Areal time", "areal", expansion)
+    rule(v, [2 * math.asin(math.sqrt(T)) for T in (0.1, 0.25, 0.5, 0.75, 0.95)])
+    v.curve("t2", *b.inside(np.full_like(S, PI), S))
+    edges(v)
+    v.legend("cover", "the expansion of the dust, which $T$ and $r \\le 0$ cover")
+    v.legend("t2", "$T$ constant, at $0.1$, $0.25$, $0.5$, $0.75$, $0.95$ and $1$ times $r_s$")
+    v.legend("r2", "$r$ constant, the world lines of the dust, at $-r_s/2$, $-r_s$, $-2r_s$ and $-4r_s$")
+    views.append(v)
+
+    v = base("kruskal", "Kruskal exterior", "exterior_kruskal", vacuum)
+    tt = np.sinh(np.linspace(-11, 11, 2000))
+    for r in (0.3, 0.6, 0.9, 1.25, 1.6, 2.5, 5, 10):
+        k = math.sqrt(abs(r - 1) * math.exp(r))
+        if r > 1:
+            v.curve("r", *outside(-k * np.exp(-tt / 2), k * np.exp(tt / 2)))
+        else:
+            # Inside r_s, on the side V >= U of the surface: the black hole above and the white hole below.
+            half = np.exp(np.linspace(0, 11, 1000))
+            v.curve("r", *outside(k / half, k * half))
+            v.curve("r", *outside(-k * half, -k / half))
+    kk = np.exp(np.linspace(-14, 14, 2000))
+    for t in (-10, -5, -2.5, -1, 0, 1, 2.5, 5, 10):
+        v.curve("t", *outside(-kk * math.exp(-t / 2), kk * math.exp(t / 2)))
+    edges(v)
+    v.legend("cover", "Schwarzschild's vacuum on the side $V \\ge U$ of the surface, which $U$ and $V$ cover")
+    v.legend("r", "the areal radius constant: $0.3$, $0.6$, $0.9$, $1.25$, $1.6$, $2.5$, $5$ and $10\\,r_s$")
+    v.legend("t", "Schwarzschild's $ct$ constant outside $r_s$, at $0$, $\\pm 1$, $\\pm 2.5$, $\\pm 5$ and $\\pm 10\\,r_s$")
+    views.append(v)
+    return views
+
+
 def white_hole(ck, src):
     """The white hole: Oppenheimer and Snyder's ball of dust from the singularity it leaves, through
     its moment of rest at R0 = 2 r_s, to the singularity it falls back to. The drawing is the
@@ -19705,6 +19945,7 @@ DRAWN = {
     "einstein_cluster": einstein_cluster,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
+    "datt_ruban_t_models": datt_ruban_t_models,
     "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
@@ -22142,6 +22383,22 @@ CAPTIONS = {
         "X)/2) = \\tanh((\\eta \\pm \\chi)/2)$ sends it into the Einstein static universe. It has the causal "
         "structure of the flat universe, a triangle with the bang along its base and null infinity above, and "
         "differs from it only in where its surfaces of constant $\\eta$ and $\\chi$ lie.",
+    ],
+    ("datt_ruban_t_models", "ruban"): [
+        "A T-sphere ($\\epsilon = 1$, $\\mu = 1/\\pi$), each point in the diagram a 2-sphere, with the dust ruled in Ruban's $\\eta$. The dust is the lens on the left: its tube runs on to $r \\to -\\infty$, the point on the far left, and lives from the bang, the lower curve, to the crunch, the upper one. Light crosses a finite stretch of it in that time, since $\\int b\\,d\\eta/a$ from the bang to the crunch is $3.83\\,r_s$.",
+        "To the right of the surface is Kruskal's extension of Schwarzschild's vacuum, cut along the radial geodesic $V = U$: the two horizons cross on the surface, at the moment $\\eta = \\pi$ of greatest expansion, and run on into the dust. The event horizon reaches back to the bang at $r = -1.91\\,r_s$, so only the dust nearer the surface than that can send light to $\\mathscr{I}^+$, however much of it the tube holds. Every sphere of the dust above $\\eta = \\pi$ is trapped, and every sphere below it is the time reverse.",
+    ],
+    ("datt_ruban_t_models", "comoving"): [
+        "A T-sphere ($\\epsilon = 1$, $\\mu = 1/\\pi$), each point in the diagram a 2-sphere, with the dust ruled in its proper time $t$, from the bang at $t = 0$ to the crunch at $ct = \\pi r_s$. The moments crowd toward the bang and the crunch, where the radius $b$ of the spheres changes fastest.",
+        "Each moment of the dust carries on outside as the moment of clocks released from rest at the greatest expansion, Igor Novikov's slicing of the vacuum, whose innermost clock is the surface of the dust.",
+    ],
+    ("datt_ruban_t_models", "areal"): [
+        "A T-sphere ($\\epsilon = 1$, $\\mu = 1/\\pi$), each point in the diagram a 2-sphere, with the dust ruled in the radius $T$ of its spheres. That time covers the expansion, the lower half of the lens, and stops on the line $T = r_s$, where the spheres stand still; the collapse above it is the same chart with the time reversed.",
+        "With no dust the lower half of the lens would be the white hole of Kruskal's manifold and the line $T = r_s$ its horizon. In the dust that line is an ordinary moment, the same on every shell.",
+    ],
+    ("datt_ruban_t_models", "kruskal"): [
+        "A T-sphere ($\\epsilon = 1$, $\\mu = 1/\\pi$), each point in the diagram a 2-sphere, with the vacuum ruled in the areal radius and in Schwarzschild's time. Outside, $p = P(U)$ and $q = Q(V)$ are functions $P$ and $Q$ of the Kruskal coordinates $U$ and $V$, and three conditions fix them: the two sides agree on the surface $V = U$, and each singularity of the vacuum is a level line that meets the crunch or the bang of the dust on the surface.",
+        "The world outside, between the two horizons and $i^0$, sees the surface only below the crossing: the surface comes out of the white hole and settles on the event horizon, and the dust above the crossing, its whole collapse, lies inside the black hole.",
     ],
     ("semiclosed_world", "comoving"): [
         "A semiclosed world ($\\chi_0 = 3\\pi/4$), each point in the diagram a 2-sphere, with the dust ruled in its proper time $\\tau$. The dust is the rectangle on the left, a closed universe drawn in its conformal time $\\eta$ and $\\chi$ from the bang to the crunch. To its right is Kruskal's extension of Schwarzschild's exterior, entered from behind: first the sheet behind the throat, then the bifurcation sphere at $X = 3\\chi_0 - \\pi$, then the far sheet out to $i^0$.",
