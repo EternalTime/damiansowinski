@@ -687,6 +687,10 @@ BARDEEN = {"r_s": 1, "g": "1/3"}
 
 # Damour and Solodukhin's wormhole at lambda = 1/5, where the throat's clocks run five times slow.
 DS = {"r_s": 1, "lambda": "1/5"}
+# Fisher, Janis, Newman and Winicour's scalar field at gamma = 1/2, the value of Abdolrahimi and Shoom's
+# figures, in units of b; the harmonic chart in units of k = b/2, where m = gamma k.
+FJNW = {"b": 1, "gamma": "1/2"}
+FJNW_HARMONIC = {"m": "1/2", "k": 1}
 
 # Simpson and Visser's three geometries at r_s = 1: the black bounce, a = r_s/2, whose horizons are
 # r = +-sqrt(3)/2, the one way wormhole, a = r_s, and the traversable wormhole, a = 2 r_s.
@@ -998,6 +1002,19 @@ DIAGRAMS = [
               "$r/r_s$", "$(u + r)/r_s$", {"r_s": 1, "a": a}, EQUATOR, to_display=FINKELSTEIN_OUT, tau="u + r",
               families=SIDEWAYS, areal=True)
       for case, (label, a) in SV_CASES.items()],
+    # Fisher, Janis, Newman and Winicour's scalar field on its plane of the time and the radial
+    # coordinate in each of its four charts, at gamma = 1/2: from the singularity out in Wyman's r, in
+    # Janis, Newman and Winicour's R = r - 3b/4 and in the isotropic radius, whose singularity is b/4,
+    # and from spatial infinity u = 0 in toward the singularity u = infinity in Bronnikov's harmonic u.
+    Diagram("fisher_jnw", "spherical", "radial", "$t$ and $r$", ("t", "r"), (1, 5, -2, 2),
+            "$r/b$", "$ct/b$", FJNW, EQUATOR, areal=True),
+    Diagram("fisher_jnw", "jnw", "radial", "$t$ and $R$", ("t", "R"), (0.25, 4.25, -2, 2),
+            "$R/b$", "$ct/b$", FJNW, EQUATOR, areal=True),
+    Diagram("fisher_jnw", "isotropic", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0.25, 4.25, -2, 2),
+            "$\\rho/b$", "$ct/b$", FJNW, EQUATOR, areal=True, inside=True),
+    Diagram("fisher_jnw", "harmonic", "radial", "$t$ and $u$", ("t", "u"), (0, 4, -4, 4),
+            "$ku$", "$ct/k$", FJNW_HARMONIC, EQUATOR, families=("outgoing", "ingoing"), areal=True,
+            areal_contours=(0.5, 1.0, 2.0, 4.0)),
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -2489,6 +2506,48 @@ CAPTIONS = {
         "$(r_s/c)\\ln(1/\\lambda^2)$ on each side is spent beside the throat. The faint vertical lines are the "
         "spheres of areal radius $1.5\\,r_s$, $2\\,r_s$, and $3\\,r_s$, one of each on either side. The "
         "Kretschmann scalar is $(1 + 24\\lambda^4)/(4\\lambda^4r_s^4)$ at the throat.",
+    ],
+    ("fisher_jnw", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\gamma = 1/2$, each point in the "
+        "plane a 2-sphere of area $4\\pi r^2f^{1-\\gamma}$ with $f = 1 - b/r$. The edges of the cones are "
+        "$dr/d(ct) = \\pm f^{\\gamma}$, so $ct \\mp r_*$ is constant along a ray, with "
+        "$r_* = \\sqrt{r(r - b)} + b\\ln\\left((\\sqrt{r} + \\sqrt{r - b})/\\sqrt{b}\\right)$ at this $\\gamma$, "
+        "which vanishes at $r = b$.",
+        "The cones narrow toward $r = b$ and close only on it, where the spheres have zero area and the "
+        "Kretschmann scalar diverges as $(r - b)^{2\\gamma - 4}$. A ray moving in from $r$ reaches that "
+        "singularity after the finite time $r_*(r)/c$, which is $2.3\\,b/c$ from $r = 2b$ here, and a ray "
+        "leaves it for infinity at every moment, so no horizon hides it. At $\\gamma = 1$ the time is "
+        "infinite and $r = b$ is Schwarzschild's horizon.",
+    ],
+    ("fisher_jnw", "jnw", "radial"): [
+        "The plane of $t$ and $R$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\gamma = 1/2$, where "
+        "$R = r - 3b/4$ and the singularity is $R = b/4$. The edges of the cones are "
+        "$dR/d(ct) = \\pm f^{\\gamma}$ with $f = (4R - b)/(4R + 3b)$, the cones of the spherical chart moved "
+        "over by $3b/4$, and $ct \\mp r_*$ is constant along a ray.",
+        "In this radius $\\Gamma^R{}_{\\theta\\theta} = -R$ for every $\\gamma$, as in flat space. Each point "
+        "in the plane is a 2-sphere of area $4\\pi\\left(R - b/4\\right)^{1/2}\\left(R + 3b/4\\right)^{3/2}$, which "
+        "vanishes on the singularity, where the Kretschmann scalar diverges. A ray moving in from "
+        "$R = 5b/4$ reaches it after $2.3\\,b/c$.",
+    ],
+    ("fisher_jnw", "isotropic", "radial"): [
+        "The plane of $t$ and the isotropic radius $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for "
+        "$\\gamma = 1/2$, with $r = \\rho\\left(1 + b/4\\rho\\right)^2$ and the singularity at $\\rho = b/4$. The "
+        "edges of the cones are $d\\rho/d(ct) = \\pm h^{2\\gamma - 1}\\left(1 + b/4\\rho\\right)^{-2}$ with "
+        "$h = (4\\rho - b)/(4\\rho + b)$, and $ct \\mp r_*$ is constant along a ray.",
+        "For $\\gamma > 1/2$ the cones close on the singularity and for $\\gamma < 1/2$ they open there without "
+        "bound. At $\\gamma = 1/2$ the power of $h$ drops out and they keep the width "
+        "$d\\rho/d(ct) = \\pm 1/4$ on it, so every ray drawn meets the singularity at that slope. The "
+        "spheres have zero area there and the Kretschmann scalar diverges.",
+    ],
+    ("fisher_jnw", "harmonic", "radial"): [
+        "The plane of $t$ and $u$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $m = k/2$, which is "
+        "$\\gamma = 1/2$. Spatial infinity is $u = 0$, the singularity is $u \\to \\infty$, and the scalar field "
+        "grows in proportion to $u$. The edges of the cones are $du/d(ct) = \\pm e^{-2mu}\\sinh^2(ku)/k^2$, "
+        "and $ct \\pm r_*$ is constant along a ray, with $r = 2k/(1 - e^{-2ku})$.",
+        "The cones close as $u^2$ toward $u = 0$, which a ray reaches only as $t \\to \\pm\\infty$, and open as "
+        "$e^{2(k - m)u}/4k^2$ at large $u$. A ray moving toward larger $u$ runs through all of it in a finite "
+        "time and reaches the singularity $1.6\\,k/c$ after passing $ku = 1$. The faint vertical lines are "
+        "the spheres of areal radius $4k$, $2k$, $k$, and $k/2$, at $ku = 0.28$, $0.64$, $1.5$, and $2.8$.",
     ],
     ("morris_thorne", "spherical", "radial"): [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). "
@@ -6038,6 +6097,14 @@ def _ds_rstar(r):
     return root / a + (1 + a) / (2 * a ** 1.5) * np.log((2 * a * r - (1 + a) + 2 * math.sqrt(a) * root) / (a - 1))
 
 
+def _fjnw_rstar(r):
+    """The tortoise coordinate of Fisher, Janis, Newman and Winicour's metric at gamma = 1/2 and b = 1,
+    zero at the singularity: dr_*/dr = (1 - 1/r)^(-1/2)."""
+    r = np.asarray(r, float)
+    root = np.sqrt(np.maximum(r * (r - 1), 0))
+    return root + np.log(np.sqrt(r) + np.sqrt(np.maximum(r - 1, 0)))
+
+
 def _ds_xstar(rho):
     """The tortoise coordinate of the rescaled time in Bueno and his collaborators' rho, at r_s = 1
     and lambda = 1/5: r_s((2 + lambda^2) rho + lambda^2 sinh rho)/(2(1 + lambda^2)), odd in rho."""
@@ -6240,6 +6307,18 @@ CLOSED_FORMS = {
          lambda t, r: t - np.sign(4 * r - 1) * _ds_rstar(_ds_areal(r)), lambda t, r: r > 0.005),
     ("damour_solodukhin", "einstein_rosen", "radial"):
         (lambda t, u: t + np.sign(u) * _ds_rstar(1 + u ** 2), lambda t, u: t - np.sign(u) * _ds_rstar(1 + u ** 2), None),
+    # With b = 1 and gamma = 1/2: r = R + 3/4, r = rho (1 + 1/(4 rho))^2, and in the harmonic chart, at
+    # k = 1 and b = 2, r = 2/(1 - e^(-2u)) falls as u grows and the tortoise coordinate is twice that of b = 1.
+    ("fisher_jnw", "spherical", "radial"):
+        (lambda t, r: t + _fjnw_rstar(r), lambda t, r: t - _fjnw_rstar(r), lambda t, r: r > 1.0005),
+    ("fisher_jnw", "jnw", "radial"):
+        (lambda t, R: t + _fjnw_rstar(R + 0.75), lambda t, R: t - _fjnw_rstar(R + 0.75), lambda t, R: R > 0.2505),
+    ("fisher_jnw", "isotropic", "radial"):
+        (lambda t, rho: t + _fjnw_rstar(rho * (1 + 1 / (4 * rho)) ** 2),
+         lambda t, rho: t - _fjnw_rstar(rho * (1 + 1 / (4 * rho)) ** 2), lambda t, rho: rho > 0.2505),
+    ("fisher_jnw", "harmonic", "radial"):
+        (lambda t, u: t - 2 * _fjnw_rstar(1 / (1 - np.exp(-2 * u))), lambda t, u: t + 2 * _fjnw_rstar(1 / (1 - np.exp(-2 * u))),
+         lambda t, u: u > 0.05),
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     # With m = 1, z_* = z e^(2/z) - 2 Ei(2/z) on the axis and rho_* the integral of e^(2/s - 1/(2 s^2)) in the plane.

@@ -5761,6 +5761,122 @@ def spinning_string(ck, src):
                           "$dX^2 + dY^2 - dZ^2$.")]
 
 
+def fisher_jnw(ck, src):
+    """The equatorial plane of Fisher, Janis, Newman and Winicour's scalar field at one moment, at
+    gamma = 1/2 and b = 1, the surface Abdolrahimi and Shoom embed. It is read in the harmonic
+    chart at k = 1/2 and m = 1/4, where the singularity is u -> infinity and nothing cancels on the
+    way to it: e^(-u) = f = 1 - b/r, so with w = f^(1/4) = e^(-u/4) the circle of the sphere r has
+    the radius rho = r f^(1/4) = w/(1 - w^4), which shrinks to a point at the singularity.
+
+    g_rr - (d rho/dr)^2 = f^(-3/2) (b/2r - 9b^2/16r^2), which vanishes on r_e = (1 + gamma)^2 b/4 gamma
+    = 9b/8, u = ln 9. Outside it the surface is drawn in flat space, climbing from level as Flamm's
+    paraboloid does, z(w) the integral of sqrt(9 s^4 - 1)/(1 - s^4)^(3/2) ds from 3^(-1/2) up to w.
+    Inside it the circles grow faster than the distance out to them, which is checked, and the
+    surface is drawn in three dimensional Minkowski space, falling from level at Z(w), the integral
+    of sqrt(1 - 9 s^4)/(1 - s^4)^(3/2) ds, to the singular point, which it enters along the light
+    cone, dZ/d rho -> 1. Both pieces lie level at r_e, so they meet in one circle with one tangent,
+    checked from the numbers and from the file. Each closed form is checked by a quadrature the
+    drawing never uses, and the spherical, isotropic and Janis-Newman-Winicour charts are checked
+    to give the same circles and the same heights.
+
+    Toward the singular point a straight chord of Minkowski space is longer than the arc it spans,
+    as beside the spinning string, so the profile steps toward it by a fortieth of rho at a time.
+    The surface also closes on the light cone as fast as f does: a chord's proper length is
+    4 sqrt(f) of its extent in rho, so d rho and dZ agree to 8f and their difference is lost to
+    rounding once f^(5/4) nears the last digit written. The profile is therefore written to
+    fourteen decimals and stops at u = 17.5, a circle of radius 0.0126 b, a sixth of a hundredth
+    of the drawing's width."""
+    params = {"m": sp.Rational(1, 4), "k": sp.Rational(1, 2)}
+    fixed = {"t": 0, **EQUATOR}
+
+    def in_w(e, u):
+        # g_phiphi and g_uu - (d rho/du)^2 as factored rational functions of w = e^(-u/4), so that the
+        # second is exactly zero on the level circle, where sympy's hyperbolic form leaves a rounding.
+        w = sp.Symbol("w", positive=True)
+        return sp.factor(sp.simplify(e.rewrite(sp.exp).subs(u, -4 * sp.log(w)))).subs(w, sp.exp(-u / 4))
+    sl = Slice(src, "fisher_jnw", "harmonic", "u", "\\phi", fixed, params, rewrite=in_w)
+    msl = Slice(src, "fisher_jnw", "harmonic", "u", "\\phi", fixed, params, space="minkowski", rewrite=in_w)
+    at = lambda r: math.log(r / (r - 1))                       # u of the sphere r, in units of b
+    level, top, tip = math.log(9), at(4.0), 17.5
+    sl.known = msl.known = {level: sp.log(9), top: sp.log(sp.Rational(4, 3))}
+    name = "Fisher-Janis-Newman-Winicour"
+    radius = lambda u: np.exp(-np.asarray(u, dtype=float) / 4) / (1 - np.exp(-np.asarray(u, dtype=float)))
+    size = 2 * float(radius(top))
+    ck.add(f"{name}: the surface lies level where g_rr = (d rho/dr)^2, at r = 9b/8",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-12)
+    ck.stops(f"{name}, inside r = 9b/8 in flat space", sl, np.linspace(level, 40, 402)[1:])
+    outward = np.linspace(1e-3, level, 402)[:-1]
+    ck.add(f"{name}: beyond r = 9b/8 no surface in Minkowski space carries the slice, (d rho/du)^2 - g_uu < 0",
+           float(max(0.0, np.max(-msl.defect_at(outward)))), 0.0)
+    if not np.all(msl.defect_at(outward) > 0):
+        ck.items[-1]["ok"] = False
+
+    join = ("at $r = 9b/8$ the surface lies level, in Minkowski space nearer the singularity and in flat space "
+            "beyond")
+    rise = sl.rise(top, level)
+    far = Piece("far", "sheet", sl, top, level, rise, -1,
+                (("edge", "the surface runs on, to $r \\to \\infty$"), ("join", join)),
+                [(top, "r", None), (at(3.0), "r", None), (at(2.0), "r", None), (at(1.5), "r", None),
+                 (level, "space", None)], size)
+    steps = int(math.ceil((tip - level) / (4 * math.log(1.025))))
+    near = Piece("near", "sheet", msl, level, tip, 0.0, -1,
+                 (("join", join),
+                  ("edge", "the surface runs on into the axis along a light cone, to the singularity $r = b$")),
+                 [(level, "space", None)], size, digits=1e-14,
+                 knots=[level + (tip - level) * k / steps for k in range(1, steps)])
+    for p in (far, near):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {p.id} {space}", p)
+        ck.radius(f"{name}, {p.id}, rho = r f^(1/4) {space}", p, radius, size)
+    ck.join(f"{name}, far in flat space and near in Minkowski space at r = 9b/8", far, level, near, level)
+    pa, pb = far.data()["points"][-1], near.data()["points"][0]
+    ck.add(f"{name}, far and near as written: one point at r = 9b/8",
+           max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(far.decimals, near.decimals))
+
+    # The closed forms, in w = e^(-u/4), by a quadrature of their own.
+    w_e = 3 ** -0.5
+
+    def flat_height(u):
+        return np.array([quad(lambda s: math.sqrt(max(9 * s ** 4 - 1, 0.0)) / (1 - s ** 4) ** 1.5, w_e, math.exp(-x / 4),
+                              epsabs=1e-13, epsrel=1e-12)[0] for x in np.atleast_1d(u)])
+
+    def cone_height(u):
+        return np.array([-quad(lambda s: math.sqrt(max(1 - 9 * s ** 4, 0.0)) / (1 - s ** 4) ** 1.5, math.exp(-x / 4), w_e,
+                               epsabs=1e-13, epsrel=1e-12)[0] for x in np.atleast_1d(u)])
+    ck.form(f"{name}, far, z = the integral of sqrt(9 w^4 - 1)/(1 - w^4)^(3/2)", far, flat_height, size)
+    ck.form(f"{name}, near, Z = -the integral of sqrt(1 - 9 w^4)/(1 - w^4)^(3/2)", near, cone_height, size)
+    ck.add(f"{name}: the surface enters the singular point along the light cone, Z - Z_0 = rho there",
+           abs((near.at(tip)[1] - float(cone_height(200.0)[0])) / near.at(tip)[0] - 1), 1e-3)
+
+    # The other three charts, at b = 1 and gamma = 1/2, give the same circles and the same heights.
+    half = {"b": 1, "gamma": sp.Rational(1, 2)}
+    for system, x, of_r in (("spherical", "r", lambda r: r), ("jnw", "R", lambda r: r - 0.75),
+                            ("isotropic", "\\rho", lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2)):
+        other = Slice(src, "fisher_jnw", system, x, "\\phi", fixed, half)
+        mother = Slice(src, "fisher_jnw", system, x, "\\phi", fixed, half, space="minkowski")
+        rs = np.array([1.125, 1.5, 2.0, 3.0, 4.0])
+        ck.add(f"{name}: the {system} chart's circles are the same", float(np.max(np.abs(
+            other.rho_at(np.array([of_r(r) for r in rs])) - radius([at(r) for r in rs])))), 1e-12)
+        ck.add(f"{name}: the {system} chart's surface in flat space is the same",
+               abs(other.rise(of_r(1.125), of_r(4.0)) - rise), 1e-9)
+        ck.add(f"{name}: the {system} chart's surface in Minkowski space is the same",
+               abs(mother.rise(of_r(1.001), of_r(1.125)) - msl.rise(level, at(1.001))), 1e-9)
+
+    surface = Surface([far, near])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *far.at(level), "$r = 9b/8$", dx=10)
+    ring_label(fig, [0, 0, 0], *far.at(at(2.0)), "$2b$")
+    ring_label(fig, [0, 0, 0], *far.at(top), "$4b$")
+    fig.legend("fill", "cover", "the equatorial plane at one moment, from the singularity $r = b$ out")
+    fig.legend("line", "r", "$r$ constant, at $1.5\\,b$, $2b$, $3b$, and $4b$")
+    fig.legend("line", "space", "$r = 9b/8$: Minkowski space inside, flat space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "A moment of $t$", "$b$", [surface], fig.done(),
+                 settings="$\\gamma = 1/2$ and $b = 1$, the unit of every length; in the harmonic chart $k = b/2$ and "
+                          "$m = b/4$. Every length along the surface inside $r = 9b/8$ is measured with "
+                          "$dX^2 + dY^2 - dZ^2$.")]
+
+
 MILNE = (0.5, 1.0, 2.0, 3.0)    # the moments of ct drawn, in any unit of length l
 
 
@@ -7265,6 +7381,7 @@ DRAWN = {
     "string_wave": string_wave,
     "spinning_string": spinning_string,
     "photon_rocket": photon_rocket,
+    "fisher_jnw": fisher_jnw,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -7283,6 +7400,18 @@ CAPTIONS = {
         "string swings out by $\\ell/2$ and back, the ring crosses the cone the other way, reaching from "
         "$r = 1.5\\,\\ell$ to $2.5\\,\\ell$ on the crest, $u = 0$. A string at rest pulls on nothing. Once the "
         "pulse has passed, the ring is left falling toward the string, the pull Vachaspati found.",
+    ],
+    ("fisher_jnw", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) at one moment of $t$ ($\\gamma = 1/2$), from the singularity "
+        "$r = b$ out to $r = 4b$, in three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$) out to the circle "
+        "$r = 9b/8$ and in flat space beyond it, every distance along the surface the metric distance.",
+        "On the slice the metric is $f^{-\\gamma}dr^2 + r^2f^{1-\\gamma}d\\phi^2$ with $f = 1 - b/r$, so the circle "
+        "of the sphere $r$ has radius $rf^{(1-\\gamma)/2}$, which shrinks to a point at $r = b$, where "
+        "Schwarzschild's slice has its throat. Inside $r = (1 + \\gamma)^2b/4\\gamma$ the circles grow faster "
+        "than the distance out to them, and the surface leaves the singular point along a light cone of "
+        "Minkowski space and bends over until it lies level on that circle. Beyond it the surface climbs in "
+        "flat space as Flamm's paraboloid does, and at $\\gamma = 1$ the circle is $r = b$ and the surface is "
+        "Flamm's. Both parts lie level at the circle, so they meet there with one tangent plane.",
     ],
     ("spinning_string", "moment"): [
         "The moment $t = 0$ of the plane $z = 0$ outside the closed timelike curves ($b = 0.9$, $r > r_c = a/b$), "

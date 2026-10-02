@@ -429,6 +429,14 @@ def simpson_visser(chart, case):
     return marks
 
 
+def _fjnw_reach(m, of_r):
+    """The embedding of Fisher, Janis, Newman and Winicour's equator is read in the harmonic chart at
+    k = 1/2, b = 1, where e^(-u) = 1 - b/r: the radii r it reaches, least first, each carried to a
+    chart's own radial coordinate by of_r."""
+    lo, hi = m.reach("harmonic", "u")
+    return [of_r(1 / (1 - math.exp(-u))) for u in (hi, lo)]
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -932,6 +940,15 @@ FLAT = {
     **{("simpson_visser", chart, case): (lambda chart=chart, case=case: simpson_visser(chart, case))
        for chart in ("spherical", "areal", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing")
        for case in SV_A},
+    # Fisher, Janis, Newman and Winicour's scalar field at gamma = 1/2 and b = 1: the moment t = 0 from
+    # the singularity out, in Wyman's r, in R = r - 3b/4, in the isotropic radius, and in the harmonic
+    # coordinate, which its plane draws in units of 1/k at k = 1, so at half the embedding's own u.
+    ("fisher_jnw", "spherical", "radial"): lambda: one("fisher_jnw", lambda m: along(0.0, *_fjnw_reach(m, lambda r: r))),
+    ("fisher_jnw", "jnw", "radial"): lambda: one("fisher_jnw", lambda m: along(0.0, *_fjnw_reach(m, lambda r: r - 0.75))),
+    ("fisher_jnw", "isotropic", "radial"): lambda: one(
+        "fisher_jnw", lambda m: along(0.0, *_fjnw_reach(m, lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2))),
+    ("fisher_jnw", "harmonic", "radial"): lambda: one(
+        "fisher_jnw", lambda m: along(0.0, *(u / 2 for u in m.reach("harmonic", "u")))),
     ("minkowski", "spherical", "radial"): lambda: one("minkowski", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # t = (u + v)/2 and r = (v - u)/2, so the moment is u = -r, v = r.
     ("minkowski", "spherical_null", "radial"): lambda: one(

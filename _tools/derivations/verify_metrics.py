@@ -231,6 +231,20 @@ DIMENSIONS = {
     ("zipoy_voorhees", "prolate_spheroidal"): {
         "t": "T", "x": "1", "y": "1", "\\phi": "1", "m": "L", "\\delta": "1", "f": "1", "h": "1",
     },
+    # Fisher, Janis, Newman and Winicour's b is a length and gamma a pure number; f and h are the
+    # ratios the charts name. Bronnikov's harmonic coordinate u is an inverse length, e^{-2ku} = 1 - b/r.
+    ("fisher_jnw", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "b": "L", "\\gamma": "1", "f": "1",
+    },
+    ("fisher_jnw", "jnw"): {
+        "t": "T", "R": "L", "\\theta": "1", "\\phi": "1", "b": "L", "\\gamma": "1", "f": "1",
+    },
+    ("fisher_jnw", "isotropic"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "b": "L", "\\gamma": "1", "h": "1",
+    },
+    ("fisher_jnw", "harmonic"): {
+        "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "m": "L", "k": "L",
+    },
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },

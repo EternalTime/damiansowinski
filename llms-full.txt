@@ -419,6 +419,19 @@ A static, spherically symmetric traversable wormhole with zero redshift function
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2 dt^2 + dr^2 + (r^2 + \ell^2)\left(d\theta^2 + \sin^2\theta\, d\phi^2\right)$$
 
+### Fisher-Janis-Newman-Winicour Scalar Field
+
+The static, spherically symmetric spacetime of a mass that also carries a massless scalar field, found by I. Z. Fisher in 1948 and found again by Allen Janis, Ezra Newman, and Jeffrey Winicour in 1968. For any scalar charge, however small, the sphere where Schwarzschild's horizon would stand has zero area and infinite curvature, and no horizon hides it.
+
+- id: `fisher_jnw`
+- tags: non-vacuum, static, stationary, spherically symmetric, scalar field, massless scalar field, minimally coupled scalar field, Einstein-scalar, scalar charge, mass, naked singularity, singularity, curvature singularity, timelike singularity, no horizon, no-hair theorem, black hole mimicker, photon sphere, gravitational lensing, cosmic censorship, Janis-Newman-Winicour, JNW, Fisher solution, Wyman solution, anti-Fisher, harmonic coordinates, isotropic coordinates, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -f^{\gamma}c^2dt^2 + \dfrac{dr^2}{f^{\gamma}} + f^{1-\gamma}r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Janis-Newman-Winicour: coordinates $(t, R, \theta, \phi)$, $$ds^2 = -f^{\gamma}c^2dt^2 + \dfrac{dR^2}{f^{\gamma}} + f^{1-\gamma}\left(R + \dfrac{b(1+\gamma)}{2}\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Isotropic: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -h^{2\gamma}c^2dt^2 + \left(1 + \dfrac{b}{4\rho}\right)^4h^{2(1-\gamma)}\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Harmonic: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -e^{-2mu}c^2dt^2 + \dfrac{k^2e^{2mu}}{\sinh^2(ku)}\left(\dfrac{k^2du^2}{\sinh^2(ku)} + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Friedmann-Lemaître-Robertson-Walker Expanding Universe
 
 The Friedmann-Lemaître-Robertson-Walker metric describing a homogeneous, isotropic expanding universe.

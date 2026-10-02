@@ -5,7 +5,7 @@ schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
-damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen and hayward, and
+damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward and fisher_jnw, and
 Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
@@ -24,7 +24,7 @@ reads better than an expanded one, and each of those is checked against sympy he
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
-majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md and photon_rocket.md beside this file.
+majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md and fisher_jnw.md beside this file.
 """
 import argparse
 import itertools
@@ -5002,6 +5002,253 @@ def ori_pullback(chart, system):
 
 
 CHARTS["ori_time_machine"] = [lambda s=s: ori_time_machine(s) for s in ORI_CHARTS]
+
+# -- Fisher, Janis, Newman and Winicour's scalar field -----------------------------------
+
+FJNW_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+FJNW_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+FJNW_CHARTS = ["spherical", "jnw", "isotropic", "harmonic"]
+
+
+def fjnw_hyperbolic(u, m, k):
+    """A `pretty` for the harmonic chart, whose values carry e^{2mu}, sinh(ku) and cosh(ku) and
+    come back from the checker's Geometry as exponentials: each is rewritten in S = sinh(ku),
+    C = cosh(ku) and E = e^{mu}, reduced by C^2 = 1 + S^2, its denominator cleared of C by its
+    conjugate, and factored, as chart_printer.hyperbolic does for one argument."""
+    S, C, E = sp.symbols("FJNWs FJNWc FJNWe", positive=True)
+
+    def reduce(p):
+        return sp.expand(sp.reduced(sp.expand(p), [C ** 2 - 1 - S ** 2], C, S)[1])
+
+    def powers(e):
+        a = sp.Poly(sp.expand(e.args[0]), u)
+        if a.degree() != 1 or a.coeff_monomial(1) != 0:
+            raise AssertionError(f"{e} is no exponential of a multiple of u")
+        rate = sp.Poly(a.coeff_monomial(u), m, k)
+        n, j = rate.coeff_monomial(k), rate.coeff_monomial(m)
+        if not (n.is_Integer and j.is_Integer) or sp.expand(rate.as_expr() - n * k - j * m) != 0:
+            raise AssertionError(f"{e} is no power of e^(ku) and e^(mu)")
+        return (S + C) ** n * E ** j
+
+    def pretty(value):
+        x = sp.sympify(value).replace(sp.sinh, lambda a: (sp.exp(a) - sp.exp(-a)) / 2)
+        x = x.replace(sp.cosh, lambda a: (sp.exp(a) + sp.exp(-a)) / 2).replace(lambda e: isinstance(e, sp.exp), powers)
+        num, den = (reduce(part) for part in sp.fraction(sp.together(x)))
+        d0, d1 = sp.Poly(den, C).coeff_monomial(1), sp.Poly(den, C).coeff_monomial(C)
+        if d1 != 0:
+            num, den = reduce(num * (d0 - d1 * C)), sp.expand(d0 ** 2 - d1 ** 2 * (1 + S ** 2))
+        out = sp.factor(sp.cancel(sp.factor(num) / sp.factor(den)))
+        return out.subs({S: sp.sinh(k * u), C: sp.cosh(k * u)}).replace(
+            lambda e: e.is_Pow and e.base == E, lambda e: sp.exp(e.exp * m * u)).subs(E, sp.exp(m * u))
+
+    return pretty
+
+
+def fisher_jnw(system):
+    """The static, spherically symmetric, asymptotically flat solution of Einstein's equations
+    with a massless scalar field, in four charts. Wyman's, in the form Virbhadra gives it, his
+    (11), has g_tt g_rr = -1 and is Schwarzschild's at gamma = 1, with b = 2 sqrt(m^2 + q^2) and
+    gamma = 2m/b. Janis, Newman and Winicour's own radius is R = r - (1 + gamma) b/2, Virbhadra's
+    (14), with their r_0 = gamma b and mu = 1/gamma; it is Fisher's Z/c, his (14) and (25), and in
+    it Gamma^R_theta theta = -R. The isotropic radius has r = rho (1 + b/4 rho)^2, the chart
+    Fisher names in his (35) and (36) and Xanthopoulos and Zannias integrate in. Bronnikov's
+    harmonic coordinate u has e^{-2ku} = 1 - b/r with k = b/2 and m = gamma k, in which the
+    scalar field is linear in u; it is (54) of Bronnikov, Fabris and Zhidenko. The first three
+    name the ratio f or h and are printed around its powers by named_powers; the fourth is
+    printed in sinh(ku), cosh(ku) and e^{mu} by fjnw_hyperbolic. fisher_jnw_check holds each to
+    the field equations and each after the first to being the first pulled back, and
+    fisher_jnw.md beside this file is the derivation."""
+    state = {}
+    named, wholes, kretschmann = {}, [], None
+    if system == "harmonic":
+        coords, name = ["t", "u", "\\theta", "\\phi"], "Harmonic"
+        parameters = ["m", "k"]
+        domains = (["t \\in (-\\infty, \\infty)", "u \\in (0, \\infty)"] + FJNW_ANGLES
+                   + ["u \\to 0 \\;\\text{(spatial infinity)}", "u \\to \\infty \\;\\text{(the singularity, for } m < k\\text{)}"])
+
+        def line(c2):
+            return (f"ds^2 = -e^{{-2mu}}{c2}dt^2 + \\dfrac{{k^2e^{{2mu}}}}{{\\sinh^2(ku)}}\\left(\\dfrac{{k^2du^2}}{{\\sinh^2(ku)}}"
+                    " + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        x, m, k = probe.symbol["u"], probe.parameters["m"], probe.parameters["k"]
+        printer = {"lead": [k, m], "factors": [k, m], "flip": False}
+        pretty = fjnw_hyperbolic(x, m, k)
+        components = {}
+        kretschmann = ("\\dfrac{4e^{-4mu}\\sinh^6(ku)\\left(\\left(3k^4 + 14k^2m^2 + 7m^4\\right)\\sinh^2(ku)"
+                       " - 8km\\left(k^2 + 2m^2\\right)\\sinh(ku)\\cosh(ku) + 12k^2m^2\\right)}{k^8}")
+    else:
+        if system == "spherical":
+            coords, name = ["t", "r", "\\theta", "\\phi"], "Spherical"
+            parameters = ["b", "\\gamma", "f = 1 - \\dfrac{b}{r}"]
+            domains = (["t \\in (-\\infty, \\infty)", "r \\in (b, \\infty)"] + FJNW_ANGLES
+                       + ["r = b \\;\\text{(the singularity, for } \\gamma < 1\\text{)}"])
+
+            def line(c2):
+                return f"ds^2 = -f^{{\\gamma}}{c2}dt^2 + \\dfrac{{dr^2}}{{f^{{\\gamma}}}} + f^{{1-\\gamma}}r^2" + FJNW_SPHERE
+            probe = vm.Reader(coords, parameters, ())
+            x, b, g = probe.symbol["r"], probe.parameters["b"], probe.parameters["gamma"]
+            names = {"f": {x - b: 1, x: -1}}
+            sums = [(2 * x - (1 + g) * b, "2r - b\\left(1 + \\gamma\\right)")]
+            area = "r^2f^{1-\\gamma}"
+            ratio = "f"
+        elif system == "jnw":
+            coords, name = ["t", "R", "\\theta", "\\phi"], "Janis-Newman-Winicour"
+            parameters = ["b", "\\gamma", "f = \\dfrac{2R - b(1-\\gamma)}{2R + b(1+\\gamma)}"]
+            domains = (["t \\in (-\\infty, \\infty)", "R \\in (b(1-\\gamma)/2, \\infty)"] + FJNW_ANGLES
+                       + ["R = b(1-\\gamma)/2 \\;\\text{(the singularity, for } \\gamma < 1\\text{)}"])
+
+            def line(c2):
+                return (f"ds^2 = -f^{{\\gamma}}{c2}dt^2 + \\dfrac{{dR^2}}{{f^{{\\gamma}}}}"
+                        " + f^{1-\\gamma}\\left(R + \\dfrac{b(1+\\gamma)}{2}\\right)^2" + FJNW_SPHERE)
+            probe = vm.Reader(coords, parameters, ())
+            x, b, g = probe.symbol["R"], probe.parameters["b"], probe.parameters["gamma"]
+            names = {"f": {2 * x - (1 - g) * b: 1, 2 * x + (1 + g) * b: -1}}
+            sums = [(2 * x + (1 + g) * b, "2R + b\\left(1 + \\gamma\\right)"),
+                    (2 * x - (1 - g) * b, "2R - b\\left(1 - \\gamma\\right)")]
+            area = "\\left(R + \\dfrac{b(1+\\gamma)}{2}\\right)^2f^{1-\\gamma}"
+            ratio = "f"
+        else:
+            coords, name = ["t", "\\rho", "\\theta", "\\phi"], "Isotropic"
+            parameters = ["b", "\\gamma", "h = \\dfrac{4\\rho - b}{4\\rho + b}"]
+            domains = (["t \\in (-\\infty, \\infty)", "\\rho \\in (b/4, \\infty)"] + FJNW_ANGLES
+                       + ["\\rho = b/4 \\;\\text{(the singularity, for } \\gamma < 1\\text{)}"])
+
+            def line(c2):
+                return (f"ds^2 = -h^{{2\\gamma}}{c2}dt^2 + \\left(1 + \\dfrac{{b}}{{4\\rho}}\\right)^4h^{{2(1-\\gamma)}}"
+                        "\\left(d\\rho^2 + \\rho^2" + FJNW_SPHERE + "\\right)")
+            probe = vm.Reader(coords, parameters, ())
+            x, b, g = probe.symbol["\\rho"], probe.parameters["b"], probe.parameters["gamma"]
+            # The reader holds h^(2 gamma) as a power of b - 4 rho, so that is the base the powers are counted on.
+            names = {"h": {b - 4 * x: 1, 4 * x + b: -1}}
+            sums = []
+            area = None
+            ratio = "h"
+        for i, (poly, text) in enumerate(sums):
+            placeholder = sp.Symbol(f"FJNWsum{i}")
+            named[placeholder] = text
+            wholes.append((placeholder, poly))
+        printer = {"lead": [x, b, g], "factors": [b, g, x], "rising": [g], "flip": False, "named": named,
+                   "collect": lambda poly, pr: cp.collect_by(poly, [x], pr)}
+        powers = named_powers(names, state)
+
+        def pretty(value):
+            # A base written with the other sign under a power that holds gamma is the same positive
+            # ratio, and each sum the chart names is written the way the chart writes it.
+            value = sp.factor(sp.sympify(value)).replace(
+                lambda e: e.is_Pow and e.base == -1 and not e.exp.is_Number, lambda e: sp.Integer(1))
+            out = sp.Integer(1)
+            for factor in sp.Mul.make_args(powers(value)):
+                base, e = (factor.base, factor.exp) if factor.is_Pow else (factor, sp.Integer(1))
+                if base.is_Add and e.is_Integer:
+                    # sympy carries a rational coefficient into a lone sum, so the sum is matched by
+                    # its primitive part and the coefficient put back in front.
+                    content, primitive = base.as_content_primitive()
+                    for placeholder, poly in wholes:
+                        if sp.expand(primitive - poly) == 0:
+                            base, out = placeholder, out * content ** e
+                        elif sp.expand(primitive + poly) == 0:
+                            base, out = placeholder, out * (-content) ** e
+                out *= base ** e
+            return out
+
+        if system == "isotropic":
+            conformal = "\\left(1 + \\dfrac{b}{4\\rho}\\right)^4h^{2(1-\\gamma)}"
+            components = {"metric_components": {("t", "t"): "-h^{2\\gamma}", ("\\rho", "\\rho"): conformal,
+                                                ("\\theta", "\\theta"): "\\rho^2" + conformal,
+                                                ("\\phi", "\\phi"): "\\rho^2" + conformal + "\\sin^2\\theta"},
+                          "inverse_metric_components": {("t", "t"): "-\\dfrac{1}{h^{2\\gamma}}"}}
+        else:
+            components = {
+                "metric_components": {("t", "t"): "-f^{\\gamma}", (coords[1], coords[1]): "\\dfrac{1}{f^{\\gamma}}",
+                                      ("\\theta", "\\theta"): area, ("\\phi", "\\phi"): area + "\\sin^2\\theta"},
+                "inverse_metric_components": {("t", "t"): "-\\dfrac{1}{f^{\\gamma}}", (coords[1], coords[1]): "f^{\\gamma}"}}
+
+    def check(chart):
+        state["printer"] = chart.printer
+        fisher_jnw_check(chart, system)
+
+    spec = {
+        "metric_id": "fisher_jnw",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "components": components,
+        "check": check,
+    }
+    if kretschmann:
+        spec["kretschmann"] = kretschmann
+    return spec
+
+
+def fisher_jnw_check(chart, system):
+    """In every chart the Ricci tensor is 2 d phi d phi for the field phi = sqrt(1 - gamma^2) ln(f)/2,
+    which is -sqrt(k^2 - m^2) u in the harmonic chart, and that field solves the wave equation;
+    without the field, gamma = 1 or m = k, the Ricci tensor vanishes; the harmonic coordinate is
+    harmonic; and each chart after the first is the first pulled back: r = R + (1 + gamma) b/2,
+    r = rho (1 + b/4 rho)^2, and r = 2k/(1 - e^{-2ku}) with b = 2k and gamma = m/k."""
+    t, x, th, ph = chart.symbols
+    P = chart.reader.parameters
+    if system == "harmonic":
+        m, k = P["m"], P["k"]
+        b, gamma = 2 * k, m / k
+        radius = 2 * k / (1 - sp.exp(-2 * k * x))
+        vacuum = {m: k}
+    else:
+        b, gamma = P["b"], P["gamma"]
+        radius = {"spherical": x, "jnw": x + (1 + gamma) * b / 2, "isotropic": x * (1 + b / (4 * x)) ** 2}[system]
+        vacuum = {gamma: 1}
+    field = sp.sqrt(1 - gamma ** 2) * sp.log(1 - b / radius) / 2
+    g, ginv = chart.geo.g, chart.geo.ginv
+    ricci = chart.geo.ricci_ll()
+    for a, c in vm._indices(4, 2):
+        source = 2 * sp.diff(field, chart.symbols[a]) * sp.diff(field, chart.symbols[c])
+        if vm.norm(vm._at(ricci, (a, c)) - source) != 0:
+            raise AssertionError(f"fisher_jnw: R_ab is not 2 d_a phi d_b phi in slot {(a, c)} of the {system} chart")
+        if vm.norm(vm.norm(vm._at(ricci, (a, c))).subs(vacuum)) != 0:
+            raise AssertionError(f"fisher_jnw: the {system} chart is not vacuum without the field")
+    # d_x(sqrt(-g) g^xx d_x phi) = 0, written through logarithmic derivatives so that no root is taken.
+    density = sp.diff(g.det(), x) / (2 * g.det()) + sp.diff(ginv[1, 1], x) / ginv[1, 1]
+    if vm.norm(density + sp.diff(field, x, 2) / sp.diff(field, x)) != 0:
+        raise AssertionError(f"fisher_jnw: the field does not solve the wave equation in the {system} chart")
+    if system == "harmonic" and vm.norm(density) != 0:
+        raise AssertionError("fisher_jnw: the coordinate u is not harmonic")
+    if system == "spherical":
+        return
+    source = fisher_jnw("spherical")
+    own = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    names = dict(zip(own.symbols[2:], chart.symbols[2:]))
+    names.update({own.symbols[0]: t, own.reader.parameters["b"]: b, own.reader.parameters["gamma"]: gamma})
+    J = sp.diag(1, sp.diff(radius, x), 1, 1)
+    pulled = J.T * own.geo.g.subs(names, simultaneous=True).subs(own.symbols[1], radius) * J
+    # Compared on positive symbols, the distance X from the singularity among them, so that
+    # (h^2)^gamma and h^(2 gamma) are one power of a positive base.
+    X, A, B = sp.symbols("FJNWx FJNWa FJNWb", positive=True)
+    if system == "harmonic":
+        positive = {x: X, P["m"]: A, P["k"]: B}
+    else:
+        edge = {"jnw": (1 - A) * B / 2, "isotropic": B / 4}[system]
+        positive = {x: edge + X, P["gamma"]: A, P["b"]: B}
+    for a, c in vm._indices(4, 2):
+        if g[a, c] == 0:
+            same = pulled[a, c] == 0
+        else:
+            ratio = (pulled[a, c] / g[a, c]).subs(positive, simultaneous=True)
+            if system == "harmonic":
+                ratio = ratio.rewrite(sp.exp)
+            ratio = sp.powdenest(sp.factor(ratio), force=True)
+            # The reader holds h^(2 gamma) as a power of b - 4 rho with (-1)^(2 gamma) beside it: a
+            # phase of its generator, and no sign of the component.
+            ratio = ratio.replace(lambda e: e.is_Pow and e.base.is_negative and not e.exp.is_Number,
+                                  lambda e: (-e.base) ** e.exp)
+            same = sp.simplify(sp.powsimp(sp.powdenest(ratio, force=True), force=True)) == 1
+        if not same:
+            raise AssertionError(f"fisher_jnw: the {system} chart is not the spherical chart pulled back in slot {(a, c)}")
+
+
+CHARTS["fisher_jnw"] = [lambda s=s: fisher_jnw(s) for s in FJNW_CHARTS]
+
 
 
 # -- Van Den Broeck's warp drive -----------------------------------------------------

@@ -6969,6 +6969,116 @@ def levi_civita(ck, src):
     return views
 
 
+def fisher_jnw(ck, src):
+    """Fisher, Janis, Newman and Winicour's scalar field at gamma = 1/2, the whole spacetime, each
+    point a 2-sphere, one view for each of its four charts.
+
+    On the plane of t and r the metric is f^gamma (-c^2dt^2 + dr_*^2) with f = 1 - b/r and
+    dr_*/dr = f^(-gamma), whose integral from b is finite for every gamma < 1: at gamma = 1/2,
+    r_* = sqrt(r (r - b)) + b ln((sqrt r + sqrt(r - b))/sqrt b), zero at r = b and without bound.
+    So p, q = arctan((ct -+ r_*)/l) with l = 4b bring it into Minkowski's triangle with r = b on
+    X = 0, a timelike line where the spheres have zero area and the Kretschmann scalar diverges,
+    and no horizon: Abdolrahimi and Shoom's Figure 9, the triangle of Schwarzschild's metric of
+    negative mass. Janis, Newman and Winicour's R = r - 3b/4 and the isotropic radius, with
+    r = rho (1 + b/4 rho)^2, name the same spheres. The harmonic chart is drawn at k = 1 and m = 1/2,
+    so b = 2k, r = 2k/(1 - e^(-2ku)), its tortoise coordinate is twice that of b = 1 and l = 8k; u
+    grows toward the singularity, which is u -> infinity. One event is checked to land on one point
+    through all four maps, and the Kretschmann scalar against its closed form."""
+    ell = 4.0
+    star = nr._fjnw_rstar
+    to_r = {"spherical": lambda r: np.asarray(r, dtype=float),
+            "jnw": lambda R: np.asarray(R, dtype=float) + 0.75,
+            "isotropic": lambda rho: np.asarray(rho, dtype=float) * (1 + 1 / (4 * np.asarray(rho, dtype=float))) ** 2,
+            "harmonic": lambda u: 1 / (1 - np.exp(-2 * np.asarray(u, dtype=float)))}
+    maps = {cid: (lambda t, x, cid=cid: mink_pq(t, star(to_r[cid](x)), ell)) for cid in ("spherical", "jnw", "isotropic")}
+    # In the harmonic chart ct and r are in units of k = b/2, so both are halved to be read in b.
+    maps["harmonic"] = lambda t, u: mink_pq(np.asarray(t, dtype=float) / 2, star(to_r["harmonic"](u)), ell)
+    coords = {"spherical": "r", "jnw": "R", "isotropic": "\\rho", "harmonic": "u"}
+    planes = {cid: Plane(src, "fisher_jnw", cid, ("t", coords[cid]), {**EQUATOR, "phi": "0"},
+                         nr.FJNW_HARMONIC if cid == "harmonic" else nr.FJNW) for cid in coords}
+    spans = {"spherical": 1 + np.exp(ck.uniform(-6, 3.5)), "jnw": 0.25 + np.exp(ck.uniform(-6, 3.5)),
+             "isotropic": 0.25 + np.exp(ck.uniform(-6, 3.5)), "harmonic": np.exp(ck.uniform(-4, 2))}
+    for cid, plane in planes.items():
+        ck.chart(f"Fisher-Janis-Newman-Winicour, {cid}", plane, maps[cid], ck.uniform(-40, 40), spans[cid],
+                 lambda t, x: (1, 0))
+        K = plane.kretschmann
+        if cid == "harmonic":
+            ck.diverges("Fisher-Janis-Newman-Winicour, harmonic: the Kretschmann scalar diverges as u -> infinity",
+                        K(0, 6.0), K(0, 9.0))
+        else:
+            edge = 1.0 if cid == "spherical" else 0.25
+            ck.diverges(f"Fisher-Janis-Newman-Winicour, {cid}: the Kretschmann scalar diverges on the edge r = b",
+                        K(0, edge + 1e-2), K(0, edge + 1e-3))
+        # K = b^2 (48 gamma^2 r^2 - 16 gamma (1 + gamma)(1 + 2 gamma) b r + (1 + gamma)^2 (3 + 2 gamma + 7 gamma^2) b^2)
+        # f^(2 gamma)/(4 r^4 (r - b)^4), which at gamma = 1/2 and b = 1 is (192 r^2 - 384 r + 207)/(64 r^5 (r - 1)^3),
+        # and 16 times smaller at b = 2 for the same r/b.
+        x = spans[cid][:50]
+        r = to_r[cid](x)
+        ck.limit(f"Fisher-Janis-Newman-Winicour, {cid}: the Kretschmann scalar is its closed form",
+                 K(np.zeros(50), x) * (16 if cid == "harmonic" else 1) * (64 * r ** 5 * (r - 1) ** 3)
+                 / (192 * r ** 2 - 384 * r + 207), np.ones(50), 1e-6)
+    r = 1 + np.exp(ck.uniform(-6, 3.5))
+    g = planes["spherical"].metric(0 * r, r)
+    h = 1e-6 * (r - 1)
+    ck.limit("Fisher-Janis-Newman-Winicour: the tortoise coordinate has dr_*/dr = sqrt(-g_rr/g_tt)",
+             (star(r + h) - star(r - h)) / (2 * h) / np.sqrt(-g[2] / g[0]), np.ones_like(r), 1e-6)
+    ck.limit("Fisher-Janis-Newman-Winicour: the tortoise coordinate vanishes at the singularity", star(1.0), [0.0], 1e-12)
+    # One event, one point: the sphere r at the time t, in each chart's own coordinate and unit.
+    t, r = ck.uniform(-20, 20), 1 + np.exp(ck.uniform(-4, 3))
+    want = np.array(maps["spherical"](t, r))
+    for cid, got in (("jnw", maps["jnw"](t, r - 0.75)),
+                     ("isotropic", maps["isotropic"](t, (r - 0.5 + np.sqrt(r * (r - 1))) / 2)),
+                     ("harmonic", maps["harmonic"](2 * t, np.log(r / (r - 1)) / 2))):
+        ck.limit(f"Fisher-Janis-Newman-Winicour: the {cid} chart lands on the points of the spherical chart",
+                 np.array(got), want, 1e-9)
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    moment = slices.moments("fisher_jnw")[0]
+    reach = np.array(slices._fjnw_reach(moment, lambda r: r))
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    table = (
+        ("spherical", "Spherical", "r", (1.5, 2, 4, 8), "$1.5\\,b$, $2b$, $4b$, and $8b$", 2, "$r = 2b$", "$r = b$",
+         lambda r: r, 1, "b"),
+        ("jnw", "Janis-Newman-Winicour", "R", (0.5, 1, 2, 4, 8), "$b/2$, $b$, $2b$, $4b$, and $8b$", 2, "$R = 2b$",
+         "$R = b/4$", lambda r: r - 0.75, 1, "b"),
+        ("isotropic", "Isotropic", "\\rho", (0.5, 1, 2, 4, 8), "$b/2$, $b$, $2b$, $4b$, and $8b$", 2, "$\\rho = 2b$",
+         "$\\rho = b/4$", lambda r: (r - 0.5 + np.sqrt(r * (r - 1))) / 2, 1, "b"),
+        ("harmonic", "Harmonic", "u", (0.125, 0.25, 0.5, 1, 2), "$1/8k$, $1/4k$, $1/2k$, $1/k$, and $2/k$", 0.5,
+         "$u = 1/2k$", "$u \\to \\infty$", lambda r: np.log(r / (r - 1)) / 2, 2, "k"))
+    views = []
+    for cid, name, x, lines, listed, marked, mark, edge, of_r, unit, length in table:
+        fmap = maps[cid]
+        v = View(cid, name, box, cid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda c, t, fmap=fmap, unit=unit: fmap(unit * t, c), lines, S_ALL)
+        grid(v, "t", lambda t, s: mink_pq(t, s, ell), TS, S_POS)
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], edge, "r", dx=-6)
+        label_on(v, fmap(0, marked), mark)
+        v.legend("cover", f"the whole spacetime, which $t$ and ${x}$ cover")
+        v.legend("r", f"${x}$ constant, at {listed}")
+        v.legend("t", f"$ct$ constant, every $2b$ to $\\pm 4b$, and at $\\pm 8b$" if length == "b" else
+                 "$ct$ constant, every $4k$ to $\\pm 8k$, and at $\\pm 16k$")
+        v.legend("singular", f"the singularity {edge}, where the spheres have zero area and the Kretschmann scalar "
+                             "diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        along = of_r(reach)
+        v.slice(moment, [fmap(0 * along, along)])
+        v.set(settings=("$\\gamma = 1/2$ and $b = 1$, the unit of every length, and $\\ell = 4b$; " if length == "b" else
+                        "$m = k/2$ and $k = 1$, the unit of every length, so that $b = 2k$, and $\\ell = 8k$; ")
+              + "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$.")
+        views.append(v)
+    return views
+
+
 def kaluza_klein_monopole(ck, src):
     """The Kaluza-Klein monopole's plane of t and its radius at m = 1, in each of its three polar
     charts.
@@ -9333,6 +9443,7 @@ DRAWN = {
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
     "kaluza_klein_monopole": kaluza_klein_monopole,
+    "fisher_jnw": fisher_jnw,
     "curzon_chazy": curzon_chazy,
     "zipoy_voorhees": zipoy_voorhees,
     "string_black_hole": string_black_hole,
@@ -10767,6 +10878,39 @@ CAPTIONS = {
         "triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
         "The edge $X = 0$ is the nut $\\rho = 2m$, a regular centre where the Kretschmann scalar is "
         "$3/(32m^4)$, and the monopole has no horizon.",
+    ],
+    ("fisher_jnw", "spherical"): [
+        "A static mass with a massless scalar field ($\\gamma = 1/2$), each point in the diagram a 2-sphere of "
+        "radius $rf^{(1-\\gamma)/2}$. On the plane of $t$ and $r$ the metric is $f^{\\gamma}(-c^2dt^2 + dr_*^2)$ "
+        "with $dr_*/dr = f^{-\\gamma}$, and $r_* = \\sqrt{r(r - b)} + b\\ln\\left((\\sqrt{r} + \\sqrt{r - b})/\\sqrt{b}\\right)$ "
+        "at this $\\gamma$ vanishes at $r = b$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $r = b$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. The triangle is the same for every $\\gamma < 1$, and "
+        "it is the diagram of Schwarzschild's metric of negative mass. At $\\gamma = 1$ the integral for $r_*$ "
+        "diverges at $r = b$, which is then Schwarzschild's horizon, and the diagram is Kruskal's.",
+    ],
+    ("fisher_jnw", "jnw"): [
+        "A static mass with a massless scalar field ($\\gamma = 1/2$) in Janis, Newman, and Winicour's radius "
+        "$R = r - 3b/4$, each point in the diagram a 2-sphere. On the plane of $t$ and $R$ the metric is "
+        "$f^{\\gamma}(-c^2dt^2 + dr_*^2)$ with $f = (4R - b)/(4R + 3b)$ and $dr_*/dR = f^{-\\gamma}$, and $r_*$ "
+        "vanishes at $R = b/4$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $R = b/4$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. The lines of constant $R$ are the lines of constant $r$ of the "
+        "spherical chart, moved over by $3b/4$.",
+    ],
+    ("fisher_jnw", "isotropic"): [
+        "A static mass with a massless scalar field ($\\gamma = 1/2$) in the isotropic radius $\\rho$, with "
+        "$r = \\rho\\left(1 + b/4\\rho\\right)^2$, each point in the diagram a 2-sphere. On the plane of $t$ and "
+        "$\\rho$ the metric is $h^{2\\gamma}(-c^2dt^2 + dr_*^2)$ with $h = (4\\rho - b)/(4\\rho + b)$, and $r_*$ "
+        "vanishes at $\\rho = b/4$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $\\rho = b/4$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. At $\\gamma = 1$ the isotropic radius runs on through "
+        "$b/4$ into a second exterior, and for $\\gamma < 1$ the spacetime ends there.",
+    ],
+    ("fisher_jnw", "harmonic"): [
+        "A static mass with a massless scalar field ($m = k/2$, which is $\\gamma = 1/2$) in the harmonic "
+        "coordinate $u$, each point in the diagram a 2-sphere of radius $ke^{mu}/\\sinh(ku)$. On the plane of $t$ "
+        "and $u$ the metric is $e^{-2mu}(-c^2dt^2 + dr_*^2)$ with $dr_*/du = -k^2e^{2mu}/\\sinh^2(ku)$, and $r_*$ "
+        "falls to zero as $u \\to \\infty$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $u \\to \\infty$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. Spatial infinity $i^0$ is $u = 0$, and the scalar field, "
+        "proportional to $u$, grows without bound toward the edge.",
     ],
     ("levi_civita", "weyl"): [
         "The half plane of fixed $\\phi$ and $z$ of Levi-Civita's cylinder ($\\sigma = 1/4$), each point in the "

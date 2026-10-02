@@ -529,10 +529,53 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bcf86f59a5e8d739",
+    "version": "b0a1c6a1f44a9737",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a"
+  },
+  {
+    "id": "fisher_jnw",
+    "name": "Fisher-Janis-Newman-Winicour",
+    "tags": [
+      "non-vacuum",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "scalar field",
+      "massless scalar field",
+      "minimally coupled scalar field",
+      "Einstein-scalar",
+      "scalar charge",
+      "mass",
+      "naked singularity",
+      "singularity",
+      "curvature singularity",
+      "timelike singularity",
+      "no horizon",
+      "no-hair theorem",
+      "black hole mimicker",
+      "photon sphere",
+      "gravitational lensing",
+      "cosmic censorship",
+      "Janis-Newman-Winicour",
+      "JNW",
+      "Fisher solution",
+      "Wyman solution",
+      "anti-Fisher",
+      "harmonic coordinates",
+      "isotropic coordinates",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "1cd6db953a7edaf3",
+    "diagrams": "3ae6a5324e2f9841",
+    "conformal": "0ad248166c7cdb8f",
+    "embedding": "3cdd1185c95f1f46"
   },
   {
     "id": "frw",
@@ -1623,7 +1666,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "161d34335c9725ef",
+    "version": "02368fc4baaf1836",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2120,7 +2163,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "26691d34cb21f7d9",
+    "version": "ac56bd5ec17ce07e",
     "diagrams": "c383ba43920e5b0b",
     "conformal": "f06e536b192c099c",
     "embedding": "633fa78640daea0a"
