@@ -5,7 +5,7 @@ schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
-damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser and bardeen, and
+damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen and hayward, and
 Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
@@ -5652,6 +5652,104 @@ def bardeen_source(chart):
 
 BARDEEN_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
 CHARTS["bardeen"] = [lambda s=s: bardeen(s) for s in BARDEEN_CHARTS]
+
+
+# -- Hayward ---------------------------------------------------------------------------
+
+HAYWARD_CHARTS = ("static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "evaporating")
+
+
+def hayward(system_id):
+    """Hayward's regular black hole, F = 1 - 2 m r^2/(r^3 + 2 m ell^2), his (1) and (5), in his
+    own two lengths: the static chart, the two Eddington-Finkelstein charts built on its tortoise
+    coordinate, dr_*/dr = 1/F, of which the ingoing one is his (10), and the same ingoing chart
+    with the mass a function m(v) of advanced time, the chart his black hole forms and evaporates
+    in. Every value is printed around r^3 + 2 m ell^2 and r^3 - 2 m r^2 + 2 m ell^2, the
+    denominator and the numerator of F, so that each chart is Schwarzschild's at ell = 0 term by
+    term. hayward_check holds each chart to his Einstein tensor, to de Sitter space at the centre
+    and to Schwarzschild's metric far away."""
+    f = "\\left(1 - \\dfrac{2mr^2}{r^3 + 2m\\ell^2}\\right)"
+    bare = "1 - \\dfrac{2mr^2}{r^3 + 2m\\ell^2}"
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    domains = ["r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    marks = ["r = r_+ \\;\\text{(the outer horizon)}", "r = r_- \\;\\text{(the inner horizon)}"]
+    parameters = ["m", "\\ell"]
+    if system_id == "static":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Spherical"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+        if system_id == "evaporating":
+            name = "Forming and Evaporating"
+            parameters = ["m = m(v)", "\\ell"]
+            marks = ["r^3 - 2mr^2 + 2m\\ell^2 = 0 \\;\\text{(the trapping horizons)}"]
+    probe = vm.Reader(coords, parameters, ())
+    r, m, ell = probe.symbol["r"], probe.parameters["m"], probe.parameters["ell"]
+    # A product is written as the line element writes it, the mass and the length before the
+    # radius, 2 m ell^2 and 2 m r^2, and a sum by falling powers of r.
+    printer = {"lead": [r, m, ell], "factors": [m, ell, r], "flip": False}
+    if system_id == "evaporating":
+        dm = sp.Derivative(m, probe.symbol["v"])
+        printer["lead"] = [dm, r, m, ell]
+        printer["factors"] = [m, ell, r, dm]
+        # The rate of change of the mass stands apart from what the static chart has already.
+        printer["collect"] = lambda poly, pr: cp.collect_by(poly, [dm], pr)
+    return {
+        "metric_id": "hayward",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)"] + domains + marks,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": printer,
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": hayward_check,
+    }
+
+
+def hayward_check(chart):
+    """Hayward's Einstein tensor, his (7), (8) and (12), as the mixed components he writes:
+    G^t_t = G^r_r = -12 ell^2 m^2/(r^3 + 2 ell^2 m)^2 and G^theta_theta = G^phi_phi =
+    24(r^3 - ell^2 m) ell^2 m^2/(r^3 + 2 ell^2 m)^3, and with m a function of v the one further
+    component G^r_v = 2 r^4 m'/(r^3 + 2 ell^2 m)^2, the ingoing flux of the radiation, which in
+    retarded time is G^r_u with the opposite sign. At the centre F = 1 - r^2/ell^2 + O(r^5), his
+    (3), de Sitter space of radius ell for every mass, and far away F = 1 - 2m/r + O(1/r^4), his
+    (2), Schwarzschild's."""
+    r = chart.reader.symbol["r"]
+    m, ell = chart.reader.parameters["m"], chart.reader.parameters["ell"]
+    D = r ** 3 + 2 * m * ell ** 2
+    G = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    want = sp.zeros(4, 4)
+    want[0, 0] = want[1, 1] = -12 * ell ** 2 * m ** 2 / D ** 2
+    want[2, 2] = want[3, 3] = 24 * ell ** 2 * m ** 2 * (r ** 3 - ell ** 2 * m) / D ** 3
+    x0 = chart.symbols[0]
+    if chart.coords_tex[0] != "t":
+        sign = -1 if chart.coords_tex[0] == "u" else 1
+        want[1, 0] = sign * 2 * r ** 4 * sp.diff(m, x0) / D ** 2
+    for a in range(4):
+        for b in range(4):
+            if vm.norm(vm._at(G, (a, b)) - want[a, b]) != 0:
+                raise AssertionError(f"hayward: the mixed Einstein tensor misses Hayward's in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+    mass = sp.Symbol("mass", positive=True)
+    F = (1 - 2 * mass * r ** 2 / (r ** 3 + 2 * mass * ell ** 2))
+    if sp.series(F, r, 0, 5).removeO() != 1 - r ** 2 / ell ** 2:
+        raise AssertionError("hayward: F is not 1 - r^2/ell^2 + O(r^5) at the centre")
+    if sp.limit((F - 1 + 2 * mass / r) * r ** 3, r, sp.oo) != 0:
+        raise AssertionError("hayward: F is not 1 - 2m/r + O(1/r^4) far away")
+
+
+CHARTS["hayward"] = [lambda s=s: hayward(s) for s in HAYWARD_CHARTS]
 
 
 def write(spec):

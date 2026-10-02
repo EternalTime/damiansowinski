@@ -61,6 +61,11 @@
       "id": "bardeen",
       "kind": "composite",
       "text": "A black hole with de Sitter space at its centre. Inside its inner horizon Bardeen's metric approaches de Sitter's static patch, which keeps the centre regular [ansoldi2008]."
+    },
+    {
+      "id": "hayward",
+      "kind": "generalisation",
+      "text": "A black hole whose core is a ball of de Sitter space, with $\\Lambda = 3/\\ell^2$ whatever the mass [hayward2006, frolov2016]."
     }
   ],
   "references": [
@@ -82,7 +87,9 @@
     "perlmutter1999",
     "hawking1973",
     "ortaggio2002",
-    "ansoldi2008"
+    "ansoldi2008",
+    "hayward2006",
+    "frolov2016"
   ],
   "coordinates": [
     {

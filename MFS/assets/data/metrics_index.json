@@ -183,7 +183,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ffa8260224c1ab61",
+    "version": "13b728bbc98aa12e",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572"
@@ -410,7 +410,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1cd0414771b61ee5",
+    "version": "3d628de300a5dba2",
     "diagrams": "b1166493c0272984",
     "conformal": "f0585b2da42de10b",
     "embedding": "168a0415f5dda720"
@@ -701,6 +701,46 @@
     "diagrams": "2af1bbf417683eb3",
     "conformal": "431800db7085dc77",
     "embedding": "f0d7a1bdcd0620df"
+  },
+  {
+    "id": "hayward",
+    "name": "Hayward",
+    "tags": [
+      "regular black hole",
+      "nonsingular",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "black hole",
+      "mass",
+      "de Sitter core",
+      "horizon",
+      "inner horizon",
+      "Cauchy horizon",
+      "trapping horizon",
+      "trapped surface",
+      "apparent horizon",
+      "black hole evaporation",
+      "Hawking radiation",
+      "information paradox",
+      "Vaidya",
+      "time-dependent",
+      "dynamical",
+      "non-vacuum",
+      "energy conditions",
+      "nonlinear electrodynamics",
+      "maximal extension",
+      "causal structure",
+      "asymptotically flat",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "ca40daaf144debdf",
+    "diagrams": "bd41935318270b6a",
+    "conformal": "17d38d5b746db304",
+    "embedding": "a8a85de8ed835f8a"
   },
   {
     "id": "kaluza_klein_monopole",
@@ -1471,7 +1511,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "695175fd0b35d359",
+    "version": "05ed5d9454047267",
     "diagrams": "4565bff8ba921a42",
     "conformal": "fb9ce65c8d285c0e",
     "embedding": "1f6d4a7541295881"
@@ -1583,7 +1623,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f137e42571d20dfa",
+    "version": "161d34335c9725ef",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -1945,7 +1985,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3b5410885a6ca4cd",
+    "version": "66598482fc02a192",
     "diagrams": "87052dae566b6395",
     "conformal": "99424b00c9e94c1b",
     "embedding": "1e162e2bfa0db4eb"

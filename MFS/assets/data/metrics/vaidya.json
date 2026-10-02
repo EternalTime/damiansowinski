@@ -44,6 +44,11 @@
       "id": "simpson_visser",
       "kind": "family",
       "text": "Vaidya's mass that depends on the null time, put into Simpson and Visser's regular black hole. A wormhole that accretes enough null dust grows a horizon around its throat [simpson2019vaidya]."
+    },
+    {
+      "id": "hayward",
+      "kind": "generalisation",
+      "text": "Vaidya's ingoing metric with a length $\\ell$ that keeps the centre regular while the radiation pours in. Sean Hayward used it in 2006 for a black hole that forms and evaporates with no singularity [hayward2006]."
     }
   ],
   "references": [
@@ -61,7 +66,8 @@
     "papapetrou1985",
     "dwivedi1989",
     "podolsky2008",
-    "simpson2019vaidya"
+    "simpson2019vaidya",
+    "hayward2006"
   ],
   "coordinates": [
     {

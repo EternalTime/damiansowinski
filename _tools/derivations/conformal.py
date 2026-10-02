@@ -2614,6 +2614,401 @@ def bardeen(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Hayward
+
+HAYWARD_ELL2 = 144 / 343            # ell^2 in units of m^2, ell = 12m/(7 sqrt 7)
+
+
+def hayward_mass(v):
+    """The mass the forming and evaporating hole is drawn with, null_rays.HAYWARD_MASS, as numbers."""
+    v = np.asarray(v, dtype=float)
+    a, b = np.clip(v, 0.0, 2.0), np.clip(v, 4.0, 8.0)
+    return np.sin(np.pi * a / 4) ** 2 * np.cos(np.pi * (b - 4) / 8) ** 2
+
+
+def hayward_F(v, r):
+    """g^rr of the forming and evaporating chart, 1 - 2 m r^2/(r^3 + 2 m ell^2), and 1 where m = 0."""
+    m = hayward_mass(v)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return np.where(m > 0, 1 - 2 * m * r * r / (r ** 3 + 2 * m * HAYWARD_ELL2), 1.0)
+
+
+def hayward_left_centre(v, r, h=0.004):
+    """The advanced time v_0 at which the outgoing light ray through each event (v, r) of the forming
+    and evaporating chart left the centre r = 0. Outside 0 < v < 8 the plane is Minkowski's and the
+    ray is r = (v - v_0)/2; between, dr/dv = F/2 is integrated backward by the classical Runge-Kutta
+    rule, in steps of h ending on the multiples of h, among them 2, 4 and 8, where the second
+    derivative of the declared mass jumps, until the ray reaches r = 0, a zero of the step's Hermite
+    cubic, or v = 0."""
+    v, r = np.broadcast_arrays(np.asarray(v, dtype=float), np.asarray(r, dtype=float))
+    v, r = v.copy(), r.copy()
+    v0 = np.full(v.shape, np.nan)
+    late = v > 8
+    back = r - (v - 8) / 2
+    gone = late & (back <= 0)
+    v0[gone] = (v - 2 * r)[gone]
+    stay = late & ~gone
+    v[stay], r[stay] = 8.0, back[stay]
+    early = np.isnan(v0) & (v <= 0)
+    v0[early] = (v - 2 * r)[early]
+    for _ in range(int(8 / h) + 4):
+        on = np.isnan(v0)
+        if not on.any():
+            break
+        va, ra = v[on], r[on]
+        # The first step of an event ends on the multiple of h below it; every later one is h long.
+        step = va - (np.ceil(va / h - 1e-9) - 1) * h
+        k1 = hayward_F(va, ra) / 2
+        k2 = hayward_F(va - step / 2, ra - step * k1 / 2) / 2
+        k3 = hayward_F(va - step / 2, ra - step * k2 / 2) / 2
+        k4 = hayward_F(va - step, ra - step * k3) / 2
+        rb = ra - step * (k1 + 2 * k2 + 2 * k3 + k4) / 6
+        vb = va - step
+        found = np.full(va.shape, np.nan)
+        hit = rb <= 0
+        if hit.any():
+            # r(s) on the step, s from 0 at its start to 1 at its end, as the Hermite cubic through
+            # both ends with the slopes there; its zero by Newton's rule from the chord's.
+            a0, b0, st = ra[hit], rb[hit], step[hit]
+            da, db = -st * k1[hit], -st * hayward_F(vb[hit], b0) / 2
+            sroot = a0 / (a0 - b0)
+            for _ in range(8):
+                h00, h10 = 2 * sroot ** 3 - 3 * sroot ** 2 + 1, sroot ** 3 - 2 * sroot ** 2 + sroot
+                h01, h11 = -2 * sroot ** 3 + 3 * sroot ** 2, sroot ** 3 - sroot ** 2
+                value = h00 * a0 + h10 * da + h01 * b0 + h11 * db
+                slope = ((6 * sroot ** 2 - 6 * sroot) * (a0 - b0) + (3 * sroot ** 2 - 4 * sroot + 1) * da
+                         + (3 * sroot ** 2 - 2 * sroot) * db)
+                sroot = sroot - value / slope
+            found[hit] = va[hit] - sroot * st
+        flat = ~hit & (vb <= 1e-12)
+        found[flat] = -2 * rb[flat]
+        v[on], r[on] = vb, rb
+        v0[on] = found
+    if np.isnan(v0).any():
+        raise AssertionError("Hayward: an outgoing ray was not traced back to the centre")
+    return v0
+
+
+def hayward(ck, src):
+    """Hayward's regular black hole, in two diagrams.
+
+    The static hole, at ell = 12m/(7 sqrt 7), where r^3 - 2m r^2 + 2m ell^2 = (r - 12m/7)(r - 6m/7)
+    (r + 4m/7): 1/F is 1 plus three simple poles, so it is a Tower of those three roots, the
+    negative one among them, whose tortoise coordinate r_* = r + 3 ln|7r/12 - 1| - (6/5) ln|7r/6 - 1|
+    + (1/5) ln(7r/4 + 1) vanishes at r = 0. That is Reissner-Nordstrom's tower with the centre
+    r = 0, u = -v, on the vertical lines X = +-pi/2, where the published Kretschmann scalar is
+    24/ell^4: a regular centre in place of the singularity. It is drawn symmetric about the moment
+    t = 0 of one pair of exteriors, a cell k periods up being the cell's own map moved by k pi in
+    both p and q: the black hole above and the white hole below, an inner region beyond each, and
+    the next white hole, black hole and exteriors where the drawing fades. The static chart covers
+    the exterior I, the black hole II and the inner region III. The ingoing chart, v = t + r_*,
+    covers I, II and the inner region III' on the other side, where the cell's own time is
+    r_* - v; the outgoing chart, u = t - r_*, covers I, the white hole IV and the inner region
+    below it, where the cell's own time is -u - r_*. Each is checked against its own published
+    metric in each cell and to be continuous across both horizons.
+
+    The hole that forms and evaporates, with the mass null_rays.HAYWARD_MASS: every outgoing ray
+    leaves the regular centre, at the advanced time v_0 that hayward_left_centre finds, so p =
+    Phi(v_0) and q = Phi(v) with Phi(w) = arctan((w - 4)/4) put the centre on the straight line
+    X = 0 and the whole spacetime on Minkowski's triangle. The curve g^rr = 0 is closed and no ray
+    stays inside it, which is checked by sending rays out from the centre."""
+    name = "Hayward"
+    params = {"m": 1, "ell": "12/(7*sqrt(7))"}
+    pl = Plane(src, "hayward", "static", ("t", "r"), EQUATOR, params)
+    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+    roots = sorted(sp.solve(sp.numer(sp.together(pl.gi[1, 1])), pl.x1), reverse=True)
+    T = Tower(-pl.g[0, 0], pl.x1, roots)
+    rp, rm, negative = T.rf
+    ck.limit(f"{name}: the roots of the published g^rr are 12m/7, 6m/7 and -4m/7", T.rf, [12 / 7, 6 / 7, -4 / 7], 1e-12)
+    ck.limit(f"{name}: the surface gravities are 1/(6m) and 5/(12m)", [float(k) for k in T.kappa[:2]], [1 / 6, 5 / 12], 1e-12)
+
+    def cell(c, k=0):
+        """The map of a cell k periods up the tower."""
+        return lambda t, r: tuple(x + k * PI for x in T.pq(c, t, r))
+    span = 15
+    for c, lo, hi, future in (("I", rp + 1e-3, 40, (1, 0)), ("II", rm + 1e-3, rp - 1e-3, (0, -1)),
+                              ("III", 1e-3, rm - 1e-3, (-1, 0)), ("III'", 1e-3, rm - 1e-3, (-1, 0)),
+                              ("IV", rm + 1e-3, rp - 1e-3, (0, 1)), ("I'", rp + 1e-3, 40, (-1, 0))):
+        ck.chart(f"{name} static, cell {c}", pl, cell(c), ck.uniform(-span, span), ck.uniform(lo, hi),
+                 lambda t, r, future=future: future)
+    # Inside r_- the future is toward smaller t in every copy of both inner cells, as in the tower's III.
+    for c in ("III", "III'"):
+        ck.chart(f"{name} static, cell {c} a period down", pl, cell(c, -1), ck.uniform(-span, span),
+                 ck.uniform(1e-3, rm - 1e-3), lambda t, r: (-1, 0))
+    ts = np.array([-6.0, 0.0, 6.0])
+    p, q = T.pq("III", ts, np.zeros(3))
+    ck.limit(f"{name}: r = 0 lies on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-12)
+    ck.settles(f"{name}: the Kretschmann scalar settles at the centre",
+               pl.kretschmann(np.zeros(3), np.full(3, 1e-3)), pl.kretschmann(np.zeros(3), np.full(3, 1e-4)))
+    ck.limit(f"{name}: the Kretschmann scalar at the centre is de Sitter's 24/ell^4",
+             pl.kretschmann(0.0, 1e-5), [24 / HAYWARD_ELL2 ** 2], 1e-6)
+    ck.finite(f"{name}: the Kretschmann scalar is finite at both horizons",
+              pl.kretschmann(np.zeros(2), np.array([rp, rm])))
+
+    # The Eddington-Finkelstein charts through the three cells each covers.
+    def ingoing(w, r):
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        rs = T.rstar(r)
+        p, q = np.empty(w.shape), np.empty(w.shape)
+        for mask, c, t in ((r > rp, "I", w - rs), ((r < rp) & (r > rm), "II", w - rs), (r < rm, "III'", rs - w)):
+            if mask.any():
+                p[mask], q[mask] = T.pq(c, t[mask], r[mask])
+        return p, q
+
+    def outgoing(w, r):
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        rs = T.rstar(r)
+        p, q = np.empty(w.shape), np.empty(w.shape)
+        for mask, c, t, k in ((r > rp, "I", w + rs, 0), ((r < rp) & (r > rm), "IV", w + rs, 0),
+                              (r < rm, "III'", -w - rs, -1)):
+            if mask.any():
+                p[mask], q[mask] = cell(c, k)(t[mask], r[mask])
+        return p, q
+    planes = {"ingoing": Plane(src, "hayward", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, params),
+              "outgoing": Plane(src, "hayward", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, params)}
+    for way, fmap, future in (("ingoing", ingoing, (1, -60)), ("outgoing", outgoing, (1, 60))):
+        for part, lo, hi in (("outside r+", rp + 1e-3, 40), ("between the horizons", rm + 1e-3, rp - 1e-3),
+                             ("inside r-", 1e-3, rm - 1e-3)):
+            ck.chart(f"{name} {way}, {part}", planes[way], fmap, ck.uniform(-span, span), ck.uniform(lo, hi),
+                     lambda w, r, future=future: future)
+    w = np.array([-3.0, 0.0, 2.5])
+    for way, fmap in (("ingoing", ingoing), ("outgoing", outgoing)):
+        # Across r_+ the map is smooth. Across r_- it is continuous and no more: the ray's own
+        # coordinate closes on its limit as (r - r_-)^(k+/k-), the power 2/5, so the two sides are
+        # compared 1e-12 from the horizon, where they stand 3e-5 apart.
+        for root, text, off, tol in ((rp, "r+", 1e-9, 1e-6), (rm, "r-", 1e-12, 1e-4)):
+            ck.limit(f"{name} {way}: the map is continuous across {text}",
+                     fmap(w, np.full(3, root + off)), fmap(w, np.full(3, root - off)), tol)
+    ck.limit(f"{name}: an ingoing ray keeps q = arctan e^(k v) through all three cells",
+             ingoing(np.full(3, 0.7), np.array([3.0, 1.2, 0.4]))[1], [float(np.arctan(np.exp(T.kp * 0.7)))] * 3, 1e-12)
+    ck.limit(f"{name}: an outgoing ray keeps p = -arctan e^(-k u) through all three cells",
+             outgoing(np.full(3, 0.7), np.array([3.0, 1.2, 0.4]))[0], [-float(np.arctan(np.exp(-T.kp * 0.7)))] * 3, 1e-12)
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             ingoing(2.0 + T.rstar(3.0), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point",
+             outgoing(2.0 - T.rstar(3.0), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+
+    box = [-PI - 0.45, PI + 0.45, -2 * PI - 0.1, 2 * PI + 0.1]
+    T0, T1 = box[2], box[3]
+    polygons = dict(CELL_POLYGON)
+    polygons["III"] = [(0, HALF), (HALF, HALF), (HALF, PI)]
+    polygons["III'"] = [(HALF, 0), (HALF, HALF), (PI, HALF)]
+    # The cells the drawing holds, as (cell, periods up): one pair of exteriors about T = 0 with the
+    # black hole and an inner region on each side above, the white hole and the same below, and the
+    # next white hole, black hole and exteriors beyond, cut at the top and the bottom of the box.
+    CELLS = [("I", 0), ("I'", 0), ("II", 0), ("IV", 0), ("III", 0), ("III'", 0), ("III", -1), ("III'", -1),
+             ("IV", 1), ("II", -1), ("I", 1), ("I'", 1), ("I", -1), ("I'", -1)]
+
+    def polygon(c, k):
+        return clip_polygon([point(pp + k * PI, qq + k * PI) for pp, qq in polygons[c]], T0, T1)
+
+    def clipped(p, q):
+        X, Tm = xt(p, q)
+        bad = (Tm < T0) | (Tm > T1)
+        return np.where(bad, np.nan, p), np.where(bad, np.nan, q)
+
+    def segment(v, cls, a, b, k):
+        """The straight line between two corners of a cell k periods up, cut to the box."""
+        (xa, ta), (xb, tb) = point(a[0] + k * PI, a[1] + k * PI), point(b[0] + k * PI, b[1] + k * PI)
+        if ta > tb:
+            (xa, ta), (xb, tb) = (xb, tb), (xa, ta)
+        lo, hi = max(ta, T0), min(tb, T1)
+        if lo >= hi and ta != tb:
+            return
+        if ta != tb:
+            xa, xb = (xa + (xb - xa) * (lo - ta) / (tb - ta), xa + (xb - xa) * (hi - ta) / (tb - ta))
+            ta, tb = lo, hi
+        v.line(cls, [[[xa, ta], [xb, tb]]])
+
+    def edges(v):
+        for c, k in CELLS:
+            if c == "I":
+                segment(v, "scri", (-HALF, 0), (-HALF, HALF), k)
+                segment(v, "scri", (-HALF, HALF), (0, HALF), k)
+                segment(v, "horizon", (0, 0), (0, HALF), k)
+                segment(v, "horizon", (-HALF, 0), (0, 0), k)
+            elif c == "I'":
+                segment(v, "scri", (0, -HALF), (HALF, -HALF), k)
+                segment(v, "scri", (HALF, -HALF), (HALF, 0), k)
+                segment(v, "horizon", (0, 0), (HALF, 0), k)
+                segment(v, "horizon", (0, -HALF), (0, 0), k)
+            elif c in ("II", "IV"):
+                sign = 1 if c == "II" else -1
+                for a, b in (((0, 0), (HALF, 0)), ((HALF, 0), (HALF, HALF)), ((HALF, HALF), (0, HALF)), ((0, HALF), (0, 0))):
+                    segment(v, "horizon", (sign * a[0], sign * a[1]), (sign * b[0], sign * b[1]), k)
+            elif c == "III":
+                segment(v, "centre", (0, HALF), (HALF, PI), k)
+            else:
+                segment(v, "centre", (HALF, 0), (PI, HALF), k)
+
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(T, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(T, "II", 4, rm, rp), [rm, rp])
+    rIII = nice_all(even_radii(T, "III", 3, 0, rm, xmax=HALF), [0, rm])
+    radii = {"I": rI, "I'": rI, "II": rII, "IV": rII, "III": rIII, "III'": rIII}
+    ranges = {"I": (rp, np.inf), "I'": (rp, np.inf), "II": (rm, rp), "IV": (rm, rp), "III": (0, rm), "III'": (0, rm)}
+    tt = spread(-np.inf, np.inf, 500, 10)
+
+    def labels(v):
+        for sx in (1, -1):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * PI, 4), 0.0]})
+            v.label_xt([sx * PI, 0], "$i^0$", "l" if sx > 0 else "r", dx=6 * sx)
+            for dT, text, anchor, dy in ((HALF, "$i^+$", "b", -2), (-HALF, "$i^-$", "t", 2)):
+                v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * HALF, 4), round(dT, 4)]})
+                v.label_xt([sx * HALF, dT], text, anchor + ("l" if sx > 0 else "r"), dx=5 * sx, dy=dy)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-3)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=3)
+            # Above the moment t = 0, which runs through the middle of the exterior.
+            v.label_xt([sx * HALF, 0.3], "exterior", cls="region")
+            for up in (1, -1):
+                v.label_xt([sx * HALF, up * (PI + 0.7)], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
+                v.label_xt([sx * 0.9, up * (PI + 0.2)], "$r < r_-$", cls="region")
+        v.label_xt([0, HALF + 0.1], "black hole", cls="region")
+        v.label_xt([0, -HALF - 0.1], "white hole", cls="region")
+        v.label_xt([Q4, Q4], "$r_+$", "tl", "small", dx=5, dy=1)
+        v.label_xt([Q4, 3 * Q4], "$r_-$", "bl", "small", dx=5, dy=-1)
+
+    outside, inside = slices.moments("hayward", "outside")[0], slices.moments("hayward", "inside")[0]
+
+    def through(cells, k, far, near):
+        """The moment t = 0 from r = far in the first cell to the bifurcation sphere r = near and
+        on to r = far in the second, k periods up."""
+        p, q = through_bifurcation(T, cells, far, near)
+        return p + k * PI, q + k * PI
+    out_line = through(("I'", "I"), 0, *outside.reach("static", "r")[::-1])
+    in_reach = inside.reach("static", "r")
+
+    views = []
+    for vid, label, system, cover, k_inside in (
+            ("static", "Static Spherical", "static", (("I", 0), ("II", 0), ("III", 0)), 0),
+            ("ingoing", "Ingoing Eddington-Finkelstein", "eddington_finkelstein_ingoing",
+             (("I", 0), ("II", 0), ("III'", 0)), 0),
+            ("outgoing", "Outgoing Eddington-Finkelstein", "eddington_finkelstein_outgoing",
+             (("I", 0), ("IV", 0), ("III'", -1)), -1)):
+        v = View(vid, label, box, system)
+        for c, k in CELLS:
+            v.fill("region", polygon(c, k))
+        for c, k in cover:
+            v.fill("cover", polygon(c, k))
+        for c, k in CELLS:
+            for r in radii[c]:
+                v.curve("r", *clipped(*cell(c, k)(tt, np.full_like(tt, r))))
+        if vid == "static":
+            for c, k in CELLS:
+                rr = spread(*ranges[c], 600, 16)
+                for t0 in times:
+                    v.curve("t", *clipped(*cell(c, k)(np.full_like(rr, t0), rr)))
+            v.legend("cover", "one exterior, one region between the horizons, and one inside $r_-$, which $t$ and "
+                              "$r$ cover")
+            v.legend("t", "$t$ constant")
+        else:
+            fmap, coordinate, kind = (ingoing, "v", "an ingoing") if vid == "ingoing" else (outgoing, "u", "an outgoing")
+            for r0 in (0.0, rm, rp):
+                rr = spread(r0, rm if r0 == 0.0 else rp if r0 == rm else np.inf, 400, 14)
+                for w in (-12, -8, -4, 0, 4, 8, 12):
+                    v.curve("null", *fmap(np.full_like(rr, w), rr))
+            v.legend("cover", f"the exterior, the {'black' if vid == 'ingoing' else 'white'} hole, and the region "
+                              f"inside $r_-$ that ${coordinate}$ and $r$ cover")
+            v.legend("null", f"${coordinate}$ constant, {kind} light ray")
+        edges(v)
+        labels(v)
+        v.set(fade={"top": 0.9, "bottom": 0.9})
+        v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                      "in units of $m$")
+        v.legend("horizon", "the horizons $r_+ = 12m/7$ and $r_- = 6m/7$")
+        v.legend("centre", "$r = 0$, a regular centre, where the Kretschmann scalar is $24/\\ell^4$")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(settings="$\\ell = 12m/7\\sqrt{7} = 0.648\\,m$, so that $r_+ = 12m/7$, $r_- = 6m/7$, and "
+                       "$\\kappa_-/\\kappa_+ = 5/2$.")
+        v.slice(outside, [out_line])
+        v.slice(inside, [through(("III'", "III"), k_inside, *in_reach)])
+        views.append(v)
+
+    # The hole that forms and evaporates.
+    dyn = Plane(src, "hayward", "evaporating", ("v", "r"), EQUATOR, {"ell": "12/(7*sqrt(7))"},
+                functions={"m": nr.HAYWARD_MASS})
+
+    def Phi(w):
+        return np.arctan((np.asarray(w, dtype=float) - 4) / 4)
+
+    def evap(w, r):
+        return Phi(hayward_left_centre(w, r)), Phi(w) + 0 * np.asarray(r, dtype=float)
+    ck.chart(f"{name}, forming and evaporating", dyn, evap, ck.uniform(-6, 14), ck.uniform(0.01, 12),
+             lambda w, r: (1, -60))
+    ck.chart(f"{name}, forming and evaporating, near the trapped region", dyn, evap, ck.uniform(1, 6),
+             ck.uniform(0.01, 3), lambda w, r: (1, -60))
+    w = np.linspace(-5, 13, 37)
+    ck.limit(f"{name}, forming and evaporating: the centre lies on X = 0", np.subtract(*evap(w, np.zeros_like(w))), 0 * w, 1e-12)
+    ck.limit(f"{name}, forming and evaporating: before the radiation the map is Minkowski's, v_0 = v - 2r",
+             hayward_left_centre(np.array([-1.0, -3.0]), np.array([2.0, 0.5])), [-5.0, -4.0], 1e-12)
+    # Sending the rays out again: the ray that left the centre at v_0 passes through the event it was traced from.
+    from scipy.integrate import solve_ivp
+    events = [(3.0, 1.3), (4.5, 0.9), (2.5, 1.6), (6.0, 2.0), (9.0, 1.0), (7.5, 0.4)]
+    back = hayward_left_centre(np.array([e[0] for e in events]), np.array([e[1] for e in events]))
+    miss = []
+    for (ve, re), v_left in zip(events, back):
+        sol = solve_ivp(lambda x, y: [float(hayward_F(x, y[0])) / 2], [v_left, ve], [0.0], rtol=1e-11, atol=1e-13,
+                        max_step=0.01)
+        miss.append(sol.y[0, -1] - re)
+    ck.limit(f"{name}, forming and evaporating: a ray sent out from the centre at v_0 passes through its event",
+             miss, [0.0] * len(events), 1e-7)
+    # No event horizon: the ray that leaves the centre at each v_0 is far away at v = 200 m_0.
+    left = np.linspace(-2, 8, 41)
+    far = [solve_ivp(lambda x, y: [float(hayward_F(x, y[0])) / 2], [a, 200.0], [0.0], rtol=1e-9, atol=1e-12,
+                     max_step=0.05).y[0, -1] for a in left]
+    ck.limit(f"{name}, forming and evaporating: every outgoing ray from the centre reaches r > 90 m_0 by v = 200 m_0",
+             [min(0.0, x - 90) for x in far], [0.0] * len(far), 1e-12)
+    ck.finite(f"{name}, forming and evaporating: r = 0 is a regular centre",
+              dyn.kretschmann(np.linspace(0.5, 7.5, 15), np.full(15, 1e-4)))
+    # The closed curve g^rr = 0: the two positive roots of r^3 - 2m r^2 + 2m ell^2 while m > m_*.
+    m_star = 3 * math.sqrt(3) * math.sqrt(HAYWARD_ELL2) / 4
+    v_open = 4 * math.asin(math.sqrt(m_star)) / math.pi
+    v_close = 4 + 8 * math.acos(math.sqrt(m_star)) / math.pi
+    ck.limit(f"{name}, forming and evaporating: trapped spheres exist from v = 1.479 to 5.042 m_0",
+             [v_open, v_close], [1.479, 5.042], 1e-3)
+    ws = v_open + (v_close - v_open) * (1 - np.cos(np.linspace(0, np.pi, 400))) / 2
+    inner, outer = [], []
+    for x in ws:
+        mass = float(hayward_mass(x))
+        found = sorted(z.real for z in np.roots([1, -2 * mass, 0, 2 * mass * HAYWARD_ELL2]) if abs(z.imag) < 1e-7 and z.real > 0)
+        if len(found) < 2:
+            found = [4 * mass / 3] * 2
+        inner.append(found[0])
+        outer.append(found[-1])
+    inner, outer = np.array(inner), np.array(outer)
+    ck.limit(f"{name}, forming and evaporating: the trapping horizons reach r_- = 6m_0/7 and r_+ = 12m_0/7",
+             [inner.min(), outer.max()], [6 / 7, 12 / 7], 1e-9)
+    loop_w, loop_r = np.concatenate([ws, ws[::-1]]), np.concatenate([inner, outer[::-1]])
+    loop_p, loop_q = evap(loop_w, loop_r)
+
+    v = View("history", "Forming and evaporating", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "evaporating")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    v.fill("past", [point(a, b) for a, b in zip(loop_p, loop_q)])
+    for r in (0.5, 1, 2, 4, 8):
+        v.curve("r", *evap(S_ALL + 4, np.full_like(S_ALL, r)))
+    v.curve("apparent", np.append(loop_p, loop_p[0]), np.append(loop_q, loop_q[0]))
+    for edge in (0.0, 8.0):
+        v.segment("surface", (-HALF, float(Phi(edge))), (float(Phi(edge)), float(Phi(edge))))
+    triangle_edges(v)
+    label_on(v, evap(-6.0, 4.0), "$r = 4$")
+    v.label(evap(3.2, 1.25), "trapped", cls="region")
+    v.legend("cover", "the whole spacetime, which $v$ and $r$ cover")
+    v.legend("past", "the trapped region, where $g^{rr} < 0$")
+    v.legend("r", "$r$ constant, at $0.5$, $1$, $2$, $4$ and $8\\,m_0$")
+    v.legend("apparent", "the trapping horizons, where $g^{rr} = 0$, one closed curve")
+    v.legend("surface", "the first and the last of the radiation, $v = 0$ and $v = 8\\,m_0$")
+    v.legend("centre", "$r = 0$, a regular centre")
+    v.set(settings="$\\ell = 0.648\\,m_0$, with $m_0$ the greatest mass and the unit of every length.",
+          input=nr.HAYWARD_INPUT)
+    for moment in slices.moments("hayward", "history"):
+        lo, hi = moment.reach("evaporating", "r")
+        rr = np.linspace(lo, hi, 300)
+        v.slice(moment, [evap(moment.time + rr, rr)])
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Majumdar-Papapetrou
 
 def clip_polygon(pts, T0, T1):
@@ -8914,7 +9309,7 @@ DRAWN = {
     "light_beam": light_beam,
     "kantowski_sachs": kantowski_sachs,
     "domain_wall": domain_wall,
-    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "bardeen": bardeen,
+    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "bardeen": bardeen,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
@@ -9676,6 +10071,44 @@ CAPTIONS = {
         "between the horizons, and a region inside $r_-$. Between the horizons their $t$ alone "
         "cannot tell the black hole from the white hole, and we take the region to be the black "
         "hole an infalling observer enters.",
+    ],
+    ("hayward", "static"): [
+        "Hayward's black hole, maximally extended ($\\ell = 0.648\\,m$), each point in the diagram a 2-sphere "
+        "of radius $r$. The extension is Reissner-Nordström's tower, which repeats up and down without end, "
+        "with a regular centre where that tower has its singularity. Its tortoise coordinate is "
+        "$r_* = r + \\frac{1}{2\\kappa_+}\\ln|r/r_+ - 1| - \\frac{1}{2\\kappa_-}\\ln|r/r_- - 1| + "
+        "\\frac{m}{5}\\ln(1 + 7r/4m)$ with $\\kappa_+ = 1/6m$ and $\\kappa_- = 5/12m$, so that $r_*(0) = 0$.",
+        "We place every region by the Kruskal coordinate of the outer horizon, $p = \\pm\\arctan "
+        "e^{-\\kappa_+ u}$ and $q = \\pm\\arctan e^{\\kappa_+ v}$ with $u, v = ct \\mp r_*$, and a region one "
+        "period up the tower by the same map moved by $\\pi$ in both $p$ and $q$. This puts the centre $r = 0$ "
+        "on the vertical lines $X = \\pm\\pi/2$, each running from the $i^+$ of one exterior to the $i^-$ of the "
+        "next. The map is smooth across $r_+$ and continuous across $r_-$.",
+        "The coordinates $t$ and $r$ cover one region of each kind: an exterior, a region between the horizons, "
+        "and a region inside $r_-$. Between the horizons their $t$ alone cannot tell the black hole from the "
+        "white hole, and we take the region to be the black hole an infalling observer enters.",
+    ],
+    ("hayward", "ingoing"): [
+        "The same tower ($\\ell = 0.648\\,m$) with the regions that $v$ and $r$ cover tinted: an exterior, the "
+        "black hole, and the region inside $r_-$ beyond it, each point in the diagram a 2-sphere of radius $r$. "
+        "An ingoing light ray, $v$ constant, crosses $r_+$ and $r_-$ and reaches the centre $r = 0$ at a finite "
+        "value of its affine parameter, which is $r$ itself.",
+    ],
+    ("hayward", "outgoing"): [
+        "The same tower ($\\ell = 0.648\\,m$) with the regions that $u$ and $r$ cover tinted: an exterior, the "
+        "white hole, and the region inside $r_-$ in its past, each point in the diagram a 2-sphere of radius "
+        "$r$. An outgoing light ray, $u$ constant, leaves the centre $r = 0$, crosses $r_-$ and $r_+$, and "
+        "reaches $\\mathscr{I}^+$.",
+    ],
+    ("hayward", "history"): [
+        "A black hole that forms and evaporates ($\\ell = 0.648\\,m_0$), each point in the diagram a 2-sphere of "
+        "radius $r$. Every outgoing light ray leaves the regular centre, at an advanced time $v_0$, so "
+        "$p = \\arctan((v_0 - 4m_0)/4m_0)$ and $q = \\arctan((v - 4m_0)/4m_0)$ put the centre on the straight "
+        "line $X = 0$ and the whole spacetime on Minkowski's triangle. We find $v_0$ by integrating "
+        "$dr/dv = g^{rr}/2$ back along the ray to the centre.",
+        "The trapped region is closed: it opens at $v = 1.48\\,m_0$, when the mass passes $3\\sqrt{3}\\,\\ell/4$, "
+        "and closes at $v = 5.04\\,m_0$. Inside it the lines of constant $r$ are spacelike. Every outgoing ray "
+        "reaches $\\mathscr{I}^+$, so the spacetime has no event horizon, and the Kretschmann scalar is finite "
+        "at every event, the centre included.",
     ],
     ("rn_metric", "malament_hogarth"): [
         "The same tower with one event beyond the Cauchy horizon $r_-$ marked on it. "

@@ -784,6 +784,22 @@ DIMENSIONS = {
     ("tolman_bondi", "comoving_synchronous"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "R": "L", "E": "1",
     },
+    # Hayward's regular black hole keeps his own two lengths, the mass m = GM/c^2 and the length
+    # ell of the de Sitter core. The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are
+    # lengths, and so is the advanced time of the chart whose mass is a function m(v), where a
+    # dot on m is a derivative along v and carries no dimension.
+    ("hayward", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
+    },
+    ("hayward", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
+    },
+    ("hayward", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
+    },
+    ("hayward", "evaporating"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
+    },
     # The one entry that keeps G and a mass explicit rather than folding them into a
     # length like r_s, and so the only one whose declarations need a mass at all.
     ("vaidya", "eddington_finkelstein_outgoing"): {

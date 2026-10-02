@@ -59,6 +59,11 @@
       "id": "simpson_visser",
       "kind": "family",
       "text": "Another black hole with no singularity. Where Bardeen's has a regular centre, Simpson and Visser's has a throat of radius $a$, and its inside bounces into another universe [simpson2019]."
+    },
+    {
+      "id": "hayward",
+      "kind": "family",
+      "text": "A regular black hole of the same kind whose metric function is a ratio of polynomials. Sean Hayward let its mass change in time in 2006, so that it forms and evaporates [hayward2006]."
     }
   ],
   "references": [
