@@ -50,6 +50,11 @@
       "id": "btz",
       "kind": "family",
       "text": "In three dimensions Kaigorodov's metric is the extreme BTZ black hole, the one spinning as fast as its mass allows [cvetic1999]."
+    },
+    {
+      "id": "lifshitz_spacetime",
+      "kind": "family",
+      "text": "A wave of this form in five dimensions, rolled up along its null direction, is Lifshitz spacetime at $z = 2$, where time scales as the square of space [balasubramanian2010, donos2010]."
     }
   ],
   "references": [
@@ -66,7 +71,9 @@
     "petrov1954",
     "chamblin2000supergravity",
     "brecher2001",
-    "podolsky1998impulsive"
+    "podolsky1998impulsive",
+    "balasubramanian2010",
+    "donos2010"
   ],
   "coordinates": [
     {

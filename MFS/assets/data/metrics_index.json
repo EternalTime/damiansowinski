@@ -68,7 +68,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "2c6621a15ac85820",
+    "version": "78d114daaa560f13",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -1608,6 +1608,36 @@
     "embedding": "232b53e716678841"
   },
   {
+    "id": "lifshitz_spacetime",
+    "name": "Lifshitz",
+    "tags": [
+      "Lifshitz",
+      "anisotropic scaling",
+      "dynamical exponent",
+      "holography",
+      "critical phenomena",
+      "negative cosmological constant",
+      "cosmological constant",
+      "null singularity",
+      "naked singularity",
+      "homogeneous",
+      "planar symmetry",
+      "massive vector field",
+      "string theory",
+      "static",
+      "stationary",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "75126ff1daf2ecd9",
+    "diagrams": "0f6e9fbd677331a1",
+    "conformal": "5a36ce41d9009dbd",
+    "embedding": "cd98817c46caeee2"
+  },
+  {
     "id": "majumdar_papapetrou",
     "name": "Majumdar-Papapetrou",
     "tags": [
@@ -2167,7 +2197,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a975537ea8cf5d50",
+    "version": "386d61a98baa2d53",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -2202,7 +2232,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "2909987fcc28b18e",
+    "version": "dafe0d6f896cadcc",
     "diagrams": "50800a9b7aca56c8",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"
@@ -2598,7 +2628,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "76f0bf3cf8b0933f",
+    "version": "8b4e3af16d5cbe68",
     "diagrams": "468d3b17b45fa67c",
     "conformal": "2735322746e26156",
     "embedding": "ad8fbfdcb04765f7"

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 103,
+  "count": 104,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -597,6 +597,11 @@
           "id": "ads_soliton",
           "kind": "generalisation",
           "text": "Anti-de Sitter space with one flat direction wound into a circle that shrinks to a point at a smooth tip, $r_0$ from the Poincaré horizon. It weighs less than anti-de Sitter space with the same circle [horowitz1998]."
+        },
+        {
+          "id": "lifshitz_spacetime",
+          "kind": "generalisation",
+          "text": "The Poincaré chart with time rescaled by a power of its own, $t \\to \\lambda^z t$ while $x \\to \\lambda x$. For $z > 1$ the Poincaré horizon turns into a null singularity [kachru2008, copsey2011]."
         }
       ],
       "references": [
@@ -636,7 +641,9 @@
         "chamblin1999",
         "boulware1985",
         "charmousis2008",
-        "horowitz1998"
+        "horowitz1998",
+        "kachru2008",
+        "copsey2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -16334,6 +16341,465 @@
       ]
     },
     {
+      "id": "lifshitz_spacetime",
+      "name": "Lifshitz Spacetime",
+      "short_name": "Lifshitz",
+      "description": "A spacetime whose symmetry rescales time and space by different powers, $t \\to \\lambda^z t$ while $x \\to \\lambda x$, written down by Shamit Kachru, Xiao Liu, and Michael Mulligan in 2008 as the gravitational dual of a Lifshitz critical point. At $z = 1$ it is anti-de Sitter space, and for $z > 1$ every curvature scalar is constant while the tidal forces diverge on a null singularity at $r = 0$.",
+      "tags": [
+        "Lifshitz",
+        "anisotropic scaling",
+        "dynamical exponent",
+        "holography",
+        "critical phenomena",
+        "negative cosmological constant",
+        "cosmological constant",
+        "null singularity",
+        "naked singularity",
+        "homogeneous",
+        "planar symmetry",
+        "massive vector field",
+        "string theory",
+        "static",
+        "stationary",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The dynamical exponent $z \\ge 1$ is a pure number and $L$ is a length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "Lifshitz spacetime at $z = 1$, where time and space scale alike. There the edge $r = 0$ is the horizon of the Poincaré chart, with more spacetime beyond it [kachru2008, copsey2011]."
+        },
+        {
+          "id": "siklos",
+          "kind": "family",
+          "text": "A wave of Siklos's form crossing anti-de Sitter space of five dimensions, rolled up along the wave's null direction, is Lifshitz spacetime at $z = 2$ [balasubramanian2010, donos2010]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "family",
+          "text": "Near $r = 0$ Lifshitz spacetime looks like a singular plane wave, which is how Horowitz and Way sent strings through its singularity [horowitz2012lifshitz]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "Randall and Sundrum's wall warps time and space by one factor. Koroteev and Libanov gave the two different factors by filling the space beside it with an anisotropic fluid, and met Lifshitz's scaling in five dimensions [koroteev2008]."
+        }
+      ],
+      "references": [
+        "kachru2008",
+        "hornreich1975",
+        "koroteev2008",
+        "copsey2011",
+        "taylor2008",
+        "danielsson2009",
+        "keranen2012",
+        "balasubramanian2010",
+        "donos2010",
+        "horowitz2012lifshitz",
+        "bao2012",
+        "harrison2014",
+        "keeler2014",
+        "horava2011",
+        "taylor2016"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lifshitz_spacetime.json",
+      "charts": [
+        {
+          "id": "kachru_liu_mulligan",
+          "name": "Kachru-Liu-Mulligan",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "r \\to \\infty \\;\\text{(the boundary)}",
+            "r \\to 0 \\;\\text{(a null singularity of the tidal forces for } z > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "z",
+              "description": "Dynamical exponent: under $t \\to \\lambda^z t$, $x \\to \\lambda x$, $y \\to \\lambda y$, and $r \\to r/\\lambda$ the metric keeps its form (a pure number, $z \\ge 1$; $z = 1$ is anti-de Sitter space)"
+            },
+            {
+              "symbol": "L",
+              "description": "Curvature radius (a length); the cosmological constant is $\\Lambda = -(z^2 + z + 4)/2L^2$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, x, y, r)$ of Kachru, Liu, and Mulligan, with $t$ carrying dimensions of time and $x$, $y$, and $r$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{r}{L}\\right)^{2z}c^2dt^2 + \\dfrac{r^2}{L^2}\\left(dx^2 + dy^2\\right) + \\dfrac{L^2}{r^2}dr^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{r}{L}\\right)^{2z}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(z^2 + 2z + 3\\right)}{L^2}",
+          "kretschmann": "K = \\dfrac{4\\left(z^4 + 2z^2 + 3\\right)}{L^4}"
+        },
+        {
+          "id": "poincare",
+          "name": "Inverse Radius",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "u"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "u \\in (0, \\infty)",
+            "u \\to 0 \\;\\text{(the boundary)}",
+            "u \\to \\infty \\;\\text{(a null singularity of the tidal forces for } z > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "z",
+              "description": "Dynamical exponent: under $t \\to \\lambda^z t$, $x \\to \\lambda x$, $y \\to \\lambda y$, and $r \\to r/\\lambda$ the metric keeps its form (a pure number, $z \\ge 1$; $z = 1$ is anti-de Sitter space)"
+            },
+            {
+              "symbol": "L",
+              "description": "Curvature radius (a length); the cosmological constant is $\\Lambda = -(z^2 + z + 4)/2L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, u)$, with $t$ carrying dimensions of time and $x$, $y$, and $u = L^2/r$ lengths, where $r$ is the radius of Kachru, Liu, and Mulligan. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{L}{u}\\right)^{2z}c^2dt^2 + \\dfrac{L^2}{u^2}\\left(dx^2 + dy^2 + du^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{L}{u}\\right)^{2z}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2}{u^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{L^2}{u^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{L^2}{u^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(z^2 + 2z + 3\\right)}{L^2}",
+          "kretschmann": "K = \\dfrac{4\\left(z^4 + 2z^2 + 3\\right)}{L^4}"
+        },
+        {
+          "id": "proper_distance",
+          "name": "Proper Distance",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "\\rho"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\rho \\in (-\\infty, \\infty)",
+            "\\rho \\to \\infty \\;\\text{(the boundary)}",
+            "\\rho \\to -\\infty \\;\\text{(a null singularity of the tidal forces for } z > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "z",
+              "description": "Dynamical exponent: under $t \\to \\lambda^z t$, $x \\to \\lambda x$, $y \\to \\lambda y$, and $r \\to r/\\lambda$ the metric keeps its form (a pure number, $z \\ge 1$; $z = 1$ is anti-de Sitter space)"
+            },
+            {
+              "symbol": "L",
+              "description": "Curvature radius (a length); the cosmological constant is $\\Lambda = -(z^2 + z + 4)/2L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, \\rho)$, with $t$ carrying dimensions of time, $x$ and $y$ lengths, and $\\rho = L\\ln(r/L)$ the proper distance along the radius $r$ of Kachru, Liu, and Mulligan. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2z\\rho/L}c^2dt^2 + e^{2\\rho/L}\\left(dx^2 + dy^2\\right) + d\\rho^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2z\\rho/L}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "e^{2\\rho/L}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{2\\rho/L}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(z^2 + 2z + 3\\right)}{L^2}",
+          "kretschmann": "K = \\dfrac{4\\left(z^4 + 2z^2 + 3\\right)}{L^4}"
+        },
+        {
+          "id": "tortoise",
+          "name": "Tortoise",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "w"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "w \\in (0, \\infty)",
+            "w \\to 0 \\;\\text{(the boundary)}",
+            "w \\to \\infty \\;\\text{(a null singularity of the tidal forces for } z > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "z",
+              "description": "Dynamical exponent: under $t \\to \\lambda^z t$, $x \\to \\lambda x$, $y \\to \\lambda y$, and $r \\to r/\\lambda$ the metric keeps its form (a pure number, $z \\ge 1$; $z = 1$ is anti-de Sitter space)"
+            },
+            {
+              "symbol": "L",
+              "description": "Curvature radius (a length); the cosmological constant is $\\Lambda = -(z^2 + z + 4)/2L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, w)$, with $t$ carrying dimensions of time, $x$ and $y$ lengths, and $w = L^{z+1}/(zr^z)$ the tortoise coordinate of the radius $r$ of Kachru, Liu, and Mulligan, a length. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{L^2}{z^2w^2}\\left(-c^2dt^2 + dw^2\\right) + \\left(\\dfrac{L}{zw}\\right)^{2/z}\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2}{z^2w^2}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "\\dfrac{L^2}{z^2w^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\left(\\dfrac{L}{zw}\\right)^{2/z}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\left(\\dfrac{L}{zw}\\right)^{2/z}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(z^2 + 2z + 3\\right)}{L^2}",
+          "kretschmann": "K = \\dfrac{4\\left(z^4 + 2z^2 + 3\\right)}{L^4}"
+        },
+        {
+          "id": "eddington_finkelstein",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "x",
+            "y",
+            "r"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "r \\to \\infty \\;\\text{(the boundary)}",
+            "r \\to 0 \\;\\text{(a null singularity of the tidal forces for } z > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "z",
+              "description": "Dynamical exponent: under $t \\to \\lambda^z t$, $x \\to \\lambda x$, $y \\to \\lambda y$, and $r \\to r/\\lambda$ the metric keeps its form (a pure number, $z \\ge 1$; $z = 1$ is anti-de Sitter space)"
+            },
+            {
+              "symbol": "L",
+              "description": "Curvature radius (a length); the cosmological constant is $\\Lambda = -(z^2 + z + 4)/2L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(v, x, y, r)$, all lengths, with $r$ the radius of Kachru, Liu, and Mulligan and $v = ct - L^{z+1}/(zr^z)$ the advanced time, constant along each ingoing light ray of fixed $x$ and $y$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(\\dfrac{r}{L}\\right)^{2z}dv^2 + 2\\left(\\dfrac{r}{L}\\right)^{z - 1}dv\\,dr + \\dfrac{r^2}{L^2}\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(\\dfrac{r}{L}\\right)^{2z}"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "\\left(\\dfrac{r}{L}\\right)^{z - 1}"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "\\left(\\dfrac{r}{L}\\right)^{z - 1}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(z^2 + 2z + 3\\right)}{L^2}",
+          "kretschmann": "K = \\dfrac{4\\left(z^4 + 2z^2 + 3\\right)}{L^4}"
+        },
+        {
+          "id": "affine",
+          "name": "Affine Null (Copsey-Mann)",
+          "coordinates": [
+            "v",
+            "x",
+            "y",
+            "s"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "s \\in (0, \\infty)",
+            "s \\to \\infty \\;\\text{(the boundary)}",
+            "s \\to 0 \\;\\text{(a null singularity of the tidal forces for } z > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "z",
+              "description": "Dynamical exponent: under $t \\to \\lambda^z t$, $x \\to \\lambda x$, $y \\to \\lambda y$, and $r \\to r/\\lambda$ the metric keeps its form (a pure number, $z \\ge 1$; $z = 1$ is anti-de Sitter space)"
+            },
+            {
+              "symbol": "L",
+              "description": "Curvature radius (a length); the cosmological constant is $\\Lambda = -(z^2 + z + 4)/2L^2$"
+            }
+          ],
+          "convention": "We use the coordinates $(v, x, y, s)$ of Copsey and Mann, all lengths, with $v = ct - L^{z+1}/(zr^z)$ the advanced time and $s = (2L/z)(r/L)^z$ an affine parameter along each ingoing light ray of fixed $x$ and $y$, where $r$ is the radius of Kachru, Liu, and Mulligan. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{z^2s^2}{4L^2}dv^2 + dv\\,ds + \\left(\\dfrac{zs}{2L}\\right)^{2/z}\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\dfrac{z^2s^2}{4L^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "s"
+              ],
+              "value": "\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "s",
+                "v"
+              ],
+              "value": "\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\left(\\dfrac{zs}{2L}\\right)^{2/z}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\left(\\dfrac{zs}{2L}\\right)^{2/z}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(z^2 + 2z + 3\\right)}{L^2}",
+          "kretschmann": "K = \\dfrac{4\\left(z^4 + 2z^2 + 3\\right)}{L^4}"
+        }
+      ]
+    },
+    {
       "id": "majumdar_papapetrou",
       "name": "Majumdar-Papapetrou Extremal Black Holes",
       "short_name": "Majumdar-Papapetrou",
@@ -21930,6 +22396,11 @@
           "id": "israel_wilson_perjes",
           "kind": "family",
           "text": "Tod's other class. A spacetime with a supercovariantly constant spinor is a pp-wave where the spinor's Killing vector is null everywhere, and one of Israel, Wilson, and Perjés's fields where it is timelike [tod1983, chrusciel2006]."
+        },
+        {
+          "id": "lifshitz_spacetime",
+          "kind": "family",
+          "text": "A spacetime whose null singularity is that of a singular plane wave, so strings falling into it behave as they do in one [horowitz2012lifshitz]."
         }
       ],
       "references": [
@@ -21964,7 +22435,8 @@
         "siklos1985",
         "podolsky1998",
         "tod1983",
-        "chrusciel2006"
+        "chrusciel2006",
+        "horowitz2012lifshitz"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -22166,6 +22638,11 @@
           "id": "kaluza_klein_monopole",
           "kind": "family",
           "text": "Gravity in five dimensions with the fifth rolled into a small circle, the compactification that Randall and Sundrum's single wall is an alternative to [randall1999b]."
+        },
+        {
+          "id": "lifshitz_spacetime",
+          "kind": "family",
+          "text": "Fill the space beside the wall with an anisotropic fluid and time and space warp at different rates, the scaling of Lifshitz spacetime, as Peter Koroteev and Maxim Libanov found in 2007 [koroteev2008]."
         }
       ],
       "references": [
@@ -22184,7 +22661,8 @@
         "figueras2011",
         "maldacena1998",
         "gubser2001",
-        "atlas2021"
+        "atlas2021",
+        "koroteev2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json",
@@ -25886,6 +26364,11 @@
           "id": "btz",
           "kind": "family",
           "text": "In three dimensions Kaigorodov's metric is the extreme BTZ black hole, the one spinning as fast as its mass allows [cvetic1999]."
+        },
+        {
+          "id": "lifshitz_spacetime",
+          "kind": "family",
+          "text": "A wave of this form in five dimensions, rolled up along its null direction, is Lifshitz spacetime at $z = 2$, where time scales as the square of space [balasubramanian2010, donos2010]."
         }
       ],
       "references": [
@@ -25902,7 +26385,9 @@
         "petrov1954",
         "chamblin2000supergravity",
         "brecher2001",
-        "podolsky1998impulsive"
+        "podolsky1998impulsive",
+        "balasubramanian2010",
+        "donos2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/siklos.json",

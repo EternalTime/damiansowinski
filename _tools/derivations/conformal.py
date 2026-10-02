@@ -15016,7 +15016,171 @@ def sultana_dyer(ck, src):
 
 
 
+def lifshitz_spacetime(ck, src):
+    """Lifshitz spacetime at z = 2 on its plane of the time and the radial coordinate, x and y held
+    fixed, which the reflections of x and y make totally geodesic and which is the same at every x
+    and y, in units of L.
+
+    The plane's metric is -(r/L)^{2z} c^2 dt^2 + L^2 dr^2/r^2 = (L^2/z^2 w^2)(-c^2 dt^2 + dw^2) with
+    the tortoise coordinate w = L^{z+1}/(z r^z), which runs from 0 on the boundary r -> infinity
+    without bound toward r = 0. So p, q = arctan((ct -+ w)/L) bring the plane into Minkowski's
+    triangle with the boundary a timelike line on X = 0, as anti-de Sitter's is, and the two null
+    edges r = 0: Copsey and Mann's Figure 1, the Poincare patch with singularities where its
+    horizons would be. The inverse radius, proper distance and tortoise charts are the same plane
+    in their own radial coordinate, w = u^2/2 = e^{-2 rho}/2 at z = 2 and L = 1, and the two null
+    charts enter it through ct = v + w, with w = 1/(2 r^2) = 1/(2 s).
+
+    Every curvature scalar is constant, the Kretschmann scalar 4(z^4 + 2 z^2 + 3)/L^4 = 108/L^4 at
+    every event, which is checked, so the edges are drawn as a singularity on other grounds: along
+    the timelike geodesics of unit energy with no momentum along x or y, whose velocity is
+    (r^-4, 0, 0, -r sqrt(r^-4 - 1)) in Kachru, Liu and Mulligan's chart, the tidal tensor
+    E_ab = R_acbd u^c u^d of the published Riemann tensor is checked to grow without limit,
+    E_ab E^ab = z^4 + 2 (1 + (z - 1) r^-2z)^2, Copsey and Mann's (2.12), while those observers
+    reach r = 0 from r_0 in the proper time arcsin(r_0^2)/2."""
+    name = "lifshitz_spacetime"
+    params = {"z": 2, "L": 1}
+
+    def plane_pq(t, w):
+        return mink_pq(t, w)
+
+    def f(a):
+        return np.asarray(a, dtype=float)
+
+    # Each chart: its drawn pair, the tortoise coordinate w of its radial coordinate, the static time
+    # of its pair, a future directed timelike vector, and its radial coordinate at a given w.
+    charts = {
+        "kachru_liu_mulligan": (("t", "r"), lambda r: 0.5 / f(r) ** 2, None, lambda w: np.sqrt(0.5 / f(w))),
+        "poincare": (("t", "u"), lambda u: 0.5 * f(u) ** 2, None, lambda w: np.sqrt(2 * f(w))),
+        "proper_distance": (("t", "\\rho"), lambda rho: 0.5 * np.exp(-2 * f(rho)), None, lambda w: -0.5 * np.log(2 * f(w))),
+        "tortoise": (("t", "w"), lambda w: f(w), None, lambda w: f(w)),
+        "eddington_finkelstein": (("v", "r"), lambda r: 0.5 / f(r) ** 2, "v", lambda w: np.sqrt(0.5 / f(w))),
+        "affine": (("v", "s"), lambda s_: 0.5 / f(s_), "v", lambda w: 0.5 / f(w)),
+    }
+
+    def fmap_of(cid):
+        _, w_of, null, _ = charts[cid]
+        if null:
+            return lambda v, x: plane_pq(f(v) + w_of(x), w_of(x))
+        return lambda t, x: plane_pq(t, w_of(x))
+
+    samples = {
+        "kachru_liu_mulligan": (ck.uniform(-6, 6), ck.uniform(0.3, 4)),
+        "poincare": (ck.uniform(-6, 6), ck.uniform(0.05, 3)),
+        "proper_distance": (ck.uniform(-6, 6), ck.uniform(-1.2, 1.4)),
+        "tortoise": (ck.uniform(-6, 6), ck.uniform(0.02, 6)),
+        "eddington_finkelstein": (ck.uniform(-6, 6), ck.uniform(0.3, 4)),
+        "affine": (ck.uniform(-6, 6), ck.uniform(0.1, 9)),
+    }
+    planes = {}
+    for cid, (pair, w_of, null, _) in charts.items():
+        planes[cid] = Plane(src, name, cid, pair, {"x": "0", "y": "0"}, params)
+        ck.chart(f"Lifshitz, {cid}", planes[cid], fmap_of(cid), *samples[cid], lambda a, b: (1, 0))
+        K = planes[cid].kretschmann(*(a[:50] for a in samples[cid]))
+        ck.limit(f"Lifshitz, {cid}: the Kretschmann scalar is 108/L^4 at every event", K, np.full(50, 108.0), 1e-9)
+    r = ck.uniform(0.3, 3, 200)
+    g = planes["kachru_liu_mulligan"].metric(0 * r, r)
+    h = 1e-6
+    w_klm = charts["kachru_liu_mulligan"][1]
+    ck.limit("Lifshitz: w has dw/dr = -sqrt(-g_rr/g_tt) on the plane of t and r",
+             (w_klm(r + h) - w_klm(r - h)) / (2 * h), -np.sqrt(-g[2] / g[0]), 1e-6)
+    # One event through the maps of all six charts.
+    t0, w0 = ck.uniform(-2, 2, 50), ck.uniform(0.2, 2, 50)
+    want = np.array(plane_pq(t0, w0))
+    for cid, (_, _, null, x_of) in charts.items():
+        at = ((t0 - w0) if null else t0, x_of(w0))
+        ck.limit(f"Lifshitz: {cid} and the tortoise chart put one event on one point", np.array(fmap_of(cid)(*at)), want, 1e-12)
+    ck.limit("Lifshitz: the boundary w -> 0 lands on X = 0", np.subtract(*plane_pq(t0, 1e-12 + 0 * t0)[::-1]), 0 * t0, 1e-9)
+    edge = np.array(plane_pq(0 * t0, 1e12 + 0 * t0))
+    ck.limit("Lifshitz: r -> 0 lands on the null edges p = -pi/2 and q = pi/2",
+             edge, np.array([np.full(50, -HALF), np.full(50, HALF)]), 1e-9)
+
+    # The tidal tensor along the timelike geodesics of unit energy with no momentum along x or y, from
+    # the published Riemann tensor, metric and Christoffel symbols of Kachru, Liu and Mulligan's chart.
+    _, entry, R = nr.load(name, "kachru_liu_mulligan")
+    src.note(name, "kachru_liu_mulligan", ["riemann", "christoffel"])
+    coords = entry["coords"]
+    at = {R.parameters["z"]: 2, R.parameters["L"]: 1}
+    rs = R.symbol["r"]
+    gm = nr.published_matrix(R, entry, "metric_components").subs(at)
+    gi = nr.published_matrix(R, entry, "inverse_metric_components").subs(at)
+    riem = {tuple(coords.index(i) for i in c["indices"]): R(c["value"]).subs(at)
+            for c in entry["riemann"]["variants"]["llll"]["nonzero"]}
+    u = [rs ** -4, 0, 0, -rs * sp.sqrt(rs ** -4 - 1)]
+    norm = sum(gm[a, b] * u[a] * u[b] for a in range(4) for b in range(4))
+    ck.limit("Lifshitz: (r^-4, 0, 0, -r sqrt(r^-4 - 1)) is a unit timelike vector", [float(sp.simplify(norm))], [-1.0], 1e-12)
+    gamma = {tuple(coords.index(i) for i in c["indices"]): R(c["value"]).subs(at)
+             for c in entry["christoffel"]["variants"]["ull"]["nonzero"]}
+    acc = [sp.simplify(u[3] * sp.diff(u[a], rs) + sum(val * u[b] * u[c] for (i, b, c), val in gamma.items() if i == a))
+           for a in range(4)]
+    ck.limit("Lifshitz: that vector field is geodesic by the published Christoffel symbols",
+             [float(sp.Abs(e).subs(rs, sp.Rational(1, 2))) for e in acc], [0.0] * 4, 1e-12)
+    E = sp.Matrix(4, 4, lambda a, b: sum(val * u[c] * u[d] for (i, c, j, d), val in riem.items() if (i, j) == (a, b)))
+    Eup = gi * E
+    tidal = sp.lambdify(rs, sum(Eup[a, b] * Eup[b, a] for a in range(4) for b in range(4)), "numpy")
+    ck.diverges("Lifshitz: the tidal tensor of those observers grows without limit toward r = 0", [tidal(1e-2)], [tidal(1e-3)])
+    ck.limit("Lifshitz: E_ab E^ab = z^4 + 2 (1 + (z - 1) r^-2z)^2 along them, Copsey and Mann's (2.12)",
+             [tidal(0.5) / (16 + 2 * (1 + 0.5 ** -4) ** 2)], [1.0], 1e-12)
+    ck.limit("Lifshitz: they reach r = 0 from r = 1/sqrt 2 in the proper time arcsin(1/2)/2 = pi/12",
+             [integrate.quad(lambda a: 1 / (a * math.sqrt(a ** -4 - 1)), 0.0, math.sqrt(0.5))[0]], [PI / 12], 1e-9)
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    moment, = slices.moments(name)
+    reach = 0.5 * np.exp(-2 * np.linspace(*moment.reach("proper_distance", "\\rho"), 200))
+    WS, TS = (0.125, 0.5, 2.0), (-4, -2, -1, 0, 1, 2, 4)
+    # Each chart's names for the boundary, the edge r = 0, the two lines of constant depth that are
+    # labelled, the three that are drawn, and its settings.
+    TEXTS = {
+        "kachru_liu_mulligan": ("Kachru-Liu-Mulligan", "$r \\to \\infty$", "$r = 0$", "$r = L$", "$L/2$",
+                                "$r$ constant, at $2L$, $L$ and $L/2$", "$t$ and $r$", "."),
+        "poincare": ("Inverse radius", "$u = 0$", "$u \\to \\infty$", "$u = L$", "$2L$",
+                     "$u$ constant, at $L/2$, $L$ and $2L$", "$t$ and $u$", " and $r = L^2/u$."),
+        "proper_distance": ("Proper distance", "$\\rho \\to \\infty$", "$\\rho \\to -\\infty$", "$\\rho = 0$", "$-L\\ln 2$",
+                            "$\\rho$ constant, at $L\\ln 2$, $0$ and $-L\\ln 2$", "$t$ and $\\rho$",
+                            " and $r = Le^{\\rho/L}$."),
+        "tortoise": ("Tortoise", "$w = 0$", "$w \\to \\infty$", "$w = L/2$", "$2L$",
+                     "$w$ constant, at $L/8$, $L/2$ and $2L$", "$t$ and $w$", "."),
+        "eddington_finkelstein": ("Eddington-Finkelstein", "$r \\to \\infty$", "$r = 0$", "$r = L$", "$L/2$",
+                                  "$r$ constant, at $2L$, $L$ and $L/2$", "$v$ and $r$", " and $ct = v + w$."),
+        "affine": ("Affine null", "$s \\to \\infty$", "$s = 0$", "$s = L$", "$L/4$",
+                   "$s$ constant, at $4L$, $L$ and $L/4$", "$v$ and $s$", ", $ct = v + w$, and $r^z = zsL^{z-1}/2$."),
+    }
+    views = []
+    for cid, (pair, w_of, null, _) in charts.items():
+        label, edge, end, one, two, depths, cover, tail = TEXTS[cid]
+        v = View(cid, label, box, cid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda w, t: plane_pq(t, w), WS, S_ALL)
+        if null:
+            # A line of constant v is an ingoing ray, ct - w = v.
+            grid(v, "null", lambda vv, w: plane_pq(vv + w, w), TS, S_POS)
+        else:
+            grid(v, "t", lambda t, w: plane_pq(t, w), TS, S_POS)
+        v.line("boundary", [[[0, -PI], [0, PI]]])
+        v.line("singular", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]], zig=True)
+        v.label_xt([0, 0.25], edge, "r", dx=-6)
+        v.label_xt([HALF, HALF], end, "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], end, "tl", dx=5, dy=3)
+        label_on(v, plane_pq(0, 0.5), one)
+        label_on(v, plane_pq(0, 2.0), two)
+        v.legend("cover", f"the whole plane, which {cover} cover")
+        v.legend("r", depths)
+        if null:
+            v.legend("null", "$v$ constant, an ingoing light ray, at $0$, $\\pm L$, $\\pm 2L$ and $\\pm 4L$")
+        else:
+            v.legend("t", "$ct$ constant, at $0$, $\\pm L$, $\\pm 2L$ and $\\pm 4L$")
+        v.legend("boundary", "the boundary, a timelike line of this plane")
+        v.legend("singular", "the null singularity, where the tidal forces on a falling observer diverge and "
+                             "every curvature scalar stays finite")
+        v.slice(moment, [plane_pq(0 * reach, reach)])
+        v.set(settings="$z = 2$ and $L = 1$; $p = \\arctan((ct - w)/L)$ and $q = \\arctan((ct + w)/L)$, with "
+                       "$w = L^{z+1}/(zr^z)$" + tail)
+        views.append(v)
+    return views
+
+
 DRAWN = {
+    "lifshitz_spacetime": lifshitz_spacetime,
     "aichelburg_sexl": aichelburg_sexl,
     "kiselev": kiselev,
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
@@ -15299,6 +15463,30 @@ CAPTIONS = {
         "$\\sqrt{r^2 - r_0^2}\\,L/r_0$.",
         "A light ray from the tip reaches the boundary at $ct = \\pi L^2/(2r_0)$ and is back at "
         "$ct = \\pi L^2/r_0$, as in anti-de Sitter space, whose centre the tip is.",
+    ],
+    ("lifshitz_spacetime", "kachru_liu_mulligan"): [
+        "Lifshitz spacetime at $z = 2$ on its plane of the time and the radial coordinate, each point in the diagram a plane of $x$ and $y$, brought by $p = \\arctan((ct - w)/L)$ and $q = \\arctan((ct + w)/L)$ into Minkowski's triangle. On this plane the metric is $(L^2/z^2w^2)(-c^2dt^2 + dw^2)$ with $w = L^{z+1}/(zr^z)$, which is zero on the boundary and grows without limit toward the two null edges.",
+        "The boundary $r \\to \\infty$ is a timelike line, as anti-de Sitter's is, and light reaches it at a finite $t$. The two null edges are $r = 0$, where the Poincaré chart of anti-de Sitter space has its horizons. For $z > 1$ they are a singularity: every curvature scalar is the same there as everywhere else, while an observer falling in feels tidal forces that grow as $r^{-2z}$ and arrives in a finite proper time. Every observer has the past edge in view, so the singularity is naked.",
+    ],
+    ("lifshitz_spacetime", "poincare"): [
+        "Lifshitz spacetime at $z = 2$ on its plane of the time and the radial coordinate, each point in the diagram a plane of $x$ and $y$, brought by $p = \\arctan((ct - w)/L)$ and $q = \\arctan((ct + w)/L)$ into Minkowski's triangle. On this plane the metric is $(L^2/z^2w^2)(-c^2dt^2 + dw^2)$ with $w = u^z/(zL^{z-1})$, which is zero on the boundary and grows without limit toward the two null edges.",
+        "The boundary $u = 0$ is a timelike line, as anti-de Sitter's is, and light reaches it at a finite $t$. The two null edges are $u \\to \\infty$, where the Poincaré chart of anti-de Sitter space has its horizons. For $z > 1$ they are a singularity: every curvature scalar is the same there as everywhere else, while an observer falling in feels tidal forces that grow as $r^{-2z}$ and arrives in a finite proper time. Every observer has the past edge in view, so the singularity is naked.",
+    ],
+    ("lifshitz_spacetime", "proper_distance"): [
+        "Lifshitz spacetime at $z = 2$ on its plane of the time and the radial coordinate, each point in the diagram a plane of $x$ and $y$, brought by $p = \\arctan((ct - w)/L)$ and $q = \\arctan((ct + w)/L)$ into Minkowski's triangle. On this plane the metric is $(L^2/z^2w^2)(-c^2dt^2 + dw^2)$ with $w = (L/z)e^{-z\\rho/L}$, which is zero on the boundary and grows without limit toward the two null edges. Those edges lie a proper distance without end along $\\rho$ from every event.",
+        "The boundary $\\rho \\to \\infty$ is a timelike line, as anti-de Sitter's is, and light reaches it at a finite $t$. The two null edges are $\\rho \\to -\\infty$, where the Poincaré chart of anti-de Sitter space has its horizons. For $z > 1$ they are a singularity: every curvature scalar is the same there as everywhere else, while an observer falling in feels tidal forces that grow as $r^{-2z}$ and arrives in a finite proper time. Every observer has the past edge in view, so the singularity is naked.",
+    ],
+    ("lifshitz_spacetime", "tortoise"): [
+        "Lifshitz spacetime at $z = 2$ on its plane of the time and the radial coordinate, each point in the diagram a plane of $x$ and $y$, brought by $p = \\arctan((ct - w)/L)$ and $q = \\arctan((ct + w)/L)$ into Minkowski's triangle. On this plane the metric is $(L^2/z^2w^2)(-c^2dt^2 + dw^2)$ with $w$ the chart's own radial coordinate, which is zero on the boundary and grows without limit toward the two null edges.",
+        "The boundary $w = 0$ is a timelike line, as anti-de Sitter's is, and light reaches it at a finite $t$. The two null edges are $w \\to \\infty$, where the Poincaré chart of anti-de Sitter space has its horizons. For $z > 1$ they are a singularity: every curvature scalar is the same there as everywhere else, while an observer falling in feels tidal forces that grow as $r^{-2z}$ and arrives in a finite proper time. Every observer has the past edge in view, so the singularity is naked.",
+    ],
+    ("lifshitz_spacetime", "eddington_finkelstein"): [
+        "Lifshitz spacetime at $z = 2$ on its plane of the time and the radial coordinate, each point in the diagram a plane of $x$ and $y$, brought by $p = \\arctan((ct - w)/L)$ and $q = \\arctan((ct + w)/L)$ into Minkowski's triangle. On this plane the metric is $(L^2/z^2w^2)(-c^2dt^2 + dw^2)$ with $w = L^{z+1}/(zr^z)$ and $ct = v + w$, which is zero on the boundary and grows without limit toward the two null edges. A line of constant $v$ is an ingoing ray, straight at 45°, and it meets the future edge at a finite $v$.",
+        "The boundary $r \\to \\infty$ is a timelike line, as anti-de Sitter's is, and light reaches it at a finite $t$. The two null edges are $r = 0$, where the Poincaré chart of anti-de Sitter space has its horizons. For $z > 1$ they are a singularity: every curvature scalar is the same there as everywhere else, while an observer falling in feels tidal forces that grow as $r^{-2z}$ and arrives in a finite proper time. Every observer has the past edge in view, so the singularity is naked.",
+    ],
+    ("lifshitz_spacetime", "affine"): [
+        "Lifshitz spacetime at $z = 2$ on its plane of the time and the radial coordinate, each point in the diagram a plane of $x$ and $y$, brought by $p = \\arctan((ct - w)/L)$ and $q = \\arctan((ct + w)/L)$ into Minkowski's triangle. On this plane the metric is $(L^2/z^2w^2)(-c^2dt^2 + dw^2)$ with $w = 2L^2/(z^2s)$ and $ct = v + w$, which is zero on the boundary and grows without limit toward the two null edges. A line of constant $v$ is an ingoing ray, straight at 45°, and $s$ is an affine parameter along it.",
+        "The boundary $s \\to \\infty$ is a timelike line, as anti-de Sitter's is, and light reaches it at a finite $t$. The two null edges are $s = 0$, where the Poincaré chart of anti-de Sitter space has its horizons. For $z > 1$ they are a singularity: every curvature scalar is the same there as everywhere else, while an observer falling in feels tidal forces that grow as $r^{-2z}$ and arrives in a finite proper time. Every observer has the past edge in view, so the singularity is naked.",
     ],
     ("randall_sundrum", "proper_distance"): [
         "The region Randall and Sundrum's coordinates cover (one wall), each point in the diagram a flat space of three dimensions, brought by $p = \\arctan(k(ct - w))$ and $q = \\arctan(k(ct + w))$ into the whole diamond, with $1 + k|w| = e^{k|y|}$. The wall is the vertical line in the middle, from $i^-$ to $i^+$, and a light ray crosses it as one straight line.",

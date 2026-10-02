@@ -64,6 +64,11 @@
       "id": "kaluza_klein_monopole",
       "kind": "family",
       "text": "Gravity in five dimensions with the fifth rolled into a small circle, the compactification that Randall and Sundrum's single wall is an alternative to [randall1999b]."
+    },
+    {
+      "id": "lifshitz_spacetime",
+      "kind": "family",
+      "text": "Fill the space beside the wall with an anisotropic fluid and time and space warp at different rates, the scaling of Lifshitz spacetime, as Peter Koroteev and Maxim Libanov found in 2007 [koroteev2008]."
     }
   ],
   "references": [
@@ -82,7 +87,8 @@
     "figueras2011",
     "maldacena1998",
     "gubser2001",
-    "atlas2021"
+    "atlas2021",
+    "koroteev2008"
   ],
   "coordinates": [
     {

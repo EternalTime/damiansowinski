@@ -810,6 +810,14 @@ DIMENSIONS = {
     ("kaluza_klein_black_hole", "einstein_eddington_finkelstein"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "q": "L",
     },
+    # Lifshitz spacetime keeps one length, L, and one pure number, the dynamical exponent z. Every
+    # radial coordinate is a length, and so is the advanced time v = ct - w of the two null charts.
+    ("lifshitz_spacetime", "kachru_liu_mulligan"): {"t": "T", "x": "L", "y": "L", "r": "L", "z": "1", "L": "L"},
+    ("lifshitz_spacetime", "poincare"): {"t": "T", "x": "L", "y": "L", "u": "L", "z": "1", "L": "L"},
+    ("lifshitz_spacetime", "proper_distance"): {"t": "T", "x": "L", "y": "L", "\\rho": "L", "z": "1", "L": "L"},
+    ("lifshitz_spacetime", "tortoise"): {"t": "T", "x": "L", "y": "L", "w": "L", "z": "1", "L": "L"},
+    ("lifshitz_spacetime", "eddington_finkelstein"): {"v": "L", "x": "L", "y": "L", "r": "L", "z": "1", "L": "L"},
+    ("lifshitz_spacetime", "affine"): {"v": "L", "x": "L", "y": "L", "s": "L", "z": "1", "L": "L"},
     # Van Den Broeck's drive adds one more pure number to Alcubierre's two: B, the factor every
     # length of a slice is multiplied by. The comoving chart is the inside of the bubble, f = 1.
     ("van_den_broeck", "cartesian"): {

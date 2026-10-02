@@ -1743,6 +1743,25 @@ FLAT = {
     ("randall_sundrum", "two_walls", "tphi"): lambda: one(
         "randall_sundrum", lambda m: along(0.0, -m.reach("two_walls", "\\phi")[1], m.reach("two_walls", "\\phi")[1]),
         view_id="two_walls"),
+    # Lifshitz spacetime's moment t = 0, over the embedding's reach in the proper distance rho, at z = 2
+    # and L = 1: r = e^rho, u = e^-rho, w = e^(-2 rho)/2 and s = e^(2 rho), the curve v = -w in the two
+    # null charts, and on each plane of t and x the line t = 0 over the strip 0 <= x < 2 pi L.
+    ("lifshitz_spacetime", "kachru_liu_mulligan", "tr"): lambda: one(
+        "lifshitz_spacetime", lambda m: along(0.0, *(math.exp(y) for y in m.reach("proper_distance", "\\rho")))),
+    ("lifshitz_spacetime", "poincare", "tu"): lambda: one(
+        "lifshitz_spacetime", lambda m: along(0.0, *sorted(math.exp(-y) for y in m.reach("proper_distance", "\\rho")))),
+    **{("lifshitz_spacetime", "poincare", view): lambda: one("lifshitz_spacetime", lambda m: along(0.0, 0.0, 2 * math.pi))
+       for view in ("tx_half", "tx_one", "tx_two")},
+    ("lifshitz_spacetime", "proper_distance", "trho"): lambda: one(
+        "lifshitz_spacetime", lambda m: along(0.0, *m.reach("proper_distance", "\\rho"))),
+    ("lifshitz_spacetime", "tortoise", "tw"): lambda: one(
+        "lifshitz_spacetime", lambda m: along(0.0, *sorted(0.5 * math.exp(-2 * y) for y in m.reach("proper_distance", "\\rho")))),
+    ("lifshitz_spacetime", "eddington_finkelstein", "vr"): lambda: one(
+        "lifshitz_spacetime", lambda m: [np.column_stack([-0.5 * np.exp(-2 * rho), np.exp(rho)])
+                                         for rho in [np.linspace(*m.reach("proper_distance", "\\rho"), N)]]),
+    ("lifshitz_spacetime", "affine", "vs"): lambda: one(
+        "lifshitz_spacetime", lambda m: [np.column_stack([-0.5 * np.exp(-2 * rho), np.exp(2 * rho)])
+                                         for rho in [np.linspace(*m.reach("proper_distance", "\\rho"), N)]]),
     ("domain_wall", "planar", "tz"): lambda: one("domain_wall", lambda m: across(m.time, 0.0, 1.0)),
     ("domain_wall", "inertial", "through"): lambda: one("domain_wall", _wall_inertial),
     ("anti_de_sitter", "static_global", "radial"): lambda: one("anti_de_sitter", lambda m: along(0.0, *m.reach("static_global", "r"))),
@@ -2035,6 +2054,7 @@ HIDDEN = {
        for view in ("midway", "one")},
     ("light_beam", "midway"): "two beams side by side, another spacetime than the single beam whose wave fronts are embedded",
     ("light_beam", "cartesian", "lens"): "the plane y = 0 with t left out, which every wave front covers whole",
+    ("lifshitz_spacetime", "poincare", "rays"): "the plane y = 0 with t left out, which every moment of the static spacetime covers whole",
     ("wormhole_time_machine", "wormhole", "speeding"): "the axis of the acceleration, theta = 0, which the embedded plane theta = pi/2 meets nowhere",
     ("wormhole_time_machine", "wormhole", "slowing"): "the axis of the acceleration, theta = 0, which the embedded plane theta = pi/2 meets nowhere",
     ("wormhole_time_machine", "short_throat", "radial"): "the mouth of the throat of zero length; the moment embedded is the smooth wormhole's",

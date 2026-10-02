@@ -298,6 +298,10 @@ BS_INPUT = ("Elvang and Figueras's functions on the plane of the ring, $\\rho = 
             "$\\kappa_3 = 3/7$, and $\\beta = 0$, where each is rational in $z$.")
 # Randall and Sundrum's planes of t and the fifth coordinate hold the three coordinates along the wall fixed.
 RS_WALL = {"x_1": "0", "x_2": "0", "x_3": "0"}
+# Lifshitz spacetime at z = 2, Kachru, Liu and Mulligan's own case, in units of L: its planes of the
+# time and the radius hold x and y fixed.
+LIFSHITZ = {"z": 2, "L": 1}
+LIFSHITZ_PLANE = {"x": "0", "y": "0"}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -2027,6 +2031,27 @@ DIAGRAMS = [
     Diagram("randall_sundrum", "two_walls", "tphi", "$t$ and $\\phi$", ("t", "\\phi"), (-math.pi, math.pi, -4, 4),
             "$\\phi$", "$kct$", {"k": 1, "r_c": "1/2"}, RS_WALL, families=SIDEWAYS, cones=(6, 7),
             periodic=("\\phi",), lines=(("shell", "r", "0", "the wall of positive tension, $\\phi = 0$"),)),
+    # Lifshitz spacetime at z = 2 and L = 1, on the plane of the time and the radial coordinate in each
+    # of its six charts, x and y held fixed, and on three planes of t and x at fixed depth in the inverse
+    # radius chart, u = L/2, L and 2L, whose null lines have the slopes (L/u)^(z-1) = 2, 1 and 1/2. The two
+    # null charts are drawn against v - r and v - s/2, time functions where r < 2^(1/3) L and s < sqrt(2) L.
+    Diagram("lifshitz_spacetime", "kachru_liu_mulligan", "tr", "$t$ and $r$", ("t", "r"), (0, 2, -2, 2),
+            "$r/L$", "$ct/L$", LIFSHITZ, LIFSHITZ_PLANE, cones=(6, 7)),
+    Diagram("lifshitz_spacetime", "poincare", "tu", "$t$ and $u$", ("t", "u"), (0, 3, -3, 3),
+            "$u/L$", "$ct/L$", LIFSHITZ, LIFSHITZ_PLANE, families=SIDEWAYS, cones=(6, 7)),
+    *[Diagram("lifshitz_spacetime", "poincare", view, label, ("t", "x"), (-3, 3, -3, 3), "$x/L$", "$ct/L$",
+              LIFSHITZ, {"y": "0", "u": u}, families=SIDEWAYS, cones=(5, 5))
+      for view, label, u in (("tx_half", "$t$ and $x$, $u = L/2$", "1/2"), ("tx_one", "$t$ and $x$, $u = L$", "1"),
+                             ("tx_two", "$t$ and $x$, $u = 2L$", "2"))],
+    Diagram("lifshitz_spacetime", "proper_distance", "trho", "$t$ and $\\rho$", ("t", "\\rho"), (-1.5, 1, -2, 2),
+            "$\\rho/L$", "$ct/L$", LIFSHITZ, LIFSHITZ_PLANE, cones=(6, 7)),
+    Diagram("lifshitz_spacetime", "tortoise", "tw", "$t$ and $w$", ("t", "w"), (0, 4, -2, 2),
+            "$w/L$", "$ct/L$", LIFSHITZ, LIFSHITZ_PLANE, families=SIDEWAYS, cones=(6, 7)),
+    Diagram("lifshitz_spacetime", "eddington_finkelstein", "vr", "$v$ and $r$", ("v", "r"), (0, 1.2, -2, 2),
+            "$r/L$", "$(v - r)/L$", LIFSHITZ, LIFSHITZ_PLANE, to_display=FINKELSTEIN_IN, tau="v - r", cones=(6, 7)),
+    Diagram("lifshitz_spacetime", "affine", "vs", "$v$ and $s$", ("v", "s"), (0, 1.25, -2, 2),
+            "$s/L$", "$(v - s/2)/L$", LIFSHITZ, LIFSHITZ_PLANE, to_display=((0, 1), (1, -0.5)), tau="v - s/2",
+            cones=(6, 7)),
     # Coleman and De Luccia's bubble with a thin wall, in units of the curvature radius l of the
     # vacuum that has one. Decay into flat space: de Sitter space outside, Minkowski space inside,
     # CDL's rho_0 = l, so the wall is at rho_bar = 4l/5 and rho' drops from 1 to 3/5 across it.
@@ -4903,6 +4928,68 @@ CAPTIONS = {
         "point, so the two halves of the drawing are two copies of the space between the walls and a ray that "
         "reaches either wall turns back from it. No Christoffel symbol turns a ray out of the plane, so every "
         "curve drawn is a null geodesic.",
+    ],
+    ("lifshitz_spacetime", "kachru_liu_mulligan", "tr"): [
+        "The plane of $t$ and $r$ ($x = y = 0$) at $z = 2$, the same at every $x$ and $y$, in units of $L$. The "
+        "metric on it is $-(r/L)^{2z}c^2dt^2 + L^2dr^2/r^2$, so the edges of the cones are "
+        "$dr/d(ct) = \\pm(r/L)^{z+1}$: the cones open toward the boundary, which a ray reaches at a finite $t$, "
+        "and close toward $r = 0$.",
+        "A ray runs along $ct \\mp L^{z+1}/(zr^z) = $ const and takes an infinite time $t$ and a finite affine "
+        "parameter to reach $r = 0$. Every curvature scalar is the same there as everywhere else, while the "
+        "tidal forces on whatever falls in beside the ray grow without bound for $z > 1$. "
+        "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",
+    ],
+    ("lifshitz_spacetime", "poincare", "tu"): [
+        "The plane of $t$ and $u$ ($x = y = 0$) at $z = 2$, in units of $L$. The metric on it is "
+        "$-(L/u)^{2z}c^2dt^2 + L^2du^2/u^2$, so the edges of the cones are $du/d(ct) = \\pm(u/L)^{1-z}$, which "
+        "at $z = 1$ are the 45° lines of anti-de Sitter space's Poincaré chart. For $z > 1$ the cones open "
+        "without bound toward the boundary, $u = 0$, and close toward large $u$.",
+        "A ray runs along $ct \\pm u^z/(zL^{z-1}) = $ const, a parabola at $z = 2$, and reaches the boundary at a "
+        "finite $t$. "
+        "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",
+    ],
+    **{("lifshitz_spacetime", "poincare", view): [
+        "The plane of $t$ and $x$ ($y = 0$, $u = " + depth + "$) at $z = 2$, in units of $L$, a surface of constant "
+        "depth below the boundary. The metric on it is $-(L/u)^{2z}c^2dt^2 + (L/u)^2dx^2$, flat, so its null "
+        "curves are the straight lines $dx/d(ct) = \\pm(L/u)^{z-1}$, of slope $" + slope + "$ at this depth.",
+        "The slope is $2$ at $u = L/2$, $1$ at $u = L$, and $1/2$ at $u = 2L$, and it grows without bound toward "
+        "the boundary, $u = 0$. Neither curve is a null geodesic for $z > 1$: light launched along either one is "
+        "turned toward larger $u$ by $\\Gamma^u{}_{tt}$ and $\\Gamma^u{}_{xx}$, so a ray with any momentum along "
+        "$x$ turns back before it reaches the boundary.",
+    ] for view, depth, slope in (("tx_half", "L/2", "2"), ("tx_one", "L", "1"), ("tx_two", "2L", "1/2"))},
+    ("lifshitz_spacetime", "proper_distance", "trho"): [
+        "The plane of $t$ and $\\rho$ ($x = y = 0$) at $z = 2$, in units of $L$. The metric on it is "
+        "$-e^{2z\\rho/L}c^2dt^2 + d\\rho^2$, so the edges of the cones are $d\\rho/d(ct) = \\pm e^{z\\rho/L}$, and "
+        "equal steps across the drawing are equal proper distances.",
+        "The cones close toward $\\rho \\to -\\infty$, a proper distance without end away, which a ray running "
+        "along $ct \\mp (L/z)e^{-z\\rho/L} = $ const still reaches at a finite affine parameter. "
+        "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",
+    ],
+    ("lifshitz_spacetime", "tortoise", "tw"): [
+        "The plane of $t$ and $w$ ($x = y = 0$) at $z = 2$, in units of $L$. The metric on it is "
+        "$L^2(-c^2dt^2 + dw^2)/z^2w^2$, conformal to Minkowski's plane, so every ray is a straight 45° line, "
+        "$ct \\pm w = $ const. It is the plane of anti-de Sitter space's Poincaré chart with $L/z$ for the radius.",
+        "The boundary is the left edge, $w = 0$, and the singularity lies at $w \\to \\infty$, off the drawing to "
+        "the right. "
+        "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",
+    ],
+    ("lifshitz_spacetime", "eddington_finkelstein", "vr"): [
+        "The plane of $v$ and $r$ ($x = y = 0$) at $z = 2$, drawn with $r$ across and $v - r$ up, in units of $L$. "
+        "The ingoing rays are the lines of constant $v$, at 45°, and each reaches $r = 0$ at a finite $v$, where "
+        "the static time $t$ has run to infinity. The outgoing rays run along $v + 2L^{z+1}/(zr^z) = $ const.",
+        "The metric on the plane is $-(r/L)^{2z}dv^2 + 2(r/L)^{z-1}dv\\,dr$, finite at $r = 0$ and degenerate there "
+        "for $z > 1$, where $g_{vr}$ vanishes. "
+        "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",
+    ],
+    ("lifshitz_spacetime", "affine", "vs"): [
+        "The plane of $v$ and $s$ ($x = y = 0$) at $z = 2$, drawn with $s$ across and $v - s/2$ up, in units of "
+        "$L$. The ingoing rays are the lines of constant $v$, and $s$ is an affine parameter along each, so a "
+        "ray reaches the left edge, $s = 0$, after a finite stretch of it. The outgoing rays run along "
+        "$v + 4L^2/(z^2s) = $ const.",
+        "The metric on the plane is $-(z^2s^2/4L^2)dv^2 + dv\\,ds$, finite and invertible at $s = 0$, a null "
+        "surface. There $g_{xx} = g_{yy} = (zs/2L)^{2/z}$ vanish, so every length along $x$ and $y$ shrinks to "
+        "nothing on it. "
+        "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",
     ],
     ("anti_de_sitter", "static_global", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the global "
@@ -9672,6 +9759,22 @@ def _bv_away(side):
     """Off the shell on the side where the metric is Reissner-Nordstrom's, and off both horizons and r = 0."""
     return lambda w, r: (side * w > 0.02) & (np.abs(r - 1.28) > 0.05) & (np.abs(r - 0.72) > 0.05) & (r > 0.05)
 
+
+# Lifshitz spacetime at z = 2 and L = 1: w = 1/(2 r^2) = u^2/2 = e^(-2 rho)/2 = 1/(2 s), and a ray keeps
+# ct -+ w, an ingoing one v and an outgoing one v + 2w in the null charts. On a plane of t and x at
+# the depth u the null lines keep ct +- u x.
+CLOSED_FORMS.update({
+    ("lifshitz_spacetime", "kachru_liu_mulligan", "tr"):
+        (lambda t, r: t - 0.5 / r ** 2, lambda t, r: t + 0.5 / r ** 2, None),
+    ("lifshitz_spacetime", "poincare", "tu"): (lambda t, u: t + 0.5 * u ** 2, lambda t, u: t - 0.5 * u ** 2, None),
+    **{("lifshitz_spacetime", "poincare", view): (lambda t, x, u=u: t + u * x, lambda t, x, u=u: t - u * x, None)
+       for view, u in (("tx_half", 0.5), ("tx_one", 1.0), ("tx_two", 2.0))},
+    ("lifshitz_spacetime", "proper_distance", "trho"):
+        (lambda t, rho: t - 0.5 * np.exp(-2 * rho), lambda t, rho: t + 0.5 * np.exp(-2 * rho), None),
+    ("lifshitz_spacetime", "tortoise", "tw"): (lambda t, w: t + w, lambda t, w: t - w, None),
+    ("lifshitz_spacetime", "eddington_finkelstein", "vr"): (lambda v, r: v, lambda v, r: v + 1 / r ** 2, None),
+    ("lifshitz_spacetime", "affine", "vs"): (lambda v, s: v, lambda v, s: v + 1 / s, None),
+})
 
 # Bonnor and Vaidya's charged shell: on the Reissner-Nordstrom side an ingoing ray keeps v and an
 # outgoing one v - 2 r_*, and in the outgoing chart u + 2 r_* and u.

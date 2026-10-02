@@ -834,6 +834,21 @@ The static vacuum field with cylindrical symmetry, the field outside an infinite
 - chart Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -\rho^{4\sigma}c^2dt^2 + \rho^{4\sigma(2\sigma - 1)}\left(d\rho^2 + dz^2\right) + \dfrac{\rho^{2(1 - 2\sigma)}}{C^2}d\phi^2$$
 - chart Kasner: coordinates $(t, r, \phi, z)$, $$ds^2 = -r^{2p_0}c^2dt^2 + dr^2 + \ell^2r^{2p_2}d\phi^2 + r^{2p_3}dz^2$$
 
+### Lifshitz Spacetime
+
+A spacetime whose symmetry rescales time and space by different powers, $t \to \lambda^z t$ while $x \to \lambda x$, written down by Shamit Kachru, Xiao Liu, and Michael Mulligan in 2008 as the gravitational dual of a Lifshitz critical point. At $z = 1$ it is anti-de Sitter space, and for $z > 1$ every curvature scalar is constant while the tidal forces diverge on a null singularity at $r = 0$.
+
+- id: `lifshitz_spacetime`
+- tags: Lifshitz, anisotropic scaling, dynamical exponent, holography, critical phenomena, negative cosmological constant, cosmological constant, null singularity, naked singularity, homogeneous, planar symmetry, massive vector field, string theory, static, stationary, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/lifshitz_spacetime.json
+- chart Kachru-Liu-Mulligan: coordinates $(t, x, y, r)$, $$ds^2 = -\left(\dfrac{r}{L}\right)^{2z}c^2dt^2 + \dfrac{r^2}{L^2}\left(dx^2 + dy^2\right) + \dfrac{L^2}{r^2}dr^2$$
+- chart Inverse Radius: coordinates $(t, x, y, u)$, $$ds^2 = -\left(\dfrac{L}{u}\right)^{2z}c^2dt^2 + \dfrac{L^2}{u^2}\left(dx^2 + dy^2 + du^2\right)$$
+- chart Proper Distance: coordinates $(t, x, y, \rho)$, $$ds^2 = -e^{2z\rho/L}c^2dt^2 + e^{2\rho/L}\left(dx^2 + dy^2\right) + d\rho^2$$
+- chart Tortoise: coordinates $(t, x, y, w)$, $$ds^2 = \dfrac{L^2}{z^2w^2}\left(-c^2dt^2 + dw^2\right) + \left(\dfrac{L}{zw}\right)^{2/z}\left(dx^2 + dy^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, x, y, r)$, $$ds^2 = -\left(\dfrac{r}{L}\right)^{2z}dv^2 + 2\left(\dfrac{r}{L}\right)^{z - 1}dv\,dr + \dfrac{r^2}{L^2}\left(dx^2 + dy^2\right)$$
+- chart Affine Null (Copsey-Mann): coordinates $(v, x, y, s)$, $$ds^2 = -\dfrac{z^2s^2}{4L^2}dv^2 + dv\,ds + \left(\dfrac{zs}{2L}\right)^{2/z}\left(dx^2 + dy^2\right)$$
+
 ### Majumdar-Papapetrou Extremal Black Holes
 
 Any number of extremal charged black holes at rest, the static electrovacuum solution Sudhansu Datta Majumdar and Achilles Papapetrou found independently in 1947. Between every pair of holes the electric repulsion balances the gravitational attraction exactly, so the holes stay at rest in any arrangement.
