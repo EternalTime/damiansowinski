@@ -113,6 +113,11 @@
       "id": "kiselev",
       "kind": "generalisation",
       "text": "De Sitter's static metric with a black hole added and $\\Lambda r^2/3$ replaced by a power of the radius, $(r_q/r)^{3w+1}$. At $w = -1$ and $r_s = 0$ it is de Sitter's, with $\\Lambda = 3/r_q^2$ [kiselev2003]."
+    },
+    {
+      "id": "hotta_tanaka",
+      "kind": "locally_same",
+      "text": "De Sitter space with an impulsive gravitational wave on one cosmological horizon, the field of two massless particles. Off that horizon it is de Sitter space [hotta1993]."
     }
   ],
   "references": [
@@ -149,7 +154,8 @@
     "senovilla1998",
     "chinea1992",
     "mazur2004",
-    "kiselev2003"
+    "kiselev2003",
+    "hotta1993"
   ],
   "coordinates": [
     {

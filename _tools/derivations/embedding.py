@@ -8136,6 +8136,117 @@ def aichelburg_sexl(ck, src):
                  input=given)]
 
 
+def hotta_tanaka(ck, src):
+    """The sphere of constant u and v of the Kruskal chart through a ring of free particles, at
+    8GE/c^4 = a = 1, with the delta of the shock drawn as a pulse: g_thetatheta = R^2 and
+    g_phiphi = R^2 sin^2 theta with R = a (a^2 + uv)/(a^2 - uv), a round sphere of radius R.
+    The ring is the circle theta = 30 degrees of the dust at rest in the closed slicing on the
+    great sphere u = v, which shrinks to the radius a, where it meets the shock, and grows again:
+    u = v = a tanh(tau/2a) before the shock, with tau the proper time. Each particle is run from
+    tau = -0.6 a with the published Christoffel symbols of the plane of u, v and theta. Behind
+    the shock the hyperboloid's Z_0 + Z_1 = a sinh(tau/a) = a s still, and by Podolsky and
+    Ortaggio's (37) and (43) the ring's distance from the axis and its height along it are
+    Z = a sin(theta_0) sqrt(1 + s^2) - (4GE/c^4) s/sin(theta_0) and
+    Z_4 = a cos(theta_0) sqrt(1 + s^2) + (4GE/c^4) ln(cot(theta_0/2)) s, so R^2 = Z^2 + Z_4^2,
+    tan(theta) = Z/Z_4, and the ring closes on the axis at s = sin^2(theta_0)/sqrt(g^2 -
+    sin^4(theta_0)) with g = 4GE/(c^4 a), which is 1/sqrt(3) here. The particles move while they
+    cross a pulse of width w, so every check against the closed forms holds to twice it."""
+    width = 0.005
+    theta0, g = math.pi / 6, 0.5
+    gamma, R = published_christoffel(src, "hotta_tanaka", "kruskal")
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    decl = {R.parameters["G"]: 1, R.parameters["E"]: sp.Rational(1, 8), R.parameters["a"]: 1}
+    args = (names["u"], names["v"], names["theta"])
+    pulse = f"exp(-s**2/{width}**2)/({width}*sqrt(pi))"
+    ck.exact("Hotta-Tanaka: no published Gamma^phi drives a particle with no motion in phi",
+             not any(ix[0] == "\\phi" and "\\phi" not in ix[1:] for ix in gamma))
+    f = {ix: sp.lambdify(args, nr.smoothed(value, pulse).subs(decl), "numpy") for ix, value in gamma.items()}
+    from scipy.integrate import solve_ivp
+
+    def G(a, b, c, u, v, th):
+        return f[(a, b, c)](u, v, th) if (a, b, c) in f else 0.0
+
+    def rhs(tau, w):
+        u, v, th, du, dv, dth = w
+        T = "\\theta"
+        return [du, dv, dth,
+                -(G("u", "u", "u", u, v, th) * du * du + G("u", T, T, u, v, th) * dth * dth),
+                -(G("v", "u", "u", u, v, th) * du * du + 2 * G("v", "u", T, u, v, th) * du * dth
+                  + G("v", "v", "v", u, v, th) * dv * dv + G("v", T, T, u, v, th) * dth * dth),
+                -(G(T, "u", "u", u, v, th) * du * du + 2 * G(T, "u", T, u, v, th) * du * dth
+                  + 2 * G(T, "v", T, u, v, th) * dv * dth)]
+    first, last = -0.6, 0.5
+    start = [math.tanh(first / 2), math.tanh(first / 2), theta0, 0.5 / math.cosh(first / 2) ** 2,
+             0.5 / math.cosh(first / 2) ** 2, 0.0]
+    run = solve_ivp(rhs, (first, last + 0.01), start, rtol=1e-11, atol=1e-13, dense_output=True, max_step=width / 4)
+
+    def closed(tau):
+        """(u, v, theta, R) of the ring by Podolsky and Ortaggio's geodesics."""
+        s = math.sinh(tau)
+        behind = s if s > 0 else 0.0
+        Z = math.sin(theta0) * math.sqrt(1 + s * s) - g / math.sin(theta0) * behind
+        Z4 = math.cos(theta0) * math.sqrt(1 + s * s) + g * math.log(1 / math.tan(theta0 / 2)) * behind
+        radius = math.hypot(Z, Z4)
+        x = (radius - 1) / (radius + 1)
+        u = s * (1 - x) / 2
+        return u, (x / u if u else 0.0), math.atan2(Z, Z4), radius
+    sample = [t for t in np.linspace(first, last, 45) if abs(t) > 6 * width]
+    found = np.array([run.sol(t)[:3] for t in sample])
+    known = np.array([closed(t) for t in sample])
+    ck.add("Hotta-Tanaka: the ring's u, v and theta against Podolsky and Ortaggio's geodesics, to twice the width of the pulse",
+           float(np.max(np.abs(found - known[:, :3]))), 2 * width)
+    focus = math.asinh(math.sin(theta0) ** 2 / math.sqrt(g * g - math.sin(theta0) ** 4))
+    ck.add("Hotta-Tanaka: the ring closes on the axis at sinh(tau/a) = 1/sqrt(3)", abs(math.sinh(focus) - 1 / math.sqrt(3)), 1e-12)
+    ck.add("Hotta-Tanaka: the closed form puts the ring on the axis there", abs(closed(focus)[2]), 1e-9)
+
+    size = 3.0
+    alpha = np.linspace(0, 2 * math.pi, 361)
+    taus, keys = movie_values([first, 0.0, 0.25, last], 0.025)
+    frames = []
+    for tau in [round(t, 9) for t in taus]:
+        u, v, theta = (float(x) for x in run.sol(tau)[:3])
+        if abs(tau) < 1e-12:
+            # The moment the ring meets the shock: the sphere u = v = 0, of radius a.
+            u = v = 0.0
+        sl = Slice(src, "hotta_tanaka", "kruskal", "\\theta", "\\phi", {"u": repr(u), "v": repr(v)},
+                   {"G": 1, "E": "1/8", "a": 1})
+        radius = (1 + u * v) / (1 - u * v)
+        where = f"Hotta-Tanaka, tau = {tau:g}"
+        north = Piece("north", "sheet", sl, 0.0, math.pi / 2, radius, -1,
+                      (("axis", "the axis through one null particle, $\\theta = 0$"),
+                       ("join", "the equator, halfway between the two null particles")),
+                      [(math.pi / 2, "r", None)], size, knots=[theta])
+        south = Piece("south", "sheet", sl, math.pi / 2, math.pi, 0.0, -1,
+                      (("join", "the equator"), ("axis", "the axis through the other null particle, $\\theta = \\pi$")),
+                      [], size)
+        for piece in (north, south):
+            ck.isometry(f"{where}, the {piece.id} hemisphere", piece)
+            ck.radius(f"{where}, the {piece.id} hemisphere rho = R sin(theta)", piece, lambda x, r=radius: r * np.sin(x), size)
+            ck.form(f"{where}, the {piece.id} hemisphere z = R cos(theta)", piece, lambda x, r=radius: r * np.cos(x), size)
+        ck.join(f"{where}, the hemispheres meet at the equator", north, math.pi / 2, south, math.pi / 2)
+        ck.add(f"{where}: the sphere's radius against the closed form, to twice the width of the pulse",
+               abs(radius - closed(tau)[3]), 2 * width)
+        rho, z = north.at(theta)
+        P = np.column_stack([rho * np.cos(alpha), rho * np.sin(alpha), np.full_like(alpha, z)])
+        ck.on_piece(f"{where}, the ring", north, P)
+        ring = Curve(north, "particles", P, closed=True)
+        frames.append(Surface([north, south], label=f"$\\tau = {tau:g}$", time=tau, curves=[ring],
+                              dots=[(north, "particles", Q) for Q in P[:-1:30]]))
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    played = movie(frames, "$\\tau$", [s.time for s in frames])
+    fig.legend("fill", "cover", "the sphere of constant $u$ and $v$ through the ring at each moment")
+    fig.legend("line", "particles", "a ring of free particles at $\\theta = 30°$, at rest in the closed universe before the "
+                                    "shock, with twelve of them marked")
+    fig.legend("line", "r", "the equator $\\theta = \\pi/2$, halfway between the two null particles")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    settings = ("$8GE/c^4 = a = 1$, the unit of every length and of the proper time $\\tau$ of the ring's particles; "
+                "each moment is the sphere of the $u$ and $v$ the ring has reached.")
+    given = ("$\\delta(u)$ drawn as the pulse $e^{-u^2/w^2}/(w\\sqrt{\\pi})$ with $w = 0.005$, and the ring taken from the "
+             "dust at rest in the closed slicing, on the sphere $u = v$, which meets the shock at $\\tau = 0$.")
+    return [view("ring", "A ring of particles", "$a$", surfaces, fig.done(), movie=played, settings=settings, input=given)]
+
+
 def light_beam(ck, src):
     """The wave front at six values of u of the null Cartesian chart, u = 0 to 10 in units of the
     beam's radius R, with the free profile the uniform beam the spacetime diagrams declare,
@@ -11379,6 +11490,7 @@ STATED = {}
 
 DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
+    "hotta_tanaka": hotta_tanaka,
     "schwarzschild": schwarzschild,
     "misner": misner,
     "gott_time_machine": gott_time_machine,
@@ -13070,6 +13182,16 @@ CAPTIONS = {
         "The world tube of a ring of free particles at rest about the axis the source moves along before the shock, "
         "each wave front from $u = -1$ to $u = 1.5$ a circle at the height of its $u$. Behind the shock the tube "
         "narrows as a cone and closes on the axis at $u = 2$, in units of $8GE/c^4$.",
+    ],
+    ("hotta_tanaka", "ring"): [
+        "The sphere of constant $u$ and $v$ through a ring of free particles as their proper time $\\tau$ runs "
+        "from $-0.6\\,a$ to $0.5\\,a$, each sphere drawn as a surface in flat space with every distance along it "
+        "the metric distance. The particles belong to the dust at rest in the closed universe on the great sphere "
+        "$u = v$, which shrinks to the radius $a$ at $\\tau = 0$, where it is the wave front, and grows again.",
+        "Crossing the shock, each particle is turned toward the null particle on its side of the equator. The ring "
+        "($\\theta = 30°$) leaves its sphere of dust, slides toward the pole, and closes on the axis at "
+        "$\\sinh(\\tau/a) = 1/\\sqrt{3}$, $\\tau = 0.549\\,a$. A ring with $\\sin^2\\theta > 4GE/(c^4a)$, which is "
+        "$45°$ here, is carried apart by the expansion before it can close [podolsky2001].",
     ],
     ("aichelburg_sexl", "ring"): [
         "The wave front of the Aichelburg-Sexl shock as $u = ct - z$ runs from $-1$ to $1.5$, each front drawn as a "

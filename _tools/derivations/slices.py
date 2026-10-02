@@ -1533,7 +1533,72 @@ def string_wave_V(u, X):
     return 2 * (X - A) * dA + integral
 
 
+def hotta_tanaka_sphere(tau, theta0=math.pi / 6, g=0.5):
+    """The sphere of Hotta and Tanaka's Kruskal chart through the embedded ring at the proper time
+    tau, at 8GE/c^4 = a = 1, as (Z_0 + Z_1, Z_0 - Z_1) on the hyperboloid: the ring keeps
+    Z_0 + Z_1 = sinh(tau), and Z_0 - Z_1 = (R^2 - 1)/(Z_0 + Z_1) with R the sphere's radius, by
+    Podolsky and Ortaggio's geodesics, as embedding.hotta_tanaka checks the ring against them."""
+    s = math.sinh(tau)
+    if s <= 0:
+        return s, s
+    Z = math.sin(theta0) * math.sqrt(1 + s * s) - g / math.sin(theta0) * s
+    Z4 = math.cos(theta0) * math.sqrt(1 + s * s) + g * math.log(1 / math.tan(theta0 / 2)) * s
+    return s, (Z * Z + Z4 * Z4 - 1) / s
+
+
+def hotta_tanaka_event(system, fixed, U, V):
+    """Where the sphere Z_0 + Z_1 = U, Z_0 - Z_1 = V meets the plane of a chart's view, as the
+    chart's (x^0, r), or None where it does not: hotta_tanaka.md Step 9 solves each chart's map
+    into the hyperboloid for it."""
+    if system in ("kruskal", "global"):
+        x = (math.sqrt(1 + U * V) - 1) / (math.sqrt(1 + U * V) + 1)
+        u, v = U * (1 - x) / 2, V * (1 - x) / 2
+        if system == "kruskal":
+            return u, v
+        return math.atan(u) + math.atan(v) + math.pi / 2, math.pi / 2 + math.atan(v) - math.atan(u)
+    if system == "null_cylindrical":
+        rho = fixed
+        k = 1 + rho * rho / 4
+        omega = k if U * V == 0 else (-1 + math.sqrt(1 + U * V * k)) / (U * V / 2)
+        return U * omega, V * omega
+    c, s = math.cos(fixed), math.sin(fixed)
+    if system == "kundt":
+        w = (V - U + 2 * c) / (2 * s)
+        if w <= 1e-9 or 1 + 2 * w * U / s < 0:
+            return None
+        return w, (-1 + math.sqrt(1 + 2 * w * U / s)) / w
+    # The conformally flat chart: eta^2 - rho^2 = 2 eta U and rho cos(theta) - 1 = eta (V - U)/2.
+    if abs(c) < 1e-12:
+        if V <= U:
+            return None
+        eta = -2 / (V - U)
+        return eta, math.sqrt(eta * eta - 2 * eta * U)
+    k = (V - U) / 2
+    # (c^2 - k^2) eta^2 - 2 (k + c^2 U) eta - 1 = 0, with eta < 0 and rho = (1 + k eta)/c > 0.
+    A, B = c * c - k * k, k + c * c * U
+    roots = [-1 / (2 * B)] if abs(A) < 1e-14 else [(B + sign * math.sqrt(B * B + A)) / A for sign in (1, -1) if B * B + A >= 0]
+    for eta in roots:
+        if eta < 0 and (1 + k * eta) / c > 0:
+            return eta, (1 + k * eta) / c
+    return None
+
+
+def _hotta_tanaka(system, fixed):
+    """Each moment of the embedded ring as the event where its sphere meets the view's plane."""
+    out = []
+    for m in moments("hotta_tanaka"):
+        at = hotta_tanaka_event(system, fixed, *hotta_tanaka_sphere(m.time))
+        out.append(Mark(m, points=[at] if at is not None else []))
+    return out
+
+
 FLAT = {
+    **{("hotta_tanaka", system, view): (lambda system=system, fixed=fixed: _hotta_tanaka(system, fixed))
+       for system in ("conformally_flat", "global", "kruskal")
+       for view, fixed in (("equator", math.pi / 2), ("near", math.pi / 12))
+       if (system, view) != ("conformally_flat", "equator")},
+    **{("hotta_tanaka", "null_cylindrical", view): (lambda fixed=fixed: _hotta_tanaka("null_cylindrical", fixed))
+       for view, fixed in (("equator", 2.0), ("near", 0.25))},
     **{("kerr_de_sitter", system, view + suffix): (lambda sign=sign: _kds(sign))
        for sign, suffix in (("de_sitter", ""), ("anti_de_sitter", "_ads"))
        for system, view in (("boyer_lindquist", "axis"), ("boyer_lindquist", "principal"))},
@@ -2140,6 +2205,9 @@ FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
 HIDDEN = {
+    ("hotta_tanaka", "conformally_flat", "equator"): "the spheres through the ring up to the shock meet the plane theta = pi/2 of this chart only as eta goes to minus infinity",
+    **{("hotta_tanaka", "kundt", view): "the Kundt chart covers half of each wave front, and the spheres through the ring up to the shock lie on its edge w = 0"
+       for view in ("equator", "near")},
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",
     ("btz", "stationary", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
