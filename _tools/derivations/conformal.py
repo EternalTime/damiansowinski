@@ -3586,6 +3586,356 @@ def schwarzschild_de_sitter(ck, src):
     return views
 
 
+class KiselevMap(Kottler):
+    """Kiselev's spacetime at w = -2/3, f = 1 - r_s/r - r/r_q, whose horizons are the roots of the
+    published g^rr: r_- < r_+ with the black hole, and r_q alone without it.
+
+    1/f = -r_q r/((r - r_-)(r - r_+)) has no polynomial part, so r* = sum_i A_i ln|1 - r/r_i| with
+    A_i = 1/f'(r_i), which vanishes at r = 0, and since sum_i A_i = -r_q it falls as -r_q ln r as
+    r -> infinity. Every region is drawn through Kottler's one function g and laid out in
+    Kottler's cells, with k_- for his k_h and k_+ for his k_c, and without the black hole with
+    the one surface gravity 1/2r_q for both, so that g(x) + g(-x) = pi/2 and the centre
+    r = 0, where u = v, is the straight vertical line (-g(t), g(-t)) in S.
+
+    Beyond r_+ the two null edges of the cell are r = infinity: on a ray of constant v,
+    u = v - 2r* -> +infinity and p = -g(u) -> 0, and on a ray of constant u, v -> -infinity and
+    q = pi - g(-v) -> pi. The area radius is an affine parameter on every radial ray, since
+    g_tt g_rr = -1, so those edges are null infinity, and a curve of bounded t ends at their
+    corner (0, pi)."""
+
+    def __init__(self, plane):
+        r = plane.x1
+        numerator = sp.numer(sp.together(plane.gi[1, 1]))
+        roots = sorted(float(z) for z in sp.Poly(numerator, r).real_roots())
+        self.roots = roots
+        self.rh, self.rc = roots if len(roots) == 2 else (None, roots[0])
+        self.f = sp.lambdify(r, plane.gi[1, 1], "numpy")
+        fp = sp.lambdify(r, sp.diff(plane.gi[1, 1], r), "numpy")
+        self.A = [1 / float(fp(ri)) for ri in roots]
+        self.kc = -float(fp(self.rc)) / 2
+        self.kh = float(fp(self.rh)) / 2 if self.rh is not None else self.kc
+        self.a, self.b = (self.kh + self.kc) / 2, (self.kh - self.kc) / 2
+
+    def centre(self, cell="S", n=700):
+        """The centre r = 0 of the spacetime without the black hole, where u = v = t."""
+        t = spread(-np.inf, np.inf, n, 40)
+        return self.null(cell, t, t)
+
+
+def kiselev(ck, src):
+    """Kiselev's spacetime in his example w = -2/3, with the black hole at r_s = 1 and r_q = 8 and
+    without it at r_q = 1, each maximally extended through KiselevMap. With the black hole the
+    chart that keeps w and the chart of the linear term cover S, the ingoing Eddington-Finkelstein
+    chart B, S and C- through q = g(-v) and p from u = v - 2r*, and the outgoing one W, S and C+
+    through p = -g(u) and q from v = u + 2r*. Without it the hyperbolic chart covers S, where
+    u, v = 2 r_q(eta -+ chi), and the conformally flat chart S and C- by Minkowski's map of the
+    flat plane it is conformal to, p = arctan(tau - rho) - pi/2 and q = arctan(tau + rho), which
+    is checked to be KiselevMap's in both cells."""
+    params = {"r_s": 1, "r_q": 8, "w": "-2/3"}
+    st = Plane(src, "kiselev", "static", ("t", "r"), EQUATOR, params)
+    lin = Plane(src, "kiselev", "linear", ("t", "r"), EQUATOR, {"r_s": 1, "r_q": 8})
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    assert lin.g[0, 1] == 0 and sp.simplify(lin.g[0, 0] * lin.g[1, 1] + 1) == 0
+    K = KiselevMap(lin)
+    rh, rc = K.rh, K.rc
+    ck.limit("Kiselev: the horizons are the roots 4 -+ 2 sqrt 2 of the published g^rr",
+             [rh, rc], [4 - 2 * math.sqrt(2), 4 + 2 * math.sqrt(2)], 1e-12)
+    at = np.array([0.5, 3.0, 9.0])
+    ck.limit("Kiselev: dr*/dr = 1/f", (K.rstar(at + 1e-6) - K.rstar(at - 1e-6)) / 2e-6 * K.f(at), [1, 1, 1], 1e-6)
+    ck.limit("Kiselev: the residues are 1/2k_- and -1/2k_+ and sum to -r_q",
+             [K.A[0] * 2 * K.kh, K.A[1] * 2 * K.kc, sum(K.A)], [1, -1, -8], 1e-12)
+    span = 30
+    for plane, name in ((st, "static"), (lin, "linear")):
+        for cell, lo, hi, future in (("S", rh + 1e-3, rc - 1e-3, (1, 0)), ("S'", rh + 1e-3, rc - 1e-3, (-1, 0)),
+                                     ("S''", rh + 1e-3, rc - 1e-3, (-1, 0)), ("B", 0.01, rh - 1e-3, (0, -1)),
+                                     ("W", 0.01, rh - 1e-3, (0, 1)), ("C+", rc + 1e-3, 60, (0, 1)),
+                                     ("C-", rc + 1e-3, 60, (0, -1))):
+            ck.chart(f"Kiselev {name}, {cell}", plane, lambda t, r, c=cell: K.pq(c, t, r),
+                     ck.uniform(-span, span), ck.uniform(lo, hi), lambda t, r, f=future: f)
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        u = w - 2 * K.rstar(r)
+        q = K.g(-w)
+        p = np.where(r < rh, K.g(u), np.where(r < rc, -K.g(u), K.g(u) - PI))
+        return p, q
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        v = u + 2 * K.rstar(r)
+        p = -K.g(u)
+        q = np.where(r < rh, -K.g(-v), np.where(r < rc, K.g(-v), PI - K.g(-v)))
+        return p, q
+    ein = Plane(src, "kiselev", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, params)
+    eout = Plane(src, "kiselev", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, params)
+    for name, plane, fmap, sign in (("ingoing", ein, ingoing, 1), ("outgoing", eout, outgoing, -1)):
+        for lo, hi in ((0.01, rh - 1e-3), (rh + 1e-3, rc - 1e-3), (rc + 1e-3, 60)):
+            # d_v - (1 + |f|) d_r for the ingoing chart and d_u + (1 + |f|) d_r for the outgoing
+            # one are timelike wherever f + 2 + 2|f| > 0, which is everywhere, and raise T.
+            ck.chart(f"Kiselev {name} Eddington-Finkelstein, {lo:.2f} < r < {hi:.2f}",
+                     plane, fmap, ck.uniform(-span, span), ck.uniform(lo, hi),
+                     lambda w, r, s=sign: (1, -s * (1 + np.abs(K.f(r)))))
+    ck.limit("Kiselev: the ingoing and static coordinates put one event at one point",
+             np.concatenate([ingoing(2.0 + K.rstar(r), r) for r in (0.5, 3.0, 9.0)]),
+             np.concatenate([K.pq(c, 2.0, r) for c, r in (("B", 0.5), ("S", 3.0), ("C-", 9.0))]), 1e-12)
+    ck.limit("Kiselev: the outgoing and static coordinates put one event at one point",
+             np.concatenate([outgoing(2.0 - K.rstar(r), r) for r in (0.5, 3.0, 9.0)]),
+             np.concatenate([K.pq(c, 2.0, r) for c, r in (("W", 0.5), ("S", 3.0), ("C+", 9.0))]), 1e-12)
+    for t in (-6.0, 0.0, 6.0):
+        ck.limit(f"Kiselev: r -> r_- at t = {t:g} lands on the black hole's bifurcation sphere",
+                 point(*K.pq("S", t, rh * (1 + 1e-13))), [0, 0], 1e-3)
+        ck.limit(f"Kiselev: r -> r_+ at t = {t:g} lands on the outer bifurcation sphere",
+                 point(*K.pq("S", t, rc * (1 - 1e-13))), [PI, 0], 1e-3)
+    t = np.array([-5.0, 0, 5])
+    ck.limit("Kiselev: r -> 0 in the black hole lands on the singularity (g(t), g(-t))",
+             np.concatenate(K.pq("B", t, np.full(3, 1e-12))), np.concatenate([K.g(t), K.g(-t)]), 1e-9)
+    ck.limit("Kiselev: r -> infinity at bounded t in the expanding region lands on the corner (0, pi)",
+             np.concatenate(K.pq("C+", t, np.full(3, 1e12))), [0, 0, 0, PI, PI, PI], 1e-6)
+    w = np.array([-20.0, 0, 20])
+    ck.limit("Kiselev: r -> infinity along an ingoing ray in the expanding region lands on the edge p = 0",
+             np.concatenate(K.null("C+", w - 2 * K.rstar(1e12), w)), np.concatenate([0 * w, PI - K.g(-w)]), 1e-6)
+    ck.limit("Kiselev: r -> infinity along an outgoing ray in the expanding region lands on the edge q = pi",
+             np.concatenate(K.null("C+", w, w + 2 * K.rstar(1e12))), np.concatenate([-K.g(w), PI + 0 * w]), 1e-6)
+    ck.diverges("Kiselev: the Kretschmann scalar diverges at r = 0", lin.kretschmann(0, 1e-2), lin.kretschmann(0, 1e-3))
+    ck.finite("Kiselev: the Kretschmann scalar is finite at both horizons",
+              lin.kretschmann(np.zeros(2), np.array([rh, rc])))
+
+    H = HALF
+    sing, past_sing = K.singularity(1), K.singularity(-1)
+
+    def region(cell):
+        if cell == "B":
+            return [(0, 0), (0, H)] + list(zip(*sing))[::-1] + [(H, 0)]
+        if cell == "W":
+            return [(0, 0), (0, -H)] + list(zip(*past_sing)) + [(-H, 0)]
+        if cell == "C+":
+            return [(-H, H), (-H, PI), (0, PI), (0, H)]
+        if cell == "C-":
+            return [(-H, H), (-PI, H), (-PI, 0), (-H, 0)]
+        p0, q0 = {"S": (-H, 0), "S'": (0, -H), "S''": (-PI, H)}[cell]
+        return [(p0, q0), (p0 + H, q0), (p0 + H, q0 + H), (p0, q0 + H)]
+    CELLS = ["S'", "B", "W", "S", "C+", "C-", "S''"]
+    t_all = spread(-np.inf, np.inf, 500, 9)
+
+    def scri(v):
+        v.line("scri", [[point(-H, PI), point(0, PI)], [point(0, PI), point(0, H)]])
+        v.line("scri", [[point(-PI, H), point(-PI, 0)], [point(-PI, 0), point(-H, 0)]])
+        for at in ((PI, PI), (PI, -PI)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+        v.label_xt([PI, PI], "$i^+$", "b", dy=-6)
+        v.label_xt([PI, -PI], "$i^-$", "t", dy=6)
+        # Each name stands where its diamond is widest.
+        v.label_xt([PI, H], "expanding", cls="region")
+        v.label_xt([PI, -H], "contracting", cls="region")
+        v.label_xt([5 * Q4, 3 * Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+        v.label_xt([3 * Q4, 3 * Q4], "$\\mathscr{I}^+$", "br", dx=-4, dy=-3)
+        v.label_xt([5 * Q4, -3 * Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=3)
+        v.label_xt([3 * Q4, -3 * Q4], "$\\mathscr{I}^-$", "tr", dx=-4, dy=3)
+        v.legend("scri", "future and past null infinity $\\mathscr{I}^\\pm$, where $r \\to \\infty$")
+
+    def edges(v):
+        v.line("horizon", [[point(0, -H), point(0, H)], [point(-H, 0), point(H, 0)]])
+        v.line("horizon", [[point(-H, 0), point(-H, PI)], [point(-PI, H), point(0, H)]])
+        v.line("horizon", [[point(H, -H), point(H, 0)], [point(0, -H), point(H, -H)]])
+        v.line("horizon", [[point(-PI, H), point(-PI, PI)], [point(-PI, PI), point(-H, PI)]])
+        v.curve("singular", *sing, zig=True, tol=0.004)
+        v.curve("singular", *past_sing, zig=True, tol=0.004)
+        scri(v)
+        for cx in (-H, H, 3 * H):
+            for ct in (H, -H):
+                v.layers.append({"kind": "point", "class": "infinity", "at": [round(cx, 4), round(ct, 4)]})
+        # Beside the diamonds a corner's name stands clear of the edge of null infinity.
+        for cx, side, dx in ((-H, "", 0), (H, "r", -4), (3 * H, "l", 4)):
+            v.label_xt([cx, H], "$i^+$", "b" + side, dx=dx, dy=-6)
+            v.label_xt([cx, -H], "$i^-$", "t" + side, dx=dx, dy=6)
+        v.label_xt([0, 1.2], "black hole", cls="region")
+        v.label_xt([0, -1.2], "white hole", cls="region")
+        for cx in (-H, H, 3 * H):
+            v.label_xt([cx, -0.45], "static", cls="region")
+        v.label_xt([0, H + 0.15], "$r = 0$", "b", dy=-4)
+        v.label_xt([0, -H - 0.15], "$r = 0$", "t", dy=4)
+        v.label_xt([Q4, Q4], "$r_-$", "tr", "small", dx=-5, dy=1)
+        v.label_xt([PI - Q4, Q4], "$r_+$", "tl", "small", dx=5, dy=1)
+        v.legend("horizon", f"the black hole horizons $r_- = {rh:.4g}\\,r_s$ and the outer horizons "
+                            f"$r_+ = {rc:.4g}\\,r_s$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+
+    moment = slices.moments("kiselev", "black_hole")[0]
+    lo, hi = moment.reach("linear", "r")
+    # The moment ends on the bifurcation spheres, where the map of the static chart is 0/0; the
+    # limits above place them at (p, q) = (0, 0) and (-pi/2, pi/2), and the next static
+    # region's black hole sphere at (-pi, pi).
+    rr = np.linspace(lo, hi, 9)[1:-1]
+    a, b = K.pq("S", 0 * rr, rr), K.pq("S''", 0 * rr, rr[::-1])
+    moment_line = [(np.concatenate([[0], a[0], [-H], b[0], [-PI]]), np.concatenate([[0], a[1], [H], b[1], [PI]]))]
+    box = [-PI - 0.3, 2 * PI + 0.3, -PI - 0.45, PI + 0.45]
+    R_S, R_IN, R_OUT = (1.5, 2.0, 3.0, 4.0, 5.0, 6.0), (0.4, 0.8, 1.05), (8.0, 12.0, 24.0)
+    TS = (-24, -12, -6, 0, 6, 12, 24)
+    views = []
+
+    def frame(v, cover, cells=CELLS, shape=region):
+        for cell in cells:
+            v.fill("region", [point(*pq) for pq in shape(cell)])
+        for cell in cover:
+            v.fill("cover", [point(*pq) for pq in shape(cell)])
+
+    for vid, label in (("static", "Static"), ("linear", "Static")):
+        v = View(vid, label, box, vid)
+        frame(v, ["S"])
+        for r in R_S:
+            v.curve("r", *K.pq("S", t_all, np.full_like(t_all, r)))
+        rr = spread(rh, rc, 600, 16)
+        for tt in TS:
+            v.curve("t", *K.pq("S", np.full_like(rr, tt), rr))
+        edges(v)
+        label_on(v, K.pq("S", 0.0, 3.0), "$3\\,r_s$", "br", dx=-3)
+        v.legend("cover", "the static region $r_- < r < r_+$, which $t$ and $r$ cover")
+        v.legend("r", "$r$ constant, at " + listed(R_S) + " in units of $r_s$")
+        v.legend("t", "$ct$ constant, in units of $r_s$")
+        v.slice(moment, moment_line)
+        views.append(v)
+
+    for vid, label, system, fmap, cells, null_text in (
+            ("ingoing", "Ingoing Eddington-Finkelstein", "eddington_finkelstein_ingoing", ingoing, ["B", "S", "C-"],
+             "$v$ constant, an ingoing light ray"),
+            ("outgoing", "Outgoing Eddington-Finkelstein", "eddington_finkelstein_outgoing", outgoing, ["W", "S", "C+"],
+             "$u$ constant, an outgoing light ray")):
+        v = View(vid, label, box, system)
+        frame(v, cells)
+        for r in R_IN + R_S + R_OUT:
+            v.curve("r", *fmap(t_all, np.full_like(t_all, r)))
+        for lo_, hi_ in ((0, rh), (rh, rc), (rc, np.inf)):
+            rr = spread(lo_, hi_, 600, 16)
+            for w in (-16, -8, 0, 8, 16):
+                v.curve("null", *fmap(np.full_like(rr, w), rr))
+        edges(v)
+        v.legend("cover", ("the black hole, the static region and the contracting region, which $v$ and $r > 0$ cover"
+                           if vid == "ingoing" else
+                           "the white hole, the static region and the expanding region, which $u$ and $r > 0$ cover"))
+        v.legend("r", "$r$ constant, at " + listed(R_IN + R_S + R_OUT) + " in units of $r_s$")
+        v.legend("null", null_text)
+        v.slice(moment, moment_line)
+        views.append(v)
+    for view in views:
+        view.set(settings=f"$w = -2/3$ and $r_q = 8\\,r_s$, so that $r_- = {rh:.4g}\\,r_s$, $r_+ = {rc:.4g}\\,r_s$, and, "
+                          f"with $\\kappa_-$ and $\\kappa_+$ the surface gravities of the two horizons, "
+                          f"$\\kappa_+/\\kappa_- = {K.kc / K.kh:.3g}$.")
+
+    # The matter alone, r_s = 0 and r_q = 1.
+    alone = Plane(src, "kiselev", "linear", ("t", "r"), EQUATOR, {"r_s": 0, "r_q": 1})
+    hyp = Plane(src, "kiselev", "hyperbolic", ("\\eta", "\\chi"), EQUATOR, {"r_q": 1})
+    flat = Plane(src, "kiselev", "conformally_flat", ("\\tau", "\\rho"), EQUATOR, {"r_q": 1})
+    F = KiselevMap(alone)
+    ck.limit("Kiselev, the matter alone: the horizon is r_q, with the surface gravity 1/2r_q", [F.rc, F.kc, F.b],
+             [1, 0.5, 0], 1e-12)
+    for cell, lo, hi, future in (("S", 0.01, 1 - 1e-3, (1, 0)), ("S''", 0.01, 1 - 1e-3, (-1, 0)),
+                                 ("C+", 1 + 1e-3, 40, (0, 1)), ("C-", 1 + 1e-3, 40, (0, -1))):
+        ck.chart(f"Kiselev, the matter alone, static, {cell}", alone, lambda t, r, c=cell: F.pq(c, t, r),
+                 ck.uniform(-8, 8), ck.uniform(lo, hi), lambda t, r, f=future: f)
+
+    def hyperbolic(eta, chi):
+        eta, chi = np.asarray(eta, dtype=float), np.asarray(chi, dtype=float)
+        return F.null("S", 2 * (eta - chi), 2 * (eta + chi))
+
+    def minkowski(tau, rho):
+        tau, rho = np.asarray(tau, dtype=float), np.asarray(rho, dtype=float)
+        return np.arctan(tau - rho) - HALF, np.arctan(tau + rho)
+    ck.chart("Kiselev, the matter alone, hyperbolic", hyp, hyperbolic, ck.uniform(-4, 4), ck.uniform(0.01, 4),
+             lambda eta, chi: (1, 0))
+    rho = ck.uniform(0.01, 6)
+    ck.chart("Kiselev, the matter alone, conformally flat", flat, minkowski, -rho + ck.uniform(0.01, 6, rho.size), rho,
+             lambda tau, rho: (1, 0))
+    eta, chi = np.array([-1.0, 0.3, 2.0]), np.array([0.4, 1.0, 2.5])
+    r = 1 - np.exp(-2 * chi)
+    ck.limit("Kiselev, the matter alone: the hyperbolic and static coordinates put one event at one point",
+             np.concatenate(hyperbolic(eta, chi)), np.concatenate(F.pq("S", 2 * eta, r)), 1e-12)
+    ck.limit("Kiselev, the matter alone: the conformally flat and hyperbolic coordinates put one event at one point",
+             np.concatenate(minkowski(np.exp(eta) * np.cosh(chi), np.exp(eta) * np.sinh(chi))),
+             np.concatenate(hyperbolic(eta, chi)), 1e-12)
+    # Below the horizon the conformally flat chart's rho - tau and tau + rho are e^(u/2) and
+    # e^(v/2) of the contracting region's static coordinates, r - 1 = (rho - tau)/(tau + rho).
+    tau, rho = np.array([-0.5, 0.2, 1.0]), np.array([1.5, 0.9, 3.0])
+    ck.limit("Kiselev, the matter alone: below the horizon Minkowski's map is the contracting region's",
+             np.concatenate(minkowski(tau, rho)),
+             np.concatenate(F.null("C-", 2 * np.log(rho - tau), 2 * np.log(tau + rho))), 1e-12)
+    ck.limit("Kiselev, the matter alone: there the area radius is 2 r_q rho/(tau + rho)",
+             (rho - tau) / (tau + rho), np.exp(-F.rstar(2 * rho / (tau + rho))), 1e-12)
+    ck.limit("Kiselev, the matter alone: the centre is the vertical line X = pi/2",
+             xt(*F.centre())[0], np.full(700, HALF), 1e-12)
+    ck.diverges("Kiselev, the matter alone: the Kretschmann scalar diverges at the centre",
+                hyp.kretschmann(0, 1e-5), hyp.kretschmann(0, 1e-6))
+    ck.finite("Kiselev, the matter alone: the Kretschmann scalar is finite at the horizon", alone.kretschmann(0, 1.0))
+
+    def free_region(cell):
+        if cell == "S":
+            return [(-H, 0), (0, H), (-H, H)]
+        if cell == "S''":
+            return [(-H, PI), (-PI, H), (-H, H)]
+        return region(cell)
+    FREE = ["S", "C+", "C-", "S''"]
+
+    def free_edges(v):
+        v.line("horizon", [[point(-H, 0), point(-H, PI)], [point(-PI, H), point(0, H)]])
+        v.line("singular", [[point(-H, 0), point(0, H)]], zig=True)
+        v.line("singular", [[point(-H, PI), point(-PI, H)]], zig=True)
+        scri(v)
+        for cx in (H, 3 * H):
+            for ct in (H, -H):
+                v.layers.append({"kind": "point", "class": "infinity", "at": [round(cx, 4), round(ct, 4)]})
+        for cx, side, dx in ((H, "r", -4), (3 * H, "l", 4)):
+            v.label_xt([cx, H], "$i^+$", "b" + side, dx=dx, dy=-6)
+            v.label_xt([cx, -H], "$i^-$", "t" + side, dx=dx, dy=6)
+        v.label_xt([H, 0.6], "$r = 0$", "r", dx=-6)
+        v.label_xt([3 * H, 0.6], "$r = 0$", "l", dx=6)
+        v.label_xt([H + 0.62, -0.3], "static", cls="region")
+        v.label_xt([3 * H - 0.62, -0.3], "static", cls="region")
+        v.label_xt([PI - Q4, Q4], "$r_q$", "tr", "small", dx=-5, dy=1)
+        v.legend("horizon", "the horizons $r = r_q$")
+        v.legend("singular", "the centres $r = 0$, where the Kretschmann scalar diverges")
+
+    free_moment = slices.moments("kiselev", "free")[0]
+    lo, hi = free_moment.reach("linear", "r")
+    rr = np.linspace(lo, hi, 9)[1:-1]
+    a, b = F.pq("S", 0 * rr, rr), F.pq("S''", 0 * rr, rr[::-1])
+    centre, far = F.null("S", 0.0, 0.0), F.null("S''", 0.0, 0.0)
+    free_line = [(np.concatenate([[centre[0]], a[0], [-H], b[0], [far[0]]]),
+                  np.concatenate([[centre[1]], a[1], [H], b[1], [far[1]]]))]
+    free_box = [PI - 3.6, PI + 3.6, -PI - 0.45, PI + 0.45]
+    free_views = []
+
+    v = View("hyperbolic", "Hyperbolic", free_box, "hyperbolic")
+    frame(v, ["S"], FREE, free_region)
+    for c in (0.25, 0.5, 1.0, 2.0):
+        v.curve("r", *hyperbolic(t_all, np.full_like(t_all, c)))
+    cc = spread(0, np.inf, 600, 16)
+    for e in (-2, -1, 0, 1, 2):
+        v.curve("t", *hyperbolic(np.full_like(cc, e), cc))
+    free_edges(v)
+    v.legend("cover", "the static region $r < r_q$, which $\\eta$ and $\\chi$ cover")
+    v.legend("r", "$\\chi$ constant, at " + listed((0.25, 0.5, 1.0, 2.0)))
+    v.legend("t", "$\\eta$ constant, at " + listed((-2, -1, 0, 1, 2)))
+    v.slice(free_moment, free_line, label="$\\eta = 0$")
+    free_views.append(v)
+
+    v = View("conformally_flat", "Conformally Flat", free_box, "conformally_flat")
+    frame(v, ["S", "C-"], FREE, free_region)
+    for c in (0.5, 1.0, 2.0, 4.0):
+        tt = spread(-c, np.inf, 600, 16)
+        v.curve("r", *minkowski(tt, np.full_like(tt, c)))
+    for e in (-2, -1, 0, 1, 2, 4):
+        cc = spread(max(0.0, -e), np.inf, 600, 16)
+        v.curve("t", *minkowski(np.full_like(cc, e), cc))
+    free_edges(v)
+    v.legend("cover", "the static region and the contracting region, which $\\tau$ and $\\rho$ cover")
+    v.legend("r", "$\\rho$ constant, at " + listed((0.5, 1.0, 2.0, 4.0)))
+    v.legend("t", "$\\tau$ constant, at " + listed((-2, -1, 0, 1, 2, 4)))
+    v.slice(free_moment, free_line, label="static $t = 0$")
+    free_views.append(v)
+    for view in free_views:
+        view.set(settings="$r_s = 0$, $w = -2/3$, and $r_q = 1$, the unit of every length.")
+    return views + free_views
+
+
 class ChargedKottler:
     """The charged black hole in de Sitter space, f = 1 - r_s/r + r_q^2/r^2 - Lambda r^2/3 with
     r_s = 1, whose horizons r_- < r_+ < r_c are the positive roots of the published g^rr and whose
@@ -17076,6 +17426,7 @@ def hartle_thorne(ck, src):
 
 DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
+    "kiselev": kiselev,
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "siklos": siklos,
     "light_beam": light_beam,
@@ -17175,6 +17526,21 @@ def _roberts_captions():
 
 ROBERTS_CAPTIONS = _roberts_captions()
 
+
+KISELEV_STATIC_CAPTION = [
+    "Kiselev's black hole for $w = -2/3$, maximally extended, each point in the diagram a 2-sphere of radius $r$. "
+    "Its tortoise coordinate is $r_* = \\sum_i \\ln|1 - r/r_i|/f'(r_i)$ over the two roots $r_\\pm$ of "
+    "$f = 1 - r_s/r - r/r_q$, so that $r_*(0) = 0$, and $u, v = ct \\mp r_*$ in each region. We place every "
+    "region by $p = \\pm\\arctan W(u)$ and $q = \\pm\\arctan W(-v)$, shifted by $\\pi$ where the region lies beyond "
+    "an outer horizon, with $W(x) = \\exp(-ax - b\\sqrt{x^2 + r_s^2})$ and $a, b = (\\kappa_- \\pm \\kappa_+)/2$: "
+    "toward each horizon $W$ is its Kruskal coordinate, $e^{-\\kappa_-x}$ toward $r_-$ and $e^{-\\kappa_+x}$ toward "
+    "$r_+$, so every line crosses both kinds of horizon with a continuous tangent.",
+    "The coordinates $t$ and $r_- < r < r_+$ cover one static region. Static regions alternate along the chain "
+    "with the black hole above the white hole across $r_-$ and the expanding region above the contracting one "
+    "across $r_+$, and the chain runs on past both ends of the drawing without end. The singularity $r = 0$ is a "
+    "spacelike curve. Beyond $r_+$ the tortoise coordinate falls as $-r_q\\ln r$ and $r$ is an affine parameter "
+    "along every radial light ray, so $r \\to \\infty$ is null infinity, two edges at 45° that meet at $i^\\pm$.",
+]
 
 CAPTIONS = {
     ("siklos", "kaigorodov"): [
@@ -18092,6 +18458,38 @@ CAPTIONS = {
         "reverse of the ingoing ones. With $p = -\\arctan W(u)$ for the function $W$ of the static chart's diagram and $v = u + 2r_*$ they cover the white hole, the "
         "static region and the expanding region, and their lines of constant $u$ are outgoing light rays, which "
         "leave $r = 0$, cross both horizons outward and end on $\\mathscr{I}^+$.",
+    ],
+    ("kiselev", "static"): KISELEV_STATIC_CAPTION,
+    ("kiselev", "linear"): KISELEV_STATIC_CAPTION,
+    ("kiselev", "ingoing"): [
+        "Kiselev's black hole for $w = -2/3$ with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ on it. "
+        "With $q = \\arctan W(-v)$ for the function $W$ of the static chart's diagram and $u = v - 2r_*$, one chart "
+        "covers the contracting region, the static region and the black hole together, and its lines of constant "
+        "$v$ are ingoing light rays, which start on $\\mathscr{I}^-$, cross both horizons at 45° and end at $r = 0$.",
+    ],
+    ("kiselev", "outgoing"): [
+        "Kiselev's black hole for $w = -2/3$ with the outgoing Eddington-Finkelstein coordinates $u$ and $r$ on it, "
+        "the time reverse of the ingoing ones. With $p = -\\arctan W(u)$ for the function $W$ of the static chart's "
+        "diagram and $v = u + 2r_*$ they cover the white hole, the static region and the expanding region, and "
+        "their lines of constant $u$ are outgoing light rays, which leave $r = 0$, cross both horizons outward "
+        "and end on $\\mathscr{I}^+$.",
+    ],
+    ("kiselev", "hyperbolic"): [
+        "Kiselev's matter alone ($r_s = 0$, $w = -2/3$), maximally extended, each point in the diagram a 2-sphere. "
+        "Here $u, v = 2r_q(\\eta \\mp \\chi)$ are null, and we place the static region by "
+        "$p = -\\arctan e^{-u/2r_q}$ and $q = \\arctan e^{v/2r_q}$, the Kruskal coordinates of the horizon "
+        "$r = r_q$, which lies at $\\chi \\to \\infty$. The centre $\\chi = 0$ is a timelike singularity on a "
+        "straight vertical line.",
+        "Beyond the horizon lie an expanding region to the future and a contracting one to the past, each ending "
+        "on null infinity, and a second static region with a centre of its own closes the spacetime on the far side.",
+    ],
+    ("kiselev", "conformally_flat"): [
+        "Kiselev's matter alone ($r_s = 0$, $w = -2/3$) with the coordinates $\\tau$ and $\\rho$ on it. The chart is "
+        "conformal to flat space, so we place it by Minkowski's map, $p = \\arctan(\\tau - \\rho) - \\pi/2$ and "
+        "$q = \\arctan(\\tau + \\rho)$. It covers the static region, $\\tau > \\rho$, and the contracting region in "
+        "its past as far as past null infinity, $\\tau + \\rho = 0$.",
+        "The edge $\\tau + \\rho \\to \\infty$ of the chart is the future horizon $r = r_q$, which a light ray "
+        "reaches at a finite value of its affine parameter.",
     ],
     ("kastor_traschen", "one_hole"): [
         "One hole alone ($U = H\\tau + m/r$, $H = -3c/(16m)$), which is the lukewarm charged black hole in de "

@@ -700,6 +700,21 @@ Two impulsive plane gravitational waves colliding head on in flat space. Each fo
 - chart Double Null: coordinates $(u, v, x, y)$, $$ds^2 = -\dfrac{2L^2\left(1 - u^2 - v^2\right)^{3/2}}{\sqrt{1 - u^2}\sqrt{1 - v^2}\left(uv + \sqrt{1 - u^2}\sqrt{1 - v^2}\right)^2}du\,dv + \left(1 - u^2 - v^2\right)\dfrac{1 + u\sqrt{1 - v^2} + v\sqrt{1 - u^2}}{1 - u\sqrt{1 - v^2} - v\sqrt{1 - u^2}}dx^2 + \left(1 - u^2 - v^2\right)\dfrac{1 - u\sqrt{1 - v^2} - v\sqrt{1 - u^2}}{1 + u\sqrt{1 - v^2} + v\sqrt{1 - u^2}}dy^2$$
 - chart Cosmological: coordinates $(\tau, \sigma, x, y)$, $$ds^2 = \dfrac{L^2\left(\cos\tau\right)^{3/2}}{2\sqrt{\cos\sigma}}\left(-d\tau^2 + d\sigma^2\right) + \dfrac{\cos\sigma}{\cos\tau}\left(\left(1 + \sin\tau\right)^2dx^2 + \left(1 - \sin\tau\right)^2dy^2\right)$$
 
+### Kiselev Black Hole
+
+Schwarzschild's black hole with one more term in its metric, a power of the radius that stands for matter around the hole whose pressure, averaged over directions, is a fixed multiple of its energy density. Valery Kiselev wrote it down in 2003 as a black hole surrounded by quintessence, and Matt Visser showed in 2020 that the matter is neither a perfect fluid nor quintessence.
+
+- id: `kiselev`
+- tags: static, stationary, spherically symmetric, black hole, mass, quintessence, dark energy, equation of state, anisotropic pressure, energy conditions, horizon, event horizon, cosmological horizon, white hole, curvature singularity, coordinate singularity, maximal extension, causal structure, Hawking temperature, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kiselev.json
+- chart Static Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} - \left(\dfrac{r_q}{r}\right)^{3w + 1}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r} - \left(\dfrac{r_q}{r}\right)^{3w + 1}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} - \left(\dfrac{r_q}{r}\right)^{3w + 1}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} - \left(\dfrac{r_q}{r}\right)^{3w + 1}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Static, Linear Term: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} - \dfrac{r}{r_q}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r} - \dfrac{r}{r_q}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Free Matter, Hyperbolic: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = 4r_q^2e^{-2\chi}\left(-d\eta^2 + d\chi^2 + \sinh^2\chi\,\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Free Matter, Conformally Flat: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = \dfrac{4r_q^2}{\left(\tau + \rho\right)^2}\left(-d\tau^2 + d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Krasnikov Tube
 
 A tube of modified spacetime laid down along the path of an outbound ship, flat inside but with its light cones tipped so far open that the trip home can be superluminal. The outbound leg is no faster than light, yet the round trip can be made arbitrarily short by clocks left at home, and holding the tube open takes negative energy density.

@@ -263,6 +263,11 @@
       "id": "tolman_vii",
       "kind": "composite",
       "text": "A star whose density falls as $1 - r^2/R^2$ to an empty surface, with Schwarzschild's vacuum outside it. Richard Tolman found the inside in 1939 [tolman1939]."
+    },
+    {
+      "id": "kiselev",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric with one more term, $-(r_q/r)^{3w+1}$, for matter around the hole whose pressure averages to $w$ times its energy density. At $w = 0$ the term is one more mass [kiselev2003]."
     }
   ],
   "references": [
@@ -338,7 +343,8 @@
     "witten1991",
     "mazur2004",
     "visser2004",
-    "tolman1939"
+    "tolman1939",
+    "kiselev2003"
   ],
   "coordinates": [
     {

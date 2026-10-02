@@ -351,6 +351,9 @@ class Diagram:
     surface: str = None             # r at which a star's surface is released from rest; see Surface
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
     singular_where_claimed: bool = False  # judge a singular edge only inside the published domains
+    singular_near: float = 1e-5     # how near an edge singular_runs takes the Kretschmann scalar, in the unit
+                                    # square: nearer for a scalar whose coefficient falls to zero along the
+                                    # edge, as Kiselev's 2(tau + rho)^2/rho^2 does toward tau = 0 on rho = 0
     star: dict = None               # a declared polytrope, {"K": ..., "rho_c": ...}; see StarSolver
     fronts: dict = None             # declared Robinson-Trautman initial data, {"epsilon": ...}; see FrontSolver
     any_factor: str = None          # a declared conformal factor the drawing holds for every value of
@@ -372,6 +375,9 @@ class Diagram:
                                     # plane's two coordinates, as UV < 1 in the Kruskal chart of Witten's
                                     # black hole: the view is hatched where it is not positive, and no ray
                                     # or cone is drawn there
+    where_is_infinity: bool = False  # the edge of `where` is infinity, where a conformal factor diverges and
+                                    # g^rr vanishes with it, as on tau + rho = 0 of Kiselev's conformally
+                                    # flat chart: no zero of g^rr is marked on that edge
     null_radius: bool = False       # the drawn radius is a null coordinate, so the areal radius is stationary
                                     # along it exactly on the marginally trapped spheres: that curve is
                                     # marked as the apparent horizon, and no throat is
@@ -601,6 +607,14 @@ GRAVASTAR = {"r_s": 1, "R": "5/4", "L": 2}
 GRAVASTAR_C = 64 / 195
 GRAVASTAR_X = 2 / math.sqrt(GRAVASTAR_C) * math.atanh(5 / 8)
 SDS_STATIC = 7.5 ** (1 / 3)
+# Kiselev's black hole in his example w = -2/3 at r_q = 8 r_s, where f = 1 - r_s/r - r/r_q vanishes at
+# r = (4 -+ 2 sqrt 2) r_s, the black hole horizon and the outer one, and is greatest at sqrt(r_s r_q),
+# the radius of the static observer in free fall. KISELEV_FREE is the same matter with no black hole.
+KISELEV = {"r_s": 1, "r_q": 8, "w": "-2/3"}
+KISELEV_LINEAR = {"r_s": 1, "r_q": 8}
+KISELEV_STATIC = 8 ** 0.5
+KISELEV_ROOTS = (4 - 2 * 2 ** 0.5, 4 + 2 * 2 ** 0.5)
+KISELEV_FREE = {"r_q": 1}
 # The lukewarm charged black hole in de Sitter space, r_q = r_s/2 and Lambda r_s^2 = 27/64, which is
 # H r_s/c = 3/8: f = (1 - 1/(2r))^2 - 9r^2/64 vanishes at r_c = 2, r_+ = 2/3, r_- = (2 sqrt 7 - 4)/3 and
 # -(2 sqrt 7 + 4)/3, and is greatest between r_+ and r_c at the root 1.298 of 9r^4 - 32r + 16.
@@ -1044,6 +1058,26 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
     Diagram("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 4, -4, 0), "$r/r_s$", "$u/r_s$", SDS, EQUATOR, tau="u + r", areal=True),
+    Diagram("kiselev", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 9, -4.5, 4.5),
+            "$r/r_s$", "$ct/r_s$", KISELEV, EQUATOR, orient="split", split=KISELEV_STATIC, areal=True),
+    Diagram("kiselev", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 9, -4.5, 4.5), "$r/r_s$", "$(v - r)/r_s$", KISELEV, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("kiselev", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 9, 0, 9), "$r/r_s$", "$v/r_s$", KISELEV, EQUATOR, tau="v - r", areal=True),
+    Diagram("kiselev", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 9, -4.5, 4.5), "$r/r_s$", "$(u + r)/r_s$", KISELEV, EQUATOR,
+            to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
+    Diagram("kiselev", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 9, -9, 0), "$r/r_s$", "$u/r_s$", KISELEV, EQUATOR, tau="u + r", areal=True),
+    Diagram("kiselev", "linear", "radial", "$t$ and $r$", ("t", "r"), (0, 9, -4.5, 4.5),
+            "$r/r_s$", "$ct/r_s$", KISELEV_LINEAR, EQUATOR, orient="split", split=KISELEV_STATIC, areal=True),
+    Diagram("kiselev", "hyperbolic", "radial", "$\\eta$ and $\\chi$", ("\\eta", "\\chi"), (0, 4, -2, 2),
+            "$\\chi$", "$\\eta$", KISELEV_FREE, EQUATOR, tau="eta", areal=True),
+    Diagram("kiselev", "conformally_flat", "radial", "$\\tau$ and $\\rho$", ("\\tau", "\\rho"), (0, 4, -2, 2),
+            "$\\rho$", "$\\tau$", KISELEV_FREE, EQUATOR, tau="tau", areal=True, where="tau + rho",
+            where_is_infinity=True, no_throat=True, singular_runs=True, singular_where_claimed=True,
+            singular_near=1e-9),
     Diagram("reissner_nordstrom_de_sitter", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 2.6, -1.3, 1.3),
             "$r/r_s$", "$ct/r_s$", RNDS, EQUATOR, orient="split", split=RNDS_STATIC, areal=True),
     Diagram("reissner_nordstrom_de_sitter", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -2562,6 +2596,78 @@ CAPTIONS = {
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
         "null coordinate. The ingoing family turns vertical at both horizons and leans toward larger $r$ "
         "inside $r_h$ and beyond $r_c$.",
+    ],
+    ("kiselev", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $w = -2/3$ and $r_q = 8\\,r_s$, "
+        "the same at every other angle by spherical symmetry. There $g^{rr} = 1 - r_s/r - r/r_q$ "
+        "vanishes at the black hole horizon $r_- = 1.172\\,r_s$ and at the outer horizon "
+        "$r_+ = 6.828\\,r_s$, and the cones close at both, since $dt/dr = \\pm(1 - r_s/r - r/r_q)^{-1}$ "
+        "diverges there. Between them the cones are widest at $r = \\sqrt{r_sr_q} = 2.828\\,r_s$, "
+        "where $g^{rr}$ is greatest.",
+        "Inside $r_-$ and beyond $r_+$, $t$ is a spacelike coordinate, and the components alone do not fix "
+        "which way is future. We take it from the ingoing Eddington-Finkelstein chart inside $r_-$, which "
+        "makes that region the black hole, where every cone points to $r = 0$, and from the outgoing one "
+        "beyond $r_+$, where every cone points to larger $r$. "
+        "The Kretschmann scalar $12r_s^2/r^6 + 8/(r^2r_q^2)$ diverges only at $r = 0$.",
+    ],
+    ("kiselev", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $w = -2/3$ and $r_q = 8\\,r_s$ with "
+        "$v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family "
+        "has $dv/dr = 2(1 - r_s/r - r/r_q)^{-1}$, so it stands vertical at both horizons: each horizon "
+        "is an outgoing ray that stays where it is.",
+        "The chart crosses the black hole horizon $r_- = 1.172\\,r_s$ into the black hole, where both edges of "
+        "every future cone point to smaller $r$. It crosses the outer horizon $r_+ = 6.828\\,r_s$ into "
+        "the region in the past of the static one, where both edges point to smaller $r$ as well.",
+    ],
+    ("kiselev", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a "
+        "null coordinate. The outgoing family turns vertical at both horizons and leans back toward smaller "
+        "$r$ inside $r_-$ and beyond $r_+$.",
+    ],
+    ("kiselev", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $w = -2/3$ and $r_q = 8\\,r_s$ with "
+        "$u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family "
+        "stands vertical at both horizons. Inside $r_-$ both edges of every future cone point to larger $r$: "
+        "this is the white hole, which nothing from outside can enter. Beyond $r_+$ they point to larger $r$ "
+        "as well, into the region that the static observers' light goes on to reach.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("kiselev", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
+        "null coordinate. The ingoing family turns vertical at both horizons and leans toward larger $r$ "
+        "inside $r_-$ and beyond $r_+$.",
+    ],
+    ("kiselev", "linear", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_q = 8\\,r_s$, "
+        "the same at every other angle by spherical symmetry. There $g^{rr} = 1 - r_s/r - r/r_q$ "
+        "vanishes at the black hole horizon $r_- = 1.172\\,r_s$ and at the outer horizon "
+        "$r_+ = 6.828\\,r_s$, and the cones close at both, since $dt/dr = \\pm(1 - r_s/r - r/r_q)^{-1}$ "
+        "diverges there. Between them the cones are widest at $r = \\sqrt{r_sr_q} = 2.828\\,r_s$, "
+        "where $g^{rr}$ is greatest.",
+        "Inside $r_-$ and beyond $r_+$, $t$ is a spacelike coordinate, and the components alone do not fix "
+        "which way is future. We take it from the ingoing Eddington-Finkelstein chart inside $r_-$, which "
+        "makes that region the black hole, where every cone points to $r = 0$, and from the outgoing one "
+        "beyond $r_+$, where every cone points to larger $r$. "
+        "The Kretschmann scalar $12r_s^2/r^6 + 8/(r^2r_q^2)$ diverges only at $r = 0$.",
+    ],
+    ("kiselev", "hyperbolic", "radial"): [
+        "The plane of $\\eta$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$), with no black hole and $w = -2/3$. "
+        "The plane is conformally flat, so every radial null ray is a straight line at 45°, "
+        "$\\eta \\mp \\chi = $ const. The centre $\\chi = 0$ is a curvature singularity, where the Kretschmann "
+        "scalar $2e^{2\\chi}/(r_q^4\\sinh^2\\chi)$ diverges, and the areal radius $r = r_q(1 - e^{-2\\chi})$ "
+        "reaches the horizon $r = r_q$ only as $\\chi \\to \\infty$.",
+    ],
+    ("kiselev", "conformally_flat", "radial"): [
+        "The plane of $\\tau$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$), with no black hole and $w = -2/3$. "
+        "The metric is $4r_q^2/(\\tau + \\rho)^2$ times Minkowski's, so every radial null ray is a straight line "
+        "at 45°. The static region is $\\tau > \\rho$, and the horizon $r = r_q$ is the ray $\\tau = \\rho$ "
+        "from the origin.",
+        "Below the horizon the areal radius $r = 2r_q\\rho/(\\tau + \\rho)$ exceeds $r_q$, and it grows without "
+        "bound toward $\\tau + \\rho = 0$, which is past null infinity. The centre $\\rho = 0$ is a curvature "
+        "singularity, where the Kretschmann scalar $2(\\tau + \\rho)^2/(r_q^4\\rho^2)$ diverges.",
     ],
     ("reissner_nordstrom_de_sitter", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for the lukewarm hole ($r_q = r_s/2$, $\\Lambda = 27/(64\\,r_s^2)$), "
@@ -6869,7 +6975,8 @@ class Plot:
                  "top": lambda e: np.stack([t, np.full_like(t, 1 - e)], -1)}
         whole, runs = [], []
         for name, at in edges.items():
-            near, far = (np.abs(self.c.fn["K"](*self.to_chart(self.from_unit(at(e))))) for e in (1e-5, 1e-4))
+            closest = self.c.spec.singular_near
+            near, far = (np.abs(self.c.fn["K"](*self.to_chart(self.from_unit(at(e))))) for e in (closest, 10 * closest))
             with np.errstate(all="ignore"):
                 hit = (near > 1e8) & (near / far > 50)
             if self.c.spec.singular_where_claimed:
@@ -6977,7 +7084,8 @@ class Plot:
         # the view marks itself.
         # Beyond a declared singular curve there is no spacetime, so nothing is marked there.
         here = (lambda x0, r: self.claimed(x0, r)) if spec.singular_zero else (lambda x0, r: True)
-        lines = [] if spec.any_factor else self.zero_set("girr", keep=here if spec.singular_zero else None)
+        keep = here if spec.singular_zero else (lambda x0, r: self.claimed(x0, r)) if spec.where_is_infinity else None
+        lines = [] if spec.any_factor else self.zero_set("girr", keep=keep)
         if lines:
             out.append({"kind": "grr", "lines": lines})
         if spec.mark_gtt:
@@ -7916,6 +8024,17 @@ def _sds_away(x, r):
     return (np.abs(r - 1.0852) > 0.05) & (np.abs(r - 3.2146) > 0.05)
 
 
+def _kiselev_rstar(r):
+    """Kiselev's tortoise coordinate at w = -2/3, r_s = 1 and r_q = 8, where 1/f = -8r/((r - a)(r - b))
+    with a, b = 4 -+ 2 sqrt 2: (4 sqrt 2 - 4) ln|r - a| - (4 sqrt 2 + 4) ln|r - b|, up to a constant."""
+    a, b = KISELEV_ROOTS
+    return (4 * 2 ** 0.5 - 4) * np.log(np.abs(r - a)) - (4 * 2 ** 0.5 + 4) * np.log(np.abs(r - b))
+
+
+def _kiselev_away(x, r):
+    return (np.abs(r - KISELEV_ROOTS[0]) > 0.05) & (np.abs(r - KISELEV_ROOTS[1]) > 0.05)
+
+
 def _mp_axis(z):
     """The integral of U^2 along the axis for two holes of m = 1 at z = +-2, U = 1 + 1/|z - 2| +
     1/|z + 2|, up to a constant in each of the three intervals the holes cut the axis into:
@@ -8177,6 +8296,17 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _sds_rstar(r), _sds_away),
     ("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _sds_rstar(r), lambda u, r: u, _sds_away),
+    ("kiselev", "static", "radial"):
+        (lambda t, r: t + _kiselev_rstar(r), lambda t, r: t - _kiselev_rstar(r), _kiselev_away),
+    ("kiselev", "linear", "radial"):
+        (lambda t, r: t + _kiselev_rstar(r), lambda t, r: t - _kiselev_rstar(r), _kiselev_away),
+    ("kiselev", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _kiselev_rstar(r), _kiselev_away),
+    ("kiselev", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _kiselev_rstar(r), lambda u, r: u, _kiselev_away),
+    # Kiselev's two charts of the matter alone are conformal to flat planes, so the rays keep the sums.
+    ("kiselev", "hyperbolic", "radial"): (lambda eta, chi: eta + chi, lambda eta, chi: eta - chi, None),
+    ("kiselev", "conformally_flat", "radial"): (lambda tau, rho: tau + rho, lambda tau, rho: tau - rho, None),
     ("rn_metric", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [0.64, 0.36]), lambda t, r: t - _rstar(r, [0.64, 0.36]),
          lambda t, r: (np.abs(r - 0.64) > 0.05) & (np.abs(r - 0.36) > 0.05)),

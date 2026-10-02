@@ -48,6 +48,11 @@
       "id": "domain_wall",
       "kind": "family",
       "text": "The defect spread over a surface. A wall repels matter, as a global monopole does [kibble1976, harari1990]."
+    },
+    {
+      "id": "kiselev",
+      "kind": "family",
+      "text": "A black hole with a power of $r$ added to Schwarzschild's metric function for matter around it. At $w = -1/3$ the power is zero and the term is the monopole's constant deficit [kiselev2003, visser2020]."
     }
   ],
   "references": [
@@ -64,7 +69,9 @@
     "liebling2000",
     "bennett1990",
     "pen1994",
-    "pen1997"
+    "pen1997",
+    "kiselev2003",
+    "visser2020"
   ],
   "coordinates": [
     {

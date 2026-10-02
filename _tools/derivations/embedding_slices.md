@@ -484,6 +484,17 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `static`, `ingoing` and `kerr_schild`, the maximal extension: the line $T = 0$ through the bifurcation point from one exterior to the other; `six` the same for the moment of six dimensions.
 - The rippled horizon is the perturbed string, another spacetime than the one whose planes are drawn: not visible on any of them, and five dimensions and six are marked each on its own charts.
 
+### Kiselev
+
+- The embedding has two views, each the equator of the static moment $t = 0$ at $w = -2/3$: with the black hole, at $r_q = 8\,r_s$, $r$ from the throat $r_- = 1.172\,r_s$ to the widest circle $r_+ = 6.828\,r_s$ and back to the next throat, and the matter alone, from the centre to the horizon $r = r_q$ and on to the second centre. They are two spacetimes, each marked on the drawings of the charts that hold it.
+- `static/radial` and `linear/radial`: the line $ct = 0$ from $r_-$ to $r_+$; inside $r_-$ and beyond $r_+$ the surfaces of constant $t$ are timelike.
+- `eddington_finkelstein_ingoing/finkelstein` and `/chart`: with $v = ct + r_*$ and $r_*(0) = 0$ the moment is the curve $v = r_*$ between the horizons, which runs off to $v \to -\infty$ at $r_-$ and to $v \to +\infty$ at $r_+$.
+- `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the time reverse, $u = -r_*$.
+- `hyperbolic/radial`: the matter alone's moment is $\eta = 0$, the whole half line of $\chi$, since $r = r_q(1 - e^{-2\chi})$ reaches the horizon only as $\chi \to \infty$.
+- `conformally_flat/radial`: with $\tau = e^\eta\cosh\chi$ and $\rho = e^\eta\sinh\chi$ it is the hyperbola $\tau = \sqrt{1 + \rho^2}$ from the centre.
+- `static`, `linear`, `ingoing` and `outgoing`, the chain of the maximal extension: the line $T = 0$ from the black hole's bifurcation point at $X = 0$ through the static region, the outer bifurcation point at $X = \pi$ and the next static region to the next black hole's bifurcation point at $X = 2\pi$.
+- `hyperbolic` and `conformally_flat`: the line $T = 0$ from one centre, at $X = \pi/2$, through the bifurcation point at $X = \pi$ to the other, at $X = 3\pi/2$.
+
 ### Schwarzschild-de Sitter
 
 - The embedding is the equator of Kottler's static moment $t = 0$ at $\Lambda = 0.2/r_s^2$, $r$ from the throat $r_h = 1.085\,r_s$ to the widest circle $r_c = 3.215\,r_s$ and back to the next throat, through the cosmological bifurcation sphere into the next static region.
@@ -634,6 +645,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Reissner-Nordström | two lines once redrawn at $r_q = 0.48\,r_s$ | none | two lines, twice |
 | Bardeen | two lines, two curves four times | none | two lines, three times |
 | Schwarzschild | line, four curves | none | line, three times |
+| Kiselev | two lines, four curves; line and curve for the matter alone | none | line, four times; line, twice |
 | Schwarzschild-de Sitter | line, four curves | none | line, three times |
 | Siklos waves | event, three times; line, five times | none | curve, five times |
 | van Stockum | line, not visible | floor | none drawn |

@@ -66,6 +66,11 @@
       "id": "kerr_de_sitter",
       "kind": "generalisation",
       "text": "Kottler's black hole set spinning. An inner horizon appears, as in Kerr, and with $a = 0$ the metric is Kottler's [akcay2011]."
+    },
+    {
+      "id": "kiselev",
+      "kind": "generalisation",
+      "text": "Kottler's $\\Lambda r^2/3$ replaced by a power of the radius, $(r_q/r)^{3w+1}$, for matter around the hole whose pressure averages to $w$ times its energy density. At $w = -1$ it is Kottler's term with $\\Lambda = 3/r_q^2$ [kiselev2003]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "kaloper2010",
     "carrera2010",
     "romans1992",
-    "akcay2011"
+    "akcay2011",
+    "kiselev2003"
   ],
   "coordinates": [
     {

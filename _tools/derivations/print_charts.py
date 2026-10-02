@@ -8,7 +8,7 @@ kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
-einstein_rosen_bridge, bonnor_vaidya and tolman_vii, and Godel's cylindrical chart.
+einstein_rosen_bridge, bonnor_vaidya, tolman_vii and kiselev, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -27,7 +27,7 @@ reads better than an expanded one, and each of those is checked against sympy he
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
-witten_black_hole.md, roberts.md, gravastar.md and bonnor_vaidya.md beside this file.
+witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md and kiselev.md beside this file.
 """
 import argparse
 import itertools
@@ -10602,6 +10602,289 @@ def tolman_vii_check(chart, system, rate):
 
 
 CHARTS["tolman_vii"] = [lambda s=s: tolman_vii(s) for s in TOLMAN_VII_CHARTS]
+# -- The Kiselev black hole ---------------------------------------------------------------
+
+KISELEV_CHARTS = ("static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "linear",
+                  "hyperbolic", "conformally_flat")
+KISELEV_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+KISELEV_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+KISELEV_H = "h = \\left(\\dfrac{r_q}{r}\\right)^{3w + 1}"
+
+
+def kiselev(system):
+    """Kiselev's black hole, his (18) with one term: f = 1 - r_s/r - (r_q/r)^{3w + 1}, in the
+    static chart and the two Eddington-Finkelstein charts built on its tortoise coordinate,
+    dr_*/dr = 1/f, for every state parameter w; his example w = -2/3, f = 1 - r_s/r - r/r_q, his
+    (22) without the charge and the de Sitter term; and that example with no black hole in his
+    two charts of it, the hyperbolic chart (25) and the conformally flat chart (29) Fock's
+    transformation leads to. The charts that keep w name the term h = (r_q/r)^{3w + 1} and
+    print every value as a polynomial in it, since each derivative of h is h times a rational
+    function. kiselev_check holds each chart to Kiselev's stress tensor and to the chart before
+    it, and kiselev.md records each chart's source."""
+    reals = "(-\\infty, \\infty)"
+    if system in ("static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"):
+        parameters = ["r_s", "r_q", "w", KISELEV_H]
+        full = "1 - \\dfrac{r_s}{r} - \\left(\\dfrac{r_q}{r}\\right)^{3w + 1}"
+        f, bare = "\\left(1 - \\dfrac{r_s}{r} - h\\right)", "1 - \\dfrac{r_s}{r} - h"
+        marks = ["1 - \\dfrac{r_s}{r} - h = 0 \\;\\text{(the horizons)}"]
+    elif system == "linear":
+        parameters = ["r_s", "r_q"]
+        full = "1 - \\dfrac{r_s}{r} - \\dfrac{r}{r_q}"
+        f, bare = "\\left(" + full + "\\right)", full
+        marks = ["r = r_- \\;\\text{(the black hole horizon)}", "r = r_+ \\;\\text{(the outer horizon)}"]
+    if system in ("static", "linear"):
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Spherical" if system == "static" else "Static, Linear Term"
+
+        def line(c2):
+            return ("ds^2 = -\\left(" + full + "\\right)" + c2 + "dt^2 + \\dfrac{dr^2}{" + full + "} + r^2"
+                    + KISELEV_SPHERE)
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)"] + KISELEV_ANGLES + marks
+        components = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                      "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}
+    elif system.startswith("eddington"):
+        null, sign = ("u", "-") if system.endswith("outgoing") else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+
+        def line(c2):
+            return ("ds^2 = -\\left(" + full + "\\right)d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr + r^2"
+                    + KISELEV_SPHERE)
+        one = "-1" if null == "u" else "1"
+        domains = [null + " \\in " + reals, "r \\in (0, \\infty)"] + KISELEV_ANGLES + marks
+        components = {"metric_components": {(null, null): "-" + f, (null, "r"): one, ("r", null): one},
+                      "inverse_metric_components": {(null, "r"): one, ("r", null): one, ("r", "r"): bare}}
+    elif system == "hyperbolic":
+        coords, parameters, name = ["\\eta", "\\chi", "\\theta", "\\phi"], ["r_q"], "Free Matter, Hyperbolic"
+
+        def line(c2):
+            return ("ds^2 = 4r_q^2e^{-2\\chi}\\left(-d\\eta^2 + d\\chi^2 + \\sinh^2\\chi\\," + KISELEV_SPHERE
+                    + "\\right)")
+        domains = ["\\eta \\in " + reals, "\\chi \\in (0, \\infty)"] + KISELEV_ANGLES + [
+            "\\chi = 0 \\;\\text{(the centre, a curvature singularity)}"]
+        scale = "4r_q^2e^{-2\\chi}"
+        components = {
+            "metric_components": {
+                ("\\eta", "\\eta"): "-" + scale, ("\\chi", "\\chi"): scale,
+                ("\\theta", "\\theta"): scale + "\\sinh^2\\chi",
+                ("\\phi", "\\phi"): scale + "\\sinh^2\\chi\\sin^2\\theta"},
+            "inverse_metric_components": {
+                ("\\eta", "\\eta"): "-\\dfrac{e^{2\\chi}}{4r_q^2}", ("\\chi", "\\chi"): "\\dfrac{e^{2\\chi}}{4r_q^2}",
+                ("\\theta", "\\theta"): "\\dfrac{e^{2\\chi}}{4r_q^2\\sinh^2\\chi}",
+                ("\\phi", "\\phi"): "\\dfrac{e^{2\\chi}\\csc^2\\theta}{4r_q^2\\sinh^2\\chi}"}}
+    else:
+        coords, parameters, name = ["\\tau", "\\rho", "\\theta", "\\phi"], ["r_q"], "Free Matter, Conformally Flat"
+
+        def line(c2):
+            return ("ds^2 = \\dfrac{4r_q^2}{\\left(\\tau + \\rho\\right)^2}\\left(-d\\tau^2 + d\\rho^2 + \\rho^2"
+                    + KISELEV_SPHERE + "\\right)")
+        domains = ["\\tau \\in " + reals, "\\rho \\in (0, \\infty)"] + KISELEV_ANGLES + [
+            "\\tau + \\rho > 0", "\\rho = 0 \\;\\text{(the centre, a curvature singularity)}",
+            "\\tau = \\rho \\;\\text{(the horizon } r = r_q\\text{)}"]
+        components = {}
+    probe = vm.Reader(coords, parameters, ())
+    x = probe.symbol[coords[1]]
+    rq = probe.parameters["r_q"]
+    spec = {
+        "metric_id": "kiselev",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "components": components,
+        "check": lambda chart: kiselev_check(chart, system),
+    }
+    if KISELEV_H in parameters:
+        rs, w = probe.parameters["r_s"], probe.parameters["w"]
+        H = sp.Symbol("KISELEVH", positive=True)
+
+        def pretty(value):
+            # The checker hands every value back in r^{3w} and r_q^{3w}. Here r_q^{3w} is written
+            # h r^{3w + 1}/r_q, after which every power of r^{3w} cancels and r_q with it.
+            X = sp.Symbol("KISELEVX", positive=True)
+
+            def power(e):
+                k = sp.expand(e.exp).coeff(w) / 3
+                rest = sp.expand(e.exp - 3 * w * k)
+                if e.base == rq:
+                    return (H * X * x / rq) ** k * rq ** rest
+                return X ** k * x ** rest
+            v = sp.sympify(value).replace(
+                lambda e: e.is_Pow and e.base in (x, rq) and e.exp.has(w), power)
+            v = sp.factor(sp.cancel(sp.together(v)))
+            if v.has(X) or v.has(rq) or any(p.exp.has(w) for p in v.atoms(sp.Pow)):
+                raise AssertionError(f"kiselev: {value} is not a polynomial in h over r, r_s and w")
+            return v
+        spec["pretty"] = pretty
+        # A sum is written by rising powers of h, Schwarzschild's part first.
+        spec["printer"] = {"lead": [H, x, rs, w], "factors": [w, rs, x, H], "rising": [H, rs], "flip": False,
+                           "overrides": {H: "h"},
+                           "collect": lambda poly, pr: cp.collect_by(poly, [H], pr)}
+        # Schwarzschild's 12 r_s^2/r^6, the cross term, and the matter's own.
+        spec["kretschmann"] = ("\\dfrac{12r_s^2}{r^6} + \\dfrac{12\\left(w + 1\\right)\\left(3w + 2\\right)r_s\\,h}{r^5}"
+                               " + \\dfrac{3\\left(27w^4 + 54w^3 + 51w^2 + 20w + 4\\right)h^2}{r^4}")
+    elif system == "linear":
+        rs = probe.parameters["r_s"]
+        spec["printer"] = {"lead": [x, rs, rq], "flip": False}
+        spec["kretschmann"] = "\\dfrac{12r_s^2}{r^6} + \\dfrac{8}{r^2r_q^2}"
+    elif system == "hyperbolic":
+        spec["printer"] = {"lead": [rq, x]}
+        spec["pretty"] = kiselev_hyperbolic(x)
+        spec["ricci_scalar"] = "\\dfrac{3}{r_q^2}\\left(1 + \\coth\\chi\\right)"
+    else:
+        spec["printer"] = {"lead": [probe.symbol[coords[0]], x, rq], "factors": [rq, probe.symbol[coords[0]], x]}
+        spec["ricci_scalar"] = "\\dfrac{3\\left(\\tau + \\rho\\right)}{r_q^2\\,\\rho}"
+    return spec
+
+
+def kiselev_hyperbolic(chi):
+    """A `pretty` for Kiselev's hyperbolic chart, whose conformal factor is e^{-2 chi} and whose
+    spheres have the radius sinh(chi): every value is a rational function of E = e^chi, and each
+    pair (E - 1)(E + 1) = 2 E sinh(chi) is written as that, so a value reads as a power of e^chi
+    times a power of sinh(chi), as the line element does."""
+    E, S = sp.Symbol("KISELEVE", positive=True), sp.Symbol("KISELEVS", positive=True)
+
+    def pretty(value):
+        v = sp.sympify(value).subs({sp.sinh(chi): (E - 1 / E) / 2, sp.cosh(chi): (E + 1 / E) / 2})
+        v = v.replace(lambda e: isinstance(e, sp.exp) and sp.expand(e.args[0] / chi).is_Integer,
+                      lambda e: E ** sp.expand(e.args[0] / chi))
+        v = sp.factor(sp.cancel(sp.together(v)))
+        pair, rest = {}, sp.Integer(1)
+        for f in sp.Mul.make_args(v):
+            base, k = f.as_base_exp()
+            if sp.expand(base - (E - 1)) == 0 or sp.expand(base - (E + 1)) == 0:
+                pair[sp.expand(base)] = pair.get(sp.expand(base), 0) + k
+            else:
+                rest *= f
+        if pair:
+            if len(pair) != 2 or len(set(pair.values())) != 1:
+                raise AssertionError(f"kiselev: {value} is not a power of e^chi times a power of sinh(chi)")
+            rest *= (2 * E * S) ** next(iter(pair.values()))
+        rest = sp.powsimp(sp.cancel(rest))
+        return rest.replace(lambda e: e.is_Pow and e.base == E, lambda e: sp.exp(e.exp * chi)).subs(
+            {E: sp.exp(chi), S: sp.sinh(chi)})
+    return pretty
+
+
+def kiselev_check(chart, system):
+    """Every chart carries Kiselev's stress tensor, his (13) and (14): in the mixed
+    components of this collection G^t_t = G^r_r = 3wh/r^2 and G^theta_theta = G^phi_phi =
+    -3w(3w + 1)h/2r^2, with h = (r_q/r)^{3w + 1}, so the radial pressure is minus the energy
+    density, the tangential pressure is (3w + 1)/2 of it, and their average over directions is w
+    times it, which is Visser's (3) to (5) with K = r_q^{3w + 1}. The static chart is
+    Schwarzschild's published metric of radius r_s + r_q at w = 0, Kottler's with Lambda =
+    3/r_q^2 at w = -1, and Reissner and Nordstrom's with r_q^2 -> -r_q^2 at w = 1/3. Each
+    Eddington-Finkelstein chart is the static one pulled back along c dt = dv - dr/f or du +
+    dr/f, the linear chart the static one at w = -2/3, the hyperbolic chart the linear one at
+    r_s = 0 pulled back along the map Kiselev gives before his (25), ct = 2 r_q eta and
+    r = r_q(1 - e^{-2 chi}), and the conformally flat chart the hyperbolic one pulled back along
+    the inverse of his (27) and (28), eta = ln(tau^2 - rho^2)/2 and chi = artanh(rho/tau)."""
+    P = chart.reader.parameters
+    rq = P["r_q"]
+    x0, x1, theta = chart.symbols[:3]
+    g = chart.geo.g
+
+    def same(matrix, what, tidy=sp.simplify):
+        for i in range(4):
+            for j in range(i, 4):
+                if tidy(matrix[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"kiselev: the {system} chart is not {what} in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    def other(system_id, swaps=None):
+        source = kiselev(system_id)
+        there = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+        swaps = dict(swaps or {})
+        for name, symbol in there.reader.parameters.items():
+            if name in P and name != "h":
+                swaps.setdefault(symbol, P[name])
+        swaps.update(dict(zip(there.symbols[2:], chart.symbols[2:])))
+        return there, swaps
+
+    # The stress tensor, in the areal radius and the state parameter of each chart.
+    if system == "hyperbolic":
+        r, w = rq * (1 - sp.exp(-2 * x1)), sp.Rational(-2, 3)
+    elif system == "conformally_flat":
+        r, w = 2 * rq * x1 / (x0 + x1), sp.Rational(-2, 3)
+    else:
+        r, w = x1, P["w"] if "w" in P else sp.Rational(-2, 3)
+    h = (rq / r) ** (3 * w + 1) if "w" in P else r / rq
+    G = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    want = sp.zeros(4, 4)
+    want[0, 0] = want[1, 1] = 3 * w * h / r ** 2
+    want[2, 2] = want[3, 3] = -3 * w * (3 * w + 1) * h / (2 * r ** 2)
+    for a in range(4):
+        for b in range(4):
+            if vm.norm(vm._at(G, (a, b)) - want[a, b]) != 0:
+                raise AssertionError(f"kiselev: the mixed Einstein tensor of the {system} chart misses Kiselev's "
+                                     f"stress tensor in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+    rho, p_r, p_t = -want[0, 0], want[1, 1], want[2, 2]
+    if sp.simplify(p_r + rho) != 0 or sp.simplify(p_t / p_r + (1 + 3 * w) / 2) != 0 \
+            or sp.simplify((p_r + 2 * p_t) / 3 - w * rho) != 0:
+        raise AssertionError("kiselev: the pressures are not Visser's, p_r = -rho, p_t/p_r = -(1 + 3w)/2 and "
+                             "an average of w rho")
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        matrix = sp.Matrix(4, 4, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix.subs(dict(zip([reader.symbol[c] for c in entry["coords"]], chart.symbols)))
+
+    if system == "static":
+        rs, wsym = P["r_s"], P["w"]
+        positive = lambda e: sp.simplify(sp.powdenest(e, force=True))  # noqa: E731
+        reader, matrix = published("schwarzschild", "spherical")
+        same(matrix.subs(reader.parameters["r_s"], rs + rq), "Schwarzschild's published metric of radius "
+             "r_s + r_q at w = 0", lambda e: positive(e.subs(wsym, 0)))
+        reader, matrix = published("schwarzschild_de_sitter", "static")
+        same(matrix.subs({reader.parameters["r_s"]: rs, reader.parameters["Lambda"]: 3 / rq ** 2}),
+             "Kottler's published metric with Lambda = 3/r_q^2 at w = -1", lambda e: positive(e.subs(wsym, -1)))
+        reader, matrix = published("rn_metric", "spherical")
+        flipped = sp.Symbol("KISELEVq", positive=True)
+        there = matrix.subs({reader.parameters["r_q"]: flipped, reader.parameters["r_s"]: rs})
+        there = there.applyfunc(lambda e: sp.together(e).subs(flipped ** 2, -rq ** 2))
+        same(there, "Reissner and Nordstrom's published metric with the sign of r_q^2 reversed at w = 1/3",
+             lambda e: positive(e.subs(wsym, sp.Rational(1, 3))))
+        return
+    if system.startswith("eddington"):
+        there, swaps = other("static")
+        sign = -1 if system.endswith("outgoing") else 1
+        f = -there.geo.g[0, 0].subs(swaps).subs(there.symbols[1], x1)
+        # c dt = dv - dr/f in advanced time and du + dr/f in retarded time.
+        J = sp.Matrix([[1, -sign / f, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+        pulled = J.T * there.geo.g.subs(swaps).subs(there.symbols[1], x1) * J
+        same(pulled, "the static chart pulled back", vm.norm)
+        return
+    if system == "linear":
+        there, swaps = other("static")
+        swaps[there.reader.parameters["w"]] = sp.Rational(-2, 3)
+        pulled = there.geo.g.subs(swaps).subs({there.symbols[0]: x0, there.symbols[1]: x1})
+        same(pulled, "the static chart at w = -2/3", lambda e: sp.simplify(sp.powdenest(e, force=True)))
+        return
+    if system == "hyperbolic":
+        there, swaps = other("linear")
+        swaps[there.reader.parameters["r_s"]] = 0
+        image = [2 * rq * x0, rq * (1 - sp.exp(-2 * x1))]
+        tidy = lambda e: sp.simplify(e.rewrite(sp.exp))  # noqa: E731
+    else:
+        there, swaps = other("hyperbolic")
+        image = [sp.log(x0 ** 2 - x1 ** 2) / 2, sp.atanh(x1 / x0)]
+        tidy = lambda e: sp.simplify(sp.expand_log(e.rewrite(sp.exp).rewrite(sp.log), force=True))  # noqa: E731
+        # Fock's transformation, Kiselev's (27) and (28): tau = e^eta cosh(chi), rho = e^eta sinh(chi).
+        eta, chi = sp.symbols("eta chi", positive=True)
+        back = {x0: sp.exp(eta) * sp.cosh(chi), x1: sp.exp(eta) * sp.sinh(chi)}
+        if sp.simplify(((x0 ** 2 - x1 ** 2).subs(back) - sp.exp(2 * eta)).rewrite(sp.exp)) != 0 \
+                or sp.simplify(((x1 / x0).subs(back) - sp.tanh(chi)).rewrite(sp.exp)) != 0:
+            raise AssertionError("kiselev: the map is not the inverse of Fock's transformation")
+    J = sp.Matrix(4, 4, lambda a, b: sp.diff(image[a], chart.symbols[b]) if a < 2 else int(a == b))
+    at = dict(swaps)
+    at.update(dict(zip(there.symbols[:2], image)))
+    pulled = J.T * there.geo.g.subs(at, simultaneous=True) * J
+    same(pulled, "the chart before it pulled back", tidy)
+
+
+CHARTS["kiselev"] = [lambda s=s: kiselev(s) for s in KISELEV_CHARTS]
 
 
 def write(spec):
