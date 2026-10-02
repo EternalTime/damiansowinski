@@ -149,6 +149,11 @@
       "id": "nordstrom_scalar",
       "kind": "programme",
       "text": "Nordström's own theory of gravity, a scalar field on flat spacetime, which he set out in 1913 before he took up Einstein's [nordstrom1913]."
+    },
+    {
+      "id": "born_infeld_charge",
+      "kind": "generalisation",
+      "text": "This charge with a limit on its field. Born and Infeld's electrodynamics keeps the field of a point charge finite, so the energy of the field is finite too, and the charge is a black hole with one horizon or two, or a particle with no horizon and a conical point at its centre [hoffmann1935, gibbonsrasheed1995]."
     }
   ],
   "references": [
@@ -188,7 +193,9 @@
     "brill1963",
     "emparan2000",
     "markov1970",
-    "nordstrom1913"
+    "nordstrom1913",
+    "hoffmann1935",
+    "gibbonsrasheed1995"
   ],
   "coordinates": [
     {

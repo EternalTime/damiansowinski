@@ -11,8 +11,8 @@ som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, 
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
-wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice and
-belinski_zakharov, and Godel's cylindrical chart.
+wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov and
+born_infeld_charge, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -7695,6 +7695,220 @@ def bardeen_source(chart):
 
 BARDEEN_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
 CHARTS["bardeen"] = [lambda s=s: bardeen(s) for s in BARDEEN_CHARTS]
+
+
+# -- Born-Infeld point charge ----------------------------------------------------------
+
+BORN_INFELD_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+BORN_INFELD_W = "W = \\sqrt{r^4 + r_0^4}"
+BORN_INFELD_M = ("m = \\dfrac{r_s}{2} + \\dfrac{r_q^2\\,r}{3\\left(r^2 + W\\right)} - \\dfrac{r_q^2}{3r_0}\\,"
+                 "\\mathrm{F}\\left(2\\arctan\\left(\\dfrac{r_0}{r}\\right) \\mid \\dfrac{1}{2}\\right)")
+# Born and Infeld's number, Gamma(1/4)^2/(6 sqrt(pi)) = 1.2360: the energy of the field of a point
+# charge is this times Q^2/r_0, so the mass function at the centre is r_s/2 - 1.2360 r_q^2/r_0.
+BORN_INFELD_NUMBER = sp.gamma(sp.Rational(1, 4)) ** 2 / (6 * sp.sqrt(sp.pi))
+
+
+def born_infeld_charge(system_id):
+    """The point charge of Born and Infeld's electrodynamics with its own gravity, Hoffmann's
+    solution of 1935: ds^2 = -f c^2dt^2 + dr^2/f + r^2 dOmega^2 with f = 1 - 2m(r)/r, in the static
+    chart and in the two Eddington-Finkelstein charts built on its tortoise coordinate,
+    dr_*/dr = 1/f. The parameters are three lengths: Schwarzschild's r_s for the whole mass,
+    Reissner and Nordstrom's r_q for the charge, and Born and Infeld's r_0, the radius at which
+    the charge's Coulomb field would reach their greatest field b. The charts name the radical
+    W = sqrt(r^4 + r_0^4) and the mass function m, whose slope is the energy of the field in a
+    shell, dm/dr = r_q^2/(r^2 + W), and which tends to r_s/2 far away: no elementary function has
+    that slope, and m is written with the incomplete elliptic integral of the first kind. The
+    checker holds m as a function with that slope, vm.HELD and vm.RATES, having checked the slope
+    against the elliptic integral, so every value is printed in r, W, m and r_q, where it is
+    Reissner and Nordstrom's at W = r^2, which is r_0 = 0. born_infeld_charge.md records each
+    chart's source."""
+    f = "\\left(1 - \\dfrac{2m}{r}\\right)"
+    bare = f[6:-7]
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    domains = ["r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               "r = r_h \\;\\text{(the horizons, where}\\; r = 2m\\text{)}"]
+    if system_id == "static":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Spherical"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    parameters = ["r_s", "r_q", "r_0", BORN_INFELD_W, BORN_INFELD_M]
+    probe = vm.Reader(coords, parameters, (), held=("m",))
+    r, rq, r0, m = probe.symbol["r"], probe.parameters["r_q"], probe.parameters["r_0"], probe.parameters["m"]
+    W = sp.Symbol("W", positive=True)
+    slope = rq ** 2 / (r ** 2 + sp.sqrt(r ** 4 + r0 ** 4))
+
+    def reduce(value):
+        # The mass function's slope is the energy of the field in a shell, so no derivative of m is left.
+        value = sp.sympify(value)
+        for d in sorted(value.atoms(sp.Derivative), key=lambda d: -d.derivative_count):
+            if d.expr != m:
+                raise AssertionError(f"born_infeld_charge: {d} is no derivative of the mass function")
+            value = value.xreplace({d: sp.diff(slope, r, d.derivative_count - 1)})
+        return vm.norm(value)
+
+    def collect(poly, printer):
+        # r - 2m, whose zeros are the horizons, keeps the order the line element writes it in.
+        if sp.expand(poly - (r - 2 * m)) == 0 or sp.expand(poly + (r - 2 * m)) == 0:
+            return printer.sum_of(poly)
+        return cp.collect_by(poly, [m], printer)
+
+    return {
+        "metric_id": "born_infeld_charge",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        # A numerator is grouped by the powers of the mass function, as (r^2 + W) m - r_q^2 r.
+        "printer": {"lead": [r, m, W, rq], "factors": [rq, r, m, W], "flip": False, "collect": collect},
+        "pretty": born_infeld_pretty(r, r0, W),
+        "reduce": reduce,
+        "ricci_scalar": "\\dfrac{4r_q^2\\left(W - r^2\\right)}{r^2\\,W\\left(r^2 + W\\right)}",
+        # In the frame of a static observer the Riemann tensor has three independent components.
+        "kretschmann": ("\\dfrac{16}{r^6}\\left(\\left(m - \\dfrac{r_q^2\\,r}{W}\\right)^2"
+                        " + \\left(m - \\dfrac{r_q^2\\,r}{r^2 + W}\\right)^2 + m^2\\right)"),
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": lambda chart: born_infeld_check(chart, system_id),
+    }
+
+
+def born_infeld_pretty(r, r0, W):
+    """A pretty printer for the charts of Born and Infeld's point charge, whose every value is a
+    rational function of r, r_q, the mass function m, r_0^4 and one radical, W = sqrt(r^4 + r_0^4).
+    Written in r, W, m and r_q, with r_0^4 = W^2 - r^4, no relation is left among the generators,
+    so the value factors there, and the W - r^2 that r_0^4 brings cancels: the density of the
+    field's energy is 2 r_q^2/(r^2 (r^2 + W)), Maxwell's r_q^2/r^4 at W = r^2."""
+    square = r ** 4 + r0 ** 4
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.replace(lambda p: p.is_Pow and sp.expand(p.base - square) == 0, lambda p: W ** (2 * p.exp))
+        value = sp.together(value.subs(r0, (W ** 2 - r ** 4) ** sp.Rational(1, 4)))
+        if value.has(r0) or any(not p.exp.is_Integer for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"born_infeld_charge: a power of r_0 that is no power of r_0^4 is left in {value}")
+        return sp.factor(value)
+
+    return pretty
+
+
+def born_infeld_check(chart, system_id):
+    """Each chart solves Einstein's equations with the field of a point charge in Born and
+    Infeld's electrodynamics for its source. In lengths, with the electric field E a reciprocal
+    length, the Lagrangian is L(F) = beta^2 (sqrt(1 + 2F/beta^2) - 1) with F = F_mn F^mn/4 and
+    beta = r_q/r_0^2 the greatest field, Maxwell's L = F for small F, and the equations are
+    G_m^n = 2(L_F F_ml F^nl - delta_m^n L), as bardeen_source writes them. A radial electric
+    field has F = -E^2/2, the field equation d(r^2 L_F E)/dr = 0 gives E = r_q/sqrt(r^4 + r_0^4),
+    finite at the charge, and G^t_t = G^r_r = -2(L_F E^2 + L), G^theta_theta = G^phi_phi = -2L.
+    The static chart is Schwarzschild's published metric at r_q = 0 and tends to Reissner and
+    Nordstrom's as r_0 -> 0, its mass function has the slope the checker holds it to, tends to
+    r_s/2 far away and to r_s/2 - 1.2360 r_q^2/r_0 at the centre, Born and Infeld's number, and
+    where that vanishes g^rr tends to 1 - 2 r_q^2/r_0^2 at the centre, Hoffmann's conical
+    singularity; each Eddington-Finkelstein chart is the static one pulled back along
+    c t = v - r_* or u + r_*, dr_*/dr = 1/f."""
+    geo, g = chart.geo, chart.geo.g
+    reader = chart.reader
+    r = reader.symbol["r"]
+    rs, rq, r0, m = (reader.parameters[k] for k in ("r_s", "r_q", "r_0", "m"))
+    definition = reader.held[m]
+    W = sp.sqrt(r ** 4 + r0 ** 4)
+    if vm.norm(sp.diff(definition, r) - rq ** 2 / (r ** 2 + W)) != 0:
+        raise AssertionError("born_infeld_charge: the slope of the mass function is not r_q^2/(r^2 + W)")
+    E, F = sp.Symbol("E", positive=True), sp.Symbol("F", real=True)
+    beta = rq / r0 ** 2
+    lagrangian = beta ** 2 * (sp.sqrt(1 + 2 * F / beta ** 2) - 1)
+    field = rq / W
+    on = {F: -field ** 2 / 2}
+    L, LF = lagrangian.subs(on), sp.diff(lagrangian, F).subs(on)
+    if vm.norm(sp.diff(r ** 2 * LF * field, r)) != 0 or vm.norm(r ** 2 * LF * field - rq) != 0:
+        raise AssertionError("born_infeld_charge: the field r_q/W does not solve Born and Infeld's equation "
+                             "with the charge r_q")
+    mixed = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+    wanted = [-2 * (LF * field ** 2 + L), -2 * (LF * field ** 2 + L), -2 * L, -2 * L]
+    for a in range(4):
+        for b in range(4):
+            if vm.norm(mixed[a][b] - (wanted[a] if a == b else 0)) != 0:
+                raise AssertionError(f"born_infeld_charge: the Einstein tensor misses the field's stress in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+    if vm.norm(wanted[0] + 2 * rq ** 2 / (r ** 2 * (r ** 2 + W))) != 0:
+        raise AssertionError("born_infeld_charge: the energy density is not 2 r_q^2/(r^2 (r^2 + W))")
+    if system_id != "static":
+        spec = born_infeld_charge("static")
+        static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                          held=("m",))
+        at = dict(zip(static.symbols[1:], chart.symbols[1:]))
+        old = static.geo.g.subs(at, simultaneous=True)
+        J = sp.eye(4)
+        J[0, 1] = (1 if chart.coords_tex[0] == "u" else -1) / (-old[0, 0])
+        pulled = J.T * old * J
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"born_infeld_charge: the static chart pulled back misses the "
+                                         f"{chart.coords_tex[0]} chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        return
+    f = 1 - 2 * definition / r
+    if vm.norm(g[0, 0] + 1 - 2 * m / r) != 0 or vm.norm(g[1, 1] * (1 - 2 * m / r) - 1) != 0:
+        raise AssertionError("born_infeld_charge: the static chart is not -f c^2dt^2 + dr^2/f")
+
+    def number(e, values, digits=40):
+        return sp.sympify(e).xreplace(values).evalf(digits)
+
+    def published(metric_id, chart_id):
+        there = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == chart_id)
+        other = vm.Reader(there["coords"], [p["symbol"] for p in there["parameters"]], ())
+        values = {tuple(e["indices"]): other(e["value"]) for e in there["metric_components"]}
+        return other, values
+
+    rng = random.Random(7)
+    for _ in range(4):
+        at = {r: sp.Rational(rng.randint(500, 4000), 1000), rs: sp.Rational(rng.randint(500, 2000), 1000),
+              rq: sp.Rational(rng.randint(200, 900), 1000), r0: sp.Rational(rng.randint(300, 2000), 1000)}
+        # Schwarzschild's published metric at r_q = 0, where the mass function is r_s/2.
+        other, values = published("schwarzschild", "spherical")
+        same = {other.symbol["r"]: at[r], other.parameters["r_s"]: at[rs]}
+        if abs(number(f, {**at, rq: 0}) + number(values["t", "t"], same)) > sp.Float(10) ** -30:
+            raise AssertionError("born_infeld_charge: the static chart at r_q = 0 is not Schwarzschild's published metric")
+        # Reissner and Nordstrom's published metric as r_0 -> 0: f falls short of theirs by r_q^2 r_0^4/(20 r^6).
+        other, values = published("rn_metric", "spherical")
+        same = {other.symbol["r"]: at[r], other.parameters["r_s"]: at[rs], other.parameters["r_q"]: at[rq]}
+        small = sp.Rational(1, 10 ** 3)
+        miss = number(f, {**at, r0: small}, 60) + number(values["t", "t"], same, 60)
+        if abs(miss / number(-rq ** 2 * small ** 4 / (20 * r ** 6), at) - 1) > sp.Float(10) ** -6:
+            raise AssertionError("born_infeld_charge: the static chart does not tend to Reissner and Nordstrom's "
+                                 "published metric as r_0 -> 0")
+        # Far away the mass function is r_s/2 - r_q^2/(2r), and at the centre r_s/2 - 1.2360 r_q^2/r_0.
+        far = sp.Integer(10) ** 6
+        if abs(number((definition - rs / 2) * r, {**at, r: far}, 60) / number(-rq ** 2 / 2, at) - 1) > sp.Float(10) ** -20:
+            raise AssertionError("born_infeld_charge: the mass function does not tend to r_s/2 - r_q^2/(2r) far away")
+        centre = number(definition, {**at, r: sp.Rational(1, 10 ** 40)})
+        if abs(centre - number(rs / 2 - BORN_INFELD_NUMBER * rq ** 2 / r0, at)) > sp.Float(10) ** -30:
+            raise AssertionError("born_infeld_charge: the mass function at the centre is not "
+                                 "r_s/2 - Gamma(1/4)^2 r_q^2/(6 sqrt(pi) r_0)")
+        # Hoffmann's particle, whose whole mass is the field's: g^rr -> 1 - 2 r_q^2/r_0^2 at the centre.
+        whole = {**at, rs: 2 * BORN_INFELD_NUMBER * at[rq] ** 2 / at[r0]}
+        tiny = sp.Rational(1, 10 ** 15)
+        if abs(number(f, {**whole, r: tiny}) - number(1 - 2 * rq ** 2 / r0 ** 2, at)) > sp.Float(10) ** -12:
+            raise AssertionError("born_infeld_charge: g^rr of the particle whose mass is the field's does not tend to "
+                                 "1 - 2 r_q^2/r_0^2 at the centre")
+    if abs(sp.N(BORN_INFELD_NUMBER, 12) - sp.Float("1.23604978", 12)) > sp.Float(10) ** -8:
+        raise AssertionError("born_infeld_charge: Born and Infeld's number is not 1.2360")
+
+
+CHARTS["born_infeld_charge"] = [lambda s=s: born_infeld_charge(s) for s in BORN_INFELD_CHARTS]
 
 
 # -- Hayward ---------------------------------------------------------------------------

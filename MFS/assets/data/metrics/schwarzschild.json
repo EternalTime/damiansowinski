@@ -358,6 +358,11 @@
       "id": "nordstrom_scalar",
       "kind": "programme",
       "text": "The field of a point mass in the scalar theory Einstein's displaced. Nordström's metric is $(1 - GM/c^2r)^2$ times Minkowski's: the same redshift to first order, light that goes straight, and a perihelion that turns backwards [deruelle2011]."
+    },
+    {
+      "id": "born_infeld_charge",
+      "kind": "generalisation",
+      "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
     }
   ],
   "references": [
@@ -457,7 +462,9 @@
     "novikov1965",
     "lindquist1957",
     "belinskii1979",
-    "deruelle2011"
+    "deruelle2011",
+    "hoffmann1935",
+    "gibbonsrasheed1995"
   ],
   "coordinates": [
     {

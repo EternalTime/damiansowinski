@@ -59,6 +59,11 @@
       "id": "vaidya",
       "kind": "family",
       "text": "A black hole fed by a stream of radiation, its mass a function of the advanced time $v$. Tsutomu Kobayashi let the mass of this hole depend on $v$ in the same way in 2005, in Eddington-Finkelstein coordinates, with a null fluid for the radiation [kobayashi2005]."
+    },
+    {
+      "id": "born_infeld_charge",
+      "kind": "family",
+      "text": "String theory's correction to Maxwell's field, beside its correction to Einstein's gravity. The metric of Born and Infeld's point charge has a radical of the same kind, the square root of $r^4$ plus a constant, and David Wiltshire solved for both corrections together in 1988 [gibbonsrasheed1995, wiltshire1988]."
     }
   ],
   "references": [
@@ -80,7 +85,9 @@
     "gurses2020",
     "fernandes2022",
     "cai2002",
-    "kobayashi2005"
+    "kobayashi2005",
+    "gibbonsrasheed1995",
+    "wiltshire1988"
   ],
   "coordinates": [
     {

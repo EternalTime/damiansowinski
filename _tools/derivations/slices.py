@@ -1510,6 +1510,108 @@ def _bardeen_both(sign=0):
     return _bardeen("outside", sign) + _bardeen("inside", sign)
 
 
+# Born and Infeld's point charge as every diagram draws it, in units of r_0: (r_s, r_q) of
+# Hoffmann's particle, whose mass is the energy of its field, and of the black hole, null_rays.BI_PARTICLE
+# and BI_HOLE, with the black hole's one horizon.
+BORN_INFELD_DIGITS = {"particle": ("0.61802489243379063947795011573", "0.5"), "hole": ("2", "0.5")}
+BORN_INFELD = {case: tuple(float(x) for x in pair) for case, pair in BORN_INFELD_DIGITS.items()}
+BORN_INFELD_HORIZON = 1.8666065519401185
+
+
+def born_infeld_f(r, case):
+    """g^rr = 1 - 2m/r of Born and Infeld's point charge, with the mass function null_rays.born_infeld_mass."""
+    import null_rays as nr
+    rs, rq = BORN_INFELD[case]
+    r = np.asarray(r, dtype=float)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return 1 - 2 * nr.born_infeld_mass(r, rs, rq) / r
+
+
+@functools.lru_cache(maxsize=None)
+def _born_infeld_smooth(case):
+    """What is left of 1/f once the pole at the black hole's horizon is taken out, the whole of it
+    for the particle, which has no horizon, and its integral from 0 to each multiple of a tenth of
+    r_0 up to 8 r_0 and on from there to each half step of ln r. Within a twentieth of r_0 of the
+    horizon it is worked in forty digits, since 1/f and its pole cancel there to the last digits
+    of a float, and so it is within a hundredth of r_0 of the particle's centre, where the mass
+    function is the difference of two numbers that agree."""
+    import mpmath
+    rs, rq = (mpmath.mpf(x) for x in BORN_INFELD_DIGITS[case])
+
+    def f(x):
+        W = mpmath.sqrt(x ** 4 + 1)
+        m = rs / 2 + rq ** 2 * x / (3 * (x * x + W)) - rq ** 2 / 3 * mpmath.ellipf(2 * mpmath.atan(1 / x), 0.5)
+        return 1 - 2 * m / x
+
+    exact = []
+    if case == "hole":
+        with mpmath.workdps(40):
+            root = mpmath.findroot(f, BORN_INFELD_HORIZON)
+            exact = [(root, 1 / mpmath.diff(f, root))]
+    poles = [(float(ri), float(a)) for ri, a in exact]
+
+    def smooth(x):
+        if x > 0.01 and all(abs(x - ri) > 0.05 for ri, _ in poles):
+            return 1 / float(born_infeld_f(x, case)) - sum(a / (x - ri) for ri, a in poles)
+        with mpmath.workdps(40):
+            x = mpmath.mpf(x)
+            return float(1 / f(x) - sum(a / (x - ri) for ri, a in exact))
+
+    nodes, weights = np.polynomial.legendre.leggauss(12)
+
+    def panel(a, b, of=smooth):
+        half, mid = 0.5 * (b - a), 0.5 * (a + b)
+        return half * sum(w * of(mid + half * n) for n, w in zip(nodes, weights))
+
+    def in_log(u):
+        return smooth(math.exp(u)) * math.exp(u)
+    edges = [0.1 * k for k in range(81)]
+    sums = np.concatenate([[0.0], np.cumsum([panel(a, b) for a, b in zip(edges, edges[1:])])])
+    logs = [math.log(8.0) + 0.5 * k for k in range(61)]
+    tails = sums[-1] + np.concatenate([[0.0], np.cumsum([panel(a, b, in_log) for a, b in zip(logs, logs[1:])])])
+
+    def integral(x):
+        """The integral of the smooth part from 0 to x."""
+        if x <= 8.0:
+            k = min(int(x / 0.1), 80)
+            return float(sums[k]) + (panel(0.1 * k, x) if x > 0.1 * k else 0.0)
+        u = math.log(x)
+        k = min(int((u - logs[0]) / 0.5), 60)
+        return float(tails[k]) + (panel(logs[k], u, in_log) if u > logs[k] else 0.0)
+    return integral, poles
+
+
+def born_infeld_rstar(r, case):
+    """The tortoise coordinate of Born and Infeld's point charge, dr_*/dr = 1/f, as the
+    Eddington-Finkelstein charts fix it, vanishing at r = 0, for Hoffmann's particle or for the
+    black hole. The particle has no horizon and 1/f is smooth, 2 at the centre. The black hole's
+    1/f has one simple pole, at the horizon, of residue 1/f'(r_h), so its r_* is
+    ln|1 - r/r_h|/f'(r_h) and the integral from 0 of what is left of 1/f once that pole is taken
+    out. The smooth integrand is summed by Gauss and Legendre's rule, on panels a tenth of r_0
+    wide out to 8 r_0 and half a unit of ln r wide beyond."""
+    integral, poles = _born_infeld_smooth(case)
+
+    def one(x):
+        if math.isinf(x):
+            return math.inf
+        with np.errstate(divide="ignore"):
+            return integral(x) + sum(a * float(np.log(abs(1 - x / ri))) for ri, a in poles)
+    return np.array([one(float(x)) for x in np.atleast_1d(np.asarray(r, dtype=float))]).reshape(np.shape(r))
+
+
+def _born_infeld(case, sign=0):
+    """The moment t = 0 of Born and Infeld's point charge, the whole of it for Hoffmann's
+    particle and outside the horizon for the black hole: along r in the static chart (sign 0), and
+    in the ingoing (1) or outgoing (-1) chart as v = r_* or u = -r_*, which for the black hole
+    runs off toward the horizon."""
+    m, = moments("born_infeld_charge", case)
+    lo, hi = m.reach("static", "r")
+    if not sign:
+        return [Mark(m, along(0.0, lo, hi))]
+    r = near(lo, hi) if case == "hole" else np.linspace(lo, hi, N)
+    return [Mark(m, [np.column_stack([sign * born_infeld_rstar(r, case), r])])]
+
+
 def hayward_rstar(r):
     """Hayward's tortoise coordinate at m = 1 and ell = 12/(7 sqrt 7), where 1/F = 1 + 2r^2/((r - 6/7)
     (r - 12/7)(r + 4/7)), as the Eddington-Finkelstein charts fix it, vanishing at r = 0:
@@ -1878,6 +1980,14 @@ FLAT = {
     ("hiscock", "ingoing", "history"): lambda: _hiscock("ingoing"),
     ("hiscock", "outgoing", "history"): lambda: _hiscock("outgoing"),
     ("hiscock", "flat", "after"): lambda: _hiscock("after"),
+    ("born_infeld_charge", "static", "particle"): lambda: _born_infeld("particle"),
+    ("born_infeld_charge", "static", "hole"): lambda: _born_infeld("hole"),
+    ("born_infeld_charge", "eddington_finkelstein_ingoing", "particle"): lambda: _born_infeld("particle", 1),
+    ("born_infeld_charge", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _born_infeld("hole", 1),
+    ("born_infeld_charge", "eddington_finkelstein_ingoing", "chart"): lambda: _born_infeld("hole", 1),
+    ("born_infeld_charge", "eddington_finkelstein_outgoing", "particle"): lambda: _born_infeld("particle", -1),
+    ("born_infeld_charge", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _born_infeld("hole", -1),
+    ("born_infeld_charge", "eddington_finkelstein_outgoing", "chart"): lambda: _born_infeld("hole", -1),
     ("hayward", "evaporating", "history"): lambda: one(
         "hayward", lambda m: [[(m.time + r, r) for r in m.reach("evaporating", "r")]], view_id="history"),
     ("reissner_nordstrom_ads", "static", "radial"): lambda: _rnads(),
@@ -2946,6 +3056,29 @@ def checks():
     report("Bardeen: r_* = 0 at the centre", abs(float(bardeen_rstar(0.0))), 1e-15)
     report("Bardeen: the horizons are the zeros of the published g^rr",
            max(abs(1 / grr(ri)) for ri in BARDEEN_HORIZONS), 1e-13)
+
+    # Born and Infeld's point charge: the tortoise coordinate's slope is the published g_rr of the
+    # static chart, with the mass function written out as its elliptic integral, it vanishes at the
+    # centre, the particle's g^rr is positive at every radius, and the black hole's horizon is the
+    # zero of the published g^rr.
+    _, entry_bi, reader_bi = nr.load("born_infeld_charge", "static")
+    g_bi = nr.published_matrix(reader_bi, entry_bi, "metric_components").subs(reader_bi.held).doit()
+    r_bi = reader_bi.symbol["r"]
+    h = 1e-5
+    for case, params, pts in (
+            ("particle", nr.BI_PARTICLE, np.concatenate([rng.uniform(0.02, 1, 8), rng.uniform(1, 6, 8)])),
+            ("hole", nr.BI_HOLE, np.concatenate([rng.uniform(0.02, 1.8, 8), rng.uniform(1.93, 6, 8)]))):
+        subs = {reader_bi.c: 1, **{reader_bi.parameters[k]: nr.number(v) for k, v in params.items()}}
+        grr = sp.lambdify(r_bi, g_bi[1, 1].subs(subs), "numpy")
+        miss = max(abs((born_infeld_rstar(v + h, case) - born_infeld_rstar(v - h, case)) / (2 * h) / grr(v) - 1) for v in pts)
+        report(f"Born-Infeld, the {case}: dr_*/dr is the published g_rr", float(miss), 1e-7)
+        report(f"Born-Infeld, the {case}: r_* = 0 at the centre", abs(float(born_infeld_rstar(0.0, case))), 1e-15)
+        if case == "particle":
+            report("Born-Infeld, the particle: the published g^rr is positive at every radius, 1/2 at the centre",
+                   float(max(0.0, -np.min(1 / grr(np.geomspace(1e-5, 1e5, 4000)))) + abs(1 / grr(1e-5) - 0.5)), 1e-8)
+        else:
+            report("Born-Infeld, the black hole: the horizon is the zero of the published g^rr",
+                   abs(1 / grr(BORN_INFELD_HORIZON)), 1e-13)
 
     # de Sitter: the static chart of the flat slicing, r = rho e^t_f and
     # t_s = t_f - ln(1 - rho^2 e^(2 t_f))/2, pulls the static plane back onto the flat one, and the
