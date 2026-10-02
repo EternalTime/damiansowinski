@@ -1,0 +1,5389 @@
+{
+  "id": "randall_sundrum",
+  "name": "Randall-Sundrum Braneworld",
+  "short_name": "Randall-Sundrum",
+  "description": "A flat wall with three dimensions of space in anti-de Sitter space of five dimensions, found by Lisa Randall and Raman Sundrum in 1999. Every length along the wall's directions shrinks as $e^{-k|y|}$ with the distance $y$ from it, which between two walls turns the Planck scale into the weak scale, and with one wall keeps gravity four dimensional beside a fifth dimension of infinite size.",
+  "tags": [
+    "braneworld",
+    "brane",
+    "domain wall",
+    "thin shell",
+    "warped geometry",
+    "warp factor",
+    "extra dimensions",
+    "higher dimensions",
+    "five-dimensional",
+    "anti-de Sitter",
+    "negative cosmological constant",
+    "cosmological constant",
+    "hierarchy problem",
+    "localized gravity",
+    "reflection symmetry",
+    "orbifold",
+    "planar symmetry",
+    "static",
+    "conformally flat",
+    "horizon",
+    "AdS/CFT",
+    "holography",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+,+)",
+  "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $\\delta$ is the Dirac delta. We keep factors of $c$ explicit.",
+  "history": "\"Do we live inside a domain wall?\" Valery Rubakov and Mikhail Shaposhnikov asked it in 1983 of a universe with five dimensions, in which ordinary particles are confined to a potential well that is narrow along the extra direction and flat along the other three [rubakov1983]. Fifteen years later particle physicists put the wall to work on the hierarchy problem, the sixteen powers of ten between the Planck scale, $10^{19}$ GeV, and the TeV scale of the weak force [arkanihamed1998, randall1999a]. In Nima Arkani-Hamed, Savas Dimopoulos, and Gia Dvali's version of 1998, matter is stuck to such a wall, a \"3-brane\", while gravity alone spreads into extra dimensions as large as a millimeter [arkanihamed1998, randall1999a]. Lisa Randall and Raman Sundrum replied that this trades one large number for another, the size of those dimensions measured against the weak scale [randall1999a].¶Their own answer came in May 1999, with a single extra dimension and the gravity of the walls counted in [randall1999a]. Picture a stack of copies of our world of four dimensions, one for each value of a fifth coordinate $y$, each copy a print of the one at $y = 0$ scaled down by $e^{-k|y|}$ [randall1999a]. That is Randall and Sundrum's metric between two walls a distance $\\pi r_c$ apart, a slice of anti-de Sitter space of five dimensions, and Einstein's equations allow it only when the walls have equal and opposite tensions tuned to the negative cosmological constant between them [randall1999a]. A mass $m_0$ written into the physics of the far wall is measured there as $e^{-kr_c\\pi}m_0$, so $e^{kr_c\\pi}$ of order $10^{15}$ makes TeV masses out of Planck ones, and $kr_c$ need only be about 12 [randall1999a, goldberger1999]. The walls needed something to hold them at that distance, and Walter Goldberger and Mark Wise supplied it that July, a scalar field in the space between them, with no fine tuning [randall1999a, goldberger1999]. The gravitons that move in the fifth dimension would then show up at a collider one at a time, as resonances of spin 2 with masses of order a TeV [randall1999a].¶A month later Randall and Sundrum pushed the second wall away to see how far it could go, and it could go to infinity [randall1999b]. An extra dimension was supposed to be compact and small, since gravity that spreads into an open one would break Newton's inverse square law [randall1999b]. With a single wall of positive tension the law holds anyway: the curved space on either side binds one state of the graviton to the wall, and two masses on the wall attract with Newton's potential times $1 + 1/(k^2r^2)$ [randall1999b]. Jaume Garriga and Takahiro Tanaka included the bending of the wall under the mass, which gives $1 + 2/(3k^2r^2)$ and, to leading order, Einstein's gravity on the wall [garriga2000]. Laboratory tests of Newton's law see no deviation down to about a tenth of a millimeter, so $1/k \\lesssim 0.1$ mm [maartens2010].¶How does one build such a spacetime? Take anti-de Sitter space of five dimensions, slice it along the flat surface $y = 0$, keep the side that runs to the horizon, and join it to its mirror image [chamblin2000]. The crease is the wall: the jump in extrinsic curvature across it is a tension $3kc^4/4\\pi G_5$, with $G_5$ Newton's constant in five dimensions [chamblin2000]. Walls of this kind were known from supergravity, where Mirjam Cvetič and Harald Soleng had reviewed them in 1997 [randall1999b, cvetic1997]. The tension has to match the cosmological constant for the wall to stay flat, and Randall and Sundrum left that adjustment \"taken as a given and not solved\" [randall1999b]. The coordinates break down at $y = \\infty$, a horizon, and beyond it the spacetime continues in more than one way, as anti-de Sitter space with no walls or with infinitely many more of them [chamblin2000].¶And what does a star that collapses on the wall leave behind? The first candidate came from Andrew Chamblin, Stephen Hawking, and Harvey Reall in September 1999, a black string: Minkowski space on each copy can be traded for any Ricci flat metric, so they put Schwarzschild's there, and someone on the wall sees Schwarzschild's black hole [chamblin2000]. Its curvature grows without bound toward the horizon at $y = \\infty$, and near that horizon the string has Ruth Gregory and Raymond Laflamme's instability, so they conjectured that it pinches off into a \"black cigar\" [chamblin2000, gregorylaflamme1993]. In 2002 came a proposal from holography, by Tanaka and by Roberto Emparan, Alessandro Fabbri, and Nemanja Kaloper: a large black hole on the wall evaporates by a classical process in five dimensions, the holographic image of Hawking radiation [tanaka2002, emparan2002holograms]. Pau Figueras and Toby Wiseman's numerical solutions of 2011 hold static black holes on the wall with radius up to about $20/k$ [figueras2011].¶Randall and Sundrum suspected their one wall spacetime of having \"a dual description of this theory in terms of a cut-off conformal field theory in four-dimensions\", after Juan Maldacena's correspondence between anti-de Sitter space and conformal field theories [randall1999b, maldacena1998]. Steven Gubser credited Maldacena with the view that their alternative to compactification \"is nothing more nor less than gravity coupled to a strongly interacting CFT\", and Edward Witten with the calculation of the correction to Newton's law from that field theory's stress tensor [gubser2001]. Gubser derived the strength of gravity on the wall from it, $G_4 = 2G_5/L$ for one copy of anti-de Sitter space of radius $L$ ending on the wall, with $G_4$ Newton's constant in four dimensions, which is $G_4 = kG_5$ once both sides of the wall are counted and $L = 1/k$ [gubser2001]. The spin 2 resonance of the two wall spacetime is within a collider's reach, and the ATLAS experiment at the Large Hadron Collider looked for it decaying to two photons in 139 inverse femtobarns of proton collisions at 13 TeV, reporting in 2021 no \"significant deviation from the Standard Model\" [atlas2021].",
+  "related": [
+    {
+      "id": "anti_de_sitter",
+      "kind": "piece",
+      "text": "Each side of the wall is a piece of anti-de Sitter space with one more dimension, of radius $1/k$, in the Poincaré chart [randall1999a, chamblin2000]."
+    },
+    {
+      "id": "domain_wall",
+      "kind": "family",
+      "text": "A thin wall with flat space on both sides, which cannot stay at rest and accelerates as a bubble. A wall between anti-de Sitter vacua can be static, and Randall and Sundrum's is one of those [cvetic1997, randall1999b]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "piece",
+      "text": "Every surface of constant $y$ is Minkowski space, with its lengths scaled by $e^{-k|y|}$ [randall1999a]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "Put Schwarzschild's metric on every surface of constant $y$ in place of Minkowski's and the result still solves the equations: a black string, which someone on the wall sees as Schwarzschild's black hole [chamblin2000]."
+    },
+    {
+      "id": "black_string",
+      "kind": "family",
+      "text": "The black hole on the wall is this string with anti-de Sitter space around it, and near the horizon $y = \\infty$ it has the string's instability [chamblin2000, gregorylaflamme1993]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "Gravity in five dimensions with the fifth rolled into a small circle, the compactification that Randall and Sundrum's single wall is an alternative to [randall1999b]."
+    }
+  ],
+  "references": [
+    "rubakov1983",
+    "arkanihamed1998",
+    "randall1999a",
+    "goldberger1999",
+    "randall1999b",
+    "garriga2000",
+    "maartens2010",
+    "chamblin2000",
+    "cvetic1997",
+    "gregorylaflamme1993",
+    "tanaka2002",
+    "emparan2002holograms",
+    "figueras2011",
+    "maldacena1998",
+    "gubser2001",
+    "atlas2021"
+  ],
+  "coordinates": [
+    {
+      "id": "proper_distance",
+      "name": "Proper Distance",
+      "coords": [
+        "t",
+        "x_1",
+        "x_2",
+        "x_3",
+        "y"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x_1 \\in (-\\infty, \\infty)",
+        "x_2 \\in (-\\infty, \\infty)",
+        "x_3 \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "y = 0 \\;\\text{(the wall)}",
+        "y \\to \\pm\\infty \\;\\text{(the two horizons)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Inverse length, with $1/k$ the radius of the anti-de Sitter space on each side of the wall, where $R_{\\mu\\nu} = -4k^2g_{\\mu\\nu}$; the wall's tension is $3kc^4/4\\pi G_5$, with $G_5$ Newton's constant in five dimensions"
+        }
+      ],
+      "convention": "We use coordinates $(t, x_1, x_2, x_3, y)$, with $t$ the proper time of an observer at rest on the wall, $x_1$, $x_2$, and $x_3$ lengths along the wall, and $y$ the proper distance from it, and $\\mathrm{sgn}(y)$ is the sign of $y$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = e^{-2k|y|}\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{-2k|y|}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "e^{-2k|y|}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "e^{-2k|y|}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "e^{-2k|y|}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{2k|y|}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "e^{2k|y|}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "e^{2k|y|}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "e^{2k|y|}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "y"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "x_1"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "y"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "x_2"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "y"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "x_3"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "y"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "x_1"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "y"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "x_2"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "y"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "x_3"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "-k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "k\\,\\mathrm{sgn}(y)e^{-2k|y|}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-2k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\left(k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\left(k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "x_1",
+                  "y"
+                ],
+                "value": "-\\left(k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "y",
+                  "x_1"
+                ],
+                "value": "\\left(k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "x_2",
+                  "y"
+                ],
+                "value": "-\\left(k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "y",
+                  "x_2"
+                ],
+                "value": "\\left(k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "x_3",
+                  "y"
+                ],
+                "value": "-\\left(k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "y",
+                  "x_3"
+                ],
+                "value": "\\left(k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "x_1",
+                  "y"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "y",
+                  "x_1"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "x_2",
+                  "y"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "y",
+                  "x_2"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "x_3",
+                  "y"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "y",
+                  "x_3"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-4k|y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "x_1",
+                  "y"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "y",
+                  "x_1"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "x_2",
+                  "y"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "y",
+                  "x_2"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "x_3",
+                  "y"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "y",
+                  "x_3"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "x_1",
+                  "y"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "y",
+                  "x_1"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "x_2",
+                  "y"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "y",
+                  "x_2"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "x_3",
+                  "y"
+                ],
+                "value": "\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "y",
+                  "x_3"
+                ],
+                "value": "-\\left(k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\left(4k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\left(4k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\left(4k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\left(4k^2e^{-2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\left(4k^2 - 8k\\,\\delta(y)\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(4k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\left(4k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\left(4k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\left(4k^2 - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\left(4k^2 - 8k\\,\\delta(y)\\right)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\left(4k^2e^{2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\left(4k^2e^{2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\left(4k^2e^{2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\left(4k^2e^{2k|y|} - 2k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\left(4k^2 - 8k\\,\\delta(y)\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\left(20k^2 - 16k\\,\\delta(y)\\right)",
+      "kretschmann": "K = 40k^4 \\;\\text{for}\\; y \\neq 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(6k^2e^{-2k|y|} - 6k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\left(6k^2e^{-2k|y|} - 6k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\left(6k^2e^{-2k|y|} - 6k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\left(6k^2e^{-2k|y|} - 6k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "6k^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "6k^2 - 6k\\,\\delta(y)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "6k^2 - 6k\\,\\delta(y)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "6k^2 - 6k\\,\\delta(y)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "6k^2 - 6k\\,\\delta(y)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "6k^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(6k^2e^{2k|y|} - 6k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\left(6k^2e^{2k|y|} - 6k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\left(6k^2e^{2k|y|} - 6k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\left(6k^2e^{2k|y|} - 6k\\,\\delta(y)\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "6k^2"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - 2k\\,\\mathrm{sgn}(y)\\dot{t}\\dot{y} = 0",
+        "\\ddot{x_1} - 2k\\,\\mathrm{sgn}(y)\\dot{x_1}\\dot{y} = 0",
+        "\\ddot{x_2} - 2k\\,\\mathrm{sgn}(y)\\dot{x_2}\\dot{y} = 0",
+        "\\ddot{x_3} - 2k\\,\\mathrm{sgn}(y)\\dot{x_3}\\dot{y} = 0",
+        "\\ddot{y} - k\\,\\mathrm{sgn}(y)e^{-2k|y|}\\dot{t}^2 + k\\,\\mathrm{sgn}(y)e^{-2k|y|}\\dot{x_1}^2 + k\\,\\mathrm{sgn}(y)e^{-2k|y|}\\dot{x_2}^2 + k\\,\\mathrm{sgn}(y)e^{-2k|y|}\\dot{x_3}^2 = 0"
+      ]
+    },
+    {
+      "id": "conformal",
+      "name": "Conformally Flat",
+      "coords": [
+        "t",
+        "x_1",
+        "x_2",
+        "x_3",
+        "w"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x_1 \\in (-\\infty, \\infty)",
+        "x_2 \\in (-\\infty, \\infty)",
+        "x_3 \\in (-\\infty, \\infty)",
+        "w \\in (-\\infty, \\infty)",
+        "w = 0 \\;\\text{(the wall)}",
+        "w \\to \\pm\\infty \\;\\text{(the two horizons)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Inverse length, with $1/k$ the radius of the anti-de Sitter space on each side of the wall, where $R_{\\mu\\nu} = -4k^2g_{\\mu\\nu}$; the wall's tension is $3kc^4/4\\pi G_5$, with $G_5$ Newton's constant in five dimensions"
+        }
+      ],
+      "convention": "We use coordinates $(t, x_1, x_2, x_3, w)$, with $t$ the proper time of an observer at rest on the wall, $x_1$, $x_2$, and $x_3$ lengths along the wall, and $w$ the length with $1 + k|w| = e^{k|y|}$, where $y$ is the proper distance from the wall, and $\\mathrm{sgn}(w)$ is the sign of $w$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\dfrac{-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2 + dw^2}{\\left(1 + k|w|\\right)^2}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{\\left(1 + k|w|\\right)^2}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\dfrac{1}{\\left(1 + k|w|\\right)^2}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\dfrac{1}{\\left(1 + k|w|\\right)^2}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\dfrac{1}{\\left(1 + k|w|\\right)^2}"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "\\dfrac{1}{\\left(1 + k|w|\\right)^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 + k|w|\\right)^2"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\left(1 + k|w|\\right)^2"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\left(1 + k|w|\\right)^2"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\left(1 + k|w|\\right)^2"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "\\left(1 + k|w|\\right)^2"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "w"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "w",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "w"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "w",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "w"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "w",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "w"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "w",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "w"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "w",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "w"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "w",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(w)}{\\left(1 + k|w|\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "w",
+                  "x_1",
+                  "w"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "w",
+                  "w",
+                  "x_1"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "w",
+                  "x_2",
+                  "w"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "w",
+                  "w",
+                  "x_2"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "w",
+                  "x_3",
+                  "w"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "w",
+                  "w",
+                  "x_3"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_1",
+                  "x_1",
+                  "w"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_1",
+                  "w",
+                  "x_1"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_2",
+                  "x_2",
+                  "w"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_2",
+                  "w",
+                  "x_2"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_3",
+                  "x_3",
+                  "w"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_3",
+                  "w",
+                  "x_3"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{k^2}{\\left(1 + k|w|\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "w",
+                  "x_1",
+                  "w"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "w",
+                  "w",
+                  "x_1"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "w",
+                  "x_2",
+                  "w"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "w",
+                  "w",
+                  "x_2"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "w",
+                  "x_3",
+                  "w"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "w",
+                  "w",
+                  "x_3"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_1",
+                  "x_1",
+                  "w"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_1",
+                  "w",
+                  "x_1"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_2",
+                  "x_2",
+                  "w"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_2",
+                  "w",
+                  "x_2"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_3",
+                  "x_3",
+                  "w"
+                ],
+                "value": "\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x_3",
+                  "w",
+                  "x_3"
+                ],
+                "value": "-\\left(\\dfrac{k^2}{\\left(1 + k|w|\\right)^4} - 2k\\,\\delta(w)\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\left(\\dfrac{4k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\left(\\dfrac{4k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\left(\\dfrac{4k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\left(\\dfrac{4k^2}{\\left(1 + k|w|\\right)^2} - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "-\\left(\\dfrac{4k^2}{\\left(1 + k|w|\\right)^2} - 8k\\,\\delta(w)\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(4k^2 - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\left(4k^2 - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\left(4k^2 - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\left(4k^2 - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "-\\left(4k^2 - 8k\\,\\delta(w)\\right)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\left(4k^2\\left(1 + k|w|\\right)^2 - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\left(4k^2\\left(1 + k|w|\\right)^2 - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\left(4k^2\\left(1 + k|w|\\right)^2 - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\left(4k^2\\left(1 + k|w|\\right)^2 - 2k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "-\\left(4k^2\\left(1 + k|w|\\right)^2 - 8k\\,\\delta(w)\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\left(20k^2 - 16k\\,\\delta(w)\\right)",
+      "kretschmann": "K = 40k^4 \\;\\text{for}\\; w \\neq 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(\\dfrac{6k^2}{\\left(1 + k|w|\\right)^2} - 6k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\left(\\dfrac{6k^2}{\\left(1 + k|w|\\right)^2} - 6k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\left(\\dfrac{6k^2}{\\left(1 + k|w|\\right)^2} - 6k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\left(\\dfrac{6k^2}{\\left(1 + k|w|\\right)^2} - 6k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "\\dfrac{6k^2}{\\left(1 + k|w|\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "6k^2 - 6k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "6k^2 - 6k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "6k^2 - 6k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "6k^2 - 6k\\,\\delta(w)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "6k^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(6k^2\\left(1 + k|w|\\right)^2 - 6k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\left(6k^2\\left(1 + k|w|\\right)^2 - 6k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\left(6k^2\\left(1 + k|w|\\right)^2 - 6k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\left(6k^2\\left(1 + k|w|\\right)^2 - 6k\\,\\delta(w)\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "6k^2\\left(1 + k|w|\\right)^2"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{2k\\,\\mathrm{sgn}(w)}{1 + k|w|}\\dot{t}\\dot{w} = 0",
+        "\\ddot{x_1} - \\dfrac{2k\\,\\mathrm{sgn}(w)}{1 + k|w|}\\dot{x_1}\\dot{w} = 0",
+        "\\ddot{x_2} - \\dfrac{2k\\,\\mathrm{sgn}(w)}{1 + k|w|}\\dot{x_2}\\dot{w} = 0",
+        "\\ddot{x_3} - \\dfrac{2k\\,\\mathrm{sgn}(w)}{1 + k|w|}\\dot{x_3}\\dot{w} = 0",
+        "\\ddot{w} - \\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}\\dot{t}^2 + \\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}\\dot{x_1}^2 + \\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}\\dot{x_2}^2 + \\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}\\dot{x_3}^2 - \\dfrac{k\\,\\mathrm{sgn}(w)}{1 + k|w|}\\dot{w}^2 = 0"
+      ]
+    },
+    {
+      "id": "poincare",
+      "name": "Poincaré, One Side",
+      "coords": [
+        "t",
+        "x_1",
+        "x_2",
+        "x_3",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x_1 \\in (-\\infty, \\infty)",
+        "x_2 \\in (-\\infty, \\infty)",
+        "x_3 \\in (-\\infty, \\infty)",
+        "z \\in [1/k, \\infty)",
+        "z = 1/k \\;\\text{(the wall, where this side meets its mirror image)}",
+        "z \\to \\infty \\;\\text{(the horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Inverse length, with $1/k$ the radius of the anti-de Sitter space on each side of the wall, where $R_{\\mu\\nu} = -4k^2g_{\\mu\\nu}$; the wall's tension is $3kc^4/4\\pi G_5$, with $G_5$ Newton's constant in five dimensions"
+        }
+      ],
+      "convention": "We use coordinates $(t, x_1, x_2, x_3, z)$ on one side of the wall, with $t$ the proper time of an observer at rest on the wall, $x_1$, $x_2$, and $x_3$ lengths along the wall, and $z = e^{ky}/k$, where $y$ is the proper distance from the wall. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\dfrac{-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2 + dz^2}{k^2z^2}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{k^2z^2}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\dfrac{1}{k^2z^2}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\dfrac{1}{k^2z^2}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\dfrac{1}{k^2z^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{k^2z^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-k^2z^2"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "k^2z^2"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "k^2z^2"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "k^2z^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "k^2z^2"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "z",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "z",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "z",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "z",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "z",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "z",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{k^2z^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{k^2z^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "z",
+                  "x_1",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "z",
+                  "z",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "z",
+                  "x_2",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "z",
+                  "z",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "z",
+                  "x_3",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "z",
+                  "z",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_1",
+                  "x_1",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_1",
+                  "z",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_2",
+                  "x_2",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_2",
+                  "z",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_3",
+                  "x_3",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_3",
+                  "z",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{z^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "z",
+                  "x_1",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "z",
+                  "z",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "z",
+                  "x_2",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "z",
+                  "z",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "z",
+                  "x_3",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "z",
+                  "z",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_1",
+                  "x_1",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_1",
+                  "z",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_2",
+                  "x_2",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_2",
+                  "z",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_3",
+                  "x_3",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{k^2z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x_3",
+                  "z",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{k^2z^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{4}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{4}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{4}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{4}{z^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-4k^2"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-4k^2"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-4k^2"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-4k^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-4k^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "4k^4z^2"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-4k^4z^2"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-4k^4z^2"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-4k^4z^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-4k^4z^2"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -20k^2",
+      "kretschmann": "K = 40k^4",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{6}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{6}{z^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{6}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{6}{z^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "6k^2"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "6k^2"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "6k^2"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "6k^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "6k^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-6k^4z^2"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "6k^4z^2"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "6k^4z^2"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "6k^4z^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "6k^4z^2"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{2}{z}\\dot{t}\\dot{z} = 0",
+        "\\ddot{x_1} - \\dfrac{2}{z}\\dot{x_1}\\dot{z} = 0",
+        "\\ddot{x_2} - \\dfrac{2}{z}\\dot{x_2}\\dot{z} = 0",
+        "\\ddot{x_3} - \\dfrac{2}{z}\\dot{x_3}\\dot{z} = 0",
+        "\\ddot{z} - \\dfrac{1}{z}\\dot{t}^2 + \\dfrac{1}{z}\\dot{x_1}^2 + \\dfrac{1}{z}\\dot{x_2}^2 + \\dfrac{1}{z}\\dot{x_3}^2 - \\dfrac{1}{z}\\dot{z}^2 = 0"
+      ]
+    },
+    {
+      "id": "two_walls",
+      "name": "Two Walls",
+      "coords": [
+        "t",
+        "x_1",
+        "x_2",
+        "x_3",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x_1 \\in (-\\infty, \\infty)",
+        "x_2 \\in (-\\infty, \\infty)",
+        "x_3 \\in (-\\infty, \\infty)",
+        "\\phi \\in (-\\pi, \\pi]",
+        "\\phi = 0 \\;\\text{(the wall of positive tension)}",
+        "\\phi = \\pi \\;\\text{(the wall of negative tension)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Inverse length, with $1/k$ the radius of the anti-de Sitter space on each side of the wall, where $R_{\\mu\\nu} = -4k^2g_{\\mu\\nu}$; the wall's tension is $3kc^4/4\\pi G_5$, with $G_5$ Newton's constant in five dimensions"
+        },
+        {
+          "symbol": "r_c",
+          "description": "Length that sets the size of the fifth dimension: the two walls are a proper distance $\\pi r_c$ apart"
+        }
+      ],
+      "convention": "We use coordinates $(t, x_1, x_2, x_3, \\phi)$, with $t$ the proper time of an observer at rest on the wall at $\\phi = 0$, $x_1$, $x_2$, and $x_3$ lengths along it, and $\\phi$ an angle, with $\\mathrm{sgn}(\\phi)$ its sign. The points $\\phi$ and $-\\phi$ are one point, and every component holds for $|\\phi| < \\pi$, the wall at $\\phi = \\pi$ carrying deltas of the opposite sign. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = e^{-2kr_c|\\phi|}\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + r_c^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{-2kr_c|\\phi|}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "e^{-2kr_c|\\phi|}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "e^{-2kr_c|\\phi|}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "e^{-2kr_c|\\phi|}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r_c^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{2kr_c|\\phi|}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "e^{2kr_c|\\phi|}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "e^{2kr_c|\\phi|}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "e^{2kr_c|\\phi|}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{r_c^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "\\phi"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "\\phi",
+                  "x_1"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "\\phi"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "\\phi",
+                  "x_2"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "\\phi"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "\\phi",
+                  "x_3"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{k\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{k\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}}{r_c}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "\\phi"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "\\phi",
+                  "x_1"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "\\phi"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "\\phi",
+                  "x_2"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "\\phi"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "\\phi",
+                  "x_3"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t"
+                ],
+                "value": "-kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "kr_c\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-2kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\left(k^2r_c^2 - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\left(k^2r_c^2 - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "\\phi",
+                  "x_1",
+                  "\\phi"
+                ],
+                "value": "-\\left(k^2r_c^2 - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "\\phi",
+                  "\\phi",
+                  "x_1"
+                ],
+                "value": "\\left(k^2r_c^2 - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "\\phi",
+                  "x_2",
+                  "\\phi"
+                ],
+                "value": "-\\left(k^2r_c^2 - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "\\phi",
+                  "\\phi",
+                  "x_2"
+                ],
+                "value": "\\left(k^2r_c^2 - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "\\phi",
+                  "x_3",
+                  "\\phi"
+                ],
+                "value": "-\\left(k^2r_c^2 - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "\\phi",
+                  "\\phi",
+                  "x_3"
+                ],
+                "value": "\\left(k^2r_c^2 - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\left(k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\left(k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_1",
+                  "x_1",
+                  "\\phi"
+                ],
+                "value": "\\left(k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_1",
+                  "\\phi",
+                  "x_1"
+                ],
+                "value": "-\\left(k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_2",
+                  "x_2",
+                  "\\phi"
+                ],
+                "value": "\\left(k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_2",
+                  "\\phi",
+                  "x_2"
+                ],
+                "value": "-\\left(k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_3",
+                  "x_3",
+                  "\\phi"
+                ],
+                "value": "\\left(k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_3",
+                  "\\phi",
+                  "x_3"
+                ],
+                "value": "-\\left(k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-k^2e^{-4kr_c|\\phi|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "\\phi",
+                  "x_1",
+                  "\\phi"
+                ],
+                "value": "-\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "\\phi",
+                  "\\phi",
+                  "x_1"
+                ],
+                "value": "\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "\\phi",
+                  "x_2",
+                  "\\phi"
+                ],
+                "value": "-\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "\\phi",
+                  "\\phi",
+                  "x_2"
+                ],
+                "value": "\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "\\phi",
+                  "x_3",
+                  "\\phi"
+                ],
+                "value": "-\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "\\phi",
+                  "\\phi",
+                  "x_3"
+                ],
+                "value": "\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_1",
+                  "x_1",
+                  "\\phi"
+                ],
+                "value": "\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_1",
+                  "\\phi",
+                  "x_1"
+                ],
+                "value": "-\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_2",
+                  "x_2",
+                  "\\phi"
+                ],
+                "value": "\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_2",
+                  "\\phi",
+                  "x_2"
+                ],
+                "value": "-\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_3",
+                  "x_3",
+                  "\\phi"
+                ],
+                "value": "\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x_3",
+                  "\\phi",
+                  "x_3"
+                ],
+                "value": "-\\left(k^2r_c^2e^{-2kr_c|\\phi|} - 2kr_c\\,\\delta(\\phi)\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\left(4k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\left(4k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\left(4k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\left(4k^2e^{-2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(4k^2r_c^2 - 8kr_c\\,\\delta(\\phi)\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(4k^2 - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\left(4k^2 - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\left(4k^2 - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\left(4k^2 - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(4k^2 - \\dfrac{8k\\,\\delta(\\phi)}{r_c}\\right)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\left(4k^2e^{2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\left(4k^2e^{2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\left(4k^2e^{2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\left(4k^2e^{2kr_c|\\phi|} - \\dfrac{2k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(\\dfrac{4k^2}{r_c^2} - \\dfrac{8k\\,\\delta(\\phi)}{r_c^3}\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\left(20k^2 - \\dfrac{16k\\,\\delta(\\phi)}{r_c}\\right)",
+      "kretschmann": "K = 40k^4 \\;\\text{for}\\; \\phi \\neq 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(6k^2e^{-2kr_c|\\phi|} - \\dfrac{6k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\left(6k^2e^{-2kr_c|\\phi|} - \\dfrac{6k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\left(6k^2e^{-2kr_c|\\phi|} - \\dfrac{6k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\left(6k^2e^{-2kr_c|\\phi|} - \\dfrac{6k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "6k^2r_c^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "6k^2 - \\dfrac{6k\\,\\delta(\\phi)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "6k^2 - \\dfrac{6k\\,\\delta(\\phi)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "6k^2 - \\dfrac{6k\\,\\delta(\\phi)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "6k^2 - \\dfrac{6k\\,\\delta(\\phi)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "6k^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(6k^2e^{2kr_c|\\phi|} - \\dfrac{6k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\left(6k^2e^{2kr_c|\\phi|} - \\dfrac{6k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\left(6k^2e^{2kr_c|\\phi|} - \\dfrac{6k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\left(6k^2e^{2kr_c|\\phi|} - \\dfrac{6k\\,\\delta(\\phi)}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6k^2}{r_c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - 2kr_c\\,\\mathrm{sgn}(\\phi)\\dot{t}\\dot{\\phi} = 0",
+        "\\ddot{x_1} - 2kr_c\\,\\mathrm{sgn}(\\phi)\\dot{x_1}\\dot{\\phi} = 0",
+        "\\ddot{x_2} - 2kr_c\\,\\mathrm{sgn}(\\phi)\\dot{x_2}\\dot{\\phi} = 0",
+        "\\ddot{x_3} - 2kr_c\\,\\mathrm{sgn}(\\phi)\\dot{x_3}\\dot{\\phi} = 0",
+        "\\ddot{\\phi} - \\dfrac{k\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}}{r_c}\\dot{t}^2 + \\dfrac{k\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}}{r_c}\\dot{x_1}^2 + \\dfrac{k\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}}{r_c}\\dot{x_2}^2 + \\dfrac{k\\,\\mathrm{sgn}(\\phi)e^{-2kr_c|\\phi|}}{r_c}\\dot{x_3}^2 = 0"
+      ]
+    }
+  ]
+}

@@ -742,6 +742,15 @@ DIMENSIONS = {
     ("tangherlini", "spherical_six"): {
         "t": "T", "r": "L", "\\chi": "1", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_h": "L",
     },
+    # Randall and Sundrum's wall has one inverse length, k, the curvature of the anti-de Sitter space
+    # on each side; x_1, x_2 and x_3 run along the wall, and the fifth coordinate is a length in every
+    # chart but the one between two walls, where it is the angle phi and r_c carries the length.
+    ("randall_sundrum", "proper_distance"): {"t": "T", "x_1": "L", "x_2": "L", "x_3": "L", "y": "L", "k": "1/L"},
+    ("randall_sundrum", "conformal"): {"t": "T", "x_1": "L", "x_2": "L", "x_3": "L", "w": "L", "k": "1/L"},
+    ("randall_sundrum", "poincare"): {"t": "T", "x_1": "L", "x_2": "L", "x_3": "L", "z": "L", "k": "1/L"},
+    ("randall_sundrum", "two_walls"): {
+        "t": "T", "x_1": "L", "x_2": "L", "x_3": "L", "\\phi": "1", "k": "1/L", "r_c": "L",
+    },
     # Bardeen's regular black hole keeps Schwarzschild's r_s; g, the monopole's charge, is a length.
     # The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
     ("bardeen", "static"): {

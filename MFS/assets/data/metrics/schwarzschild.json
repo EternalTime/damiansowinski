@@ -230,6 +230,11 @@
       "id": "kasner",
       "kind": "limit",
       "text": "A limit of Schwarzschild's metric with the mass sent to infinity. Robert Geroch showed in 1969 that the limit depends on the coordinates carried along: in one set it is Minkowski space, and in another, which stays inside the horizon, it is a Kasner universe [geroch1969]."
+    },
+    {
+      "id": "randall_sundrum",
+      "kind": "family",
+      "text": "Schwarzschild's black hole on a wall in five dimensions is a black string that reaches away from the wall into the fifth [chamblin2000]."
     }
   ],
   "references": [
@@ -300,7 +305,8 @@
     "hartlethorne1968",
     "ernst1976b",
     "einstein1945",
-    "geroch1969"
+    "geroch1969",
+    "chamblin2000"
   ],
   "coordinates": [
     {

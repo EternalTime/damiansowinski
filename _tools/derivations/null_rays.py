@@ -254,6 +254,8 @@ MYERS_ONE = {"mu": 1, "a": "3/5"}
 MYERS_EQUAL = {"mu": 1, "a": "2/5"}
 MYERS_SIX = {"mu": 1, "a": "3/2"}
 MYERS_CONE = "future cone of no angular momentum"
+# Randall and Sundrum's planes of t and the fifth coordinate hold the three coordinates along the wall fixed.
+RS_WALL = {"x_1": "0", "x_2": "0", "x_3": "0"}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -1389,6 +1391,21 @@ DIAGRAMS = [
             "$kx$", "$kcT$", {"k": 1}, EQUATOR, mirror=True, tau="T", families=SIDEWAYS, cones=(4, 8),
             areal=True, marked=(("shell", {"x0": "0", "r": "0"}, "both", "the rays $R = c|T|$ through the centre at "
                                 "$T = 0$, the horizons of the planar and global charts"),)),
+    # Randall and Sundrum's wall at k = 1, on the plane of t and the fifth coordinate in each chart, every
+    # x_i held fixed: the proper distance chart out to 2.5/k on either side, where the cones close as
+    # e^{-k|y|}; the conformally flat chart, whose rays run at 45 degrees; the Poincare chart of one side
+    # from the wall at z = 1/k; and the two walls at k r_c = 1/2, whose edges phi = +-pi are one wall.
+    Diagram("randall_sundrum", "proper_distance", "ty", "$t$ and $y$", ("t", "y"), (-2.5, 2.5, -6, 6),
+            "$ky$", "$kct$", {"k": 1}, RS_WALL, families=SIDEWAYS, cones=(6, 7),
+            lines=(("shell", "r", "0", "the wall, $y = 0$"),)),
+    Diagram("randall_sundrum", "conformal", "tw", "$t$ and $w$", ("t", "w"), (-4, 4, -4, 4),
+            "$kw$", "$kct$", {"k": 1}, RS_WALL, families=SIDEWAYS, cones=(6, 7),
+            lines=(("shell", "r", "0", "the wall, $w = 0$"),)),
+    Diagram("randall_sundrum", "poincare", "tz", "$t$ and $z$", ("t", "z"), (1, 5, -2, 2),
+            "$kz$", "$kct$", {"k": 1}, RS_WALL, families=SIDEWAYS, cones=(5, 7)),
+    Diagram("randall_sundrum", "two_walls", "tphi", "$t$ and $\\phi$", ("t", "\\phi"), (-math.pi, math.pi, -4, 4),
+            "$\\phi$", "$kct$", {"k": 1, "r_c": "1/2"}, RS_WALL, families=SIDEWAYS, cones=(6, 7),
+            periodic=("\\phi",), lines=(("shell", "r", "0", "the wall of positive tension, $\\phi = 0$"),)),
     Diagram("anti_de_sitter", "static_global", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/L$", "$ct/L$", {"L": 1}, EQUATOR, areal=True),
     Diagram("anti_de_sitter", "static_global", "through", "through the centre", ("t", "r"),
@@ -3371,6 +3388,41 @@ CAPTIONS = {
         "the wall runs on into it. The rays $R = c|T|$ through the centre at $T = 0$ bound the region "
         "the planar and global charts cover, between them and the wall, and are the horizons $|z| = 1/k$ "
         "of those charts.",
+    ],
+    ("randall_sundrum", "proper_distance", "ty"): [
+        "The plane of $t$ and $y$ ($x_1 = x_2 = x_3 = 0$), the same at every place along the wall, in units of "
+        "$1/k$. The metric on it is $-e^{-2k|y|}c^2dt^2 + dy^2$, so the edges of the cones are "
+        "$dy/d(ct) = \\pm e^{-k|y|}$, widest on the wall at $y = 0$, and a ray crosses the wall with the slope it "
+        "had.",
+        "The cones close toward the horizons $y \\to \\pm\\infty$, where $g_{tt}$ vanishes, and a ray takes an "
+        "infinite time $t$ and a finite affine parameter to reach either, running along "
+        "$kct \\mp \\mathrm{sgn}(y)\\,(e^{k|y|} - 1) = $ const. No Christoffel symbol turns a ray out of the plane, "
+        "so every curve drawn is a null geodesic.",
+    ],
+    ("randall_sundrum", "conformal", "tw"): [
+        "The plane of $t$ and $w$ ($x_1 = x_2 = x_3 = 0$), in units of $1/k$. The metric on it is "
+        "$(-c^2dt^2 + dw^2)/(1 + k|w|)^2$, conformal to Minkowski's plane, so every ray is a straight 45° line, "
+        "$ct \\pm w = $ const, through the wall at $w = 0$ and on.",
+        "The horizons lie at $w \\to \\pm\\infty$, off the drawing in every direction. No Christoffel symbol turns "
+        "a ray out of the plane, so every curve drawn is a null geodesic.",
+    ],
+    ("randall_sundrum", "poincare", "tz"): [
+        "The plane of $t$ and $z$ ($x_1 = x_2 = x_3 = 0$) on one side of the wall, in units of $1/k$. The metric "
+        "on it is $(-c^2dt^2 + dz^2)/k^2z^2$, anti-de Sitter space in the Poincaré chart, so every ray is a "
+        "straight 45° line, $ct \\pm z = $ const.",
+        "The left edge is the wall, $z = 1/k$, where a ray passes into the mirror image of this side, and the "
+        "conformal boundary of anti-de Sitter space, $z = 0$, lies in the part cut away. No Christoffel symbol "
+        "turns a ray out of the plane, so every curve drawn is a null geodesic.",
+    ],
+    ("randall_sundrum", "two_walls", "tphi"): [
+        "The plane of $t$ and $\\phi$ ($x_1 = x_2 = x_3 = 0$) between two walls with $kr_c = 1/2$, in units of "
+        "$1/k$. The metric on it is $-e^{-2kr_c|\\phi|}c^2dt^2 + r_c^2d\\phi^2$, so the edges of the cones are "
+        "$r_c\\,d\\phi/d(ct) = \\pm e^{-kr_c|\\phi|}$, and the cones at the edges are $e^{-\\pi/2} = 0.21$ as wide "
+        "as on the wall of positive tension at $\\phi = 0$.",
+        "The edges $\\phi = \\pm\\pi$ are one line, the wall of negative tension, and $\\phi$ and $-\\phi$ are one "
+        "point, so the two halves of the drawing are two copies of the space between the walls and a ray that "
+        "reaches either wall turns back from it. No Christoffel symbol turns a ray out of the plane, so every "
+        "curve drawn is a null geodesic.",
     ],
     ("anti_de_sitter", "static_global", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the global "
@@ -7079,6 +7131,14 @@ CLOSED_FORMS = {
     ("milne", "inertial", "through"): (lambda T, R: T + R, lambda T, R: T - R, None),
     ("anti_de_sitter", "static_global", "radial"):
         (lambda t, r: t + np.arctan(r), lambda t, r: t - np.arctan(r), None),
+    # Randall and Sundrum's wall at k = 1: the rays keep ct -+ sgn(y)(e^|y| - 1), which is ct -+ w, and
+    # ct -+ z on one side; between two walls at r_c = 1/2, ct -+ sgn(phi)(e^(|phi|/2) - 1).
+    ("randall_sundrum", "proper_distance", "ty"):
+        (lambda t, y: t + np.sign(y) * np.expm1(np.abs(y)), lambda t, y: t - np.sign(y) * np.expm1(np.abs(y)), None),
+    ("randall_sundrum", "conformal", "tw"): (lambda t, w: t + w, lambda t, w: t - w, None),
+    ("randall_sundrum", "poincare", "tz"): (lambda t, z: t + z, lambda t, z: t - z, None),
+    ("randall_sundrum", "two_walls", "tphi"):
+        (lambda t, f: t + np.sign(f) * np.expm1(np.abs(f) / 2), lambda t, f: t - np.sign(f) * np.expm1(np.abs(f) / 2), None),
     ("domain_wall", "planar", "tz"):
         (lambda t, z: t - np.sign(z) * np.log(1 - np.abs(z)), lambda t, z: t + np.sign(z) * np.log(1 - np.abs(z)),
          lambda t, z: np.abs(z) < 0.95),

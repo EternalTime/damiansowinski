@@ -6,7 +6,7 @@ khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_sh
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
-black_string, myers_perry, near_horizon_extreme_kerr and hartle_thorne, and Godel's cylindrical chart.
+black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne and randall_sundrum, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -3777,6 +3777,131 @@ def kaluza_klein_pullback(chart, system_id):
 
 
 CHARTS["kaluza_klein_monopole"] = [lambda s=s: kaluza_klein_monopole(s) for s in KK_CHARTS]
+
+
+# -- Randall-Sundrum -------------------------------------------------------------------
+
+RS_CHARTS = ["proper_distance", "conformal", "poincare", "two_walls"]
+
+
+def randall_sundrum(system):
+    """Randall and Sundrum's wall in five dimensional anti-de Sitter space, in the four charts its
+    literature uses: their own of 1999, with y the proper distance from the wall and the warp
+    factor e^{-2k|y|}; the conformally flat chart of their second paper, 1 + k|w| = e^{k|y|};
+    the Poincare chart of one side, kz = e^{ky}, in which Chamblin, Hawking and Reall wrote the
+    black string; and the chart of their first paper, y = r_c phi between two walls. The
+    curvature of the three charts that cross the wall is anti-de Sitter's plus a delta on the
+    wall, which the checker reads as a distribution, and their Kretschmann scalar is stated
+    where the wall is not. Each chart is held to R_AB = -4k^2 g_AB off the wall, and each after
+    the first to being the first pulled back on either side of it; randall_sundrum.md derives
+    each chart."""
+    flat = "dx_1^2 + dx_2^2 + dx_3^2"
+    along = ["x_1", "x_2", "x_3"]
+    reals = " \\in (-\\infty, \\infty)"
+    charts = {
+        "proper_distance": {
+            "name": "Proper Distance", "fifth": "y", "kink": True,
+            "line": "ds^2 = e^{-2k|y|}\\left(-%sdt^2 + " + flat + "\\right) + dy^2",
+            "domains": ["y" + reals, "y = 0 \\;\\text{(the wall)}",
+                        "y \\to \\pm\\infty \\;\\text{(the two horizons)}"]},
+        "conformal": {
+            "name": "Conformally Flat", "fifth": "w", "kink": True,
+            "line": "ds^2 = \\dfrac{-%sdt^2 + " + flat + " + dw^2}{\\left(1 + k|w|\\right)^2}",
+            "domains": ["w" + reals, "w = 0 \\;\\text{(the wall)}",
+                        "w \\to \\pm\\infty \\;\\text{(the two horizons)}"]},
+        "poincare": {
+            "name": "Poincaré, One Side", "fifth": "z", "kink": False,
+            "line": "ds^2 = \\dfrac{-%sdt^2 + " + flat + " + dz^2}{k^2z^2}",
+            "domains": ["z \\in [1/k, \\infty)",
+                        "z = 1/k \\;\\text{(the wall, where this side meets its mirror image)}",
+                        "z \\to \\infty \\;\\text{(the horizon)}"]},
+        "two_walls": {
+            "name": "Two Walls", "fifth": "\\phi", "kink": True,
+            "line": "ds^2 = e^{-2kr_c|\\phi|}\\left(-%sdt^2 + " + flat + "\\right) + r_c^2d\\phi^2",
+            "domains": ["\\phi \\in (-\\pi, \\pi]", "\\phi = 0 \\;\\text{(the wall of positive tension)}",
+                        "\\phi = \\pi \\;\\text{(the wall of negative tension)}"]},
+    }
+    chart = charts[system]
+    coords = ["t"] + along + [chart["fifth"]]
+    parameters = ["k", "r_c"] if system == "two_walls" else ["k"]
+    probe = vm.Reader(coords, parameters, ())
+    k, x = probe.parameters["k"], probe.symbol[chart["fifth"]]
+    lead = [k] + ([probe.parameters["r_c"]] if system == "two_walls" else []) + [x]
+    spec = {
+        "metric_id": "randall_sundrum",
+        "system": {"id": system, "name": chart["name"], "coords": coords,
+                   "domains": ["t" + reals] + [a + reals for a in along] + chart["domains"],
+                   "parameters": parameters, "line_element": chart["line"] % "c^2"},
+        "chart_line_element": chart["line"] % "",
+        "printer": {"lead": lead},
+        "check": lambda c, s=system: randall_sundrum_check(c, s),
+    }
+    if chart["kink"]:
+        kinked, overrides = cp.kink(x)
+        absolute = next(p for p in overrides if p.name.startswith("_abs"))
+
+        def pretty(value):
+            # Anti-de Sitter's curvature and the wall's are printed apart: the part without the
+            # delta as the kink prints it, and the delta with its coefficient taken on the wall.
+            value = sp.sympify(value)
+            delta = sp.DiracDelta(x)
+            if not value.has(delta):
+                return kinked(value)
+            regular = value.subs(delta, 0)
+            on_wall = sp.simplify(sp.simplify((value - regular) / delta).subs(x, 0))
+            if on_wall.has(delta) or on_wall.has(sp.sign) or on_wall.has(x):
+                raise ValueError(f"{value} is not a function plus a delta on the wall")
+            return kinked(regular) + kinked(on_wall * delta)
+        placeholder = next(p for p in overrides if p.name.startswith("_delta"))
+        spec["pretty"] = spec["bracketed"] = pretty
+        spec["printer"] = {"lead": lead, "rising": [absolute], "last": [placeholder], "overrides": overrides}
+        spec["kretschmann_where"] = chart["fifth"]
+    else:
+        spec["kretschmann"] = "40k^4"
+    spec["rewrite"] = [("k\\,|", "k|"), ("r_c\\,|", "r_c|"), ("k\\,r_c", "kr_c"), ("k^2\\,r_c", "k^2r_c"),
+                       ("k^2\\,z", "k^2z"), ("k^4\\,z", "k^4z")]
+    return spec
+
+
+def randall_sundrum_check(chart, system):
+    """Off the wall every chart solves R_AB = -4k^2 g_AB, anti-de Sitter space of radius 1/k in
+    five dimensions, checked on each side with the fifth coordinate written as plus or minus a
+    positive symbol; and each chart after the first is the first pulled back through
+    y = sgn(w) ln(1 + k|w|)/k, y = ln(kz)/k, or y = r_c phi, slot by slot, on each side."""
+    k = chart.reader.parameters["k"]
+    fifth = chart.symbols[-1]
+    s = sp.Symbol("s", positive=True)
+    sides = (1,) if system == "poincare" else (1, -1)
+    ricci = sp.Matrix(chart.geo.ricci_ll())
+    for side in sides:
+        at = {fifth: side * s}
+        difference = (ricci + 4 * k ** 2 * chart.geo.g).subs(at).doit()
+        difference = difference.replace(lambda e: isinstance(e, sp.DiracDelta), lambda e: sp.Integer(0))
+        if sp.simplify(difference) != sp.zeros(5, 5):
+            raise AssertionError(f"randall_sundrum: the {system} chart is not anti-de Sitter space on the side {side}")
+    if system == "proper_distance":
+        return
+    first = randall_sundrum("proper_distance")
+    source = cp.Chart(first["system"]["coords"], first["system"]["parameters"], first["chart_line_element"])
+    y = source.symbols[-1]
+    for side in sides:
+        # The Poincare chart's side is z > 1/k, so its z is written 1/k + s.
+        image = {"conformal": side * sp.log(1 + k * s) / k, "poincare": sp.log(1 + k * s) / k,
+                 "two_walls": side * chart.reader.parameters.get("r_c", 1) * s}[system]
+        J = sp.diag(1, 1, 1, 1, sp.diff(image, s) * side)
+        at = dict(zip(source.symbols[:-1], chart.symbols[:-1]))
+        at[y] = image
+        at[source.reader.parameters["k"]] = k
+        # k and r_c are lengths' inverses and lengths, positive, which is what tells sympy the side y is on.
+        positive = {p: sp.Symbol(p.name + "_positive", positive=True) for p in chart.reader.parameters.values()}
+        pulled = (J.T * source.geo.g.subs(at, simultaneous=True) * J).subs(positive)
+        own = chart.geo.g.subs(fifth, 1 / k + s if system == "poincare" else side * s).subs(positive)
+        if sp.simplify(pulled - own) != sp.zeros(5, 5):
+            raise AssertionError(f"randall_sundrum: the proper distance chart pulled back misses the {system} "
+                                 f"chart on the side {side}")
+
+
+CHARTS["randall_sundrum"] = [lambda s=s: randall_sundrum(s) for s in RS_CHARTS]
 # -- Bell-Szekeres -----------------------------------------------------------------------
 
 BS_CHARTS = ("double_null", "time_space", "regular", "global", "kruskal_szekeres", "bertotti_robinson")

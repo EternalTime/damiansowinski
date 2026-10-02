@@ -140,6 +140,11 @@
       "id": "malament_hogarth",
       "kind": "conformal",
       "text": "Remove one event from Minkowski space and multiply the metric by a factor that grows without bound toward it, and one observer can see the whole endless future of another in a finite time of their own [earman1993]. Itamar Pitowsky had tried the same in Minkowski space itself in 1990, where the traveller's acceleration must grow without bound [pitowsky1990]."
+    },
+    {
+      "id": "randall_sundrum",
+      "kind": "composite",
+      "text": "A stack of Minkowski spaces along a fifth dimension, each scaled by $e^{-k|y|}$ with its distance $y$ from a wall [randall1999a]."
     }
   ],
   "references": [
@@ -192,7 +197,8 @@
     "everett1997",
     "visser1989prd",
     "earman1993",
-    "pitowsky1990"
+    "pitowsky1990",
+    "randall1999a"
   ],
   "coordinates": [
     {

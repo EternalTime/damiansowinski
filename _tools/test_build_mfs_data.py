@@ -4220,6 +4220,12 @@ class Slices(unittest.TestCase):
     # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
     # Barriola-Vilenkin drawings the monopole's.
     HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
+                    # Randall and Sundrum's one wall and their two walls are two spacetimes of one line
+                    # element: each drawing marks the moment of its own.
+                    **{f"randall_sundrum/{s}": {"two_walls"} for s in ("proper_distance/ty", "conformal/tw", "poincare/tz")},
+                    **{f"conformal randall_sundrum/{v}": {"two_walls"} for v in ("proper_distance", "conformal", "poincare")},
+                    "randall_sundrum/two_walls/tphi": {"pseudosphere"},
+                    "conformal randall_sundrum/two_walls": {"pseudosphere"},
                     # Hayward's static hole and the hole that forms and evaporates are two spacetimes of one
                     # line element: the static and Eddington-Finkelstein drawings mark the static moment, outside
                     # r_+ and inside r_-, and the forming and evaporating ones the slices of constant v - r.
@@ -4734,6 +4740,12 @@ class Slices(unittest.TestCase):
                 return (lambda X: 0.0), [lo, hi]
             sign = 1 if chart.endswith("ingoing") else -1
             return (lambda X: sign * (sv_rstar(X, a) - X)), [lo, hi]
+        if key == "randall_sundrum/conformal/tw":
+            # The conformal distance of the circles the embedding reaches in the proper distance y, at k = 1.
+            return (lambda X: 0.0), [math.copysign(math.expm1(abs(y)), y) for y in self.reach(surface)]
+        if key == "randall_sundrum/poincare/tz":
+            # One side, from the wall at z = 1/k to z = e^{ky}/k of the farthest circle.
+            return (lambda X: 0.0), [1.0, math.exp(self.reach(surface)[1])]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))

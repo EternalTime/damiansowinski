@@ -1318,6 +1318,19 @@ FLAT = {
     # A moment kct of the domain wall's global chart meets the plane x = y = 0 of the planar chart
     # along t = const, every z, and in the inertial chart of the side z < 0 it is the cone
     # cT = R tanh(kct) from the centre at T = 0 out to the wall, across the centre on either side.
+    # Randall and Sundrum's moment t = 0, out to the embedding's reach in the proper distance y: in the
+    # conformally flat chart w = sgn(y)(e^{k|y|} - 1)/k, on one side in the Poincare chart z = e^{ky}/k, at
+    # k = 1; between two walls phi and -phi are one point, so the moment is the whole line of phi.
+    ("randall_sundrum", "proper_distance", "ty"): lambda: one(
+        "randall_sundrum", lambda m: along(0.0, *m.reach("proper_distance", "y")), view_id="pseudosphere"),
+    ("randall_sundrum", "conformal", "tw"): lambda: one(
+        "randall_sundrum", lambda m: along(0.0, *(math.copysign(math.expm1(abs(y)), y) for y in m.reach("proper_distance", "y"))),
+        view_id="pseudosphere"),
+    ("randall_sundrum", "poincare", "tz"): lambda: one(
+        "randall_sundrum", lambda m: along(0.0, 1.0, math.exp(m.reach("proper_distance", "y")[1])), view_id="pseudosphere"),
+    ("randall_sundrum", "two_walls", "tphi"): lambda: one(
+        "randall_sundrum", lambda m: along(0.0, -m.reach("two_walls", "\\phi")[1], m.reach("two_walls", "\\phi")[1]),
+        view_id="two_walls"),
     ("domain_wall", "planar", "tz"): lambda: one("domain_wall", lambda m: across(m.time, 0.0, 1.0)),
     ("domain_wall", "inertial", "through"): lambda: one("domain_wall", _wall_inertial),
     ("anti_de_sitter", "static_global", "radial"): lambda: one("anti_de_sitter", lambda m: along(0.0, *m.reach("static_global", "r"))),

@@ -80,6 +80,11 @@
       "id": "topological_black_hole",
       "kind": "generalisation",
       "text": "Anti-de Sitter space sliced by hyperbolic planes has a horizon at $r = L$, and with points identified that horizon is a black hole's, of genus two or more [aminneborg1996]. Adding mass gives the family [mann1997]."
+    },
+    {
+      "id": "randall_sundrum",
+      "kind": "composite",
+      "text": "Two pieces of anti-de Sitter space of five dimensions joined mirror to mirror along a flat wall, which keeps gravity four dimensional beside a fifth dimension of infinite size [randall1999b]."
     }
   ],
   "references": [
@@ -111,7 +116,8 @@
     "godel1949",
     "rooman1998",
     "aminneborg1996",
-    "mann1997"
+    "mann1997",
+    "randall1999b"
   ],
   "coordinates": [
     {
