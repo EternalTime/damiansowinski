@@ -48,6 +48,11 @@
       "id": "wormhole_time_machine",
       "kind": "generalisation",
       "text": "The same wormhole with one mouth taken on a round trip at nearly the speed of light. The mouth comes home younger than the one that stayed, and a walk through the throat is a walk into the past [morris1988prl]."
+    },
+    {
+      "id": "damour_solodukhin",
+      "kind": "special_case",
+      "text": "The member with the constant shape function $b = r_s$ and $e^{2\\Phi} = 1 - r_s/r + \\lambda^2$, which Thibault Damour and Sergey Solodukhin made in 2007 to pass for a Schwarzschild black hole [damour2007, nandi2022]."
     }
   ],
   "references": [
@@ -64,7 +69,9 @@
     "bronnikov1973",
     "visser1989prd",
     "visser1989nuclphysb",
-    "teo1998"
+    "teo1998",
+    "damour2007",
+    "nandi2022"
   ],
   "coordinates": [
     {

@@ -2281,6 +2281,59 @@ def teo_wormhole(ck, src):
                           settings="$b_0 = 1$, the unit of every length, and $a = 1/4$.")]
 
 
+def damour_solodukhin(ck, src):
+    """Flamm's paraboloid on both sheets, as Schwarzschild's slice, since g_rr = 1/(1 - r_s/r) and
+    g_phiphi = r^2 for every lambda: z^2 = 4 r_s (r - r_s), the two sides meeting smoothly at the
+    throat r = r_s. In Einstein and Rosen's chart, r = r_s + u^2, the slice is 4(u^2 + r_s) du^2 +
+    (u^2 + r_s)^2 dphi^2 and the height is z = 2 sqrt(r_s) u, which is checked to give the same
+    surface, as is the isotropic chart's. Drawn at r_s = 1 and lambda = 1/5 to r = 6 on both sides."""
+    params = {"r_s": 1, "lambda": "1/5"}
+    sl = Slice(src, "damour_solodukhin", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    top, radii = 6.0, (1.5, 2, 3, 4, 5)
+    size = 2 * top
+    near = Piece("near", "sheet", sl, 1.0, top, 0.0, 1,
+                 (("throat", "the throat $r = r_s$, the smallest circle, where the other side begins"),
+                  ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                 [(1.0, "throat", "$r = r_s$")] + [(r, "r", None) for r in radii] + [(top, "r", "$r = 6\\,r_s$")],
+                 size)
+    far = Piece("far", "sheet2", sl, 1.0, top, 0.0, -1,
+                (("throat", "the throat $r = r_s$"), ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    surface = Surface([near, far])
+    for p in (near, far):
+        ck.isometry(f"Damour-Solodukhin, {p.id} side", p)
+        ck.form(f"Damour-Solodukhin, {p.id} side, Flamm's z = 2 sqrt(r_s (r - r_s))", p,
+                lambda r, s=p.sense: s * 2 * np.sqrt(np.maximum(r - 1, 0)), size)
+    ck.join("Damour-Solodukhin, the two sides at the throat", near, 1.0, far, 1.0)
+    through = Slice(src, "damour_solodukhin", "einstein_rosen", "u", "\\phi", {"t": 0, **EQUATOR}, params)
+    whole = Piece("through", "sheet", through, 0.0, math.sqrt(top - 1), 0.0, 1, size=size)
+    ck.isometry("Damour-Solodukhin, Einstein and Rosen's chart", whole)
+    ck.form("Damour-Solodukhin, Einstein and Rosen's chart, z = 2 sqrt(r_s) u", whole, lambda u: 2 * u, size)
+    heights = 2 * np.sqrt(np.maximum(whole.rho - 1, 0))
+    ck.add("Damour-Solodukhin, Einstein and Rosen's chart gives the same surface",
+           float(np.max(np.abs(heights - whole.z))) / size, FORM)
+
+    # The isotropic radius r has the areal radius r(1 + r_s/4r)^2, from the throat r_s/4 out.
+    outer = (top - 0.5 + math.sqrt(top * (top - 1))) / 2
+    isotropic = Slice(src, "damour_solodukhin", "isotropic", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    round_ = Piece("isotropic", "sheet", isotropic, 0.25, outer, 0.0, 1, size=size)
+    ck.isometry("Damour-Solodukhin, the isotropic chart", round_)
+    ck.add("Damour-Solodukhin, the isotropic chart gives the same surface",
+           float(np.max(np.abs(2 * np.sqrt(np.maximum(round_.rho - 1, 0)) - round_.z))) / size, FORM)
+
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], 1.0, 0.0, "$r = r_s$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_s$")
+    fig.legend("fill", "cover", "the side $u > 0$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "r2", "the same radii on the other side, $u < 0$")
+    fig.legend("line", "throat", "the throat $r = r_s$, the smallest circle")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("wormhole", "The wormhole", "$r_s$", [surface], fig.done(),
+                 settings="$r_s = 1$, the unit of every length, at every $\\lambda$.")]
+
+
 def two_sheets(ck, name, sl, throat, top, radii, size, near_marks=(), texts=("", "")):
     """A slice of constant t through a bifurcation sphere, as Schwarzschild's: the exterior from
     the throat out to `top`, tinted, and the same surface turned over on the other side."""
@@ -6370,6 +6423,7 @@ DRAWN = {
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
+    "damour_solodukhin": damour_solodukhin,
     "levi_civita": levi_civita,
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
@@ -6559,6 +6613,16 @@ CAPTIONS = {
         "$dz/dr = \\sqrt{r_s/(a - r_s)} = 2$, so the surface turns through a finite angle there. The crease "
         "is the shell, whose surface energy density $-(c^4/2\\pi Ga)\\sqrt{1 - r_s/a}$ is negative, since the "
         "throat flares out on both sides.",
+    ],
+    ("damour_solodukhin", "wormhole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the Damour-Solodukhin wormhole at one moment of $t$, "
+        "drawn as a surface in flat space with every distance along it the metric distance. On it the metric is "
+        "$dr^2/(1 - r_s/r) + r^2d\\phi^2$ for every $\\lambda$, as on Schwarzschild's slice, so the surface is "
+        "Flamm's paraboloid $z^2 = 4r_s(r - r_s)$ on both sides of the throat, and Einstein and Rosen's "
+        "coordinate is its height, $z = 2\\sqrt{r_s}\\,u$.",
+        "The two sides meet smoothly at the throat $r = r_s$, the smallest circle. Clocks at rest there run at "
+        "the rate $\\lambda$ of clocks far away, so the surface is the same at every moment, and light and "
+        "matter cross from one side to the other.",
     ],
     ("rn_metric", "outside"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a charged black hole at one moment of $t$ outside its "

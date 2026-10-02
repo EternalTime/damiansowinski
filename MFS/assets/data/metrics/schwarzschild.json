@@ -175,6 +175,11 @@
       "id": "photon_rocket",
       "kind": "generalisation",
       "text": "Schwarzschild's mass with a lamp and a direction to go in. It shines unevenly, loses mass, and accelerates on the recoil of its own light [kinnersley1969, podolsky2008]."
+    },
+    {
+      "id": "damour_solodukhin",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric with a small constant $\\lambda^2$ added to $-g_{tt}$, which turns the horizon into the throat of a wormhole that passes for a black hole. At $\\lambda = 0$ it is Schwarzschild's [damour2007]."
     }
   ],
   "references": [
@@ -222,7 +227,8 @@
     "ellis1973",
     "obregon1998",
     "kinnersley1969",
-    "podolsky2008"
+    "podolsky2008",
+    "damour2007"
   ],
   "coordinates": [
     {

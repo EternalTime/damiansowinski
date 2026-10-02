@@ -39,6 +39,11 @@
       "id": "teo_wormhole",
       "kind": "family",
       "text": "A wormhole that rotates. Edward Teo wrote its geometry down in 1998 and left its matter open, and Burkhard Kleihaus and Jutta Kunz set the throat of the Ellis wormhole itself rotating in 2014, phantom field and all [teo1998, kleihaus2014]."
+    },
+    {
+      "id": "damour_solodukhin",
+      "kind": "family",
+      "text": "Another member of Morris and Thorne's family, Schwarzschild's metric with the horizon opened into a throat by one small number, so that from outside it looks like a black hole [damour2007]."
     }
   ],
   "references": [
@@ -54,7 +59,8 @@
     "abe2010",
     "takahashi2013",
     "teo1998",
-    "kleihaus2014"
+    "kleihaus2014",
+    "damour2007"
   ],
   "coordinates": [
     {

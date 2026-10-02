@@ -316,6 +316,37 @@
     "embedding": "a9676c6465fbce1c"
   },
   {
+    "id": "damour_solodukhin",
+    "name": "Damour-Solodukhin",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "black hole mimicker",
+      "black hole foil",
+      "exotic compact object",
+      "throat",
+      "no horizon",
+      "echoes",
+      "quasinormal modes",
+      "exotic matter",
+      "energy condition violation",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "non-vacuum",
+      "asymptotically flat",
+      "Einstein-Rosen bridge",
+      "Flamm's paraboloid",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "336a25ce674b863b",
+    "diagrams": "99a9f8a21a100275",
+    "conformal": "6c2254de11290b3b",
+    "embedding": "759b3c0dec35465e"
+  },
+  {
     "id": "de_sitter",
     "name": "de Sitter",
     "tags": [
@@ -457,7 +488,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2022ec62f120396e",
+    "version": "00a77de2e613b45b",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a"
@@ -1131,7 +1162,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2e5ff2940560df3c",
+    "version": "edcd3a4b49c15257",
     "diagrams": "6a553e7d399d3c52",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
@@ -1413,7 +1444,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8d899e14ec442a62",
+    "version": "1d0962d7347c6998",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -1817,7 +1848,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3eb16aa2291abe6b",
+    "version": "b41456021685cd71",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"

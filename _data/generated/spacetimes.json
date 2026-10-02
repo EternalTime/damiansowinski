@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 64,
+  "count": 65,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -2860,6 +2860,389 @@
       ]
     },
     {
+      "id": "damour_solodukhin",
+      "name": "Damour-Solodukhin Wormhole",
+      "short_name": "Damour-Solodukhin",
+      "description": "Schwarzschild's metric with a small constant $\\lambda^2$ added to $-g_{tt}$, which Thibault Damour and Sergey Solodukhin wrote down in 2007. The horizon becomes the throat of a static wormhole joining two asymptotically flat regions, and for small $\\lambda$ an observer needs a time of order $(r_s/c)\\ln(1/\\lambda^2)$ to tell it from a black hole.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "black hole mimicker",
+        "black hole foil",
+        "exotic compact object",
+        "throat",
+        "no horizon",
+        "echoes",
+        "quasinormal modes",
+        "exotic matter",
+        "energy condition violation",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "non-vacuum",
+        "asymptotically flat",
+        "Einstein-Rosen bridge",
+        "Flamm's paraboloid",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "At $\\lambda = 0$ the throat is Schwarzschild's horizon and the wormhole is his black hole. For any other $\\lambda$ a moment of time is the same Flamm's paraboloid, with a throat that stays open [damour2007]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "generalisation",
+          "text": "The general static wormhole a traveller could cross, with any redshift function $\\Phi$ and shape function $b$. Damour and Solodukhin's is the one with $b = r_s$ and $e^{2\\Phi} = 1 - r_s/r + \\lambda^2$ [morris1988, nandi2022]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "Visser's wormhole cut from Schwarzschild's exterior, the other wormhole made to pass for a black hole. Cardoso, Franzin, and Pani dropped a particle through one with its throat just outside $r_s$ and heard a black hole's ringdown, with the wormhole's own modes arriving late [cardoso2016prl]."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "Another member of Morris and Thorne's family, with $\\Phi = 0$ and $b = \\ell^2/r$. Its clocks run at one rate everywhere, where Damour and Solodukhin's slow by the factor $\\lambda$ at the throat [ellis1973, bronnikov1973, damour2007]."
+        }
+      ],
+      "references": [
+        "damour2007",
+        "solodukhin2005",
+        "flamm1916",
+        "einstein1935",
+        "fuller1962",
+        "nandi2022",
+        "bueno2018",
+        "morris1988",
+        "bronnikov2021",
+        "tsukamoto2020",
+        "lemos2008",
+        "damour1978",
+        "cardoso2016prl",
+        "volkel2018",
+        "nandi2018",
+        "vagnozzi2023",
+        "ellis1973",
+        "bronnikov1973"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/damour_solodukhin.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Damour-Solodukhin",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass parameter, $r_s = 2GM/c^2$, the areal radius of the throat"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Dimensionless constant, $\\lambda > 0$; at $\\lambda = 0$ the metric is Schwarzschild's"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ on either side of the throat, with $t$ carrying dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\lambda^2\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\lambda^2\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{\\lambda^2\\,r_s^2}{2r^2\\left(\\left(1 + \\lambda^2\\right)r - r_s\\right)^2}",
+          "kretschmann": "K = \\dfrac{r_s^2\\left(4\\left(r - r_s\\right)\\left(\\left(1 + \\lambda^2\\right)r - r_s\\right) - \\lambda^2\\,r\\,r_s\\right)^2}{4r^6\\left(\\left(1 + \\lambda^2\\right)r - r_s\\right)^4} + \\dfrac{2r_s^2\\left(r - r_s\\right)^2}{r^6\\left(\\left(1 + \\lambda^2\\right)r - r_s\\right)^2} + \\dfrac{6r_s^2}{r^6}"
+        },
+        {
+          "id": "rescaled",
+          "name": "Rescaled Time",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass parameter, $r_s = 2GM/c^2$, the areal radius of the throat"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Dimensionless constant, $\\lambda > 0$; at $\\lambda = 0$ the metric is Schwarzschild's"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ on either side of the throat, with $r$ the areal radius and $t$ the proper time of a clock at rest far away, $\\sqrt{1 + \\lambda^2}$ times the time of Damour and Solodukhin's chart. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{\\left(1 + \\lambda^2\\right)r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{\\left(1 + \\lambda^2\\right)r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{\\lambda^2\\,r_s^2}{2r^2\\left(\\left(1 + \\lambda^2\\right)r - r_s\\right)^2}",
+          "kretschmann": "K = \\dfrac{r_s^2\\left(4\\left(r - r_s\\right)\\left(\\left(1 + \\lambda^2\\right)r - r_s\\right) - \\lambda^2\\,r\\,r_s\\right)^2}{4r^6\\left(\\left(1 + \\lambda^2\\right)r - r_s\\right)^4} + \\dfrac{2r_s^2\\left(r - r_s\\right)^2}{r^6\\left(\\left(1 + \\lambda^2\\right)r - r_s\\right)^2} + \\dfrac{6r_s^2}{r^6}"
+        },
+        {
+          "id": "throat",
+          "name": "Through the Throat",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = 0 \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass parameter, $r_s = 2GM/c^2$, the areal radius of the throat"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Dimensionless constant, $\\lambda > 0$; at $\\lambda = 0$ the metric is Schwarzschild's"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\theta, \\phi)$, with $t$ the proper time of a clock at rest far away and $\\rho$ dimensionless, changing sign at the throat. The areal radius is $r = r_s\\left(2 + \\lambda^2(1 + \\cosh\\rho)\\right)/2(1 + \\lambda^2)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\dfrac{\\lambda^2\\left(1 + \\cosh\\rho\\right)}{2 + \\lambda^2\\left(1 + \\cosh\\rho\\right)}c^2dt^2 + \\dfrac{r_s^2}{4\\left(1 + \\lambda^2\\right)^2}\\left(\\lambda^2\\left(1 + \\cosh\\rho\\right)\\left(2 + \\lambda^2\\left(1 + \\cosh\\rho\\right)\\right)d\\rho^2 + \\left(2 + \\lambda^2\\left(1 + \\cosh\\rho\\right)\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\lambda^2\\left(1 + \\cosh\\rho\\right)}{2 + \\lambda^2\\left(1 + \\cosh\\rho\\right)}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\lambda^2\\,r_s^2\\left(2 + \\lambda^2\\left(1 + \\cosh\\rho\\right)\\right)\\left(1 + \\cosh\\rho\\right)}{4\\left(1 + \\lambda^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r_s^2\\left(2 + \\lambda^2\\left(1 + \\cosh\\rho\\right)\\right)^2}{4\\left(1 + \\lambda^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r_s^2\\left(2 + \\lambda^2\\left(1 + \\cosh\\rho\\right)\\right)^2\\sin^2\\theta}{4\\left(1 + \\lambda^2\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{8\\left(1 + \\lambda^2\\right)^2}{\\lambda^2\\,r_s^2\\left(2 + \\lambda^2\\left(1 + \\cosh\\rho\\right)\\right)^2\\left(1 + \\cosh\\rho\\right)^2}",
+          "kretschmann": "K = \\dfrac{64\\left(1 + \\lambda^2\\right)^4\\left(36\\lambda^8\\cosh^2\\rho + 24\\lambda^8\\cosh^3\\rho + 6\\lambda^8\\cosh^4\\rho + 24\\lambda^8\\cosh\\rho + 6\\lambda^8 + 72\\lambda^6\\cosh^2\\rho + 48\\lambda^6\\cosh^3\\rho + 12\\lambda^6\\cosh^4\\rho + 48\\lambda^6\\cosh\\rho + 12\\lambda^6 + 21\\lambda^4\\cosh^2\\rho + 20\\lambda^4\\cosh^3\\rho + 12\\lambda^4\\cosh^4\\rho + 30\\lambda^4\\cosh\\rho + 17\\lambda^4 - 8\\lambda^2\\cosh^2\\rho + 4\\lambda^2\\cosh\\rho + 12\\lambda^2 + 4\\right)}{\\lambda^4\\,r_s^4\\left(2 + \\lambda^2\\left(1 + \\cosh\\rho\\right)\\right)^6\\left(1 + \\cosh\\rho\\right)^4}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s/4 \\;\\text{(throat)}",
+            "r \\to 0 \\;\\text{(the far end of the other side)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass parameter, $r_s = 2GM/c^2$, the areal radius of the throat"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Dimensionless constant, $\\lambda > 0$; at $\\lambda = 0$ the metric is Schwarzschild's"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the isotropic radius, so the areal radius is $r\\left(1 + r_s/4r\\right)^2$ and $r \\to r_s^2/16r$ exchanges the two sides of the throat. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\left(\\left(\\dfrac{4r - r_s}{4r + r_s}\\right)^2 + \\lambda^2\\right)c^2dt^2 + \\left(1 + \\dfrac{r_s}{4r}\\right)^4\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\left(\\dfrac{4r - r_s}{4r + r_s}\\right)^2 + \\lambda^2\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 + \\dfrac{r_s}{4r}\\right)^4"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(4r + r_s\\right)^4}{256r^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(4r + r_s\\right)^4\\sin^2\\theta}{256r^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{32768\\lambda^2\\,r^4\\,r_s^2}{\\left(4r + r_s\\right)^4\\left(\\left(4r - r_s\\right)^2 + \\lambda^2\\left(4r + r_s\\right)^2\\right)^2}",
+          "kretschmann": "K = \\dfrac{16777216r^6\\,r_s^2}{\\left(4r + r_s\\right)^{12}}\\left(\\dfrac{4\\left(\\left(4r - r_s\\right)^2\\left(\\left(4r - r_s\\right)^2 + \\lambda^2\\left(4r + r_s\\right)^2\\right) - 4\\lambda^2\\,r\\,r_s\\left(4r + r_s\\right)^2\\right)^2}{\\left(\\left(4r - r_s\\right)^2 + \\lambda^2\\left(4r + r_s\\right)^2\\right)^4} + \\dfrac{2\\left(4r - r_s\\right)^4}{\\left(\\left(4r - r_s\\right)^2 + \\lambda^2\\left(4r + r_s\\right)^2\\right)^2} + 6\\right)"
+        },
+        {
+          "id": "einstein_rosen",
+          "name": "Einstein-Rosen",
+          "coordinates": [
+            "t",
+            "u",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "u \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "u = 0 \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass parameter, $r_s = 2GM/c^2$, the areal radius of the throat"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Dimensionless constant, $\\lambda > 0$; at $\\lambda = 0$ the metric is Schwarzschild's"
+            }
+          ],
+          "convention": "We use coordinates $(t, u, \\theta, \\phi)$, with $t$ carrying dimensions of time and $u^2 = r - r_s$, so $u$ is the square root of a length and changes sign at the throat. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{u^2}{u^2 + r_s} + \\lambda^2\\right)c^2dt^2 + 4\\left(u^2 + r_s\\right)du^2 + \\left(u^2 + r_s\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{u^2}{u^2 + r_s} + \\lambda^2\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "4\\left(u^2 + r_s\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(u^2 + r_s\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(u^2 + r_s\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{\\lambda^2\\,r_s^2}{2\\left(u^2 + r_s\\right)^2\\left(\\left(1 + \\lambda^2\\right)u^2 + \\lambda^2\\,r_s\\right)^2}",
+          "kretschmann": "K = \\dfrac{r_s^2\\left(4u^2\\left(\\left(1 + \\lambda^2\\right)u^2 + \\lambda^2\\,r_s\\right) - \\lambda^2\\,r_s\\left(u^2 + r_s\\right)\\right)^2}{4\\left(u^2 + r_s\\right)^6\\left(\\left(1 + \\lambda^2\\right)u^2 + \\lambda^2\\,r_s\\right)^4} + \\dfrac{2u^4\\,r_s^2}{\\left(u^2 + r_s\\right)^6\\left(\\left(1 + \\lambda^2\\right)u^2 + \\lambda^2\\,r_s\\right)^2} + \\dfrac{6r_s^2}{\\left(u^2 + r_s\\right)^6}"
+        }
+      ]
+    },
+    {
       "id": "de_sitter",
       "name": "de Sitter",
       "short_name": "de Sitter",
@@ -3976,6 +4359,11 @@
           "id": "teo_wormhole",
           "kind": "family",
           "text": "A wormhole that rotates. Edward Teo wrote its geometry down in 1998 and left its matter open, and Burkhard Kleihaus and Jutta Kunz set the throat of the Ellis wormhole itself rotating in 2014, phantom field and all [teo1998, kleihaus2014]."
+        },
+        {
+          "id": "damour_solodukhin",
+          "kind": "family",
+          "text": "Another member of Morris and Thorne's family, Schwarzschild's metric with the horizon opened into a throat by one small number, so that from outside it looks like a black hole [damour2007]."
         }
       ],
       "references": [
@@ -3991,7 +4379,8 @@
         "abe2010",
         "takahashi2013",
         "teo1998",
-        "kleihaus2014"
+        "kleihaus2014",
+        "damour2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json",
@@ -9292,6 +9681,11 @@
           "id": "wormhole_time_machine",
           "kind": "generalisation",
           "text": "The same wormhole with one mouth taken on a round trip at nearly the speed of light. The mouth comes home younger than the one that stayed, and a walk through the throat is a walk into the past [morris1988prl]."
+        },
+        {
+          "id": "damour_solodukhin",
+          "kind": "special_case",
+          "text": "The member with the constant shape function $b = r_s$ and $e^{2\\Phi} = 1 - r_s/r + \\lambda^2$, which Thibault Damour and Sergey Solodukhin made in 2007 to pass for a Schwarzschild black hole [damour2007, nandi2022]."
         }
       ],
       "references": [
@@ -9308,7 +9702,9 @@
         "bronnikov1973",
         "visser1989prd",
         "visser1989nuclphysb",
-        "teo1998"
+        "teo1998",
+        "damour2007",
+        "nandi2022"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -11398,6 +11794,11 @@
           "id": "photon_rocket",
           "kind": "generalisation",
           "text": "Schwarzschild's mass with a lamp and a direction to go in. It shines unevenly, loses mass, and accelerates on the recoil of its own light [kinnersley1969, podolsky2008]."
+        },
+        {
+          "id": "damour_solodukhin",
+          "kind": "generalisation",
+          "text": "Schwarzschild's metric with a small constant $\\lambda^2$ added to $-g_{tt}$, which turns the horizon into the throat of a wormhole that passes for a black hole. At $\\lambda = 0$ it is Schwarzschild's [damour2007]."
         }
       ],
       "references": [
@@ -11445,7 +11846,8 @@
         "ellis1973",
         "obregon1998",
         "kinnersley1969",
-        "podolsky2008"
+        "podolsky2008",
+        "damour2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -14804,6 +15206,11 @@
           "id": "wormhole_time_machine",
           "kind": "family",
           "text": "Two mouths of a thin shell wormhole with no mass, both opening into one flat space. Move one of them and closed timelike curves thread the throat [friedman1990, morris1988prl]."
+        },
+        {
+          "id": "damour_solodukhin",
+          "kind": "family",
+          "text": "A smooth wormhole that passes for a Schwarzschild black hole, with its throat where the horizon would be and its matter spread through a thin layer around it [damour2007]."
         }
       ],
       "references": [
@@ -14826,7 +15233,8 @@
         "abbott2025tgr",
         "teo1998",
         "friedman1990",
-        "morris1988prl"
+        "morris1988prl",
+        "damour2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",

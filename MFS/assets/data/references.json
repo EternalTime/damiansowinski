@@ -1,5 +1,5 @@
 {
-  "version": "6f5e70ce19a1393f",
+  "version": "607247ca43204b13",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -12344,6 +12344,181 @@
         "eprint": "2007.04685",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2007.04685"
+      }
+    },
+    "damour2007": {
+      "type": "article",
+      "fields": {
+        "title": "Wormholes as black hole foils",
+        "author": "Damour, Thibault and Solodukhin, Sergey N.",
+        "journal": "Physical Review D",
+        "volume": "76",
+        "number": "2",
+        "pages": "024016",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.76.024016",
+        "eprint": "0704.2667",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0704.2667"
+      }
+    },
+    "solodukhin2005": {
+      "type": "article",
+      "fields": {
+        "title": "Restoring unitarity in the {Banados}-{Teitelboim}-{Zanelli} black hole",
+        "author": "Solodukhin, Sergey N.",
+        "journal": "Physical Review D",
+        "volume": "71",
+        "number": "6",
+        "pages": "064006",
+        "year": "2005",
+        "doi": "10.1103/PhysRevD.71.064006",
+        "eprint": "hep-th/0501053",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0501053"
+      }
+    },
+    "damour1978": {
+      "type": "article",
+      "fields": {
+        "title": "Black-hole eddy currents",
+        "author": "Damour, Thibault",
+        "journal": "Physical Review D",
+        "volume": "18",
+        "number": "10",
+        "pages": "3598--3604",
+        "year": "1978",
+        "doi": "10.1103/PhysRevD.18.3598",
+        "url": "https://doi.org/10.1103/PhysRevD.18.3598"
+      }
+    },
+    "lemos2008": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole mimickers: Regular versus singular behavior",
+        "author": "Lemos, José P. S. and Zaslavskii, Oleg B.",
+        "journal": "Physical Review D",
+        "volume": "78",
+        "number": "2",
+        "pages": "024040",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.78.024040",
+        "eprint": "0806.0845",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0806.0845"
+      }
+    },
+    "bueno2018": {
+      "type": "article",
+      "fields": {
+        "title": "Echoes of {Kerr}-like wormholes",
+        "author": "Bueno, Pablo and Cano, Pablo A. and Goelen, Frederik and Hertog, Thomas and Vercnocke, Bert",
+        "journal": "Physical Review D",
+        "volume": "97",
+        "number": "2",
+        "pages": "024040",
+        "year": "2018",
+        "doi": "10.1103/PhysRevD.97.024040",
+        "eprint": "1711.00391",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1711.00391"
+      }
+    },
+    "volkel2018": {
+      "type": "article",
+      "fields": {
+        "title": "Wormhole potentials and throats from quasi-normal modes",
+        "author": "Völkel, Sebastian H. and Kokkotas, Kostas D.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "35",
+        "number": "10",
+        "pages": "105018",
+        "year": "2018",
+        "doi": "10.1088/1361-6382/aabce6",
+        "eprint": "1802.08525",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1802.08525"
+      }
+    },
+    "nandi2018": {
+      "type": "article",
+      "fields": {
+        "title": "Strong field lensing by {Damour}-{Solodukhin} wormhole",
+        "author": "Nandi, K. K. and Izmailov, R. N. and Zhdanov, E. R. and Bhattacharya, Amrita",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2018",
+        "number": "07",
+        "pages": "027",
+        "year": "2018",
+        "doi": "10.1088/1475-7516/2018/07/027",
+        "eprint": "1805.04679",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1805.04679"
+      }
+    },
+    "tsukamoto2020": {
+      "type": "article",
+      "fields": {
+        "title": "Nonlogarithmic divergence of a deflection angle by a marginally unstable photon sphere of the {Damour}-{Solodukhin} wormhole in a strong deflection limit",
+        "author": "Tsukamoto, Naoki",
+        "journal": "Physical Review D",
+        "volume": "101",
+        "number": "10",
+        "pages": "104021",
+        "year": "2020",
+        "doi": "10.1103/PhysRevD.101.104021",
+        "eprint": "2004.00822",
+        "archiveprefix": "arXiv",
+        "note": "Erratum: Phys. Rev. D 106, 049901 (2022), doi:10.1103/PhysRevD.106.049901",
+        "url": "https://arxiv.org/abs/2004.00822"
+      }
+    },
+    "bronnikov2021": {
+      "type": "article",
+      "fields": {
+        "title": "General parametrization of wormhole spacetimes and its application to shadows and quasinormal modes",
+        "author": "Bronnikov, Kirill A. and Konoplya, Roman A. and Pappas, Thomas D.",
+        "journal": "Physical Review D",
+        "volume": "103",
+        "number": "12",
+        "pages": "124062",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.103.124062",
+        "eprint": "2102.10679",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2102.10679"
+      }
+    },
+    "nandi2022": {
+      "type": "article",
+      "fields": {
+        "title": "{Damour}-{Solodukhin} Wormhole as a Black Hole Mimicker: The Role of Observers' Location",
+        "author": "Nandi, Kamal K. and Karimov, Ramis Kh. and Izmailov, Ramil N. and Potapov, Alexander A.",
+        "journal": "Universe",
+        "volume": "8",
+        "number": "10",
+        "pages": "525",
+        "year": "2022",
+        "doi": "10.3390/universe8100525",
+        "eprint": "2607.09724",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3390/universe8100525"
+      }
+    },
+    "vagnozzi2023": {
+      "type": "article",
+      "fields": {
+        "title": "Horizon-scale tests of gravity theories and fundamental physics from the {Event Horizon Telescope} image of {Sagittarius A*}",
+        "author": "Vagnozzi, Sunny and Roy, Rittick and Tsai, Yu-Dai and Visinelli, Luca and Afrin, Misba and Allahyari, Alireza and Bambhaniya, Parth and Dey, Dipanjan and Ghosh, Sushant G. and Joshi, Pankaj S. and Jusufi, Kimet and Khodadi, Mohsen and Walia, Rahul Kumar and Övgün, Ali and Bambi, Cosimo",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "40",
+        "number": "16",
+        "pages": "165007",
+        "year": "2023",
+        "doi": "10.1088/1361-6382/acd97b",
+        "eprint": "2205.07787",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2205.07787"
       }
     }
   }

@@ -4,7 +4,8 @@ charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metri
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
-kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam and wormhole_time_machine, and Godel's cylindrical chart.
+kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine and
+damour_solodukhin, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -4419,6 +4420,214 @@ def wormhole_accelerated_frame(chart):
 
 
 CHARTS["wormhole_time_machine"] = [lambda s=s: wormhole_time_machine(s) for s in WTM_CHARTS]
+
+
+# -- The Damour-Solodukhin wormhole ------------------------------------------------------
+
+DS_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+DS_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+DS_REALS = "(-\\infty, \\infty)"
+DS_THROAT = "\\;\\text{(throat)}"
+DS_FAR = "\\;\\text{(the far end of the other side)}"
+DS_CHARTS = ["spherical", "rescaled", "throat", "isotropic", "einstein_rosen"]
+
+
+def damour_solodukhin(system):
+    """Damour and Solodukhin's wormhole, Schwarzschild's metric with the constant lambda^2 added
+    to -g_tt, in five charts, each with r_s the areal radius of the throat. Their own keeps
+    Schwarzschild's t and r on either side of the throat r = r_s, where g_rr diverges and g_tt =
+    -lambda^2 does not vanish. Bueno, Cano, Goelen, Hertog and Vercnocke's time T = sqrt(1 +
+    lambda^2) t is the proper time of a clock at rest far away, their (35) with their mass
+    M = r_s c^2/2G(1 + lambda^2). Their auxiliary variable rho, r = r_s(2 + lambda^2(1 + cosh
+    rho))/2(1 + lambda^2), runs over the whole line through the throat rho = 0, and in it the
+    plane of T and rho is conformally flat with dr_* = r d rho, their (40) and (41). Nandi,
+    Karimov, Izmailov and Potapov's isotropic radius, with the areal radius r(1 + r_s/4r)^2, has
+    the throat at r_s/4 and the other side inside it, their (21) and (22). Einstein and Rosen's
+    coordinate u, u^2 = r - r_s, runs through the throat with a polynomial. Each chart after
+    the first is checked to be the first pulled back, on both sides of the throat where it
+    covers both. The energy density vanishes, since g_rr is Schwarzschild's, which is checked as
+    G^t_t = 0, and at the throat G^r_r = -1/r_s^2, G^theta_theta = (1 + 2 lambda^2)/(4 lambda^2
+    r_s^2) and K = (1 + 24 lambda^4)/(4 lambda^4 r_s^4). The Kretschmann scalar is written as
+    4A^2 + 8B^2 + 8C^2 + 4D^2 over the four frame components of a static observer, t r t r,
+    t theta t theta, r theta r theta and theta phi theta phi. damour_solodukhin.md derives each."""
+    parameters = ["r_s", "\\lambda"]
+    one = sp.Symbol("DSone", positive=True)
+    overrides = {one: "\\left(1 + \\lambda^2\\right)"}
+    named, wholes, hyper, kretschmann = {}, [], None, None
+    time = "t"
+    if system in ("spherical", "rescaled"):
+        coords = [time, "r", "\\theta", "\\phi"]
+        domains = [time + " \\in " + DS_REALS, "r \\in [r_s, \\infty)"] + DS_ANGLES + ["r = r_s \\;\\text{(throat)}"]
+        bare = "1 - \\dfrac{r_s}{r}"
+        space = "\\dfrac{dr^2}{" + bare + "} + r^2" + DS_SPHERE
+        W = "\\left(\\left(1 + \\lambda^2\\right)r - r_s\\right)"
+        if system == "spherical":
+            name = "Damour-Solodukhin"
+            f = "\\left(1 - \\dfrac{r_s}{r} + \\lambda^2\\right)"
+            weight = ""
+        else:
+            name = "Rescaled Time"
+            f = "\\left(1 - \\dfrac{r_s}{\\left(1 + \\lambda^2\\right)r}\\right)"
+            weight = ""
+        components = {"metric_components": {(time, time): "-" + f, ("r", "r"): "\\left(" + bare + "\\right)^{-1}"},
+                      "inverse_metric_components": {(time, time): "-" + f + "^{-1}", ("r", "r"): bare}}
+        kretschmann = ("\\dfrac{r_s^2\\left(4\\left(r - r_s\\right)" + W + " - \\lambda^2\\,r\\,r_s\\right)^2}{4r^6" + W + "^4}"
+                       " + \\dfrac{2r_s^2\\left(r - r_s\\right)^2}{r^6" + W + "^2} + \\dfrac{6r_s^2}{r^6}")
+    elif system == "einstein_rosen":
+        coords, name = ["t", "u", "\\theta", "\\phi"], "Einstein-Rosen"
+        domains = ["t \\in " + DS_REALS, "u \\in " + DS_REALS] + DS_ANGLES + ["u = 0 \\;\\text{(throat)}"]
+        f = "\\left(\\dfrac{u^2}{u^2 + r_s} + \\lambda^2\\right)"
+        space = "4\\left(u^2 + r_s\\right)du^2 + \\left(u^2 + r_s\\right)^2" + DS_SPHERE
+        components = {"metric_components": {("t", "t"): "-" + f, ("u", "u"): "4\\left(u^2 + r_s\\right)"},
+                      "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}"}}
+        W = "\\left(\\left(1 + \\lambda^2\\right)u^2 + \\lambda^2\\,r_s\\right)"
+        kretschmann = ("\\dfrac{r_s^2\\left(4u^2" + W + " - \\lambda^2\\,r_s\\left(u^2 + r_s\\right)\\right)^2}"
+                       "{4\\left(u^2 + r_s\\right)^6" + W + "^4}"
+                       " + \\dfrac{2u^4\\,r_s^2}{\\left(u^2 + r_s\\right)^6" + W + "^2}"
+                       " + \\dfrac{6r_s^2}{\\left(u^2 + r_s\\right)^6}")
+    elif system == "isotropic":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Isotropic"
+        domains = (["t \\in " + DS_REALS, "r \\in (0, \\infty)"] + DS_ANGLES
+                   + ["r = r_s/4 " + DS_THROAT, "r \\to 0 " + DS_FAR])
+        f = "\\left(\\left(\\dfrac{4r - r_s}{4r + r_s}\\right)^2 + \\lambda^2\\right)"
+        space = "\\left(1 + \\dfrac{r_s}{4r}\\right)^4\\left(dr^2 + r^2" + DS_SPHERE + "\\right)"
+        components = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): "\\left(1 + \\dfrac{r_s}{4r}\\right)^4"},
+                      "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}"}}
+        W = "\\left(\\left(4r - r_s\\right)^2 + \\lambda^2\\left(4r + r_s\\right)^2\\right)"
+        kretschmann = ("\\dfrac{16777216r^6\\,r_s^2}{\\left(4r + r_s\\right)^{12}}\\left(\\dfrac{4\\left(\\left(4r - r_s\\right)^2"
+                       + W + " - 4\\lambda^2\\,r\\,r_s\\left(4r + r_s\\right)^2\\right)^2}{" + W + "^4}"
+                       " + \\dfrac{2\\left(4r - r_s\\right)^4}{" + W + "^2} + 6\\right)")
+    else:
+        coords, name = ["t", "\\rho", "\\theta", "\\phi"], "Through the Throat"
+        domains = ["t \\in " + DS_REALS, "\\rho \\in " + DS_REALS] + DS_ANGLES + ["\\rho = 0 \\;\\text{(throat)}"]
+        up = "\\left(1 + \\cosh\\rho\\right)"
+        whole = "2 + \\lambda^2" + up
+        f = "\\dfrac{\\lambda^2" + up + "}{" + whole + "}"
+        scale = "\\dfrac{r_s^2}{4\\left(1 + \\lambda^2\\right)^2}"
+        space = (scale + "\\left(\\lambda^2" + up + "\\left(" + whole + "\\right)d\\rho^2 + \\left(" + whole
+                 + "\\right)^2" + DS_SPHERE + "\\right)")
+        components = {}
+    probe = vm.Reader(coords, parameters, ())
+    x, rs, lam = probe.symbol[coords[1]], probe.parameters["r_s"], probe.parameters["lambda"]
+    lead = [one, x, rs, lam]
+    if system in ("einstein_rosen", "isotropic"):
+        placeholder = sp.Symbol("DSw")
+        named[placeholder] = W.removeprefix("\\left(").removesuffix("\\right)")
+        wholes = [(placeholder, (1 + lam ** 2) * x ** 2 + lam ** 2 * rs if system == "einstein_rosen"
+                   else (4 * x - rs) ** 2 + lam ** 2 * (4 * x + rs) ** 2)]
+    elif system == "throat":
+        # Every value is a rational function of C = cosh rho with at most one S = sinh rho, and its
+        # factors are 1 + cosh rho, cosh rho - 1 and the areal radius's 2 + lambda^2(1 + cosh rho).
+        S, C = sp.symbols("DSs DSc", positive=True)
+        hyper = (S, C)
+        placeholder, lift = sp.Symbol("DSw"), sp.Symbol("DSu")
+        named[placeholder], named[lift] = whole, "1 + \\cosh\\rho"
+        wholes = [(placeholder, 2 + lam ** 2 * (1 + C)), (lift, 1 + C)]
+        overrides.update({S: "\\sinh\\rho", C: "\\cosh\\rho"})
+        lead = [one, C, S, rs, lam]
+
+    def in_hyperbolics(value):
+        S, C = hyper
+        value = sp.sympify(value).subs({sp.sinh(x): S, sp.cosh(x): C})
+        value = value.replace(lambda e: isinstance(e, sp.exp) and sp.expand(e.args[0] / x).is_Integer,
+                              lambda e: (S + C) ** sp.expand(e.args[0] / x))
+
+        def reduced(poly):
+            return sp.expand(sp.reduced(sp.expand(poly), [S ** 2 - C ** 2 + 1], S, C)[1])
+
+        num, den = (reduced(part) for part in sp.fraction(sp.together(value)))
+        d0, d1 = sp.Poly(den, S).coeff_monomial(1), sp.Poly(den, S).coeff_monomial(S)
+        if d1 != 0:
+            num, den = reduced(num * (d0 - d1 * S)), sp.expand(d0 ** 2 - d1 ** 2 * (C ** 2 - 1))
+        return sp.cancel(sp.factor(num) / sp.factor(den))
+
+    def pretty(value):
+        # 1 + lambda^2 is written whole wherever that shortens a factor, as (1 + lambda^2) r - r_s.
+        if hyper:
+            value = in_hyperbolics(value)
+        out = sp.Integer(1)
+        for factor in sp.Mul.make_args(sp.factor(value)):
+            base, k = (factor.base, factor.exp) if factor.is_Pow else (factor, sp.Integer(1))
+            if base.is_Add:
+                for placeholder, poly in wholes:
+                    if sp.expand(base - poly) == 0:
+                        base = placeholder
+                    elif sp.expand(base + poly) == 0 and k.is_Integer:
+                        base, out = placeholder, out * (-1) ** k
+            if base.is_Add and base.has(lam):
+                short = sp.expand(base.subs(lam ** 2, one - 1))
+                if not short.has(lam) and len(sp.Add.make_args(short)) < len(sp.Add.make_args(sp.expand(base))):
+                    base = short
+            out *= base ** k
+        return out
+
+    spec = {
+        "metric_id": "damour_solodukhin",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": "ds^2 = -" + f + "c^2dt^2 + " + space},
+        "chart_line_element": "ds^2 = -" + f + "dt^2 + " + space,
+        "printer": {"lead": lead, "factors": [one, lam] + lead[1:-1], "flip": False,
+                    "overrides": overrides, "named": named},
+        "pretty": pretty,
+        "components": components,
+        "check": lambda chart: damour_solodukhin_check(chart, system),
+    }
+    if hyper:
+        back = {hyper[0]: sp.sinh(x), hyper[1]: sp.cosh(x)}
+        spec["pretty"] = lambda value: pretty(value).subs(back)
+        spec["printer"]["overrides"] = {one: overrides[one]}
+        spec["printer"]["lead"] = [one, rs, lam]
+        spec["printer"]["factors"] = [one, lam, rs]
+    if kretschmann:
+        spec["kretschmann"] = kretschmann
+    return spec
+
+
+def damour_solodukhin_check(chart, system):
+    """G^t_t = 0 in every chart, the energy density of the matter at the throat; at the throat
+    G^r_r = -1/r_s^2, G^theta_theta = (1 + 2 lambda^2)/(4 lambda^2 r_s^2) and
+    K = (1 + 24 lambda^4)/(4 lambda^4 r_s^4); at lambda = 0 the Ricci tensor vanishes; and each
+    chart after the first is Damour and Solodukhin's pulled back: t = T/sqrt(1 + lambda^2) for
+    the rescaled time, r = r_s(2 + lambda^2(1 + cosh rho))/2(1 + lambda^2) besides through the
+    throat, the areal radius (4r + r_s)^2/16r for the isotropic radius, and r = r_s + u^2 for
+    Einstein and Rosen's u, each on both sides of the throat."""
+    rs, lam = chart.reader.parameters["r_s"], chart.reader.parameters["lambda"]
+    t, x = chart.symbols[:2]
+    throat = {x: rs} if system in ("spherical", "rescaled") else {x: rs / 4} if system == "isotropic" else {x: 0}
+    G = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    if vm.norm(vm._at(G, (0, 0))) != 0:
+        raise AssertionError(f"damour_solodukhin: the energy density does not vanish in the {system} chart")
+    expected = {(1, 1): -1 / rs ** 2, (2, 2): (1 + 2 * lam ** 2) / (4 * lam ** 2 * rs ** 2)}
+    for slot, value in expected.items():
+        if sp.simplify(sp.simplify(vm._at(G, slot)).subs(throat) - value) != 0:
+            raise AssertionError(f"damour_solodukhin: G^a_b in slot {slot} at the throat is not {value}")
+    K = sp.simplify(chart.geo.kretschmann())
+    if sp.simplify(K.subs(throat) - (1 + 24 * lam ** 4) / (4 * lam ** 4 * rs ** 4)) != 0:
+        raise AssertionError("damour_solodukhin: the Kretschmann scalar at the throat is not "
+                             "(1 + 24 lambda^4)/(4 lambda^4 r_s^4)")
+    ricci = chart.geo.ricci_ll()
+    if system != "throat" and any(sp.simplify(sp.cancel(vm._at(ricci, index)).subs(lam, 0)) != 0
+                                  for index in vm._indices(4, 2)):
+        raise AssertionError(f"damour_solodukhin: the {system} chart is not vacuum at lambda = 0")
+    if system == "spherical":
+        return
+    source = damour_solodukhin("spherical")
+    areal = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    names = dict(zip(areal.symbols[2:], chart.symbols[2:]))
+    names.update({areal.reader.parameters[n]: chart.reader.parameters[n] for n in ("r_s", "lambda")})
+    image = {"rescaled": [t / sp.sqrt(1 + lam ** 2), x],
+             "throat": [t / sp.sqrt(1 + lam ** 2), rs * (2 + lam ** 2 * (1 + sp.cosh(x))) / (2 * (1 + lam ** 2))],
+             "isotropic": [t, (4 * x + rs) ** 2 / (16 * x)],
+             "einstein_rosen": [t, rs + x ** 2]}[system]
+    J = sp.diag(sp.diff(image[0], t), sp.diff(image[1], x), 1, 1)
+    at = dict(zip(areal.symbols[:2], image))
+    pulled = J.T * areal.geo.g.subs(names).subs(at, simultaneous=True) * J
+    difference = (pulled - chart.geo.g).applyfunc(lambda e: sp.simplify(e.rewrite(sp.exp)))
+    if difference != sp.zeros(4, 4):
+        raise AssertionError(f"damour_solodukhin: the {system} chart is not the wormhole's own pulled back")
+
+
+CHARTS["damour_solodukhin"] = [lambda s=s: damour_solodukhin(s) for s in DS_CHARTS]
 
 
 def write(spec):

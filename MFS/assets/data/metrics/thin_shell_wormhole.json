@@ -2696,6 +2696,11 @@
       "id": "wormhole_time_machine",
       "kind": "family",
       "text": "Two mouths of a thin shell wormhole with no mass, both opening into one flat space. Move one of them and closed timelike curves thread the throat [friedman1990, morris1988prl]."
+    },
+    {
+      "id": "damour_solodukhin",
+      "kind": "family",
+      "text": "A smooth wormhole that passes for a Schwarzschild black hole, with its throat where the horizon would be and its matter spread through a thin layer around it [damour2007]."
     }
   ],
   "references": [
@@ -2718,6 +2723,7 @@
     "abbott2025tgr",
     "teo1998",
     "friedman1990",
-    "morris1988prl"
+    "morris1988prl",
+    "damour2007"
   ]
 }

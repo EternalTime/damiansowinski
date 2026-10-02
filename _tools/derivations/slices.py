@@ -334,6 +334,12 @@ def _mcvittie_areal(m):
     return along(m.time, mcvittie_areal(m.time, lo), mcvittie_areal(m.time, hi))
 
 
+def _ds_isotropic(R):
+    """The isotropic radius outside the throat of Damour and Solodukhin's sphere of areal radius R, at
+    r_s = 1: R = r(1 + 1/4r)^2."""
+    return (R - 0.5 + math.sqrt(R * (R - 1))) / 2
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -587,6 +593,22 @@ FLAT = {
                                                m.reach("spherical", "r")[1] - m.reach("spherical", "r")[0])),
     **{("teo_wormhole", system, view): (lambda system=system, view=view: teo(system, view))
        for system in ("spherical", "proper_radial") for view in ("axis", "equator")},
+    # Damour and Solodukhin's wormhole at r_s = 1 and lambda = 1/5: one side in its own chart and in the
+    # rescaled time, from the throat r = r_s out, and both sides through the throat, where
+    # cosh rho = 52 r - 51, the isotropic radius runs from r_s^2/16r to r, and u = +-sqrt(r - r_s).
+    ("damour_solodukhin", "spherical", "radial"): lambda: one(
+        "damour_solodukhin", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    ("damour_solodukhin", "rescaled", "radial"): lambda: one(
+        "damour_solodukhin", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    ("damour_solodukhin", "throat", "radial"): lambda: one(
+        "damour_solodukhin", lambda m: along(0.0, -math.acosh(52 * m.reach("spherical", "r")[1] - 51),
+                                             math.acosh(52 * m.reach("spherical", "r")[1] - 51))),
+    ("damour_solodukhin", "isotropic", "radial"): lambda: one(
+        "damour_solodukhin", lambda m: along(0.0, 1 / (16 * _ds_isotropic(m.reach("spherical", "r")[1])),
+                                             _ds_isotropic(m.reach("spherical", "r")[1]))),
+    ("damour_solodukhin", "einstein_rosen", "radial"): lambda: one(
+        "damour_solodukhin", lambda m: along(0.0, -math.sqrt(m.reach("spherical", "r")[1] - 1),
+                                             math.sqrt(m.reach("spherical", "r")[1] - 1))),
     ("minkowski", "spherical", "radial"): lambda: one("minkowski", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # t = (u + v)/2 and r = (v - u)/2, so the moment is u = -r, v = r.
     ("minkowski", "spherical_null", "radial"): lambda: one(

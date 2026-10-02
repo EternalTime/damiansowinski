@@ -225,6 +225,15 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `kasner/radial`, the plane of $t$ and $r$: the line $ct = 0$ from $r = \rho^\Sigma/\Sigma$ at $\rho = 1/16$ to its value at $\rho = 4$, with $\Sigma = 3/4$, that is from $r = 1/6$ to $3.77$; the Kasner form's $t$ is Weyl's times a constant, so the moment is the same.
 - `weyl` and `kasner`, the triangle: the curve $p, q = \arctan(\mp 4\rho^{1/4})$ between the same two circles.
 
+### Damour-Solodukhin wormhole
+
+- The embedding is Flamm's paraboloid, the equator at one moment of $t$, drawn at $t = 0$ at $r_s = 1$, $r$ from the throat $r_s$ to $6\,r_s$ on both sides.
+- `spherical/radial` and `rescaled/radial`, one side of the throat: the line $ct = 0$ from $r = r_s$ to the box's edge at $6\,r_s$, which the embedding also reaches; a moment of one time is a moment of the other.
+- `throat/radial`, both sides in $\rho$ with $\cosh\rho = 52r/r_s - 51$ at $\lambda = 1/5$: the line $ct = 0$ from $\rho = -6.26$ to $6.26$, cut to the box at $|\rho| = 6$.
+- `isotropic/radial`, both sides in the isotropic radius: the line $ct = 0$ from $r = 0.0114\,r_s$, the sphere of areal radius $6\,r_s$ on the other side, to $5.49\,r_s$, cut to the box at $2\,r_s$.
+- `einstein_rosen/radial`, both sides in $u = \pm\sqrt{r - r_s}$: the line $ct = 0$ from $u = -\sqrt{5}$ to $\sqrt{5}$, cut to the box at $|u| = 2$.
+- All five conformal views, the diamond in the tortoise coordinate: the line $T = 0$ through the throat from $6\,r_s$ on one side to $6\,r_s$ on the other, the same on each.
+
 ### Kaluza-Klein monopole
 
 The cigar is the surface of $r$ and $x_5$ on the half axis $\theta = 0$ at $t = 0$ in Gross and Perry's chart, from the nut $r = 0$ out to $r = 16m$ at $m = 1$.

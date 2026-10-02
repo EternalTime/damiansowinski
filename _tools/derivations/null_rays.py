@@ -599,6 +599,9 @@ DILATON = {"r_s": 1, "r_d": "1/2"}
 # and the horizon is r_h = L, the black hole of Hawking and Page's temperature T_1.
 SADS = {"r_s": 2, "L": 1}
 
+# Damour and Solodukhin's wormhole at lambda = 1/5, where the throat's clocks run five times slow.
+DS = {"r_s": 1, "lambda": "1/5"}
+
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m.
 MP_TWO = "1 + 1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2)"
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
@@ -809,6 +812,21 @@ DIAGRAMS = [
                                   ("slowing", "$t$ and $l$ on the axis, slowing down", WTM_P / 2 - WTM_PEAK))],
     Diagram("wormhole_time_machine", "short_throat", "radial", "$t$ and $l$", ("t", "l"), (-3, 3, -3, 3),
             "$l/b$", "$ct/b$", {"b": 1}, EQUATOR, families=SIDEWAYS, areal=True, areal_contours=(1.5, 2.0, 3.0)),
+    # Damour and Solodukhin's wormhole from the throat r = r_s out, where its own chart and the chart
+    # of the rescaled time end, and through the throat in Bueno and his collaborators' rho, in the
+    # isotropic radius, whose throat is r_s/4, and in Einstein and Rosen's u, u^2 = r - r_s, in units
+    # of sqrt(r_s).
+    Diagram("damour_solodukhin", "spherical", "radial", "$t$ and $r$", ("t", "r"), (1, 6, -2.5, 2.5),
+            "$r/r_s$", "$ct/r_s$", DS, EQUATOR, areal=True),
+    Diagram("damour_solodukhin", "rescaled", "radial", "$t$ and $r$", ("t", "r"), (1, 6, -2.5, 2.5),
+            "$r/r_s$", "$ct/r_s$", DS, EQUATOR, areal=True),
+    Diagram("damour_solodukhin", "throat", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (-6, 6, -6, 6),
+            "$\\rho$", "$ct/r_s$", DS, EQUATOR, families=SIDEWAYS, areal=True, areal_contours=(1.5, 2.0, 3.0)),
+    Diagram("damour_solodukhin", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -4, 4),
+            "$r/r_s$", "$ct/r_s$", DS, EQUATOR, areal=True, areal_contours=(1.5, 2.0)),
+    Diagram("damour_solodukhin", "einstein_rosen", "radial", "$t$ and $u$", ("t", "u"), (-2, 2, -5, 5),
+            "$u/\\sqrt{r_s}$", "$ct/r_s$", DS, EQUATOR, families=SIDEWAYS, areal=True,
+            areal_contours=(1.5, 2.0, 3.0)),
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -1911,6 +1929,70 @@ CAPTIONS = {
         "The throat $l = 0$ carries the curvature, a delta function, since $r = b + |l|$ has a kink there. "
         "The faint vertical lines are the spheres of areal radius $1.5\\,b$, $2\\,b$, and $3\\,b$, one of each "
         "on either side.",
+    ],
+    ("damour_solodukhin", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on one side of the throat, drawn for "
+        "$\\lambda = 0.2$, the same on the other side and at every other angle. The edges of the cones are "
+        "$dr/d(ct) = \\pm\\sqrt{(1 - r_s/r)(1 - r_s/r + \\lambda^2)}$, so $ct \\mp r_*$ is constant along a ray, "
+        "with $r_* = \\sqrt{(r - r_s)(ar - r_s)}/a + \\left((1 + a)r_s/2a^{3/2}\\right)"
+        "\\ln\\left(\\left(2ar - (1 + a)r_s + 2\\sqrt{a(r - r_s)(ar - r_s)}\\right)/\\lambda^2r_s\\right)$ "
+        "and $a = 1 + \\lambda^2$, which vanishes at the throat.",
+        "The cones close toward the throat $r = r_s$ because $g_{rr} = (1 - r_s/r)^{-1}$ diverges there. "
+        "There $g_{tt} = -\\lambda^2$, so $\\partial_t$ is timelike right up to the throat, and $r = r_s$ is "
+        "the edge of this chart with no horizon on it. A ray moving in from $r$ reaches the throat after the "
+        "finite time $r_*(r)/c$, which is $5.5\\,r_s/c$ from $r = 2\\,r_s$ here and grows as "
+        "$(r_s/c)\\ln(1/\\lambda^2)$ as $\\lambda \\to 0$, and it goes on into the other side. The Kretschmann "
+        "scalar at the throat is $(1 + 24\\lambda^4)/(4\\lambda^4r_s^4)$.",
+    ],
+    ("damour_solodukhin", "rescaled", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on one side of the throat, drawn for "
+        "$\\lambda = 0.2$, with $t$ the proper time of a clock at rest far away. The edges of the cones are "
+        "$dr/d(ct) = \\pm\\sqrt{(1 - r_s/r)(1 - r_s/ar)}$ with $a = 1 + \\lambda^2$, so they open to 45° far "
+        "from the throat, and $ct \\mp \\sqrt{a}\\,r_*$ is constant along a ray, with $r_*$ the tortoise "
+        "coordinate of Damour and Solodukhin's chart.",
+        "The cones close toward the throat $r = r_s$ because $g_{rr} = (1 - r_s/r)^{-1}$ diverges there, and "
+        "$g_{tt} = -\\lambda^2/a$ on it. A ray moving in from $r = 2\\,r_s$ reaches the throat after "
+        "$5.6\\,r_s/c$ of this time and goes on into the other side. For small $\\lambda$ the time from $r$ "
+        "is $\\left(r + r_s\\ln(r/r_s - 1) - r_s + r_s\\ln(4/\\lambda^2)\\right)/c$, Schwarzschild's tortoise "
+        "coordinate and a constant that grows as $\\ln(1/\\lambda^2)$.",
+    ],
+    ("damour_solodukhin", "throat", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\lambda = 0.2$, with "
+        "$\\rho < 0$ on one side of the throat and $\\rho > 0$ on the other. The metric on it is "
+        "$(1 - r_s/ar)\\left(-c^2dt^2 + r^2d\\rho^2\\right)$ with $a = 1 + \\lambda^2$, so the edges of the cones "
+        "are $d\\rho/d(ct) = \\pm 1/r$ and $ct \\mp x$ is constant along a ray, with "
+        "$x = r_s\\left((2 + \\lambda^2)\\rho + \\lambda^2\\sinh\\rho\\right)/2a$.",
+        "The cones are widest at the throat $\\rho = 0$, where $d\\rho/d(ct) = \\pm 1/r_s$, and every ray "
+        "crosses it. The coordinate $\\rho$ stretches the neighbourhood of the throat: the faint vertical "
+        "lines are the spheres of areal radius $1.5\\,r_s$, $2\\,r_s$, and $3\\,r_s$, at $|\\rho| = 4.0$, "
+        "$4.7$, and $5.3$, and between the two spheres of radius $2\\,r_s$ a ray spends $11.2\\,r_s/c$. "
+        "The Kretschmann scalar is $(1 + 24\\lambda^4)/(4\\lambda^4r_s^4)$ at the throat.",
+    ],
+    ("damour_solodukhin", "isotropic", "radial"): [
+        "The plane of $t$ and the isotropic radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for "
+        "$\\lambda = 0.2$. The areal radius is $R = r(1 + r_s/4r)^2$, least at the throat $r = r_s/4$, and the "
+        "whole of the other side lies between the throat and $r = 0$, which is its far end. The edges of the "
+        "cones are $dr/d(ct) = \\pm\\sqrt{(4r - r_s)^2 + \\lambda^2(4r + r_s)^2}\\,16r^2/(4r + r_s)^3$, so "
+        "$ct \\mp r_*\\,\\mathrm{sgn}(4r - r_s)$ is constant along a ray, with $r_*$ the tortoise coordinate of "
+        "the sphere of areal radius $R$.",
+        "Every component of the metric is finite at the throat, where $dr/d(ct) = \\pm\\lambda/2$, and every ray "
+        "crosses it. A ray moving in slows as $r^2$ toward $r = 0$ and reaches it only as $t \\to \\infty$. The "
+        "faint vertical lines are the spheres of areal radius $1.5\\,r_s$ and $2\\,r_s$, at $r = 0.93\\,r_s$ and "
+        "$1.46\\,r_s$ on this side and at $r_s^2/16r = 0.067\\,r_s$ and $0.043\\,r_s$ on the other. The "
+        "Kretschmann scalar is $(1 + 24\\lambda^4)/(4\\lambda^4r_s^4)$ at the throat.",
+    ],
+    ("damour_solodukhin", "einstein_rosen", "radial"): [
+        "The plane of $t$ and $u$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\lambda = 0.2$, with "
+        "$r = r_s + u^2$, $u < 0$ on one side of the throat and $u > 0$ on the other. The edges of the cones are "
+        "$du/d(ct) = \\pm\\sqrt{(1 + \\lambda^2)u^2 + \\lambda^2r_s}/2(u^2 + r_s)$, so $ct \\mp r_*\\,\\mathrm{sgn}(u)$ "
+        "is constant along a ray, with $r_*$ the tortoise coordinate of the sphere $r = r_s + u^2$. Every "
+        "component of the metric is finite at the throat $u = 0$, where the cones are narrowest, "
+        "$du/d(ct) = \\pm\\lambda/2\\sqrt{r_s}$, and every ray crosses it.",
+        "A ray takes the time $2r_*(r)/c$ to pass from the sphere of radius $r$ on one side to the sphere of "
+        "the same radius on the other, $11\\,r_s/c$ for $r = 2\\,r_s$ here, of which the logarithm "
+        "$(r_s/c)\\ln(1/\\lambda^2)$ on each side is spent beside the throat. The faint vertical lines are the "
+        "spheres of areal radius $1.5\\,r_s$, $2\\,r_s$, and $3\\,r_s$, one of each on either side. The "
+        "Kretschmann scalar is $(1 + 24\\lambda^4)/(4\\lambda^4r_s^4)$ at the throat.",
     ],
     ("morris_thorne", "spherical", "radial"): [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). "
@@ -5255,6 +5337,38 @@ def _mp_midplane(x):
 
 # (metric, system, view): (what P conserves, what M conserves, where to compare). None
 # where a family has no closed form. P moves toward smaller r or x, M toward larger.
+def _ds_rstar(r):
+    """The tortoise coordinate of Damour and Solodukhin's wormhole at r_s = 1 and lambda = 1/5, zero at
+    the throat: dr_*/dr = r/sqrt((r - r_s)(a r - r_s)) with a = 1 + lambda^2."""
+    r = np.asarray(r, float)
+    a = 1.04
+    root = np.sqrt(np.maximum((r - 1) * (a * r - 1), 0))
+    return root / a + (1 + a) / (2 * a ** 1.5) * np.log((2 * a * r - (1 + a) + 2 * math.sqrt(a) * root) / (a - 1))
+
+
+def _ds_xstar(rho):
+    """The tortoise coordinate of the rescaled time in Bueno and his collaborators' rho, at r_s = 1
+    and lambda = 1/5: r_s((2 + lambda^2) rho + lambda^2 sinh rho)/(2(1 + lambda^2)), odd in rho."""
+    rho = np.asarray(rho, float)
+    return (2.04 * rho + 0.04 * np.sinh(rho)) / 2.08
+
+
+def _ds_areal(r):
+    """The areal radius at the isotropic radius r, r(1 + r_s/4r)^2 at r_s = 1, never below the throat's 1."""
+    r = np.asarray(r, float)
+    return np.maximum(r * (1 + 1 / (4 * r)) ** 2, 1.0)
+
+
+def _ds_isotropic(R):
+    """The isotropic radius outside the throat of the sphere of areal radius R, at r_s = 1."""
+    return (R - 0.5 + math.sqrt(R * (R - 1))) / 2
+
+
+def _ds_radius(rho):
+    """The areal radius at rho, r_s(2 + lambda^2(1 + cosh rho))/(2(1 + lambda^2)), at r_s = 1 and lambda = 1/5."""
+    return (2.04 + 0.04 * np.cosh(np.asarray(rho, float))) / 2.08
+
+
 def _tsw_lstar(l):
     """The tortoise coordinate of the thin shell wormhole's chart through the throat, r_s = 1 and
     a = 5/4, zero at the throat: dl_*/dl = (a + |l|)/(a + |l| - r_s)."""
@@ -5394,6 +5508,22 @@ CLOSED_FORMS = {
     ("gowdy", "areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, lambda t, th: t > 0.02),
     ("gowdy", "sphere", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),
     ("gowdy", "logarithmic", "plane"): (lambda tau, th: np.exp(-tau) + th, lambda tau, th: np.exp(-tau) - th, None),
+    # With r_s = 1 and lambda = 1/5, and r = 1 + u^2 through the throat, where r_* changes sign with u.
+    ("damour_solodukhin", "spherical", "radial"):
+        (lambda t, r: t + _ds_rstar(r), lambda t, r: t - _ds_rstar(r), lambda t, r: r > 1.0005),
+    # The rescaled time is sqrt(1 + lambda^2) t, and in rho the tortoise coordinate of that time is
+    # r_s((2 + lambda^2) rho + lambda^2 sinh rho)/(2(1 + lambda^2)).
+    ("damour_solodukhin", "rescaled", "radial"):
+        (lambda t, r: t + math.sqrt(1.04) * _ds_rstar(r), lambda t, r: t - math.sqrt(1.04) * _ds_rstar(r),
+         lambda t, r: r > 1.0005),
+    ("damour_solodukhin", "throat", "radial"):
+        (lambda t, rho: t + _ds_xstar(rho), lambda t, rho: t - _ds_xstar(rho), None),
+    # The isotropic radius has the areal radius r(1 + 1/4r)^2, and r_* changes sign at the throat r = 1/4.
+    ("damour_solodukhin", "isotropic", "radial"):
+        (lambda t, r: t + np.sign(4 * r - 1) * _ds_rstar(_ds_areal(r)),
+         lambda t, r: t - np.sign(4 * r - 1) * _ds_rstar(_ds_areal(r)), lambda t, r: r > 0.005),
+    ("damour_solodukhin", "einstein_rosen", "radial"):
+        (lambda t, u: t + np.sign(u) * _ds_rstar(1 + u ** 2), lambda t, u: t - np.sign(u) * _ds_rstar(1 + u ** 2), None),
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     # With m = 1, z_* = z e^(2/z) - 2 Ei(2/z) on the axis and rho_* the integral of e^(2/s - 1/(2 s^2)) in the plane.
