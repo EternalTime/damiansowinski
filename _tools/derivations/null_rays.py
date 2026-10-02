@@ -1302,6 +1302,27 @@ IWP_TWO_INPUT = ("Two sources on the axis, $U = 1 + (m - il)/r_1 + (m + il)/r_2$
                  "2l(z - 2m)/r_1 - (l/2)\\left((\\rho^2 + z^2 - 4m^2)/(r_1r_2) - 1\\right)$, which vanishes on "
                  "the axis beyond the sources.")
 
+# Einstein, Infeld and Hoffmann's field for two equal bodies on a circular orbit, each of mass m, the
+# unit of length, a distance d = 20m apart, in their plane z = 0 about the origin. Their equations of
+# motion set the angular velocity, to first order Omega^2 = (2m/d^3)(1 - (11/4)(2m/d)) c^2 = 29 c^2/(160000 m^2),
+# so each body moves at sqrt(29) c/40, and psi = (3 v^2/2 - m/d) U = -(73/3200) U.
+_EIH_PHASE = "sqrt(29)*t/400"
+_EIH_R = (f"sqrt((x - 10*cos({_EIH_PHASE}))**2 + (y - 10*sin({_EIH_PHASE}))**2 + z**2)",
+          f"sqrt((x + 10*cos({_EIH_PHASE}))**2 + (y + 10*sin({_EIH_PHASE}))**2 + z**2)")
+EIH_BINARY = {
+    "U": f"1/{_EIH_R[0]} + 1/{_EIH_R[1]}",
+    "psi": f"-Rational(73, 3200)*(1/{_EIH_R[0]} + 1/{_EIH_R[1]})",
+    "chi": f"{_EIH_R[0]} + {_EIH_R[1]}",
+    "V_1": f"-sqrt(29)/40*sin({_EIH_PHASE})*(1/{_EIH_R[0]} - 1/{_EIH_R[1]})",
+    "V_2": f"sqrt(29)/40*cos({_EIH_PHASE})*(1/{_EIH_R[0]} - 1/{_EIH_R[1]})",
+    "V_3": "0",
+}
+EIH_BINARY_INPUT = ("Two bodies of equal mass, $m = GM/c^2$ each, on a circular orbit about the origin in the plane "
+                    "$z = 0$, a distance $d = 20\\,m$ apart, turning at the angular velocity $\\Omega$ that the "
+                    "equations of motion of Einstein, Infeld, and Hoffmann set to first order in $m/d$, "
+                    "$\\Omega^2 = (2Gm/d^3)(1 - 11m/2d)$, so $\\Omega = 0.0135\\,c/m$ and each moves at $0.135\\,c$; at "
+                    "$t = 0$ they are on the $x$ axis.")
+
 # Two of Kastor and Traschen's holes, each of mass parameter m, the unit, at z = +-2m, falling
 # together at H = -3c/(32m), and one hole alone at H = -3c/(16m), the lukewarm hole; slices.py
 # holds the rates and the last ray of each plane to reach infinity, the event horizon there.
@@ -2994,6 +3015,15 @@ DIAGRAMS = [
             functions={"U": MP_TWO_CYLINDRICAL}, input=MP_TWO_INPUT),
     Diagram("majumdar_papapetrou", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/m$", "$ct/m$", {"m": 1}, EQUATOR, areal=True),
+    # Einstein, Infeld and Hoffmann's field of two equal bodies on a circular orbit, on the axis of the
+    # orbit, which the turn through half a circle about it keeps every ray on; out to z = 30m, inside
+    # the near zone, which ends at c/(2 Omega) = 37.1m.
+    Diagram("eih_many_bodies", "harmonic", "axis", "the axis of the orbit", ("t", "z"), (-30, 30, -30, 30),
+            "$z/m$", "$ct/m$", {}, {"x": "0", "y": "0"}, families=SIDEWAYS,
+            functions=EIH_BINARY, input=EIH_BINARY_INPUT),
+    Diagram("eih_many_bodies", "standard", "axis", "the axis of the orbit", ("t", "z"), (-30, 30, -30, 30),
+            "$z/m$", "$ct/m$", {}, {"x": "0", "y": "0"}, families=SIDEWAYS,
+            functions=EIH_BINARY, input=EIH_BINARY_INPUT),
     Diagram("israel_wilson_perjes", "cylindrical", "midplane", "the midplane", ("t", "\\rho"), (1, 7, -3, 3),
             "$\\rho/m$", "$ct/m$", {}, {"z": "0"}, functions=IWP_TWO, input=IWP_TWO_INPUT, quotient="phi",
             cone=BTZ_CONE),
@@ -7112,6 +7142,24 @@ CAPTIONS = {
         "chart runs smoothly through both horizons, and we take the future from it, which makes "
         "the region between the horizons the black hole. The Kretschmann scalar diverges at $r = "
         "0$.",
+    ],
+    ("eih_many_bodies", "harmonic", "axis"): [
+        "The plane of $t$ and $z$ on the axis of the orbit ($x = y = 0$) of two equal bodies, which light launched "
+        "along the axis never leaves, since half a turn about it carries the pair onto itself at every moment. "
+        "Its rays are null geodesics with $dz/dt = \\pm c\\sqrt{(1 - 2U + 2U^2 - 2\\psi)/(1 + 2U)}$, where "
+        "$U = 2m/\\sqrt{z^2 + 100\\,m^2}$ and $\\psi = -73U/3200$ on the axis.",
+        "The cones are narrowest at $z = 0$, midway between the bodies, where $U = 1/5$ and light moves at "
+        "$0.70\\,c$ in $t$, and they open toward $45°$ along the axis. On the axis $\\partial_t^2\\chi$ vanishes, so this plane is the same in both charts. The bodies circle in the plane "
+        "$z = 0$, ten $m$ from the axis on either side.",
+    ],
+    ("eih_many_bodies", "standard", "axis"): [
+        "The plane of $t$ and $z$ on the axis of the orbit ($x = y = 0$) of two equal bodies, which light launched "
+        "along the axis never leaves, since half a turn about it carries the pair onto itself at every moment. "
+        "Its rays are null geodesics with $dz/dt = \\pm c\\sqrt{(1 - 2U + 2U^2 - 2\\psi)/(1 + 2U)}$, where "
+        "$U = 2m/\\sqrt{z^2 + 100\\,m^2}$ and $\\psi = -73U/3200$ on the axis.",
+        "The cones are narrowest at $z = 0$, midway between the bodies, where $U = 1/5$ and light moves at "
+        "$0.70\\,c$ in $t$, and they open toward $45°$ along the axis. On the axis $\\partial_t\\partial_z\\chi$ vanishes, so this plane is the same in both charts. The bodies circle in the plane "
+        "$z = 0$, ten $m$ from the axis on either side.",
     ],
     ("majumdar_papapetrou", "cartesian", "tz"): [
         "The plane of $t$ and $z$ on the axis through both holes ($x = y = 0$), which light launched along "
@@ -12406,6 +12454,21 @@ def _iwp_midplane(rho):
     return np.vectorize(lambda x: quad(integrand, 1.0, x, epsabs=1e-12, epsrel=1e-12)[0])(np.asarray(rho, dtype=float))
 
 
+def _eih_axis(z):
+    """The tortoise coordinate of the axis of Einstein, Infeld and Hoffmann's two equal bodies, m = 1 at
+    ten m from the axis: the quadrature from 0 of sqrt((1 + 2U)/(1 - 2U + 2U^2 - 2 psi)) with
+    U = 2/sqrt(z^2 + 100) and psi = -73U/3200, the potentials of the declared binary on the axis, where
+    the second time derivative of chi vanishes."""
+    from scipy.integrate import quad
+
+    def slow(v):
+        u = 2 / np.sqrt(v * v + 100)
+        return np.sqrt((1 + 2 * u) / (1 - 2 * u + 2 * u * u + 73 * u / 1600))
+
+    one = np.vectorize(lambda v: quad(slow, 0, v, epsabs=1e-13, epsrel=1e-13)[0])
+    return one(np.asarray(z, dtype=float))
+
+
 def _mp_midplane(x):
     """The integral of U^2 across the midplane of the same two holes, U = 1 + 2/sqrt(x^2 + 4):
     x + 4 arcsinh(x/2) + 2 arctan(x/2)."""
@@ -12739,6 +12802,10 @@ CLOSED_FORMS = {
     ("israel_wilson_perjes", "spherical", "radial"):
         (lambda t, r: t + r + 2 * np.log(r - 1) - 1.25 / (r - 1), lambda t, r: t - r - 2 * np.log(r - 1) + 1.25 / (r - 1),
          lambda t, r: r > 1.05),
+    ("eih_many_bodies", "harmonic", "axis"):
+        (lambda t, z: t + _eih_axis(z), lambda t, z: t - _eih_axis(z), None),
+    ("eih_many_bodies", "standard", "axis"):
+        (lambda t, z: t + _eih_axis(z), lambda t, z: t - _eih_axis(z), None),
     ("majumdar_papapetrou", "cartesian", "tz"):
         (lambda t, z: t + _mp_axis(z), lambda t, z: t - _mp_axis(z), lambda t, z: np.abs(np.abs(z) - 2) > 0.05),
     ("majumdar_papapetrou", "cartesian", "tx"):

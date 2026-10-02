@@ -393,6 +393,11 @@
       "id": "datt_ruban_t_models",
       "kind": "generalisation",
       "text": "The inside of the horizon filled with dust that adds nothing to the mass: a tube of spheres, all of one radius, holding any amount of matter at the same $r_s$ [ruban1968]."
+    },
+    {
+      "id": "eih_many_bodies",
+      "kind": "generalisation",
+      "text": "Many bodies in slow motion. Close to each the field is Schwarzschild's far from its horizon, and between them it is known to the first order beyond Newton [will2014]."
     }
   ],
   "references": [
@@ -502,7 +507,8 @@
     "alcubierre2000collapse",
     "hruska2019",
     "martins1996",
-    "ruban1968"
+    "ruban1968",
+    "will2014"
   ],
   "coordinates": [
     {

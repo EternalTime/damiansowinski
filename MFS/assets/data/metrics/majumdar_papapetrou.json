@@ -92,6 +92,11 @@
       "id": "charged_shell",
       "kind": "family",
       "text": "One charge in the same balance, spread on a shell. Arnowitt, Deser, and Misner shrank it to a point in 1960 and found the mass fixed by the charge, with the single hole's field outside [arnowitt1960]."
+    },
+    {
+      "id": "eih_many_bodies",
+      "kind": "family",
+      "text": "Many bodies with no charge to hold them apart. They orbit, and their field is known to the first order beyond Newton, where Majumdar and Papapetrou's is exact [einstein1938]."
     }
   ],
   "references": [
@@ -125,7 +130,8 @@
     "ishihara2006",
     "brill1963",
     "emparan2000",
-    "arnowitt1960"
+    "arnowitt1960",
+    "einstein1938"
   ],
   "coordinates": [
     {

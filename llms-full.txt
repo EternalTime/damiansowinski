@@ -643,6 +643,17 @@ Albert Einstein's cosmology of 1917: dust spread uniformly through a round three
 - chart Areal: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \dfrac{R^2\,dr^2}{R^2 - r^2} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Einstein's Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 + \dfrac{\left(x\,dx + y\,dy + z\,dz\right)^2}{R^2 - x^2 - y^2 - z^2}$$
 
+### Einstein-Infeld-Hoffmann Field of Many Bodies
+
+The gravitational field of $N$ slowly moving bodies to the first order beyond Newton, the order at which the vacuum field equations fix how the bodies move. It is an approximate spacetime with a definite metric, the one the planets and the binary pulsar are timed in.
+
+- id: `eih_many_bodies`
+- tags: post-Newtonian, weak field, approximate solution, many bodies, two-body problem, problem of motion, equations of motion, point masses, binary, binary pulsar, periastron advance, perihelion precession, solar system, harmonic coordinates, gravitomagnetic, time-dependent, no horizon, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/eih_many_bodies.json
+- chart Einstein, Infeld, and Hoffmann (harmonic): coordinates $(t, x, y, z)$, $$ds^2 = -\left(1 - 2U + 2U^2 - 2\psi - \partial_t^2\chi\right)c^2dt^2 - 8\left(V_1\,dx + V_2\,dy + V_3\,dz\right)c\,dt + \left(1 + 2U\right)\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Standard post-Newtonian gauge: coordinates $(t, x, y, z)$, $$ds^2 = -\left(1 - 2U + 2U^2 - 2\psi\right)c^2dt^2 - \left(\left(8V_1 + \partial_t\partial_x\chi\right)dx + \left(8V_2 + \partial_t\partial_y\chi\right)dy + \left(8V_3 + \partial_t\partial_z\chi\right)dz\right)c\,dt + \left(1 + 2U\right)\left(dx^2 + dy^2 + dz^2\right)$$
+
 ### Einstein-Rosen Bridge
 
 The model of a particle that Albert Einstein and Nathan Rosen proposed in 1935: two identical sheets of space joined at a smallest sphere, the bridge. The neutral bridge is Schwarzschild's exterior taken twice and joined at $r = r_s$, and the charged bridge is Reissner and Nordström's metric with the sign of the electric term reversed, which needs no mass.
