@@ -206,6 +206,27 @@ URL: https://damiansowinski.com/MFS/
 
 Machine-readable catalogue: https://damiansowinski.com/data/spacetimes.json
 
+### The A- and B-Metrics of Ehlers and Kundt
+
+The static vacuum fields of algebraic type D beside Schwarzschild's, which Tullio Levi-Civita constructed and Jürgen Ehlers and Wolfgang Kundt named in 1962: the A-metrics have a hyperbolic or a flat plane where Schwarzschild's field has a sphere, and the B-metrics exchange the time with an angle. Two of them, A II and B I, are the field of a tachyon, Schwarzschild's mass boosted past the speed of light, with a cone of unbounded curvature between them.
+
+- id: `ab_metrics`
+- tags: vacuum, static, stationary, Petrov type D, tachyon, Cherenkov cone, shock wave, hyperbolic symmetry, plane symmetric, Killing horizon, horizon, curvature singularity, Kruskal extension, maximal extension, wormhole, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/ab_metrics.json
+- chart A II, Static: coordinates $(t, r, \chi, \phi)$, $$ds^2 = -\left(\dfrac{b}{r} - 1\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{b}{r} - 1} + r^2\left(d\chi^2 + \sinh^2\chi\,d\phi^2\right)$$
+- chart A II, Inside the Cone: coordinates $(\sigma, z, \chi, \phi)$, $$ds^2 = -\dfrac{d\sigma^2}{1 - \dfrac{b}{\sigma}} + \left(1 - \dfrac{b}{\sigma}\right)dz^2 + \sigma^2\left(d\chi^2 + \sinh^2\chi\,d\phi^2\right)$$
+- chart A II, Kruskal: coordinates $(U, V, \chi, \phi)$, $$ds^2 = -\dfrac{4b^3}{r}e^{-r/b}\,dU\,dV + r^2\left(d\chi^2 + \sinh^2\chi\,d\phi^2\right)$$
+- chart A II, Inertial: coordinates $(T, X, Y, Z)$, $$ds^2 = -dT^2 + dX^2 + dY^2 + dZ^2 - \dfrac{b}{\sigma}\left(dZ^2 + \dfrac{\left(T\,dT - X\,dX - Y\,dY\right)^2}{\sigma\left(\sigma - b\right)}\right)$$
+- chart B I, Static: coordinates $(\tau, r, \theta, z)$, $$ds^2 = r^2\left(-\sin^2\theta\,d\tau^2 + d\theta^2\right) + \dfrac{dr^2}{1 - \dfrac{b}{r}} + \left(1 - \dfrac{b}{r}\right)dz^2$$
+- chart B I, Outside the Cone: coordinates $(\tau, r, \phi, z)$, $$ds^2 = r^2\left(-d\tau^2 + \cosh^2\tau\,d\phi^2\right) + \dfrac{dr^2}{1 - \dfrac{b}{r}} + \left(1 - \dfrac{b}{r}\right)dz^2$$
+- chart B I, Through the Neck: coordinates $(\tau, \rho, \phi, z)$, $$ds^2 = \dfrac{b^2}{\left(1 - \rho^2\right)^2}\left(-d\tau^2 + \cosh^2\tau\,d\phi^2\right) + \dfrac{4b^2\,d\rho^2}{\left(1 - \rho^2\right)^4} + \rho^2dz^2$$
+- chart B I, Inertial: coordinates $(T, X, Y, Z)$, $$ds^2 = -dT^2 + dX^2 + dY^2 + dZ^2 - \dfrac{b}{r}\left(dZ^2 - \dfrac{\left(T\,dT - X\,dX - Y\,dY\right)^2}{r\left(r - b\right)}\right)$$
+- chart A III: coordinates $(t, r, \chi, \phi)$, $$ds^2 = -\dfrac{b}{r}c^2dt^2 + \dfrac{r}{b}dr^2 + r^2\left(d\chi^2 + \chi^2d\phi^2\right)$$
+- chart B II, Static: coordinates $(\tau, r, \chi, z)$, $$ds^2 = r^2\left(-\sinh^2\chi\,d\tau^2 + d\chi^2\right) + \dfrac{dr^2}{\dfrac{b}{r} - 1} + \left(\dfrac{b}{r} - 1\right)dz^2$$
+- chart B II, Through the Axis: coordinates $(\tau, \rho, \chi, z)$, $$ds^2 = \dfrac{b^2}{\left(1 + \rho^2\right)^2}\left(-\cosh^2\chi\,d\tau^2 + d\chi^2\right) + \dfrac{4b^2\,d\rho^2}{\left(1 + \rho^2\right)^4} + \rho^2dz^2$$
+- chart B III: coordinates $(\tau, r, x, z)$, $$ds^2 = r^2\left(-d\tau^2 + dx^2\right) + \dfrac{r}{b}dr^2 + \dfrac{b}{r}dz^2$$
+
 ### Aichelburg-Sexl Ultraboost
 
 The gravitational field of a massless particle, the Schwarzschild field boosted to the speed of light with its energy held fixed. Spacetime is flat on either side of a single null plane, which carries an impulsive gravitational shock wave with the particle at its centre.

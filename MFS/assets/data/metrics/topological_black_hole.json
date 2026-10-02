@@ -77,6 +77,11 @@
       "id": "plebanski_hacyan",
       "kind": "limit",
       "text": "The limit toward the horizon of the hyperbolic hole at its least mass, $\\mu = -2L/(3\\sqrt{3})$. It is anti-de Sitter space of two dimensions times a hyperbolic plane of radius $L/\\sqrt{3}$, the anti-Nariai universe [caldarelli2001extremal, cardoso2004]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "special_case",
+      "text": "The hyperbolic and the flat hole without the cosmological constant, $L \\to \\infty$, are A II and A III of Ehlers and Kundt's table, with $\\mu = -b$ [hruska2019]."
     }
   ],
   "references": [
@@ -103,7 +108,8 @@
     "cai2002",
     "horowitz1998",
     "caldarelli2001extremal",
-    "cardoso2004"
+    "cardoso2004",
+    "hruska2019"
   ],
   "coordinates": [
     {

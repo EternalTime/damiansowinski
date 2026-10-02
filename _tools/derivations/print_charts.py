@@ -11,8 +11,8 @@ som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, 
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
-wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov and
-born_infeld_charge, and Godel's cylindrical chart.
+wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
+born_infeld_charge and ab_metrics, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -19377,7 +19377,7 @@ def white_hole_novikov(reader):
     return reduce, pretty
 
 
-def white_hole_kruskal(reader):
+def white_hole_kruskal(reader, horizon="r_s", inside=False):
     """A `reduce` for Kruskal's chart, whose areal radius is held as a function r(U, V). Its
     definition, (1 - r/r_s) e^(r/r_s) = UV, makes
 
@@ -19390,8 +19390,11 @@ def white_hole_kruskal(reader):
     below the line or is shorter: no value is then 0/0 on a horizon, and every curvature component
     holds r and e^(-r/r_s) alone."""
     U, V = reader.symbol["U"], reader.symbol["V"]
-    r, rs = reader.parameters["r"], reader.parameters["r_s"]
-    rates = {U: -rs ** 2 * V * sp.exp(-r / rs) / r, V: -rs ** 2 * U * sp.exp(-r / rs) / r}
+    r, rs = reader.parameters["r"], reader.parameters[horizon]
+    # Ehlers and Kundt's AII has Schwarzschild's block with the sign changed: there
+    # (r/b - 1) e^(r/b) = UV, which changes the sign of both rates and of r_s - r below.
+    sign = -1 if inside else 1
+    rates = {U: -sign * rs ** 2 * V * sp.exp(-r / rs) / r, V: -sign * rs ** 2 * U * sp.exp(-r / rs) / r}
     rho, e = sp.Symbol("_rho", positive=True), sp.Symbol("_e", positive=True)
 
     def paired(poly):
@@ -19399,7 +19402,7 @@ def white_hole_kruskal(reader):
         out = sp.Integer(0)
         for (a, b), coefficient in sp.Poly(poly, U, V).terms():
             k = min(a, b)
-            out += coefficient * ((rs - rho) / (rs * e)) ** k * U ** (a - k) * V ** (b - k)
+            out += coefficient * (sign * (rs - rho) / (rs * e)) ** k * U ** (a - k) * V ** (b - k)
         return out
 
     def reduce(value):
@@ -19422,7 +19425,7 @@ def white_hole_kruskal(reader):
         value = value.replace(lambda x: isinstance(x, sp.exp), lambda x: e ** sp.cancel(-x.args[0] * rs / rho))
         if any(not p.exp.is_Integer for p in value.atoms(sp.Pow) if p.base == e) or value.has(sp.exp):
             raise AssertionError(f"white_hole: an exponential other than a power of e^(-r/r_s) in {value}")
-        free = sp.cancel(sp.together(value.subs(e, (rs - rho) / (rs * U * V))))
+        free = sp.cancel(sp.together(value.subs(e, sign * (rs - rho) / (rs * U * V))))
         if free == 0:
             return sp.Integer(0)
         num, den = sp.fraction(free)
@@ -19937,6 +19940,352 @@ def nordstrom_scalar_check(chart, system):
 
 
 CHARTS["nordstrom_scalar"] = [lambda s=s: nordstrom_scalar(s) for s in NORDSTROM_CHARTS]
+
+
+# -- The A- and B-metrics of Ehlers and Kundt ----------------------------------------------
+
+AB_CHARTS = ("a2_static", "a2_cone", "a2_kruskal", "a2_cartesian", "b1_static", "b1_cone", "b1_neck",
+             "b1_cartesian", "a3", "b2_static", "b2_neck", "b3")
+AB_RADIUS = "r = b\\left(1 + \\mathrm{W}\\left(e^{-1}UV\\right)\\right)"
+AB_INSIDE = "\\sigma = \\sqrt{T^2 - X^2 - Y^2}"
+AB_OUTSIDE = "r = \\sqrt{X^2 + Y^2 - T^2}"
+
+
+def ab_metrics(system):
+    """The static vacuum fields of type D that Ehlers and Kundt named A and B (in Gravitation: An
+    Introduction to Current Research, 1962), other than AI, which is Schwarzschild's, with the
+    length b for their constant. AII in its static region r < b, in the region sigma > b beyond the
+    horizon, where the radius is the time, in Kruskal's chart, -(4b^3/r) e^(-r/b) dU dV with
+    (r/b - 1) e^(r/b) = UV, Schwarzschild's with the static regions at the sides, and in the
+    inertial coordinates of the flat space it is at b = 0, inside the cone c^2T^2 = X^2 + Y^2
+    (Hruska and Podolsky, Phys. Rev. D 99, 084037 (2019), (18) of arXiv:1808.03508).
+    BI in Ehlers and Kundt's static chart, in the chart of a de Sitter space of two dimensions
+    (Gott, Nuovo Cimento B 22, 49 (1974); Hruska and Podolsky's (33)), in Ehlers and Kundt's chart
+    through the neck, r = b/(1 - rho^2), and in the inertial coordinates outside the cone. AIII,
+    Taub's plane symmetric vacuum; BII in Ehlers and Kundt's chart and through its axis,
+    r = b/(1 + rho^2); and BIII. ab_metrics_check holds each to a vacuum with the Kretschmann
+    scalar 12 b^2/r^6 and each chart of AII and BI after the first to being the first pulled back;
+    ab_metrics.md records each chart's source."""
+    reals = " \\in (-\\infty, \\infty)"
+    spec = {"metric_id": "ab_metrics", "check": lambda chart: ab_metrics_check(chart, system),
+            "kretschmann": "\\dfrac{12b^2}{r^6}"}
+    parameters = ["b"]
+    chart_parameters = None
+    held = ()
+    components = {}
+    plane = "\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\phi^2\\right)"
+    if system == "a2_static":
+        coords, name = ["t", "r", "\\chi", "\\phi"], "A II, Static"
+        f, bare = "\\left(\\dfrac{b}{r} - 1\\right)", "\\dfrac{b}{r} - 1"
+
+        def line(c2):
+            return "ds^2 = -" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + plane
+        domains = ["t" + reals, "r \\in (0, b)", "\\chi \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)"]
+        full, chart_line = line("c^2"), line("")
+        components = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                      "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}
+        hyper = "\\chi"
+    elif system == "a2_cone":
+        coords, name = ["\\sigma", "z", "\\chi", "\\phi"], "A II, Inside the Cone"
+        f, bare = "\\left(1 - \\dfrac{b}{\\sigma}\\right)", "1 - \\dfrac{b}{\\sigma}"
+        full = chart_line = ("ds^2 = -\\dfrac{d\\sigma^2}{" + bare + "} + " + f + "dz^2 + \\sigma^2" + plane)
+        domains = ["\\sigma \\in (b, \\infty)", "z" + reals, "\\chi \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)"]
+        components = {"metric_components": {("\\sigma", "\\sigma"): "-" + f + "^{-1}", ("z", "z"): bare},
+                      "inverse_metric_components": {("\\sigma", "\\sigma"): "-" + f, ("z", "z"): f + "^{-1}"}}
+        spec["kretschmann"] = "\\dfrac{12b^2}{\\sigma^6}"
+        hyper = "\\chi"
+    elif system == "a2_kruskal":
+        coords, name = ["U", "V", "\\chi", "\\phi"], "A II, Kruskal"
+        parameters = ["b", AB_RADIUS]
+        full = chart_line = "ds^2 = -\\dfrac{4b^3}{r}e^{-r/b}\\,dU\\,dV + r^2" + plane
+        domains = ["U" + reals, "V" + reals, "\\chi \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "UV > -1 \\;\\text{(where } r > 0\\text{)}", "UV = 0 \\;\\text{(the horizons)}"]
+        half, up = "-\\dfrac{2b^3}{r}e^{-r/b}", "-\\dfrac{r}{2b^3}e^{r/b}"
+        components = {"metric_components": {("U", "V"): half, ("V", "U"): half},
+                      "inverse_metric_components": {("U", "V"): up, ("V", "U"): up}}
+        hyper = None
+    elif system == "a2_cartesian":
+        coords, name = ["T", "X", "Y", "Z"], "A II, Inertial"
+        parameters = ["b", AB_INSIDE]
+        full = chart_line = ("ds^2 = -dT^2 + dX^2 + dY^2 + dZ^2 - \\dfrac{b}{\\sigma}\\left(dZ^2 + "
+                             "\\dfrac{\\left(T\\,dT - X\\,dX - Y\\,dY\\right)^2}{\\sigma\\left(\\sigma - b\\right)}\\right)")
+        domains = [x + reals for x in coords] + ["T^2 > X^2 + Y^2 \\;\\text{(inside the cone)}",
+                                                 "\\sigma = b \\;\\text{(the horizon)}"]
+        spec["kretschmann"] = "\\dfrac{12b^2}{\\sigma^6}"
+        hyper = None
+    elif system == "b1_static":
+        coords, name = ["\\tau", "r", "\\theta", "z"], "B I, Static"
+        f, bare = "\\left(1 - \\dfrac{b}{r}\\right)", "1 - \\dfrac{b}{r}"
+        full = chart_line = ("ds^2 = r^2\\left(-\\sin^2\\theta\\,d\\tau^2 + d\\theta^2\\right) + \\dfrac{dr^2}{" + bare
+                             + "} + " + f + "dz^2")
+        domains = ["\\tau" + reals, "r \\in (b, \\infty)", "\\theta \\in (0, \\pi)", "z" + reals]
+        components = {"metric_components": {("r", "r"): f + "^{-1}", ("z", "z"): bare},
+                      "inverse_metric_components": {("r", "r"): bare, ("z", "z"): f + "^{-1}"}}
+        hyper = None
+    elif system == "b1_cone":
+        coords, name = ["\\tau", "r", "\\phi", "z"], "B I, Outside the Cone"
+        f, bare = "\\left(1 - \\dfrac{b}{r}\\right)", "1 - \\dfrac{b}{r}"
+        full = chart_line = ("ds^2 = r^2\\left(-d\\tau^2 + \\cosh^2\\tau\\,d\\phi^2\\right) + \\dfrac{dr^2}{" + bare
+                             + "} + " + f + "dz^2")
+        domains = ["\\tau" + reals, "r \\in (b, \\infty)", "\\phi \\in [0, 2\\pi)", "z" + reals]
+        components = {"metric_components": {("r", "r"): f + "^{-1}", ("z", "z"): bare},
+                      "inverse_metric_components": {("r", "r"): bare, ("z", "z"): f + "^{-1}"}}
+        hyper = "\\tau"
+    elif system == "b1_neck":
+        coords, name = ["\\tau", "\\rho", "\\phi", "z"], "B I, Through the Neck"
+        full = chart_line = ("ds^2 = \\dfrac{b^2}{\\left(1 - \\rho^2\\right)^2}\\left(-d\\tau^2 + \\cosh^2\\tau\\,d\\phi^2\\right)"
+                             " + \\dfrac{4b^2\\,d\\rho^2}{\\left(1 - \\rho^2\\right)^4} + \\rho^2dz^2")
+        domains = ["\\tau" + reals, "\\rho \\in (-1, 1)", "\\phi \\in [0, 2\\pi)", "z" + reals,
+                   "\\rho = 0 \\;\\text{(the neck)}"]
+        spec["kretschmann"] = "\\dfrac{12\\left(1 - \\rho^2\\right)^6}{b^4}"
+        hyper = "\\tau"
+    elif system == "b1_cartesian":
+        coords, name = ["T", "X", "Y", "Z"], "B I, Inertial"
+        parameters = ["b", AB_OUTSIDE]
+        full = chart_line = ("ds^2 = -dT^2 + dX^2 + dY^2 + dZ^2 - \\dfrac{b}{r}\\left(dZ^2 - "
+                             "\\dfrac{\\left(T\\,dT - X\\,dX - Y\\,dY\\right)^2}{r\\left(r - b\\right)}\\right)")
+        domains = [x + reals for x in coords] + ["X^2 + Y^2 > T^2 + b^2 \\;\\text{(outside the cone, } r > b\\text{)}"]
+        hyper = None
+    elif system == "a3":
+        coords, name = ["t", "r", "\\chi", "\\phi"], "A III"
+
+        def line(c2):
+            return ("ds^2 = -\\dfrac{b}{r}" + c2 + "dt^2 + \\dfrac{r}{b}dr^2 + r^2\\left(d\\chi^2 + \\chi^2d\\phi^2\\right)")
+        full, chart_line = line("c^2"), line("")
+        domains = ["t" + reals, "r \\in (0, \\infty)", "\\chi \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)"]
+        hyper = None
+    elif system == "b2_static":
+        coords, name = ["\\tau", "r", "\\chi", "z"], "B II, Static"
+        f, bare = "\\left(\\dfrac{b}{r} - 1\\right)", "\\dfrac{b}{r} - 1"
+        full = chart_line = ("ds^2 = r^2\\left(-\\sinh^2\\chi\\,d\\tau^2 + d\\chi^2\\right) + \\dfrac{dr^2}{" + bare
+                             + "} + " + f + "dz^2")
+        domains = ["\\tau" + reals, "r \\in (0, b)", "\\chi \\in (0, \\infty)", "z" + reals]
+        components = {"metric_components": {("r", "r"): f + "^{-1}", ("z", "z"): bare},
+                      "inverse_metric_components": {("r", "r"): bare, ("z", "z"): f + "^{-1}"}}
+        hyper = "\\chi"
+    elif system == "b2_neck":
+        coords, name = ["\\tau", "\\rho", "\\chi", "z"], "B II, Through the Axis"
+        full = chart_line = ("ds^2 = \\dfrac{b^2}{\\left(1 + \\rho^2\\right)^2}\\left(-\\cosh^2\\chi\\,d\\tau^2 + d\\chi^2\\right)"
+                             " + \\dfrac{4b^2\\,d\\rho^2}{\\left(1 + \\rho^2\\right)^4} + \\rho^2dz^2")
+        domains = ["\\tau" + reals, "\\rho" + reals, "\\chi" + reals, "z" + reals,
+                   "\\rho = 0 \\;\\text{(the axis)}"]
+        spec["kretschmann"] = "\\dfrac{12\\left(1 + \\rho^2\\right)^6}{b^4}"
+        hyper = "\\chi"
+    elif system == "b3":
+        coords, name = ["\\tau", "r", "x", "z"], "B III"
+        full = chart_line = "ds^2 = r^2\\left(-d\\tau^2 + dx^2\\right) + \\dfrac{r}{b}dr^2 + \\dfrac{b}{r}dz^2"
+        domains = ["\\tau" + reals, "r \\in (0, \\infty)", "x" + reals, "z" + reals]
+        hyper = None
+    else:
+        raise KeyError(system)
+    probe = vm.Reader(coords, chart_parameters or parameters, (), held=vm.HELD.get(("ab_metrics", system), ()))
+    b = probe.parameters["b"]
+    printer = {"rising": [b], "lead": [probe.symbol[c] for c in coords if c in ("r", "\\sigma", "\\rho")] + [b],
+               "flip": False}
+    if hyper:
+        spec["pretty"] = cp.hyperbolic(probe.symbol[hyper])
+    if system == "b1_neck":
+        # (rho + 1)(rho - 1) is the line element's 1 - rho^2, up to its sign.
+        rho, plain = probe.symbol["\\rho"], spec["pretty"]
+
+        def pretty(value):
+            value = plain(value)
+            if value == 0:
+                return value
+            out, powers = _factor_powers(value, factor=False)
+            out *= (-1) ** _merge_pair(powers, rho + 1, rho - 1, 1 - rho ** 2)
+            for base, k in powers.items():
+                out *= base ** k
+            return out
+        spec["pretty"] = pretty
+    if system == "a2_kruskal":
+        printer = {"lead": [probe.parameters["r"], b], "flip": False}
+        # The exponentials of chi are set aside as powers of one symbol while the radius is reduced,
+        # since that reduction reads every exponential as a power of e^(-r/b).
+        chi, aside = probe.symbol["\\chi"], sp.Symbol("_echi", positive=True)
+        radial, plane_pretty = white_hole_kruskal(probe, "b", inside=True), cp.hyperbolic(chi)
+
+        def reduce(value):
+            value = sp.sympify(value)
+            if isinstance(value, sp.MatrixBase):
+                return value.applyfunc(reduce)
+            value = value.replace(lambda e: isinstance(e, sp.exp) and sp.expand(e.args[0] / chi).is_Integer,
+                                  lambda e: aside ** sp.expand(e.args[0] / chi))
+            return radial(value).subs(aside, sp.exp(chi))
+        spec["reduce"] = reduce
+        spec["pretty"] = lambda value: value if not sp.sympify(value).has(chi) else plane_pretty(value)
+    if system.endswith("cartesian"):
+        name_of = "sigma" if system == "a2_cartesian" else "r"
+        radius = sp.Symbol(name_of, positive=True)
+        printer = {"rising": [b], "lead": [radius, b] + [probe.symbol[c] for c in coords], "flip": False}
+        spec["pretty"] = ab_inertial(probe, radius, system == "a2_cartesian")
+    if chart_parameters:
+        spec["chart_parameters"] = chart_parameters
+    spec.update({"system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                            "parameters": parameters, "line_element": full},
+                 "chart_line_element": chart_line, "printer": printer, "components": components})
+    return spec
+
+
+def ab_inertial(reader, radius, inside):
+    """A `pretty` for the inertial charts, which name sigma = sqrt(T^2 - X^2 - Y^2) inside the cone
+    and r = sqrt(X^2 + Y^2 - T^2) outside it: every power of the radicand is written as a power of
+    the name and every even power of T left over by the name and X and Y, so that a value is a
+    polynomial in the name, X and Y with at most one T in front."""
+    T, X, Y = (reader.symbol[c] for c in ("T", "X", "Y"))
+    inner = T ** 2 - X ** 2 - Y ** 2
+    t2 = radius ** 2 + X ** 2 + Y ** 2 if inside else X ** 2 + Y ** 2 - radius ** 2
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        # Outside the cone the canonical form writes the root on its other branch,
+        # sqrt(X^2 + Y^2 - T^2) as i sqrt(T^2 - X^2 - Y^2), so that root is read back as -i r.
+        value = value.replace(lambda p: p.is_Pow and sp.expand(p.base - inner) == 0,
+                              lambda p: (radius if inside else -sp.I * radius) ** (2 * p.exp))
+        value = sp.expand(value) if value.has(sp.I) else value
+        if value.has(sp.I):
+            raise AssertionError(f"ab_metrics: an imaginary unit is left in {value}")
+        sides = []
+        for side in sp.fraction(sp.together(value)):
+            poly = sp.Poly(sp.expand(side), T)
+            low = min(k for (k,), _ in poly.terms()) % 2
+            if all((k - low) % 2 == 0 for (k,), _ in poly.terms()):
+                rest = sum(c * t2 ** ((k - low) // 2) for (k,), c in poly.terms())
+                sides.append(T ** low * sp.factor(sp.expand(rest)))
+            else:
+                sides.append(sp.factor(sp.expand(side)))
+        return sp.factor(sides[0] / sides[1])
+
+    return pretty
+
+
+def ab_chart(system):
+    spec = ab_metrics(system)
+    return cp.Chart(spec["system"]["coords"], spec.get("chart_parameters", spec["system"]["parameters"]),
+                    spec["chart_line_element"], held=vm.HELD.get(("ab_metrics", system), ()))
+
+
+def ab_metrics_check(chart, system):
+    """Every chart is a vacuum with the Kretschmann scalar 12 b^2/r^6 in its own radius. Each chart
+    of AII after the static one, and each chart of BI after Ehlers and Kundt's, is the first carried
+    along its map, J^T g J slot by slot: the region beyond the horizon by r = sigma, ct = z, on
+    the other side of r = b; the inertial chart inside the cone by cT = sigma cosh(chi),
+    X = sigma sinh(chi) cos(phi), Y = sigma sinh(chi) sin(phi); the chart of two-dimensional de Sitter
+    space by cos(theta) = cosh(tau') sin(phi), tanh(tau) = tanh(tau')/cos(phi), which Ehlers and
+    Kundt give; the neck by r = b/(1 - rho^2); and the inertial chart outside the cone by
+    cT = r sinh(tau), X = r cosh(tau) cos(phi), Y = r cosh(tau) sin(phi). Kruskal's chart of AII carries
+    the static chart's block of t and r, and the two charts of BII have
+    surfaces of constant r and z of curvature -1/r^2."""
+    geo, g = chart.geo, chart.geo.g
+    ricci = geo.ricci_ll()
+    if any(vm.norm(ricci[a][b]) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError(f"ab_metrics: the {system} chart is no vacuum")
+    x = chart.symbols
+    b = chart.reader.parameters["b"]
+
+    def pulled_back(source, images, at=None):
+        there = ab_chart(source)
+        swap = dict(zip(there.symbols, images))
+        swap[there.reader.parameters["b"]] = b
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(images[i], x[j]))
+        pulled = J.T * there.geo.g.subs(swap, simultaneous=True) * J
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify((pulled[i, j] - g[i, j]).rewrite(sp.exp)) != 0:
+                    raise AssertionError(f"ab_metrics: {source} carried along its map misses the {system} chart "
+                                         f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    def numerically(left, right, symbols, what):
+        """Two matrices of the chart's symbols agree at three random points to thirty digits."""
+        rng = random.Random(7)
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 60), 100) for s in symbols}
+            at[b] = sp.Rational(rng.randint(120, 180), 100)
+            for i in range(left.rows):
+                for j in range(left.cols):
+                    if abs(sp.N((left[i, j] - right[i, j]).subs(at), 40)) > sp.Float(10) ** -30:
+                        raise AssertionError(f"ab_metrics: {what} fails in slot {i}{j}")
+
+    def carried(target, images):
+        """This chart with its coordinates written as `images` in the coordinates of `target`,
+        J^T g J, against the metric of `target`. Outside the cone the canonical form holds the root
+        on its other branch, i sqrt(T^2 - X^2 - Y^2), which is put back before a number is taken."""
+        there = ab_chart(target)
+        inner = x[0] ** 2 - x[1] ** 2 - x[2] ** 2
+        g = chart.geo.g
+        if system == "b1_cartesian":
+            g = g.replace(lambda p: p.is_Pow and not p.exp.is_Integer and sp.expand(p.base - inner) == 0,
+                          lambda p: (-sp.I * sp.sqrt(-inner)) ** (2 * p.exp))
+        swap = dict(zip(x, images(*there.symbols)))
+        swap[b] = there.reader.parameters["b"]
+        new = [swap[s] for s in x]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(new[i], there.symbols[j]))
+        pulled = J.T * g.subs(swap, simultaneous=True) * J
+        return pulled, there
+
+    if system == "a2_cone":
+        sigma, z, chi, phi = x
+        pulled_back("a2_static", [z, sigma, chi, phi])
+    elif system == "b1_neck":
+        tau, rho, phi, z = x
+        pulled_back("b1_cone", [tau, b / (1 - rho ** 2), phi, z])
+    elif system == "a2_kruskal":
+        # In the static region U = -sqrt(1 - r/b) e^(r/2b) e^(-ct/2b) and V = sqrt(1 - r/b) e^(r/2b) e^(ct/2b),
+        # so that UV = (r/b - 1) e^(r/b), and the block -(4b^3/r) e^(-r/b) dU dV is the static chart's.
+        t, r = sp.symbols("t r", positive=True)
+        A = sp.sqrt(1 - r / b) * sp.exp(r / (2 * b))
+        U, V = -A * sp.exp(-t / (2 * b)), A * sp.exp(t / (2 * b))
+        h = -2 * b ** 3 * sp.exp(-r / b) / r
+        J = sp.Matrix([[sp.diff(U, t), sp.diff(U, r)], [sp.diff(V, t), sp.diff(V, r)]])
+        block = (J.T * sp.Matrix([[0, h], [h, 0]]) * J).applyfunc(sp.simplify)
+        if (block - sp.diag(-(b / r - 1), 1 / (b / r - 1))).applyfunc(sp.simplify) != sp.zeros(2, 2):
+            raise AssertionError("ab_metrics: Kruskal's block is not the static chart's")
+        if sp.simplify(U * V - (r / b - 1) * sp.exp(r / b)) != 0:
+            raise AssertionError("ab_metrics: UV is not (r/b - 1) e^(r/b) in the static region")
+        name = chart.reader.parameters["r"]
+        if sp.simplify(g[0, 1] - h.subs(r, name)) != 0 or sp.simplify(g[2, 2] - name ** 2) != 0:
+            raise AssertionError("ab_metrics: Kruskal's chart does not carry that block")
+    elif system == "a2_cartesian":
+        pulled, there = carried("a2_cone", lambda sigma, z, chi, phi: [
+            sigma * sp.cosh(chi), sigma * sp.sinh(chi) * sp.cos(phi), sigma * sp.sinh(chi) * sp.sin(phi), z])
+        numerically(pulled, there.geo.g, there.symbols, "the inertial chart inside the cone")
+    elif system == "b1_cartesian":
+        pulled, there = carried("b1_cone", lambda tau, r, phi, z: [
+            r * sp.sinh(tau), r * sp.cosh(tau) * sp.cos(phi), r * sp.cosh(tau) * sp.sin(phi), z])
+        numerically(pulled, there.geo.g, there.symbols, "the inertial chart outside the cone")
+    elif system == "b1_cone":
+        # Ehlers and Kundt's map between their static chart and the chart of de Sitter space.
+        there = ab_chart("b1_static")
+        tau, r, phi, z = x
+        images = [sp.atanh(sp.tanh(tau) / sp.cos(phi)), r, sp.acos(sp.cosh(tau) * sp.sin(phi)), z]
+        swap = dict(zip(there.symbols, images))
+        swap[there.reader.parameters["b"]] = b
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(images[i], x[j]))
+        numerically(J.T * there.geo.g.subs(swap, simultaneous=True) * J, g, [tau, phi, z, r],
+                    "Ehlers and Kundt's map from the static chart of BI")
+    elif system == "b2_neck":
+        # Anti-de Sitter space of two dimensions in its static chart and in the chart of an accelerated
+        # observer: sinh(chi') = sinh(chi) cosh(tau), tan(tau') = tanh(chi) sinh(tau), and r = b/(1 + rho^2).
+        there = ab_chart("b2_static")
+        tau, r, chi, z = there.symbols
+        new = [sp.atan(sp.tanh(chi) * sp.sinh(tau)), sp.sqrt(b / r - 1), sp.asinh(sp.sinh(chi) * sp.cosh(tau)), z]
+        swap = dict(zip(x, new))
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(new[i], there.symbols[j]))
+        pulled = J.T * g.subs(swap, simultaneous=True) * J
+        rng = random.Random(7)
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 60), 100) for s in there.symbols}
+            at[b], at[there.reader.parameters["b"]] = sp.Integer(1), sp.Integer(1)
+            for i in range(4):
+                for j in range(4):
+                    if abs(sp.N((pulled[i, j] - there.geo.g[i, j]).subs(at), 40)) > sp.Float(10) ** -30:
+                        raise AssertionError(f"ab_metrics: the chart of BII through its axis is not the static "
+                                             f"chart carried along its map, slot {i}{j}")
+
+
+CHARTS["ab_metrics"] = [lambda s=s: ab_metrics(s) for s in AB_CHARTS]
 
 
 def write(spec):
