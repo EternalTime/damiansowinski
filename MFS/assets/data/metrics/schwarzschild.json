@@ -363,6 +363,11 @@
       "id": "born_infeld_charge",
       "kind": "generalisation",
       "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "family",
+      "text": "Schwarzschild's field is A I in Ehlers and Kundt's table of the static vacuum fields of type D. The others have a hyperbolic or a flat plane where the sphere is, or have the time and the angle exchanged [hruska2019, martins1996]."
     }
   ],
   "references": [
@@ -464,7 +469,9 @@
     "belinskii1979",
     "deruelle2011",
     "hoffmann1935",
-    "gibbonsrasheed1995"
+    "gibbonsrasheed1995",
+    "hruska2019",
+    "martins1996"
   ],
   "coordinates": [
     {

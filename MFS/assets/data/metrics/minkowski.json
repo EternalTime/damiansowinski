@@ -218,6 +218,11 @@
       "id": "charged_shell",
       "kind": "composite",
       "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. With more charge than rest mass it falls through both horizons, turns, and leaves into another exterior [delacruz1967]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a tachyon in it. At $b = 0$ A II and B I are the inside and the outside of the cone $T^2 = X^2 + Y^2$ about a spacelike line of Minkowski space [hruska2019]."
     }
   ],
   "references": [
@@ -286,7 +291,8 @@
     "tippett2017",
     "will2014",
     "einstein1914fokker",
-    "delacruz1967"
+    "delacruz1967",
+    "hruska2019"
   ],
   "coordinates": [
     {

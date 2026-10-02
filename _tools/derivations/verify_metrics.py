@@ -830,6 +830,23 @@ DIMENSIONS = {
     ("white_hole", "exterior_eddington_finkelstein"): {
         "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
     },
+    # Ehlers and Kundt's A- and B-metrics, with their constant b a length. A time that stands
+    # beside an angle is itself a number: tau in every B-metric is a boost parameter or the time
+    # of a de Sitter or anti-de Sitter space of two dimensions with its radius factored out. Beyond the
+    # horizon of AII the time is the length sigma. Kruskal's U and V are numbers, and the inertial
+    # charts take their time T as a length and name sigma and r, the intervals from the tachyon's line.
+    ("ab_metrics", "a2_static"): {"t": "T", "r": "L", "\\chi": "1", "\\phi": "1", "b": "L"},
+    ("ab_metrics", "a2_cone"): {"\\sigma": "L", "z": "L", "\\chi": "1", "\\phi": "1", "b": "L"},
+    ("ab_metrics", "a2_kruskal"): {"U": "1", "V": "1", "\\chi": "1", "\\phi": "1", "b": "L", "r": "L"},
+    ("ab_metrics", "a2_cartesian"): {"T": "L", "X": "L", "Y": "L", "Z": "L", "b": "L", "\\sigma": "L"},
+    ("ab_metrics", "b1_static"): {"\\tau": "1", "r": "L", "\\theta": "1", "z": "L", "b": "L"},
+    ("ab_metrics", "b1_cone"): {"\\tau": "1", "r": "L", "\\phi": "1", "z": "L", "b": "L"},
+    ("ab_metrics", "b1_neck"): {"\\tau": "1", "\\rho": "1", "\\phi": "1", "z": "L", "b": "L"},
+    ("ab_metrics", "b1_cartesian"): {"T": "L", "X": "L", "Y": "L", "Z": "L", "b": "L", "r": "L"},
+    ("ab_metrics", "a3"): {"t": "T", "r": "L", "\\chi": "1", "\\phi": "1", "b": "L"},
+    ("ab_metrics", "b2_static"): {"\\tau": "1", "r": "L", "\\chi": "1", "z": "L", "b": "L"},
+    ("ab_metrics", "b2_neck"): {"\\tau": "1", "\\rho": "1", "\\chi": "1", "z": "L", "b": "L"},
+    ("ab_metrics", "b3"): {"\\tau": "1", "r": "L", "x": "1", "z": "L", "b": "L"},
     # Kruskal's null coordinates U and V are numbers, and the factor 4 r_s^3 e^(-r/r_s)/r carries
     # the area.
     ("white_hole", "exterior_kruskal"): {
@@ -1752,6 +1769,8 @@ HELD = {
     # The areal radius of Kruskal's chart, Lambert's function of UV: held, a value is
     # written in r and e^(-r/r_s), as the line element is.
     ("white_hole", "exterior_kruskal"): ("r",),
+    # The radius of AII in Kruskal's chart, the same function of UV.
+    ("ab_metrics", "a2_kruskal"): ("r",),
     # The mass function of Born and Infeld's point charge, an incomplete elliptic integral of the
     # first kind whose derivative along r is algebraic, the energy of the field in a shell.
     ("born_infeld_charge", "static"): ("m",),
