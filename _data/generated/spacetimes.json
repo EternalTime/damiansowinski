@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 76,
+  "count": 77,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -514,6 +514,11 @@
           "id": "kerr_de_sitter",
           "kind": "generalisation",
           "text": "Anti-de Sitter space with a rotating black hole put in. Henneaux and Teitelboim took it as the prototype for every isolated system in anti-de Sitter space [henneaux1985]."
+        },
+        {
+          "id": "near_horizon_extreme_kerr",
+          "kind": "family",
+          "text": "A vacuum with no cosmological constant that still carries an anti-de Sitter space of two dimensions along its axis, and a timelike boundary of its own [bardeen1999]."
         }
       ],
       "references": [
@@ -540,7 +545,8 @@
         "bertotti1959",
         "robinson1959",
         "hogarth1992",
-        "henneaux1985"
+        "henneaux1985",
+        "bardeen1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -2135,6 +2141,11 @@
           "id": "reissner_nordstrom_de_sitter",
           "kind": "generalisation",
           "text": "The charged black hole in de Sitter space. The throat of its cold member is a product of a two dimensional spacetime and a sphere, and at $\\Lambda = 0$ that product is Bertotti and Robinson's [romans1992]."
+        },
+        {
+          "id": "near_horizon_extreme_kerr",
+          "kind": "family",
+          "text": "The throat of an extreme black hole that spins, a vacuum with a circle twisted over the anti-de Sitter factor at every polar angle [bardeen1999]."
         }
       ],
       "references": [
@@ -8481,6 +8492,11 @@
           "id": "myers_perry",
           "kind": "generalisation",
           "text": "Kerr's black hole in more than four dimensions, with a spin for every independent plane of rotation. From six dimensions up a hole turning in one plane keeps its horizon at every spin [myers1986]."
+        },
+        {
+          "id": "near_horizon_extreme_kerr",
+          "kind": "special_case",
+          "text": "Kerr spinning as fast as it can, seen from just outside the horizon. The region there is a throat without end, with four symmetries where Kerr has two [bardeen1999]."
         }
       ],
       "references": [
@@ -8510,7 +8526,8 @@
         "garfinkle1999",
         "mazza2021",
         "carter1968separable",
-        "myers1986"
+        "myers1986",
+        "bardeen1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -9324,6 +9341,11 @@
           "id": "kerr_de_sitter",
           "kind": "family",
           "text": "Kerr's black hole with a cosmological constant where this one has a charge. Carter found both in one family by asking the Hamilton-Jacobi equation to separate [carter1968separable]."
+        },
+        {
+          "id": "near_horizon_extreme_kerr",
+          "kind": "special_case",
+          "text": "The throat of the extreme hole with the charge switched off. With charge the throat slides toward the Bertotti-Robinson universe [bardeen1999]."
         }
       ],
       "references": [
@@ -9345,7 +9367,8 @@
         "mazur1982",
         "ruffini1971",
         "gibbons1975",
-        "carter1968separable"
+        "carter1968separable",
+        "bardeen1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_newman.json",
@@ -13701,6 +13724,365 @@
           ],
           "ricci_scalar": "R = \\dfrac{\\left(\\partial_y u\\right)^2 + \\left(\\partial_z u\\right)^2}{2\\,c^2}",
           "kretschmann": "K = \\dfrac{11\\left(\\left(\\partial_y u\\right)^2 + \\left(\\partial_z u\\right)^2\\right)^2}{4\\,c^4} - \\dfrac{2\\left(\\left(\\partial_y^2 u\\right)^2 + 2\\left(\\partial_y\\partial_z u\\right)^2 + \\left(\\partial_z^2 u\\right)^2\\right)}{c^2} + \\dfrac{2\\left(\\left(\\partial_t\\partial_y u\\right)^2 + \\left(\\partial_t\\partial_z u\\right)^2\\right)}{c^2}"
+        }
+      ]
+    },
+    {
+      "id": "near_horizon_extreme_kerr",
+      "name": "Near-Horizon Extreme Kerr Geometry",
+      "short_name": "Near-Horizon Extreme Kerr",
+      "description": "The vacuum geometry left when one looks only at the region just outside the horizon of a Kerr black hole spinning as fast as it can, known as NHEK. At every polar angle it is a circle fibred over anti-de Sitter space of two dimensions, it has no singularity and no asymptotically flat region, and the Kerr/CFT correspondence is built on it.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "rotating",
+        "extremal",
+        "near-horizon limit",
+        "NHEK",
+        "extreme Kerr throat",
+        "black hole",
+        "stationary",
+        "axisymmetric",
+        "angular momentum",
+        "frame dragging",
+        "anti-de Sitter",
+        "warped anti-de Sitter",
+        "Kerr/CFT",
+        "holography",
+        "geodesically complete",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the one scale is the length $r_0$, with $r_0^2 = 2GJ/c^3$ for a black hole of angular momentum $J$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "generalisation",
+          "text": "The rotating black hole whose throat this is. Spin Kerr up to $a = GM/c^2$, zoom in on the horizon, and the throat remains [bardeen1999]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "The throat of the extreme charged black hole, anti-de Sitter space of two dimensions times a round sphere. Bardeen and Horowitz called theirs \"a vacuum analog\" of it [bardeen1999]."
+        },
+        {
+          "id": "kerr_newman",
+          "kind": "generalisation",
+          "text": "Give the extreme hole charge as well as spin and its throat slides from this one to the Bertotti-Robinson throat as the charge grows [bardeen1999]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Along its axis the throat is exactly an anti-de Sitter space of two dimensions, and its boundary is timelike, as anti-de Sitter's is [bardeen1999]."
+        }
+      ],
+      "references": [
+        "bardeen1999",
+        "bardeen1971",
+        "guica2009",
+        "amsel2009",
+        "smarr1973",
+        "maldacena1998",
+        "brown1986",
+        "mcclintock2006",
+        "dias2009kerr",
+        "bredberg2010",
+        "compere2017",
+        "gralla2018"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/near_horizon_extreme_kerr.json",
+      "charts": [
+        {
+          "id": "poincare",
+          "name": "Poincaré",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the horizon of the patch)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Scale of the throat, a length, with $r_0^2 = 2GJ/c^3 = 2G^2M^2/c^4$ for the extreme Kerr black hole of angular momentum $J$ and mass $M$ whose throat this is; the area of its horizon is $4\\pi r_0^2$"
+            }
+          ],
+          "convention": "We use Bardeen and Horowitz's coordinates $(t, r, \\theta, \\phi)$, which turn with the horizon, with $t$ carrying dimensions of time and $r$ a length. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{1 + \\cos^2\\theta}{2}\\left(-\\dfrac{r^2}{r_0^2}c^2dt^2 + \\dfrac{r_0^2}{r^2}dr^2 + r_0^2d\\theta^2\\right) + \\dfrac{2r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}\\left(d\\phi + \\dfrac{r}{r_0^2}c\\,dt\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{r^2\\left(3 - 6\\cos^2\\theta - \\cos^4\\theta\\right)}{2r_0^2\\left(1 + \\cos^2\\theta\\right)}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2r\\sin^2\\theta}{1 + \\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "\\dfrac{2r\\sin^2\\theta}{1 + \\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r_0^2\\left(1 + \\cos^2\\theta\\right)}{2r^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r_0^2\\left(1 + \\cos^2\\theta\\right)}{2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{192\\left(\\cos^4\\theta - 14\\cos^2\\theta + 1\\right)\\sin^2\\theta}{r_0^4\\left(1 + \\cos^2\\theta\\right)^6}"
+        },
+        {
+          "id": "inverse_radius",
+          "name": "Poincaré, Inverse Radius",
+          "coordinates": [
+            "t",
+            "x",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "x = 0 \\;\\text{(the timelike boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Scale of the throat, a length, with $r_0^2 = 2GJ/c^3 = 2G^2M^2/c^4$ for the extreme Kerr black hole of angular momentum $J$ and mass $M$ whose throat this is; the area of its horizon is $4\\pi r_0^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, \\theta, \\phi)$, with $t$ carrying dimensions of time and $x$ a length, related to the Poincaré chart by $rx = r_0^2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{1 + \\cos^2\\theta}{2}\\left(\\dfrac{r_0^2}{x^2}\\left(-c^2dt^2 + dx^2\\right) + r_0^2d\\theta^2\\right) + \\dfrac{2r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}\\left(d\\phi + \\dfrac{c\\,dt}{x}\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{r_0^2\\left(3 - 6\\cos^2\\theta - \\cos^4\\theta\\right)}{2x^2\\left(1 + \\cos^2\\theta\\right)}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2r_0^2\\sin^2\\theta}{x\\left(1 + \\cos^2\\theta\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "\\dfrac{2r_0^2\\sin^2\\theta}{x\\left(1 + \\cos^2\\theta\\right)}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r_0^2\\left(1 + \\cos^2\\theta\\right)}{2x^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r_0^2\\left(1 + \\cos^2\\theta\\right)}{2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{192\\left(\\cos^4\\theta - 14\\cos^2\\theta + 1\\right)\\sin^2\\theta}{r_0^4\\left(1 + \\cos^2\\theta\\right)^6}"
+        },
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "\\tau",
+            "y",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Scale of the throat, a length, with $r_0^2 = 2GJ/c^3 = 2G^2M^2/c^4$ for the extreme Kerr black hole of angular momentum $J$ and mass $M$ whose throat this is; the area of its horizon is $4\\pi r_0^2$"
+            }
+          ],
+          "convention": "We use Bardeen and Horowitz's global coordinates $(\\tau, y, \\theta, \\phi)$, with $\\tau$ and $y$ pure numbers, so $\\tau$ is itself the chart's $x^0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{1 + \\cos^2\\theta}{2}r_0^2\\left(-\\left(1 + y^2\\right)d\\tau^2 + \\dfrac{dy^2}{1 + y^2} + d\\theta^2\\right) + \\dfrac{2r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}\\left(d\\phi + y\\,d\\tau\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{r_0^2\\left(y^2\\left(\\cos^4\\theta + 6\\cos^2\\theta - 3\\right) + \\left(1 + \\cos^2\\theta\\right)^2\\right)}{2\\left(1 + \\cos^2\\theta\\right)}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2y\\,r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\tau"
+              ],
+              "value": "\\dfrac{2y\\,r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r_0^2\\left(1 + \\cos^2\\theta\\right)}{2\\left(1 + y^2\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r_0^2\\left(1 + \\cos^2\\theta\\right)}{2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{192\\left(\\cos^4\\theta - 14\\cos^2\\theta + 1\\right)\\sin^2\\theta}{r_0^4\\left(1 + \\cos^2\\theta\\right)^6}"
+        },
+        {
+          "id": "near_nhek",
+          "name": "Near-NHEK",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (2k, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 2k \\;\\text{(the horizon of the patch)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Scale of the throat, a length, with $r_0^2 = 2GJ/c^3 = 2G^2M^2/c^4$ for the extreme Kerr black hole of angular momentum $J$ and mass $M$ whose throat this is; the area of its horizon is $4\\pi r_0^2$"
+            },
+            {
+              "symbol": "k",
+              "description": "Half the coordinate radius of the horizon of the patch, a length; the surface gravity of that horizon with respect to $t$ is $c^2k/r_0^2$, and at $k = 0$ the chart is the Poincaré chart"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ adapted to a horizon of finite temperature at $r = 2k$, with $t$ carrying dimensions of time and $r$ and $k$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{1 + \\cos^2\\theta}{2}\\left(-\\dfrac{r\\left(r - 2k\\right)}{r_0^2}c^2dt^2 + \\dfrac{r_0^2}{r\\left(r - 2k\\right)}dr^2 + r_0^2d\\theta^2\\right) + \\dfrac{2r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}\\left(d\\phi + \\dfrac{r - k}{r_0^2}c\\,dt\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{k^2\\left(1 + \\cos^2\\theta\\right)^2 - \\left(\\cos^4\\theta + 6\\cos^2\\theta - 3\\right)\\left(r - k\\right)^2}{2r_0^2\\left(1 + \\cos^2\\theta\\right)}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2\\left(r - k\\right)\\sin^2\\theta}{1 + \\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "\\dfrac{2\\left(r - k\\right)\\sin^2\\theta}{1 + \\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r_0^2\\left(1 + \\cos^2\\theta\\right)}{2r\\left(r - 2k\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r_0^2\\left(1 + \\cos^2\\theta\\right)}{2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{192\\left(\\cos^4\\theta - 14\\cos^2\\theta + 1\\right)\\sin^2\\theta}{r_0^4\\left(1 + \\cos^2\\theta\\right)^6}"
         }
       ]
     },

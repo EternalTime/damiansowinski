@@ -592,6 +592,32 @@ def _br(chart):
     return [Mark(equator, along(0.0, lo, hi)), Mark(sphere, points=[(0.0, 1.0)])]
 
 
+def nhek_radius(y):
+    """Bardeen and Horowitz's Poincare radius, in r_0, of the event at y on the moment tau = 0 of
+    their global chart, where t = 0 too: r = sqrt(1 + y^2) + y."""
+    return math.sqrt(1 + y * y) + y
+
+
+def _nhek(chart):
+    """The throat of extreme Kerr at the moment tau = 0 of the global chart: the equator along y
+    as far as the cylinder reaches, and the horizon's sphere at the event y = 0. Bardeen and
+    Horowitz's map puts tau = 0 on t = 0 of their Poincare chart with r = r_0 (sqrt(1 + y^2) + y)
+    and the same phi, and the inverse radius is x = r_0^2/r, so the same stretch is a line of
+    t = 0 on each of those planes and the sphere stands at r = r_0 and at x = r_0."""
+    throat = moments("near_horizon_extreme_kerr", "throat", label="$\\tau = 0$")[0]
+    sphere = moments("near_horizon_extreme_kerr", "horizon", label="$\\tau = 0$, $y = 0$")[0]
+    lo, hi = throat.reach("global", "y")
+    at = 0.0
+    if chart != "global":
+        lo, hi, at = nhek_radius(lo), nhek_radius(hi), 1.0
+        throat.label = "$t = 0$"
+        sphere.label = "$t = 0$, $r = r_0$"
+    if chart == "inverse_radius":
+        lo, hi = 1 / hi, 1 / lo
+        sphere.label = "$t = 0$, $x = r_0$"
+    return [Mark(throat, along(0.0, lo, hi)), Mark(sphere, points=[(0.0, at)])]
+
+
 def _ds_flat():
     """de Sitter's static moment t = 0 in the flat slicing, H = 1: with
     X_0 = sinh t_f + rho^2 e^(t_f)/2 of the embedding space it is X_0 = 0, which is
@@ -1168,6 +1194,9 @@ FLAT = {
         "majumdar_papapetrou", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_holes"),
     ("majumdar_papapetrou", "cartesian", "tz"): _mp_axis,
     ("taub_nut", "spherical", "radial"): lambda: one("taub_nut", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    ("near_horizon_extreme_kerr", "poincare", "equator"): lambda: _nhek("poincare"),
+    ("near_horizon_extreme_kerr", "inverse_radius", "equator"): lambda: _nhek("inverse_radius"),
+    ("near_horizon_extreme_kerr", "global", "equator"): lambda: _nhek("global"),
     ("bertotti_robinson", "static", "radial"): lambda: _br("static"),
     ("bertotti_robinson", "poincare", "tx"): lambda: _br("poincare"),
     ("nariai", "static", "patch"): lambda: _nariai("static"),
@@ -1354,6 +1383,8 @@ HIDDEN = {
     ("wormhole_time_machine", "lorentz"): "the flat space outside the mouths, with the mouths drawn as world lines; the moment embedded runs through the throat",
     ("frw", "open"): "the open universe's conformal diagram; the moments embedded are the closed universe's",
     ("myers_perry", "boyer_lindquist_six", "rotation"): "the plane of rotation in six dimensions, theta = pi/2, which the embedded transverse plane theta = 0 meets nowhere outside the horizon",
+    ("near_horizon_extreme_kerr", "near_nhek", "equator"): "the patch ct > r_0^2/r of the Poincare chart, to the future of the ray that leaves the boundary at t = 0, which the moment tau = 0 embedded does not enter",
+    ("near_horizon_extreme_kerr", "near_nhek"): "the patch ct > r_0^2/r of the Poincare chart, to the future of the ray that leaves the boundary at t = 0, which the moment tau = 0 embedded does not enter",
 }
 
 
@@ -1818,6 +1849,32 @@ def checks():
     miss = max(abs(float((Vm - image[1]).subs({um: a, Xm: X})) - string_wave_V(a, X))
                for a in (-1.5, -0.3, 0.0, 1.0, 2.5) for X in (-0.25, 0.75))
     report("string wave: string_wave_V is V on the surface v = 0", miss, 1e-12)
+
+    # The throat of extreme Kerr: Bardeen and Horowitz's map from their global chart, r = r_0 (sqrt(1 +
+    # y^2) cos tau + y), ct = r_0 sqrt(1 + y^2) sin tau/(sqrt(1 + y^2) cos tau + y) and phi moved by
+    # ln((cos tau + y sin tau)/(1 + sqrt(1 + y^2) sin tau)), pulls the Poincare chart back onto the
+    # global one in every slot, and on tau = 0 it is t = 0, r = r_0 nhek_radius(y) and the same phi.
+    g_p, (tp, rp, thp, php) = metric("near_horizon_extreme_kerr", "poincare", {"r_0": 1})
+    g_g, (tg, yg, thg, phg) = metric("near_horizon_extreme_kerr", "global", {"r_0": 1})
+    g_x, (tx, xx, thx, phx) = metric("near_horizon_extreme_kerr", "inverse_radius", {"r_0": 1})
+    root = sp.sqrt(1 + yg ** 2)
+    image = [root * sp.sin(tg) / (root * sp.cos(tg) + yg), root * sp.cos(tg) + yg, thg,
+             phg + sp.log((sp.cos(tg) + yg * sp.sin(tg)) / (1 + root * sp.sin(tg)))]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (tg, yg, thg, phg)[j]))
+    pulled = J.T * g_p.subs(dict(zip((tp, rp, thp, php), image)), simultaneous=True) * J
+    miss = 0.0
+    for a, b, c in zip(rng.uniform(-0.4, 0.4, 20), rng.uniform(-2, 2, 20), rng.uniform(0.2, 2.9, 20)):
+        at = {tg: a, yg: b, thg: c}
+        miss = max(miss, max(abs(complex((pulled - g_g).subs(at)[i, j])) for i in range(4) for j in range(4)))
+    report("NHEK: Bardeen and Horowitz's map pulls the Poincare chart back onto the global one", miss, 1e-10)
+    miss = max(max(abs(float(e.subs({tg: 0, yg: b, phg: 0.3}) - v)) for e, v in zip(image, (0.0, nhek_radius(b), None, 0.3))
+                   if v is not None) for b in rng.uniform(-2.25, 2.25, 20))
+    report("NHEK: the moment tau = 0 is t = 0 with r = r_0 (sqrt(1 + y^2) + y) and the same phi", miss, 1e-12)
+    J = sp.diag(1, sp.diff(1 / xx, xx), 1, 1)
+    pulled = J.T * g_p.subs({tp: tx, rp: 1 / xx, thp: thx, php: phx}, simultaneous=True) * J
+    miss = max(abs(complex((pulled - g_x).subs({xx: a, thx: c})[i, j])) for a, c in zip(
+        rng.uniform(0.2, 4, 20), rng.uniform(0.2, 2.9, 20)) for i in range(4) for j in range(4))
+    report("NHEK: x = r_0^2/r pulls the Poincare chart back onto the inverse radius one", miss, 1e-10)
     return failures
 
 

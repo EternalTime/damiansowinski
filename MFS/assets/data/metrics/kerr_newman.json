@@ -55,6 +55,11 @@
       "id": "kerr_de_sitter",
       "kind": "family",
       "text": "Kerr's black hole with a cosmological constant where this one has a charge. Carter found both in one family by asking the Hamilton-Jacobi equation to separate [carter1968separable]."
+    },
+    {
+      "id": "near_horizon_extreme_kerr",
+      "kind": "special_case",
+      "text": "The throat of the extreme hole with the charge switched off. With charge the throat slides toward the Bertotti-Robinson universe [bardeen1999]."
     }
   ],
   "references": [
@@ -76,7 +81,8 @@
     "mazur1982",
     "ruffini1971",
     "gibbons1975",
-    "carter1968separable"
+    "carter1968separable",
+    "bardeen1999"
   ],
   "coordinates": [
     {

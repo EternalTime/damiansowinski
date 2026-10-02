@@ -65,6 +65,11 @@
       "id": "kerr_de_sitter",
       "kind": "generalisation",
       "text": "Anti-de Sitter space with a rotating black hole put in. Henneaux and Teitelboim took it as the prototype for every isolated system in anti-de Sitter space [henneaux1985]."
+    },
+    {
+      "id": "near_horizon_extreme_kerr",
+      "kind": "family",
+      "text": "A vacuum with no cosmological constant that still carries an anti-de Sitter space of two dimensions along its axis, and a timelike boundary of its own [bardeen1999]."
     }
   ],
   "references": [
@@ -91,7 +96,8 @@
     "bertotti1959",
     "robinson1959",
     "hogarth1992",
-    "henneaux1985"
+    "henneaux1985",
+    "bardeen1999"
   ],
   "coordinates": [
     {

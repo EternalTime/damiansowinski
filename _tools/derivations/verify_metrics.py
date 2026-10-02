@@ -520,6 +520,18 @@ DIMENSIONS = {
     ("spinning_string", "extended_source"): {
         "t": "T", "r": "L", "\\phi": "1", "z": "L", "M": "L", "\\rho": "L", "r_0": "L",
     },
+    # The throat of extreme Kerr with one length, r_0^2 = 2GJ/c^3. Bardeen and Horowitz's
+    # Poincare-type chart keeps a time and a length, the inverse radius x = r_0^2/r is a length
+    # too, their global chart's tau and y are pure numbers with r_0^2 out in front, and the
+    # near-NHEK chart adds the length k = pi r_0^2 T of its horizon's temperature.
+    ("near_horizon_extreme_kerr", "poincare"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L"},
+    ("near_horizon_extreme_kerr", "inverse_radius"): {
+        "t": "T", "x": "L", "\\theta": "1", "\\phi": "1", "r_0": "L",
+    },
+    ("near_horizon_extreme_kerr", "global"): {"\\tau": "1", "y": "1", "\\theta": "1", "\\phi": "1", "r_0": "L"},
+    ("near_horizon_extreme_kerr", "near_nhek"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "k": "L",
+    },
     # The travelling wave on a string: u = ct - z and v = ct + z are lengths, so no coordinate is a
     # time and the profile F is a pure number, as is b = 1 - 4G mu/c^2. The string's displacements
     # A(u) and B(u) are lengths, as are the isotropic x and y, their distance rho from the string

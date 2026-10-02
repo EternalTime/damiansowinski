@@ -640,6 +640,86 @@ def ergoregion(spec, camera=Camera(-90, 30), horizon_between=(1.0, 1.9), ergo_be
     return fig.done(), sl
 
 
+class ThroatSlice(Slice):
+    """The equator of the extreme Kerr throat in Bardeen and Horowitz's global chart, (tau, y,
+    phi), drawn polar with each circle of constant y at the radius 2 + arsinh(y)/sqrt 2 in units
+    of r_0: the published g_yy = r_0^2/(2(1 + y^2)) on the equator, which is checked, makes
+    arsinh(y)/sqrt 2 the proper distance along the throat from y = 0, and the 2 keeps the circles
+    of negative y off the axis."""
+
+    def radius(self, y):
+        return 2.0 + np.arcsinh(y) / np.sqrt(2.0)
+
+    def jacobian(self, x):
+        t, y, b = x
+        if not abs(self.metric(x)[1, 1] - 0.5 / (1 + y * y)) < 1e-12:
+            raise SystemExit(f"{self.metric_id}/{self.system_id}: g_yy is not r_0^2/(2(1 + y^2)) on the equator")
+        d, a = 1.0 / np.sqrt(2.0 * (1 + y * y)), self.radius(y)
+        return np.array([[0.0, d * np.cos(b), -a * np.sin(b)],
+                         [0.0, d * np.sin(b), a * np.cos(b)],
+                         [1.0, 0.0, 0.0]])
+
+
+def throat(spec, camera=Camera(-90, 30)):
+    """The light cones of the extreme Kerr throat on its equator, the slice theta = pi/2 of tau,
+    y and phi in the global chart, drawn polar with the proper distance along the throat as the
+    radius, ThroatSlice.
+
+    The circles y = +-1/sqrt 3 are the zeros of the published g_tautau, found by bisection and
+    checked against 1/sqrt 3. Cones stand at four places around each of the circles y = 0,
+    y = +-1/sqrt 3 and y = +-3/2, those on the dotted circles turned by 45 degrees from the
+    others, oriented by the time function tau, which the published g^tautau < 0 makes one at
+    every y. Before anything is drawn, g_tautau is checked negative at y = 0 and positive at
+    y = +-3/2, and the cones are checked to turn as that says: some generators toward each sense
+    of phi at y = 0, none toward +phi on y = 1/sqrt 3 and every one toward -phi at y = 3/2, and
+    the mirror image where y is negative. The floor runs from y = -2 to 2, inside the reach of
+    the embedding's cylinder, whose moment tau = 0 it is, and the circle y = 0 on it is the
+    equator of the horizon the embedding's second view draws."""
+    sl = ThroatSlice(spec.metric, spec.system, ("\\tau", "y", "\\phi"), "polar", spec.params, spec.fixed)
+    g_tt = lambda y: sl.metric((0.0, y, 0.0))[0, 0]
+    edge = root(g_tt, 0.1, 1.0)
+    outer = 1.5
+    if not (abs(edge - 1 / np.sqrt(3)) < 1e-10 and abs(g_tt(-edge)) < 1e-10 and g_tt(0.0) < 0
+            and g_tt(outer) > 0 and g_tt(-outer) > 0
+            and all(sl.inverse((0.0, y, 0.0))[0, 0] < 0 for y in np.linspace(-2, 2, 41))):
+        raise SystemExit(f"{key(spec)}: d/dtau is not null where y^2 = 1/3, or tau is no time function")
+    turn = {}
+    for y in (-outer, -edge, 0.0, edge, outer):
+        _, k = generators(sl, (0.0, y, 0.0), "tau", 3600)
+        size = sl.radius(y)
+        swing = k[:, 2] * size / np.linalg.norm(k * [1, 1, size], axis=1)
+        turn[y] = (float(swing.min()), float(swing.max()))
+    if not (turn[0.0][0] < 0 < turn[0.0][1] and abs(turn[edge][1]) < 1e-5 and turn[outer][1] < 0
+            and abs(turn[-edge][0]) < 1e-5 and turn[-outer][0] > 0):
+        raise SystemExit(f"{key(spec)}: the cones do not turn as g_tautau says: {turn}")
+    fig = Figure(spec.view, spec.label, camera)
+    reach = 2.0
+    for k in range(12):
+        ph = k * np.pi / 6
+        fig.line("floor", sl.to_drawing((np.zeros(2), np.array([-reach, reach]), np.full(2, ph))))
+    for y, cls in ((-reach, "floor"), (-outer, "floor"), (0.0, "floor"), (outer, "floor"), (reach, "floor"),
+                   (-edge, "ergo"), (edge, "ergo")):
+        fig.line(cls, circle(sl, 0.0, y), closed=True)
+    fig.line("axis", np.array([[0, 0, -0.4], [0, 0, 1.3]]))
+    cones = []
+    for y, shift in ((-outer, 0.0), (-edge, 0.5), (0.0, 0.0), (edge, 0.5), (outer, 0.0)):
+        cones += [(0.0, y, (k + shift) * np.pi / 2) for k in range(4)]
+    drawn = [future_cone(sl, x, 0.3, orient="tau") for x in cones]
+    for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    cylinder = slices.moments(spec.metric, "throat", label="$\\tau = 0$")[0]
+    sphere = slices.moments(spec.metric, "horizon", label="$\\tau = 0$, $y = 0$")[0]
+    lo, hi = cylinder.reach(spec.system, "y")
+    if not (lo < -reach and hi > reach):
+        raise SystemExit(f"{key(spec)}: the embedding's cylinder does not pass the floor's edges")
+    fig.slice(cylinder, fills=[[circle(sl, 0.0, reach), circle(sl, 0.0, -reach)]])
+    fig.slice(sphere, lines=[circle(sl, 0.0, 0.0)])
+    fig.label(np.array([0, 0, 1.3]), "$\\tau$", "b", dy=-4)
+    fig.legend("cone", "cone", "future light cone")
+    fig.legend("line", "ergo", "$y = \\pm 1/\\sqrt{3}$, where $g_{\\tau\\tau} = 0$")
+    return fig.done(), sl
+
+
 def bubble(spec, camera=Camera(-90, 30), later=0.75):
     """A warp bubble's light cones, on the slice z = 0 of t, x and y, drawn cartesian with t up,
     at t = 0, when the declared profile centres the bubble on x = 0, with the centre's world
@@ -801,6 +881,22 @@ CAPTIONS = {
         "$f = 1$, $ds^2 = -c^2dt^2$: its world line is timelike, and its clock "
         "keeps $t$.",
     ],
+    ("near_horizon_extreme_kerr", "global", "dragging"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the global chart with $\\tau$ up and $\\phi$ the angle "
+        "about the axis, each circle of constant $y$ drawn at the radius "
+        "$2r_0 + r_0\\,\\mathrm{arsinh}(y)/\\sqrt{2}$, so that the distance between two circles is the proper "
+        "distance along the throat. Light moving in this plane stays in it, since the reflection "
+        "$\\theta \\to \\pi - \\theta$ leaves it fixed. The cones stand at $\\tau = 0$ at four places around "
+        "each of five circles: $y = 0$, $y = \\pm 1/\\sqrt{3}$, and $y = \\pm 3/2$. On the middle circle they "
+        "stand upright, and the cross term $g_{\\tau\\phi} = 2r_0^2y$ tips them toward $-\\phi$ where $y$ is "
+        "positive and toward $+\\phi$ where it is negative.",
+        "On the dotted circles $g_{\\tau\\tau} = \\tfrac{1}{2}r_0^2(3y^2 - 1)$ vanishes, so $\\partial_\\tau$ "
+        "is null and one edge of every cone stands vertical. Beyond them the cones have tipped past the "
+        "vertical: every future direction, timelike or null, turns about the axis, clockwise seen from above "
+        "on the outer side and counterclockwise on the inner one, and nothing can stay at fixed $\\phi$. "
+        "Bardeen and Horowitz likened this region to Kerr's ergosphere, and their vector "
+        "$\\partial_\\tau - y\\,\\partial_\\phi$, which turns with the cones, is timelike at every point.",
+    ],
     ("kerr", "boyer_lindquist", "dragging"): [
         "The equatorial plane ($\\theta = \\pi/2$) with $t$ up and $r$ and $\\phi$ as polar "
         "coordinates about the axis, for $a = 0.9\\,GM/c^2$, down to the horizon $r_+ = "
@@ -890,6 +986,9 @@ FIGURES = [
     # the floor.
     Projection("kerr_de_sitter", "boyer_lindquist", "dragging", "$\\Lambda > 0$, light cones on the equator",
                lambda spec: ergoregion(spec, horizon_between=(0.6, 1.0), ergo_below=2.0), nr.KDS, {"theta": "pi/2"}),
+    # The throat of extreme Kerr on its equator, at r_0 = 1, as its flat views are drawn.
+    Projection("near_horizon_extreme_kerr", "global", "dragging", "light cones on the equator", throat,
+               {"r_0": 1}, {"theta": "pi/2"}),
 ]
 
 

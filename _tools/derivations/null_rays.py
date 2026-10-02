@@ -255,6 +255,7 @@ MYERS_CONE = "future cone of no angular momentum"
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
+NHEK_CONE = "future cone of no angular momentum"
 
 
 # Levi-Civita's cylinder as every one of its diagrams draws it: sigma = 1/4 and C = 1 in Weyl's
@@ -1275,6 +1276,21 @@ DIAGRAMS = [
             "$r/b$", "$ct/b$", {"b": 1}, EQUATOR),
     Diagram("bertotti_robinson", "poincare", "tx", "$t$ and $x$", ("t", "x"), (0, 4, -2, 2),
             "$x/b$", "$ct/b$", {"b": 1}, EQUATOR, families=SIDEWAYS),
+    # The throat of extreme Kerr at r_0 = 1, on the equator with phi divided out, where the plane's
+    # metric is half that of the two dimensional anti-de Sitter space of each chart: the rays of no
+    # angular momentum are the throat's principal null rays, the same on every cone of theta, which
+    # print_charts.py checks. The near-NHEK chart is drawn at k = r_0/2, its horizon at r = r_0.
+    Diagram("near_horizon_extreme_kerr", "poincare", "equator", "$t$ and $r$ on the equator", ("t", "r"),
+            (0, 3, -1.5, 1.5), "$r/r_0$", "$ct/r_0$", {"r_0": 1}, {"theta": "pi/2"}, quotient="phi", cone=NHEK_CONE),
+    Diagram("near_horizon_extreme_kerr", "inverse_radius", "equator", "$t$ and $x$ on the equator", ("t", "x"),
+            (0, 4, -2, 2), "$x/r_0$", "$ct/r_0$", {"r_0": 1}, {"theta": "pi/2"}, families=SIDEWAYS, quotient="phi",
+            cone=NHEK_CONE),
+    Diagram("near_horizon_extreme_kerr", "global", "equator", "$\\tau$ and $y$ on the equator", ("\\tau", "y"),
+            (-3, 3, -2, 2), "$y$", "$\\tau$", {"r_0": 1}, {"theta": "pi/2"}, tau="tau", families=SIDEWAYS,
+            quotient="phi", mark_gtt="where $\\partial_\\tau$ turns spacelike", cone=NHEK_CONE),
+    Diagram("near_horizon_extreme_kerr", "near_nhek", "equator", "$t$ and $r$ on the equator", ("t", "r"),
+            (1, 4, -1.5, 1.5), "$r/r_0$", "$ct/r_0$", {"r_0": 1, "k": "1/2"}, {"theta": "pi/2"}, quotient="phi",
+            cone=NHEK_CONE),
     # The Nariai universe's static patch reaches from one horizon, r = -1/sqrt(Lambda), to the other,
     # and its global chart runs round the whole circle of chi, the static patch the half 0 < chi < pi.
     Diagram("nariai", "static", "patch", "$t$ and $r$", ("t", "r"), (-1, 1, -2, 2),
@@ -3259,6 +3275,54 @@ CAPTIONS = {
         "$b$. The first factor is conformal to flat, so the rays are at 45°. "
         "Here $x$ is a coordinate on the AdS₂ factor, with the boundary at $x \\to 0$ and the "
         "Poincaré horizon at $x \\to \\infty$.",
+    ],
+    ("near_horizon_extreme_kerr", "poincare", "equator"): [
+        "The plane of $t$ and $r$ on the equator ($\\theta = \\pi/2$) with $\\phi$ divided out, "
+        "$\\tfrac{1}{2}\\left(-(r^2/r_0^2)\\,c^2dt^2 + (r_0^2/r^2)\\,dr^2\\right)$, the metric orthogonal to the "
+        "circles of $\\phi$ and half the Poincaré chart of a two dimensional anti-de Sitter space. Its null "
+        "curves are the shadows on $t$ and $r$ of the null geodesics of zero angular momentum, each turning in "
+        "$\\phi$ at $d\\phi/d(ct) = -r/r_0^2$, and each cone is the future cone of the directions of zero "
+        "angular momentum.",
+        "$ct \\pm r_0^2/r$ is constant along a ray, so a ray takes infinite $t$ to reach $r = 0$, a Poincaré "
+        "horizon as in the Bertotti-Robinson throat, and reaches $r \\to \\infty$, the timelike boundary, in a "
+        "finite one. The same rays stand over the plane of $t$ and $r$ at every $\\theta$: they are the two "
+        "principal null directions of the throat. On the equator $g_{tt} = 3r^2/2r_0^2$ is positive at every "
+        "$r$, so no observer there keeps $\\phi$ fixed.",
+    ],
+    ("near_horizon_extreme_kerr", "inverse_radius", "equator"): [
+        "The plane of $t$ and $x$ on the equator ($\\theta = \\pi/2$) with $\\phi$ divided out, "
+        "$(r_0^2/2x^2)\\left(-c^2dt^2 + dx^2\\right)$, the metric orthogonal to the circles of $\\phi$. It is "
+        "conformal to flat, so the shadows on $t$ and $x$ of the null geodesics of zero angular momentum run "
+        "at 45°, each turning in $\\phi$ at $d\\phi/d(ct) = -1/x$, and each cone is the future cone of the "
+        "directions of zero angular momentum.",
+        "The timelike boundary of the throat is $x \\to 0$, which a ray reaches in a finite $t$, and the "
+        "Poincaré horizon is $x \\to \\infty$. The boundary is where the throat joined the rest of the extreme "
+        "Kerr black hole before the limit was taken.",
+    ],
+    ("near_horizon_extreme_kerr", "global", "equator"): [
+        "The plane of $\\tau$ and $y$ on the equator ($\\theta = \\pi/2$) with $\\phi$ divided out, "
+        "$\\tfrac{1}{2}r_0^2\\left(-(1 + y^2)\\,d\\tau^2 + dy^2/(1 + y^2)\\right)$, the metric orthogonal to the "
+        "circles of $\\phi$ and half the global chart of a two dimensional anti-de Sitter space. Its null "
+        "curves are the shadows on $\\tau$ and $y$ of the null geodesics of zero angular momentum, each turning "
+        "in $\\phi$ at $d\\phi/d\\tau = -y$, and each cone is the future cone of the directions of zero angular "
+        "momentum.",
+        "$\\tau \\mp \\arctan y$ is constant along a ray, so light crosses the whole throat, from the boundary "
+        "$y \\to -\\infty$ to the boundary $y \\to \\infty$, in $\\Delta\\tau = \\pi$. The cones open as "
+        "$1 + y^2$ and close at no $y$: this chart has no horizon, and it covers the whole spacetime. The "
+        "dotted lines are $y = \\pm 1/\\sqrt{3}$, where $g_{\\tau\\tau} = \\tfrac{1}{2}r_0^2(3y^2 - 1)$ "
+        "vanishes on the equator. Beyond them no observer keeps $\\phi$ fixed, the throat's counterpart of "
+        "Kerr's ergoregion.",
+    ],
+    ("near_horizon_extreme_kerr", "near_nhek", "equator"): [
+        "The plane of $t$ and $r$ on the equator ($\\theta = \\pi/2$) with $\\phi$ divided out, drawn for "
+        "$k = r_0/2$: $\\tfrac{1}{2}\\left(-(r(r - 2k)/r_0^2)\\,c^2dt^2 + r_0^2\\,dr^2/r(r - 2k)\\right)$, the "
+        "metric orthogonal to the circles of $\\phi$. Its null curves are the shadows on $t$ and $r$ of the "
+        "null geodesics of zero angular momentum, each turning in $\\phi$ at $d\\phi/d(ct) = -(r - k)/r_0^2$, "
+        "and each cone is the future cone of the directions of zero angular momentum.",
+        "$ct \\mp r_*$ is constant along a ray, with $r_* = (r_0^2/2k)\\ln(1 - 2k/r)$. The cones close at "
+        "$r = 2k$, a horizon of surface gravity $c^2k/r_0^2$ for the observers at fixed $r$, which a ray "
+        "reaches only as $t \\to \\pm\\infty$. The patch is a part of the same throat, and its horizon is an "
+        "acceleration horizon of the two dimensional anti-de Sitter space, as Rindler's is of flat space.",
     ],
     ("nariai", "static", "patch"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the static chart, the two dimensional "
@@ -6630,6 +6694,14 @@ CLOSED_FORMS = {
         (lambda t, c: c + np.arctan(np.sinh(t)), lambda t, c: c - np.arctan(np.sinh(t)), None),
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    # The throat of extreme Kerr at r_0 = 1: each plane is conformal to a chart of AdS2, whose rays
+    # keep ct -+ r_* with r_* = -1/r, x, arctan y, and ln(1 - 1/r) at k = 1/2.
+    ("near_horizon_extreme_kerr", "poincare", "equator"): (lambda t, r: t - 1 / r, lambda t, r: t + 1 / r, None),
+    ("near_horizon_extreme_kerr", "inverse_radius", "equator"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("near_horizon_extreme_kerr", "global", "equator"):
+        (lambda t, y: t + np.arctan(y), lambda t, y: t - np.arctan(y), None),
+    ("near_horizon_extreme_kerr", "near_nhek", "equator"):
+        (lambda t, r: t + np.log(1 - 1 / r), lambda t, r: t - np.log(1 - 1 / r), lambda t, r: r > 1.02),
     ("godel", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     # Inside Schwarzschild's horizon dr/dT = +-T/(1 - T), so r +- (T + ln(1 - T)) is constant.
     ("kantowski_sachs", "schwarzschild_interior", "Tr"):

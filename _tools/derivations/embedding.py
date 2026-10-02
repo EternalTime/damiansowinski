@@ -6332,6 +6332,132 @@ def fisher_jnw(ck, src):
                           "$dX^2 + dY^2 - dZ^2$.")]
 
 
+NHEK_REACH = 2.25               # |y| the throat is drawn out to, past the floor of its figure of cones
+
+
+class LevelSlice(Slice):
+    """A slice with circles named in `level` on which g_xx = (drho/dx)^2, at values of x with no
+    form in radicals: there the profile lies level, in flat space and in Minkowski space alike,
+    and its unit tangent is (+-1, 0), the sign that of drho/dx, where sympy's limit of
+    sqrt(g_xx - (drho/dx)^2) at a root it cannot reduce comes back with a rounding's worth of
+    the wrong sign."""
+
+    level = {}
+
+    def slope(self, x, side):
+        if x in self.level:
+            return np.array([self.level[x], 0.0])
+        return super().slope(x, side)
+
+
+def near_horizon_extreme_kerr(ck, src):
+    """The throat of the extreme Kerr black hole at r_0 = 1, in two views read from Bardeen and
+    Horowitz's global chart. The equator at the moment tau = 0 has g_yy = 1/(2(1 + y^2)) and
+    g_phiphi = 2, since the cross term is g_tau_phi and drops out of a slice of constant tau: a
+    cylinder of radius sqrt 2, which is 2GM/c^2, along which z = arsinh(y)/sqrt 2, so both ends
+    y -> +-infinity are infinitely far. The surface of theta and phi at one event of tau and y
+    is the horizon of the extreme Kerr black hole, g_thetatheta = (1 + cos^2 theta)/2 and
+    g_phiphi = 2 sin^2 theta/(1 + cos^2 theta), the same at every event. Its
+    g_thetatheta - (drho/dtheta)^2 is ((1 + c^2)^4 - 16 c^2)/(2 (1 + c^2)^3) with c = cos theta,
+    negative from each pole to the root c_1 = 0.2956 of c^3 + c^2 + 3c - 1, theta_1 = 72.81
+    degrees, and positive between: so the belt about the equator is drawn in flat space, the cap
+    about each pole in three dimensional Minkowski space, and at theta_1 and pi - theta_1 the
+    surface lies level in both, so the pieces meet in one circle with one tangent. The Gaussian
+    curvature is 4(1 - 3 cos^2 theta)/(1 + cos^2 theta)^3 in units of 1/r_0^2, checked from the
+    published metric: positive where cos^2 theta < 1/3, within 35.26 degrees of the equator, and
+    negative within 54.74 degrees of each pole, which is why no surface of revolution in flat
+    space reaches the poles."""
+    params = {"r_0": 1}
+    sl = Slice(src, "near_horizon_extreme_kerr", "global", "y", "\\phi", {"tau": 0, **EQUATOR}, params)
+    top = NHEK_REACH
+    size = 3.0
+    tube = Piece("cylinder", "sheet", sl, -top, top, math.asinh(-top) / math.sqrt(2), 1,
+                 (("edge", "the cylinder runs on for ever toward $y \\to -\\infty$"),
+                  ("edge", "the cylinder runs on for ever toward $y \\to \\infty$")),
+                 [(float(y), "r", None) for y in (-2, -1, 0, 1, 2)], size)
+    ck.isometry("NHEK, the equator", tube)
+    ck.form("NHEK, the cylinder z = r_0 arsinh(y)/sqrt 2", tube, lambda y: np.arcsinh(y) / math.sqrt(2), size)
+    ck.radius("NHEK, the cylinder rho = sqrt 2 r_0", tube, lambda y: math.sqrt(2) * np.ones_like(y), size)
+    throat = Surface([tube])
+    fig = figure_of([throat], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tube.at(0.0), "$y = 0$")
+    ring_label(fig, [0, 0, 0], *tube.at(2.0), "$2$")
+    ring_label(fig, [0, 0, 0], *tube.at(-2.0), "$-2$")
+    fig.legend("fill", "cover", "the equator at one moment, which $y$ and $\\phi$ cover")
+    fig.legend("line", "r", "$y$ constant, at $-2$, $-1$, $0$, $1$, and $2$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = "$r_0 = 1$, the unit of every length."
+    views = [view("throat", "The throat", "$r_0$", [throat], fig.done(), settings=settings)]
+
+    fixed = {"tau": 0, "y": 0}
+    flat = LevelSlice(src, "near_horizon_extreme_kerr", "global", "\\theta", "\\phi", fixed, params)
+    mink = LevelSlice(src, "near_horizon_extreme_kerr", "global", "\\theta", "\\phi", fixed, params,
+                      space="minkowski")
+    cosine = sp.CRootOf(sp.Symbol("x") ** 3 + sp.Symbol("x") ** 2 + 3 * sp.Symbol("x") - 1, 0)
+    level = float(sp.acos(cosine))
+    other = math.pi - level
+    flat.level = mink.level = {level: 1.0, other: -1.0}
+    ck.add("NHEK: the circles grow with theta at 72.81 degrees and shrink at 107.19, at the rate of the distance along",
+           max(abs(float(flat._at(flat._drho, x) / math.sqrt(float(flat.gxx_at(x)))) - sign)
+               for x, sign in flat.level.items()), 1e-12)
+    size = 3.0
+    ck.add("NHEK: the horizon lies level where cos^3 + cos^2 + 3 cos = 1, at theta = 72.81 degrees",
+           max(abs(float(flat.defect_at(np.array([x]))[0])) for x in (level, other)), 1e-12)
+    ck.add("NHEK: the level circle is at 72.81 degrees", abs(math.degrees(level) - 72.80661591717184), 1e-9)
+    caps = np.concatenate([np.linspace(0.0, level, 402)[1:-1], np.linspace(other, math.pi, 402)[1:-1]])
+    ck.stops("NHEK, the horizon within 72.81 degrees of a pole in flat space", flat, caps)
+    belt_at = np.linspace(level, other, 402)[1:-1]
+    ck.add("NHEK: within 17.19 degrees of the equator no surface in Minkowski space carries the horizon, "
+           "(drho/dtheta)^2 - g_thetatheta < 0", float(max(0.0, np.max(-mink.defect_at(belt_at)))), 0.0)
+    if not np.all(mink.defect_at(belt_at) > 0):
+        ck.items[-1]["ok"] = False
+    # The Gaussian curvature of E dtheta^2 + G dphi^2 is -(1/sqrt(EG)) d/dtheta((d sqrt G/dtheta)/sqrt E),
+    # here with sqrt G written without the absolute value of sin theta, which is positive on the slice.
+    th = flat.x
+    root_g = sp.sqrt(2) * sp.sin(th) / sp.sqrt(1 + sp.cos(th) ** 2)
+    if sp.simplify(root_g ** 2 - flat.gpp) != 0:
+        raise SystemExit("near_horizon_extreme_kerr: g_phiphi on the horizon is not 2 sin^2/(1 + cos^2)")
+    curvature = sp.simplify(-sp.diff(sp.diff(root_g, th) / sp.sqrt(flat.gxx), th) / (sp.sqrt(flat.gxx) * root_g))
+    stated = 4 * (1 - 3 * sp.cos(th) ** 2) / (1 + sp.cos(th) ** 2) ** 3
+    ck.exact("NHEK: the horizon's Gaussian curvature is 4(1 - 3 cos^2 theta)/(r_0^2 (1 + cos^2 theta)^3)",
+             all(abs(float((curvature - stated).subs(th, x))) < 1e-12 for x in (0.3, 0.9, 1.3, 1.6, 2.4)))
+
+    join = ("at $\\theta = 72.8°$ the surface lies level, in Minkowski space toward the pole and in flat space "
+            "toward the equator")
+    north = Piece("north", "sheet", mink, 0.0, level, 0.0, 1, (("axis", "the pole $\\theta = 0$"), ("join", join)),
+                  [(math.pi / 5, "r", None), (level, "space", None)], size)
+    belt = Piece("belt", "sheet", flat, level, other, north.at(level)[1], 1, (("join", join), ("join", join)),
+                 [(math.pi / 2, "r", None), (other, "space", None)], size)
+    south = Piece("south", "sheet", mink, other, math.pi, belt.at(other)[1], 1,
+                  (("join", join), ("axis", "the pole $\\theta = \\pi$")), [(4 * math.pi / 5, "r", None)], size)
+    for p in (north, belt, south):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"NHEK, the horizon, {p.id} {space}", p)
+        ck.radius(f"NHEK, the horizon, {p.id}, rho = sqrt 2 sin theta/sqrt(1 + cos^2 theta) {space}", p,
+                  lambda x: math.sqrt(2) * np.sin(x) / np.sqrt(1 + np.cos(x) ** 2), size)
+    for a, b, x in ((north, belt, level), (belt, south, other)):
+        ck.join(f"NHEK, the horizon, {a.id} and {b.id} at the level circle", a, x, b, x)
+        pa, pb = a.data()["points"][-1], b.data()["points"][0]
+        ck.add(f"NHEK, the horizon, {a.id} and {b.id} as written: one point at the level circle",
+               max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(a.decimals, b.decimals))
+    ck.add("NHEK: the horizon's equator has the circumference radius sqrt 2 r_0 = 2GM/c^2",
+           abs(belt.at(math.pi / 2)[0] - math.sqrt(2)), 1e-7)
+    ck.add("NHEK: the horizon's meridian from pole to pole is 2.70 r_0, where a round sphere of its equator has 4.44",
+           max(abs(flat.proper(0.0, math.pi) - 2.701287762095351), abs(math.pi * math.sqrt(2) - 4.442882938158366)), 1e-9)
+    horizon = Surface([north, belt, south])
+    fig = figure_of([horizon], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *north.at(level), "$\\theta = 72.8°$")
+    ring_label(fig, [0, 0, 0], *belt.at(other), "$107.2°$", side=-1)
+    fig.legend("fill", "cover", "the horizon, which $\\theta$ and $\\phi$ cover but for its poles")
+    fig.legend("line", "r", "$\\theta$ constant, at $36°$, $90°$, and $144°$")
+    fig.legend("line", "space", "$\\theta = 72.8°$ and $107.2°$: Minkowski space toward each pole, flat space between")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("horizon", "The horizon", "$r_0$", [horizon], fig.done(),
+                      settings="$r_0 = 1$, the unit of every length. Every length along the surface within "
+                               "$72.8°$ of a pole is measured with $dX^2 + dY^2 - dZ^2$."))
+    return views
+
+
 MILNE = (0.5, 1.0, 2.0, 3.0)    # the moments of ct drawn, in any unit of length l
 
 
@@ -7838,6 +7964,7 @@ DRAWN = {
     "szekeres": szekeres,
     "string_wave": string_wave,
     "spinning_string": spinning_string,
+    "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "photon_rocket": photon_rocket,
     "fisher_jnw": fisher_jnw,
 }
@@ -7849,6 +7976,36 @@ DRAWN = {
 NOT_DRAWN = {"lentz"}
 
 CAPTIONS = {
+    ("near_horizon_extreme_kerr", "throat"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the throat at one moment of the global time ($\\tau = 0$), "
+        "drawn as a surface in flat space with every distance along it the metric distance. On it the metric is "
+        "$r_0^2\\,dy^2/2(1 + y^2) + 2r_0^2\\,d\\phi^2$, since the dragging term $g_{\\tau\\phi}$ drops out of a "
+        "slice of constant $\\tau$: a cylinder of radius $\\sqrt{2}\\,r_0$, on which "
+        "$z = r_0\\,\\mathrm{arsinh}(y)/\\sqrt{2}$ puts $y \\to -\\infty$ and $y \\to \\infty$ both infinitely "
+        "far away.",
+        "Every circle on it has the circumference $2\\sqrt{2}\\,\\pi r_0 = 4\\pi GM/c^2$, the equator of the "
+        "extreme Kerr horizon, and the cylinder is flat, as a rolled sheet of paper is. The equatorial funnel of "
+        "a Kerr black hole narrows into this cylinder, infinitely long, as its spin reaches $a = GM/c^2$. James "
+        "Bardeen and Gary Horowitz took the cylinder and everything on it as a spacetime of its own in 1999.",
+    ],
+    ("near_horizon_extreme_kerr", "horizon"): [
+        "The surface of $\\theta$ and $\\phi$ at one event of $\\tau$ and $y$, the horizon of the extreme Kerr "
+        "black hole, drawn in flat space within $17.2°$ of the equator and in three dimensional Minkowski space "
+        "($dX^2 + dY^2 - dZ^2$) from there to each pole, every distance along the surface the metric distance. It "
+        "is the same surface at every event, with the metric "
+        "$r_0^2\\left(\\tfrac{1}{2}(1 + \\cos^2\\theta)\\,d\\theta^2 + 2\\sin^2\\theta\\,d\\phi^2/(1 + "
+        "\\cos^2\\theta)\\right)$.",
+        "Its equator has the circumference $8.89\\,r_0$ and its meridian from pole to pole the length "
+        "$2.70\\,r_0$, where a round sphere of that equator would have $4.44\\,r_0$: the spin has flattened it. "
+        "The Gaussian curvature is $4(1 - 3\\cos^2\\theta)/r_0^2(1 + \\cos^2\\theta)^3$, positive about the "
+        "equator and negative within $54.7°$ of each pole. Larry Smarr found in 1973 that a Kerr horizon spinning "
+        "faster than $a = \\sqrt{3}\\,GM/2c^2$ has two polar caps of negative curvature and no global embedding "
+        "in flat space.",
+        "Toward each pole the circle of constant $\\theta$, of radius $\\rho$, grows faster than the distance out "
+        "to it, so from $\\theta = 72.8°$ the surface climbs at "
+        "$dZ/d\\theta = \\sqrt{(d\\rho/d\\theta)^2 - g_{\\theta\\theta}}$ in Minkowski space. "
+        "On that circle it lies level in both spaces, and the two parts meet there with one tangent plane.",
+    ],
     ("string_wave", "ring"): [
         "The surface of constant $u$ and $v$ across a cosmic string carrying a travelling wave ($b = 1/2$), drawn "
         "as a surface in flat space with every distance along it the metric distance. The wave stands in "

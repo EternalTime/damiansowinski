@@ -67,6 +67,16 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `poincare/tx`: the Poincaré chart has the same $t$ and $x = b^2/r$, which carries one line element onto the other, so the equator is the line $ct = 0$ from $x = b/e$ to $eb$ and the sphere the point $x = b$.
 - `static` and `poincare`, the strip of the first factor, each point a sphere of radius $b$: the line $T = 0$ over the same stretch of $r$ and the point at $r = b$, the same on both, since the two charts cover the same wedge.
 
+### Near-horizon extreme Kerr
+
+- The embedding has two views at the moment $\tau = 0$ of the global chart: the equator, $y$ from $-2.25$ to $2.25$ with $\phi$, and the sphere of $\theta$ and $\phi$ at one event, drawn at $y = 0$.
+- `global/equator`: the equator is the line $\tau = 0$ from $y = -2.25$ to $2.25$; the sphere is the point $\tau = 0$, $y = 0$ on it.
+- `poincare/equator`: Bardeen and Horowitz's map puts $\tau = 0$ on $t = 0$ with $r = r_0\left(\sqrt{1 + y^2} + y\right)$ and the same $\phi$, so the equator is the line $ct = 0$ from $r = 0.212\,r_0$ to $4.71\,r_0$, which the plane cuts at its edge, and the sphere the point $r = r_0$.
+- `inverse_radius/equator`: with $x = r_0^2/r$ the equator is the line $ct = 0$ over the same stretch of $x$ and the sphere the point $x = r_0$.
+- `near_nhek/equator`: the patch is $ct > r_0^2/r$ of the Poincaré chart, which the moment $\tau = 0$ does not enter: not drawn, and listed in `HIDDEN`.
+- `global/dragging`, the figure of light cones: the floor $\tau = 0$ from $y = -2$ to $2$ is part of the equator's moment, and the circle $y = 0$ on it is the equator of the sphere.
+- `poincare`, `inverse_radius` and `global`, the strip of the anti-de Sitter space orthogonal to the circles of $\phi$: the line $T = 0$ from $X = -\arctan 2.25$ to $\arctan 2.25$ and the point at $X = 0$, the same on all three; `near_nhek` carries none.
+
 ### Bianchi type I
 
 - The embedding is the plane $y = 0$ at four moments of cosmic time, $c\bar Ht = 0.10$, $0.38$, $1.00$ and $2.00$, counted from the singularity.
