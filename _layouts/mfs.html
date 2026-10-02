@@ -3274,9 +3274,8 @@
          its frames drawn live in turn, each by MfsTurn at the camera the reader has turned the
          figure to, and at the figure's own camera kept once drawn. Each frame's value, its time or
          how far a cone is unrolled, runs at a steady rate, one pass taking the movie's `seconds`,
-         and MfsTurn.movieFrame() says which frame is shown: played once, the last frame is held
-         one step and the movie starts again, and played "pingpong", as the cosmic string's cone,
-         it runs forward, back and forward again, each end shown once at its turnaround. It plays
+         and MfsTurn.movieFrame() says which frame is shown: every movie runs forward, back and
+         forward again, each end shown once at its turnaround, and never jumps to its start. It plays
          once the page has drawn it and only while it is on the screen, and a reader who asks for
          reduced motion finds it paused on its first frame. The button in its top left corner
          plays and pauses it. `go(k)` draws frame k and `settle()` the frame shown in full. */

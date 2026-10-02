@@ -318,7 +318,7 @@ def check_moments(where, view):
 def check_movie(where, view):
     """A movie, as _tools/README.md defines it: at least two frames, each a surface with its label
     and a value of the movie's variable, the values strictly increasing, one pass taking a
-    positive number of seconds, and a loop, where it says one, of "once" or "pingpong"."""
+    positive number of seconds, and no `loop`, since every movie plays forward and back."""
     movie = view["movie"]
     frames = movie.get("frames") or []
     values = [f.get("value") for f in frames]
@@ -329,9 +329,9 @@ def check_movie(where, view):
         raise DataError(f"{where}: the movie of the view {view['id']!r} leaves a frame or its variable unnamed")
     if not (isinstance(movie.get("seconds"), (int, float)) and movie["seconds"] > 0):
         raise DataError(f"{where}: the movie of the view {view['id']!r} takes no time")
-    if movie.get("loop", "once") not in ("once", "pingpong"):
-        raise DataError(f"{where}: the movie of the view {view['id']!r} loops as {movie['loop']!r}, which is neither "
-                        "'once' nor 'pingpong'")
+    if "loop" in movie:
+        raise DataError(f"{where}: the movie of the view {view['id']!r} says how it loops, which no movie does: "
+                        "every movie plays forward and back")
     if movie.get("turns", False) is not False:
         raise DataError(f"{where}: the movie of the view {view['id']!r} says it turns, which every figure does unless "
                         "it says otherwise")

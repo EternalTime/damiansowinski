@@ -3247,17 +3247,25 @@ class StacksAndMovies(unittest.TestCase):
         self.assertAlmostEqual(math.degrees(delta), 36, delta=1e-12)
         self.assertEqual(frames[-1]["label"], "$\\Delta\\phi = 36° = \\delta$")
 
-    def test_only_the_cosmic_string_plays_forward_and_back(self):
-        loops = {key: v["movie"].get("loop", "once") for key, v in self.movies().items()}
-        self.assertEqual({key for key, loop in loops.items() if loop != "once"}, {("cosmic_string", "unroll")})
-        self.assertEqual(loops[("cosmic_string", "unroll")], "pingpong")
-        self.assertNotIn("loop", next(v for v in self.embedding["frw"]["views"] if "movie" in v)["movie"])
+    def test_no_movie_says_how_it_loops(self):
+        # Forward and back is the one way a movie plays, so no movie's data, the build and the
+        # player carry a word for another.
+        for key, view in self.movies().items():
+            self.assertLessEqual(set(view["movie"]), {"variable", "seconds", "frames", "turns"}, str(key))
         view = copy.deepcopy(next(v for v in self.embedding["cosmic_string"]["views"] if "movie" in v))
         build.check_movie("cosmic_string", view)
-        view["movie"]["loop"] = "bounce"
-        with self.assertRaises(build.DataError) as raised:
-            build.check_movie("cosmic_string", view)
-        self.assertIn("neither 'once' nor 'pingpong'", str(raised.exception))
+        for loop in ("once", "pingpong", "restart"):
+            view["movie"]["loop"] = loop
+            with self.assertRaises(build.DataError) as raised:
+                build.check_movie("cosmic_string", view)
+            self.assertIn("every movie plays forward and back", str(raised.exception))
+        player = (build.ROOT / "MFS" / "assets" / "turn.js").read_text(encoding="utf-8")
+        body = re.search(r"\n  function movieFrame\(movie, ms\) \{[\s\S]*?\n  \}\n", player)
+        self.assertIsNotNone(body, "no movieFrame()")
+        self.assertEqual(set(re.findall(r"\bmovie\.(\w+)", body.group(0))), {"frames", "seconds"})
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        self.assertEqual(page.count("MfsTurn.movieFrame(movie, elapsed)"), 1, "the page plays a movie some other way")
+        self.assertNotIn("movie.loop", page)
 
     def frames_shown(self, movies, times):
         """The frame MfsTurn.movieFrame() shows of each movie at each of `times` in milliseconds,
@@ -3290,18 +3298,29 @@ class StacksAndMovies(unittest.TestCase):
             self.assertLessEqual(abs(run - step), 1, runs)
         self.assertTrue(all(abs(a - b) == 1 for a, b in zip(shown, shown[1:]) if a != b))
 
-    def test_every_other_movie_plays_once_through_and_starts_again(self):
-        movies = {key: v["movie"] for key, v in self.movies().items() if v["movie"].get("loop", "once") == "once"}
-        self.assertEqual(set(movies), set(self.MOVIES) - {("cosmic_string", "unroll")})
-        times = list(range(0, 2 * 1000 * max(m["seconds"] for m in movies.values()) + 2000, 7))
+    def test_every_movie_plays_forward_then_back_and_never_jumps_to_its_start(self):
+        movies = {key: v["movie"] for key, v in self.movies().items()}
+        self.assertEqual(set(movies), set(self.MOVIES))
+        # Three passes and a little more, forward, back and forward again, every 7 milliseconds.
+        times = list(range(0, 3 * 1000 * max(m["seconds"] for m in movies.values()) + 2000, 7))
         for (name, movie), shown in zip(movies.items(), self.frames_shown(list(movies.values()), times)):
             values, period = [f["value"] for f in movie["frames"]], 1000 * movie["seconds"]
-            n = len(values)
-            want = []
-            for ms in times:
-                v = values[0] + (values[-1] - values[0]) * (ms % (period * n / (n - 1))) / period
-                want.append(max(k for k in range(n) if k == 0 or values[k] <= v))
-            self.assertEqual(shown, want, str(name))
+            n, span = len(values), values[-1] - values[0]
+            half = period * (values[1] - values[0]) / span / 2
+            # The frame shown is the one nearest in value, to within rounding where two are as near.
+            for ms, k in zip(times, shown):
+                p = (ms - half) % (2 * period)
+                v = values[0] + span * (p if p < period else 2 * period - p) / period
+                self.assertLessEqual(abs(values[k] - v), min(abs(x - v) for x in values) + 1e-6 * span, (name, ms))
+            # It starts on its first frame and moves one frame at a time, so it never jumps, least
+            # of all from its last frame to its first.
+            self.assertEqual(shown[0], 0, str(name))
+            self.assertTrue(all(abs(a - b) <= 1 for a, b in zip(shown, shown[1:])), str(name))
+            # Its frames in the order shown: up to the last, down to the first, and up again.
+            order = [k for k, _ in itertools.groupby(shown)]
+            up, down = list(range(n)), list(range(n - 2, 0, -1))
+            self.assertEqual(order, (up + down + up + down)[:len(order)], str(name))
+            self.assertGreaterEqual(len(order), 3 * (n - 1), str(name))
 
     def test_the_page_plays_a_movie_and_holds_it_still_for_a_reader_who_asks(self):
         page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
@@ -3474,7 +3493,7 @@ class TimeSlicedViewsAreMovies(unittest.TestCase):
         # The same shape as FRW's, Bianchi's and the cosmic string's: frames with a label and a
         # value, one label on the figure that names the frame shown, which is the first, and
         # nothing a client would have to treat on its own.
-        keys = {"variable", "seconds", "frames", "loop", "turns"}
+        keys = {"variable", "seconds", "frames", "turns"}
         for name, view in self.views:
             if "movie" not in view:
                 continue
