@@ -317,6 +317,10 @@ PH_HYPERBOLIC = {"theta": "1", "phi": "0"}
 # sphere's equator fixed, and their plane of the time and phi one point of the flat dimensions.
 CS_LARGE = {"y": "0", "z": "0", "theta": "pi/2", "phi": "0"}
 CS_EQUATOR = {"x": "0", "y": "0", "z": "0", "theta": "pi/2"}
+# The three-brane's plane of the time and its radial coordinate holds a point of the brane and a point
+# of the sphere fixed.
+TB_PLANE = {"x": "0", "y": "0", "z": "0", "alpha": "pi/2", "beta": "pi/2", "psi": "pi/2", "theta": "pi/2",
+            "phi": "0"}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -3668,6 +3672,20 @@ DIAGRAMS = [
     Diagram("cremmer_scherk", "cartesian", "circle", "$t$ and $\\phi$", ("t", "\\phi"),
             (0, 2 * math.pi, -math.pi, math.pi), "$\\phi$", "$ct/a$", {"a": 1}, CS_EQUATOR, families=SIDEWAYS,
             periodic=("\\phi",)),
+    # The three-brane at L = 1, on the plane of the time and the radial coordinate of each chart: the
+    # isotropic radius, the areal radius from the horizon r = L out, Gibbons, Horowitz and Townsend's w
+    # from the horizon w = 0 to infinity at w = 1, and the throat alone in Maldacena's r and in the
+    # proper distance sigma.
+    Diagram("three_brane_throat", "isotropic", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
+            "$\\rho/L$", "$ct/L$", {"L": 1}, TB_PLANE),
+    Diagram("three_brane_throat", "areal", "radial", "$t$ and $r$", ("t", "r"), (1, 5, -2, 2),
+            "$r/L$", "$ct/L$", {"L": 1}, TB_PLANE),
+    Diagram("three_brane_throat", "horizon", "radial", "$t$ and $w$", ("t", "w"), (0, 1, -1, 1),
+            "$w$", "$ct/L$", {"L": 1}, TB_PLANE),
+    Diagram("three_brane_throat", "throat", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/L$", "$ct/L$", {"L": 1}, TB_PLANE),
+    Diagram("three_brane_throat", "throat_proper", "radial", "$t$ and $\\sigma$", ("t", "\\sigma"),
+            (-2, 2, -2, 2), "$\\sigma/L$", "$ct/L$", {"L": 1}, TB_PLANE),
     Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
             (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
@@ -8677,6 +8695,43 @@ CAPTIONS = {
         "A ray sent round the equator is back where it started after the time $2\\pi a/c$, having gone nowhere "
         "in $x$, $y$, and $z$. To an observer in the large dimensions a neutral scalar wave on the sphere is a "
         "particle at rest, of mass $\\hbar\\sqrt{J(J + 1)}/ac$ for integer $J$.",
+    ],
+    ("three_brane_throat", "isotropic", "radial"): [
+        "The plane of $t$ and $\\rho$ ($x = y = z = 0$, $\\alpha = \\beta = \\psi = \\theta = \\pi/2$, $\\phi = 0$), each point in the plane a flat sheet of $x$, $y$, and $z$ times a "
+        "5-sphere of radius $(\\rho^4 + L^4)^{1/4}$. The rays have "
+        "$d\\rho/d(ct) = \\pm\\rho^2/\\sqrt{\\rho^4 + L^4}$, at 45° far from the brane and closing toward "
+        "the vertical as $\\rho \\to 0$.",
+        "A ray sent inward needs infinite $t$ to reach $\\rho = 0$, the horizon, and the proper distance to it "
+        "along a moment of $t$ is infinite as well, growing as $L\\ln(L/\\rho)$. The Kretschmann scalar is "
+        "finite there, $80/L^4$.",
+    ],
+    ("three_brane_throat", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($x = y = z = 0$, $\\alpha = \\beta = \\psi = \\theta = \\pi/2$, $\\phi = 0$), with $r$ the areal radius of the 5-sphere. The rays have "
+        "$dr/d(ct) = \\pm(1 - L^4/r^4)^{5/4}$, and the cones close toward the vertical at $r = L$, the horizon, "
+        "which no ray reaches in finite $t$.",
+        "The three-brane is the extreme member of Horowitz and Strominger's family of black three-branes, the "
+        "one with the least mass for its charge. Every component of the curvature is finite at $r = L$.",
+    ],
+    ("three_brane_throat", "horizon", "radial"): [
+        "The plane of $t$ and $w$ ($x = y = z = 0$, $\\alpha = \\beta = \\psi = \\theta = \\pi/2$, $\\phi = 0$), Gibbons, Horowitz, and Townsend's coordinate "
+        "$w = (1 - L^4/r^4)^{1/4}$ against time, from the horizon at $w = 0$ to infinity at $w = 1$. The rays "
+        "have $dw/d(ct) = \\pm w^2(1 - w^4)^{5/4}/L$, so the cones close toward the vertical at both ends.",
+        "Every component of the metric is even in $w$. The region $w < 0$ behind the horizon is a mirror image "
+        "of this one, with an infinity of its own at $w = -1$.",
+    ],
+    ("three_brane_throat", "throat", "radial"): [
+        "The plane of $t$ and $r$ ($x = y = z = 0$, $\\alpha = \\beta = \\psi = \\theta = \\pi/2$, $\\phi = 0$) of the throat alone, anti-de Sitter space of five dimensions times a "
+        "5-sphere, both of radius $L$. The rays have $dr/d(ct) = \\pm r^2/L^2$ and take infinite $t$ to reach "
+        "$r = 0$, the Poincaré horizon.",
+        "At large $r$ the cones open without limit, and a ray reaches $r \\to \\infty$, the boundary of "
+        "anti-de Sitter space, in finite $t$. In the whole three-brane the throat widens there into flat space.",
+    ],
+    ("three_brane_throat", "throat_proper", "radial"): [
+        "The plane of $t$ and $\\sigma$ ($x = y = z = 0$, $\\alpha = \\beta = \\psi = \\theta = \\pi/2$, $\\phi = 0$), with $\\sigma$ the proper distance along the throat. The rays "
+        "have $d\\sigma/d(ct) = \\pm e^{\\sigma/L}$, so a ray slows by a factor of $e$ for each length $L$ "
+        "it travels down the throat.",
+        "The horizon lies at $\\sigma \\to -\\infty$, an infinite proper distance away at every moment of "
+        "$t$.",
     ],
     ("interior_schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the "
@@ -13760,6 +13815,19 @@ def _tangherlini_rstar(r, D=5):
             - np.arctan((2 * r + 1) / np.sqrt(3)) / np.sqrt(3))
 
 
+def _three_brane_rstar(rho):
+    """The three-brane's tortoise coordinate at L = 1, the integral of sqrt(1 + 1/rho^4), with the
+    constant that makes it odd in rho, -1/rho + rho^3/6 - ... toward the horizon. With
+    F(x) = x 2F1(-1/2, -1/4, 3/4, -1/x^4) it is F(rho) - C for rho >= 1, where
+    C = 2 Gamma(3/4)^2/sqrt(pi), and -F(1/rho) below, by the inversion rho -> 1/rho, which sends
+    rho_* to -rho_* - C."""
+    from scipy.special import gamma, hyp2f1
+    rho = np.asarray(rho, float)
+    big = np.where(rho >= 1, rho, 1 / rho)
+    F = big * hyp2f1(-0.5, -0.25, 0.75, -1 / big ** 4)
+    return np.where(rho >= 1, F - 2 * gamma(0.75) ** 2 / np.sqrt(np.pi), -F)
+
+
 def _kk_rstar(r):
     """The Kaluza-Klein monopole's tortoise coordinate at m = 1, the integral of sqrt(1 + 4/r) from the
     nut: sqrt(r(r + 4)) + 4 arsinh(sqrt(r)/2)."""
@@ -14857,6 +14925,19 @@ CLOSED_FORMS = {
     # Cremmer and Scherk's flat dimensions and the equator of their sphere at unit radius: ct -+ x and ct -+ phi.
     ("cremmer_scherk", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("cremmer_scherk", "cartesian", "circle"): (lambda t, f: t + f, lambda t, f: t - f, None),
+    # The three-brane at L = 1: ct -+ rho_* with d(rho_*)/d(rho) = sqrt(1 + 1/rho^4), on each chart by its
+    # map to the isotropic radius, and the throat's r_* = -1/r = -e^(-sigma).
+    ("three_brane_throat", "isotropic", "radial"):
+        (lambda t, r: t + _three_brane_rstar(r), lambda t, r: t - _three_brane_rstar(r), lambda t, r: r > 0.05),
+    ("three_brane_throat", "areal", "radial"):
+        (lambda t, r: t + _three_brane_rstar((r ** 4 - 1) ** 0.25), lambda t, r: t - _three_brane_rstar((r ** 4 - 1) ** 0.25),
+         lambda t, r: r > 1.02),
+    ("three_brane_throat", "horizon", "radial"):
+        (lambda t, w: t + _three_brane_rstar(w / (1 - w ** 4) ** 0.25),
+         lambda t, w: t - _three_brane_rstar(w / (1 - w ** 4) ** 0.25), lambda t, w: (w > 0.05) & (w < 0.98)),
+    ("three_brane_throat", "throat", "radial"): (lambda t, r: t - 1 / r, lambda t, r: t + 1 / r, lambda t, r: r > 0.05),
+    ("three_brane_throat", "throat_proper", "radial"):
+        (lambda t, s: t - np.exp(-s), lambda t, s: t + np.exp(-s), None),
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     # The throat of extreme Kerr at r_0 = 1: each plane is conformal to a chart of AdS2, whose rays

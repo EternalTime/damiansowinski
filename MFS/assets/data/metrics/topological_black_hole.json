@@ -87,6 +87,11 @@
       "id": "btz_multi_holes_wormholes",
       "kind": "family",
       "text": "The cutting and gluing done in three dimensions, where the handles sit behind the horizon and the outsides are those of BTZ holes. Four of the five authors made the topological holes of four dimensions [aminneborg1996, aminneborg1998]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "A three-brane of string theory heated a little above its least mass has this black hole, in five dimensions, in its throat [maldacena1998]."
     }
   ],
   "references": [
@@ -115,7 +120,8 @@
     "caldarelli2001extremal",
     "cardoso2004",
     "hruska2019",
-    "aminneborg1998"
+    "aminneborg1998",
+    "maldacena1998"
   ],
   "coordinates": [
     {

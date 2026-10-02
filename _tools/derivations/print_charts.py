@@ -17,7 +17,8 @@ rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kas
 moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
-string_bh_three_four_charges and btz_multi_holes_wormholes, and Godel's cylindrical chart.
+string_bh_three_four_charges, btz_multi_holes_wormholes and three_brane_throat, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -21024,6 +21025,248 @@ def cremmer_scherk_check(chart):
 
 
 CHARTS["cremmer_scherk"] = cremmer_scherk
+
+
+# -- The three-brane and its throat -----------------------------------------------------
+
+THREE_BRANE_CHARTS = ["isotropic", "areal", "horizon", "throat", "throat_proper"]
+THREE_BRANE_ANGLES = ["\\alpha", "\\beta", "\\psi", "\\theta", "\\phi"]
+THREE_BRANE_SPHERE = ("\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\psi^2"
+                      " + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)\\right)")
+THREE_BRANE_FLAT = "\\left(-{}dt^2 + dx^2 + dy^2 + dz^2\\right)"
+THREE_BRANE_AREAL = "r = \\dfrac{L}{\\left(1 - w^4\\right)^{1/4}}"
+
+
+def three_brane(system):
+    """The extreme three-brane of type IIB supergravity in ten dimensions and its throat. The
+    isotropic chart is Duff and Lu's (2.2) with (2.20) and (3.4), e^{-4A} = 1 + |Q|/r^4, their |Q|
+    written L^4 and their r written rho. The areal chart is Horowitz and Strominger's (36) at
+    r_+ = r_- = L, which is Gibbons and Townsend's (3) and Gibbons, Horowitz and Townsend's (3.12) at
+    d = 7, p = 3. The horizon chart takes Gibbons, Horowitz and Townsend's coordinate of (2.14),
+    the power 1/(p + 1) of 1 - (mu/r)^(d - 3), here w = (1 - L^4/r^4)^(1/4): every component is
+    even in w, which is their reflection (2.22). The throat is Maldacena's (2.3), his U written
+    r and the lengths kept, the limit in which the 1 of the harmonic function is dropped, and the
+    throat in the proper distance is Gibbons and Townsend's (5). three_brane_check holds each chart
+    to the field equations with a self-dual five-form\\; three_brane_throat.md records each source."""
+    coords = ["t", "x", "y", "z", {"isotropic": "\\rho", "areal": "r", "horizon": "w", "throat": "r",
+                                    "throat_proper": "\\sigma"}[system]] + THREE_BRANE_ANGLES
+    reals = [PH_LINE.format(c) for c in coords[:4]]
+    angles = [a + " \\in [0, \\pi]" for a in THREE_BRANE_ANGLES[:-1]] + ["\\phi \\in [0, 2\\pi)"]
+    parameters = ["L"]
+    if system == "isotropic":
+        name, radial = "Isotropic", ["\\rho \\in (0, \\infty)"]
+        parameters = ["L", "H = 1 + \\dfrac{L^4}{\\rho^4}"]
+        line = ("ds^2 = H^{-1/2}" + THREE_BRANE_FLAT + " + H^{1/2}\\left(d\\rho^2 + \\rho^2"
+                + THREE_BRANE_SPHERE + "\\right)")
+    elif system == "areal":
+        name, radial = "Areal Radius", ["r \\in (L, \\infty)"]
+        f = "\\left(1 - \\dfrac{L^4}{r^4}\\right)"
+        line = ("ds^2 = " + f + "^{1/2}" + THREE_BRANE_FLAT + " + " + f + "^{-2}dr^2 + r^2" + THREE_BRANE_SPHERE)
+    elif system == "horizon":
+        # The areal radius is held as a function of w with the slope vm.RATES declares, so that every
+        # value is rational in w and r and no root of 1 - w^4 is written. L stands in neither the
+        # line element nor the slope: it is the constant of integration of the slope, so w and r
+        # have no relation among them that a value could hold.
+        name, radial = "Gibbons-Horowitz-Townsend", ["w \\in (0, 1)"]
+        parameters = ["L", THREE_BRANE_AREAL]
+        line = ("ds^2 = w^2" + THREE_BRANE_FLAT + " + r^2\\left(\\dfrac{dw^2}{w^2\\left(1 - w^4\\right)^2} + "
+                + THREE_BRANE_SPHERE[len("\\left("):])
+    elif system == "throat":
+        name, radial = "Throat", ["r \\in (0, \\infty)"]
+        line = ("ds^2 = \\dfrac{r^2}{L^2}" + THREE_BRANE_FLAT + " + \\dfrac{L^2}{r^2}dr^2 + L^2" + THREE_BRANE_SPHERE)
+    else:
+        name, radial = "Throat, Proper Distance", ["\\sigma \\in (-\\infty, \\infty)"]
+        line = ("ds^2 = e^{2\\sigma/L}" + THREE_BRANE_FLAT + " + d\\sigma^2 + L^2" + THREE_BRANE_SPHERE)
+    spec = {"metric_id": "three_brane_throat", "check": lambda chart, s=system: three_brane_check(chart, s),
+            "system": {"id": system, "name": name, "coords": coords, "domains": reals + radial + angles,
+                       "parameters": parameters, "line_element": line.replace("{}", "c^2")},
+            "chart_line_element": line.replace("{}", "")}
+    if system == "horizon":
+        probe = vm.Reader(coords, parameters, (), held=("r",), rates=vm.RATES[("three_brane_throat", "horizon")])
+        w, whole = probe.symbol["w"], sp.Symbol("_whole", positive=True)
+        spec["printer"] = {"lead": [w], "factors": [w, whole, probe.parameters["r"]], "flip": False,
+                           "named": {whole: "1 - w^4"}}
+        spec["reduce"] = lambda value: vm.norm(probe.by_rates(value))
+
+        def pretty(value):
+            # 1 - w^4 is kept whole, as the line element writes it.
+            value = sp.factor(value)
+            powers = value.as_powers_dict()
+            power = powers.get(w + 1, 0)
+            if power != 0 and powers.get(w - 1, 0) == power and powers.get(w ** 2 + 1, 0) == power:
+                value = sp.factor(value / (w ** 4 - 1) ** power) * (-whole) ** power
+            return value
+        spec["pretty"] = pretty
+    else:
+        probe = vm.Reader(coords, parameters, ())
+        spec["printer"] = {"lead": [probe.symbol[coords[4]], probe.parameters["L"]], "flip": False}
+    if system == "areal":
+        # r^4 - L^4 is kept whole, as the line element writes it.
+        factors = ["\\left(r + L\\right)", "\\left(r - L\\right)", "\\left(r^2 + L^2\\right)"]
+        spec["rewrite"] = [("".join(f + power for f in factors), "\\left(r^4 - L^4\\right)" + power)
+                           for power in ("^{3/2}", "^{5/2}", "^2", "^3", "^4", "")]
+        spec["rewrite"].append(("\\sqrt{r + L}\\sqrt{r - L}\\sqrt{r^2 + L^2}", "\\sqrt{r^4 - L^4}"))
+    return spec
+
+
+def three_brane_metric(system, x, L):
+    """The diagonal of a chart's metric at the radial coordinate x, with x^0 = ct: the four
+    dimensions along the brane, the radial one, and the square of the sphere's radius."""
+    if system == "isotropic":
+        H = 1 + L ** 4 / x ** 4
+        return 1 / sp.sqrt(H), sp.sqrt(H), sp.sqrt(H) * x ** 2
+    if system == "areal":
+        f = 1 - L ** 4 / x ** 4
+        return sp.sqrt(f), f ** -2, x ** 2
+    if system == "horizon":
+        return x ** 2, L ** 2 / (x ** 2 * (1 - x ** 4) ** sp.Rational(5, 2)), L ** 2 / sp.sqrt(1 - x ** 4)
+    if system == "throat":
+        return x ** 2 / L ** 2, L ** 2 / x ** 2, L ** 2
+    return sp.exp(2 * x / L), sp.Integer(1), L ** 2
+
+
+def three_brane_check(chart, system):
+    """Each chart against type IIB supergravity with a constant dilaton, Duff and Lu's (3.1),
+    R_MN = F_MPQRS F_N^PQRS / 96, for the five-form F = dA + *dA with A_txyz the square of the
+    warp factor, their (2.3) with (2.20): F is self-dual by construction, its part on the sphere is
+    closed, its flux through the sphere is 4 L^4 times the unit sphere's volume, the Ricci scalar
+    vanishes, and R^M_N is -k on the brane's four dimensions and the radial one and +k on the
+    sphere, with k = 4 L^8/(rho^4 + L^4)^(5/2) on the isotropic chart and 4/L^2 in the throat.
+    The areal chart is the isotropic one pulled back along rho^4 = r^4 - L^4, Gibbons, Horowitz
+    and Townsend's (4.1), and the horizon chart along rho = L w (1 - w^4)^(-1/4), and the horizon
+    chart is even in w. The inversion rho -> L^2/rho multiplies the isotropic metric by
+    L^2/rho^2, Gibbons and Townsend's conformal isometry (7). The throat is the isotropic chart
+    with H = L^4/rho^4, the limit lambda -> 0 of the isotropic metric at rho = lambda r with the
+    brane's coordinates divided by lambda, has no Weyl tensor, and is an Einstein space of
+    constant -4/L^2 on its first five dimensions and +4/L^2 on the sphere\\; the proper distance
+    chart is the throat pulled back along r = L e^(sigma/L)."""
+    name = f"three_brane_throat/{system}"
+    x, L = chart.symbols[4], chart.reader.parameters["L"]
+    g = sp.Matrix(chart.geo.g)
+
+    # The radial coordinate and L are positive, and w lies below 1, which the reader's symbols do
+    # not say, so a difference is settled with them written as positive symbols.
+    radius, length = sp.Symbol("_radius", positive=True), sp.Symbol("_length", positive=True)
+    inside = {x: radius / (1 + radius)} if system == "horizon" else {x: radius}
+    if system == "areal":
+        inside = {x: length * (1 + radius)}
+
+    rng = random.Random(3)
+    rated = None
+    if system == "horizon":
+        rated = vm.Reader(chart.coords_tex, ["L", THREE_BRANE_AREAL], (), held=("r",),
+                          rates=vm.RATES[("three_brane_throat", "horizon")])
+
+    def zero(e):
+        e = sp.sympify(e)
+        if e == 0:
+            return True
+        if rated:
+            # The held areal radius is written out, its slope by the declared rate first.
+            e = rated.by_rates(e.doit())
+            e = e.xreplace({f: L / (1 - x ** 4) ** sp.Rational(1, 4) for f in e.atoms(AppliedUndef)})
+        e = e.subs(inside, simultaneous=True).subs(L, length)
+        if sp.simplify(e) == 0:
+            return True
+        # Nested roots that simplify leaves standing are settled at three points, to thirty digits.
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 160), 100) for s in sorted(e.free_symbols, key=str)}
+            if abs(sp.N(e.subs(at), 40)) > sp.Float(10) ** -30:
+                return False
+        return True
+
+    sines = [sp.sin(a) for a in chart.symbols[5:9]]
+    round_sphere = [sp.Integer(1), sines[0] ** 2, (sines[0] * sines[1]) ** 2, (sines[0] * sines[1] * sines[2]) ** 2,
+                    (sines[0] * sines[1] * sines[2] * sines[3]) ** 2]
+
+    def diagonal(warp, radial, sphere):
+        return sp.diag(-warp, warp, warp, warp, radial, *[sphere * s for s in round_sphere])
+
+    warp, radial, sphere = three_brane_metric(system, x, L)
+    wanted = diagonal(warp, radial, sphere)
+    if any(not zero(g[i, j] - wanted[i, j]) for i in range(10) for j in range(10)):
+        raise AssertionError(f"{name}: the line element is not the chart's warp factor, radial part and sphere")
+
+    # The five-form: F_txyz(radial) = d(warp^2)/d(radial) and its dual on the sphere.
+    electric = sp.diff(warp ** 2, x)
+    volume = sines[0] ** 4 * sines[1] ** 3 * sines[2] ** 2 * sines[3]       # of the unit five-sphere
+    root = warp ** 2 * sp.sqrt(radial) * sphere ** sp.Rational(5, 2) * volume  # sqrt(-g), 0 < angles < pi
+    if not zero(sp.Mul(*[g[i, i] for i in range(10)]) + root ** 2):
+        raise AssertionError(f"{name}: sqrt(-g) is not the product of the warp factors")
+    magnetic = root * electric / (warp ** 4 * radial)                          # (*F) on the sphere
+    if not zero(sp.diff(magnetic, x)):
+        raise AssertionError(f"{name}: the five-form on the sphere is not closed")
+    if not zero(magnetic - 4 * L ** 4 * volume):
+        raise AssertionError(f"{name}: the flux through the sphere is not 4 L^4 times the unit sphere's volume")
+    ricci = chart.geo.ricci_ll()
+    ginv = [1 / g[i, i] for i in range(10)]
+    for i in range(10):
+        block = range(5) if i < 5 else range(5, 10)
+        strength = electric if i < 5 else magnetic
+        others = sp.Mul(*[ginv[a] for a in block if a != i])
+        if not zero(sp.sympify(ricci[i][i]) - strength ** 2 * others / 4):
+            raise AssertionError(f"{name}: R_MN = F_MPQRS F_N^PQRS/96 fails in slot {chart.coords_tex[i]}")
+        if any(ricci[i][j] != 0 for j in range(10) if j != i):
+            raise AssertionError(f"{name}: the Ricci tensor is not diagonal")
+    if not zero(chart.geo.ricci_scalar()):
+        raise AssertionError(f"{name}: the Ricci scalar does not vanish")
+    mixed = [sp.sympify(ricci[i][i]) * ginv[i] for i in range(10)]
+    if any(not zero(mixed[i] - (1 if i >= 5 else -1) * mixed[9]) for i in range(10)):
+        raise AssertionError(f"{name}: the mixed Ricci tensor is not -k on the first five dimensions and +k on the sphere")
+
+    def source(of):
+        spec = three_brane(of)
+        return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+    def pulled(of, image, slope):
+        """The chart `of` carried along radial = image(x), in every diagonal slot."""
+        there = source(of)
+        at = {there.symbols[4]: image, there.reader.parameters["L"]: L}
+        at.update(dict(zip(there.symbols[5:], chart.symbols[5:])))
+        J = sp.eye(10)
+        J[4, 4] = slope
+        return J.T * sp.Matrix(there.geo.g).subs(at, simultaneous=True) * J
+
+    def same(a, b, what):
+        if any(not zero(a[i, j] - b[i, j]) for i in range(10) for j in range(i, 10)):
+            raise AssertionError(f"{name}: {what}")
+
+    if system == "isotropic":
+        if not zero(mixed[9] - 4 * L ** 8 / (x ** 4 + L ** 4) ** sp.Rational(5, 2)):
+            raise AssertionError(f"{name}: the mixed Ricci tensor is not 4 L^8/(rho^4 + L^4)^(5/2)")
+        inverted = g.subs(x, L ** 2 / x)
+        inverted[4, 4] *= (L ** 2 / x ** 2) ** 2
+        same(inverted, (L ** 2 / x ** 2) * g, "the inversion rho -> L^2/rho is not a conformal isometry of factor L^2/rho^2")
+        return
+    if system == "areal":
+        image = (x ** 4 - L ** 4) ** sp.Rational(1, 4)
+        same(pulled("isotropic", image, sp.diff(image, x)), g, "not the isotropic chart pulled back along rho^4 = r^4 - L^4")
+        return
+    if system == "horizon":
+        image = L * x / (1 - x ** 4) ** sp.Rational(1, 4)
+        same(pulled("isotropic", image, sp.diff(image, x)), g,
+             "not the isotropic chart pulled back along rho = L w (1 - w^4)^(-1/4)")
+        if any(not zero(part - part.subs(x, -x)) for part in three_brane_metric("horizon", x, L)):
+            raise AssertionError(f"{name}: the metric is not even in w")
+        return
+    if any(vm._at(chart.geo.weyl_llll(), index) != 0 for index in vm._indices(10, 4)):
+        raise AssertionError(f"{name}: the throat has a Weyl tensor")
+    if not zero(mixed[9] - 4 / L ** 2):
+        raise AssertionError(f"{name}: the throat's Ricci tensor is not -4/L^2 on anti-de Sitter space and +4/L^2 on the sphere")
+    if system == "throat":
+        # The isotropic chart at rho = lambda r, with t, x, y, z divided by lambda, as lambda -> 0.
+        scale = sp.Symbol("lambda", positive=True)
+        iso_warp, iso_radial, iso_sphere = three_brane_metric("isotropic", scale * x, L)
+        limits = [sp.limit(iso_warp / scale ** 2, scale, 0), sp.limit(iso_radial * scale ** 2, scale, 0),
+                  sp.limit(iso_sphere, scale, 0)]
+        if any(not zero(a - b) for a, b in zip(limits, (warp, radial, sphere))):
+            raise AssertionError(f"{name}: not the limit of the isotropic chart toward rho = 0")
+        return
+    image = L * sp.exp(x / L)
+    same(pulled("throat", image, sp.diff(image, x)), g, "not the throat pulled back along r = L e^(sigma/L)")
+
+
+CHARTS["three_brane_throat"] = [lambda s=s: three_brane(s) for s in THREE_BRANE_CHARTS]
 # -- Tippett and Tsang's time machine ---------------------------------------------------
 
 TIPPETT_TSANG_CHARTS = ["cartesian", "polar", "interior", "rindler"]

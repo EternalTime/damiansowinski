@@ -115,7 +115,8 @@ CAPTION_VOICE = (
 )
 # A hyphen joins two names, a name and a word, or a designation; beyond those it is part of a
 # spelling only in these terms, and an ordinary compound is rewritten without it.
-HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "pp-wave", "pp-waves", "scalar-tensor"}
+HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "pp-wave", "pp-waves", "scalar-tensor",
+                    "three-brane", "three-branes"}
 
 # The templates and pages whose words reach a reader, beside the generated files, and the
 # data the site hands to agents.
@@ -5110,6 +5111,12 @@ class Slices(unittest.TestCase):
                     # Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the
                     # time and phi.
                     "cremmer_scherk/cartesian/circle": {"sphere"},
+                    # The three-brane and its throat alone are two spacetimes, the second the limit of the
+                    # first, and each chart's drawings mark the surface of its own.
+                    **{f"{place}three_brane_throat/{chart}{view}": {other}
+                       for other, charts in (("throat", ("isotropic", "areal", "horizon")),
+                                             ("brane", ("throat", "throat_proper")))
+                       for chart in charts for place, view in (("", "/radial"), ("conformal ", ""))},
                     # The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and
                     # each chart's drawings mark the surfaces of its own.
                     **{where: {"hyperbolic_plane"} for where in (
@@ -6341,6 +6348,16 @@ class Slices(unittest.TestCase):
             hi = self.reach(surface)[1]
             horizon = 2 * math.acosh(2) / math.pi
             return (lambda X: 0.0), [horizon, horizon * (1 + hi * hi) / (1 - hi * hi)]
+        if key in ("three_brane_throat/areal/radial", "three_brane_throat/horizon/radial"):
+            # The embedding reads the isotropic radius rho at L = 1: the areal radius is (rho^4 + 1)^(1/4)
+            # and Gibbons, Horowitz and Townsend's w is rho over it.
+            areal = [(x ** 4 + 1) ** 0.25 for x in self.reach(surface, "isotropic")]
+            if "/areal/" in key:
+                return (lambda X: 0.0), areal
+            return (lambda X: 0.0), [x / r for x, r in zip(self.reach(surface, "isotropic"), areal)]
+        if key == "three_brane_throat/throat/radial":
+            # The throat's cylinder is read in the proper distance sigma, and r = L e^(sigma/L).
+            return (lambda X: 0.0), [math.exp(x) for x in self.reach(surface, "throat_proper")]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
