@@ -1,5 +1,5 @@
 {
-  "version": "d01273242f110437",
+  "version": "5d50caaf1375677c",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -5564,6 +5564,79 @@
         "doi": "10.1002/andp.19123430704",
         "note": "English translation: ``The Speed of Light and the Statics of the Gravitational Field'', The Collected Papers of Albert Einstein, Volume 4 (English translation supplement), Doc. 3",
         "url": "https://doi.org/10.1002/andp.19123430704"
+      }
+    },
+    "einstein1912static": {
+      "type": "article",
+      "fields": {
+        "title": "Zur Theorie des statischen Gravitationsfeldes",
+        "author": "Einstein, A.",
+        "journal": "Annalen der Physik",
+        "volume": "343",
+        "number": "7",
+        "pages": "443--458",
+        "year": "1912",
+        "doi": "10.1002/andp.19123430709",
+        "note": "English translation: ``On the Theory of the Static Gravitational Field'', The Collected Papers of Albert Einstein, Volume 4 (English translation supplement), Doc. 4",
+        "url": "https://doi.org/10.1002/andp.19123430709"
+      }
+    },
+    "einstein1912abraham": {
+      "type": "article",
+      "fields": {
+        "title": "Relativit\\\"at und Gravitation. Erwiderung auf eine Bemerkung von M. Abraham",
+        "author": "Einstein, A.",
+        "journal": "Annalen der Physik",
+        "volume": "343",
+        "number": "10",
+        "pages": "1059--1064",
+        "year": "1912",
+        "doi": "10.1002/andp.19123431014",
+        "url": "https://doi.org/10.1002/andp.19123431014"
+      }
+    },
+    "giulini2014prague": {
+      "type": "incollection",
+      "fields": {
+        "title": "Einstein's ``Prague Field Equation'' of 1912: Another Perspective",
+        "author": "Giulini, Domenico",
+        "booktitle": "Relativity and Gravitation: 100 Years after Einstein in Prague",
+        "editor": "Bičák, Jiří and Ledvinka, Tomáš",
+        "series": "Springer Proceedings in Physics",
+        "publisher": "Springer",
+        "pages": "69--82",
+        "year": "2014",
+        "doi": "10.1007/978-3-319-06761-2_10",
+        "eprint": "1306.5966",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1306.5966"
+      }
+    },
+    "straumann2011": {
+      "type": "article",
+      "fields": {
+        "title": "Einstein's `Z\\\"urich Notebook' and his journey to general relativity",
+        "author": "Straumann, N.",
+        "journal": "Annalen der Physik",
+        "volume": "523",
+        "number": "6",
+        "pages": "488--500",
+        "year": "2011",
+        "doi": "10.1002/andp.201110467",
+        "eprint": "1106.0900",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1106.0900"
+      }
+    },
+    "weinstein2012": {
+      "type": "misc",
+      "fields": {
+        "title": "Einstein's 1912-1913 struggles with Gravitation Theory: Importance of Static Gravitational Fields Theory",
+        "author": "Weinstein, Galina",
+        "year": "2012",
+        "eprint": "1202.2791",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1202.2791"
       }
     },
     "einstein1913": {

@@ -1136,6 +1136,29 @@
     "embedding": "07b92b646e316b86"
   },
   {
+    "id": "einstein_1912_static",
+    "name": "Einstein's 1912 Static Field",
+    "tags": [
+      "scalar gravity",
+      "alternative theory of gravity",
+      "variable speed of light",
+      "equivalence principle",
+      "light deflection",
+      "uniform field",
+      "static",
+      "stationary",
+      "four-dimensional",
+      "Lorentzian",
+      "idealized model",
+      "curvature singularity",
+      "asymptotically flat"
+    ],
+    "version": "16e11c11cac6888c",
+    "diagrams": "797bb029c7a77a1c",
+    "conformal": "ba7f2b66e7041147",
+    "embedding": "d878e36cfb97e520"
+  },
+  {
     "id": "einstein_rosen_bridge",
     "name": "Einstein-Rosen Bridge",
     "tags": [
@@ -2659,7 +2682,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "ce105f7bdbef53f8",
+    "version": "fe0e267da664a542",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -3077,7 +3100,7 @@
       "cosmology",
       "dust"
     ],
-    "version": "939f5c5da3cda8ec",
+    "version": "cbff644bc78f3f26",
     "diagrams": "7ca84c063f7c2ca0",
     "conformal": "20e04688ba6cf230",
     "embedding": "3a2c6a2557fbf67a"
@@ -3164,7 +3187,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b00d7fc0aa4af761",
+    "version": "dc33db116e524ea7",
     "diagrams": "197eec2d67db791c",
     "conformal": "6588b3545cfd1a4f",
     "embedding": "7438e54f373b2e03"
@@ -3677,7 +3700,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f7de51595c638a3f",
+    "version": "eb765a3a641dd811",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
