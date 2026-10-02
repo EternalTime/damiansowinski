@@ -3948,6 +3948,133 @@ def reissner_nordstrom_de_sitter(ck, src):
     return views
 
 
+def kastor_traschen(ck, src):
+    """One of Kastor and Traschen's holes alone, m = 1 and H = -3/16, which is the lukewarm charged
+    black hole in de Sitter space at r_s = 2m, so its diagram is ChargedKottler's, read from that
+    spacetime's static chart at r_s = 1 with every length halved. The isotropic chart with H < 0
+    is the time reverse of the lukewarm hole's cosmological chart: with tau' = -tau/2 and
+    rho = r/2, U = H tau + 1/r is W = (3/8) tau' + 1/(2 rho), so an event (tau, r) is drawn at the
+    point of (tau', rho) turned upside down, (p, q) -> (-q, -p). The chart therefore covers the
+    contracting region, the static region, the black hole and one region inside the inner
+    horizon, where Brill, Horowitz, Kastor and Traschen draw it in their figure 1. The map is
+    checked against the published isotropic metric in each of those regions, and to be
+    continuous through the three horizons and through tau = 0, the sphere R = m."""
+    name = "Kastor-Traschen"
+    st = Plane(src, "reissner_nordstrom_de_sitter", "static", ("t", "r"), EQUATOR, RNDS)
+    K = ChargedKottler(st)
+    rm, rp, rc = K.rm, K.rp, K.rc
+    iso = Plane(src, "kastor_traschen", "isotropic", ("\\tau", "r"), EQUATOR, {"m": 1, "H": "-3/16"})
+    ck.limit(f"{name}: one hole's horizons are twice the lukewarm hole's at r_s = 1, R = 4/3 and 4 and the inner one",
+             [2 * rm, 2 * rp, 2 * rc], list(slices.KT_ONE_ROOTS[2::-1]), 1e-12)
+
+    def hole(tau, r):
+        tau, r = np.broadcast_arrays(np.asarray(tau, dtype=float), np.asarray(r, dtype=float))
+        tau_, rho = -tau / 2, r / 2
+        R = slices.RNDS_H * tau_ * rho + 0.5
+        with np.errstate(divide="ignore", invalid="ignore"):
+            p, q = K.across(K.cell(R, False), slices.rnds_static_t(tau_, R), R)
+        return -q, -p
+    for lo, hi in ((0.1, 2 * rm - 2e-2), (2 * rm + 2e-2, 0.98), (1.02, 2 * rp - 2e-2), (2 * rp + 2e-2, 2 * rc - 2e-2),
+                   (2 * rc + 2e-2, 24)):
+        # Points of the plane by their areal radius R = H tau r + 1: tau > 0 inside R = m and tau < 0 outside.
+        R = ck.uniform(lo, hi)
+        tau = ck.uniform(0.6, 12) * (1 if hi < 1 else -1)
+        ck.chart(f"{name} isotropic, {lo:.2f} < R < {hi:.2f}", iso, hole, tau, (R - 1) / (slices.KT_H_ONE * tau),
+                 lambda t, x: (1, 0))
+    for tau, R0, what, tol in ((-4.0, 2 * rp, "the black hole horizon", 1e-6), (-4.0, 2 * rc, "the cosmological horizon", 1e-6),
+                               (4.0, 2 * rm, "the inner horizon", 1e-2)):
+        both = [hole(tau, (R0 + d - 1) / (slices.KT_H_ONE * tau)) for d in (-2e-9, 2e-9)]
+        ck.limit(f"{name}: the isotropic chart is continuous through {what}", np.ravel(both[0]), np.ravel(both[1]), tol)
+    ck.limit(f"{name}: the isotropic chart is continuous through tau = 0, the sphere R = m",
+             np.ravel(hole(2e-9, 2.0)), np.ravel(hole(-2e-9, 2.0)), 1e-6)
+    ck.diverges(f"{name}: the Kretschmann scalar diverges on U = 0",
+                iso.kretschmann(4.0, 4 / 3 - 1e-2), iso.kretschmann(4.0, 4 / 3 - 1e-3))
+    ck.finite(f"{name}: the Kretschmann scalar is finite on the three horizons",
+              iso.kretschmann(np.array([-4.0, -4.0, 4.0]),
+                              (2 * np.array([rp, rc, rm]) - 1) / (slices.KT_H_ONE * np.array([-4.0, -4.0, 4.0]))))
+
+    H = HALF
+    scri, past_scri = K.infinity(1), K.infinity(-1)
+    sing = {c: K.singularity(c) for c in ("Ib", "Ia", "Ib-", "Ia-")}
+
+    def region(cell):
+        if cell == "C+":
+            return [(-H, H), (-H, PI)] + list(zip(*scri))[::-1] + [(0, H)]
+        if cell == "C-":
+            return [(-H, H), (-PI, H)] + list(zip(*past_scri)) + [(-H, 0)]
+        if cell in sing:
+            corner = {"Ib": (H, H), "Ia": (H, H), "Ib-": (-H, -H), "Ia-": (-H, -H)}[cell]
+            curve = list(zip(*sing[cell]))
+            return [curve[-1], corner, curve[0]] + curve
+        p0, q0 = {"S": (-H, 0), "S'": (0, -H), "S''": (-PI, H), "B": (0, 0), "W": (-H, -H)}[cell]
+        return [(p0, q0), (p0 + H, q0), (p0 + H, q0 + H), (p0, q0 + H)]
+
+    box = [-PI - 0.3, 2 * PI + 0.3, -3 * HALF - 0.3, 3 * HALF + 0.3]
+    v = View("one_hole", "One hole", box, "isotropic")
+    for cell in ["S'", "B", "W", "S", "C+", "C-", "S''", "Ib", "Ia", "Ib-", "Ia-"]:
+        v.fill("region", [point(*pq) for pq in region(cell)])
+    # The lukewarm hole's cosmological chart covers Ia-, W, S and C+, and this one their time reverse.
+    for cell in ["Ia-", "W", "S", "C+"]:
+        v.fill("cover", [point(-q, -p) for p, q in region(cell)])
+    R_CONST = (0.5, 1.0, 2.0, 4.0)
+    for r in R_CONST:
+        # A circle of constant r runs from past infinity to the singularity, at H tau r = -1.
+        tau = -1 / (slices.KT_H_ONE * r) - np.exp(np.linspace(-14, 7, 900))
+        v.curve("r", *hole(tau, np.full_like(tau, r)))
+    T_CONST = (-16.0, -8.0, -4.0, -2.0, 2.0, 4.0, 8.0)
+    for tau in T_CONST:
+        top = -1 / (slices.KT_H_ONE * tau) if tau > 0 else np.inf
+        xs = np.exp(np.linspace(-14, 10, 900)) if tau < 0 else top / (1 + np.exp(np.linspace(14, -14, 900)))
+        v.curve("t", *hole(np.full_like(xs, tau), xs))
+    v.line("horizon", [[point(0, -H), point(0, H)], [point(-H, 0), point(H, 0)]])
+    v.line("horizon", [[point(-H, 0), point(-H, PI)], [point(-PI, H), point(0, H)]])
+    v.line("horizon", [[point(H, -H), point(H, 0)], [point(0, -H), point(H, -H)]])
+    v.line("horizon", [[point(-PI, H), point(-PI, PI)], [point(-PI, PI), point(-H, PI)]])
+    v.line("horizon", [[point(0, H), point(PI, H)], [point(H, 0), point(H, PI)]])
+    v.line("horizon", [[point(0, -H), point(-PI, -H)], [point(-H, 0), point(-H, -PI)]])
+    for cell in sing:
+        v.curve("singular", *sing[cell], zig=True, tol=0.004)
+    v.curve("scri", *scri, tol=0.004)
+    v.curve("scri", *past_scri, tol=0.004)
+    for cx in (-H, H, 3 * H):
+        for ct in (H, -H):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(cx, 4), round(ct, 4)]})
+    v.label_xt([3 * H, H], "$i^+$", "b", dy=-6)
+    v.label_xt([3 * H, -H], "$i^-$", "t", dy=6)
+    for cx, side, dx in ((H, "l", 7), (-H, "r", -7)):
+        v.label_xt([cx, H], "$i^+$", "b" + side, dx=dx, dy=-4)
+        v.label_xt([cx, -H], "$i^-$", "t" + side, dx=dx, dy=4)
+    v.label_xt([0, H], "black hole", cls="region")
+    v.label_xt([0, -H], "white hole", cls="region")
+    v.label_xt([PI, 1.2], "expanding", cls="region")
+    v.label_xt([PI, -1.2], "contracting", cls="region")
+    for cx in (-H, H, 3 * H):
+        v.label_xt([cx, -0.45], "static", cls="region")
+    v.label_xt([PI, 1.62], "$\\mathscr{I}^+$", "b", dy=-3)
+    v.label_xt([PI, -1.62], "$\\mathscr{I}^-$", "t", dy=3)
+    for cx, anchor, dx in ((H, "l", 6), (-H, "r", -6)):
+        v.label_xt([cx, PI], "$R = 0$", anchor, dx=dx)
+        v.label_xt([cx, -PI], "$R = 0$", anchor, dx=dx)
+    v.label_xt([Q4, Q4], "$4m/3$", "tr", "small", dx=-5, dy=1)
+    v.label_xt([PI - Q4, Q4], "$4m$", "tl", "small", dx=5, dy=1)
+    v.label_xt([Q4, PI - Q4], "$0.86\\,m$", "bl", "small", dx=5, dy=-1)
+    v.legend("cover", "the contracting region, the static region, the black hole, and a region inside the inner "
+                      "horizon, which $\\tau$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant, at " + listed(R_CONST) + " in units of $m$")
+    v.legend("t", "$c\\tau$ constant, at $-16$, $-8$, $-4$, $-2$, $2$, $4$, and $8$ in units of $m$")
+    v.legend("horizon", f"the inner horizons $R = {2 * rm:.3g}\\,m$, the black hole horizons $R = 4m/3$, and the "
+                        "cosmological horizons $R = 4m$")
+    v.legend("singular", "$R = 0$, where the Kretschmann scalar diverges, timelike")
+    v.legend("scri", "future and past infinity $\\mathscr{I}^\\pm$, spacelike")
+    moment, = slices.moments("kastor_traschen", "one_hole", label=slices.KT_LABEL)
+    lo, hi = moment.reach("isotropic", "r")
+    xs = lo + (hi - lo) * np.geomspace(1e-6, 1, 400)
+    v.slice(moment, [hole(np.full_like(xs, slices.KT_TAU), xs)])
+    v.set(settings="$m = 1$, the unit of every length, and $H = -3c/(16m)$, the lukewarm hole, whose horizons are "
+                   f"at the areal radii $R = {2 * rm:.3g}\\,m$, $4m/3$, and $4m$.")
+    return [v]
+
+
 def kerr_axis(ck, src, metric_id, params, name):
     """The symmetry axis theta = 0, where the published metric is, in the limit,
     -Delta/(r^2 + a^2) c^2dt^2 + (r^2 + a^2)/Delta dr^2, with g_tt g_rr = -1 checked: a tower
@@ -10588,6 +10715,7 @@ DRAWN = {
     "einstein_rosen_waves": einstein_rosen_waves, "gowdy": gowdy,
     "nariai": nariai, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "majumdar_papapetrou": majumdar_papapetrou,
+    "kastor_traschen": kastor_traschen,
     "robinson_trautman": robinson_trautman,
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
@@ -11319,6 +11447,20 @@ CAPTIONS = {
         "reverse of the ingoing ones. With $p = -\\arctan W(u)$ for the function $W$ of the static chart's diagram and $v = u + 2r_*$ they cover the white hole, the "
         "static region and the expanding region, and their lines of constant $u$ are outgoing light rays, which "
         "leave $r = 0$, cross both horizons outward and end on $\\mathscr{I}^+$.",
+    ],
+    ("kastor_traschen", "one_hole"): [
+        "One hole alone ($U = H\\tau + m/r$, $H = -3c/(16m)$), which is the lukewarm charged black hole in de "
+        "Sitter space, maximally extended, each point in the diagram a 2-sphere of areal radius "
+        "$R = H\\tau r + m$. The extension repeats sideways and up and down without end. The singularities "
+        "$R = 0$ are timelike, and future and past infinity are spacelike.",
+        "The coordinates $\\tau$ and $r > 0$ with $H < 0$ cover the contracting region, one static region, the "
+        "black hole, and one region inside the inner horizon together, from $\\mathscr{I}^-$ to the singularity "
+        "on $H\\tau r = -m$. The surface $\\tau = 0$ is the sphere $R = m$, inside the black hole, and every "
+        "surface of constant $\\tau$ is spacelike. Before $\\tau = 0$ such a surface runs from the corner of "
+        "$\\mathscr{I}^-$ where $r = \\infty$, through the contracting region, the static region, and the black "
+        "hole, to the corner on the black hole's left where the infinitely long throat $r \\to 0$ ends. After "
+        "$\\tau = 0$ it starts on the singularity and ends on the same corner. With $H > 0$ the same coordinates "
+        "cover the time reverse, the white hole and the expanding region.",
     ],
     ("majumdar_papapetrou", "one_hole"): [
         "One hole alone ($U = 1 + m/r$), which is the extremal Reissner-Nordström black hole, maximally "

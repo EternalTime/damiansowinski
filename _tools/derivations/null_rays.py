@@ -761,7 +761,7 @@ def _kt_point(plane, x, comoving=False):
 def _kt_rows():
     rows = []
     for system, time, ylabel, box, comoving in (("cartesian", "\\tau", "$c\\tau/m$", (-12, 12, -12, 12), False),
-                                                ("comoving", "t", "$ct/m$", (-12, 12, 0, 24), True)):
+                                                ("comoving", "t", "$ct/m$", (-12, 12, 2, 26), True)):
         common = dict(families=SIDEWAYS, functions={"V": KT_TWO}, input=KT_TWO_INPUT,
                       tau="t" if comoving else "tau")
         if not comoving:
@@ -776,7 +776,7 @@ def _kt_rows():
                             marked=(("event", _kt_point("midplane", 0, comoving), "both", KT_HORIZON, "future"),)))
         if not comoving:
             rows.append(Diagram("kastor_traschen", "cylindrical", "radial", "$\\tau$ and $\\rho$", ("\\tau", "\\rho"),
-                                (0, 12, -8, 4), "$\\rho/m$", "$c\\tau/m$", KT_PARAMS, {"phi": "0", "z": "0"},
+                                (0, 12, -9, 3), "$\\rho/m$", "$c\\tau/m$", KT_PARAMS, {"phi": "0", "z": "0"},
                                 functions={"V": KT_TWO_CYLINDRICAL}, input=KT_TWO_INPUT, tau="tau",
                                 singular_zero="H*tau + V", ends_on_singular=True,
                                 marked=(("event", _kt_point("midplane", 4), 1, KT_HORIZON),)))
