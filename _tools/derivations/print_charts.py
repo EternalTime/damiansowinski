@@ -11389,6 +11389,128 @@ def gravastar_check(chart, system):
 CHARTS["gravastar"] = [lambda s=s: gravastar(s) for s in GRAVASTAR_CHARTS]
 
 
+# -- Israel's collapsing shell of dust ----------------------------------------------------
+
+ISRAEL_SHELL_CHARTS = ("interior", "exterior", "exterior_ingoing")
+
+
+def israel_shell(system):
+    """Israel's thin shell of dust, Nuovo Cimento B 44, 1 (1966), and Phys. Rev. 153,
+    1388 (1967): flat space inside the shell in the time T of an observer at its centre,
+    Schwarzschild's vacuum outside it in Schwarzschild's chart, which ends on r_s, and in the ingoing
+    Eddington-Finkelstein chart, which follows the shell through r_s to r = 0. The areal radius r is
+    one coordinate on both sides, and the shell is r = R, a function of each chart's time that the
+    chart declares; mu = G m/c^2 is the rest mass of the dust as a length. The shell is in no chart,
+    since the time of one side is not the time of the other and g_rr jumps across it.
+    israel_shell_check holds the interior to a vanishing Riemann tensor and to Minkowski's
+    published spherical chart, the exterior charts to a vacuum and to Schwarzschild's published
+    charts slot by slot, and the ingoing chart to being the exterior pulled back.
+    _tools/test_israel_shell.py holds the shell's motion to the junction conditions, and
+    israel_shell.md records each chart's source."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    mark = ["r = R \\;\\text{(the shell)}"]
+    if system == "interior":
+        coords, parameters = ["T", "r", "\\theta", "\\phi"], ["r_s", "\\mu", "R = R(T)"]
+
+        def line(c2):
+            return "ds^2 = -" + c2 + "dT^2 + dr^2 + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "israel_shell",
+            "system": {"id": system, "name": "Flat Interior", "coords": coords,
+                       "domains": ["T \\in (-\\infty, \\infty)", "r \\in [0, R]"] + angles + mark,
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [probe.symbol["r"]], "flip": False},
+            "check": lambda chart: israel_shell_check(chart, system),
+        }
+    f, bare = "\\left(1 - \\dfrac{r_s}{r}\\right)", "1 - \\dfrac{r_s}{r}"
+    if system == "exterior":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["r_s", "\\mu", "R = R(t)"]
+
+        def line(c2):
+            return "ds^2 = -" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        r, rs = probe.symbol["r"], probe.parameters["r_s"]
+        return {
+            "metric_id": "israel_shell",
+            "system": {"id": system, "name": "Schwarzschild Exterior", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in [R, \\infty)"] + angles + mark,
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"rising": [rs], "lead": [r, rs], "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                           "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}},
+            "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+            "check": lambda chart: israel_shell_check(chart, system),
+        }
+    coords, parameters = ["v", "r", "\\theta", "\\phi"], ["r_s", "\\mu", "R = R(v)"]
+    line = "ds^2 = -" + f + "dv^2 + 2\\,dv\\,dr + r^2" + sphere
+    probe = vm.Reader(coords, parameters, ())
+    r, rs = probe.symbol["r"], probe.parameters["r_s"]
+    return {
+        "metric_id": "israel_shell",
+        "system": {"id": system, "name": "Ingoing Eddington-Finkelstein Exterior", "coords": coords,
+                   "domains": ["v \\in (-\\infty, \\infty)", "r \\in [R, \\infty)"] + angles + mark
+                   + ["r = r_s \\;\\text{(the event horizon)}"],
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"rising": [rs], "lead": [r, rs], "flip": False},
+        "components": {"metric_components": {("v", "v"): "-" + f, ("v", "r"): "1", ("r", "v"): "1"},
+                       "inverse_metric_components": {("v", "r"): "1", ("r", "v"): "1", ("r", "r"): bare}},
+        "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+        "check": lambda chart: israel_shell_check(chart, system),
+    }
+
+
+def israel_shell_check(chart, system):
+    """The interior is flat and is Minkowski's published spherical chart with its time named T;
+    each exterior chart is a vacuum and is the published chart of Schwarzschild's metric it names,
+    slot by slot; and the ingoing chart is the exterior pulled back along
+    v = t + r + r_s ln(r/r_s - 1)."""
+    geo, g = chart.geo, chart.geo.g
+    ricci = geo.ricci_ll()
+    if any(vm.norm(ricci[a][b]) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError(f"israel_shell: the {system} chart is no vacuum")
+    source, there_id = {"interior": ("minkowski", "spherical"), "exterior": ("schwarzschild", "spherical"),
+                        "exterior_ingoing": ("schwarzschild", "eddington_finkelstein_ingoing")}[system]
+    published = next(c for c in json.loads((METRICS / f"{source}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == there_id)
+    there = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    swap = {there.symbol[a]: chart.reader.symbol[b] for a, b in zip(published["coords"], chart.coords_tex)}
+    swap.update({there.parameters[p["symbol"]]: chart.reader.parameters[p["symbol"]] for p in published["parameters"]})
+    values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    for i, a in enumerate(published["coords"]):
+        for j, b in enumerate(published["coords"]):
+            if vm.norm(there(values.get((a, b), "0")).subs(swap) - g[i, j]) != 0:
+                raise AssertionError(f"israel_shell: the {system} chart misses the published metric of {source} in "
+                                     f"slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if system == "interior":
+        if vm.norm(geo.kretschmann()) != 0:
+            raise AssertionError("israel_shell: the interior is not flat")
+        return
+    if vm.norm(geo.kretschmann() - 12 * chart.reader.parameters["r_s"] ** 2 / chart.reader.symbol["r"] ** 6) != 0:
+        raise AssertionError(f"israel_shell: the {system} chart's Kretschmann scalar is not 12 r_s^2/r^6")
+    if system == "exterior_ingoing":
+        spec = israel_shell("exterior")
+        static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        r, rs = chart.reader.symbol["r"], chart.reader.parameters["r_s"]
+        # ct = v - r - r_s ln(r/r_s - 1), so d(ct) = dv - dr/(1 - r_s/r).
+        J = sp.eye(4)
+        J[0, 1] = -1 / (1 - rs / r)
+        at = {static.symbols[1]: r, static.reader.parameters["r_s"]: rs, **dict(zip(static.symbols[2:], chart.symbols[2:]))}
+        pulled = J.T * static.geo.g.subs(at) * J
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"israel_shell: the exterior pulled back misses the ingoing chart in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["israel_shell"] = [lambda s=s: israel_shell(s) for s in ISRAEL_SHELL_CHARTS]
+
+
 # -- Hiscock's evaporating black hole -----------------------------------------------------
 
 HISCOCK_CHARTS = ("ingoing", "outgoing", "flat")

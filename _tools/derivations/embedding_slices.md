@@ -714,6 +714,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `homothetic/scaling` draws the collapse of a mass and a charge that grow with the advanced time, another spacetime: not visible.
 - `shell` and `bounce`, the conformal views: each moment through the flat map inside the shell and the tower's ingoing map outside it, met at the shell; every moment lies before the turn, so it is the same curve on both.
 
+### Israel's shell
+
+- The embedding is four moments, $v - r = -5$, $-3$, $-1$ and $1\,r_s$ of the ingoing chart outside the shell, each carried on inside the shell as the moment of the flat time $T$ at which it meets the shell; the last lies after the shell has reached the centre and has no flat part.
+- `interior/radial` and `interior/through`: level lines $T = T(w)$ from the centre to the shell, three of them.
+- `exterior/radial`: the curves $ct = w - r_s\ln(r/r_s - 1)$ outside $r_s$, which leave the drawing toward $r_s$.
+- `exterior_ingoing/shell`, drawn against $v - r$: level lines from the shell, or from $r = 0$, to $4\,r_s$.
+- The conformal views: each moment through the flat map inside the shell and the ingoing chart's map outside it, met at the shell.
+
 ### Vaidya
 
 - The embedding is four moments of constant $v - r$ in the ingoing chart, $-3$, $-1.5$, $-0.5$ and $1\,r_s$, since a moment of constant $v$ is a light cone; each runs from $r = 0$ to $4\,r_s$, flat inside the shell, which falls along $v = 0$ and so crosses the moment at $r = -(v - r)$, and Flamm's paraboloid moved in by $r_s$ outside it.
@@ -777,6 +785,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Hiscock | level lines in each chart that holds the moment; not visible on the two shells | none | six curves |
 | Lifshitz | line in each static chart and on each plane of $t$ and $x$, curve in each null chart | not visible: $t$ left out | six curves |
 | Wahlquist | line on each view of Wahlquist's chart and of Whittaker's; not visible on Mars's two | none | none drawn |
+| Israel's shell | level lines inside the shell and against $v - r$, curves in Schwarzschild's chart | none | four curves |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
 
 As drawn in 4de26cc, the Krasnikov tube's slice is a line, Reissner-Nordström's are two lines, and Vaidya's ingoing view carries all four lines.

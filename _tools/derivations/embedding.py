@@ -5661,6 +5661,89 @@ def vaidya(ck, src):
                        "mass of the shell, as in the conformal diagram.")]
 
 
+def israel_shell(ck, src):
+    """Israel's shell of dust as the other diagrams draw it, the shell that falls from rest at
+    infinity, mu = r_s/2 and r_s = 1, whose motion israel_shell.py writes in closed form. The
+    moments are Vaidya's: outside the shell, slices of constant v - r = w of the ingoing chart,
+    spacelike everywhere, on which the published metric pulls back to (1 + r_s/r) dr^2 + r^2 dphi^2
+    with v = w + r, so dz/dr = sqrt(r_s/r) and z = 2 sqrt(r_s r), Flamm's paraboloid moved in by
+    r_s; inside it, the moment of the flat time T at which the slice meets the shell, a flat disc,
+    which is checked. The shell is the circle r = R(w) where the two meet, and it folds the surface
+    by the angle whose tangent is sqrt(r_s/R). The event horizon, T - r = -7/3 inside and r = r_s
+    outside, is r = T + 7/3 on the disc while the shell is outside r_s. From w = V_END, where the
+    shell reaches the centre, the whole slice is Schwarzschild's and closes in a spike."""
+    top = 4.0
+    size = 2 * top
+    shell = nr.ishell
+    rim = ("edge", "the surface runs on, as Flamm's paraboloid moved in by $r_s$, to $r \\to \\infty$")
+
+    def outside_at(w):
+        return Slice(src, "israel_shell", "exterior_ingoing", "r", "\\phi", {"theta": "pi/2"}, nr.ISRAEL,
+                     along={"v": f"{w!r} + r"})
+
+    def moment(w):
+        where = f"Israel's shell, v - r = {w:g}"
+        hole = outside_at(w)
+        rings = [(r, "r", None) for r in (2.0, 3.0, top)]
+        if w < shell.V_END:
+            s = float(shell.s_of_slice(w))
+            R, T = float(shell.radius(s)), float(shell.inner_time(s))
+            ck.add(f"{where}, the shell is on the slice", abs(float(shell.advanced(s)) - R - w), 1e-12)
+            flat = Slice(src, "israel_shell", "interior", "r", "\\phi", {"theta": "pi/2", "T": repr(T)}, nr.ISRAEL)
+            ck.plane(f"{where}, inside the shell", flat, np.linspace(1e-3 * R, R, 200))
+            horizon = T - shell.HORIZON_U
+            inside = Piece("inside", "sheet", flat, 0.0, R, 0.0, 1,
+                           (("axis", "the centre $r = 0$, where space is flat until the shell arrives"),
+                            ("crease", "the shell of dust, where the surface folds")),
+                           [(R, "surface", None)] + ([(horizon, "horizon", None)] if 0 < horizon < R - 1e-9 else []),
+                           size)
+            # On the frame where the shell is on r_s the horizon is the shell's own circle.
+            outside = Piece("outside", "sheet", hole, R, top, 0.0, 1, (("crease", "the shell"), rim),
+                            ([(1.0, "horizon", None)] if R < 1 - 1e-9 else []) + [m for m in rings if m[0] > R], size)
+            pieces = [inside, outside]
+            # The rim of the drawing, r = 4 r_s, stands at z = 0 at every moment.
+            shift = -outside.z[-1]
+            inside.z, outside.z = inside.z + shift, outside.z + shift
+            ck.add(f"{where}, the two sides meet at the shell: one point",
+                   float(np.max(np.abs(np.array(inside.at(R)) - outside.at(R)))), JOIN)
+            ck.form(f"{where}, outside the shell z = 2 sqrt(r_s r) - 2 sqrt(r_s R)", outside,
+                    lambda r, R=R, shift=shift: 2 * (np.sqrt(r) - np.sqrt(R)) + shift, size)
+            tangent = outside.sl.slope(R, "+")
+            ck.add(f"{where}, the fold at the shell is sqrt(r_s/R)",
+                   abs(float(tangent[1] / tangent[0]) / math.sqrt(1 / R) - 1), 1e-6)
+        else:
+            whole = Piece("whole", "sheet", hole, 0.0, top, 0.0, 1,
+                          (("apex", "the singularity $r = 0$, where the surface closes in a spike"), rim),
+                          [(1.0, "horizon", None)] + rings, size)
+            shift = -whole.z[-1]
+            whole.z = whole.z + shift
+            pieces = [whole]
+            ck.form(f"{where}, z = 2 sqrt(r_s r)", whole, lambda r, shift=shift: 2 * np.sqrt(r) + shift, size)
+        for p in pieces:
+            ck.isometry(f"{where}, {p.id}", p)
+        return Surface(pieces, label=f"$v - r = {w:g}\\,r_s$", time=w)
+
+    # A frame every r_s/16 of v - r, which holds each moment of the flat views. The shell crosses r_s
+    # on the frame w = -1 and reaches the centre between the frames 1/2 and 9/16.
+    frames = [moment(-5.0 + k / 16) for k in range(97)]
+    ck.add("Israel's shell: it is on r_s at v - r = -r_s", abs(float(shell.radius_on_slice(-1.0)) - 1), 1e-12)
+    ck.add("Israel's shell: the horizon meets it there", abs(float(shell.inner_time(3.0)) - shell.HORIZON_U - 1), 1e-12)
+    surfaces = [frames[k] for k in (0, 32, 64, 96)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the slice, flat inside the shell and of constant $v - r$ outside it")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$ and $4\\,r_s$")
+    fig.legend("line", "surface", "the shell of dust, where the surface folds")
+    fig.legend("line", "horizon", "the event horizon, which forms at the centre at $cT = -7r_s/3$ and grows through "
+                                  "flat space to meet the shell at $r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("shell", "The falling shell", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$v - r$", [f.time for f in frames]),
+                 settings="$r_s = 1$, the unit of every length, and $\\mu = r_s/2$; each moment is a slice of "
+                          "constant $v - r$ outside the shell and of constant $T$ inside it.",
+                 input="The shell of dust that falls from rest at infinity, $\\mu = r_s/2$, as in the conformal "
+                       "diagram.")]
+
+
 def bonnor_vaidya(ck, src):
     """The charged shell the other diagrams draw: the ingoing chart with m = q = 0 for v < 0 and
     m = M = 1, q = 24/25 for v > 0. A slice of constant v is null, so the moments are slices of
@@ -11714,6 +11797,7 @@ DRAWN = {
     "hiscock": hiscock,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
+    "israel_shell": israel_shell,
     "bonnor_vaidya": bonnor_vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "tolman_bondi": tolman_bondi,
@@ -12730,6 +12814,19 @@ CAPTIONS = {
         "through the flat interior, where nothing yet marks it, to meet the shell at $r_s$, where it stays. "
         "Once the shell has reached the centre the whole slice is Schwarzschild's, and the paraboloid runs "
         "on through the horizon to close in a spike at the singularity $r = 0$.",
+    ],
+    ("israel_shell", "shell"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of dust falling inward from rest at "
+        "infinity, from $v - r = -5\\,r_s$ to $r_s$, each moment drawn as a surface in flat space with every "
+        "distance along it the metric distance. Outside the shell the moments are slices of constant $v - r$, "
+        "which are spacelike everywhere, inside the horizon as well, and carry the metric "
+        "$(1 + r_s/r)\\,dr^2 + r^2d\\phi^2$, so the surface is $z^2 = 4r_sr$, Flamm's paraboloid moved in by "
+        "$r_s$. Inside the shell space is flat and the surface is a level disc, and the mass of the shell "
+        "folds the surface where the two meet, at a slope $\\sqrt{r_s/R}$ that steepens as the shell falls.",
+        "The event horizon forms at the centre at $cT = -7r_s/3$, before the shell arrives, and grows through "
+        "the flat disc at the speed of light to meet the shell at $r_s$, where it stays. The shell reaches "
+        "the centre at $v = 0.52\\,r_s$, and from then on the whole slice is Schwarzschild's, with the "
+        "paraboloid running on through the horizon to close in a spike at the singularity $r = 0$.",
     ],
     ("oppenheimer_snyder", "collapse"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a star of dust collapsing from rest, as the dust's own time "
