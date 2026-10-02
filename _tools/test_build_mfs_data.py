@@ -3385,7 +3385,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                          {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "bianchi", "pp_wave",
                           "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
-                          "belinski_zakharov"})
+                          "belinski_zakharov", "moving_mirror"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -3553,7 +3553,7 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         # and turned all the way round it keeps to its box, the Krasnikov tube's rectangle drawn
         # smaller where it would stand wider or taller than it was published.
         heights = {v["metric"]: v["height"] for v in self.check()["views"] if "height" in v}
-        self.assertEqual(set(heights), {"alcubierre", "krasnikov", "natario", "tippett_tsang"})
+        self.assertEqual(set(heights), {"alcubierre", "krasnikov", "natario", "tippett_tsang", "moving_mirror"})
         for metric_id, h in heights.items():
             for side in ("above", "below"):
                 seen = h[side]
@@ -4851,6 +4851,15 @@ class Slices(unittest.TestCase):
               # The flat interior of Tippett and Tsang's bubble continued over the whole plane, another
               # spacetime than the bubble whose moment is embedded.
               "tippett_tsang/interior/tx", "tippett_tsang/rindler/plane",
+              # The moving mirror's radiation is drawn as a height over a region of the plane of t and x,
+              # which is no moment of the spacetime, so no drawing marks one.
+              *(f"moving_mirror/{system}/{view}" for system, views in (
+                  ("inertial", ("thermal", "collapse", "uniform")), ("null", ("thermal", "collapse")),
+                  ("mirror_rest", ("thermal", "collapse")), ("thermal", ("tx",)), ("collapse", ("tx",)),
+                  ("rindler", ("tx",))) for view in views),
+              *(f"conformal moving_mirror/{view}" for view in (
+                  "inertial_thermal", "inertial_collapse", "inertial_uniform", "null", "mirror_rest", "thermal",
+                  "collapse", "rindler")),
               # A plane wave and the uniform field of Nordstrom's theory, other spacetimes than the point
               # mass and the dust universe whose moments are embedded.
               "nordstrom_scalar/conformal/tx", "nordstrom_scalar/uniform/tz",

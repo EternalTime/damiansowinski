@@ -7336,6 +7336,112 @@
    "\\phi"
   ]
  },
+ "moving_mirror/collapse": {
+  "stamp": "3df2faf816afefc2",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
+ "moving_mirror/inertial": {
+  "stamp": "7f99642c7e06ca1a",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "moving_mirror/mirror_rest": {
+  "stamp": "25090f01a14ebf77",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "v",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "moving_mirror/null": {
+  "stamp": "1600f9fd81d83b72",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "u",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "v",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "moving_mirror/rindler": {
+  "stamp": "749229af1b45897e",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\eta",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "moving_mirror/thermal": {
+  "stamp": "985879c8b558afa2",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
  "myers_perry/boyer_lindquist": {
   "stamp": "eb69f2511cc92659",
   "relations": {},
