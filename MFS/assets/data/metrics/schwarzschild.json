@@ -348,6 +348,11 @@
       "id": "lindquist_wheeler_lattice",
       "kind": "composite",
       "text": "A closed universe tiled with pieces of this geometry: $N$ equal masses on a three sphere, each keeping Schwarzschild's vacuum out to a sphere in free fall [lindquist1957]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "Schwarzschild's black hole is two solitons on flat space with no rotation, in Belinski and Zakharov's inverse scattering method [belinskii1979]."
     }
   ],
   "references": [
@@ -445,7 +450,8 @@
     "zelmanov1965",
     "marolf2009",
     "novikov1965",
-    "lindquist1957"
+    "lindquist1957",
+    "belinskii1979"
   ],
   "coordinates": [
     {
