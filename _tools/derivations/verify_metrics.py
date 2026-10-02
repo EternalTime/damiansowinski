@@ -128,6 +128,17 @@ uncut, as Hartle and Thorne's (1 - 2j_2 P_2)/F does, and the drawings, which rea
 then read a metric and its exact inverse. A published connection or curvature that carries a
 term beyond the order is a disagreement, so nothing of higher order is printed as if it were
 known.
+
+A post-Newtonian metric is kept to an order that depends on the component: with the velocity
+v/c counted as first order, g_tt is known through the fourth, g_ti through the third and g_ij
+through the second. Such a system names its time coordinate as a third item of its ORDERS
+line, and each tensor is then cut component by component: a connection, Riemann or Ricci
+component with n time indices, wherever they stand, is kept n orders further than the order
+the line names, an Einstein or Weyl component only where n is odd, since both take a trace
+with the metric, the Ricci scalar at the order named and the Kretschmann scalar at twice the
+lowest order of the curvature. Those are the terms the metric fixes: one order further, each
+would need a term of the metric that the post-Newtonian metric does not have, which
+_tools/test_ppn_metric.py checks by adding such terms and finding the kept ones unmoved.
 """
 
 import argparse
@@ -1426,6 +1437,22 @@ DIMENSIONS = {
     ("hartle_thorne", "painleve_gullstrand"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "R": "L",
     },
+    # The parametrised post-Newtonian metric: the mass is the length m = GM/c^2, the spin the
+    # length a = J/(Mc), and Eddington's numbers beta and gamma, the preferred frame parameter
+    # alpha_1 and the dragging strength Delta are pure numbers.
+    ("ppn_metric", "isotropic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\beta": "1", "\\gamma": "1", "R": "L",
+    },
+    ("ppn_metric", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "m": "L", "\\beta": "1", "\\gamma": "1", "R": "L", "r": "L",
+    },
+    ("ppn_metric", "areal"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\beta": "1", "\\gamma": "1", "R": "L",
+    },
+    ("ppn_metric", "rotating"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "\\beta": "1", "\\gamma": "1",
+        "\\alpha_1": "1", "R": "L", "\\Delta": "1",
+    },
     # Three dimensions, where 4Gm/c^2 is a pure number, so alpha = 1 - 4Gm/c^2 is one too. The
     # isotropic radius and the isotropic x and y are lengths, measured in the arbitrary length ell,
     # as are the coordinate distances rho_1 and rho_2 from two particles at rest and half their
@@ -1543,6 +1570,13 @@ ORDERS = {
     # Lense and Thirring's field is linear in the source: the mass is first order, and the
     # angular momentum, which enters as the product a m, comes with it.
     ("hartle_thorne", "lense_thirring"): ({"m": 1}, 1),
+    # The parametrised post-Newtonian metric, counted in powers of v/c: the mass m = GM/c^2 over a
+    # distance is second order and the spin a = J/(Mc) over one is first, and the time coordinate
+    # is named, so that each component is kept as far as the post-Newtonian metric fixes it.
+    ("ppn_metric", "isotropic"): ({"m": 2}, 2, "t"),
+    ("ppn_metric", "cartesian"): ({"m": 2}, 2, "t"),
+    ("ppn_metric", "areal"): ({"m": 2}, 2, "t"),
+    ("ppn_metric", "rotating"): ({"m": 2, "a": 1}, 2, "t"),
 }
 
 # The defined names a system holds as functions of the coordinates while its tensors are built.
@@ -2494,12 +2528,21 @@ class Reader:
             self.relations[self.parameters[name]] = sp.sympify(value)
         # A system kept to an order counts each of its small parameters as a power of one symbol.
         self.order = None
+        # A post-Newtonian system: the time coordinate whose indices carry an order each, and the
+        # order a component without one is kept to, which is the lowest order of the curvature.
+        self.slow = None
         if kept:
-            weights, highest = kept
+            weights, highest, *slow = kept
             stray = [name for name in weights if name not in self.parameters or not self.parameters[name].is_Symbol]
             if stray:
                 raise LatexError(f"an order is declared for {stray}, which are not constants of the system")
             small = sp.Dummy("epsilon", positive=True)
+            if slow:
+                if slow[0] not in self.coords:
+                    raise LatexError(f"post-Newtonian orders are declared along {slow[0]!r}, which is not a coordinate")
+                self.slow = (self.coords.index(slow[0]), highest)
+                # Every tensor is built two orders further, as far as any component is kept.
+                highest += 2
             self.order = ({self.parameters[name]: small ** weight * self.parameters[name]
                            for name, weight in weights.items()}, small, highest)
 
@@ -2544,13 +2587,30 @@ class Reader:
             return norm(expression)
         if isinstance(expression, sp.MatrixBase):
             return expression.applyfunc(self.truncated)
-        scaled, small, highest = self.order
+        return self.through(expression, self.order[2])
+
+    def through(self, expression, highest):
+        """The Taylor polynomial of the expression through the order `highest`."""
+        scaled, small, _ = self.order
         term = sp.sympify(expression).xreplace(scaled)
         out = sp.Integer(0)
         for k in range(highest + 1):
             out += norm(term.subs(small, 0)) / sp.factorial(k)
             term = sp.diff(term, small)
         return norm(out)
+
+    def kept_order(self, field, index=()):
+        """The order a component of a post-Newtonian system is kept to: `field` is the tensor,
+        "christoffel", "riemann", "ricci_tensor", "einstein_tensor", "weyl_tensor", "ricci_scalar"
+        or "kretschmann", and `index` the positions of its indices among the coordinates. See
+        "Systems kept to an order" in the header."""
+        time, base = self.slow
+        if field == "kretschmann":
+            return 2 * base
+        times = sum(1 for i in index if i == time)
+        if field in ("einstein_tensor", "weyl_tensor"):
+            times %= 2
+        return base + min(times, 2)
 
     def zeroth(self, g):
         """A metric at zeroth order, every small parameter set to zero."""
@@ -3208,6 +3268,54 @@ def _put(tensor, index, value):
     tensor[index[-1]] = value
 
 
+class PostNewtonian:
+    """The Geometry of a post-Newtonian system, each tensor handed over cut component by
+    component at the order Reader.kept_order names. The Geometry inside builds every tensor to
+    the highest of those orders, so a product is cut only after it is formed whole."""
+
+    FIELDS = {"christoffel_ull": "christoffel", "christoffel_lll": "christoffel",
+              "riemann_ulll": "riemann", "riemann_llll": "riemann", "ricci_ll": "ricci_tensor",
+              "einstein_ll": "einstein_tensor", "weyl_llll": "weyl_tensor",
+              "ricci_scalar": "ricci_scalar", "kretschmann": "kretschmann"}
+
+    def __init__(self, geometry, reader):
+        self._geometry, self._reader, self._done, self._field = geometry, reader, {}, {}
+
+    def _cut(self, tensor, field, index=()):
+        if isinstance(tensor, list):
+            return [self._cut(item, field, index + (i,)) for i, item in enumerate(tensor)]
+        return self._reader.through(tensor, self._reader.kept_order(field, index))
+
+    def _handed(self, tensor, field):
+        # The tensor is remembered with its field, which raise_indices asks for, and kept alive.
+        self._field[id(tensor)] = (field, tensor)
+        return tensor
+
+    def __getattr__(self, name):
+        found = getattr(self._geometry, name)
+        if name not in self.FIELDS:
+            return found
+
+        def cut():
+            if name not in self._done:
+                self._done[name] = self._handed(self._cut(found(), self.FIELDS[name]), self.FIELDS[name])
+            return self._done[name]
+        return cut
+
+    def raise_indices(self, tensor, rank, positions):
+        """A tensor this Geometry handed over with some of its indices raised, cut again: raising an
+        index leaves the number of time indices of the leading term as it was."""
+        field = self._field[id(tensor)][0]
+        return self._handed(self._cut(self._geometry.raise_indices(tensor, rank, positions), field), field)
+
+
+def geometry_of(g, symbols, seconds, reader):
+    """The Geometry of a system as its Reader keeps it: whole, to an order, or post-Newtonian."""
+    geometry = Geometry(g, symbols, seconds, reader if reader.order else None,
+                        (lambda e: norm(reader.by_rates(e))) if reader.rates else None)
+    return PostNewtonian(geometry, reader) if reader.slow else geometry
+
+
 class Report:
     def __init__(self):
         self.disagreements = []
@@ -3417,8 +3525,7 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     # Everything is computed with the bare coordinates and then weighted into the
     # x^0 = cT chart by compare_block, which is exact because the rescaling is linear.
     symbols = [reader.symbol[name] for name in coords]
-    geometry = Geometry(g, symbols, seconds, reader if reader.order else None,
-                        (lambda e: norm(reader.by_rates(e))) if reader.rates else None)
+    geometry = geometry_of(g, symbols, seconds, reader)
     report.checked_systems += 1
     print(f"  {where}")
 

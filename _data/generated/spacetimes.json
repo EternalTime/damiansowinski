@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 120,
+  "count": 121,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -12546,6 +12546,11 @@
           "id": "neugebauer_meinel",
           "kind": "family",
           "text": "A rotating body solved exactly, a disc of dust at any speed of rotation. Bardeen and Wagoner took it up because studies such as Hartle and Thorne's had assumed slow rotation or weak fields [bardeen1969]."
+        },
+        {
+          "id": "ppn_metric",
+          "kind": "family",
+          "text": "Lense and Thirring's weak field with numbers in front of its terms, so that other theories of gravity fit in it too. The dragging of frames comes with the factor $\\tfrac{1}{2}(1 + \\gamma + \\tfrac{1}{4}\\alpha_1)$, which is $1$ in general relativity [will2014]."
         }
       ],
       "references": [
@@ -12564,7 +12569,8 @@
         "ciufolini2004",
         "venkatraman2020",
         "bradley2000",
-        "bardeen1969"
+        "bardeen1969",
+        "will2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hartle_thorne.json",
@@ -22448,6 +22454,11 @@
           "id": "kundt_waves",
           "kind": "generalisation",
           "text": "Flat space is what a Kundt wave leaves when its profile is switched off, in coordinates that cover the outside of a cylinder growing at the speed of light [podolskybelan2004]."
+        },
+        {
+          "id": "ppn_metric",
+          "kind": "generalisation",
+          "text": "Flat spacetime with a slowly moving body in it and gravity weak, written so that every metric theory of gravity fits. Take the mass away, $m = 0$, and it is flat again [will2014]."
         }
       ],
       "references": [
@@ -22511,7 +22522,8 @@
         "martindussaud2019",
         "bonnor1977cloud",
         "astesiano2024",
-        "podolskybelan2004"
+        "podolskybelan2004",
+        "will2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -26768,6 +26780,391 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "ppn_metric",
+      "name": "Parametrised Post-Newtonian Metric",
+      "short_name": "Parametrised Post-Newtonian",
+      "description": "The weak gravitational field of a slowly moving body with a number in front of every term, so that each metric theory of gravity is a set of numbers and each experiment in the solar system measures a combination of them. General relativity is the point $\\beta = \\gamma = 1$, where the metric is Schwarzschild's far from the horizon.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "post-Newtonian",
+        "PPN",
+        "weak field",
+        "approximate solution",
+        "tests of general relativity",
+        "solar system",
+        "light deflection",
+        "Shapiro delay",
+        "perihelion precession",
+        "Nordtvedt effect",
+        "alternative theories of gravity",
+        "Brans-Dicke",
+        "scalar field",
+        "isotropic coordinates",
+        "frame dragging",
+        "gravitomagnetic",
+        "rotating",
+        "angular momentum",
+        "mass",
+        "exterior",
+        "asymptotically flat",
+        "no horizon",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass enters as the length $m = GM/c^2$, and we keep factors of $c$ explicit. We count $v/c$ as first order and $m/r$ as second, and write the metric and its inverse whole. The connection, the Riemann tensor, and the Ricci tensor keep terms in $m^2$ where a component carries two time indices and stop at the first power of $m$ elsewhere, as the Einstein tensor, the Weyl tensor, and the Ricci scalar do throughout, and the Kretschmann scalar is its leading term. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "General relativity's point of the plane. At $\\beta = \\gamma = 1$ the metric is Schwarzschild's in isotropic coordinates, expanded far from the horizon [thornewill1971]."
+        },
+        {
+          "id": "hartle_thorne",
+          "kind": "family",
+          "text": "The slowly rotating star of general relativity. Far from it Hartle and Thorne's field is Lense and Thirring's, which is the rotating body here at $\\beta = \\gamma = 1$ and $\\alpha_1 = 0$, to first order in the mass [will2014]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The body taken away. At $m = 0$ every number in front of every term has nothing left to multiply, and the metric is flat."
+        }
+      ],
+      "references": [
+        "eddington1923",
+        "dyson1920",
+        "thornewill1971",
+        "willnordtvedt1972",
+        "schiff1960tests",
+        "will2014",
+        "bransdicke1961",
+        "nordtvedt1968a",
+        "nordtvedt1968b",
+        "nordtvedt1968c",
+        "shapiro1964",
+        "reasenberg1979",
+        "will1971",
+        "shapiro1971",
+        "bertotti2003",
+        "williams2004",
+        "schiff1960",
+        "everitt2011"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ppn_metric.json",
+      "charts": [
+        {
+          "id": "isotropic",
+          "name": "Eddington-Robertson-Schiff (isotropic)",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the surface of the body)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the body as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Eddington's number in front of $m^2/r^2$ in $g_{tt}$, the nonlinearity in the superposition of gravity; general relativity has $\\beta = 1$"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Eddington's number in front of $m/r$ in the metric of space, the curvature of space a unit of mass produces; general relativity has $\\gamma = 1$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the body's surface, with $R \\gg m$; the body itself fills $r < R$"
+            }
+          ],
+          "convention": "We use isotropic coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so a dot on $t$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{2\\beta m^2}{r^2}\\right)c^2dt^2 + \\left(1 + \\dfrac{2\\gamma m}{r}\\right)\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{2\\beta m^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1 + \\dfrac{2\\gamma m}{r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\left(1 + \\dfrac{2\\gamma m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta\\left(1 + \\dfrac{2\\gamma m}{r}\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24m^2\\left(\\gamma^2 + 1\\right)}{r^6}"
+        },
+        {
+          "id": "cartesian",
+          "name": "Standard post-Newtonian gauge (Cartesian)",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "r > R \\;\\text{(outside the body)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the body as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Eddington's number in front of $m^2/r^2$ in $g_{tt}$, the nonlinearity in the superposition of gravity; general relativity has $\\beta = 1$"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Eddington's number in front of $m/r$ in the metric of space, the curvature of space a unit of mass produces; general relativity has $\\gamma = 1$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the body's surface, with $R \\gg m$; the body itself fills $r < R$"
+            },
+            {
+              "symbol": "r = \\sqrt{x^2 + y^2 + z^2}",
+              "description": "Isotropic radius, the coordinate distance from the body's centre"
+            }
+          ],
+          "convention": "We use the Cartesian coordinates $(t, x, y, z)$ of the standard post-Newtonian gauge, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so a dot on $t$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{2\\beta m^2}{r^2}\\right)c^2dt^2 + \\left(1 + \\dfrac{2\\gamma m}{r}\\right)\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{2\\beta m^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1 + \\dfrac{2\\gamma m}{r}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1 + \\dfrac{2\\gamma m}{r}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1 + \\dfrac{2\\gamma m}{r}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24m^2\\left(\\gamma^2 + 1\\right)}{r^6}"
+        },
+        {
+          "id": "areal",
+          "name": "Eddington (areal radius)",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the surface of the body)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the body as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Eddington's number in front of $m^2/r^2$ in $g_{tt}$, the nonlinearity in the superposition of gravity; general relativity has $\\beta = 1$"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Eddington's number in front of $m/r$ in the metric of space, the curvature of space a unit of mass produces; general relativity has $\\gamma = 1$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the body's surface, with $R \\gg m$; the body itself fills $r < R$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ with $r$ the areal radius, the isotropic radius plus $\\gamma m$, and $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so a dot on $t$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{2\\left(\\beta - \\gamma\\right)m^2}{r^2}\\right)c^2dt^2 + \\left(1 + \\dfrac{2\\gamma m}{r}\\right)dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{2\\left(\\beta - \\gamma\\right)m^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1 + \\dfrac{2\\gamma m}{r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24m^2\\left(\\gamma^2 + 1\\right)}{r^6}"
+        },
+        {
+          "id": "rotating",
+          "name": "Rotating body (isotropic)",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the surface of the body)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the body as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin per unit mass, $a = J/(Mc)$ with $J$ the angular momentum, a length"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Eddington's number in front of $m^2/r^2$ in $g_{tt}$, the nonlinearity in the superposition of gravity; general relativity has $\\beta = 1$"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Eddington's number in front of $m/r$ in the metric of space, the curvature of space a unit of mass produces; general relativity has $\\gamma = 1$"
+            },
+            {
+              "symbol": "\\alpha_1",
+              "description": "Preferred frame parameter of Will and Nordtvedt, zero in general relativity; the body is at rest in the preferred frame"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the body's surface, with $R \\gg m$; the body itself fills $r < R$"
+            },
+            {
+              "symbol": "\\Delta = \\dfrac{1}{2}\\left(1 + \\gamma + \\dfrac{\\alpha_1}{4}\\right)",
+              "description": "Strength of the dragging of inertial frames, $1$ in general relativity"
+            }
+          ],
+          "convention": "We use isotropic coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, count $a/r$ as first order, so that a component with one time index keeps its term in $am$, and take components in the chart $x^0 = ct$, so a dot on $t$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{2\\beta m^2}{r^2}\\right)c^2dt^2 + \\left(1 + \\dfrac{2\\gamma m}{r}\\right)\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right) - \\dfrac{4\\Delta am\\sin^2\\theta}{r}c\\,dt\\,d\\phi",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{2\\beta m^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2\\Delta am\\sin^2\\theta}{r}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{2\\Delta am\\sin^2\\theta}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1 + \\dfrac{2\\gamma m}{r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\left(1 + \\dfrac{2\\gamma m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta\\left(1 + \\dfrac{2\\gamma m}{r}\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24m^2\\left(\\gamma^2 + 1\\right)}{r^6}"
         }
       ]
     },
@@ -31119,6 +31516,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "family",
           "text": "Bonnor's mass with a magnetic dipole moment. With the dipole switched off it keeps a quadrupole and a naked singularity, so Schwarzschild's black hole is not among its cases [emparan2000]."
+        },
+        {
+          "id": "ppn_metric",
+          "kind": "generalisation",
+          "text": "Schwarzschild's far field with a number in front of each term, $\\beta$ on $m^2/r^2$ in $g_{tt}$ and $\\gamma$ on $m/r$ in the metric of space. Every test in the solar system measures those numbers, and at $\\beta = \\gamma = 1$ the field is Schwarzschild's [thornewill1971]."
         }
       ],
       "references": [
@@ -31208,7 +31610,8 @@
         "lemos1993",
         "brill1963",
         "cook2000",
-        "emparan2000"
+        "emparan2000",
+        "thornewill1971"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

@@ -1262,7 +1262,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5354f8dfd62045d5",
+    "version": "b34c72bbc30d43f0",
     "diagrams": "dfa07fae80435e7d",
     "conformal": "878abf6db42c0334",
     "embedding": "cc9efb7cafec7946"
@@ -2158,7 +2158,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "b6b2027344b8aed0",
+    "version": "9dc27d5b16725463",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2542,6 +2542,44 @@
     "diagrams": "f02d33ce21e424e5",
     "conformal": "caada1e1189ae9f1",
     "embedding": "7b305003632e43d9"
+  },
+  {
+    "id": "ppn_metric",
+    "name": "Parametrised Post-Newtonian",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "post-Newtonian",
+      "PPN",
+      "weak field",
+      "approximate solution",
+      "tests of general relativity",
+      "solar system",
+      "light deflection",
+      "Shapiro delay",
+      "perihelion precession",
+      "Nordtvedt effect",
+      "alternative theories of gravity",
+      "Brans-Dicke",
+      "scalar field",
+      "isotropic coordinates",
+      "frame dragging",
+      "gravitomagnetic",
+      "rotating",
+      "angular momentum",
+      "mass",
+      "exterior",
+      "asymptotically flat",
+      "no horizon",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "f17949989678d037",
+    "diagrams": "197eec2d67db791c",
+    "conformal": "6588b3545cfd1a4f",
+    "embedding": "7438e54f373b2e03"
   },
   {
     "id": "photon_rocket",
@@ -2943,7 +2981,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f346570d6df9c464",
+    "version": "ec48adb4c993c83a",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

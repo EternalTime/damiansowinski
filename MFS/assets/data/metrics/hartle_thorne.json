@@ -54,6 +54,11 @@
       "id": "neugebauer_meinel",
       "kind": "family",
       "text": "A rotating body solved exactly, a disc of dust at any speed of rotation. Bardeen and Wagoner took it up because studies such as Hartle and Thorne's had assumed slow rotation or weak fields [bardeen1969]."
+    },
+    {
+      "id": "ppn_metric",
+      "kind": "family",
+      "text": "Lense and Thirring's weak field with numbers in front of its terms, so that other theories of gravity fit in it too. The dragging of frames comes with the factor $\\tfrac{1}{2}(1 + \\gamma + \\tfrac{1}{4}\\alpha_1)$, which is $1$ in general relativity [will2014]."
     }
   ],
   "references": [
@@ -72,7 +77,8 @@
     "ciufolini2004",
     "venkatraman2020",
     "bradley2000",
-    "bardeen1969"
+    "bardeen1969",
+    "will2014"
   ],
   "coordinates": [
     {
