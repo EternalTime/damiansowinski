@@ -52,6 +52,11 @@
       "id": "bartnik_mckinnon",
       "kind": "family",
       "text": "A static soliton on a threshold of collapse. For a Yang-Mills field Choptuik, Chmaj, and Bizoń found black holes that begin at a finite mass, with the first Bartnik-McKinnon soliton as the critical solution [choptuik1996]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "Gravitational waves with nothing else in them, known at one moment. Evolved on a computer they disperse when weak and collapse to a black hole when strong, with the threshold of Holz's wave at $a = 4.70$ [hilditch2017]."
     }
   ],
   "references": [
@@ -69,7 +74,8 @@
     "frolov2000",
     "christodoulou1994",
     "christodoulou1999",
-    "choptuik1996"
+    "choptuik1996",
+    "hilditch2017"
   ],
   "coordinates": [
     {

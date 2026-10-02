@@ -560,6 +560,29 @@ WH_REST = OS_AM * math.pi / 2                # c tau of the moment of rest, pi a
 WH_BOOST = math.sqrt(2) * math.exp(1 + math.pi / 2)      # e^(v_h/2r_s), v_h = (pi + 2 + ln 2) r_s
 
 
+def dr_eta(tau):
+    """The cycloid's parameter of Ruban's dust at the proper time tau since its greatest expansion,
+    in r_s: eta = pi + e with (e + sin e)/2 = c tau."""
+    lo, hi = 0.0, math.pi
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if 0.5 * (mid + math.sin(mid)) < tau else (lo, mid)
+    return math.pi + 0.5 * (lo + hi)
+
+
+def dr_shells(m):
+    """Kruskal's U and V of the moment outside a T-sphere: Novikov's shells released from rest with
+    the dust, from the surface, the shell at rest at r_s, out as far as the embedding reaches."""
+    lo, hi = m.reach("comoving_synchronous", "r")
+    U, V, _ = novikov_sheets(np.linspace(lo, hi, N), m.time)
+    return U, V
+
+
+def _dr_kruskal():
+    """The moments of a T-sphere on Kruskal's plane outside it, each a curve from the surface V = U."""
+    return [Mark(m, [np.column_stack(dr_shells(m))]) for m in moments("datt_ruban_t_models")]
+
+
 def wh_eta(tau):
     """The conformal time of the white hole's dust at its proper time tau, tau = (a_m/2)(eta - sin eta)."""
     lo, hi = 0.0, 2 * math.pi
@@ -968,6 +991,13 @@ def _penrose_wave(view):
     return out
 
 
+def _kt_eta(t):
+    """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l:
+    eta = t 2F1(1/3, 1/2; 3/2; -t^2)."""
+    from scipy.special import hyp2f1
+    return float(t * hyp2f1(1 / 3, 0.5, 1.5, -t * t))
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -1169,6 +1199,49 @@ def _plebanski_hacyan(chart):
                      label="$\\tau = 0$, $\\chi = b$" if rindler else "$t = 0$, $z = b$")[0]
     lo, hi = equator.reach("sphere", "z")
     return [Mark(equator, along(0.0, 0.0 if rindler else lo, hi)), Mark(sphere, points=[(0.0, 1.0)])]
+
+
+def ab_static(tau, phi):
+    """Ehlers and Kundt's map from the de Sitter slicing of BI to their static chart, on a surface
+    of constant r and z: tanh(tau_s) = tanh(tau)/cos(phi) and cos(theta) = cosh(tau) sin(phi),
+    where cosh(tau) |sin(phi)| < 1. Returns (tau_s, theta)."""
+    return np.arctanh(np.tanh(tau) / np.cos(phi)), np.arccos(np.cosh(tau) * np.sin(phi))
+
+
+def _ab_metrics(system, view):
+    """The moments of BI's neck, tau of the de Sitter slicing from the neck r = b out to the
+    embedding's reach. On the planes of tau and r of the de Sitter slicing and of the static chart,
+    whose plane theta = pi/2 is phi = 0 with the same time, a line of constant time; through the
+    neck the same line on both sheets, rho = +-sqrt(1 - b/r); on the de Sitter space at r = 2b, which
+    every moment drawn reaches, the whole circle of phi; on the static surface at r = 2b the curve
+    ab_static, which runs off to the horizons theta = 0 and pi; and on the inertial plane the two
+    rays T = X tanh(tau), from r = b outward."""
+    out = []
+    for m in moments("ab_metrics", "neck"):
+        lo, hi = m.reach("b1_cone", "r")
+        tau = m.time
+        if (system, view) in (("b1_cone", "radial"), ("b1_static", "radial")):
+            lines = along(tau, lo, hi)
+        elif system == "b1_neck":
+            lines = along(tau, -math.sqrt(1 - 1 / hi), math.sqrt(1 - 1 / hi))
+        elif (system, view) == ("b1_cone", "de_sitter"):
+            if not lo <= 2.0 <= hi:
+                raise ValueError("the circle r = 2b lies outside the embedding")
+            lines = [[(tau, 0.0), (tau, 2 * math.pi)]]
+        elif (system, view) == ("b1_static", "surface"):
+            if not lo <= 2.0 <= hi:
+                raise ValueError("the circle r = 2b lies outside the embedding")
+            edge = math.asin(1 / math.cosh(tau))
+            phi = edge * np.tanh(np.linspace(-12, 12, N))
+            phi = phi[np.cosh(tau) * np.abs(np.sin(phi)) < 1 - 1e-12]
+            lines = [np.column_stack(ab_static(tau, phi))]
+        elif system == "b1_cartesian":
+            r = np.array([lo, hi])
+            lines = [np.column_stack([r * math.sinh(tau), sign * r * math.cosh(tau)]) for sign in (1, -1)]
+        else:
+            raise KeyError((system, view))
+        out.append(Mark(m, lines))
+    return out
 
 
 def nhek_radius(y):
@@ -2306,6 +2379,13 @@ FLAT = {
     ("elliptic_de_sitter", "kruskal", "plane"): lambda: _eds("kruskal"),
     ("elliptic_de_sitter", "static", "radial"): lambda: _eds("static"),
     ("elliptic_de_sitter", "planar", "tx"): lambda: _eds("planar"),
+    # The RP3 geon's moment t = 0 at r_s = 1, from the throat out to the areal radius the embedding reaches:
+    # T = 0 of Kruskal's chart with X = sqrt(r - 1) e^(r/2), and the isotropic radius of each r.
+    ("rp3_geon", "kruskal", "plane"): lambda: one("rp3_geon", lambda m: along(
+        0.0, *(math.sqrt(r - 1) * math.exp(r / 2) for r in m.reach("schwarzschild", "r")))),
+    ("rp3_geon", "schwarzschild", "radial"): lambda: one("rp3_geon", lambda m: along(0.0, *m.reach("schwarzschild", "r"))),
+    ("rp3_geon", "isotropic", "radial"): lambda: one("rp3_geon", lambda m: along(
+        0.0, *(_ds_isotropic(r) for r in m.reach("schwarzschild", "r")))),
     ("einstein_static", "hyperspherical", "radial"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
     ("einstein_static", "hyperspherical", "through"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
     ("einstein_static", "static_areal", "radial"): lambda: one("einstein_static", _es_areal),
@@ -2397,6 +2477,12 @@ FLAT = {
     ("plebanski_hacyan", "sphere_rindler", "wedge"): lambda: _plebanski_hacyan("sphere_rindler"),
     ("plebanski_hacyan", "anti_nariai", "wedge"): lambda: _plebanski_hacyan("anti_nariai"),
     ("plebanski_hacyan", "anti_nariai_static", "radial"): lambda: _plebanski_hacyan("anti_nariai_static"),
+    ("ab_metrics", "b1_static", "radial"): lambda: _ab_metrics("b1_static", "radial"),
+    ("ab_metrics", "b1_static", "surface"): lambda: _ab_metrics("b1_static", "surface"),
+    ("ab_metrics", "b1_cone", "radial"): lambda: _ab_metrics("b1_cone", "radial"),
+    ("ab_metrics", "b1_cone", "de_sitter"): lambda: _ab_metrics("b1_cone", "de_sitter"),
+    ("ab_metrics", "b1_neck", "through"): lambda: _ab_metrics("b1_neck", "through"),
+    ("ab_metrics", "b1_cartesian", "TX"): lambda: _ab_metrics("b1_cartesian", "TX"),
     ("nariai", "static", "patch"): lambda: _nariai("static"),
     ("nariai", "global", "circle"): lambda: _nariai("global"),
     ("interior_schwarzschild", "spherical", "radial"): lambda: one("interior_schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
@@ -2633,6 +2719,13 @@ FLAT = {
     **{("zipoy_voorhees", "prolate_spheroidal", f"equator_{shape}"): lambda shape=shape: one(
         "zipoy_voorhees", lambda m: along(0.0, *(r - 1 for r in m.reach("spherical", "r"))), view_id=shape)
        for shape in ("oblate", "prolate")},
+    # Erez and Rosen's equatorial plane at t = 0 for each deformation, the same way.
+    **{("erez_rosen", "spherical", f"equator_{shape}"): lambda shape=shape: one(
+        "erez_rosen", lambda m: along(0.0, *m.reach("spherical", "r")), view_id=shape)
+       for shape in ("prolate", "oblate")},
+    **{("erez_rosen", "prolate_spheroidal", f"equator_{shape}"): lambda shape=shape: one(
+        "erez_rosen", lambda m: along(0.0, *(r - 1 for r in m.reach("spherical", "r"))), view_id=shape)
+       for shape in ("prolate", "oblate")},
     ("tolman_vii", "spherical", "radial"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "spherical", "through"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "tolman", "radial"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
@@ -2666,11 +2759,19 @@ FLAT = {
         "nordstrom_scalar", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="point_mass"),
     ("nordstrom_scalar", "dust", "radial"): lambda: one(
         "nordstrom_scalar", lambda m: along(m.time, *m.reach("dust", "r")), view_id="dust"),
+    # Kopczynski and Trautman's universe at each moment of its movie, out to the dust at r = l on each chart.
+    ("kopczynski_trautman", "comoving_spherical", "radial"): lambda: one(
+        "kopczynski_trautman", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
+    ("kopczynski_trautman", "comoving_cartesian", "tx"): lambda: one(
+        "kopczynski_trautman", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
+    ("kopczynski_trautman", "conformal", "radial"): lambda: one(
+        "kopczynski_trautman", lambda m: along(_kt_eta(m.time), *m.reach("comoving_spherical", "r"))),
     ("oppenheimer_snyder", "interior_comoving", "through"): _os_interior,
     ("semiclosed_world", "comoving", "dust"): lambda: _scw_dust(False),
     ("semiclosed_world", "conformal", "dust"): lambda: _scw_dust(True),
     ("semiclosed_world", "schwarzschild", "radial"): lambda: _scw_far(False),
     ("semiclosed_world", "isotropic", "radial"): lambda: _scw_far(True),
+    ("datt_ruban_t_models", "exterior_kruskal", "kruskal"): _dr_kruskal,
     ("oppenheimer_snyder", "exterior_schwarzschild", "radial"): os_exterior,
     ("white_hole", "interior_comoving", "through"): lambda: one(
         "white_hole", lambda m: [[(m.time / OS_AM, lo) for lo in m.reach("interior_comoving", "\\chi")]]),
@@ -2737,6 +2838,10 @@ FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
 HIDDEN = {
+    ("datt_ruban_t_models", "comoving", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
+    ("datt_ruban_t_models", "ruban", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
+    ("datt_ruban_t_models", "areal", "expansion"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
+    ("datt_ruban_t_models", "de_sitter", "tube"): "Ruban's tube on de Sitter space, another spacetime than the T-sphere embedded",
     ("kundt_waves", "kundt", "front"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "near"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "far"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
@@ -2754,6 +2859,20 @@ HIDDEN = {
     ("plebanski_hacyan", "plane"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_null"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_static"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("ab_metrics", "a2_static", "radial"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_cone", "beyond"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_kruskal", "kruskal"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_cartesian", "TX"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a3", "radial"): "A III, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "b2_static", "radial"): "B II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "b2_static", "wedge"): "B II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "b2_neck", "through"): "B II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "b2_neck", "ads"): "B II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "b3", "radial"): "B III, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_static"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_cone"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_kruskal"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_cartesian"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
     ("nordstrom_scalar", "conformal", "tx"): "a plane wave of the theory, another spacetime than the point mass and the dust universe whose moments are embedded",
     ("nordstrom_scalar", "conformal"): "a plane wave of the theory, another spacetime than the point mass and the dust universe whose moments are embedded",
     ("nordstrom_scalar", "uniform", "tz"): "the uniform field, another spacetime than the point mass and the dust universe whose moments are embedded",
@@ -2790,6 +2909,13 @@ HIDDEN = {
     ("godel", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves and no surface of constant t is a moment of space; the embedding stops at sinh^2 r = 1/sqrt 2",
     ("stockum_dust", "cylindrical", "beyond"): "beyond r = R the circles are closed timelike curves; the embedding stops at r = 0.83 R",
     ("som_raychaudhuri", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves; the embedding stops at r = sqrt(3) r_c/2",
+    # Petrov's plane of r and z, t = 0 and phi = 0, meets each plane of t and phi, each cylinder
+    # outside the dust and the slice z = 0 of the figure where no line or region of the moment lies.
+    **{("petrov_homogeneous", "petrov", view): "the embedded plane of r and z meets this plane of t and phi in the one event t = 0, phi = 0"
+       for view in ("upright", "diagonal", "sideways", "inverted")},
+    **{("petrov_homogeneous", "cylinder", view): "the embedded plane of r and z meets this cylinder in the one event t = 0, phi = 0"
+       for view in ("surface", "band", "beyond")},
+    ("petrov_homogeneous", "petrov", "turning"): "the embedded plane of r and z meets the slice z = 0 in the line t = 0, phi = 0, which the figure draws as its axis",
     **{("lewis", system, "inside"): "inside r = ell the circles are closed timelike curves; the embedding begins at ell"
        for system in ("lewis", "canonical")},
     **{("lewis", system, view): "another member of Lewis's family than the cylinder of the Weyl class whose moment is embedded"
@@ -2832,6 +2958,10 @@ HIDDEN = {
     **{("zipoy_voorhees", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     **{("zipoy_voorhees", f"{system}_axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
+       for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
+    **{("erez_rosen", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
+       for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
+    **{("erez_rosen", f"{system}_axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     **{("szekeres", "axisymmetric", half): "the axis of symmetry, which the embedded surface through the equators of the shells meets only at the centre r = 0"
        for half in ("north", "south")},
@@ -3385,6 +3515,33 @@ def checks():
     miss = max(abs(float(T_s.subs({tg: a, cg: b})) - float(nariai_static_t(a, float(R_s.subs({tg: a, cg: b})))))
                for a, b in pts)
     report("Nariai: nariai_static_t is the global moment in the static chart", miss, 1e-12)
+
+    # Ehlers and Kundt's BI: tanh(tau_s) = tanh(tau)/cos(phi) and cos(theta) = cosh(tau) sin(phi)
+    # carry the de Sitter slicing into the static chart, pulling the static metric back onto it,
+    # and T = r sinh(tau), X = r cosh(tau) cos(phi), Y = r cosh(tau) sin(phi) carry it into the
+    # inertial chart; ab_static is the first map.
+    g_s, (ts, rs, ths, zs) = metric("ab_metrics", "b1_static", {"b": 1})
+    g_c, (tc, rc, pc, zc) = metric("ab_metrics", "b1_cone", {"b": 1})
+    image = [sp.atanh(sp.tanh(tc) / sp.cos(pc)), rc, sp.acos(sp.cosh(tc) * sp.sin(pc)), zc]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (tc, rc, pc, zc)[j]))
+    pulled = J.T * g_s.subs(dict(zip((ts, rs, ths, zs), image)), simultaneous=True) * J
+    pts = [(a, b, c) for a, b, c in zip(rng.uniform(-0.8, 0.8, 30), rng.uniform(1.2, 4, 30), rng.uniform(-0.6, 0.6, 30))
+           if math.cosh(a) * abs(math.sin(c)) < 0.95]
+    miss = max(abs(complex((pulled - g_c).subs({tc: a, rc: b, pc: c})[i, j])) for a, b, c in pts
+               for i in range(4) for j in range(4))
+    report("A- and B-metrics: Ehlers and Kundt's map pulls the static chart of BI back onto the de Sitter slicing",
+           miss, 1e-10)
+    miss = max(max(abs(float(image[0].subs({tc: a, pc: c})) - float(ab_static(a, c)[0])),
+                   abs(float(image[2].subs({tc: a, pc: c})) - float(ab_static(a, c)[1]))) for a, _, c in pts)
+    report("A- and B-metrics: ab_static is that map on a surface of constant r and z", miss, 1e-12)
+    g_i, (Ti, Xi, Yi, Zi) = metric("ab_metrics", "b1_cartesian", {"b": 1})
+    image = [rc * sp.sinh(tc), rc * sp.cosh(tc) * sp.cos(pc), rc * sp.cosh(tc) * sp.sin(pc), zc]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (tc, rc, pc, zc)[j]))
+    pulled = J.T * g_i.subs(dict(zip((Ti, Xi, Yi, Zi), image)), simultaneous=True) * J
+    miss = max(abs(complex(sp.N((pulled - g_c).subs({tc: a, rc: b, pc: c})[i, j]))) for a, b, c in pts
+               for i in range(4) for j in range(4))
+    report("A- and B-metrics: T = r sinh(tau), X = r cosh(tau) cos(phi), Y = r cosh(tau) sin(phi) pulls the "
+           "inertial chart of BI back onto the de Sitter slicing", miss, 1e-9)
 
     # McVittie: R = ar(1 + 1/(4ar))^2 and the same t carry the isotropic plane onto the areal one,
     # with H = (da/dt)/a and sqrt(1 - 1/R) = (4ar - 1)/(4ar + 1) outside the throat, at the scale

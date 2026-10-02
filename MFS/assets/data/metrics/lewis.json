@@ -52,6 +52,11 @@
       "id": "cosmic_string",
       "kind": "special_case",
       "text": "The flat member at rest. At $n = 1$ and $b = q = 0$ only the cone is left, with $a$ setting the missing angle [bronnikov2020]."
+    },
+    {
+      "id": "petrov_homogeneous",
+      "kind": "special_case",
+      "text": "The Lewis class at $m = \\sqrt{3}$, where the Kretschmann scalar vanishes. There the field gains a fourth symmetry and is Petrov's homogeneous vacuum, the same at every event [bonnor1979petrov, bonnor1980]."
     }
   ],
   "references": [
@@ -67,7 +72,8 @@
     "tipler1974",
     "stachel1982",
     "maccallum1998",
-    "jensen1992"
+    "jensen1992",
+    "bonnor1979petrov"
   ],
   "coordinates": [
     {

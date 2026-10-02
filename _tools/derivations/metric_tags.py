@@ -226,11 +226,22 @@ REGIONS = {
         "regions": [["comoving", "conformal"], ["schwarzschild", "isotropic"]],
         "why": "the dust behind the throat and the vacuum outside it are two regions of one spacetime",
     },
+    "ab_metrics": {
+        "regions": [["a2_static", "a2_cone", "a2_kruskal", "a2_cartesian"],
+                    ["b1_static", "b1_cone", "b1_neck", "b1_cartesian"], ["a3"], ["b2_static", "b2_neck"], ["b3"]],
+        "why": "AII, BI, AIII, BII and BIII are five spacetimes, each a static vacuum field of type D "
+               "with symmetries of its own",
+    },
     "white_hole": {
         "regions": [["interior_comoving", "interior_conformal"],
                     ["exterior_schwarzschild", "exterior_eddington_finkelstein", "exterior_kruskal"]],
         "why": "the dust ball and the vacuum outside it are two regions of one spacetime; novikov_comoving "
                "leaves the mass and the delay of each shell free, and draws Novikov's marginally bound core",
+    },
+    "datt_ruban_t_models": {
+        "regions": [["ruban", "areal"], ["exterior_kruskal"]],
+        "why": "the dust of a T-sphere and the vacuum outside its surface are two regions of one spacetime; "
+               "comoving leaves a and b free, and de_sitter is Ruban's T-model with a cosmological constant",
     },
     "ori_time_machine": {
         "regions": [["foliation", "brinkmann"]],

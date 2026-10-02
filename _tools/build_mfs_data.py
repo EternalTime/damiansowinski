@@ -875,6 +875,44 @@ def check_dollars():
         raise DataError("\n".join(problems))
 
 
+# The widest and the tallest a spacetime diagram's plotted region may be, as width over height.
+ASPECT_WIDEST = 2.0
+ASPECT_TALLEST = 0.5
+
+
+def view_aspect(view):
+    """The width over the height of the region a view of a spacetime diagram plots, as the page
+    and the application draw it: its box at one scale on both axes, a view drawn through a centre
+    twice as wide as the half its file holds."""
+    x0, x1, y0, y1 = view["box"]
+    width = 2 * x1 if view.get("mirror") else x1 - x0
+    return width / (y1 - y0)
+
+
+def aspect_problems(name, data):
+    """Each view and figure of one parsed diagram file whose plotted region is wider than 2:1 or
+    taller than 1:2, named by its place. The captain asked on 2 October 2026 that the spacetime
+    diagrams "stick to 1:1 aspect ratios, allowing for up to 1:2 and 2:1 but no more than that"."""
+    problems = []
+    for part in ("systems", "projections"):
+        for system_id, views in data.get(part, {}).items():
+            for view in views:
+                aspect = view_aspect(view)
+                if not ASPECT_TALLEST - 1e-9 <= aspect <= ASPECT_WIDEST + 1e-9:
+                    shape = f"{aspect:.2f}:1" if aspect > 1 else f"1:{1 / aspect:.2f}"
+                    problems.append(
+                        f"diagrams/{name}.json {system_id}/{view['id']} plots a region of {shape}, outside "
+                        "1:2 to 2:1; choose a window nearer 1:1 in its row and redraw it")
+    return problems
+
+
+def check_aspects(diagrams):
+    """Refuse a spacetime diagram whose plotted region is outside 1:2 to 2:1, naming each."""
+    problems = [problem for name, data in sorted(diagrams.items()) for problem in aspect_problems(name, data)]
+    if problems:
+        raise DataError("\n".join(problems))
+
+
 def serialise(value):
     return json.dumps(value, indent=2, ensure_ascii=False) + "\n"
 
@@ -893,6 +931,7 @@ def main(argv=None):
         check_conventions(metrics)
         check_relations(metrics)
         diagrams = load_diagrams(metrics)
+        check_aspects(diagrams)
         conformal = load_conformal(metrics)
         embedding = load_embedding(metrics)
         check_slices(diagrams, conformal, embedding)
