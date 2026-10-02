@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
-schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
+schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
@@ -712,6 +712,171 @@ def schwarzschild_ads(system_id):
 
 
 SADS_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+
+
+# -- Topological black holes in anti-de Sitter space -------------------------------------
+
+TBH_CHARTS = ["static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "black_string",
+              "brane", "hyperbolic"]
+
+
+def topological_black_hole(system_id):
+    """The black holes of anti-de Sitter space whose horizons are flat or hyperbolic,
+    f = k - mu/r + r^2/L^2 over a surface of constant curvature k, as Birmingham writes the family
+    (his (1) and (2) in four dimensions) and Brill, Louko and Peldan theirs (2.1): the static chart
+    and the two Eddington-Finkelstein charts for every k at once, with the surface written
+    d rho^2/(1 - k rho^2) + rho^2 d phi^2\\; Lemos's black string, k = 0 with one flat direction a
+    circle and alpha = 1/L\\; the same hole in the coordinate z = L^2/r of the Poincare patch, with
+    horizon z_h = L^2/r_h, the black brane of holography\\; and Mann's and Vanzo's hyperbolic chart,
+    k = -1 with rho = sinh theta. The parameters are anti-de Sitter's L and a length mu, which is
+    Schwarzschild-anti-de Sitter's r_s at k = 1. topological_check holds each chart to
+    R_mu_nu = -(3/L^2) g_mu_nu and each after the first to being the first pulled back."""
+    k_f = "\\left(k - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)"
+    k_bare = "k - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}"
+    surface = " + r^2\\left(\\dfrac{d\\rho^2}{1 - k\\rho^2} + \\rho^2d\\phi^2\\right)"
+    k_metric = {("\\rho", "\\rho"): "\\dfrac{r^2}{1 - k\\rho^2}"}
+    k_inverse = {("\\rho", "\\rho"): "\\dfrac{1 - k\\rho^2}{r^2}"}
+    time_domain = "{} \\in (-\\infty, \\infty)"
+    k_domains = ["r \\in (0, \\infty)", "\\rho \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0",
+                 "\\rho \\in [0, \\infty) \\;\\text{for}\\; k \\le 0", "\\phi \\in [0, 2\\pi)",
+                 "r = r_h \\;\\text{(the horizon)}"]
+    spec = {"metric_id": "topological_black_hole", "check": topological_check}
+    scalars = {"ricci_scalar": "-\\dfrac{12}{L^2}", "kretschmann": "\\dfrac{12\\mu^2}{r^6} + \\dfrac{24}{L^4}"}
+    if system_id == "static":
+        coords, parameters, name = ["t", "r", "\\rho", "\\phi"], ["\\mu", "L", "k"], "Static"
+        line = "ds^2 = -" + k_f + "c^2dt^2 + \\dfrac{dr^2}{" + k_bare + "}" + surface
+        chart_line = "ds^2 = -" + k_f + "dt^2 + \\dfrac{dr^2}{" + k_bare + "}" + surface
+        domains = [time_domain.format("t")] + k_domains
+        metric = {("t", "t"): "-" + k_f, ("r", "r"): k_f + "^{-1}", **k_metric}
+        inverse = {("t", "t"): "-" + k_f + "^{-1}", ("r", "r"): k_bare, **k_inverse}
+    elif system_id.startswith("eddington_finkelstein"):
+        null, sign = ("u", "-") if system_id.endswith("outgoing") else ("v", "+")
+        coords, parameters = [null, "r", "\\rho", "\\phi"], ["\\mu", "L", "k"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = chart_line = "ds^2 = -" + k_f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + surface
+        domains = [time_domain.format(null)] + k_domains
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + k_f, (null, "r"): one, ("r", null): one, **k_metric}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): k_bare, **k_inverse}
+    elif system_id == "black_string":
+        f, bare = "\\left(\\dfrac{r^2}{L^2} - \\dfrac{\\mu}{r}\\right)", "\\dfrac{r^2}{L^2} - \\dfrac{\\mu}{r}"
+        coords, parameters, name = ["t", "r", "\\phi", "z"], ["\\mu", "L"], "Black String"
+        tail = " + r^2d\\phi^2 + \\dfrac{r^2}{L^2}dz^2"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + tail
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + tail
+        domains = [time_domain.format("t"), "r \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", time_domain.format("z"),
+                   "r = r_h \\;\\text{(the horizon)}"]
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    elif system_id == "brane":
+        h, bare = "\\left(1 - \\dfrac{z^3}{z_h^3}\\right)", "1 - \\dfrac{z^3}{z_h^3}"
+        coords, parameters, name = ["t", "x", "y", "z"], ["z_h", "L"], "Black Brane"
+        line = ("ds^2 = \\dfrac{L^2}{z^2}\\left(-" + h + "c^2dt^2 + dx^2 + dy^2 + \\dfrac{dz^2}{" + bare + "}\\right)")
+        chart_line = line.replace("c^2dt^2", "dt^2")
+        domains = [time_domain.format(c) for c in ("t", "x", "y")] + ["z \\in (0, \\infty)",
+                                                                       "z = z_h \\;\\text{(the horizon)}"]
+        conformal = "\\dfrac{L^2}{z^2}"
+        metric = {("t", "t"): "-" + conformal + h, ("z", "z"): conformal + h + "^{-1}"}
+        inverse = {("t", "t"): "-\\dfrac{z^2}{L^2}" + h + "^{-1}", ("z", "z"): "\\dfrac{z^2}{L^2}" + h}
+        scalars = {"ricci_scalar": "-\\dfrac{12}{L^2}",
+                   "kretschmann": "\\dfrac{12}{L^4}\\left(2 + \\dfrac{z^6}{z_h^6}\\right)"}
+    elif system_id == "hyperbolic":
+        f = "\\left(-1 - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)"
+        bare = "-1 - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}"
+        coords, parameters, name = ["t", "r", "\\theta", "\\phi"], ["\\mu", "L"], "Hyperbolic"
+        tail = " + r^2\\left(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2\\right)"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + tail
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + tail
+        domains = [time_domain.format("t"), "r \\in (0, \\infty)", "\\theta \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "r = r_+ \\;\\text{(the event horizon)}",
+                   "r = r_- \\;\\text{(the inner horizon, for } \\mu < 0 \\text{)}"]
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        raise KeyError(system_id)
+    probe = vm.Reader(coords, parameters, ())
+    L = probe.parameters["L"]
+    if system_id == "brane":
+        z, zh = probe.symbol["z"], probe.parameters["z_h"]
+        printer = {"lead": [z, zh, L], "factors": [L, z, zh], "flip": False}
+
+        def pretty(value):
+            # z^3 - z_h^3 is kept whole, as the line element writes 1 - z^3/z_h^3.
+            powers = sp.factor(value).as_powers_dict()
+            n = powers.get(z - zh, 0)
+            if n and powers.get(z ** 2 + z * zh + zh ** 2, 0) == n:
+                del powers[z - zh], powers[z ** 2 + z * zh + zh ** 2]
+                powers[z ** 3 - zh ** 3] = n
+            return sp.Mul(*[b ** e for b, e in powers.items()], evaluate=False) if n else sp.factor(value)
+        spec["pretty"] = pretty
+    else:
+        r, mu = probe.symbol["r"], probe.parameters["mu"]
+        # Every value is printed around L^2 r f = r^3 + k L^2 r - L^2 mu, the cubic whose roots are the horizons.
+        printer = {"rising": [L, mu], "lead": [L, r, mu], "flip": False}
+        if "k" in probe.parameters:
+            printer["rising"] = [L, mu, probe.parameters["k"]]
+            printer["factors"] = [probe.parameters["k"], L, r, mu, probe.symbol["\\rho"]]
+    if system_id == "hyperbolic":
+        spec["pretty"] = cp.hyperbolic(probe.symbol["\\theta"])
+    spec.update({"system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                            "parameters": parameters, "line_element": line},
+                 "chart_line_element": chart_line, "printer": printer,
+                 "components": {"metric_components": metric, "inverse_metric_components": inverse}, **scalars})
+    return spec
+
+
+def topological_check(chart):
+    """Every chart solves R_mu_nu = -(3/L^2) g_mu_nu, Einstein's equations with Lambda = -3/L^2 and
+    no matter, for every k where the chart carries one. Each chart after the static one is that
+    chart pulled back, J^T g J with J the Jacobian of the map between them, slot by slot: the
+    Eddington-Finkelstein charts by c t = v - r_* and u + r_*, dr_*/dr = 1/f; Lemos's string at
+    k = 0 by phi_s = rho cos(phi), z = L rho sin(phi); the brane at k = 0 by r = L^2/z,
+    x = L rho cos(phi), y = L rho sin(phi) and mu = L^4/z_h^3; and the hyperbolic chart at k = -1
+    by rho = sinh(theta)."""
+    L = chart.reader.parameters["L"]
+    ricci = chart.geo.ricci_ll()
+    for a in range(4):
+        for b in range(4):
+            if vm.norm(vm._at(ricci, (a, b)) + 3 * chart.geo.g[a, b] / L ** 2) != 0:
+                raise AssertionError(f"topological_black_hole: R + (3/L^2) g does not vanish in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+    lead = chart.coords_tex[0]
+    if chart.coords_tex == ["t", "r", "\\rho", "\\phi"]:
+        return
+    spec = topological_black_hole("static")
+    static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    t, r, rho, phi = static.symbols
+    mu, k = static.reader.parameters["mu"], static.reader.parameters["k"]
+    at = {static.reader.parameters["L"]: L}
+    x = chart.symbols
+    if lead in ("u", "v"):
+        # The static chart in the null chart's coordinates: c t = v - r_*(r) or u + r_*(r).
+        at.update({mu: chart.reader.parameters["mu"], k: chart.reader.parameters["k"], r: x[1], rho: x[2], phi: x[3]})
+        f = (-static.geo.g[0, 0]).subs(at, simultaneous=True)
+        J = sp.eye(4)
+        J[0, 1] = (1 if lead == "u" else -1) / f
+        old, new = static.geo.g.subs(at, simultaneous=True), chart.geo.g
+    elif chart.coords_tex[2] == "\\theta":
+        at.update({mu: chart.reader.parameters["mu"], k: -1, t: x[0], r: x[1], rho: sp.sinh(x[2]), phi: x[3]})
+        J = sp.diag(1, 1, sp.cosh(x[2]), 1)
+        old, new = static.geo.g.subs(at, simultaneous=True), chart.geo.g
+    else:
+        # The flat charts' coordinates as functions of the static chart's at k = 0.
+        if chart.coords_tex[1] == "r":
+            here = {x[0]: t, x[1]: r, x[2]: rho * sp.cos(phi), x[3]: L * rho * sp.sin(phi),
+                    chart.reader.parameters["mu"]: mu}
+        else:
+            here = {x[0]: t, x[1]: L * rho * sp.cos(phi), x[2]: L * rho * sp.sin(phi), x[3]: L ** 2 / r,
+                    chart.reader.parameters["z_h"]: (L ** 4 / mu) ** sp.Rational(1, 3)}
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(here[x[i]], static.symbols[j]))
+        old = chart.geo.g.subs(here, simultaneous=True)
+        new = static.geo.g.subs({**at, k: 0}, simultaneous=True)
+    pulled = J.T * old * J
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify((pulled[i, j] - new[i, j]).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"topological_black_hole: the static chart and the chart of {lead} and "
+                                     f"{chart.coords_tex[1]} disagree in slot {i}{j} under their map")
 
 
 # -- Global monopole -------------------------------------------------------------------
@@ -2305,6 +2470,7 @@ MELVIN_GEODESICS = [
 
 CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
 CHARTS["schwarzschild_ads"] = [lambda s=s: schwarzschild_ads(s) for s in SADS_CHARTS]
+CHARTS["topological_black_hole"] = [lambda s=s: topological_black_hole(s) for s in TBH_CHARTS]
 
 
 # -- Levi-Civita -------------------------------------------------------------------------

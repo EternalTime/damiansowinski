@@ -1058,6 +1058,21 @@ The hydrostatic equilibrium equations for a static, spherically symmetric relati
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/tov.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{2\Phi}c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{2m}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Topological Black Holes in Anti-de Sitter Space
+
+Black holes in anti-de Sitter space whose horizons are planes, cylinders, tori, or closed surfaces of genus two or more, the static vacuum solutions with a negative cosmological constant over a surface of constant curvature. The flat one is the black brane of holography, and the hyperbolic one is a black hole even with no mass or a negative one.
+
+- id: `topological_black_hole`
+- tags: vacuum, vacuum solution, static, stationary, black hole, black brane, black string, planar black hole, toroidal black hole, hyperbolic black hole, topological black hole, higher genus horizon, horizon topology, topological censorship, mass, negative mass, cosmological constant, negative cosmological constant, anti-de Sitter, AdS/CFT, holography, black hole thermodynamics, singularity, curvature singularity, coordinate singularity, horizon, event horizon, inner horizon, white hole, maximal extension, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json
+- chart Static: coordinates $(t, r, \rho, \phi)$, $$ds^2 = -\left(k - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{k - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}} + r^2\left(\dfrac{d\rho^2}{1 - k\rho^2} + \rho^2d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \rho, \phi)$, $$ds^2 = -\left(k - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}\right)dv^2 + 2\,dv\,dr + r^2\left(\dfrac{d\rho^2}{1 - k\rho^2} + \rho^2d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \rho, \phi)$, $$ds^2 = -\left(k - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}\right)du^2 - 2\,du\,dr + r^2\left(\dfrac{d\rho^2}{1 - k\rho^2} + \rho^2d\phi^2\right)$$
+- chart Black String: coordinates $(t, r, \phi, z)$, $$ds^2 = -\left(\dfrac{r^2}{L^2} - \dfrac{\mu}{r}\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{L^2} - \dfrac{\mu}{r}} + r^2d\phi^2 + \dfrac{r^2}{L^2}dz^2$$
+- chart Black Brane: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-\left(1 - \dfrac{z^3}{z_h^3}\right)c^2dt^2 + dx^2 + dy^2 + \dfrac{dz^2}{1 - \dfrac{z^3}{z_h^3}}\right)$$
+- chart Hyperbolic: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(-1 - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{-1 - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sinh^2\theta\,d\phi^2\right)$$
+
 ### Vaidya Radiating Star
 
 A dynamical solution describing the spacetime of a radiating or accreting spherical mass with outgoing or ingoing null dust. It models radiating stars and the evaporation or growth of black holes.

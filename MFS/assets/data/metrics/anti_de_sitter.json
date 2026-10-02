@@ -75,6 +75,11 @@
       "id": "godel",
       "kind": "family",
       "text": "A rotating universe of dust built on anti-de Sitter space of three dimensions, with its metric stretched by $\\sqrt{2}$ along a family of timelike lines and a flat direction added [godel1949]. Marianne Rooman and Philippe Spindel showed in 1998 that anti-de Sitter space is the boundary between such spaces that are causally safe and those with closed timelike curves [rooman1998]."
+    },
+    {
+      "id": "topological_black_hole",
+      "kind": "generalisation",
+      "text": "Anti-de Sitter space sliced by hyperbolic planes has a horizon at $r = L$, and with points identified that horizon is a black hole's, of genus two or more [aminneborg1996]. Adding mass gives the family [mann1997]."
     }
   ],
   "references": [
@@ -104,7 +109,9 @@
     "henneaux1985",
     "bardeen1999",
     "godel1949",
-    "rooman1998"
+    "rooman1998",
+    "aminneborg1996",
+    "mann1997"
   ],
   "coordinates": [
     {

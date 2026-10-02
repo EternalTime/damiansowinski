@@ -60,6 +60,11 @@
       "id": "kerr_de_sitter",
       "kind": "generalisation",
       "text": "The same black hole set spinning. Its boundary turns into a rotating Einstein universe [hawking1999rotation]."
+    },
+    {
+      "id": "topological_black_hole",
+      "kind": "generalisation",
+      "text": "The same metric function with $k$ where it has $1$: a flat horizon for $k = 0$ and a hyperbolic one for $k = -1$ [lemos1995, mann1997]."
     }
   ],
   "references": [

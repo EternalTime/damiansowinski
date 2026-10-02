@@ -81,6 +81,11 @@
       "id": "oppenheimer_snyder",
       "kind": "family",
       "text": "Dust collapsing to a black hole in four dimensions. Robert Mann and Simon Ross carried the collapse over to three in 1993, where dust falling under a negative cosmological constant ends as a BTZ black hole [mann1993]."
+    },
+    {
+      "id": "topological_black_hole",
+      "kind": "family",
+      "text": "The same identification of points carried to four dimensions, where the horizon comes out a torus or a surface of genus two or more [aminneborg1996]."
     }
   ],
   "references": [
@@ -102,7 +107,8 @@
     "deser1992time",
     "hawking1999rotation",
     "solodukhin2005",
-    "damour2007"
+    "damour2007",
+    "aminneborg1996"
   ],
   "coordinates": [
     {

@@ -3095,6 +3095,120 @@ def schwarzschild_ads(ck, src):
                           "the surface beyond $r = 1.26\\,L$ is measured with $dX^2 + dY^2 - dZ^2$.")]
 
 
+def topological_black_hole(ck, src):
+    """Two views, in units of L. The black string: the moment t = 0, z = 0 of Lemos's chart at
+    mu = L, where the horizon, the root of the published g^rr, is r_h = 1. g_rr = 1/f with f = r^2
+    - 1/r and g_phiphi = r^2, so in flat space dz/dr = sqrt(1/f - 1): the slice runs through the
+    bifurcation surface r_h, its throat, into the second exterior and lies level where f = 1, at
+    the real root of r^3 - r - 1, r = 1.3247. Farther out 1/f < 1, the circles grow faster than
+    the distance out to them, which is checked, and the slice is drawn on in three dimensional
+    Minkowski space at dZ/dr = sqrt(1 - 1/f), as Schwarzschild-anti-de Sitter's is; between r_h and
+    the level circle no surface of Minkowski space carries it, which is checked as well. Each
+    exterior is a piece in flat space and a piece in Minkowski space started where the first ends,
+    and they meet in one circle with one tangent. The drawing stops at r = 3.
+
+    The hyperbolic horizon: the surface t = 0, r = r_h of the hyperbolic chart at mu = 0, where
+    r_h = L. Its metric is d theta^2 + sinh^2(theta) d phi^2, the hyperbolic plane of curvature
+    -1/L^2, whose circles grow as cosh(theta), faster than the distance out to them at every
+    theta > 0, which is checked: no surface of revolution in flat space carries it, and in
+    Minkowski space it is the sheet Z = cosh(theta) - 1 of a hyperboloid, drawn to theta = 2 with
+    the light cone it nears."""
+    name = "topological black hole"
+    params = {"mu": 1, "L": 1}
+    fixed_at = {"t": 0, "z": 0}
+    sl = Slice(src, "topological_black_hole", "black_string", "r", "\\phi", fixed_at, params)
+    msl = Slice(src, "topological_black_hole", "black_string", "r", "\\phi", fixed_at, params, space="minkowski")
+    rh = sl.horizons()[0]
+    # The level circle is the real root of r^3 - r - 1, named exactly so that the tangent at the join is exact.
+    exact_level = sp.CRootOf(sl.x ** 3 - sl.x - 1, 0)
+    level = float(exact_level)
+    sl.known = msl.known = {level: exact_level}
+    top = 3.0
+    size = 2 * top
+    ck.add(f"{name}, the string: the horizon is at r_h = (mu L^2)^(1/3) = L", abs(rh - 1.0), 1e-12)
+    ck.add(f"{name}, the string: r^3 - r - 1 vanishes at 1.3247", abs(level - 1.3247179572447), 1e-12)
+    ck.add(f"{name}, the string: the surface lies level where f = 1",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-12)
+    ck.stops(f"{name}, the string beyond r = 1.3247 L in flat space", sl, np.linspace(level, 40, 402)[1:])
+    inward = np.linspace(rh, level, 402)[1:-1]
+    ck.add(f"{name}, the string: between r_h and 1.3247 L no surface in Minkowski space carries the slice, "
+           "(drho/dr)^2 - g_rr < 0", float(max(0.0, np.max(-msl.defect_at(inward)))), 0.0)
+    if not np.all(msl.defect_at(inward) > 0):
+        ck.items[-1]["ok"] = False
+
+    join = ("at $r = 1.32\\,L$ the surface lies level, in flat space nearer the horizon and in Minkowski "
+            "space beyond")
+    edge = "the sheet runs on toward a light cone, to $r \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, rh, level, 0.0, 1,
+                 (("throat", "the throat $r = r_h$, where the other exterior begins"), ("join", join)),
+                 [(rh, "horizon", "$r = r_h$"), (1.1, "r", None), (level, "space", None)], size)
+    out = Piece("exterior_minkowski", "sheet", msl, level, top, near.at(level)[1], 1, (("join", join), ("edge", edge)),
+                [(2.0, "r", None), (top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rh, level, 0.0, -1, (("throat", "the throat $r = r_h$"), ("join", join)),
+                [(1.1, "r2", None), (level, "space", None)], size)
+    far_out = Piece("other_exterior_minkowski", "sheet2", msl, level, top, far.at(level)[1], -1,
+                    (("join", join), ("edge", edge)), [(2.0, "r2", None), (top, "r2", None)], size)
+    for p in (near, out, far, far_out):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, the string, {p.id} {space}", p)
+        ck.radius(f"{name}, the string, {p.id}, rho = r {space}", p, lambda r: r, size)
+    ck.join(f"{name}, the string: the two sheets at the throat", near, rh, far, rh)
+    for a, b in ((near, out), (far, far_out)):
+        ck.join(f"{name}, the string: {a.id} in flat space and {b.id} in Minkowski space at r = 1.3247 L",
+                a, level, b, level)
+        pa, pb = a.data()["points"][-1], b.data()["points"][0]
+        ck.add(f"{name}, the string: {a.id} and {b.id} as written, one point at r = 1.3247 L",
+               max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(a.decimals, b.decimals))
+    surface = Surface([near, out, far, far_out])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rh, 0.0, "$r = r_h$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(level), "$1.32\\,L$")
+    ring_label(fig, [0, 0, 0], *out.at(top), "$3L$")
+    fig.legend("fill", "cover", "the exterior $r > r_h$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.1\\,L$, $2L$ and $3L$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_h$, where the slice crosses the horizon")
+    fig.legend("line", "space", "$r = 1.32\\,L$, where $g_{rr} = 1$: flat space inside, Minkowski space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("string", "The black string", "$L$", [surface], fig.done(),
+                  settings="$L = 1$, the unit of every length, and $\\mu = L$, so that $r_h = L$. Every length along "
+                           "the surface beyond $r = 1.32\\,L$ is measured with $dX^2 + dY^2 - dZ^2$.")]
+
+    hz = Slice(src, "topological_black_hole", "hyperbolic", "\\theta", "\\phi", {"t": 0, "r": 1},
+               {"mu": 0, "L": 1}, space="minkowski")
+    ck.stops(f"{name}, the hyperbolic horizon in flat space", hz, np.linspace(1e-3, 6, 400))
+    htop = 2.0
+    hsize = 2 * math.sinh(htop)
+    sheet = Piece("sheet", "sheet", hz, 0.0, htop, 0.0, 1,
+                  (("axis", "the point $\\theta = 0$"),
+                   ("edge", "the sheet runs on toward the light cone, to $\\theta \\to \\infty$")),
+                  [(th, "r", None) for th in (0.5, 1.0, 1.5, htop)], hsize)
+    cone = FormPiece("cone", hz, np.linspace(0.0, htop, 81), np.sinh, lambda th: np.sinh(th) - 1.0,
+                     (("apex", "the apex of the light cone, a distance $L$ below the point $\\theta = 0$"),
+                      ("edge", "the cone runs on")), hsize)
+    ck.isometry(f"{name}, the hyperbolic horizon", sheet)
+    ck.form(f"{name}, the hyperbolic horizon: the hyperboloid Z = L cosh(theta) - L", sheet,
+            lambda th: np.cosh(th) - 1, hsize)
+    ck.radius(f"{name}, the hyperbolic horizon: rho = L sinh(theta)", sheet, np.sinh, hsize)
+    ck.add(f"{name}, the hyperbolic horizon: from theta = 0 to theta = 2 is 2 L", abs(hz.proper(0.0, htop) - htop), 1e-9)
+    hsurface = Surface([sheet, cone])
+    fig = figure_of([hsurface], {"sheet": "cover"}, hsize)
+    ring_label(fig, [0, 0, 0], *sheet.at(1.0), "$\\theta = 1$")
+    ring_label(fig, [0, 0, 0], *sheet.at(htop), "$2$")
+    fig.legend("fill", "cover", "the horizon $r = r_h$ at one moment")
+    fig.legend("line", "r", "$\\theta$ constant, at $0.5$, $1$, $1.5$ and $2$, each a proper distance $L/2$ from the last")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears as "
+                                    "$\\theta \\to \\infty$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("horizon", "The hyperbolic horizon", "$L$", [hsurface], fig.done(),
+                      settings="$L = 1$, the unit of every length, and $\\mu = 0$, so that $r_h = L$. Every length "
+                               "along the sheet is measured with $dX^2 + dY^2 - dZ^2$.",
+                      stops=["At every $\\theta > 0$ the circles grow faster than the distance out to them, "
+                             "$g_{\\theta\\theta} < (\\partial_\\theta\\sqrt{g_{\\phi\\phi}})^2$, and no surface of "
+                             "revolution in flat space carries the horizon; Minkowski space carries it."]))
+    return views
+
+
 def hayward(ck, src):
     """Hayward's regular black hole at ell = 12m/(7 sqrt 7), where the horizons, the two positive
     roots of the published g^rr, are r_- = 6m/7 and r_+ = 12m/7. g_rr = 1/F with F = 1 - 2mr^2/
@@ -8088,6 +8202,7 @@ DRAWN = {
     "einstein_static": einstein_static,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
     "schwarzschild_ads": schwarzschild_ads,
+    "topological_black_hole": topological_black_hole,
     "hayward": hayward,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
@@ -8523,6 +8638,28 @@ CAPTIONS = {
         "out to them, as on the static slice of anti-de Sitter space, and the surface climbs at "
         "$dZ/dr = \\sqrt{1 - 1/f}$ from level toward a light cone of Minkowski space, as the hyperboloid of "
         "anti-de Sitter space does. Both parts lie level at the circle, so they meet there with one tangent plane.",
+    ],
+    ("topological_black_hole", "string"): [
+        "The plane $z = 0$ across the black string at the moment $t = 0$ ($\\mu = L$, $r_h = L$) through both of "
+        "its exteriors, joined at the horizon's circle $r = r_h$, in flat space out to the circle $r = 1.32\\,L$ "
+        "and in three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$) beyond it, every distance along the "
+        "surface the metric distance.",
+        "On the slice the metric is $dr^2/f + r^2d\\phi^2$ with $f = r^2/L^2 - \\mu/r$. Inside the circle "
+        "$f < 1$ and the surface climbs at $dz/dr = \\sqrt{1/f - 1}$, from vertical at the throat to level where "
+        "$f = 1$, at the root of $r^3 - L^2r - \\mu L^2$. Beyond it the circles grow faster than the distance "
+        "out to them, as on the static slice of anti-de Sitter space, and the surface climbs at "
+        "$dZ/dr = \\sqrt{1 - 1/f}$ from level toward a light cone of Minkowski space. Both parts lie level at "
+        "the circle, so they meet there with one tangent plane.",
+    ],
+    ("topological_black_hole", "horizon"): [
+        "The horizon $r = r_h$ of the hyperbolic hole at one moment of $t$ ($\\mu = 0$, $r_h = L$), drawn as a "
+        "surface in three dimensional Minkowski space with every distance along it, measured with "
+        "$dX^2 + dY^2 - dZ^2$, the metric distance. On it the metric is $L^2(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2)$: "
+        "the circle a distance $L\\theta$ from the point $\\theta = 0$ has circumference $2\\pi L\\sinh\\theta$, "
+        "which grows faster than the distance out to it, as no surface of revolution in flat space allows.",
+        "In Minkowski space the horizon is one sheet of the hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, the "
+        "hyperbolic plane of curvature $-1/L^2$, and it nears the light cone, dashed, without reaching it. A "
+        "horizon of genus two or more is a polygon cut from this sheet with its edges joined in pairs.",
     ],
     ("reissner_nordstrom_de_sitter", "between"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the lukewarm black hole at the moment $t = 0$ of its static "
