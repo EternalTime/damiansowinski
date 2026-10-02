@@ -322,7 +322,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "59a2a62a2b1493d7",
+    "version": "b7ad60fc594b8e3d",
     "diagrams": "d6268bdae97d9fd7",
     "embedding": "7fea7a854b8ceca4"
   },
@@ -1034,7 +1034,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "474bf811b6476d5f",
+    "version": "d6df40ccec7e1f99",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -1126,7 +1126,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "53017a6451f06168",
+    "version": "7ba2454722ca153e",
     "diagrams": "e73839d0a0529179",
     "conformal": "2fed97c5ab6ddc3d",
     "embedding": "954af1b6ad40d276"
@@ -1247,7 +1247,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "2507a9ebb977715b",
+    "version": "6a5fcd7c827447f3",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1382,7 +1382,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4065b5f6a0b40e65",
+    "version": "2bda5fa1d0ed673d",
     "diagrams": "2af1bbf417683eb3",
     "conformal": "431800db7085dc77",
     "embedding": "f0d7a1bdcd0620df"
@@ -2435,7 +2435,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "ed141fac530ee329",
+    "version": "e2ea815665cd15d3",
     "diagrams": "434dbc69f632abef",
     "conformal": "608160b20d1a5d0b",
     "embedding": "6358a5e6f5a871e8"
@@ -2484,7 +2484,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "04f2e2ed24febd65",
+    "version": "1634bdd8d5f13645",
     "diagrams": "62b5c96261ee76e9",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -3666,6 +3666,37 @@
     "diagrams": "b272a6aeea9e0b62",
     "conformal": "09d52a3611b8d1c6",
     "embedding": "044c6a18e30bb001"
+  },
+  {
+    "id": "small_universes",
+    "name": "Small Universes",
+    "tags": [
+      "cosmology",
+      "topology",
+      "multiply connected",
+      "torus",
+      "compact",
+      "closed universe",
+      "hyperbolic space",
+      "expanding universe",
+      "FLRW",
+      "locally isotropic",
+      "ghost images",
+      "cosmic microwave background",
+      "big bang",
+      "curvature singularity",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "four-dimensional",
+      "conformally flat"
+    ],
+    "version": "752e06e7c98a40e1",
+    "diagrams": "0e11382338963c29",
+    "conformal": "60e261619c0672af",
+    "embedding": "31ff007c1a714047"
   },
   {
     "id": "som_raychaudhuri",
