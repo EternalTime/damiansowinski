@@ -11097,6 +11097,253 @@ def randall_sundrum(ck, src):
     views[3].set(settings="$1/k$ the unit of every length and of $ct$, and $kr_c = 1/2$, so that the walls are "
                           "$\\pi/2k$ apart.")
     views[3].slice(between, [walls(np.zeros_like(phi), phi)])
+def coleman_de_luccia(ck, src):
+    """Coleman and De Luccia's bubble with a thin wall, from the moment it appears, each point a
+    2-sphere, in units of the curvature radius l of the vacuum that has one.
+
+    The whole spacetime has the Lorentz group's symmetry about the event the bubble is centred on,
+    so one pair of null coordinates serves both sides of the wall. Outside that event's light cone
+    the plane of psi and xi has the metric rho^2(dX^2 - dpsi^2) with X the integral of d xi/rho,
+    continuous through the wall, and U = -e^(X - psi), V = e^(X + psi) are null; inside it the
+    open universe has a^2(-d eta^2 + d chi^2) and U = e^(eta - chi), V = e^(eta + chi), with
+    eta = X(i tau) the conformal time, the same function continued through the light cone. The
+    drawing is p = arctan(U/s) and q = arctan(V/s), Minkowski's map of U and V, so the light cone
+    is p = 0 and the centre X = 0.
+
+    Decay into flat space, de Sitter space of radius l outside and Minkowski space inside, the wall
+    born with rho_bar = 4l/5: inside, rho = xi and U, V are c T -+ R of the inertial chart; outside,
+    rho = l sin(xi'), xi' = xi - xi_0, and X = ln tan(xi'/2) + ln(8/5). At s = 8/5 the map outside
+    is de Sitter's own global square, tan q = e^psi tan(xi'/2), as ds_static_pq draws the static
+    chart, so future infinity of the false vacuum is the line T = pi/2 from X = pi/2 to pi, the
+    light cone of the event opposite the centre is q = pi/2, and the Minkowski space inside runs on
+    above T = pi/2 to its own future null infinity, q = pi/2 with 0 < p < pi/2.
+
+    Decay of flat space, Minkowski space outside and anti-de Sitter space of radius l inside, the
+    wall born with rho_bar = 4l/3: inside, X = ln tanh(xi/2), which is U, V = tan((ct -+ arctan r)/2)
+    of the static chart, and outside rho = xi' = xi - ln 3 + 4/3 with X = ln(3 xi'/8), so
+    U, V = 3(cT -+ R)/8 of the inertial chart. At s = 1 the wall starts at X = 2 arctan(1/2) as in the
+    other view. The open universe inside has eta = ln tan(c tau/2l), and its a = 0 at c tau = pi l
+    is the line q = pi/2, which leaves the event where the wall reaches anti-de Sitter's infinity:
+    the Cauchy horizon of the exact solution."""
+    views = []
+    box = [-0.35, PI + 0.35, -0.3, PI + 0.3]
+    alpha = math.asin(0.8)
+
+    def bubble(name, scale):
+        def outside(psi, xi):
+            X = nr.cdl_conformal_distance(xi, name)
+            psi = np.asarray(psi, dtype=float)
+            return -np.arctan(np.exp(X - psi) / scale), np.arctan(np.exp(X + psi) / scale)
+
+        def conformal(eta, chi):
+            eta, chi = np.asarray(eta, dtype=float), np.asarray(chi, dtype=float)
+            return np.arctan(np.exp(eta - chi) / scale), np.arctan(np.exp(eta + chi) / scale)
+        return outside, conformal
+
+    # ---- decay into flat space
+    out_a, conf_a = bubble("into_flat", 1.6)
+
+    def open_a(tau, chi):
+        return conf_a(np.log(np.asarray(tau, dtype=float)), chi)
+
+    def inertial_a(T, R):
+        return mink_pq(T, R, 1.6)
+    flat_in = Plane(src, "coleman_de_luccia", "wall", ("\\psi", "\\xi"), EQUATOR, functions={"rho": "xi"})
+    ds_out = Plane(src, "coleman_de_luccia", "wall", ("\\psi", "\\xi"), EQUATOR,
+                   functions={"rho": "sin(xi - Rational(4, 5) + asin(Rational(4, 5)))"})
+    milne_in = Plane(src, "coleman_de_luccia", "open", ("\\tau", "\\chi"), EQUATOR, functions={"a": "tau"})
+    st_in_a = Plane(src, "coleman_de_luccia", "static_inside", ("t", "r"), EQUATOR, {"Lambda_T": 0})
+    st_out_a = Plane(src, "coleman_de_luccia", "static_outside", ("t", "r"), EQUATOR, {"Lambda_F": 3})
+    xi_end = 0.8 + PI - alpha
+    ck.chart("Coleman-De Luccia into flat space, inside the wall", flat_in, out_a, ck.uniform(-3, 3),
+             ck.uniform(0.01, 0.8), lambda psi, xi: (1, 0))
+    ck.chart("Coleman-De Luccia into flat space, outside the wall", ds_out, out_a, ck.uniform(-3, 3),
+             ck.uniform(0.8, xi_end - 0.01), lambda psi, xi: (1, 0))
+    ck.chart("Coleman-De Luccia into flat space, the open universe", milne_in, open_a, ck.uniform(0.01, 20),
+             ck.uniform(0.001, 5), lambda tau, chi: (1, 0))
+    T = ck.uniform(0, 10)
+    ck.chart("Coleman-De Luccia into flat space, static inside", st_in_a, inertial_a, T,
+             np.sqrt(0.64 + T ** 2) * ck.uniform(0.001, 0.999), lambda t, r: (1, 0))
+    t = ck.uniform(0, 6)
+    wall_r = np.sqrt(0.64 + 0.36 * np.tanh(t) ** 2)
+    ck.chart("Coleman-De Luccia into flat space, static outside", st_out_a, ds_static_pq, t,
+             wall_r + (1 - wall_r) * ck.uniform(0.001, 0.999), lambda t, r: (1, 0))
+    psi = np.linspace(0, 6, 61)
+    ck.limit("Coleman-De Luccia into flat space: both sides reach the wall at one point",
+             np.concatenate(out_a(psi, np.full(61, 0.8 - 1e-13))), np.concatenate(out_a(psi, np.full(61, 0.8 + 1e-13))), 1e-10)
+    ck.limit("Coleman-De Luccia into flat space: the wall is the hyperbola R^2 - c^2T^2 = (4/5)^2 of the inertial chart",
+             np.concatenate(out_a(psi, np.full(61, 0.8))),
+             np.concatenate(inertial_a(0.8 * np.sinh(psi), 0.8 * np.cosh(psi))), 1e-12)
+    ts = np.linspace(0, 4, 41)
+    rw = np.sqrt(0.64 + 0.36 * np.tanh(ts) ** 2)
+    ck.limit("Coleman-De Luccia into flat space: r_w(t) of the static chart outside lies on the wall",
+             np.concatenate(ds_static_pq(ts, rw)),
+             np.concatenate(out_a(np.arcsinh(np.tanh(ts) / np.tan(alpha)), np.full(41, 0.8))), 1e-10)
+    ck.limit("Coleman-De Luccia into flat space: the wall ends where the light cone meets infinity, (X, T) = (pi/2, pi/2)",
+             point(*out_a(40.0, 0.8)), [HALF, HALF], 1e-9)
+    ck.limit("Coleman-De Luccia into flat space: the false vacuum's future infinity is T = pi/2",
+             np.sum(out_a(40.0, np.linspace(0.9, xi_end - 0.1, 21)), axis=0), np.full(21, HALF), 1e-9)
+    ck.limit("Coleman-De Luccia into flat space: xi -> the second zero of rho lands on q = pi/2 or p = -pi/2",
+             [out_a(3.0, xi_end - 1e-12)[1], out_a(-3.0, xi_end - 1e-12)[0]], [HALF, -HALF], 1e-9)
+    ck.finite("Coleman-De Luccia into flat space: the centre is regular", st_in_a.kretschmann(ck.uniform(0, 5, 50), np.full(50, 1e-6)))
+    ck.finite("Coleman-De Luccia into flat space: the curvature is finite beside the wall",
+              ds_out.kretschmann(ck.uniform(-2, 2, 50), np.full(50, 0.8 + 1e-6)))
+
+    S_PSI = np.concatenate([[0.0], spread(0, np.inf, 500, 12)])
+    S_TAU = spread(0, np.inf, 500, 12)
+    S_CHI = np.linspace(0, 40, 2000)
+
+    def corner(v, at, text, anchor, dx=0, dy=0):
+        v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+
+    v = View("into_flat", "Decay into flat space", box)
+    region = [[0, 0], [PI, 0], [PI, HALF], [HALF, HALF], [0, PI]]
+    v.fill("region", region)
+    wall_p, wall_q = out_a(S_PSI, np.full_like(S_PSI, 0.8))
+    wall_xt = np.column_stack(xt(wall_p, wall_q))
+    v.fill("cover", [[0, 0]] + wall_xt.tolist() + [[HALF, HALF], [0, PI]])
+    for xi in (0.2, 0.4, 0.6):
+        v.curve("r", *out_a(S_PSI, np.full_like(S_PSI, xi)))
+    for xi in (1.2, 1.6, 2.0, 2.4, 2.8):
+        v.curve("r", *out_a(S_PSI, np.full_like(S_PSI, xi)))
+    for psi0 in (0.5, 1.0, 2.0):
+        for half in (np.linspace(1e-9, 0.8, 300), np.linspace(0.8, xi_end - 1e-9, 600)):
+            v.curve("t", *out_a(np.full_like(half, psi0), half))
+    grid(v, "r2", lambda c, tau: open_a(tau, c), (0.5, 1.0, 1.5, 2.0), S_TAU)
+    grid(v, "t2", open_a, (0.4, 0.8, 1.6, 3.2), S_CHI)
+    v.line("surface", [wall_xt.tolist()])
+    v.line("horizon", [[[0, 0], [HALF, HALF]], [[PI, 0], [HALF, HALF]]])
+    v.line("centre", [[[0, 0], [0, PI]], [[PI, 0], [PI, HALF]]])
+    v.line("scri", [[[HALF, HALF], [PI, HALF]], [[HALF, HALF], [0, PI]]])
+    v.line("chartedge", [[[0, 0], [PI, 0]]])
+    corner(v, (0, PI), "$i^+$", "b", dy=-6)
+    v.label_xt([0.75 * PI, HALF], "$\\mathscr{I}^+$", "b", dy=-5)
+    v.label_xt([Q4, 3 * Q4], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([0, 1.2], "$R = 0$", "r", dx=-6)
+    v.label_xt([PI, 0.8], "antipode", "l", "coord", dx=6)
+    v.label_xt([float(wall_xt[0, 0]), 0.0], "the wall", "t", "small", dy=6)
+    v.label_xt([2.2, 0.55], "false vacuum", cls="region")
+    v.label_xt([0.42, 2.0], "true vacuum", cls="region")
+    v.legend("cover", "the true vacuum inside the wall, Minkowski space")
+    v.legend("r", "$\\xi$ constant, at $\\ell/5$, $2\\ell/5$, and $3\\ell/5$ inside the wall and every $2\\ell/5$ "
+                  "from $6\\ell/5$ outside it")
+    v.legend("t", "$\\psi$ constant, at $1/2$, $1$, and $2$")
+    v.legend("r2", "$\\chi$ constant, a comoving observer of the open universe, at $1/2$, $1$, $3/2$, and $2$")
+    v.legend("t2", "$c\\tau$ constant, at $0.4$, $0.8$, $1.6$, and $3.2\\,\\ell$")
+    v.legend("surface", "the wall, the hyperboloid $\\rho = \\bar\\rho$")
+    v.legend("horizon", "the future light cones of the bubble's centre and of the event opposite it")
+    v.legend("centre", "the centre of the bubble, $R = 0$, and the antipode of de Sitter space")
+    v.legend("chartedge", "the moment the bubble appears, with the wall at rest")
+    v.legend("scri", "future infinity: spacelike for the false vacuum, null for the true one")
+    v.set(settings="$\\ell = \\sqrt{3/\\Lambda_F}$, the de Sitter radius of the false vacuum, the unit of every "
+                   "length; $p = \\arctan(5(cT - R)/8\\ell)$ and $q = \\arctan(5(cT + R)/8\\ell)$ inside the wall, with "
+                   "$T$ and $R$ the inertial time and radius of the true vacuum.",
+          input=nr.CDL_INPUT["into_flat"])
+    views.append(v)
+
+    # ---- decay of flat space
+    out_b, conf_b = bubble("out_of_flat", 1.0)
+
+    def open_b(tau, chi):
+        return conf_b(np.log(np.tan(np.asarray(tau, dtype=float) / 2)), chi)
+
+    def static_in_b(t, r):
+        t, sigma = np.asarray(t, dtype=float), np.arctan(np.asarray(r, dtype=float))
+        return np.arctan(np.tan((t - sigma) / 2)), np.arctan(np.tan((t + sigma) / 2))
+
+    def inertial_b(T, R):
+        return mink_pq(T, R, 8 / 3)
+    ads_in = Plane(src, "coleman_de_luccia", "wall", ("\\psi", "\\xi"), EQUATOR, functions={"rho": "sinh(xi)"})
+    flat_out = Plane(src, "coleman_de_luccia", "wall", ("\\psi", "\\xi"), EQUATOR,
+                     functions={"rho": "xi - log(3) + Rational(4, 3)"})
+    ads_open = Plane(src, "coleman_de_luccia", "open", ("\\tau", "\\chi"), EQUATOR, functions={"a": "sin(tau)"})
+    ads_conf = Plane(src, "coleman_de_luccia", "open_conformal", ("\\eta", "\\chi"), EQUATOR, functions={"a": "1/cosh(eta)"})
+    st_in_b = Plane(src, "coleman_de_luccia", "static_inside", ("t", "r"), EQUATOR, {"Lambda_T": -3})
+    st_out_b = Plane(src, "coleman_de_luccia", "static_outside", ("t", "r"), EQUATOR, {"Lambda_F": 0})
+    w = math.log(3)
+    ck.chart("Coleman-De Luccia out of flat space, inside the wall", ads_in, out_b, ck.uniform(-3, 3),
+             ck.uniform(0.01, w), lambda psi, xi: (1, 0))
+    ck.chart("Coleman-De Luccia out of flat space, outside the wall", flat_out, out_b, ck.uniform(-3, 3),
+             w + ck.uniform(0, 20), lambda psi, xi: (1, 0))
+    ck.chart("Coleman-De Luccia out of flat space, the open universe", ads_open, open_b, ck.uniform(0.01, PI - 0.01),
+             ck.uniform(0.001, 5), lambda tau, chi: (1, 0))
+    ck.chart("Coleman-De Luccia out of flat space, conformal time", ads_conf, conf_b, ck.uniform(-4, 4),
+             ck.uniform(0.001, 5), lambda eta, chi: (1, 0))
+    t = ck.uniform(0, HALF - 0.01)
+    ck.chart("Coleman-De Luccia out of flat space, static inside", st_in_b, static_in_b, t,
+             np.sqrt(16 / 9 + 25 / 9 * np.tan(t) ** 2) * ck.uniform(0.001, 0.999), lambda t, r: (1, 0))
+    T = ck.uniform(0, 10)
+    ck.chart("Coleman-De Luccia out of flat space, static outside", st_out_b, inertial_b, T,
+             np.sqrt(16 / 9 + T ** 2) * (1 + ck.uniform(0.001, 5)), lambda t, r: (1, 0))
+    ck.limit("Coleman-De Luccia out of flat space: both sides reach the wall at one point",
+             np.concatenate(out_b(psi, np.full(61, w - 1e-13))), np.concatenate(out_b(psi, np.full(61, w + 1e-13))), 1e-10)
+    ck.limit("Coleman-De Luccia out of flat space: the wall is the hyperbola R^2 - c^2T^2 = (4/3)^2 of the inertial chart",
+             np.concatenate(out_b(psi, np.full(61, w))),
+             np.concatenate(inertial_b(4 / 3 * np.sinh(psi), 4 / 3 * np.cosh(psi))), 1e-12)
+    ts = np.linspace(0, 1.5, 31)
+    ck.limit("Coleman-De Luccia out of flat space: r_w(t) of the static chart inside lies on the wall",
+             np.concatenate(static_in_b(ts, np.sqrt(16 / 9 + 25 / 9 * np.tan(ts) ** 2))),
+             np.concatenate(out_b(np.arcsinh(np.tan(ts) / 0.8), np.full(31, w))), 1e-10)
+    ck.limit("Coleman-De Luccia out of flat space: the open universe is the static chart's region above the light cone",
+             np.concatenate(open_b(np.full(31, 1.0), np.linspace(0, 3, 31))),
+             np.concatenate(static_in_b(np.arctan2(np.sqrt(np.sin(1.0) ** 2 + (np.sin(1.0) * np.sinh(np.linspace(0, 3, 31))) ** 2),
+                                                   np.cos(1.0)), np.sin(1.0) * np.sinh(np.linspace(0, 3, 31)))), 1e-10)
+    ck.limit("Coleman-De Luccia out of flat space: the wall ends at (X, T) = (pi/2, pi/2), anti-de Sitter's infinity at ct = pi l/2",
+             point(*out_b(40.0, w)), [HALF, HALF], 1e-9)
+    ck.limit("Coleman-De Luccia out of flat space: a = 0 at c tau = pi l is the line q = pi/2",
+             open_b(np.full(21, PI - 1e-13), np.linspace(0.5, 5, 21))[1], np.full(21, HALF), 1e-9)
+    ck.finite("Coleman-De Luccia out of flat space: the centre is regular", st_in_b.kretschmann(ck.uniform(0, 1.5, 50), np.full(50, 1e-6)))
+    ck.finite("Coleman-De Luccia out of flat space: the curvature is finite where a returns to zero",
+              ads_open.kretschmann(np.full(50, PI - 1e-3), ck.uniform(0, 3, 50)))
+
+    v = View("out_of_flat", "Decay of flat space", box)
+    region = [[0, 0], [PI, 0], [HALF, HALF], [0, PI]]
+    v.fill("region", region)
+    wall_p, wall_q = out_b(S_PSI, np.full_like(S_PSI, w))
+    wall_xt = np.column_stack(xt(wall_p, wall_q))
+    v.fill("cover", [[0, 0]] + wall_xt.tolist() + [[HALF, HALF], [0, PI]])
+    for xi in (0.3, 0.6, 0.9):
+        v.curve("r", *out_b(S_PSI, np.full_like(S_PSI, xi)))
+    for xi in (2, 3, 5, 9):
+        v.curve("r", *out_b(S_PSI, np.full_like(S_PSI, float(xi))))
+    for psi0 in (0.5, 1.0, 2.0):
+        for half in (np.linspace(1e-9, w, 300), w + np.concatenate([[0.0], spread(0, np.inf, 500, 12)])):
+            v.curve("t", *out_b(np.full_like(half, psi0), half))
+    S_T = PI * (1 / (1 + np.exp(-np.linspace(-14, 14, 700))))
+    grid(v, "r2", lambda c, tau: open_b(tau, c), (0.5, 1.0, 1.5, 2.0), S_T)
+    v.line("surface", [wall_xt.tolist()])
+    v.line("horizon", [[[0, 0], [HALF, HALF]]])
+    v.line("centre", [[[0, 0], [0, PI]]])
+    v.line("scri", [[[PI, 0], [HALF, HALF]]])
+    v.line("chartedge", [[[0, 0], [PI, 0]]])
+    v.line("boundary", [[[HALF, HALF], [0, PI]]])
+    corner(v, (PI, 0), "$i^0$", "l", dx=6)
+    v.label_xt([0.75 * PI, Q4], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([Q4, 3 * Q4], "$a = 0$", "bl", "small", dx=6, dy=-2)
+    v.label_xt([0, 1.2], "$r = 0$", "r", dx=-6)
+    v.label_xt([float(wall_xt[0, 0]), 0.0], "the wall", "t", "small", dy=6)
+    v.label_xt([2.1, 0.3], "false vacuum", cls="region")
+    v.legend("cover", "the true vacuum inside the wall, anti-de Sitter space")
+    v.legend("r", "$\\xi$ constant, at $0.3$, $0.6$, and $0.9\\,\\ell$ inside the wall and at $2$, $3$, $5$, and "
+                  "$9\\,\\ell$ outside it")
+    v.legend("t", "$\\psi$ constant, at $1/2$, $1$, and $2$")
+    v.legend("r2", "$\\chi$ constant, a comoving observer of the open universe, at $1/2$, $1$, $3/2$, and $2$")
+    v.legend("surface", "the wall, the hyperboloid $\\rho = \\bar\\rho$")
+    v.legend("horizon", "the future light cone of the bubble's centre, where the open universe begins")
+    v.legend("centre", "the centre of the bubble, $r = 0$")
+    v.legend("chartedge", "the moment the bubble appears, with the wall at rest")
+    v.legend("boundary", "$a = 0$ at $c\\tau = \\pi\\ell$, the light cone that leaves the event where the wall "
+                         "reaches infinity; under a disturbance, the crunch")
+    v.legend("scri", "future null infinity $\\mathscr{I}^+$ of the false vacuum, which the wall reaches")
+    for m in slices.moments("coleman_de_luccia"):
+        chi = np.linspace(*m.reach("open", "\\chi"), 400)
+        v.slice(m, [open_b(np.full_like(chi, m.time), chi)])
+    v.set(settings="$\\ell = \\sqrt{-3/\\Lambda_T}$, the anti-de Sitter radius of the true vacuum, the unit of "
+                   "every length; $p = \\arctan(3(cT - R)/8\\ell)$ and $q = \\arctan(3(cT + R)/8\\ell)$ outside the wall, "
+                   "with $T$ and $R$ the inertial time and radius of the false vacuum.",
+          input=nr.CDL_INPUT["out_of_flat"])
+    views.append(v)
     return views
 
 
@@ -11658,6 +11905,7 @@ DRAWN = {
     "kantowski_sachs": kantowski_sachs,
     "domain_wall": domain_wall,
     "randall_sundrum": randall_sundrum,
+    "coleman_de_luccia": coleman_de_luccia,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "bardeen": bardeen,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
@@ -11797,6 +12045,33 @@ CAPTIONS = {
         "wall. The points $\\phi$ and $-\\phi$ are one point, so the left half of the strip repeats the right.",
         "A light ray that reaches either wall turns back from it, and crosses from one wall to the other in the "
         "time $t = (e^{kr_c\\pi} - 1)/kc$. Every ray stays between the walls, from $i^-$ to $i^+$.",
+    ],
+    ("coleman_de_luccia", "into_flat"): [
+        "A false vacuum of positive energy decaying into flat space, from the moment the bubble appears, each "
+        "point in the diagram a 2-sphere. Outside the wall the spacetime is de Sitter space on the upper half of "
+        "its square, and inside it is Minkowski space, joined along the wall, the hyperboloid "
+        "$\\rho = \\bar\\rho = 4\\ell/5$. One pair of null coordinates covers both sides, since $\\psi \\pm "
+        "\\int d\\xi/\\rho$ are null on either side and continuous through the wall.",
+        "The wall starts at rest and closes in on the future light cone of the bubble's centre, and both end on "
+        "the false vacuum's future infinity, so the bubble never fills de Sitter space: an observer near the "
+        "antipode stays in the false vacuum. Inside the light cone lies the open universe of $\\tau$ and "
+        "$\\chi$, here Milne's, each of its moments an infinite hyperbolic space that fits between the centre "
+        "and the wall. The true vacuum runs on past the false vacuum's future infinity to a null infinity of its "
+        "own.",
+    ],
+    ("coleman_de_luccia", "out_of_flat"): [
+        "Flat space decaying into a vacuum of negative energy, from the moment the bubble appears, each point "
+        "in the diagram a 2-sphere. Outside the wall the spacetime is Minkowski space, and inside it is anti-de "
+        "Sitter space, joined along the wall, the hyperboloid $\\rho = \\bar\\rho = 4\\ell/3$. One pair of null "
+        "coordinates covers both sides, since $\\psi \\pm \\int d\\xi/\\rho$ are null on either side and "
+        "continuous through the wall.",
+        "The wall starts at rest, closes in on the future light cone of the bubble's centre, and reaches the "
+        "false vacuum's future null infinity, so it overtakes every observer outside. Inside the light cone "
+        "lies the open universe of $\\tau$ and $\\chi$, whose scale factor $\\ell\\sin(c\\tau/\\ell)$ returns "
+        "to zero on the upper edge. In this exact solution that edge is a light cone on which the curvature "
+        "is finite, and nothing fixes the spacetime beyond it, since it leaves the event where the wall "
+        "reaches the infinity of anti-de Sitter space. Coleman and De Luccia argued that any small disturbance "
+        "turns it into a spacelike singularity.",
     ],
     ("domain_wall", "planar"): [
         "The whole spacetime of the wall, each point in the diagram a 2-sphere, two copies of the inside of the "

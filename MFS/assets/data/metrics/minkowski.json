@@ -155,6 +155,11 @@
       "id": "point_particle_2plus1",
       "kind": "locally_same",
       "text": "Minkowski space of three dimensions with a wedge removed along a particle's world line. In a world with two dimensions of space that missing wedge is all the gravity a mass has [deser1984]."
+    },
+    {
+      "id": "coleman_de_luccia",
+      "kind": "composite",
+      "text": "A false vacuum decaying by a bubble. Flat space is the inside of the bubble where the old vacuum had positive energy, and the outside of it where flat space is the one decaying [coleman1980]."
     }
   ],
   "references": [
@@ -210,7 +215,8 @@
     "pitowsky1990",
     "randall1999a",
     "som1968",
-    "deser1984"
+    "deser1984",
+    "coleman1980"
   ],
   "coordinates": [
     {

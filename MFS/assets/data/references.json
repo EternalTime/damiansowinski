@@ -1,5 +1,5 @@
 {
-  "version": "bbec078cd8e91802",
+  "version": "837b0f4c53593edc",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -16576,6 +16576,238 @@
         "eprint": "gr-qc/0409039",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.12942/lrr-2005-1"
+      }
+    },
+    "coleman1977": {
+      "type": "article",
+      "fields": {
+        "title": "Fate of the false vacuum: Semiclassical theory",
+        "author": "Coleman, Sidney",
+        "journal": "Physical Review D",
+        "volume": "15",
+        "number": "10",
+        "pages": "2929--2936",
+        "year": "1977",
+        "doi": "10.1103/PhysRevD.15.2929",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.15.2929"
+      }
+    },
+    "voloshin1974": {
+      "type": "article",
+      "fields": {
+        "title": "Bubbles in metastable vacuum",
+        "author": "Voloshin, M. B. and Kobzarev, I. Yu. and Okun', L. B.",
+        "journal": "Yadernaya Fizika",
+        "volume": "20",
+        "pages": "1229--1234",
+        "year": "1974",
+        "url": "https://inspirehep.net/literature/88934"
+      }
+    },
+    "callan1977": {
+      "type": "article",
+      "fields": {
+        "title": "Fate of the false vacuum. II. First quantum corrections",
+        "author": "Callan, Curtis G. and Coleman, Sidney",
+        "journal": "Physical Review D",
+        "volume": "16",
+        "number": "6",
+        "pages": "1762--1768",
+        "year": "1977",
+        "doi": "10.1103/PhysRevD.16.1762",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.16.1762"
+      }
+    },
+    "coleman1980": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational effects on and of vacuum decay",
+        "author": "Coleman, Sidney and De Luccia, Frank",
+        "journal": "Physical Review D",
+        "volume": "21",
+        "number": "12",
+        "pages": "3305--3315",
+        "year": "1980",
+        "doi": "10.1103/PhysRevD.21.3305",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.21.3305"
+      }
+    },
+    "parke1983": {
+      "type": "article",
+      "fields": {
+        "title": "Gravity and the decay of the false vacuum",
+        "author": "Parke, Stephen",
+        "journal": "Physics Letters B",
+        "volume": "121",
+        "number": "5",
+        "pages": "313--315",
+        "year": "1983",
+        "doi": "10.1016/0370-2693(83)91376-X",
+        "url": "https://doi.org/10.1016/0370-2693(83)91376-X"
+      }
+    },
+    "abbott1985": {
+      "type": "article",
+      "fields": {
+        "title": "The collapse of an anti-de Sitter bubble",
+        "author": "Abbott, L. F. and Coleman, Sidney",
+        "journal": "Nuclear Physics B",
+        "volume": "259",
+        "number": "1",
+        "pages": "170--174",
+        "year": "1985",
+        "doi": "10.1016/0550-3213(85)90305-0",
+        "url": "https://doi.org/10.1016/0550-3213(85)90305-0"
+      }
+    },
+    "guth1983": {
+      "type": "article",
+      "fields": {
+        "title": "Could the universe have recovered from a slow first-order phase transition?",
+        "author": "Guth, Alan H. and Weinberg, Erick J.",
+        "journal": "Nuclear Physics B",
+        "volume": "212",
+        "number": "2",
+        "pages": "321--364",
+        "year": "1983",
+        "doi": "10.1016/0550-3213(83)90307-3",
+        "url": "https://doi.org/10.1016/0550-3213(83)90307-3"
+      }
+    },
+    "gott1982": {
+      "type": "article",
+      "fields": {
+        "title": "Creation of open universes from de Sitter space",
+        "author": "Gott, J. Richard",
+        "journal": "Nature",
+        "volume": "295",
+        "number": "5847",
+        "pages": "304--307",
+        "year": "1982",
+        "doi": "10.1038/295304a0",
+        "url": "https://doi.org/10.1038/295304a0"
+      }
+    },
+    "bucher1995": {
+      "type": "article",
+      "fields": {
+        "title": "Open universe from inflation",
+        "author": "Bucher, Martin and Goldhaber, Alfred S. and Turok, Neil",
+        "journal": "Physical Review D",
+        "volume": "52",
+        "number": "6",
+        "pages": "3314--3337",
+        "year": "1995",
+        "doi": "10.1103/PhysRevD.52.3314",
+        "eprint": "hep-ph/9411206",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-ph/9411206"
+      }
+    },
+    "susskind2007": {
+      "type": "incollection",
+      "fields": {
+        "title": "The anthropic landscape of string theory",
+        "author": "Susskind, Leonard",
+        "booktitle": "Universe or Multiverse?",
+        "editor": "Carr, Bernard",
+        "publisher": "Cambridge University Press",
+        "pages": "247--266",
+        "year": "2007",
+        "doi": "10.1017/CBO9781107050990.018",
+        "eprint": "hep-th/0302219",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0302219"
+      }
+    },
+    "freivogel2006": {
+      "type": "article",
+      "fields": {
+        "title": "Observational consequences of a landscape",
+        "author": "Freivogel, Ben and Kleban, Matthew and Rodr\\'iguez Mart\\'inez, Mar\\'ia and Susskind, Leonard",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2006",
+        "number": "03",
+        "pages": "039",
+        "year": "2006",
+        "doi": "10.1088/1126-6708/2006/03/039",
+        "eprint": "hep-th/0505232",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0505232"
+      }
+    },
+    "blau1987": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamics of false-vacuum bubbles",
+        "author": "Blau, Steven K. and Guendelman, E. I. and Guth, Alan H.",
+        "journal": "Physical Review D",
+        "volume": "35",
+        "number": "6",
+        "pages": "1747--1766",
+        "year": "1987",
+        "doi": "10.1103/PhysRevD.35.1747",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.35.1747"
+      }
+    },
+    "berezin1987": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamics of bubbles in general relativity",
+        "author": "Berezin, V. A. and Kuzmin, V. A. and Tkachev, I. I.",
+        "journal": "Physical Review D",
+        "volume": "36",
+        "number": "10",
+        "pages": "2919--2944",
+        "year": "1987",
+        "doi": "10.1103/PhysRevD.36.2919",
+        "url": "https://link.aps.org/doi/10.1103/PhysRevD.36.2919"
+      }
+    },
+    "farhi1987": {
+      "type": "article",
+      "fields": {
+        "title": "An obstacle to creating a universe in the laboratory",
+        "author": "Farhi, Edward and Guth, Alan H.",
+        "journal": "Physics Letters B",
+        "volume": "183",
+        "number": "2",
+        "pages": "149--155",
+        "year": "1987",
+        "doi": "10.1016/0370-2693(87)90429-1",
+        "url": "https://doi.org/10.1016/0370-2693(87)90429-1"
+      }
+    },
+    "feeney2011": {
+      "type": "article",
+      "fields": {
+        "title": "First observational tests of eternal inflation",
+        "author": "Feeney, Stephen M. and Johnson, Matthew C. and Mortlock, Daniel J. and Peiris, Hiranya V.",
+        "journal": "Physical Review Letters",
+        "volume": "107",
+        "number": "7",
+        "pages": "071301",
+        "year": "2011",
+        "doi": "10.1103/PhysRevLett.107.071301",
+        "eprint": "1012.1995",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1012.1995"
+      }
+    },
+    "degrassi2012": {
+      "type": "article",
+      "fields": {
+        "title": "Higgs mass and vacuum stability in the Standard Model at NNLO",
+        "author": "Degrassi, Giuseppe and Di Vita, Stefano and Elias-Mir\\'o, Joan and Espinosa, Jos\\'e R. and Giudice, Gian F. and Isidori, Gino and Strumia, Alessandro",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2012",
+        "number": "8",
+        "pages": "098",
+        "year": "2012",
+        "doi": "10.1007/JHEP08(2012)098",
+        "eprint": "1205.6497",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1205.6497"
       }
     }
   }

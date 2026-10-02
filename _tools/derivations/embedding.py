@@ -7066,6 +7066,71 @@ def milne(ck, src):
                         "in flat space carries the slice; Minkowski space carries it."])]
 
 
+# The moments of c tau drawn inside a bubble of negative vacuum energy, in units of l = sqrt(-3/Lambda).
+CDL_MOMENTS = tuple(math.pi * k / 6 for k in (1, 2, 3, 4, 5))
+
+
+def coleman_de_luccia(ck, src):
+    """The open universe inside a bubble whose new vacuum has negative energy, Coleman and De
+    Luccia's (4.12): a = l sin(c tau/l), drawn at l = 1, which is checked to make the open chart's
+    published Einstein tensor -Lambda g with Lambda = -3/l^2. The equator of a moment has
+    g_chichi = a^2 and g_phiphi = a^2 sinh^2 chi, the hyperbolic plane of radius a, whose circles
+    grow faster than the distance out to them at every chi > 0, which is checked, so it is drawn
+    in three dimensional Minkowski space, dX^2 + dY^2 - dZ^2, where it climbs at
+    dZ/dchi = a sinh chi from Z = a on the axis: rho = a sinh chi and Z = a cosh chi, the sheet
+    Z^2 - rho^2 = a^2. The moments run from c tau = pi l/6 through the widest, pi l/2, to
+    5 pi l/6, a movie with a frame about every 0.05 l of c tau, each out to rho = 3 l."""
+    src.note("coleman_de_luccia", "open", ["einstein_tensor"])
+    _, entry, reader = nr.load("coleman_de_luccia", "open")
+    tau = reader.symbol["\\tau"]
+    scale = sp.sin(tau)
+    g = nr.published_matrix(reader, entry, "metric_components")
+    for c in entry["einstein_tensor"]["variants"]["ll"]["nonzero"]:
+        i = entry["coords"].index(c["indices"][0])
+        left = (reader(c["value"]) - 3 * g[i, i]).subs(reader.parameters["a"], scale).doit().subs(reader.c, 1)
+        ck.exact(f"Coleman-De Luccia: a = l sin(c tau/l) makes the published G_{c['indices'][0]}{c['indices'][1]} "
+                 "equal 3 g/l^2, anti-de Sitter space", sp.simplify(left) == 0)
+    top = 3.0
+    size = 2 * top
+    rings = (0.5, 1.0, 1.5, 2.0, 2.5)
+
+    def moment(t, label, check=True):
+        a = math.sin(t)
+        fixed_at = {"tau": repr(t), **EQUATOR}
+        sl = Slice(src, "coleman_de_luccia", "open", "\\chi", "\\phi", fixed_at, functions={"a": repr(a)},
+                   space="minkowski")
+        hi = math.asinh(top / a)
+        sheet = Piece("sheet", "sheet", sl, 0.0, hi, a, 1,
+                      (("axis", "the comoving observer at $\\chi = 0$"),
+                       ("edge", "the sheet runs on, to $\\chi \\to \\infty$")),
+                      [(x, "r", None) for x in rings if x < hi], size)
+        where = f"Coleman-De Luccia, c tau = {t:.4f}"
+        if check:
+            flat = Slice(src, "coleman_de_luccia", "open", "\\chi", "\\phi", fixed_at, functions={"a": repr(a)})
+            ck.stops(f"{where}, the equator in flat space", flat, np.linspace(1e-3, 20, 400))
+            ck.isometry(f"{where}, the sheet", sheet)
+            ck.form(f"{where}, the hyperboloid Z = a cosh chi", sheet, lambda x: a * np.cosh(x), size)
+            ck.radius(f"{where}, rho = a sinh chi", sheet, lambda x: a * np.sinh(x), size)
+        return Surface([sheet], label=label, time=t)
+
+    times, keys = movie_values(list(CDL_MOMENTS), 0.05)
+    frames = [moment(t, f"$c\\tau = {t:.2f}$", True) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the equator of the moment, which $\\chi$ and $\\phi$ cover whole")
+    fig.legend("line", "r", "$\\chi$ constant, every $1/2$, the circle of comoving observers at that $\\chi$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("hyperboloids", "Inside the bubble", "$\\ell$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", times, turns=False),
+                 settings="$\\ell = \\sqrt{-3/\\Lambda}$, the curvature radius of the new vacuum, the unit of every "
+                          "length and of $c\\tau$, and every length along a sheet measured with $dX^2 + dY^2 - dZ^2$.",
+                 input="A new vacuum of negative energy, $a = \\ell\\sin(c\\tau/\\ell)$, anti-de Sitter space "
+                       "inside the bubble.",
+                 stops=["At every $\\chi > 0$ the circles grow faster than the distance out to them, "
+                        "$g_{\\chi\\chi} < (\\partial_\\chi\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution "
+                        "in flat space carries the slice; Minkowski space carries it."])]
+
+
 # At ct = a the pulse bends the surface by the axis on a scale of a/4, against a drawing 20a
 # across, so the chords there are a few thousandths of a long and are rounded a decade finer.
 ER_DIGITS = 1e-8
@@ -8513,6 +8578,7 @@ DRAWN = {
     "point_particle_2plus1": point_particle_2plus1,
     "frw": frw,
     "milne": milne,
+    "coleman_de_luccia": coleman_de_luccia,
     "domain_wall": domain_wall,
     "randall_sundrum": randall_sundrum,
     "minkowski": minkowski,
@@ -9891,6 +9957,17 @@ CAPTIONS = {
         "0$, dashed, and each nears it as $\\chi$ grows. The circle of comoving particles at each $\\chi$ moves "
         "out along the straight line $Z = \\rho\\coth\\chi$, with $\\rho$ the distance from the axis, through the "
         "apex of the cone, at the speed $c\\tanh\\chi$.",
+    ],
+    ("coleman_de_luccia", "hyperboloids"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the open universe inside a bubble of negative vacuum energy as "
+        "its proper time runs from $c\\tau = \\pi\\ell/6$ to $5\\pi\\ell/6$, each moment drawn as a surface in three "
+        "dimensional Minkowski space with every distance along it, measured with $dX^2 + dY^2 - dZ^2$, the metric "
+        "distance. On it $g_{\\chi\\chi} = a^2$ while the circle at $\\chi$ has circumference $2\\pi a\\sinh\\chi$, "
+        "so every circle grows faster than the distance out to it, and the moment is the hyperbolic plane of "
+        "curvature $-1/a^2$. It lies whole on one sheet of the hyperboloid $Z^2 - X^2 - Y^2 = a^2$.",
+        "The sheet flattens as the universe grows to $a = \\ell$ at $c\\tau = \\pi\\ell/2$ and sharpens again as $a$ "
+        "falls back toward zero at $c\\tau = \\pi\\ell$. The circle of comoving observers at each $\\chi$ has the "
+        "radius $a\\sinh\\chi$, so the circles swell and shrink together, and each moment is infinite.",
     ],
     ("frw", "closed"): [
         "The equator ($\\theta = \\pi/2$) of space in a closed universe of dust as cosmic time runs from $ct = 0.18$ "

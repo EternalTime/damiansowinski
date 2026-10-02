@@ -91,6 +91,11 @@
       "id": "domain_wall",
       "kind": "family",
       "text": "A domain wall is a de Sitter space of one dimension fewer. In the flat space on either side the wall is the hyperboloid $X^2 + Y^2 + Z^2 = 1/k^2 + c^2T^2$, and the metric induced on it is de Sitter's in $2 + 1$ dimensions [ipser1984, caldwell1996]."
+    },
+    {
+      "id": "coleman_de_luccia",
+      "kind": "composite",
+      "text": "De Sitter space with a bubble of lower vacuum energy growing in it, the way a false vacuum decays [coleman1980]."
     }
   ],
   "references": [
@@ -122,7 +127,8 @@
     "kastor1993",
     "mazur2015",
     "ipser1984",
-    "caldwell1996"
+    "caldwell1996",
+    "coleman1980"
   ],
   "coordinates": [
     {

@@ -477,6 +477,19 @@ DIMENSIONS = {
     ("domain_wall", "global"): {"t": "T", "z": "L", "\\theta": "1", "\\phi": "1", "k": "1/L"},
     ("domain_wall", "conformal"): {"t": "T", "w": "L", "\\theta": "1", "\\phi": "1", "k": "1/L"},
     ("domain_wall", "inertial"): {"T": "T", "R": "L", "\\theta": "1", "\\phi": "1", "k": "1/L"},
+    # Coleman and De Luccia's bubble: the rapidities psi and chi and the conformal time eta are pure
+    # numbers, the proper distance xi and the proper time tau carry the dimensions, and rho and
+    # the scale factor a are lengths. Each static chart has the cosmological constant of its
+    # side and the wall's areal radius, a length.
+    ("coleman_de_luccia", "wall"): {"\\psi": "1", "\\xi": "L", "\\theta": "1", "\\phi": "1", "\\rho": "L"},
+    ("coleman_de_luccia", "open"): {"\\tau": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
+    ("coleman_de_luccia", "open_conformal"): {"\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
+    ("coleman_de_luccia", "static_inside"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda_T": "1/L**2", "r_w": "L",
+    },
+    ("coleman_de_luccia", "static_outside"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda_F": "1/L**2", "r_w": "L",
+    },
     ("malament_hogarth", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1",
     },

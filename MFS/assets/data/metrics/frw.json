@@ -67,6 +67,11 @@
       "id": "schwarzschild",
       "kind": "family",
       "text": "The vacuum around a single mass. Albert Einstein and Ernst Straus cut a ball out of a Friedmann universe of dust in 1945 and put Schwarzschild's solution for the mass removed in its place, so a system inside the hole does not feel the expansion [einstein1945, carrera2010]."
+    },
+    {
+      "id": "coleman_de_luccia",
+      "kind": "composite",
+      "text": "A bubble of new vacuum with an open Friedmann universe inside it, $k = -1$, and no singularity at its start [coleman1980, bucher1995]."
     }
   ],
   "references": [
@@ -115,7 +120,9 @@
     "mcvittie1933",
     "kaloper2010",
     "einstein1945",
-    "carrera2010"
+    "carrera2010",
+    "coleman1980",
+    "bucher1995"
   ],
   "coordinates": [
     {

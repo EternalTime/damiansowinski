@@ -349,6 +349,20 @@ An exact vacuum solution describing two black holes that accelerate away from ea
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{1}{\left(1 + \alpha r\cos\theta\right)^2}\left(-\left(1 - \alpha^2r^2\right)\left(1 - \dfrac{2m}{r}\right)c^2dt^2 + \dfrac{dr^2}{\left(1 - \alpha^2r^2\right)\left(1 - \dfrac{2m}{r}\right)} + \dfrac{r^2d\theta^2}{1 + 2\alpha m\cos\theta} + C^2\left(1 + 2\alpha m\cos\theta\right)r^2\sin^2\theta\,d\phi^2\right)$$
 - chart Hong-Teo: coordinates $(\tau, y, x, \phi)$, $$ds^2 = \dfrac{1}{\alpha^2\left(x + y\right)^2}\left(\left(1 - y^2\right)\left(1 - 2\alpha m y\right)d\tau^2 - \dfrac{dy^2}{\left(1 - y^2\right)\left(1 - 2\alpha m y\right)} + \dfrac{dx^2}{\left(1 - x^2\right)\left(1 + 2\alpha m x\right)} + C^2\left(1 - x^2\right)\left(1 + 2\alpha m x\right)d\phi^2\right)$$
 
+### Coleman-De Luccia Bubble
+
+The spacetime of a false vacuum decaying, found by Sidney Coleman and Frank De Luccia in 1980. A bubble of lower vacuum energy appears by quantum tunnelling, its wall accelerates outward toward the speed of light, and the inside of the bubble is an open universe with no singularity at its start.
+
+- id: `coleman_de_luccia`
+- tags: vacuum decay, false vacuum, bubble, thin shell, matched solution, cosmology, cosmological, open universe, hyperbolic space, inflation, de Sitter, anti-de Sitter, cosmological constant, spherically symmetric, time-dependent, dynamical, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/coleman_de_luccia.json
+- chart Outside the Light Cone: coordinates $(\psi, \xi, \theta, \phi)$, $$ds^2 = d\xi^2 + \rho^2\left(-d\psi^2 + \cosh^2\psi\,d\theta^2 + \cosh^2\psi\sin^2\theta\,d\phi^2\right)$$
+- chart Open Universe: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \sinh^2\chi\,d\theta^2 + \sinh^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Open Universe, Conformal Time: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + d\chi^2 + \sinh^2\chi\,d\theta^2 + \sinh^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Static, Inside the Wall: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_T r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_T r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Static, Outside the Wall: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_F r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_F r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Curzon-Chazy Particle
 
 A static, axially symmetric vacuum field whose Weyl potential is Newton's potential of a point mass, found by Jean Chazy in 1924 and H. E. J. Curzon in 1925. Its singularity is a naked ring of infinite circumference, and the curvature there depends on the direction of approach.

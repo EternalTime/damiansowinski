@@ -36,6 +36,11 @@
       "id": "minkowski",
       "kind": "locally_same",
       "text": "Milne's universe is the inside of one event's future light cone in Minkowski space, in the coordinates of particles flying out from that event [robertson1933]."
+    },
+    {
+      "id": "coleman_de_luccia",
+      "kind": "composite",
+      "text": "A bubble of new vacuum growing in an old one. When the new vacuum has zero energy the inside of the bubble is a Milne universe, with the wall beyond its light cone [coleman1980, bucher1995]."
     }
   ],
   "references": [
@@ -63,7 +68,9 @@
     "vaudrevange2007",
     "khoury2002",
     "turok2004",
-    "benoitlevy2012"
+    "benoitlevy2012",
+    "coleman1980",
+    "bucher1995"
   ],
   "coordinates": [
     {
