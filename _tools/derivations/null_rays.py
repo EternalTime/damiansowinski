@@ -3722,6 +3722,19 @@ DIAGRAMS = [
             families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
     Diagram("som_raychaudhuri", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x/r_c$", "$ct/r_c$",
             {"Omega": 1}, {"y": "0", "z": "0"}, orient="vector", families=SIDEWAYS),
+    # Maitra's dust in units of its length a: the plane z = 0 in t and r with phi divided out, where
+    # the curves are the null geodesics of no angular momentum, and its circles at a and 5a
+    # through time, unrolled as van Stockum's cylinders are, phi scaled by r.
+    Diagram("maitra_dust", "cylindrical", "radial", "$t$ and $r$ in the plane $z = 0$", ("t", "r"), (0, 4, -2, 2),
+            "$r/a$", "$ct/a$", {"a": 1}, {"z": "0"}, quotient="phi"),
+    Diagram("maitra_dust", "cylindrical", "near", "$t$ and $\\phi$ at $r = a$", ("t", "\\phi"),
+            (-math.pi, math.pi, -math.pi, math.pi), "$r\\phi/a$", "$ct/a$", {"a": 1},
+            {"r": "1", "z": "0"}, to_display=((0, 1.0), (1, 0)), orient="vector", families=SIDEWAYS,
+            cones=(5, 5), periodic=("\\phi",)),
+    Diagram("maitra_dust", "cylindrical", "far", "$t$ and $\\phi$ at $r = 5a$", ("t", "\\phi"),
+            (-5 * math.pi, 5 * math.pi, -5 * math.pi, 5 * math.pi), "$r\\phi/a$", "$ct/a$", {"a": 1},
+            {"r": "5", "z": "0"}, to_display=((0, 5.0), (1, 0)), orient="vector", families=SIDEWAYS,
+            cones=(5, 5), periodic=("\\phi",)),
     # The heaviest boson star, in units of the boson's reduced Compton wavelength 1/mu: the areal
     # chart out to 2.5 times the radius that holds 99% of its mass, and the isotropic chart beside it.
     Diagram("boson_star", "areal", "radial", "$t$ and $r$", ("t", "r"), (0, 20, -10, 10),
@@ -8860,6 +8873,33 @@ CAPTIONS = {
         "timelike curves circle each world line of the dust beyond $r_c$, through $y$ as well as $x$, so they "
         "cross this plane.",
     ],
+    ("maitra_dust", "cylindrical", "radial"): [
+        "The plane $z = 0$ of Maitra's dust ($a = 1$) drawn in $t$ and $r$, with $\\phi$ left out. The curves are "
+        "the null geodesics of no angular momentum, $c\\,dt/dr = \\pm e^{\\gamma/2}\\sqrt{1 - k^2/r^2}$, each "
+        "carried round toward $-\\phi$ as it goes, the way the dust circles, $d\\phi = -k\\,c\\,dt/(r^2 - k^2)$.",
+        "On the axis the cones stand at 45°. Farther out they narrow, since $e^{\\gamma}$ falls and $k/r$ climbs "
+        "toward $1$, and they stay open at every radius, since $k < r$: a ray reaches any $r$ in a finite time $t$.",
+    ],
+    ("maitra_dust", "cylindrical", "near"): [
+        "The circle $r = a$ of the plane $z = 0$ through time, the cylinder of $t$ and $\\phi$, opened along the "
+        "line $\\phi = \\pm\\pi$ and drawn with $r\\phi/a$ across, so that its left and right edges are that one "
+        "line. The metric on it is $-(c\\,dt - k\\,d\\phi)^2 + r^2d\\phi^2$, the same at every point, so its null "
+        "curves are straight, $c\\,dt = (k \\pm r)\\,d\\phi$, with $k = 0.377\\,a$ here.",
+        "The cross term tilts every cone toward $-\\phi$, the way the dust circles: a curve moving that way covers "
+        "$2.2$ times the $\\phi$ in a given $t$ that one moving the other way does. The horizontal lines, circles "
+        "of constant $t$, lie outside every cone and are spacelike. Neither family is a null geodesic, and light "
+        "launched along either is turned away from the axis.",
+    ],
+    ("maitra_dust", "cylindrical", "far"): [
+        "The circle $r = 5a$ of the plane $z = 0$ through time, opened along $\\phi = \\pm\\pi$ in the same way, "
+        "where $k = 3.67\\,a$. The cones have tipped farther toward $-\\phi$: the null curve moving that way, "
+        "$c\\,dt = -(r - k)\\,d\\phi$, covers $6.5$ times the $\\phi$ in a given $t$ that the one moving to "
+        "$+\\phi$ does.",
+        "The lower edge of a cone stays above the horizontal at every radius. The slope $dk/dr = 2r/a(s + 1)$ is "
+        "less than $1$, so $k < r$, the circle of constant $t$, $r$, and $z$ is spacelike however far out it "
+        "lies, and $t$ rises along every timelike curve, which therefore cannot close. Neither family here is a "
+        "null geodesic, and light launched along either is turned away from the axis.",
+    ],
     ("boson_star", "areal", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through the heaviest boson star, the same at "
         "every other angle by spherical symmetry. The metric functions $\\alpha$ and $a$ come from $G^t{}_t$, "
@@ -12336,9 +12376,11 @@ def settings(spec, entry):
              for p in entry.get("parameters", [])}
     names.update({vm.Reader._plain(c): c for c in entry["coords"]})
     parts = []
+    # A figure in three dimensions, a Projection, states every value exactly and has no `rounded`.
+    rounded = getattr(spec, "rounded", None) or {}
     for plain, value in list(spec.params.items()) + list(spec.fixed.items()):
-        if plain in (spec.rounded or {}):
-            parts.append(f"${names[plain]} \\approx {spec.rounded[plain]}$")
+        if plain in rounded:
+            parts.append(f"${names[plain]} \\approx {rounded[plain]}$")
             continue
         value = number(value)
         # A value that is the root of an equation, as the angle of a lattice's cell is, is shown to four figures.
@@ -12879,6 +12921,27 @@ def _curzon_plane(rho):
         return quad(lambda s: math.exp(2 / s - 0.5 / s ** 2) if s > 0 else 0.0, 0, r, epsabs=1e-13, epsrel=1e-13,
                     limit=200)[0]
     return np.vectorize(one, otypes=[float])(np.asarray(rho, float))
+
+
+def _maitra_twist(r):
+    """Maitra's k at a = 1."""
+    s = math.sqrt(1 + 4 * r * r)
+    return (s - 1 - math.log((s + 1) / 2)) / 2
+
+
+def _maitra_plane(r):
+    """r_* in the plane z = 0 of Maitra's dust at a = 1, for the rays of no angular momentum: the
+    integral from 0 of e^(gamma/2) sqrt(1 - k^2/x^2)."""
+    def speed(x):
+        if x == 0:
+            return 1.0
+        s = math.sqrt(1 + 4 * x * x)
+        gamma = 0.25 - 1 / (2 * (s + 1)) - math.log((s + 1) / 2) / 2
+        return math.exp(gamma / 2) * math.sqrt(1 - (_maitra_twist(x) / x) ** 2)
+
+    def one(x):
+        return quad(speed, 0, x, epsabs=1e-13, epsrel=1e-13, limit=200)[0]
+    return np.vectorize(one, otypes=[float])(np.asarray(r, float))
 
 
 def _bonnor_plane(rho):
@@ -14037,6 +14100,8 @@ CLOSED_FORMS = {
                                           lambda t, z: z > 0.35) for system in ("weyl", "spherical")},
     **{("curzon_chazy", system, "equator"): (lambda t, r: t + _curzon_plane(r), lambda t, r: t - _curzon_plane(r),
                                              lambda t, r: r > 0.02) for system in ("weyl", "spherical")},
+    ("maitra_dust", "cylindrical", "radial"): (lambda t, r: t + _maitra_plane(r), lambda t, r: t - _maitra_plane(r),
+                                               lambda t, r: r > 0.02),
     **{("bonnor_rotating_dust", system, "axis"): (lambda t, z: t + z, lambda t, z: t - z, None)
        for system in ("cylindrical", "spherical")},
     **{("bonnor_rotating_dust", system, "equator"): (lambda t, r: t + _bonnor_plane(r), lambda t, r: t - _bonnor_plane(r),
@@ -14227,6 +14292,10 @@ CYLINDERS = {
     # right, at rho = a/2, inside the null circle, and at 3a/2.
     ("bonnor_rotating_dust", "cylindrical", "inside"): (1.5, 2.5),
     ("bonnor_rotating_dust", "cylindrical", "outside"): (-5 / 6, 13 / 6),
+    # Maitra's dust in its plane z = 0: c dt = (k - r) dphi moving left and (k + r) dphi moving right,
+    # at r = a and at 5a.
+    ("maitra_dust", "cylindrical", "near"): (_maitra_twist(1.0) - 1, _maitra_twist(1.0) + 1),
+    ("maitra_dust", "cylindrical", "far"): (_maitra_twist(5.0) - 5, _maitra_twist(5.0) + 5),
 }
 # The spinning string's cylinders: k = -(b r + a) moving left and b r - a moving right, with
 # b r = 0.45 inside and 1.35 outside, in the proper radius and rescaled radius charts, and
@@ -14407,6 +14476,8 @@ TURNING = {
     ("som_raychaudhuri", "cylindrical", "beyond"): ("away", "toward"),
     ("bonnor_rotating_dust", "cylindrical", "inside"): ("away", "toward"),
     ("bonnor_rotating_dust", "cylindrical", "outside"): ("away", "away"),
+    ("maitra_dust", "cylindrical", "near"): ("away", "away"),
+    ("maitra_dust", "cylindrical", "far"): ("away", "away"),
     # The spinning string is flat, so light launched along a circle about it leaves for larger r.
     **{("spinning_string", system, view): ("away", "away")
        for system in ("proper_radius", "helical") for view in ("inside", "outside")},

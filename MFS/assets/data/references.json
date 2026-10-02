@@ -1,5 +1,5 @@
 {
-  "version": "017b194170bd8888",
+  "version": "ae26f4949321f105",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -27050,6 +27050,118 @@
         "eprint": "0802.0530",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.77.064003"
+      }
+    },
+    "maitra1966": {
+      "type": "article",
+      "fields": {
+        "title": "Stationary Dust-Filled Cosmological Solution with $\\Lambda = 0$ and without Closed Timelike Lines",
+        "author": "Maitra, S. C.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "7",
+        "number": "6",
+        "pages": "1025--1030",
+        "year": "1966",
+        "doi": "10.1063/1.1704993",
+        "url": "https://doi.org/10.1063/1.1704993"
+      }
+    },
+    "mathgenealogymaitra": {
+      "type": "misc",
+      "fields": {
+        "title": "Samaresh C. Maitra",
+        "author": "{Mathematics Genealogy Project}",
+        "howpublished": "Department of Mathematics, North Dakota State University; record 142959, consulted 2 October 2026",
+        "year": "2026",
+        "url": "https://www.mathgenealogy.org/id.php?id=142959"
+      }
+    },
+    "king1974": {
+      "type": "article",
+      "fields": {
+        "title": "New types of singularity in General Relativity: The general cylindrically symmetric stationary dust solution",
+        "author": "King, A. R.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "38",
+        "number": "2",
+        "pages": "157--171",
+        "year": "1974",
+        "doi": "10.1007/BF01651509",
+        "url": "https://doi.org/10.1007/BF01651509"
+      }
+    },
+    "winicour1975": {
+      "type": "article",
+      "fields": {
+        "title": "All stationary axisymmetric rotating dust metrics",
+        "author": "Winicour, Jeffrey",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "16",
+        "number": "9",
+        "pages": "1806--1808",
+        "year": "1975",
+        "doi": "10.1063/1.522754",
+        "url": "https://doi.org/10.1063/1.522754"
+      }
+    },
+    "vishveshwara1977": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistically rotating dust cylinders",
+        "author": "Vishveshwara, C. V. and Winicour, J.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "18",
+        "number": "6",
+        "pages": "1280--1284",
+        "year": "1977",
+        "doi": "10.1063/1.523404",
+        "url": "https://doi.org/10.1063/1.523404"
+      }
+    },
+    "krasinski1998rotating": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating dust solutions of {Einstein}'s equations with 3-dimensional symmetry groups. {II}. One {Killing} field spanned on $u^\\alpha$ and $w^\\alpha$",
+        "author": "Krasiński, Andrzej",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "39",
+        "number": "1",
+        "pages": "401--422",
+        "year": "1998",
+        "doi": "10.1063/1.532336",
+        "eprint": "gr-qc/9705078",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9705078"
+      }
+    },
+    "bonnor2009maitra": {
+      "type": "article",
+      "fields": {
+        "title": "A vacuum exterior to {Maitra}'s cylindrical dust solution",
+        "author": "Bonnor, W. B. and Steadman, B. R.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "41",
+        "number": "6",
+        "pages": "1381--1387",
+        "year": "2009",
+        "doi": "10.1007/s10714-008-0725-2",
+        "url": "https://doi.org/10.1007/s10714-008-0725-2"
+      }
+    },
+    "chan2024": {
+      "type": "article",
+      "fields": {
+        "title": "Nonrigidly rotating stationary cylindrical dust spacetimes",
+        "author": "Chan, R. and Santos, N. O.",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "33",
+        "number": "16",
+        "pages": "2450057",
+        "year": "2024",
+        "doi": "10.1142/S0218271824500573",
+        "eprint": "2407.11695",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2407.11695"
       }
     }
   }

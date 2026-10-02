@@ -8545,6 +8545,51 @@ def som_raychaudhuri(ck, src):
                         "the dust is an axis like this one."])]
 
 
+MAITRA_REACH = 6.0               # how far out the plane z = 0 of Maitra's dust is drawn, in a
+
+
+def maitra_dust(ck, src):
+    """The plane z = 0 of Maitra's dust at one moment of t, a = 1: g_rr = e^gamma and
+    g_phiphi = r^2 - k^2, so the circle at r has the radius rho = sqrt(r^2 - k^2). Since k' < 1 and
+    k < r, rho grows at every radius, and g_rr - (drho/dr)^2 is positive at every radius, checked
+    here out to r = 1000 a, so the surface never stops: it is drawn to r = 6a. The circles grow
+    more slowly than the distance out to them, rho = 0.93 a at r = a and 3.87 a at 6a, and far out
+    rho^2 tends to a r (1 + ln(r/a)), checked at r = 10^6 a."""
+    sl = Slice(src, "maitra_dust", "cylindrical", "r", "\\phi", {"t": 0, "z": 0}, {"a": 1})
+    far = np.geomspace(1e-3, 1e3, 4001)
+    ck.add("Maitra: g_rr > (drho/dr)^2 at every radius out to 1000 a, so the surface never stops",
+           float(max(0.0, np.max(-sl.defect_at(far)))), 0.0)
+    ck.add("Maitra: the circles are spacelike at every radius out to 1000 a, g_phiphi > 0",
+           float(max(0.0, np.max(-sl.gpp_at(far)))), 0.0)
+    rho = sl.rho_at(far)
+    ck.add("Maitra: the circles grow at every radius", float(max(0.0, np.max(-np.diff(rho)))), 0.0)
+
+    def radius(r):
+        r = np.asarray(r, dtype=float)
+        s = np.sqrt(1 + 4 * r * r)
+        k = (s - 1 - np.log((s + 1) / 2)) / 2
+        return np.sqrt(r * r - k * k)
+
+    ck.add("Maitra: far out rho^2 tends to a r (1 + ln(r/a))",
+           abs(float(radius(1e6)) ** 2 / (1e6 * (1 + math.log(1e6))) - 1), 1e-5)
+    size = 8.0
+    dust = Piece("dust", "star", sl, 0.0, MAITRA_REACH, 0.0, 1,
+                 (("axis", "the axis $r = 0$"),
+                  ("edge", "the surface runs on to $r \\to \\infty$, its circles growing at every radius")),
+                 [(1.0, "r", None), (2.0, "r", None), (4.0, "r", None)], size)
+    ck.isometry("Maitra, the dust", dust)
+    ck.radius("Maitra, rho = sqrt(r^2 - k^2)", dust, radius, size)
+    surface = Surface([dust])
+    fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *dust.at(1.0), "$a$")
+    ring_label(fig, [0, 0, 0], *dust.at(4.0), "$4a$", side=-1)
+    fig.legend("fill", "star", "the rotating dust, which $t$, $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $a$, $2a$ and $4a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("dust", "The rotating dust", "$a$", [surface], fig.done(),
+                 settings="$a = 1$, the unit of every length.")]
+
+
 def ellis_bronnikov(ck, src):
     """In its own chart r is the proper distance from the throat, g_rr = 1 and g_phiphi = r^2 +
     l^2, so dz/dr = l/sqrt(r^2 + l^2) and z = l arcsinh(r/l): the catenoid rho = l cosh(z/l),
@@ -14823,6 +14868,7 @@ DRAWN = {
     "israel_wilson_perjes": israel_wilson_perjes,
     "godel": godel,
     "som_raychaudhuri": som_raychaudhuri,
+    "maitra_dust": maitra_dust,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
     "kerr_de_sitter": kerr_de_sitter,
@@ -16416,6 +16462,16 @@ CAPTIONS = {
         "At $r = r_c$ the circles are null, and beyond it they are closed timelike curves. The universe is "
         "homogeneous, so every world line of the dust is an axis like this one, and this surface is a moment "
         "of space only within $r_c$ of its axis.",
+    ],
+    ("maitra_dust", "dust"): [
+        "The plane $z = 0$ across Maitra's dust at one moment of $t$, drawn about its axis as a surface in flat "
+        "space with every distance along it the metric distance. On it $g_{rr} = e^{\\gamma}$, and the circle at "
+        "$r$ has circumference $2\\pi\\sqrt{r^2 - k^2}$, which grows at every radius, since $k < r$ and "
+        "$dk/dr < 1$.",
+        "The circles grow more slowly than the distance out to them, so the surface is a bowl whose wall steepens: "
+        "the circle at $r = a$ has radius $0.93\\,a$, and the one at $r = 6a$, where the drawing ends, $3.87\\,a$. "
+        "The bowl goes on past the drawing with its circles still growing, so a surface of constant $t$ is a "
+        "moment of space at every radius.",
     ],
     ("ellis_bronnikov", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Ellis-Bronnikov wormhole at one moment of $t$, drawn "

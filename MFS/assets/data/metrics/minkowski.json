@@ -253,6 +253,11 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "Flat spacetime on its outgoing light cones with four functions added, the form of the metric far from an isolated body that radiates. Its symmetries far away are Poincaré's and the supertranslations besides [bondi1962, sachs1962bms]."
+    },
+    {
+      "id": "maitra_dust",
+      "kind": "generalisation",
+      "text": "Samaresh C. Maitra's rotating dust of 1966, which is flat space in cylindrical coordinates when its density is taken to zero, $a \\to \\infty$ [maitra1966, chan2024]."
     }
   ],
   "references": [
@@ -329,7 +334,9 @@
     "davies1977",
     "horvath1977",
     "bondi1962",
-    "sachs1962bms"
+    "sachs1962bms",
+    "maitra1966",
+    "chan2024"
   ],
   "coordinates": [
     {

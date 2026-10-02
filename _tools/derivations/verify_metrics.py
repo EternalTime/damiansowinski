@@ -1430,6 +1430,11 @@ DIMENSIONS = {
     # so that Omega r^2/c is a length beside c dt.
     ("som_raychaudhuri", "cylindrical"): {"t": "T", "r": "L", "\\phi": "1", "z": "L", "\\Omega": "1/T"},
     ("som_raychaudhuri", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1/T"},
+    # Maitra's dust keeps c. Its a is the one length of the solution, 8 pi G rho/c^2 = 1/a^2 on the
+    # axis; s and gamma are numbers and k is a length, so that k dphi stands beside c dt.
+    ("maitra_dust", "cylindrical"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "a": "L", "s": "1", "k": "L", "\\gamma": "1",
+    },
     # Bonnor's rotating dust cloud keeps c, and its a is a length, a^2 = 2h = 2GJ/c^3, so that
     # a^2 rho^2/r^3 is a length beside c dt; r = sqrt(rho^2 + z^2) is the name the cylindrical chart defines.
     ("bonnor_rotating_dust", "cylindrical"): {"t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "a": "L", "r": "L"},
@@ -2047,6 +2052,9 @@ HELD = {
     # of U and the coordinates, as the line element is.
     **{("bonnor_charged_dust", chart): ("U",) for chart in
        ("sphere_1965", "sphere_1975", "spheroid_interior", "spheroid_exterior", "quasi_black_hole")},
+    # Maitra's two functions, each a logarithm of 1 + s beside powers of the root s: held, a value
+    # is a rational function of r, a, s, k and e^gamma.
+    ("maitra_dust", "cylindrical"): ("k", "gamma"),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2115,6 +2123,11 @@ RATES = {
     ("bonnor_charged_dust", "spheroid_interior"): {"U": {"u": "-\\dfrac{m\\,u^3}{a\\,u_0^3\\cosh u_0}"}},
     ("bonnor_charged_dust", "spheroid_exterior"): {"U": {"u": "-\\dfrac{m}{a\\cosh u}"}},
     ("bonnor_charged_dust", "quasi_black_hole"): {"U": {"r": "-\\dfrac{r\\left(U - 1\\right)^3}{m^2}"}},
+    # Maitra's k and gamma: k' = (s - 1) a/2r and gamma' = -k'^2/2r, Chan and Santos's (47) and (49).
+    ("maitra_dust", "cylindrical"): {
+        "k": {"r": "\\dfrac{2r}{a\\left(1 + s\\right)}"},
+        "gamma": {"r": "-\\dfrac{2r}{a^2\\left(1 + s\\right)^2}"},
+    },
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across

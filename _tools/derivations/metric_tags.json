@@ -7312,6 +7312,36 @@
    "\\phi"
   ]
  },
+ "maitra_dust/cylindrical": {
+  "stamp": "22eb067e116ef463",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "majumdar_papapetrou/cartesian": {
   "stamp": "bf13448b551507bb",
   "relations": {},

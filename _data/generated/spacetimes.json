@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 152,
+  "count": 153,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -6754,6 +6754,11 @@
           "id": "curzon_chazy",
           "kind": "family",
           "text": "A static vacuum field built on the potential of a point, as Bonnor's cloud is in van Stockum's class. Each has a singularity at the origin whose strength depends on the direction of approach [gautreau1967, ilyas2017, astesiano2024]."
+        },
+        {
+          "id": "maitra_dust",
+          "kind": "family",
+          "text": "Dust in differential rotation filling all of space about an axis, regular everywhere. Bonnor and B. R. Steadman fitted a vacuum around a cylinder of it in 2009 and found no closed timelike curves inside or out [maitra1966, bonnor2009maitra]."
         }
       ],
       "references": [
@@ -6772,7 +6777,9 @@
         "zingg2007",
         "bonnor2005cloud",
         "godel1949",
-        "gautreau1967"
+        "gautreau1967",
+        "maitra1966",
+        "bonnor2009maitra"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bonnor_rotating_dust.json",
@@ -17254,6 +17261,11 @@
           "id": "petrov_homogeneous",
           "kind": "family",
           "text": "A spacetime with nothing in it that is also the same at every event and also holds closed timelike curves. It is the field outside a cylinder of rotating dust [bonnor1979petrov, gibbons2008petrov]."
+        },
+        {
+          "id": "maitra_dust",
+          "kind": "family",
+          "text": "A stationary universe of rotating dust with no cosmological constant and no closed timelike curves, which Samaresh C. Maitra found in 1966. Its dust shears and thins out away from an axis, where Gödel's turns rigidly and is the same everywhere [maitra1966, chan2024]."
         }
       ],
       "references": [
@@ -17281,7 +17293,9 @@
         "bonnor1977cloud",
         "astesiano2024",
         "bonnor1979petrov",
-        "gibbons2008petrov"
+        "gibbons2008petrov",
+        "maitra1966",
+        "chan2024"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/godel.json",
@@ -27026,6 +27040,11 @@
           "id": "petrov_homogeneous",
           "kind": "piece",
           "text": "The vacuum outside the cylinder when its surface is the null circle $r = R$. William Bonnor showed in 1979 that this exterior is Petrov's homogeneous vacuum [bonnor1979petrov]."
+        },
+        {
+          "id": "maitra_dust",
+          "kind": "family",
+          "text": "Samaresh C. Maitra's dust of 1966, the same cylinder with the dust allowed to shear. Its circles about the axis stay spacelike at every radius, and near the axis its line element is van Stockum's at $R = 2a$ [maitra1966, chan2024]."
         }
       ],
       "references": [
@@ -27046,7 +27065,9 @@
         "bonnor1977cloud",
         "bratek2007",
         "neugebauer1995",
-        "bonnor1979petrov"
+        "bonnor1979petrov",
+        "maitra1966",
+        "chan2024"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stockum_dust.json",
@@ -27579,6 +27600,11 @@
           "id": "petrov_homogeneous",
           "kind": "special_case",
           "text": "The Lewis class at $m = \\sqrt{3}$, where the Kretschmann scalar vanishes. There the field gains a fourth symmetry and is Petrov's homogeneous vacuum, the same at every event [bonnor1979petrov, bonnor1980]."
+        },
+        {
+          "id": "maitra_dust",
+          "kind": "composite",
+          "text": "A cylinder of shearing, rotating dust with Lewis's vacuum around it. R. Chan and N. O. Santos showed that only the Weyl class of the family joins to such dust [bonnor2009maitra, chan2024]."
         }
       ],
       "references": [
@@ -27595,7 +27621,9 @@
         "stachel1982",
         "maccallum1998",
         "jensen1992",
-        "bonnor1979petrov"
+        "bonnor1979petrov",
+        "bonnor2009maitra",
+        "chan2024"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lewis.json",
@@ -29032,6 +29060,167 @@
           ],
           "ricci_scalar": "R = \\dfrac{6a\\,\\ddot{a} + 6\\dot{a}^2 + 6}{a^2}",
           "kretschmann": "K = \\dfrac{12a^2\\,\\ddot{a}^2 + 24\\dot{a}^2 + 12\\dot{a}^4 + 12}{a^4}"
+        }
+      ]
+    },
+    {
+      "id": "maitra_dust",
+      "name": "Maitra's Rotating Dust",
+      "short_name": "Maitra Rotating Dust",
+      "description": "A stationary, cylindrically symmetric universe of dust that turns faster near its axis than far from it, found by Samaresh C. Maitra in 1966. It has no cosmological constant and no closed timelike curves, and its density falls from $c^2/8\\pi Ga^2$ on the axis toward zero far away.",
+      "tags": [
+        "dust",
+        "rotating",
+        "cylindrical symmetry",
+        "axisymmetric",
+        "cosmology",
+        "exact solution",
+        "stationary",
+        "inhomogeneous",
+        "geodesically complete",
+        "no singularity",
+        "regular",
+        "causal structure",
+        "frame dragging",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "stockum_dust",
+          "kind": "family",
+          "text": "Willem Jacob van Stockum's cylinder of dust in rigid rotation, whose circles about the axis are closed timelike curves beyond $r = R$. Maitra's dust is that cylinder allowed to shear, and near the axis its line element is van Stockum's at $R = 2a$ [vanstockum1937, chan2024]."
+        },
+        {
+          "id": "godel",
+          "kind": "family",
+          "text": "Kurt Gödel's rotating dust of 1949, homogeneous, with a negative cosmological constant and closed timelike curves through every event. Maitra's dust has neither [godel1949, maitra1966]."
+        },
+        {
+          "id": "som_raychaudhuri",
+          "kind": "family",
+          "text": "Charged dust in rigid rotation with no cosmological constant, where the circles about any grain are closed timelike curves beyond $r = c/\\Omega$. Maitra's dust carries no charge and shears, and its circles stay spacelike [som1968, chan2024]."
+        },
+        {
+          "id": "bonnor_rotating_dust",
+          "kind": "family",
+          "text": "William Bonnor's cloud of rigidly rotating dust, flat far away, with a singular centre and closed timelike curves around it. Bonnor and B. R. Steadman later fitted a vacuum around a cylinder of Maitra's dust and found no closed timelike curves inside or out [bonnor1977cloud, bonnor2009maitra]."
+        },
+        {
+          "id": "lewis",
+          "kind": "piece",
+          "text": "The vacuum around a cylinder of Maitra's dust cut off at a finite radius. R. Chan and N. O. Santos showed that it has to be of the Weyl class of Lewis's solutions [lewis1932, chan2024]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The dust thinned to nothing, $a \\to \\infty$, where $k$ and $\\gamma$ vanish and the line element is flat space in cylindrical coordinates [chan2024]."
+        }
+      ],
+      "references": [
+        "maitra1966",
+        "chan2024",
+        "mathgenealogymaitra",
+        "vanstockum1937",
+        "godel1949",
+        "king1974",
+        "vishveshwara1977",
+        "winicour1975",
+        "krasinski1998rotating",
+        "bonnor2009maitra",
+        "maccallum2015",
+        "lewis1932",
+        "som1968",
+        "bonnor1977cloud"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/maitra_dust.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "The one length of the solution: the density of the dust on the axis is $\\rho_0 = c^2/8\\pi G a^2$"
+            },
+            {
+              "symbol": "s = \\sqrt{1 + \\dfrac{4r^2}{a^2}}",
+              "description": "A function of the radius that is $1$ on the axis and grows as $2r/a$ far from it; the density of the dust is $c^2/8\\pi G$ times the Ricci scalar, $\\rho = 4\\rho_0\\,e^{-\\gamma}/s(s + 1)^2$"
+            },
+            {
+              "symbol": "k = \\dfrac{a}{2}\\left(s - 1 - \\ln\\left(\\dfrac{s + 1}{2}\\right)\\right)",
+              "description": "The twist of the chart, a length, with $dk/dr = 2r/a(s + 1)$, which is less than $1$; so $k < r$ at every radius, and $g^{tt} = -(1 - k^2/r^2)$ is negative everywhere"
+            },
+            {
+              "symbol": "\\gamma = \\dfrac{1}{4} - \\dfrac{1}{2\\left(s + 1\\right)} - \\dfrac{1}{2}\\ln\\left(\\dfrac{s + 1}{2}\\right)",
+              "description": "The logarithm of the factor on $dr^2 + dz^2$, with $d\\gamma/dr = -2r/a^2(s + 1)^2$; it vanishes on the axis and falls as $-\\tfrac{1}{2}\\ln(r/a)$ far from it"
+            }
+          ],
+          "convention": "We use Maitra's cylindrical coordinates $(t, r, \\phi, z)$ about the axis of rotation, in the letters of Chan and Santos, with $t$ carrying dimensions of time, $\\phi$ periodic in $2\\pi$, and $r$ chosen so that the metric of $t$ and $\\phi$ alone has the determinant $-r^2$. The lines of constant $r$, $\\phi$, and $z$ are geodesics along which $t$ is proper time, and the dust circles the axis through them toward $-\\phi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(c\\,dt - k\\,d\\phi\\right)^2 + r^2d\\phi^2 + e^{\\gamma}\\left(dr^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "k"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "k"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "e^{\\gamma}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{\\gamma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2 - k^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4e^{-\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}",
+          "kretschmann": "K = \\dfrac{4\\left(3s^3 - 3s^2 + 4s + 12\\right)e^{-2\\gamma}}{a^4\\,s^2\\left(s + 1\\right)^5}"
         }
       ]
     },
@@ -30778,6 +30967,11 @@
           "id": "bondi_sachs",
           "kind": "generalisation",
           "text": "Flat spacetime on its outgoing light cones with four functions added, the form of the metric far from an isolated body that radiates. Its symmetries far away are Poincaré's and the supertranslations besides [bondi1962, sachs1962bms]."
+        },
+        {
+          "id": "maitra_dust",
+          "kind": "generalisation",
+          "text": "Samaresh C. Maitra's rotating dust of 1966, which is flat space in cylindrical coordinates when its density is taken to zero, $a \\to \\infty$ [maitra1966, chan2024]."
         }
       ],
       "references": [
@@ -30854,7 +31048,9 @@
         "davies1977",
         "horvath1977",
         "bondi1962",
-        "sachs1962bms"
+        "sachs1962bms",
+        "maitra1966",
+        "chan2024"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -45388,6 +45584,11 @@
           "id": "minkowski",
           "kind": "special_case",
           "text": "The dust at rest, $\\Omega = 0$, where the density vanishes and the line element is flat space in cylindrical coordinates."
+        },
+        {
+          "id": "maitra_dust",
+          "kind": "family",
+          "text": "Uncharged dust that turns faster near its axis than far from it, with no magnetic field to help. Its circles about the axis stay spacelike at every radius [maitra1966, chan2024]."
         }
       ],
       "references": [
@@ -45406,7 +45607,9 @@
         "gauntlett2003",
         "hikida2003",
         "drukker2003",
-        "soleng1994"
+        "soleng1994",
+        "maitra1966",
+        "chan2024"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/som_raychaudhuri.json",
