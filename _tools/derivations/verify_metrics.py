@@ -506,6 +506,17 @@ DIMENSIONS = {
     ("spinning_string", "extended_source"): {
         "t": "T", "r": "L", "\\phi": "1", "z": "L", "M": "L", "\\rho": "L", "r_0": "L",
     },
+    # The travelling wave on a string: u = ct - z and v = ct + z are lengths, so no coordinate is a
+    # time and the profile F is a pure number, as is b = 1 - 4G mu/c^2. The string's displacements
+    # A(u) and B(u) are lengths, as are the isotropic x and y, their distance rho from the string
+    # and the arbitrary length ell that rho is measured in.
+    ("string_wave", "null_conical"): {"u": "L", "v": "L", "r": "L", "\\phi": "1", "b": "1", "F": "1"},
+    ("string_wave", "isotropic"): {
+        "u": "L", "v": "L", "x": "L", "y": "L", "b": "1", "\\ell": "L", "A": "L", "B": "L", "\\rho": "L",
+    },
+    ("string_wave", "moving_string"): {
+        "u": "L", "V": "L", "X": "L", "Y": "L", "b": "1", "\\ell": "L", "A": "L", "B": "L", "\\rho": "L",
+    },
     # The redshift function sits inside an exponential and so is dimensionless, and the
     # shape function is a length beside r, which is what leaves 1 - b/r dimensionless.
     # In the proper distance chart l is the radial coordinate and the areal radius r is
@@ -919,9 +930,11 @@ def _canonical(expression):
     expression = expression.replace(
         lambda x: x.is_Pow and x.exp.is_Rational and not x.exp.is_Integer and not x.base.is_Number,
         _factored_root)
-    # A power of a sum or a product with a symbolic exponent, as (1 - 2m/r)^q, is split the same way.
+    # A power of a sum or a product with a symbolic exponent, as (1 - 2m/r)^q, is split the same way,
+    # and so is one of a reciprocal, as the (1/ell)^(2b) sympy makes of (rho/ell)^(2b - 2).
     expression = expression.replace(
-        lambda x: x.func is sp.Pow and not x.exp.is_Number and (x.base.is_Add or x.base.is_Mul),
+        lambda x: x.func is sp.Pow and not x.exp.is_Number
+        and (x.base.is_Add or x.base.is_Mul or (x.base.is_Pow and x.base.exp.is_Integer)),
         _factored_root)
 
     generators = set()
@@ -1514,9 +1527,9 @@ class Reader:
         For the second kind the printed rate is a derivative with respect to the chart
         coordinate, which is c times the named one when that one is a time, so the rate
         carries the matching power of c. A function of one coordinate answers to a dot
-        and to a prime, up to the second derivative, and a function of any number of
-        coordinates answers to \\partial at any order, which _declare_partials resolves
-        when a published value names one.
+        and to a prime, a dot up to the second derivative and a prime up to the third,
+        and a function of any number of coordinates answers to \\partial at any order,
+        which _declare_partials resolves when a published value names one.
         """
         name, _, right = declaration.partition("=")
         plain = self._plain(name)
@@ -1542,9 +1555,12 @@ class Reader:
         scale = self._scale(names[0])
         first = sp.Derivative(function, variable) / scale
         second = sp.Derivative(function, variable, 2) / scale ** 2
+        # A third prime is as far as a chart goes: the travelling wave on a string writes its
+        # g_uu with A'', and a Christoffel symbol differentiates that once more.
+        third = sp.Derivative(function, variable, 3) / scale ** 3
         # Both spellings appear: a dot in the comoving chart, a prime in the conformal one.
         for suffix, value in (("_dot", first), ("_prime", first),
-                              ("_ddot", second), ("_pprime", second)):
+                              ("_ddot", second), ("_pprime", second), ("_ppprime", third)):
             self.parameters[plain + suffix] = value
         self.primed.add(plain)
 
@@ -1600,6 +1616,7 @@ class Reader:
         if self.dirac:
             text = re.sub(r"\\delta\s*('*)\s*\(", lambda m: f" DIRAC{len(m.group(1))}(", text)
         for name in sorted(self.primed, key=len, reverse=True):
+            text = re.sub(re.escape(name) + r"'''", f" {name}_ppprime ", text)
             text = re.sub(re.escape(name) + r"''", f" {name}_pprime ", text)
             text = re.sub(re.escape(name) + r"'", f" {name}_prime ", text)
         text = expand_partials(text)

@@ -1,5 +1,5 @@
 {
-  "version": "e5c0f6c8aa6c67d7",
+  "version": "f2285e5b376148c2",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -12907,6 +12907,213 @@
         "eprint": "1910.01648",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1910.01648"
+      }
+    },
+    "vachaspati1986": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational effects of cosmic strings",
+        "author": "Vachaspati, Tanmay",
+        "journal": "Nuclear Physics B",
+        "volume": "277",
+        "pages": "593--604",
+        "year": "1986",
+        "doi": "10.1016/0550-3213(86)90458-X",
+        "url": "https://doi.org/10.1016/0550-3213(86)90458-X"
+      }
+    },
+    "vachaspati1990": {
+      "type": "article",
+      "fields": {
+        "title": "Travelling waves on domain walls and cosmic strings",
+        "author": "{Vachaspati} and Vachaspati, Tanmay",
+        "journal": "Physics Letters B",
+        "volume": "238",
+        "number": "1",
+        "pages": "41--44",
+        "year": "1990",
+        "doi": "10.1016/0370-2693(90)92097-3",
+        "url": "https://doi.org/10.1016/0370-2693(90)92097-3"
+      }
+    },
+    "hiscock1985": {
+      "type": "article",
+      "fields": {
+        "title": "Exact gravitational field of a string",
+        "author": "Hiscock, William A.",
+        "journal": "Physical Review D",
+        "volume": "31",
+        "number": "12",
+        "pages": "3288--3290",
+        "year": "1985",
+        "doi": "10.1103/PhysRevD.31.3288",
+        "url": "https://doi.org/10.1103/PhysRevD.31.3288"
+      }
+    },
+    "unruh1989": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic-string loops are straight",
+        "author": "Unruh, W. G. and Hayward, G. and Israel, W. and McManus, D.",
+        "journal": "Physical Review Letters",
+        "volume": "62",
+        "number": "25",
+        "pages": "2897--2900",
+        "year": "1989",
+        "doi": "10.1103/PhysRevLett.62.2897",
+        "url": "https://doi.org/10.1103/PhysRevLett.62.2897"
+      }
+    },
+    "garfinkle1990": {
+      "type": "article",
+      "fields": {
+        "title": "Traveling waves in strongly gravitating cosmic strings",
+        "author": "Garfinkle, David",
+        "journal": "Physical Review D",
+        "volume": "41",
+        "number": "4",
+        "pages": "1112--1115",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.41.1112",
+        "url": "https://doi.org/10.1103/PhysRevD.41.1112"
+      }
+    },
+    "garfinklevachaspati1990": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic-string traveling waves",
+        "author": "Garfinkle, David and Vachaspati, Tanmay",
+        "journal": "Physical Review D",
+        "volume": "42",
+        "number": "6",
+        "pages": "1960--1963",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.42.1960",
+        "url": "https://doi.org/10.1103/PhysRevD.42.1960"
+      }
+    },
+    "frolovgarfinkle1990": {
+      "type": "article",
+      "fields": {
+        "title": "Interaction of cosmic strings with gravitational waves",
+        "author": "Frolov, Valeri P. and Garfinkle, David",
+        "journal": "Physical Review D",
+        "volume": "42",
+        "number": "12",
+        "pages": "3980--3982",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.42.3980",
+        "url": "https://doi.org/10.1103/PhysRevD.42.3980"
+      }
+    },
+    "garfinkle1992": {
+      "type": "article",
+      "fields": {
+        "title": "Black string traveling waves",
+        "author": "Garfinkle, David",
+        "journal": "Physical Review D",
+        "volume": "46",
+        "number": "10",
+        "pages": "4286--4288",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.46.4286",
+        "eprint": "gr-qc/9209002",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9209002"
+      }
+    },
+    "garriga1994": {
+      "type": "article",
+      "fields": {
+        "title": "Lensing properties of lightlike current-carrying cosmic strings",
+        "author": "Garriga, Jaume and Peter, Patrick",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "11",
+        "number": "7",
+        "pages": "1743--1762",
+        "year": "1994",
+        "doi": "10.1088/0264-9381/11/7/012",
+        "eprint": "gr-qc/9403025",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9403025"
+      }
+    },
+    "dabholkar1996": {
+      "type": "article",
+      "fields": {
+        "title": "Strings as solitons \\& black holes as strings",
+        "author": "Dabholkar, Atish and Gauntlett, Jerome P. and Harvey, Jeffrey A. and Waldram, Daniel",
+        "journal": "Nuclear Physics B",
+        "volume": "474",
+        "number": "1",
+        "pages": "85--121",
+        "year": "1996",
+        "doi": "10.1016/0550-3213(96)00266-0",
+        "eprint": "hep-th/9511053",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9511053"
+      }
+    },
+    "horowitz1997": {
+      "type": "article",
+      "fields": {
+        "title": "Counting states of black strings with traveling waves",
+        "author": "Horowitz, Gary T. and Marolf, Donald",
+        "journal": "Physical Review D",
+        "volume": "55",
+        "number": "2",
+        "pages": "835--845",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.55.835",
+        "eprint": "hep-th/9605224",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9605224"
+      }
+    },
+    "kaloper1997": {
+      "type": "article",
+      "fields": {
+        "title": "Wavy strings: Black or bright?",
+        "author": "Kaloper, Nemanja and Myers, Robert C. and Roussel, Harold",
+        "journal": "Physical Review D",
+        "volume": "55",
+        "number": "12",
+        "pages": "7625--7644",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.55.7625",
+        "eprint": "hep-th/9612248",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9612248"
+      }
+    },
+    "anderson1999": {
+      "type": "article",
+      "fields": {
+        "title": "Near-field expansion of the metric due to a cosmic string",
+        "author": "Anderson, Malcolm",
+        "journal": "The Journal of the Australian Mathematical Society. Series B. Applied Mathematics",
+        "volume": "41",
+        "number": "2",
+        "pages": "180--197",
+        "year": "1999",
+        "doi": "10.1017/S0334270000011152",
+        "url": "https://doi.org/10.1017/S0334270000011152"
+      }
+    },
+    "lunin2001": {
+      "type": "article",
+      "fields": {
+        "title": "Metric of the multiply wound rotating string",
+        "author": "Lunin, Oleg and Mathur, Samir D.",
+        "journal": "Nuclear Physics B",
+        "volume": "610",
+        "number": "1--2",
+        "pages": "49--76",
+        "year": "2001",
+        "doi": "10.1016/S0550-3213(01)00321-2",
+        "eprint": "hep-th/0105136",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0105136"
       }
     }
   }

@@ -44,6 +44,11 @@
       "id": "light_beam",
       "kind": "family",
       "text": "A steady beam of light of finite width, whose exact field William Bonnor found in 1969. Outside the beam its profile is the shock's logarithm with no delta in front [bonnor1969light]."
+    },
+    {
+      "id": "string_wave",
+      "kind": "family",
+      "text": "Another pp-wave whose profile is harmonic off a line. Here the line is the path of a massless particle, there a cosmic string carrying a wave [garfinkle1990]."
     }
   ],
   "references": [
@@ -68,7 +73,8 @@
     "dimopoulos2001",
     "yoshino2003",
     "sperhake2008",
-    "east2013"
+    "east2013",
+    "garfinkle1990"
   ],
   "coordinates": [
     {

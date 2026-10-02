@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 68,
+  "count": 69,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -51,6 +51,11 @@
           "id": "light_beam",
           "kind": "family",
           "text": "A steady beam of light of finite width, whose exact field William Bonnor found in 1969. Outside the beam its profile is the shock's logarithm with no delta in front [bonnor1969light]."
+        },
+        {
+          "id": "string_wave",
+          "kind": "family",
+          "text": "Another pp-wave whose profile is harmonic off a line. Here the line is the path of a massless particle, there a cosmic string carrying a wave [garfinkle1990]."
         }
       ],
       "references": [
@@ -75,7 +80,8 @@
         "dimopoulos2001",
         "yoshino2003",
         "sperhake2008",
-        "east2013"
+        "east2013",
+        "garfinkle1990"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/aichelburg_sexl.json",
@@ -4687,6 +4693,342 @@
       ]
     },
     {
+      "id": "string_wave",
+      "name": "Garfinkle-Vachaspati Travelling Wave on a Cosmic String",
+      "short_name": "Garfinkle-Vachaspati",
+      "description": "A straight cosmic string carrying a wave of arbitrary shape that runs along it at the speed of light, together with the exact gravitational field of the wave. The geometry is a pp-wave whose transverse plane is the string's cone, curved wherever the wave passes while every scalar built from its curvature vanishes.",
+      "tags": [
+        "topological defect",
+        "cosmic string",
+        "conical",
+        "angular deficit",
+        "travelling wave",
+        "pp-wave",
+        "gravitational wave",
+        "plane-fronted wave",
+        "null Killing vector",
+        "vacuum",
+        "vacuum solution",
+        "vanishing scalar invariants",
+        "time-dependent",
+        "dynamical",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The string's mass per unit length $\\mu$ enters through $b = 1 - 4G\\mu/c^2$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "special_case",
+          "text": "The string with its wave switched off. With $A = B = 0$ only the cone is left [garfinklevachaspati1990]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "special_case",
+          "text": "The string's mass switched off. At $b = 1$ the cone opens into a plane and the metric is a pp-wave in Brinkmann's form [garfinkle1990]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The string taken away. At $b = 1$ the travelling wave's profile is linear in $x$ and $y$, and a change of coordinates removes it [anderson1999]."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "family",
+          "text": "Another pp-wave whose profile is harmonic off a line, there the logarithm around a massless particle and here the dipole around a string [aichelburg1971, dabholkar1996]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "A straight string given spin where this one is given a wave. Both leave every curvature scalar at zero [deser1992time, kaloper1997]."
+        }
+      ],
+      "references": [
+        "vilenkin1981",
+        "gott1985",
+        "hiscock1985",
+        "vachaspati1986",
+        "vachaspati1990",
+        "garfinkle1990",
+        "brinkmann1925",
+        "anderson1999",
+        "garfinklevachaspati1990",
+        "kaloper1997",
+        "frolovgarfinkle1990",
+        "garriga1994",
+        "garfinkle1992",
+        "dabholkar1996",
+        "horowitz1997",
+        "lunin2001",
+        "aichelburg1971",
+        "deser1992time"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_wave.json",
+      "charts": [
+        {
+          "id": "null_conical",
+          "name": "Null Conical",
+          "coordinates": [
+            "u",
+            "v",
+            "r",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the string)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            },
+            {
+              "symbol": "F = F(u,r,\\phi)",
+              "description": "Wave profile, a dimensionless function of $u$, $r$, and $\\phi$. The metric is a vacuum solution where $F$ solves Laplace's equation on the cone, $\\partial_r^2F + \\partial_rF/r + \\partial_\\phi^2F/(b^2r^2) = 0$, and the string's own travelling wave is $F = -2\\ell(br/\\ell)^{1/b}(A''\\cos\\phi + B''\\sin\\phi)$"
+            }
+          ],
+          "convention": "We use the null coordinates $u = ct - z$ and $v = ct + z$, both lengths, with $r$ the proper distance from the string and $\\phi$ the angle about it, periodic in $2\\pi$. We leave the profile $F$ free, so no component assumes a field equation. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du\\,dv + F\\,du^2 + dr^2 + b^2r^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "F"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "b^2\\,r^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "(x, y) = (0, 0) \\;\\text{(the string)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "An arbitrary length; changing it rescales $x$ and $y$, which is a change of coordinates"
+            },
+            {
+              "symbol": "A = A(u)",
+              "description": "Displacement of the string along the first transverse direction, a length and an arbitrary function of $u$"
+            },
+            {
+              "symbol": "B = B(u)",
+              "description": "Displacement of the string along the second transverse direction, a length and an arbitrary function of $u$"
+            },
+            {
+              "symbol": "\\rho = \\sqrt{x^2 + y^2}",
+              "description": "Coordinate distance from the string; the proper distance is $r = (\\ell/b)(\\rho/\\ell)^b$"
+            }
+          ],
+          "convention": "We use the null coordinates $u = ct - z$ and $v = ct + z$, both lengths, with Garfinkle's isotropic coordinates $x$ and $y$ across the string, which lies along $x = y = 0$. A prime is a derivative with respect to $u$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du\\,dv - 2\\left(x\\,A'' + y\\,B''\\right)du^2 + \\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-2\\left(x\\,A'' + y\\,B''\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "moving_string",
+          "name": "Moving String",
+          "coordinates": [
+            "u",
+            "V",
+            "X",
+            "Y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "X \\in (-\\infty, \\infty)",
+            "Y \\in (-\\infty, \\infty)",
+            "(X, Y) = (A, B) \\;\\text{(the string)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "An arbitrary length; changing it rescales $x$ and $y$, which is a change of coordinates"
+            },
+            {
+              "symbol": "A = A(u)",
+              "description": "Displacement of the string along the first transverse direction, a length and an arbitrary function of $u$"
+            },
+            {
+              "symbol": "B = B(u)",
+              "description": "Displacement of the string along the second transverse direction, a length and an arbitrary function of $u$"
+            },
+            {
+              "symbol": "\\rho = \\sqrt{(X - A)^2 + (Y - B)^2}",
+              "description": "Coordinate distance from the string at fixed $u$; the proper distance is $(\\ell/b)(\\rho/\\ell)^b$"
+            }
+          ],
+          "convention": "We use coordinates $(u, V, X, Y)$ in which the string lies along $X = A(u)$, $Y = B(u)$: $X = x + A$, $Y = y + B$, and $V = v + 2xA' + 2yB' + \\int(A'^2 + B'^2)\\,du$, with $v$, $x$, and $y$ those of the isotropic chart. A prime is a derivative with respect to $u = ct - z$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du\\,dV + dX^2 + dY^2 + \\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)\\left(\\left(dX - A'\\,du\\right)^2 + \\left(dY - B'\\,du\\right)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "V"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "V",
+                "u"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "u",
+                "X"
+              ],
+              "value": "-\\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)A'"
+            },
+            {
+              "indices": [
+                "X",
+                "u"
+              ],
+              "value": "-\\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)A'"
+            },
+            {
+              "indices": [
+                "u",
+                "Y"
+              ],
+              "value": "-\\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)B'"
+            },
+            {
+              "indices": [
+                "Y",
+                "u"
+              ],
+              "value": "-\\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)B'"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "global_monopole",
       "name": "Global Monopole and Letelier's Cloud of Strings",
       "short_name": "Global Monopole",
@@ -8930,6 +9272,11 @@
           "id": "wormhole_time_machine",
           "kind": "locally_same",
           "text": "Minkowski space with two balls cut out and their surfaces identified at equal proper times is a wormhole, and moving one ball makes it a time machine [friedman1990, morris1988prl]."
+        },
+        {
+          "id": "string_wave",
+          "kind": "generalisation",
+          "text": "Flat spacetime with a cosmic string through it and a wave running along the string. Take the string's mass to zero and a change of coordinates brings Minkowski back [anderson1999]."
         }
       ],
       "references": [
@@ -8968,7 +9315,8 @@
         "deser1992time",
         "bonnor1969light",
         "friedman1990",
-        "morris1988prl"
+        "morris1988prl",
+        "anderson1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -11452,6 +11800,11 @@
           "id": "ori_time_machine",
           "kind": "locally_same",
           "text": "A vacuum pp-wave with one coordinate made periodic. Its circles turn from spacelike to timelike, which makes it the core of Amos Ori's time machine of 2005 [ori2005]."
+        },
+        {
+          "id": "string_wave",
+          "kind": "generalisation",
+          "text": "A pp-wave riding a cosmic string, its transverse plane the string's cone. A profile linear in $x$ and $y$, which a change of coordinates removes here, is there the wave of a wiggling string [garfinkle1990, anderson1999]."
         }
       ],
       "references": [
@@ -11476,7 +11829,9 @@
         "griffiths2009",
         "griffiths1991",
         "bonnor1969light",
-        "ori2005"
+        "ori2005",
+        "garfinkle1990",
+        "anderson1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -13898,6 +14253,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The black hole of gravity in three dimensions, which needs a negative cosmological constant [banados1992]. Without one a spinning source is this string seen end on, and Neil Cornish and Norman Frankel found in 1994 that rotating matter there generally brings closed timelike curves or infinite shear [deser1984, cornish1994]."
+        },
+        {
+          "id": "string_wave",
+          "kind": "family",
+          "text": "The straight string given a wave where this one is given spin. Its curvature scalars vanish as well, while the spacetime is curved wherever the wave passes [kaloper1997, anderson1999]."
         }
       ],
       "references": [
@@ -13922,7 +14282,9 @@
         "vanstockum1937",
         "misner1963",
         "banados1992",
-        "cornish1994"
+        "cornish1994",
+        "kaloper1997",
+        "anderson1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/spinning_string.json",
@@ -15706,6 +16068,11 @@
           "id": "spinning_string",
           "kind": "generalisation",
           "text": "The string given angular momentum as well as mass. Time then jumps by $8\\pi GJ/c^4$ on each circuit of it, and close in the circles around it are closed timelike curves [deser1984, deser1992time]."
+        },
+        {
+          "id": "string_wave",
+          "kind": "generalisation",
+          "text": "The string plucked. A wave of any shape runs along it at the speed of light, and the cone around it becomes a pp-wave [garfinkle1990]."
         }
       ],
       "references": [
@@ -15729,7 +16096,8 @@
         "maccallum2011",
         "hawking1995",
         "barriola1989",
-        "deser1992time"
+        "deser1992time",
+        "garfinkle1990"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",

@@ -590,6 +590,19 @@ ORI_F = "(x**2 - y**2)/32"
 ORI_INPUT = "Ori's example, $f = a(x^2 - y^2)/2$ at $a = 1/16$, a vacuum, with $L = 2\\pi$."
 # The spinning string: b = 0.9, the cosmic string's deficit, and a = 0.9 in units of r_c = a/b.
 SPINNING = {"a": "9/10", "b": "9/10"}
+# The travelling wave on a string: b = 1/2, a string whose cone lacks half a turn, heavy enough for
+# the wave's field to show, with ell the unit of length and the string displaced along one
+# transverse direction by the pulse A = (ell/2) exp(-4u^2/ell^2), B = 0. In the null conical chart
+# that is the profile F = -2 ell (b r/ell)^(1/b) A'' cos(phi), harmonic on the cone.
+STRING_WAVE = {"b": "1/2", "ell": 1}
+STRING_WAVE_PULSE = {"A": "exp(-4*u**2)/2", "B": "0"}
+STRING_WAVE_PROFILE = {"F": "-2*(r/2)**2*(32*u**2 - 4)*exp(-4*u**2)*cos(phi)"}
+STRING_WAVE_INPUT = ("The pulse $A = (\\ell/2)\\,e^{-4u^2/\\ell^2}$, $B = 0$ on a string with $b = 1/2$, whose cone "
+                     "lacks half a turn.")
+STRING_WAVE_PROFILE_INPUT = ("The string's own travelling wave, $F = -2\\ell(br/\\ell)^{1/b}(A''\\cos\\phi + "
+                             "B''\\sin\\phi)$, for the pulse $A = (\\ell/2)\\,e^{-4u^2/\\ell^2}$, $B = 0$ on a "
+                             "string with $b = 1/2$, whose cone lacks half a turn.")
+STRING_WAVE_CREST = (("shell", "x0", "0", "the crest of the pulse, $u = 0$"),)
 GOTT_STRINGS = {"mu": "1/12", "G": 1, "v": "4/5", "d": "1/2", "alpha": "pi/3", "gamma": "5/3"}
 
 # Morris, Thorne and Yurtsever's round trip, in the throat radius r_0 and with c = 1: the right
@@ -1015,6 +1028,25 @@ DIAGRAMS = [
               {"r": at, "z": "0"}, to_display=((0, r), (1, 0)), tau="tau", families=SIDEWAYS, cones=(5, 5),
               periodic=("\\tilde\\phi",))
       for view, name, at, r in (("inside", "r = r_c/2", "1/2", 0.5), ("outside", "r = 3r_c/2", "3/2", 1.5))],
+    # The travelling wave on a string, on the plane of u and v drawn against z and ct, at fixed
+    # places across the string: on the two sides of it in the null conical chart, at r = ell, where
+    # the isotropic x is ell/4; at that x in the isotropic chart; and at X = -ell/4 and 3 ell/4 in the
+    # moving string chart, which the string draws away from and comes to within ell/4 of. The time
+    # function is 3u + v, whose gradient is timelike wherever g_uu > -3, since g_uu falls to -2 here
+    # and u + v stops being a time below -1.
+    *[Diagram("string_wave", "null_conical", view, label, ("u", "v"), (-2, 2, -2, 2), "$z/\\ell$", "$ct/\\ell$",
+              {"b": "1/2"}, {"r": "1", "phi": phi}, to_display=NULL_TO_TR, tau="3*u + v", families=SIDEWAYS,
+              functions=STRING_WAVE_PROFILE, solves=(("v", "u"),), lines=STRING_WAVE_CREST,
+              input=STRING_WAVE_PROFILE_INPUT)
+      for view, label, phi in (("toward", "$\\phi = 0$", "0"), ("away", "$\\phi = \\pi$", "pi"))],
+    Diagram("string_wave", "isotropic", "beside", "$x = \\ell/4$", ("u", "v"), (-2, 2, -2, 2), "$z/\\ell$", "$ct/\\ell$",
+            STRING_WAVE, {"x": "1/4", "y": "0"}, to_display=NULL_TO_TR, tau="3*u + v", families=SIDEWAYS,
+            functions=STRING_WAVE_PULSE, lines=STRING_WAVE_CREST, input=STRING_WAVE_INPUT),
+    *[Diagram("string_wave", "moving_string", view, label, ("u", "V"), (-2, 2, -2, 2), "$z/\\ell$", "$ct/\\ell$",
+              STRING_WAVE, {"X": X, "Y": "0"}, to_display=NULL_TO_TR, tau="3*u + V", families=SIDEWAYS,
+              functions={"rho": "sqrt((X - A)**2 + (Y - B)**2)", **STRING_WAVE_PULSE}, lines=STRING_WAVE_CREST,
+              input=STRING_WAVE_INPUT)
+      for view, label, X in (("behind", "$X = -\\ell/4$", "-1/4"), ("ahead", "$X = 3\\ell/4$", "3/4"))],
     Diagram("de_sitter", "static_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
             "$r\\sqrt{\\Lambda/3}$", "$ct\\sqrt{\\Lambda/3}$", {"Lambda": 3}, EQUATOR,
             orient="outgoing", cones=(8, 7), areal=True),
@@ -2211,6 +2243,38 @@ CAPTIONS = {
         "The light rays run as $\\xi = \\xi_0e^{\\pm\\eta}$, and the cones close toward $\\xi = 0$, the "
         "chronology horizon, where the closed curves turn into closed null geodesics.",
     ],
+    **{("string_wave", "null_conical", view): [
+        f"The plane of $u$ and $v$ ($r = \\ell$, $\\phi = {phi}$), on the side of the string {side}, drawn with "
+        "$z = (v - u)/2$ and $ct = (u + v)/2$. The rays moving right keep their $u$ and travel with the wave. A "
+        f"curve moving left crosses the wave with $dv/du = F$, and here $F = {sign}\\tfrac{{1}}{{2}}\\ell A''$: it "
+        f"keeps $v {other} \\tfrac{{1}}{{2}}\\ell A'$, so it is moved along $v$ while the string accelerates and "
+        "comes out of the pulse where it would have been without it.",
+        "The rays moving right are null geodesics. $\\Gamma^r{}_{uu} = -\\partial_rF/2$ turns light crossing the "
+        "wave out of this plane, so a curve moving left is a null curve, and a null geodesic only outside the pulse.",
+    ] for view, phi, side, sign, other in (
+        ("toward", "0", "its displacement $A$ points to", "-", "+"),
+        ("away", "\\pi", "its displacement $A$ points away from", "", "-"))},
+    ("string_wave", "isotropic", "beside"): [
+        "The plane of $u$ and $v$ ($x = \\ell/4$, $y = 0$), at a fixed isotropic distance from the string, drawn "
+        "with $z = (v - u)/2$ and $ct = (u + v)/2$. The chart moves with the string, so the wave shows on this "
+        "plane as $g_{uu} = -2xA''$ alone. The rays moving right keep their $u$ and travel with the wave, and a "
+        "curve moving left keeps $v + 2xA'$.",
+        "The rays moving right are null geodesics. $\\Gamma^x{}_{uu} = (\\rho/\\ell)^{2 - 2b}A''$ turns light "
+        "crossing the wave out of this plane, so a curve moving left is a null curve, and a null geodesic only "
+        "outside the pulse.",
+    ],
+    **{("string_wave", "moving_string", view): [
+        f"The plane of $u$ and $V$ ($X = {X}$, $Y = 0$), a line parallel to the string's resting place, drawn with "
+        f"$z = (V - u)/2$ and $ct = (u + V)/2$. The pulse carries the string from $X = 0$ out to $\\ell/2$ and "
+        f"back, {passing}. On this plane $g_{{uu}} = ((\\rho/\\ell)^{{2b - 2}} - 1)A'^2$, positive inside "
+        "$\\rho = \\ell$, so the cones lean toward $+z$ on either side of the crest, where the string is moving, "
+        "and stand at 45° on the crest and away from the pulse.",
+        "The rays moving right keep their $u$, travel with the wave, and are null geodesics. A curve moving left "
+        f"is moved along $V$ by $\\int g_{{uu}}\\,du = {shift}\\,\\ell$ in crossing the pulse. Light crossing the "
+        "wave is turned out of this plane, so that curve is a null curve, and a null geodesic only outside the pulse.",
+    ] for view, X, passing, shift in (
+        ("behind", "-\\ell/4", "between $\\ell/4$ and $3\\ell/4$ from this line", "0.65"),
+        ("ahead", "3\\ell/4", "coming within $\\ell/4$ of this line", "0.78"))},
     ("spinning_string", "proper_radius", "inside"): [
         "The cylinder of $t$ and $\\phi$ ($r = r_c/2$, $z = 0$), opened along the line $\\phi = \\pm\\pi$ and drawn with $br\\phi$ across, so that its left and right edges are that one line. The metric on it is $-(c\\,dt + a\\,d\\phi)^2 + b^2r^2d\\phi^2$, the same at every point, so its null curves are straight: $c\\,dt = (br - a)\\,d\\phi$ and $c\\,dt = -(br + a)\\,d\\phi$. Inside $r_c = a/b$ both go down in $t$ toward $+\\phi$, so every horizontal line, run toward $+\\phi$, points into the future cones, and the circle of constant $t$, $r$, and $z$ is a closed timelike curve.",
         "Neither curve is a null geodesic: the spacetime is flat, and light launched along either one leaves the cylinder for larger $r$, turned by $\\Gamma^r{}_{\\phi\\phi} = -b^2r$.",
@@ -5201,8 +5265,10 @@ def solves_check(spec, chart):
     x0, r = plot.to_chart(plot.from_unit(u))
     for index in spec.solves:
         value = chart.lambdify(chart.prep(chart.reader(next(c["value"] for c in ul if c["indices"] == list(index)))))
-        size = chart.lambdify(chart.prep(chart.reader(next(c["value"] for c in ul
-                                                           if c["indices"] == [chart.entry["coords"][0]] * 2))))
+        # The scale is G^0_0 where the chart publishes one; a pp-wave's only component is G^v_u, and
+        # it is then measured against 1.
+        scale_text = next((c["value"] for c in ul if c["indices"] == [chart.entry["coords"][0]] * 2), "0")
+        size = chart.lambdify(chart.prep(chart.reader(scale_text)))
         with np.errstate(all="ignore"):
             v, scale = value(x0, r), np.abs(size(x0, r))
         ok = np.isfinite(v) & np.isfinite(scale)
@@ -5921,6 +5987,32 @@ CYLINDERS.update({
     ("spinning_string", "circumference_radius", "outside"): (-0.9 * (math.sqrt(2) + 1), 0.9 * (math.sqrt(2) - 1)),
     ("spinning_string", "helical", "inside"): (-0.5, 0.5),
     ("spinning_string", "helical", "outside"): (-1.5, 1.5),
+})
+
+
+def _string_wave_slope(u):
+    """A'(u) of the declared pulse A = exp(-4u^2)/2."""
+    return -4 * u * np.exp(-4 * u ** 2)
+
+
+def _string_wave_shift(X):
+    """The integral of g_uu = (1/rho - 1) A'^2 from far before the pulse to u, on the line X of the
+    moving string chart at b = 1/2, where rho = |X - A|, by a quadrature the tracing does not use."""
+    def g_uu(s):
+        return (1 / abs(X - math.exp(-4 * s * s) / 2) - 1) * (4 * s * math.exp(-4 * s * s)) ** 2
+    return lambda u: np.array([quad(g_uu, -6.0, x, limit=200, epsabs=1e-12, epsrel=1e-12)[0] for x in np.atleast_1d(u)])
+
+
+# The travelling wave on a string: a curve moving left keeps v minus the integral of g_uu, which
+# is v + 2xA' where g_uu = -2xA'', at x = ell/4 or -ell/4, and a quadrature in the moving string
+# chart; a ray moving right keeps u.
+CLOSED_FORMS.update({
+    ("string_wave", "null_conical", "toward"): (lambda u, v: v + _string_wave_slope(u) / 2, lambda u, v: u, None),
+    ("string_wave", "null_conical", "away"): (lambda u, v: v - _string_wave_slope(u) / 2, lambda u, v: u, None),
+    ("string_wave", "isotropic", "beside"): (lambda u, v: v + _string_wave_slope(u) / 2, lambda u, v: u, None),
+    **{("string_wave", "moving_string", view): (lambda u, V, shift=_string_wave_shift(X): V - shift(u),
+                                                lambda u, V: u, None)
+       for view, X in (("behind", -0.25), ("ahead", 0.75))},
 })
 CLOSED_FORMS.update({where: (lambda t, phi, k=left: t - k * phi, lambda t, phi, k=right: t - k * phi, None)
                      for where, (left, right) in CYLINDERS.items()})

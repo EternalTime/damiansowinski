@@ -1,0 +1,3409 @@
+{
+  "id": "string_wave",
+  "name": "Garfinkle-Vachaspati Travelling Wave on a Cosmic String",
+  "short_name": "Garfinkle-Vachaspati",
+  "description": "A straight cosmic string carrying a wave of arbitrary shape that runs along it at the speed of light, together with the exact gravitational field of the wave. The geometry is a pp-wave whose transverse plane is the string's cone, curved wherever the wave passes while every scalar built from its curvature vanishes.",
+  "tags": [
+    "topological defect",
+    "cosmic string",
+    "conical",
+    "angular deficit",
+    "travelling wave",
+    "pp-wave",
+    "gravitational wave",
+    "plane-fronted wave",
+    "null Killing vector",
+    "vacuum",
+    "vacuum solution",
+    "vanishing scalar invariants",
+    "time-dependent",
+    "dynamical",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The string's mass per unit length $\\mu$ enters through $b = 1 - 4G\\mu/c^2$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A cosmic string at rest is about as quiet as a gravitating object gets. Alexander Vilenkin's linearized calculation of 1981 has a straight string leave the space around it flat, with a wedge of angle $8\\pi G\\mu/c^2$ missing [vilenkin1981]. The exact solutions that J. Richard Gott and William Hiscock gave in 1985 agree: a cone, and no force on anything nearby [gott1985, hiscock1985]. So what happens when the string wiggles?¶The wiggles Tanmay Vachaspati chose to study in 1986 were the travelling waves: a wave of any shape running along the string in one direction at the speed of light [vachaspati1986, vachaspati1990]. Working in the weak field approximation, he found the metric around such a string [vachaspati1986]. The string now pulls: particles around it feel a force that falls off as $1/r$ [vachaspati1986]. The waves survive when the string is given its full thickness: two Vachaspatis, Tanmay and a coauthor who signs with the one name, showed in 1990 that travelling waves of arbitrary shape solve the field theory of a straight string, global or local [vachaspati1990].¶The exact answer came in 1990, when David Garfinkle found the metric of a travelling wave on a strongly gravitating string [garfinkle1990]. It is a pp-wave, one of the plane-fronted waves with parallel rays that Hans Brinkmann met in 1925 [garfinkle1990, brinkmann1925], and in the weak field limit it reduces to Vachaspati's [garfinkle1990]. In Garfinkle's coordinates the whole wave is one term in the metric, linear in the two directions across the string: $F = 2xA'' + 2yB''$, with $A$ and $B$ arbitrary functions of $ct - z$ [garfinkle1990, anderson1999]. In flat spacetime a term like that can be removed by a change of coordinates [anderson1999]. On the cone around a string it cannot, and the spacetime is curved [anderson1999].¶That September Garfinkle and Vachaspati gave the full solution together, the metric along with the scalar and gauge fields that make up the string [garfinklevachaspati1990]. They got it by applying a transformation to the solution for a long, straight, static string [garfinklevachaspati1990]. The transformation asks one thing of the solution it starts from: a family of light rays along which nothing changes, in technical terms a null Killing vector $k$ that is hypersurface orthogonal [kaloper1997]. The recipe is then a single line: add $F\\,k_\\mu k_\\nu$ to the metric, with a weight fixed by $k$ itself, and leave the matter fields alone [kaloper1997]. The field equations still hold provided $F$ is constant along $k$ and solves Laplace's equation in the old geometry [kaloper1997]. Valeri Frolov and Garfinkle used the freedom in $F$ that December, putting a gravitational wave alongside the wave on the string and setting travelling waves on several parallel strings at once [frolovgarfinkle1990].¶Where is the string in all this? A change of coordinates puts it on show: in the new chart the string lies along $x = A(ct - z)$, $y = B(ct - z)$, a wiggle of arbitrary shape running up the string at the speed of light [anderson1999]. The wave keeps its shape and the metric is stationary, which Malcolm Anderson flagged in 1999, since a moving string is expected to radiate gravitational energy [anderson1999]. He traced the calm to the surface the string sweeps out in spacetime, its world sheet, which is intrinsically flat for every travelling wave [anderson1999].¶Curvature scalars are blind to the wave [kaloper1997]. That is a theorem of 1997, due to Nemanja Kaloper, Robert Myers, and Harold Roussel: every scalar invariant built from the curvature of the new metric equals the corresponding invariant of the old [kaloper1997]. Tidal forces do see it: on a black string carrying such a wave, they found, the tidal force on an infalling observer diverges at the horizon for every mode but the monopole [kaloper1997]. Light notices too: when Jaume Garriga and Patrick Peter sent a pulse of lightlike current along a superconducting string in 1994, they found a pp-wave with a deficit angle outside it, and the double image of a source behind the string shifted as the pulse went by [garriga1994].¶The transformation works just as well in the low energy limit of string theory, where Garfinkle used it in 1992 to set waves of any amplitude running along extremal black strings [garfinkle1992]. By 1996 it had reached the fundamental string itself: Atish Dabholkar, Jerome Gauntlett, Jeffrey Harvey, and Daniel Waldram built the oscillating strings of the perturbative spectrum as exact supergravity solutions, and singled out the term linear in the transverse coordinates as the one that matches onto an oscillating string source [dabholkar1996]. When Gary Horowitz and Donald Marolf counted the states of black strings carrying travelling waves, in 1997, the count matched the Bekenstein-Hawking entropy [horowitz1997]. They called the solutions \"quite remarkable in that the waves propagate indefinitely without radiating to infinity or falling into the horizon\" [horowitz1997]. A string wound many times around a circle and carrying a travelling wave was the starting point, in 2001, of Oleg Lunin and Samir Mathur, who mapped its solution by dualities onto the D1-D5 system [lunin2001].",
+  "related": [
+    {
+      "id": "cosmic_string",
+      "kind": "special_case",
+      "text": "The string with its wave switched off. With $A = B = 0$ only the cone is left [garfinklevachaspati1990]."
+    },
+    {
+      "id": "pp_wave",
+      "kind": "special_case",
+      "text": "The string's mass switched off. At $b = 1$ the cone opens into a plane and the metric is a pp-wave in Brinkmann's form [garfinkle1990]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "The string taken away. At $b = 1$ the travelling wave's profile is linear in $x$ and $y$, and a change of coordinates removes it [anderson1999]."
+    },
+    {
+      "id": "aichelburg_sexl",
+      "kind": "family",
+      "text": "Another pp-wave whose profile is harmonic off a line, there the logarithm around a massless particle and here the dipole around a string [aichelburg1971, dabholkar1996]."
+    },
+    {
+      "id": "spinning_string",
+      "kind": "family",
+      "text": "A straight string given spin where this one is given a wave. Both leave every curvature scalar at zero [deser1992time, kaloper1997]."
+    }
+  ],
+  "references": [
+    "vilenkin1981",
+    "gott1985",
+    "hiscock1985",
+    "vachaspati1986",
+    "vachaspati1990",
+    "garfinkle1990",
+    "brinkmann1925",
+    "anderson1999",
+    "garfinklevachaspati1990",
+    "kaloper1997",
+    "frolovgarfinkle1990",
+    "garriga1994",
+    "garfinkle1992",
+    "dabholkar1996",
+    "horowitz1997",
+    "lunin2001",
+    "aichelburg1971",
+    "deser1992time"
+  ],
+  "coordinates": [
+    {
+      "id": "null_conical",
+      "name": "Null Conical",
+      "coords": [
+        "u",
+        "v",
+        "r",
+        "\\phi"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "r = 0 \\;\\text{(the string)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "b",
+          "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+        },
+        {
+          "symbol": "F = F(u,r,\\phi)",
+          "description": "Wave profile, a dimensionless function of $u$, $r$, and $\\phi$. The metric is a vacuum solution where $F$ solves Laplace's equation on the cone, $\\partial_r^2F + \\partial_rF/r + \\partial_\\phi^2F/(b^2r^2) = 0$, and the string's own travelling wave is $F = -2\\ell(br/\\ell)^{1/b}(A''\\cos\\phi + B''\\sin\\phi)$"
+        }
+      ],
+      "convention": "We use the null coordinates $u = ct - z$ and $v = ct + z$, both lengths, with $r$ the proper distance from the string and $\\phi$ the angle about it, periodic in $2\\pi$. We leave the profile $F$ free, so no component assumes a field equation. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -du\\,dv + F\\,du^2 + dr^2 + b^2r^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "F"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "b^2\\,r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "-4F"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{b^2\\,r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\partial_u F"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\partial_r F"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\partial_r F"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\partial_\\phi F"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\partial_\\phi F"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_r F}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-b^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi F}{2b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{\\partial_u F}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_r F}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{\\partial_r F}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_r F}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\phi F}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\partial_\\phi F}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi F}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-b^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "b^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "b^2\\,r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\partial_r^2 F"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\partial_r^2 F"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\left(-b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\left(-b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_r^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_r^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{2b^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{2b^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{b^2\\,r\\,\\partial_r F + \\partial_\\phi^2 F}{2b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{b^2\\,r\\,\\partial_r F + \\partial_\\phi^2 F}{2b^2\\,r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\partial_r^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{\\partial_r^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_r^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_r^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{b^2\\,r\\,\\partial_r F + \\partial_\\phi^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{b^2\\,r\\,\\partial_r F + \\partial_\\phi^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{b^2\\,r\\,\\partial_r F + \\partial_\\phi^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{b^2\\,r\\,\\partial_r F + \\partial_\\phi^2 F}{2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{b^2\\,r^2\\,\\partial_r^2 F + b^2\\,r\\,\\partial_r F + \\partial_\\phi^2 F}{2b^2\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{b^2\\,r^2\\,\\partial_r^2 F + b^2\\,r\\,\\partial_r F + \\partial_\\phi^2 F}{b^2\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{2b^2\\,r^2\\,\\partial_r^2 F + 2b^2\\,r\\,\\partial_r F + 2\\partial_\\phi^2 F}{b^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{b^2\\,r^2\\,\\partial_r^2 F + b^2\\,r\\,\\partial_r F + \\partial_\\phi^2 F}{2b^2\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{b^2\\,r^2\\,\\partial_r^2 F + b^2\\,r\\,\\partial_r F + \\partial_\\phi^2 F}{b^2\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{2b^2\\,r^2\\,\\partial_r^2 F + 2b^2\\,r\\,\\partial_r F + 2\\partial_\\phi^2 F}{b^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{2b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{2b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{4b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{4b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{4b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{4b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{2b^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_r\\partial_\\phi F - \\partial_\\phi F}{2b^2\\,r^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_\\phi^2 F + b^2\\,r\\,\\partial_r F - b^2\\,r^2\\,\\partial_r^2 F}{4b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi^2 F + b^2\\,r\\,\\partial_r F - b^2\\,r^2\\,\\partial_r^2 F}{4b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi^2 F + b^2\\,r\\,\\partial_r F - b^2\\,r^2\\,\\partial_r^2 F}{4b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{\\partial_\\phi^2 F + b^2\\,r\\,\\partial_r F - b^2\\,r^2\\,\\partial_r^2 F}{4b^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{\\partial_\\phi F - r\\,\\partial_r\\partial_\\phi F}{2r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{b^2\\,r^2\\,\\partial_r^2 F - b^2\\,r\\,\\partial_r F - \\partial_\\phi^2 F}{4}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} - \\partial_u F\\,\\dot{u}^2 - 2\\partial_r F\\,\\dot{u}\\dot{r} - 2\\partial_\\phi F\\,\\dot{u}\\dot{\\phi} = 0",
+        "\\ddot{r} - \\dfrac{\\partial_r F}{2}\\dot{u}^2 - b^2\\,r\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{\\partial_\\phi F}{2b^2\\,r^2}\\dot{u}^2 + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "isotropic",
+      "name": "Isotropic",
+      "coords": [
+        "u",
+        "v",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "(x, y) = (0, 0) \\;\\text{(the string)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "b",
+          "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "An arbitrary length; changing it rescales $x$ and $y$, which is a change of coordinates"
+        },
+        {
+          "symbol": "A = A(u)",
+          "description": "Displacement of the string along the first transverse direction, a length and an arbitrary function of $u$"
+        },
+        {
+          "symbol": "B = B(u)",
+          "description": "Displacement of the string along the second transverse direction, a length and an arbitrary function of $u$"
+        },
+        {
+          "symbol": "\\rho = \\sqrt{x^2 + y^2}",
+          "description": "Coordinate distance from the string; the proper distance is $r = (\\ell/b)(\\rho/\\ell)^b$"
+        }
+      ],
+      "convention": "We use the null coordinates $u = ct - z$ and $v = ct + z$, both lengths, with Garfinkle's isotropic coordinates $x$ and $y$ across the string, which lies along $x = y = 0$. A prime is a derivative with respect to $u$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -du\\,dv - 2\\left(x\\,A'' + y\\,B''\\right)du^2 + \\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}\\left(dx^2 + dy^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-2\\left(x\\,A'' + y\\,B''\\right)"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "8x\\,A'' + 8y\\,B''"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "2x\\,A''' + 2y\\,B'''"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "2A''"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "2A''"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "2B''"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "2B''"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\,A''"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\left(b - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{x\\left(b - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\left(b - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\left(b - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\left(b - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{y\\left(b - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{y\\left(b - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\left(b - 1\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\,B''"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(x\\,A''' + y\\,B'''\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-A''"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-A''"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "A''"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-B''"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-B''"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "B''"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\left(b - 1\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{x\\left(b - 1\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{x\\left(b - 1\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{x\\left(b - 1\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\left(b - 1\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{y\\left(b - 1\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{y\\left(b - 1\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{y\\left(b - 1\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,A'' - y\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(x\\,B'' + y\\,A''\\right)}{\\rho^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} + \\left(2x\\,A''' + 2y\\,B'''\\right)\\dot{u}^2 + 4A''\\,\\dot{u}\\dot{x} + 4B''\\,\\dot{u}\\dot{y} = 0",
+        "\\ddot{x} + \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\,A''\\,\\dot{u}^2 + \\dfrac{x\\left(b - 1\\right)}{\\rho^2}\\dot{x}^2 + \\dfrac{2y\\left(b - 1\\right)}{\\rho^2}\\dot{x}\\dot{y} + \\dfrac{x\\left(1 - b\\right)}{\\rho^2}\\dot{y}^2 = 0",
+        "\\ddot{y} + \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\,B''\\,\\dot{u}^2 + \\dfrac{y\\left(1 - b\\right)}{\\rho^2}\\dot{x}^2 + \\dfrac{2x\\left(b - 1\\right)}{\\rho^2}\\dot{x}\\dot{y} + \\dfrac{y\\left(b - 1\\right)}{\\rho^2}\\dot{y}^2 = 0"
+      ]
+    },
+    {
+      "id": "moving_string",
+      "name": "Moving String",
+      "coords": [
+        "u",
+        "V",
+        "X",
+        "Y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "V \\in (-\\infty, \\infty)",
+        "X \\in (-\\infty, \\infty)",
+        "Y \\in (-\\infty, \\infty)",
+        "(X, Y) = (A, B) \\;\\text{(the string)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "b",
+          "description": "$b = 1 - 4G\\mu/c^2$, with $\\mu$ the string's mass per unit length, $0 < b \\le 1$; the deficit angle is $2\\pi(1 - b)$"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "An arbitrary length; changing it rescales $x$ and $y$, which is a change of coordinates"
+        },
+        {
+          "symbol": "A = A(u)",
+          "description": "Displacement of the string along the first transverse direction, a length and an arbitrary function of $u$"
+        },
+        {
+          "symbol": "B = B(u)",
+          "description": "Displacement of the string along the second transverse direction, a length and an arbitrary function of $u$"
+        },
+        {
+          "symbol": "\\rho = \\sqrt{(X - A)^2 + (Y - B)^2}",
+          "description": "Coordinate distance from the string at fixed $u$; the proper distance is $(\\ell/b)(\\rho/\\ell)^b$"
+        }
+      ],
+      "convention": "We use coordinates $(u, V, X, Y)$ in which the string lies along $X = A(u)$, $Y = B(u)$: $X = x + A$, $Y = y + B$, and $V = v + 2xA' + 2yB' + \\int(A'^2 + B'^2)\\,du$, with $v$, $x$, and $y$ those of the isotropic chart. A prime is a derivative with respect to $u = ct - z$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -du\\,dV + dX^2 + dY^2 + \\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)\\left(\\left(dX - A'\\,du\\right)^2 + \\left(dY - B'\\,du\\right)^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "\\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)"
+        },
+        {
+          "indices": [
+            "u",
+            "V"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "V",
+            "u"
+          ],
+          "value": "-\\dfrac{1}{2}"
+        },
+        {
+          "indices": [
+            "u",
+            "X"
+          ],
+          "value": "-\\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)A'"
+        },
+        {
+          "indices": [
+            "X",
+            "u"
+          ],
+          "value": "-\\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)A'"
+        },
+        {
+          "indices": [
+            "u",
+            "Y"
+          ],
+          "value": "-\\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)B'"
+        },
+        {
+          "indices": [
+            "Y",
+            "u"
+          ],
+          "value": "-\\left(\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2} - 1\\right)B'"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "V"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "V",
+            "u"
+          ],
+          "value": "-2"
+        },
+        {
+          "indices": [
+            "V",
+            "V"
+          ],
+          "value": "-4\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)"
+        },
+        {
+          "indices": [
+            "V",
+            "X"
+          ],
+          "value": "-2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)A'"
+        },
+        {
+          "indices": [
+            "X",
+            "V"
+          ],
+          "value": "-2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)A'"
+        },
+        {
+          "indices": [
+            "V",
+            "Y"
+          ],
+          "value": "-2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)B'"
+        },
+        {
+          "indices": [
+            "Y",
+            "V"
+          ],
+          "value": "-2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)B'"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(A'\\,A'' + B'\\,B''\\right) - \\dfrac{2\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)}{\\rho^2}\\right)"
+              },
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(X - A\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(X - A\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(Y - B\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(Y - B\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A' - \\left(Y - B\\right)B'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "Y"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A' - \\left(Y - B\\right)B'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B' + \\left(Y - B\\right)A'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B' + \\left(Y - B\\right)A'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)A'' - \\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)\\left(A'\\right)^2 - \\left(X - A\\right)\\left(B'\\right)^2 + 2\\left(Y - B\\right)A'\\,B'\\right)}{\\rho^2}\\right)"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B' - \\left(Y - B\\right)A'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B' - \\left(Y - B\\right)A'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B' - \\left(Y - B\\right)A'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B' - \\left(Y - B\\right)A'\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(X - A\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(X - A\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(X - A\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(X - A\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(Y - B\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(Y - B\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(Y - B\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(Y - B\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)B'' - \\dfrac{\\left(b - 1\\right)\\left(2\\left(X - A\\right)A'\\,B' - \\left(Y - B\\right)\\left(A'\\right)^2 + \\left(Y - B\\right)\\left(B'\\right)^2\\right)}{\\rho^2}\\right)"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}\\right)\\left(A'\\,A'' + B'\\,B''\\right) + \\dfrac{\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(X - A\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(X - A\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(Y - B\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(Y - B\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A' - \\left(Y - B\\right)B'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A' - \\left(Y - B\\right)B'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B' + \\left(Y - B\\right)A'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B' + \\left(Y - B\\right)A'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "u"
+                ],
+                "value": "\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}\\right)A'' + \\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)\\left(A'\\right)^2 - \\left(X - A\\right)\\left(B'\\right)^2 + 2\\left(Y - B\\right)A'\\,B'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B' - \\left(Y - B\\right)A'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B' - \\left(Y - B\\right)A'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B' - \\left(Y - B\\right)A'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B' - \\left(Y - B\\right)A'\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(X - A\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(X - A\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(X - A\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(X - A\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(Y - B\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(Y - B\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(Y - B\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Y",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(Y - B\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "u"
+                ],
+                "value": "\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}\\right)B'' + \\dfrac{\\left(b - 1\\right)\\left(2\\left(X - A\\right)A'\\,B' - \\left(Y - B\\right)\\left(A'\\right)^2 + \\left(Y - B\\right)\\left(B'\\right)^2\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}}{\\rho^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(b - 1\\right)\\left(\\left(X - A\\right)A'\\,A'' + \\left(X - A\\right)B'\\,B'' + \\left(Y - B\\right)A''\\,B' - \\left(Y - B\\right)A'\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "\\dfrac{2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(b - 1\\right)\\left(\\left(X - A\\right)A'\\,A'' + \\left(X - A\\right)B'\\,B'' + \\left(Y - B\\right)A''\\,B' - \\left(Y - B\\right)A'\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(b - 1\\right)\\left(\\left(X - A\\right)A''\\,B' - \\left(X - A\\right)A'\\,B'' - \\left(Y - B\\right)A'\\,A'' - \\left(Y - B\\right)B'\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(b - 1\\right)\\left(\\left(X - A\\right)A''\\,B' - \\left(X - A\\right)A'\\,B'' - \\left(Y - B\\right)A'\\,A'' - \\left(Y - B\\right)B'\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "X",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "X",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(b - 1\\right)\\left(\\left(X - A\\right)A'\\,A'' + \\left(X - A\\right)B'\\,B'' + \\left(Y - B\\right)A''\\,B' - \\left(Y - B\\right)A'\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "\\dfrac{2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(b - 1\\right)\\left(\\left(X - A\\right)A'\\,A'' + \\left(X - A\\right)B'\\,B'' + \\left(Y - B\\right)A''\\,B' - \\left(Y - B\\right)A'\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(b - 1\\right)\\left(\\left(X - A\\right)A''\\,B' - \\left(X - A\\right)A'\\,B'' - \\left(Y - B\\right)A'\\,A'' - \\left(Y - B\\right)B'\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(b - 1\\right)\\left(\\left(X - A\\right)A''\\,B' - \\left(X - A\\right)A'\\,B'' - \\left(Y - B\\right)A'\\,A'' - \\left(Y - B\\right)B'\\,B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "Y",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}}{\\rho^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "X",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)A'' - \\left(Y - B\\right)B''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "u",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "X",
+                  "Y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "u",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "Y",
+                  "X",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "u",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "u",
+                  "Y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "u",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "u",
+                  "X",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)B'' + \\left(Y - B\\right)A''\\right)}{\\rho^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{V} - \\left(2\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)\\left(A'\\,A'' + B'\\,B''\\right) - \\dfrac{2\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)}{\\rho^2}\\right)\\dot{u}^2 - \\dfrac{4\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(X - A\\right)}{\\rho^2}\\dot{u}\\dot{X} - \\dfrac{4\\left(b - 1\\right)\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)\\left(Y - B\\right)}{\\rho^2}\\dot{u}\\dot{Y} + \\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A' - \\left(Y - B\\right)B'\\right)}{\\rho^2}\\dot{X}^2 + \\dfrac{4\\left(b - 1\\right)\\left(\\left(X - A\\right)B' + \\left(Y - B\\right)A'\\right)}{\\rho^2}\\dot{X}\\dot{Y} - \\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A' - \\left(Y - B\\right)B'\\right)}{\\rho^2}\\dot{Y}^2 = 0",
+        "\\ddot{X} - \\left(\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)A'' - \\dfrac{\\left(b - 1\\right)\\left(\\left(X - A\\right)\\left(A'\\right)^2 - \\left(X - A\\right)\\left(B'\\right)^2 + 2\\left(Y - B\\right)A'\\,B'\\right)}{\\rho^2}\\right)\\dot{u}^2 - \\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)}{\\rho^2}\\dot{u}\\dot{X} + \\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B' - \\left(Y - B\\right)A'\\right)}{\\rho^2}\\dot{u}\\dot{Y} + \\dfrac{\\left(b - 1\\right)\\left(X - A\\right)}{\\rho^2}\\dot{X}^2 + \\dfrac{2\\left(b - 1\\right)\\left(Y - B\\right)}{\\rho^2}\\dot{X}\\dot{Y} + \\dfrac{\\left(1 - b\\right)\\left(X - A\\right)}{\\rho^2}\\dot{Y}^2 = 0",
+        "\\ddot{Y} - \\left(\\left(1 - \\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2b}\\right)B'' - \\dfrac{\\left(b - 1\\right)\\left(2\\left(X - A\\right)A'\\,B' - \\left(Y - B\\right)\\left(A'\\right)^2 + \\left(Y - B\\right)\\left(B'\\right)^2\\right)}{\\rho^2}\\right)\\dot{u}^2 - \\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)B' - \\left(Y - B\\right)A'\\right)}{\\rho^2}\\dot{u}\\dot{X} - \\dfrac{2\\left(b - 1\\right)\\left(\\left(X - A\\right)A' + \\left(Y - B\\right)B'\\right)}{\\rho^2}\\dot{u}\\dot{Y} + \\dfrac{\\left(1 - b\\right)\\left(Y - B\\right)}{\\rho^2}\\dot{X}^2 + \\dfrac{2\\left(b - 1\\right)\\left(X - A\\right)}{\\rho^2}\\dot{X}\\dot{Y} + \\dfrac{\\left(b - 1\\right)\\left(Y - B\\right)}{\\rho^2}\\dot{Y}^2 = 0"
+      ]
+    }
+  ]
+}

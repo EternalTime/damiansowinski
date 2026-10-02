@@ -5,7 +5,8 @@ schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
-damour_solodukhin, ori_time_machine and reissner_nordstrom_de_sitter, and Godel's cylindrical chart.
+damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter and string_wave, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -28,6 +29,7 @@ majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md and ph
 import argparse
 import itertools
 import json
+import random
 import sys
 import time
 from pathlib import Path
@@ -5092,6 +5094,217 @@ def reissner_nordstrom_de_sitter_pullback(chart):
 
 
 CHARTS["reissner_nordstrom_de_sitter"] = [lambda s=s: reissner_nordstrom_de_sitter(s) for s in RNDS_CHARTS]
+
+
+# -- The travelling wave on a cosmic string ----------------------------------------------
+
+STRING_WAVE_CHARTS = ("null_conical", "isotropic", "moving_string")
+STRING_WAVE_FACTOR = "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2b - 2}"
+
+
+def string_wave(system):
+    """Garfinkle and Vachaspati's travelling wave on a cosmic string, with b = 1 - 4G mu/c^2 and
+    the null coordinates u = ct - z and v = ct + z, both lengths, in three charts:
+
+    null_conical   the pp-wave on the cone, -du dv + F du^2 + dr^2 + b^2 r^2 dphi^2 with F(u, r, phi)
+                   free, Frolov and Garfinkle's family and the form of Garriga and Peter's (14)\\;
+    isotropic      Garfinkle's own chart, as Anderson's (1.5) and (1.6) write it, the cone
+                   conformally flat, (rho/ell)^(2b - 2)(dx^2 + dy^2), and the wave the one term
+                   -2(x A'' + y B'') du^2\\;
+    moving_string  the chart of Anderson's (1.10) and of Dabholkar, Gauntlett, Harvey and Waldram's
+                   (2.14), in which the string lies along X = A(u), Y = B(u).
+
+    The isotropic chart is checked to be the null conical chart pulled back at the profile
+    F = -2 ell (b r/ell)^(1/b)(A'' cos phi + B'' sin phi), and the moving string chart to be the
+    isotropic chart pulled back\\; the isotropic chart's Ricci tensor is checked to vanish.
+    string_wave.md is the derivation."""
+    reals = "(-\\infty, \\infty)"
+    state = {}
+    probe_parameters = ["b", "\\ell", "A = A(u)", "B = B(u)"]
+    if system == "null_conical":
+        coords, parameters = ["u", "v", "r", "\\phi"], ["b", "F = F(u,r,\\phi)"]
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "string_wave",
+            "system": {"id": system, "name": "Null Conical", "coords": coords, "parameters": parameters,
+                       "domains": ["u \\in " + reals, "v \\in " + reals, "r \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                                   "r = 0 \\;\\text{(the string)}"],
+                       "line_element": "ds^2 = -du\\,dv + F\\,du^2 + dr^2 + b^2r^2d\\phi^2"},
+            "chart_line_element": "ds^2 = -du\\,dv + F\\,du^2 + dr^2 + b^2r^2d\\phi^2",
+            "printer": {"lead": [probe.parameters["b"], probe.symbol["r"]]},
+        }
+    if system == "isotropic":
+        coords = ["u", "v", "x", "y"]
+        parameters = probe_parameters + ["\\rho = \\sqrt{x^2 + y^2}"]
+        line = ("ds^2 = -du\\,dv - 2\\left(x\\,A'' + y\\,B''\\right)du^2 + " + STRING_WAVE_FACTOR
+                + "\\left(dx^2 + dy^2\\right)")
+        name, string = "Isotropic", "(x, y) = (0, 0) \\;\\text{(the string)}"
+        components = {"metric_components": {("u", "u"): "-2\\left(x\\,A'' + y\\,B''\\right)"}}
+    else:
+        coords = ["u", "V", "X", "Y"]
+        parameters = probe_parameters + ["\\rho = \\sqrt{(X - A)^2 + (Y - B)^2}"]
+        line = ("ds^2 = -du\\,dV + dX^2 + dY^2 + \\left(" + STRING_WAVE_FACTOR + " - 1\\right)"
+                "\\left(\\left(dX - A'\\,du\\right)^2 + \\left(dY - B'\\,du\\right)^2\\right)")
+        name, string = "Moving String", "(X, Y) = (A, B) \\;\\text{(the string)}"
+        # The metric as the line element writes it, around (rho/ell)^(2b - 2) - 1.
+        lift = "\\left(" + STRING_WAVE_FACTOR + " - 1\\right)"
+        components = {"metric_components": {
+            ("u", "u"): lift + "\\left(\\left(A'\\right)^2 + \\left(B'\\right)^2\\right)",
+            **{pair: "-" + lift + f"{f}'" for f, c in (("A", "X"), ("B", "Y")) for pair in (("u", c), (c, "u"))}}}
+    probe = vm.Reader(coords, parameters, ())
+    first, second = probe.symbol[coords[2]], probe.symbol[coords[3]]
+    b, ell, A, B = (probe.parameters[n] for n in ("b", "ell", "A", "B"))
+    moving = system == "moving_string"
+    # Across the string every value is written in the two distances from it, x and y, or X - A
+    # and Y - B, which the moving string chart prints as the differences they are.
+    xi, eta = (sp.Symbol("_xi", real=True), sp.Symbol("_eta", real=True)) if moving else (first, second)
+    rho = sp.Symbol("rho", positive=True)
+    powers = {}
+
+    def pretty(value):
+        """The value with every power of (x^2 + y^2)/ell^2 whose exponent holds b written as a
+        power of (rho/ell)^(2b - 2), the conformal factor of the cone, and then factored, with
+        every factor x^2 + y^2 written rho^2."""
+        L, S, T, W = (sp.Dummy(positive=True) for _ in range(4))
+        value = sp.sympify(value)
+        if moving:
+            value = state["reader"].surface(value)
+            value = value.subs({first: xi + A, second: eta + B}, simultaneous=True).doit()
+        value = value.subs(ell, L)
+
+        def split(power):
+            # The base is (x^2 + y^2)^p ell^q; with x^2 + y^2 = T ell^2 the power is T^(p e) ell^((2p + q) e),
+            # and the part of ell's exponent that holds b cancels between the factors of a term.
+            base = sp.powsimp(sp.expand_power_base(sp.factor(power.base).subs(xi ** 2 + eta ** 2, S), force=True))
+            found = base.as_powers_dict()
+            p, q = found.get(S, 0), found.get(L, 0)
+            if sp.simplify(base - S ** p * L ** q) != 0:
+                raise AssertionError(f"string_wave: {power} is no power of the distance from the string")
+            return T ** sp.expand(p * power.exp) * L ** sp.expand((2 * p + q) * power.exp)
+
+        value = value.replace(lambda e: e.is_Pow and e.exp.has(b), split)
+        value = sp.factor(sp.powsimp(sp.together(value), force=True))
+
+        def conformal(power):
+            # T^(k b + n) is W^k (T)^(n + k), with W = T^(b - 1) the conformal factor.
+            whole, symbolic = sp.expand(power.exp).as_coeff_Add()
+            k = sp.cancel(symbolic / b)
+            if not k.is_Integer:
+                raise AssertionError(f"string_wave: {power} is no power of the conformal factor")
+            return W ** k * ((xi ** 2 + eta ** 2) / L ** 2) ** (whole + k)
+
+        value = value.replace(lambda e: e.is_Pow and e.base == T and e.exp.has(b), conformal)
+        value = value.subs(T, (xi ** 2 + eta ** 2) / L ** 2)
+        if any(e.is_Pow and e.exp.has(b) for e in sp.preorder_traversal(value)):
+            raise AssertionError(f"string_wave: {value} keeps a power of b")
+
+        def named(k):
+            name = powers.setdefault(k, sp.Symbol(f"STRINGWAVEPOWER{len(powers)}", positive=True))
+            exponent = state["printer"].positive_first(sp.expand(2 * k * (b - 1)))
+            state["printer"].overrides[name] = "\\left(\\dfrac{\\rho}{\\ell}\\right)^{" + exponent + "}"
+            return name
+
+        def finished(part):
+            # Factored, with the factors that hold the conformal factor multiplied out into one
+            # bracket, as (rho/ell)^(2 - 2b) - 1, and every factor x^2 + y^2 written rho^2.
+            part = sp.factor(part)
+            holding = [f for f in sp.Mul.make_args(part) if f.has(W)]
+            rest = sp.cancel(part / sp.Mul(*holding))
+            bracket = sp.expand(sp.Mul(*holding))
+            bracket = bracket.replace(lambda e: e.is_Pow and e.base == W, lambda e: named(e.exp))
+            bracket = bracket.subs(W, named(sp.Integer(1))) if bracket.has(W) else bracket
+            return sp.factor(rest).subs(xi ** 2 + eta ** 2, rho ** 2).subs(L, ell) * bracket
+
+        # A value that holds the string's acceleration beside terms without it is written as the
+        # two parts it is made of, the cone's own and the wave's, each factored.
+        accelerations = {sp.diff(A, state["u"], 2): 0, sp.diff(B, state["u"], 2): 0}
+        still = value.xreplace(accelerations)
+        if still == 0 or sp.expand(value - still) == 0:
+            return finished(value)
+        return sp.Add(finished(still), finished(sp.together(value - still)), evaluate=False)
+
+    def check(chart):
+        state["printer"], state["reader"], state["u"] = chart.printer, chart.reader, chart.symbols[0]
+        if moving:
+            chart.printer.named.update({xi: "X - A", eta: "Y - B"})
+        string_wave_check(chart, system)
+
+    return {
+        "metric_id": "string_wave",
+        "system": {"id": system, "name": name, "coords": coords, "parameters": parameters,
+                   "domains": [f"{c} \\in " + reals for c in coords] + [string], "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [b, rho, xi, eta, first, second, ell], "primed": ["A", "B"]},
+        "pretty": pretty,
+        # The moving string chart's rho holds A and B, so the checker holds it as a function, and
+        # every value is written out in X - A and Y - B before it is printed or compared.
+        **({"reduce": lambda value: vm.norm(state["reader"].surface(sp.sympify(value)))} if moving else {}),
+        "components": components,
+        "check": check,
+    }
+
+
+def string_wave_chart(system):
+    spec = string_wave(system)
+    return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+
+def string_wave_check(chart, system):
+    """The isotropic chart against the null conical chart at the travelling wave's own profile,
+    x = ell (b r/ell)^(1/b) cos(phi) and y = ell (b r/ell)^(1/b) sin(phi), checked at random points
+    since the map carries the power 1/b, and its Ricci tensor against zero\\; the moving string
+    chart against the isotropic chart, x = X - A, y = Y - B and
+    v = V - 2 A' (X - A) - 2 B' (Y - B) - int (A'^2 + B'^2) du, checked exactly."""
+    u, v, x, y = chart.symbols
+    p = chart.reader.parameters
+    b, ell, A, B = (p[n] for n in ("b", "ell", "A", "B"))
+    surface = chart.reader.surface
+    if system == "isotropic":
+        ricci = chart.geo.ricci_ll()
+        if any(vm.norm(surface(ricci[i][j])) != 0 for i in range(4) for j in range(4)):
+            raise AssertionError("string_wave: the isotropic chart's Ricci tensor does not vanish")
+        source = string_wave_chart("null_conical")
+        r, phi = source.symbols[2:]
+        sb, F = source.reader.parameters["b"], source.reader.parameters["F"]
+        radius = sp.sqrt(x ** 2 + y ** 2)
+        image = [u, v, ell * (radius / ell) ** b / b, sp.atan2(y, x)]
+        profile = -2 * (x * sp.diff(A, u, 2) + y * sp.diff(B, u, 2))
+        g = source.geo.g.subs({F: profile, sb: b}).subs(dict(zip(source.symbols, image)), simultaneous=True)
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        difference = J.T * g * J - chart.geo.g.applyfunc(surface)
+        # The profile is harmonic on the cone: the null conical chart's only Ricci component.
+        lap = (sp.diff(F, r, 2) + sp.diff(F, r) / r + sp.diff(F, phi, 2) / (sb ** 2 * r ** 2))
+        if vm.norm(source.geo.ricci_ll()[0][0] + lap / 2) != 0:
+            raise AssertionError("string_wave: the null conical chart's R_uu is not minus half the Laplacian of F")
+        wave = -2 * ell * (sb * r / ell) ** (1 / sb) * (sp.Symbol("a2") * sp.cos(phi) + sp.Symbol("b2") * sp.sin(phi))
+        on_cone = sp.diff(wave, r, 2) + sp.diff(wave, r) / r + sp.diff(wave, phi, 2) / (sb ** 2 * r ** 2)
+        if sp.simplify(on_cone) != 0:
+            raise AssertionError("string_wave: the travelling wave's profile is not harmonic on the cone")
+    else:
+        source = string_wave_chart("isotropic")
+        sp_ = source.reader.parameters
+        dA, dB = sp.diff(A, u), sp.diff(B, u)
+        image = [u, v - 2 * dA * (x - A) - 2 * dB * (y - B) - sp.Integral(dA ** 2 + dB ** 2, u), x - A, y - B]
+        g = source.geo.g.applyfunc(source.reader.surface)
+        g = g.subs({sp_["A"]: A, sp_["B"]: B, sp_["b"]: b, sp_["ell"]: ell})
+        g = g.subs(dict(zip(source.symbols, image)), simultaneous=True).doit()
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        difference = J.T * g * J - chart.geo.g.applyfunc(surface)
+    rng = random.Random(0)
+    for _ in range(6):
+        atoms = set()
+        for entry in difference:
+            atoms |= entry.atoms(sp.Derivative) | entry.atoms(sp.core.function.AppliedUndef) | entry.free_symbols
+        at = {a: sp.Rational(rng.randint(10 ** 3, 2 * 10 ** 3), 10 ** 3)
+              for a in sorted(atoms, key=lambda a: (-len(str(a)), str(a)))}
+        for i in range(4):
+            for j in range(4):
+                if abs(complex(difference[i, j].xreplace(at).evalf(30))) > 1e-20:
+                    raise AssertionError(f"string_wave: the {system} chart is not its source pulled back in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["string_wave"] = [lambda s=s: string_wave(s) for s in STRING_WAVE_CHARTS]
 
 
 def write(spec):

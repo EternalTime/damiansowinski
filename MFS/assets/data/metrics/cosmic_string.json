@@ -63,6 +63,11 @@
       "id": "spinning_string",
       "kind": "generalisation",
       "text": "The string given angular momentum as well as mass. Time then jumps by $8\\pi GJ/c^4$ on each circuit of it, and close in the circles around it are closed timelike curves [deser1984, deser1992time]."
+    },
+    {
+      "id": "string_wave",
+      "kind": "generalisation",
+      "text": "The string plucked. A wave of any shape runs along it at the speed of light, and the cone around it becomes a pp-wave [garfinkle1990]."
     }
   ],
   "references": [
@@ -86,7 +91,8 @@
     "maccallum2011",
     "hawking1995",
     "barriola1989",
-    "deser1992time"
+    "deser1992time",
+    "garfinkle1990"
   ],
   "coordinates": [
     {
