@@ -1448,7 +1448,7 @@ sympy is not installed system wide, and the virtual environment does not belong 
 
 The whole collection took 160 seconds on 29 September 2026, and `--system <metric_id>/<system_id>` checks one system in seconds, which is what to use while editing a single entry.
 The slowest systems are the three charts of `gowdy`, each with three free functions of two coordinates, which took three and a half minutes together on 1 October 2026, then the general flow chart of `natario` and the potential flow of `lentz`, each under a minute, then `mixmaster` at about forty seconds; Kerr takes about seven seconds and the interior Schwarzschild solution about two.
-`--budget <seconds>` changes how long sympy may spend on one tensor, and the default of 120 is several times what any tensor in the collection needs.
+`--budget <seconds>` changes how long sympy may spend on one tensor, and the default of 120 is several times what almost every tensor in the collection needs; `SYSTEM_BUDGET_SECONDS` raises it for the one system that needs more, the toroidal chart of `bach_weyl_ring`, whose Kretschmann scalar takes 100 to 130 seconds.
 `--dimensions-only` runs the dimensional pass alone, which takes about a second over the whole collection, so there is no reason not to run it on every edit.
 
 The speed is `norm`, the routine every tensor passes through, which puts an expression into a canonical form so that one that vanishes is exactly zero.
