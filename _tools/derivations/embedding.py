@@ -164,6 +164,8 @@ class Slice:
                the Mixmaster great sphere: g_phiphi picks up the moving coordinate's terms;
                one of the surface's own two coordinates may be given as an expression in both, as
                Y and chi on Gott's cylinders, whose circle closes only after a shift along Y;
+               and the time itself may be swept through the imaginary direction, t = -i phi, which
+               reads a static chart's Euclidean section, g_phiphi = -g_tt, as Witten's cigar is read;
     turn       where the angle is no coordinate of the chart: the chart coordinate that turning
                carries x into, about the chart's origin, as y on the Malament-Hogarth plane of
                x and y; phi is then None, and the published metric is pulled back to the polar
@@ -3962,6 +3964,49 @@ def kaluza_klein_monopole(ck, src):
     fig.legend("line", "meridian", "$x_5$ constant, every $2\\pi m/3$")
     return [view("cigar", "The fifth dimension", "$m$", [surface], fig.done(),
                  settings="$m = 1$, the unit of every length, on the surface of $r$ and $x_5$ ($\\theta = 0$).")]
+
+
+def witten_black_hole(ck, src):
+    """Witten's cigar: the Euclidean section of his black hole in two dimensions, at lambda = 1,
+    read in his own chart. With t = -i theta/(lambda c) the metric -tanh^2(lambda r) c^2 dt^2 + dr^2
+    is dr^2 + tanh^2(lambda r) dtheta^2/lambda^2, his (9), which the slice reaches by sweeping
+    t = -i phi, a turn of the Killing time through the imaginary direction: g_phiphi is then
+    -g_tt, positive, and the surface of r and theta is a surface of revolution with circles of
+    radius rho = tanh(lambda r)/lambda. drho/ds = 1/cosh^2(lambda r) <= 1, so it embeds in flat
+    space everywhere: it closes smoothly at the horizon r = 0, where drho/ds = 1, which is what
+    fixes the period 2 pi of theta, and widens to a cylinder of radius 1/lambda. Its height is
+    arsinh(cosh r) - sqrt(1 + 1/cosh^2 r) + sqrt 2 - arsinh 1, checked. The meridians theta = 0
+    and theta = pi are the moment t = 0 on the two sides of the horizon, where the Euclidean and
+    the Lorentzian sections meet, so that moment is the one marked on the other diagrams. The
+    geometry is static, so it is one surface and no movie. Drawn to lambda r = 3."""
+    sl = Slice(src, "witten_black_hole", "witten", "r", "t", {}, {"lambda": 1}, swept={"t": "-I*t"})
+    top, size = 3.0, 3.5
+    radii = (0.5, 1.0, 2.0)
+    cigar = Piece("cigar", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the horizon $r = 0$, where the circle of $\\theta$ closes to a point"),
+                   ("edge", "the surface runs on to $r \\to \\infty$, a cylinder of radius $1/\\lambda$")),
+                  [(r, "r", None) for r in radii] + [(top, "r", "$\\lambda r = 3$")], size)
+    ck.isometry("Witten's black hole, the cigar", cigar)
+    ck.radius("Witten's black hole, the cigar, rho = tanh(lambda r)/lambda", cigar, np.tanh, size)
+    ck.form("Witten's black hole, the cigar, z = arsinh(cosh r) - sqrt(1 + sech^2 r) + sqrt 2 - arsinh 1", cigar,
+            lambda r: np.arcsinh(np.cosh(r)) - np.sqrt(1 + 1 / np.cosh(r) ** 2) + math.sqrt(2) - math.asinh(1), size)
+    tip = sl.slope(0.0, "+")
+    ck.add("Witten's black hole: the cigar closes smoothly at the horizon, drho/ds = 1",
+           float(np.hypot(tip[0] - 1, tip[1])), 1e-9)
+    r = np.linspace(0.01, 20, 400)
+    ck.add("Witten's black hole: drho/ds = 1/cosh^2(lambda r) along the cigar",
+           float(np.max(np.abs(sl._drho(r) / np.sqrt(sl.gxx_at(r)) - 1 / np.cosh(r) ** 2))), 1e-12)
+    ck.add("Witten's black hole: far away the circle's radius is 1/lambda", abs(float(sl.rho_at(40.0)) - 1), 1e-12)
+    surface = Surface([cigar])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *cigar.at(1.0), "$\\lambda r = 1$", dx=10)
+    ring_label(fig, [0, 0, 0], *cigar.at(top), "$3$")
+    fig.legend("fill", "cover", "the Euclidean section, which $r$ and $\\theta$ cover")
+    fig.legend("line", "r", "$r$ constant, at $\\lambda r = 0.5$, $1$, $2$ and $3$: the circle of Euclidean time")
+    fig.legend("line", "meridian", "$\\theta$ constant, every $\\pi/12$")
+    return [view("cigar", "The cigar", "$1/\\lambda$", [surface], fig.done(),
+                 settings="$\\lambda = 1$, the unit of every length being $1/\\lambda$, on the surface of $r$ and "
+                          "the angle $\\theta = i\\lambda ct$.")]
 
 
 def vaidya(ck, src):
@@ -8330,6 +8375,7 @@ DRAWN = {
     "tangherlini": tangherlini,
     "black_string": black_string,
     "kaluza_klein_monopole": kaluza_klein_monopole,
+    "witten_black_hole": witten_black_hole,
     "myers_perry": myers_perry,
     "dilaton_black_hole": dilaton_black_hole,
     "majumdar_papapetrou": majumdar_papapetrou,
@@ -9151,6 +9197,20 @@ CAPTIONS = {
         "The throat has the radius $r_+ = 0.413\\,\\mu^{1/3}$ at $a = 1.5\\,\\mu^{1/3}$, and it shrinks toward "
         "$\\mu/a^2$ as the spin grows. In the plane of rotation the same horizon has the circumference radius "
         "$(r_+^2 + a^2)/r_+ = 5.86\\,\\mu^{1/3}$.",
+    ],
+    ("witten_black_hole", "cigar"): [
+        "The Euclidean section of Witten's black hole, drawn as a surface in flat space with every distance "
+        "along it the metric distance. With the time turned to the angle $\\theta = i\\lambda ct$ the metric "
+        "is $dr^2 + \\tanh^2(\\lambda r)\\,d\\theta^2/\\lambda^2$, so the circle at $r$ has circumference "
+        "$2\\pi\\tanh(\\lambda r)/\\lambda$. Far from the horizon the surface is a cylinder of radius "
+        "$1/\\lambda$, and Witten called the whole a \"semi-infinite cigar\".",
+        "Toward the horizon the circle shrinks, and at $r = 0$ it closes to a point. Its radius $\\rho$ grows "
+        "with the distance $s$ from the tip as $d\\rho/ds = 1/\\cosh^2(\\lambda r)$, which is $1$ at $r = 0$, "
+        "so the tip is as smooth as the pole of a sphere. The period $2\\pi$ of $\\theta$ is the one that "
+        "makes it so, a period $2\\pi/\\lambda c$ of the Euclidean time, and its inverse is the Hawking "
+        "temperature $\\hbar c\\lambda/2\\pi k_B$, the same for every mass.",
+        "The meridians $\\theta = 0$ and $\\theta = \\pi$ are the moment $t = 0$ on the two sides of the "
+        "horizon, the line along which the Euclidean section meets the black hole.",
     ],
     ("tangherlini", "five"): [
         "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the Schwarzschild-Tangherlini spacetime in "

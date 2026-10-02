@@ -235,6 +235,11 @@
       "id": "randall_sundrum",
       "kind": "family",
       "text": "Schwarzschild's black hole on a wall in five dimensions is a black string that reaches away from the wall into the fifth [chamblin2000]."
+    },
+    {
+      "id": "witten_black_hole",
+      "kind": "family",
+      "text": "A black hole of string theory with one dimension of space. Its Kruskal diagram matches Schwarzschild's region by region [witten1991]."
     }
   ],
   "references": [
@@ -306,7 +311,8 @@
     "ernst1976b",
     "einstein1945",
     "geroch1969",
-    "chamblin2000"
+    "chamblin2000",
+    "witten1991"
   ],
   "coordinates": [
     {

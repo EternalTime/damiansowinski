@@ -169,6 +169,10 @@ Markers
   hatch       outside the entry's published domains, parsed by the same Reader; a domain
               ending at the undeclared r_+ is read at the outermost zero of g^rr, and one from
               r_+ to the undeclared r_c at the two outermost zeros.
+              A domain that is an inequality between the plane's two coordinates, as UV < 1,
+              is stated in the row's `where`, positive on the spacetime: what lies beyond
+              is hatched, and no ray or cone is drawn there.
+
 
 
 Declared inputs
@@ -356,6 +360,11 @@ class Diagram:
     no_throat: bool = False         # the areal radius is stationary along the drawn radius on a curve that
                                     # is no throat, as on tau = 0 of the lukewarm hole's cosmological chart,
                                     # where every rho has the areal radius r_s/2; the curve is left unmarked
+    where: str = None               # an expression in the chart's plain names that is positive on the
+                                    # spacetime, for a published domain that is an inequality between the
+                                    # plane's two coordinates, as UV < 1 in the Kruskal chart of Witten's
+                                    # black hole: the view is hatched where it is not positive, and no ray
+                                    # or cone is drawn there
     quotient: str = None            # a coordinate the metric does not depend on, divided out: the
                                     # plane's metric is g_ab - g_ak g_bk/g_kk; see "Rays of no angular
                                     # momentum"
@@ -731,6 +740,10 @@ DS = {"r_s": 1, "lambda": "1/5"}
 # figures, in units of b; the harmonic chart in units of k = b/2, where m = gamma k.
 FJNW = {"b": 1, "gamma": "1/2"}
 FJNW_HARMONIC = {"m": "1/2", "k": 1}
+
+# Witten's black hole in two dimensions in units of 1/lambda, at m = 1, where the horizon is x = 0
+# in the charts of x and w = 1 in the dilaton chart.
+WITTEN = {"lambda": 1, "m": 1}
 
 # Simpson and Visser's three geometries at r_s = 1: the black bounce, a = r_s/2, whose horizons are
 # r = +-sqrt(3)/2, the one way wormhole, a = r_s, and the traversable wormhole, a = 2 r_s.
@@ -1237,6 +1250,28 @@ DIAGRAMS = [
     Diagram("hartle_thorne", "painleve_gullstrand", "equator", "$t$ and $r$ on the equator", ("t", "r"),
             (6, 14, -4, 4), "$r/m$", "$ct/m$", HT_SIMPLE, {"theta": "pi/2"}, quotient="phi", cone=HT_CONE,
             lines=(("surface", "r", "6", "the surface of the star, $r = R$"),)),
+    # Witten's black hole in two dimensions, the whole plane in each of its seven charts: outside the
+    # horizon in his own proper distance and in the conformal chart, across it to the singularity in
+    # the Schwarzschild gauge, in the dilaton chart and in both Eddington-Finkelstein charts, and
+    # the Kruskal plane with both horizons and both branches of the singularity UV = 1.
+    Diagram("witten_black_hole", "witten", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$\\lambda r$", "$\\lambda ct$", {"lambda": 1}),
+    Diagram("witten_black_hole", "schwarzschild_gauge", "radial", "$t$ and $x$", ("t", "x"), (-1.5, 2.5, -2, 2),
+            "$\\lambda x$", "$\\lambda ct$", WITTEN, orient="ingoing"),
+    Diagram("witten_black_hole", "dilaton", "radial", "$t$ and $w$", ("t", "w"), (0, 4, -2, 2),
+            "$w/m$", "$\\lambda ct$", WITTEN, orient="ingoing"),
+    Diagram("witten_black_hole", "conformal", "radial", "$t$ and $\\sigma$", ("t", "\\sigma"), (-2.5, 2.5, -2.5, 2.5),
+            "$\\lambda\\sigma$", "$\\lambda ct$", WITTEN),
+    Diagram("witten_black_hole", "kruskal", "plane", "$U$ and $V$", ("U", "V"), (-2, 2, -2, 2),
+            "$(V - U)/2$", "$(U + V)/2$", WITTEN, to_display=NULL_TO_TR, tau="U + V", families=SIDEWAYS,
+            where="1 - U*V", singular_zero="1 - U*V",
+            marked=(("shell", {"x0": "0", "r": "0"}, "both", "the horizons, $UV = 0$", "past"),)),
+    Diagram("witten_black_hole", "eddington_finkelstein_ingoing", "finkelstein", "against $v - x$",
+            ("v", "x"), (-1.5, 2.5, -2, 2), "$\\lambda x$", "$\\lambda(v - x)$", WITTEN,
+            to_display=FINKELSTEIN_IN, tau="v - x"),
+    Diagram("witten_black_hole", "eddington_finkelstein_outgoing", "finkelstein", "against $u + x$",
+            ("u", "x"), (-1.5, 2.5, -2, 2), "$\\lambda x$", "$\\lambda(u + x)$", WITTEN,
+            to_display=FINKELSTEIN_OUT, tau="u + x"),
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -3083,6 +3118,68 @@ CAPTIONS = {
         "An observer falling from rest far away with no angular momentum moves inward at $\\sqrt{2m/r}\\,c$, "
         "midway between the two edges of every cone, and turns about the axis at the same $2amc/r^3$, "
         "which at the surface is a speed of $0.014\\,c$ around it.",
+    ],
+    ("witten_black_hole", "witten", "radial"): [
+        "The plane of $t$ and $r$, each point in the diagram a single event. The edges of the cones are "
+        "$dr/d(ct) = \\pm\\tanh(\\lambda r)$, so $ct \\mp \\sigma$ is constant along a ray, with "
+        "$\\sigma = \\ln\\sinh(\\lambda r)/\\lambda$.",
+        "Far from the horizon the cones open to 45°, as in flat space, and they close on $r = 0$, the "
+        "horizon, which a ray reaches only as $t \\to \\pm\\infty$. Since $r$ is the proper distance, the "
+        "horizon lies a finite distance from every event, and the Ricci scalar there is $4\\lambda^2$.",
+    ],
+    ("witten_black_hole", "schwarzschild_gauge", "radial"): [
+        "The plane of $t$ and $x$, drawn for $m = 1$, each point in the diagram a single event. The edges "
+        "of the cones are $dx/d(ct) = \\pm\\left(1 - m\\,e^{-2\\lambda x}\\right)$, and the horizon is "
+        "$x = \\ln(m)/2\\lambda$, here $x = 0$. Outside it the cones narrow toward the vertical as the "
+        "horizon is approached, and far away they open to 45°.",
+        "Inside the horizon $x$ is the time. We take the future from the ingoing Eddington-Finkelstein "
+        "chart, which makes the region the black hole, every cone pointing to smaller $x$. The Ricci scalar "
+        "$4\\lambda^2m\\,e^{-2\\lambda x}$ grows without bound as $x \\to -\\infty$, the singularity, and no "
+        "observer spends a proper time longer than $\\pi/2\\lambda c$ between the horizon and it.",
+    ],
+    ("witten_black_hole", "dilaton", "radial"): [
+        "The plane of $t$ and $w$, drawn for $m = 1$, each point in the diagram a single event where the "
+        "dilaton is $\\Phi = -\\tfrac{1}{2}\\ln w$. The edges of the cones are "
+        "$dw/d(ct) = \\pm 2\\lambda\\left(w - m\\right)$, so along a ray $w - m$ grows or decays as "
+        "$e^{\\pm 2\\lambda ct}$.",
+        "The cones close on the horizon $w = m$ and open again inside it, where $w$ is the time and we take "
+        "the future toward smaller $w$, the black hole. They meet the singularity $w = 0$ at the finite "
+        "slope $2\\lambda m$. There $e^{-2\\Phi}$ vanishes and the Ricci scalar $4\\lambda^2m/w$ diverges.",
+    ],
+    ("witten_black_hole", "conformal", "radial"): [
+        "The plane of $t$ and $\\sigma$, drawn for $m = 1$, each point in the diagram a single event. The "
+        "metric is $\\left(1 + m\\,e^{-2\\lambda\\sigma}\\right)^{-1}$ times Minkowski's, so the light rays are "
+        "the lines of constant $ct \\pm \\sigma$, at 45°.",
+        "The chart covers the outside of the horizon. The horizon is $\\sigma \\to -\\infty$, where the "
+        "conformal factor vanishes as $e^{2\\lambda\\sigma}/m$, and toward $\\sigma \\to \\infty$ the factor "
+        "tends to $1$, the plane is flat, and the dilaton is linear in $\\sigma$.",
+    ],
+    ("witten_black_hole", "kruskal", "plane"): [
+        "The plane of $U$ and $V$, drawn with $(U + V)/2$ up and $(V - U)/2$ across, each point in the "
+        "diagram a single event. Only $g_{UV}$ is nonzero, so the light rays are the lines $U = $ const and "
+        "$V = $ const at 45°.",
+        "The horizons are the lines $UV = 0$, and the singularity is the hyperbola $UV = 1$, with one branch "
+        "in the future and one in the past, where the Ricci scalar $4\\lambda^2/(1 - UV)$ diverges. The "
+        "quadrant $U < 0 < V$ is the outside of the black hole, with $V = \\sinh(\\lambda r)\\,e^{\\lambda ct}$ "
+        "and $U = -\\sinh(\\lambda r)\\,e^{-\\lambda ct}$ in Witten's $t$ and $r$, and the opposite quadrant is "
+        "a second copy of it. The four regions and their causal relations are those of Kruskal's plane for "
+        "the Schwarzschild black hole.",
+    ],
+    ("witten_black_hole", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $x$, drawn for $m = 1$ with $v - x$ as the vertical axis so that the ingoing "
+        "rays, $v = $ const, run at 45°. The outgoing family has "
+        "$dv/dx = 2\\left(1 - m\\,e^{-2\\lambda x}\\right)^{-1}$, so it stands vertical at the horizon "
+        "$x = \\ln(m)/2\\lambda$: the horizon is itself an outgoing ray that stays where it is.",
+        "The cones cross the horizon smoothly and keep tipping. Inside, both edges of every future cone "
+        "point to smaller $x$, toward the singularity $x \\to -\\infty$.",
+    ],
+    ("witten_black_hole", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $x$, drawn for $m = 1$ with $u + x$ as the vertical axis so that the outgoing "
+        "rays, $u = $ const, run at 45°. The retarded chart crosses the other horizon. Inside "
+        "$x = \\ln(m)/2\\lambda$ both edges of every future cone point to larger $x$: this is the white "
+        "hole, which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ux}$ is $-1$ where the ingoing chart's "
+        "$g_{vx}$ is $+1$.",
     ],
     ("morris_thorne", "spherical", "radial"): [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). The metric leaves $\\Phi(r)$ "
@@ -5007,6 +5104,8 @@ class Chart:
             self.K_expr = K
             self.zero_expr = prep(sp.sympify(spec.singular_zero, locals={**reader.local, **by_plain}))
             self.fn["szero"] = self.lambdify(self.zero_expr)
+        if spec.where:
+            self.fn["where"] = self.lambdify(prep(sp.sympify(spec.where, locals={**reader.local, **by_plain})))
         tau = sp.sympify(spec.tau, locals={str(self.x0): self.x0, str(self.xr): self.xr})
         self.fn["dtau0"] = self.lambdify(sp.diff(tau, self.x0))
         self.fn["dtaur"] = self.lambdify(sp.diff(tau, self.xr))
@@ -5082,16 +5181,20 @@ class Chart:
         return self.fn["g00"](x0, r), self.fn["g0r"](x0, r), self.fn["grr"](x0, r)
 
     def outside(self, x0, r):
-        """Where the chart's published domain leaves off inside a star's surface."""
-        if self.surface is None:
-            return np.zeros(np.broadcast(np.asarray(x0), np.asarray(r)).shape, dtype=bool)
+        """Where the chart's published domain leaves off inside a star's surface, or where the
+        expression a row declares in `where` is not positive."""
+        gone = np.zeros(np.broadcast(np.asarray(x0), np.asarray(r)).shape, dtype=bool)
         with np.errstate(invalid="ignore"):
-            return np.asarray(r) < self.surface(np.asarray(x0, dtype=float))
+            if self.surface is not None:
+                gone = gone | (np.asarray(r) < self.surface(np.asarray(x0, dtype=float)))
+            if self.spec.where:
+                gone = gone | ~(self.fn["where"](x0, r) > 0)
+        return gone
 
     def null_dirs(self, x0, r):
         """The directions P and M in (dx^0, dr), and D. NaN where there are none, and inside a
         star's surface, which the chart does not cover."""
-        if self.surface is not None:
+        if self.surface is not None or self.spec.where:
             P, M, D = self._null_dirs(x0, r)
             gone = self.outside(x0, r)
             return (np.where(gone[..., None], np.nan, P), np.where(gone[..., None], np.nan, M),
@@ -5913,12 +6016,14 @@ class Plot:
                         outside |= (values < lo) | ((values == lo) & lo_open)
                     if hi is not None:
                         outside |= (values > hi) | ((values == hi) & hi_open)
+            if self.c.spec.where:
+                outside |= ~(self.c.fn["where"](x0, r) > 0)
         return ~outside
 
     def hatch(self):
         """Where a chart point lies outside the entry's published domains, as polygons."""
         domains = parse_domains(self.c)
-        if not domains and self.c.surface is None and not self.c.spec.crunch:
+        if not domains and self.c.surface is None and not self.c.spec.crunch and not self.c.spec.where:
             return []
         UU, VV, x0, r = self.grid(161)
         outside = ~self.claimed(x0, r, domains)
@@ -6943,6 +7048,12 @@ def _ds_rstar(r):
     return root / a + (1 + a) / (2 * a ** 1.5) * np.log((2 * a * r - (1 + a) + 2 * math.sqrt(a) * root) / (a - 1))
 
 
+def _witten_xstar(x):
+    """The tortoise coordinate of Witten's black hole in the Schwarzschild gauge at lambda = m = 1:
+    dx_*/dx = 1/(1 - e^(-2x)), so x_* = ln|e^(2x) - 1|/2."""
+    return np.log(np.abs(np.expm1(2 * np.asarray(x, float)))) / 2
+
+
 def _fjnw_rstar(r):
     """The tortoise coordinate of Fisher, Janis, Newman and Winicour's metric at gamma = 1/2 and b = 1,
     zero at the singularity: dr_*/dr = (1 - 1/r)^(-1/2)."""
@@ -7197,6 +7308,21 @@ CLOSED_FORMS = {
     ("fisher_jnw", "harmonic", "radial"):
         (lambda t, u: t - 2 * _fjnw_rstar(1 / (1 - np.exp(-2 * u))), lambda t, u: t + 2 * _fjnw_rstar(1 / (1 - np.exp(-2 * u))),
          lambda t, u: u > 0.05),
+    # Witten's black hole at lambda = m = 1: the tortoise coordinate is ln sinh r in his own chart,
+    # ln|e^(2x) - 1|/2 in the charts of x and ln|w - 1|/2 in the dilaton chart, and it is sigma itself.
+    ("witten_black_hole", "witten", "radial"):
+        (lambda t, r: t + np.log(np.sinh(r)), lambda t, r: t - np.log(np.sinh(r)), lambda t, r: r > 0.02),
+    ("witten_black_hole", "schwarzschild_gauge", "radial"):
+        (lambda t, x: t + _witten_xstar(x), lambda t, x: t - _witten_xstar(x), lambda t, x: np.abs(x) > 0.02),
+    ("witten_black_hole", "dilaton", "radial"):
+        (lambda t, w: t + np.log(np.abs(w - 1)) / 2, lambda t, w: t - np.log(np.abs(w - 1)) / 2,
+         lambda t, w: np.abs(w - 1) > 0.02),
+    ("witten_black_hole", "conformal", "radial"): (lambda t, s: t + s, lambda t, s: t - s, None),
+    ("witten_black_hole", "kruskal", "plane"): (lambda U, V: V, lambda U, V: U, None),
+    ("witten_black_hole", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, x: v, lambda v, x: v - 2 * _witten_xstar(x), lambda v, x: np.abs(x) > 0.02),
+    ("witten_black_hole", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, x: u + 2 * _witten_xstar(x), lambda u, x: u, lambda u, x: np.abs(x) > 0.02),
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     # With m = 1, z_* = z e^(2/z) - 2 Ei(2/z) on the axis and rho_* the integral of e^(2/s - 1/(2 s^2)) in the plane.

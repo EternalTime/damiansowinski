@@ -6,7 +6,7 @@ khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_sh
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
-black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne and randall_sundrum, and Godel's cylindrical chart.
+black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum and witten_black_hole, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -24,7 +24,8 @@ reads better than an expanded one, and each of those is checked against sympy he
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
-majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md and fisher_jnw.md beside this file.
+majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md and
+witten_black_hole.md beside this file.
 """
 import argparse
 import itertools
@@ -7741,6 +7742,212 @@ def kastor_traschen_pullback(chart):
 
 
 CHARTS["kastor_traschen"] = [lambda s=s: kastor_traschen(s) for s in KT_CHARTS]
+# -- Witten's black hole in two dimensions -----------------------------------------------
+
+WITTEN_CHARTS = ["witten", "schwarzschild_gauge", "dilaton", "conformal", "kruskal",
+                 "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"]
+WITTEN_REALS = "(-\\infty, \\infty)"
+WITTEN_F = "\\left(1 - m\\,e^{-2\\lambda x}\\right)"
+
+
+def witten_black_hole(system):
+    """Witten's black hole in two dimensions, in seven charts. His own, his (22), is
+    ds^2 = dr^2 - tanh^2(r) dt^2, here with the scale lambda of Callan, Giddings, Harvey and
+    Strominger written out: r is the proper distance from the horizon and the dilaton is
+    Phi_0 - ln cosh(lambda r). Mandal, Sengupta and Wadia's Schwarzschild-like gauge has the
+    dilaton linear in the spatial coordinate, Phi = -lambda x, and g = 1 - a exp(Q eta) with
+    Q = -2 lambda and a = m, the root of Q their note (i) allows that puts the singularity at
+    x -> -infinity. Horowitz's (4.20) takes e^(-2 Phi) itself as the coordinate, w here. The
+    conformal chart is Witten's (25) and Callan, Giddings, Harvey and Strominger's (15), with
+    sigma the tortoise coordinate; the Kruskal chart is Witten's (28), ds^2 = -du dv/(1 - uv),
+    and the others' e^(-2 Phi) = M/lambda - lambda^2 x+ x-, their (11), with x+- = sqrt(m) (V, U)/lambda;
+    and the Eddington-Finkelstein charts are the gauge of Grumiller, Kummer and Vassilevich,
+    their (3.26) with the Killing norm of their (3.74). Each is printed in the functions its
+    line element is written in: sinh and cosh of lambda r, the factor f = 1 - m e^(-2 lambda x)
+    that the charts of x name, and the sums w - m, e^(2 lambda sigma) + m and 1 - UV.
+    witten_black_hole_check holds each to the dilaton gravity field equations and each after
+    the first to being the first, and witten_black_hole.md beside this file is the derivation."""
+    if system == "witten":
+        name, coords, parameters = "Witten", ["t", "r"], ["\\lambda"]
+        domains = ["t \\in " + WITTEN_REALS, "r \\in (0, \\infty)", "r = 0 \\;\\text{(the horizon)}"]
+
+        def line(c2):
+            return f"ds^2 = -\\tanh^2(\\lambda r)\\,{c2}dt^2 + dr^2"
+        probe = vm.Reader(coords, parameters, ())
+        lam, x = probe.parameters["lambda"], probe.symbol["r"]
+        printer = {"lead": [lam], "factors": [lam], "flip": False}
+        pretty = cp.hyperbolic(lam * x)
+        components = {"metric_components": {("t", "t"): "-\\tanh^2(\\lambda r)"},
+                      "inverse_metric_components": {("t", "t"): "-\\coth^2(\\lambda r)"}}
+        scalar, kretschmann = "\\dfrac{4\\lambda^2}{\\cosh^2(\\lambda r)}", "\\dfrac{16\\lambda^4}{\\cosh^4(\\lambda r)}"
+    elif system == "dilaton":
+        name, coords, parameters = "Dilaton", ["t", "w"], ["\\lambda", "m"]
+        domains = ["t \\in " + WITTEN_REALS, "w \\in (0, \\infty)", "w = m \\;\\text{(the horizon)}",
+                   "w = 0 \\;\\text{(the singularity)}"]
+
+        def line(c2):
+            return (f"ds^2 = -\\left(1 - \\dfrac{{m}}{{w}}\\right){c2}dt^2"
+                    " + \\dfrac{dw^2}{4\\lambda^2w\\left(w - m\\right)}")
+        probe = vm.Reader(coords, parameters, ())
+        lam, m, x = probe.parameters["lambda"], probe.parameters["m"], probe.symbol["w"]
+        printer = {"lead": [x, m, lam], "factors": [lam, m, x], "flip": False}
+        pretty = sp.factor
+        components = {"metric_components": {("t", "t"): "-\\left(1 - \\dfrac{m}{w}\\right)"}}
+        scalar, kretschmann = "\\dfrac{4\\lambda^2m}{w}", "\\dfrac{16\\lambda^4m^2}{w^2}"
+    elif system == "conformal":
+        name, coords, parameters = "Conformal", ["t", "\\sigma"], ["\\lambda", "m"]
+        domains = ["t \\in " + WITTEN_REALS, "\\sigma \\in " + WITTEN_REALS,
+                   "\\sigma \\to -\\infty \\;\\text{(the horizon)}"]
+
+        def line(c2):
+            return f"ds^2 = \\dfrac{{-{c2}dt^2 + d\\sigma^2}}{{1 + m\\,e^{{-2\\lambda\\sigma}}}}"
+        probe = vm.Reader(coords, parameters, ())
+        lam, m, x = probe.parameters["lambda"], probe.parameters["m"], probe.symbol["\\sigma"]
+        E = sp.Symbol("WittenE", positive=True)
+        printer = {"lead": [m, lam], "factors": [lam, m], "rising": [m], "flip": False}
+        pretty = witten_exponential(lam * x, E)
+        components = {"metric_components": {("t", "t"): "-\\dfrac{1}{1 + m\\,e^{-2\\lambda\\sigma}}",
+                                            ("\\sigma", "\\sigma"): "\\dfrac{1}{1 + m\\,e^{-2\\lambda\\sigma}}"},
+                      "inverse_metric_components": {("t", "t"): "-\\left(1 + m\\,e^{-2\\lambda\\sigma}\\right)",
+                                                    ("\\sigma", "\\sigma"): "1 + m\\,e^{-2\\lambda\\sigma}"}}
+        scalar = "\\dfrac{4\\lambda^2m}{e^{2\\lambda\\sigma} + m}"
+        kretschmann = "\\dfrac{16\\lambda^4m^2}{\\left(e^{2\\lambda\\sigma} + m\\right)^2}"
+    elif system == "kruskal":
+        name, coords, parameters = "Kruskal", ["U", "V"], ["\\lambda", "m"]
+        domains = ["U \\in " + WITTEN_REALS, "V \\in " + WITTEN_REALS, "UV < 1",
+                   "UV = 0 \\;\\text{(the horizons)}", "UV = 1 \\;\\text{(the singularity)}"]
+
+        def line(c2):
+            return "ds^2 = -\\dfrac{dU\\,dV}{\\lambda^2\\left(1 - UV\\right)}"
+        probe = vm.Reader(coords, parameters, ())
+        lam, m = probe.parameters["lambda"], probe.parameters["m"]
+        U, V = probe.symbol["U"], probe.symbol["V"]
+        printer = {"lead": [U, V, lam], "factors": [lam, U, V], "rising": [U], "flip": False}
+        pretty = sp.factor
+        components = {}
+        scalar = "\\dfrac{4\\lambda^2}{1 - UV}"
+        kretschmann = "\\dfrac{16\\lambda^4}{\\left(1 - UV\\right)^2}"
+    else:
+        probe_x = "x"
+        if system == "schwarzschild_gauge":
+            name, coords = "Schwarzschild Gauge", ["t", "x"]
+
+            def line(c2):
+                return f"ds^2 = -{WITTEN_F}{c2}dt^2 + \\dfrac{{dx^2}}{{1 - m\\,e^{{-2\\lambda x}}}}"
+            components = {"metric_components": {("t", "t"): "-" + WITTEN_F, ("x", "x"): WITTEN_F + "^{-1}"},
+                          "inverse_metric_components": {("t", "t"): "-" + WITTEN_F + "^{-1}",
+                                                        ("x", "x"): "1 - m\\,e^{-2\\lambda x}"}}
+        else:
+            null, sign = ("u", "-") if system == "eddington_finkelstein_outgoing" else ("v", "+")
+            name, coords = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein", [null, "x"]
+
+            def line(c2):
+                return f"ds^2 = -{WITTEN_F}d{null}^2 {sign} 2\\,d{null}\\,dx"
+            one = "-1" if null == "u" else "1"
+            components = {"metric_components": {(null, null): "-" + WITTEN_F, (null, "x"): one, ("x", null): one},
+                          "inverse_metric_components": {(null, "x"): one, ("x", null): one,
+                                                        ("x", "x"): "1 - m\\,e^{-2\\lambda x}"}}
+        parameters = ["\\lambda", "m"]
+        domains = [coords[0] + " \\in " + WITTEN_REALS, "x \\in " + WITTEN_REALS,
+                   "x = \\ln(m)/2\\lambda \\;\\text{(the horizon)}", "x \\to -\\infty \\;\\text{(the singularity)}"]
+        probe = vm.Reader(coords, parameters, ())
+        lam, m, x = probe.parameters["lambda"], probe.parameters["m"], probe.symbol[probe_x]
+        E = sp.Symbol("WittenE", positive=True)
+        printer = {"lead": [m, lam], "factors": [lam, m], "rising": [m], "flip": False}
+        pretty = witten_exponential(-lam * x, E)
+        scalar, kretschmann = "4\\lambda^2m\\,e^{-2\\lambda x}", "16\\lambda^4m^2e^{-4\\lambda x}"
+    return {
+        "metric_id": "witten_black_hole",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "components": components,
+        "ricci_scalar": scalar,
+        "kretschmann": kretschmann,
+        "check": lambda chart: witten_black_hole_check(chart, system),
+    }
+
+
+def witten_exponential(argument, E):
+    """A `pretty` for a chart written in one exponential, E = e^(2 argument): every exponential
+    of a whole multiple of the argument is written as a power of E, and the value factored, so
+    that 1 - m e^(-2 lambda x) and e^(2 lambda sigma) + m stay the factors the line element has."""
+    def pretty(value):
+        x = sp.sympify(value).replace(
+            lambda e: isinstance(e, sp.exp) and (sp.expand(e.args[0] / argument) / 2).is_Integer,
+            lambda e: E ** (sp.expand(e.args[0] / argument) / 2))
+        return sp.factor(sp.cancel(sp.together(x))).subs(E, sp.exp(2 * argument))
+    return pretty
+
+
+def witten_black_hole_check(chart, system):
+    """Every chart, with its dilaton, solves the field equations of dilaton gravity in two
+    dimensions, R_ab + 2 D_a D_b Phi = 0 and R + 4 lambda^2 + 4 D^2 Phi - 4 (D Phi)^2 = 0, which
+    are (3.7) and (3.8) of Strominger's lectures; its Einstein tensor vanishes identically, as
+    every Einstein tensor in two dimensions does; and Witten's chart carried along the map into
+    each other chart is that chart's metric: with x^0 = ct, e^(2 lambda x) = w = m cosh^2(lambda r),
+    e^(2 lambda sigma) = m sinh^2(lambda r), v, u = x^0 +- sigma, and V, U = +-sinh(lambda r) e^(+-lambda x^0)."""
+    a, b = chart.symbols
+    P = chart.reader.parameters
+    lam = P["lambda"]
+    m = P.get("m")
+    g, ginv = chart.geo.g, chart.geo.ginv
+    dilaton = {
+        "witten": lambda: -sp.log(sp.cosh(lam * b)),
+        "schwarzschild_gauge": lambda: -lam * b,
+        "eddington_finkelstein_ingoing": lambda: -lam * b,
+        "eddington_finkelstein_outgoing": lambda: -lam * b,
+        "dilaton": lambda: -sp.log(b) / 2,
+        "conformal": lambda: -sp.log(sp.exp(2 * lam * b) + m) / 2,
+        "kruskal": lambda: -sp.log(m * (1 - a * b)) / 2,
+    }[system]()
+    gamma = chart.geo.christoffel_ull()
+    ricci = chart.geo.ricci_ll()
+    d = [sp.diff(dilaton, s) for s in chart.symbols]
+    hessian = [[sp.diff(dilaton, chart.symbols[i], chart.symbols[j])
+                - sum(gamma[k][i][j] * d[k] for k in range(2)) for j in range(2)] for i in range(2)]
+    for i in range(2):
+        for j in range(2):
+            if vm.norm(ricci[i][j] + 2 * hessian[i][j]) != 0:
+                raise AssertionError(f"witten_black_hole: R_ab + 2 D_a D_b Phi does not vanish in slot {(i, j)} "
+                                     f"of the {system} chart")
+            if chart.geo.einstein_ll()[i][j] != 0:
+                raise AssertionError(f"witten_black_hole: the Einstein tensor of the {system} chart does not vanish")
+    box = sum(ginv[i, j] * hessian[i][j] for i in range(2) for j in range(2))
+    square = sum(ginv[i, j] * d[i] * d[j] for i in range(2) for j in range(2))
+    if vm.norm(chart.geo.ricci_scalar() + 4 * lam ** 2 + 4 * box - 4 * square) != 0:
+        raise AssertionError(f"witten_black_hole: the dilaton equation fails in the {system} chart")
+    if vm.norm(chart.geo.kretschmann() - chart.geo.ricci_scalar() ** 2) != 0:
+        raise AssertionError(f"witten_black_hole: K is not R^2 in the {system} chart")
+    if system == "witten":
+        return
+    # The map from Witten's chart, x^0 = T and the proper distance r = X/lambda, into this one.
+    T, X, M = sp.symbols("WittenT WittenX WittenM", positive=True)
+    L = sp.Symbol("WittenL", positive=True)
+    sigma = sp.log(sp.sqrt(M) * sp.sinh(L * X)) / L
+    x = sp.log(sp.sqrt(M) * sp.cosh(L * X)) / L
+    image = {
+        "schwarzschild_gauge": (T, x),
+        "dilaton": (T, M * sp.cosh(L * X) ** 2),
+        "conformal": (T, sigma),
+        "kruskal": (-sp.sinh(L * X) * sp.exp(-L * T), sp.sinh(L * X) * sp.exp(L * T)),
+        "eddington_finkelstein_ingoing": (T + sigma, x),
+        "eddington_finkelstein_outgoing": (T - sigma, x),
+    }[system]
+    J = sp.Matrix([[sp.diff(f, s) for s in (T, X)] for f in image])
+    at = g.subs({lam: L, **({m: M} if m is not None else {})}).subs(dict(zip((a, b), image)), simultaneous=True)
+    pulled = J.T * at * J
+    own = sp.diag(-sp.tanh(L * X) ** 2, 1)
+    for i in range(2):
+        for j in range(2):
+            if sp.simplify((pulled[i, j] - own[i, j]).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"witten_black_hole: Witten's chart carried into the {system} chart "
+                                     f"misses its metric in slot {(i, j)}")
+
+
+CHARTS["witten_black_hole"] = [lambda s=s: witten_black_hole(s) for s in WITTEN_CHARTS]
 
 
 def write(spec):

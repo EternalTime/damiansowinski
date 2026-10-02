@@ -459,6 +459,30 @@ def _fjnw_reach(m, of_r):
     return [of_r(1 / (1 - math.exp(-u))) for u in (hi, lo)]
 
 
+def witten(chart):
+    """The moment t = 0 of Witten's black hole outside the horizon, the meridian theta = 0 of his
+    cigar, as far as the embedding reaches in his proper distance r, at lambda = m = 1: level in
+    each chart of t, from the horizon out, with e^(2x) = w = cosh^2 r and e^sigma = sinh r; the
+    curve v = sigma(x) or u = -sigma(x), sigma = ln(e^(2x) - 1)/2, in an Eddington-Finkelstein chart;
+    and on the Kruskal plane the line U + V = 0 through the bifurcation point, V = -U = sinh r on
+    one side and its mirror on the other, the meridian theta = pi."""
+    m = moments("witten_black_hole")[0]
+    lo, hi = m.reach("witten", "r")
+    if chart == "witten":
+        return [Mark(m, along(0.0, lo, hi))]
+    if chart == "schwarzschild_gauge":
+        return [Mark(m, along(0.0, math.log(math.cosh(lo)), math.log(math.cosh(hi))))]
+    if chart == "dilaton":
+        return [Mark(m, along(0.0, math.cosh(lo) ** 2, math.cosh(hi) ** 2))]
+    if chart == "conformal":
+        return [Mark(m, along(0.0, -BIG, math.log(math.sinh(hi))))]
+    if chart == "kruskal":
+        return [Mark(m, [[(math.sinh(hi), -math.sinh(hi)), (-math.sinh(hi), math.sinh(hi))]])]
+    sign = 1 if chart == "eddington_finkelstein_ingoing" else -1
+    x = near(math.log(math.cosh(lo)), math.log(math.cosh(hi)))
+    return [Mark(m, [np.column_stack([sign * np.log(np.expm1(2 * x)) / 2, x])])]
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -1213,6 +1237,13 @@ FLAT = {
         "fisher_jnw", lambda m: along(0.0, *(u / 2 for u in m.reach("harmonic", "u")))),
     ("hartle_thorne", "hartle_thorne", "equator"): lambda: one(
         "hartle_thorne", lambda m: along(0.0, *m.reach("hartle_thorne", "r"))),
+    # Witten's black hole in two dimensions: the moment t = 0 outside the horizon in each chart, and
+    # on both sides of it on the Kruskal plane.
+    **{("witten_black_hole", chart, view): (lambda chart=chart: witten(chart))
+       for chart, view in (("witten", "radial"), ("schwarzschild_gauge", "radial"), ("dilaton", "radial"),
+                           ("conformal", "radial"), ("kruskal", "plane"),
+                           ("eddington_finkelstein_ingoing", "finkelstein"),
+                           ("eddington_finkelstein_outgoing", "finkelstein"))},
     ("minkowski", "spherical", "radial"): lambda: one("minkowski", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # t = (u + v)/2 and r = (v - u)/2, so the moment is u = -r, v = r.
     ("minkowski", "spherical_null", "radial"): lambda: one(

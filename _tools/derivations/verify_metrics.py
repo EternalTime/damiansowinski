@@ -199,6 +199,16 @@ DIMENSIONS = {
     ("btz", "eddington_finkelstein_outgoing"): {
         "u": "L", "r": "L", "\\tilde\\phi": "1", "\\ell": "L", "M": "1", "J": "L",
     },
+    # Witten's black hole in two dimensions: lambda is an inverse length and the mass parameter m,
+    # the value of e^(-2 Phi) on the horizon, a number. The dilaton chart's w = e^(-2 Phi) and the
+    # Kruskal coordinates U and V are numbers, and the advanced and retarded times are lengths.
+    ("witten_black_hole", "witten"): {"t": "T", "r": "L", "\\lambda": "1/L"},
+    ("witten_black_hole", "schwarzschild_gauge"): {"t": "T", "x": "L", "\\lambda": "1/L", "m": "1"},
+    ("witten_black_hole", "dilaton"): {"t": "T", "w": "1", "\\lambda": "1/L", "m": "1"},
+    ("witten_black_hole", "conformal"): {"t": "T", "\\sigma": "L", "\\lambda": "1/L", "m": "1"},
+    ("witten_black_hole", "kruskal"): {"U": "1", "V": "1", "\\lambda": "1/L", "m": "1"},
+    ("witten_black_hole", "eddington_finkelstein_ingoing"): {"v": "L", "x": "L", "\\lambda": "1/L", "m": "1"},
+    ("witten_black_hole", "eddington_finkelstein_outgoing"): {"u": "L", "x": "L", "\\lambda": "1/L", "m": "1"},
     # The wave amplitude psi and gamma sit in exponentials and are dimensionless; the null chart's
     # u = ct - rho and v = ct + rho are lengths, as the Eddington-Finkelstein times of BTZ are.
     ("einstein_rosen_waves", "cylindrical"): {
@@ -2348,6 +2358,10 @@ class Geometry:
     def weyl_llll(self):
         def build():
             n = self.n
+            if n < 3:
+                # In two dimensions the Riemann tensor is (R/2)(g g - g g), all trace, and the Weyl
+                # tensor, what is left of it with the traces removed, vanishes identically.
+                return self._zeros(4)
             riemann = self.riemann_llll()
             ricci = self.ricci_ll()
             scalar = self.ricci_scalar()

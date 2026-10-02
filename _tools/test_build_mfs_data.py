@@ -4717,6 +4717,21 @@ class Slices(unittest.TestCase):
             of_r = {"spherical": lambda r: r, "jnw": lambda r: r - 0.75,
                     "isotropic": lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2}[key.split("/")[1]]
             return (lambda X: 0.0), [of_r(1 / (1 - math.exp(-u))) for u in (hi, lo)]
+        if key.startswith("witten_black_hole/"):
+            # The cigar is read in Witten's proper distance r at lambda = m = 1, and its meridian theta = 0 is
+            # the moment t = 0 from the horizon out, where e^(2x) = w = cosh^2 r and e^sigma = sinh r: level in
+            # the charts of t; v - x = sigma - x and u + x = x - sigma, sigma = ln(e^(2x) - 1)/2, in the
+            # Eddington-Finkelstein charts; and the line U + V = 0 of the Kruskal plane, drawn against
+            # (V - U)/2, on both sides of the bifurcation point, the other side being the meridian theta = pi.
+            lo, hi = self.reach(surface)
+            chart = key.split("/")[1]
+            if chart.startswith("eddington"):
+                sign = 1 if chart.endswith("ingoing") else -1
+                return (lambda X: sign * (0.5 * math.log(max(math.expm1(2 * X), 1e-300)) - X)), [math.log(math.cosh(hi))]
+            return (lambda X: 0.0), {
+                "witten": [lo, hi], "schwarzschild_gauge": [math.log(math.cosh(lo)), math.log(math.cosh(hi))],
+                "dilaton": [math.cosh(lo) ** 2, math.cosh(hi) ** 2], "conformal": [math.log(math.sinh(hi))],
+                "kruskal": [-math.sinh(hi), math.sinh(hi)]}[chart]
         if key == "damour_solodukhin/isotropic/radial":
             # The isotropic radius of the circles the embedding reaches in the areal radius R, at r_s = 1:
             # r = (R - 1/2 + sqrt(R(R - 1)))/2 on one side and 1/(16 r) on the other.
