@@ -5688,6 +5688,202 @@ def de_sitter(ck, src):
     return views
 
 
+def elliptic_de_sitter(ck, src):
+    """Half of de Sitter's global square, the hyperboloid -X0^2 + X1^2 + ... + X4^2 = l^2 with X and
+    -X one event, drawn at l = 1.
+
+    In de Sitter's square, X = chi across and T = eta up, the antipodal map is (chi, eta) ->
+    (pi - chi, -eta) with every sphere turned to its opposite points, which is checked on the
+    hyperboloid. The half chi <= pi/2 holds one point of every pair, and its edge chi = pi/2 is glued
+    to itself with eta -> -eta. The global chart enters by ds_closed_pq, the conformal chart as
+    itself, the Kruskal chart, X0 = (U + V)/(1 - UV) and X4 = (V - U)/(1 - UV), as
+    p = arctan V - pi/4 and q = arctan U + pi/4, the static chart by ds_static_pq, and the planar
+    chart, with conformal time tau = -exp(-t), as p = pi/4 + arctan(tau - rho) and
+    q = pi/4 + arctan(tau + rho), which covers the half X0 + X4 > 0 of the square: the part of it
+    beyond chi = pi/2 is carried into the half square by the antipodal map. Each is checked
+    against the published metric and against the hyperboloid.
+    """
+    planes = {
+        "global": Plane(src, "elliptic_de_sitter", "global", ("t", "\\chi"), EQUATOR, {"ell": 1}),
+        "conformal": Plane(src, "elliptic_de_sitter", "conformal", ("\\eta", "\\chi"), EQUATOR, {"ell": 1}),
+        "kruskal": Plane(src, "elliptic_de_sitter", "kruskal", ("U", "V"), EQUATOR, {"ell": 1}),
+        "static": Plane(src, "elliptic_de_sitter", "static", ("t", "r"), EQUATOR, {"ell": 1}),
+        "planar": Plane(src, "elliptic_de_sitter", "planar", ("t", "x"), {"y": "0", "z": "0"}, {"ell": 1}),
+    }
+
+    def conformal(eta, chi):
+        eta, chi = np.asarray(eta, dtype=float), np.asarray(chi, dtype=float)
+        return (eta - chi) / 2, (eta + chi) / 2
+
+    def kruskal(U, V):
+        return np.arctan(np.asarray(V, dtype=float)) - Q4, np.arctan(np.asarray(U, dtype=float)) + Q4
+
+    def planar(t, rho):
+        tau = -np.exp(-np.asarray(t, dtype=float))
+        return Q4 + np.arctan(tau - rho), Q4 + np.arctan(tau + rho)
+
+    def antipode(p, q):
+        """(chi, eta) -> (pi - chi, -eta) in the drawing's null coordinates."""
+        return -np.asarray(p, dtype=float) - HALF, HALF - np.asarray(q, dtype=float)
+
+    name = "elliptic de Sitter"
+    ck.chart(f"{name} global", planes["global"], ds_closed_pq, ck.uniform(-3, 3), ck.uniform(0.01, HALF),
+             lambda t, c: (1, 0))
+    ck.chart(f"{name} conformal", planes["conformal"], conformal, ck.uniform(-1.5, 1.5), ck.uniform(0.01, HALF),
+             lambda e, c: (1, 0))
+    ck.chart(f"{name} Kruskal", planes["kruskal"], kruskal, ck.uniform(-0.95, 0.95), ck.uniform(-0.95, 0.95),
+             lambda U, V: (1, 1))
+    ck.chart(f"{name} static", planes["static"], ds_static_pq, ck.uniform(-10, 10), ck.uniform(0.001, 0.999),
+             lambda t, r: (1, 0))
+    ck.chart(f"{name} planar", planes["planar"], planar, ck.uniform(-6, 6), ck.uniform(0.001, 20), lambda t, x: (1, 0))
+
+    def lands(what, pq, X0, X4, R):
+        got = ds_hyperboloid(*pq)
+        scale = 1 + np.abs(X0) + np.abs(X4) + np.abs(R)
+        ck.limit(f"{name}: {what} lands where the hyperboloid puts it",
+                 np.concatenate([(got[0] - X0) / scale, (got[1] - X4) / scale, (got[2] - R) / scale]), 0, 1e-10)
+    t, chi = ck.uniform(-3, 3, 2000), ck.uniform(0, HALF, 2000)
+    lands("the global chart", ds_closed_pq(t, chi), np.sinh(t), np.cosh(t) * np.cos(chi), np.cosh(t) * np.sin(chi))
+    U, V = ck.uniform(-0.95, 0.95, 2000), ck.uniform(-0.95, 0.95, 2000)
+    lands("the Kruskal chart", kruskal(U, V), (U + V) / (1 - U * V), (V - U) / (1 - U * V), (1 + U * V) / (1 - U * V))
+    t, r = ck.uniform(-6, 6, 2000), ck.uniform(0, 0.999, 2000)
+    lands("the static chart", ds_static_pq(t, r), np.sqrt(1 - r ** 2) * np.sinh(t), np.sqrt(1 - r ** 2) * np.cosh(t), r)
+    t, rho = ck.uniform(-4, 4, 2000), ck.uniform(0, 8, 2000)
+    a = np.exp(t)
+    lands("the planar chart", planar(t, rho), np.sinh(t) + rho ** 2 * a / 2, np.cosh(t) - rho ** 2 * a / 2, a * rho)
+    # The antipodal map of the square is X -> -X of the hyperboloid: X0 and X4 change sign, and the
+    # sphere's radius is the same, its points being carried to their opposites.
+    p, q = conformal(ck.uniform(-1.5, 1.5, 2000), ck.uniform(0.01, PI - 0.01, 2000))
+    here, there = ds_hyperboloid(p, q), ds_hyperboloid(*antipode(p, q))
+    scale = 1 + np.abs(here[0]) + np.abs(here[1])
+    ck.limit(f"{name}: (chi, eta) -> (pi - chi, -eta) is X -> -X",
+             np.concatenate([(here[0] + there[0]) / scale, (here[1] + there[1]) / scale, (here[2] - there[2]) / scale]),
+             0, 1e-10)
+    # Schrodinger's theorem: the past of the observer's whole world line is X4 > X0, and of every
+    # event and its antipode exactly one lies in it.
+    seen, seen_there = here[1] > here[0], there[1] > there[0]
+    ck.limit(f"{name}: of every event and its antipode the observer sees exactly one",
+             (seen ^ seen_there).astype(float), 1, 1e-12)
+    ck.finite(f"{name}: the observer's r = 0 is a regular centre",
+              planes["static"].kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    ck.finite(f"{name}: the glued edge chi = pi/2 is regular",
+              planes["global"].kretschmann(ck.uniform(-3, 3, 50), np.full(50, HALF)))
+
+    box = [-0.75, HALF + 0.75, -HALF - 0.3, HALF + 0.3]
+    half = [[0, -HALF], [HALF, -HALF], [HALF, HALF], [0, HALF]]
+    # A light ray from the event E beyond the observer's future horizon: out to the edge at P, where
+    # eta is T1, in again at -T1, and on to the observer.
+    E = np.array([1.15, 1.0])
+    T1 = E[1] - (HALF - E[0])
+    leg_out, leg_in = [[E[0], E[1]], [HALF, T1]], [[HALF, -T1], [0, HALF - T1]]
+    for leg, coordinate in ((leg_out, "q"), (leg_in, "q")):
+        (Xa, Ta), (Xb, Tb) = leg
+        ck.limit(f"{name}: the ray from E keeps its {coordinate} along each leg", [(Ta + Xa) / 2], [(Tb + Xb) / 2], 1e-12)
+    ck.limit(f"{name}: E lies beyond the observer's future horizon and its ray reaches the observer",
+             [float(E[1] > HALF - E[0]), float(HALF - T1 < HALF)], [1, 1], 1e-12)
+    moment, = slices.moments("elliptic_de_sitter")
+    lo, hi = moment.reach("global", "\\chi")
+    moment_xt = [np.array([[lo, 0.0], [hi, 0.0]])]
+
+    def frame(v, system):
+        v.fill("region", half)
+        v.line("scri", [[[0, HALF], [HALF, HALF]], [[0, -HALF], [HALF, -HALF]]])
+        v.line("centre", [[[0, -HALF], [0, HALF]]])
+        v.line("horizon", [[[0, -HALF], [HALF, 0]], [[0, HALF], [HALF, 0]]])
+        v.line("surface", [[[HALF, -HALF], [HALF, HALF]]])
+        v.line("null", [leg_out, leg_in])
+        for at in (leg_out[1], leg_in[0]):
+            v.layers.append({"kind": "point", "class": "mark", "at": rounded(at)})
+        v.layers.append({"kind": "point", "class": "mark", "at": rounded(E)})
+        v.label_xt([HALF / 2, HALF], "$\\mathscr{I}^+$", "b", dy=-5)
+        v.label_xt([HALF / 2, -HALF], "$\\mathscr{I}^-$", "t", dy=5)
+        v.label_xt([0, -0.55], "observer", "r", "coord", dx=-6)
+        v.label_xt(leg_out[1], "$P$", "l", dx=8)
+        v.label_xt(leg_in[0], "$P$", "l", dx=8)
+        v.label_xt(E.tolist(), "$E$", "br", dx=-5, dy=-4)
+        v.legend("scri", "infinity $\\mathscr{I}^\\pm$, the two halves of one sphere")
+        v.legend("centre", "the observer, $\\chi = 0$")
+        v.legend("horizon", "the observer's horizons")
+        v.legend("surface", "the equator $\\chi = \\pi/2$, glued to itself with the time reversed")
+        v.legend("mark", "the event $E$, and the event $P$ of the edge, drawn twice")
+        v.legend("null", "a light ray from $E$ to the observer, through $P$")
+        v.slice(moment, xt=moment_xt)
+
+    def inside(p, q):
+        """A curve given by p and q with every point off the half square left out."""
+        X, T = xt(p, q)
+        off = (X < -1e-9) | (X > HALF + 1e-9) | (np.abs(T) > HALF + 1e-9)
+        return np.where(off, np.nan, p), np.where(off, np.nan, q)
+
+    views = []
+    v = View("global", "Global", box, "global")
+    frame(v, "global")
+    v.fill("cover", half)
+    grid(v, "t", ds_closed_pq, (-2, -1, -0.5, 0.5, 1, 2), np.linspace(0, HALF, 60))
+    grid(v, "r", lambda c, t: ds_closed_pq(t, c), (PI / 8, PI / 4, 3 * PI / 8), S_ALL)
+    label_on(v, ds_closed_pq(1, 0.45), "$ct = \\ell$")
+    label_on(v, ds_closed_pq(-1, 0.45), "$-\\ell$")
+    v.legend("cover", "the whole space, which $t$ and $\\chi \\le \\pi/2$ cover")
+    v.legend("t", "$ct$ constant, at $\\pm\\ell/2$, $\\pm\\ell$ and $\\pm2\\ell$")
+    v.legend("r", "$\\chi$ constant, at $\\pi/8$, $\\pi/4$ and $3\\pi/8$")
+    views.append(v)
+
+    v = View("conformal", "Conformal", box, "conformal")
+    frame(v, "conformal")
+    v.fill("cover", half)
+    grid(v, "t", conformal, (-3 * PI / 8, -PI / 4, -PI / 8, PI / 8, PI / 4, 3 * PI / 8), np.linspace(0, HALF, 60))
+    grid(v, "r", lambda c, e: conformal(e, c), (PI / 8, PI / 4, 3 * PI / 8), np.linspace(-HALF, HALF, 60))
+    label_on(v, conformal(PI / 4, 0.45), "$\\eta = \\pi/4$")
+    label_on(v, conformal(-PI / 4, 0.45), "$-\\pi/4$")
+    v.legend("cover", "the whole space, which $\\eta$ and $\\chi \\le \\pi/2$ cover")
+    v.legend("t", "$\\eta$ constant, every $\\pi/8$")
+    v.legend("r", "$\\chi$ constant, at $\\pi/8$, $\\pi/4$ and $3\\pi/8$")
+    views.append(v)
+
+    v = View("kruskal", "Kruskal", box, "kruskal")
+    frame(v, "kruskal")
+    v.fill("cover", half)
+    run = np.tan(np.linspace(-HALF + 1e-6, HALF - 1e-6, 1200))
+    for c in (-2, -1, -0.5, 0.5, 1, 2):
+        v.curve("t", *inside(*kruskal(np.full_like(run, c), run)))
+        v.curve("r", *inside(*kruskal(run, np.full_like(run, c))))
+    v.legend("cover", "the whole space, the half $V \\ge U$ of the Kruskal chart")
+    v.legend("t", "$U$ constant, at $\\pm1/2$, $\\pm1$ and $\\pm2$")
+    v.legend("r", "$V$ constant, at the same values")
+    views.append(v)
+
+    v = View("static", "Static", box, "static")
+    frame(v, "static")
+    v.fill("cover", [[0, -HALF], [HALF, 0], [0, HALF]])
+    grid(v, "r", lambda r, t: ds_static_pq(t, r), (0.3, 0.6, 0.85, 0.97), S_ALL)
+    grid(v, "t", ds_static_pq, (-3, -1.5, -0.5, 0.5, 1.5, 3), spread(0, 1, 500, 14))
+    label_on(v, ds_static_pq(0.9, 0.3), "$r = 0.3$", anchor="bl", dx=2)
+    v.legend("cover", "the static patch, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, in units of $\\ell$")
+    v.legend("t", "$ct$ constant")
+    views.append(v)
+
+    v = View("planar", "Planar", box, "planar")
+    frame(v, "planar")
+    v.fill("cover", [[0, -HALF], [HALF, 0], [HALF, HALF], [0, HALF]])
+    v.fill("cover2", [[0, -HALF], [HALF, -HALF], [HALF, 0]])
+    for constants, cls, first, s in (((0.25, 0.5, 1, 2, 4), "r", True, S_ALL), ((-2, -1, 0, 1, 2), "t", False, S_POS)):
+        for c in constants:
+            p, q = planar(s, np.full_like(s, c)) if first else planar(np.full_like(s, c), s)
+            v.curve(cls, *inside(p, q))
+            v.curve(cls + "2", *inside(*antipode(p, q)))
+    v.line("chartedge", [[[0, -HALF], [HALF, 0]]])
+    v.legend("cover", "the part of the planar chart on the observer's side of the equator")
+    v.legend("cover2", "the part beyond the equator, carried here by the identification")
+    v.legend("r", "$\\rho = \\sqrt{x^2 + y^2 + z^2}$ constant, at $\\ell/4$, $\\ell/2$, $\\ell$, $2\\ell$ and $4\\ell$")
+    v.legend("r2", "the same lines beyond the equator")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm\\ell$ and $\\pm2\\ell$")
+    v.legend("t2", "the same lines beyond the equator")
+    v.legend("chartedge", "$t \\to -\\infty$, the one null surface the planar chart leaves out")
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- anti-de Sitter and Bertotti-Robinson
 
 def poincare_pq(t, z):
@@ -17927,6 +18123,7 @@ DRAWN = {
     "coleman_de_luccia": coleman_de_luccia,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "de_sitter": de_sitter,
+    "elliptic_de_sitter": elliptic_de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
@@ -19488,6 +19685,42 @@ CAPTIONS = {
         "$q = \\pi/4 + \\arctan(H\\eta + H\\rho/c)$, with $\\rho^2 = x^2 + y^2 + z^2$.",
         "The slicing covers the half above the observer's past horizon, so its $t \\to -\\infty$ "
         "is a null line where the coordinates end, and the spacetime goes on below it.",
+    ],
+    ("elliptic_de_sitter", "global"): [
+        "Elliptic de Sitter space, the hyperboloid $-X_0^2 + X_1^2 + \\dots + X_4^2 = \\ell^2$ with $X$ and $-X$ one "
+        "event, each point in the diagram a 2-sphere. In the conformal time $\\eta$ of the global chart, "
+        "$\\tan\\eta = \\sinh(ct/\\ell)$, the metric is $\\frac{\\ell^2}{\\cos^2\\eta}(-d\\eta^2 + d\\chi^2 + "
+        "\\sin^2\\chi\\,d\\Omega^2)$, and the antipodal map is $\\eta \\to -\\eta$, $\\chi \\to \\pi - \\chi$, with "
+        "each sphere turned onto its opposite points. The half $0 \\le \\chi \\le \\pi/2$ of de Sitter's square holds "
+        "one point of every pair, with $X = \\chi$ across and $T = \\eta$ up.",
+        "The edge $\\chi = \\pi/2$ is glued to itself with the time reversed: its sphere at $\\eta$ is its sphere "
+        "at $-\\eta$, so the two marks at the event $P$ are one event, and future and past infinity are the two "
+        "halves of one sphere. A light ray from the event $E$, beyond the observer's future horizon, runs out "
+        "through $P$ and in to the observer. The observer sees every event off that horizon.",
+    ],
+    ("elliptic_de_sitter", "conformal"): [
+        "The same half square with the conformal chart's own lines, each straight, since $T = \\eta$ and "
+        "$X = \\chi$. The conformal factor $\\ell^2/\\cos^2\\eta$ diverges on $\\eta = \\pm\\pi/2$, which is infinity.",
+    ],
+    ("elliptic_de_sitter", "kruskal"): [
+        "The Kruskal chart's null coordinates enter as $p = \\arctan V - \\pi/4$ and $q = \\arctan U + \\pi/4$, so "
+        "their lines run at 45°. The half $V \\ge U$ of the chart is the half square: the observer $UV = -1$ is "
+        "the left edge, infinity $UV = 1$ the top and the bottom, and $U = V$ the glued edge.",
+    ],
+    ("elliptic_de_sitter", "static"): [
+        "The static coordinates enter as $\\tan p = \\tanh(u/2\\ell)$ and $\\tan q = \\tanh(v/2\\ell)$, with "
+        "$u, v = ct \\mp \\ell\\,\\mathrm{artanh}(r/\\ell)$, and cover the triangle about the observer; their "
+        "horizon $r = \\ell$ is the pair of null lines that meet on the edge. De Sitter space has a second static "
+        "patch about the opposite observer, and here that patch is this one with $t$ reversed. The two triangles "
+        "beyond the horizons are the halves of one region, joined across the edge.",
+    ],
+    ("elliptic_de_sitter", "planar"): [
+        "With the conformal time $\\tau = -\\ell e^{-ct/\\ell}$ and $\\rho = \\sqrt{x^2 + y^2 + z^2}$ the planar "
+        "chart enters de Sitter's square as $p = \\pi/4 + \\arctan((\\tau - \\rho)/\\ell)$ and "
+        "$q = \\pi/4 + \\arctan((\\tau + \\rho)/\\ell)$, the half of the square above the observer's past horizon.",
+        "The part of that half beyond the equator is carried by the identification into the triangle below the "
+        "past horizon, so the planar chart covers the whole space but the horizon itself, the null surface "
+        "$t \\to -\\infty$.",
     ],
     ("anti_de_sitter", "global"): [
         "Anti-de Sitter spacetime, its universal cover, each point in the diagram a 2-sphere. "
