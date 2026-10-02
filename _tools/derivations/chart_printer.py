@@ -705,17 +705,21 @@ class Reduced:
 
 class Chart:
     def __init__(self, coords_tex, parameters, chart_line_element, printer_options=None, pretty=None, time=None,
-                 bracketed=None, reduce=None):
+                 bracketed=None, reduce=None, order=None):
         # Time is already the chart coordinate here, so no coordinate is scaled by c. A chart
         # whose components depend on the time names it as `time`: its symbol then stands for
         # x^0 = ct in the geometry, and every value is printed and read back with it written
         # as c times the time the file prints, as Milne's comoving c^2t^2 is.
         self.coords_tex = coords_tex
-        self.reader = vm.Reader(coords_tex, parameters, ())
+        self.reader = vm.Reader(coords_tex, parameters, (), kept=order)
         self.symbols = [self.reader.symbol[name] for name in coords_tex]
         self.bare = {self.reader.symbol[time]: self.reader.c * self.reader.symbol[time]} if time else {}
         g = vm.metric_from_line_element(self.reader, chart_line_element, coords_tex)
-        self.geo = vm.Geometry(g, self.symbols, 10 ** 6)
+        # A chart kept to an order, as the checker's ORDERS declares it, builds every tensor as a
+        # polynomial to that order, and a value written by hand is compared with it to that order.
+        self.geo = vm.Geometry(g, self.symbols, 10 ** 6, self.reader if order else None)
+        if order and not reduce:
+            reduce = self.reader.truncated
         # A chart that holds a defined name as a function, as Szekeres's E is held, passes
         # `reduce`, which writes a value in generators with no relation left among them, so
         # that a value which vanishes for the name's definition is exactly zero.

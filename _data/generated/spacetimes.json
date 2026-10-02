@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 77,
+  "count": 78,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -7333,6 +7333,361 @@
       ]
     },
     {
+      "id": "hartle_thorne",
+      "name": "Hartle-Thorne Slowly Rotating Star",
+      "short_name": "Hartle-Thorne",
+      "description": "The gravitational field outside a slowly rotating star, through second order in its spin: Schwarzschild's exterior, the dragging of inertial frames, and a quadrupole moment set by the star's interior. Far from the star it is the field of Lense and Thirring, whose frame dragging Gravity Probe B measured around the Earth.",
+      "tags": [
+        "vacuum",
+        "stationary",
+        "axisymmetric",
+        "rotating",
+        "angular momentum",
+        "frame dragging",
+        "gravitomagnetic",
+        "quadrupole",
+        "slow rotation",
+        "approximate solution",
+        "exterior",
+        "neutron star",
+        "Lense-Thirring",
+        "Painlevé-Gullstrand",
+        "weak field",
+        "asymptotically flat",
+        "no horizon",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass enters as the length $m = GM/c^2$ and the spin as the length $a = J/(Mc)$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "special_case",
+          "text": "The black hole is the star with $q = a^2$. Kerr's metric expanded to second order in $a$ is Hartle and Thorne's with that quadrupole moment, after a change of $r$ and $\\theta$ [hartlethorne1968]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Hartle and Thorne's star with the spin switched off. At $a = 0$ and $q = 0$ the field is Schwarzschild's."
+        },
+        {
+          "id": "tov",
+          "kind": "family",
+          "text": "The star before it turns. Hartle built his rotating star as a perturbation of this one, and Hartle and Thorne's field is the outside of the result [hartle1967]."
+        }
+      ],
+      "references": [
+        "pfister2007",
+        "mashhoon1984",
+        "baines2021",
+        "brill1966",
+        "hartle1967",
+        "hartlethorne1968",
+        "hewish1968",
+        "kerr1963",
+        "laarakkers1999",
+        "berti2005",
+        "everitt2011",
+        "schiff1960",
+        "ciufolini2004",
+        "venkatraman2020"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hartle_thorne.json",
+      "charts": [
+        {
+          "id": "hartle_thorne",
+          "name": "Hartle-Thorne",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the surface of the star)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the rotating star as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin per unit mass, $a = J/(Mc)$ with $J$ the angular momentum, a length"
+            },
+            {
+              "symbol": "q",
+              "description": "Mass quadrupole moment per unit mass, $q = Q/M$, an area, positive for an oblate star; Kerr's value is $q = a^2$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the star's surface, with $R > 2m$; the star itself fills $r < R$"
+            },
+            {
+              "symbol": "L = \\ln\\left(\\dfrac{r}{r - 2m}\\right)",
+              "description": "The logarithm in Hartle and Thorne's two Legendre functions of the second kind"
+            },
+            {
+              "symbol": "A = \\dfrac{15r\\left(r - 2m\\right)}{16m^2}L - \\dfrac{5\\left(r - m\\right)\\left(3r^2 - 6mr - 2m^2\\right)}{8mr\\left(r - 2m\\right)}",
+              "description": "Hartle and Thorne's $\\tfrac{5}{8}Q_2^{\\,2}(r/m - 1)$, which falls off as $m^3/r^3$"
+            },
+            {
+              "symbol": "B = \\dfrac{5\\left(3r^2 - 6mr + m^2\\right)}{4r\\left(r - 2m\\right)} - \\dfrac{15\\left(r - m\\right)}{8m}L",
+              "description": "Their $\\tfrac{5}{4}\\,m\\,Q_2^{\\,1}(r/m - 1)/\\sqrt{r(r - 2m)}$, which falls off as $m^4/2r^4$"
+            },
+            {
+              "symbol": "P_2 = \\dfrac{3\\cos^2\\theta - 1}{2}",
+              "description": "The Legendre polynomial $P_2(\\cos\\theta)$"
+            },
+            {
+              "symbol": "F = 1 - \\dfrac{2m}{r} + \\dfrac{2a^2m^2}{r^4}",
+              "description": "Schwarzschild's $1 - 2m/r$ with the second order term of the spin"
+            },
+            {
+              "symbol": "h_2 = \\dfrac{a^2m}{r^3}\\left(1 + \\dfrac{m}{r}\\right) + \\dfrac{q - a^2}{m^2}A",
+              "description": "Quadrupole part of $g_{tt}$; far from the star $h_2 \\to qm/r^3$"
+            },
+            {
+              "symbol": "j_2 = \\dfrac{a^2m}{r^3}\\left(1 - \\dfrac{5m}{r}\\right) + \\dfrac{q - a^2}{m^2}A",
+              "description": "Quadrupole part of $g_{rr}$"
+            },
+            {
+              "symbol": "k_2 = -\\dfrac{a^2m}{r^3}\\left(1 + \\dfrac{2m}{r}\\right) + \\dfrac{q - a^2}{m^2}\\left(B - A\\right)",
+              "description": "Quadrupole part of $g_{\\theta\\theta}$ and $g_{\\phi\\phi}$"
+            }
+          ],
+          "convention": "We use Hartle and Thorne's coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and count $a$ as first order and $q$ as second. The metric and its inverse are written whole, and the connection and curvature keep terms through second order. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -F\\left(1 + 2h_2\\,P_2\\right)c^2dt^2 + \\dfrac{1 - 2j_2\\,P_2}{F}dr^2 + r^2\\left(1 + 2k_2\\,P_2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\left(d\\phi - \\dfrac{2am}{r^3}c\\,dt\\right)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-F\\left(1 + 2h_2\\,P_2\\right) + \\dfrac{4a^2m^2\\sin^2\\theta}{r^4}\\left(1 + 2k_2\\,P_2\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2am\\sin^2\\theta}{r}\\left(1 + 2k_2\\,P_2\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{2am\\sin^2\\theta}{r}\\left(1 + 2k_2\\,P_2\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1 - 2j_2\\,P_2}{F}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\left(1 + 2k_2\\,P_2\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta\\left(1 + 2k_2\\,P_2\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48m^2}{r^6} - \\dfrac{144a^2\\,m^2\\left(8r^2\\cos^2\\theta - r^2 + m\\,r\\cos^2\\theta - m\\,r - 6m^2\\cos^2\\theta + 2m^2\\right)}{r^{10}} - \\dfrac{15\\left(3\\cos^2\\theta - 1\\right)\\left(3L\\,r^4 - 6m\\,r^3 - 6m^2\\,r^2 - 8m^3\\,r - 12m^4\\right)\\left(q - a^2\\right)}{m^3\\,r^7}"
+        },
+        {
+          "id": "lense_thirring",
+          "name": "Lense-Thirring",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the surface of the star)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the rotating star as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin per unit mass, $a = J/(Mc)$ with $J$ the angular momentum, a length"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the star's surface, with $R > 2m$; the star itself fills $r < R$"
+            }
+          ],
+          "convention": "We use isotropic coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and count $m$ as first order, which makes the spin term $am$ first order too. The inverse metric, the connection, and the curvature keep terms through first order. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)c^2dt^2 + \\left(1 + \\dfrac{2m}{r}\\right)\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right) - \\dfrac{4am\\sin^2\\theta}{r}c\\,dt\\,d\\phi",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2am\\sin^2\\theta}{r}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{2am\\sin^2\\theta}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1 + \\dfrac{2m}{r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\left(1 + \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta\\left(1 + \\dfrac{2m}{r}\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "painleve_gullstrand",
+          "name": "Painlevé-Gullstrand",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the surface of the star)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the rotating star as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin per unit mass, $a = J/(Mc)$ with $J$ the angular momentum, a length"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the star's surface, with $R > 2m$; the star itself fills $r < R$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\theta, \\phi)$ of Joshua Baines, Thomas Berry, Alex Simpson, and Matt Visser, whose $t$ carries dimensions of time and is the proper time of an observer falling from rest far away with no angular momentum. Every component is exact for the line element as written, which agrees with Hartle and Thorne's to first order in $a$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\left(dr + \\sqrt{\\dfrac{2m}{r}}\\,c\\,dt\\right)^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\left(d\\phi - \\dfrac{2am}{r^3}c\\,dt\\right)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} - \\dfrac{4a^2m^2\\sin^2\\theta}{r^4}\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "r"
+              ],
+              "value": "\\sqrt{\\dfrac{2m}{r}}"
+            },
+            {
+              "indices": [
+                "r",
+                "t"
+              ],
+              "value": "\\sqrt{\\dfrac{2m}{r}}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2am\\sin^2\\theta}{r}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{2am\\sin^2\\theta}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{18a^2\\,m^2\\sin^2\\theta}{r^6}",
+          "kretschmann": "K = \\dfrac{12m^2\\left(297a^4\\,m^2\\sin^4\\theta + 24a^2\\,r^4\\sin^2\\theta - 36a^2\\,r^4 + 72a^2\\,m\\,r^3\\sin^2\\theta + 4r^6\\right)}{r^{12}}"
+        }
+      ]
+    },
+    {
       "id": "hayward",
       "name": "Hayward Regular Black Hole",
       "short_name": "Hayward",
@@ -8497,6 +8852,11 @@
           "id": "near_horizon_extreme_kerr",
           "kind": "special_case",
           "text": "Kerr spinning as fast as it can, seen from just outside the horizon. The region there is a throat without end, with four symmetries where Kerr has two [bardeen1999]."
+        },
+        {
+          "id": "hartle_thorne",
+          "kind": "generalisation",
+          "text": "The field outside a slowly rotating star, to second order in its spin. The star's quadrupole moment is free, and at Kerr's value, $Q = J^2/M$, the field is Kerr's metric to that order [hartlethorne1968]."
         }
       ],
       "references": [
@@ -8527,7 +8887,8 @@
         "mazza2021",
         "carter1968separable",
         "myers1986",
-        "bardeen1999"
+        "bardeen1999",
+        "hartlethorne1968"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -16072,6 +16433,11 @@
           "id": "black_string",
           "kind": "composite",
           "text": "Schwarzschild's black hole with one more direction of space added, along which nothing changes, so that the horizon is a cylinder. Ripples along it longer than about seven horizon radii grow [gregorylaflamme1993]."
+        },
+        {
+          "id": "hartle_thorne",
+          "kind": "generalisation",
+          "text": "The field outside a star that turns slowly. Rotation adds the dragging of inertial frames at first order in the spin and a quadrupole moment at second [hartlethorne1968]."
         }
       ],
       "references": [
@@ -16127,7 +16493,8 @@
         "hayward2006",
         "fisher1948",
         "janis1968",
-        "gregorylaflamme1993"
+        "gregorylaflamme1993",
+        "hartlethorne1968"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -19038,6 +19405,11 @@
           "id": "oppenheimer_snyder",
           "kind": "programme",
           "text": "With Hartland Snyder, a few months later, Oppenheimer followed a star too heavy for any equilibrium as it collapses [oppenheimersnyder1939]."
+        },
+        {
+          "id": "hartle_thorne",
+          "kind": "family",
+          "text": "The same star set turning slowly. James Hartle added rotation to these equations to second order in the angular velocity, and Hartle and Thorne's field is the outside of the result [hartle1967, hartlethorne1968]."
         }
       ],
       "references": [
@@ -19061,7 +19433,9 @@
         "abbott2018",
         "schwarzschild1916b",
         "buchdahl1959",
-        "oppenheimersnyder1939"
+        "oppenheimersnyder1939",
+        "hartle1967",
+        "hartlethorne1968"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tov.json",

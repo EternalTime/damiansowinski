@@ -209,6 +209,7 @@ import sys
 from dataclasses import dataclass, field, replace
 from decimal import Decimal
 from fractions import Fraction
+from functools import lru_cache
 from pathlib import Path
 
 import contourpy
@@ -785,6 +786,70 @@ TEO_RADIUS_INPUT = ("$r(l)$ from Teo's $l = \\pm\\left(\\sqrt{r(r - b_0)} + b_0\
                     "\\sqrt{r/b_0 - 1}\\right)\\right)$, inverted by Newton's method.")
 TEO_CONE = "future cone of no angular momentum"
 
+# Hartle and Thorne's star as every one of its diagrams draws it, in units of m = GM/c^2: the
+# surface at R = 6 m, 12.4 km for 1.4 solar masses, the spin a = m/4, and a quadrupole moment
+# four times Kerr's, q = 4a^2, inside the range Laarakkers and Poisson found for neutron stars.
+HT_STAR = {"m": 1, "a": "1/4", "q": "1/4", "R": 6}
+HT_SIMPLE = {"m": 1, "a": "1/4", "R": 6}
+HT_AXIS = {"theta": "0", "phi": "0"}
+HT_CONE = "future cone of no angular momentum"
+
+
+def ht_functions(r, a=0.25, q=0.25):
+    """Hartle and Thorne's F, h_2, j_2 and k_2 at m = 1, written out here from their equation (A1)
+    and never read from the file, so that the drawings can be checked against them."""
+    r = np.asarray(r, dtype=float)
+    L = np.log(r / (r - 2))
+    A = 15 * r * (r - 2) / 16 * L - 5 * (r - 1) * (3 * r ** 2 - 6 * r - 2) / (8 * r * (r - 2))
+    B = 5 * (3 * r ** 2 - 6 * r + 1) / (4 * r * (r - 2)) - 15 * (r - 1) / 8 * L
+    F = 1 - 2 / r + 2 * a ** 2 / r ** 4
+    h2 = a ** 2 / r ** 3 * (1 + 1 / r) + (q - a ** 2) * A
+    j2 = a ** 2 / r ** 3 * (1 - 5 / r) + (q - a ** 2) * A
+    k2 = -a ** 2 / r ** 3 * (1 + 2 / r) + (q - a ** 2) * (B - A)
+    return F, h2, j2, k2
+
+
+def _ht_speed(r, P2):
+    F, h2, j2, _ = ht_functions(r)
+    return np.sqrt((1 - 2 * j2 * P2) / (1 + 2 * h2 * P2)) / F
+
+
+@lru_cache(maxsize=None)
+def _ht_table(P2):
+    r = 6 + np.concatenate([[0.0], np.geomspace(1e-9, 1e4, 400001)])
+    speed = _ht_speed(r, P2)
+    return r, speed, np.concatenate([[0.0], np.cumsum(0.5 * (speed[1:] + speed[:-1]) * np.diff(r))])
+
+
+def ht_star(r, P2):
+    """The tortoise coordinate of Hartle and Thorne's chart on the axis, P_2 = 1, or on the equator
+    with phi divided out, P_2 = -1/2, at the declared star: the quadrature of sqrt(-g_rr/g_tt) =
+    sqrt((1 - 2j_2 P_2)/(1 + 2h_2 P_2))/F from the surface r = 6m, where it vanishes, by the
+    trapezoid rule on a table and on the last part of a cell. Past r = 10^4 m, where the terms of
+    second order are below 10^-13, it runs on as Schwarzschild's."""
+    r = np.asarray(r, dtype=float)
+    grid, speed, table = _ht_table(P2)
+    top = grid[-1]
+    inside = np.clip(r, 6.0, top)
+    i = np.clip(np.searchsorted(grid, inside, side="right") - 1, 0, grid.size - 1)
+    near = table[i] + 0.5 * (speed[i] + _ht_speed(inside, P2)) * (inside - grid[i])
+    far = table[-1] + (r - top) + 2 * np.log(np.maximum(r, top + 1) - 2) - 2 * np.log(top - 2)
+    return np.where(r <= top, near, far)
+
+
+def pg_out(r):
+    """The integral of dr/(1 - sqrt(2m/r)) at m = 1, which t minus it keeps along an outgoing ray of
+    the Painleve-Gullstrand chart, zero at the surface r = 6m."""
+    f = lambda x: x + 2 * np.sqrt(2 * x) + 4 * np.log(np.sqrt(x / 2) - 1)
+    return f(np.asarray(r, dtype=float)) - f(6.0)
+
+
+def pg_in(r):
+    """The integral of dr/(1 + sqrt(2m/r)) at m = 1, which t plus it keeps along an ingoing ray."""
+    f = lambda x: x - 2 * np.sqrt(2 * x) + 4 * np.log(np.sqrt(x / 2) + 1)
+    return f(np.asarray(r, dtype=float)) - f(6.0)
+
+
 DIAGRAMS = [
     *[Diagram("aichelburg_sexl", "null_cartesian", view, f"$\\rho = \\rho_0/{rho[2:]}$", ("u", "v"), (-3, 3, -2.5, 3.5),
               "$z\\;[8GE/c^4]$", "$ct\\;[8GE/c^4]$", {"G": 1, "E": "1/8", "rho_0": 1}, {"x": rho, "y": "0"},
@@ -1075,6 +1140,20 @@ DIAGRAMS = [
     Diagram("fisher_jnw", "harmonic", "radial", "$t$ and $u$", ("t", "u"), (0, 4, -4, 4),
             "$ku$", "$ct/k$", FJNW_HARMONIC, EQUATOR, families=("outgoing", "ingoing"), areal=True,
             areal_contours=(0.5, 1.0, 2.0, 4.0)),
+    # The slowly rotating star from its surface out. On the axis the dragging term vanishes and the
+    # plane of t and r holds its rays; on the equator the rays of no angular momentum are those of
+    # the plane with phi divided out. The weak field chart holds where m/r is small, and there
+    # its planes are flat to the eye, so none is drawn.
+    Diagram("hartle_thorne", "hartle_thorne", "axis", "$t$ and $r$ on the axis", ("t", "r"), (6, 14, -4, 4),
+            "$r/m$", "$ct/m$", HT_STAR, HT_AXIS, lines=(("surface", "r", "6", "the surface of the star, $r = R$"),)),
+    Diagram("hartle_thorne", "hartle_thorne", "equator", "$t$ and $r$ on the equator", ("t", "r"), (6, 14, -4, 4),
+            "$r/m$", "$ct/m$", HT_STAR, {"theta": "pi/2"}, quotient="phi", cone=HT_CONE,
+            lines=(("surface", "r", "6", "the surface of the star, $r = R$"),)),
+    Diagram("hartle_thorne", "painleve_gullstrand", "axis", "$t$ and $r$ on the axis", ("t", "r"), (6, 14, -4, 4),
+            "$r/m$", "$ct/m$", HT_SIMPLE, HT_AXIS, lines=(("surface", "r", "6", "the surface of the star, $r = R$"),)),
+    Diagram("hartle_thorne", "painleve_gullstrand", "equator", "$t$ and $r$ on the equator", ("t", "r"),
+            (6, 14, -4, 4), "$r/m$", "$ct/m$", HT_SIMPLE, {"theta": "pi/2"}, quotient="phi", cone=HT_CONE,
+            lines=(("surface", "r", "6", "the surface of the star, $r = R$"),)),
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -2773,6 +2852,47 @@ CAPTIONS = {
         "$e^{2(k - m)u}/4k^2$ at large $u$. A ray moving toward larger $u$ runs through all of it in a finite "
         "time and reaches the singularity $1.6\\,k/c$ after passing $ku = 1$. The faint vertical lines are "
         "the spheres of areal radius $4k$, $2k$, $k$, and $k/2$, at $ku = 0.28$, $0.64$, $1.5$, and $2.8$.",
+    ],
+    ("hartle_thorne", "hartle_thorne", "axis"): [
+        "The plane of $t$ and $r$ on the axis of rotation ($\\theta = 0$) from the surface of the star out "
+        "($R = 6\\,m$, $a = m/4$, $q = 4a^2$). The dragging of frames carries a factor $\\sin^2\\theta$ and vanishes "
+        "on the axis, so these rays are null geodesics that stay on it, with edges "
+        "$dr/d(ct) = \\pm F\\sqrt{(1 + 2h_2)/(1 - 2j_2)}$.",
+        "The cones are narrowest at the surface, where $dr/d(ct) = \\pm 0.6691$, and open to 45° far from the "
+        "star. Schwarzschild's edges at the same radius are $\\pm 0.6667$, so at these values the spin and the "
+        "quadrupole moment move each edge by less than half a per cent, and the chart ends at $r = R$, where the "
+        "star begins.",
+    ],
+    ("hartle_thorne", "hartle_thorne", "equator"): [
+        "The plane of $t$ and $r$ on the equator ($\\theta = \\pi/2$) with $\\phi$ divided out, "
+        "$-F(1 - h_2)c^2dt^2 + (1 + j_2)dr^2/F$, the metric orthogonal to the circles of $\\phi$, from the "
+        "surface of the star out ($R = 6\\,m$, $a = m/4$, $q = 4a^2$). Its null curves are the shadows on $t$ and "
+        "$r$ of the null geodesics of zero angular momentum, each turning in $\\phi$ at $d\\phi/d(ct) = 2am/r^3$, "
+        "and each cone is the future cone of the directions of zero angular momentum.",
+        "At the surface such a ray is carried around the axis at $2amc/R^2 = 0.014\\,c$, the dragging of inertial "
+        "frames, which falls off as $1/r^2$. The edges of the cones there are $dr/d(ct) = \\pm 0.6656$, "
+        "a little inside Schwarzschild's $\\pm 0.6667$, where on the axis they lie a little outside.",
+    ],
+    ("hartle_thorne", "painleve_gullstrand", "axis"): [
+        "The plane of $t$ and $r$ on the axis of rotation ($\\theta = 0$) from the surface of the star out "
+        "($R = 6\\,m$, $a = m/4$), with $t$ the proper time of an observer falling from rest far away. The edges of "
+        "the cones are $dr/d(ct) = \\pm 1 - \\sqrt{2m/r}$: each is a 45° cone tipped inward by the speed of that "
+        "observer, $0.58\\,c$ at the surface.",
+        "$ct + r - 2\\sqrt{2mr} + 4m\\ln\\left(\\sqrt{r/2m} + 1\\right)$ is constant along an ingoing ray and "
+        "$ct - r - 2\\sqrt{2mr} - 4m\\ln\\left(\\sqrt{r/2m} - 1\\right)$ along an outgoing one. The observer's "
+        "world line, $dr/d(ct) = -\\sqrt{2m/r}$, runs midway between the two edges of every cone, and the "
+        "chart ends at $r = R$, where the star begins.",
+    ],
+    ("hartle_thorne", "painleve_gullstrand", "equator"): [
+        "The plane of $t$ and $r$ on the equator ($\\theta = \\pi/2$) with $\\phi$ divided out, "
+        "$-c^2dt^2 + \\left(dr + \\sqrt{2m/r}\\,c\\,dt\\right)^2$, the metric orthogonal to the circles of $\\phi$, "
+        "from the surface of the star out ($R = 6\\,m$, $a = m/4$). It is the metric of the axis for every spin, so "
+        "the shadows on $t$ and $r$ of the null geodesics of zero angular momentum are the rays of the axis, each "
+        "turning in $\\phi$ at $d\\phi/d(ct) = 2am/r^3$, and each cone is the future cone of the directions of "
+        "zero angular momentum.",
+        "An observer falling from rest far away with no angular momentum moves inward at $\\sqrt{2m/r}\\,c$, "
+        "midway between the two edges of every cone, and turns about the axis at the same $2amc/r^3$, "
+        "which at the surface is a speed of $0.014\\,c$ around it.",
     ],
     ("morris_thorne", "spherical", "radial"): [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). The metric leaves $\\Phi(r)$ "
@@ -6892,6 +7012,17 @@ def _kerr_de_sitter_forms():
 
 
 CLOSED_FORMS.update(_kerr_de_sitter_forms())
+
+# Hartle and Thorne's star: the tortoise coordinate of ht_star on the axis and on the equator, and
+# the two quadratures of the Painleve-Gullstrand plane, which is Schwarzschild's on both.
+CLOSED_FORMS.update({
+    ("hartle_thorne", "hartle_thorne", "axis"):
+        (lambda t, r: t + ht_star(r, 1.0), lambda t, r: t - ht_star(r, 1.0), None),
+    ("hartle_thorne", "hartle_thorne", "equator"):
+        (lambda t, r: t + ht_star(r, -0.5), lambda t, r: t - ht_star(r, -0.5), None),
+    ("hartle_thorne", "painleve_gullstrand", "axis"): (lambda t, r: t + pg_in(r), lambda t, r: t - pg_out(r), None),
+    ("hartle_thorne", "painleve_gullstrand", "equator"): (lambda t, r: t + pg_in(r), lambda t, r: t - pg_out(r), None),
+})
 
 
 def verify(metrics=()):

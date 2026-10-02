@@ -40,6 +40,11 @@
       "id": "oppenheimer_snyder",
       "kind": "programme",
       "text": "With Hartland Snyder, a few months later, Oppenheimer followed a star too heavy for any equilibrium as it collapses [oppenheimersnyder1939]."
+    },
+    {
+      "id": "hartle_thorne",
+      "kind": "family",
+      "text": "The same star set turning slowly. James Hartle added rotation to these equations to second order in the angular velocity, and Hartle and Thorne's field is the outside of the result [hartle1967, hartlethorne1968]."
     }
   ],
   "references": [
@@ -63,7 +68,9 @@
     "abbott2018",
     "schwarzschild1916b",
     "buchdahl1959",
-    "oppenheimersnyder1939"
+    "oppenheimersnyder1939",
+    "hartle1967",
+    "hartlethorne1968"
   ],
   "coordinates": [
     {

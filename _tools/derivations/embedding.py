@@ -7871,6 +7871,61 @@ def szekeres(ck, src):
                        "density.")]
 
 
+def hartle_thorne(ck, src):
+    """The equator outside the declared star, R = 6m, a = m/4 and q = 4a^2, at one moment of each chart's
+    time, from the surface out to 3R.
+
+    Hartle and Thorne's t: the dragging term drops out of a moment of constant t, and on the equator,
+    where P_2 = -1/2, the slice is (1 + j_2)/F dr^2 + r^2 (1 - k_2) dphi^2, Flamm's paraboloid of the
+    star's mass with corrections of second order in the spin. Each circle is checked against
+    r sqrt(1 - k_2) with nr.ht_functions, which writes their functions out independently of the file,
+    and with a = q = 0 the same slice is checked to be Flamm's z = 2 sqrt(2m(r - 2m)). The vacuum
+    paraboloid is drawn on inside R, down to its throat, as under the other stars.
+
+    A moment of the Painleve-Gullstrand time has g_rr = 1 and g_phiphi = r^2 on its equator, a flat
+    plane, which is checked and stated."""
+    R, top = 6.0, 18.0
+    size = 2 * top
+    sl = Slice(src, "hartle_thorne", "hartle_thorne", "r", "\\phi", {"t": 0, **EQUATOR}, nr.HT_STAR)
+    still = Slice(src, "hartle_thorne", "hartle_thorne", "r", "\\phi", {"t": 0, **EQUATOR},
+                  {"m": 1, "a": 0, "q": 0, "R": 6})
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 2})
+    vacuum = Piece("vacuum", "reference", outer, 2.0, R, 0.0, 1,
+                   (("throat", "the throat $r = 2m$ of the vacuum, which the star replaces"), ("join", None)),
+                   [(2.0, "reference", None)], size, reference=True)
+    zR = vacuum.at(R)[1]
+    radii = (9.0, 12.0, 15.0)
+    ends = (("edge", "the surface of the star, $r = R$, inside which the slice runs on through the star"),
+            ("edge", "the surface runs on to $r \\to \\infty$"))
+    marks = [(R, "surface", "$r = R$")] + [(r, "r", None) for r in radii] + [(top, "r", None)]
+    ext = Piece("exterior", "sheet", sl, R, top, zR, 1, ends, marks, size)
+    bare = Piece("exterior", "sheet", still, R, top, zR, 1, ends, marks, size)
+    ck.isometry("Hartle-Thorne, the exterior", ext)
+    ck.radius("Hartle-Thorne, the exterior, rho = r sqrt(1 - k_2)", ext,
+              lambda r: r * np.sqrt(1 - nr.ht_functions(r)[3]), size)
+    ck.form("Hartle-Thorne without rotation, Flamm's z = 2 sqrt(2m (r - 2m))", bare,
+            lambda r: 2 * np.sqrt(2 * (r - 2)), size)
+    shift = float(np.max(np.abs(ext.z - np.interp(ext.x, bare.x, bare.z))))
+    ck.add("Hartle-Thorne: the rotation moves the surface by less than m/50", shift, 0.02)
+    surface = Surface([ext, vacuum])
+    fig = figure_of([surface], {"sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *ext.at(R), "$r = R$", dx=10)
+    ring_label(fig, [0, 0, 0], *ext.at(12.0), "$2R$")
+    ring_label(fig, [0, 0, 0], *ext.at(top), "$3R$")
+    ring_label(fig, [0, 0, 0], *vacuum.at(2.0), "$2m$", side=-1, dx=8)
+    fig.legend("fill", "cover", "the exterior $r > R$ at $t = 0$, which $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $9$, $12$, $15$, and $18\\,m$")
+    fig.legend("line", "surface", "the surface of the star, $r = R$")
+    fig.legend("line", "reference", "the vacuum paraboloid inside $R$, down to its throat at $r = 2m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    flat = Slice(src, "hartle_thorne", "painleve_gullstrand", "r", "\\phi", {"t": 0, **EQUATOR}, nr.HT_SIMPLE)
+    ck.plane("Hartle-Thorne, the Painleve-Gullstrand equator", flat, np.linspace(R, 200, 400))
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings="$m = GM/c^2 = 1$, the unit of every length, $R = 6\\,m$, $a = m/4$, and $q = 4a^2$.",
+                 stops=["Every moment of the Painlevé-Gullstrand time is flat, $dr^2 + r^2(d\\theta^2 + "
+                        "\\sin^2\\theta\\,d\\phi^2)$, so its equator is a plane."])]
+
+
 def flat_slices(ck, src, metric_id, system_id, time="t"):
     """Check that every slice of constant `time` of a coordinate system is flat: its spatial
     metric has no cross term and no component that depends on a spatial coordinate, so at
@@ -7967,6 +8022,7 @@ DRAWN = {
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "photon_rocket": photon_rocket,
     "fisher_jnw": fisher_jnw,
+    "hartle_thorne": hartle_thorne,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -8903,6 +8959,16 @@ CAPTIONS = {
         "The cylinders narrow as $\\tau$ climbs toward $0$ and stop at the circumference $b$; in Misner space, "
         "where $b = 0$, they close up. The chronology horizon holds no closed null geodesic, and the closed "
         "timelike curves lie beyond it, in the wedge $X > c|T|$.",
+    ],
+    ("hartle_thorne", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) outside a slowly rotating star at one moment of $t$ "
+        "($R = 6\\,m$, $a = m/4$, $q = 4a^2$), drawn as a surface in flat space with every distance along it the "
+        "metric distance. The dragging term drops out of a moment of constant $t$, which leaves "
+        "$(1 + j_2)dr^2/F + r^2(1 - k_2)d\\phi^2$: Flamm's paraboloid of the star's mass, with corrections of "
+        "second order in the spin.",
+        "At these values the circle at the surface has radius $6.0054\\,m$, and the whole surface lies within "
+        "$m/50$ of Flamm's. The faint surface inside $R$ is the vacuum paraboloid, down to its throat at "
+        "$r = 2m$, which the star replaces.",
     ],
     ("minkowski", "plane"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Minkowski space at one moment of $t$, drawn as a "

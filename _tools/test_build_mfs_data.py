@@ -4164,7 +4164,12 @@ class Slices(unittest.TestCase):
               "light_beam/cartesian/lens",
               # The near-NHEK patch of the extreme Kerr throat, ct > r_0^2/r of the Poincare chart, which
               # the moment tau = 0 embedded does not enter.
-              "near_horizon_extreme_kerr/near_nhek/equator", "conformal near_horizon_extreme_kerr/near_nhek"}
+              "near_horizon_extreme_kerr/near_nhek/equator", "conformal near_horizon_extreme_kerr/near_nhek",
+              # The slowly rotating star's axis, which the embedded equatorial plane does not meet, and its
+              # Painleve-Gullstrand line element, which agrees with Hartle and Thorne's to first order in the
+              # spin and no further, while the moment embedded is one of Hartle and Thorne's t.
+              "hartle_thorne/hartle_thorne/axis", "hartle_thorne/painleve_gullstrand/axis",
+              "hartle_thorne/painleve_gullstrand/equator", "conformal hartle_thorne/painleve_gullstrand"}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()

@@ -6,7 +6,7 @@ khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_sh
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
-black_string, myers_perry and near_horizon_extreme_kerr, and Godel's cylindrical chart.
+black_string, myers_perry, near_horizon_extreme_kerr and hartle_thorne, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -5997,6 +5997,267 @@ def hayward_check(chart):
 
 
 CHARTS["hayward"] = [lambda s=s: hayward(s) for s in HAYWARD_CHARTS]
+# -- Hartle-Thorne ---------------------------------------------------------------------
+
+HT_CHARTS = ["hartle_thorne", "lense_thirring", "painleve_gullstrand"]
+HT_DOMAINS = ["t \\in (-\\infty, \\infty)", "r \\in (R, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+              "r = R \\;\\text{(the surface of the star)}"]
+HT_NAMES = [
+    "L = \\ln\\left(\\dfrac{r}{r - 2m}\\right)",
+    "A = \\dfrac{15r\\left(r - 2m\\right)}{16m^2}L - \\dfrac{5\\left(r - m\\right)\\left(3r^2 - 6mr - 2m^2\\right)}"
+    "{8mr\\left(r - 2m\\right)}",
+    "B = \\dfrac{5\\left(3r^2 - 6mr + m^2\\right)}{4r\\left(r - 2m\\right)} - \\dfrac{15\\left(r - m\\right)}{8m}L",
+    "P_2 = \\dfrac{3\\cos^2\\theta - 1}{2}",
+    "F = 1 - \\dfrac{2m}{r} + \\dfrac{2a^2m^2}{r^4}",
+    "h_2 = \\dfrac{a^2m}{r^3}\\left(1 + \\dfrac{m}{r}\\right) + \\dfrac{q - a^2}{m^2}A",
+    "j_2 = \\dfrac{a^2m}{r^3}\\left(1 - \\dfrac{5m}{r}\\right) + \\dfrac{q - a^2}{m^2}A",
+    "k_2 = -\\dfrac{a^2m}{r^3}\\left(1 + \\dfrac{2m}{r}\\right) + \\dfrac{q - a^2}{m^2}\\left(B - A\\right)",
+]
+
+
+def hartle_thorne(system):
+    """The field outside a slowly rotating star, in three charts.
+
+    hartle_thorne        Hartle and Thorne's exterior, their equation (A1) of 1968, through second
+                         order in the spin, with the mass m = GM/c^2, the spin a = J/(Mc) and the
+                         quadrupole moment q = Q/M; A and B are their Legendre functions of the
+                         second kind, (5/8) Q_2^2(r/m - 1) and (5/4) m Q_2^1(r/m - 1)/sqrt(r(r - 2m));
+    lense_thirring       Lense and Thirring's field of 1918 in isotropic coordinates, linear in the
+                         mass and the angular momentum;
+    painleve_gullstrand  the form of Baines, Berry, Simpson and Visser of 2021, their equation (6),
+                         kept exact.
+
+    The first two are kept to an order, which vm.ORDERS declares: every tensor is a polynomial to
+    that order, and each is printed around the powers of the small parameters, the first with the
+    logarithm written L and the departure from Kerr's quadrupole moment written q - a^2.
+    hartle_thorne_check holds each chart to what it claims before it is written, and
+    hartle_thorne.md beside this file is the derivation."""
+    coords = ["t", "r", "\\theta", "\\phi"]
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\left(d\\phi - \\dfrac{2am}{r^3}{c}dt\\right)^2\\right)"
+    if system == "hartle_thorne":
+        parameters = ["m", "a", "q", "R"] + HT_NAMES
+        name = "Hartle-Thorne"
+        line = ("ds^2 = -F\\left(1 + 2h_2\\,P_2\\right){c2}dt^2 + \\dfrac{1 - 2j_2\\,P_2}{F}dr^2 + "
+                "r^2\\left(1 + 2k_2\\,P_2\\right)" + sphere)
+    elif system == "lense_thirring":
+        parameters = ["m", "a", "R"]
+        name = "Lense-Thirring"
+        line = ("ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right){c2}dt^2 + \\left(1 + \\dfrac{2m}{r}\\right)"
+                "\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right) - "
+                "\\dfrac{4am\\sin^2\\theta}{r}{c}dt\\,d\\phi")
+    else:
+        parameters = ["m", "a", "R"]
+        name = "Painlevé-Gullstrand"
+        line = "ds^2 = -{c2}dt^2 + \\left(dr + \\sqrt{\\dfrac{2m}{r}}\\,{c}dt\\right)^2 + r^2" + sphere
+
+    def written(c):
+        return line.replace("{c2}", "c^2" if c else "").replace("{c}", "c\\," if c else "")
+
+    probe = vm.Reader(coords, parameters, ())
+    r, th = probe.symbol["r"], probe.symbol["\\theta"]
+    m, a = probe.parameters["m"], probe.parameters["a"]
+    spec = {
+        "metric_id": "hartle_thorne",
+        "system": {"id": system, "name": name, "coords": coords, "domains": HT_DOMAINS, "parameters": parameters,
+                   "line_element": written(True)},
+        "chart_line_element": written(False),
+        "printer": {"lead": [a, r, m, sp.cos(th), sp.sin(th)], "factors": [a, m, r, sp.cos(th), sp.sin(th)]},
+        "check": hartle_thorne_check,
+    }
+    if system == "hartle_thorne":
+        q = probe.parameters["q"]
+        # The logarithm and the departure from Kerr's quadrupole moment, each printed under the
+        # name the chart gives it and read back as what it names.
+        log, kerr = sp.Symbol("L", positive=True), sp.Symbol("HT_departure", real=True)
+        spec["printer"] = {"lead": [a, kerr, log, r, m, sp.cos(th), sp.sin(th)], "rising": [kerr, a],
+                           "factors": [a, kerr, log, m, r, sp.cos(th), sp.sin(th)], "named": {kerr: "q - a^2"}}
+        spec["pretty"] = spec["bracketed"] = hartle_thorne_orders(a, q, kerr, log, th)
+        shape = "\\left(1 + 2k_2\\,P_2\\right)"
+        lapse = "F\\left(1 + 2h_2\\,P_2\\right)"
+        # The metric as the line element writes it, and its exact inverse, in the names of the chart.
+        spec["components"] = {
+            "metric_components": {
+                ("t", "t"): "-" + lapse + " + \\dfrac{4a^2m^2\\sin^2\\theta}{r^4}" + shape,
+                ("t", "\\phi"): "-\\dfrac{2am\\sin^2\\theta}{r}" + shape,
+                ("\\phi", "t"): "-\\dfrac{2am\\sin^2\\theta}{r}" + shape,
+                ("r", "r"): "\\dfrac{1 - 2j_2\\,P_2}{F}",
+                ("\\theta", "\\theta"): "r^2" + shape,
+                ("\\phi", "\\phi"): "r^2\\sin^2\\theta" + shape},
+            "inverse_metric_components": {
+                ("t", "t"): "-\\dfrac{1}{" + lapse + "}",
+                ("t", "\\phi"): "-\\dfrac{2am}{r^3" + lapse + "}",
+                ("\\phi", "t"): "-\\dfrac{2am}{r^3" + lapse + "}",
+                ("r", "r"): "\\dfrac{F}{1 - 2j_2\\,P_2}",
+                ("\\theta", "\\theta"): "\\dfrac{1}{r^2" + shape + "}",
+                ("\\phi", "\\phi"): ("\\dfrac{1}{r^2\\sin^2\\theta" + shape + "} - \\dfrac{4a^2m^2}{r^6"
+                                         + lapse + "}")}}
+    elif system == "lense_thirring":
+        drag = "-\\dfrac{2am\\sin^2\\theta}{r}"
+        weak, strong = "1 + \\dfrac{2m}{r}", "1 - \\dfrac{2m}{r}"
+        # The metric as the line element writes it, and its inverse to first order in the mass.
+        spec["components"] = {
+            "metric_components": {
+                ("t", "t"): "-\\left(" + strong + "\\right)", ("t", "\\phi"): drag, ("\\phi", "t"): drag,
+                ("r", "r"): weak, ("\\theta", "\\theta"): "r^2\\left(" + weak + "\\right)",
+                ("\\phi", "\\phi"): "r^2\\sin^2\\theta\\left(" + weak + "\\right)"},
+            "inverse_metric_components": {
+                ("t", "t"): "-\\left(" + weak + "\\right)", ("r", "r"): strong,
+                ("t", "\\phi"): "-\\dfrac{2am}{r^3}", ("\\phi", "t"): "-\\dfrac{2am}{r^3}",
+                ("\\theta", "\\theta"): "\\dfrac{1}{r^2}\\left(" + strong + "\\right)",
+                ("\\phi", "\\phi"): "\\dfrac{1}{r^2\\sin^2\\theta}\\left(" + strong + "\\right)"}}
+    else:
+        # Every half power of m and r comes from the speed sqrt(2m/r) at which the slices fall
+        # inward, so each value is written as a rational function times at most one power of it.
+        fall = sp.Symbol("HT_fall", positive=True)
+        text = "\\sqrt{\\dfrac{2m}{r}}"
+        spec["printer"] = {"lead": [a, r, m, sp.cos(th), sp.sin(th)], "overrides": {fall: text},
+                           "factors": [a, m, r, sp.cos(th), sp.sin(th), fall]}
+
+        root_m, root_r = sp.Dummy("root_m", positive=True), sp.Dummy("root_r", positive=True)
+
+        def pretty(value):
+            value = sp.sympify(value).subs(fall, sp.sqrt(2 * m / r))
+            halves = value.replace(lambda p: p.is_Pow and p.base in (m, r) and p.exp.is_Rational and p.exp.q == 2,
+                                   lambda p: (root_m if p.base == m else root_r) ** p.exp.p)
+            mirrored = halves.subs(root_m, -root_m)
+            back = {root_m: sp.sqrt(m), root_r: sp.sqrt(r)}
+            even = sp.cancel((halves + mirrored) / 2).subs(back)
+            odd = sp.cancel((halves - mirrored) * root_r / (2 * sp.sqrt(2) * root_m)).subs(back)
+            if any(e.has(sp.sqrt(m)) or e.has(sp.sqrt(r)) for e in (even, odd)):
+                raise AssertionError(f"hartle_thorne: {value} is not a rational function and one times sqrt(2m/r)")
+            return sp.factor(even) + fall * sp.factor(odd)
+
+        spec["pretty"] = spec["bracketed"] = pretty
+        drag = "-\\dfrac{2am\\sin^2\\theta}{r}"
+        spec["components"] = {
+            "metric_components": {
+                ("t", "t"): "-\\left(1 - \\dfrac{2m}{r} - \\dfrac{4a^2m^2\\sin^2\\theta}{r^4}\\right)",
+                ("t", "r"): text, ("r", "t"): text, ("t", "\\phi"): drag, ("\\phi", "t"): drag},
+            "inverse_metric_components": {
+                ("t", "r"): text, ("r", "t"): text, ("r", "r"): "1 - \\dfrac{2m}{r}",
+                ("t", "\\phi"): "-\\dfrac{2am}{r^3}", ("\\phi", "t"): "-\\dfrac{2am}{r^3}",
+                ("r", "\\phi"): "\\dfrac{2am}{r^3}" + text, ("\\phi", "r"): "\\dfrac{2am}{r^3}" + text,
+                ("\\phi", "\\phi"): "\\dfrac{1}{r^2\\sin^2\\theta} - \\dfrac{4a^2m^2}{r^6}"}}
+    return spec
+
+
+def hartle_thorne_orders(a, q, kerr, log, theta):
+    """A value of Hartle and Thorne's chart, a polynomial of second order, written order by order:
+    what Schwarzschild has, the term linear in a, the term in a^2 that Kerr has, and the term in
+    q - a^2 by which the star's quadrupole moment departs from Kerr's, which alone holds the
+    logarithm. Each is factored with sin^2 written 1 - cos^2, so that 3 cos^2(theta) - 1, twice
+    the Legendre polynomial, comes out as a factor, and (cos + 1)(cos - 1) is written -sin^2."""
+    s, c = sp.sin(theta), sp.cos(theta)
+
+    def factored(e):
+        e = e.replace(lambda p: p.is_Pow and p.base == s and p.exp.is_Integer and p.exp > 1,
+                      lambda p: s ** (int(p.exp) % 2) * (1 - c ** 2) ** (int(p.exp) // 2))
+        powers = {}
+        for f in sp.Mul.make_args(sp.factor(e)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        k = min(powers.get(c + 1, 0), powers.get(c - 1, 0))
+        if k > 0:
+            powers[c + 1] -= k
+            powers[c - 1] -= k
+            powers[s] = powers.get(s, 0) + 2 * k
+        return sp.Integer(-1) ** max(k, 0) * sp.Mul(*[base ** k for base, k in powers.items()])
+
+    def pretty(value):
+        value = sp.sympify(value).replace(lambda e: isinstance(e, sp.log), lambda e: log)
+        if value.has(kerr):
+            value = value.subs(kerr, q - a ** 2)
+        zeroth = value.subs({a: 0, q: 0})
+        first = sp.diff(value, a).subs({a: 0, q: 0})
+        second = sp.diff(value, a, 2).subs({a: 0, q: 0}) / 2
+        moment = sp.diff(value, q).subs({a: 0, q: 0})
+        if vm.norm(value - zeroth - a * first - a ** 2 * second - q * moment) != 0:
+            raise AssertionError(f"hartle_thorne: {value} is no polynomial of second order")
+        terms = [(1, zeroth), (a, first), (a ** 2, vm.norm(second + moment)), (kerr, moment)]
+        return sp.Add(*[power * factored(part) for power, part in terms if part != 0])
+
+    return pretty
+
+
+def hartle_thorne_kerr(chart):
+    """Hartle and Thorne's chart at q = a^2 is Kerr's metric to second order in a: Boyer and
+    Lindquist's line element with J = Ma, pulled back through
+
+        r -> r - (a^2/2r^3)((r + 2m)(r - m) - cos^2(theta) (r - 2m)(r + 3m)),
+        theta -> theta - (a^2/2r^3)(r + 2m) sin(theta) cos(theta),
+
+    Hartle and Thorne's (A5) with the sign of its cos^2 term as Berti, White, Maniopoulou and Bruni
+    correct it, agrees with it slot by slot to that order. With the sign as printed it does not."""
+    reader = chart.reader
+    t, r, th, ph = chart.symbols
+    m, a, q = (reader.parameters[k] for k in "maq")
+    published = chart.geo.g.subs(q, a ** 2)
+
+    def misses(sign):
+        rb = r - a ** 2 / (2 * r ** 3) * ((r + 2 * m) * (r - m) + sign * sp.cos(th) ** 2 * (r - 2 * m) * (r + 3 * m))
+        tb = th - a ** 2 / (2 * r ** 3) * (r + 2 * m) * sp.sin(th) * sp.cos(th)
+        sigma, delta = rb ** 2 + a ** 2 * sp.cos(tb) ** 2, rb ** 2 - 2 * m * rb + a ** 2
+        kerr = sp.zeros(4, 4)
+        kerr[0, 0] = -(1 - 2 * m * rb / sigma)
+        kerr[0, 3] = kerr[3, 0] = -2 * m * a * rb * sp.sin(tb) ** 2 / sigma
+        kerr[1, 1], kerr[2, 2] = sigma / delta, sigma
+        kerr[3, 3] = (rb ** 2 + a ** 2 + 2 * m * a ** 2 * rb * sp.sin(tb) ** 2 / sigma) * sp.sin(tb) ** 2
+        jacobian = sp.Matrix([[1, 0, 0, 0], [0, sp.diff(rb, r), sp.diff(rb, th), 0],
+                              [0, sp.diff(tb, r), sp.diff(tb, th), 0], [0, 0, 0, 1]])
+        pulled = jacobian.T * kerr * jacobian
+        return [(i, j) for i in range(4) for j in range(i, 4)
+                if reader.truncated(sp.expand_trig(pulled[i, j] - published[i, j])) != 0]
+
+    if misses(-1):
+        raise AssertionError(f"hartle_thorne: Kerr pulled back misses the chart at q = a^2 in the slots {misses(-1)}")
+    if not misses(1):
+        raise AssertionError("hartle_thorne: the transformation with +cos^2, as printed in (A5), should miss")
+
+
+def hartle_thorne_check(chart):
+    """What the three charts are held to before anything is written.
+
+    Hartle and Thorne's: the Ricci tensor vanishes through second order, and at q = a^2 the chart
+    is Kerr's metric to that order, hartle_thorne_kerr.
+    Lense and Thirring's: the Ricci tensor vanishes to first order in the mass, and the chart is
+    Hartle and Thorne's at first order in a, pulled back through r -> r + m, the isotropic radius
+    to first order in the mass.
+    Painleve and Gullstrand's: with dt -> dt + sqrt(2m/r) dr/(1 - 2m/r) and
+    dphi -> dphi + (2am/r^3) sqrt(2m/r) dr/(1 - 2m/r) the line element is exactly
+    -(1 - 2m/r) dt^2 + dr^2/(1 - 2m/r) + r^2 (dtheta^2 + sin^2(theta) (dphi - (2am/r^3) dt)^2), which
+    is Hartle and Thorne's with every term of second order dropped from F, h_2, j_2 and k_2; and
+    its Ricci scalar is Baines, Berry, Simpson and Visser's 18 J^2 sin^2(theta)/r^6 with J = am."""
+    reader = chart.reader
+    t, r, th, ph = chart.symbols
+    m, a = reader.parameters["m"], reader.parameters["a"]
+    f = 1 - 2 * m / r
+    drag = 2 * a * m / r ** 3
+    first = sp.diag(-f, 1 / f, r ** 2, r ** 2 * sp.sin(th) ** 2)
+    first[0, 0] += r ** 2 * sp.sin(th) ** 2 * drag ** 2
+    first[0, 3] = first[3, 0] = -r ** 2 * sp.sin(th) ** 2 * drag
+    if "q" in reader.parameters:
+        if any(value != 0 for row in chart.geo.ricci_ll() for value in row):
+            raise AssertionError("hartle_thorne: the Ricci tensor does not vanish through second order")
+        hartle_thorne_kerr(chart)
+    elif reader.order:
+        if any(value != 0 for row in chart.geo.ricci_ll() for value in row):
+            raise AssertionError("hartle_thorne: the weak field's Ricci tensor does not vanish to first order")
+        jacobian = sp.eye(4)
+        pulled = first.subs(r, r + m)
+        if any(reader.truncated(pulled[i, j] - chart.geo.g[i, j]) != 0 for i in range(4) for j in range(4)):
+            raise AssertionError("hartle_thorne: the weak field is not the first order chart at r + m")
+    else:
+        fall = sp.sqrt(2 * m / r)
+        jacobian = sp.eye(4)
+        jacobian[0, 1], jacobian[3, 1] = fall / f, drag * fall / f
+        pulled = jacobian.T * chart.geo.g * jacobian
+        if any(vm.norm(pulled[i, j] - first[i, j]) != 0 for i in range(4) for j in range(4)):
+            raise AssertionError("hartle_thorne: the Painleve-Gullstrand chart is not the first order chart pulled back")
+        if vm.norm(chart.geo.ricci_scalar() - 18 * a ** 2 * m ** 2 * sp.sin(th) ** 2 / r ** 6) != 0:
+            raise AssertionError("hartle_thorne: the Ricci scalar is not 18 a^2 m^2 sin^2(theta)/r^6")
+
+
+CHARTS["hartle_thorne"] = [lambda s=s: hartle_thorne(s) for s in HT_CHARTS]
 
 
 # -- Kerr-de Sitter ----------------------------------------------------------------------
@@ -6949,7 +7210,8 @@ CHARTS["near_horizon_extreme_kerr"] = [lambda s=s: near_horizon_extreme_kerr(s) 
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
-                     spec["printer"], spec.get("pretty"), spec.get("time"), spec.get("bracketed"), spec.get("reduce"))
+                     spec["printer"], spec.get("pretty"), spec.get("time"), spec.get("bracketed"), spec.get("reduce"),
+                     vm.ORDERS.get((spec["metric_id"], spec["system"]["id"])))
     if "check" in spec:
         spec["check"](chart)
     math = chart.mathematics()

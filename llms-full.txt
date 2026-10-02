@@ -517,6 +517,18 @@ Closed vacuum universes holding gravitational waves that travel along one direct
 - chart Torus, Logarithmic Time: coordinates $(\tau, \theta, \sigma, \delta)$, $$ds^2 = L^2\left(e^{(\lambda + \tau)/2}\left(-e^{-2\tau}d\tau^2 + d\theta^2\right) + e^{-\tau}\left(e^{P}\left(d\sigma + Q\,d\delta\right)^2 + e^{-P}d\delta^2\right)\right)$$
 - chart Sphere and Handle: coordinates $(t, \theta, \sigma, \delta)$, $$ds^2 = L^2\left(e^{2a}\left(-dt^2 + d\theta^2\right) + \sin t\,\sin\theta\left(e^{P}\left(d\sigma + Q\,d\delta\right)^2 + e^{-P}d\delta^2\right)\right)$$
 
+### Hartle-Thorne Slowly Rotating Star
+
+The gravitational field outside a slowly rotating star, through second order in its spin: Schwarzschild's exterior, the dragging of inertial frames, and a quadrupole moment set by the star's interior. Far from the star it is the field of Lense and Thirring, whose frame dragging Gravity Probe B measured around the Earth.
+
+- id: `hartle_thorne`
+- tags: vacuum, stationary, axisymmetric, rotating, angular momentum, frame dragging, gravitomagnetic, quadrupole, slow rotation, approximate solution, exterior, neutron star, Lense-Thirring, Painlevé-Gullstrand, weak field, asymptotically flat, no horizon, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/hartle_thorne.json
+- chart Hartle-Thorne: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -F\left(1 + 2h_2\,P_2\right)c^2dt^2 + \dfrac{1 - 2j_2\,P_2}{F}dr^2 + r^2\left(1 + 2k_2\,P_2\right)\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2am}{r^3}c\,dt\right)^2\right)$$
+- chart Lense-Thirring: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)c^2dt^2 + \left(1 + \dfrac{2m}{r}\right)\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right) - \dfrac{4am\sin^2\theta}{r}c\,dt\,d\phi$$
+- chart Painlevé-Gullstrand: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \left(dr + \sqrt{\dfrac{2m}{r}}\,c\,dt\right)^2 + r^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2am}{r^3}c\,dt\right)^2\right)$$
+
 ### Hayward Regular Black Hole
 
 A black hole with two horizons and a regular centre, Schwarzschild's metric far away and de Sitter space at the core. Sean Hayward wrote it down in 2006 and let its mass change in time, so that a region of trapped surfaces forms, evaporates, and leaves neither a singularity nor an event horizon.

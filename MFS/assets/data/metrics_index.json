@@ -786,6 +786,37 @@
     "embedding": "f0d7a1bdcd0620df"
   },
   {
+    "id": "hartle_thorne",
+    "name": "Hartle-Thorne",
+    "tags": [
+      "vacuum",
+      "stationary",
+      "axisymmetric",
+      "rotating",
+      "angular momentum",
+      "frame dragging",
+      "gravitomagnetic",
+      "quadrupole",
+      "slow rotation",
+      "approximate solution",
+      "exterior",
+      "neutron star",
+      "Lense-Thirring",
+      "Painlevé-Gullstrand",
+      "weak field",
+      "asymptotically flat",
+      "no horizon",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "38b9358e145ba9ec",
+    "diagrams": "dfa07fae80435e7d",
+    "conformal": "878abf6db42c0334",
+    "embedding": "cc9efb7cafec7946"
+  },
+  {
     "id": "hayward",
     "name": "Hayward",
     "tags": [
@@ -947,7 +978,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d5c97ade4a4fb13c",
+    "version": "fea48d810a6538c0",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1828,7 +1859,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cd18cccf60ca957c",
+    "version": "9895120e01387ff2",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2164,7 +2195,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8a706a772fa93f54",
+    "version": "0fe4076e2911f120",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89"

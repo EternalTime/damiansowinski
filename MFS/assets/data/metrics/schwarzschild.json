@@ -210,6 +210,11 @@
       "id": "black_string",
       "kind": "composite",
       "text": "Schwarzschild's black hole with one more direction of space added, along which nothing changes, so that the horizon is a cylinder. Ripples along it longer than about seven horizon radii grow [gregorylaflamme1993]."
+    },
+    {
+      "id": "hartle_thorne",
+      "kind": "generalisation",
+      "text": "The field outside a star that turns slowly. Rotation adds the dragging of inertial frames at first order in the spin and a quadrupole moment at second [hartlethorne1968]."
     }
   ],
   "references": [
@@ -265,7 +270,8 @@
     "hayward2006",
     "fisher1948",
     "janis1968",
-    "gregorylaflamme1993"
+    "gregorylaflamme1993",
+    "hartlethorne1968"
   ],
   "coordinates": [
     {
