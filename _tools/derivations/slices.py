@@ -711,6 +711,14 @@ def _sultana_dyer_t(m):
     return [np.column_stack([m.time - np.log(r - 1), r])]
 
 
+def _boson_star_isotropic(m):
+    """The boson star's moment t = 0 in the isotropic radius: the embedding's reach along the areal
+    radius r carried to R, where r = psi^2 R, by the solver that drew it."""
+    import boson_star
+    lo, hi = m.reach("areal", "r")
+    return along(0.0, *(float(x) for x in boson_star.star().isotropic().rho_of([lo, hi])))
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -1995,6 +2003,9 @@ FLAT = {
     ("tolman_vii", "spherical", "through"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "tolman", "radial"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "tolman", "through"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    ("boson_star", "areal", "radial"): lambda: one("boson_star", lambda m: along(0.0, *m.reach("areal", "r"))),
+    ("boson_star", "areal", "through"): lambda: one("boson_star", lambda m: along(0.0, *m.reach("areal", "r"))),
+    ("boson_star", "isotropic", "radial"): lambda: one("boson_star", _boson_star_isotropic),
     ("tov", "spherical", "radial"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("einstein_cluster", "areal", "radial"): lambda: one("einstein_cluster", lambda m: along(0.0, *m.reach("areal", "r")), view_id="core"),

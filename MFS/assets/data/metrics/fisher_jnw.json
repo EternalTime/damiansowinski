@@ -59,6 +59,11 @@
       "id": "roberts",
       "kind": "family",
       "text": "The same massless scalar field falling in from infinity. Fisher's singularity is there from the start, and Roberts found his solution while looking for one that develops [roberts1996]."
+    },
+    {
+      "id": "boson_star",
+      "kind": "family",
+      "text": "A scalar field that holds together with no singularity. Give the field a mass and let its phase turn at a frequency $\\omega$, and gravity binds it into a star with a regular centre [liebling2023]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "virbhadra2002",
     "eht2022metric",
     "chowdhury2012",
-    "roberts1996"
+    "roberts1996",
+    "liebling2023"
   ],
   "coordinates": [
     {

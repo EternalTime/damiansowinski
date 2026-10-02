@@ -119,6 +119,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 import build_mfs_data as build  # noqa: E402
+import boson_star as bs  # noqa: E402
 import null_rays as nr  # noqa: E402
 import conformal  # noqa: E402
 from conformal import Sources  # noqa: E402
@@ -2281,6 +2282,75 @@ def tov(ck, src):
                        "$\\rho c^2$, where $\\rho = \\rho_0 + p/c^2$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$, "
                        f"solved from this spacetime's own $G^t{{}}_t$ and $G^r{{}}_r$: a star of $M = {M:.2f}\\,M_\\odot$ "
                        f"and $R = {R * km:.1f}$ km, the star on which numerical relativists test their codes.")]
+
+
+def boson_star(ck, src):
+    """The declared boson star, the ground state of central amplitude sigma = 0.271, G = c = mu = 1,
+    which boson_star.Star solves from this spacetime's own Einstein tensor and the null rays and
+    the conformal diagram draw. On the slice g_rr = a^2, with the solver's a, so dz/dr =
+    sqrt(a^2 - 1), which is sqrt(2M(r)/(r - 2M(r))) for the mass M(r) = r(1 - 1/a^2)/2 inside r.
+    The field never ends, so the surface is one smooth sheet, drawn in two pieces that meet at
+    R_99, the sphere holding 99% of the mass; far out it is Flamm's paraboloid of the star's
+    mass, which is checked at the edge of the drawing and drawn on under the star down to its
+    throat at 2M. The isotropic chart is checked to give the same surface."""
+    star = bs.star()
+    src.note("boson_star", "areal", ["einstein_tensor"])
+    M, R = star.M, star.radius()
+    ck.add("boson star: the declared star solves the published G^theta_theta",
+           float(np.max(np.abs(star.theta_theta(np.linspace(0.05, 0.98 * star.edge, 400))))), 1e-9)
+    ck.add("boson star: it is the star its input states", float(len(star.stated())), 0.5)
+
+    def radial(k):
+        return lambda x: star.values(x)["a"][k].reshape(np.shape(x))
+    top = 3 * R
+    size = 2 * top
+    sl = Slice(src, "boson_star", "areal", "r", "\\phi", {"t": 0, **EQUATOR}, numeric={"a": (radial(0), radial(1))})
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": repr(2 * M)})
+    vacuum = Piece("vacuum", "reference", outer, 2 * M, top, 0.0, 1,
+                   (("throat", "the throat $r = 2GM/c^2$ of the vacuum of the same mass"), ("join", None)),
+                   [(2 * M, "reference", None)], size, reference=True)
+    core = Piece("core", "star", sl, 0.0, R, 0.0, 1,
+                 (("axis", "the centre $r = 0$, where the surface is flat"),
+                  ("join", "the sphere $r = R_{99}$, which holds 99% of the mass")),
+                 [(R / 3, "r", None), (2 * R / 3, "r", None)], size)
+    tail = Piece("tail", "sheet", sl, R, top, core.z[-1], 1,
+                 (("join", "the sphere $r = R_{99}$, which holds 99% of the mass"),
+                  ("edge", "the surface runs on to $r \\to \\infty$")),
+                 [(R, "surface", "$R_{99}$"), (2 * R, "r", None), (top, "r", None)], size)
+    lift = vacuum.at(top)[1] - tail.z[-1]
+    core.z, tail.z = core.z + lift, tail.z + lift
+    surface = Surface([core, tail, vacuum])
+    ck.isometry("boson star, inside R_99", core)
+    ck.isometry("boson star, outside R_99", tail)
+    ck.join("boson star, the two pieces at R_99", core, R, tail, R)
+    # Far out the slice is Flamm's paraboloid of the star's mass: the slopes agree at the top.
+    ck.add("boson star, the slope at the edge of the drawing is Flamm's",
+           abs(float(np.sqrt(radial(0)(np.array([top]))[0] ** 2 - 1)) - math.sqrt(2 * M / (top - 2 * M))), 1e-6)
+    iso = star.isotropic()
+
+    def conformal(k):
+        return lambda x: iso.values(x)["psi"][k].reshape(np.shape(x))
+    other = Slice(src, "boson_star", "isotropic", "R", "\\phi", {"t": 0, **EQUATOR},
+                  numeric={"psi": (conformal(0), conformal(1))})
+    whole = Piece("isotropic", "sheet", other, 0.0, float(iso.rho_of(top)[0]), 0.0, 1, size=size)
+    ck.isometry("boson star, the isotropic chart", whole)
+    # The same surface: at each of its points, the areal chart's height at r = rho.
+    heights = np.array([sl.rise(0.0, r) for r in whole.rho])
+    ck.add("boson star, the isotropic chart gives the same surface",
+           float(np.max(np.abs(heights - whole.z))) / size, FORM)
+
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *tail.at(R), "$R_{99}$", dx=10)
+    ring_label(fig, [0, 0, 0], *tail.at(2 * R), "$2R_{99}$")
+    ring_label(fig, [0, 0, 0], *tail.at(top), "$3R_{99}$")
+    ring_label(fig, [0, 0, 0], *vacuum.at(2 * M), "$r_s$", side=-1, dx=8)
+    fig.legend("fill", "star", "the star inside $R_{99}$, which holds 99% of its mass")
+    fig.legend("fill", "cover", "the thinning field outside $R_{99}$")
+    fig.legend("line", "r", "$r$ constant, at $R_{99}/3$ and $2R_{99}/3$ inside and $2R_{99}$ and $3R_{99}$ outside")
+    fig.legend("line", "surface", f"the radius $R_{{99}}$, at $\\mu R_{{99}} = {R:.2f}$")
+    fig.legend("line", "reference", "Flamm's paraboloid of the same mass, down to its throat at $r_s = 2GM/c^2$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("star", "The star", "$1/\\mu$", [surface], fig.done(), settings=bs.SETTINGS, input=bs.INPUT)]
 
 
 def morris_thorne(ck, src):
@@ -10576,6 +10646,7 @@ DRAWN = {
     "gravastar": gravastar,
     "tolman_vii": tolman_vii,
     "tov": tov,
+    "boson_star": boson_star,
     "einstein_cluster": einstein_cluster,
     "morris_thorne": morris_thorne,
     "ellis_bronnikov": ellis_bronnikov,
@@ -10904,6 +10975,16 @@ CAPTIONS = {
         "saddle, as Flamm's paraboloid does everywhere. Karl Schwarzschild's star of uniform density is a cap of "
         "a sphere all the way out, and meets the paraboloid with a jump in curvature that this star does not "
         "have: the density here is zero on both sides of $r = R$.",
+    ],
+    ("boson_star", "star"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the heaviest boson star at one moment of $t$, drawn as a "
+        "surface in flat space with every distance along it the metric distance. On it $g_{rr} = a^2$, with "
+        "$a^{-2} = 1 - 2GM(r)/(c^2r)$ for the mass $M(r)$ inside $r$, so the surface climbs at "
+        "$dz/dr = \\sqrt{a^2 - 1}$: level at the centre, steepest near $\\mu r = 3.8$, where $2GM(r)/(c^2r)$ "
+        "peaks at $0.24$, and flattening from there outward.",
+        "The field thins out exponentially and never ends, so the ring at the radius $R_{99}$ marks the sphere "
+        "that holds 99% of the mass. Far outside it the surface is Flamm's paraboloid for the star's mass, "
+        "drawn dashed on down to the throat it would have at $r_s = 2GM/c^2$, where $\\mu r_s = 1.27$.",
     ],
     ("tov", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a neutron star at one moment of $t$, drawn as a "

@@ -376,6 +376,17 @@ Vaidya's radiating star with a charge: the field of a spherical body that sends 
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{q^2}{r^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Homothetic: coordinates $(V, R, \theta, \phi)$, $$ds^2 = e^{2\mu V/M}\left(-\left(1 - \dfrac{2M}{R} + \dfrac{Q^2}{R^2} - \dfrac{2\mu R}{M}\right)dV^2 + 2\,dV\,dR + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Boson Stars and Geons
+
+A ball of scalar field held together by its own gravity, the heir of John Wheeler's geon of light, found by David Kaup in 1968 and by Remo Ruffini and Silvano Bonazzola in 1969. The field turns in phase at a frequency $\omega$ while the spacetime stays static, with a regular centre and no horizon. The metric is known only numerically, as a solution of the Einstein-Klein-Gordon equations integrated outward from the centre, and the heaviest star has $M = 0.633\,M_P^2/m$ for bosons of mass $m$, with $M_P$ the Planck mass.
+
+- id: `boson_star`
+- tags: boson star, geon, scalar field, complex scalar field, minimally coupled scalar field, Einstein-Klein-Gordon, soliton, numerical solution, Kaup limit, maximum mass, no horizon, regular centre, black hole mimicker, exotic compact object, dark matter, Proca star, anisotropic pressure, isotropic coordinates, mass, asymptotically flat, static, stationary, spherically symmetric, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/boson_star.json
+- chart Polar Areal: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\alpha^2c^2dt^2 + a^2dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Isotropic: coordinates $(t, R, \theta, \phi)$, $$ds^2 = -\alpha^2c^2dt^2 + \psi^4\left(dR^2 + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Boulware-Deser Black Hole
 
 The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, which David Boulware and Stanley Deser found in 1985. The curvature squared term of string theory keeps its metric function finite at the centre and leaves a small mass with no horizon, and the same field equations have a second solution that approaches anti-de Sitter space.

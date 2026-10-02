@@ -431,6 +431,43 @@
     "embedding": "c306446463337712"
   },
   {
+    "id": "boson_star",
+    "name": "Boson Star",
+    "tags": [
+      "boson star",
+      "geon",
+      "scalar field",
+      "complex scalar field",
+      "minimally coupled scalar field",
+      "Einstein-Klein-Gordon",
+      "soliton",
+      "numerical solution",
+      "Kaup limit",
+      "maximum mass",
+      "no horizon",
+      "regular centre",
+      "black hole mimicker",
+      "exotic compact object",
+      "dark matter",
+      "Proca star",
+      "anisotropic pressure",
+      "isotropic coordinates",
+      "mass",
+      "asymptotically flat",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "44db90962747e1e5",
+    "diagrams": "d8f5e35c3b0e6fe2",
+    "conformal": "7b86209f53558e97",
+    "embedding": "c3dc5db3068ad454"
+  },
+  {
     "id": "boulware_deser",
     "name": "Boulware-Deser",
     "tags": [
@@ -759,7 +796,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9dbe5e9a628db0a1",
+    "version": "7ba666fbd68707fd",
     "diagrams": "1358f347fde7be67",
     "conformal": "7807b351c1311ade",
     "embedding": "ab81073436048cb9"
@@ -907,7 +944,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e651b57bee2aadbe",
+    "version": "c0bfc85f3b7fd524",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46"
@@ -1099,7 +1136,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "72e0145d4b53641a",
+    "version": "fc8cd04765fcb0c2",
     "diagrams": "1e2a338fbaeb162f",
     "conformal": "c44e7367505c4a14",
     "embedding": "eb3c3b7b2d474485"
@@ -1886,7 +1923,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "19a135ca793e62aa",
+    "version": "a7975dc1fb347f7f",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "edd5386c486f11df",
     "embedding": "86969fc37532f407"
@@ -2588,7 +2625,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "02315aba6430c669",
+    "version": "5a279849b1344288",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3050,7 +3087,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ba816c96290eafd9",
+    "version": "1059e537916f6036",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89"

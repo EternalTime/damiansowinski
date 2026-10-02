@@ -105,6 +105,7 @@ import slices
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
+import boson_star as bs  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import null_rays as nr  # noqa: E402
 import verify_metrics as vm  # noqa: E402
@@ -10161,6 +10162,98 @@ def tov(ck, src):
     return [v]
 
 
+# ---------------------------------------------------------------- boson stars
+
+def boson_star(ck, src):
+    """The declared boson star, the ground state of central amplitude sigma = 0.271, G = c = mu = 1,
+    which boson_star.Star solves from this spacetime's own Einstein tensor and the null rays and
+    the embedding diagram draw, in its two charts.
+
+    r* = int (a/alpha) dr runs from 0 at the centre to infinity: inside the star's edge by the
+    trapezoid rule on the solver's a and alpha, and from the edge on by Schwarzschild's
+    r + 2M ln(r/2M - 1), since the metric there is Schwarzschild's of the mass inside. Then
+    p, q = arctan((t -+ r*)/R_99), with R_99 the radius that holds 99% of the mass, give
+    Minkowski's triangle. The isotropic chart has the same r*, as a function of the sphere, since
+    (psi^2/alpha) dR = (a/alpha) dr, so its view is the same triangle with the lines of constant
+    R drawn. Each chart is checked to carry the published metric onto the triangle's null
+    coordinates, the star to solve the published G^theta_theta, which its construction did not
+    use, to be the star its input states and to have no trapped sphere, and its centre to be
+    regular on the published Kretschmann scalar.
+    """
+    star = bs.star()
+    iso = star.isotropic()
+    src.note("boson_star", "areal", ["einstein_tensor"])
+    M, R, edge = star.M, star.radius(), star.edge
+    grid_r = np.linspace(0, edge, 400001)
+    v = star.values(grid_r)
+    inner_rs = cumulative_trapezoid(v["a"][0] / v["alpha"][0], grid_r, initial=0)
+    outer_c = inner_rs[-1] - (edge + 2 * M * np.log(edge / (2 * M) - 1))
+
+    def rstar(x):
+        x = np.asarray(x, dtype=float)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            outside = x + 2 * M * np.log(x / (2 * M) - 1) + outer_c
+        return np.where(x <= edge, np.interp(x, grid_r, inner_rs), outside)
+    ck.limit("boson star: the declared star solves the published G^theta_theta",
+             star.theta_theta(np.linspace(0.05, 0.98 * edge, 400)), 0, 1e-9)
+    ck.limit("boson star: it is the star its input states", [float(len(star.stated()))], [0], 0.5)
+    ck.limit("boson star: no sphere is trapped, 2M(r)/r < 1", [float(star.compactness()[0] < 1)], [1], 0.5)
+    ck.limit("boson star: alpha and a are continuous at the edge",
+             [star.values(edge * (1 - 1e-9))[n][0][0] for n in star.funcs],
+             [star.values(edge * (1 + 1e-9))[n][0][0] for n in star.funcs], 1e-8)
+    moment = slices.moments("boson_star")[0]
+    lo, hi = moment.reach("areal", "r")
+    views = []
+    for system, name, x, solver, areal, to_x in (("areal", "Polar-Areal", "r", star, lambda x: x, lambda r: r),
+                                                 ("isotropic", "Isotropic", "R", iso, iso.r_of, iso.rho_of)):
+        pl = Plane(src, "boson_star", system, ("t", x), EQUATOR, numeric=list(solver.funcs))
+
+        def fvals(t, xs, solver=solver):
+            return solver.values(xs)
+
+        def chart(t, xs, areal=areal):
+            return mink_pq(t, rstar(areal(xs)), R)
+        far = float(np.atleast_1d(to_x(edge))[0])
+        ck.chart(f"boson star, {system}, inside the edge", pl, chart, ck.uniform(-60, 60),
+                 ck.uniform(0.01, 0.999 * far), lambda t, xs: (1, 0), fvals)
+        ck.chart(f"boson star, {system}, outside it", pl, chart, ck.uniform(-60, 60),
+                 ck.uniform(1.001 * far, 120), lambda t, xs: (1, 0), fvals)
+        ck.finite(f"boson star, {system}: the centre is regular",
+                  pl.kretschmann(np.zeros(5), np.array([1e-4, 1e-3, 1e-2, 0.5, 1.0]), fvals))
+
+        vw = View(system, name, [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+        vw.fill("region", TRIANGLE)
+        vw.fill("cover", TRIANGLE)
+        ps, qs = mink_pq(S_ALL, rstar(R), R)
+        vw.fill("star", [[0, -PI]] + [point(a, b) for a, b in zip(ps, qs)] + [[0, PI]])
+        Rx = float(np.atleast_1d(to_x(R))[0])
+        inner = [round(Rx / 3, 1), round(2 * Rx / 3, 1)]
+        outer = [2 * round(Rx, 1), 4 * round(Rx, 1)]
+        for value in inner:
+            vw.curve("r", *chart(S_ALL, np.full_like(S_ALL, value)))
+        for value in outer:
+            vw.curve("r2", *chart(S_ALL, np.full_like(S_ALL, value)))
+        rr = np.concatenate([np.linspace(0, R, 60)[:-1], R + np.exp(np.linspace(-6, 9, 200)) - np.exp(-6)])
+        for tt in (-4, -2, -1, 0, 1, 2, 4):
+            vw.curve("t", *mink_pq(np.full_like(rr, tt * R), rstar(rr), R))
+        vw.curve("surface", ps, qs)
+        triangle_edges(vw)
+        label_on(vw, mink_pq(0, rstar(R), R), "$R_{99}$")
+        vw.label_xt([0.33, 0.0], "star", cls="region")
+        vw.legend("star", "the star inside $R_{99}$, which holds 99% of its mass")
+        vw.legend("cover", f"the whole spacetime, which $t$ and ${x}$ cover")
+        vw.legend("r", f"${x}$ constant inside, at $\\mu {x} = {inner[0]:.1f}$ and ${inner[1]:.1f}$")
+        vw.legend("r2", f"${x}$ constant outside, at $\\mu {x} = {outer[0]:.1f}$ and ${outer[1]:.1f}$")
+        vw.legend("t", "$ct$ constant, at $0$, $\\pm R_{99}$, $\\pm 2R_{99}$ and $\\pm 4R_{99}$")
+        vw.legend("surface", f"the radius $R_{{99}}$ of the sphere that holds 99% of the mass, at $\\mu r = {R:.2f}$")
+        vw.legend("centre", f"${x} = 0$, a regular centre")
+        rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
+        vw.slice(moment, [mink_pq(0 * rr, rstar(rr), R)])
+        vw.set(settings=bs.SETTINGS, input=bs.INPUT)
+        views.append(vw)
+    return views
+
+
 # ---------------------------------------------------------------- the Malament-Hogarth toy
 
 def malament_hogarth(ck, src):
@@ -15449,7 +15542,7 @@ DRAWN = {
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
     "einstein_cluster": einstein_cluster,
-    "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "tolman_vii": tolman_vii,
+    "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
@@ -17450,6 +17543,22 @@ CAPTIONS = {
         "Marginally trapped spheres appear at the surface then and move inward along "
         "$\\eta = \\pi - 2\\chi$, a timelike curve, and the crunch of the dust and the singularity "
         "outside it are one spacelike line.",
+    ],
+    ("boson_star", "areal"): [
+        "The heaviest boson star, each point in the diagram a 2-sphere of radius $r$. Its metric functions "
+        "$\\alpha$ and $a$ come from $G^t{}_t$, $G^r{}_r$, and the wave equation of the field, integrated "
+        "numerically from a regular centre, and far from the star they are Schwarzschild's for the star's mass.",
+        "The tortoise coordinate $r_* = \\int (a/\\alpha)\\,dr$ runs from $0$ at the centre to infinity, and "
+        "$p, q = \\arctan((ct \\mp r_*)/R_{99})$ bring the spacetime into Minkowski's triangle, with the radius "
+        "$R_{99}$ of the sphere that holds 99% of the mass a timelike line from $i^-$ to $i^+$. The star has "
+        "the causal structure of flat space: $2GM(r)/(c^2r)$, with $M(r)$ the mass inside $r$, peaks at "
+        "$0.24$, so no sphere is trapped.",
+    ],
+    ("boson_star", "isotropic"): [
+        "The same star in the isotropic radius $R$, each point in the diagram a 2-sphere of areal radius "
+        "$r = \\psi^2R$. The tortoise coordinate is $r_* = \\int (\\psi^2/\\alpha)\\,dR$, the same function "
+        "of the sphere as in the areal chart, so the triangle and the lines of constant $t$ are those of "
+        "the areal chart, and the lines of constant $R$ mark other spheres.",
     ],
     ("tov", "spherical"): [
         "A static star of fluid with a polytrope for its equation of state, each point in the "

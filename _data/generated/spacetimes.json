@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 108,
+  "count": 109,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -4614,6 +4614,224 @@
       ]
     },
     {
+      "id": "boson_star",
+      "name": "Boson Stars and Geons",
+      "short_name": "Boson Star",
+      "description": "A ball of scalar field held together by its own gravity, the heir of John Wheeler's geon of light, found by David Kaup in 1968 and by Remo Ruffini and Silvano Bonazzola in 1969. The field turns in phase at a frequency $\\omega$ while the spacetime stays static, with a regular centre and no horizon. The metric is known only numerically, as a solution of the Einstein-Klein-Gordon equations integrated outward from the centre, and the heaviest star has $M = 0.633\\,M_P^2/m$ for bosons of mass $m$, with $M_P$ the Planck mass.",
+      "tags": [
+        "boson star",
+        "geon",
+        "scalar field",
+        "complex scalar field",
+        "minimally coupled scalar field",
+        "Einstein-Klein-Gordon",
+        "soliton",
+        "numerical solution",
+        "Kaup limit",
+        "maximum mass",
+        "no horizon",
+        "regular centre",
+        "black hole mimicker",
+        "exotic compact object",
+        "dark matter",
+        "Proca star",
+        "anisotropic pressure",
+        "isotropic coordinates",
+        "mass",
+        "asymptotically flat",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We write the field of the star as $\\varphi = \\varphi_0(r)e^{i\\omega t}$ for bosons of mass $m$, with $\\mu = mc/\\hbar$ and $\\sigma = \\sqrt{4\\pi G}\\,\\varphi_0/c^2$ its dimensionless amplitude. We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "related": [
+        {
+          "id": "tov",
+          "kind": "family",
+          "text": "The same balance for a star of fluid, where pressure does the holding up. Ruffini and Bonazzola put fermions through their method as well, and it \"confirms the Oppenheimer-Volkoff treatment in extremely good approximation\" [ruffini1969]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The star with no field in it: at $\\sigma = 0$ the equations give $\\alpha^2 = a^{-2} = 1 - r_s/r$. Far from a boson star the field has died away and the metric is Schwarzschild's for the star's mass [liebling2023]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "family",
+          "text": "The scalar field with no mass, at rest, which ends in a naked singularity at its centre [janis1968]. A boson star's field has a mass and a turning phase, and its centre is regular [liebling2023]."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "Mael Melvin's magnetic geon, parallel lines of magnetic field held together by their own gravity, Wheeler's idea in a cylinder [melvin1964]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "family",
+          "text": "A star held up by sideways stress alone, with none along its radius [einstein1939]. A boson star's two stresses differ as well, and neither star has an equation of state [ruffini1969]."
+        },
+        {
+          "id": "gravastar",
+          "kind": "family",
+          "text": "Another star with no horizon offered as a stand in for a black hole, a ball of de Sitter space under a thin shell [mazur2004]."
+        }
+      ],
+      "references": [
+        "wheeler1955",
+        "brillhartle1964",
+        "anderson1997",
+        "derrick1964",
+        "kaup1968",
+        "liebling2023",
+        "feinblum1968",
+        "ruffini1969",
+        "schunck2003",
+        "lai2004",
+        "colpi1986",
+        "gleiser1989",
+        "lee1989",
+        "seidel1990",
+        "seidel1994",
+        "seidel1991",
+        "yoshida1997",
+        "brito2016",
+        "calderonbustillo2021",
+        "janis1968",
+        "melvin1964",
+        "einstein1939",
+        "mazur2004"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/boson_star.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Polar Areal",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha = \\alpha(r)",
+              "description": "Lapse, dimensionless: a clock held at radius $r$ runs at $\\alpha$ of the rate $t$ counts. For the star it is known only numerically, as the solution of $\\partial_r\\alpha = \\dfrac{\\alpha}{2}\\left[\\dfrac{a^2 - 1}{r} + r\\left(\\left(\\dfrac{\\omega^2}{c^2\\alpha^2} - \\mu^2\\right)a^2\\sigma^2 + \\left(\\partial_r\\sigma\\right)^2\\right)\\right]$ that approaches $1$ far from the star"
+            },
+            {
+              "symbol": "a = a(r)",
+              "description": "Radial function, dimensionless: $a\\,dr$ is the proper distance along the radius, and $M(r) = c^2r\\left(1 - a^{-2}\\right)/2G$ is the mass inside the sphere of radius $r$. For the star it is known only numerically, as the solution of $\\partial_r a = \\dfrac{a}{2}\\left[-\\dfrac{a^2 - 1}{r} + r\\left(\\left(\\dfrac{\\omega^2}{c^2\\alpha^2} + \\mu^2\\right)a^2\\sigma^2 + \\left(\\partial_r\\sigma\\right)^2\\right)\\right]$ with $a(0) = 1$, where the field obeys $\\partial_r^2\\sigma = -\\left(1 + a^2 - \\mu^2r^2a^2\\sigma^2\\right)\\dfrac{\\partial_r\\sigma}{r} - \\left(\\dfrac{\\omega^2}{c^2\\alpha^2} - \\mu^2\\right)a^2\\sigma$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\theta, \\phi)$ that Liebling and Palenzuela call polar areal, with $t$ carrying dimensions of time and $r$ the areal radius. The lapse $\\alpha(r)$ and the radial function $a(r)$ are dimensionless, and we leave both free. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\alpha^2c^2dt^2 + a^2dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\alpha^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\alpha\\,a^3 - 2\\alpha\\,a + 4\\alpha\\,r\\,\\partial_r a - 2a\\,r^2\\,\\partial_r^2\\alpha - 4a\\,r\\,\\partial_r\\alpha + 2r^2\\,\\partial_r a\\,\\partial_r\\alpha}{\\alpha\\,a^3\\,r^2}",
+          "kretschmann": "K = 4\\left(\\dfrac{a\\,\\partial_r^2\\alpha - \\partial_r a\\,\\partial_r\\alpha}{\\alpha\\,a^3}\\right)^2 + \\dfrac{8\\left(\\partial_r\\alpha\\right)^2}{\\alpha^2a^4r^2} + \\dfrac{8\\left(\\partial_r a\\right)^2}{a^6r^2} + \\dfrac{4\\left(a^2 - 1\\right)^2}{a^4r^4}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "R \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha = \\alpha(R)",
+              "description": "Lapse, dimensionless, the same function of the sphere as in the polar areal chart: a clock held at radius $R$ runs at $\\alpha$ of the rate $t$ counts, and $\\alpha$ approaches $1$ far from the star"
+            },
+            {
+              "symbol": "\\psi = \\psi(R)",
+              "description": "Conformal factor, dimensionless: the areal radius is $r = \\psi^2R$, and the radial function of the polar areal chart is $a = \\psi/\\left(\\psi + 2R\\,\\partial_R\\psi\\right)$. For the star it is known only numerically, from $dR/dr = aR/r$, and far from the star it approaches $1 + GM/(2c^2R)$, with $M$ the mass of the star"
+            }
+          ],
+          "convention": "We use Liebling and Palenzuela's isotropic coordinates $(t, R, \\theta, \\phi)$, with $t$ carrying dimensions of time and $R$ the isotropic radius, a length, so the areal radius is $r = \\psi^2R$. The lapse $\\alpha(R)$ and the conformal factor $\\psi(R)$ are dimensionless, and we leave both free. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\alpha^2c^2dt^2 + \\psi^4\\left(dR^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\alpha^2"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\psi^4"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\psi^4\\,R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\psi^4\\,R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{8\\alpha\\,R\\,\\partial_R^2\\psi + 16\\alpha\\,\\partial_R\\psi + 2\\psi\\,R\\,\\partial_R^2\\alpha + 4\\psi\\,\\partial_R\\alpha + 4R\\,\\partial_R\\alpha\\,\\partial_R\\psi}{\\alpha\\,\\psi^5\\,R}",
+          "kretschmann": "K = 4\\left(\\dfrac{\\psi\\,\\partial_R^2\\alpha - 2\\partial_R\\alpha\\,\\partial_R\\psi}{\\alpha\\,\\psi^5}\\right)^2 + \\dfrac{8\\left(\\psi + 2R\\,\\partial_R\\psi\\right)^2\\left(\\partial_R\\alpha\\right)^2}{\\alpha^2\\psi^{10}R^2} + \\dfrac{32\\left(R\\,\\psi\\,\\partial_R^2\\psi - R\\left(\\partial_R\\psi\\right)^2 + \\psi\\,\\partial_R\\psi\\right)^2}{\\psi^{12}R^2} + \\dfrac{64\\left(\\psi + R\\,\\partial_R\\psi\\right)^2\\left(\\partial_R\\psi\\right)^2}{\\psi^{12}R^2}"
+        }
+      ]
+    },
+    {
       "id": "boulware_deser",
       "name": "Boulware-Deser Black Hole",
       "short_name": "Boulware-Deser",
@@ -7482,6 +7700,11 @@
           "id": "tolman_vii",
           "kind": "family",
           "text": "A static star of the same year whose fluid presses equally in every direction, with a density that falls as the square of the radius. Richard Tolman's paper was received on 3 January 1939, four months before Einstein's [tolman1939, einstein1939]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "family",
+          "text": "Another star whose stress along the radius differs from its stress across it, made of a scalar field with no particles circling [ruffini1969]."
         }
       ],
       "references": [
@@ -7498,7 +7721,8 @@
         "bohmerharko2007",
         "lake2006",
         "einstein1917",
-        "tolman1939"
+        "tolman1939",
+        "ruffini1969"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_cluster.json",
@@ -8914,6 +9138,11 @@
           "id": "roberts",
           "kind": "family",
           "text": "The same massless scalar field falling in from infinity. Fisher's singularity is there from the start, and Roberts found his solution while looking for one that develops [roberts1996]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "family",
+          "text": "A scalar field that holds together with no singularity. Give the field a mass and let its phase turn at a frequency $\\omega$, and gravity binds it into a star with a regular centre [liebling2023]."
         }
       ],
       "references": [
@@ -8939,7 +9168,8 @@
         "virbhadra2002",
         "eht2022metric",
         "chowdhury2012",
-        "roberts1996"
+        "roberts1996",
+        "liebling2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -11129,6 +11359,11 @@
           "id": "hayward",
           "kind": "family",
           "text": "A black hole with de Sitter space at its core and Schwarzschild far away, whose horizons Hayward let form and evaporate [hayward2006]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "family",
+          "text": "A black hole mimicker made of a scalar field, smooth all the way through, with a regular centre and no horizon [liebling2023]."
         }
       ],
       "references": [
@@ -11149,7 +11384,8 @@
         "abbott2021tgr",
         "abbott2025tgr",
         "visser1989nuclphysb",
-        "hayward2006"
+        "hayward2006",
+        "liebling2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gravastar.json",
@@ -18932,6 +19168,11 @@
           "id": "schwarzschild",
           "kind": "family",
           "text": "The black hole Frederick Ernst set in Melvin's universe in 1976. Ernst's metric is Schwarzschild's at $B = 0$ and Melvin's universe at $r_s = 0$ [ernst1976b]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "family",
+          "text": "Wheeler's geon carried from light to a scalar field with mass, where it makes a star: a ball of field held together by its own gravity, which Kaup named a Klein-Gordon geon [kaup1968]."
         }
       ],
       "references": [
@@ -18958,7 +19199,8 @@
         "tseytlin1995",
         "bertotti1959",
         "robinson1959",
-        "bonnor1969light"
+        "bonnor1969light",
+        "kaup1968"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
@@ -26501,6 +26743,11 @@
           "id": "eguchi_hanson",
           "kind": "family",
           "text": "A gravitational instanton, as Schwarzschild's black hole continued to Euclidean signature is. Each closes on a 2-sphere that Gibbons and Hawking call a bolt, and Schwarzschild's bolt is its horizon [hawking1977, gibbonshawking1979]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "generalisation",
+          "text": "Schwarzschild's vacuum with a ball of scalar field in its middle, held together by its own gravity. The ball has a regular centre and no horizon, and far from it the metric is Schwarzschild's [liebling2023]."
         }
       ],
       "references": [
@@ -26583,7 +26830,8 @@
         "bach1922",
         "neugebauer2012",
         "hawking1977",
-        "gibbonshawking1979"
+        "gibbonshawking1979",
+        "liebling2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -31170,6 +31418,11 @@
           "id": "tolman_vii",
           "kind": "special_case",
           "text": "Tolman's seventh solution, a star whose density falls as $1 - r^2/R^2$ from the centre to an empty surface. Its $m(r)$ is a polynomial and its redshift function a cosine of a logarithm, and the density inside a neutron star follows it closely [tolman1939, lattimer2001]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "family",
+          "text": "A star with no equation of state: a scalar field held up by the uncertainty principle, whose stress along the radius differs from its stress across it. Its largest mass is $0.633\\,M_P^2/m$ for bosons of mass $m$, with $M_P$ the Planck mass [ruffini1969, liebling2023]."
         }
       ],
       "references": [
@@ -31203,7 +31456,9 @@
         "tolman1934",
         "einstein1939",
         "lake2006",
-        "lattimer2001"
+        "lattimer2001",
+        "ruffini1969",
+        "liebling2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tov.json",

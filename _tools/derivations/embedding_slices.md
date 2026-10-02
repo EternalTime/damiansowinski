@@ -655,6 +655,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `spherical/through`: the line $ct = 0$ from $x = -16$ to $16$.
 - `spherical`, the half diamond: the line $T = 0$ from the centre through the surface to $r = 28.76$.
 
+### Boson star
+
+- The embedding is the equator at one moment of $t$, drawn at $t = 0$: $r$ from $0$ to $23.58/\mu$, three times the radius $R_{99} = 7.86/\mu$ of the sphere holding 99% of the mass; the vacuum paraboloid is a reference.
+- `areal/radial`: the line $ct = 0$ across the whole box, $r$ from $0$ to $20$.
+- `areal/through`: the line $ct = 0$ from $x = -20$ to $20$.
+- `isotropic/radial`: the line $ct = 0$ across the whole box; the embedding's rim is at the isotropic radius $22.95/\mu$, where $r = \psi^2R$.
+- `areal` and `isotropic`, the half diamonds: the line $T = 0$ from the centre to $r = 23.58/\mu$, the same curve on both.
+
 ### Bonnor-Vaidya
 
 - The embedding is four moments of constant $v - r$ in the ingoing chart, $-3$, $-2$, $-1$ and $-0.4608\,M$, each from $r = 0$ to $4\,M$, flat inside the charged shell, which crosses the moment at $r = -(v - r)$; the last is the moment the shell reaches $r = q^2/2M$.
