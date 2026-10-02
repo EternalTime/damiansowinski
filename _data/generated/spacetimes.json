@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 140,
+  "count": 141,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -7310,6 +7310,311 @@
       ]
     },
     {
+      "id": "brans_dicke_sphere",
+      "name": "Brans-Dicke Static Sphere",
+      "short_name": "Brans-Dicke Sphere",
+      "description": "The gravitational field outside a static, spherical body in Carl Brans and Robert Dicke's theory of 1961, where a scalar field beside the metric sets the strength of gravity from place to place. With the coupling constant $\\omega$ it bends light by $(3 + 2\\omega)/(4 + 2\\omega)$ of Einstein's value, and where Schwarzschild's horizon would stand its spheres shrink to zero area at infinite curvature, with no horizon to hide them.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "four-dimensional",
+        "Brans-Dicke",
+        "scalar field",
+        "scalar-tensor theory",
+        "Jordan frame",
+        "Einstein frame",
+        "Mach's principle",
+        "alternative theories of gravity",
+        "varying gravitational constant",
+        "Brans class I",
+        "Campanelli-Lousto",
+        "naked singularity",
+        "curvature singularity",
+        "no horizon",
+        "wormhole",
+        "scalar charge",
+        "mass",
+        "post-Newtonian",
+        "tests of general relativity",
+        "light deflection",
+        "perihelion precession",
+        "solar system",
+        "no-hair theorem",
+        "isotropic coordinates",
+        "harmonic coordinates",
+        "asymptotically flat",
+        "exact solution",
+        "exterior",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The scalar field $\\phi$ carries the dimensions of $1/G$, with $\\phi_0$ its value far from the body, and $\\omega$ is the coupling constant of Brans and Dicke's theory. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "fisher_jnw",
+          "kind": "conformal",
+          "text": "The same sphere measured in Dicke's units. Multiply Brans and Dicke's metric by $\\phi/\\phi_0$ and it is Fisher's, with $\\gamma = (C + 2)/2\\lambda$ and $b = 4B$ in Fisher's letters, a solution of Einstein's equations with a massless scalar field [dicke1962, faraoni2018]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The sphere with no scalar charge. At $C = 0$, where $\\lambda = 1$, the field $\\phi$ is constant and the metric is Schwarzschild's in isotropic coordinates, with its horizon at $\\rho = B$ [bransdicke1961]."
+        },
+        {
+          "id": "ppn_metric",
+          "kind": "generalisation",
+          "text": "The weak field of a body with a number in front of every term. Far from the body Brans and Dicke's sphere sits at $\\beta = 1$ and $\\gamma = (1 + \\omega)/(2 + \\omega)$, and the Cassini spacecraft's measurement of $\\gamma$ puts $\\omega$ above $40{,}000$ [thornewill1971, will2014]."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "family",
+          "text": "Gravity carried by a scalar field alone, on flat spacetime. Nordström's theory bends no light, and Brans and Dicke's keeps Einstein's metric and adds the scalar field to it [deruelle2011, bransdicke1961]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "A scalar field beside the metric again, with a Maxwell field. The gravity of bosonic string theory at low energy is Brans and Dicke's with $\\omega = -1$, and the dilaton is its scalar field [faraoni2016]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "The general traversable wormhole. Brans and Dicke's sphere has a throat where its singularity would be when $\\gamma > 1$ [agnese1995]."
+        }
+      ],
+      "references": [
+        "bransdicke1961",
+        "brans2014",
+        "will2014",
+        "thornewill1971",
+        "dickegoldenberg1967",
+        "dicke1962",
+        "vanzo2012",
+        "faraoni2018",
+        "fisher1948",
+        "bronnikov1973",
+        "bronnikov1997",
+        "faraoni2016",
+        "agnese1995",
+        "brans1962",
+        "campanelli1993",
+        "hawking1972bd",
+        "thornedykla1971",
+        "scheel1995",
+        "ohanlon1972",
+        "deruelle2011"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brans_dicke_sphere.json",
+      "charts": [
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (B, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = B \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "B",
+              "description": "Value of $\\rho$ at the singularity, a length. Far from the body the field is that of a mass $M$ with $GM/c^2 = 2B/\\lambda$, where $G$ is the constant of gravitation measured there"
+            },
+            {
+              "symbol": "C",
+              "description": "Strength of the scalar field, a pure number. $C = 0$ with $\\lambda = 1$ is Schwarzschild's metric in isotropic coordinates, a body whose gravity is weak throughout has $C = -1/(2 + \\omega)$, and the post-Newtonian parameter is $\\gamma = C + 1$"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "A positive pure number, $\\lambda = \\sqrt{(C + 1)^2 - C(1 - \\omega C/2)}$, which is $\\sqrt{(2\\omega + 3)/(2\\omega + 4)}$ at $C = -1/(2 + \\omega)$"
+            },
+            {
+              "symbol": "h = \\dfrac{\\rho - B}{\\rho + B}",
+              "description": "Ratio that vanishes on the singularity and is $1$ far away; the scalar field is $\\phi = \\phi_0h^{C/\\lambda}$, with $R_{\\mu\\nu} = \\omega\\,\\partial_\\mu\\phi\\,\\partial_\\nu\\phi/\\phi^2 + \\nabla_\\mu\\nabla_\\nu\\phi/\\phi$ and $\\nabla^\\mu\\nabla_\\mu\\phi = 0$"
+            }
+          ],
+          "convention": "We use Brans and Dicke's isotropic coordinates $(t, \\rho, \\theta, \\phi)$ and their constants $B$, $C$, and $\\lambda$, with $t$ carrying dimensions of time and $\\rho$ a length, and write $h = (\\rho - B)/(\\rho + B)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the rate of $ct$.",
+          "line_element": "ds^2 = -h^{2/\\lambda}c^2dt^2 + \\left(1 + \\dfrac{B}{\\rho}\\right)^4h^{2(\\lambda - C - 1)/\\lambda}\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-h^{2/\\lambda}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\left(1 + \\dfrac{B}{\\rho}\\right)^4h^{2(\\lambda - C - 1)/\\lambda}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho^2\\left(1 + \\dfrac{B}{\\rho}\\right)^4h^{2(\\lambda - C - 1)/\\lambda}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2\\left(1 + \\dfrac{B}{\\rho}\\right)^4h^{2(\\lambda - C - 1)/\\lambda}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{8B^2\\,\\rho^4\\left(C^2 + C - \\lambda^2 + 1\\right)h^{(2C + 2)/\\lambda}}{\\lambda^2\\left(\\rho + B\\right)^4\\left(\\rho - B\\right)^4}",
+          "kretschmann": "K = \\dfrac{32B^2\\,\\rho^6\\left(3\\lambda^2\\,\\rho^4\\left(C^2 + 2C + 2\\right) - 4B\\,\\lambda\\,\\rho^3\\left(C^3 + 3C^2 + 2C\\,\\lambda^2 + 5C + 2\\lambda^2 + 4\\right) + 2B^2\\,\\rho^2\\left(C^4 + 4C^3 + 5C^2\\,\\lambda^2 + 9C^2 + 10C\\,\\lambda^2 + 12C + 3\\lambda^4 + 8\\lambda^2 + 7\\right) - 4B^3\\,\\lambda\\,\\rho\\left(C^3 + 3C^2 + 2C\\,\\lambda^2 + 5C + 2\\lambda^2 + 4\\right) + 3B^4\\,\\lambda^2\\left(C^2 + 2C + 2\\right)\\right)h^{(4C + 4)/\\lambda}}{\\lambda^4\\left(\\rho + B\\right)^8\\left(\\rho - B\\right)^8}"
+        },
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (2r_0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 2r_0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Half the value of $r$ at the singularity, a length. Far from the body the field is that of a mass $M$ with $GM/c^2 = (m + 1)r_0$, where $G$ is the constant of gravitation measured there"
+            },
+            {
+              "symbol": "m",
+              "description": "A pure number that sets the rate of clocks, $g_{tt} = -A^{m+1}$. $m = n = 0$ is Schwarzschild's metric with its horizon at $r = 2r_0$"
+            },
+            {
+              "symbol": "n",
+              "description": "A pure number that sets the area of the spheres, $4\\pi r^2A^{n}$. The post-Newtonian parameter is $\\gamma = (1 - n)/(1 + m)$, and the coupling constant is $\\omega = -2(m^2 + n^2 + mn + m - n)/(m + n)^2$"
+            },
+            {
+              "symbol": "A = 1 - \\dfrac{2r_0}{r}",
+              "description": "Schwarzschild's function with $2r_0$ for the Schwarzschild radius; the scalar field is $\\phi = \\phi_0A^{-(m+n)/2}$, with $R_{\\mu\\nu} = \\omega\\,\\partial_\\mu\\phi\\,\\partial_\\nu\\phi/\\phi^2 + \\nabla_\\mu\\nabla_\\nu\\phi/\\phi$ and $\\nabla^\\mu\\nabla_\\mu\\phi = 0$"
+            }
+          ],
+          "convention": "We use Campanelli and Lousto's coordinates $(t, r, \\theta, \\phi)$, Schwarzschild's at $m = n = 0$, with $A = 1 - 2r_0/r$; in Brans's constants $r = \\rho(1 + B/\\rho)^2$, $r_0 = 2B$, $m = 1/\\lambda - 1$, and $n = 1 - (C + 1)/\\lambda$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the rate of $ct$.",
+          "line_element": "ds^2 = -A^{m+1}c^2dt^2 + A^{n-1}dr^2 + A^{n}r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-A^{m+1}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "A^{n-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2A^{n}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2A^{n}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2r_0^2\\left(m^2 + m\\,n + m + n^2 - n\\right)}{r^3\\left(r - 2r_0\\right)A^{n}}",
+          "kretschmann": "K = \\dfrac{4r_0^2\\left(6r^2\\left(m^2 + 2m + n^2 - 2n + 2\\right) - 4r_0\\,r\\left(m^3 - 2m^2\\,n + 8m^2 - 4m\\,n + 13m - n^3 + 6n^2 - 13n + 12\\right) + r_0^2\\left(m^4 - 2m^3\\,n + 10m^3 + 3m^2\\,n^2 - 20m^2\\,n + 41m^2 + 6m\\,n^2 - 34m\\,n + 56m + n^4 - 8n^3 + 29n^2 - 56n + 48\\right)\\right)}{r^6\\left(r - 2r_0\\right)^2\\,A^{2n}}"
+        },
+        {
+          "id": "harmonic",
+          "name": "Harmonic",
+          "coordinates": [
+            "t",
+            "u",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "u \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "u \\to 0 \\;\\text{(spatial infinity)}",
+            "u \\to \\infty \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "A length, half the value of Campanelli and Lousto's radius $r$ at the singularity, with $e^{-2ku} = 1 - 2k/r$"
+            },
+            {
+              "symbol": "b",
+              "description": "A length, the mass of Fisher's metric $(\\phi/\\phi_0)g_{\\mu\\nu}$. Far from the body the field is that of a mass $M$ with $GM/c^2 = b - s/2$, where $G$ is the constant of gravitation measured there"
+            },
+            {
+              "symbol": "s",
+              "description": "A length, the scalar charge: $\\phi = \\phi_0e^{-su}$, with $R_{\\mu\\nu} = \\omega\\,\\partial_\\mu\\phi\\,\\partial_\\nu\\phi/\\phi^2 + \\nabla_\\mu\\nabla_\\nu\\phi/\\phi$. $s = 0$ with $b = k$ is Schwarzschild's metric, and the coupling constant is $\\omega = 2(k^2 - b^2)/s^2 - 3/2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, u, \\theta, \\phi)$, with $u$ an inverse length, Bronnikov's harmonic coordinate of the metric $(\\phi/\\phi_0)g_{\\mu\\nu}$; in Brans's constants $k = 2B$, $b = (C + 2)B/\\lambda$, and $s = 2BC/\\lambda$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the rate of $ct$.",
+          "line_element": "ds^2 = e^{su}\\left(-e^{-2bu}c^2dt^2 + \\dfrac{k^2e^{2bu}}{\\sinh^2(ku)}\\left(\\dfrac{k^2du^2}{\\sinh^2(ku)} + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{-(2b-s)u}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{k^4e^{(2b+s)u}}{\\sinh^4(ku)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{k^2e^{(2b+s)u}}{\\sinh^2(ku)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{k^2e^{(2b+s)u}\\sin^2\\theta}{\\sinh^2(ku)}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(4k^2 - 4b^2 - 3s^2\\right)e^{-u\\left(2b + s\\right)}\\sinh^4\\left(k\\,u\\right)}{2k^4}",
+          "kretschmann": "K = \\dfrac{\\left(48k^4\\sinh^2\\left(k\\,u\\right) - 128k^3\\,b\\sinh\\left(k\\,u\\right)\\cosh\\left(k\\,u\\right) - 64k^3\\,s\\sinh\\left(k\\,u\\right)\\cosh\\left(k\\,u\\right) + 224k^2\\,b^2\\sinh^2\\left(k\\,u\\right) + 192k^2\\,b^2 + 32k^2\\,b\\,s\\sinh^2\\left(k\\,u\\right) + 56k^2\\,s^2\\sinh^2\\left(k\\,u\\right) + 48k^2\\,s^2 - 256k\\,b^3\\sinh\\left(k\\,u\\right)\\cosh\\left(k\\,u\\right) + 64k\\,b^2\\,s\\sinh\\left(k\\,u\\right)\\cosh\\left(k\\,u\\right) - 64k\\,b\\,s^2\\sinh\\left(k\\,u\\right)\\cosh\\left(k\\,u\\right) - 16k\\,s^3\\sinh\\left(k\\,u\\right)\\cosh\\left(k\\,u\\right) + 112b^4\\sinh^2\\left(k\\,u\\right) - 32b^3\\,s\\sinh^2\\left(k\\,u\\right) + 24b^2\\,s^2\\sinh^2\\left(k\\,u\\right) + 8b\\,s^3\\sinh^2\\left(k\\,u\\right) + 3s^4\\sinh^2\\left(k\\,u\\right)\\right)e^{-2u\\left(2b + s\\right)}\\sinh^6\\left(k\\,u\\right)}{4k^8}"
+        }
+      ]
+    },
+    {
       "id": "brill_waves",
       "name": "Brill's Time-Symmetric Gravitational Waves",
       "short_name": "Brill Waves",
@@ -10124,6 +10429,11 @@
           "id": "kaluza_klein_black_hole",
           "kind": "family",
           "text": "The charged holes of Kaluza and Klein's theory, where the scalar field couples with strength $\\sqrt{3}$ and records the length of a fifth dimension. Their extremal limit has a horizon of zero area too, unless both charges are present [horowitz2012]."
+        },
+        {
+          "id": "brans_dicke_sphere",
+          "kind": "family",
+          "text": "The dilaton's ancestor. Brans and Dicke put a scalar field beside the metric in 1961, and the gravity of bosonic string theory at low energy is their theory with $\\omega = -1$ [bransdicke1961, faraoni2016]."
         }
       ],
       "references": [
@@ -10144,7 +10454,9 @@
         "mizuno2018",
         "kocherlakota2021",
         "duff1994",
-        "horowitz2012"
+        "horowitz2012",
+        "bransdicke1961",
+        "faraoni2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -13474,6 +13786,11 @@
           "id": "exponential_metric",
           "kind": "limit",
           "text": "The limit $\\gamma \\to \\infty$ with $\\gamma b = 2m$ held fixed, where $f^\\gamma \\to e^{-2m/r}$. It takes the scalar field's energy negative, and the naked singularity opens into the throat of a wormhole [makukov2018]."
+        },
+        {
+          "id": "brans_dicke_sphere",
+          "kind": "conformal",
+          "text": "Fisher's metric divided by a scalar field. In Brans's constants $C$ and $\\lambda$, with $\\phi/\\phi_0 = f^{C/2\\lambda}$ and $\\gamma = (C + 2)/2\\lambda$, the metric $g_{\\mu\\nu}\\phi_0/\\phi$ solves the vacuum equations of Brans and Dicke's theory, where freely falling bodies follow its geodesics [dicke1962, faraoni2018]."
         }
       ],
       "references": [
@@ -13501,7 +13818,9 @@
         "chowdhury2012",
         "roberts1996",
         "liebling2023",
-        "makukov2018"
+        "makukov2018",
+        "dicke1962",
+        "faraoni2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -28735,6 +29054,11 @@
           "id": "exponential_metric",
           "kind": "special_case",
           "text": "A member written down in 1954 and recognised as a traversable wormhole in 2018, with $g_{tt} = -e^{-2m/r}$ in the isotropic radius $r$ and a throat of areal radius $e\\,m$ [papapetrou1954, boonserm2018]."
+        },
+        {
+          "id": "brans_dicke_sphere",
+          "kind": "family",
+          "text": "A wormhole with no matter but the scalar field of Brans and Dicke's theory. Their static sphere has a throat when the post-Newtonian parameter $\\gamma$ exceeds $1$ [agnese1995]."
         }
       ],
       "references": [
@@ -28758,7 +29082,8 @@
         "simpson2019",
         "alcubierre1994",
         "papapetrou1954",
-        "boonserm2018"
+        "boonserm2018",
+        "agnese1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -31173,6 +31498,11 @@
           "id": "malament_hogarth",
           "kind": "family",
           "text": "Minkowski's metric times a free conformal factor again. There the factor is chosen to stretch one world line without end, and here a field equation fixes it [einstein1914fokker]."
+        },
+        {
+          "id": "brans_dicke_sphere",
+          "kind": "family",
+          "text": "A scalar field in gravity again, half a century on. Brans and Dicke kept Einstein's metric and added a scalar field to set the strength of gravity, and their static sphere bends light by $(3 + 2\\omega)/(4 + 2\\omega)$ of Einstein's angle [bransdicke1961]."
         }
       ],
       "references": [
@@ -31193,7 +31523,8 @@
         "nordstrom1914unify",
         "kaluza1921",
         "ravndal2004",
-        "nordstrom1918"
+        "nordstrom1918",
+        "bransdicke1961"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nordstrom_scalar.json",
@@ -32058,6 +32389,11 @@
           "id": "exponential_metric",
           "kind": "family",
           "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$ and the post-Newtonian tests do not separate the two [boonserm2018]."
+        },
+        {
+          "id": "brans_dicke_sphere",
+          "kind": "special_case",
+          "text": "Brans and Dicke's theory as a point of the plane. Far from the body their static sphere has $\\beta = 1$ and $\\gamma = (1 + \\omega)/(2 + \\omega)$ [thornewill1971, bransdicke1961]."
         }
       ],
       "references": [
@@ -37709,6 +38045,11 @@
           "id": "ab_metrics",
           "kind": "family",
           "text": "Schwarzschild's field is A I in Ehlers and Kundt's table of the static vacuum fields of type D. The others have a hyperbolic or a flat plane where the sphere is, or have the time and the angle exchanged [hruska2019, martins1996]."
+        },
+        {
+          "id": "brans_dicke_sphere",
+          "kind": "generalisation",
+          "text": "The field outside a static body in Brans and Dicke's theory, where a scalar field sets the strength of gravity. With the scalar charge $C = 0$ it is Schwarzschild's metric, and with any other the horizon gives way to a singularity [bransdicke1961, agnese1995]."
         }
       ],
       "references": [
@@ -37817,7 +38158,9 @@
         "brill1959",
         "alcubierre2000collapse",
         "hruska2019",
-        "martins1996"
+        "martins1996",
+        "bransdicke1961",
+        "agnese1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

@@ -467,6 +467,18 @@ The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, wh
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 - chart Hyperspherical, Anti-de Sitter Branch: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 
+### Brans-Dicke Static Sphere
+
+The gravitational field outside a static, spherical body in Carl Brans and Robert Dicke's theory of 1961, where a scalar field beside the metric sets the strength of gravity from place to place. With the coupling constant $\omega$ it bends light by $(3 + 2\omega)/(4 + 2\omega)$ of Einstein's value, and where Schwarzschild's horizon would stand its spheres shrink to zero area at infinite curvature, with no horizon to hide them.
+
+- id: `brans_dicke_sphere`
+- tags: static, stationary, spherically symmetric, four-dimensional, Brans-Dicke, scalar field, scalar-tensor theory, Jordan frame, Einstein frame, Mach's principle, alternative theories of gravity, varying gravitational constant, Brans class I, Campanelli-Lousto, naked singularity, curvature singularity, no horizon, wormhole, scalar charge, mass, post-Newtonian, tests of general relativity, light deflection, perihelion precession, solar system, no-hair theorem, isotropic coordinates, harmonic coordinates, asymptotically flat, exact solution, exterior, Lorentzian, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/brans_dicke_sphere.json
+- chart Isotropic: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -h^{2/\lambda}c^2dt^2 + \left(1 + \dfrac{B}{\rho}\right)^4h^{2(\lambda - C - 1)/\lambda}\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -A^{m+1}c^2dt^2 + A^{n-1}dr^2 + A^{n}r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Harmonic: coordinates $(t, u, \theta, \phi)$, $$ds^2 = e^{su}\left(-e^{-2bu}c^2dt^2 + \dfrac{k^2e^{2bu}}{\sinh^2(ku)}\left(\dfrac{k^2du^2}{\sinh^2(ku)} + d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Brill's Time-Symmetric Gravitational Waves
 
 One moment of a spacetime that holds gravitational waves and nothing else, which Dieter Brill constructed in 1959. It is a single slice of space, three dimensions with no time, at the moment the wave is at rest, and it satisfies Einstein's constraint equations with no matter anywhere. Brill proved its mass positive, a strong enough wave already lies inside its own apparent horizon, and what the wave does afterwards is known from computer simulations.

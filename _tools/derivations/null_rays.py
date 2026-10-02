@@ -1244,6 +1244,14 @@ ERB_CHARGED = {"r_s": 1, "r_q": "sqrt(3)/2"}
 FJNW = {"b": 1, "gamma": "1/2"}
 FJNW_HARMONIC = {"m": "1/2", "k": 1}
 EXPONENTIAL = {"m": 1}          # the exponential metric of Papapetrou and Yilmaz, in units of m = GM/c^2
+# Brans and Dicke's static sphere at omega = 6 and C = -1/4, where lambda = 1 and every power is
+# rational: twice the scalar charge of a body of weak gravity, whose C = -1/8 confines the difference
+# from Schwarzschild's metric to within a few thousandths of the singular radius. In Campanelli and
+# Lousto's letters m = 1/lambda - 1 = 0 and n = 1 - (C + 1)/lambda = 1/4, and in the harmonic chart
+# b = (C + 2)k/2 lambda = 7k/8 and s = kC/lambda = -k/4.
+BRANS_DICKE = {"B": 1, "C": "-1/4", "lambda": 1}
+BRANS_DICKE_SPHERICAL = {"r_0": 1, "m": 0, "n": "1/4"}
+BRANS_DICKE_HARMONIC = {"k": 1, "b": "7/8", "s": "-1/4"}
 # Roberts's collapsing scalar field for its three outcomes: p = 9/10, where the field disperses, the
 # threshold p = 1, and p = 2, where it makes a black hole. Nothing in it sets a scale, so lengths
 # are in any unit ell.
@@ -2517,6 +2525,17 @@ DIAGRAMS = [
     Diagram("fisher_jnw", "harmonic", "radial", "$t$ and $u$", ("t", "u"), (0, 4, -4, 4),
             "$ku$", "$ct/k$", FJNW_HARMONIC, EQUATOR, families=("outgoing", "ingoing"), areal=True,
             areal_contours=(0.5, 1.0, 2.0, 4.0)),
+    # Brans and Dicke's static sphere on its plane of the time and the radial coordinate in each of its
+    # three charts, at omega = 6 and C = -1/4: from the singularity out in Brans's isotropic radius, whose
+    # singularity is B, and in Campanelli and Lousto's r, whose singularity is 2 r_0, and from spatial
+    # infinity u = 0 in toward the singularity u = infinity in Bronnikov's harmonic u.
+    Diagram("brans_dicke_sphere", "isotropic", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (1, 5, -2, 2),
+            "$\\rho/B$", "$ct/B$", BRANS_DICKE, EQUATOR, areal=True, inside=True),
+    Diagram("brans_dicke_sphere", "spherical", "radial", "$t$ and $r$", ("t", "r"), (2, 6, -2, 2),
+            "$r/r_0$", "$ct/r_0$", BRANS_DICKE_SPHERICAL, EQUATOR, areal=True),
+    Diagram("brans_dicke_sphere", "harmonic", "radial", "$t$ and $u$", ("t", "u"), (0, 4, -4, 4),
+            "$ku$", "$ct/k$", BRANS_DICKE_HARMONIC, EQUATOR, families=("outgoing", "ingoing"), areal=True,
+            areal_contours=(1.0, 1.5, 2.0, 4.0)),
     # The exponential metric of Papapetrou and Yilmaz at m = 1, on its plane of the time and the radial
     # coordinate in each chart: the isotropic radius from the singular horizon r = 0 through the throat
     # r = m, the line through r = 0 in the Cartesian chart, the areal radius from the throat R = e m
@@ -6042,6 +6061,44 @@ CAPTIONS = {
         "$e^{2(k - m)u}/4k^2$ at large $u$. A ray moving toward larger $u$ runs through all of it in a finite "
         "time and reaches the singularity $1.6\\,k/c$ after passing $ku = 1$. The faint vertical lines are "
         "the spheres of areal radius $4k$, $2k$, $k$, and $k/2$, at $ku = 0.28$, $0.64$, $1.5$, and $2.8$.",
+    ],
+    ("brans_dicke_sphere", "isotropic", "radial"): [
+        "The plane of $t$ and the isotropic radius $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for "
+        "$\\omega = 6$ and $C = -1/4$, where $\\lambda = 1$, each point in the plane a 2-sphere. The edges of "
+        "the cones are $d\\rho/d(ct) = \\pm h^{(C + 2)/\\lambda - 1}\\left(1 + B/\\rho\\right)^{-2}$ with "
+        "$h = (\\rho - B)/(\\rho + B)$, and $ct \\mp r_*$ is constant along a ray, for the tortoise coordinate "
+        "$r_*$ with $dr_*/d\\rho = h^{1 - (C + 2)/\\lambda}\\left(1 + B/\\rho\\right)^2$ and $r_* = 0$ at "
+        "$\\rho = B$.",
+        "At $C = 0$ the cones are Schwarzschild's in isotropic coordinates, which close as $h$ on the horizon "
+        "$\\rho = B$. Here they close as $h^{3/4}$, on a sphere of zero area where the Kretschmann scalar "
+        "diverges, and the power below $1$ makes $r_*$ finite there: a ray moving in from $\\rho = 3B$ "
+        "reaches the singularity after $29\\,B/c$, and a ray leaves it for infinity at every moment. A body "
+        "of weak gravity has $C = -1/8$ at this $\\omega$, half the scalar charge drawn, and the power is "
+        "$0.94$.",
+    ],
+    ("brans_dicke_sphere", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $m = 0$ and $n = 1/4$, which "
+        "is $\\omega = 6$ with Schwarzschild's $g_{tt}$, each point in the plane a 2-sphere of area "
+        "$4\\pi r^2A^{n}$ with $A = 1 - 2r_0/r$. The edges of the cones are "
+        "$dr/d(ct) = \\pm A^{(m - n + 2)/2}$, so $ct \\mp r_*$ is constant along a ray, for the tortoise "
+        "coordinate $r_*$ with $dr_*/dr = A^{-(m - n + 2)/2}$ and $r_* = 0$ at $r = 2r_0$.",
+        "The power of $A$ is $7/8$ where Schwarzschild's is $1$, so at $r = 3r_0$ the cones are $15$ percent "
+        "wider than Schwarzschild's. They close only on $r = 2r_0$, where the spheres have zero area and the "
+        "Kretschmann scalar diverges. A ray moving in from $r = 4r_0$ reaches that singularity after the "
+        "finite time $18\\,r_0/c$, and a ray leaves it for infinity at every moment, so no horizon hides "
+        "it. At $m = n = 0$ the time is infinite and $r = 2r_0$ is Schwarzschild's horizon.",
+    ],
+    ("brans_dicke_sphere", "harmonic", "radial"): [
+        "The plane of $t$ and $u$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $b = 7k/8$ and $s = -k/4$, "
+        "which is $\\omega = 6$. Spatial infinity is $u = 0$, the singularity is $u \\to \\infty$, and the "
+        "logarithm of the scalar field grows in proportion to $u$. The edges of the cones are "
+        "$du/d(ct) = \\pm e^{-2bu}\\sinh^2(ku)/k^2$, and $ct \\pm r_*$ is constant along a ray, for the "
+        "tortoise coordinate $r_*$ with $dr_*/du = -k^2e^{2bu}/\\sinh^2(ku)$.",
+        "The cones close as $u^2$ toward $u = 0$, which a ray reaches only as $t \\to \\pm\\infty$, and open as "
+        "$e^{2(k - b)u}/4k^2$ at large $u$. A ray moving toward larger $u$ runs through all of it in a finite "
+        "time and reaches the singularity $13\\,k/c$ after passing $ku = 1$. The faint vertical lines are "
+        "the spheres of areal radius $4k$, $2k$, $1.5\\,k$, and $k$, at $ku = 0.31$, $0.83$, $1.4$, and "
+        "$2.8$.",
     ],
     ("exponential_metric", "isotropic", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $m = 1$), each point in the plane a 2-sphere of area "
@@ -12342,6 +12399,16 @@ def _witten_xstar(x):
     return np.log(np.abs(np.expm1(2 * np.asarray(x, float)))) / 2
 
 
+def _bd_rstar(r):
+    """The tortoise coordinate of Brans and Dicke's sphere at m = 0, n = 1/4 and r_0 = 1, zero at the
+    singularity r = 2: dr_*/dr = A^(-sigma) with A = 1 - 2/r and sigma = (m - n + 2)/2 = 7/8, so
+    r_* = 2 A^(1 - sigma) 2F1(2, 1 - sigma; 2 - sigma; A)/(1 - sigma)."""
+    from scipy.special import hyp2f1
+    sigma = 7 / 8
+    A = np.clip(1 - 2 / np.asarray(r, float), 0.0, None)
+    return 2 * A ** (1 - sigma) * hyp2f1(2, 1 - sigma, 2 - sigma, A) / (1 - sigma)
+
+
 def _fjnw_rstar(r):
     """The tortoise coordinate of Fisher, Janis, Newman and Winicour's metric at gamma = 1/2 and b = 1,
     zero at the singularity: dr_*/dr = (1 - 1/r)^(-1/2)."""
@@ -12804,6 +12871,17 @@ CLOSED_FORMS = {
          lambda t, rho: t - _fjnw_rstar(rho * (1 + 1 / (4 * rho)) ** 2), lambda t, rho: rho > 0.2505),
     ("fisher_jnw", "harmonic", "radial"):
         (lambda t, u: t - 2 * _fjnw_rstar(1 / (1 - np.exp(-2 * u))), lambda t, u: t + 2 * _fjnw_rstar(1 / (1 - np.exp(-2 * u))),
+         lambda t, u: u > 0.05),
+    # Brans and Dicke's sphere at omega = 6 and C = -1/4: with r_0 = 1 the tortoise coordinate is _bd_rstar(r); the
+    # isotropic chart counts lengths in B = r_0/2, where r/r_0 = rho (1 + 1/rho)^2/2, and the harmonic
+    # chart has k = r_0 and r = 2/(1 - e^(-2u)), which falls as u grows.
+    ("brans_dicke_sphere", "isotropic", "radial"):
+        (lambda t, rho: t + 2 * _bd_rstar(rho * (1 + 1 / rho) ** 2 / 2),
+         lambda t, rho: t - 2 * _bd_rstar(rho * (1 + 1 / rho) ** 2 / 2), lambda t, rho: rho > 1.001),
+    ("brans_dicke_sphere", "spherical", "radial"):
+        (lambda t, r: t + _bd_rstar(r), lambda t, r: t - _bd_rstar(r), lambda t, r: r > 2.001),
+    ("brans_dicke_sphere", "harmonic", "radial"):
+        (lambda t, u: t - _bd_rstar(2 / (1 - np.exp(-2 * u))), lambda t, u: t + _bd_rstar(2 / (1 - np.exp(-2 * u))),
          lambda t, u: u > 0.05),
     # The exponential metric at m = 1: on every plane the metric is e^(-2/r)(-dt^2 + dr_*^2) with the
     # tortoise coordinate of the Curzon-Chazy particle's axis, r_* = r e^(2/r) - 2 Ei(2/r), at the

@@ -811,6 +811,14 @@ def _fjnw_reach(m, of_r):
     return [of_r(1 / (1 - math.exp(-u))) for u in (hi, lo)]
 
 
+def _bd_reach(m, of_r):
+    """The embedding of Brans and Dicke's equator is read in the harmonic chart at k = r_0 = 1, where
+    e^(-2u) = 1 - 2 r_0/r: the radii r it reaches, least first, each carried to a chart's own radial
+    coordinate by of_r."""
+    lo, hi = m.reach("harmonic", "u")
+    return [of_r(2 / (1 - math.exp(-2 * u))) for u in (hi, lo)]
+
+
 def witten(chart):
     """The moment t = 0 of Witten's black hole outside the horizon, the meridian theta = 0 of his
     cigar, as far as the embedding reaches in his proper distance r, at lambda = m = 1: level in
@@ -2175,6 +2183,15 @@ FLAT = {
         "fisher_jnw", lambda m: along(0.0, *_fjnw_reach(m, lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2))),
     ("fisher_jnw", "harmonic", "radial"): lambda: one(
         "fisher_jnw", lambda m: along(0.0, *(u / 2 for u in m.reach("harmonic", "u")))),
+    # Brans and Dicke's sphere at omega = 6 and C = -1/4: the moment t = 0 as far as the embedding
+    # reaches, from the singularity out, in the isotropic radius, which its plane draws in units of
+    # B = r_0/2, in Campanelli and Lousto's r, and in the harmonic coordinate.
+    ("brans_dicke_sphere", "isotropic", "radial"): lambda: one(
+        "brans_dicke_sphere", lambda m: along(0.0, *_bd_reach(m, lambda r: r - 1 + math.sqrt(r * (r - 2))))),
+    ("brans_dicke_sphere", "spherical", "radial"): lambda: one(
+        "brans_dicke_sphere", lambda m: along(0.0, *_bd_reach(m, lambda r: r))),
+    ("brans_dicke_sphere", "harmonic", "radial"): lambda: one(
+        "brans_dicke_sphere", lambda m: along(0.0, *m.reach("harmonic", "u"))),
     # The exponential metric at m = 1: the moment t = 0 from r = m/3 on the far side of the throat to
     # r = 6m on the near side, in the isotropic radius, on the Cartesian line through r = 0, in the
     # areal radius R = r e^(m/r), which covers the near side from the throat R = e m out, and in u = 1/r.

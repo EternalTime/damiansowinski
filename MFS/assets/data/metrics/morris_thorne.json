@@ -77,6 +77,11 @@
       "id": "exponential_metric",
       "kind": "special_case",
       "text": "A member written down in 1954 and recognised as a traversable wormhole in 2018, with $g_{tt} = -e^{-2m/r}$ in the isotropic radius $r$ and a throat of areal radius $e\\,m$ [papapetrou1954, boonserm2018]."
+    },
+    {
+      "id": "brans_dicke_sphere",
+      "kind": "family",
+      "text": "A wormhole with no matter but the scalar field of Brans and Dicke's theory. Their static sphere has a throat when the post-Newtonian parameter $\\gamma$ exceeds $1$ [agnese1995]."
     }
   ],
   "references": [
@@ -100,7 +105,8 @@
     "simpson2019",
     "alcubierre1994",
     "papapetrou1954",
-    "boonserm2018"
+    "boonserm2018",
+    "agnese1995"
   ],
   "coordinates": [
     {

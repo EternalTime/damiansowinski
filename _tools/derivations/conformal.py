@@ -123,7 +123,7 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "misner_brill_lindquist", "brill_waves",
-             "kundt_waves", "wahlquist", "tippett_tsang"}
+             "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous"}
 
 
 # ---------------------------------------------------------------- the drawing
@@ -13523,6 +13523,118 @@ def fisher_jnw(ck, src):
     return views
 
 
+def brans_dicke_sphere(ck, src):
+    """Brans and Dicke's static sphere at omega = 6 and C = -1/4, where lambda = 1, the whole
+    spacetime, each point a 2-sphere, one view for each of its three charts.
+
+    In Campanelli and Lousto's letters m = 0 and n = 1/4, and on the plane of t and r the metric is
+    A^(m+1) (-c^2dt^2 + dr_*^2) with A = 1 - 2 r_0/r and dr_*/dr = A^(-(m - n + 2)/2) = A^(-7/8), whose
+    integral from 2 r_0 is finite: r_* = 16 r_0 A^(1/8) 2F1(2, 1/8; 9/8; A), zero at r = 2 r_0 and
+    without bound. So p, q = arctan((ct -+ r_*)/l) with l = 16 r_0 bring it into Minkowski's triangle
+    with r = 2 r_0 on X = 0, a timelike line where the spheres have zero area and the Kretschmann
+    scalar diverges, and no horizon: the triangle of Fisher's metric, which is this one times
+    phi/phi_0. Brans's isotropic radius, with r = rho (1 + B/rho)^2, is drawn at B = 1, so r_0 = 2B,
+    its lengths and times are twice their count in r_0 and l = 32 B. The harmonic chart is drawn
+    at k = r_0 = 1, r = 2k/(1 - e^(-2ku)); u grows toward the singularity, which is u -> infinity.
+    One event is checked to land on one point through all three maps, and the Kretschmann scalar
+    against its closed form."""
+    ell = 16.0
+    star = nr._bd_rstar
+    to_r = {"spherical": lambda r: np.asarray(r, dtype=float),
+            "isotropic": lambda rho: np.asarray(rho, dtype=float) * (1 + 1 / np.asarray(rho, dtype=float)) ** 2 / 2,
+            "harmonic": lambda u: 2 / (1 - np.exp(-2 * np.asarray(u, dtype=float)))}
+    maps = {cid: (lambda t, x, cid=cid: mink_pq(t, star(to_r[cid](x)), ell)) for cid in ("spherical", "harmonic")}
+    # In the isotropic chart ct is in units of B = r_0/2, so it is halved to be read in r_0.
+    maps["isotropic"] = lambda t, rho: mink_pq(np.asarray(t, dtype=float) / 2, star(to_r["isotropic"](rho)), ell)
+    coords = {"isotropic": "\\rho", "spherical": "r", "harmonic": "u"}
+    params = {"isotropic": nr.BRANS_DICKE, "spherical": nr.BRANS_DICKE_SPHERICAL, "harmonic": nr.BRANS_DICKE_HARMONIC}
+    planes = {cid: Plane(src, "brans_dicke_sphere", cid, ("t", coords[cid]), {**EQUATOR, "phi": "0"}, params[cid])
+              for cid in coords}
+    spans = {"spherical": 2 + np.exp(ck.uniform(-6, 3.5)), "isotropic": 1 + np.exp(ck.uniform(-6, 3.5)),
+             "harmonic": np.exp(ck.uniform(-4, 2))}
+    for cid, plane in planes.items():
+        ck.chart(f"Brans-Dicke, {cid}", plane, maps[cid], ck.uniform(-40, 40), spans[cid], lambda t, x: (1, 0))
+        K = plane.kretschmann
+        if cid == "harmonic":
+            ck.diverges("Brans-Dicke, harmonic: the Kretschmann scalar diverges as u -> infinity", K(0, 6.0), K(0, 9.0))
+        else:
+            # K grows as (r - 2 r_0)^(-5/2), so the spherical chart is read a hundred times nearer its edge.
+            edge, near = (2.0, 1e-4) if cid == "spherical" else (1.0, 1e-2)
+            ck.diverges(f"Brans-Dicke, {cid}: the Kretschmann scalar diverges on the edge r = 2 r_0",
+                        K(0, edge + near), K(0, edge + near / 10))
+        # K = 4 r_0^2 (6 r^2 (n^2 - 2n + 2) - 4 r_0 r (12 - 13n + 6n^2 - n^3) + r_0^2 (48 - 56n + 29n^2 - 8n^3 + n^4))
+        # /(r^6 (r - 2 r_0)^2 A^(2n)) at m = 0, which at n = 1/4 and r_0 = 1 is
+        # (2400 r^2 - 9328 r + 9137)/(64 r^6 (r - 2)^2 A^(1/2)), and 16 times smaller at r_0 = 2 for the same r/r_0.
+        x = spans[cid][:50]
+        r = to_r[cid](x)
+        ck.limit(f"Brans-Dicke, {cid}: the Kretschmann scalar is its closed form",
+                 K(np.zeros(50), x) * (16 if cid == "isotropic" else 1) * (64 * r ** 6 * (r - 2) ** 2 * np.sqrt(1 - 2 / r))
+                 / (2400 * r ** 2 - 9328 * r + 9137), np.ones(50), 1e-6)
+    r = 2 + np.exp(ck.uniform(-6, 3.5))
+    g = planes["spherical"].metric(0 * r, r)
+    h = 1e-6 * (r - 2)
+    ck.limit("Brans-Dicke: the tortoise coordinate has dr_*/dr = sqrt(-g_rr/g_tt)",
+             (star(r + h) - star(r - h)) / (2 * h) / np.sqrt(-g[2] / g[0]), np.ones_like(r), 1e-6)
+    ck.limit("Brans-Dicke: the tortoise coordinate vanishes at the singularity", star(2.0), [0.0], 1e-12)
+    # One event, one point: the sphere r at the time t, in each chart's own coordinate and unit.
+    t, r = ck.uniform(-20, 20), 2 + np.exp(ck.uniform(-4, 3))
+    want = np.array(maps["spherical"](t, r))
+    for cid, got in (("isotropic", maps["isotropic"](2 * t, r - 1 + np.sqrt(r * (r - 2)))),
+                     ("harmonic", maps["harmonic"](t, np.log(r / (r - 2)) / 2))):
+        ck.limit(f"Brans-Dicke: the {cid} chart lands on the points of the spherical chart", np.array(got), want, 1e-9)
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    moment = slices.moments("brans_dicke_sphere")[0]
+    reach = np.array(slices._bd_reach(moment, lambda r: r))
+    TS = (-32, -16, -8, 0, 8, 16, 32)
+    table = (
+        ("isotropic", "Isotropic", "\\rho", (1.05, 1.5, 2, 4, 8, 16, 32),
+         "$1.05\\,B$, $1.5\\,B$, $2B$, $4B$, $8B$, $16B$, and $32B$", 8, "$\\rho = 8B$", "$\\rho = B$",
+         lambda r: r - 1 + np.sqrt(r * (r - 2)), 2, "B"),
+        ("spherical", "Spherical", "r", (2.001, 2.1, 2.5, 4, 8, 16, 32),
+         "$2.001\\,r_0$, $2.1\\,r_0$, $2.5\\,r_0$, $4r_0$, $8r_0$, $16r_0$, and $32r_0$", 4, "$r = 4r_0$", "$r = 2r_0$",
+         lambda r: r, 1, "r_0"),
+        ("harmonic", "Harmonic", "u", (0.0625, 0.125, 0.25, 0.5, 1, 2, 4),
+         "$1/16k$, $1/8k$, $1/4k$, $1/2k$, $1/k$, $2/k$, and $4/k$", 0.5, "$u = 1/2k$", "$u \\to \\infty$",
+         lambda r: np.log(r / (r - 2)) / 2, 1, "k"))
+    views = []
+    for cid, name, x, lines, listed, marked, mark, edge, of_r, unit, length in table:
+        fmap = maps[cid]
+        v = View(cid, name, box, cid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda c, t, fmap=fmap, unit=unit: fmap(unit * t, c), lines, S_ALL)
+        grid(v, "t", lambda t, s: mink_pq(t, s, ell), TS, S_POS)
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], edge, "r", dx=-6)
+        label_on(v, fmap(0, marked), mark)
+        v.legend("cover", f"the whole spacetime, which $t$ and ${x}$ cover")
+        v.legend("r", f"${x}$ constant, at {listed}")
+        v.legend("t", {"r_0": "$ct$ constant, every $8r_0$ to $\\pm 16r_0$, and at $\\pm 32r_0$",
+                       "B": "$ct$ constant, every $16B$ to $\\pm 32B$, and at $\\pm 64B$",
+                       "k": "$ct$ constant, every $8k$ to $\\pm 16k$, and at $\\pm 32k$"}[length])
+        v.legend("singular", f"the singularity {edge}, where the spheres have zero area and the Kretschmann scalar "
+                             "diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        along = of_r(reach)
+        v.slice(moment, [fmap(0 * along, along)])
+        v.set(settings={"r_0": "$m = 0$, $n = 1/4$, and $r_0 = 1$, the unit of every length, and $\\ell = 16r_0$; ",
+                        "B": "$C = -1/4$, $\\lambda = 1$, and $B = 1$, the unit of every length, so that $r_0 = 2B$, "
+                             "and $\\ell = 32B$; ",
+                        "k": "$b = 7k/8$, $s = -k/4$, and $k = 1$, the unit of every length, so that $r_0 = k$, "
+                             "and $\\ell = 16k$; "}[length]
+              + "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$.")
+        views.append(v)
+    return views
+
+
 def exponential_metric(ck, src):
     """The exponential metric of Papapetrou and Yilmaz at m = 1, the whole spacetime, each point a
     2-sphere, one view for each chart whose points are spheres.
@@ -19732,6 +19844,7 @@ DRAWN = {
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "fisher_jnw": fisher_jnw,
+    "brans_dicke_sphere": brans_dicke_sphere,
     "exponential_metric": exponential_metric,
     "witten_black_hole": witten_black_hole,
     "roberts": roberts,
@@ -22692,6 +22805,34 @@ CAPTIONS = {
         "$U = -e^{-\\lambda u}/\\sqrt{m}$ and $V = \\left(e^{2\\lambda x}/m - 1\\right)/(-U)$ they cover the "
         "exterior and the white hole, and their lines of constant $u$ are outgoing light rays, which leave the "
         "singularity and cross the horizon outward.",
+    ],
+    ("brans_dicke_sphere", "isotropic"): [
+        "The static sphere of Brans and Dicke's theory in Brans's isotropic radius $\\rho$ ($\\omega = 6$, "
+        "$C = -1/4$, $\\lambda = 1$), each point in the diagram a 2-sphere. On the plane of $t$ and $\\rho$ the "
+        "metric is $h^{2/\\lambda}(-c^2dt^2 + dr_*^2)$ with $h = (\\rho - B)/(\\rho + B)$ and "
+        "$dr_*/d\\rho = h^{1 - (C + 2)/\\lambda}\\left(1 + B/\\rho\\right)^2$, and $r_*$ vanishes at "
+        "$\\rho = B$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $\\rho = B$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. At $C = 0$ the isotropic radius of Schwarzschild's metric runs on "
+        "through $\\rho = B$ into a second exterior, and at the values drawn the spacetime ends there.",
+    ],
+    ("brans_dicke_sphere", "spherical"): [
+        "The static sphere of Brans and Dicke's theory ($m = 0$, $n = 1/4$, which is $\\omega = 6$), each point "
+        "in the diagram a 2-sphere of radius $rA^{n/2}$. On the plane of $t$ and $r$ the metric is "
+        "$A^{m+1}(-c^2dt^2 + dr_*^2)$ with $A = 1 - 2r_0/r$ and $dr_*/dr = A^{-(m - n + 2)/2}$, and $r_*$ "
+        "vanishes at $r = 2r_0$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $r = 2r_0$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. The triangle is Fisher's, whose metric is this one multiplied by "
+        "the scalar field, a factor that moves no light ray. The strip between the edge and the first line "
+        "drawn is the last thousandth of $r_0$ before the singularity, which light takes $6.2\\,r_0/c$ to "
+        "cross: the power of $A$ in $dr_*/dr$ is $7/8$ where Schwarzschild's is $1$, and at $m = n = 0$ the "
+        "integral for $r_*$ diverges at $r = 2r_0$, which is then Schwarzschild's horizon.",
+    ],
+    ("brans_dicke_sphere", "harmonic"): [
+        "The static sphere of Brans and Dicke's theory ($b = 7k/8$, $s = -k/4$, which is $\\omega = 6$) in the "
+        "harmonic coordinate $u$, each point in the diagram a 2-sphere of radius $ke^{(2b+s)u/2}/\\sinh(ku)$. "
+        "On the plane of $t$ and $u$ the metric is $e^{-(2b-s)u}(-c^2dt^2 + dr_*^2)$ with "
+        "$dr_*/du = -k^2e^{2bu}/\\sinh^2(ku)$, and $r_*$ falls to zero as $u \\to \\infty$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $u \\to \\infty$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. Spatial infinity $i^0$ is $u = 0$, and the scalar field "
+        "$\\phi_0e^{-su}$ grows without bound toward the edge.",
     ],
     ("fisher_jnw", "spherical"): [
         "A static mass with a massless scalar field ($\\gamma = 1/2$), each point in the diagram a 2-sphere of "

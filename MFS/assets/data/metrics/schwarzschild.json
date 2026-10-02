@@ -388,6 +388,11 @@
       "id": "ab_metrics",
       "kind": "family",
       "text": "Schwarzschild's field is A I in Ehlers and Kundt's table of the static vacuum fields of type D. The others have a hyperbolic or a flat plane where the sphere is, or have the time and the angle exchanged [hruska2019, martins1996]."
+    },
+    {
+      "id": "brans_dicke_sphere",
+      "kind": "generalisation",
+      "text": "The field outside a static body in Brans and Dicke's theory, where a scalar field sets the strength of gravity. With the scalar charge $C = 0$ it is Schwarzschild's metric, and with any other the horizon gives way to a singularity [bransdicke1961, agnese1995]."
     }
   ],
   "references": [
@@ -496,7 +501,9 @@
     "brill1959",
     "alcubierre2000collapse",
     "hruska2019",
-    "martins1996"
+    "martins1996",
+    "bransdicke1961",
+    "agnese1995"
   ],
   "coordinates": [
     {
