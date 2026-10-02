@@ -486,9 +486,14 @@ class FlatPlane(Slice):
     with its profile along x: the circle through the point x of the profile has the proper radius
     sqrt(g_xx) x, so g_phiphi = g_xx x^2 with phi the angle of the Euclidean plane, which need be
     no angle of the chart, since in Kasner's plane of x and z a circle of the chart is an ellipse.
-    `draw` carries chart points (x, y) to the drawing's (X, Y, 0)."""
+    `draw` carries chart points (x, y) to the drawing's (X, Y, 0).
 
-    def __init__(self, sources, metric_id, system_id, x, y, fixed, params=None, functions=None):
+    A plane whose constant coefficients carry a cross term, h = g_xx dx^2 + 2 g_xy dx dy + g_yy dy^2,
+    is flat as well, and is drawn through a `frame` E handed to it, (X, Y) = E (x, y), which is
+    checked to be orthonormal, E^T E = h. The frame says which way the drawing is turned, so
+    whoever hands it over says why it is that one."""
+
+    def __init__(self, sources, metric_id, system_id, x, y, fixed, params=None, functions=None, frame=None):
         _, entry, R = nr.load(metric_id, system_id)
         sources.note(metric_id, system_id, FIELDS)
         self.metric_id, self.system_id, self.coordinate = metric_id, system_id, x
@@ -512,17 +517,26 @@ class FlatPlane(Slice):
         i, j = entry["coords"].index(x), entry["coords"].index(y)
         gxx, gyy, gxy = prep(g[i, i]), prep(g[j, j]), prep(g[i, j])
         where = f"{metric_id}/{system_id} on the plane of {x} and {y}"
-        if gxy != 0 or gxx.free_symbols or gyy.free_symbols or not (gxx > 0 and gyy > 0):
+        if frame is None and gxy != 0:
+            raise SystemExit(f"{where}: g_xy = {gxy}, so the plane needs a frame to be drawn through")
+        if gxx.free_symbols or gyy.free_symbols or gxy.free_symbols or not (gxx > 0 and gxx * gyy - gxy ** 2 > 0):
             raise SystemExit(f"{where}: g_xx = {gxx}, g_yy = {gyy} and g_xy = {gxy}, so the plane is not flat "
                              "in these coordinates")
         self.x, self.phi = R.symbol[x], sp.Symbol("varphi", real=True)
         self.scale = np.array([math.sqrt(float(gxx)), math.sqrt(float(gyy))])
+        self.h = np.array([[float(gxx), float(gxy)], [float(gxy), float(gyy)]])
+        self.dyad = None if frame is None else np.asarray(frame, dtype=float)
+        if self.dyad is not None and float(np.max(np.abs(self.dyad.T @ self.dyad - self.h))) > 1e-9:
+            raise SystemExit(f"{where}: the frame handed over is not orthonormal in the plane's metric")
         self.gxx, self.gxp, self.gpp = gxx, sp.Integer(0), gxx * self.x ** 2
         self._surface(where)
 
     def draw(self, cx, cy):
         """The drawing's (X, Y, 0) of the chart points (cx, cy) of the plane."""
         cx, cy = np.broadcast_arrays(np.asarray(cx, dtype=float), np.asarray(cy, dtype=float))
+        if self.dyad is not None:
+            XY = np.column_stack([cx.ravel(), cy.ravel()]) @ self.dyad.T
+            return np.column_stack([XY, np.zeros(cx.size)])
         return np.column_stack([self.scale[0] * cx.ravel(), self.scale[1] * cy.ravel(), np.zeros(cx.size)])
 
 
@@ -989,6 +1003,11 @@ class EllipsesPiece(GridPiece):
       the distance from its apex, running round only part of the axis, `open`, as a cone unrolls
       onto the plane, every distance along it the distance on the cone.
 
+    A ring that the waves shear as well as stretch has no fixed axes, and its rows are the ellipses
+    (a(u) cos v + sx(u) sin v, sy(u) cos v + b(u) sin v): the image of the unit circle under the
+    matrix ((a, sx), (sy, b)), whose columns v are still the ring's particles. rows(u) then gives
+    (a, b, z, sx, sy), and the file writes sx and sy beside a and b.
+
     rows(u) gives (a, b, z) for an array of u; u is halved until every triangle lies within
     GRID_SAG of the drawing's size of the surface rows() describes, measured in space, which is
     the parametric miss at points spread over each triangle, at least the distance to the
@@ -1013,9 +1032,12 @@ class EllipsesPiece(GridPiece):
             if len(self.u) > 20000:
                 raise AssertionError(f"piece {pid}: the rows cannot hold the surface within GRID_SAG by halving")
             self.u = np.sort(np.concatenate([self.u, 0.5 * (self.u[bad] + self.u[bad + 1])]))
-        a, b, z = (np.asarray(w, dtype=float) for w in rows(self.u))
-        self.decimals = decimals(max(2 * float(np.max(a)), 2 * float(np.max(b)), float(np.ptp(z)), 1e-9))
-        self.A, self.B, self.Zr = (np.round(w, self.decimals) + 0.0 for w in (a, b, z))
+        a, b, z, sx, sy = self._rows(self.u)
+        self.sheared = bool(np.any(sx != 0) or np.any(sy != 0))
+        reach = max(float(np.max(np.hypot(a, sx))), float(np.max(np.hypot(b, sy))))
+        self.decimals = decimals(max(2 * reach if self.sheared else max(2 * float(np.max(a)), 2 * float(np.max(b))),
+                                     float(np.ptp(z)), 1e-9))
+        self.A, self.B, self.Zr, self.SX, self.SY = (np.round(w, self.decimals) + 0.0 for w in (a, b, z, sx, sy))
         self.Z = np.repeat(self.Zr[:, None], len(self.v), axis=1)
         self.drawn = [(c, which, [self.index(which, x) for x in values]) for c, which, values in lines]
         self.lines = {"u": [], "v": []}
@@ -1023,20 +1045,31 @@ class EllipsesPiece(GridPiece):
         X, Y = self.plane()
         self.extent = self.facets.extent = max(float(np.ptp(X)), float(np.ptp(Y)))
 
+    def _rows(self, u):
+        """rows(u) as (a, b, z, sx, sy), the shear zero where the rows give none."""
+        out = [np.asarray(w, dtype=float) for w in self.rows(u)]
+        if len(out) == 3:
+            out += [np.zeros_like(out[0]), np.zeros_like(out[0])]
+        return out
+
     def plane(self, u=None, v=None):
         if u is None and v is None:
-            return np.outer(self.A, np.cos(self.v)), np.outer(self.B, np.sin(self.v))
-        a, b, _ = self.rows(self.u if u is None else u)
-        v = self.v if v is None else v
-        return np.outer(a, np.cos(v)), np.outer(b, np.sin(v))
+            a, b, sx, sy, v = self.A, self.B, self.SX, self.SY, self.v
+        else:
+            a, b, _, sx, sy = self._rows(self.u if u is None else u)
+            v = self.v if v is None else v
+        if not self.sheared:
+            return np.outer(a, np.cos(v)), np.outer(b, np.sin(v))
+        return np.outer(a, np.cos(v)) + np.outer(sx, np.sin(v)), np.outer(sy, np.cos(v)) + np.outer(b, np.sin(v))
 
     def _errors(self, Z=None):
         """The distance in space from each cell's triangles to the surface at the same place of
         the grid, the worst of samples over each, from the unrounded rows."""
         u, v = self.u, self.v
         vv = np.append(v, v[0] + 2 * math.pi) if self.wrap else v
-        a, b, z = (np.asarray(w, dtype=float) for w in self.rows(u))
-        P = np.stack([np.outer(a, np.cos(vv)), np.outer(b, np.sin(vv)), np.repeat(z[:, None], len(vv), axis=1)], -1)
+        a, b, z, sx, sy = self._rows(u)
+        P = np.stack([np.outer(a, np.cos(vv)) + np.outer(sx, np.sin(vv)), np.outer(sy, np.cos(vv)) + np.outer(b, np.sin(vv)),
+                      np.repeat(z[:, None], len(vv), axis=1)], -1)
         g = np.linspace(0, 1, 9)
         s, t = (w.ravel() for w in np.meshgrid(g, g))
         keep = s + t <= 1 + 1e-12
@@ -1049,8 +1082,9 @@ class EllipsesPiece(GridPiece):
             uu = u[:-1, None, None] + du[:, None, None] * fu[None, None, :]
             ww = np.broadcast_to(vv[None, :-1, None] + dv[None, :, None] * fv[None, None, :],
                                  (len(u) - 1, len(vv) - 1, len(fv)))
-            ra, rb, rz = (np.asarray(w, dtype=float).reshape(uu.shape[0], 1, -1) for w in self.rows(uu[:, 0, :].ravel()))
-            T = np.stack([ra * np.cos(ww), rb * np.sin(ww), np.broadcast_to(rz, ww.shape)], -1)
+            ra, rb, rz, rsx, rsy = (w.reshape(uu.shape[0], 1, -1) for w in self._rows(uu[:, 0, :].ravel()))
+            T = np.stack([ra * np.cos(ww) + rsx * np.sin(ww), rsy * np.cos(ww) + rb * np.sin(ww),
+                          np.broadcast_to(rz, ww.shape)], -1)
             worst = np.maximum(worst, np.linalg.norm(Q - T, axis=-1).max(axis=-1))
         return worst
 
@@ -1091,6 +1125,8 @@ class EllipsesPiece(GridPiece):
         d = self.decimals
         grid = {"frame": "ellipses", "u": [significant(x) for x in self.u], "v": [significant(x) for x in self.v],
                 "a": [fixed(x, d) for x in self.A], "b": [fixed(x, d) for x in self.B], "z": [fixed(x, d) for x in self.Zr]}
+        if self.sheared:
+            grid["sx"], grid["sy"] = [fixed(x, d) for x in self.SX], [fixed(x, d) for x in self.SY]
         if self.open:
             grid["open"] = True
         grid["lines"] = [{"class": c, "u": idx if which == "u" else [], "v": idx if which == "v" else []}
@@ -7663,6 +7699,9 @@ def particles(ck, where, sl, piece, cx, cy, every=30):
     ck.on_piece(f"{where}, the ring", piece, P)
     chord = np.linalg.norm(np.diff(P, axis=0), axis=1)
     metric = np.sqrt(float(sl.gxx) * np.diff(cx) ** 2 + float(sl.scale[1] ** 2) * np.diff(cy) ** 2)
+    if getattr(sl, "dyad", None) is not None:
+        dx, dy = np.diff(cx), np.diff(cy)
+        metric = np.sqrt(sl.h[0, 0] * dx ** 2 + 2 * sl.h[0, 1] * dx * dy + sl.h[1, 1] * dy ** 2)
     ck.add(f"{where}, the ring's steps against the plane's metric", float(np.max(np.abs(chord - metric))), 1e-12)
     return Curve(piece, "particles", P, closed=True), [(piece, "particles", Q) for Q in P[:-1:every]]
 
@@ -8122,16 +8161,18 @@ def at_rest(ck, src, metric_id, system_id):
              not any(ix[1:] == ("t", "t") and ix[0] != "t" for ix in gamma))
 
 
-def ring_sequence(ck, src, name, metric_id, system_id, moments, top, params=None, axes=("x", "z")):
+def ring_sequence(ck, src, name, metric_id, system_id, moments, top, params=None, axes=("x", "z"), frame=None):
     """A flat plane of the two axes, x and z unless named, at each moment, (label, time, fixed,
     functions), with a ring of particles at rest on the unit circle of the chart, which each
     moment stretches into an ellipse of semi-axes sqrt(g_xx) and sqrt(g_zz), checked. The
-    moments are the frames of the view's movie, ring_movie()."""
+    moments are the frames of the view's movie, ring_movie(). Where the plane's metric carries a
+    cross term, frame(time) is the frame each moment is drawn through, as FlatPlane takes it."""
     size = 2 * top
     alpha = np.linspace(0, 2 * math.pi, 361)
     surfaces = []
     for label, time, fixed_at, functions in moments:
-        sl = FlatPlane(src, metric_id, system_id, *axes, fixed_at, params, functions)
+        sl = FlatPlane(src, metric_id, system_id, *axes, fixed_at, params, functions,
+                       frame=None if frame is None else frame(time))
         where = f"{name}, {label}"
         plane = disc(sl, "plane", top, "the centre of the ring", "the plane runs on, flat, to infinity", [], size)
         ck.isometry(where, plane)
@@ -8166,19 +8207,21 @@ def stack(ck, name, surfaces, rows, lift, planes, size, edge):
     `surfaces`, which is checked, and its columns their world lines. planes(u) gives the plane of
     each row as a FlatPlane, or the ring's own points, whose semi-axes are checked against the row
     it stands at. The axis of time runs from the first moment to a quarter of the tube's length
-    past the last."""
+    past the last. A ring that is sheared as well as stretched has rows(u) = (a, b, sx, sy), the
+    matrix ((a, sx), (sy, b)) that carries the unit circle to the ring, as EllipsesPiece takes it,
+    and planes(u, a, b, sx, sy) checks it."""
     alpha = np.linspace(0, 2 * math.pi, 361)[:-1]
     times = [s.time for s in surfaces]
 
     def at(u):
-        a, b = rows(np.asarray(u, dtype=float))
-        return a, b, lift * np.asarray(u, dtype=float)
+        a, b, *shear = rows(np.asarray(u, dtype=float))
+        return (a, b, lift * np.asarray(u, dtype=float), *shear)
     tube = EllipsesPiece("tube", "sheet", times, alpha, at, surfaces[0].pieces[0].sl.metric_id,
                          surfaces[0].pieces[0].sl.system_id, edge, size, [("worldline", "v", alpha[::30])])
     ck.add(f"{name}, the tube's triangles against its ellipses, in space", tube.sag() / size, GRID_SAG)
     worst = 0.0
-    for u, a, b in zip(tube.u, tube.A, tube.B):
-        worst = max(worst, planes(u, a, b))
+    for u, a, b, sx, sy in zip(tube.u, tube.A, tube.B, tube.SX, tube.SY):
+        worst = max(worst, planes(u, a, b, sx, sy) if tube.sheared else planes(u, a, b))
     # Within the rounding of the file, and for rings run as geodesics the 1e-9 they are run to.
     ck.add(f"{name}, every row of the tube is the ring at its time", worst, 0.5 * 10.0 ** -tube.decimals + 1e-9)
     N = tube.nodes()
@@ -8815,6 +8858,96 @@ def bell_szekeres(ck, src):
                 "ring's radius before the collision, the unit of every length.")
     return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings,
                  height="$\\xi$, a height of $3\\,\\ell$ for each unit of $\\xi$"),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
+
+
+def chandrasekhar_xanthopoulos(ck, src):
+    """The wave front, the plane of x and y, at the four events psi = 0, 0.5, 0.9 and 1.2 on
+    lambda = 0 of the chart of psi and lambda, where u = v, at p = 3/5 and q = 4/5: each flat, its
+    metric of constant coefficients with a cross term, since the polarizations of the waves are out
+    of line. The ring of free particles at rest on x^2 + y^2 = l^2 stays at rest: the published
+    Christoffel symbols have no Gamma^x_psipsi or Gamma^y_psipsi, and Gamma^lambda_psipsi vanishes on
+    lambda = 0. Each moment is drawn through the frame that parallel transport carries along the world
+    line of the ring's centre: its two covectors E_i obey dE_ia/dpsi = E_ib Gamma^b_{psi a}, with the
+    published symbols on lambda = 0, from E = 1 at the collision, where the front's metric is
+    dx^2 + dy^2. E^T E is checked to be the published metric at every moment, so the ring is the
+    ellipse E (cos, sin), which the waves stretch, squeeze and turn; its area is checked to be
+    pi cos(psi) and its length on the horizon to be sqrt((1 + p)(5 - 3p))/q = 2 sqrt(2)."""
+    from scipy.integrate import solve_ivp
+    params = {"m": 1, "alpha": "atan(4/3)"}
+    gamma, R = published_christoffel(src, "chandrasekhar_xanthopoulos", "angular")
+    psi, lam = R.symbol["\\psi"], R.symbol["\\lambda"]
+    at = {R.parameters[k]: sp.sympify(v) for k, v in params.items()}
+    ck.exact("Chandrasekhar-Xanthopoulos: no published Gamma^x_psipsi or Gamma^y_psipsi",
+             not any(ix[0] in ("x", "y") and ix[1:] == ("\\psi", "\\psi") for ix in gamma))
+    lambda_pp = gamma.get(("\\lambda", "\\psi", "\\psi"), sp.Integer(0))
+    ck.exact("Chandrasekhar-Xanthopoulos: Gamma^lambda_psipsi vanishes on lambda = 0",
+             sp.simplify(lambda_pp.subs(lam, 0)) == 0)
+    turn = sp.Matrix(2, 2, lambda b, a: gamma.get((("x", "y")[b], "\\psi", ("x", "y")[a]), sp.Integer(0)))
+    turn = sp.lambdify(psi, turn.subs(lam, 0).subs(at), "numpy")
+    last = 1.2
+
+    def rate(s, E):
+        return (E.reshape(2, 2) @ np.asarray(turn(s), dtype=float)).ravel()
+    carried = solve_ivp(rate, (0.0, math.pi / 2 - 1e-6), np.eye(2).ravel(), dense_output=True, rtol=1e-12, atol=1e-14)
+
+    def frame(s):
+        return carried.sol(float(s)).reshape(2, 2)
+
+    def front(s):
+        return f"$\\psi = {s:g}$", s, {"psi": repr(s), "lambda": 0}, None
+    named = (0.0, 0.5, 0.9, last)
+    # The movie runs through the moments at a steady psi, a frame every 0.025 of it.
+    moments, keys = ring_moments(named, 0.025, lambda k: front(named[k]), front)
+    times = [s for _, s, _, _ in moments]
+    frames = ring_sequence(ck, src, "Chandrasekhar-Xanthopoulos", "chandrasekhar_xanthopoulos", "angular", moments,
+                           3.0, params, axes=("x", "y"), frame=frame)
+    surfaces = [frames[i] for i in keys]
+    for s, time_ in zip(frames, times):
+        ring = s.curves[0].points[:360, :2]
+        area = 0.5 * abs(float(np.sum(ring[:, 0] * np.roll(ring[:, 1], -1) - ring[:, 1] * np.roll(ring[:, 0], -1))))
+        # The polygon through 360 points of an ellipse has sin(1 degree)/(1 degree) of its area.
+        ck.add(f"Chandrasekhar-Xanthopoulos, psi = {time_}: the ring's area is pi cos(psi)",
+               abs(area / (math.sin(math.radians(1)) / math.radians(1)) - math.pi * math.cos(time_)), 1e-9)
+    edge = frame(math.pi / 2 - 1e-6)
+    axes_, sides = np.linalg.svd(edge)[1], np.linalg.svd(frame(1e-4) - np.eye(2))[0]
+    p, q = 0.6, 0.8
+    ck.add("Chandrasekhar-Xanthopoulos: on the horizon the ring closes onto a segment of half length 2 sqrt(2)",
+           max(abs(axes_[0] - math.sqrt((1 + p) * (5 - 3 * p)) / q), abs(axes_[1])), 1e-5)
+    # The long axis at the start, the direction the ring first stretches along, and on the horizon.
+    first = math.degrees(math.atan2(sides[1, 0], sides[0, 0])) % 180
+    final = np.linalg.svd(edge)[0]
+    final = math.degrees(math.atan2(final[1, 0], final[0, 0])) % 180
+    ck.add("Chandrasekhar-Xanthopoulos: the ring's long axis turns through 63 degrees from the collision to the horizon",
+           abs(abs(first - final) - 63.4), 0.5)
+    def rows(s):
+        E = np.array([frame(x) for x in np.atleast_1d(np.asarray(s, dtype=float))])
+        return E[:, 0, 0], E[:, 1, 1], E[:, 0, 1], E[:, 1, 0]
+
+    def plane(s, a, b, sx, sy):
+        sl = FlatPlane(src, "chandrasekhar_xanthopoulos", "angular", "x", "y", {"psi": repr(float(s)), "lambda": 0},
+                       params, frame=frame(s))
+        return float(np.max(np.abs(sl.dyad - [[a, sx], [sy, b]])))
+    tube = stack(ck, "Chandrasekhar-Xanthopoulos", surfaces, rows, 3.0, plane, 6.0,
+                 "the world tube of the ring runs on before the collision, a cylinder, and after $\\psi = 1.2$ to the "
+                 "horizon")
+    tube_fig = stack_figure(tube, 6.0, "$\\psi$", [
+        ("fill", "cover", "the ring at every moment from the collision, $\\psi = 0$, to $\\psi = 1.2$, each at the "
+                          "height of its $\\psi$"),
+        ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
+        ("line", "axis", "the axis of $\\psi$, through the centre of the ring")])
+    fig, played = ring_movie(frames, 6.0, "$\\psi$")
+    fig.legend("fill", "cover", "the wave front at each moment, flat")
+    fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = \\ell^2$, with twelve of them "
+                                    "marked: an ellipse of area $\\pi\\ell^2\\cos\\psi$ that the waves stretch, "
+                                    "squeeze, and turn")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = ("$q = 4/5$, each moment the wave front at one $\\psi$ on $\\lambda = 0$, where $u = v$, drawn in the "
+                "frame parallel transport carries along the world line of the ring's centre, with $\\ell$ the "
+                "ring's radius before the collision, the unit of every length.")
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings,
+                 height="$\\psi$, a height of $3\\,\\ell$ for each unit of $\\psi$"),
             view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
 
 
@@ -11903,6 +12036,7 @@ DRAWN = {
     "kasner": kasner,
     "bianchi": bianchi,
     "pp_wave": pp_wave, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
+    "chandrasekhar_xanthopoulos": chandrasekhar_xanthopoulos,
     "light_beam": light_beam,
     "krasnikov": krasnikov,
     "tippett_tsang": tippett_tsang,
@@ -13674,6 +13808,29 @@ CAPTIONS = {
         "and vanishes at the Killing-Cauchy horizon $\\xi = \\pi/2$, where the ring closes onto a segment of the "
         "$x$ axis while the Kretschmann scalar stays at $32a^2b^2$. P. Bell and Peter Szekeres found this spacetime "
         "in 1974, the exact solution for two plane electromagnetic shock waves colliding head on.",
+    ],
+    ("chandrasekhar_xanthopoulos", "tube"): [
+        "The world tube of a ring of free particles at rest on the wave front where both gravitational waves have "
+        "passed ($q = 4/5$), each moment on $\\lambda = 0$ from the collision at $\\psi = 0$ to $\\psi = 1.2$ an "
+        "ellipse at the height of its $\\psi$, seen in the frame that parallel transport carries up the tube's "
+        "axis. The two waves stretch the tube along one direction, squeeze it along the other, and twist it, since "
+        "their polarizations are out of line, and at the Killing-Cauchy horizon $\\psi = \\pi/2$ it closes onto "
+        "a strip of half width $2\\sqrt{2}\\,\\ell$ with the curvature finite.",
+    ],
+    ("chandrasekhar_xanthopoulos", "ring"): [
+        "The wave front, the plane of $x$ and $y$, as $\\psi$ runs from $0$ to $1.2$ on $\\lambda = 0$ where both "
+        "waves have passed ($q = 4/5$), each moment drawn as a surface in flat space with every distance along it the "
+        "metric distance. At each moment the front's metric has constant coefficients, with a cross term $g_{xy}$ "
+        "because the polarizations of the waves are out of line, so the drawing is a flat disc, seen in the frame "
+        "that parallel transport carries along the world line of the ring's centre. The waves show in a ring of "
+        "free particles at rest on the circle $x^2 + y^2 = \\ell^2$ before they arrive.",
+        "At the collision, $\\psi = 0$, the ring is still that circle, and afterwards it is an ellipse that the "
+        "waves stretch along one axis, squeeze along the other, and turn, its long axis swinging through about "
+        "$63°$ on the way to the horizon. The area it encloses falls as $\\pi\\ell^2\\cos\\psi$ and vanishes at "
+        "the Killing-Cauchy horizon $\\psi = \\pi/2$, where the ring closes onto a segment of half length "
+        "$2\\sqrt{2}\\,\\ell$ while the curvature stays finite. Subrahmanyan Chandrasekhar and Basilis "
+        "Xanthopoulos found this spacetime in 1986, the collision of two plane gravitational waves that ends on "
+        "the inner horizon of Kerr's metric.",
     ],
     ("kasner", "ring"): [
         "The plane $y = 0$ of Kasner's universe as $t$ runs from $1/4$ to $2$, each moment drawn as a surface in flat space with "

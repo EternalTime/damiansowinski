@@ -473,6 +473,25 @@ DIMENSIONS = {
     ("bell_szekeres", "global"): {"\\chi": "1", "\\rho": "1", "\\theta": "1", "\\phi": "1", "a": "1/L", "b": "1/L"},
     ("bell_szekeres", "kruskal_szekeres"): {"U": "L", "V": "L", "\\eta": "1", "x": "L", "a": "1/L", "b": "1/L"},
     ("bell_szekeres", "bertotti_robinson"): {"t": "1", "r": "1", "\\theta": "1", "\\phi": "1", "a": "1/L", "b": "1/L"},
+    # Chandrasekhar and Xanthopoulos's eta and mu, and psi and lambda, are pure
+    # numbers; x and y are lengths along the wave fronts and m is the length that multiplies the
+    # part of the metric across them. In Kerr's charts m and a are lengths, and t and v are
+    # lengths that stand along a spacelike Killing vector between the horizons.
+    ("chandrasekhar_xanthopoulos", "prolate"): {
+        "\\eta": "1", "\\mu": "1", "x": "L", "y": "L", "m": "L", "\\alpha": "1", "p": "1", "q": "1",
+        "\\rho": "1", "X": "1", "Y": "1",
+    },
+    ("chandrasekhar_xanthopoulos", "angular"): {
+        "\\psi": "1", "\\lambda": "1", "x": "L", "y": "L", "m": "L", "\\alpha": "1", "p": "1", "q": "1",
+        "\\rho": "1", "X": "1", "Y": "1",
+    },
+    ("chandrasekhar_xanthopoulos", "boyer_lindquist"): {
+        "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("chandrasekhar_xanthopoulos", "kerr_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "m": "L", "a": "L", "\\Sigma": "L**2",
+        "\\Delta": "L**2",
+    },
     ("krasnikov", "cylindrical"): {
         "t": "T", "x": "L", "r": "L", "\\phi": "1", "k": "1",
     },
