@@ -778,7 +778,7 @@ def _kt_rows():
             rows.append(Diagram("kastor_traschen", "cylindrical", "radial", "$\\tau$ and $\\rho$", ("\\tau", "\\rho"),
                                 (0, 12, -8, 4), "$\\rho/m$", "$c\\tau/m$", KT_PARAMS, {"phi": "0", "z": "0"},
                                 functions={"V": KT_TWO_CYLINDRICAL}, input=KT_TWO_INPUT, tau="tau",
-                                singular_zero="H*tau + V", ends_on_singular=True, step=0.00125,
+                                singular_zero="H*tau + V", ends_on_singular=True,
                                 marked=(("event", _kt_point("midplane", 4), 1, KT_HORIZON),)))
             rows.append(Diagram("kastor_traschen", "isotropic", "radial", "$\\tau$ and $r$", ("\\tau", "r"),
                                 (0, 8, -4, 4), "$r/m$", "$c\\tau/m$", {"m": 1, "H": "-3/16"}, EQUATOR, tau="tau",
@@ -6614,12 +6614,11 @@ def _kt_label(plane, direction, comoving=False):
     return label
 
 
-def _kt_keep(plane):
+def _kt_keep(tau, x):
     """A ray of the two holes is compared at every twelfth point, since each costs an integration,
-    and where U > 1/4: beside the singularity U = 0 a ray runs level and its past is ill conditioned."""
-    def keep(tau, x):
-        return (np.arange(len(x)) % 12 == 0) & (slices.KT_H_TWO * tau + slices.kt_potential(plane, x) > 0.25)
-    return keep
+    and before tau = 0: after it U is small, neighbouring rays followed into the past part as
+    exp(int 2|dU/dx|/U^3 d(c tau)), and no integrator names the place to a part in 1e5."""
+    return (np.arange(len(x)) % 12 == 0) & (tau < 0)
 
 
 def _kt_every(time, x):
@@ -6879,9 +6878,9 @@ CLOSED_FORMS = {
     ("rn_metric", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [0.64, 0.36]), lambda t, r: t - _rstar(r, [0.64, 0.36]),
          lambda t, r: (np.abs(r - 0.64) > 0.05) & (np.abs(r - 0.36) > 0.05)),
-    ("kastor_traschen", "cartesian", "tz"): (_kt_label("axis", -1), _kt_label("axis", 1), _kt_keep("axis")),
-    ("kastor_traschen", "cartesian", "tx"): (_kt_label("midplane", -1), _kt_label("midplane", 1), _kt_keep("midplane")),
-    ("kastor_traschen", "cylindrical", "radial"): (_kt_label("midplane", -1), _kt_label("midplane", 1), _kt_keep("midplane")),
+    ("kastor_traschen", "cartesian", "tz"): (_kt_label("axis", -1), _kt_label("axis", 1), _kt_keep),
+    ("kastor_traschen", "cartesian", "tx"): (_kt_label("midplane", -1), _kt_label("midplane", 1), _kt_keep),
+    ("kastor_traschen", "cylindrical", "radial"): (_kt_label("midplane", -1), _kt_label("midplane", 1), _kt_keep),
     ("kastor_traschen", "isotropic", "radial"):
         (lambda tau, r: _kt_cosmic(tau, r, 1), lambda tau, r: _kt_cosmic(tau, r, -1), _kt_cosmic_away),
     ("kastor_traschen", "comoving", "tz"):
