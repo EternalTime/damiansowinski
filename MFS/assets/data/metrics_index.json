@@ -1231,7 +1231,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "fc8cd04765fcb0c2",
+    "version": "89343b9f6e12c3b0",
     "diagrams": "1e2a338fbaeb162f",
     "conformal": "c44e7367505c4a14",
     "embedding": "eb3c3b7b2d474485"
@@ -1371,6 +1371,35 @@
     "diagrams": "582c49f296d53450",
     "conformal": "1c0299b48c135ff5",
     "embedding": "4a468cbcc8c8e211"
+  },
+  {
+    "id": "israel_shell",
+    "name": "Israel Shell",
+    "tags": [
+      "dust",
+      "thin shell",
+      "gravitational collapse",
+      "matched solution",
+      "junction conditions",
+      "black hole",
+      "mass",
+      "curvature singularity",
+      "horizon",
+      "event horizon",
+      "time-dependent",
+      "spherically symmetric",
+      "asymptotically flat",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "eceb39abf39a98d4",
+    "diagrams": "c5dd1a29c82d4852",
+    "conformal": "3af58a8247811924",
+    "embedding": "2d27d1ba3b61e75b"
   },
   {
     "id": "israel_wilson_perjes",
@@ -2158,7 +2187,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "b6b2027344b8aed0",
+    "version": "f45fb451a3705000",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2513,7 +2542,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3a754f5f8ff17eca",
+    "version": "d42b6fefacc14419",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -2943,7 +2972,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f346570d6df9c464",
+    "version": "f0ce0a141e769d8f",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3475,7 +3504,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "12387afe5059c7a7",
+    "version": "d6c20744537be24f",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"
@@ -3575,7 +3604,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9b11ef4b6ef91775",
+    "version": "ce9d8434eb3cabe8",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"

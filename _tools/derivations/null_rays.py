@@ -230,6 +230,7 @@ import boson_star as bs  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
+import israel_shell as ishell  # noqa: E402
 import ori_shell  # noqa: E402
 import slices  # noqa: E402
 import verify_metrics as vm  # noqa: E402
@@ -410,6 +411,9 @@ class Diagram:
     lines: tuple = ()               # (kind, "x0" or "r", value, legend): a line of constant
                                     # coordinate drawn and named, such as where a declared function jumps;
                                     # legend None for a marker the page names itself, as grr
+    curves: tuple = ()              # (kind, r as an expression in the plane's time, legend): a world line
+                                    # drawn and named, as a shell whose radius the row declares; it is
+                                    # drawn where the expression is positive
     surface: str = None             # r at which a star's surface is released from rest; see Surface
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
     singular_where_claimed: bool = False  # judge a singular edge only inside the published domains
@@ -1420,6 +1424,31 @@ class hiscock_r_out(sp.Function):
     _imp_ = staticmethod(hiscock_edge)
 
 
+# Israel's shell of dust as every one of its diagrams draws it, in units of r_s: the shell that falls
+# from rest at infinity, mu = r_s/2, whose motion israel_shell.py writes in closed form. Each chart
+# declares the shell's radius as a function of its own time: the flat time T inside, which is
+# Cardano's formula, Schwarzschild's t outside, and the advanced time v.
+ISRAEL = {"r_s": 1, "mu": "1/2"}
+ISRAEL_R_IN = "Piecewise(((4*sinh(asinh(2 - 12*T)/3)**2 - 1)/8, T < 0), (0, True))"
+ISRAEL_INPUT = ("The shell that falls from rest at infinity, $\\mu = r_s/2$, for which the mass seen from outside "
+                "is the rest mass of the dust. In $s = \\sqrt{1 + 8R/r_s}$ its proper time is "
+                "$c\\tau = -r_s(s - 1)^2(s + 2)/24$, zero where it reaches $R = 0$.")
+
+
+class israel_r_out(sp.Function):
+    """The radius of Israel's shell at Schwarzschild's time t, israel_shell.radius_at_outer_time."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(ishell.radius_at_outer_time)
+
+
+class israel_r_adv(sp.Function):
+    """The radius of Israel's shell at the advanced time v, israel_shell.radius_at_advanced."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(ishell.radius_at_advanced)
+
+
 # Bartnik and McKinnon's soliton as every one of its diagrams draws it, in units of the length ell:
 # the soliton whose Yang-Mills amplitude w has n zeros, solved by bartnik_mckinnon.py, n = 1 unless a
 # row says otherwise. Each declared function takes n for its second argument, and sympy
@@ -1481,7 +1510,8 @@ DECLARED_FUNCTIONS = {**{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, 
                       "teo_rho": teo_rho, "teo_sigma": teo_sigma, "ori_mass_behind": ori_mass_behind,
                       "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind,
                       "hiscock_m_out": hiscock_m_out, "hiscock_dm_out": hiscock_dm_out,
-                      "hiscock_d2m_out": hiscock_d2m_out, "hiscock_r_out": hiscock_r_out}
+                      "hiscock_d2m_out": hiscock_d2m_out, "hiscock_r_out": hiscock_r_out,
+                      "israel_r_out": israel_r_out, "israel_r_adv": israel_r_adv}
 
 
 # Neugebauer and Meinel's disc as every one of its diagrams draws it: mu = 3, the disc whose Ernst
@@ -3114,6 +3144,29 @@ DIAGRAMS = [
             "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, orient="ingoing", areal=True, surface="2",
             input="The surface released from rest at $r = 2r_s$ at $t = 0$, the star of the interior "
                   "coordinates with $\\chi_0 = \\pi/4$."),
+    # Israel's shell of dust, the one that falls from rest at infinity: the flat space inside it, on the
+    # plane of T and r and on the line through the centre, with the event horizon, the outgoing ray
+    # T - r = -7/3 that meets the shell on r_s; Schwarzschild's chart outside it, which the shell never
+    # leaves; and the ingoing chart, against v - r, where it falls through r_s at v = 0 to r = 0.
+    Diagram("israel_shell", "interior", "radial", "$T$ and $r$", ("T", "r"), (0, 3, -5.25, 0.25),
+            "$r/r_s$", "$cT/r_s$", ISRAEL, EQUATOR, tau="T", areal=True, functions={"R": ISRAEL_R_IN},
+            where=f"{ISRAEL_R_IN} - r", input=ISRAEL_INPUT,
+            curves=(("shell", ISRAEL_R_IN, "the shell of dust, $r = R$"),),
+            marked=(("event", {"x0": "-11/6", "r": "1/2"}, 1, "the event horizon"),)),
+    Diagram("israel_shell", "interior", "through", "through the centre", ("T", "r"), (0, 3, -5.25, 0.25),
+            "$x/r_s$", "$cT/r_s$", ISRAEL, EQUATOR, tau="T", mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True,
+            functions={"R": ISRAEL_R_IN}, where=f"{ISRAEL_R_IN} - r", input=ISRAEL_INPUT,
+            curves=(("shell", ISRAEL_R_IN, "the shell of dust, $r = R$"),),
+            marked=(("event", {"x0": "-11/6", "r": "1/2"}, 1, "the event horizon"),)),
+    Diagram("israel_shell", "exterior", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -7, 4),
+            "$r/r_s$", "$ct/r_s$", ISRAEL, EQUATOR, orient="ingoing", areal=True,
+            functions={"R": "israel_r_out(t)"}, where="r - israel_r_out(t)", input=ISRAEL_INPUT,
+            curves=(("shell", "israel_r_out(t)", "the shell of dust, $r = R$"),)),
+    Diagram("israel_shell", "exterior_ingoing", "shell", "against $v - r$", ("v", "r"), (0, 4, -5.5, 1.5),
+            "$r/r_s$", "$(v - r)/r_s$", ISRAEL, EQUATOR, to_display=FINKELSTEIN_IN, tau="v - r", areal=True,
+            functions={"R": "israel_r_adv(v)"}, where="r - israel_r_adv(v)", input=ISRAEL_INPUT,
+            singular_runs=True, singular_where_claimed=True,
+            curves=(("shell", "israel_r_adv(v)", "the shell of dust, $r = R$"),)),
     # A shell of null dust falls in along v = 0: flat inside, Schwarzschild outside, as the
     # conformal diagram declares it. The outgoing chart draws its time reverse.
     Diagram("vaidya", "eddington_finkelstein_ingoing", "shell", "an imploding shell", ("v", "r"),
@@ -7342,6 +7395,42 @@ CAPTIONS = {
         "$ct = -0.42\\,r_b$, well before any of this, and outside the cloud it runs along the dotted "
         "curve, the sphere $R = 2GM/c^2$.",
     ],
+    ("israel_shell", "interior", "radial"): [
+        "The plane of $T$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the shell, drawn for the shell that falls "
+        "from rest at infinity, $\\mu = r_s/2$. Space is flat here, so every ray runs at 45° and every cone is the "
+        "same. The shell is the curve $r = R(T)$, which closes on the centre at $T = 0$ at a speed that rises "
+        "toward that of light, and the flat region ends there.",
+        "The event horizon is the outgoing ray that reaches the shell as the shell crosses $r_s$, at "
+        "$cT = -4r_s/3$. It leaves the centre at $cT = -7r_s/3$ and crosses flat space, where no local "
+        "measurement marks it. An outgoing ray that leaves the centre after that moment meets the shell inside "
+        "$r_s$ and ends on the singularity.",
+    ],
+    ("israel_shell", "interior", "through"): [
+        "The line through the centre of the shell in the plane $\\theta = \\pi/2$, from the shell to the shell: "
+        "$x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. The two sides of the shell "
+        "close on the centre at $T = 0$, and the event horizon is the pair of rays that leave the centre at "
+        "$cT = -7r_s/3$, one to each side.",
+    ],
+    ("israel_shell", "exterior", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell, where the metric is "
+        "Schwarzschild's, drawn for the shell that falls from rest at infinity. The edges of the cones are "
+        "$dr/d(ct) = \\pm(1 - r_s/r)$, so $ct \\mp r_*$ is constant along a ray, with "
+        "$r_* = r + r_s\\ln(r/r_s - 1)$. Inside the shell, $r < R(t)$, lies the flat interior, which keeps a "
+        "time of its own.",
+        "The shell reaches $r_s$ only as $t \\to \\infty$, while its own clock passes $r_s$ at a finite reading, "
+        "$5r_s/6c$ before it reaches the centre. Each outgoing ray it sends takes longer than the last to climb "
+        "away. Its fall through the horizon to $r = 0$ lies beyond these coordinates, and the advanced time "
+        "$v$ follows it there.",
+    ],
+    ("israel_shell", "exterior_ingoing", "shell"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell, drawn with $v - r$ as the "
+        "vertical axis so that the ingoing rays, $v$ constant, run at 45°. The shell falls from rest at infinity, "
+        "crosses $r_s$ at $v = 0$ with $dR/d(c\\tau) = -3/4$, and reaches $r = 0$ at $v = 0.52\\,r_s$, a proper "
+        "time $5r_s/6c$ later. Inside the shell, $r < R(v)$, space is flat.",
+        "Outside $r_s$ the outgoing rays bend away from the horizon, and inside it every future cone points to "
+        "smaller $r$. From the moment the shell reaches the centre, $r = 0$ is the singularity of "
+        "Schwarzschild's vacuum, where the Kretschmann scalar $12r_s^2/r^6$ diverges.",
+    ],
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): [
         "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn with $cv - r$ as "
         "the vertical axis so that the ingoing rays, $v$ constant, run at 45°. A shell of null dust of mass $M$ falls in "
@@ -9129,6 +9218,25 @@ class Plot:
         corners = self.to_chart(self.from_unit(np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)))
         return float(np.min(corners[0])), float(np.max(corners[0]))
 
+    def world_line(self, radius):
+        """A world line r = radius(x^0) a row declares in `curves`, through the drawing, in the unit
+        square, over the times at which the radius is positive and one more, where it ends."""
+        x0 = self.c.x0
+        f = sp.lambdify(x0, sp.sympify(radius, locals={str(x0): x0, **DECLARED_FUNCTIONS}), "numpy")
+        t = np.linspace(*self.x0_range(), 4001)
+        with np.errstate(all="ignore"):
+            R = np.broadcast_to(np.asarray(f(t), dtype=float), t.shape)
+        keep = np.isfinite(R) & (R > 0)
+        if keep.sum() < 2:
+            raise SystemExit(f"{key(self.c.spec)}: the world line r = {radius} does not cross the drawing")
+        last = np.flatnonzero(keep)[-1]
+        if last + 1 < t.size and np.isfinite(R[last + 1]):
+            keep[last + 1] = True
+        points = np.array([self.to_unit(self.to_display(a, b)) for a, b in zip(t[keep], R[keep])])
+        if not np.all((points >= 0) & (points <= 1), axis=1).any():
+            raise SystemExit(f"{key(self.c.spec)}: the world line r = {radius} does not cross the drawing")
+        return inside_unit(points)
+
     def surface_line(self):
         """The star's surface through the drawing, in the unit square."""
         t = np.linspace(*self.x0_range(), 2001)
@@ -9231,6 +9339,8 @@ class Plot:
         for kind, (x0, r), legend in spec.points:
             u = self.to_unit(self.to_display(float(number(x0)), float(number(r))))
             out.append({"kind": kind, "points": [rounded(u)], "legend": legend})
+        for kind, radius, legend in spec.curves:
+            out.append({"kind": kind, "lines": [rounded(thin(self.world_line(radius), 0.0006))], "legend": legend})
         if spec.surface:
             out.append({"kind": "surface", "lines": [rounded(thin(self.surface_line(), 0.0006))],
                         "legend": self.c.surface.legend})
@@ -10830,6 +10940,14 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: 10 * ori_shell.label_behind(np.minimum(v, -1e-3), r, -1.0),
          lambda v, r: (v < -1e-3) & (r < ori_shell.shell().radius_behind(np.minimum(v, -1e-3)) - 0.01)
          & (r > ori_shell.horizons(ori_shell.shell().mass_behind(np.minimum(v, -1e-3)))[0] + 0.03)),
+    # Israel's shell at r_s = 1: cT +- r in the flat space inside it, and Schwarzschild's ct +- r_*, and v
+    # and v - 2r_*, outside it.
+    ("israel_shell", "interior", "radial"): (lambda T, r: T + r, lambda T, r: T - r, None),
+    ("israel_shell", "interior", "through"): (lambda T, r: T + r, lambda T, r: T - r, None),
+    ("israel_shell", "exterior", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), None),
+    ("israel_shell", "exterior_ingoing", "shell"):
+        (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), _away(1)),
     ("gowdy", "areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, lambda t, th: t > 0.02),
     ("gowdy", "sphere", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),
     ("gowdy", "logarithmic", "plane"): (lambda tau, th: np.exp(-tau) + th, lambda tau, th: np.exp(-tau) - th, None),

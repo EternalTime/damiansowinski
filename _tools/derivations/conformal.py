@@ -9488,6 +9488,146 @@ def vaidya(ck, src):
     return [v]
 
 
+# ---------------------------------------------------------------- Israel's shell of dust
+
+def israel_shell(ck, src):
+    """The shell of dust its other diagrams draw, the one that falls from rest at infinity,
+    mu = r_s/2 and r_s = 1, whose motion israel_shell.py writes in closed form. Inside the shell
+    p, q = Phi(T -+ r) with Phi(w) = arctan(3w/7), Minkowski's own compactification, which puts
+    the centre on the straight line X = 0 and the event horizon T - r = -7/3 on p = -pi/4.
+    Outside, each ray keeps the p or the q it has where it crosses the shell, so both are
+    continuous there, and an ingoing ray that arrives after the shell has reached the centre, at
+    v >= V_END, takes q = -p of the outgoing ray that ends on the singularity with it, which
+    makes the singularity the straight line T = 0. Schwarzschild's chart is the part of the
+    outside beyond r_s, entered through v = ct + r + ln(r - 1). One view for each chart."""
+    shell = nr.ishell
+    inner = Plane(src, "israel_shell", "interior", ("T", "r"), EQUATOR, nr.ISRAEL)
+    static = Plane(src, "israel_shell", "exterior", ("t", "r"), EQUATOR, nr.ISRAEL)
+    hole = Plane(src, "israel_shell", "exterior_ingoing", ("v", "r"), EQUATOR, nr.ISRAEL)
+    inside, outside = shell.conformal_inside, shell.conformal_outside
+
+    def schwarzschild(t, r):
+        return outside(np.asarray(t, dtype=float) + shell.tortoise(r), r)
+
+    T = ck.uniform(-15, -0.01)
+    ck.chart("Israel's shell, flat inside", inner, inside, T, ck.uniform(0.02, 0.98) * shell.radius_at_inner_time(T),
+             lambda T, r: (1, 0))
+    v = ck.uniform(-15, 15)
+    ck.chart("Israel's shell, Schwarzschild outside in the ingoing chart", hole, outside, v,
+             shell.radius_at_advanced(v) + ck.uniform(0.02, 20), lambda v, r: (1, -60))
+    t = ck.uniform(-15, 15)
+    ck.chart("Israel's shell, Schwarzschild outside in Schwarzschild's chart", static, schwarzschild, t,
+             shell.radius_at_outer_time(t) + ck.uniform(0.02, 20), lambda t, r: (1, 0))
+    s = ck.uniform(1.2, 40, 400)
+    R = shell.radius(s)
+    ck.limit("Israel's shell: the two sides put the shell at one place",
+             np.concatenate(inside(shell.inner_time(s), R)), np.concatenate(outside(shell.advanced(s), R)), 1e-9)
+    ck.limit("Israel's shell: one proper time on both sides, dT^2 - dR^2 = f dt^2 - dR^2/f",
+             shell.gamma(R, 1, 0.5) ** 2 - shell.speed(R, 1, 0.5) ** 2,
+             shell.beta(R, 1, 0.5) ** 2 / (1 - 1 / R) - shell.speed(R, 1, 0.5) ** 2 / (1 - 1 / R), 1e-9)
+    late = ck.uniform(shell.V_END + 0.01, 30, 200)
+    ck.limit("Israel's shell: the singularity is the line T = 0", np.add(*outside(late, np.full_like(late, 1e-9))), 0, 1e-6)
+    ck.limit("Israel's shell: r_s is the line p = -pi/4 outside the shell",
+             outside(ck.uniform(0.01, 30, 200), np.ones(200))[0], -Q4, 1e-9)
+    ck.limit("Israel's shell: the event horizon reaches the centre at cT = -7 r_s/3",
+             inside(shell.HORIZON_U, 0.0), [-Q4, -Q4], 1e-12)
+    ck.limit("Israel's shell: the horizon meets the shell on r_s",
+             [float(shell.radius(shell.s_of_inner_retarded(shell.HORIZON_U)))], [1.0], 1e-12)
+    ck.diverges("Israel's shell: the Kretschmann scalar diverges at r = 0 after the shell",
+                hole.kretschmann(1, 1e-2), hole.kretschmann(1, 1e-3))
+    ck.finite("Israel's shell: r = 0 before the shell arrives is a regular centre",
+              inner.kretschmann(ck.uniform(-9, -1, 20), np.full(20, 1e-6)))
+
+    # The shell from i^- to the point where it reaches the centre, the top of the centre line.
+    along = 1 + np.exp(np.linspace(9, -14, 900))
+    shell_p, shell_q = inside(shell.inner_time(along), shell.radius(along))
+    shell_xt = [[0, -PI]] + [point(p, q) for p, q in zip(shell_p, shell_q)] + [[0, 0]]
+    i_minus, i_zero, i_plus, end = (-HALF, -HALF), (-HALF, Q4), (-Q4, Q4), (0, 0)
+    flat_region = shell_xt
+    out_region = shell_xt + [point(*i_plus), point(*i_zero)]
+    beyond = along[along > shell.HORIZON_S]
+    static_p, static_q = inside(shell.inner_time(beyond), shell.radius(beyond))
+    static_region = ([[0, -PI]] + [point(p, q) for p, q in zip(static_p, static_q)]
+                     + [point(-Q4, float(shell.phi(-1 / 3))), point(*i_plus), point(*i_zero)])
+
+    def r_inside(r):
+        T = spread(-np.inf, float(shell.inner_time(shell.s_of_radius(r))), 500, 10)
+        return inside(T, np.full_like(T, r))
+
+    def T_inside(T):
+        r = np.linspace(0, float(shell.radius_at_inner_time(T)), 200)
+        return inside(np.full_like(r, T), r)
+
+    def r_outside(r):
+        v = spread(float(shell.advanced(shell.s_of_radius(r))), np.inf, 700, 11)
+        return outside(v, np.full_like(v, r))
+
+    def t_outside(t):
+        r = spread(float(shell.radius_at_outer_time(t)), np.inf, 600, 12)
+        return schwarzschild(np.full_like(r, t), r)
+
+    views = []
+    for vid, label in (("interior", "Flat interior"), ("exterior", "Schwarzschild exterior"),
+                       ("exterior_ingoing", "Ingoing exterior")):
+        v = View(vid, label, [-0.35, 3 * Q4 + 0.35, -PI - 0.25, 0.35], vid)
+        v.fill("region", out_region)
+        v.fill("region", flat_region)
+        v.fill("cover", {"interior": flat_region, "exterior": static_region, "exterior_ingoing": out_region}[vid])
+        for r in (0.5, 1.0, 2.0, 4.0):
+            v.curve("r2", *r_inside(r))
+        for time in (-8, -4, -2, -1):
+            v.curve("t2", *T_inside(time))
+        for r in (0.5, 0.8, 1.25, 1.6, 2.5, 5.0):
+            v.curve("r", *r_outside(r))
+        if vid == "exterior":
+            for time in (-8, -4, -2, 0, 2, 4):
+                v.curve("t", *t_outside(time))
+        v.curve("surface", shell_p, shell_q)
+        v.segment("event", (-Q4, -Q4), i_plus)
+        v.segment("centre", i_minus, end)
+        v.segment("singular", end, i_plus, zig=True)
+        v.segment("scri", i_plus, i_zero)
+        v.segment("scri", i_zero, i_minus)
+        for pq, text, anchor, dx, dy in ((i_minus, "$i^-$", "t", 0, 6), (i_zero, "$i^0$", "l", 6, 0),
+                                         (i_plus, "$i^+$", "bl", 4, -3)):
+            v.point("infinity", pq)
+            v.label(pq, text, anchor, dx=dx, dy=dy)
+        v.label((-3 * Q4 / 2, Q4), "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+        v.label((-HALF, -Q4 / 2), "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([Q4, 0], "$r = 0$", "b", dy=-8)
+        far = shell.s_of_radius(4.0)
+        v.label(inside(shell.inner_time(far), shell.radius(far)), "the shell", "tl", "small", dx=5, dy=3)
+        v.label((-Q4, 0.3), "event horizon", "tl", "small", dx=5, dy=3)
+        v.legend("cover", {"interior": "inside the shell, $r \\le R$, which $T$ and $r$ cover: flat",
+                           "exterior": "outside the shell and outside $r_s$, which Schwarzschild's $t$ and $r$ cover",
+                           "exterior_ingoing": "outside the shell, $r \\ge R$, which $v$ and $r$ cover: Schwarzschild"}[vid])
+        v.legend("surface", "the shell of dust $r = R$, a timelike curve from $i^-$ to $r = 0$")
+        v.legend("r", "$r$ constant outside: $0.5$, $0.8$, $1.25$, $1.6$, $2.5$ and $5\\,r_s$")
+        v.legend("r2", "$r$ constant inside: $0.5$, $1$, $2$ and $4\\,r_s$")
+        v.legend("t2", "$cT$ constant inside: $-8$, $-4$, $-2$ and $-1\\,r_s$")
+        if vid == "exterior":
+            v.legend("t", "$ct$ constant outside, every $2\\,r_s$ from $-8$ to $4\\,r_s$")
+        v.legend("event", "the event horizon, from the centre at $cT = -7r_s/3$ to $i^+$")
+        v.legend("centre", "$r = 0$ until the shell arrives, a regular centre")
+        v.legend("singular", "$r = 0$ from then on, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(input="The shell that falls from rest at infinity, $\\mu = r_s/2$.")
+        # Each moment: the flat time T at which the slice v - r = w meets the shell, from the centre to
+        # the shell, and v - r = w from the shell out, as far as the embedding reaches.
+        for m in slices.moments("israel_shell"):
+            lines = []
+            if m.time < shell.V_END:
+                sm = float(shell.s_of_slice(m.time))
+                r_in = np.linspace(0, float(shell.radius(sm)), 200)
+                lines.append(inside(np.full_like(r_in, float(shell.inner_time(sm))), r_in))
+            lo, hi = m.reach("exterior_ingoing", "r")
+            r_out = lo + (hi - lo) * np.linspace(0, 1, 400) ** 2
+            lines.append(outside(m.time + r_out, r_out))
+            v.slice(m, lines)
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Hiscock
 
 HISCOCK_STEP = 0.002
@@ -16630,7 +16770,7 @@ DRAWN = {
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
     "einstein_cluster": einstein_cluster,
-    "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
+    "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "israel_shell": israel_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
     "bartnik_mckinnon": bartnik_mckinnon,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
@@ -19362,6 +19502,29 @@ CAPTIONS = {
         "Schwarzschild's and is timelike while the mass falls, so it ends inside the event horizon's future, at "
         "the same point. The radiation crosses $\\mathscr{I}^+$ between the rays $u_1$ and $u_0$, crowded against "
         "the Cauchy horizon by the redshift of the light that left just outside the horizon.",
+    ],
+    ("israel_shell", "interior"): [
+        "A spacetime in which a spherical shell of dust falls from rest at infinity ($\\mu = r_s/2$), each point "
+        "in the diagram a 2-sphere of radius $r$. Inside the shell the metric is flat, placed by "
+        "$p, q = \\arctan(3(cT \\mp r)/7r_s)$, which puts the centre on the straight line $X = 0$. Outside it the "
+        "metric is Schwarzschild's, and each light ray keeps the $p$ or the $q$ it has where it crosses the shell, "
+        "so the shell is one curve from both sides.",
+        "The event horizon forms at the centre at $cT = -7r_s/3$, before the shell arrives, and grows through "
+        "flat space to meet the shell at $r = r_s$. The shell reaches $r = 0$ a proper time $5r_s/6c$ after that, "
+        "and the singularity starts there. The coordinates $T$ and $r$ cover the region inside the shell, "
+        "which ends where the shell does.",
+    ],
+    ("israel_shell", "exterior"): [
+        "The same shell in Schwarzschild's coordinates outside it, which cover the region between the shell and "
+        "infinity up to the event horizon. A line of constant $t$ runs from $i^0$ to the shell, and the lines "
+        "crowd toward the horizon, which they reach only as $t \\to \\infty$.",
+    ],
+    ("israel_shell", "exterior_ingoing"): [
+        "The same shell in the ingoing coordinates $v$ and $r$ outside it, which cover everything outside the "
+        "shell, the black hole included. A line of constant $r$ inside $r_s$ starts on the shell and ends at "
+        "$i^+$, and every one of them is spacelike. The lines bend where they cross the ingoing ray "
+        "$v = 0.52\\,r_s$, the last to meet the shell, because $q$, chosen to make the centre and the singularity "
+        "straight, has zero slope on one side of that ray and infinite slope on the other.",
     ],
     ("vaidya", "shell"): [
         "A spacetime into which a spherical shell of null dust of mass $M$ falls along $v = 0$, each point in the "

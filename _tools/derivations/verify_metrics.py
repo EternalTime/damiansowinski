@@ -1203,6 +1203,19 @@ DIMENSIONS = {
     ("hiscock", "flat"): {
         "u": "L", "v": "L", "\\theta": "1", "\\phi": "1",
     },
+    # Israel's shell of dust: flat space inside in the time T of its centre, Schwarzschild's vacuum
+    # outside in Schwarzschild's time t and in the advanced time v, a length. R, the areal radius of
+    # the shell, and mu = G m/c^2, the rest mass of the dust as a length, enter the domains and the
+    # shell's motion alone.
+    ("israel_shell", "interior"): {
+        "T": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\mu": "L", "R": "L",
+    },
+    ("israel_shell", "exterior"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\mu": "L", "R": "L",
+    },
+    ("israel_shell", "exterior_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\mu": "L", "R": "L",
+    },
     # The gravastar: a ball of de Sitter space of radius L inside a thin shell at the areal radius
     # R, Schwarzschild's vacuum of radius r_s outside. C is a name for the number that makes g_tt
     # continuous across the shell, and the tortoise coordinate x of the interior is a length.

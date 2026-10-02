@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 120,
+  "count": 121,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -12265,6 +12265,11 @@
           "id": "boson_star",
           "kind": "family",
           "text": "A black hole mimicker made of a scalar field, smooth all the way through, with a regular centre and no horizon [liebling2023]."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "family",
+          "text": "A thin shell of dust with flat space inside and nothing to hold it up, so it falls and makes a black hole [israel1966]."
         }
       ],
       "references": [
@@ -13956,6 +13961,295 @@
           ],
           "ricci_scalar": "R = \\dfrac{12}{a^2}",
           "kretschmann": "K = \\dfrac{24}{a^4}"
+        }
+      ]
+    },
+    {
+      "id": "israel_shell",
+      "name": "Israel's Collapsing Shell of Dust",
+      "short_name": "Israel Shell",
+      "description": "A thin spherical shell of dust falling under its own weight, with flat spacetime inside it and Schwarzschild's vacuum outside. Werner Israel solved its motion in 1966 with the junction conditions he wrote for a surface that carries matter. The event horizon forms at the centre of the flat interior before the shell arrives.",
+      "tags": [
+        "dust",
+        "thin shell",
+        "gravitational collapse",
+        "matched solution",
+        "junction conditions",
+        "black hole",
+        "mass",
+        "curvature singularity",
+        "horizon",
+        "event horizon",
+        "time-dependent",
+        "spherically symmetric",
+        "asymptotically flat",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The outside of the shell. The mass in it is the energy of the shell, the dust's energy of motion less the binding energy [poisson2004]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "The inside of the shell, flat until the shell arrives. The event horizon starts at its centre and crosses it at the speed of light."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "The collapse of a whole ball of dust, with a piece of a closed universe inside where the shell has flat space [oppenheimersnyder1939]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "limit",
+          "text": "The shell of light, the limit $m \\to 0$ of the shell of dust at fixed $M$, which falls along one ingoing ray [adler2005]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "Two Schwarzschild exteriors joined at a throat by the same junction conditions, on a shell of negative energy density [visser1989nuclphysb]."
+        },
+        {
+          "id": "gravastar",
+          "kind": "family",
+          "text": "A shell that stays put, with de Sitter space inside it where the falling shell has flat space [visser2004]."
+        }
+      ],
+      "references": [
+        "oppenheimersnyder1939",
+        "schwarzschild1916",
+        "poisson2004",
+        "israel1966",
+        "lanczos1924shell",
+        "sen1924",
+        "darmois1927",
+        "mansouri1996",
+        "kamal2008",
+        "eddington1924",
+        "finkelstein1958",
+        "adler2005",
+        "israel1967collapse",
+        "delacruz1967",
+        "kuchar1968",
+        "boulware1973",
+        "hajicek1992",
+        "visser1989nuclphysb",
+        "visser2004"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_shell.json",
+      "charts": [
+        {
+          "id": "interior",
+          "name": "Flat Interior",
+          "coordinates": [
+            "T",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "r \\in [0, R]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu = r_s/2$ falls from rest at infinity, and a heavier one from rest at a finite radius"
+            },
+            {
+              "symbol": "R = R(T)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust and $\\gamma = r_s/2\\mu + \\mu/2R$, it falls as $dR/d(c\\tau) = -\\sqrt{\\gamma^2 - 1}$ while $dT/d\\tau = \\gamma$"
+            }
+          ],
+          "convention": "We use coordinates $(T, r, \\theta, \\phi)$ inside the shell, with $T$ the time of an observer at rest at the centre, carrying dimensions of time, and $r$ the areal radius. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "exterior",
+          "name": "Schwarzschild Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu = r_s/2$ falls from rest at infinity, and a heavier one from rest at a finite radius"
+            },
+            {
+              "symbol": "R = R(t)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust and $\\beta = r_s/2\\mu - \\mu/2R$, it falls as $dR/d(c\\tau) = -\\sqrt{\\beta^2 - 1 + r_s/R}$ while $(1 - r_s/R)\\,dt/d\\tau = \\beta$, and it reaches $r_s$ only as $t \\to \\infty$"
+            }
+          ],
+          "convention": "We use Schwarzschild coordinates $(t, r, \\theta, \\phi)$ outside the shell, with $t$ carrying dimensions of time and $r$ the areal radius, the same $r$ as inside. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "exterior_ingoing",
+          "name": "Ingoing Eddington-Finkelstein Exterior",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}",
+            "r = r_s \\;\\text{(the event horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu = r_s/2$ falls from rest at infinity, and a heavier one from rest at a finite radius"
+            },
+            {
+              "symbol": "R = R(v)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust and $\\beta = r_s/2\\mu - \\mu/2R$, it falls as $dR/d(c\\tau) = -\\sqrt{\\beta^2 - 1 + r_s/R}$ while $dv/d(c\\tau) = 1/\\left(\\beta + \\sqrt{\\beta^2 - 1 + r_s/R}\\right)$, through $r_s$ to $R = 0$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$ outside the shell, with the advanced time $v = ct + r + r_s\\ln\\left|r/r_s - 1\\right|$ a length, constant along ingoing light rays, and $r$ the areal radius. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
         }
       ]
     },
@@ -22448,6 +22742,11 @@
           "id": "kundt_waves",
           "kind": "generalisation",
           "text": "Flat space is what a Kundt wave leaves when its profile is switched off, in coordinates that cover the outside of a cylinder growing at the speed of light [podolskybelan2004]."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "composite",
+          "text": "The space inside a collapsing shell of dust, which stays flat until the shell reaches the centre [israel1966]."
         }
       ],
       "references": [
@@ -22511,7 +22810,8 @@
         "martindussaud2019",
         "bonnor1977cloud",
         "astesiano2024",
-        "podolskybelan2004"
+        "podolskybelan2004",
+        "israel1966"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -26307,6 +26607,11 @@
           "id": "neugebauer_meinel",
           "kind": "family",
           "text": "Dust that reaches a black hole without falling: a spinning disc whose equilibria run out at the extreme Kerr black hole. Meinel set the two side by side as idealized routes to a black hole [meinel2002]."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "family",
+          "text": "The same collapse with the dust on one thin shell and flat space inside, which Werner Israel solved in 1966 [israel1966]."
         }
       ],
       "references": [
@@ -26324,7 +26629,8 @@
         "vaidya1966",
         "mann1993",
         "einstein1939",
-        "meinel2002"
+        "meinel2002",
+        "israel1966"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -31119,6 +31425,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "family",
           "text": "Bonnor's mass with a magnetic dipole moment. With the dipole switched off it keeps a quadrupole and a naked singularity, so Schwarzschild's black hole is not among its cases [emparan2000]."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "composite",
+          "text": "A shell of dust falling in on flat space. Schwarzschild's metric is the field outside it, down to wherever the shell is [israel1966]."
         }
       ],
       "references": [
@@ -31208,7 +31519,8 @@
         "lemos1993",
         "brill1963",
         "cook2000",
-        "emparan2000"
+        "emparan2000",
+        "israel1966"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -36553,6 +36865,11 @@
           "id": "hiscock",
           "kind": "composite",
           "text": "A black hole that evaporates, made of both of Vaidya's metrics. Negative energy falls in along the ingoing one and shrinks the hole, and the outgoing one carries the mass away [hiscock1981outgoing]."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "limit_source",
+          "text": "A falling shell of dust with rest mass. In the limit of no rest mass it is Vaidya's shell of light [israel1966, adler2005]."
         }
       ],
       "references": [
@@ -36583,7 +36900,9 @@
         "wang1997collapse",
         "poisson1989",
         "kobayashi2005",
-        "hiscock1981outgoing"
+        "hiscock1981outgoing",
+        "israel1966",
+        "adler2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
@@ -37605,6 +37924,11 @@
           "id": "gravastar",
           "kind": "family",
           "text": "A thin shell round a ball of de Sitter space, in place of a throat. Struck by a wave, a compact one answers as the wormhole does, with a black hole's first ringdown and then a train of echoes [cardoso2016prd]."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "family",
+          "text": "The shell of dust Werner Israel tried his junction conditions on in 1966, falling in on flat space [israel1966]."
         }
       ],
       "references": [

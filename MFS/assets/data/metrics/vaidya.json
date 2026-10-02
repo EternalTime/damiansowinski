@@ -104,6 +104,11 @@
       "id": "hiscock",
       "kind": "composite",
       "text": "A black hole that evaporates, made of both of Vaidya's metrics. Negative energy falls in along the ingoing one and shrinks the hole, and the outgoing one carries the mass away [hiscock1981outgoing]."
+    },
+    {
+      "id": "israel_shell",
+      "kind": "limit_source",
+      "text": "A falling shell of dust with rest mass. In the limit of no rest mass it is Vaidya's shell of light [israel1966, adler2005]."
     }
   ],
   "references": [
@@ -134,7 +139,9 @@
     "wang1997collapse",
     "poisson1989",
     "kobayashi2005",
-    "hiscock1981outgoing"
+    "hiscock1981outgoing",
+    "israel1966",
+    "adler2005"
   ],
   "coordinates": [
     {
