@@ -232,6 +232,11 @@ REGIONS = {
         "why": "the dust ball and the vacuum outside it are two regions of one spacetime; novikov_comoving "
                "leaves the mass and the delay of each shell free, and draws Novikov's marginally bound core",
     },
+    "datt_ruban_t_models": {
+        "regions": [["ruban", "areal"], ["exterior_kruskal"]],
+        "why": "the dust of a T-sphere and the vacuum outside its surface are two regions of one spacetime; "
+               "comoving leaves a and b free, and de_sitter is Ruban's T-model with a cosmological constant",
+    },
     "ori_time_machine": {
         "regions": [["foliation", "brinkmann"]],
         "why": "vacuum_core leaves f free; the core is a vacuum where f is harmonic in x "

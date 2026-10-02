@@ -67,6 +67,11 @@
       "id": "plebanski_hacyan",
       "kind": "family",
       "text": "The other products of two surfaces of constant curvature. Anti-Nariai trades de Sitter space for anti-de Sitter space and the sphere for a hyperbolic plane, and Plebański and Hacyan's two have one flat factor and a uniform electromagnetic field [ortaggio2002direct]."
+    },
+    {
+      "id": "datt_ruban_t_models",
+      "kind": "family",
+      "text": "Dust whose spheres all share one radius at each moment, the solution Ruban set beside Nariai's in 1969: both are left out when the radius of the spheres is taken to change from shell to shell [ruban1969, krasinski2001ruban]."
     }
   ],
   "references": [
@@ -86,7 +91,9 @@
     "romans1992",
     "kasner1921",
     "podolskybelan2004",
-    "ortaggio2002direct"
+    "ortaggio2002direct",
+    "ruban1969",
+    "krasinski2001ruban"
   ],
   "coordinates": [
     {

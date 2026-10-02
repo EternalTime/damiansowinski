@@ -71,6 +71,11 @@
       "id": "lindquist_wheeler_lattice",
       "kind": "family",
       "text": "Each cell of the lattice, in Lindquist and Wheeler's comoving coordinates, is this metric with no dust in it: every shell carries the same mass, and $E = -r_s/2r$ for the shell that turns around at $r$ [lindquist1957]."
+    },
+    {
+      "id": "datt_ruban_t_models",
+      "kind": "family",
+      "text": "The spherical dust that this family leaves out: every shell has the same radius, and the shells stack along a tube [ruban1969, krasinski1999datt]."
     }
   ],
   "references": [
@@ -102,7 +107,9 @@
     "lattimer2001",
     "krasinski2001novikov",
     "novikov1965",
-    "lindquist1957"
+    "lindquist1957",
+    "ruban1969",
+    "krasinski1999datt"
   ],
   "coordinates": [
     {

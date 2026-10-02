@@ -84,6 +84,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `isotropic/radial`: at $\tau = 0$ the line $t = 0$ from the surface of the dust behind the throat, $r = 0.043\,r_s$, through the throat to the rim; afterwards the shells of the far sheet as curves in $t$ and the isotropic radius. The shells behind the throat then lie at negative $t$ of this chart, whose time runs to the past there, below the plane drawn.
 - the four conformal views, one drawing: each moment is the line $T = \eta$ across the dust and, from the surface, Novikov's curve through Kruskal's $U$ and $V$ of each shell on both sheets, `slices.novikov_sheets`, carried by `Bag`'s $P$ and $Q$.
 
+### The T-models of Datt and Ruban
+
+- The embedding is five moments of the dust's proper time since its greatest expansion, $c\tau = 0$, $0.6$, $1.1$, $1.4$ and $1.5\,r_s$, of a T-sphere with $\epsilon = 1$ and $\mu = 1/\pi$. Inside it is the moment of constant $\eta$ of Ruban's chart, $\eta = \pi + e$ with $\tfrac{1}{2}(e + \sin e) = c\tau$, along the stretch $-2r_s \le r \le 0$ of the tube; outside it is Igor Novikov's slice, the clocks released from rest with the dust, labelled by $s$ with the areal radius $r_s(s^2 + 1)$ at rest, from the surface $s = 0$ to $s = \sqrt{3}$.
+- `exterior_kruskal/kruskal`: each moment is the curve of Kruskal's $U$ and $V$ of those shells, `slices.dr_shells`, from the surface $V = U$; at $\tau = 0$ it is the line $U + V = 0$.
+- the four conformal views, one drawing: each moment is the curve of constant $\eta$ across the stretch of the tube and, from the surface, the same shells carried by `TSphere`'s $P$ and $Q$.
+- `comoving/tube`, `ruban/tube`, `areal/expansion` and `de_sitter/tube` draw a tube that runs on in both directions, and Ruban's tube on de Sitter space: other spacetimes than the T-sphere embedded, so no moment lies on them.
+
 ### Plebański-Hacyan and anti-Nariai
 
 - The embedding has three views. Two are of the flat plane times a sphere at the moment $t = 0$: the equator, $z$ from $-b$ to $b$ with $\phi$, and the sphere of $\theta$ and $\phi$ at one event, drawn at $z = b$. The third is anti-Nariai's hyperbolic plane of $\theta$ and $\phi$ at the event $\tau = 0$, $\chi = 1$.
@@ -832,6 +839,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Born-Infeld point charge | two lines, six curves | none | line, six times |
 | Schwarzschild | line, four curves | none | line, three times |
 | semiclosed world | five lines, twice; line and four curves, twice | none | five curves, four times |
+| T-models of Datt and Ruban | five curves on Kruskal's plane; none on the four planes of the tube | none | five curves, four times |
 | Kiselev | two lines, four curves; line and curve for the matter alone | none | line, four times; line, twice |
 | Schwarzschild-de Sitter | line, four curves | none | line, three times |
 | Siklos waves | event, three times; line, five times | none | curve, five times |
