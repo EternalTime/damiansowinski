@@ -3074,6 +3074,75 @@ def einstein_rosen_bridge(ck, src):
     return views
 
 
+def edm_height(u):
+    """The height of the Einstein-Dirac-Maxwell wormhole's equator over the throat at r_0 = 1 and
+    Q_e = 1/2, as a function of Bronnikov and Kim's u, r = r_0 + u^2: dz/du = 2 sqrt((r_0^2 +
+    (r_0 + b) u^2)/(r_0 - b + u^2)) with b = Q_e^2/r_0, smooth through the throat, by quadrature."""
+    from scipy.integrate import quad
+    b = 0.25
+    slope = lambda w: 2 * math.sqrt((1 + (1 + b) * w * w) / (1 - b + w * w))
+    return np.array([math.copysign(quad(slope, 0, abs(float(x)), epsabs=1e-12, epsrel=1e-12)[0], x)
+                     for x in np.atleast_1d(u)])
+
+
+def einstein_dirac_maxwell_wormhole(ck, src):
+    """The equator of Blazquez-Salcedo, Knoll and Radu's wormhole at one moment, at r_0 = 1 and
+    Q_e = 1/2, both sheets from the throat r = r_0 out to 6 r_0. On it the metric is dr^2/((1 -
+    r_0/r)(1 - Q_e^2/r_0 r)) + r^2 dphi^2, and in Bronnikov and Kim's u, r = r_0 + u^2, it is 4 r_0
+    (r_0 + u^2)^2 du^2/(r_0^2 - Q_e^2 + r_0 u^2) + (r_0 + u^2)^2 dphi^2, so the height rises as
+    dz/du = 2 sqrt((r_0^2 + (r_0 + b) u^2)/(r_0 - b + u^2)) with b = Q_e^2/r_0, which edm_height
+    integrates by quadrature, independently of the profile. The areal chart's two sheets, the
+    chart of u and the compact chart of x, r = r_0/(1 - x^2), are each checked to give that surface.
+    Far out it approaches Flamm's paraboloid of r_s = r_0 + b. The geometry is static, so the
+    surface is the same at every moment, and there is one."""
+    params = {"r_0": 1, "Q_e": "1/2"}
+    sl = Slice(src, "einstein_dirac_maxwell_wormhole", "areal", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    top, radii = 6.0, (1.5, 2, 3, 4, 5)
+    size = 2 * top
+    near = Piece("near", "sheet", sl, 1.0, top, 0.0, 1,
+                 (("throat", "the throat $r = r_0$, the smallest circle, where the other side begins"),
+                  ("edge", "the surface runs on to $r \\to \\infty$")),
+                 [(1.0, "throat", "$r = r_0$")] + [(r, "r", None) for r in radii] + [(top, "r", "$r = 6\\,r_0$")],
+                 size)
+    far = Piece("far", "sheet2", sl, 1.0, top, 0.0, -1,
+                (("throat", "the throat $r = r_0$"), ("edge", "the surface runs on to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    surface = Surface([near, far])
+    for p in (near, far):
+        ck.isometry(f"Einstein-Dirac-Maxwell wormhole, {p.id} side", p)
+        ck.form(f"Einstein-Dirac-Maxwell wormhole, {p.id} side, the quadrature in u", p,
+                lambda r, s=p.sense: s * edm_height(np.sqrt(np.maximum(np.asarray(r) - 1, 0))), size)
+    ck.join("Einstein-Dirac-Maxwell wormhole, the two sides at the throat", near, 1.0, far, 1.0)
+    through = Slice(src, "einstein_dirac_maxwell_wormhole", "bronnikov_kim", "u", "\\phi", {"t": 0, **EQUATOR}, params)
+    whole = Piece("through", "sheet", through, -math.sqrt(top - 1), math.sqrt(top - 1),
+                  float(edm_height(-math.sqrt(top - 1))[0]), 1, size=size)
+    ck.isometry("Einstein-Dirac-Maxwell wormhole, Bronnikov and Kim's chart", whole)
+    ck.form("Einstein-Dirac-Maxwell wormhole, Bronnikov and Kim's chart, the quadrature in u", whole, edm_height, size)
+    compact = Slice(src, "einstein_dirac_maxwell_wormhole", "compact", "x", "\\phi", {"t": 0, **EQUATOR}, params)
+    edge = math.sqrt(1 - 1 / top)
+    folded = Piece("compact", "sheet", compact, -edge, edge, float(edm_height(-math.sqrt(top - 1))[0]), 1, size=size)
+    ck.isometry("Einstein-Dirac-Maxwell wormhole, the compact chart", folded)
+    ck.form("Einstein-Dirac-Maxwell wormhole, the compact chart gives the same surface", folded,
+            lambda x: edm_height(np.sign(x) * np.sqrt(1 / (1 - np.asarray(x) ** 2) - 1)), size)
+    # Far out g_rr - 1 = ((r_0 + b) r - r_0 b)/((r - r_0)(r - b)) -> (r_0 + b)/r, Flamm's slope with
+    # r_s = r_0 + b, which the caption states; at r = 10^4 r_0 the two agree to 10^-4.
+    far = 1e4
+    ck.add("Einstein-Dirac-Maxwell wormhole: far out the slope is Flamm's, dz/dr -> sqrt(r_s/r) with r_s = r_0 + Q_e^2/r_0",
+           abs(math.sqrt((1.25 * far - 0.25) / ((far - 1) * (far - 0.25))) / math.sqrt(1.25 / far) - 1), 1e-3)
+
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], 1.0, 0.0, "$r = r_0$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_0$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_0$")
+    fig.legend("fill", "cover", "the side $u > 0$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,r_0$")
+    fig.legend("line", "r2", "the same radii on the other side, $u < 0$")
+    fig.legend("line", "throat", "the throat $r = r_0$, the smallest circle")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("wormhole", "The wormhole", "$r_0$", [surface], fig.done(),
+                 settings="$r_0 = 1$, the unit of every length, and $Q_e = 1/2$, so that $M = 2/5$.")]
+
+
 def two_sheets(ck, name, sl, throat, top, radii, size, near_marks=(), texts=("", "")):
     """A slice of constant t through a bifurcation sphere, as Schwarzschild's: the exterior from
     the throat out to `top`, tinted, and the same surface turned over on the other side."""
@@ -15345,6 +15414,7 @@ DRAWN = {
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
     "damour_solodukhin": damour_solodukhin,
+    "einstein_dirac_maxwell_wormhole": einstein_dirac_maxwell_wormhole,
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
@@ -15956,6 +16026,16 @@ CAPTIONS = {
         "The surface is closed: this moment of space is a sphere, finite and without an edge, where "
         "Reissner-Nordström's ends at a singularity. Near each centre $dz/dr = \\sqrt{r_sr^2/g^3}$, the slope of "
         "a sphere of radius $\\sqrt{g^3/r_s} = 0.192\\,r_s$, the equator of a moment of de Sitter space.",
+    ],
+    ("einstein_dirac_maxwell_wormhole", "wormhole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the Einstein-Dirac-Maxwell wormhole at one moment of $t$ "
+        "($Q_e = r_0/2$), drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "the metric is $dr^2/\\left((1 - r_0/r)(1 - Q_e^2/r_0r)\\right) + r^2d\\phi^2$, and in Bronnikov and Kim's "
+        "$u$, with $r = r_0 + u^2$, the surface rises as "
+        "$dz/du = 2\\sqrt{(r_0^2 + (r_0 + Q_e^2/r_0)u^2)/(r_0 - Q_e^2/r_0 + u^2)}$, smooth through the throat.",
+        "The two sides meet at the throat $r = r_0$, the smallest circle. Far out each side approaches Flamm's "
+        "paraboloid with $r_s = r_0 + Q_e^2/r_0$, and the surface is the same at every moment, since the "
+        "wormhole is static.",
     ],
     ("rn_metric", "outside"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a charged black hole at one moment of $t$ outside its "

@@ -92,6 +92,11 @@
       "id": "ab_metrics",
       "kind": "family",
       "text": "B I continued through $r = b$ is a bridge of the same kind, two asymptotically flat regions joined at a neck [hruska2019]."
+    },
+    {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "kind": "family",
+      "text": "A static wormhole whose two sheets, written in $u$ with $r = r_0 + u^2$, join at a throat that is no horizon. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's [bronnikovkim2003, blazquez2021]."
     }
   ],
   "references": [
@@ -118,7 +123,9 @@
     "clifton2012",
     "hoffmann1935",
     "tahvildarzadeh2011",
-    "hruska2019"
+    "hruska2019",
+    "bronnikovkim2003",
+    "blazquez2021"
   ],
   "coordinates": [
     {
