@@ -118,6 +118,11 @@
       "id": "kundt_waves",
       "kind": "generalisation",
       "text": "Gravitational waves of type N that cross de Sitter space on fronts shaped as hemispheres. With the profile switched off the metric is de Sitter space [bicak1999, griffiths2004]."
+    },
+    {
+      "id": "hotta_tanaka",
+      "kind": "locally_same",
+      "text": "De Sitter space with an impulsive gravitational wave on one cosmological horizon, the field of two massless particles. Off that horizon it is de Sitter space [hotta1993]."
     }
   ],
   "references": [
@@ -156,7 +161,8 @@
     "mazur2004",
     "kiselev2003",
     "bicak1999",
-    "griffiths2004"
+    "griffiths2004",
+    "hotta1993"
   ],
   "coordinates": [
     {

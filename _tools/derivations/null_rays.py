@@ -898,6 +898,15 @@ AS_PULSE = "20*exp(-400*s**2)/sqrt(pi)"
 AS_INPUT = ("$\\delta(u)$ drawn as the pulse $e^{-u^2/w^2}/(w\\sqrt{\\pi})$ with $w = 0.05$, the field of a pulse "
             "of light of that length in $u$ along the axis, carrying the same energy $E$.")
 AS_RHO = {"half": "1/2", "eighth": "1/8", "thirtysecond": "1/32"}
+# Hotta and Tanaka's shock as its diagrams draw it: 8GE/c^4 = a = 1, on the plane through the
+# equator of the wave front and on one 15 degrees from a null particle, where the profile
+# cos(theta) ln((1 + cos theta)/(1 - cos theta)) - 2 is -2 and 1.917.
+HT = {"G": 1, "E": "1/8", "a": 1}
+HT_THETA = {"equator": ("pi/2", "\\pi/2"), "near": ("pi/12", "\\pi/12")}
+HT_INPUT = ("$\\delta$ drawn as the pulse $e^{-s^2/w^2}/(w\\sqrt{\\pi})$ of its argument $s$, with $w = 0.05$ in the "
+            "unit of that argument.")
+HT_MOMENTS = HT_INPUT + (" Each point marked is the event of this plane on the sphere of the embedding diagram at the "
+                         "proper time $\\tau$ of its ring of particles.")
 
 # The global monopole at Delta = 0.19, so that sqrt(1 - Delta) = 0.9 and the equatorial cone of its
 # embedding diagram lacks the 36 degrees the cosmic string's does, and Letelier's black hole at
@@ -1631,6 +1640,28 @@ EC_RHO0 = 3 / (6 - 2 * math.sqrt(6)) ** 2
 EC_CHI0 = math.asin(1 / math.sqrt(3))
 
 DIAGRAMS = [
+    *[Diagram("hotta_tanaka", "conformally_flat", view, f"$\\theta = {tex}$", ("\\eta", "\\rho"), (0, 4, -4.3, -0.3),
+              "$\\rho/a$", "$\\eta/a$", HT, {"theta": theta, "phi": "0"}, tau="eta", delta=AS_PULSE, step=0.0005,
+              input=HT_MOMENTS if view == "near" else HT_INPUT)
+      for view, (theta, tex) in HT_THETA.items()],
+    *[Diagram("hotta_tanaka", "global", view, f"$\\theta = {tex}$", ("\\eta", "\\chi"), (0, math.pi, 0, math.pi),
+              "$\\chi$", "$\\eta$", HT, {"theta": theta, "phi": "0"}, tau="eta", cones=(4, 6), delta=AS_PULSE,
+              step=0.0005, input=HT_MOMENTS)
+      for view, (theta, tex) in HT_THETA.items()],
+    *[Diagram("hotta_tanaka", "kruskal", view, f"$\\theta = {tex}$", ("u", "v"), (-1.5, 1.5, -1.3, 1.7),
+              "$(v - u)/2a$", "$(u + v)/2a$", HT, {"theta": theta, "phi": "0"}, to_display=NULL_TO_TR, tau="u + v",
+              families=SIDEWAYS, delta=AS_PULSE, step=0.0005, where="(1 - u*v)*(1 + u*v)",
+              lines=(("shell", "x0", "0", "the shock, $u = 0$"),), input=HT_MOMENTS)
+      for view, (theta, tex) in HT_THETA.items()],
+    *[Diagram("hotta_tanaka", "null_cylindrical", view, f"$\\rho = {tex}$", ("u", "v"), (-3, 3, -2.5, 3.5),
+              "$(v - u)/2a$", "$(u + v)/2a$", HT, {"rho": rho, "phi": "0"}, to_display=NULL_TO_TR, tau="u + v",
+              families=SIDEWAYS, delta=AS_PULSE, step=0.0005, where=f"4 + ({rho})**2 - u*v", where_is_infinity=True,
+              lines=(("shell", "x0", "0", "the shock, $u = 0$"),), input=HT_MOMENTS)
+      for view, (rho, tex) in (("equator", ("2", "2a")), ("near", ("1/4", "a/4")))],
+    *[Diagram("hotta_tanaka", "kundt", view, f"$\\theta = {tex}$", ("w", "u"), (-1.8, 2.2, 0, 4),
+              "$u/a$", "$w/a$", HT, {"theta": theta, "phi": "0"}, tau="w", families=SIDEWAYS, delta=AS_PULSE,
+              step=0.0005, lines=(("shell", "r", "0", "the shock, $u = 0$"),), input=HT_INPUT)
+      for view, (theta, tex) in HT_THETA.items()],
     *[Diagram("aichelburg_sexl", "null_cartesian", view, f"$\\rho = \\rho_0/{rho[2:]}$", ("u", "v"), (-3, 3, -2.5, 3.5),
               "$z\\;[8GE/c^4]$", "$ct\\;[8GE/c^4]$", {"G": 1, "E": "1/8", "rho_0": 1}, {"x": rho, "y": "0"},
               to_display=NULL_TO_TR, tau="u + v", families=SIDEWAYS, delta=AS_PULSE, step=0.0005,
@@ -3594,8 +3625,72 @@ def _roberts_captions():
 
 ROBERTS_CAPTIONS = _roberts_captions()
 
+
+def _ht_captions():
+    """The captions of Hotta and Tanaka's views, at 8GE/c^4 = a: on the equator of the wave front
+    the profile is -2, and 15 degrees from a null particle it is 1.917."""
+    out = {}
+    for view, angle, shift, way in (("equator", "\\pi/2", "-2", "advanced"), ("near", "\\pi/12", "1.917", "delayed")):
+        at = f"($\\theta = {angle}$, $\\phi = 0$)"
+        where = ("halfway between the two null particles" if view == "equator" else "$15°$ from one null particle")
+        geodesic = ("By the symmetry of the wave front about its equator no Christoffel symbol turns a ray out of this "
+                    "plane, so every curve drawn is a null geodesic." if view == "equator" else
+                    "The Christoffel symbol $\\Gamma^\\theta$ of the shock turns every ray that crosses it toward the "
+                    "particle, out of this plane, so the curves drawn are null curves, and null geodesics off the shock.")
+        P = f"P = \\cos\\theta\\,\\ln\\dfrac{{1 + \\cos\\theta}}{{1 - \\cos\\theta}} - 2 = {shift}"
+        out[("hotta_tanaka", "conformally_flat", view)] = [
+            f"The plane of $\\eta$ and $\\rho$ {at}, {where}. Off the shock $\\rho = -\\eta$ the metric on this "
+            "plane is $(a^2/\\eta^2)(-d\\eta^2 + d\\rho^2)$, and light runs at 45°. The ingoing rays run beside the "
+            "shock without crossing it. Each outgoing ray crosses it and comes out with $-2a^2/(\\eta - \\rho)$ "
+            f"changed by $(2GE/c^4)P$, where ${P}$ here, so the ray is {way}.",
+            geodesic,
+        ]
+        out[("hotta_tanaka", "global", view)] = [
+            f"The plane of $\\eta$ and $\\chi$ {at}, {where}: the whole of de Sitter space, from one pole "
+            "$\\chi = 0$ to the other, $\\chi = \\pi$, with past infinity on $\\eta = 0$ and future infinity on "
+            "$\\eta = \\pi$. Light runs at 45°, and the shock is the diagonal $\\chi = \\eta$. The rays moving right "
+            "run beside it. Each ray moving left crosses it and comes out with "
+            f"$-a\\cot((\\eta + \\chi)/2)$ changed by $(2GE/c^4)P$, where ${P}$ here, so the ray is {way}.",
+            geodesic + (" A ray that leaves the pole $\\chi = \\pi$ before $\\eta = 2\\arctan(4GE/c^4a)$ reaches the "
+                        "pole $\\chi = 0$." if view == "equator" else ""),
+        ]
+        out[("hotta_tanaka", "kruskal", view)] = [
+            f"The plane of $u$ and $v$ {at}, {where}, drawn with $(v - u)/2$ across and $(u + v)/2$ up. Off the "
+            "shock $u = 0$ the metric on this plane is $-4a^4\\,du\\,dv/(a^2 - uv)^2$, and light runs at 45°. The "
+            "poles of the universe are the hyperbola $uv = -a^2$ and infinity is $uv = a^2$. The rays moving right "
+            "keep their $u$ and run beside the shock. Each ray moving left crosses it and comes out with $v$ changed "
+            f"by $\\Delta v = (2GE/c^4)P$, where ${P}$ here, so the ray is {way}.",
+            geodesic + " The jump is the same at every $v$, since the wave front is a sphere of radius $a$ at each of them.",
+        ]
+        out[("hotta_tanaka", "kundt", view)] = [
+            f"The plane of $u$ and $w$ {at}, {where}. The vertical lines are the rays of the wave fronts "
+            "$u = \\text{constant}$, each a sphere of radius $a$ at every $w$, and the shock is the one on $u = 0$. "
+            "The rays that cross the fronts have $dw/du = w^2/2a^2$ off the shock, and each comes out of it with "
+            f"$w$ changed by $(2GE/c^4)P/\\sin\\theta$, where ${P}$ here, so the ray is {way}.",
+            geodesic + " The crossing rays steepen toward $w \\to \\infty$, which is infinity.",
+        ]
+    for view, rho, jump, way, where in (
+            ("equator", "2a", "-2a", "advanced", "the equator of the wave front, halfway between the two null particles"),
+            ("near", "a/4", "1.031\\,a", "delayed", "$14°$ from the null particle on the axis")):
+        out[("hotta_tanaka", "null_cylindrical", view)] = [
+            f"The plane of $u$ and $v$ ($\\rho = {rho}$, $\\phi = 0$), {where}, drawn with $(v - u)/2$ across and "
+            "$(u + v)/2$ up. Off the shock $u = 0$ the metric on this plane is conformal to $-du\\,dv$, and light runs "
+            "at 45°. Infinity is the hyperbola $uv = 4a^2 + \\rho^2$. The rays moving right keep their $u$ and run "
+            f"beside the shock. Each ray moving left crosses it and comes out with $v$ changed by $\\Delta v = {jump}$, "
+            f"so the ray is {way}.",
+            "With $a \\to \\infty$ at a fixed $\\rho$ the jump tends to $-(8GE/c^4)\\ln(\\rho/2a) - 8GE/c^4$, "
+            "Aichelburg and Sexl's logarithm with the length $\\rho_0 = 2a/e$ [hotta1993]. The Christoffel symbol "
+            "$\\Gamma^\\rho{}_{uu}$ turns every ray that crosses the shock out of this plane, so the curves drawn are "
+            "null curves, and null geodesics off the shock.",
+        ]
+    return out
+
+
+HT_CAPTIONS = _ht_captions()
+
 CAPTIONS = {
     **LB_CAPTIONS,
+    **HT_CAPTIONS,
     **{("aichelburg_sexl", "null_cartesian", view): _as_caption(rho[2:]) for view, rho in AS_RHO.items()},
     ("schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every fixed angle "
@@ -9022,7 +9117,8 @@ class Plot:
         # Beyond a declared singular curve there is no spacetime, so nothing is marked there.
         here = (lambda x0, r: self.claimed(x0, r)) if spec.singular_zero else (lambda x0, r: True)
         keep = here if spec.singular_zero else (lambda x0, r: self.claimed(x0, r)) if spec.where_is_infinity else None
-        lines = [] if spec.any_factor else self.zero_set("girr", keep=keep)
+        # Inside a declared pulse g^rr takes the pulse's own sign, which marks nothing of the spacetime.
+        lines = [] if spec.any_factor or spec.delta else self.zero_set("girr", keep=keep)
         if lines:
             out.append({"kind": "grr", "lines": lines})
         if spec.mark_gtt:

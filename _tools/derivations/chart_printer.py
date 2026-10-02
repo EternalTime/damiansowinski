@@ -703,10 +703,15 @@ def is_single_term(text):
 
 
 class Reduced:
-    """A Geometry whose every tensor is put through a chart's `reduce` as it is handed over."""
+    """A Geometry whose every tensor is put through a chart's `reduce` as it is handed over.
 
-    def __init__(self, geometry, reduce):
+    With `raw`, a tensor handed back in, as the Riemann tensor is to have an index raised, is
+    replaced by the one it was reduced from: a chart whose delta is a pulse reduces a value only
+    once it stands whole, since the limit of a product is not the product of the limits."""
+
+    def __init__(self, geometry, reduce, raw=False):
         self._geometry, self._reduce, self._done = geometry, reduce, {}
+        self._raw = {} if raw else None
 
     def _through(self, value):
         if isinstance(value, list):
@@ -716,26 +721,36 @@ class Reduced:
     def __getattr__(self, name):
         found = getattr(self._geometry, name)
         if not callable(found):
+            # The metric and its inverse of a chart whose delta is a pulse are handed over in the limit too.
+            if self._raw is not None and isinstance(found, sp.MatrixBase):
+                return found.applyfunc(self._reduce)
             return found
 
         def reduced(*arguments):
             if arguments:
+                if self._raw is not None:
+                    arguments = tuple(self._raw.get(id(a), (None, a))[1] if isinstance(a, list) else a
+                                      for a in arguments)
                 return self._through(found(*arguments))
             if name not in self._done:
-                self._done[name] = self._through(found())
+                whole = found()
+                self._done[name] = self._through(whole)
+                if self._raw is not None:
+                    # The reduced tensor is kept beside its key, so the id stays its own.
+                    self._raw[id(self._done[name])] = (self._done[name], whole)
             return self._done[name]
         return reduced
 
 
 class Chart:
     def __init__(self, coords_tex, parameters, chart_line_element, printer_options=None, pretty=None, time=None,
-                 bracketed=None, reduce=None, order=None, held=()):
+                 bracketed=None, reduce=None, order=None, held=(), pulse=False):
         # Time is already the chart coordinate here, so no coordinate is scaled by c. A chart
         # whose components depend on the time names it as `time`: its symbol then stands for
         # x^0 = ct in the geometry, and every value is printed and read back with it written
         # as c times the time the file prints, as Milne's comoving c^2t^2 is.
         self.coords_tex = coords_tex
-        self.reader = vm.Reader(coords_tex, parameters, (), kept=order, held=held)
+        self.reader = vm.Reader(coords_tex, parameters, (), kept=order, held=held, pulse=pulse)
         self.symbols = [self.reader.symbol[name] for name in coords_tex]
         self.bare = {self.reader.symbol[time]: self.reader.c * self.reader.symbol[time]} if time else {}
         g = vm.metric_from_line_element(self.reader, chart_line_element, coords_tex)
@@ -747,9 +762,13 @@ class Chart:
         # A chart that holds a defined name as a function, as Szekeres's E is held, passes
         # `reduce`, which writes a value in generators with no relation left among them, so
         # that a value which vanishes for the name's definition is exactly zero.
+        # A chart whose delta is a pulse, as the checker's IMPULSES declares it, takes every value
+        # to the limit of the pulse once it stands whole.
+        if pulse and not reduce:
+            reduce = self.reader.surface
         self.reduce = reduce
         if reduce:
-            self.geo = Reduced(self.geo, reduce)
+            self.geo = Reduced(self.geo, reduce, raw=pulse)
         self.printer = Printer(self.symbols, **(printer_options or {}))
         self.pretty = pretty or sp.factor
         # The sum a value is printed as when it has to stand in a bracket with a minus in front:

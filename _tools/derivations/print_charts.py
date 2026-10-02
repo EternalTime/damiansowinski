@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
-schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, ads_soliton, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
+schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, ads_soliton, milne, einstein_rosen_waves, nariai, aichelburg_sexl, hotta_tanaka,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy, bonnor_rotating_dust,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
@@ -1266,6 +1266,253 @@ def aichelburg_sexl(system):
 AS_CHARTS = ["cartesian", "null_cartesian", "null_cylindrical"]
 
 
+# -- Hotta-Tanaka ---------------------------------------------------------------------
+
+def hotta_tanaka_pretty(chart, system):
+    """A `pretty` for a value that holds a delta on a curved background, and the placeholders it
+    prints with, as (pretty, overrides): the smooth part and the coefficient of each delta are
+    factored on their own, so that the de Sitter part reads as de Sitter's and the shock as a
+    term beside it, G and E are written as the product GE, and the profile's logarithm is
+    written as the line element has it, ln((1 + cos theta)/(1 - cos theta)) or ln(rho^2/4a^2),
+    with the terms that multiply it gathered."""
+    reader = chart["reader"]
+    G, E, a = (reader.parameters[name] for name in ("G", "E", "a"))
+    GE, L = sp.Symbol("GE"), sp.Symbol("_L")
+    if system == "null_cylindrical":
+        overrides = {L: "\\ln\\left(\\dfrac{\\rho^2}{4a^2}\\right)"}
+        argument = reader.symbol["\\rho"] ** 2 / (4 * a ** 2)
+    else:
+        cosine = sp.cos(reader.symbol["\\theta"])
+        overrides = {L: "\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right)"}
+        argument = (1 + cosine) / (1 - cosine)
+    phi = reader.symbol["\\phi"] if system == "kundt" else None
+
+    def named(value):
+        """Every logarithm written as the one the line element names plus a number, which cancels."""
+        def one(log):
+            if not log.args[0].free_symbols:
+                return log
+            ratio = sp.simplify(log.args[0] / argument)
+            if ratio.free_symbols:
+                raise ValueError(f"{log} is not the profile's logarithm")
+            return L + sp.log(ratio)
+        out = sp.expand(sp.expand_log(value.replace(lambda e: isinstance(e, sp.log), one), force=True))
+        if out.atoms(sp.log):
+            raise ValueError(f"{value} keeps a logarithm beside the profile's")
+        return out
+
+    def about_phi(value):
+        """The Kundt chart's phi written in its cosine, the factor of its line element."""
+        S, C = sp.symbols("_S _C")
+        num, den = sp.fraction(sp.together(value.subs({sp.sin(phi): S, sp.cos(phi): C})))
+        num, den = (sp.reduced(sp.expand(side), [S ** 2 + C ** 2 - 1], S, C)[1] for side in (num, den))
+        return sp.factor(num / den).subs({S: sp.sin(phi), C: sp.cos(phi)})
+
+    def factored(value):
+        value = sp.factor(named(value))
+        if phi is not None:
+            value = about_phi(value)
+        # The terms that multiply the logarithm are gathered, as the profile writes them.
+        value = value.replace(lambda f: f.is_Add and f.has(L), lambda f: sp.collect(sp.expand(f), L))
+        return value.subs(E, GE / G)
+
+    def pretty(value):
+        value = sp.sympify(value)
+        deltas = sorted(value.atoms(sp.DiracDelta), key=sp.default_sort_key)
+        if not deltas:
+            return factored(value)
+        marks = {d: sp.Dummy(f"d{i}") for i, d in enumerate(deltas)}
+        numerator, denominator = sp.fraction(sp.together(value.xreplace(marks)))
+        poly = sp.Poly(sp.expand(numerator), *marks.values())
+        back = {m: d for d, m in marks.items()}
+        out = sp.Integer(0)
+        for monomial, coefficient in poly.terms():
+            out += factored(coefficient / denominator) * sp.Mul(
+                *[g ** k for g, k in zip(poly.gens, monomial)]).xreplace(back)
+        return out
+    return pretty, overrides
+
+
+def hotta_tanaka(system):
+    """The charts of the Hotta-Tanaka shock, de Sitter space with an impulsive wave on the null
+    cone Z_0 + Z_1 = 0 of its hyperboloid, the field of two null particles at the poles
+    Z_4 = +-a of the wave front. Every chart is the five-dimensional form
+    ds^2 = ds_dS^2 + (4GE/c^4)(z ln((1 + z)/(1 - z)) - 2) delta(Z_0 + Z_1)(dZ_0 + dZ_1)^2, z = Z_4/a,
+    of Hotta and Tanaka's equation (18) pulled back; hotta_tanaka.md derives each."""
+    profile = "\\left(\\cos\\theta\\,\\ln\\left(\\dfrac{1 + \\cos\\theta}{1 - \\cos\\theta}\\right) - 2\\right)"
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    particles = "\\theta \\in \\{0, \\pi\\} \\;\\text{on the shock (the two null particles)}"
+    charts = {
+        "conformally_flat": {
+            "name": "Conformally Flat", "coords": ["\\eta", "\\rho", "\\theta", "\\phi"],
+            "domains": ["\\eta \\in (-\\infty, 0)", "\\rho \\in [0, \\infty)", "\\theta \\in [0, \\pi]",
+                        "\\phi \\in [0, 2\\pi)", "\\rho = -\\eta \\;\\text{(the shock)}", particles],
+            "line_element": "ds^2 = \\dfrac{a^2}{\\eta^2}\\left(-d\\eta^2 + d\\rho^2 + \\rho^2" + sphere + "\\right) + "
+                            "\\dfrac{4GE}{c^4}" + profile + "\\delta(\\eta + \\rho)\\left(d\\eta + d\\rho\\right)^2"},
+        "global": {
+            "name": "Global Conformal", "coords": ["\\eta", "\\chi", "\\theta", "\\phi"],
+            "domains": ["\\eta \\in (0, \\pi)", "\\chi \\in [0, \\pi]", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                        "\\chi = \\eta \\;\\text{(the shock)}", particles],
+            "line_element": "ds^2 = \\dfrac{a^2}{\\sin^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi" + sphere
+                            + "\\right) + \\dfrac{4GEa}{c^4}" + profile
+                            + "\\delta(\\eta - \\chi)\\left(d\\eta - d\\chi\\right)^2"},
+        "kruskal": {
+            "name": "Kruskal", "coords": ["u", "v", "\\theta", "\\phi"],
+            "domains": ["u \\in (-\\infty, \\infty)", "v \\in (-\\infty, \\infty)", "\\theta \\in [0, \\pi]",
+                        "\\phi \\in [0, 2\\pi)", "-a^2 < uv < a^2", "u = 0 \\;\\text{(the shock)}", particles],
+            "line_element": "ds^2 = -\\dfrac{4a^4}{\\left(a^2 - uv\\right)^2}du\\,dv + \\dfrac{a^2\\left(a^2 + uv\\right)^2}"
+                            "{\\left(a^2 - uv\\right)^2}" + sphere + " + \\dfrac{8GE}{c^4}" + profile + "\\delta(u)\\,du^2"},
+        "null_cylindrical": {
+            "name": "Null Cylindrical", "coords": ["u", "v", "\\rho", "\\phi"],
+            "domains": ["u \\in (-\\infty, \\infty)", "v \\in (-\\infty, \\infty)", "\\rho \\in (0, \\infty)",
+                        "\\phi \\in [0, 2\\pi)", "uv < 4a^2 + \\rho^2", "u = 0 \\;\\text{(the shock)}"],
+            "line_element": "ds^2 = \\dfrac{-du\\,dv + d\\rho^2 + \\rho^2d\\phi^2 - \\dfrac{4GE}{c^4}"
+                            "\\left(\\left(1 - \\dfrac{\\rho^2}{4a^2}\\right)\\ln\\left(\\dfrac{\\rho^2}{4a^2}\\right)"
+                            " + 2 + \\dfrac{\\rho^2}{2a^2}\\right)\\delta(u)\\,du^2}"
+                            "{\\left(1 + \\dfrac{\\rho^2 - uv}{4a^2}\\right)^2}"},
+        "kundt": {
+            "name": "Kundt", "coords": ["u", "w", "\\theta", "\\phi"],
+            "domains": ["u \\in (-\\infty, \\infty)", "w \\in (0, \\infty)", "\\theta \\in (0, \\pi)",
+                        "\\phi \\in (-\\pi/2, \\pi/2)", "u = 0 \\;\\text{(the shock)}"],
+            "line_element": "ds^2 = \\sin^2\\theta\\cos^2\\phi\\left(-2\\,du\\,dw + \\dfrac{w^2}{a^2}du^2\\right) + a^2" + sphere
+                            + " + \\dfrac{4GE}{c^4}\\sin\\theta\\cos\\phi" + profile + "\\delta(u)\\,du^2"},
+    }
+    chart = charts[system]
+    parameters = ["G", "E", "a"]
+    probe = vm.Reader(chart["coords"], parameters, ())
+    pretty, overrides = hotta_tanaka_pretty({"reader": probe, "coords": chart["coords"]}, system)
+    GE, log = sp.Symbol("GE"), next(iter(overrides.values()))
+    return {
+        "metric_id": "hotta_tanaka",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": parameters, "line_element": chart["line_element"]},
+        "chart_line_element": chart["line_element"],
+        "printer": {"lead": [probe.c, GE, probe.parameters["a"], *probe.symbol.values()], "flip": False,
+                    "last": [sp.DiracDelta], "overrides": overrides},
+        "pretty": pretty,
+        "bracketed": pretty,
+        "kretschmann": "\\dfrac{24}{a^4}",
+        # uv is set as the line element sets it, and the logarithm after the cosine or the sine it multiplies.
+        "rewrite": [("u\\,v", "uv")] + [(log + trig + after, trig + "\\," + log + after) for trig, after in (
+            ("\\sin^2\\theta\\cos\\theta", ""), ("\\cos\\theta", " - 2"), ("\\sin^2\\theta", " + 2"))],
+        "check": lambda built: hotta_tanaka_check(built, system),
+    }
+
+
+def hotta_tanaka_embedding(system, symbol, a):
+    """The chart's map into the hyperboloid -Z_0^2 + Z_1^2 + Z_2^2 + Z_3^2 + Z_4^2 = a^2, as
+    (Z_0, ..., Z_4), and the argument of its delta. The shock is on Z_0 + Z_1 = 0 and the two
+    particles on Z_4 = +-a there."""
+    theta, phi = (symbol.get(name) for name in ("\\theta", "\\phi"))
+    if system == "conformally_flat":
+        # Hotta and Tanaka's equations (22) to (26), with their conformal time written -eta.
+        eta, rho = symbol["\\eta"], symbol["\\rho"]
+        x, y, z = rho * sp.cos(theta), rho * sp.sin(theta) * sp.cos(phi), rho * sp.sin(theta) * sp.sin(phi)
+        s2 = (x - a) ** 2 + y ** 2 + z ** 2
+        return [-(a / 2) * (a / eta - eta / a) - s2 / (2 * eta), -(a / eta) * (x - a), -a * y / eta, -a * z / eta,
+                -(a / 2) * (a / eta + eta / a) + s2 / (2 * eta)], eta + rho
+    if system == "global":
+        # Podolsky and Griffiths's equation (10).
+        eta, chi = symbol["\\eta"], symbol["\\chi"]
+        r = a * sp.sin(chi) / sp.sin(eta)
+        return [-a * sp.cot(eta), a * sp.cos(chi) / sp.sin(eta), r * sp.sin(theta) * sp.cos(phi),
+                r * sp.sin(theta) * sp.sin(phi), r * sp.cos(theta)], eta - chi
+    u = symbol["u"]
+    if system == "kruskal":
+        v = symbol["v"]
+        r = a * (a ** 2 + u * v) / (a ** 2 - u * v)
+        U, V = 2 * a ** 2 * u / (a ** 2 - u * v), 2 * a ** 2 * v / (a ** 2 - u * v)
+        return [(U + V) / 2, (U - V) / 2, r * sp.sin(theta) * sp.cos(phi), r * sp.sin(theta) * sp.sin(phi),
+                r * sp.cos(theta)], u
+    if system == "null_cylindrical":
+        # Podolsky and Ortaggio's equation (8).
+        v = symbol["v"]
+        x, y = symbol["\\rho"] * sp.cos(phi), symbol["\\rho"] * sp.sin(phi)
+        omega = 1 + (x ** 2 + y ** 2 - u * v) / (4 * a ** 2)
+        return [(u + v) / (2 * omega), (u - v) / (2 * omega), x / omega, y / omega, a * (2 / omega - 1)], u
+    # Podolsky and Griffiths's equation (19), with t = a^2/w and their rho = t + u.
+    w = symbol["w"]
+    t = a ** 2 / w
+    r, s = t + u, sp.sin(theta) * sp.cos(phi)
+    return [-a * sp.cos(theta) + a ** 2 * s / t + (r ** 2 - t ** 2) * s / (2 * t), a * sp.cos(theta) - a ** 2 * s / t,
+            r * a * s / t, a * sp.sin(theta) * sp.sin(phi), a * sp.cos(theta) - (r ** 2 - t ** 2) * s / (2 * t)], u
+
+
+def hotta_tanaka_check(chart, system):
+    """The chart is Hotta and Tanaka's five-dimensional form pulled back, and their solution.
+
+    Without the particles the line element is the hyperboloid's, and the shock's term is
+    (4GE/c^4)(z ln((1 + z)/(1 - z)) - 2) delta(Z_0 + Z_1)(dZ_0 + dZ_1)^2 with z = Z_4/a, Hotta
+    and Tanaka's equation (18), pulled back. The Ricci tensor is (3/a^2) g, shock and all, so the
+    chart solves Einstein's equations with Lambda = 3/a^2 off the particles. And the Weyl tensor
+    is the one Gauss's equation makes of the five-dimensional wave, whose only curvature is
+    R_{UpUq} = -(1/2) d_p d_q H delta(U), on a hyperboloid whose extrinsic curvature carries
+    (Z_4 H' - H) delta(U)/2a along dU, as Podolsky and Ortaggio found it."""
+    reader, n = chart.reader, 4
+    G, E, a = (reader.parameters[name] for name in ("G", "E", "a"))
+    c = reader.c
+    Z, argument = hotta_tanaka_embedding(system, reader.symbol, a)
+    points = random.Random(0)
+    e = sp.Matrix(Z).jacobian(chart.symbols)
+    signs = [-1, 1, 1, 1, 1]
+    background = vm.norm(sp.Matrix(n, n, lambda i, j: sum(signs[A] * e[A, i] * e[A, j] for A in range(5))))
+    g = chart.geo.g
+    ricci = chart.geo.ricci_ll()
+    for i in range(n):
+        for j in range(n):
+            if vm.norm(vm.off_support(g[i, j], argument) - background[i, j]) != 0:
+                raise AssertionError(f"hotta_tanaka {system}: without the shock the chart is not the hyperboloid's")
+            if vm.norm(ricci[i][j] - 3 * g[i, j] / a ** 2) != 0:
+                raise AssertionError(f"hotta_tanaka {system}: the Ricci tensor is not (3/a^2) g")
+
+    # Each remaining value is a function on the shock times the chart's delta, and is compared there
+    # at three random points in forty digits: the logarithm of the profile is spelled in more than
+    # one way, and no canonical form makes one generator of them.
+    pivot = sorted(argument.free_symbols, key=sp.default_sort_key)[0]
+    shock = {pivot: sp.solve(argument, pivot)[0]}
+    slope = sp.diff(Z[0] + Z[1], pivot) / sp.diff(argument, pivot)
+    z4 = sp.Dummy("z4")
+    H = 4 * G * E / c ** 4 * (z4 / a * sp.log((a + z4) / (a - z4)) - 2)
+    ell = [e[0, i] + e[1, i] for i in range(n)]
+    four = [e[4, i] for i in range(n)]
+    second = sp.diff(H, z4, 2).subs(z4, Z[4])
+    bend = (z4 * sp.diff(H, z4) - H).subs(z4, Z[4]) / (2 * a ** 2)
+    delta = sp.DiracDelta(argument)
+    free = sorted(set().union(*(z.free_symbols for z in Z)) | {G, E, c}, key=sp.default_sort_key)
+    places = []
+    for _ in range(3):
+        at = {s: sp.Rational(points.randint(30, 90), 100) for s in free}
+        at[pivot] = shock[pivot].xreplace(at)
+        places.append(at)
+
+    def on_shock(published, wanted, what):
+        """The published value is `wanted` times the chart's delta, and nothing else."""
+        published = sp.expand(sp.sympify(published))
+        if published.atoms(sp.DiracDelta) - {delta}:
+            raise AssertionError(f"hotta_tanaka {system}: {what} holds a delta that is not the shock's")
+        coefficient = published.coeff(delta) if published.has(delta) else sp.Integer(0)
+        if sp.expand(published - coefficient * delta).has(delta):
+            raise AssertionError(f"hotta_tanaka {system}: {what} is not linear in the delta")
+        for at in places:
+            if abs((coefficient - wanted / slope).xreplace(at).evalf(40)) > sp.Float("1e-30"):
+                raise AssertionError(f"hotta_tanaka {system}: {what} is not the five-dimensional wave's")
+
+    for i in range(n):
+        for j in range(n):
+            on_shock(g[i, j] - vm.off_support(g[i, j], argument), H.subs(z4, Z[4]) * ell[i] * ell[j],
+                     f"g_{chart.coords_tex[i]}{chart.coords_tex[j]}")
+    weyl = chart.geo.weyl_llll()
+    for i, j, k, l in vm._indices(n, 4):
+        wave = -second / 2 * (ell[i] * ell[k] * four[j] * four[l] + ell[j] * ell[l] * four[i] * four[k]
+                              - ell[i] * ell[l] * four[j] * four[k] - ell[j] * ell[k] * four[i] * four[l])
+        wave += bend * (background[i, k] * ell[j] * ell[l] + background[j, l] * ell[i] * ell[k]
+                        - background[i, l] * ell[j] * ell[k] - background[j, k] * ell[i] * ell[l])
+        on_shock(weyl[i][j][k][l], wave, "the Weyl tensor")
+
+
+HT_CHARTS = ["conformally_flat", "global", "kruskal", "null_cylindrical", "kundt"]
+
+
 # -- Khan-Penrose ------------------------------------------------------------------------
 
 KP_NULL_LINE = (
@@ -2195,6 +2442,7 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "einstein_rosen_waves": [lambda s=s: einstein_rosen(s) for s in ("cylindrical", "null")],
           "nariai": [lambda s=s: nariai(s) for s in ("static", "global", "conformal")],
           "aichelburg_sexl": [lambda s=s: aichelburg_sexl(s) for s in AS_CHARTS],
+          "hotta_tanaka": [lambda s=s: hotta_tanaka(s) for s in HT_CHARTS],
           "khan_penrose": khan_penrose,
           "global_monopole": [lambda s=s: global_monopole(s) for s in GM_CHARTS],
           "domain_wall": [lambda s=s: domain_wall(s) for s in DW_CHARTS],
@@ -16726,7 +16974,8 @@ def write(spec):
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
                      spec["printer"], spec.get("pretty"), spec.get("time"), spec.get("bracketed"), spec.get("reduce"),
                      vm.ORDERS.get((spec["metric_id"], spec["system"]["id"])),
-                     vm.HELD.get((spec["metric_id"], spec["system"]["id"]), ()))
+                     vm.HELD.get((spec["metric_id"], spec["system"]["id"]), ()),
+                     (spec["metric_id"], spec["system"]["id"]) in vm.IMPULSES)
     if "check" in spec:
         spec["check"](chart)
     math = chart.mathematics()

@@ -71,6 +71,11 @@
       "id": "kiselev",
       "kind": "generalisation",
       "text": "Kottler's $\\Lambda r^2/3$ replaced by a power of the radius, $(r_q/r)^{3w+1}$, for matter around the hole whose pressure averages to $w$ times its energy density. At $w = -1$ it is Kottler's term with $\\Lambda = 3/r_q^2$ [kiselev2003]."
+    },
+    {
+      "id": "hotta_tanaka",
+      "kind": "limit",
+      "text": "This black hole boosted to the speed of light, a limit taken with the mass going to zero and the energy held fixed. The field ends up on a sphere riding a cosmological horizon, with a massless particle at each pole [hotta1993]."
     }
   ],
   "references": [
@@ -94,7 +99,8 @@
     "carrera2010",
     "romans1992",
     "akcay2011",
-    "kiselev2003"
+    "kiselev2003",
+    "hotta1993"
   ],
   "coordinates": [
     {

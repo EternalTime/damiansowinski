@@ -433,7 +433,8 @@ def compute(metric_id, entry, seconds):
     orders = vm.ORDERS.get((metric_id, entry["id"]))
     reader = vm.Reader(coords, [p["symbol"] for p in entry.get("parameters", [])],
                        vm.time_coordinates(declared, coords), relations, orders,
-                       vm.HELD.get((metric_id, entry["id"]), ()))
+                       vm.HELD.get((metric_id, entry["id"]), ()),
+                       pulse=(metric_id, entry["id"]) in vm.IMPULSES)
     g = vm.metric_from_line_element(reader, entry["line_element"], coords)
     symbols = [reader.symbol[name] for name in coords]
     # A chart kept to an order, as Hartle and Thorne's is to the second in the spin, has its
