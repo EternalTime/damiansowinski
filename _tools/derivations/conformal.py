@@ -97,7 +97,7 @@ from pathlib import Path
 import mpmath
 import numpy as np
 import sympy as sp
-from scipy import integrate, interpolate, special
+from scipy import integrate, interpolate, optimize, special
 from scipy.integrate import cumulative_trapezoid, solve_ivp
 
 import slices
@@ -13043,6 +13043,138 @@ def fisher_jnw(ck, src):
     return views
 
 
+def exponential_metric(ck, src):
+    """The exponential metric of Papapetrou and Yilmaz at m = 1, the whole spacetime, each point a
+    2-sphere, one view for each chart whose points are spheres.
+
+    On the plane of t and r the metric is e^(-2m/r)(-c^2dt^2 + dr_*^2) with dr_*/dr = e^(2m/r), the
+    tortoise coordinate of the Curzon-Chazy particle's axis, r_* = r e^(2m/r) - 2m Ei(2m/r), which
+    runs over the whole line: it grows as r far out and falls as -r^2 e^(2m/r)/2m toward r = 0. With
+    x = r_*(r) - r_*(m), zero on the throat, p, q = arctan((ct -+ x)/l) at l = 4m bring the plane
+    into the full diamond, the throat on its axis. The right half is the near side, r > m, with
+    i0 and scri. The left edges are r = 0, where g_tt -> 0 and the spheres grow without bound:
+    g_tt g_rr = -1, so r is an affine parameter along a radial ray, which reaches r = 0 at a finite
+    affine distance, and the Kretschmann scalar goes to zero there while R_rr = -2m^2/r^4 does
+    not, the singular horizon of Bronnikov, Fabris and Zhidenko (2011), their Branch B. The areal
+    radius R = r e^(m/r) covers one side at a time and is drawn on the near side, the right half,
+    and the harmonic u = 1/r covers the whole. One event is checked to land on one point through
+    the three maps, and the Kretschmann scalar against its closed form."""
+    ell = 4.0
+    params = nr.EXPONENTIAL
+
+    def star(r):
+        return nr._curzon_axis(r) - float(nr._curzon_axis(1.0))
+
+    def far_side(R):
+        """The isotropic radius of the sphere of areal radius R beyond the throat, r < m."""
+        return np.array([optimize.brentq(lambda r: r * math.exp(1 / r) - value, 1e-2, 1.0) for value in np.atleast_1d(R)])
+    to_r = {"isotropic": lambda r: np.asarray(r, dtype=float),
+            "areal": nr._exponential_isotropic,
+            "harmonic": lambda u: 1 / np.asarray(u, dtype=float)}
+    maps = {cid: (lambda t, x, cid=cid: mink_pq(t, star(to_r[cid](x)), ell)) for cid in to_r}
+    coords = {"isotropic": "r", "areal": "R", "harmonic": "u"}
+    planes = {cid: Plane(src, "exponential_metric", cid, ("t", x), {**EQUATOR, "phi": "0"}, params)
+              for cid, x in coords.items()}
+    name = "The exponential metric"
+    r = np.exp(ck.uniform(-1.1, 3.5))
+    spans = {"isotropic": r, "areal": math.e + np.exp(ck.uniform(-5, 3.5)), "harmonic": 1 / r}
+    for cid, plane in planes.items():
+        ck.chart(f"{name}, {cid}", plane, maps[cid], ck.uniform(-40, 40), spans[cid], lambda t, x: (1, 0))
+        x = spans[cid][:50]
+        rr = to_r[cid](x)
+        ck.limit(f"{name}, {cid}: the Kretschmann scalar is 4m^2(12r^2 - 16mr + 7m^2)e^(-4m/r)/r^8",
+                 plane.kretschmann(np.zeros(50), x) * rr ** 8 * np.exp(4 / rr) / (4 * (12 * rr ** 2 - 16 * rr + 7)),
+                 np.ones(50), 1e-6)
+    K = planes["isotropic"].kretschmann
+    ck.finite(f"{name}: the curvature is finite beside the throat",
+              K(ck.uniform(-5, 5, 50), 1.0 + ck.uniform(-0.01, 0.01, 50)))
+    ck.limit(f"{name}: the Kretschmann scalar at the throat is 12/(e^4 m^4)", K(np.zeros(1), np.ones(1)),
+             [12 * math.exp(-4)], 1e-9)
+    ck.limit(f"{name}: the Kretschmann scalar goes to zero toward r = 0", K(np.zeros(2), np.array([0.05, 0.02])),
+             np.zeros(2), 1e-20)
+    g = planes["isotropic"].metric(0 * r, r)
+    ck.limit(f"{name}: g_tt g_rr = -1, so r is an affine parameter along a radial ray", g[0] * g[2], -np.ones_like(r), 1e-9)
+    h = 1e-6 * r
+    ck.limit(f"{name}: the tortoise coordinate has dr_*/dr = sqrt(-g_rr/g_tt)",
+             (star(r + h) - star(r - h)) / (2 * h) / np.sqrt(-g[2] / g[0]), np.ones_like(r), 1e-6)
+    ck.limit(f"{name}: the tortoise coordinate vanishes at the throat", star(1.0), [0.0], 1e-12)
+    ck.limit(f"{name}: toward r = 0 the tortoise coordinate falls as -r^2 e^(2m/r)/2m",
+             star(np.array([0.05, 0.03])) / (-np.array([0.05, 0.03]) ** 2 * np.exp(2 / np.array([0.05, 0.03])) / 2),
+             np.ones(2), 0.1)
+    ck.limit(f"{name}: every moment of t reaches the left corner as r -> 0",
+             np.array(xt(*maps["isotropic"](np.array([-5.0, 0.0, 5.0]), np.full(3, 0.03)))),
+             np.array([[-PI] * 3, [0.0] * 3]), 1e-6)
+    # One event, one point: the sphere r at the time t, in each chart's own coordinate.
+    t, r1 = ck.uniform(-20, 20), 1 + np.exp(ck.uniform(-4, 3))
+    want = np.array(maps["isotropic"](t, r1))
+    ck.limit(f"{name}: the areal chart lands on the points of the isotropic chart",
+             np.array(maps["areal"](t, r1 * np.exp(1 / r1))), want, 1e-9)
+    ck.limit(f"{name}: the harmonic chart lands on the points of the isotropic chart",
+             np.array(maps["harmonic"](t, 1 / r1)), want, 1e-9)
+    radii = np.array([3.0, 4.0, 6.0, 10.0])
+    ck.limit(f"{name}: the far side's spheres have the areal radii of the near side's",
+             far_side(radii) * np.exp(1 / far_side(radii)), radii, 1e-9)
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    moment = slices.moments("exponential_metric")[0]
+    along = np.linspace(*moment.reach("isotropic", "r"), 401)
+    TS = (-16, -8, -4, 0, 4, 8, 16)
+    iso = maps["isotropic"]
+    views = []
+    for vid, label in (("isotropic", "Isotropic"), ("areal", "Areal"), ("harmonic", "Harmonic")):
+        v = View(vid, label, box, vid)
+        fmap = maps[vid]
+        v.fill("region", DIAMOND)
+        if vid == "isotropic":
+            v.fill("cover", DIAMOND)
+            grid(v, "r", lambda c, t: fmap(t, c), (0.4, 0.5, 0.75, 2, 4, 8), S_ALL)
+            label_on(v, fmap(0, 2), "$r = 2m$")
+            label_on(v, fmap(0, 0.5), "$m/2$")
+            v.legend("cover", "the whole spacetime, which $t$ and the isotropic $r$ cover")
+            v.legend("r", "$r$ constant, at $2m$, $4m$, and $8m$ on the near side and at $3m/4$, $m/2$, and $2m/5$ on the far side")
+        elif vid == "harmonic":
+            v.fill("cover", DIAMOND)
+            grid(v, "r", lambda c, t: fmap(t, c), (0.125, 0.25, 0.5, 1.5, 2, 2.5), S_ALL)
+            label_on(v, fmap(0, 0.5), "$u = 1/2m$")
+            label_on(v, fmap(0, 2), "$2/m$")
+            v.legend("cover", "the whole spacetime, which $t$ and $u$ cover")
+            v.legend("r", "$u$ constant, at $1/8m$, $1/4m$, and $1/2m$ on the near side and at $3/2m$, $2/m$, and $5/2m$ "
+                          "on the far side")
+        else:
+            v.fill("cover", TRIANGLE)
+            for R in radii:
+                v.curve("r", *fmap(S_ALL, np.full_like(S_ALL, R)))
+                v.curve("r2", *iso(S_ALL, np.full_like(S_ALL, float(far_side(R)[0]))))
+            label_on(v, fmap(0, 4.0), "$R = 4m$")
+            v.legend("cover", "the near side of the throat, which $t$ and $R$ cover")
+            v.legend("r", "$R$ constant, at $3m$, $4m$, $6m$, and $10m$")
+            v.legend("r2", "the same radii on the far side")
+        grid(v, "t", lambda t, x: mink_pq(t, x, ell), TS, S_ALL)
+        v.line("throat", [[[0, -PI], [0, PI]]])
+        v.line("singular", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        edge = "$u \\to \\infty$" if vid == "harmonic" else "$r = 0$"
+        v.label_xt([-HALF, HALF], edge, "br", dx=-5, dy=-3)
+        v.label_xt([0, 0.3], "throat", "l", "small", dx=6)
+        v.legend("t", "$ct$ constant, every $4m$ to $\\pm 8m$, and at $\\pm 16m$")
+        v.legend("throat", {"isotropic": "the throat $r = m$", "areal": "the throat $R = e\\,m$",
+                            "harmonic": "the throat $u = 1/m$"}[vid])
+        v.legend("singular", f"the singular horizon {edge}, which a ray reaches at a finite affine distance")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.slice(moment, [iso(0 * along, along)])
+        v.set(settings="$m = 1$, the unit of every length, and $\\ell = 4m$; $p = \\arctan((ct - x)/\\ell)$ and "
+                       "$q = \\arctan((ct + x)/\\ell)$, with $x = r_*(r) - r_*(m)$ and "
+                       "$r_* = r\\,e^{2m/r} - 2m\\,\\mathrm{Ei}(2m/r)$ for the isotropic radius $r$.")
+        views.append(v)
+    return views
+
+
 class MyersSix(Tower):
     """The tower of f = 1 - mu/(r(r^2 + a^2)), the plane transverse to the rotation of Myers and
     Perry's black hole with one spin in six dimensions. 1/f = 1 + mu/(r^3 + a^2 r - mu), and the
@@ -18888,6 +19020,7 @@ DRAWN = {
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "fisher_jnw": fisher_jnw,
+    "exponential_metric": exponential_metric,
     "witten_black_hole": witten_black_hole,
     "roberts": roberts,
     "myers_perry": myers_perry,
@@ -20667,6 +20800,36 @@ CAPTIONS = {
         "universes, each with its own $i^0$ and $\\mathscr{I}^\\pm$, joined at the throat $r = 0$, "
         "where the spheres are smallest. Light crosses the throat at 45°, as it does everywhere "
         "else, so the wormhole has no horizon.",
+    ],
+    ("exponential_metric", "isotropic"): [
+        "The exponential metric ($m = 1$) in isotropic coordinates, the whole spacetime, each point in the diagram a "
+        "2-sphere of radius $re^{m/r}$. The metric on the plane of $t$ and $r$ is "
+        "$e^{-2m/r}\\left(-c^2dt^2 + dx^2\\right)$, with $x = r_*(r) - r_*(m)$ and $r_* = r\\,e^{2m/r} - 2m\\,\\mathrm{Ei}(2m/r)$ "
+        "running over the whole line, and $p, q = \\arctan((ct \\mp x)/\\ell)$ bring it into the full diamond, the "
+        "throat $r = m$ on its axis.",
+        "The right half is the near side, with its $i^0$ and $\\mathscr{I}^\\pm$, and light crosses the throat both "
+        "ways, so there is no horizon. The left edges are $r = 0$, where the spheres grow without bound and "
+        "$g_{tt}$ goes to zero. A ray reaches them at a finite affine distance, since $r$ is an affine parameter "
+        "along it, and there the Kretschmann scalar goes to zero while $R_{rr} = -2m^2/r^4$ along the ray grows "
+        "without bound: a singular horizon, on which the spacetime ends.",
+    ],
+    ("exponential_metric", "areal"): [
+        "The exponential metric ($m = 1$) in the areal radius $R$ on the near side of the throat, each point in the "
+        "diagram a 2-sphere of radius $R$. With $r$ the isotropic radius of the sphere $R$, $x = r_*(r) - r_*(m)$, "
+        "and $r_* = r\\,e^{2m/r} - 2m\\,\\mathrm{Ei}(2m/r)$, $p, q = \\arctan((ct \\mp x)/\\ell)$ bring the plane of $t$ and $R$ into the "
+        "right half of the diamond.",
+        "The coordinates end at the throat $R = e\\,m$, where $g_{RR}$ diverges. The same radii on the far side, "
+        "on the branch $\\mathrm{W}_{-1}$ of Lambert's function, cover the left half, out to the singular horizon "
+        "$r = 0$, where $R$ grows without bound.",
+    ],
+    ("exponential_metric", "harmonic"): [
+        "The exponential metric ($m = 1$) in Bronnikov's harmonic coordinate $u = 1/r$, the whole spacetime, each "
+        "point in the diagram a 2-sphere of radius $e^{mu}/u$. With $x = r_*(r) - r_*(m)$ and "
+        "$r_* = r\\,e^{2m/r} - 2m\\,\\mathrm{Ei}(2m/r)$, $p, q = \\arctan((ct \\mp x)/\\ell)$ bring the plane of $t$ and $u$ into the "
+        "full diamond.",
+        "Spatial infinity $u = 0$ is the right corner $i^0$, the throat $u = 1/m$ the axis, and $u \\to \\infty$ the "
+        "left edges, the singular horizon. The scalar field of negative energy that sources the metric is "
+        "proportional to $u$, so each line of constant $u$ is a surface of constant field.",
     ],
     ("ppn_metric", "isotropic"): [
         "The outside of the body ($R = 10\\,m$, $\\beta = \\gamma = 1$) in the isotropic chart, each point in the "

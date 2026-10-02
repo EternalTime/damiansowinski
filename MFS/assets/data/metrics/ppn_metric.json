@@ -56,6 +56,11 @@
       "id": "nordstrom_scalar",
       "kind": "special_case",
       "text": "Nordström's scalar theory as a point of the plane. At $\\gamma = -1$ and $\\beta = 1/2$ the metric is the weak field of his point mass, which bends no light [deruelle2011]."
+    },
+    {
+      "id": "exponential_metric",
+      "kind": "family",
+      "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$ and the post-Newtonian tests do not separate the two [boonserm2018]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "williams2004",
     "schiff1960",
     "everitt2011",
-    "deruelle2011"
+    "deruelle2011",
+    "boonserm2018"
   ],
   "coordinates": [
     {

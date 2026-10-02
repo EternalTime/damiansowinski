@@ -645,6 +645,19 @@ A static, spherically symmetric traversable wormhole with zero redshift function
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2 dt^2 + dr^2 + (r^2 + \ell^2)\left(d\theta^2 + \sin^2\theta\, d\phi^2\right)$$
 
+### Exponential Metric of Papapetrou and Yilmaz
+
+A static, spherically symmetric metric whose components are exponentials of the Newtonian potential, with no horizon, offered in place of Schwarzschild's and later shown to be a traversable wormhole held open by a scalar field of negative energy.
+
+- id: `exponential_metric`
+- tags: wormhole, traversable, no horizon, exotic matter, scalar field, phantom field, energy condition violation, asymptotically flat, isotropic coordinates, alternative theories of gravity, Yilmaz, Papapetrou, Lambert W function, singular horizon, static, stationary, spherically symmetric, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/exponential_metric.json
+- chart Isotropic: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{-2m/r}c^2dt^2 + e^{2m/r}\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -e^{-2m/r}c^2dt^2 + e^{2m/r}\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Areal (curvature coordinates): coordinates $(t, R, \theta, \phi)$, $$ds^2 = -e^{-2m/r}c^2dt^2 + \dfrac{dR^2}{\left(1 - \dfrac{m}{r}\right)^2} + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Harmonic: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -e^{-2m\,u}c^2dt^2 + \dfrac{e^{2m\,u}}{u^2}\left(\dfrac{du^2}{u^2} + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Fisher-Janis-Newman-Winicour Scalar Field
 
 The static, spherically symmetric spacetime of a mass that also carries a massless scalar field, found by I. Z. Fisher in 1948 and found again by Allen Janis, Ezra Newman, and Jeffrey Winicour in 1968. For any scalar charge, however small, the sphere where Schwarzschild's horizon would stand has zero area and infinite curvature, and no horizon hides it.
