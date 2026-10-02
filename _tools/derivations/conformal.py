@@ -7216,6 +7216,94 @@ def interior_schwarzschild(ck, src):
     return [v]
 
 
+def gravastar(ck, src):
+    """The gravastar its other diagrams draw, r_s = 1, R = 5/4 and L = 2, where C = 64/195. g_tt is
+    -(1 - r_s/R) on the shell from both sides, checked, so t is one coordinate, and the tortoise
+    coordinate x, dx/dr = sqrt(g_rr/(-g_tt)), runs on through the shell: x = (L/sqrt(C)) artanh(r/L)
+    inside, the interior tortoise chart's own coordinate, and x_R + r_* - r_*(R) outside with
+    Schwarzschild's r_* = r + r_s ln(r/r_s - 1). p, q = arctan((ct -+ x)/x_R) give Minkowski's
+    triangle with the shell a timelike line through (X, T) = (pi/2, 0), one view for each chart."""
+    R, L, C = 1.25, 2.0, nr.GRAVASTAR_C
+    xR = nr.GRAVASTAR_X
+    params = {"r_s": 1, "R": "5/4", "L": 2}
+    inner = Plane(src, "gravastar", "interior", ("t", "r"), EQUATOR, params)
+    tortoise = Plane(src, "gravastar", "interior_tortoise", ("t", "x"), EQUATOR, params)
+    outer = Plane(src, "gravastar", "exterior", ("t", "r"), EQUATOR, {"r_s": 1, "R": "5/4"})
+    ck.limit("gravastar: g_tt is one value on the shell from both sides",
+             [float(inner.g[0, 0].subs(inner.x1, R)), float(tortoise.g[0, 0].subs(tortoise.x1, xR))],
+             [float(outer.g[0, 0].subs(outer.x1, R))] * 2, 1e-12)
+
+    def x_of(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            inside = L / math.sqrt(C) * np.arctanh(np.minimum(r, R) / L)
+            outside = xR + (r + np.log(np.abs(r - 1))) - (R + math.log(R - 1))
+        return np.where(r <= R, inside, outside)
+
+    def areal(t, r):
+        return mink_pq(t, x_of(r), xR)
+
+    def conformal(t, x):
+        return mink_pq(t, x, xR)
+    ck.limit("gravastar: the tortoise coordinate of the shell is the end of the tortoise chart",
+             [float(x_of(R))], [xR], 1e-12)
+    ck.chart("gravastar, the interior", inner, areal, ck.uniform(-20, 20), ck.uniform(0.01, 1.24), lambda t, r: (1, 0))
+    ck.chart("gravastar, the interior in the tortoise coordinate", tortoise, conformal, ck.uniform(-20, 20),
+             ck.uniform(0.01, xR - 0.01), lambda t, x: (1, 0))
+    ck.chart("gravastar, the exterior", outer, areal, ck.uniform(-20, 20), ck.uniform(1.26, 30), lambda t, r: (1, 0))
+    ts, rs = ck.uniform(-5, 5, 50), ck.uniform(0.05, 1.2, 50)
+    ck.limit("gravastar: one event is one point through both interior charts",
+             np.concatenate(areal(ts, rs)), np.concatenate(conformal(ts, x_of(rs))), 1e-12)
+    ck.finite("gravastar: r = 0 is a regular centre", inner.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    ck.limit("gravastar: the Kretschmann scalar is 24/L^4 inside and 12 r_s^2/R^6 beside the shell outside",
+             [float(inner.kretschmann(0.0, 1.0)), float(tortoise.kretschmann(0.0, 1.0)), float(outer.kretschmann(0.0, R))],
+             [24 / L ** 4, 24 / L ** 4, 12 / R ** 6], 1e-9)
+
+    moment = slices.moments("gravastar")[0]
+    lo, hi = moment.reach(None, "r")
+    rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
+    ps, qs = areal(S_ALL, np.full_like(S_ALL, R))
+    tube = [[0, -PI]] + [point(p, q) for p, q in zip(ps, qs)] + [[0, PI]]
+    outside = [[PI, 0]] + [point(p, q) for p, q in zip(ps[::-1], qs[::-1])]
+    radial = np.concatenate([np.linspace(0, R, 60)[:-1], R + np.exp(np.linspace(-6, 8, 200)) - np.exp(-6)])
+    views = []
+    for vid, label in (("interior", "de Sitter interior"), ("interior_tortoise", "Interior tortoise"),
+                       ("exterior", "Schwarzschild exterior")):
+        v = View(vid, label, [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], vid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", outside if vid == "exterior" else tube)
+        if vid == "interior_tortoise":
+            for x in (1.0, 2.0):
+                v.curve("r", *conformal(S_ALL, np.full_like(S_ALL, x)))
+        else:
+            for r in (0.5, 1.0):
+                v.curve("r", *areal(S_ALL, np.full_like(S_ALL, r)))
+        for r in (2.0, 3.0, 6.0):
+            v.curve("r2", *areal(S_ALL, np.full_like(S_ALL, r)))
+        for t in (-6, -3, -1.5, 0, 1.5, 3, 6):
+            v.curve("t", *areal(np.full_like(radial, t), radial))
+        v.curve("surface", ps, qs)
+        triangle_edges(v)
+        label_on(v, areal(0, R), "$r = R$")
+        if vid == "exterior":
+            v.legend("cover", "the exterior, $r \\ge R$, which Schwarzschild's $t$ and $r$ cover")
+            v.legend("r", "$r$ constant inside, at $0.5$ and $1\\,r_s$")
+        elif vid == "interior":
+            v.legend("cover", "the interior, $r \\le R$, which $t$ and $r$ cover")
+            v.legend("r", "$r$ constant inside, at $0.5$ and $1\\,r_s$")
+        else:
+            v.legend("cover", "the interior, $r \\le R$, which $t$ and $x$ cover")
+            v.legend("r", "$x$ constant inside, at $1$ and $2\\,r_s$")
+        v.legend("r2", "$r$ constant outside, at $2$, $3$ and $6\\,r_s$")
+        v.legend("t", "$t$ constant, one $t$ on both sides")
+        v.legend("surface", "the shell $r = R$")
+        v.legend("centre", "$r = 0$, a regular centre")
+        v.set(settings="$R = 1.25\\,r_s$ and $L = 2\\,r_s$.")
+        v.slice(moment, [areal(0 * rr, rr)])
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- FRW
 
 def frw(ck, src):
@@ -12162,7 +12250,7 @@ DRAWN = {
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
-    "interior_schwarzschild": interior_schwarzschild, "frw": frw,
+    "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "c_metric": c_metric,
     "misner": misner, "milne": milne,
@@ -13699,6 +13787,28 @@ CAPTIONS = {
         "the centre through the surface, and $p, q = \\arctan((t \\mp r_*)/R)$ bring the spacetime "
         "into Minkowski's triangle, the causal structure of empty space, with the star a timelike "
         "tube from $i^-$ to $i^+$.",
+    ],
+    ("gravastar", "interior"): [
+        "A gravastar ($R = 1.25\\,r_s$, $L = 2\\,r_s$), each point in the diagram a 2-sphere of radius $r$. On the "
+        "shell $g_{tt} = -(1 - r_s/R)$ from both sides, so $t$ is one coordinate throughout, and the tortoise "
+        "coordinate $x$, with $dx/dr = \\sqrt{g_{rr}/(-g_{tt})}$, runs from the centre on through the shell, which "
+        "it reaches at $x_R = (L/\\sqrt{C})\\,\\mathrm{artanh}(R/L) = 2.56\\,r_s$. The map $p, q = \\arctan((ct \\mp x)/x_R)$ brings the spacetime into "
+        "Minkowski's triangle, with the shell a timelike line from $i^-$ to $i^+$.",
+        "Every ray from $\\mathscr{I}^-$ crosses the shell, passes through the centre, crosses the shell again, "
+        "and reaches $\\mathscr{I}^+$, so there is no horizon. The Kretschmann scalar is $24/L^4$ inside and at most "
+        "$12r_s^2/R^6$ outside, so there is no singularity either. The coordinates $t$ and $r$ of the interior "
+        "cover the tube inside the shell.",
+    ],
+    ("gravastar", "interior_tortoise"): [
+        "The same gravastar with the interior in the tortoise coordinate $x$, each point in the diagram a "
+        "2-sphere of radius $L\\tanh(\\sqrt{C}\\,x/L)$ inside the shell. There $ct \\mp x$ are the chart's own null "
+        "coordinates, a line of constant $x$ is the curve $\\tan q - \\tan p = 2x/x_R$, and the shell is at "
+        "$x_R = (L/\\sqrt{C})\\,\\mathrm{artanh}(R/L)$.",
+    ],
+    ("gravastar", "exterior"): [
+        "The same gravastar in Schwarzschild's coordinates outside the shell, which cover the triangle from the "
+        "shell out to $i^0$. There $x = x_R + r_* - r_*(R)$, where $x_R$ is the value of $x$ on the shell and "
+        "$r_* = r + r_s\\ln(r/r_s - 1)$, as outside a Schwarzschild black hole.",
     ],
     ("frw", "flat"): [
         "A flat universe of dust, each point in the diagram a 2-sphere. With $k = 0$, $G^r{}_r = 0$ gives $a \\propto \\eta^2$, and the metric "

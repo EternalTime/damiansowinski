@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 87,
+  "count": 88,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -1465,6 +1465,11 @@
           "id": "hayward",
           "kind": "family",
           "text": "A regular black hole of the same kind whose metric function is a ratio of polynomials. Sean Hayward let its mass change in time in 2006, so that it forms and evaporates [hayward2006]."
+        },
+        {
+          "id": "gravastar",
+          "kind": "family",
+          "text": "Gliner's vacuum with $p = -\\rho$ as the whole interior of a collapsed star, held under a thin shell with no horizon [mazur2004, gliner1966]."
         }
       ],
       "references": [
@@ -1487,7 +1492,8 @@
         "bardeen2014",
         "carballorubio2018",
         "poisson1990",
-        "simpson2019"
+        "simpson2019",
+        "mazur2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bardeen.json",
@@ -4561,6 +4567,11 @@
           "id": "senovilla",
           "kind": "family",
           "text": "A universe of radiation that also contracts, bounces, and expands with no singularity, and keeps the strong energy condition that de Sitter's violates. It has no closed trapped surface, and its slices of constant time are open [senovilla1998, chinea1992]."
+        },
+        {
+          "id": "gravastar",
+          "kind": "composite",
+          "text": "A ball of de Sitter space inside a thin shell, with Schwarzschild's vacuum outside. The vacuum within pushes outward on the shell, and no horizon forms [mazur2004]."
         }
       ],
       "references": [
@@ -4595,7 +4606,8 @@
         "caldwell1996",
         "coleman1980",
         "senovilla1998",
-        "chinea1992"
+        "chinea1992",
+        "mazur2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -7974,6 +7986,294 @@
       ]
     },
     {
+      "id": "gravastar",
+      "name": "Mazur-Mottola Gravastar",
+      "short_name": "Gravastar",
+      "description": "A star with no horizon and no singularity that passes for a black hole from outside, proposed by Pawel Mazur and Emil Mottola in 2001. A ball of de Sitter space, a vacuum with $p = -\\rho$, fills the inside of a thin shell at $R > r_s$, and Schwarzschild's vacuum lies outside it, the three layers Matt Visser and David Wiltshire reduced it to.",
+      "tags": [
+        "gravastar",
+        "black hole mimicker",
+        "exotic compact object",
+        "no horizon",
+        "thin shell",
+        "matched solution",
+        "de Sitter core",
+        "regular centre",
+        "vacuum energy",
+        "positive cosmological constant",
+        "anisotropic pressure",
+        "strong energy condition",
+        "echoes",
+        "quasinormal modes",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "mass",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The outside of the gravastar, from the shell out. The shell sits at $R > r_s$, so Schwarzschild's horizon is never reached [visser2004]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "piece",
+          "text": "The inside of the gravastar, a ball cut from the static patch of de Sitter space and ending at the shell, short of the horizon at $r = L$ [mazur2004]."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "family",
+          "text": "Schwarzschild's star of uniform density. Squeezed to $R = r_s$ it is a gravastar with $L = r_s$ and $C = 1/4$, as Mazur and Mottola found in 2015 [mazur2015]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "Visser's earlier use of a thin shell, two Schwarzschild exteriors joined at a throat. Visser and Wiltshire took the shell's surface density and tension from the same calculation [visser2004, visser1989nuclphysb]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "family",
+          "text": "Gliner's vacuum with $p = -\\rho$ at the centre of a collapsed star again, there with its horizons kept and no shell [gliner1966]."
+        },
+        {
+          "id": "hayward",
+          "kind": "family",
+          "text": "A black hole with de Sitter space at its core and Schwarzschild far away, whose horizons Hayward let form and evaporate [hayward2006]."
+        }
+      ],
+      "references": [
+        "mazur2004",
+        "gliner1966",
+        "chapline2001",
+        "mazur2001",
+        "visser2004",
+        "israel1966",
+        "cattoen2005",
+        "buchdahl1959",
+        "mazur2015",
+        "schwarzschild1916b",
+        "chirenti2007",
+        "pani2009",
+        "cardoso2016prd",
+        "chirenti2016",
+        "abbott2021tgr",
+        "abbott2025tgr",
+        "visser1989nuclphysb",
+        "hayward2006"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gravastar.json",
+      "charts": [
+        {
+          "id": "interior",
+          "name": "de Sitter Interior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, R]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the gravastar, $r_s = 2GM/c^2$, with $M$ the mass measured from far away"
+            },
+            {
+              "symbol": "R",
+              "description": "Areal radius of the thin shell, $r_s < R < L$"
+            },
+            {
+              "symbol": "L",
+              "description": "Radius of the de Sitter space the interior is cut from, $L = \\sqrt{3/\\Lambda}$ with $\\Lambda = 8\\pi G\\rho/c^4$, where $\\rho$ is the energy density of the vacuum inside"
+            },
+            {
+              "symbol": "C = \\dfrac{1 - r_s/R}{1 - R^2/L^2}",
+              "description": "Constant that makes $g_{tt}$ continuous across the shell, so that one time $t$ serves both sides; $C = 1$ where $L^2 = R^3/r_s$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ inside the shell, with $r$ the areal radius and $t$ the time of the exterior chart, carrying dimensions of time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -C\\left(1 - \\dfrac{r^2}{L^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r^2}{L^2}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-C\\left(1 - \\dfrac{r^2}{L^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r^2}{L^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "interior_tortoise",
+          "name": "Interior Tortoise",
+          "coordinates": [
+            "t",
+            "x",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in \\left[0, \\dfrac{L}{2\\sqrt{C}}\\ln\\left(\\dfrac{L + R}{L - R}\\right)\\right]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the gravastar, $r_s = 2GM/c^2$, with $M$ the mass measured from far away"
+            },
+            {
+              "symbol": "R",
+              "description": "Areal radius of the thin shell, $r_s < R < L$"
+            },
+            {
+              "symbol": "L",
+              "description": "Radius of the de Sitter space the interior is cut from, $L = \\sqrt{3/\\Lambda}$ with $\\Lambda = 8\\pi G\\rho/c^4$, where $\\rho$ is the energy density of the vacuum inside"
+            },
+            {
+              "symbol": "C = \\dfrac{1 - r_s/R}{1 - R^2/L^2}",
+              "description": "Constant that makes $g_{tt}$ continuous across the shell, so that one time $t$ serves both sides; $C = 1$ where $L^2 = R^3/r_s$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, \\theta, \\phi)$ inside the shell, with $t$ carrying dimensions of time and $x$ the tortoise coordinate, a length, so the areal radius is $r = L\\tanh(\\sqrt{C}\\,x/L)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{C}{\\cosh^2\\left(\\dfrac{\\sqrt{C}\\,x}{L}\\right)}\\left(-c^2dt^2 + dx^2\\right) + L^2\\tanh^2\\left(\\dfrac{\\sqrt{C}\\,x}{L}\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{C}{\\cosh^2\\left(\\dfrac{\\sqrt{C}\\,x}{L}\\right)}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{C}{\\cosh^2\\left(\\dfrac{\\sqrt{C}\\,x}{L}\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2\\tanh^2\\left(\\dfrac{\\sqrt{C}\\,x}{L}\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L^2\\tanh^2\\left(\\dfrac{\\sqrt{C}\\,x}{L}\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "exterior",
+          "name": "Schwarzschild Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the gravastar, $r_s = 2GM/c^2$, with $M$ the mass measured from far away"
+            },
+            {
+              "symbol": "R",
+              "description": "Areal radius of the thin shell, $r_s < R < L$"
+            }
+          ],
+          "convention": "We use Schwarzschild's coordinates $(t, r, \\theta, \\phi)$ outside the shell, with $t$ carrying dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        }
+      ]
+    },
+    {
       "id": "hartle_thorne",
       "name": "Hartle-Thorne Slowly Rotating Star",
       "short_name": "Hartle-Thorne",
@@ -8393,6 +8693,11 @@
           "id": "simpson_visser",
           "kind": "family",
           "text": "Another black hole with no singularity. Simpson and Visser set theirs apart from the regular black holes of Bardeen and Hayward: it opens through a throat of radius $a$ where Hayward's closes over a regular centre [simpson2019]."
+        },
+        {
+          "id": "gravastar",
+          "kind": "family",
+          "text": "A ball of de Sitter space under a thin shell with Schwarzschild's vacuum outside, a collapsed star with a de Sitter core and no horizon [mazur2004]."
         }
       ],
       "references": [
@@ -8413,7 +8718,8 @@
         "delorenzo2015",
         "carballorubio2018",
         "vagnozzi2023",
-        "simpson2019"
+        "simpson2019",
+        "mazur2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hayward.json",
@@ -18962,6 +19268,11 @@
           "id": "witten_black_hole",
           "kind": "family",
           "text": "A black hole of string theory with one dimension of space. Its Kruskal diagram matches Schwarzschild's region by region [witten1991]."
+        },
+        {
+          "id": "gravastar",
+          "kind": "composite",
+          "text": "A star with Schwarzschild's vacuum outside a thin shell at $R > r_s$ and a ball of de Sitter space inside, so that no horizon forms [mazur2004, visser2004]."
         }
       ],
       "references": [
@@ -19034,7 +19345,9 @@
         "einstein1945",
         "geroch1969",
         "chamblin2000",
-        "witten1991"
+        "witten1991",
+        "mazur2004",
+        "visser2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -19270,6 +19583,11 @@
           "id": "einstein_static",
           "kind": "family",
           "text": "The whole three sphere, filled with dust and held still by a cosmological constant. Schwarzschild found in 1916 that space inside his star is a cap of such a sphere, and a year later Einstein closed the sphere into a universe [schwarzschild1916b, einstein1917]."
+        },
+        {
+          "id": "gravastar",
+          "kind": "family",
+          "text": "A ball of de Sitter space under a thin shell, with Schwarzschild's vacuum outside. Schwarzschild's star squeezed to $R = r_s$ is one, with the de Sitter radius $r_s$ [mazur2015]."
         }
       ],
       "references": [
@@ -24088,6 +24406,11 @@
           "id": "minkowski",
           "kind": "piece",
           "text": "With no mass, $r_s = 0$, both sides of the throat are flat. Visser's first wormholes of 1989 were of this kind, two copies of Minkowski space with a region cut from each and the edges joined [visser1989prd]."
+        },
+        {
+          "id": "gravastar",
+          "kind": "family",
+          "text": "A thin shell round a ball of de Sitter space, in place of a throat. Struck by a wave, a compact one answers as the wormhole does, with a black hole's first ringdown and then a train of echoes [cardoso2016prd]."
         }
       ],
       "references": [

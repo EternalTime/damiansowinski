@@ -531,6 +531,18 @@ Closed vacuum universes holding gravitational waves that travel along one direct
 - chart Torus, Logarithmic Time: coordinates $(\tau, \theta, \sigma, \delta)$, $$ds^2 = L^2\left(e^{(\lambda + \tau)/2}\left(-e^{-2\tau}d\tau^2 + d\theta^2\right) + e^{-\tau}\left(e^{P}\left(d\sigma + Q\,d\delta\right)^2 + e^{-P}d\delta^2\right)\right)$$
 - chart Sphere and Handle: coordinates $(t, \theta, \sigma, \delta)$, $$ds^2 = L^2\left(e^{2a}\left(-dt^2 + d\theta^2\right) + \sin t\,\sin\theta\left(e^{P}\left(d\sigma + Q\,d\delta\right)^2 + e^{-P}d\delta^2\right)\right)$$
 
+### Mazur-Mottola Gravastar
+
+A star with no horizon and no singularity that passes for a black hole from outside, proposed by Pawel Mazur and Emil Mottola in 2001. A ball of de Sitter space, a vacuum with $p = -\rho$, fills the inside of a thin shell at $R > r_s$, and Schwarzschild's vacuum lies outside it, the three layers Matt Visser and David Wiltshire reduced it to.
+
+- id: `gravastar`
+- tags: gravastar, black hole mimicker, exotic compact object, no horizon, thin shell, matched solution, de Sitter core, regular centre, vacuum energy, positive cosmological constant, anisotropic pressure, strong energy condition, echoes, quasinormal modes, static, stationary, spherically symmetric, mass, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/gravastar.json
+- chart de Sitter Interior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -C\left(1 - \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Interior Tortoise: coordinates $(t, x, \theta, \phi)$, $$ds^2 = \dfrac{C}{\cosh^2\left(\dfrac{\sqrt{C}\,x}{L}\right)}\left(-c^2dt^2 + dx^2\right) + L^2\tanh^2\left(\dfrac{\sqrt{C}\,x}{L}\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Hartle-Thorne Slowly Rotating Star
 
 The gravitational field outside a slowly rotating star, through second order in its spin: Schwarzschild's exterior, the dragging of inertial frames, and a quadrupole moment set by the star's interior. Far from the star it is the field of Lense and Thirring, whose frame dragging Gravity Probe B measured around the Earth.

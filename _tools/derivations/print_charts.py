@@ -7,7 +7,8 @@ robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, 
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
-som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla and roberts, and Godel's cylindrical chart.
+som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts and gravastar, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -26,7 +27,7 @@ reads better than an expanded one, and each of those is checked against sympy he
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
-witten_black_hole.md and roberts.md beside this file.
+witten_black_hole.md, roberts.md and gravastar.md beside this file.
 """
 import argparse
 import itertools
@@ -9131,6 +9132,168 @@ SENOVILLA_GEODESICS = [
 
 
 CHARTS["senovilla"] = senovilla
+
+
+# -- The gravastar ---------------------------------------------------------------------
+
+GRAVASTAR_CHARTS = ["interior", "interior_tortoise", "exterior"]
+GRAVASTAR_C = "C = \\dfrac{1 - r_s/R}{1 - R^2/L^2}"
+
+
+def gravastar(system):
+    """The gravastar in Visser and Wiltshire's three layers: a ball of de Sitter space of
+    radius L, a thin shell at the areal radius R, and Schwarzschild's vacuum of radius r_s
+    outside, r_s < R < L. Mazur and Mottola's line element -f c^2dt^2 + dr^2/h + r^2 dOmega^2 has
+    f = h = 1 - r_s/r outside and f = C h, h = 1 - r^2/L^2, inside, and their constant C is the
+    name the interior charts define, C = (1 - r_s/R)/(1 - R^2/L^2), which makes g_tt continuous
+    across the shell so that one time t serves both sides. The interior is printed in the areal
+    radius and in the tortoise coordinate x of Pani and his collaborators, r = L tanh(sqrt(C) x/L),
+    where the plane of t and x is conformally flat. gravastar_check holds each chart to its field
+    equations, the tortoise chart to being the interior pulled back, the exterior to
+    Schwarzschild's published metric, and g_tt to one value on the shell from both sides.
+    gravastar.md records each chart's source and the shell's surface density and tension."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    reals = "t \\in (-\\infty, \\infty)"
+    if system == "exterior":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["r_s", "R"]
+        f, bare = "\\left(1 - \\dfrac{r_s}{r}\\right)", "1 - \\dfrac{r_s}{r}"
+
+        def line(c2):
+            return "ds^2 = -" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        r, rs = probe.symbol["r"], probe.parameters["r_s"]
+        return {
+            "metric_id": "gravastar",
+            "system": {"id": system, "name": "Schwarzschild Exterior", "coords": coords,
+                       "domains": [reals, "r \\in [R, \\infty)"] + angles + ["r = R \\;\\text{(the shell)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"rising": [rs], "lead": [r, rs], "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                           "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}},
+            "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+            "check": lambda chart: gravastar_check(chart, system),
+        }
+    parameters = ["r_s", "R", "L", GRAVASTAR_C]
+    C = sp.Symbol("C", positive=True)
+    if system == "interior":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        h, bare = "\\left(1 - \\dfrac{r^2}{L^2}\\right)", "1 - \\dfrac{r^2}{L^2}"
+
+        def line(c2):
+            return "ds^2 = -C" + h + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        x = probe.symbol["r"]
+        name, domains = "de Sitter Interior", [reals, "r \\in [0, R]"] + angles + ["r = R \\;\\text{(the shell)}"]
+        components = {"metric_components": {("t", "t"): "-C" + h, ("r", "r"): h + "^{-1}"},
+                      "inverse_metric_components": {("t", "t"): "-\\dfrac{1}{C}" + h + "^{-1}", ("r", "r"): bare}}
+        then = sp.factor
+    else:
+        coords = ["t", "x", "\\theta", "\\phi"]
+        arg = "\\left(\\dfrac{\\sqrt{C}\\,x}{L}\\right)"
+        conformal = "\\dfrac{C}{\\cosh^2" + arg + "}"
+
+        def line(c2):
+            return ("ds^2 = " + conformal + "\\left(-" + c2 + "dt^2 + dx^2\\right) + L^2\\tanh^2" + arg + sphere)
+        probe = vm.Reader(coords, parameters, ())
+        x = probe.symbol["x"]
+        name = "Interior Tortoise"
+        shell = "\\dfrac{L}{2\\sqrt{C}}\\ln\\left(\\dfrac{L + R}{L - R}\\right)"
+        domains = [reals, "x \\in \\left[0, " + shell + "\\right]"] + angles
+        components = {"metric_components": {("t", "t"): "-" + conformal, ("x", "x"): conformal,
+                                            ("\\theta", "\\theta"): "L^2\\tanh^2" + arg,
+                                            ("\\phi", "\\phi"): "L^2\\tanh^2" + arg + "\\sin^2\\theta"},
+                      "inverse_metric_components": {("t", "t"): "-\\dfrac{\\cosh^2" + arg + "}{C}",
+                                                    ("x", "x"): "\\dfrac{\\cosh^2" + arg + "}{C}"}}
+        then = cp.hyperbolic(sp.sqrt(C) * x / probe.parameters["L"])
+    rs, R, L = (probe.parameters[n] for n in ("r_s", "R", "L"))
+
+    def pretty(value):
+        # The checker hands every value back with C written out. Here sqrt(R - r_s) is written
+        # sqrt(C R (L - R)(L + R))/L and r_s as R - C R (L^2 - R^2)/L^2, after which R cancels,
+        # since the interior knows of the shell only through C.
+        root = sp.sqrt(C) * sp.sqrt(R) * sp.sqrt(L - R) * sp.sqrt(L + R) / L
+        v = sp.sympify(value).replace(
+            lambda e: e.is_Pow and e.base == R - rs and e.exp.is_Rational and e.exp.q == 2,
+            lambda e: root ** (2 * e.exp))
+        v = v.subs(rs, R - C * R * (L ** 2 - R ** 2) / L ** 2)
+        # An exponential of the tortoise chart is a power of E = e^(sqrt(C) x/L) while R cancels.
+        E, unit = sp.Symbol("_E", positive=True), sp.sqrt(C) * x / L
+        v = v.replace(lambda e: isinstance(e, sp.exp), lambda e: E ** sp.cancel(e.args[0] / unit))
+        v = sp.cancel(sp.together(v))
+        if v.has(R) or v.has(rs) or any(not k.is_Integer for k in (p.exp for p in v.atoms(sp.Pow) if p.base == E)):
+            raise AssertionError(f"gravastar: {value} keeps the shell's radius beside C")
+        return then(v.replace(lambda e: e.is_Pow and e.base == E, lambda e: sp.exp(e.exp * unit)).subs(E, sp.exp(unit)))
+
+    return {
+        "metric_id": "gravastar",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": [C, L, x]},
+        "pretty": pretty,
+        "components": components,
+        "ricci_scalar": "\\dfrac{12}{L^2}",
+        "kretschmann": "\\dfrac{24}{L^4}",
+        "check": lambda chart: gravastar_check(chart, system),
+    }
+
+
+def gravastar_check(chart, system):
+    """The interior charts are de Sitter space, R_ab = (3/L^2) g_ab, and conformally flat; the
+    exterior is a vacuum and is Schwarzschild's published metric slot by slot; the tortoise chart
+    is the interior chart pulled back along r = L tanh(sqrt(C) x/L); and g_tt on the shell is
+    -(1 - r_s/R) from both sides."""
+    geo, g = chart.geo, chart.geo.g
+    ricci = geo.ricci_ll()
+    rs, R = chart.reader.parameters["r_s"], chart.reader.parameters["R"]
+    shell = -(1 - rs / R)
+    if system == "exterior":
+        if any(vm.norm(ricci[a][b]) != 0 for a in range(4) for b in range(4)):
+            raise AssertionError("gravastar: the exterior is no vacuum")
+        published = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))
+                         ["coordinates"] if c["id"] == "spherical")
+        there = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+        for i in range(4):
+            for j in range(4):
+                text = there.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+                if vm.norm(chart.reader(text) - g[i, j]) != 0:
+                    raise AssertionError(f"gravastar: the exterior misses Schwarzschild's published metric in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+        if vm.norm(g[0, 0].subs(chart.symbols[1], R) - shell) != 0:
+            raise AssertionError("gravastar: the exterior's g_tt on the shell is not -(1 - r_s/R)")
+        return
+    L = chart.reader.parameters["L"]
+    for a in range(4):
+        for b in range(4):
+            if vm.norm(ricci[a][b] - 3 * g[a, b] / L ** 2) != 0:
+                raise AssertionError(f"gravastar: the {system} chart is not de Sitter space of radius L")
+    weyl = geo.weyl_llll()
+    if any(vm.norm(vm._at(weyl, index)) != 0 for index in vm._indices(4, 4)):
+        raise AssertionError(f"gravastar: the {system} chart is not conformally flat")
+    C = chart.reader.parameters["C"]
+    if system == "interior":
+        if vm.norm(g[0, 0].subs(chart.symbols[1], R) - shell) != 0:
+            raise AssertionError("gravastar: the interior's g_tt on the shell is not -(1 - r_s/R)")
+        return
+    spec = gravastar("interior")
+    static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    x = chart.symbols[1]
+    r = L * sp.tanh(sp.sqrt(C) * x / L)
+    J = sp.eye(4)
+    J[1, 1] = sp.diff(r, x)
+    at = {static.symbols[1]: r, **{static.reader.parameters[n]: chart.reader.parameters[n] for n in ("r_s", "R", "L")},
+          **dict(zip(static.symbols[2:], chart.symbols[2:]))}
+    pulled = J.T * static.geo.g.subs(at) * J
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm((pulled[i, j] - g[i, j]).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"gravastar: the interior chart pulled back misses the tortoise chart in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["gravastar"] = [lambda s=s: gravastar(s) for s in GRAVASTAR_CHARTS]
 
 
 def write(spec):

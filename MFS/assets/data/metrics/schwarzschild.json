@@ -238,6 +238,11 @@
       "id": "witten_black_hole",
       "kind": "family",
       "text": "A black hole of string theory with one dimension of space. Its Kruskal diagram matches Schwarzschild's region by region [witten1991]."
+    },
+    {
+      "id": "gravastar",
+      "kind": "composite",
+      "text": "A star with Schwarzschild's vacuum outside a thin shell at $R > r_s$ and a ball of de Sitter space inside, so that no horizon forms [mazur2004, visser2004]."
     }
   ],
   "references": [
@@ -310,7 +315,9 @@
     "einstein1945",
     "geroch1969",
     "chamblin2000",
-    "witten1991"
+    "witten1991",
+    "mazur2004",
+    "visser2004"
   ],
   "coordinates": [
     {

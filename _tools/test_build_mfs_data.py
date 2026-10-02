@@ -2572,6 +2572,16 @@ class EmbeddingDiagrams(unittest.TestCase):
             near(z - cap[0][2], math.sqrt(27 / 8) - math.sqrt(27 / 8 - r * r), f"cap z at {r}")
         for r, rho, z in piece("interior_schwarzschild", "exterior"):
             near(z, 2 * math.sqrt(r - 1), f"star exterior z at {r}")
+        # The gravastar at R = 5/4 and L = 2: a cap of the sphere of radius L inside the shell, Flamm's
+        # paraboloid outside it, and one circle where they meet, which the cap reaches at dz/dr = 0.80.
+        core, outside = piece("gravastar", "interior"), piece("gravastar", "exterior")
+        for r, rho, z in core:
+            near(rho, r, f"gravastar cap rho at {r}")
+            near(z - core[0][2], 2 - math.sqrt(4 - r * r), f"gravastar cap z at {r}")
+        for r, rho, z in outside:
+            near(z, 2 * math.sqrt(r - 1), f"gravastar exterior z at {r}")
+        self.assertEqual(core[-1][:1] + core[-1][1:], outside[0][:1] + outside[0][1:], "the gravastar's shell is one circle")
+        self.assertEqual(core[-1][0], 1.25)
         # The neutron star's exterior is Flamm's paraboloid of its mass, whose throat, at 2M, is
         # where the vacuum drawn under the star begins.
         two_m = piece("tov", "vacuum")[0][0]
@@ -5076,6 +5086,10 @@ class Slices(unittest.TestCase):
                 return (lambda X: 0.0), [lo, hi]
             sign = 1 if chart.endswith("ingoing") else -1
             return (lambda X: sign * (sv_rstar(X, a) - X)), [lo, hi]
+        if key == "gravastar/interior_tortoise/radial":
+            # The tortoise coordinate of the circles the embedding reaches inside the shell, at L = 2 and
+            # C = 64/195: x = (L/sqrt(C)) artanh(r/L).
+            return (lambda X: 0.0), [2 / math.sqrt(64 / 195) * math.atanh(r / 2) for r in self.reach(surface, "interior")]
         if key == "randall_sundrum/conformal/tw":
             # The conformal distance of the circles the embedding reaches in the proper distance y, at k = 1.
             return (lambda X: 0.0), [math.copysign(math.expm1(abs(y)), y) for y in self.reach(surface)]

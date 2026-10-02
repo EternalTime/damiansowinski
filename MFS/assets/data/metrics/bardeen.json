@@ -62,6 +62,11 @@
       "id": "hayward",
       "kind": "family",
       "text": "A regular black hole of the same kind whose metric function is a ratio of polynomials. Sean Hayward let its mass change in time in 2006, so that it forms and evaporates [hayward2006]."
+    },
+    {
+      "id": "gravastar",
+      "kind": "family",
+      "text": "Gliner's vacuum with $p = -\\rho$ as the whole interior of a collapsed star, held under a thin shell with no horizon [mazur2004, gliner1966]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "bardeen2014",
     "carballorubio2018",
     "poisson1990",
-    "simpson2019"
+    "simpson2019",
+    "mazur2004"
   ],
   "coordinates": [
     {

@@ -153,6 +153,11 @@ def near(lo, hi, n=N, crowd=1e-9):
     return lo + (hi - lo) * np.geomspace(crowd, 1.0, n)
 
 
+def gravastar_x(r):
+    """The tortoise coordinate inside the gravastar the diagrams draw, L = 2 and C = 64/195."""
+    return 2 / math.sqrt(64 / 195) * math.atanh(r / 2)
+
+
 def schwarzschild_t(sign):
     """Schwarzschild's t = 0 in an Eddington-Finkelstein chart, r_s = 1: v = r + ln(r - 1)
     in the ingoing chart and u = -r - ln(r - 1) in the outgoing one, outside r_s."""
@@ -1247,6 +1252,14 @@ FLAT = {
     ("schwarzschild", "eddington_finkelstein_outgoing", "chart"): lambda: schwarzschild_t(-1),
     ("ellis_bronnikov", "spherical", "radial"): lambda: one("ellis_bronnikov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("morris_thorne", "spherical", "radial"): lambda: one("morris_thorne", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    # The gravastar's moment t = 0: inside the shell from the centre to it, in the areal radius and in
+    # the tortoise coordinate x = (L/sqrt(C)) artanh(r/L) at L = 2 and C = 64/195, and outside it from the
+    # shell as far as the embedding reaches.
+    ("gravastar", "interior", "radial"): lambda: one("gravastar", lambda m: along(0.0, *m.reach("interior", "r"))),
+    ("gravastar", "interior", "through"): lambda: one("gravastar", lambda m: along(0.0, *m.reach("interior", "r"))),
+    ("gravastar", "interior_tortoise", "radial"): lambda: one(
+        "gravastar", lambda m: along(0.0, *(gravastar_x(r) for r in m.reach("interior", "r")))),
+    ("gravastar", "exterior", "radial"): lambda: one("gravastar", lambda m: along(0.0, *m.reach("exterior", "r"))),
     ("thin_shell_wormhole", "spherical", "radial"): lambda: one(
         "thin_shell_wormhole", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # Both sides are read in the areal chart from the throat r = a out, and l = +-(r - a).

@@ -46,6 +46,11 @@
       "id": "einstein_static",
       "kind": "family",
       "text": "The whole three sphere, filled with dust and held still by a cosmological constant. Schwarzschild found in 1916 that space inside his star is a cap of such a sphere, and a year later Einstein closed the sphere into a universe [schwarzschild1916b, einstein1917]."
+    },
+    {
+      "id": "gravastar",
+      "kind": "family",
+      "text": "A ball of de Sitter space under a thin shell, with Schwarzschild's vacuum outside. Schwarzschild's star squeezed to $R = r_s$ is one, with the de Sitter radius $r_s$ [mazur2015]."
     }
   ],
   "references": [

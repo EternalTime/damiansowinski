@@ -1,5 +1,5 @@
 {
-  "version": "eae68bf1aab3fb33",
+  "version": "a461a87571cc8d97",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -17158,6 +17158,135 @@
         "eprint": "0711.4620",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.12942/lrr-2007-5"
+      }
+    },
+    "mazur2001": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational Condensate Stars: An Alternative to Black Holes",
+        "author": "Mazur, Pawel O. and Mottola, Emil",
+        "journal": "Universe",
+        "volume": "9",
+        "number": "2",
+        "pages": "88",
+        "year": "2023",
+        "doi": "10.3390/universe9020088",
+        "eprint": "gr-qc/0109035",
+        "archiveprefix": "arXiv",
+        "note": "arXiv preprint of September 2001",
+        "url": "https://arxiv.org/abs/gr-qc/0109035"
+      }
+    },
+    "mazur2004": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational vacuum condensate stars",
+        "author": "Mazur, Pawel O. and Mottola, Emil",
+        "journal": "Proceedings of the National Academy of Sciences",
+        "volume": "101",
+        "number": "26",
+        "pages": "9545--9550",
+        "year": "2004",
+        "doi": "10.1073/pnas.0402717101",
+        "eprint": "gr-qc/0407075",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1073/pnas.0402717101"
+      }
+    },
+    "chapline2001": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum phase transitions and the breakdown of classical general relativity",
+        "author": "Chapline, G. and Hohlfeld, E. and Laughlin, R. B. and Santiago, D. I.",
+        "journal": "Philosophical Magazine B",
+        "volume": "81",
+        "number": "3",
+        "pages": "235--254",
+        "year": "2001",
+        "doi": "10.1080/13642810108221981",
+        "eprint": "gr-qc/0012094",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1080/13642810108221981"
+      }
+    },
+    "visser2004": {
+      "type": "article",
+      "fields": {
+        "title": "Stable gravastars - an alternative to black holes?",
+        "author": "Visser, Matt and Wiltshire, David L.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "21",
+        "number": "4",
+        "pages": "1135--1151",
+        "year": "2004",
+        "doi": "10.1088/0264-9381/21/4/027",
+        "eprint": "gr-qc/0310107",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/21/4/027"
+      }
+    },
+    "cattoen2005": {
+      "type": "article",
+      "fields": {
+        "title": "Gravastars must have anisotropic pressures",
+        "author": "Cattoen, Celine and Faber, Tristan and Visser, Matt",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "22",
+        "number": "20",
+        "pages": "4189--4202",
+        "year": "2005",
+        "doi": "10.1088/0264-9381/22/20/002",
+        "eprint": "gr-qc/0505137",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/22/20/002"
+      }
+    },
+    "chirenti2007": {
+      "type": "article",
+      "fields": {
+        "title": "How to tell a gravastar from a black hole",
+        "author": "Chirenti, Cecilia B. M. H. and Rezzolla, Luciano",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "24",
+        "number": "16",
+        "pages": "4191--4206",
+        "year": "2007",
+        "doi": "10.1088/0264-9381/24/16/013",
+        "eprint": "0706.1513",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/24/16/013"
+      }
+    },
+    "pani2009": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational wave signatures of the absence of an event horizon: Nonradial oscillations of a thin-shell gravastar",
+        "author": "Pani, Paolo and Berti, Emanuele and Cardoso, Vitor and Chen, Yanbei and Norte, Richard",
+        "journal": "Physical Review D",
+        "volume": "80",
+        "number": "12",
+        "pages": "124047",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.80.124047",
+        "eprint": "0909.0287",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.80.124047"
+      }
+    },
+    "chirenti2016": {
+      "type": "article",
+      "fields": {
+        "title": "Did GW150914 produce a rotating gravastar?",
+        "author": "Chirenti, Cecilia and Rezzolla, Luciano",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "8",
+        "pages": "084016",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.084016",
+        "eprint": "1602.08759",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.94.084016"
       }
     }
   }

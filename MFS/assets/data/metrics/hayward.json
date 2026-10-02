@@ -64,6 +64,11 @@
       "id": "simpson_visser",
       "kind": "family",
       "text": "Another black hole with no singularity. Simpson and Visser set theirs apart from the regular black holes of Bardeen and Hayward: it opens through a throat of radius $a$ where Hayward's closes over a regular centre [simpson2019]."
+    },
+    {
+      "id": "gravastar",
+      "kind": "family",
+      "text": "A ball of de Sitter space under a thin shell with Schwarzschild's vacuum outside, a collapsed star with a de Sitter core and no horizon [mazur2004]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "delorenzo2015",
     "carballorubio2018",
     "vagnozzi2023",
-    "simpson2019"
+    "simpson2019",
+    "mazur2004"
   ],
   "coordinates": [
     {

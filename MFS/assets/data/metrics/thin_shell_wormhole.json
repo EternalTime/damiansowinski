@@ -2705,6 +2705,11 @@
       "id": "minkowski",
       "kind": "piece",
       "text": "With no mass, $r_s = 0$, both sides of the throat are flat. Visser's first wormholes of 1989 were of this kind, two copies of Minkowski space with a region cut from each and the edges joined [visser1989prd]."
+    },
+    {
+      "id": "gravastar",
+      "kind": "family",
+      "text": "A thin shell round a ball of de Sitter space, in place of a throat. Struck by a wave, a compact one answers as the wormhole does, with a black hole's first ringdown and then a train of echoes [cardoso2016prd]."
     }
   ],
   "references": [

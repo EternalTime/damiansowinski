@@ -2256,6 +2256,62 @@ def thin_shell_wormhole(ck, src):
                  settings="$r_s = 1$, the unit of every length, and $a = 1.25$.")]
 
 
+def gravastar(ck, src):
+    """The gravastar its other diagrams draw, r_s = 1, R = 5/4 and L = 2. Inside the shell
+    g_rr = 1/(1 - r^2/L^2), so the slice is a cap of a sphere of radius L, z = L - sqrt(L^2 - r^2)
+    from the centre, climbing at dz/dr = (R/L)/sqrt(1 - R^2/L^2) = 0.80 where it reaches the shell.
+    Outside it is Flamm's paraboloid, dz/dr = sqrt(r_s/(r - r_s)), which leaves the shell at 2. The
+    two meet in one circle at a crease, since g_rr jumps there, and the jump of sqrt(1/g_rr)/r is
+    the shell's surface density. The vacuum paraboloid is drawn on under the cap, down to the
+    throat the gravastar does not have."""
+    R, L, top = 1.25, 2.0, 4.0
+    size = 2 * top
+    params = {"r_s": 1, "R": "5/4", "L": 2}
+    inner = Slice(src, "gravastar", "interior", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    outer = Slice(src, "gravastar", "exterior", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1, "R": "5/4"})
+    hole = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1})
+    vacuum = Piece("vacuum", "reference", hole, 1.0, R, 0.0, 1,
+                   (("throat", "the throat $r = r_s$ of the vacuum, which the gravastar replaces"), ("join", None)),
+                   [(1.0, "reference", None)], size, reference=True)
+    zR = vacuum.at(R)[1]
+    ext = Piece("exterior", "sheet", outer, R, top, zR, 1,
+                (("crease", "the shell, $r = R$"), ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                [(R, "surface", "$r = R$")] + [(r, "r", None) for r in (2, 3)] + [(top, "r", None)], size)
+    core = Piece("interior", "star", inner, 0.0, R, 0.0, 1,
+                 (("axis", "the centre $r = 0$, where the cap is smooth"), ("crease", "the shell, $r = R$")),
+                 [(r, "r", None) for r in (0.5, 1.0)], size)
+    # The cap is built from its centre and moved up to meet the exterior on the shell.
+    core.z = core.z + (zR - core.z[-1])
+    surface = Surface([core, ext, vacuum])
+    ck.isometry("gravastar, the interior", core)
+    ck.isometry("gravastar, the exterior", ext)
+    pa, pb = np.array(core.at(R)), np.array(ext.at(R))
+    ck.add("gravastar, the two sides on the shell: one circle", float(np.max(np.abs(pa - pb))), JOIN)
+    ta, tb = core.inward(R), ext.inward(R)
+    inside, outside = (R / L) / math.sqrt(1 - (R / L) ** 2), 2.0
+    ck.add("gravastar, the crease: the cap reaches the shell at dz/drho = 0.80 and the paraboloid leaves it at 2",
+           float(max(abs(ta[1] / ta[0] - inside), abs(tb[1] / tb[0] - outside))), JOIN)
+    ck.form("gravastar, the cap z = L - sqrt(L^2 - r^2)", core,
+            lambda r: core.z[0] + L - np.sqrt(L * L - r * r), size)
+    ck.form("gravastar, the exterior is Flamm's", ext, lambda r: 2 * np.sqrt(r - 1), size)
+    ck.form("gravastar, the vacuum under the cap is the exterior's own paraboloid", vacuum,
+            lambda r: 2 * np.sqrt(np.maximum(r - 1, 0)), size)
+
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *ext.at(R), "$r = R$", dx=10)
+    ring_label(fig, [0, 0, 0], *ext.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *ext.at(top), "$4\\,r_s$")
+    ring_label(fig, [0, 0, 0], *vacuum.at(1.0), "$r_s$", side=-1, dx=8)
+    fig.legend("fill", "star", "the interior, $r \\le R$, a cap of a sphere of radius $L$")
+    fig.legend("fill", "cover", "the exterior, Flamm's paraboloid")
+    fig.legend("line", "r", "$r$ constant, at $0.5$ and $1\\,r_s$ inside and $2$, $3$ and $4\\,r_s$ outside")
+    fig.legend("line", "surface", "the shell, $r = R$, where the two meet at a crease")
+    fig.legend("line", "reference", "the vacuum paraboloid inside $R$, down to its throat at $r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("gravastar", "The gravastar", "$r_s$", [surface], fig.done(),
+                 settings="$r_s = 1$, the unit of every length, $R = 1.25\\,r_s$, and $L = 2\\,r_s$.")]
+
+
 def teo_wormhole(ck, src):
     """Teo's example at b_0 = 1 in two views. The equatorial plane at one moment of t, where
     N = 1: g_rr = r/(r - b_0) and g_phiphi = r^2, g_tphi dropping out at constant t, so dz/dr =
@@ -8700,6 +8756,7 @@ DRAWN = {
     "wormhole_time_machine": wormhole_time_machine,
     "ori_time_machine": ori_time_machine,
     "interior_schwarzschild": interior_schwarzschild,
+    "gravastar": gravastar,
     "tov": tov,
     "morris_thorne": morris_thorne,
     "ellis_bronnikov": ellis_bronnikov,
@@ -8958,6 +9015,19 @@ CAPTIONS = {
         "circle with one tangent plane, and the surface is smooth across the surface of the star. The "
         "vacuum paraboloid would run on down to a throat at $r_s$. The star, at $R = 1.5\\,r_s$, ends it "
         "above there, and its circles shrink to a point at the centre.",
+    ],
+    ("gravastar", "gravastar"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a gravastar at one moment of $t$ ($R = 1.25\\,r_s$, "
+        "$L = 2\\,r_s$), drawn as a surface in flat space with every distance along it the metric distance. "
+        "Inside the shell, $g_{rr} = 1/(1 - r^2/L^2)$ is the metric of a sphere of radius $L$, so the slice is a "
+        "cap of that sphere, curved alike at every point because the energy density of the vacuum is the same "
+        "everywhere. Outside it is Flamm's paraboloid.",
+        "The cap reaches the shell climbing at $dz/dr = (R/L)/\\sqrt{1 - R^2/L^2} = 0.80$, and the paraboloid "
+        "leaves it at $dz/dr = \\sqrt{r_s/(R - r_s)} = 2$, so the two meet in one circle at a crease. The crease "
+        "is the shell, whose surface density is $(c^2/4\\pi GR)\\left(\\sqrt{1 - R^2/L^2} - "
+        "\\sqrt{1 - r_s/R}\\right)$. Where $L^2 = R^3/r_s$ that density vanishes and the cap meets the paraboloid "
+        "with one tangent plane, as the surface of Schwarzschild's star of uniform density does. The vacuum "
+        "paraboloid would run on down to a throat at $r_s$, and the shell ends it above there.",
     ],
     ("tov", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a neutron star at one moment of $t$, drawn as a "
