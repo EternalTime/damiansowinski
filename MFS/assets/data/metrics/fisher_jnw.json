@@ -69,6 +69,11 @@
       "id": "exponential_metric",
       "kind": "limit",
       "text": "The limit $\\gamma \\to \\infty$ with $\\gamma b = 2m$ held fixed, where $f^\\gamma \\to e^{-2m/r}$. It takes the scalar field's energy negative, and the naked singularity opens into the throat of a wormhole [makukov2018]."
+    },
+    {
+      "id": "kasner_scalar",
+      "kind": "family",
+      "text": "The homogeneous solution of the same field equations, Einstein's with a massless scalar field, with a different rate of expansion along each axis [belinskii1973]."
     }
   ],
   "references": [
@@ -96,7 +101,8 @@
     "chowdhury2012",
     "roberts1996",
     "liebling2023",
-    "makukov2018"
+    "makukov2018",
+    "belinskii1973"
   ],
   "coordinates": [
     {

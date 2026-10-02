@@ -65,6 +65,11 @@
       "id": "belinski_zakharov",
       "kind": "generalisation",
       "text": "Kasner's universe with solitons added. Belinski and Zakharov took it for the seed of their first soliton solutions, among them two pulses of gravitational wave that run apart along a light cone [belinskii1978]."
+    },
+    {
+      "id": "kasner_scalar",
+      "kind": "generalisation",
+      "text": "Kasner's universe with a massless scalar field in it. The squares of the exponents then sum to $1 - q^2$, and for $q^2 > 1/2$ all three axes shrink toward the singularity [belinskii1973]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "berger1974",
     "geroch1969",
     "kasner1925",
-    "belinskii1978"
+    "belinskii1978",
+    "belinskii1973"
   ],
   "coordinates": [
     {

@@ -9078,6 +9078,56 @@ def kasner(ck, src):
                        "spacetime diagrams.")]
 
 
+def kasner_scalar(ck, src):
+    """The plane y = 0 of Kasner's universe with a scalar field at t = 1/4, 1/2, 1 and 2, at the
+    exponents (2/13, 4/13, 7/13) and q = 10/13 the spacetime diagrams declare, each flat,
+    t^(2 p_1) dx^2 + t^(2 p_3) dz^2, with the ring of particles at rest on x^2 + z^2 = l^2, which
+    the published Christoffel symbols keep at rest: the ellipse of semi-axes t^p_1 l and t^p_3 l,
+    along the direction that shrinks most slowly and the one that shrinks fastest, both to
+    nothing at t = 0."""
+    p, q = (sp.Rational(2, 13), sp.Rational(4, 13), sp.Rational(7, 13)), sp.Rational(10, 13)
+    ck.exact("Kasner with a scalar field: the exponents sum to 1, and their squares to 1 - q^2",
+             sum(p) == 1 and sum(k * k for k in p) == 1 - q * q)
+    at_rest(ck, src, "kasner_scalar", "synchronous")
+    params = {"p_1": "2/13", "p_2": "4/13", "p_3": "7/13", "q": "10/13"}
+    named = ("1/4", "1/2", "1", "2")
+    # The movie runs through the moments at a steady t, a frame every 0.05 of it.
+    moments, keys = ring_moments([float(sp.Rational(s)) for s in named], 0.05,
+                                 lambda k: (f"$t = {named[k]}$", float(sp.Rational(named[k])), {"t": named[k], "y": 0}, None),
+                                 lambda t: (f"$t = {t:g}$", t, {"t": repr(t), "y": 0}, None))
+    frames = ring_sequence(ck, src, "Kasner with a scalar field", "kasner_scalar", "synchronous", moments, 2.0, params)
+    surfaces = [frames[i] for i in keys]
+    for s, (_, time, _, _) in zip(frames, moments):
+        P = s.curves[0].points
+        a = np.linspace(0, 2 * math.pi, 361)
+        want = np.column_stack([time ** (2 / 13) * np.cos(a), time ** (7 / 13) * np.sin(a)])
+        ck.add(f"Kasner with a scalar field, t = {time}: the ellipse of semi-axes t^p_1 and t^p_3",
+               float(np.max(np.abs(P[:, :2] - want))), 1e-12)
+
+    def plane(u, a, b):
+        sl = FlatPlane(src, "kasner_scalar", "synchronous", "x", "z", {"t": repr(float(u)), "y": 0}, params)
+        return float(np.max(np.abs(sl.scale - [a, b])))
+    tube = stack(ck, "Kasner with a scalar field", surfaces, lambda u: (u ** (2 / 13), u ** (7 / 13)), 1.5, plane, 5.0,
+                 "the ring's world tube runs on before $t = 1/4$ and after $t = 2$")
+    tube_fig = stack_figure(tube, 5.0, "$t$", [
+        ("fill", "cover", "the ring at every moment from $t = 1/4$ to $t = 2$, each at the height of its time"),
+        ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
+        ("line", "axis", "the axis of time, through the centre of the ring")])
+    fig, played = ring_movie(frames, 4.0, "$t$")
+    fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
+    fig.legend("line", "particles", "a ring of particles at rest in the chart on $x^2 + z^2 = \\ell^2$, with twelve of them "
+                                    "marked: an ellipse reaching $t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = ("$(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, $q = 10/13$, and $t$ in the unit of time in which the powers "
+                "are evaluated, with $\\ell$ the ring's radius at $t = 1$, the unit of every length.")
+    given = ("Exponents $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$ and $q = 10/13$, as in the spacetime diagrams.")
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings, input=given,
+                 height="$t$, a height of $1.5\\,\\ell$ for each unit of $t$"),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings,
+                 input=given)]
+
+
 def bianchi(ck, src):
     """The plane y = 0 at four moments of the dust the spacetime diagram declares, solved from
     this spacetime's own G^x_x = G^y_y = G^z_z = 0 by null_rays.DustSolver: flat at each,
@@ -13143,6 +13193,7 @@ DRAWN = {
     "malament_hogarth": malament_hogarth,
     "mixmaster": mixmaster,
     "kasner": kasner,
+    "kasner_scalar": kasner_scalar,
     "bianchi": bianchi,
     "pp_wave": pp_wave, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "chandrasekhar_xanthopoulos": chandrasekhar_xanthopoulos,
@@ -14973,6 +15024,12 @@ CAPTIONS = {
         "moment from $t = 1/4$ to $t = 2$ an ellipse at the height of its time. Its cross section reaches "
         "$t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$, so the tube narrows along $x$ as it widens along $z$.",
     ],
+    ("kasner_scalar", "tube"): [
+        "The world tube of a ring of particles at rest in the chart ($(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, "
+        "$q = 10/13$), each moment from $t = 1/4$ to $t = 2$ an ellipse at the height of its time. Its cross "
+        "section reaches $t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$, so the tube narrows along both "
+        "axes toward $t = 0$, faster along $z$.",
+    ],
     ("bianchi", "tube"): [
         "The world tube of a ring of dust at rest in the chart (rates $(-0.5, 1.5, 2.0)\\,\\bar H$ where "
         "$a_1 = a_2 = a_3 = 1$), each moment from $c\\bar Ht = 0.10$ to $2.00$ an ellipse at the height of its "
@@ -15119,6 +15176,18 @@ CAPTIONS = {
         "contracts while $y$ and $z$ expand, so toward the singularity at $t = 0$ every sphere of particles is drawn "
         "out into a needle along $x$. Edward Kasner found the solution in 1921: its exponents sum to $1$, so volumes "
         "grow as $t$, and the vacuum field equations require their squares to sum to $1$ as well.",
+    ],
+    ("kasner_scalar", "ring"): [
+        "The plane $y = 0$ of Kasner's universe with a scalar field as $t$ runs from $1/4$ to $2$, each moment "
+        "drawn as a surface in flat space with every distance along it the metric distance. At every moment the "
+        "plane is flat, $t^{2p_1}dx^2 + t^{2p_3}dz^2$ being Euclid's plane with its axes scaled, so the drawing is "
+        "a flat disc, and the uneven expansion shows in a ring of particles at rest in the chart, which stay at "
+        "rest because the metric has no $\\Gamma^i{}_{tt}$.",
+        "The ring is the circle $x^2 + z^2 = \\ell^2$ at $t = 1$, and at time $t$ the ellipse reaching "
+        "$t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$. With $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$ and "
+        "$q = 10/13$ all three directions contract toward the singularity at $t = 0$, so every sphere of particles "
+        "is crushed to a point there, the singularity Kenneth Jacobs listed in 1968 as the \"point\". In Kasner's "
+        "vacuum, $q = 0$, one exponent is negative and the same sphere is drawn out into a needle.",
     ],
     ("bianchi", "ring"): [
         "The plane $y = 0$ of a Bianchi type I universe of dust as cosmic time runs from $c\\bar Ht = 0.10$ to $2.00$, "

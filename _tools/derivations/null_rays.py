@@ -1224,6 +1224,18 @@ ERB_CHARGED = {"r_s": 1, "r_q": "sqrt(3)/2"}
 # figures, in units of b; the harmonic chart in units of k = b/2, where m = gamma k.
 FJNW = {"b": 1, "gamma": "1/2"}
 FJNW_HARMONIC = {"m": "1/2", "k": 1}
+# Kasner's universe with a scalar field with all three exponents positive: they sum to 1 and their
+# squares to 1 - q^2 = 69/169. The vacuum of five dimensions that reduces to it has
+# s_5 = 2q/(sqrt(6) - q) and s_i = (sqrt(6) p_i - q)/(sqrt(6) - q), about (-0.234, -0.009, 0.327, 0.916).
+KASNER_SCALAR = {"p_1": "2/13", "p_2": "4/13", "p_3": "7/13", "q": "10/13"}
+KASNER_SCALAR_FIVE = {"s_1": "(2*sqrt(6) - 10)/(13*sqrt(6) - 10)", "s_2": "(4*sqrt(6) - 10)/(13*sqrt(6) - 10)",
+                      "s_3": "(7*sqrt(6) - 10)/(13*sqrt(6) - 10)", "s_5": "20/(13*sqrt(6) - 10)"}
+KASNER_SCALAR_INPUT = ("Exponents $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$ and $q = 10/13$: the exponents sum to 1, "
+                       "and their squares to $1 - q^2 = 69/169$.")
+KASNER_SCALAR_FIVE_INPUT = ("Exponents $s_5 = 2q/(\\sqrt{6} - q)$ and $(s_1, s_2, s_3)$ with "
+                            "$s_1 = (\\sqrt{6}\\,p_1 - q)/(\\sqrt{6} - q)$ and likewise, at "
+                            "$(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$ and $q = 10/13$: "
+                            "$(s_1, s_2, s_3, s_5) = (-0.234, -0.009, 0.327, 0.916)$, which sum to 1, as do their squares.")
 EXPONENTIAL = {"m": 1}          # the exponential metric of Papapetrou and Yilmaz, in units of m = GM/c^2
 # Roberts's collapsing scalar field for its three outcomes: p = 9/10, where the field disperses, the
 # threshold p = 1, and p = 2, where it makes a black hole. Nothing in it sets a scale, so lengths
@@ -3145,6 +3157,21 @@ DIAGRAMS = [
             families=SIDEWAYS,
             input="Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, a point on the Kasner circle: "
                   "they sum to 1, and so do their squares."),
+    # Kasner's universe with a scalar field at exponents that are all positive: the slowest axis and
+    # the fastest in the synchronous chart, the slowest in the logarithmic time, drawn with -tau
+    # upward so that the future is up, and in the vacuum of five dimensions the axis x, whose
+    # exponent there is negative, and the extra dimension w.
+    Diagram("kasner_scalar", "synchronous", "tx", "$t$ and $x$", ("t", "x"), (-1, 1, 0, 2), "$x$", "$ct$",
+            KASNER_SCALAR, {"y": "0", "z": "0"}, families=SIDEWAYS, input=KASNER_SCALAR_INPUT),
+    Diagram("kasner_scalar", "synchronous", "tz", "$t$ and $z$", ("t", "z"), (-1, 1, 0, 2), "$z$", "$ct$",
+            KASNER_SCALAR, {"x": "0", "y": "0"}, families=SIDEWAYS, input=KASNER_SCALAR_INPUT),
+    Diagram("kasner_scalar", "logarithmic", "taux", "$\\tau$ and $x$", ("\\tau", "x"), (-2, 2, -3, 1),
+            "$x/\\ell$", "$-\\tau$", {**KASNER_SCALAR, "ell": 1}, {"y": "0", "z": "0"},
+            to_display=((0, 1), (-1, 0)), tau="-tau", families=SIDEWAYS, input=KASNER_SCALAR_INPUT),
+    Diagram("kasner_scalar", "kaluza_klein", "Tx", "$T$ and $x$", ("T", "x"), (-1.2, 1.2, 0, 2.4), "$x$", "$cT$",
+            KASNER_SCALAR_FIVE, {"y": "0", "z": "0", "w": "0"}, tau="T", families=SIDEWAYS, input=KASNER_SCALAR_FIVE_INPUT),
+    Diagram("kasner_scalar", "kaluza_klein", "Tw", "$T$ and $w$", ("T", "w"), (-1.2, 1.2, 0, 2.4), "$w$", "$cT$",
+            KASNER_SCALAR_FIVE, {"x": "0", "y": "0", "z": "0"}, tau="T", families=SIDEWAYS, input=KASNER_SCALAR_FIVE_INPUT),
     Diagram("bianchi", "type_i_cartesian", "tx", "$t$ and $x$", ("t", "x"), (-1, 1, 0, 2),
             "$x\\;[c/\\bar H]$", "$ct\\;[c/\\bar H]$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS,
             dust=BIANCHI_DUST, reference="$a_i = 1$",
@@ -7430,6 +7457,42 @@ CAPTIONS = {
         "In the plane of $t$ and $x$ the same singularity closes the cones, since the "
         "scale factor there, $t^{-2/7}$, grows as $t \\to 0$.",
     ],
+    ("kasner_scalar", "synchronous", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$, $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, $q = 10/13$), the axis "
+        "that shrinks most slowly. The scale factor $t^{2/13}$ goes to zero at the singularity, so the cones open "
+        "out as $t \\to 0$: $dx/dt = \\pm t^{-2/13}$. A ray that leaves $x = 0$ at the singularity has reached "
+        "$x = (13/11)\\,t^{11/13}$ by the time $t$, a horizon along $x$. The Kretschmann scalar "
+        "$(3q^4 - 16p_1p_2p_3)/c^4t^4$ diverges at $t = 0$, the singularity.",
+    ],
+    ("kasner_scalar", "synchronous", "tz"): [
+        "The plane of $t$ and $z$ ($x = y = 0$, $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, $q = 10/13$), the axis "
+        "that shrinks fastest. The scale factor $t^{7/13}$ goes to zero at the singularity, and the cones open out "
+        "flat: $dz/dt = \\pm t^{-7/13}$. With all three exponents positive the cones open toward $t = 0$ in "
+        "every plane, and a ray from the singularity has reached $z = (13/6)\\,t^{6/13}$ by the time $t$.",
+    ],
+    ("kasner_scalar", "logarithmic", "taux"): [
+        "The plane of $\\tau$ and $x$ ($y = z = 0$, $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, $q = 10/13$), "
+        "with $-\\tau$ upward, so the future is up and the singularity, $\\tau \\to \\infty$, lies below the "
+        "whole diagram. The edges of the cones are $dx/d\\tau = \\pm\\ell e^{-11\\tau/13}$, and "
+        "$x \\pm (13/11)\\,\\ell e^{-11\\tau/13}$ is constant along a ray.",
+        "In this time the logarithm of each scale factor, $-p_i\\tau$, and the scalar field, "
+        "$\\varphi \\propto -q\\tau$, are linear. The singularity is an unbounded $\\tau$ away and a proper "
+        "time $\\ell e^{-\\tau}/c$ away.",
+    ],
+    ("kasner_scalar", "kaluza_klein", "Tx"): [
+        "The plane of $T$ and $x$ ($y = z = w = 0$) in Kasner's vacuum of five dimensions, with "
+        "$(s_1, s_2, s_3, s_5) = (-0.234, -0.009, 0.327, 0.916)$, which reduces to $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$ "
+        "and $q = 10/13$. In five dimensions the exponent along $x$ is negative, so the scale factor $T^{s_1}$ "
+        "grows toward the singularity and the cones close as $T \\to 0$: $dx/dT = \\pm T^{0.234}$. In four "
+        "dimensions lengths are measured with $\\sqrt{g_{ww}}$ times this metric, and the same axis shrinks.",
+    ],
+    ("kasner_scalar", "kaluza_klein", "Tw"): [
+        "The plane of $T$ and $w$ ($x = y = z = 0$), the extra dimension, at "
+        "$(s_1, s_2, s_3, s_5) = (-0.234, -0.009, 0.327, 0.916)$. The exponent $s_5$ is the largest of the four, so "
+        "the fifth dimension shrinks fastest toward the singularity and the cones open out flat: "
+        "$dw/dT = \\pm T^{-0.916}$. Its size, $\\sqrt{g_{ww}} = T^{s_5}$, is the scalar field of four dimensions, "
+        "$\\varphi \\propto s_5\\ln T$.",
+    ],
     ("kantowski_sachs", "comoving", "tr"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), each point in the diagram a 2-sphere of "
         "radius $b(t)$. The line element leaves $a(t)$ and $b(t)$ free, and here they are those of dust at rest "
@@ -11368,6 +11431,11 @@ def _exponential_isotropic(R):
     return -1 / lambertw(-1 / np.maximum(R, math.e)).real
 
 
+# The exponents along x and w of the vacuum of five dimensions the scalar Kasner diagrams draw.
+_KS_S1 = (2 * math.sqrt(6) - 10) / (13 * math.sqrt(6) - 10)
+_KS_S5 = 20 / (13 * math.sqrt(6) - 10)
+
+
 def _double_kerr_star(plane):
     """The tortoise coordinate of the pair on its axis or in its plane z = 0, the integral of
     e^gamma/f along the plane from a point of the same stretch: z = -6, 0 or 6 on the axis, each
@@ -12534,6 +12602,20 @@ CLOSED_FORMS = {
         (lambda t, x: x + t ** (9 / 7) * 7 / 9, lambda t, x: x - t ** (9 / 7) * 7 / 9, lambda t, x: t > 1e-3),
     ("kasner", "cartesian", "tz"):
         (lambda t, z: z + 7 * t ** (1 / 7), lambda t, z: z - 7 * t ** (1 / 7), lambda t, z: t > 1e-3),
+    # Kasner's universe with a scalar field: along an axis of exponent p a ray keeps x +- t^(1 - p)/(1 - p),
+    # which is x +- e^(-(1 - p) tau)/(1 - p) in the logarithmic time at ell = 1.
+    ("kasner_scalar", "synchronous", "tx"):
+        (lambda t, x: x + t ** (11 / 13) * 13 / 11, lambda t, x: x - t ** (11 / 13) * 13 / 11, lambda t, x: t > 1e-3),
+    ("kasner_scalar", "synchronous", "tz"):
+        (lambda t, z: z + t ** (6 / 13) * 13 / 6, lambda t, z: z - t ** (6 / 13) * 13 / 6, lambda t, z: t > 1e-3),
+    ("kasner_scalar", "logarithmic", "taux"):
+        (lambda tau, x: x + np.exp(-11 * tau / 13) * 13 / 11, lambda tau, x: x - np.exp(-11 * tau / 13) * 13 / 11, None),
+    ("kasner_scalar", "kaluza_klein", "Tx"):
+        (lambda T, x: x + T ** (1 - _KS_S1) / (1 - _KS_S1), lambda T, x: x - T ** (1 - _KS_S1) / (1 - _KS_S1),
+         lambda T, x: T > 1e-3),
+    ("kasner_scalar", "kaluza_klein", "Tw"):
+        (lambda T, w: w + T ** (1 - _KS_S5) / (1 - _KS_S5), lambda T, w: w - T ** (1 - _KS_S5) / (1 - _KS_S5),
+         lambda T, w: T > 1e-3),
     ("pp_wave", "exact_plane_wave", "tz"): (lambda u, v: v, lambda u, v: u, None),
     # Across the declared pulse a ray moving left gains ln(rho_0/rho) times the pulse's integral.
     **{("aichelburg_sexl", "null_cartesian", view):

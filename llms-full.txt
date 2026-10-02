@@ -890,6 +890,18 @@ An anisotropic vacuum cosmology that expands along some axes while contracting a
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/kasner.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + t^{2p_1} dx^2 + t^{2p_2} dy^2 + t^{2p_3} dz^2$$
 
+### Kasner Universe with a Scalar Field
+
+Kasner's anisotropic universe filled with a massless scalar field, which is also a fluid whose pressure equals its energy density. The field loosens Kasner's second condition, so all three axes can shrink together toward the singularity, and the oscillations of the vacuum come to a stop.
+
+- id: `kasner_scalar`
+- tags: scalar field, massless scalar field, minimally coupled scalar field, Einstein-scalar, stiff fluid, anisotropic, cosmology, Kasner, Bianchi classification, spatially homogeneous, homogeneous, curvature singularity, spacelike singularity, big bang, BKL, Kaluza-Klein, higher dimensions, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, five-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kasner_scalar.json
+- chart Synchronous: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2 + t^{2p_3}dz^2$$
+- chart Logarithmic time: coordinates $(\tau, x, y, z)$, $$ds^2 = -\ell^2e^{-2\tau}d\tau^2 + e^{-2p_1\tau}dx^2 + e^{-2p_2\tau}dy^2 + e^{-2p_3\tau}dz^2$$
+- chart Five dimensions (Kaluza-Klein): coordinates $(T, x, y, z, w)$, $$ds^2 = -c^2dT^2 + T^{2s_1}dx^2 + T^{2s_2}dy^2 + T^{2s_3}dz^2 + T^{2s_5}dw^2$$
+
 ### Kastor-Traschen Colliding Black Holes
 
 Any number of charged black holes in a universe with a positive cosmological constant, the exact solution of the Einstein-Maxwell equations David Kastor and Jennie Traschen found in 1993. Each hole has a charge equal to its mass, and the holes ride the expansion or the contraction of the universe, so holes that fall together merge.

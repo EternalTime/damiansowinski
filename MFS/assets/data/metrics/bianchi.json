@@ -49,6 +49,11 @@
       "id": "de_sitter",
       "kind": "family",
       "text": "Where the expanding Bianchi universes end up when the cosmological constant is positive. Robert Wald proved in 1983 that every type but IX approaches de Sitter space exponentially, and that type IX does too when $\\Lambda$ is large enough [wald1983]."
+    },
+    {
+      "id": "kasner_scalar",
+      "kind": "special_case",
+      "text": "Type I filled with a stiff fluid or a massless scalar field, whose three scale factors are powers of the time [jacobs1968, belinskii1973]."
     }
   ],
   "references": [
@@ -60,7 +65,9 @@
     "kasner1921",
     "misner1963",
     "kantowski1966",
-    "wald1983"
+    "wald1983",
+    "jacobs1968",
+    "belinskii1973"
   ],
   "coordinates": [
     {

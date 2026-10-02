@@ -3257,7 +3257,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
+        flat = {"minkowski", "kasner", "kasner_scalar", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
                 "chandrasekhar_xanthopoulos", "belinski_zakharov"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
@@ -3379,7 +3379,8 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
-                         {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose",
+                         {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "bianchi", "pp_wave",
+                          "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
                           "belinski_zakharov"})
 
@@ -3597,7 +3598,7 @@ class StacksAndMovies(unittest.TestCase):
     diagrams that change through a run of moments played as movies, as the captain asked on 30
     September 2026, from the numbers written and nothing else."""
 
-    STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
+    STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
@@ -3626,7 +3627,7 @@ class StacksAndMovies(unittest.TestCase):
               ("hiscock", "history"): "$v - r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("ori_time_machine", "throat"): "$t$", ("senovilla", "universe"): "$act$",
-              ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
+              ("kasner", "ring"): "$t$", ("kasner_scalar", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
               ("belinski_zakharov", "ring"): "$\\tau$",
@@ -5768,6 +5769,13 @@ class Slices(unittest.TestCase):
             path = next(c for c in surface["curves"] if c["class"] == "path")
             grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
             return (lambda X: 5.0), [grid["u"][0] - path["points"][0][0], grid["u"][-1] - path["points"][0][0]]
+        if key == "kasner_scalar/logarithmic/taux":
+            # A moment of t against x and -tau = ln t.
+            return (lambda X: math.log(t)), None
+        if key.startswith("kasner_scalar/kaluza_klein/"):
+            # The same moment in the time of five dimensions, t = T^k/k with k = 1 + s_5/2.
+            k = 1 + 10 / (13 * math.sqrt(6) - 10)
+            return (lambda X: (k * t) ** (1 / k)), None
         if key.startswith(("kasner", "bianchi", "malament_hogarth")):
             if key.startswith("malament_hogarth"):
                 lo, hi = self.reach(surface)
