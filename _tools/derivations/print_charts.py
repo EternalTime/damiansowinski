@@ -67,7 +67,10 @@ def tov():
                    "parameters": parameters,
                    "line_element": "ds^2 = -e^{2\\Phi}c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"},
         "chart_line_element": "ds^2 = -e^{2\\Phi}dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
-        "printer": {"lead": [Q, dPhi, r, m, sp.Derivative(m, r)], "collect": collect,
+        # Q leads each sum and is left out of `factors`, so that in a product the bracket it stands
+        # for closes the term, r(r - 2m)((d_r Phi)^2 + d_r^2 Phi), as a bracketed sum does.
+        "printer": {"lead": [Q, dPhi, r, m, sp.Derivative(m, r)], "factors": [dPhi, r, m, sp.Derivative(m, r)],
+                    "collect": collect,
                     "overrides": {Q: "\\left(\\left(\\partial_r\\Phi\\right)^2 + \\partial_r^2\\Phi\\right)"}},
         # The orthonormal frame of a static observer: 4 A^2 + 8 B^2 + 8 C^2 + 4 D^2 over the
         # four independent frame components t r t r, t theta t theta, r theta r theta, theta phi theta phi.
