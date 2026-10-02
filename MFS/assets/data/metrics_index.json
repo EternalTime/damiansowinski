@@ -98,7 +98,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "122194bf1507b037",
+    "version": "c9a7d9364ba36321",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -205,7 +205,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "7e03bd67e887ca73",
+    "version": "7b6fceee04ad1ddc",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -1459,7 +1459,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "73caeb3291244d7b",
+    "version": "da59a7c135158a9a",
     "diagrams": "8393e9b253125f33",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -1779,7 +1779,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "ab1f660c986bf236",
+    "version": "b28ba3fde5854452",
     "diagrams": "b4937a90691eba2b",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
@@ -2930,6 +2930,46 @@
     "embedding": "04c50f64f4cf864e"
   },
   {
+    "id": "btz_multi_holes_wormholes",
+    "name": "Many Black Holes and Wormholes in Three Dimensions",
+    "tags": [
+      "black hole",
+      "multiple black holes",
+      "wormhole",
+      "BTZ black hole",
+      "anti-de Sitter",
+      "negative cosmological constant",
+      "cosmological constant",
+      "constant curvature",
+      "hyperbolic space",
+      "multiply connected",
+      "topology",
+      "topological geon",
+      "topological censorship",
+      "time symmetric",
+      "initial data",
+      "closed universe",
+      "Misner space",
+      "horizon",
+      "event horizon",
+      "causal structure",
+      "AdS/CFT",
+      "holography",
+      "three-dimensional",
+      "2+1 dimensional gravity",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "Einstein space",
+      "conformally flat"
+    ],
+    "version": "81a83b682a397c93",
+    "diagrams": "cfadfa6a6d870e02",
+    "conformal": "4d5f7414085f41e0",
+    "embedding": "cd281d7fc89e697d"
+  },
+  {
     "id": "mass_inflation",
     "name": "Mass Inflation",
     "tags": [
@@ -3102,7 +3142,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "43e7d5283576c479",
+    "version": "31112e4e5f216575",
     "diagrams": "8b3c9d02bd75c817",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -3147,7 +3187,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "21e8f6faa49a9c80",
+    "version": "abcd2640a00eb314",
     "embedding": "0c96027fa617beeb"
   },
   {
@@ -3740,7 +3780,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "f75a839f1b459d1a",
+    "version": "99539ce6415af2ee",
     "diagrams": "31e9dff1390f00d4",
     "conformal": "354a17ef203ec712",
     "embedding": "925f9f623e566c24"
@@ -4031,7 +4071,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "b93e5b054ad84530",
+    "version": "62f6a8fc2bae4d92",
     "diagrams": "6a3ce40ab242fc55",
     "conformal": "fcc119dbec4fbaa1",
     "embedding": "fabbc86e0024f31d"
@@ -4772,7 +4812,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "2efbb9e7e7bb69b0",
+    "version": "3a5f520eede67cea",
     "diagrams": "70598c77af726b80",
     "conformal": "243a2de40edb7f43",
     "embedding": "930f06c7003fad35"

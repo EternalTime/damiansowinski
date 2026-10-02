@@ -1349,6 +1349,19 @@ A spacetime construction containing a worldline of infinite proper length that l
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = \Omega^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
 
+### Many Black Holes and Wormholes in Three Dimensions
+
+Anti-de Sitter space of three dimensions cut along timelike surfaces and glued back together, which makes any number of black holes joined behind their horizons, or one black hole with a wormhole of any genus inside it. Every exterior is that of a Bañados-Teitelboim-Zanelli black hole, and the whole spacetime is drawn on Poincaré's disc.
+
+- id: `btz_multi_holes_wormholes`
+- tags: black hole, multiple black holes, wormhole, BTZ black hole, anti-de Sitter, negative cosmological constant, cosmological constant, constant curvature, hyperbolic space, multiply connected, topology, topological geon, topological censorship, time symmetric, initial data, closed universe, Misner space, horizon, event horizon, causal structure, AdS/CFT, holography, three-dimensional, 2+1 dimensional gravity, exact solution, Lorentzian, Einstein equations, idealized model, Einstein space, conformally flat
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/btz_multi_holes_wormholes.json
+- chart Sausage: coordinates $(t, \rho, \phi)$, $$ds^2 = -\left(\dfrac{\ell^2 + \rho^2}{\ell^2 - \rho^2}\right)^2c^2dt^2 + \dfrac{4\ell^4}{\left(\ell^2 - \rho^2\right)^2}\left(d\rho^2 + \rho^2d\phi^2\right)$$
+- chart Stereographic: coordinates $(\tau, x, y)$, $$ds^2 = \dfrac{-c^2d\tau^2 + dx^2 + dy^2}{\left(1 - \dfrac{x^2 + y^2 - c^2\tau^2}{4\ell^2}\right)^2}$$
+- chart Free Fall: coordinates $(T, \rho, \phi)$, $$ds^2 = -c^2dT^2 + \cos^2(cT/\ell)\,\dfrac{4\ell^4}{\left(\ell^2 - \rho^2\right)^2}\left(d\rho^2 + \rho^2d\phi^2\right)$$
+- chart Exterior: coordinates $(t, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell^2} - M\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{\ell^2} - M} + r^2d\phi^2$$
+
 ### Mass Inflation Inside a Charged Black Hole
 
 The inside of a charged black hole crossed by two streams of radiation, one falling in and one running outward. Eric Poisson and Werner Israel found in 1989 that the mass function then grows without limit at the inner horizon, which turns the Cauchy horizon of the Reissner-Nordström solution into a null curvature singularity, and Amos Ori gave the exact solution in 1991.

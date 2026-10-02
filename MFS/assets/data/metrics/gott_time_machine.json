@@ -72,6 +72,11 @@
       "id": "self_creating_universe",
       "kind": "programme",
       "text": "Seven years after the strings, Gott and Li-Xin Li put closed timelike curves at the beginning of the universe: de Sitter space identified under a boost [gott1998]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "family",
+      "text": "Sören Holst carried Gott's pair to anti-de Sitter space in a chart with Poincaré's disc at every moment, the sausage coordinates in which the black holes and wormholes of three dimensions were then drawn [holst1996, aminneborg1998]."
     }
   ],
   "references": [
@@ -98,7 +103,8 @@
     "morris1988prl",
     "ori2005",
     "tippett2017",
-    "gott1998"
+    "gott1998",
+    "aminneborg1998"
   ],
   "coordinates": [
     {

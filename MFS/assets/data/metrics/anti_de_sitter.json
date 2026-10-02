@@ -132,6 +132,11 @@
       "id": "plebanski_hacyan",
       "kind": "family",
       "text": "Products that keep anti-de Sitter space of two dimensions as one factor, times a flat plane with a uniform electromagnetic field or times a hyperbolic plane with none [ortaggio2002direct]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "locally_same",
+      "text": "In three dimensions, anti-de Sitter space cut along several timelike surfaces and glued back together is a spacetime with many black holes, or one black hole with a wormhole inside [brill1996, aminneborg1998]."
     }
   ],
   "references": [
@@ -177,7 +182,9 @@
     "son2008",
     "bicak1999",
     "griffiths2004",
-    "ortaggio2002direct"
+    "ortaggio2002direct",
+    "brill1996",
+    "aminneborg1998"
   ],
   "coordinates": [
     {

@@ -1,5 +1,5 @@
 {
-  "version": "402d2c838b492e0a",
+  "version": "77ebe938c11db831",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -28231,6 +28231,105 @@
         "year": "1990",
         "doi": "10.1016/0550-3213(90)90357-J",
         "url": "https://doi.org/10.1016/0550-3213(90)90357-J"
+      }
+    },
+    "brill1996": {
+      "type": "article",
+      "fields": {
+        "title": "Multi-black-hole geometries in (2+1)-dimensional gravity",
+        "author": "Brill, Dieter R.",
+        "journal": "Physical Review D",
+        "volume": "53",
+        "number": "8",
+        "pages": "R4133--R4137",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.53.R4133",
+        "eprint": "gr-qc/9511022",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9511022"
+      }
+    },
+    "steif1996": {
+      "type": "article",
+      "fields": {
+        "title": "Time-symmetric initial data for multibody solutions in three dimensions",
+        "author": "Steif, Alan R.",
+        "journal": "Physical Review D",
+        "volume": "53",
+        "number": "10",
+        "pages": "5527--5532",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.53.5527",
+        "eprint": "gr-qc/9511053",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9511053"
+      }
+    },
+    "aminneborg1998": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes and wormholes in 2+1 dimensions",
+        "author": "Åminneborg, Stefan and Bengtsson, Ingemar and Brill, Dieter and Holst, Sören and Peldán, Peter",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "3",
+        "pages": "627--644",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/3/013",
+        "eprint": "gr-qc/9707036",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9707036"
+      }
+    },
+    "brill2000": {
+      "type": "incollection",
+      "fields": {
+        "title": "Black holes and wormholes in 2+1 dimensions",
+        "author": "Brill, Dieter",
+        "booktitle": "Mathematical and Quantum Aspects of Relativity and Cosmology",
+        "editor": "Cotsakis, Spiros and Gibbons, Gary W.",
+        "series": "Lecture Notes in Physics",
+        "volume": "537",
+        "publisher": "Springer",
+        "address": "Berlin",
+        "pages": "143--179",
+        "year": "2000",
+        "doi": "10.1007/3-540-46671-1_6",
+        "eprint": "gr-qc/9904083",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9904083"
+      }
+    },
+    "skenderis2011": {
+      "type": "article",
+      "fields": {
+        "title": "Holography and wormholes in 2+1 dimensions",
+        "author": "Skenderis, Kostas and van Rees, Balt C.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "301",
+        "number": "3",
+        "pages": "583--626",
+        "year": "2011",
+        "doi": "10.1007/s00220-010-1163-z",
+        "eprint": "0912.2090",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0912.2090"
+      }
+    },
+    "balasubramanian2014": {
+      "type": "article",
+      "fields": {
+        "title": "Multiboundary wormholes and holographic entanglement",
+        "author": "Balasubramanian, Vijay and Hayden, Patrick and Maloney, Alexander and Marolf, Donald and Ross, Simon F.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "31",
+        "number": "18",
+        "pages": "185015",
+        "year": "2014",
+        "doi": "10.1088/0264-9381/31/18/185015",
+        "eprint": "1406.2663",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1406.2663"
       }
     }
   }
