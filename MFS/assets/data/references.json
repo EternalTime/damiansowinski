@@ -1,5 +1,5 @@
 {
-  "version": "ef2ecfdb37630c0e",
+  "version": "0769672a07d7f21f",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -23145,6 +23145,155 @@
         "eprint": "1403.7377",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1403.7377"
+      }
+    },
+    "novikov1964": {
+      "type": "article",
+      "fields": {
+        "title": "R- and T-Regions in Space-Time with Spherically Symmetric Space",
+        "author": "Novikov, I. D.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "12",
+        "pages": "2259--2295",
+        "year": "2001",
+        "note": "English translation of Soobshcheniya GAISh 132, 3-42 (1964)",
+        "doi": "10.1023/A:1015398610011",
+        "url": "https://doi.org/10.1023/A:1015398610011"
+      }
+    },
+    "krasinski2001novikov": {
+      "type": "article",
+      "fields": {
+        "title": "Editor's Note: R- and T-Regions in Space-Time with Spherically Symmetric Space by I. D. Novikov",
+        "author": "Krasiński, Andrzej",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "12",
+        "pages": "2255--2258",
+        "year": "2001",
+        "doi": "10.1023/A:1015344812092",
+        "url": "https://doi.org/10.1023/A:1015344812092"
+      }
+    },
+    "zelmanov1965": {
+      "type": "article",
+      "fields": {
+        "title": "Appendix 4. Summary of Work Done in U.S.S.R. on Cosmology and Related Topics of General Relativity",
+        "author": "Zelmanov, A. L.",
+        "journal": "Transactions of the International Astronomical Union",
+        "volume": "12",
+        "number": "1",
+        "pages": "432--436",
+        "year": "1965",
+        "url": "https://www.cambridge.org/core/journals/transactions-of-the-international-astronomical-union/article/appendix-4-summary-of-work-done-in-ussr-on-cosmology-and-related-topics-of-general-relativity/E7B4EC7A0B8E78286F2021374548A61B"
+      }
+    },
+    "wheeler1964": {
+      "type": "incollection",
+      "fields": {
+        "title": "Geometrodynamics and the Issue of the Final State",
+        "author": "Wheeler, John A.",
+        "booktitle": "Relativité, Groupes et Topologie",
+        "editor": "DeWitt, C. and DeWitt, B.",
+        "publisher": "Gordon and Breach",
+        "address": "New York",
+        "pages": "317--522",
+        "year": "1964",
+        "url": "https://inspirehep.net/literature/1353706"
+      }
+    },
+    "markov1970": {
+      "type": "article",
+      "fields": {
+        "title": "Metric of a closed Friedman world perturbed by an electric charge",
+        "author": "Markov, M. A. and Frolov, V. P.",
+        "journal": "Theoretical and Mathematical Physics",
+        "volume": "3",
+        "number": "1",
+        "pages": "301--311",
+        "year": "1971",
+        "note": "English translation of Teoreticheskaya i Matematicheskaya Fizika 3, 3-17 (1970), whose title continues: Theory of electromagnetic Friedmons",
+        "doi": "10.1007/BF01031584",
+        "url": "https://doi.org/10.1007/BF01031584"
+      }
+    },
+    "marolf2009": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes, AdS, and CFTs",
+        "author": "Marolf, Donald",
+        "journal": "General Relativity and Gravitation",
+        "volume": "41",
+        "number": "4",
+        "pages": "903--917",
+        "year": "2009",
+        "doi": "10.1007/s10714-008-0749-7",
+        "eprint": "0810.4886",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0810.4886"
+      }
+    },
+    "hsu2008monsters": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole entropy, curved space and monsters",
+        "author": "Hsu, Stephen D. H. and Reeb, David",
+        "journal": "Physics Letters B",
+        "volume": "658",
+        "number": "5",
+        "pages": "244--248",
+        "year": "2008",
+        "doi": "10.1016/j.physletb.2007.09.021",
+        "eprint": "0706.3239",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0706.3239"
+      }
+    },
+    "hsu2008unitarity": {
+      "type": "article",
+      "fields": {
+        "title": "Unitarity and the Hilbert space of quantum gravity",
+        "author": "Hsu, Stephen D. H. and Reeb, David",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "25",
+        "number": "23",
+        "pages": "235007",
+        "year": "2008",
+        "doi": "10.1088/0264-9381/25/23/235007",
+        "eprint": "0803.4212",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0803.4212"
+      }
+    },
+    "bekenstein1973": {
+      "type": "article",
+      "fields": {
+        "title": "Black Holes and Entropy",
+        "author": "Bekenstein, Jacob D.",
+        "journal": "Physical Review D",
+        "volume": "7",
+        "number": "8",
+        "pages": "2333--2346",
+        "year": "1973",
+        "doi": "10.1103/PhysRevD.7.2333",
+        "url": "https://doi.org/10.1103/PhysRevD.7.2333"
+      }
+    },
+    "chakravarty2021": {
+      "type": "article",
+      "fields": {
+        "title": "Overcounting of interior excitations: a resolution to the bags of gold paradox in AdS",
+        "author": "Chakravarty, Joydeep",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2021",
+        "number": "2",
+        "pages": "27",
+        "year": "2021",
+        "doi": "10.1007/JHEP02(2021)027",
+        "eprint": "2010.03575",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2010.03575"
       }
     }
   }

@@ -459,6 +459,30 @@ def novikov_kruskal(R, tau):
     return (1 - r) * np.exp(r) / V, V, r
 
 
+def novikov_sheets(s, tau):
+    """Novikov's shells on both sheets of Schwarzschild's exterior, r_s = 1, at the proper time
+    tau since their release: the shell labelled s rests at R = s^2 + 1, on the far sheet for
+    s > 0 and behind the throat s = 0 for s < 0. Returns Kruskal's U and V and the areal radius r,
+    V = (s cos(eta/2) + sin(eta/2)) exp((r + s(eta + (R/2)(eta + sin eta)))/2) and
+    U = (sin(eta/2) - s cos(eta/2)) exp((r - s(eta + (R/2)(eta + sin eta)))/2), novikov_kruskal with
+    its k = sqrt(R - 1) given the sign of the sheet, so that U V = (1 - r) e^r and the mirror
+    s -> -s is U <-> -V at tau = 0. A negative tau is the mirror in time, eta -> -eta."""
+    s = np.asarray(s, dtype=float)
+    R = s * s + 1
+    scale = 0.5 * R ** 1.5
+    lo, hi = np.zeros_like(s), np.full_like(s, math.pi)
+    for _ in range(64):
+        mid = 0.5 * (lo + hi)
+        below = scale * (mid + np.sin(mid)) < abs(tau)
+        lo, hi = np.where(below, mid, lo), np.where(below, hi, mid)
+    eta = math.copysign(1.0, tau) * 0.5 * (lo + hi)
+    r = R * np.cos(eta / 2) ** 2
+    phase = s * (eta + 0.5 * R * (eta + np.sin(eta)))
+    V = (s * np.cos(eta / 2) + np.sin(eta / 2)) * np.exp((r + phase) / 2)
+    U = (np.sin(eta / 2) - s * np.cos(eta / 2)) * np.exp((r - phase) / 2)
+    return U, V, r
+
+
 OS_R0 = 2.0                                  # the release, in r_s, as the conformal diagram declares
 OS_AM = OS_R0 / math.sin(math.pi / 4)        # a_m = R_0 / sin chi_0 = 2 sqrt 2 r_s
 
@@ -474,6 +498,51 @@ def os_exterior():
         r, t, _ = novikov(R, m.time)
         keep = (r > 1) & np.isfinite(t)
         out.append(Mark(m, [np.column_stack([t[keep], r[keep]])]))
+    return out
+
+
+SCW_AM = 2 * math.sqrt(2.0)                  # the semiclosed world's a_m in r_s, at chi_0 = 3 pi/4
+
+
+def scw_eta(tau):
+    """The conformal time of the semiclosed world's dust at its proper time tau, in r_s:
+    (a_m/2)(eta + sin eta) = c tau."""
+    lo, hi = 0.0, math.pi
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if 0.5 * SCW_AM * (mid + math.sin(mid)) < tau else (lo, mid)
+    return 0.5 * (lo + hi)
+
+
+def _scw_dust(conformal):
+    """A moment of the dust's proper time across the dust: the line of constant tau, in units of
+    a_m, or of constant eta."""
+    return one("semiclosed_world", lambda m: [[(scw_eta(m.time) if conformal else m.time / SCW_AM, x)
+                                              for x in m.reach("comoving", "\\chi")]])
+
+
+def _scw_far(isotropic):
+    """Novikov's slice on the far sheet of the semiclosed world's exterior, in Schwarzschild's t and
+    r or in the isotropic radius: the shells from the throat out as far as the embedding reaches,
+    drawn where r > r_s. At the moment of greatest expansion the isotropic chart holds the whole
+    of it, t = 0 from the surface of the dust behind the throat to the rim; later the part behind
+    the throat lies at negative t of that chart, below the drawing."""
+    out = []
+    for m in moments("semiclosed_world"):
+        lo, hi = m.reach("comoving_synchronous", "r")
+        R = near(1.0, hi * hi + 1, 2001, 1e-6)
+        r, t, _ = novikov(R, m.time)
+        keep = (r > 1) & np.isfinite(t)
+        r, t = r[keep], t[keep]
+        if not isotropic:
+            out.append(Mark(m, [np.column_stack([t, r])]))
+            continue
+        x = (r - 0.5 + np.sqrt(r * (r - 1))) / 2
+        if m.time == 0:
+            behind = lo * lo + 1
+            out.append(Mark(m, [[(0.0, (behind - 0.5 - math.sqrt(behind * (behind - 1))) / 2), (0.0, float(x[-1]))]]))
+        else:
+            out.append(Mark(m, [np.column_stack([t, x])]))
     return out
 
 
@@ -2281,6 +2350,10 @@ FLAT = {
     ("einstein_cluster", "hyperspherical", "radial"): lambda: one("einstein_cluster", lambda m: along(0.0, 0.0, math.asin(1 / math.sqrt(3))), view_id="uniform"),
     ("malament_hogarth", "cartesian", "tx"): lambda: one("malament_hogarth", lambda m: across(m.time, *m.reach("cartesian", "x"))),
     ("oppenheimer_snyder", "interior_comoving", "through"): _os_interior,
+    ("semiclosed_world", "comoving", "dust"): lambda: _scw_dust(False),
+    ("semiclosed_world", "conformal", "dust"): lambda: _scw_dust(True),
+    ("semiclosed_world", "schwarzschild", "radial"): lambda: _scw_far(False),
+    ("semiclosed_world", "isotropic", "radial"): lambda: _scw_far(True),
     ("oppenheimer_snyder", "exterior_schwarzschild", "radial"): os_exterior,
     # v - r = w, every r the embedding reaches.
     ("c_metric", "spherical", "inner"): lambda: _c_metric(False),

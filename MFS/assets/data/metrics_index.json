@@ -985,7 +985,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0ca6656165726f2a",
+    "version": "0c884ac18a645608",
     "diagrams": "76bab86a529ed941",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -1094,7 +1094,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "7e55432b2a7c5459",
+    "version": "ba9d838d2906ae3a",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2288,7 +2288,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "f3e28a3cf84accf4",
+    "version": "1ecf1b9cc2984479",
     "embedding": "0c96027fa617beeb"
   },
   {
@@ -2574,7 +2574,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d42b6fefacc14419",
+    "version": "ff157a9fca8b399d",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -2820,7 +2820,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c9efea697d58adc5",
+    "version": "007372565d412511",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -3042,7 +3042,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "09092686fe2aa5d6",
+    "version": "10dec69cb69b94aa",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3170,6 +3170,41 @@
     "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
+  },
+  {
+    "id": "semiclosed_world",
+    "name": "Semiclosed World",
+    "tags": [
+      "dust",
+      "matched solution",
+      "closed universe",
+      "three sphere",
+      "semiclosed world",
+      "bag of gold",
+      "throat",
+      "Einstein-Rosen bridge",
+      "black hole",
+      "white hole",
+      "mass defect",
+      "black hole entropy",
+      "curvature singularity",
+      "horizon",
+      "event horizon",
+      "apparent horizon",
+      "time symmetric",
+      "time-dependent",
+      "cosmology",
+      "spherically symmetric",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "f1c4b6f5f7091625",
+    "diagrams": "ac2ae60444203f54",
+    "conformal": "1d994db28644e6d6",
+    "embedding": "74242cc150b7e4a7"
   },
   {
     "id": "senovilla",
@@ -3503,7 +3538,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c0c08d1ef4cb8505",
+    "version": "ba30b0014a5e02fa",
     "diagrams": "b997809f786afa14",
     "embedding": "aefa04627c7f6154"
   },

@@ -333,6 +333,11 @@
       "id": "ppn_metric",
       "kind": "generalisation",
       "text": "Schwarzschild's far field with a number in front of each term, $\\beta$ on $m^2/r^2$ in $g_{tt}$ and $\\gamma$ on $m/r$ in the metric of space. Every test in the solar system measures those numbers, and at $\\beta = \\gamma = 1$ the field is Schwarzschild's [thornewill1971]."
+    },
+    {
+      "id": "semiclosed_world",
+      "kind": "composite",
+      "text": "A closed universe of dust sewn onto the second sheet of the extended solution, behind the throat. Yakov Zel'dovich and Igor Novikov studied it in 1962, and it goes by the name of Wheeler's bag of gold [zelmanov1965, marolf2009]."
     }
   ],
   "references": [
@@ -426,7 +431,9 @@
     "israel1966",
     "griffiths1991",
     "ferrari1988",
-    "thornewill1971"
+    "thornewill1971",
+    "zelmanov1965",
+    "marolf2009"
   ],
   "coordinates": [
     {

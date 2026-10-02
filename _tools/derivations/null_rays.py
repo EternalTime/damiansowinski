@@ -416,6 +416,7 @@ class Diagram:
                                     # drawn and named, as a shell whose radius the row declares; it is
                                     # drawn where the expression is positive
     surface: str = None             # r at which a star's surface is released from rest; see Surface
+    surface_legend: str = None      # what that surface is, where it is no star's
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
     singular_where_claimed: bool = False  # judge a singular edge only inside the published domains
     singular_near: float = 1e-5     # how near an edge singular_runs takes the Kretschmann scalar, in the unit
@@ -789,6 +790,11 @@ BONNOR_DIPOLE = {"m": 1, "b": "2*sqrt(2)"}
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
 OS_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0], "origin": "reference"}
+# The dust of the semiclosed world, at rest with a = a_m, the unit, at tau = 0, from its bang to its crunch.
+SCW_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0], "origin": "rest"}
+# The isotropic radius, in r_s, of the surface of the semiclosed world's dust at its greatest, R_0 = 2 r_s
+# behind the throat: (R_0 - r_s/2 - sqrt(R_0 (R_0 - r_s)))/2.
+SCW_SURFACE = "(3/2 - sqrt(2))/2"
 
 # The boson star every drawing of it declares: the heaviest ground state, Kaup's limit.
 BOSON = {"sigma_c": repr(bs.SIGMA_C)}
@@ -3281,6 +3287,34 @@ DIAGRAMS = [
             functions={"R": "israel_r_adv(v)"}, where="r - israel_r_adv(v)", input=ISRAEL_INPUT,
             singular_runs=True, singular_where_claimed=True,
             curves=(("shell", "israel_r_adv(v)", "the shell of dust, $r = R$"),)),
+    # The semiclosed world at chi_0 = 3 pi/4, a_m = 2 sqrt(2) r_s, as its conformal diagram draws it:
+    # the dust from bang to crunch in its proper time and in its conformal time, the far sheet of
+    # the exterior in Schwarzschild's chart, and both sheets in the isotropic chart from the moment
+    # of greatest expansion on, with the surface of the dust behind the throat. The isotropic
+    # chart's t runs to the past behind the throat, so its time function changes sign there.
+    Diagram("semiclosed_world", "comoving", "dust", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"),
+            (0, 3 * math.pi / 4, -math.pi / 2, math.pi / 2), "$\\chi$", "$c\\tau/a_m$", {"chi_0": "3*pi/4", "a_m": 1}, EQUATOR,
+            families=SIDEWAYS, cones=(7, 9), tau="tau", areal=True, dust=SCW_DUST, crunch=True, no_throat=True,
+            lines=(("surface", "r", "pi/2", "the equator of the three sphere, $\\chi = \\pi/2$"),),
+            marked=(("event", {"x0": "-(pi/2 + 1)/2", "r": "3*pi/4"}, 1, "the event horizon"),
+                    ("past", {"x0": "(pi/2 + 1)/2", "r": "3*pi/4"}, 0, "the horizon of the white hole")),
+            input="Dust at rest at $\\tau = 0$ with $a = a_m$, $a(\\tau)$ solved from this spacetime's own "
+                  "$G^\\chi{}_\\chi = 0$, and $\\chi_0 = 3\\pi/4$, so that the surface reaches twice its "
+                  "Schwarzschild radius."),
+    Diagram("semiclosed_world", "conformal", "dust", "$\\eta$ and $\\chi$", ("\\eta", "\\chi"),
+            (0, 3 * math.pi / 4, -math.pi, math.pi), "$\\chi$", "$\\eta$", {"chi_0": "3*pi/4", "a_m": 1}, EQUATOR,
+            families=SIDEWAYS, cones=(7, 9), tau="eta", areal=True, no_throat=True,
+            lines=(("surface", "r", "pi/2", "the equator of the three sphere, $\\chi = \\pi/2$"),),
+            marked=(("event", {"x0": "-pi/2", "r": "3*pi/4"}, 1, "the event horizon"),
+                    ("past", {"x0": "pi/2", "r": "3*pi/4"}, 0, "the horizon of the white hole"))),
+    Diagram("semiclosed_world", "schwarzschild", "radial", "$t$ and $r$", ("t", "r"), (0.5, 6, -2.75, 2.75),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, where="r - 1"),
+    Diagram("semiclosed_world", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (0, 1.5, 0, 4),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, tau="Piecewise((t, r > Rational(1, 4)), (-t, True))",
+            areal=True, areal_contours=(1.5, 2.0), surface=SCW_SURFACE,
+            surface_legend="the surface of the dust, a radial geodesic at rest at $t = 0$",
+            input="The surface of the dust at rest at $t = 0$ at the areal radius $2r_s$ behind the throat, the "
+                  "isotropic radius $0.043\\,r_s$, the dust of the comoving coordinates with $\\chi_0 = 3\\pi/4$."),
     # A shell of null dust falls in along v = 0: flat inside, Schwarzschild outside, as the
     # conformal diagram declares it. The outgoing chart draws its time reverse.
     Diagram("vaidya", "eddington_finkelstein_ingoing", "shell", "an imploding shell", ("v", "r"),
@@ -7592,6 +7626,22 @@ CAPTIONS = {
         "event is infinite, while an observer who keeps away from the origin reaches $p$ in a "
         "finite time of their own.",
     ],
+    ("semiclosed_world", "comoving", "dust"): [
+        "The plane of $\\tau$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) through the dust, from the centre $\\chi = 0$ past the equator of the three sphere to the surface $\\chi_0 = 3\\pi/4$, and from the bang at $c\\tau = -\\pi a_m/2$ to the crunch at $\\pi a_m/2$, where the Kretschmann scalar diverges. The dust is a closed Friedmann universe, $-c^2d\\tau^2 + a^2(d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$, at rest at $\\tau = 0$, and its light rays obey $c\\,d\\tau = \\pm a\\,d\\chi$, so the cones open out flat toward both ends.",
+        "The dotted curves, $|\\nabla R|^2 = 0$ for the areal radius $R = a\\sin\\chi$, cross on the equator at $\\tau = 0$ and bound the trapped spheres: between them, every sphere after $\\tau = 0$ shrinks along both families of rays, and every sphere before it grows along both. The event horizon is the ray moving right that reaches the surface as the surface comes out through $r_s = a_m\\sin^3\\chi_0$, at $c\\tau = -1.29\\,a_m$. It left the bang at $\\chi = \\pi/4$, and only the dust below it can send light to the outside. The horizon of the white hole is its mirror image in time.",
+    ],
+    ("semiclosed_world", "conformal", "dust"): [
+        "The plane of $\\eta$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) through the dust in its conformal time, where the metric is $a^2(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$ with $a = \\tfrac{1}{2}a_m(1 + \\cos\\eta)$, so $\\eta \\mp \\chi$ is constant along a ray and every cone is the same. The bang is $\\eta = -\\pi$ and the crunch $\\eta = \\pi$, where the Kretschmann scalar diverges.",
+        "The marginally trapped spheres are the straight lines $\\eta = \\pm(\\pi - 2\\chi)$, which cross on the equator at $\\eta = 0$ and meet the surface at $\\eta = \\pm\\pi/2$, where the surface crosses $r_s$. The event horizon is $\\eta - \\chi = -5\\pi/4$, from the bang at $\\chi = \\pi/4$ to the surface at $\\eta = -\\pi/2$, and the horizon of the white hole is $\\eta + \\chi = 5\\pi/4$.",
+    ],
+    ("semiclosed_world", "schwarzschild", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on the far sheet of the exterior, the side of the throat an outside observer lives on, where the metric is Schwarzschild's with $r_s = a_m\\sin^3\\chi_0$. The edges of the cones are $dr/d(ct) = \\pm(1 - r_s/r)$, so $ct \\mp r_*$ is constant along a ray, with $r_* = r + r_s\\ln(r/r_s - 1)$, and the cones close toward $r = r_s$.",
+        "The sheet behind the throat has the same plane as far as the surface of the dust, $r \\le R(t)$, which rises from $r_s$, rests at $2\\,r_s$ at $t = 0$, and falls back. The slices are moments of the dust's proper time carried outward by clocks released from rest with it, Igor Novikov's slicing, each drawn where it lies outside $r_s$.",
+    ],
+    ("semiclosed_world", "isotropic", "radial"): [
+        "The plane of $t$ and the isotropic radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$) from the moment of greatest expansion on, with both sheets in it: the far sheet is $r > r_s/4$, the throat is $r = r_s/4$, and behind it the sheet of the dust runs in to the surface of the dust, at $r_d = 0.043\\,r_s$ when $t = 0$. The areal radius is $R = r(1 + r_s/4r)^2$, and the edges of the cones are $dr/d(ct) = \\pm 16r^2|4r - r_s|/(4r + r_s)^3$.",
+        "Behind the throat this $t$ runs toward the past, so the cones there open downward, and the surface drawn is the dust coming out of the white hole: followed down the page, its areal radius grows from $r_s$ to $2\\,r_s$. The faint vertical lines are the spheres of areal radius $1.5\\,r_s$ and $2\\,r_s$ on each sheet.",
+    ],
     ("oppenheimer_snyder", "interior_comoving", "through"): [
         "The line through the centre of the collapsing star in the plane $\\theta = \\pi/2$, in "
         "its own comoving coordinates: $\\chi$ on the right is $\\phi = 0$ and on the left $\\phi = \\pi$, "
@@ -8113,12 +8163,15 @@ class DustSolver:
         # dust released from rest there and collapsing to its singularity after it.
         self.t_sing = self.back.t_events[0][0] if origin == "bang" else 0.0
         self.t_ref = -self.t_sing       # the reference instant, in time since the singularity
+        # With origin "rest" the reference instant is t = 0 as well, a moment of time symmetry, and
+        # the solution is kept on both sides of it, from the singularity before to the one after.
+        self.first = self.back.t[-1] if origin == "rest" else self.t_sing
 
     def state(self, t):
         t = np.asarray(t, dtype=float)
         s = t + self.t_sing
         y = np.full((2 * len(self.funcs),) + t.shape, np.nan)
-        back = (s <= 0) & (s >= self.t_sing)
+        back = (s <= 0) & (s >= self.first)
         fwd = (s > 0) & (s <= self.fwd.t[-1])
         if back.any():
             y[:, back] = self.back.sol(s[back])
@@ -9609,7 +9662,7 @@ class Plot:
             out.append({"kind": kind, "lines": [rounded(thin(self.world_line(radius), 0.0006))], "legend": legend})
         if spec.surface:
             out.append({"kind": "surface", "lines": [rounded(thin(self.surface_line(), 0.0006))],
-                        "legend": self.c.surface.legend})
+                        "legend": spec.surface_legend or self.c.surface.legend})
         if spec.star:
             R = self.c.solver.R
             line = clip_unit(np.array([self.to_unit(self.to_display(x0, R)) for x0 in (-1e6, 1e6)]))
@@ -10298,6 +10351,12 @@ def _bm_tortoise(x, through=None):
 def _gravastar_x(r):
     """The tortoise coordinate inside the gravastar the diagrams draw, dx/dr = 1/(sqrt(C)(1 - r^2/L^2))."""
     return 2 / math.sqrt(GRAVASTAR_C) * np.arctanh(np.asarray(r, float) / 2)
+
+
+def _scw_eta(tau):
+    """The conformal time of closed dust at rest at tau = 0 with a = 1: (eta + sin eta)/2 = tau."""
+    eta = np.linspace(-math.pi, math.pi, 200001)
+    return np.interp(tau, (eta + np.sin(eta)) / 2, eta)
 
 
 def _rstar(r, horizons):
@@ -11297,6 +11356,19 @@ CLOSED_FORMS = {
         (lambda t, r: t + np.sign(4 * r - 1) * _rstar(r * (1 + 1 / (4 * r)) ** 2, [1]),
          lambda t, r: t - np.sign(4 * r - 1) * _rstar(r * (1 + 1 / (4 * r)) ** 2, [1]),
          lambda t, r: (np.abs(4 * r - 1) > 0.2) & (r > 0.02)),
+    # The semiclosed world: in the dust eta -+ chi is constant along a ray, eta the conformal time,
+    # (eta + sin eta)/2 = c tau/a_m; outside, Schwarzschild's r_* on the far sheet, and in the
+    # isotropic chart on both, where it changes sign with the sheet.
+    ("semiclosed_world", "comoving", "dust"):
+        (lambda tau, chi: _scw_eta(tau) + chi, lambda tau, chi: _scw_eta(tau) - chi, lambda tau, chi: np.abs(tau) < 1.5),
+    ("semiclosed_world", "conformal", "dust"):
+        (lambda eta, chi: eta + chi, lambda eta, chi: eta - chi, lambda eta, chi: np.abs(eta) < 3.1),
+    ("semiclosed_world", "schwarzschild", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: r > 1.05),
+    ("semiclosed_world", "isotropic", "radial"):
+        (lambda t, r: t + np.sign(4 * r - 1) * _rstar(r * (1 + 1 / (4 * r)) ** 2, [1]),
+         lambda t, r: t - np.sign(4 * r - 1) * _rstar(r * (1 + 1 / (4 * r)) ** 2, [1]),
+         lambda t, r: (np.abs(4 * r - 1) > 0.2) & (r > 0.05)),
     ("einstein_rosen_bridge", "charged_spherical", "radial"):
         (lambda t, r: t + _rstar(r, [1.5, -0.5]), lambda t, r: t - _rstar(r, [1.5, -0.5]), lambda t, r: r > 1.55),
     ("einstein_rosen_bridge", "charged_bridge", "radial"):
