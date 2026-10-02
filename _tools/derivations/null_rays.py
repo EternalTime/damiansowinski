@@ -956,6 +956,32 @@ SIKLOS_DISC_INPUT = ("Kaigorodov's profile switched on and off, $h = e^{-4u^2/L^
                      "$p^2(\\partial_\\xi^2h + \\partial_\\eta^2h) = 2h/L^2$.")
 SIKLOS_CREST = (("shell", "x0", "0", "the crest of the pulse, $u = 0$"),)
 SIKLOS_CONE = "future cone of no momentum along ${}$"
+# Kundt's waves, in units of a length ell. The free charts are drawn with the simplest wave switched
+# on and off, G = exp(-4u^2)(x^2 - y^2)/ell, on the plane of u and the coordinate along the rays at
+# a fixed place on the front, and the family with a cosmological constant at alpha = 0,
+# beta = 1/ell and Lambda = -3/ell^2, and at alpha = 1, beta = 0 and Lambda = 3/ell^2, the form of
+# the same family in de Sitter space whose envelope is a circle about the chart's origin, with
+# the profile (xi^2 - eta^2)(2 + p)/(3p ell^2), Bicak and Podolsky's (5) for f cubic, under the
+# same pulse.
+KUNDT = {"ell": 1}
+KUNDT_PULSE = {"G": "exp(-4*u**2)*(x**2 - y**2)"}
+KUNDT_INPUT = ("The simplest wave switched on and off, $G = e^{-4u^2}(x^2 - y^2)/\\ell$ with $\\ell$ any length, "
+               "which solves $\\partial_x^2G + \\partial_y^2G = 0$.")
+KUNDT_CREST = (("shell", "x0", "0", "the crest of the pulse, $u = 0$"),)
+KUNDT_FAMILY = {
+    "de_sitter": ({"Lambda": 3, "alpha": 1, "beta": 0},
+                  {"h": "exp(-4*u**2)*(xi**2 - eta**2)*(3 + (xi**2 + eta**2)/4)/(3*(1 + (xi**2 + eta**2)/4))"}),
+    "anti_de_sitter": ({"Lambda": -3, "alpha": 0, "beta": 1},
+                       {"h": "exp(-4*u**2)*(xi**2 - eta**2)*(3 - (xi**2 + eta**2)/4)/(3*(1 - (xi**2 + eta**2)/4))"}),
+}
+KUNDT_PROFILE = ("$h = e^{-4u^2/\\ell^2}(\\xi^2 - \\eta^2)(2 + p)/(3p\\ell^2)$, which solves "
+                 "$p^2(\\partial_\\xi^2h + \\partial_\\eta^2h) + 2\\Lambda h/3 = 0$.")
+KUNDT_FAMILY_INPUT = {
+    "de_sitter": ("A wave crossing de Sitter space, $\\alpha = 1$ and $\\beta = 0$ at $\\Lambda = 3/\\ell^2$ "
+                  "with $\\ell$ any length, switched on and off: " + KUNDT_PROFILE),
+    "anti_de_sitter": ("A wave of Kundt's kind crossing anti-de Sitter space, $\\alpha = 0$ and "
+                       "$\\beta = 1/\\ell$ at $\\Lambda = -3/\\ell^2$, switched on and off: " + KUNDT_PROFILE),
+}
 # Schrodinger spacetime, in units of the deformation length beta, with L = beta: every plane is the
 # plane of the time and the null coordinate at a fixed depth, where the metric is
 # -(L^2/r^2)(2 dt dxi + h dt^2) and the cone's second edge is dxi = -(h/2) dt. The global chart is
@@ -3174,6 +3200,32 @@ DIAGRAMS = [
     Diagram("siklos", "kaigorodov_kundt", "depth", "$V$ and $x$", ("V", "x"), (0.25, 2, -1.5, 1.5),
             "$x$", "$V/L$", SIKLOS, {"y": "0"}, tau="V*x**2", families=SIDEWAYS, quotient="U",
             cone=SIKLOS_CONE.format("U")),
+    # Kundt's waves. The free charts on the plane of u and the coordinate along the rays at a fixed
+    # place on the wave front, drawn as Siklos's are with the declared pulse; the simplest wave on the
+    # same plane and on its slice y = 0 with the Killing direction d/du divided out, whose rays are
+    # null geodesics; and the family with a cosmological constant as Kundt's kind in de Sitter and
+    # in anti-de Sitter space.
+    # The canonical chart is drawn where G is negative, at y = 1.1 x, since where G is positive
+    # its g^ww = (3w^2 - 4x^3 G)/x^2 changes sign on a curve that is no horizon. There g^ww is at
+    # most 49 in the box, so w + 30u has a timelike gradient throughout it; u + v serves in the
+    # charts whose v is w/2x^2.
+    Diagram("kundt_waves", "kundt", "front", "$x = \\ell$, $y = 1.1\\,\\ell$", ("u", "w"), (-2, 2, -2, 2),
+            "$(w/\\ell^2 - u)/2$", "$(u + w/\\ell^2)/2$", {}, {"x": "1", "y": "11/10"}, to_display=NULL_TO_TR,
+            tau="w + 30*u", families=SIDEWAYS,
+            functions=KUNDT_PULSE, lines=KUNDT_CREST, input=KUNDT_INPUT),
+    *[Diagram("kundt_waves", "podolsky_belan", view, label, ("u", "v"), (-2, 2, -2, 2), "$(v - u)/2$", "$(u + v)/2$",
+              {}, {"x": x, "y": "0"}, to_display=NULL_TO_TR, tau="u + v", families=SIDEWAYS,
+              functions=KUNDT_PULSE, lines=KUNDT_CREST, input=KUNDT_INPUT)
+      for view, label, x in (("near", "$x = \\ell$", "1"), ("far", "$x = 2\\ell$", "2"))],
+    Diagram("kundt_waves", "simplest_wave", "front", "$u$ and $v$", ("u", "v"), (-2, 2, -2, 2), "$(v - u)/2$",
+            "$(u + v)/2$", KUNDT, {"x": "1", "y": "0"}, to_display=NULL_TO_TR, tau="u + v", families=SIDEWAYS),
+    Diagram("kundt_waves", "simplest_wave", "depth", "$v$ and $x$", ("v", "x"), (0, 3, -2, 2), "$x/\\ell$", "$v$",
+            KUNDT, {"y": "0"}, tau="v", families=SIDEWAYS, quotient="u", cone=SIKLOS_CONE.format("u")),
+    *[Diagram("kundt_waves", "ozsvath_robinson_rozga", view, label, ("u", "v"), (-2, 2, -2, 2), "$(v - u)/2\\ell$",
+              "$(u + v)/2\\ell$", KUNDT_FAMILY[view][0], {"xi": "1", "eta": "0"}, to_display=NULL_TO_TR, tau="u + v",
+              families=SIDEWAYS, functions=KUNDT_FAMILY[view][1], lines=KUNDT_CREST,
+              input=KUNDT_FAMILY_INPUT[view])
+      for view, label in (("de_sitter", "$\\Lambda > 0$"), ("anti_de_sitter", "$\\Lambda < 0$"))],
     # Schrodinger spacetime: the plane of the time and the null coordinate at three depths in the
     # Poincare, inverse radius and global charts, for three dynamical exponents at r = beta/sqrt(2), and at
     # one depth in five and in six dimensions. No chart has a time function, so the cones take
@@ -7331,6 +7383,53 @@ CAPTIONS = {
         "The rays keep $Vx^2/\\sqrt{2} \\pm \\tfrac{2}{5}Lx^{5/2}$, and the future is the direction of "
         "increasing $Vx^2$. The conformal boundary is $x = 0$ and the singularity $x \\to \\infty$.",
     ],
+    ("kundt_waves", "kundt", "front"): [
+        "The plane of $u$ and $w$ ($x = \\ell$, $y = 1.1\\,\\ell$), at one place on the wave front, drawn with "
+        "$(w/\\ell^2 - u)/2$ across and $(u + w/\\ell^2)/2$ up. On it the metric is "
+        "$-2\\,du\\,dw + (w^2/x^2 + 4xG)\\,du^2$, and at this place the pulse has "
+        "$G = -0.21\\,\\ell\\,e^{-4u^2}$. The rays moving right keep their $u$: they are the rays of the "
+        "wave, and $w$ is an affine parameter along each.",
+        "The rays moving right are null geodesics. A curve moving left obeys $dw/du = w^2/2x^2 + 2xG$, and it "
+        "is a null curve of the plane, since $\\Gamma^x{}_{uu}$ turns light sent along it toward other $x$.",
+    ],
+    **{("kundt_waves", "podolsky_belan", view): [
+        f"The plane of $u$ and $v$ (${x}$, $y = 0$), at one place on the wave front, drawn with $(v - u)/2$ "
+        "across and $(u + v)/2$ up. On it the metric is $-4x^2\\,du\\,dv + 4(x^2v^2 + xG)\\,du^2$. Away from the "
+        "pulse that is flat space's metric on the hyperboloid $X^2 + Z^2 - c^2T^2 = x^2$, the surface of "
+        "constant $x$ and $y$. The rays moving right keep their $u$, and a curve moving left obeys "
+        "$dv/du = v^2 + G/x$, so it runs off to $v = \\infty$ at a finite $u$, sooner where it crosses the pulse.",
+        "The rays moving right are null geodesics, the rays of the wave. A curve moving left is a null curve of "
+        "the plane, since $\\Gamma^x{}_{uu}$ turns light sent along it toward other $x$.",
+    ] for view, x in (("near", "x = \\ell"), ("far", "x = 2\\ell"))},
+    ("kundt_waves", "simplest_wave", "front"): [
+        "The plane of $u$ and $v$ ($x = \\ell$, $y = 0$), at one place on the wave front, drawn with $(v - u)/2$ "
+        "across and $(u + v)/2$ up. On it the metric is $-4x^2\\,du\\,dv + 4x^2(v^2 + x/\\ell)\\,du^2$, the same "
+        "along every line of constant $v$, since this wave never switches off. The rays moving right keep their "
+        "$u$, and a curve moving left obeys $dv/du = v^2 + 1$, so it keeps $u - \\arctan v$.",
+        "The rays moving right are null geodesics, the rays of the wave. A curve moving left is a null curve of "
+        "the plane, since $\\Gamma^x{}_{uu}$ turns light sent along it toward other $x$.",
+    ],
+    ("kundt_waves", "simplest_wave", "depth"): [
+        "The plane of $v$ and $x$ ($y = 0$) with $u$ divided out, $dx^2 - x^2\\,dv^2/(v^2 + x/\\ell)$, the metric "
+        "orthogonal to the lines of $u$. Its null curves are the shadows on $v$ and $x$ of the null geodesics "
+        "with no momentum along $u$, each moving in $u$ at $du/dv = 1/(2v^2 + 2x/\\ell)$, and each cone is the "
+        "future cone of those directions.",
+        "The rays obey $dx/dv = \\pm x/\\sqrt{v^2 + x/\\ell}$, so the cones narrow toward the envelope $x = 0$, "
+        "the hatched edge, and widen with $x$. Every curvature scalar vanishes all the way to the envelope, "
+        "while the tidal forces on whatever falls toward it grow without bound.",
+    ],
+    **{("kundt_waves", "ozsvath_robinson_rozga", view): [
+        f"The plane of $u$ and $v$ ($\\xi = \\ell$, $\\eta = 0$) of a wave crossing {space} space, drawn with "
+        "$(v - u)/2$ across and $(u + v)/2$ up. On it the metric is "
+        f"$(q^2/p^2)(-2\\,du\\,dv + \\kappa v^2du^2) + (q/p)\\,h\\,du^2$ with $p = {p}$, $q = {q}$, and "
+        "$\\kappa = 1/\\ell^2$. The rays moving right keep their $u$, and a curve moving left obeys "
+        "$dv/du = (\\kappa v^2 + ph/q)/2$.",
+        "The rays moving right are null geodesics, the rays of the wave, and a curve moving left is a null "
+        f"curve of the plane. The envelope of the wave fronts, $q = 0$, is {envelope} of each front, at a "
+        "distance from this plane.",
+    ] for view, space, p, q, envelope in (
+        ("de_sitter", "de Sitter", "5/4", "3/4", "the circle $\\xi^2 + \\eta^2 = 4\\ell^2$"),
+        ("anti_de_sitter", "anti-de Sitter", "3/4", "1", "the line $\\xi = 0$"))},
     **{("schrodinger_spacetime", "poincare", view): [
         f"The plane of $t$ and $\\xi$ (${r}$, $x = 0$) at $L = \\beta$, drawn with $\\xi$ across and $ct$ up. On it "
         "the metric is $-(L^2/r^2)\\left(2c\\,dt\\,d\\xi + (\\beta^2/r^2)\\,c^2dt^2\\right)$, so one edge of every "
@@ -10861,6 +10960,11 @@ CLOSED_FORMS.update({
                                                     lambda U, Z: (-0.4 - U) * np.exp(5 * Z), None),
     ("siklos", "kaigorodov_kundt", "depth"): (lambda V, x: V * x ** 2 / math.sqrt(2) + 0.4 * x ** 2.5,
                                               lambda V, x: V * x ** 2 / math.sqrt(2) - 0.4 * x ** 2.5, None),
+})
+# Kundt's simplest wave at ell = 1 and x = 1: a curve moving left has dv/du = v^2 + 1 and keeps
+# u - arctan(v), and a ray moving right keeps u.
+CLOSED_FORMS.update({
+    ("kundt_waves", "simplest_wave", "front"): (lambda u, v: u - np.arctan(v), lambda u, v: u, None),
 })
 # Schrodinger spacetime at L = beta = 1. On the plane of the time and the null coordinate a curve
 # moving left keeps xi + (h/2) t, with h the coefficient of -dt^2 in the bracket at the plane's

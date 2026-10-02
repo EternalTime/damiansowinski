@@ -84,6 +84,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "family",
       "text": "A pair of extremal black holes with opposite magnetic charges. Each of its poles opens into a throat, which is Bertotti and Robinson's universe once an outside field balances the pair [emparan2000]."
+    },
+    {
+      "id": "kundt_waves",
+      "kind": "family",
+      "text": "Bertotti and Robinson's universe has rays that neither expand nor twist, so it sits in Kundt's class beside his waves [podolskybelan2004]."
     }
   ],
   "references": [
@@ -109,7 +114,8 @@
     "griffiths1991",
     "romans1992",
     "breitenlohner1994",
-    "emparan2000"
+    "emparan2000",
+    "podolskybelan2004"
   ],
   "coordinates": [
     {

@@ -1428,6 +1428,21 @@ DIMENSIONS = {
     ("siklos", "kaigorodov_stationary"): {"u": "L", "v": "L", "y": "L", "\\rho": "L", "L": "L"},
     ("siklos", "kaigorodov_homogeneous"): {"U": "L", "X": "L", "y": "L", "Z": "1", "L": "L", "k": "1"},
     ("siklos", "kaigorodov_kundt"): {"U": "L", "V": "L", "x": "1", "y": "1", "L": "L"},
+    # Kundt's waves: u and v are pure numbers, u the tangent of half the angle a wave front makes,
+    # so the profile G is a length and the affine parameter w = 2x^2 v an area; the simplest wave's
+    # l is a length. On flat space T is a time and the three names are x, a length, and the pure u
+    # and v. With a cosmological constant the chart is the disc's of Siklos's waves, u and v
+    # lengths, so alpha is pure, beta an inverse length and kappa, like Lambda, an inverse area.
+    ("kundt_waves", "kundt"): {"u": "1", "w": "L^2", "x": "L", "y": "L", "G": "L"},
+    ("kundt_waves", "podolsky_belan"): {"u": "1", "v": "1", "x": "L", "y": "L", "G": "L"},
+    ("kundt_waves", "simplest_wave"): {"u": "1", "v": "1", "x": "L", "y": "L", "\\ell": "L"},
+    ("kundt_waves", "kerr_schild"): {
+        "T": "T", "X": "L", "Y": "L", "Z": "L", "\\ell": "L", "x": "L", "u": "1", "v": "1",
+    },
+    ("kundt_waves", "ozsvath_robinson_rozga"): {
+        "u": "L", "v": "L", "\\xi": "L", "\\eta": "L", "\\Lambda": "1/L^2", "\\alpha": "1", "\\beta": "1/L",
+        "h": "1", "p": "1", "q": "1", "\\kappa": "1/L^2",
+    },
     # Schrodinger spacetime: t is the time of the nonrelativistic theory and every other
     # coordinate a length, the null xi included. beta is a length, so that beta^2/r^2 is pure, the
     # dynamical exponent z a pure number and the term h = (beta/r)^{2z - 2} it names one too, and
@@ -1518,6 +1533,29 @@ HELD = {
     ("wahlquist", "mars"): ("U", "V"),
     ("wahlquist", "mars_ingoing"): ("U", "V"),
     ("wahlquist", "whittaker"): ("F",),
+    # Podolsky and Belan's x, u and v as functions of the inertial coordinates of the flat space
+    # Kundt's waves cross: x is a square root, and every derivative of the three is rational in them.
+    ("kundt_waves", "kerr_schild"): ("x", "u", "v"),
+}
+
+# The first derivatives of held names along the coordinates they vary with, written in the names
+# themselves. A system listed here never has its held names written out: the reader checks each
+# declared derivative against the name's definition, and every comparison is then made between
+# rational functions of the names, which are functions of the coordinates with no relation among
+# them. It is for names that are another chart's coordinates and hold a root, as Podolsky and
+# Belan's x = sqrt(X^2 + Z^2 - c^2T^2) is: written out, each of the chart's four hundred values
+# is a polynomial of the sixth degree in that root, and the chart did not finish in ten minutes.
+RATES = {
+    # 2x du is the null covector of the Kerr-Schild form, (1 + u^2) c dT - 2u dX - (1 - u^2) dZ.
+    ("kundt_waves", "kerr_schild"): {
+        "x": {"T": "-c\\left(v + u\\left(1 + uv\\right)\\right)", "X": "1 + 2uv",
+              "Z": "v - u\\left(1 + uv\\right)"},
+        "u": {"T": "\\dfrac{c\\left(1 + u^2\\right)}{2x}", "X": "-\\dfrac{u}{x}",
+              "Z": "-\\dfrac{1 - u^2}{2x}"},
+        "v": {"T": "\\dfrac{c\\left(1 + 2v\\left(v + u\\left(1 + uv\\right)\\right)\\right)}{2x}",
+              "X": "-\\dfrac{v\\left(1 + 2uv\\right)}{x}",
+              "Z": "\\dfrac{1 - 2v\\left(v - u\\left(1 + uv\\right)\\right)}{2x}"},
+    },
 }
 
 GREEK = [
@@ -2233,7 +2271,8 @@ class Reader:
     typo in a published value becomes an error here rather than a silent new symbol.
     """
 
-    def __init__(self, coords, parameters, time_coords=frozenset(), relations=None, kept=None, held=()):
+    def __init__(self, coords, parameters, time_coords=frozenset(), relations=None, kept=None, held=(),
+                 rates=None):
         self.coords = list(coords)
         self.time_coords = set(time_coords)
         self.symbol = {}
@@ -2305,6 +2344,25 @@ class Reader:
                 value = function
             self.parameters[plain] = self.local[plain] = value
             self.known.add(plain)
+        # A held name whose first derivatives the system declares in RATES is never written out:
+        # each declared derivative is checked here against the name's own definition, and
+        # surface() then writes every derivative of the name by them.
+        self.rates = {}
+        for plain, along in (rates or {}).items():
+            if plain not in self.functions or self.functions[plain][0] not in self.held:
+                raise LatexError(f"rates are declared for {plain!r}, which is not a held name")
+            function, names = self.functions[plain]
+            if set(along) != set(names):
+                raise LatexError(f"the rates of {plain!r} are along {sorted(along)}, and it varies with {names}")
+            self.rates[function] = {}
+            for name, text in along.items():
+                rate = self(text)
+                # A definition may hold a name defined before it, so each is written out twice over.
+                out = lambda e: e.subs(self.held).subs(self.held).doit()  # noqa: E731
+                written = sp.diff(out(self.held[function]), self.symbol[name]) - out(rate)
+                if norm(written) != 0:
+                    raise LatexError(f"the declared derivative of {plain!r} along {name!r} is not its definition's")
+                self.rates[function][self.symbol[name]] = rate
         self.relations = {}
         for name, value in (relations or {}).items():
             if name not in self.parameters:
@@ -2325,8 +2383,29 @@ class Reader:
         """The expression on the surface the entry's constrained parameters live on, and to
         the order the system keeps."""
         expression = expression.subs(self.relations)
+        if self.rates:
+            return norm(self.by_rates(expression))
         expression = expression.subs(self.held).doit() if self.held else expression
         return self.truncated(expression) if self.order else expression
+
+    def by_rates(self, expression):
+        """The expression with every derivative of a held name written by the declared first
+        derivatives, to any order, so that it holds the names and no derivative of them. The
+        names are functions of the coordinates with no relation among them, as the coordinates
+        of another chart are, so two values that agree agree as rational functions of them."""
+        expression = sp.sympify(expression)
+        for _ in range(8):
+            derivatives = expression.atoms(sp.Derivative)
+            if not derivatives:
+                return expression
+            written = {}
+            for d in derivatives:
+                if d.expr not in self.rates:
+                    raise LatexError(f"{d} is a derivative of a name with no declared rates")
+                (variable, order), *rest = d.variable_count
+                written[d] = sp.Derivative(self.rates[d.expr][variable], (variable, order - 1), *rest).doit()
+            expression = expression.xreplace(written)
+        raise LatexError("the derivatives of the held names do not settle")
 
     def truncated(self, expression):
         """The Taylor polynomial of the expression through the order the system keeps, in
@@ -2791,13 +2870,15 @@ def _adjugate(matrix):
 class Geometry:
     """Every tensor the files publish, computed from g in the chart the coords name."""
 
-    def __init__(self, g, coords, seconds, order=None):
+    def __init__(self, g, coords, seconds, order=None, settle=None):
         self.n = len(coords)
         self.coords = coords
         self.seconds = seconds
         # A system kept to an order passes `order`, its Reader: the metric and the inverse are
         # then their polynomials to that order, and every tensor is cut after each product.
-        self.settle = order.truncated if order else norm
+        # A system with declared rates passes `settle`, which writes every derivative of a held
+        # name by them after each product, so that no tensor carries one into the next.
+        self.settle = settle or (order.truncated if order else norm)
         self.g = self.settle(norm(g))
         # The adjugate over the determinant, which sympy's own inv() takes far longer to reach.
         if order:
@@ -3182,7 +3263,7 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     relations = PARAMETER_RELATIONS.get((metric_id, entry["id"]), {})
     try:
         reader = Reader(coords, parameters, declaration, relations, ORDERS.get((metric_id, entry["id"])),
-                        HELD.get((metric_id, entry["id"]), ()))
+                        HELD.get((metric_id, entry["id"]), ()), RATES.get((metric_id, entry["id"])))
     except LatexError as error:
         report.skip(where, f"parameters unreadable: {error}")
         return
@@ -3210,7 +3291,8 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     # Everything is computed with the bare coordinates and then weighted into the
     # x^0 = cT chart by compare_block, which is exact because the rescaling is linear.
     symbols = [reader.symbol[name] for name in coords]
-    geometry = Geometry(g, symbols, seconds, reader if reader.order else None)
+    geometry = Geometry(g, symbols, seconds, reader if reader.order else None,
+                        (lambda e: norm(reader.by_rates(e))) if reader.rates else None)
     report.checked_systems += 1
     print(f"  {where}")
 

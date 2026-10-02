@@ -3919,6 +3919,114 @@ def siklos(ck, src):
                         "carries it."])]
 
 
+def kundt_waves(ck, src):
+    """A wave front of the family with a cosmological constant, the surface u = 0, v = 0 of
+    Ozsvath, Robinson and Rozga's chart, in units of ell = sqrt(3/|Lambda|). Its metric is
+    (d xi^2 + d eta^2)/p^2 with p = 1 + Lambda (xi^2 + eta^2)/12 whatever the profile is.
+
+    In de Sitter space, at alpha = 1 and beta = 0, the front is the part q > 0 of that sphere,
+    q = 1 - (xi^2 + eta^2)/4: the hemisphere about the chart's origin out to the envelope q = 0,
+    the equator r = 2. The circle r has the radius rho = r/(1 + r^2/4) = sin(theta) with
+    theta = 2 arctan(r/2) the proper distance from the centre, and stands at z = -cos(theta),
+    which is -q/p.
+
+    In anti-de Sitter space, at alpha = 0 and beta = 1, the surface of u and v is the hyperbolic
+    plane, drawn as Siklos's front is on a sheet of a hyperboloid in Minkowski space, and the
+    envelope q = 0 is the line xi = 0, a geodesic through the centre: the front is the half
+    xi > 0. On it q/p = xi/p is the drawing's own X, so the lines of constant q/p are the
+    sections X = 1/2, 1 and 2 of the sheet, each checked to keep its q/p and to lie on the sheet."""
+    views = []
+    # de Sitter space: the hemisphere.
+    name = "Kundt wave front in de Sitter space"
+    params, functions = nr.KUNDT_FAMILY["de_sitter"]
+    sl = Slice(src, "kundt_waves", "ozsvath_robinson_rozga", "\\xi", None, {"u": 0, "v": 0}, dict(params),
+               functions=dict(functions), turn="\\eta")
+    size = 2.0
+    rim = 2.0
+    cap = Piece("front", "sheet", sl, 0.0, rim, -1.0, 1,
+                (("axis", "the centre of the front, $\\xi = \\eta = 0$"),
+                 ("edge", "the envelope $q = 0$, where the front ends")),
+                [(2 * math.tan(math.radians(a) / 2), "r", None) for a in (30, 60)]
+                + [(rim, "horizon", "$q = 0$")], size)
+    ck.isometry(name, cap)
+    ck.radius(f"{name}: rho = sin(theta)", cap, lambda r: r / (1 + r * r / 4), size)
+    ck.form(f"{name}: the sphere z = -cos(theta) = -q/p", cap, lambda r: -(1 - r * r / 4) / (1 + r * r / 4), size)
+    ck.add(f"{name}: from the centre to the envelope is a quarter of a great circle",
+           abs(sl.proper(0.0, rim) - math.pi / 2), 1e-9)
+    surface = Surface([cap])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *cap.at(rim), "$q = 0$", dx=10)
+    fig.legend("fill", "cover", "the wave front, one surface of constant $u$ and $v$")
+    fig.legend("line", "r", "circles about the centre of the front, a proper distance $\\pi\\ell/6$ and "
+                            "$\\pi\\ell/3$ from it")
+    fig.legend("line", "horizon", "the envelope $q = 0$, a great circle of the sphere, where the front ends")
+    fig.legend("line", "meridian", "straight lines from the centre of the chart, every $15°$")
+    views.append(view("sphere", "A front in de Sitter space", "$\\ell$", [surface], fig.done(),
+                      settings="$\\Lambda = 3$, $\\alpha = 1$, and $\\beta = 0$, so that "
+                               "$\\ell = \\sqrt{3/\\Lambda} = 1$, the unit of every length."))
+
+    # Anti-de Sitter space: half of the hyperbolic plane.
+    name = "Kundt wave front in anti-de Sitter space"
+    params, functions = nr.KUNDT_FAMILY["anti_de_sitter"]
+    sl = Slice(src, "kundt_waves", "ozsvath_robinson_rozga", "\\xi", None, {"u": 0, "v": 0}, dict(params),
+               functions=dict(functions), turn="\\eta", space="minkowski")
+    reach = 2.0
+    top = 2 * math.tanh(reach / 2)
+    size = 2 * math.sinh(reach)
+
+    def proper(r):
+        return 2 * np.arctanh(np.asarray(r, dtype=float) / 2)
+
+    ck.stops(f"{name} in flat space", sl, np.linspace(1e-3, 1.99, 400))
+    sheet = Piece("sheet", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the centre of the chart, $\\xi = \\eta = 0$, a point of the envelope"),
+                   ("edge", "the sheet runs on toward the light cone, to the rim $\\xi^2 + \\eta^2 = 4\\ell^2$")),
+                  [(2 * math.tanh(d / 2), "r", None) for d in (0.5, 1.0, 1.5, reach)], size,
+                  knots=np.linspace(0.0, top, 97)[1:-1])
+    cone = FormPiece("cone", sl, np.linspace(0.0, top, 81), lambda r: np.sinh(proper(r)),
+                     lambda r: np.sinh(proper(r)) - 1.0,
+                     (("apex", "the apex of the light cone, a distance $\\ell$ below the centre of the chart"),
+                      ("edge", "the cone runs on")), size)
+    ck.isometry(name, sheet)
+    ck.form(f"{name}: the hyperboloid Z = cosh(s) - 1", sheet, lambda r: np.cosh(proper(r)) - 1, size)
+    ck.radius(f"{name}: rho = sinh(s)", sheet, lambda r: np.sinh(proper(r)), size)
+    span = math.sinh(reach)
+    curves = []
+    for c in (0.0, 0.5, 1.0, 2.0):
+        # The section X = c of the sheet, out to its last circle, where X^2 + Y^2 = sinh^2(reach).
+        Y = np.linspace(-1.0, 1.0, 241) * math.sqrt(span ** 2 - c ** 2)
+        rho = np.hypot(c, Y)
+        d = np.arcsinh(rho)
+        r = 2 * np.tanh(d / 2)
+        xi, eta = r * c / np.where(rho > 0, rho, 1.0), r * Y / np.where(rho > 0, rho, 1.0)
+        ratio = xi / (1 - (xi ** 2 + eta ** 2) / 4)
+        ck.add(f"{name}, the line q/p = {c:g}: q/p at every point", float(np.max(np.abs(ratio - c))), 1e-12)
+        P = np.column_stack([np.full_like(Y, c), Y, np.cosh(d) - 1])
+        ck.on_piece(f"{name}, the line q/p = {c:g}", sheet, P)
+        curves.append(Curve(sheet, "horizon" if c == 0 else "flow", P))
+    surface = Surface([sheet, cone], curves=curves)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(2 * math.tanh(0.5)), "$\\ell$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$2\\ell$")
+    fig.legend("fill", "cover", "the surface of constant $u$ and $v$; the wave front is its half $\\xi > 0$")
+    fig.legend("line", "horizon", "the envelope $q = 0$, the line $\\xi = 0$, where the front ends")
+    fig.legend("line", "flow", "$q/p$ constant on the front, at $1/2$, $1$, and $2$, each line a fixed distance "
+                               "from the envelope")
+    fig.legend("line", "r", "circles about the centre of the chart, a proper distance $\\ell/2$, $\\ell$, "
+                            "$3\\ell/2$, and $2\\ell$ from it")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears "
+                                    "toward the rim")
+    fig.legend("line", "meridian", "straight lines from the centre of the chart, every $15°$")
+    views.append(view("hyperbolic", "A front in anti-de Sitter space", "$\\ell$", [surface], fig.done(),
+                      settings="$\\Lambda = -3$, $\\alpha = 0$, and $\\beta = 1$, so that "
+                               "$\\ell = \\sqrt{-3/\\Lambda} = 1$, the unit of every length. Every length along "
+                               "the sheet is measured with $dX^2 + dY^2 - dZ^2$.",
+                      stops=["At every point but the centre the circles about it grow faster than the distance "
+                             "out to them, and no surface of revolution in flat space carries the surface; "
+                             "Minkowski space carries it."]))
+    return views
+
+
 def ads_soliton(ck, src):
     """The surface of rho and phi of the polar chart at one moment and one x, at r_0 = L = 1:
     g_rhorho = 1 and g_phiphi = (4/9) sinh^2(3 rho/2) cosh^(-2/3)(3 rho/2), the circle tau about the
@@ -11405,6 +11513,7 @@ DRAWN = {
     "topological_black_hole": topological_black_hole,
     "ads_soliton": ads_soliton,
     "siklos": siklos,
+    "kundt_waves": kundt_waves,
     "schrodinger_spacetime": schrodinger_spacetime,
     "hayward": hayward,
     "mass_inflation": mass_inflation,
@@ -12007,6 +12116,26 @@ CAPTIONS = {
         "out to them, as on the static slice of anti-de Sitter space, and the surface climbs at "
         "$dZ/dr = \\sqrt{1 - 1/f}$ from level toward a light cone of Minkowski space. Both parts lie level at "
         "the circle, so they meet there with one tangent plane.",
+    ],
+    ("kundt_waves", "sphere"): [
+        "A wave front in de Sitter space, a surface of constant $u$ and $v$, drawn as a surface in flat space "
+        "with every distance along it the metric distance. On it the metric is $(d\\xi^2 + d\\eta^2)/p^2$ "
+        "for every profile, a sphere of radius $\\ell = \\sqrt{3/\\Lambda}$, and the front is the hemisphere "
+        "where $q > 0$.",
+        "The front ends on the envelope $q = 0$, the great circle that bounds it. In de Sitter space the "
+        "envelope is a torus that expands at the speed of light, and this circle is where one front touches "
+        "it. Every front of the wave is such a hemisphere, turned from the one before.",
+    ],
+    ("kundt_waves", "hyperbolic"): [
+        "A surface of constant $u$ and $v$ of a wave of Kundt's kind in anti-de Sitter space, drawn as a "
+        "surface in three dimensional Minkowski space with every distance along it, measured with "
+        "$dX^2 + dY^2 - dZ^2$, the metric distance. On it the metric is $(d\\xi^2 + d\\eta^2)/p^2$ for every "
+        "profile, the hyperbolic plane of curvature $-1/\\ell^2$ with $\\ell = \\sqrt{-3/\\Lambda}$.",
+        "The envelope $q = 0$ is the line $\\xi = 0$, a straight line of the hyperbolic plane through the centre "
+        "of the chart, and the wave front is the half on one side of it, $\\xi > 0$. The curves on that half "
+        "keep $q/p$, and each stays a fixed distance from the envelope. In Minkowski space the surface is one "
+        "sheet of the hyperboloid $(Z + \\ell)^2 - X^2 - Y^2 = \\ell^2$, and it nears the light cone, dashed, "
+        "without reaching it.",
     ],
     ("siklos", "front"): [
         "A wave front, a surface of constant $u$ and $v$, drawn as a surface in three dimensional Minkowski "

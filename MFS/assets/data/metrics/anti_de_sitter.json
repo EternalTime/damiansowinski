@@ -122,6 +122,11 @@
       "id": "schrodinger_spacetime",
       "kind": "generalisation",
       "text": "Anti-de Sitter space with one term in $dt^2$ added along a null direction, which leaves of its symmetries those of the free Schrödinger equation. Dam Thanh Son proposed it in 2008 as the dual of cold atoms [son2008]."
+    },
+    {
+      "id": "kundt_waves",
+      "kind": "generalisation",
+      "text": "Gravitational waves of type N that cross anti-de Sitter space on fronts shaped as hyperbolic planes. With the profile switched off the metric is anti-de Sitter space [bicak1999, griffiths2004]."
     }
   ],
   "references": [
@@ -164,7 +169,9 @@
     "horowitz1998",
     "kachru2008",
     "copsey2011",
-    "son2008"
+    "son2008",
+    "bicak1999",
+    "griffiths2004"
   ],
   "coordinates": [
     {

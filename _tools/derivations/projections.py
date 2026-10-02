@@ -893,6 +893,17 @@ CAPTIONS = {
         "those that passed below, here at a right angle. In the two sectors beside the wedge light from both "
         "sides arrives, and an observer there sees a source far to the left twice, $\\delta$ apart.",
     ],
+    ("kundt_waves", "kerr_schild", "fronts"): [
+        "The slice $Y = 0$ of $T$, $X$, and $Z$, with $T$ up. The envelope $x = 0$ of the wave fronts is the "
+        "cone $X^2 + Z^2 = c^2T^2$, a circle growing at the speed of light, drawn at $cT = \\ell$ and $2\\ell$. "
+        "A wave front is a half plane touching the cone along one null line, and on this slice a half line "
+        "touching the circle of its time. Six fronts are drawn, each named by the angle $\\alpha$ between its "
+        "direction of travel and the $Z$ axis, $\\alpha = \\pm 30°$, $\\pm 90°$, and $\\pm 150°$, with "
+        "$u = \\tan(\\alpha/2)$.",
+        "The rays are null geodesics of the wave, for any $\\ell$. On one front they are parallel, each "
+        "pointing the way the front travels, and from one front to the next that direction turns with "
+        "$\\alpha$. No front enters the cone, and every front ends on it.",
+    ],
     ("point_particle_2plus1", "moving", "wedge"): [
         "Space and time around a particle moving along $+x$ at $v = 3c/5$ ($\\alpha = 3/4$, $\\gamma = 5/4$), "
         "$t$ up. The line element is Minkowski's, and the particle shows in the wedge it trails, drawn at three "
@@ -1083,6 +1094,9 @@ FIGURES = [
     # Schrodinger spacetime's global chart at the values its flat views are drawn at, omega = c/beta.
     Projection("schrodinger_spacetime", "global", "trap", "light in the trap", lambda spec: trap_rays(spec),
                {**nr.SCHRODINGER, "omega": 1}, {"X": "0"}, fields=("christoffel",)),
+    # Kundt's simplest wave on the flat space it crosses: the fronts rolled round the null cone.
+    Projection("kundt_waves", "kerr_schild", "fronts", "the wave fronts round their envelope",
+               lambda spec: kundt_fronts(spec), nr.KUNDT, {"Y": "0"}),
     # Gott's closed timelike curve round both strings, at the values the flat views of Grant's
     # charts are drawn at: half deficit angle pi/3, v = 4c/5 and d = l/2.
     Projection("gott_time_machine", "centre_of_momentum", "loop", "a closed timelike curve round both strings",
@@ -1397,6 +1411,75 @@ def moving_wedge(spec, top=2.0, reach=2.4, camera=Camera(-65, 24)):
     fig.legend("line", "edge", f"the two faces of its wedge at three times, ${2 * np.degrees(wide):.0f}°$ apart")
     fig.legend("line", "axis", "from an event on one face to the same event on the other, at one $t$")
     fig.legend("cone", "cone", "future light cone")
+    return fig.done(), sl
+
+
+def kundt_fronts(spec, top=2.0, reach=1.6, camera=Camera(-62, 26)):
+    """The wave fronts of the simplest Kundt wave on the slice Y = 0 of the flat space it crosses,
+    drawn cartesian with T up: the envelope x = 0, the null cone X^2 + Z^2 = c^2T^2, as its circles
+    at three times, and six fronts, each the half plane cT = X sin(alpha) + Z cos(alpha), x >= 0,
+    which is u = tan(alpha/2).
+
+    A point of a front is cT (sin, cos) + x (cos, -sin) in (X, Z), with x the name the chart
+    defines, and its rays are the lines of constant x along (cT, X, Z) = (1, sin, cos). Every
+    point drawn is checked against the chart's own x and u, read from its definitions, every ray
+    to be null by the published metric, and every front to touch the cone on the generator
+    where its x vanishes."""
+    # The reader holds the chart's three names as functions, and its `held` is each one's
+    # definition; u's and v's hold x, so each is written out twice over, and handed to the slice
+    # as the published values' own functions.
+    _, _, reader = nr.load(spec.metric, spec.system)
+    written = {n: sp.sympify(reader.parameters[n]).subs(reader.held).subs(reader.held).subs(reader.c, 1)
+               for n in ("x", "u", "v")}
+    sl = Slice(spec.metric, spec.system, ("T", "X", "Z"), "cartesian", spec.params, spec.fixed,
+               functions={n: str(e) for n, e in written.items()})
+    names = [sp.lambdify(sl.symbols, written[n], "numpy") for n in ("x", "u")]
+    angles = np.radians([-150.0, -90.0, -30.0, 30.0, 90.0, 150.0])
+    times = (top / 2, top)
+    depths = (reach / 2, reach)
+
+    def event(alpha, t, s):
+        """(cT, X, Z) on the front alpha at the time t and the distance s from the envelope."""
+        return np.array([t, t * np.sin(alpha) + s * np.cos(alpha), t * np.cos(alpha) - s * np.sin(alpha)])
+
+    for alpha in angles:
+        k = np.array([1.0, np.sin(alpha), np.cos(alpha)])
+        for t in (0.3, *times):
+            edge = event(alpha, t, 0.0)
+            if abs(edge[1] ** 2 + edge[2] ** 2 - edge[0] ** 2) > 1e-12:
+                raise SystemExit(f"{key(spec)}: a front does not touch the cone")
+            for s_ in depths:
+                e = event(alpha, t, s_)
+                x_here, u_here = (float(f(*e)) for f in names)
+                if not (abs(x_here - s_) < 1e-10 and abs(u_here - np.tan(alpha / 2)) < 1e-9):
+                    raise SystemExit(f"{key(spec)}: the event drawn is not on the front u = tan(alpha/2) at x = {s_}")
+                if abs(k @ sl.metric(tuple(e)) @ k) > 1e-9:
+                    raise SystemExit(f"{key(spec)}: a ray drawn is not null by the published metric")
+
+    draw = lambda e: sl.to_drawing((e[0], e[1], e[2]))
+    fig = Figure(spec.view, spec.label, camera)
+    far = top + reach
+    fig.line("floor", np.array([[-far, -far, 0], [far, -far, 0], [far, far, 0], [-far, far, 0]]), closed=True)
+    fig.line("floor", np.array([[-far, 0, 0], [far, 0, 0]]))
+    fig.line("floor", np.array([[0, -far, 0], [0, far, 0]]))
+    fig.line("floor", np.array([[0, 0, 0], [0, 0, top]]))
+    turn = np.linspace(0.0, 2 * np.pi, 181)
+    for t in (top / 2, top):
+        fig.line("critical", np.array([draw(np.array([t, t * np.sin(a), t * np.cos(a)])) for a in turn]))
+    for alpha in angles:
+        fig.line("critical", np.array([draw(event(alpha, 0.0, 0.0)), draw(event(alpha, top, 0.0))]))
+        for s_ in depths:
+            fig.line("above", np.array([draw(event(alpha, 0.0, s_)), draw(event(alpha, top, s_))]))
+    for alpha in angles:
+        for t in times:
+            fig.line("world", np.array([draw(event(alpha, t, 0.0)), draw(event(alpha, t, reach))]))
+    fig.label(np.array([0.0, 0.0, top]), "$T$", "b", dy=-4)
+    fig.label(np.array([far, 0.0, 0.0]), "$X$", "l", dx=4)
+    fig.label(np.array([0.0, far, 0.0]), "$Z$", "l", dx=4)
+    fig.legend("line", "critical", "the envelope $x = 0$, a circle growing at the speed of light, and the null "
+                                   "line where each front touches it")
+    fig.legend("line", "world", "six wave fronts at $cT = \\ell$ and $2\\ell$, each a half line touching the circle")
+    fig.legend("line", "above", "rays, two on each front")
     return fig.done(), sl
 
 

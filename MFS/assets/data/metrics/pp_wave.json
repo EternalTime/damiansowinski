@@ -83,6 +83,11 @@
       "id": "schrodinger_spacetime",
       "kind": "conformal",
       "text": "A pp-wave whose profile falls as the inverse square of one transverse coordinate, multiplied by anti-de Sitter's conformal factor. It has the symmetries of the free Schrödinger equation [balasubramanian2008, duval2009]."
+    },
+    {
+      "id": "kundt_waves",
+      "kind": "generalisation",
+      "text": "Plane-fronted waves whose rays turn from one front to the next. Kundt found them beside the pp-waves in 1961, and one family with a cosmological constant holds both [kundt1961, bicak1999]."
     }
   ],
   "references": [
@@ -120,7 +125,8 @@
     "chrusciel2006",
     "horowitz2012lifshitz",
     "balasubramanian2008",
-    "duval2009"
+    "duval2009",
+    "bicak1999"
   ],
   "coordinates": [
     {
