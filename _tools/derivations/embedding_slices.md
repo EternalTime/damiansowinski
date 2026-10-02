@@ -354,6 +354,15 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `axisymmetric/north` and `axisymmetric/south` draw the two halves of the axis of symmetry, $\theta = 0$ and $\theta = \pi$, which that surface meets only at the centre $r = 0$: not visible.
 - No conformal diagram.
 
+### Reissner-Nordström-de Sitter
+
+- The embedding has three views of the lukewarm hole, $r_q = r_s/2$ and $\Lambda = 27/(64\,r_s^2)$: the equator of the static moment $t = 0$ from the throat $r_+ = 2r_s/3$ to the widest circle $r_c = 2\,r_s$ and back to the next throat; the static moment inside $r_-$, from $r = 0.2495\,r_s$ to $r_- = 0.4305\,r_s$ and back; and the moment $\tau = 1/H$ of the cosmological chart, $\rho$ from $r_s/100$ to $2\,r_s$, on which the areal radius is $\rho + r_s/2$.
+- `static/radial`: the lines $ct = 0$ from $r_+$ to $r_c$ and from $0.2495\,r_s$ to $r_-$, and the cosmological moment as the curve $cT = F(r) - F(1.298\,r_s)$ of `slices.rnds_static_t` from $r_+$ out; between $r_s/2$ and $r_+$ that moment lies in the white hole, and the static plane reads that range of $r$ as the black hole.
+- `eddington_finkelstein_ingoing/finkelstein` and `/chart`: the static moments are $v = r_*$, and the cosmological one is $v = cT + r_*$ between $r_+$ and $r_c$, the part of it the ingoing chart covers.
+- `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the static moments are $u = -r_*$, and the cosmological one is $u = cT - r_*$ from $r_s/2 + r_s/100$ out, one curve through $r_+$ and $r_c$, where the logarithms of $T$ and of $r_*$ cancel.
+- `cosmological/plane`: the cosmological moment is the line $c\tau = 8r_s/3$; the static $t = 0$ between the horizons is $H\tau = e^{-HT_1(r)/c}$, $\rho = (r - r_s/2)/H\tau$, with $T_1$ the static time at $H\tau = 1$, and the moment inside $r_-$, where $\tau < 0$, is the one through $H\tau = -1/2$ on $r = 0.35\,r_s$, since the static time there is fixed only up to a constant.
+- `static`, `ingoing`, `outgoing` and `cosmological`, the maximal extension: the static moment between the horizons is the line $T = 0$ from $X = 0$ to $X = 2\pi$ on all four; the moment inside $r_-$ is the line $T = \pi$ above the black hole on the static and ingoing views and $T = -\pi$ below the white hole on the outgoing one, and on the cosmological view the curve of constant static time $cT = $ `slices.RNDS_INSIDE_T` below the white hole, through the inner bifurcation sphere; the cosmological moment is one curve through the white hole, the static region and the expanding region on all four.
+
 ### Schwarzschild-de Sitter
 
 - The embedding is the equator of Kottler's static moment $t = 0$ at $\Lambda = 0.2/r_s^2$, $r$ from the throat $r_h = 1.085\,r_s$ to the widest circle $r_c = 3.215\,r_s$ and back to the next throat, through the cosmological bifurcation sphere into the next static region.

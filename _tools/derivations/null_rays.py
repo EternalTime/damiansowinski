@@ -334,6 +334,9 @@ class Diagram:
                                     # declares a curvature singularity, where the Kretschmann scalar
                                     # diverges too slowly for the test at 1e-5 of the drawing; drawn as a
                                     # singular curve and checked in 60 digits, see Plot.weak_singularity
+    no_throat: bool = False         # the areal radius is stationary along the drawn radius on a curve that
+                                    # is no throat, as on tau = 0 of the lukewarm hole's cosmological chart,
+                                    # where every rho has the areal radius r_s/2; the curve is left unmarked
     quotient: str = None            # a coordinate the metric does not depend on, divided out: the
                                     # plane's metric is g_ab - g_ak g_bk/g_kk; see "Rays of no angular
                                     # momentum"
@@ -539,6 +542,16 @@ SDS = {"r_s": 1, "Lambda": "1/5"}
 # Visser's thin shell wormhole with its throat at a = 5r_s/4, inside the photon sphere 3r_s/2.
 TSW = {"r_s": 1, "a": "5/4"}
 SDS_STATIC = 7.5 ** (1 / 3)
+# The lukewarm charged black hole in de Sitter space, r_q = r_s/2 and Lambda r_s^2 = 27/64, which is
+# H r_s/c = 3/8: f = (1 - 1/(2r))^2 - 9r^2/64 vanishes at r_c = 2, r_+ = 2/3, r_- = (2 sqrt 7 - 4)/3 and
+# -(2 sqrt 7 + 4)/3, and is greatest between r_+ and r_c at the root 1.298 of 9r^4 - 32r + 16.
+RNDS = {"r_s": 1, "r_q": "1/2", "Lambda": "27/64"}
+RNDS_ROOTS = (2.0, 2 / 3, (2 * math.sqrt(7) - 4) / 3, -(2 * math.sqrt(7) + 4) / 3)
+RNDS_STATIC = 1.2979848366419
+# A time function of its Eddington-Finkelstein charts down to r = 0: v - h(r) with h' = r^2/(r^2 + r_q^2),
+# which lies between 0 and 2/f wherever f > 0, since f < 1 + r_q^2/r^2; v - r alone is spacelike where f > 2.
+RNDS_TIME_IN = "v - r + atan(2*r)/2"
+RNDS_TIME_OUT = "u + r - atan(2*r)/2"
 
 # The Aichelburg-Sexl shock on the plane of u and v at three distances from the source, in units
 # of 8GE/c^4 with rho_0 = 8GE/c^4: each ray moving left jumps along the shock by -ln(rho/rho_0),
@@ -746,6 +759,21 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
     Diagram("schwarzschild_de_sitter", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 4, -4, 0), "$r/r_s$", "$u/r_s$", SDS, EQUATOR, tau="u + r", areal=True),
+    Diagram("reissner_nordstrom_de_sitter", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 2.6, -1.3, 1.3),
+            "$r/r_s$", "$ct/r_s$", RNDS, EQUATOR, orient="split", split=RNDS_STATIC, areal=True),
+    Diagram("reissner_nordstrom_de_sitter", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 2.6, -1.3, 1.3), "$r/r_s$", "$(v - r)/r_s$", RNDS, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau=RNDS_TIME_IN, areal=True),
+    Diagram("reissner_nordstrom_de_sitter", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 2.6, 0, 2.6), "$r/r_s$", "$v/r_s$", RNDS, EQUATOR, tau=RNDS_TIME_IN, areal=True),
+    Diagram("reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 2.6, -1.3, 1.3), "$r/r_s$", "$(u + r)/r_s$", RNDS, EQUATOR,
+            to_display=FINKELSTEIN_OUT, tau=RNDS_TIME_OUT, areal=True),
+    Diagram("reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 2.6, -2.6, 0), "$r/r_s$", "$u/r_s$", RNDS, EQUATOR, tau=RNDS_TIME_OUT, areal=True),
+    Diagram("reissner_nordstrom_de_sitter", "cosmological", "plane", "$\\tau$ and $\\rho$", ("\\tau", "\\rho"),
+            (0, 3, -2, 4), "$\\rho/r_s$", "$c\\tau/r_s$", {"r_s": 1, "H": "3/8"}, EQUATOR, tau="tau", areal=True,
+            no_throat=True, singular_zero="2*H*tau*rho + r_s"),
     Diagram("tangherlini", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_h$", "$ct/r_h$", {"r_h": 1}, TANGHERLINI_FIVE, orient="ingoing", areal=True),
     Diagram("tangherlini", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -1669,6 +1697,62 @@ CAPTIONS = {
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
         "null coordinate. The ingoing family turns vertical at both horizons and leans toward larger $r$ "
         "inside $r_h$ and beyond $r_c$.",
+    ],
+    ("reissner_nordstrom_de_sitter", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for the lukewarm hole ($r_q = r_s/2$, $\\Lambda = 27/(64\\,r_s^2)$), "
+        "the same at every other angle by spherical symmetry. There $g^{rr} = 1 - r_s/r + r_q^2/r^2 - \\Lambda r^2/3$ "
+        "vanishes at the inner horizon $r_- = 0.431\\,r_s$, at the black hole horizon $r_+ = 2r_s/3$, and at the "
+        "cosmological horizon $r_c = 2\\,r_s$, and the cones close at each of the three, since $dt/dr = \\pm 1/g^{rr}$ "
+        "diverges there. Between $r_+$ and $r_c$ the cones are widest at $r = 1.298\\,r_s$, where $g^{rr}$ is greatest.",
+        "Between $r_-$ and $r_+$ and beyond $r_c$, $t$ is a spacelike coordinate, and the components alone do not fix "
+        "which way is future. We take it from the ingoing Eddington-Finkelstein chart inside $r_+$, which "
+        "makes that region the black hole, where every cone points to smaller $r$, and from the outgoing one "
+        "beyond $r_c$, which makes that region the expanding universe, where every cone points to larger $r$. "
+        "Inside $r_-$ the coordinate $t$ is a time again, and the singularity $r = 0$, where the Kretschmann scalar "
+        "diverges, is timelike.",
+    ],
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for the lukewarm hole ($r_q = r_s/2$, $\\Lambda = 27/(64\\,r_s^2)$) with "
+        "$v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family "
+        "has $dv/dr = 2/g^{rr}$ with $g^{rr} = 1 - r_s/r + r_q^2/r^2 - \\Lambda r^2/3$, so it stands vertical at each of the "
+        "three horizons: each horizon is an outgoing ray that stays where it is.",
+        "The chart crosses the black hole horizon $r_+ = 2r_s/3$ into the black hole, where both edges of "
+        "every future cone point to smaller $r$, and the inner horizon $r_- = 0.431\\,r_s$ into the region about the "
+        "singularity, where the outgoing edge points to larger $r$ again. It crosses the cosmological horizon "
+        "$r_c = 2\\,r_s$ into the contracting region in the past of the static one, where both edges point to "
+        "smaller $r$ as well.",
+    ],
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a "
+        "null coordinate. The outgoing family turns vertical at each of the three horizons and leans back toward smaller "
+        "$r$ between $r_-$ and $r_+$ and beyond $r_c$.",
+    ],
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for the lukewarm hole ($r_q = r_s/2$, $\\Lambda = 27/(64\\,r_s^2)$) with "
+        "$u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family "
+        "stands vertical at each of the three horizons. Between $r_-$ and $r_+$ both edges of every future cone point to "
+        "larger $r$: this is the white hole, which nothing from outside can enter. Beyond $r_c$ they point to "
+        "larger $r$ as well, into the expanding region that the static observers' light goes on to reach.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
+        "null coordinate. The ingoing family turns vertical at each of the three horizons and leans toward larger $r$ "
+        "between $r_-$ and $r_+$ and beyond $r_c$.",
+    ],
+    ("reissner_nordstrom_de_sitter", "cosmological", "plane"): [
+        "The plane of $\\tau$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $H = 3c/(8\\,r_s)$, the same at "
+        "every other angle by spherical symmetry. The rays obey $d\\rho/d(c\\tau) = \\pm(H\\tau + r_s/2\\rho)^{-2}$, so "
+        "$\\tau$ is a time everywhere and no cone closes. The marked curves, where $|\\nabla r|^2$ vanishes for the "
+        "areal radius $r = H\\tau\\rho + r_s/2$, are the three horizons, the hyperbolas $c\\tau\\rho = 4\\,r_s^2$ of $r_c$, "
+        "$4\\,r_s^2/9$ of $r_+$, and $-0.185\\,r_s^2$ of $r_-$.",
+        "The chart crosses the cosmological horizon into the expanding region and the black hole horizon into "
+        "the white hole, as the outgoing Eddington-Finkelstein chart does. The line $\\tau = 0$ is the sphere "
+        "$r = r_s/2$ inside the white hole, and below it the chart runs on through the inner horizon to the "
+        "singularity $r = 0$ on $H\\tau\\rho = -r_s/2$, where the Kretschmann scalar diverges.",
     ],
     ("tangherlini", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) in five dimensions, the same at every fixed angle by hyperspherical "
@@ -4730,7 +4814,7 @@ class Plot:
                 out.append({"kind": "gtt", "lines": lines, "legend": f"$g_{{{t}{t}}} = 0$, {spec.mark_gtt}"})
         if spec.areal:
             throat = self.zero_set("dRr", keep=lambda x0, r: (fn["R"](x0, r) > 1e-6) & here(x0, r), drop_edge=True)
-            if throat:
+            if throat and not spec.no_throat:
                 out.append({"kind": "throat", "lines": throat})
             if not self.c.same_as_grr:
                 apparent = self.zero_set("grad2", keep=lambda x0, r: (np.abs(fn["dRr"](x0, r)) > 1e-6) & here(x0, r))
@@ -5479,6 +5563,33 @@ def _sds_rstar(r):
     return sum(np.log(np.abs(r - ri)) / (1 / ri ** 2 - 0.4 * ri / 3) for ri in roots)
 
 
+def _rnds_rstar(r):
+    """The lukewarm hole's tortoise coordinate at r_s = 1, r_q = 1/2 and Lambda = 27/64,
+    sum_i ln|r - r_i|/f'(r_i) over the four roots of 9r^4 - 64r^2 + 64r - 16, the negative one
+    included, since 1/f = -64r^2/(9 prod(r - r_i)) has no polynomial part."""
+    return sum(np.log(np.abs(r - a)) * (-64 * a * a / (9 * np.prod([a - b for b in RNDS_ROOTS if b != a])))
+               for a in RNDS_ROOTS)
+
+
+def _rnds_away(x, r):
+    return np.all([np.abs(r - a) > 0.05 for a in RNDS_ROOTS[:3]], axis=0) & (r > 0.05)
+
+
+def _rnds_cosmic(tau, rho, sign):
+    """What each family keeps on the cosmological plane at r_s = 1 and H = 3/8: with the areal radius
+    r = H tau rho + 1/2, the static time is cT = ln|H tau|/H + F(r), F' = H r^2/((r - 1/2) f), a sum
+    of logarithms over 1/2 and the four roots of f, and the rays keep cT -+ r_*."""
+    r = 0.375 * tau * rho + 0.5
+    poles = (0.5,) + RNDS_ROOTS
+    F = sum(np.log(np.abs(r - a)) * (-(8 / 3) * a ** 4 / np.prod([a - b for b in poles if b != a])) for a in poles)
+    return np.log(np.abs(0.375 * tau)) / 0.375 + F + sign * _rnds_rstar(r)
+
+
+def _rnds_cosmic_away(tau, rho):
+    r = 0.375 * tau * rho + 0.5
+    return _rnds_away(tau, r) & (np.abs(r - 0.5) > 0.05) & (np.abs(tau) > 0.05)
+
+
 def _sads_rstar(r):
     """Schwarzschild-anti-de Sitter's tortoise coordinate at r_s = 2 and L = 1, where 1/f =
     r/((r - 1)(r^2 + r + 2)): (1/4) ln|r - 1| - (1/8) ln(r^2 + r + 2) + (5/(4 sqrt 7)) arctan((2r + 1)/sqrt 7),
@@ -5624,6 +5735,14 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _sads_rstar(r), lambda v, r: np.abs(r - 1) > 0.05),
     ("schwarzschild_ads", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _sads_rstar(r), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
+    ("reissner_nordstrom_de_sitter", "static", "radial"):
+        (lambda t, r: t + _rnds_rstar(r), lambda t, r: t - _rnds_rstar(r), _rnds_away),
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _rnds_rstar(r), _rnds_away),
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _rnds_rstar(r), lambda u, r: u, _rnds_away),
+    ("reissner_nordstrom_de_sitter", "cosmological", "plane"):
+        (lambda tau, rho: _rnds_cosmic(tau, rho, 1), lambda tau, rho: _rnds_cosmic(tau, rho, -1), _rnds_cosmic_away),
     ("schwarzschild_de_sitter", "static", "radial"):
         (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):

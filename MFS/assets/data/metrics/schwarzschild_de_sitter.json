@@ -58,6 +58,11 @@
       "id": "mcvittie",
       "kind": "generalisation",
       "text": "A mass in a universe whose expansion rate changes in time. Where $H$ is constant it is Schwarzschild-de Sitter [kaloper2010, carrera2010]."
+    },
+    {
+      "id": "reissner_nordstrom_de_sitter",
+      "kind": "generalisation",
+      "text": "Kottler's black hole with an electric charge. The charge adds an inner horizon, and at $r_q = r_s/2$ the black hole and the universe around it have the same temperature [romans1992]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "islam1983",
     "rindler2007",
     "kaloper2010",
-    "carrera2010"
+    "carrera2010",
+    "romans1992"
   ],
   "coordinates": [
     {

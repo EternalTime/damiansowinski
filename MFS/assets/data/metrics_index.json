@@ -196,7 +196,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cc09592dd796cf76",
+    "version": "47480b12ab1e1da6",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -1226,7 +1226,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cce140199c9aef6d",
+    "version": "9e897e2413d4831c",
     "diagrams": "37b04b7cf3bacecd",
     "conformal": "7f52e4d2155dcb5e",
     "embedding": "1199648bcf6666d8"
@@ -1402,10 +1402,53 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "588d80e6152c997e",
+    "version": "18946dc022760112",
     "diagrams": "4565bff8ba921a42",
     "conformal": "fb9ce65c8d285c0e",
     "embedding": "1f6d4a7541295881"
+  },
+  {
+    "id": "reissner_nordstrom_de_sitter",
+    "name": "Reissner-Nordström-de Sitter",
+    "tags": [
+      "electrovacuum",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "charged",
+      "charged black hole",
+      "black hole",
+      "electric charge",
+      "mass",
+      "electromagnetic field",
+      "cosmological constant",
+      "positive cosmological constant",
+      "de Sitter",
+      "singularity",
+      "curvature singularity",
+      "coordinate singularity",
+      "horizon",
+      "event horizon",
+      "Cauchy horizon",
+      "inner horizon",
+      "cosmological horizon",
+      "white hole",
+      "maximal extension",
+      "causal structure",
+      "strong cosmic censorship",
+      "lukewarm",
+      "extremal",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "Einstein-Maxwell",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "f93f0c5ded263e3d",
+    "diagrams": "f6c6ac1947d0b4e9",
+    "conformal": "639eea78631ca3e1",
+    "embedding": "342b4919bb1495ae"
   },
   {
     "id": "robinson_trautman",
@@ -1567,7 +1610,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f7055b2f70aaddbc",
+    "version": "f5450cd3f7aed6f7",
     "diagrams": "01986085179076c1",
     "conformal": "d07bed603ec275fe",
     "embedding": "2693e5d4af5edd89"

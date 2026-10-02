@@ -276,6 +276,13 @@ const chartButton = c => `#mfs-content-panel .mfs-charts [data-chart="${c}"]`;
 
 async function open(id) {
   opened = id;
+  /* Once a spacetime is open the list's panel shows its contents, so the list is brought back
+     first, as a reader does, and the name scrolled to where it can be pressed. */
+  if (await evaluate(`document.getElementById('mfs-list-pane').classList.contains('mfs-pane-off')`)) {
+    await point('.mfs-toc-back');
+    await sleep(400);
+  }
+  await evaluate(`document.querySelector('.mfs-result[data-id="${id}"]').scrollIntoView({ block: 'nearest' })`);
   await mark();
   await point(`.mfs-result[data-id="${id}"]`);
   if (!await settle(true)) mismatches.push(`${id}: never drawn once opened from the list`);
@@ -374,7 +381,11 @@ for (const id of ids) {
   await send('Page.reload', {});
   await sleep(300);
   await listed();
-  await open(id);
+  /* A spacetime has an address of its own, which the reloaded page opens at, so the page draws
+     it without a press; a page with no such address is opened from the list as before. */
+  if (await evaluate(`new URLSearchParams(location.search).get('spacetime') === ${JSON.stringify(id)}`)) {
+    if (!await settle(false)) mismatches.push(`${id}: never drawn when the page opened at its address`);
+  } else await open(id);
   const before = expected[id];
   for (const k of Object.keys(expected)) delete expected[k];
   await check(id, 0, `reloaded with ${data.coordinates[before].id} chosen, then opened`);

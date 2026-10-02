@@ -5,7 +5,7 @@ schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
-damour_solodukhin and ori_time_machine, and Godel's cylindrical chart.
+damour_solodukhin, ori_time_machine and reissner_nordstrom_de_sitter, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -4944,6 +4944,154 @@ def van_den_broeck_proper(chart):
 
 
 CHARTS["van_den_broeck"] = [lambda s=s: van_den_broeck(s) for s in VDB_CHARTS]
+
+
+# -- Reissner-Nordström-de Sitter ------------------------------------------------------
+
+RNDS_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing", "cosmological"]
+RNDS_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+RNDS_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def reissner_nordstrom_de_sitter(system_id):
+    """The charged black hole in de Sitter space, f = 1 - r_s/r + r_q^2/r^2 - Lambda r^2/3, in the
+    static chart and the two Eddington-Finkelstein charts built on its tortoise coordinate,
+    dr_*/dr = 1/f, and the lukewarm hole r_q = r_s/2 in the cosmological chart of Kastor and
+    Traschen, ds^2 = -c^2 dtau^2/W^2 + W^2 (drho^2 + rho^2 dOmega^2) with W = H tau + r_s/(2 rho)
+    and Lambda = 3H^2/c^2, whose areal radius is r = H tau rho + r_s/2. Every value of the first
+    three is printed around 3r^2 f = 3r^2 - 3r_s r + 3r_q^2 - Lambda r^4, in the order of f itself,
+    so that each chart reduces to Kottler's at r_q = 0 and to Reissner and Nordstrom's at
+    Lambda = 0 term by term. The Kretschmann scalar is Reissner and Nordstrom's plus de Sitter's
+    8 Lambda^2/3, which it is. The cosmological chart is checked, slot by slot, to be the static
+    chart pulled back; reissner_nordstrom_de_sitter.md derives the map."""
+    if system_id == "cosmological":
+        coords = ["\\tau", "\\rho", "\\theta", "\\phi"]
+        parameters = ["r_s", "H"]
+
+        def line(c2, rate):
+            W = "\\left(" + rate + " + \\dfrac{r_s}{2\\rho}\\right)"
+            return ("ds^2 = -" + W + "^{-2}" + c2 + "d\\tau^2 + " + W + "^2\\left(d\\rho^2 + \\rho^2"
+                    + RNDS_SPHERE + "\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        tau, rho = probe.symbol["\\tau"], probe.symbol["\\rho"]
+        rs, H = probe.parameters["r_s"], probe.parameters["H"]
+        D = sp.Symbol("RD", positive=True)
+        return {
+            "metric_id": "reissner_nordstrom_de_sitter",
+            "system": {"id": system_id, "name": "Cosmological", "coords": coords,
+                       "domains": ["\\tau \\in (-r_s/(2H\\rho), \\infty)", "\\rho \\in (0, \\infty)"] + RNDS_ANGLES
+                       + ["r = H\\tau\\rho + r_s/2 \\;\\text{(areal radius)}",
+                          "2H\\tau\\rho + r_s = 0 \\;\\text{(the singularity)}"],
+                       "parameters": parameters, "line_element": line("c^2", "H\\tau")},
+            # The symbol tau is x^0 = c tau in the geometry, so the rate that multiplies it is H/c there.
+            "chart_line_element": line("", "\\dfrac{H\\tau}{c}"),
+            "time": "\\tau",
+            "printer": {"lead": [H, D, tau, rho, rs, probe.c],
+                        "named": {D: "2H\\tau\\rho + r_s"}},
+            "pretty": rnds_cosmological_pretty(2 * H * tau * rho + rs, tau, D),
+            "ricci_scalar": "\\dfrac{12H^2}{c^2}",
+            # Reissner and Nordstrom's scalar at r_q = r_s/2 and the areal radius, plus de Sitter's.
+            "kretschmann": ("\\dfrac{128r_s^2\\left(24H^2\\tau^2\\rho^2 + r_s^2\\right)}"
+                            "{\\left(2H\\tau\\rho + r_s\\right)^8} + \\dfrac{24H^4}{c^4}"),
+            "check": reissner_nordstrom_de_sitter_pullback,
+        }
+    f = "\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} - \\dfrac{\\Lambda r^2}{3}\\right)"
+    bare = f[6:-7]
+    sphere = " + r^2" + RNDS_SPHERE
+    domains = ["r \\in (0, \\infty)"] + RNDS_ANGLES + [
+        "r = r_- \\;\\text{(inner horizon)}", "r = r_+ \\;\\text{(black hole horizon)}",
+        "r = r_c \\;\\text{(cosmological horizon)}"]
+    if system_id == "static":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Spherical"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    parameters = ["r_s", "r_q", "\\Lambda"]
+    probe = vm.Reader(coords, parameters, ())
+    r, rs, rq, L = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["r_q"], probe.parameters["Lambda"]
+    return {
+        "metric_id": "reissner_nordstrom_de_sitter",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"rising": [L, rq, rs], "lead": [L, r, rs, rq], "flip": False},
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "ricci_scalar": "4\\Lambda",
+        "kretschmann": ("\\dfrac{12r_s^2}{r^6} - \\dfrac{48r_s\\,r_q^2}{r^7} + \\dfrac{56r_q^4}{r^8}"
+                        " + \\dfrac{8\\Lambda^2}{3}"),
+    }
+
+
+def rnds_cosmological_pretty(twice, tau, D):
+    """A pretty printer for the cosmological chart, whose values are built on twice the areal
+    radius, 2 H tau rho + r_s: each value is factored, that sum is written as the placeholder D
+    wherever it is a factor, and any other sum is written as a polynomial in D where that
+    leaves it fewer terms, as 3H^2 D^4 + 4 r_s^2 c^2 in the Einstein tensor."""
+    back = sp.solve(twice - D, tau)[0]
+
+    def pretty(value):
+        out = sp.Integer(1)
+        for factor in sp.Mul.make_args(sp.factor(value)):
+            base, k = (factor.base, factor.exp) if factor.is_Pow else (factor, sp.Integer(1))
+            if base.is_Add:
+                if sp.expand(base - twice) == 0:
+                    base = D
+                elif sp.expand(base + twice) == 0:
+                    base, out = D, out * (-1) ** k
+                else:
+                    inside = sp.expand(base.subs(tau, back))
+                    if not sp.fraction(sp.together(inside))[1].free_symbols and len(inside.args) < len(base.args):
+                        base = inside
+            out *= base ** k
+        return out
+
+    return pretty
+
+
+def reissner_nordstrom_de_sitter_pullback(chart):
+    """J^T g J, with g the static chart's metric at r_q = r_s/2 and Lambda = 3H^2/c^2, on its plane
+    of the time T and r, and J the Jacobian of r = H tau rho + r_s/2 and
+    cT = (c/H) ln(H tau) + G(r), where dG/dr = H r^2/(c (r - r_s/2) f), against the cosmological
+    chart's metric in every slot, and the two spheres against one another."""
+    spec = reissner_nordstrom_de_sitter("static")
+    static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    r = static.symbols[1]
+    tau, rho = chart.symbols[:2]                                 # the symbol tau is x^0 = c tau here
+    rs, H, c = chart.reader.parameters["r_s"], chart.reader.parameters["H"], chart.reader.c
+    h = H / c
+    radius = h * tau * rho + rs / 2
+    at = {static.reader.parameters["r_s"]: rs, static.reader.parameters["r_q"]: rs / 2,
+          static.reader.parameters["Lambda"]: 3 * h ** 2}
+    f = (-static.geo.g[0, 0]).subs(at)
+    slope = (h * r ** 2 / ((r - rs / 2) * f)).subs(r, radius)    # dT/dr at fixed tau, in the chart x^0 = cT
+    J = sp.Matrix([[1 / (h * tau) + slope * sp.diff(radius, tau), slope * sp.diff(radius, rho)],
+                   [sp.diff(radius, tau), sp.diff(radius, rho)]])
+    plane = static.geo.g[:2, :2].subs(at).subs(r, radius)
+    pulled = J.T * plane * J
+    for i in range(2):
+        for j in range(i, 2):
+            if vm.norm(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"reissner_nordstrom_de_sitter: the static chart pulled back misses the "
+                                     f"cosmological chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    for k in (2, 3):
+        if vm.norm(static.geo.g[k, k].subs(r, radius).subs(static.symbols[2], chart.symbols[2])
+                   - chart.geo.g[k, k]) != 0:
+            raise AssertionError(f"reissner_nordstrom_de_sitter: the static sphere misses the cosmological one in slot {k}")
+
+
+CHARTS["reissner_nordstrom_de_sitter"] = [lambda s=s: reissner_nordstrom_de_sitter(s) for s in RNDS_CHARTS]
 
 
 def write(spec):

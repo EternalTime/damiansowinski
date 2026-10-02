@@ -674,6 +674,22 @@ DIMENSIONS = {
     ("schwarzschild_ads", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "L": "L",
     },
+    # The charged black hole in de Sitter space keeps the three lengths of its parents: r_s, the
+    # charge radius r_q and Lambda, a curvature. Its cosmological chart, which exists at
+    # r_q = r_s/2, carries the Hubble rate H, a frequency with 3H^2/c^2 = Lambda, as de Sitter's
+    # flat slicing does, and a comoving length rho.
+    ("reissner_nordstrom_de_sitter", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "\\Lambda": "1/L**2",
+    },
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "\\Lambda": "1/L**2",
+    },
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "\\Lambda": "1/L**2",
+    },
+    ("reissner_nordstrom_de_sitter", "cosmological"): {
+        "\\tau": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "H": "1/T",
+    },
     # Visser's thin shell wormhole joins two Schwarzschild exteriors at the throat radius a, a
     # length beside r_s. Through the throat, ell = +-(r - a) is a length, |ell| carries what ell
     # carries and sgn(ell) none, and the delta at the throat an inverse length.

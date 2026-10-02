@@ -57,6 +57,11 @@
       "id": "bell_szekeres",
       "kind": "locally_same",
       "text": "Two plane electromagnetic shock waves that collide head on leave this geometry between their fronts, with $b = 1/\\sqrt{2ab}$ set by the strengths $a$ and $b$ of the two waves. It lasts as far as the Killing-Cauchy horizon where the waves focus each other [bell1974, griffiths1991]."
+    },
+    {
+      "id": "reissner_nordstrom_de_sitter",
+      "kind": "generalisation",
+      "text": "The charged black hole in de Sitter space. The throat of its cold member is a product of a two dimensional spacetime and a sphere, and at $\\Lambda = 0$ that product is Bertotti and Robinson's [romans1992]."
     }
   ],
   "references": [
@@ -79,7 +84,8 @@
     "bonnor1954",
     "melvin1964",
     "bell1974",
-    "griffiths1991"
+    "griffiths1991",
+    "romans1992"
   ],
   "coordinates": [
     {

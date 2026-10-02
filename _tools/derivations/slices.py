@@ -532,6 +532,87 @@ def _sads(sign=0):
     return [Mark(m, [np.column_stack([sign * sads_rstar(r), r])])]
 
 
+RNDS_ROOTS = (2.0, 2 / 3, (2 * math.sqrt(7) - 4) / 3, -(2 * math.sqrt(7) + 4) / 3)
+RNDS_H = 3 / 8                  # H r_s/c of the lukewarm hole every diagram draws
+RNDS_LABEL = "$\\tau = 1/H$"      # the name of that moment on every drawing
+RNDS_TAU = 1 / RNDS_H           # the moment of the cosmological chart that is embedded, H tau = 1
+
+
+def rnds_rstar(r):
+    """The lukewarm hole's tortoise coordinate at r_s = 1, r_q = 1/2 and Lambda = 27/64, as the
+    Eddington-Finkelstein charts fix it, r_* = sum_i ln|1 - r/r_i|/f'(r_i) over the four roots of
+    9r^4 - 64r^2 + 64r - 16, with 1/f'(r_i) = -64 r_i^2/(9 prod_j (r_i - r_j)), which vanishes at r = 0."""
+    r = np.asarray(r, dtype=float)
+    return sum(np.log(np.abs(1 - r / a)) * (-64 * a * a / (9 * math.prod(a - b for b in RNDS_ROOTS if b != a)))
+               for a in RNDS_ROOTS)
+
+
+def rnds_static_t(tau, r):
+    """The static time cT of the event of the cosmological chart at tau with the areal radius
+    r = H tau rho + 1/2: cT = ln|H tau|/H + F(r) up to a constant, with F' = H r^2/((r - 1/2) f), a
+    sum of logarithms c_a ln|r - a| over a = 1/2 and the four roots of f,
+    c_a = -(8/3) a^4/prod_b (a - b). c at 1/2 is -1/H, so cT is continuous through tau = 0, where
+    r = 1/2, and its one constant is taken so that cT vanishes at H tau = 1 on the static radius
+    r = 1.298, where f is greatest, the root of 9r^4 - 32r + 16."""
+    r = np.asarray(r, dtype=float)
+    poles = (0.5,) + RNDS_ROOTS
+
+    def F(x):
+        return sum(np.log(np.abs(x - a)) * (-(8 / 3) * a ** 4 / math.prod(a - b for b in poles if b != a)) for a in poles)
+    return np.log(np.abs(RNDS_H * tau)) / RNDS_H + F(r) - F(1.2979848366419)
+
+
+# The static time inside r_- is fixed only up to a constant of its own, and the moment embedded
+# there is the one through H tau = -1/2 on r = 0.35, which lies on the drawn cosmological plane.
+RNDS_INSIDE_T = float(rnds_static_t(-0.5 / RNDS_H, 0.35))
+
+
+def _rnds(chart):
+    """The three moments of the lukewarm hole on each of its planes: the static t = 0 between r_+
+    and r_c and inside r_-, and the moment H tau = 1 of the cosmological chart, on which the
+    areal radius is rho + 1/2. In an Eddington-Finkelstein chart the static moments are v = r_*
+    and u = -r_*, and the cosmological one is v = cT + r_* or u = cT - r_* with cT of
+    rnds_static_t; on the cosmological plane the static t = 0 is |H tau| = exp(-H F(r)),
+    rho = (r - 1/2)/(H tau), and inside r_-, where tau < 0, it is the moment cT = RNDS_INSIDE_T of that time. The cosmological moment runs through the
+    white hole between r_s/2 and r_+, which the outgoing chart alone covers among the others: the
+    static plane reads that range of r as the black hole and the ingoing chart covers the black
+    hole, so they draw the moment from r_+ out, and the ingoing chart no further than r_c."""
+    between, = moments("reissner_nordstrom_de_sitter", "between")
+    inside, = moments("reissner_nordstrom_de_sitter", "inside")
+    cosmic, = moments("reissner_nordstrom_de_sitter", "cosmological", label=RNDS_LABEL)
+    rc, rp, rm, _ = RNDS_ROOTS
+    b_lo, b_hi = between.reach("static", "r")
+    i_lo, i_hi = inside.reach("static", "r")
+    c_lo, c_hi = (x + 0.5 for x in cosmic.reach("cosmological", "\\rho"))
+
+    def span(lo, hi, open_lo=True, open_hi=True):
+        """Values from lo to hi, crowding toward each end the curve runs off at."""
+        mid = 0.5 * (lo + hi)
+        left = near(lo, mid) if open_lo else np.linspace(lo, mid, N)
+        right = near(hi, mid)[::-1] if open_hi else np.linspace(mid, hi, N)
+        return np.concatenate([left, right[1:]])
+
+    r_b, r_i = span(b_lo, b_hi), span(i_lo, i_hi, open_lo=False)
+    r_static = span(rp, rc)
+    r_beyond = span(rc, c_hi, open_hi=False)
+    r_white = span(c_lo, rp, open_lo=False)
+    if chart == "static":
+        return [Mark(between, along(0.0, b_lo, b_hi)), Mark(inside, along(0.0, i_lo, i_hi)),
+                Mark(cosmic, [np.column_stack([rnds_static_t(RNDS_TAU, r), r]) for r in (r_static, r_beyond)])]
+    if chart == "cosmological":
+        def static_moment(r, sign, at):
+            tau = sign * np.exp(RNDS_H * (at - rnds_static_t(1 / RNDS_H, r))) / RNDS_H
+            return np.column_stack([tau, (r - 0.5) / (RNDS_H * tau)])
+        return [Mark(between, [static_moment(r_b, 1, 0.0)]), Mark(inside, [static_moment(r_i, -1, RNDS_INSIDE_T)]),
+                Mark(cosmic, along(RNDS_TAU, c_lo - 0.5, c_hi - 0.5))]
+    sign = 1 if chart == "ingoing" else -1
+    # In the outgoing chart the moment crosses r_+ and r_c as one curve.
+    pieces = (r_static,) if sign == 1 else (np.concatenate([r_white, r_static, r_beyond]),)
+    return [Mark(between, [np.column_stack([sign * rnds_rstar(r_b), r_b])]),
+            Mark(inside, [np.column_stack([sign * rnds_rstar(r_i), r_i])]),
+            Mark(cosmic, [np.column_stack([rnds_static_t(RNDS_TAU, r) + sign * rnds_rstar(r), r]) for r in pieces])]
+
+
 def _c_metric(y):
     """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
     axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
@@ -599,6 +680,12 @@ FLAT = {
     ("btz", "stationary", "static"): lambda: _btz(),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
     ("btz", "eddington_finkelstein_outgoing", "static"): lambda: _btz(-1),
+    ("reissner_nordstrom_de_sitter", "static", "radial"): lambda: _rnds("static"),
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _rnds("ingoing"),
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_ingoing", "chart"): lambda: _rnds("ingoing"),
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _rnds("outgoing"),
+    ("reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing", "chart"): lambda: _rnds("outgoing"),
+    ("reissner_nordstrom_de_sitter", "cosmological", "plane"): lambda: _rnds("cosmological"),
     ("schwarzschild_ads", "static", "radial"): lambda: _sads(),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _sads(1),
@@ -1311,6 +1398,30 @@ def checks():
     report("McVittie: the areal chart pulls back onto the isotropic plane outside the throat", miss, 1e-10)
     miss = max(abs(float(R_of.subs({ti: a, ri: b})) - mcvittie_areal(a, b)) for a, b in pts)
     report("McVittie: mcvittie_areal is the areal radius of the comoving r", miss, 1e-12)
+    # The lukewarm hole: r = H tau rho + r_s/2 and the static time of rnds_static_t pull the static
+    # plane back onto the cosmological one, and r_* of rnds_rstar has dr_*/dr = 1/f.
+    g_s, (ts, rs_, *_) = metric("reissner_nordstrom_de_sitter", "static", {"r_s": 1, "r_q": "1/2", "Lambda": "27/64"})
+    g_c, (tc, xc, *_) = metric("reissner_nordstrom_de_sitter", "cosmological", {"r_s": 1, "H": "3/8"})
+    f_s = sp.lambdify(rs_, -g_s[0, 0], "numpy")
+    plane = sp.lambdify((tc, xc), g_c[:2, :2], "numpy")
+    miss = 0.0
+    for tau, rho in zip(rng.uniform(0.5, 4, 40), rng.uniform(0.2, 2.5, 40)):
+        r = RNDS_H * tau * rho + 0.5
+        if min(abs(r - a) for a in RNDS_ROOTS) < 0.05:
+            continue
+        h = 1e-6
+        dT = [(rnds_static_t(tau + h, RNDS_H * (tau + h) * rho + 0.5) - rnds_static_t(tau - h, RNDS_H * (tau - h) * rho + 0.5)) / (2 * h),
+              (rnds_static_t(tau, RNDS_H * tau * (rho + h) + 0.5) - rnds_static_t(tau, RNDS_H * tau * (rho - h) + 0.5)) / (2 * h)]
+        J = np.array([dT, [RNDS_H * rho, RNDS_H * tau]])
+        pulled = J.T @ np.diag([-f_s(r), 1 / f_s(r)]) @ J
+        there = np.array(plane(tau, rho), dtype=float)
+        miss = max(miss, float(np.max(np.abs(pulled - there) / (1 + np.abs(there)))))
+    report("Reissner-Nordstrom-de Sitter: rnds_static_t pulls the static plane back onto the cosmological one", miss, 1e-6)
+    rr = rng.uniform(0.05, 2.5, 40)
+    rr = rr[np.min(np.abs(rr[:, None] - np.array(RNDS_ROOTS)[None, :]), axis=1) > 0.05]
+    slope = (rnds_rstar(rr + 1e-6) - rnds_rstar(rr - 1e-6)) / 2e-6
+    report("Reissner-Nordstrom-de Sitter: rnds_rstar has dr_*/dr = 1/f and vanishes at r = 0",
+           float(np.max(np.abs(slope * f_s(rr) - 1))) + abs(float(rnds_rstar(0.0))), 1e-6)
     return failures
 
 

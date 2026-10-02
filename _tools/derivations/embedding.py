@@ -2619,6 +2619,138 @@ def schwarzschild_de_sitter(ck, src):
                           "$r_h = 1.085\\,r_s$ and $r_c = 3.215\\,r_s$.")]
 
 
+RNDS = {"r_s": 1, "r_q": "1/2", "Lambda": "27/64"}
+RNDS_SETTINGS = ("$r_s = 1$, the unit of every length, $r_q = r_s/2$ and $\\Lambda = 27/(64\\,r_s^2)$, the lukewarm "
+                 "hole with $H = 3c/(8\\,r_s)$, so that $r_- = 0.431\\,r_s$, $r_+ = 2\\,r_s/3$, and $r_c = 2\\,r_s$.")
+RNDS_THROAT_LO = 1 / 100
+
+
+def rnds_throat(rho):
+    """z(rho) of a moment of the cosmological chart at H tau = 1, r_s = 1, from rho = 1/100: the
+    quadrature of sqrt((1 + 1/(2 rho))^2 - 1) = sqrt(4 rho + 1)/(2 rho), which is
+    w + ln((w - 1)/(w + 1))/2 with w = sqrt(4 rho + 1), Majumdar and Papapetrou's throat at m = r_s/2."""
+    def F(x):
+        w = np.sqrt(4 * np.asarray(x, dtype=float) + 1)
+        return w + 0.5 * np.log((w - 1) / (w + 1))
+    return F(rho) - F(RNDS_THROAT_LO)
+
+
+def reissner_nordstrom_de_sitter(ck, src):
+    """The lukewarm hole, r_s = 1, r_q = 1/2 and Lambda = 27/64, where f = (1 - 1/(2r))^2 -
+    9r^2/64 and the horizons are r_c = 2, r_+ = 2/3 and r_- = (2 sqrt 7 - 4)/3, in three views.
+    Between r_+ and r_c the static slice t = 0 has g_rr = 1/f > 1, so dz/dr = sqrt(1/f - 1) is real
+    and diverges at both ends: the surface stands vertical at the throat r_+ and at its widest
+    circle r_c, and runs through each bifurcation sphere into the next static region, the same
+    surface turned over, one period of which is drawn, as Kottler's is. Inside r_- the slice
+    runs through the inner bifurcation sphere, the widest circle there, and g_rr falls to 1 at
+    the root r = 0.2495 of 9r^4 + 64r - 16, where the surface lies level, as Reissner and
+    Nordstrom's does at r_q^2/r_s; nearer the singularity and between r_- and r_+ no surface
+    carries the slice, which is checked. A moment of the cosmological chart is
+    W^2(drho^2 + rho^2 dphi^2) with W = H tau + 1/(2 rho); at H tau = 1 its circles have radius
+    rho + 1/2 and dz/drho = sqrt(4 rho + 1)/(2 rho), an infinitely long throat closing on the
+    radius r_s/2, drawn from rho = 1/100, the same surface over the areal radius at every tau > 0."""
+    name = "Reissner-Nordstrom-de Sitter"
+    sl = Slice(src, "reissner_nordstrom_de_sitter", "static", "r", "\\phi", {"t": 0, **EQUATOR}, RNDS)
+    rc, rp, rm, rn = sl.horizons()
+    inner = (2 * math.sqrt(7) - 4) / 3
+    ck.add(f"{name}: the horizons are 2, 2/3 and (2 sqrt 7 - 4)/3, and the fourth root -(2 sqrt 7 + 4)/3",
+           abs(rc - 2) + abs(rp - 2 / 3) + abs(rm - inner) + abs(rn + (2 * math.sqrt(7) + 4) / 3), 1e-12)
+    ck.stops(f"{name}, between r_- and r_+", sl, np.linspace(rm, rp, 402)[1:-1])
+    ck.stops(f"{name}, beyond r_c", sl, np.linspace(rc, 40, 402)[1:])
+    size = 2 * rc
+    radii = (1.0, 1.25, 1.5, 1.75)
+    near = Piece("static", "sheet", sl, rp, rc, 0.0, 1,
+                 (("throat", "the throat $r = r_+$, the bifurcation sphere of the black hole horizon, where the "
+                             "slice runs on into another static region"),
+                  ("join", "the widest circle $r = r_c$, the bifurcation sphere of the cosmological horizon, "
+                           "where the slice runs on into the next static region")),
+                 [(rp, "horizon", "$r = r_+$")] + [(r, "r", None) for r in radii] + [(rc, "horizon", "$r = r_c$")],
+                 size)
+    top = 2 * near.z[-1]
+    far = Piece("next", "sheet2", sl, rp, rc, top, -1,
+                (("throat", "the throat $r = r_+$ of the next black hole horizon"),
+                 ("join", "the widest circle $r = r_c$")),
+                [(rp, "horizon", None)] + [(r, "r2", None) for r in radii], size)
+    for p in (near, far):
+        ck.isometry(f"{name}, the {p.id} region", p)
+        ck.radius(f"{name}, the {p.id} region, rho = r", p, lambda r: r, size)
+    ck.join(f"{name}, the two static regions at r_c", near, rc, far, rc)
+    between = Surface([near, far])
+    fig = figure_of([between], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(rc), "$r = r_c$", dx=10)
+    fig.legend("fill", "cover", "the static region $r_+ < r < r_c$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1$, $1.25$, $1.5$ and $1.75\\,r_s$")
+    fig.legend("line", "r2", "the same radii in the next static region")
+    fig.legend("line", "horizon", "the throats $r = r_+$ and the widest circle $r = r_c$, where the slice crosses the horizons")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    not_space = ("Between the inner and black hole horizons, $r_- < r < r_+$, and beyond $r_c$, $g_{rr} < 0$: $r$ is "
+                 "a time there, and a slice of constant $t$ is not a moment of space.")
+    views = [view("between", "Between $r_+$ and $r_c$", "$r_s$", [between], fig.done(), settings=RNDS_SETTINGS,
+                  stops=[not_space])]
+
+    # Inside r_-: each side from where the surface lies level up to the widest circle, r_-.
+    level = float(sp.Poly(9 * sl.x ** 4 + 64 * sl.x - 16, sl.x).real_roots()[-1])
+    ck.add(f"{name}: g_rr = 1 at the positive root of 9r^4 + 64r - 16, r = 0.2495",
+           abs(float(sl.defect_at(np.array([level]))[0])) + abs(level - 0.2495) * 1e-9, 1e-12)
+    ck.stops(f"{name}, nearer the singularity than r = 0.2495", sl, np.linspace(0, level, 402)[1:-1])
+    size = 2 * rm
+    lo = Piece("inside", "sheet", sl, level, rm, 0.0, 1,
+               (("stops", "at $r = 0.249\\,r_s$ the surface lies level, and nearer the singularity the circles grow "
+                          "faster than the distance out to them"),
+                ("join", "the inner horizon $r = r_-$, the widest circle, where the slice runs on into the other "
+                         "region inside $r_-$")),
+               [(level, "chartedge", None), (0.35, "r", None), (rm, "horizon", "$r = r_-$")], size)
+    lo.z = lo.z - lo.z[-1]
+    hi = Piece("other_inside", "sheet2", sl, level, rm, -lo.z[0], -1,
+               (("stops", "at $r = 0.249\\,r_s$"), ("join", "the inner horizon $r = r_-$")),
+               [(level, "chartedge", None), (0.35, "r2", None)], size)
+    for p in (lo, hi):
+        ck.isometry(f"{name} inside, {p.id}", p)
+    ck.join(f"{name} inside, the two sides at r_-", lo, rm, hi, rm)
+    inside = Surface([lo, hi])
+    fig = figure_of([inside], {"sheet": "cover"}, size, Camera(-90, 22))
+    ring_label(fig, [0, 0, 0], rm, 0.0, "$r = r_-$", dx=10)
+    ring_label(fig, [0, 0, 0], *lo.at(level), "$0.249\\,r_s$", side=-1)
+    fig.legend("fill", "cover", "the region $r < r_-$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $0.35\\,r_s$")
+    fig.legend("line", "r2", "the same radius in the other region inside $r_-$")
+    fig.legend("line", "horizon", "the widest circle $r = r_-$, where the slice crosses the inner horizon")
+    fig.legend("line", "chartedge", "$r = 0.249\\,r_s$, where the surface lies level and the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("inside", "Inside $r_-$", "$r_s$", [inside], fig.done(), settings=RNDS_SETTINGS,
+                      stops=["Nearer the singularity than $r = 0.249\\,r_s$, $g_{rr} < 1$: the circles grow faster "
+                             "than the distance out to them, and no surface in flat space carries that part of the "
+                             "slice.", not_space]))
+
+    # A moment of the cosmological chart, H tau = 1: tau = 8/3 in r_s/c.
+    cs = Slice(src, "reissner_nordstrom_de_sitter", "cosmological", "\\rho", "\\phi",
+               {"tau": "8/3", **EQUATOR}, {"r_s": 1, "H": "3/8"})
+    lo_, top_ = RNDS_THROAT_LO, 2.0
+    size = 2 * (top_ + 0.5)
+    marks = [(lo_, "r", None), (1 / 6, "horizon", "$r = r_+$"), (0.5, "r", None), (1.0, "r", None),
+             (1.5, "horizon", "$r = r_c$"), (top_, "r", None)]
+    throat = Piece("moment", "sheet", cs, lo_, top_, 0.0, 1,
+                   (("edge", "the throat runs on without end toward $\\rho = 0$, its circles closing on the "
+                             "radius $r = r_s/2$"),
+                    ("edge", "the surface runs on to $\\rho \\to \\infty$")), marks, size)
+    ck.isometry(f"{name}, a moment of the cosmological chart", throat)
+    ck.radius(f"{name}, a moment of the cosmological chart, rho = H tau rho + r_s/2", throat, lambda x: x + 0.5, size)
+    ck.form(f"{name}, a moment of the cosmological chart, z = w + ln((w - 1)/(w + 1))/2, w = sqrt(4 rho + 1)",
+            throat, rnds_throat, size)
+    moment = Surface([throat])
+    fig = figure_of([moment], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *throat.at(1 / 6), "$r = r_+$", dx=10)
+    ring_label(fig, [0, 0, 0], *throat.at(1.5), "$r = r_c$", dx=10)
+    fig.legend("fill", "cover", "the moment $\\tau = 1/H$, which $\\rho > 0$ and $\\phi$ cover")
+    fig.legend("line", "r", "the circles of areal radius $r = 0.51$, $1$, $1.5$ and $2.5\\,r_s$")
+    fig.legend("line", "horizon", "the circles $r = r_+$ and $r = r_c$, where the moment crosses the horizons")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("cosmological", "A moment of $\\tau$", "$r_s$", [moment], fig.done(),
+                      settings=RNDS_SETTINGS))
+    return views
+
+
 def schwarzschild_ads(ck, src):
     """The static slice t = 0 of Schwarzschild-anti-de Sitter at r_s = 2 and L = 1, so that the
     horizon, the positive root of the published g^rr, is r_h = 1. g_rr = 1/f with f = 1 - 2/r +
@@ -6515,6 +6647,7 @@ DRAWN = {
     "einstein_static": einstein_static,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
     "schwarzschild_ads": schwarzschild_ads,
+    "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "tolman_bondi": tolman_bondi,
@@ -6829,6 +6962,36 @@ CAPTIONS = {
         "out to them, as on the static slice of anti-de Sitter space, and the surface climbs at "
         "$dZ/dr = \\sqrt{1 - 1/f}$ from level toward a light cone of Minkowski space, as the hyperboloid of "
         "anti-de Sitter space does. Both parts lie level at the circle, so they meet there with one tangent plane.",
+    ],
+    ("reissner_nordstrom_de_sitter", "between"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the lukewarm black hole at the moment $t = 0$ of its static "
+        "chart, between the black hole horizon and the cosmological one, drawn as a surface in flat space with every "
+        "distance along it the metric distance. On it $g_{rr} = (1 - r_s/r + r_q^2/r^2 - \\Lambda r^2/3)^{-1}$, larger "
+        "than 1 everywhere between the two horizons, so the surface climbs at $dz/dr = \\sqrt{g_{rr} - 1}$ from the "
+        "throat $r_+$, its smallest circle, to $r_c$, its widest, and stands vertical at both.",
+        "The slice runs through the bifurcation sphere at $r_c$ into the next static region, the same surface "
+        "turned over, and through its throat at $r_+$ into another, a chain of throats and widest circles "
+        "without end, one period of which is drawn. Identifying the two throats closes the slice into a space "
+        "of topology $S^1 \\times S^2$, a charged wormhole threaded by the electric field.",
+    ],
+    ("reissner_nordstrom_de_sitter", "inside"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the same black hole at one moment of $t$ inside its inner "
+        "horizon, where $r$ is again a distance and $t$ a time, drawn as a surface in flat space with every "
+        "distance along it the metric distance. The slice runs through the inner horizon's bifurcation sphere "
+        "$r = r_-$, its widest circle, into a second region inside $r_-$, the same surface turned over.",
+        "Moving in from $r_-$, $g_{rr}$ falls to $1$ where $r_q^2/r^2 = r_s/r + \\Lambda r^2/3$, at $r = 0.249\\,r_s$, "
+        "and the surface lies level there. Nearer the singularity at $r = 0$, $g_{rr} < 1$: the circles grow faster "
+        "than the distance out to them, and no surface in flat space carries that part of the slice.",
+    ],
+    ("reissner_nordstrom_de_sitter", "cosmological"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the lukewarm black hole at the moment $\\tau = 1/H$ of its "
+        "cosmological chart, drawn as a surface in flat space with every distance along it the metric distance. On "
+        "it the circle of comoving radius $\\rho$ has the areal radius $r = H\\tau\\rho + r_s/2$ and "
+        "$g_{rr} = r^2/(r - r_s/2)^2$, so $dz/dr = \\sqrt{r_s(r - r_s/4)}/(r - r_s/2)$ at every $\\tau > 0$: each "
+        "moment is the same surface, and the circles of constant $\\rho$ move out along it as $\\tau$ grows.",
+        "The surface crosses $r_c$ and $r_+$ with no throat and no widest circle, and inside $r_+$ it falls as "
+        "$(r_s/2)\\ln\\rho$ without end while its circles close on the radius $r_s/2$, the infinitely long throat "
+        "of the extremal Reissner-Nordström black hole. It is drawn down to $\\rho = r_s/100$.",
     ],
     ("schwarzschild_de_sitter", "static"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Kottler's spacetime at the moment $t = 0$ of its static chart, "

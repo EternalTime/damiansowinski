@@ -767,6 +767,19 @@ The unique static, spherically symmetric vacuum solution to the Einstein-Maxwell
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2 - r_s r + r_q^2}{r^2}\,dt^2 + \dfrac{r^2}{r^2 - r_s r + r_q^2}\,dr^2 + r^2 d\Omega^2$$
 
+### Reissner-Nordström-de Sitter Black Hole
+
+A charged black hole in a universe with a positive cosmological constant, the static, spherically symmetric solution of the Einstein-Maxwell equations. It has an inner horizon, a black hole horizon, and a cosmological horizon, and when its charge equals its mass the last two radiate at the same temperature.
+
+- id: `reissner_nordstrom_de_sitter`
+- tags: electrovacuum, static, stationary, spherically symmetric, charged, charged black hole, black hole, electric charge, mass, electromagnetic field, cosmological constant, positive cosmological constant, de Sitter, singularity, curvature singularity, coordinate singularity, horizon, event horizon, Cauchy horizon, inner horizon, cosmological horizon, white hole, maximal extension, causal structure, strong cosmic censorship, lukewarm, extremal, exact solution, Lorentzian, Einstein equations, Einstein-Maxwell, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_de_sitter.json
+- chart Static Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} + \dfrac{r_q^2}{r^2} - \dfrac{\Lambda r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r} + \dfrac{r_q^2}{r^2} - \dfrac{\Lambda r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} + \dfrac{r_q^2}{r^2} - \dfrac{\Lambda r^2}{3}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} + \dfrac{r_q^2}{r^2} - \dfrac{\Lambda r^2}{3}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Cosmological: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = -\left(H\tau + \dfrac{r_s}{2\rho}\right)^{-2}c^2d\tau^2 + \left(H\tau + \dfrac{r_s}{2\rho}\right)^2\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Robinson-Trautman Radiating Spacetimes
 
 The vacuum field of an isolated body sending out gravitational waves on expanding wave fronts, found by Ivor Robinson and Andrzej Trautman in 1960. From smooth initial data the fronts grow round as the waves leave, and the spacetime settles down to the Schwarzschild black hole.

@@ -3616,6 +3616,52 @@ def bisect(f, lo, hi, steps=200):
     return 0.5 * (lo + hi)
 
 
+class Lukewarm:
+    """The lukewarm charged black hole in de Sitter space as every diagram draws it, r_s = 1, r_q = 1/2 and
+    Lambda = 27/64, H = 3/8: f = (1 - 1/(2r))^2 - 9r^2/64 has the roots 2, 2/3, (2 sqrt 7 - 4)/3 and
+    -(2 sqrt 7 + 4)/3, and everything below is written from them and from nothing the generators hold."""
+    ROOTS = (2.0, 2 / 3, (2 * math.sqrt(7) - 4) / 3, -(2 * math.sqrt(7) + 4) / 3)
+    H = 3 / 8
+    KAPPA = 3 / 16                  # the surface gravity of r_+ and of r_c
+
+    @classmethod
+    def rstar(cls, r):
+        """sum_i ln|1 - r/r_i|/f'(r_i), with 1/f'(r_i) = -64 r_i^2/(9 prod_j (r_i - r_j))."""
+        return sum(math.log(abs(1 - r / a)) * (-64 * a * a / (9 * math.prod(a - b for b in cls.ROOTS if b != a)))
+                   for a in cls.ROOTS)
+
+    @classmethod
+    def static_t(cls, tau, r):
+        """cT of the cosmological event at tau with the areal radius r: ln|H tau|/H + F(r) - F(1.298),
+        F the sum of c_a ln|r - a| over a = 1/2 and the roots, c_a = -(8/3) a^4/prod_b (a - b)."""
+        poles = (0.5,) + cls.ROOTS
+
+        def F(x):
+            return sum(math.log(abs(x - a)) * (-(8 / 3) * a ** 4 / math.prod(a - b for b in poles if b != a))
+                       for a in poles)
+        return math.log(abs(cls.H * tau)) / cls.H + F(r) - F(1.2979848366419)
+
+    @classmethod
+    def inside_t(cls):
+        """The static time of the moment embedded inside r_-, on the cosmological chart's time."""
+        return cls.static_t(-0.5 / cls.H, 0.35)
+
+    @classmethod
+    def tau_of(cls, r, at, sign):
+        """tau of the event of static time `at` and radius r on the cosmological plane."""
+        return sign * math.exp(cls.H * (at - cls.static_t(1 / cls.H, r))) / cls.H
+
+    @classmethod
+    def radius_at(cls, rho, at, sign, lo, hi):
+        """The areal radius, between lo and hi, at which the moment `at` meets the comoving rho."""
+        def miss(r):
+            return (r - 0.5) / (cls.H * cls.tau_of(r, at, sign)) - rho
+        lo, hi = lo + 1e-12 * (hi - lo), hi - 1e-12 * (hi - lo)
+        if miss(lo) * miss(hi) > 0:
+            return lo if abs(miss(lo)) < abs(miss(hi)) else hi
+        return bisect(miss, lo, hi) if miss(lo) < 0 else bisect(lambda r: -miss(r), lo, hi)
+
+
 def novikov_t(R, tau):
     """A shell of dust released from rest at areal radius R, r_s = 1, at its proper time tau:
     its r and Schwarzschild t, from the cycloid and Misner, Thorne and Wheeler's (31.10)."""
@@ -3836,6 +3882,25 @@ class Slices(unittest.TestCase):
             def rstar(r):
                 return sum(math.log(abs(1 - r / ri)) / (1 / ri ** 2 - 0.4 * ri / 3) for ri in roots)
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("reissner_nordstrom_de_sitter/"):
+            # The lukewarm hole: static t = 0 between r_+ and r_c and inside r_-, and the moment
+            # H tau = 1 of the cosmological chart, on which the areal radius is rho + 1/2. In an
+            # Eddington-Finkelstein chart the static moments are v = r_* and u = -r_*, and the
+            # cosmological one is v = cT + r_* or u = cT - r_*, drawn against v - r and u + r or against
+            # v and u; on the cosmological plane a static moment is tau of Lukewarm.tau_of.
+            L, chart, which = Lukewarm, key.split("/")[1], mark["view"]
+            lo, hi = self.reach(surface)
+            if chart == "cosmological":
+                if which == "cosmological":
+                    return (lambda X: 1 / L.H), [lo, hi]
+                at, sign = (0.0, 1) if which == "between" else (L.inside_t(), -1)
+                ends = [(r - 0.5) / (L.H * L.tau_of(r, at, sign)) for r in ((lo,) if which == "inside" else ())]
+                return (lambda X: L.tau_of(L.radius_at(X, at, sign, lo, hi), at, sign)), ends
+            sign = {"static": 0, "eddington_finkelstein_ingoing": 1, "eddington_finkelstein_outgoing": -1}[chart]
+            lean = sign if key.endswith("finkelstein") else 0
+            if which == "cosmological":
+                return (lambda X: L.static_t(1 / L.H, X) + sign * L.rstar(X) - lean * X), [lo + 0.5, hi + 0.5]
+            return (lambda X: sign * L.rstar(X) - lean * X), [lo, hi]
         if key.startswith("tangherlini/eddington_finkelstein"):
             # Five dimensions at r_h = 1: r_* = r + ln((r - 1)/(r + 1))/2, and the static t = 0 is v = r_*
             # and u = -r_*, drawn against v - r and u + r or against v and u.
@@ -4240,6 +4305,44 @@ class Slices(unittest.TestCase):
                         height = t if view["id"] in ("double_null", "time_space") else t - math.pi / 2
                         for X, T in points:
                             self.assertLess(abs(X) + abs(T - height), 2e-4, where)
+                    elif metric_id == "reissner_nordstrom_de_sitter":
+                        # Every region is placed by g(x) = arctan e^(-kappa x) of u and v, kappa = 3/16. The
+                        # static moment between r_+ and r_c is the line T = 0; the one inside r_- is T = pi
+                        # above the black hole and T = -pi below the white hole, and on the cosmological
+                        # chart's own time it is cT = Lukewarm.inside_t() below the white hole; the
+                        # cosmological moment is carried back to u, v and r through the white hole, the
+                        # static region and the expanding one.
+                        L = Lukewarm
+                        H = math.pi / 2
+
+                        def back(y):
+                            return -math.log(math.tan(y)) / L.KAPPA
+                        if mark["view"] == "between":
+                            self.assertTrue(all(abs(T) < 2e-4 for _, T in points), where)
+                            continue
+                        if mark["view"] == "inside" and view["id"] != "cosmological":
+                            level = math.pi if view["id"] in ("static", "ingoing") else -math.pi
+                            self.assertTrue(all(abs(T - level) < 2e-4 for _, T in points), where)
+                            continue
+                        met = 0
+                        for X, T in points:
+                            p_, q_ = (T - X) / 2, (T + X) / 2
+                            if min(abs(p_ / H - round(p_ / H)), abs(q_ / H - round(q_ / H))) < 0.03:
+                                continue    # beside a horizon, where four decimals no longer fix u or v
+                            if mark["view"] == "inside":
+                                u, v = (back(p_ + math.pi), -back(-q_)) if p_ < -H else (back(-p_), -back(q_ + math.pi))
+                                self.assertLess(abs((u + v) / 2 - L.inside_t()), 5e-2, f"{where} at {(X, T)}")
+                            else:
+                                u = back(-p_)
+                                v, (lo, hi) = ((-back(-q_), (0.5, L.ROOTS[1])) if q_ < 0 else
+                                               (-back(q_), (L.ROOTS[1], L.ROOTS[0])) if q_ < H else
+                                               (-back(math.pi - q_), (L.ROOTS[0], 60.0)))
+                                grows = L.rstar(lo + 0.3 * (hi - lo)) < L.rstar(lo + 0.6 * (hi - lo))
+                                r = bisect(lambda r: (L.rstar(r) - (v - u) / 2) * (1 if grows else -1),
+                                           lo + 1e-12, hi - 1e-12)
+                                self.assertLess(abs((u + v) / 2 - L.static_t(1 / L.H, r)), 5e-2, f"{where} at {(X, T)}")
+                            met += 1
+                        self.assertGreater(met, 3, where)
                     elif metric_id == "rn_metric" and mark["view"] == "inside":
                         self.assertTrue(all(abs(T - math.pi) < 2e-4 for _, T in points), where)
                     else:
