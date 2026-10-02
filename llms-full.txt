@@ -576,6 +576,19 @@ An anisotropic vacuum cosmology that expands along some axes while contracting a
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/kasner.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + t^{2p_1} dx^2 + t^{2p_2} dy^2 + t^{2p_3} dz^2$$
 
+### Kastor-Traschen Colliding Black Holes
+
+Any number of charged black holes in a universe with a positive cosmological constant, the exact solution of the Einstein-Maxwell equations David Kastor and Jennie Traschen found in 1993. Each hole has a charge equal to its mass, and the holes ride the expansion or the contraction of the universe, so holes that fall together merge.
+
+- id: `kastor_traschen`
+- tags: electrovacuum, non-vacuum, dynamical, time-dependent, charged, charged black hole, black hole, multiple black holes, colliding black holes, black hole merger, white hole, electric charge, mass, electromagnetic field, cosmological constant, positive cosmological constant, de Sitter, lukewarm, expanding universe, cosmological, horizon, event horizon, cosmological horizon, Cauchy horizon, inner horizon, singularity, curvature singularity, naked singularity, cosmic censorship, harmonic function, superposition, causal structure, exact solution, Lorentzian, Einstein equations, Einstein-Maxwell, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kastor_traschen.json
+- chart Cartesian: coordinates $(\tau, x, y, z)$, $$ds^2 = -\dfrac{c^2d\tau^2}{U^2} + U^2\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Cylindrical: coordinates $(\tau, \rho, \phi, z)$, $$ds^2 = -\dfrac{c^2d\tau^2}{U^2} + U^2\left(d\rho^2 + \rho^2d\phi^2 + dz^2\right)$$
+- chart Isotropic: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2d\tau^2}{U^2} + U^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Comoving: coordinates $(t, x, y, z)$, $$ds^2 = -\dfrac{c^2dt^2}{\Omega^2} + a^2\Omega^2\left(dx^2 + dy^2 + dz^2\right)$$
+
 ### Kerr Rotating Black Hole
 
 The exact vacuum solution for a rotating, uncharged black hole, characterized by mass and angular momentum. It features an ergosphere, frame dragging, and a ring singularity, and describes essentially all astrophysical black holes.

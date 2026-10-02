@@ -4461,7 +4461,7 @@ def kastor_traschen(ck, src):
 
     keys_ = kt_moments()
     size_two = 2 * KT_TOP * (H * keys_[0] + 2 / math.sqrt(KT_TOP ** 2 + 4))
-    times, keys = movie_values(list(keys_), 0.25)
+    times, keys = movie_values(list(keys_), 0.2)
     frames = [moment(round(t, 9)) for t in times]
     surfaces = [frames[i] for i in keys]
     fig = movie_figure(frames, {"sheet": "cover"}, size_two, meridians=12)

@@ -71,6 +71,11 @@
       "id": "kerr_de_sitter",
       "kind": "generalisation",
       "text": "De Sitter space with a rotating black hole put in. With the mass taken out again, Carter's metric is de Sitter space in spheroidal coordinates [akcay2011]."
+    },
+    {
+      "id": "kastor_traschen",
+      "kind": "generalisation",
+      "text": "De Sitter space with charged black holes in it, each with a charge equal to its mass, carried along by the expansion or the contraction [kastor1993]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "ansoldi2008",
     "hayward2006",
     "frolov2016",
-    "akcay2011"
+    "akcay2011",
+    "kastor1993"
   ],
   "coordinates": [
     {
