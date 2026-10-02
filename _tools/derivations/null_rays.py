@@ -3082,6 +3082,17 @@ DIAGRAMS = [
     Diagram("tolman_vii", "tolman", "through", "through the centre", ("t", "r"),
             (0, 2, -2, 2), "$x/r_s$", "$ct/r_s$", TOLMAN_VII_CONSTANTS, EQUATOR,
             mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
+    # The star of infinite central density: the sphere of radiation in units of its free length a,
+    # Tolman's two stars in units of their own radius r_b, and the
+    # stiffest member of his family, n = 1, where t runs to infinity before a ray reaches the centre.
+    Diagram("misner_zapolsky", "areal", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 2, -1, 1), "$r/a$", "$ct/a$", {"a": 1}, EQUATOR, areal=True),
+    Diagram("misner_zapolsky", "tolman_v", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 1, -0.5, 0.5), "$r/r_b$", "$ct/r_b$", {"r_b": 1}, EQUATOR, areal=True),
+    Diagram("misner_zapolsky", "tolman_vi", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 1, -0.5, 0.5), "$r/r_b$", "$ct/r_b$", {"r_b": 1}, EQUATOR, areal=True),
+    Diagram("misner_zapolsky", "power_law", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 2, -1, 1), "$r/a$", "$ct/a$", {"n": 1, "a": 1}, EQUATOR, areal=True),
     Diagram("kerr", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
             "$r/(GM/c^2)$", "$ct/(GM/c^2)$", {"G": 1, "M": 1, "a": "9/10"},
             {"theta": "0", "phi": "0"}, orient="ingoing"),
@@ -7454,6 +7465,34 @@ CAPTIONS = {
         "The line through the centre of the same star in Tolman's constants: $x = r$ on the right is "
         "$\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the centre smoothly, and the cones "
         "are narrowest there.",
+    ],
+    ("misner_zapolsky", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), with $a$ the unit of length. A radial ray "
+        "moves at $dr/d(ct) = \\pm\\sqrt{4r/7a}$, so the cones narrow toward the centre and close on it, where "
+        "$g_{tt} = 0$ and the Kretschmann scalar $72/49r^4$ diverges. A ray from $r$ still reaches the centre in "
+        "the finite time $ct = \\sqrt{7ar}$, and a ray leaves it as easily: the singularity has no horizon "
+        "around it.",
+    ],
+    ("misner_zapolsky", "tolman_v", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the chart "
+        "($r \\in (0, r_b]$), for the Tolman V star, with $r_b$ the unit of length. Near the centre the cones "
+        "are those of pure radiation, closing on $r = 0$, and at the surface $g_{tt} = -1/2$ and $g_{rr} = 2$, "
+        "the values of Schwarzschild's exterior for the Schwarzschild radius $r_s = r_b/2$. Beyond $r_b$ the "
+        "spacetime is that exterior, and the rays go on into it.",
+    ],
+    ("misner_zapolsky", "tolman_vi", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the chart "
+        "($r \\in (0, r_b]$), for the Tolman VI star, with $r_b$ the unit of length. Here $g_{rr} = 7/4$ "
+        "throughout and $g_{tt} = -(r/112r_b)(9 - r/r_b)^2$, which is $-4/7$ at the surface, the value of "
+        "Schwarzschild's exterior for the Schwarzschild radius $r_s = 3r_b/7$. The cones close on the centre as "
+        "those of pure radiation do, and beyond $r_b$ the rays go on into that exterior.",
+    ],
+    ("misner_zapolsky", "power_law", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for the stiffest fluid, $n = 1$, with $a$ "
+        "the unit of length. A radial ray moves at $dr/d(ct) = \\pm r/(\\sqrt{2}\\,a)$, so $r$ falls by a "
+        "factor $e$ in each $ct = \\sqrt{2}\\,a$ and no ray reaches the centre at a finite $t$. Its affine "
+        "parameter there is finite all the same, since it goes as $r^2$. For every $n < 1$ a ray from $r$ "
+        "arrives at $ct = \\sqrt{1 + 2n - n^2}\\,a^n r^{1 - n}/(1 - n)$.",
     ],
     ("kerr", "boyer_lindquist", "radial"): [
         "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.9\\,GM/c^2$. The curves "

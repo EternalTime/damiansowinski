@@ -5169,6 +5169,16 @@ class Slices(unittest.TestCase):
                     "black_string/static_six/radial": {"across", "ripple"},
                     "conformal black_string/six": {"across", "ripple"},
                     "global_monopole/conical/radial": {"black_hole"},
+                    # Each chart of the star of infinite central density is one spacetime of four: the
+                    # sphere of radiation, Tolman's two stars, and the stiffest fluid of his family.
+                    "misner_zapolsky/areal/radial": {"stiff", "tolman_v", "tolman_vi"},
+                    "conformal misner_zapolsky/areal": {"stiff", "tolman_v", "tolman_vi"},
+                    "misner_zapolsky/tolman_v/radial": {"core", "stiff", "tolman_vi"},
+                    "conformal misner_zapolsky/tolman_v": {"core", "stiff", "tolman_vi"},
+                    "misner_zapolsky/tolman_vi/radial": {"core", "stiff", "tolman_v"},
+                    "conformal misner_zapolsky/tolman_vi": {"core", "stiff", "tolman_v"},
+                    "misner_zapolsky/power_law/radial": {"core", "tolman_v", "tolman_vi"},
+                    "conformal misner_zapolsky/power_law": {"core", "tolman_v", "tolman_vi"},
                     "conformal global_monopole/conical": {"black_hole"},
                     # The threaded black hole's bifurcation sphere, its horizon view, lies at v -> -infinity and
                     # u -> +infinity, off both Eddington-Finkelstein charts.

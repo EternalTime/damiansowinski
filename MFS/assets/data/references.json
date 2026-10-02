@@ -1,5 +1,5 @@
 {
-  "version": "1dc5e38d71d4a632",
+  "version": "266b37748d852d19",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -25340,6 +25340,109 @@
         "eprint": "1808.03508",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.99.084037"
+      }
+    },
+    "misner1964": {
+      "type": "article",
+      "fields": {
+        "title": "High-density behavior and dynamical stability of neutron star models",
+        "author": "Misner, C. W. and Zapolsky, H. S.",
+        "journal": "Physical Review Letters",
+        "volume": "12",
+        "number": "22",
+        "pages": "635--637",
+        "year": "1964",
+        "doi": "10.1103/PhysRevLett.12.635",
+        "url": "https://doi.org/10.1103/PhysRevLett.12.635"
+      }
+    },
+    "chandrasekhar1964prl": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamical instability of gaseous masses approaching the {Schwarzschild} limit in general relativity",
+        "author": "Chandrasekhar, S.",
+        "journal": "Physical Review Letters",
+        "volume": "12",
+        "number": "4",
+        "pages": "114--116",
+        "year": "1964",
+        "doi": "10.1103/PhysRevLett.12.114",
+        "url": "https://doi.org/10.1103/PhysRevLett.12.114"
+      }
+    },
+    "meltzer1966": {
+      "type": "article",
+      "fields": {
+        "title": "Normal modes of radial pulsation of stars at the end point of thermonuclear evolution",
+        "author": "Meltzer, David W. and Thorne, Kip S.",
+        "journal": "The Astrophysical Journal",
+        "volume": "145",
+        "pages": "514",
+        "year": "1966",
+        "doi": "10.1086/148792",
+        "url": "https://doi.org/10.1086/148792"
+      }
+    },
+    "sorkin1981": {
+      "type": "article",
+      "fields": {
+        "title": "Entropy of self-gravitating radiation",
+        "author": "Sorkin, Rafael D. and Wald, Robert M. and Zhang, Zhen Jiu",
+        "journal": "General Relativity and Gravitation",
+        "volume": "13",
+        "number": "12",
+        "pages": "1127--1146",
+        "year": "1981",
+        "doi": "10.1007/BF00759862",
+        "url": "https://doi.org/10.1007/BF00759862"
+      }
+    },
+    "chavanis2002": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational instability of finite isothermal spheres in general relativity. {Analogy} with neutron stars",
+        "author": "Chavanis, Pierre-Henri",
+        "journal": "Astronomy \\& Astrophysics",
+        "volume": "381",
+        "number": "2",
+        "pages": "709--730",
+        "year": "2002",
+        "doi": "10.1051/0004-6361:20011424",
+        "eprint": "astro-ph/0108230",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1051/0004-6361:20011424"
+      }
+    },
+    "chavanis2008": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic stars with a linear equation of state: analogy with classical isothermal spheres and black holes",
+        "author": "Chavanis, Pierre-Henri",
+        "journal": "Astronomy \\& Astrophysics",
+        "volume": "483",
+        "number": "3",
+        "pages": "673--698",
+        "year": "2008",
+        "doi": "10.1051/0004-6361:20078287",
+        "eprint": "0707.2292",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1051/0004-6361:20078287"
+      }
+    },
+    "dev2002": {
+      "type": "article",
+      "fields": {
+        "title": "Anisotropic stars: exact solutions",
+        "author": "Dev, Krsna and Gleiser, Marcelo",
+        "journal": "General Relativity and Gravitation",
+        "volume": "34",
+        "number": "11",
+        "pages": "1793--1818",
+        "year": "2002",
+        "doi": "10.1023/A:1020707906543",
+        "eprint": "astro-ph/0012265",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/A:1020707906543"
       }
     }
   }

@@ -49,6 +49,11 @@
       "id": "tolman_bondi",
       "kind": "programme",
       "text": "Richard Tolman's other spacetime, dust expanding or collapsing in spherical symmetry with a density that varies with radius, from 1934 [tolman1934]."
+    },
+    {
+      "id": "misner_zapolsky",
+      "kind": "family",
+      "text": "Tolman's fifth and sixth solutions at $n = 1/2$, stars whose density and pressure are infinite at the centre in the ratio that holds for radiation. Grown without limit, both approach one metric, which he suggested \"might be called the blackbody radiation solution\" [tolman1939]."
     }
   ],
   "references": [

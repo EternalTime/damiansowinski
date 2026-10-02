@@ -123,7 +123,7 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "misner_brill_lindquist", "brill_waves",
-             "kundt_waves", "wahlquist", "tippett_tsang"}
+             "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous"}
 
 
 # ---------------------------------------------------------------- the drawing
@@ -9443,6 +9443,198 @@ def gravastar(ck, src):
         v.set(settings="$R = 1.25\\,r_s$ and $L = 2\\,r_s$.")
         v.slice(moment, [areal(0 * rr, rr)])
         views.append(v)
+    return views
+
+
+# ---------------------------------------------------------------- the star of infinite central density
+
+def misner_zapolsky(ck, src):
+    """Four views, each on the plane of t and r with the tortoise coordinate
+    r* = int sqrt(g_rr/(-g_tt)) dr and p, q = arctan((ct -+ r*)/l).
+
+    The sphere of radiation at a = 1: r* = sqrt(7 a r), which is zero at the centre, so the plane
+    is the half r* > 0 of Minkowski's and the diagram his triangle, with the centre a timelike
+    line where the published Kretschmann scalar diverges.
+
+    Tolman's two stars in units of r_b, each joined to the Schwarzschild exterior of the
+    schwarzschild entry, at r_s = 1/2 for solution V and 3/7 for solution VI; g_tt and g_rr are
+    continuous at r_b, checked, so t is one coordinate and r* runs from the centre through the
+    surface. For solution VI r* = (14 r_b/3) ln((3 + sqrt(r/r_b))/(3 - sqrt(r/r_b))) inside,
+    checked against the quadrature that solution V is drawn by.
+
+    Tolman's exponent at n = 1 and a = 1: r* = sqrt(2) a ln(r/a) runs over the whole line, so
+    the plane is all of Minkowski's and the diagram his diamond. The centre is at r* -> -infinity,
+    on the two null edges on the left, which a ray reaches at a finite affine parameter, since
+    that goes as r^2, and where the Kretschmann scalar 12/r^4 diverges."""
+    tri_box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    views = []
+
+    def corners(v, which):
+        for at, text, anchor, dx, dy in which:
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    three = (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6))
+
+    # The sphere of radiation.
+    core = Plane(src, "misner_zapolsky", "areal", ("t", "r"), EQUATOR, {"a": 1})
+
+    def radiation(t, r):
+        return mink_pq(t, np.sqrt(7 * np.asarray(r, dtype=float)))
+    ck.chart("Misner-Zapolsky, the sphere of radiation", core, radiation, ck.uniform(-20, 20),
+             ck.uniform(0.01, 30), lambda t, r: (1, 0))
+    K = core.kretschmann
+    ck.diverges("Misner-Zapolsky: the Kretschmann scalar of the sphere of radiation diverges at r = 0",
+                K(0, 1e-2), K(0, 1e-3))
+    p, q = radiation(np.array([-3.0, 0.0, 3.0]), np.full(3, 1e-14))
+    ck.limit("Misner-Zapolsky: r -> 0 lands on the line X = 0", q - p, [0, 0, 0], 1e-5)
+    v = View("areal", "Blackbody Radiation Solution", tri_box, "areal")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    for r in (0.25, 1.0, 2.0, 4.0):
+        v.curve("r", *radiation(S_ALL, np.full_like(S_ALL, r)))
+    rr = np.concatenate([[0.0], np.exp(np.linspace(-12, 14, 400))])
+    for t in (-8, -4, -2, 0, 2, 4, 8):
+        v.curve("t", *radiation(np.full_like(rr, t), rr))
+    v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    corners(v, three)
+    v.label_xt([0, 0.25], "$r = 0$", "r", dx=-6)
+    label_on(v, radiation(0, 1.0), "$r = a$")
+    label_on(v, radiation(0, 4.0), "$4a$")
+    v.legend("cover", "the whole spacetime, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $0.25$, $1$, $2$ and $4\\,a$")
+    v.legend("t", "$t$ constant")
+    v.legend("singular", "$r = 0$, where the density and the Kretschmann scalar diverge, timelike")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(settings="$a = 1$.")
+    moment = slices.moments("misner_zapolsky", "core")[0]
+    lo, hi = moment.reach("areal", "r")
+    along_r = np.concatenate([[lo], np.geomspace(1e-9, hi, 200)])
+    v.slice(moment, [radiation(0 * along_r, along_r)])
+    views.append(v)
+
+    # Tolman's two stars, r_b = 1.
+    R = 1.0
+    for system, name, rs_text in (("tolman_v", "Tolman V Star", "1/2"), ("tolman_vi", "Tolman VI Star", "3/7")):
+        rs = float(sp.Rational(rs_text))
+        inner = Plane(src, "misner_zapolsky", system, ("t", "r"), EQUATOR, {"r_b": 1})
+        outer = Plane(src, "schwarzschild", "spherical", ("t", "r"), EQUATOR, {"r_s": rs_text})
+        for k, slot in ((0, "g_tt"), (1, "g_rr")):
+            ck.limit(f"Misner-Zapolsky, {system}: {slot} is continuous at r = r_b",
+                     [float(inner.g[k, k].subs(inner.x1, R))], [float(outer.g[k, k].subs(outer.x1, R))], 1e-12)
+        # With r = w^2 the integrand of r* is finite at the centre: dr*/dw = 2w sqrt(g_rr/(-g_tt)).
+        w = sp.Symbol("w", positive=True)
+        slope = sp.lambdify(w, sp.simplify((2 * w * sp.sqrt(inner.g[1, 1] / (-inner.g[0, 0]))).subs(inner.x1, w ** 2)),
+                            "numpy")
+        wq = np.linspace(0, 1, 300001)
+        wq[0] = 1e-12
+        rsq = cumulative_trapezoid(slope(wq) * np.ones_like(wq), wq, initial=0)
+        wq[0] = 0.0
+
+        def rstar(r, rs=rs, wq=wq, rsq=rsq):
+            r = np.asarray(r, dtype=float)
+            with np.errstate(invalid="ignore", divide="ignore"):
+                outside = rsq[-1] + (r + rs * np.log(np.abs(r / rs - 1))) - (R + rs * np.log(R / rs - 1))
+            return np.where(r <= R, np.interp(np.sqrt(np.abs(r)), wq, rsq), outside)
+
+        def star(t, r, rstar=rstar):
+            return mink_pq(t, rstar(r), R)
+        if system == "tolman_vi":
+            radii = np.array([0.1, 0.3, 0.5, 0.8, 1.0])
+            ck.limit("Misner-Zapolsky, tolman_vi: r* = (14/3) ln((3 + sqrt(r))/(3 - sqrt(r)))",
+                     rstar(radii), 14 / 3 * np.log((3 + np.sqrt(radii)) / (3 - np.sqrt(radii))), 1e-8)
+        ck.chart(f"Misner-Zapolsky, the {system} star", inner, star, ck.uniform(-10, 10), ck.uniform(0.005, 0.995),
+                 lambda t, r: (1, 0))
+        ck.chart(f"Misner-Zapolsky, the {system} exterior", outer, star, ck.uniform(-10, 10), ck.uniform(1.005, 15),
+                 lambda t, r: (1, 0))
+        K = inner.kretschmann
+        ck.diverges(f"Misner-Zapolsky: the Kretschmann scalar of the {system} star diverges at r = 0",
+                    K(0, 1e-2), K(0, 1e-3))
+
+        v = View(system, name, tri_box, system)
+        v.fill("region", TRIANGLE)
+        ps, qs = mink_pq(S_ALL, rstar(R), R)
+        v.fill("cover", [[0, -PI]] + [point(a, b) for a, b in zip(ps, qs)] + [[0, PI]])
+        for r in (0.25, 0.5, 0.75):
+            v.curve("r", *star(S_ALL, np.full_like(S_ALL, r)))
+        for r in (1.5, 2.0, 4.0):
+            v.curve("r2", *star(S_ALL, np.full_like(S_ALL, r)))
+        rr = np.concatenate([np.linspace(0, 1, 80)[:-1] ** 2, R + np.exp(np.linspace(-6, 8, 200)) - np.exp(-6)])
+        for t in (-12, -6, -3, 0, 3, 6, 12):
+            v.curve("t", *star(np.full_like(rr, t), rr))
+        v.curve("surface", ps, qs)
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        corners(v, three)
+        v.label_xt([0, 0.25], "$r = 0$", "r", dx=-6)
+        label_on(v, mink_pq(0, rstar(R), R), "$r = r_b$")
+        v.label_xt([0.6, 0.0], "star", cls="region")
+        v.legend("cover", "the star, $r \\le r_b$, which $t$ and $r$ cover")
+        v.legend("r", "$r$ constant inside, at $0.25$, $0.5$ and $0.75\\,r_b$")
+        v.legend("r2", "$r$ constant outside, at $1.5$, $2$ and $4\\,r_b$")
+        v.legend("t", "$t$ constant, one $t$ on both sides")
+        v.legend("surface", "the surface of the star, $r = r_b$")
+        v.legend("singular", "$r = 0$, where the density and the Kretschmann scalar diverge, timelike")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(settings="$r_b = 1$.")
+        moment = slices.moments("misner_zapolsky", system)[0]
+        lo, hi = moment.reach(system, "r")[0], moment.reach("spherical", "r")[1]
+        along_r = np.concatenate([np.linspace(0, 1, 60)[:-1] ** 2 * (R - lo) + lo, R + np.geomspace(1e-6, hi - R, 200)])
+        v.slice(moment, [star(0 * along_r, along_r)])
+        views.append(v)
+
+    # Tolman's exponent at n = 1, the stiffest fluid.
+    stiff = Plane(src, "misner_zapolsky", "power_law", ("t", "r"), EQUATOR, {"n": 1, "a": 1})
+
+    def stiffest(t, r):
+        with np.errstate(divide="ignore"):
+            return mink_pq(t, math.sqrt(2) * np.log(np.asarray(r, dtype=float)))
+    ck.chart("Misner-Zapolsky, the stiffest fluid", stiff, stiffest, ck.uniform(-12, 12),
+             np.exp(ck.uniform(-8, 8)), lambda t, r: (1, 0))
+    K = stiff.kretschmann
+    ck.diverges("Misner-Zapolsky: the Kretschmann scalar of the stiffest fluid diverges at r = 0",
+                K(0, 1e-2), K(0, 1e-3))
+    p, q = stiffest(np.array([0.0]), np.array([1e-300]))
+    ck.limit("Misner-Zapolsky, n = 1: r -> 0 at t = 0 lands on the left corner, (X, T) = (-pi, 0)",
+             point(p[0], q[0]), [-PI, 0], 1e-2)
+    # An ingoing ray, ct + r* constant, keeps its q and runs to the upper left edge, p = pi/2, as r -> 0.
+    r_in = np.array([1e-3, 1e-30, 1e-200])
+    p, q = stiffest(-math.sqrt(2) * np.log(r_in) + 0.7, r_in)
+    ck.limit("Misner-Zapolsky, n = 1: an ingoing ray keeps its q and runs to p = pi/2 as r -> 0",
+             [q[0] - q[2], p[2]], [0, HALF], 1e-2)
+    # The affine parameter of a radial ray is int sqrt(-g_tt g_rr) dr = r^2/sqrt(2), finite at r = 0.
+    rq = np.linspace(1e-9, 1.0, 200001)
+    g00, g01, g11 = stiff.metric(0 * rq, rq)[:3]
+    ck.limit("Misner-Zapolsky, n = 1: the affine parameter from r = 0 to r = a is a/sqrt(2)",
+             [float(np.trapezoid(np.sqrt(-g00 * g11), rq))], [1 / math.sqrt(2)], 1e-6)
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    v = View("power_law", "Tolman's Exponent", box, "power_law")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    for r in (0.1, 0.5, 1.0, 2.0, 10.0):
+        v.curve("r", *stiffest(S_ALL, np.full_like(S_ALL, r)))
+    rr = np.exp(np.linspace(-60, 60, 600))
+    for t in (-6, -3, -1.5, 0, 1.5, 3, 6):
+        v.curve("t", *stiffest(np.full_like(rr, t), rr))
+    v.line("singular", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]], zig=True)
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    corners(v, three)
+    v.label_xt([-HALF, HALF], "$r = 0$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$r = 0$", "tr", dx=-5, dy=3)
+    label_on(v, stiffest(0, 1.0), "$r = a$")
+    v.legend("cover", "the whole spacetime, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $0.1$, $0.5$, $1$, $2$ and $10\\,a$")
+    v.legend("t", "$t$ constant")
+    v.legend("singular", "$r = 0$, where the density and the Kretschmann scalar diverge, null")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(settings="$n = 1$ and $a = 1$.")
+    moment = slices.moments("misner_zapolsky", "stiff")[0]
+    lo, hi = moment.reach("power_law", "r")
+    along_r = np.exp(np.linspace(-60, math.log(hi), 300))
+    v.slice(moment, [stiffest(0 * along_r, along_r)])
+    views.append(v)
     return views
 
 
@@ -19705,7 +19897,7 @@ DRAWN = {
     "einstein_cluster": einstein_cluster,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
-    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
+    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
     "ab_metrics": ab_metrics,
@@ -22061,6 +22253,38 @@ CAPTIONS = {
     ("bartnik_mckinnon", "soliton"): [
         "The soliton whose Yang-Mills amplitude $w$ has one zero, each point in the diagram a 2-sphere of radius $r$. Every sphere has $2m < r$, so there is no horizon, and the centre is regular.",
         "The tortoise coordinate $\\xi = \\int dr/(\\sigma(1 - 2m/r))$ runs from the centre to infinity, and $p, q = \\arctan((ct \\mp \\xi)/8\\ell)$ bring the spacetime into Minkowski's triangle, the causal structure of empty space. The curves of constant $r$ crowd toward the centre, since light takes $7.88\\,\\ell/c$ of $t$ to cross the first $\\ell$ of radius.",
+    ],
+    ("misner_zapolsky", "areal"): [
+        "The sphere of radiation, each point in the diagram a 2-sphere of radius $r$. Its tortoise coordinate "
+        "$r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr = \\sqrt{7ar}$ is zero at the centre, so the plane of $t$ and "
+        "$r_*$ is half of Minkowski's, and $p, q = \\arctan((ct \\mp r_*)/a)$ bring it into his triangle.",
+        "The centre $r = 0$ is a timelike line where the density and the Kretschmann scalar diverge, and no "
+        "horizon stands between it and null infinity: a ray from the centre reaches radius $r$ at "
+        "$ct = \\sqrt{7ar}$ and goes on to $\\mathscr{I}^+$.",
+    ],
+    ("misner_zapolsky", "tolman_v"): [
+        "The Tolman V star joined at its surface $r_b$ to Schwarzschild's exterior of the Schwarzschild radius "
+        "$r_s = r_b/2$, each point in the diagram a 2-sphere of radius $r$. At the surface $g_{tt} = -1/2$ and "
+        "$g_{rr} = 2$ on both sides, so $t$ is one coordinate throughout.",
+        "The tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from zero at the centre through "
+        "the surface, and $p, q = \\arctan((ct \\mp r_*)/r_b)$ bring the spacetime into Minkowski's triangle, "
+        "with the star a timelike tube from $i^-$ to $i^+$ around a centre of infinite density.",
+    ],
+    ("misner_zapolsky", "tolman_vi"): [
+        "The Tolman VI star joined at its surface $r_b$ to Schwarzschild's exterior of the Schwarzschild radius "
+        "$r_s = 3r_b/7$, each point in the diagram a 2-sphere of radius $r$. At the surface $g_{tt} = -4/7$ and "
+        "$g_{rr} = 7/4$ on both sides, so $t$ is one coordinate throughout.",
+        "Inside, the tortoise coordinate is $r_* = \\tfrac{14}{3}r_b\\ln\\left((3 + \\sqrt{r/r_b})/(3 - \\sqrt{r/r_b})\\right)$, "
+        "zero at the centre, and $p, q = \\arctan((ct \\mp r_*)/r_b)$ bring the spacetime into Minkowski's "
+        "triangle, with the star a timelike tube from $i^-$ to $i^+$ around a centre of infinite density.",
+    ],
+    ("misner_zapolsky", "power_law"): [
+        "The stiffest fluid, $n = 1$, each point in the diagram a 2-sphere of radius $r$. Its tortoise coordinate "
+        "$r_* = \\sqrt{2}\\,a\\ln(r/a)$ runs over the whole line, so the plane of $t$ and $r_*$ is all of "
+        "Minkowski's, and $p, q = \\arctan((ct \\mp r_*)/a)$ bring it into his diamond.",
+        "The centre lies on the two null edges on the left: a ray reaches it only as $t \\to \\pm\\infty$, at a "
+        "finite affine parameter, which goes as $r^2$. For every $n < 1$ the tortoise coordinate is finite at "
+        "$r = 0$ and the centre is a timelike line, as it is for radiation at $n = 1/2$.",
     ],
     ("tolman_vii", "spherical"): [
         "A static star whose density falls as $1 - r^2/R^2$ to an empty surface, joined at $R = 2\\,r_s$ "
