@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 134,
+  "count": 135,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -25539,6 +25539,11 @@
           "id": "penrose_impulsive_wave",
           "kind": "composite",
           "text": "The inside and the outside of a light cone, glued back together with a warp. The cone carries a spherical gravitational wave one instant thick [penrose1972impulsive, podolsky2000snapping]."
+        },
+        {
+          "id": "moving_mirror",
+          "kind": "locally_same",
+          "text": "Two dimensions of Minkowski space with a mirror for a left edge. Let the mirror accelerate and the empty space to its right fills with radiation, thermal if the mirror's world line closes on a light ray [fulling1976, davies1977]."
         }
       ],
       "references": [
@@ -25608,7 +25613,9 @@
         "will2014",
         "einstein1914fokker",
         "delacruz1967",
-        "podolsky2000snapping"
+        "podolsky2000snapping",
+        "fulling1976",
+        "davies1977"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -27432,6 +27439,317 @@
           ],
           "ricci_scalar": "R = -\\dfrac{8\\delta(l)}{b}",
           "kretschmann": "K = 0 \\;\\text{for}\\; l \\neq 0"
+        }
+      ]
+    },
+    {
+      "id": "moving_mirror",
+      "name": "The Moving Mirror of Fulling and Davies",
+      "short_name": "Moving mirror",
+      "description": "Flat spacetime in two dimensions that ends at a perfectly reflecting mirror on a chosen world line, with a massless quantum field to its right. A mirror that accelerates radiates, and one whose world line approaches a light ray sends out a steady thermal flux, Hawking's radiation with no curvature anywhere.",
+      "tags": [
+        "moving mirror",
+        "two-dimensional",
+        "flat",
+        "conformally flat",
+        "vacuum",
+        "Hawking radiation",
+        "Hawking temperature",
+        "dynamical Casimir effect",
+        "particle creation",
+        "quantum field theory in curved spacetime",
+        "boundary",
+        "horizon",
+        "black hole evaporation",
+        "information paradox",
+        "Page curve",
+        "Rindler",
+        "accelerating",
+        "Lambert W function",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+)",
+      "convention": "We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "The plane of $t$ and $x$ of Minkowski space, kept only to the right of the mirror's world line. Rindler's coordinates bring a uniformly accelerating mirror to rest, and that mirror does not radiate [fulling1976, davies1975]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "The black hole whose radiation the mirror imitates. A mirror on the world line $z = -ct - \\mathrm{W}\\left(2e^{-2\\kappa ct}\\right)/2\\kappa$ creates particles exactly as a shell of light collapsing to Schwarzschild's black hole does, with $\\kappa = 1/2r_s$ [good2016]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "Vaidya's metric with all its mass arriving on one ray is a collapsing shell of light, flat inside and Schwarzschild's outside. The mirror of Good, Anderson, and Evans stands in for the centre of that shell [good2016]."
+        },
+        {
+          "id": "witten_black_hole",
+          "kind": "family",
+          "text": "The other solvable model of Hawking's radiation in two dimensions, a black hole that forms from a pulse of matter and radiates at a temperature that is the same for every mass [callan1992]. The mirror of Carlitz and Willey radiates at one temperature at every time [carlitz1987, good2016]."
+        }
+      ],
+      "references": [
+        "good2013",
+        "moore1970",
+        "dewitt1975",
+        "hawking1975",
+        "good2016",
+        "wilczek1993",
+        "davies1975",
+        "fulling1976",
+        "akal2021",
+        "davies1977",
+        "carlitz1987",
+        "hawking1976",
+        "wilson2011",
+        "chen2017",
+        "callan1992"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/moving_mirror.json",
+      "charts": [
+        {
+          "id": "inertial",
+          "name": "Inertial",
+          "coordinates": [
+            "t",
+            "x"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "x > z(t) \\;\\text{(to the right of the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "z = z(t)",
+              "description": "Position of the mirror at the time $t$, a length; its world line is timelike, $|dz/dt| < c$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, x)$ of an inertial frame, with $t$ carrying dimensions of time and $x$ a length, and the mirror is at $x = z(t)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dx^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "null",
+          "name": "Null",
+          "coordinates": [
+            "u",
+            "v"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "v > p(u) \\;\\text{(to the right of the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p = p(u)",
+              "description": "Ray tracing function, a length: the ray that arrives along $v = p(u)$ leaves the mirror along $u$; it increases with $u$ for a timelike mirror"
+            }
+          ],
+          "convention": "We use the null coordinates $u = ct - x$ and $v = ct + x$ of an inertial frame, both lengths, and the mirror is at $v = p(u)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du\\,dv",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "mirror_rest",
+          "name": "Mirror at Rest",
+          "coordinates": [
+            "U",
+            "v"
+          ],
+          "domains": [
+            "p(-\\infty) < U < p(\\infty) \\;\\text{(the values the ray tracing function takes)}",
+            "v \\in (-\\infty, \\infty)",
+            "v > U \\;\\text{(to the right of the mirror)}",
+            "U = v \\;\\text{(the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "f = f(U)",
+              "description": "Inverse of the ray tracing function $p$, a length: the ray that arrives along $v$ leaves the mirror along $u = f(v)$; a prime is a derivative with respect to its argument, and $f' > 0$ for a timelike mirror"
+            }
+          ],
+          "convention": "We use the null coordinates $U = p(u)$ and $v = ct + x$, both lengths, with $u = ct - x = f(U)$ and $p$ the ray tracing function, so that the mirror is at rest at $U = v$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -f'\\,dU\\,dv",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "v"
+              ],
+              "value": "-\\dfrac{f'}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "U"
+              ],
+              "value": "-\\dfrac{f'}{2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "thermal",
+          "name": "Thermal Mirror",
+          "coordinates": [
+            "T",
+            "X"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "X \\in (0, \\infty)",
+            "X > cT \\;\\text{(the chart ends on } X = cT\\text{, where the inertial } u \\to \\infty\\text{)}",
+            "X = 0 \\;\\text{(the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\kappa",
+              "description": "Inverse length that sets the mirror's acceleration; the radiation it sends to the right has the temperature $\\hbar c\\kappa/2\\pi k_B$ at every time"
+            }
+          ],
+          "convention": "We use coordinates $(T, X)$ in which the mirror of Carlitz and Willey stands at $X = 0$, with $T$ carrying dimensions of time and $X$ a length: $cT - X = -e^{-\\kappa u}/\\kappa$ and $cT + X = v$, with $u = ct - x$ and $v = ct + x$ the null coordinates of an inertial frame. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{-c^2dT^2 + dX^2}{\\kappa\\left(X - cT\\right)}",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "\\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "collapse",
+          "name": "Collapse Mirror",
+          "coordinates": [
+            "T",
+            "X"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "X \\in (0, \\infty)",
+            "X > cT \\;\\text{(the chart ends on } X = cT\\text{, where the inertial } u \\to \\infty\\text{)}",
+            "X = 0 \\;\\text{(the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\kappa",
+              "description": "Inverse length that sets how fast the mirror's world line closes on the light ray $v = 0$; the radiation settles at late times to the temperature $\\hbar c\\kappa/2\\pi k_B$, that of a Schwarzschild black hole of radius $r_s = 1/2\\kappa$"
+            }
+          ],
+          "convention": "We use coordinates $(T, X)$ in which the mirror of Good, Anderson, and Evans stands at $X = 0$, with $T$ carrying dimensions of time and $X$ a length: $u = U - \\ln(-\\kappa U)/\\kappa$ for $U = cT - X$, and $cT + X = v$, with $u = ct - x$ and $v = ct + x$ the null coordinates of an inertial frame. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}\\right)\\left(-c^2dT^2 + dX^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\left(1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}\\right)"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "rindler",
+          "name": "Rindler",
+          "coordinates": [
+            "\\eta",
+            "\\xi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "\\xi \\in (0, \\infty)",
+            "\\xi = 0 \\;\\text{(the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\kappa",
+              "description": "Inverse length; the mirror's proper acceleration is $c^2\\kappa$"
+            }
+          ],
+          "convention": "We use Rindler's coordinates $(\\eta, \\xi)$ in their conformal form, with $\\eta$ carrying dimensions of time and $\\xi$ a length: $ct = e^{\\kappa\\xi}\\sinh(\\kappa c\\eta)/\\kappa$ and $x = e^{\\kappa\\xi}\\cosh(\\kappa c\\eta)/\\kappa$ for the inertial $t$ and $x$, so that a uniformly accelerating mirror stands at $\\xi = 0$. We take components in the chart $x^0 = c\\eta$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\eta}$ means $d(c\\eta)/d\\lambda$.",
+          "line_element": "ds^2 = e^{2\\kappa\\xi}\\left(-c^2d\\eta^2 + d\\xi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-e^{2\\kappa\\xi}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "e^{2\\kappa\\xi}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
         }
       ]
     },
@@ -35420,6 +35738,11 @@
           "id": "exponential_metric",
           "kind": "family",
           "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
+        },
+        {
+          "id": "moving_mirror",
+          "kind": "family",
+          "text": "Flat spacetime of two dimensions with a receding mirror in place of the centre of a collapsing star. The mirror radiates as a Schwarzschild black hole of radius $r_s = 1/2\\kappa$ does, with no curvature anywhere [davies1977, good2016]."
         }
       ],
       "references": [
@@ -35522,7 +35845,9 @@
         "deruelle2011",
         "hoffmann1935",
         "gibbonsrasheed1995",
-        "boonserm2018"
+        "boonserm2018",
+        "davies1977",
+        "good2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -41568,6 +41893,11 @@
           "id": "white_hole",
           "kind": "family",
           "text": "A white hole made of dust, Oppenheimer and Snyder's collapse with the time reversed. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation one sends out [zeldovichnovikovstarobinskii1974]."
+        },
+        {
+          "id": "moving_mirror",
+          "kind": "family",
+          "text": "A mirror in flat spacetime of two dimensions that creates particles exactly as Vaidya's shell of light does when it collapses to a black hole [good2016]."
         }
       ],
       "references": [
@@ -41601,7 +41931,8 @@
         "hiscock1981outgoing",
         "israel1966",
         "adler2005",
-        "zeldovichnovikovstarobinskii1974"
+        "zeldovichnovikovstarobinskii1974",
+        "good2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
@@ -43822,6 +44153,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The black hole of three dimensions. Without rotation it is dual, as a string background, to Witten's hole times a circle [horowitz1993]."
+        },
+        {
+          "id": "moving_mirror",
+          "kind": "family",
+          "text": "Hawking's radiation in two dimensions with the gravity taken out: flat spacetime ending at a mirror whose world line closes on a light ray. Its radiation, like this hole's, has a temperature set by one constant of the model [davies1977, good2016]."
         }
       ],
       "references": [
@@ -43837,7 +44173,9 @@
         "strominger1995",
         "gautason2020",
         "russo1992",
-        "horowitz1993"
+        "horowitz1993",
+        "davies1977",
+        "good2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/witten_black_hole.json",

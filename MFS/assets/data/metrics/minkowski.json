@@ -223,6 +223,11 @@
       "id": "penrose_impulsive_wave",
       "kind": "composite",
       "text": "The inside and the outside of a light cone, glued back together with a warp. The cone carries a spherical gravitational wave one instant thick [penrose1972impulsive, podolsky2000snapping]."
+    },
+    {
+      "id": "moving_mirror",
+      "kind": "locally_same",
+      "text": "Two dimensions of Minkowski space with a mirror for a left edge. Let the mirror accelerate and the empty space to its right fills with radiation, thermal if the mirror's world line closes on a light ray [fulling1976, davies1977]."
     }
   ],
   "references": [
@@ -292,7 +297,9 @@
     "will2014",
     "einstein1914fokker",
     "delacruz1967",
-    "podolsky2000snapping"
+    "podolsky2000snapping",
+    "fulling1976",
+    "davies1977"
   ],
   "coordinates": [
     {

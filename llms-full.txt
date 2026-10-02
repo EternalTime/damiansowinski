@@ -1228,6 +1228,21 @@ A traversable wormhole whose mouths have been put out of step by taking one of t
 - chart Morris-Thorne-Yurtsever: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{glF\cos\theta}{c^2}\right)^2e^{2\Phi}c^2dt^2 + dl^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Short Throat: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -c^2dt^2 + dl^2 + \left(b + |l|\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### The Moving Mirror of Fulling and Davies
+
+Flat spacetime in two dimensions that ends at a perfectly reflecting mirror on a chosen world line, with a massless quantum field to its right. A mirror that accelerates radiates, and one whose world line approaches a light ray sends out a steady thermal flux, Hawking's radiation with no curvature anywhere.
+
+- id: `moving_mirror`
+- tags: moving mirror, two-dimensional, flat, conformally flat, vacuum, Hawking radiation, Hawking temperature, dynamical Casimir effect, particle creation, quantum field theory in curved spacetime, boundary, horizon, black hole evaporation, information paradox, Page curve, Rindler, accelerating, Lambert W function, exact solution, Lorentzian, idealized model
+- signature: (-,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/moving_mirror.json
+- chart Inertial: coordinates $(t, x)$, $$ds^2 = -c^2dt^2 + dx^2$$
+- chart Null: coordinates $(u, v)$, $$ds^2 = -du\,dv$$
+- chart Mirror at Rest: coordinates $(U, v)$, $$ds^2 = -f'\,dU\,dv$$
+- chart Thermal Mirror: coordinates $(T, X)$, $$ds^2 = \dfrac{-c^2dT^2 + dX^2}{\kappa\left(X - cT\right)}$$
+- chart Collapse Mirror: coordinates $(T, X)$, $$ds^2 = \left(1 + \dfrac{1}{\kappa\left(X - cT\right)}\right)\left(-c^2dT^2 + dX^2\right)$$
+- chart Rindler: coordinates $(\eta, \xi)$, $$ds^2 = e^{2\kappa\xi}\left(-c^2d\eta^2 + d\xi^2\right)$$
+
 ### Myers-Perry Rotating Black Hole
 
 The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry found in 1985, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane keeps its horizon at every spin.

@@ -1,5 +1,5 @@
 {
-  "version": "65c56a40c80b810a",
+  "version": "00f15139b82df948",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -24507,6 +24507,167 @@
         "eprint": "1809.05290",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.98.064050"
+      }
+    },
+    "moore1970": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum Theory of the Electromagnetic Field in a Variable-Length One-Dimensional Cavity",
+        "author": "Moore, Gerald T.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "11",
+        "number": "9",
+        "pages": "2679--2691",
+        "year": "1970",
+        "doi": "10.1063/1.1665432",
+        "url": "https://doi.org/10.1063/1.1665432"
+      }
+    },
+    "dewitt1975": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum field theory in curved spacetime",
+        "author": "DeWitt, Bryce S.",
+        "journal": "Physics Reports",
+        "volume": "19",
+        "number": "6",
+        "pages": "295--357",
+        "year": "1975",
+        "doi": "10.1016/0370-1573(75)90051-4",
+        "url": "https://doi.org/10.1016/0370-1573(75)90051-4"
+      }
+    },
+    "fulling1976": {
+      "type": "article",
+      "fields": {
+        "title": "Radiation from a moving mirror in two dimensional space-time: conformal anomaly",
+        "author": "Fulling, S. A. and Davies, P. C. W.",
+        "journal": "Proceedings of the Royal Society of London A",
+        "volume": "348",
+        "number": "1654",
+        "pages": "393--414",
+        "year": "1976",
+        "doi": "10.1098/rspa.1976.0045",
+        "url": "https://doi.org/10.1098/rspa.1976.0045"
+      }
+    },
+    "davies1977": {
+      "type": "article",
+      "fields": {
+        "title": "Radiation from moving mirrors and from black holes",
+        "author": "Davies, P. C. W. and Fulling, S. A.",
+        "journal": "Proceedings of the Royal Society of London A",
+        "volume": "356",
+        "number": "1685",
+        "pages": "237--257",
+        "year": "1977",
+        "doi": "10.1098/rspa.1977.0130",
+        "url": "https://doi.org/10.1098/rspa.1977.0130"
+      }
+    },
+    "carlitz1987": {
+      "type": "article",
+      "fields": {
+        "title": "Reflections on moving mirrors",
+        "author": "Carlitz, Robert D. and Willey, Raymond S.",
+        "journal": "Physical Review D",
+        "volume": "36",
+        "number": "8",
+        "pages": "2327--2335",
+        "year": "1987",
+        "doi": "10.1103/PhysRevD.36.2327",
+        "url": "https://doi.org/10.1103/PhysRevD.36.2327"
+      }
+    },
+    "wilczek1993": {
+      "type": "misc",
+      "fields": {
+        "title": "Quantum Purity at a Small Price: Easing a Black Hole Paradox",
+        "author": "Wilczek, Frank",
+        "year": "1993",
+        "eprint": "hep-th/9302096",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9302096"
+      }
+    },
+    "good2013": {
+      "type": "article",
+      "fields": {
+        "title": "Time dependence of particle creation from accelerating mirrors",
+        "author": "Good, Michael R. R. and Anderson, Paul R. and Evans, Charles R.",
+        "journal": "Physical Review D",
+        "volume": "88",
+        "number": "2",
+        "pages": "025023",
+        "year": "2013",
+        "doi": "10.1103/PhysRevD.88.025023",
+        "eprint": "1303.6756",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.88.025023"
+      }
+    },
+    "good2016": {
+      "type": "article",
+      "fields": {
+        "title": "Mirror reflections of a black hole",
+        "author": "Good, Michael R. R. and Anderson, Paul R. and Evans, Charles R.",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "6",
+        "pages": "065010",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.065010",
+        "eprint": "1605.06635",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.94.065010"
+      }
+    },
+    "akal2021": {
+      "type": "article",
+      "fields": {
+        "title": "Entanglement Entropy in a Holographic Moving Mirror and the Page Curve",
+        "author": "Akal, Ibrahim and Kusuki, Yuya and Shiba, Noburo and Takayanagi, Tadashi and Wei, Zixia",
+        "journal": "Physical Review Letters",
+        "volume": "126",
+        "number": "6",
+        "pages": "061604",
+        "year": "2021",
+        "doi": "10.1103/PhysRevLett.126.061604",
+        "eprint": "2011.12005",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.126.061604"
+      }
+    },
+    "wilson2011": {
+      "type": "article",
+      "fields": {
+        "title": "Observation of the dynamical Casimir effect in a superconducting circuit",
+        "author": "Wilson, C. M. and Johansson, G. and Pourkabirian, A. and Simoen, M. and Johansson, J. R. and Duty, T. and Nori, F. and Delsing, P.",
+        "journal": "Nature",
+        "volume": "479",
+        "number": "7373",
+        "pages": "376--379",
+        "year": "2011",
+        "doi": "10.1038/nature10561",
+        "eprint": "1105.4714",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1038/nature10561"
+      }
+    },
+    "chen2017": {
+      "type": "article",
+      "fields": {
+        "title": "Accelerating Plasma Mirrors to Investigate the Black Hole Information Loss Paradox",
+        "author": "Chen, Pisin and Mourou, Gerard",
+        "journal": "Physical Review Letters",
+        "volume": "118",
+        "number": "4",
+        "pages": "045001",
+        "year": "2017",
+        "doi": "10.1103/PhysRevLett.118.045001",
+        "eprint": "1512.04064",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.118.045001"
       }
     }
   }

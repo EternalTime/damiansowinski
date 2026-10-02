@@ -2432,7 +2432,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "55f26acaff050937",
+    "version": "c6c43dbe2edc2ef1",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2612,6 +2612,37 @@
     "diagrams": "e780b20f08791793",
     "conformal": "325a9c57971cf007",
     "embedding": "5d574463e63f1df8"
+  },
+  {
+    "id": "moving_mirror",
+    "name": "Moving mirror",
+    "tags": [
+      "moving mirror",
+      "two-dimensional",
+      "flat",
+      "conformally flat",
+      "vacuum",
+      "Hawking radiation",
+      "Hawking temperature",
+      "dynamical Casimir effect",
+      "particle creation",
+      "quantum field theory in curved spacetime",
+      "boundary",
+      "horizon",
+      "black hole evaporation",
+      "information paradox",
+      "Page curve",
+      "Rindler",
+      "accelerating",
+      "Lambert W function",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "ae8ce036f562a68d",
+    "diagrams": "71b5d5fd56fc2bcf",
+    "conformal": "87e0174e8f73dc88",
+    "embedding": "3103128e785dc4ef"
   },
   {
     "id": "myers_perry",
@@ -3310,7 +3341,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "536769c55600cc4f",
+    "version": "57ee50a7c74fcbc7",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3900,7 +3931,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "35e69aea66e2d7c1",
+    "version": "5f904d1285fe3183",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"
@@ -4097,7 +4128,7 @@
       "conformally flat",
       "stationary"
     ],
-    "version": "b2c5307f7ef3479d",
+    "version": "0a8fb1edf5583cbe",
     "diagrams": "20e4b54fd89e7fb9",
     "conformal": "f6b963bc340f323d",
     "embedding": "05b4e9f05b7ea873"
