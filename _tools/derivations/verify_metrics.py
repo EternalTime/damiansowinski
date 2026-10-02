@@ -696,6 +696,18 @@ DIMENSIONS = {
     },
     # Plebanski and Hacyan's products and anti-Nariai: a and b are the radii of the factors, tau a
     # boost angle or a dimensionless time, and f and g, which multiply x and y in g_uu, inverse lengths.
+    # Lindquist and Wheeler's lattice keeps Schwarzschild's length r_s = 2GM/c^2 for the mass of
+    # one cell. psi, the angular radius of a cell on the comparison hypersphere, and E = cos^2(psi)
+    # are pure numbers; the comoving label rho is the largest radius a shell reaches, a length, so
+    # that d_rho r is a pure number; and the hypersphere's radius a carries the length, chi an angle.
+    ("lindquist_wheeler_lattice", "schwarzschild_cell"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\psi": "1"},
+    ("lindquist_wheeler_lattice", "cosmological_time"): {
+        "\\tau": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "E": "1"},
+    ("lindquist_wheeler_lattice", "lindquist_wheeler"): {
+        "\\tau": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L"},
+    ("lindquist_wheeler_lattice", "comparison_hypersphere"): {
+        "\\tau": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L", "r_s": "L", "\\psi": "1"},
     ("plebanski_hacyan", "sphere"): {"t": "T", "z": "L", "\\theta": "1", "\\phi": "1", "b": "L"},
     ("plebanski_hacyan", "sphere_rindler"): {"\\tau": "1", "\\chi": "L", "\\theta": "1", "\\phi": "1", "b": "L"},
     ("plebanski_hacyan", "plane"): {"u": "L", "w": "L", "x": "L", "y": "L", "a": "L"},

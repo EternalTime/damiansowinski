@@ -67,6 +67,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "A slice of space with two bridges in it, each leading to a sheet of its own, which Dieter Brill and Richard Lindquist wrote down in 1963 [brill1963]. Charles Misner's slice of 1960 joins the two mouths to each other and makes a wormhole within one sheet [misner1960]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "A closed universe of $N$ masses whose moment of greatest expansion has a bridge at every mass, each opening onto a sheet of its own [clifton2012]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "bronnikov1973",
     "einstein1937",
     "brill1963",
-    "misner1960"
+    "misner1960",
+    "clifton2012"
   ],
   "coordinates": [
     {

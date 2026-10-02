@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 120,
+  "count": 121,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -9306,6 +9306,11 @@
           "id": "misner_brill_lindquist",
           "kind": "family",
           "text": "A slice of space with two bridges in it, each leading to a sheet of its own, which Dieter Brill and Richard Lindquist wrote down in 1963 [brill1963]. Charles Misner's slice of 1960 joins the two mouths to each other and makes a wormhole within one sheet [misner1960]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "A closed universe of $N$ masses whose moment of greatest expansion has a bridge at every mass, each opening onto a sheet of its own [clifton2012]."
         }
       ],
       "references": [
@@ -9327,7 +9332,8 @@
         "bronnikov1973",
         "einstein1937",
         "brill1963",
-        "misner1960"
+        "misner1960",
+        "clifton2012"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -10409,6 +10415,11 @@
           "id": "sultana_dyer",
           "kind": "generalisation",
           "text": "The flat universe of dust with a black hole in it from the big bang on: Schwarzschild's metric times $a^2$, with $a \\propto \\eta^2$ [sultana2005]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "A closed universe with its dust gathered into $N$ equal masses on a regular lattice. It expands and recollapses on Friedmann's cycloid, to a largest radius that approaches Friedmann's as $N$ grows [lindquist1957, clifton2009]."
         }
       ],
       "references": [
@@ -10461,7 +10472,9 @@
         "coleman1980",
         "bucher1995",
         "senovilla1996",
-        "sultana2005"
+        "sultana2005",
+        "lindquist1957",
+        "clifton2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -15716,6 +15729,11 @@
           "id": "misner_brill_lindquist",
           "kind": "family",
           "text": "Two uncharged black holes at rest in a universe with no cosmological constant. Only their first moment is in closed form, and the collision that follows is known from computer simulations [brill1963, sperhake2015]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "A universe of uncharged black holes with no cosmological constant, known only approximately: each hole keeps Schwarzschild's geometry inside its cell, and the lattice of cells expands and recollapses [lindquist1957]."
         }
       ],
       "references": [
@@ -15733,7 +15751,8 @@
         "kastor1996",
         "gibbons2010",
         "brill1963",
-        "sperhake2015"
+        "sperhake2015",
+        "lindquist1957"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kastor_traschen.json",
@@ -20813,6 +20832,358 @@
       ]
     },
     {
+      "id": "lindquist_wheeler_lattice",
+      "name": "Lindquist-Wheeler Lattice Universe",
+      "short_name": "Lindquist-Wheeler Lattice",
+      "description": "A closed universe that holds nothing but $N$ equal masses, one at the centre of each cell of a regular tiling of the three sphere, built by Richard Lindquist and John Wheeler in 1957 from pieces of Schwarzschild's geometry. Fitting the pieces together makes the lattice expand and fall back almost as Friedmann's closed universe of dust does. It is an approximate spacetime, and an early test of whether a universe whose matter comes in lumps expands like a smooth one.",
+      "tags": [
+        "cosmology",
+        "closed universe",
+        "expanding universe",
+        "big bang",
+        "lattice universe",
+        "black hole lattice",
+        "multiple black holes",
+        "approximate solution",
+        "Schwarzschild-cell method",
+        "Wigner-Seitz",
+        "inhomogeneous",
+        "backreaction",
+        "three sphere",
+        "regular polytope",
+        "time-dependent",
+        "comoving",
+        "mass",
+        "horizon",
+        "curvature singularity",
+        "Flamm's paraboloid",
+        "matched solution",
+        "vacuum",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and $r_s = 2GM/c^2$ is the Schwarzschild radius of the mass at the centre of each cell. The angle $\\psi$ is the angular radius of a cell on the comparison hypersphere, which the number of cells $N$ fixes through $N(2\\psi - \\sin 2\\psi) = 2\\pi$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "Every cell is a piece of Schwarzschild's geometry, cut off at a sphere in radial free fall. The lattice has no other ingredient [lindquist1957]."
+        },
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "The smooth universe the lattice is measured against. The comparison hypersphere obeys Friedmann's equation for closed dust, and its largest radius is $3\\pi/(2N\\sin^3\\psi)$ times Friedmann's for the same total mass, which tends to 1 as $N$ grows [clifton2009]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "The exact form of one moment. At the instant of greatest expansion the lattice's initial data are Brill and Lindquist's, written on a three sphere in place of flat space, with one term for each mass [brill1963, clifton2012]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "The same fit turned inside out. There a ball of Friedmann's dust sits inside Schwarzschild's vacuum, here Schwarzschild's vacuum sits inside a cell of a closed universe, and in both the boundary falls along a radial geodesic whose energy is the cosine of the boundary's angle."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "In the exact moment of greatest expansion each mass is the mouth of an Einstein-Rosen bridge, with a sheet of its own on the far side [clifton2012]."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "family",
+          "text": "Lindquist and Wheeler's comoving coordinates are Tolman and Bondi's with no dust in them: every shell carries the same mass, and the energy function is $E = -r_s/2\\rho$."
+        },
+        {
+          "id": "kastor_traschen",
+          "kind": "family",
+          "text": "Many black holes in an expanding universe as an exact solution, which takes a cosmological constant and a charge on every hole equal to its mass [kastor1993]."
+        }
+      ],
+      "references": [
+        "friedmann1922",
+        "lindquist2011",
+        "lindquist1957",
+        "liu2015",
+        "clifton2012",
+        "schwarzschild1916",
+        "clifton2009",
+        "wheeler1983",
+        "brill1963",
+        "bentivegna2012",
+        "kastor1993"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lindquist_wheeler_lattice.json",
+      "charts": [
+        {
+          "id": "schwarzschild_cell",
+          "name": "Schwarzschild Cell",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_s, r_m]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_b(t) \\;\\text{(the boundary of the cell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+            },
+            {
+              "symbol": "\\psi",
+              "description": "Angular radius of a cell on the comparison hypersphere, a pure number with $0 < \\psi < \\pi/2$, which $N$ cells of equal volume fix through $N(2\\psi - \\sin 2\\psi) = 2\\pi$"
+            }
+          ],
+          "convention": "We use Schwarzschild's coordinates $(t, r, \\theta, \\phi)$ about the mass at the centre of one cell, with $t$ carrying dimensions of time. The cell is the ball inside the boundary $r = r_b(t)$, a sphere in radial free fall that turns around at $r_m = r_s/\\sin^2\\psi$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "cosmological_time",
+          "name": "Cosmological Time",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in \\left(0, \\dfrac{r_s}{1 - E}\\right]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+            },
+            {
+              "symbol": "E",
+              "description": "Square of a comoving shell's energy per unit rest energy, a pure number, $E = \\cos^2\\psi$ for the lattice of $N$ cells"
+            }
+          ],
+          "convention": "We use Clifton and Ferreira's coordinates $(\\tau, r, \\theta, \\phi)$ inside one cell, where $\\tau$ is the proper time of every shell in radial free fall with the boundary's energy, $E = \\cos^2\\psi$, and $r$ is the areal radius. The signs are those of a cell that expands, and the root changes sign for one that contracts. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{1}{E}\\left(1 - \\dfrac{r_s}{r}\\right)c^2d\\tau^2 - \\dfrac{2}{E}\\sqrt{E - 1 + \\dfrac{r_s}{r}}\\,c\\,d\\tau\\,dr + \\dfrac{dr^2}{E} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{1}{E}\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "r"
+              ],
+              "value": "-\\dfrac{1}{E}\\sqrt{E - 1 + \\dfrac{r_s}{r}}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{1}{E}\\sqrt{E - 1 + \\dfrac{r_s}{r}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{E}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "lindquist_wheeler",
+          "name": "Lindquist-Wheeler Comoving",
+          "coordinates": [
+            "\\tau",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in \\left(-\\dfrac{\\pi\\rho}{2c}\\sqrt{\\dfrac{\\rho}{r_s}}, \\dfrac{\\pi\\rho}{2c}\\sqrt{\\dfrac{\\rho}{r_s}}\\right)",
+            "\\rho \\in (r_s, r_m]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = r_m \\;\\text{(the boundary of the cell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+            },
+            {
+              "symbol": "r = r(\\tau,\\rho)",
+              "description": "Areal radius of the shell labelled $\\rho$ at the proper time $\\tau$, a length, the cycloid $r = \\tfrac{\\rho}{2}(1 + \\cos\\eta)$, $c\\tau = \\tfrac{\\rho}{2}\\sqrt{\\rho/r_s}\\,(\\eta + \\sin\\eta)$ in a parameter $\\eta \\in (-\\pi, \\pi)$; no component assumes it"
+            }
+          ],
+          "convention": "We use Lindquist and Wheeler's comoving coordinates $(\\tau, \\rho, \\theta, \\phi)$ inside one cell, where $\\rho$ labels a shell in radial free fall by the largest radius it reaches, $\\tau$ is its proper time counted from that moment, and $r(\\tau, \\rho)$ is its areal radius. Each shell obeys $(\\partial_\\tau r)^2 = r_s/r - r_s/\\rho$ with $\\partial_\\tau = c^{-1}\\partial/\\partial\\tau$, and the boundary of the cell is the shell $\\rho = r_m = r_s/\\sin^2\\psi$. We take components in the chart $x^0 = c\\tau$, so $\\dot{\\tau}$ in the geodesic equations means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + \\dfrac{(\\partial_\\rho r)^2}{1 - \\dfrac{r_s}{\\rho}}d\\rho^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\rho\\left(\\partial_\\rho r\\right)^2}{\\rho - r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 4r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 4r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - 2r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{r^2\\,\\rho^2\\,\\partial_\\rho r}",
+          "kretschmann": "K = \\dfrac{4r^4\\,\\rho^4\\left(\\partial_\\tau^2\\partial_\\rho r\\right)^2 + 8r^2\\,\\rho^4\\left(\\partial_\\rho r\\right)^2\\left(\\partial_\\tau^2 r\\right)^2 + 8r^2\\,\\rho^4\\left(\\partial_\\tau r\\right)^2\\left(\\partial_\\tau\\partial_\\rho r\\right)^2 - 8r^2\\,\\rho^2\\,r_s\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + 2r^2\\,r_s^2 + 4\\rho^4\\left(\\partial_\\rho r\\right)^2\\left(\\partial_\\tau r\\right)^4 + 8\\rho^3\\,r_s\\left(\\partial_\\rho r\\right)^2\\left(\\partial_\\tau r\\right)^2 + 4\\rho^2\\,r_s^2\\left(\\partial_\\rho r\\right)^2}{r^4\\,\\rho^4\\left(\\partial_\\rho r\\right)^2}"
+        },
+        {
+          "id": "comparison_hypersphere",
+          "name": "Comparison Hypersphere",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in \\left(-\\dfrac{\\pi a_m}{2c}, \\dfrac{\\pi a_m}{2c}\\right)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\chi = \\psi \\;\\text{(the boundary of the cell about } \\chi = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\tau)",
+              "description": "Radius of the comparison hypersphere, a length, the cycloid $a = \\tfrac{a_m}{2}(1 + \\cos\\eta)$, $c\\tau = \\tfrac{a_m}{2}(\\eta + \\sin\\eta)$ in a parameter $\\eta \\in (-\\pi, \\pi)$, with the largest radius $a_m = r_s/\\sin^3\\psi$; no component assumes it"
+            },
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+            },
+            {
+              "symbol": "\\psi",
+              "description": "Angular radius of a cell on the comparison hypersphere, a pure number with $0 < \\psi < \\pi/2$, which $N$ cells of equal volume fix through $N(2\\psi - \\sin 2\\psi) = 2\\pi$"
+            }
+          ],
+          "convention": "We use hyperspherical coordinates $(\\tau, \\chi, \\theta, \\phi)$ on the comparison hypersphere of radius $a(\\tau)$, where $\\tau$ is the proper time of the cell boundaries and $\\chi$ is the angle from the centre of one cell, whose boundary $\\chi = \\psi$ has the areal radius $a\\sin\\psi$. A dot on the radius is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{d\\tau}$, and the lattice obeys $\\dot{a}^2 = \\dfrac{r_s}{a\\sin^3\\psi} - 1$. We take components in the chart $x^0 = c\\tau$, so $\\dot{\\tau}$ in the geodesic equations means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a\\,\\ddot{a} + 6\\dot{a}^2 + 6}{a^2}",
+          "kretschmann": "K = \\dfrac{12a^2\\,\\ddot{a}^2 + 24\\dot{a}^2 + 12\\dot{a}^4 + 12}{a^4}"
+        }
+      ]
+    },
+    {
       "id": "majumdar_papapetrou",
       "name": "Majumdar-Papapetrou Extremal Black Holes",
       "short_name": "Majumdar-Papapetrou",
@@ -23114,6 +23485,11 @@
           "id": "boson_star",
           "kind": "programme",
           "text": "Wheeler's other way to make a body out of fields and geometry alone was the geon, a ball of field held together by its own gravity [wheeler1955]. His wormholes with Misner make mass and charge out of empty space with a handle in it [misner1957]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "A whole universe of such holes. Put $N$ of them on a three sphere in place of flat space and the same construction gives one moment of Lindquist and Wheeler's lattice exactly [wheeler1983, clifton2012]."
         }
       ],
       "references": [
@@ -23141,7 +23517,9 @@
         "kramer1980",
         "kastor1993",
         "brill1994",
-        "wheeler1955"
+        "wheeler1955",
+        "wheeler1983",
+        "clifton2012"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_brill_lindquist.json",
@@ -26307,6 +26685,11 @@
           "id": "neugebauer_meinel",
           "kind": "family",
           "text": "Dust that reaches a black hole without falling: a spinning disc whose equilibria run out at the extreme Kerr black hole. Meinel set the two side by side as idealized routes to a black hole [meinel2002]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "The collapsing star turned inside out: Schwarzschild's vacuum fills each cell of a closed universe, and the boundary of a cell falls along the radial geodesic that the star's surface follows here [lindquist1957]."
         }
       ],
       "references": [
@@ -26324,7 +26707,8 @@
         "vaidya1966",
         "mann1993",
         "einstein1939",
-        "meinel2002"
+        "meinel2002",
+        "lindquist1957"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -31119,6 +31503,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "family",
           "text": "Bonnor's mass with a magnetic dipole moment. With the dipole switched off it keeps a quadrupole and a naked singularity, so Schwarzschild's black hole is not among its cases [emparan2000]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "composite",
+          "text": "A closed universe tiled with pieces of this geometry: $N$ equal masses on a three sphere, each keeping Schwarzschild's vacuum out to a sphere in free fall [lindquist1957]."
         }
       ],
       "references": [
@@ -31208,7 +31597,8 @@
         "lemos1993",
         "brill1963",
         "cook2000",
-        "emparan2000"
+        "emparan2000",
+        "lindquist1957"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -35667,6 +36057,11 @@
           "id": "tolman_vii",
           "kind": "programme",
           "text": "Richard Tolman's static spheres of fluid, from 1939. He found eight in closed form, and the density inside a neutron star follows the seventh closely [tolman1939, lattimer2001]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "Each cell of the lattice, in Lindquist and Wheeler's comoving coordinates, is this metric with no dust in it: every shell carries the same mass, and $E = -r_s/2r$ for the shell that turns around at $r$ [lindquist1957]."
         }
       ],
       "references": [
@@ -35695,7 +36090,8 @@
         "oppenheimer1939",
         "lemos1992",
         "hellaby1994",
-        "lattimer2001"
+        "lattimer2001",
+        "lindquist1957"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tolman_bondi.json",
