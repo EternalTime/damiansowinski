@@ -1,5 +1,5 @@
 {
-  "version": "ac99c889ab1289b5",
+  "version": "970404b16baa33d9",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -24281,6 +24281,207 @@
         "eprint": "0804.0295",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1142/S0217751X08041402"
+      }
+    },
+    "cartan1923": {
+      "type": "article",
+      "fields": {
+        "title": "Sur les variétés à connexion affine et la théorie de la relativité généralisée (première partie)",
+        "author": "Cartan, Élie",
+        "journal": "Annales scientifiques de l'École normale supérieure",
+        "volume": "40",
+        "pages": "325--412",
+        "year": "1923",
+        "doi": "10.24033/asens.751",
+        "url": "https://doi.org/10.24033/asens.751"
+      }
+    },
+    "kibble1961": {
+      "type": "article",
+      "fields": {
+        "title": "Lorentz Invariance and the Gravitational Field",
+        "author": "Kibble, T. W. B.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "2",
+        "number": "2",
+        "pages": "212--221",
+        "year": "1961",
+        "doi": "10.1063/1.1703702",
+        "url": "https://doi.org/10.1063/1.1703702"
+      }
+    },
+    "kopczynski1972": {
+      "type": "article",
+      "fields": {
+        "title": "A non-singular universe with torsion",
+        "author": "Kopczyński, W.",
+        "journal": "Physics Letters A",
+        "volume": "39",
+        "number": "3",
+        "pages": "219--220",
+        "year": "1972",
+        "doi": "10.1016/0375-9601(72)90714-1",
+        "url": "https://doi.org/10.1016/0375-9601(72)90714-1"
+      }
+    },
+    "kopczynski1973": {
+      "type": "article",
+      "fields": {
+        "title": "An anisotropic universe with torsion",
+        "author": "Kopczyński, W.",
+        "journal": "Physics Letters A",
+        "volume": "43",
+        "number": "1",
+        "pages": "63--64",
+        "year": "1973",
+        "doi": "10.1016/0375-9601(73)90546-X",
+        "url": "https://doi.org/10.1016/0375-9601(73)90546-X"
+      }
+    },
+    "trautman1973": {
+      "type": "article",
+      "fields": {
+        "title": "Spin and Torsion May Avert Gravitational Singularities",
+        "author": "Trautman, Andrzej",
+        "journal": "Nature Physical Science",
+        "volume": "242",
+        "number": "114",
+        "pages": "7--8",
+        "year": "1973",
+        "doi": "10.1038/physci242007a0",
+        "url": "https://doi.org/10.1038/physci242007a0"
+      }
+    },
+    "trautman2006": {
+      "type": "incollection",
+      "fields": {
+        "title": "Einstein-Cartan Theory",
+        "author": "Trautman, Andrzej",
+        "booktitle": "Encyclopedia of Mathematical Physics",
+        "editor": "Françoise, J.-P. and Naber, G. L. and Tsou, S. T.",
+        "publisher": "Elsevier",
+        "address": "Oxford",
+        "volume": "2",
+        "pages": "189--195",
+        "year": "2006",
+        "doi": "10.1016/B0-12-512666-2/00014-6",
+        "eprint": "gr-qc/0606062",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0606062"
+      }
+    },
+    "stewart1973": {
+      "type": "article",
+      "fields": {
+        "title": "Can Spin Avert Singularities?",
+        "author": "Stewart, John and Hájíček, Peter",
+        "journal": "Nature Physical Science",
+        "volume": "244",
+        "number": "136",
+        "pages": "96",
+        "year": "1973",
+        "doi": "10.1038/physci244096a0",
+        "url": "https://doi.org/10.1038/physci244096a0"
+      }
+    },
+    "tafel1973": {
+      "type": "article",
+      "fields": {
+        "title": "A non-singular homogeneous universe with torsion",
+        "author": "Tafel, J.",
+        "journal": "Physics Letters A",
+        "volume": "45",
+        "number": "4",
+        "pages": "341--342",
+        "year": "1973",
+        "doi": "10.1016/0375-9601(73)90108-4",
+        "url": "https://doi.org/10.1016/0375-9601(73)90108-4"
+      }
+    },
+    "hehl1974": {
+      "type": "article",
+      "fields": {
+        "title": "General relativity with spin and torsion and its deviations from {Einstein}'s theory",
+        "author": "Hehl, Friedrich W. and von der Heyde, Paul and Kerlick, G. David",
+        "journal": "Physical Review D",
+        "volume": "10",
+        "number": "4",
+        "pages": "1066--1069",
+        "year": "1974",
+        "doi": "10.1103/PhysRevD.10.1066",
+        "url": "https://doi.org/10.1103/PhysRevD.10.1066"
+      }
+    },
+    "kerlick1975": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmology and particle pair production via gravitational spin-spin interaction in the {Einstein-Cartan-Sciama-Kibble} theory of gravity",
+        "author": "Kerlick, G. David",
+        "journal": "Physical Review D",
+        "volume": "12",
+        "number": "10",
+        "pages": "3004--3006",
+        "year": "1975",
+        "doi": "10.1103/PhysRevD.12.3004",
+        "url": "https://doi.org/10.1103/PhysRevD.12.3004"
+      }
+    },
+    "hehl1976": {
+      "type": "article",
+      "fields": {
+        "title": "General relativity with spin and torsion: Foundations and prospects",
+        "author": "Hehl, Friedrich W. and von der Heyde, Paul and Kerlick, G. David and Nester, James M.",
+        "journal": "Reviews of Modern Physics",
+        "volume": "48",
+        "number": "3",
+        "pages": "393--416",
+        "year": "1976",
+        "doi": "10.1103/RevModPhys.48.393",
+        "url": "https://doi.org/10.1103/RevModPhys.48.393"
+      }
+    },
+    "kuchowicz1978": {
+      "type": "article",
+      "fields": {
+        "title": "Friedmann-like cosmological models without singularity",
+        "author": "Kuchowicz, Bronisław",
+        "journal": "General Relativity and Gravitation",
+        "volume": "9",
+        "number": "6",
+        "pages": "511--517",
+        "year": "1978",
+        "doi": "10.1007/BF00759545",
+        "url": "https://doi.org/10.1007/BF00759545"
+      }
+    },
+    "hehl2007": {
+      "type": "article",
+      "fields": {
+        "title": "Élie {Cartan}'s torsion in geometry and in field theory, an essay",
+        "author": "Hehl, Friedrich W. and Obukhov, Yuri N.",
+        "journal": "Annales de la Fondation Louis de Broglie",
+        "volume": "32",
+        "pages": "157--194",
+        "year": "2007",
+        "eprint": "0711.1535",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0711.1535"
+      }
+    },
+    "poplawski2010": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmology with torsion: An alternative to cosmic inflation",
+        "author": "Popławski, Nikodem J.",
+        "journal": "Physics Letters B",
+        "volume": "694",
+        "number": "3",
+        "pages": "181--185",
+        "year": "2010",
+        "doi": "10.1016/j.physletb.2010.09.056",
+        "eprint": "1007.0587",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1007.0587"
       }
     }
   }

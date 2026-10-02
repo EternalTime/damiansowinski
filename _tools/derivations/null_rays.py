@@ -835,6 +835,10 @@ BONNOR_DIPOLE = {"m": 1, "b": "2*sqrt(2)"}
 
 
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
+# Kopczynski and Trautman's spinning dust in its conformal time, in units of l: the published G^r_r
+# set to the pressure of the spins, -4/(3 l^2 a^6), from a = 1 at rest at eta = 0, on both sides of it.
+KT_SPIN = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [0.0], "start": [1.0], "origin": "rest",
+           "sources": ["-4/(3*a**6)"]}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
 OS_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0], "origin": "reference"}
 # The dust of the semiclosed world, at rest with a = a_m, the unit, at tau = 0, from its bang to its crunch.
@@ -3375,6 +3379,17 @@ DIAGRAMS = [
             "$a\\rho$", "$act$", {"a": 1}, {"phi": "0", "z": "0"},
             lines=(("surface", "r", "acosh(2)/3", "the radius $\\cosh(3a\\rho) = 2$ of the one circular path of light"),),
             points=(("mark", ("0", "0"), "the event on the axis where the density is greatest, at the bounce $t = 0$"),)),
+    # Kopczynski and Trautman's universe in units of l, through its turn at t = 0: the comoving
+    # charts with the explicit scale factor, and the conformal chart with a(eta) solved from its own
+    # Einstein tensor and the pressure of the spins.
+    Diagram("kopczynski_trautman", "comoving_cartesian", "tx", "$t$ and $x$", ("t", "x"), (-3, 3, -3, 3),
+            "$x/\\ell$", "$ct/\\ell$", {"ell": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
+    Diagram("kopczynski_trautman", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, areal=True),
+    Diagram("kopczynski_trautman", "conformal", "radial", "$\\eta$ and $r$", ("\\eta", "r"), (0, 6, -3, 3),
+            "$r/\\ell$", "$\\eta/\\ell$", {}, EQUATOR, tau="eta", areal=True, dust=KT_SPIN, reference="$a = 1$",
+            input="The scale factor $a(\\eta)$ solved from this chart's own $G^r{}_r = -4/3\\ell^2a^6$, the pressure "
+                  "of the spins, starting from $a = 1$ and $\\partial_\\eta a = 0$ at the dashed line."),
     Diagram("melvin", "ernst", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1, "B": "1/2"}, EQUATOR, orient="ingoing",
             lines=(("surface", "r", "4", "$r = 2/B$, the widest circle of the equator"),)),
@@ -8075,6 +8090,30 @@ CAPTIONS = {
         "density, $15a^2c^4/(8\\pi G\\cosh^4(act)\\cosh^4(3a\\rho))$, is greatest at the marked event and falls away "
         "from it in every direction.",
     ],
+    ("kopczynski_trautman", "comoving_cartesian", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$), each vertical line the world line of a grain of dust. The edges of "
+        "the cones are $dx/d(ct) = \\pm 1/a$, so they stand at 45° at $t = 0$, where $a = 1$ and the dust is densest, "
+        "and close up on either side of it as $a$ grows.",
+        "Every ray comes in from $t = -\\infty$ and runs on to $t = +\\infty$, through a Kretschmann scalar that "
+        "is greatest at $t = 0$, where it is $16/3\\ell^4$. The comoving distance a ray has crossed, $\\int c\\,dt/a$, "
+        "grows without limit toward the past, so any two grains of dust have been in causal contact.",
+    ],
+    ("kopczynski_trautman", "comoving_spherical", "radial"): [
+        "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$), each point in the plane a 2-sphere "
+        "of areal radius $R = ar$. The universe contracts below $t = 0$ and expands above it, and the cones are "
+        "widest at the turn.",
+        "On the dotted curve $|\\nabla R|^2 = 0$, which is $r = 3\\ell^2a^2/2c|t|$, the Hubble sphere. It lies at "
+        "infinity at the turn, where the expansion rate vanishes, and comes nearest the centre at "
+        "$ct = \\pm\\sqrt{3}\\,\\ell$, where $r = 2.18\\,\\ell$. Beyond it both families of rays converge "
+        "before the turn and both diverge after it.",
+    ],
+    ("kopczynski_trautman", "conformal", "radial"): [
+        "The plane of the conformal time $\\eta$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$). The metric on it is "
+        "$a^2(-d\\eta^2 + dr^2)$, and $a^2$ drops out of the null condition, so the rays are straight lines at 45°.",
+        "The conformal time $\\eta = \\int c\\,dt/a$ runs over the whole real line, since the integral diverges at "
+        "both ends, so the universe is conformal to the whole of Minkowski space. The dotted curve is the Hubble "
+        "sphere, where $|\\nabla R|^2 = 0$ for the areal radius $R = ar$.",
+    ],
     ("melvin", "cylindrical", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Melvin's universe ($B = 1$). The metric on it is "
         "$(1 + B^2\\rho^2/4)^2(-c^2dt^2 + d\\rho^2)$, and the factor drops out of the null condition, so the rays are "
@@ -8855,13 +8894,18 @@ class DustSolver:
     """
 
     def __init__(self, metric_id, system_id, time_name, funcs, eqs, rates, params=None, start=None,
-                 origin="bang"):
+                 origin="bang", sources=None):
         _, entry, reader = load(metric_id, system_id)
         ul = entry["einstein_tensor"]["variants"]["ul"]["nonzero"]
         published = [next(c["value"] for c in ul if c["indices"] == list(ix)) for ix in eqs]
         t = reader.symbol[time_name]
         symbols = []
         exprs = [reader(text).subs(reader.c, 1) for text in published]
+        if sources:
+            # Matter that is not dust: each G^i_i is set to its declared source, an expression in
+            # the scale factors, as the pressure of the spins is in Kopczynski and Trautman's universe.
+            named = {name: reader.parameters[name] for name in funcs}
+            exprs = [e - sp.sympify(source, locals=named) for e, source in zip(exprs, sources, strict=True)]
         for name in funcs:
             fn = reader.parameters[name]
             A0, A1, A2 = sp.symbols(f"{name}_0 {name}_1 {name}_2")
@@ -9269,7 +9313,7 @@ def dust_solver(metric_id, system_id, time_name, dust):
     if key not in _SOLVERS:
         _SOLVERS[key] = DustSolver(metric_id, system_id, time_name, dust["funcs"], dust["eqs"],
                                    dust["rates"], dust.get("params"), dust.get("start"),
-                                   dust.get("origin", "bang"))
+                                   dust.get("origin", "bang"), dust.get("sources"))
     return _SOLVERS[key]
 
 
@@ -11838,6 +11882,13 @@ def _two_particles_distance(x):
     return np.sign(x) * (out + beyond(np.maximum(a - 1.0, 0.0) ** 0.75))
 
 
+def _kt_eta(t):
+    """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l."""
+    from scipy.special import hyp2f1
+    t = np.asarray(t, dtype=float)
+    return t * hyp2f1(1 / 3, 0.5, 1.5, -t ** 2)
+
+
 CLOSED_FORMS = {
     # Bonnor's beam: a ray with the beam keeps ct - z, or u, and a null curve against it keeps
     # ct + z + A (ct - z), or v + A u, with A the declared profile's value on the plane.
@@ -12326,6 +12377,11 @@ CLOSED_FORMS = {
        for plane, star, edge in (("axis", _zv_axis, 0.1), ("equator", _zv_equator, 0.02))},
     ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("senovilla", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    # Kopczynski and Trautman: eta(t) = int dt/(1 + t^2)^(1/3) = t 2F1(1/3, 1/2; 3/2; -t^2) in units of l.
+    ("kopczynski_trautman", "comoving_cartesian", "tx"): (lambda t, x: _kt_eta(t) + x, lambda t, x: _kt_eta(t) - x, None),
+    ("kopczynski_trautman", "comoving_spherical", "radial"):
+        (lambda t, r: _kt_eta(t) + r, lambda t, r: _kt_eta(t) - r, None),
+    ("kopczynski_trautman", "conformal", "radial"): (lambda e, r: e + r, lambda e, r: e - r, None),
     ("melvin", "ernst", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
     ("levi_civita", "weyl", "radial"):
