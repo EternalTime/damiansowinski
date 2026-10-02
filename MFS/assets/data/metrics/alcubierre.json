@@ -53,6 +53,11 @@
       "id": "minkowski",
       "kind": "special_case",
       "text": "The drive switched off. With $v_s = 0$ the metric is Minkowski's, and with the bubble moving spacetime is still flat inside it and far from it [alcubierre1994]."
+    },
+    {
+      "id": "tippett_tsang",
+      "kind": "family",
+      "text": "A bubble built on Alcubierre's recipe whose path closes on itself in spacetime. Benjamin Tippett and David Tsang sent it round a circle in the plane of $t$ and $x$ in 2017, and a rider who keeps accelerating inside it meets her own past [tippett2017]."
     }
   ],
   "references": [
@@ -69,7 +74,8 @@
     "santiago2022",
     "krasnikov1998",
     "everett1997",
-    "everett1996"
+    "everett1996",
+    "tippett2017"
   ],
   "coordinates": [
     {

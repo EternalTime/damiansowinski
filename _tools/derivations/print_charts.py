@@ -11,7 +11,7 @@ som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, 
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
-wahlquist and plebanski_hacyan, and Godel's cylindrical chart.
+wahlquist, plebanski_hacyan and tippett_tsang, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -32,7 +32,7 @@ malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
-misner_brill_lindquist.md and lewis.md beside this file.
+misner_brill_lindquist.md, lewis.md and tippett_tsang.md beside this file.
 """
 import argparse
 import itertools
@@ -42,6 +42,7 @@ import sys
 import time
 from pathlib import Path
 
+import mpmath
 import sympy as sp
 from sympy.core.function import AppliedUndef
 from sympy.core.mul import _keep_coeff
@@ -17252,6 +17253,260 @@ def plebanski_hacyan_check(chart, system):
 
 
 CHARTS["plebanski_hacyan"] = [lambda s=s: plebanski_hacyan(s) for s in PH_CHARTS]
+# -- Tippett and Tsang's time machine ---------------------------------------------------
+
+TIPPETT_TSANG_CHARTS = ["cartesian", "polar", "interior", "rindler"]
+
+
+def tippett_tsang(system_id):
+    """Tippett and Tsang's bubble of 2017 in four charts. The Cartesian chart is their equation
+    (1), Minkowski's metric plus h times the difference between Rindler's and Minkowski's, with
+    the top hat function h left an arbitrary function of the four coordinates, as Alcubierre's f
+    is. The polar chart is the same metric in the coordinates of their equation (2),
+    ct = xi sin(lambda) and x = xi cos(lambda), the chart their equation (6) for the null
+    directions is written in, with h a function of xi, y and z as it is there. The interior chart is the Cartesian one at h = 1, and the Rindler
+    chart their equation (3). tippett_tsang.md is the derivation."""
+    reals = "(-\\infty, \\infty)"
+    flat = "\\text{flat: every curvature tensor vanishes}"
+    singular = "h = \\tfrac{1}{2} \\;\\text{(curvature singularities)}"
+    if system_id == "cartesian":
+        coords = ["t", "x", "y", "z"]
+        parameters = ["h = h(t,x,y,z)"]
+        probe = vm.Reader(coords, parameters, ())
+        line = ("ds^2 = \\left(1 - \\dfrac{{2h{c2}t^2}}{{x^2 + {c2}t^2}}\\right)\\left(-{c2}dt^2 + dx^2\\right) + "
+                "\\dfrac{{4h\\,x\\,{c}t}}{{x^2 + {c2}t^2}}\\,{cdt}dt\\,dx + dy^2 + dz^2")
+        plain, turned = "{x^2 + c^2t^2}", "{x^2 + c^2t^2\\left(1 - 2h\\right)^2}"
+        bracket = "\\dfrac{x^2 + c^2t^2 - 2h\\,c^2t^2}" + plain
+        cross = "\\dfrac{{2h\\,x\\,ct}}{0}"
+        return {
+            "metric_id": "tippett_tsang",
+            "system": {"id": "cartesian", "name": "Cartesian", "coords": coords,
+                       "domains": [f"{c} \\in {reals}" for c in coords] + ["x = 0,\\; " + singular],
+                       "parameters": parameters,
+                       "line_element": line.format(c2="c^2", c="c", cdt="c\\,")},
+            "chart_line_element": line.format(c2="", c="", cdt=""),
+            "printer": {"lead": [probe.parameters["h"], probe.symbol["t"], probe.symbol["x"]],
+                        "factors": [probe.parameters["h"], probe.c, probe.symbol["t"], probe.symbol["x"]]},
+            "time": "t",
+            "check": tippett_tsang_bubble,
+            # The metric as equation (1) writes it, and its inverse over the determinant's numerator.
+            "components": {
+                "metric_components": {("t", "t"): "-" + bracket, ("x", "x"): bracket, ("t", "x"): cross.format(plain),
+                                      ("x", "t"): cross.format(plain)},
+                "inverse_metric_components": {("t", "t"): "-" + bracket.replace(plain, turned),
+                                              ("x", "x"): bracket.replace(plain, turned),
+                                              ("t", "x"): cross.format(turned), ("x", "t"): cross.format(turned)}},
+            # sympy does not finish factoring the numerator, so it is written out over the fourth
+            # power of the determinant's numerator, as Van Den Broeck's is over 4B^8.
+            "kretschmann_text": tippett_tsang_kretschmann,
+        }
+    if system_id == "polar":
+        coords = ["\\lambda", "\\xi", "y", "z"]
+        parameters = ["h = h(\\xi,y,z)"]
+        probe = vm.Reader(coords, parameters, ())
+        line = ("ds^2 = \\left(h + (1 - h)\\cos(2\\lambda)\\right)\\left(-\\xi^2d\\lambda^2 + d\\xi^2\\right) - "
+                "2(1 - h)\\xi\\sin(2\\lambda)\\,d\\lambda\\,d\\xi + dy^2 + dz^2")
+        tilt = "\\left(1 - 2(1 - h)\\sin^2\\lambda\\right)"
+        below = "\\left(1 - 4h(1 - h)\\sin^2\\lambda\\right)"
+        return {
+            "metric_id": "tippett_tsang",
+            "system": {"id": "polar", "name": "Polar", "coords": coords,
+                       "domains": ["\\lambda \\in [0, 2\\pi)", "\\xi \\in (0, \\infty)", "y \\in " + reals,
+                                   "z \\in " + reals, "\\cos\\lambda = 0,\\; " + singular],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [probe.parameters["h"], probe.symbol["\\xi"]]},
+            "check": tippett_tsang_polar,
+            # h + (1 - h) cos(2 lambda) written in sin^2(lambda), as every other value is printed.
+            "components": {
+                "metric_components": {("\\lambda", "\\lambda"): "-\\xi^2" + tilt, ("\\xi", "\\xi"): tilt,
+                                      ("\\lambda", "\\xi"): "-2(1 - h)\\xi\\sin\\lambda\\cos\\lambda",
+                                      ("\\xi", "\\lambda"): "-2(1 - h)\\xi\\sin\\lambda\\cos\\lambda"},
+                "inverse_metric_components": {
+                    ("\\lambda", "\\lambda"): "-\\dfrac{1 - 2(1 - h)\\sin^2\\lambda}{\\xi^2" + below + "}",
+                    ("\\xi", "\\xi"): "\\dfrac{1 - 2(1 - h)\\sin^2\\lambda}{1 - 4h(1 - h)\\sin^2\\lambda}",
+                    ("\\lambda", "\\xi"): "-\\dfrac{2(1 - h)\\sin\\lambda\\cos\\lambda}{\\xi" + below + "}",
+                    ("\\xi", "\\lambda"): "-\\dfrac{2(1 - h)\\sin\\lambda\\cos\\lambda}{\\xi" + below + "}"}},
+            "kretschmann_text": tippett_tsang_kretschmann,
+        }
+    if system_id == "interior":
+        coords = ["t", "x", "y", "z"]
+        line = ("ds^2 = \\dfrac{{x^2 - {c2}t^2}}{{x^2 + {c2}t^2}}\\left(-{c2}dt^2 + dx^2\\right) + "
+                "\\dfrac{{4x\\,{c}t}}{{x^2 + {c2}t^2}}\\,{cdt}dt\\,dx + dy^2 + dz^2")
+        probe = vm.Reader(coords, [], ())
+        ratio = "\\dfrac{x^2 - c^2t^2}{x^2 + c^2t^2}"
+        cross = "\\dfrac{2x\\,ct}{x^2 + c^2t^2}"
+        return {
+            "metric_id": "tippett_tsang",
+            "system": {"id": "interior", "name": "Bubble Interior", "coords": coords,
+                       "domains": [f"{c} \\in {reals}" for c in coords] + ["(t, x) \\neq (0, 0)", flat],
+                       "parameters": [], "line_element": line.format(c2="c^2", c="c", cdt="c\\,")},
+            "chart_line_element": line.format(c2="", c="", cdt=""),
+            "printer": {"lead": [probe.symbol["t"], probe.symbol["x"]],
+                        "factors": [probe.c, probe.symbol["t"], probe.symbol["x"]]},
+            "time": "t",
+            "check": tippett_tsang_interior,
+            # The metric is its own inverse on the plane of t and x, since its determinant there is -1.
+            "components": {field: {("t", "t"): "-" + ratio, ("x", "x"): ratio, ("t", "x"): cross, ("x", "t"): cross}
+                           for field in ("metric_components", "inverse_metric_components")},
+        }
+    coords = ["\\lambda", "\\xi", "y", "z"]
+    line = "ds^2 = -\\xi^2d\\lambda^2 + d\\xi^2 + dy^2 + dz^2"
+    probe = vm.Reader(coords, [], ())
+    return {
+        "metric_id": "tippett_tsang",
+        "system": {"id": "rindler", "name": "Rindler", "coords": coords,
+                   "domains": ["\\lambda \\in [0, 2\\pi)", "\\xi \\in (0, \\infty)", "y \\in " + reals, "z \\in " + reals,
+                               "\\lambda \\sim \\lambda + 2\\pi \\;\\text{(closed timelike curves)}", flat],
+                   "parameters": [], "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [probe.symbol["\\xi"]]},
+        "check": tippett_tsang_rindler,
+    }
+
+
+def tippett_tsang_kretschmann(chart):
+    numerator, denominator = sp.fraction(sp.together(chart.geo.kretschmann()))
+    return chart.printer(chart.named_time(sp.expand(numerator)) / chart.named_time(sp.factor(denominator)))
+
+
+def _tippett_tsang_chart(system_id):
+    spec = tippett_tsang(system_id)
+    return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+
+def _tippett_tsang_pulled(source, chart, h=None):
+    """The Cartesian or interior chart carried along ct = xi sin(lambda), x = xi cos(lambda), with
+    the top hat function, where the chart has one, written as the function h given."""
+    lam, xi, y, z = chart.symbols
+    image = [xi * sp.sin(lam), xi * sp.cos(lam), y, z]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    g = source.geo.g
+    if h is not None:
+        g = g.subs(source.reader.parameters["h"], h)
+    g = g.subs(dict(zip(source.symbols, image)), simultaneous=True)
+    return (J.T * g * J).applyfunc(sp.simplify)
+
+
+def tippett_tsang_bubble(chart):
+    """The Cartesian chart against Tippett and Tsang's paper. With h = 0 it is Minkowski's metric.
+    Its determinant is -(1 - 4h(1 - h)c^2t^2/(x^2 + c^2t^2)), which vanishes exactly where x = 0
+    and h = 1/2, where g_tt, g_xx and g_tx all vanish, their naked singularities, and there the
+    Kretschmann scalar of their own bubble grows without bound. On the plane y = z = 0 of their
+    bubble, R^4 - y^4 - z^4 - (x^2 + c^2t^2 - A^2)^2 inside the tanh, the only components of the
+    Einstein tensor that do not vanish are G_yy and G_zz, the energy density is zero on the moment
+    t = 0, and off the plane the null energy condition fails."""
+    t, x, y, z = chart.symbols
+    h = chart.reader.parameters["h"]
+    g = chart.geo.g
+    if g.subs(h, 0).doit().applyfunc(sp.simplify) != sp.diag(-1, 1, 1, 1):
+        raise AssertionError("tippett_tsang: the Cartesian chart at h = 0 is not Minkowski's")
+    det = -(1 - 4 * h * (1 - h) * t ** 2 / (x ** 2 + t ** 2))
+    if sp.simplify(g.det() - det) != 0:
+        raise AssertionError("tippett_tsang: det g is not -(1 - 4h(1 - h)t^2/(x^2 + t^2))")
+    half = {h: sp.Rational(1, 2), x: 0}
+    if any(sp.simplify(g[i, j].subs(half)) != 0 for i in range(2) for j in range(2)):
+        raise AssertionError("tippett_tsang: g_tt, g_xx and g_tx do not all vanish at x = 0, h = 1/2")
+    A, R, alpha = sp.Integer(1), sp.Rational(7, 10), sp.Rational(50, 3)
+    bubble = (1 + sp.tanh(alpha * (R ** 4 - y ** 4 - z ** 4 - (x ** 2 + t ** 2 - A ** 2) ** 2))) / 2
+    # Each component is written for their bubble once and then evaluated in forty digits.
+    def numeric(value):
+        return sp.lambdify((t, x, y, z), sp.sympify(value).subs(h, bubble).doit(), "mpmath")
+
+    einstein = [[numeric(value) for value in row] for row in chart.geo.einstein_ll()]
+    metric = [[numeric(g[i, j]) for j in range(4)] for i in range(4)]
+    kretschmann = numeric(chart.geo.kretschmann())
+    rng = random.Random(7)
+    with mpmath.workdps(40):
+        for _ in range(6):
+            point = (mpmath.mpf(rng.randint(-150, 150)) / 100, mpmath.mpf(rng.randint(20, 150)) / 100, 0, 0)
+            for i in range(4):
+                for j in range(i, 4):
+                    if (i, j) not in ((2, 2), (3, 3)) and abs(einstein[i][j](*point)) > 1e-25:
+                        raise AssertionError(f"tippett_tsang: G_{i}{j} does not vanish on the plane y = z = 0")
+            moment = (0, mpmath.mpf(rng.randint(20, 150)) / 100, mpmath.mpf(rng.randint(-60, 60)) / 100,
+                      mpmath.mpf(rng.randint(-60, 60)) / 100)
+            if abs(einstein[0][0](*moment)) > 1e-25:
+                raise AssertionError("tippett_tsang: the energy density does not vanish on the moment t = 0")
+        # The null energy condition at a point of the wall off the plane: G_ab N^a N^b over the null
+        # vectors N with a part along x and a part along y.
+        wall = (mpmath.mpf(1) / 2, mpmath.sqrt(mpmath.mpf("0.75") + mpmath.mpf("0.48")), mpmath.mpf(1) / 4,
+                mpmath.mpf(1) / 4)
+        gw = [[metric[i][j](*wall) for j in range(4)] for i in range(4)]
+        Gw = [[einstein[min(i, j)][max(i, j)](*wall) for j in range(4)] for i in range(4)]
+        worst = None
+        for k in range(60):
+            vx, vy = mpmath.cos(2 * mpmath.pi * k / 60), mpmath.sin(2 * mpmath.pi * k / 60)
+            a, b, c0 = gw[0][0], 2 * gw[0][1] * vx, gw[1][1] * vx ** 2 + vy ** 2
+            disc = b ** 2 - 4 * a * c0
+            if disc < 0:
+                continue
+            N = [(-b + mpmath.sqrt(disc)) / (2 * a), vx, vy, 0]
+            if abs(sum(gw[i][j] * N[i] * N[j] for i in range(4) for j in range(4))) > 1e-30:
+                raise AssertionError("tippett_tsang: the vector tried is not null")
+            value = sum(Gw[i][j] * N[i] * N[j] for i in range(4) for j in range(4))
+            worst = value if worst is None else min(worst, value)
+        if worst is None or worst >= 0:
+            raise AssertionError("tippett_tsang: the null energy condition holds in the wall of their bubble")
+        top = mpmath.sqrt(1 + mpmath.mpf("0.49"))      # where the outer wall crosses x = 0
+        sizes = [abs(kretschmann(top, mpmath.mpf(10) ** -k, 0, 0)) for k in (2, 3, 4)]
+        if not (sizes[1] > 50 * sizes[0] and sizes[2] > 50 * sizes[1]):
+            raise AssertionError("tippett_tsang: the Kretschmann scalar does not diverge at x = 0, h = 1/2")
+
+
+def tippett_tsang_polar(chart):
+    """The polar chart is the Cartesian one carried along Tippett and Tsang's equation (2), it is
+    Rindler's at h = 1 and Minkowski's at h = 0, and its null directions are their equation (6),
+    d xi = xi d lambda (sin 2 lambda +- sqrt(1 + 2b cos 2 lambda + b^2))/(cos 2 lambda + b) with
+    b = h/(1 - h)."""
+    lam, xi, y, z = chart.symbols
+    h = chart.reader.parameters["h"]
+    # Their bubble does not depend on lambda, and their equation (6) writes h as a function of xi, y and z.
+    pulled = _tippett_tsang_pulled(_tippett_tsang_chart("cartesian"), chart, h)
+    g = chart.geo.g
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"tippett_tsang: the Cartesian chart pulled back misses the polar chart in "
+                                     f"slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if g.subs(h, 1).doit().applyfunc(sp.simplify) != sp.diag(-xi ** 2, 1, 1, 1):
+        raise AssertionError("tippett_tsang: the polar chart at h = 1 is not Rindler's")
+    b = sp.Symbol("b", positive=True)
+    for sign in (1, -1):
+        slope = xi * (sp.sin(2 * lam) + sign * sp.sqrt(1 + 2 * b * sp.cos(2 * lam) + b ** 2)) / (sp.cos(2 * lam) + b)
+        null = (g[0, 0] + 2 * g[0, 1] * slope + g[1, 1] * slope ** 2).subs(h, b / (1 + b)).doit()
+        if sp.simplify(null) != 0:
+            raise AssertionError("tippett_tsang: the polar chart's null directions are not their equation (6)")
+
+
+def tippett_tsang_interior(chart):
+    """The interior chart is the Cartesian one at h = 1, slot by slot, and its determinant is -1."""
+    source = _tippett_tsang_chart("cartesian")
+    own = source.geo.g.subs(source.reader.parameters["h"], 1).doit().subs(dict(zip(source.symbols, chart.symbols)))
+    if (own - chart.geo.g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+        raise AssertionError("tippett_tsang: the interior chart is not the Cartesian one at h = 1")
+    if sp.simplify(chart.geo.g.det() + 1) != 0:
+        raise AssertionError("tippett_tsang: det g is not -1 in the interior chart")
+
+
+def tippett_tsang_rindler(chart):
+    """Rindler's chart is the interior chart carried along Tippett and Tsang's equation (2), and
+    the curve of constant xi, y and z, closed since lambda is an angle, is timelike with the
+    acceleration 1/xi of their section 2.1."""
+    lam, xi, y, z = chart.symbols
+    pulled = _tippett_tsang_pulled(_tippett_tsang_chart("interior"), chart)
+    if (pulled - chart.geo.g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+        raise AssertionError("tippett_tsang: the interior chart pulled back is not Rindler's")
+    gamma = chart.geo.christoffel_ull()
+    u = [1 / xi, 0, 0, 0]       # the unit tangent of the circle
+    if sp.simplify(sum(chart.geo.g[i, i] * u[i] ** 2 for i in range(4)) + 1) != 0:
+        raise AssertionError("tippett_tsang: the circle of constant xi is not timelike")
+    a = [sp.simplify(sum(gamma[m][i][j] * u[i] * u[j] for i in range(4) for j in range(4))) for m in range(4)]
+    if a != [0, 1 / xi, 0, 0]:
+        raise AssertionError("tippett_tsang: the acceleration on the circle of constant xi is not 1/xi")
+
+
+CHARTS["tippett_tsang"] = [lambda s=s: tippett_tsang(s) for s in TIPPETT_TSANG_CHARTS]
 
 
 def write(spec):

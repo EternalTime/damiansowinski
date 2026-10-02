@@ -3307,7 +3307,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
                          {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose",
-                          "bell_szekeres", "light_beam"})
+                          "bell_szekeres", "light_beam", "tippett_tsang"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -3475,7 +3475,7 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         # and turned all the way round it keeps to its box, the Krasnikov tube's rectangle drawn
         # smaller where it would stand wider or taller than it was published.
         heights = {v["metric"]: v["height"] for v in self.check()["views"] if "height" in v}
-        self.assertEqual(set(heights), {"alcubierre", "krasnikov", "natario"})
+        self.assertEqual(set(heights), {"alcubierre", "krasnikov", "natario", "tippett_tsang"})
         for metric_id, h in heights.items():
             for side in ("above", "below"):
                 seen = h[side]
@@ -4118,7 +4118,7 @@ class TurningLightConeFigures(unittest.TestCase):
                                    "kerr_newman/dragging", "kerr_taub_nut/dragging", "kundt_waves/fronts",
                                    "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
-                                   "bonnor_rotating_dust/tipping",
+                                   "bonnor_rotating_dust/tipping", "tippett_tsang/ring",
                                    "wormhole_time_machine/trip"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
@@ -4654,7 +4654,10 @@ class Slices(unittest.TestCase):
     # The drawings on which no moment of the spacetime's embedding lies: other universes,
     # another cloud, the time reversed shell, and cylinders where no surface of constant t is
     # a moment of space.
-    HIDDEN = {# The region x < 0 of Siklos's chart, another region than the one whose wave front is embedded.
+    HIDDEN = {# The flat interior of Tippett and Tsang's bubble continued over the whole plane, another
+              # spacetime than the bubble whose moment is embedded.
+              "tippett_tsang/interior/tx", "tippett_tsang/rindler/plane",
+              # The region x < 0 of Siklos's chart, another region than the one whose wave front is embedded.
               "siklos/kaigorodov_stationary/plane",
               # Kundt's waves with no cosmological constant, other spacetimes than the waves in de Sitter
               # and anti-de Sitter space whose fronts are embedded.
@@ -5420,6 +5423,10 @@ class Slices(unittest.TestCase):
                 return (lambda X: t - math.log(X - 1)), list(self.reach(surface, "exterior_ingoing"))
             level = israel_inner_time(israel_on_slice(t))
             return (lambda X: level), list(self.reach(surface, "interior"))
+        if key == "tippett_tsang/cartesian/tx":
+            # The moment ct = A/2 over the whole width of the height's plane.
+            u = next(p for p in surface["pieces"] if "grid" in p)["grid"]["u"]
+            return (lambda X: 0.5), [u[0], u[-1]]
         if key == "krasnikov/cylindrical/tx":
             path = next(c for c in surface["curves"] if c["class"] == "path")
             grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
@@ -5716,6 +5723,9 @@ class Slices(unittest.TestCase):
                         if key.startswith("simpson_visser/") and mark["view"] == "inside":
                             checked += self.check_bounce_moment(key, view, surface, mark)
                             continue
+                        if key == "tippett_tsang/polar/strip":
+                            checked += self.check_polar_moment(key, view, surface, mark)
+                            continue
                         Y_of, ends = self.flat_expected(key, view, surface, mark)
                         for line in mark["lines"] + [[p] for p in mark["points"]]:
                             for u in line:
@@ -5743,6 +5753,21 @@ class Slices(unittest.TestCase):
         inside = next(v for v in self.embedding["simpson_visser"]["views"] if v["id"] == "inside")
         turn = inside["surfaces"][2]["time"]
         return math.copysign(math.sqrt(max(radius * radius - 0.25, 0.0)), turn - surface["time"])
+
+    def check_polar_moment(self, key, view, surface, mark):
+        """Tippett and Tsang's moment ct = A/2 in the polar chart, xi sin(lambda) = A/2: one line, which
+        crosses each xi twice, from the box's edge to the box's edge, since the height's plane, out to
+        |x| = 1.6 A, reaches beyond the strip's xi = 1.6 A."""
+        X0, X1, Y0, Y1 = view["box"]
+        (line,) = mark["lines"]
+        for u in line:
+            xi, lam = X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)
+            self.assertAlmostEqual(xi * math.sin(lam), 0.5, delta=1e-3, msg=f"{key} {mark['label']} at {u}")
+        for u in (line[0], line[-1]):
+            self.assertLess(1 - u[0], 1.5e-4, f"{key} {mark['label']} stops at {u}")
+        grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
+        self.assertGreater(math.hypot(grid["u"][-1], 0.5), X1)
+        return len(line)
 
     def check_bounce_moment(self, key, view, surface, mark):
         """A moment of constant r between the horizons of the black bounce, a = r_s/2: one upright line
@@ -5799,6 +5824,19 @@ class Slices(unittest.TestCase):
                         hi = self.reach(surface, "conical", reference=True)[1]
                         self.assertLessEqual(max(max(r) for r in rings), hi + 1e-3, where)
                         self.assertTrue(all(abs(r - hi) < 1e-3 for rim in rims for r in rim), where)
+                        continue
+                    if metric_id == "tippett_tsang":
+                        # The moment ct = A/2 stands above the floor, the rectangle of the height's plane.
+                        grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
+                        (ring,) = [ring for rings in mark["fills"] for ring in rings]
+                        corners = set()
+                        for p in ring:
+                            along = -(p[1] - 0.5 * math.cos(e)) / math.sin(e)
+                            corners.add((round(along * math.cos(a) - p[0] * math.sin(a), 3),
+                                         round(along * math.sin(a) + p[0] * math.cos(a), 3)))
+                        self.assertEqual(corners, {(x, y) for x in (grid["u"][0], grid["u"][-1])
+                                                   for y in (grid["v"][0], grid["v"][-1])}, where)
+                        self.assertEqual(rims, [], where)
                         continue
                     for ring in rings + rims:
                         self.assertLess(max(ring) - min(ring), 2e-3 * max(ring), where)

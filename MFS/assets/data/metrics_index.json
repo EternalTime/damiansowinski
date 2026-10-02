@@ -40,7 +40,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "612ab20a7db4cb71",
+    "version": "70d13d8d91eac2ef",
     "diagrams": "a0c6ac73f99ce279",
     "embedding": "4df721cabada780a"
   },
@@ -1173,7 +1173,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "90ec15a9aa6d0217",
+    "version": "4fc5b58169cb5def",
     "diagrams": "b4937a90691eba2b",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
@@ -1830,7 +1830,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "8fcb8976751ef800",
+    "version": "1d8579d2cfdf92c0",
     "diagrams": "8465ef9c4b047da5",
     "embedding": "166bc957997dd4b5"
   },
@@ -2187,7 +2187,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "f45fb451a3705000",
+    "version": "ba49e8a4e7f891b0",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2211,7 +2211,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "fb47cc02335f3ebd",
+    "version": "8163c025b0fa1bce",
     "diagrams": "62b5c96261ee76e9",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -2363,7 +2363,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a23eeb7663b200ef",
+    "version": "96567e8a1f7e7612",
     "diagrams": "e780b20f08791793",
     "conformal": "325a9c57971cf007",
     "embedding": "5d574463e63f1df8"
@@ -2567,7 +2567,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "09e3aad736cec711",
+    "version": "ca1ce1cdd1008eab",
     "diagrams": "f02d33ce21e424e5",
     "conformal": "caada1e1189ae9f1",
     "embedding": "7b305003632e43d9"
@@ -3365,6 +3365,29 @@
     "diagrams": "f99505d95b083db0",
     "conformal": "577727a22f10c827",
     "embedding": "b79fedbd55cef742"
+  },
+  {
+    "id": "tippett_tsang",
+    "name": "Tippett-Tsang",
+    "tags": [
+      "time machine",
+      "closed timelike curves",
+      "bubble",
+      "exotic matter",
+      "energy condition violation",
+      "naked singularity",
+      "not time orientable",
+      "Rindler",
+      "asymptotically flat",
+      "time-dependent",
+      "idealized model",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional"
+    ],
+    "version": "3a798c868ed188cc",
+    "diagrams": "a22d9d0b1b5b3767",
+    "embedding": "39b40fc53795299b"
   },
   {
     "id": "tolman_vii",

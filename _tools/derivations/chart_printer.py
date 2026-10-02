@@ -779,15 +779,25 @@ class Chart:
         self.random = random.Random(0)
         self.point = {}
 
+    def named_time(self, value):
+        """A value with the chart's x^0 written as c times the time the file prints. A declared
+        function of the coordinates and its derivatives stay as they are, since the file prints
+        them by name, h and \\partial_t h, and a derivative along t is one along x^0 already."""
+        value = sp.sympify(value)
+        if not self.bare:
+            return value
+        held = {e: sp.Dummy() for e in value.atoms(sp.Derivative) | value.atoms(AppliedUndef)}
+        return value.xreplace(held).subs(self.bare, simultaneous=True).xreplace({d: e for e, d in held.items()})
+
     def check(self, text, value):
-        difference = self.reader(text) - sp.sympify(value).subs(self.bare, simultaneous=True)
+        difference = self.reader(text) - self.named_time(value)
         if vm.norm(self.reduce(difference) if self.reduce else difference) != 0:
             raise AssertionError(f"printed {text!r} does not read back as {value}")
         return text
 
     def text(self, value):
         """The printed form of a value, checked by reading it back."""
-        return self.check(self.printer(self.pretty(sp.sympify(value).subs(self.bare, simultaneous=True))), value)
+        return self.check(self.printer(self.pretty(self.named_time(value))), value)
 
     def single_term(self, value):
         """A printed form of the value with no top level sum, so a leading minus negates it.

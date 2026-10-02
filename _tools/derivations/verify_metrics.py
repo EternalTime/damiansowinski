@@ -685,6 +685,12 @@ DIMENSIONS = {
         "g": "L/T**2", "F": "1", "\\Phi": "1", "r": "L", "N": "1",
     },
     ("wormhole_time_machine", "short_throat"): {"t": "T", "l": "L", "\\theta": "1", "\\phi": "1", "b": "L"},
+    # Tippett and Tsang's bubble: the top hat function h is a pure number, and lambda, the polar
+    # angle of the plane of ct and x, is the time of the two charts that use it.
+    ("tippett_tsang", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "h": "1"},
+    ("tippett_tsang", "polar"): {"\\lambda": "1", "\\xi": "L", "y": "L", "z": "L", "h": "1"},
+    ("tippett_tsang", "interior"): {"t": "T", "x": "L", "y": "L", "z": "L"},
+    ("tippett_tsang", "rindler"): {"\\lambda": "1", "\\xi": "L", "y": "L", "z": "L"},
     # The slices are flat space and the whole of the geometry is the flow field carried on them,
     # so its components are velocities and the chart components of the metric are powers of V/c.
     ("natario", "cartesian_flow"): {

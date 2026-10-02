@@ -1536,6 +1536,19 @@ Edward Teo's rotating traversable wormhole of 1998, the stationary, axially symm
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b_0}{r}} + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 - chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + dl^2 + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 
+### Tippett-Tsang Time Machine
+
+A bubble of curved spacetime whose centre runs round a circle in the plane of $t$ and $x$, proposed by Benjamin Tippett and David Tsang in a preprint of 2013 and a paper of 2017. Inside the bubble spacetime is flat in Rindler's form with an angle for its time, so the world line of a rider who keeps accelerating closes on itself. Outside is Minkowski space, and the wall between the two violates the null energy condition, carries naked singularities, and leaves the spacetime with no consistent arrow of time.
+
+- id: `tippett_tsang`
+- tags: time machine, closed timelike curves, bubble, exotic matter, energy condition violation, naked singularity, not time orientable, Rindler, asymptotically flat, time-dependent, idealized model, Lorentzian, Einstein equations, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/tippett_tsang.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = \left(1 - \dfrac{2hc^2t^2}{x^2 + c^2t^2}\right)\left(-c^2dt^2 + dx^2\right) + \dfrac{4h\,x\,ct}{x^2 + c^2t^2}\,c\,dt\,dx + dy^2 + dz^2$$
+- chart Polar: coordinates $(\lambda, \xi, y, z)$, $$ds^2 = \left(h + (1 - h)\cos(2\lambda)\right)\left(-\xi^2d\lambda^2 + d\xi^2\right) - 2(1 - h)\xi\sin(2\lambda)\,d\lambda\,d\xi + dy^2 + dz^2$$
+- chart Bubble Interior: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{x^2 - c^2t^2}{x^2 + c^2t^2}\left(-c^2dt^2 + dx^2\right) + \dfrac{4x\,ct}{x^2 + c^2t^2}\,c\,dt\,dx + dy^2 + dz^2$$
+- chart Rindler: coordinates $(\lambda, \xi, y, z)$, $$ds^2 = -\xi^2d\lambda^2 + d\xi^2 + dy^2 + dz^2$$
+
 ### Tolman's Fluid Sphere, Solution VII
 
 A static star of perfect fluid whose density falls as the square of the radius, $\rho = \rho_c(1 - r^2/R^2)$ where the surface is empty. It is the seventh of the eight solutions Richard Tolman wrote down in 1939, and the density inside a neutron star follows it closely.
