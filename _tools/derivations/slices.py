@@ -683,6 +683,75 @@ def _rnds(chart):
             Mark(cosmic, [np.column_stack([rnds_static_t(RNDS_TAU, r) + sign * rnds_rstar(r), r]) for r in pieces])]
 
 
+BARDEEN_G = 1 / 3                         # g in r_s, as every diagram of Bardeen's black hole takes it
+BARDEEN_HORIZONS = (0.3009628011521132, 0.7754191789541744)     # r_- and r_+, the positive zeros of f
+
+
+def bardeen_f(r):
+    """Bardeen's f at r_s = 1 and g = 1/3."""
+    return 1 - r * r / (r * r + BARDEEN_G ** 2) ** 1.5
+
+
+@functools.lru_cache(maxsize=None)
+def _bardeen_smooth():
+    """What is left of 1/f once its two poles are taken out, as a function of a float, and its
+    integral from 0 to each multiple of a tenth of r_s up to 8 r_s, both worked in forty digits,
+    since 1/f and its pole cancel to the last digit of a float beside a horizon."""
+    import mpmath
+    g2 = mpmath.mpf(1) / 9
+    with mpmath.workdps(40):
+        def f(x):
+            return 1 - x * x / (x * x + g2) ** mpmath.mpf("1.5")
+        roots = [mpmath.findroot(f, ri) for ri in BARDEEN_HORIZONS]
+        poles = [(ri, (ri * ri + g2) ** mpmath.mpf("2.5") / (ri * (ri * ri - 2 * g2))) for ri in roots]
+
+    def smooth(x):
+        with mpmath.workdps(40):
+            x = mpmath.mpf(x)
+            return float(1 / f(x) - sum(a / (x - ri) for ri, a in poles))
+
+    nodes, weights = np.polynomial.legendre.leggauss(12)
+
+    def panel(a, b):
+        half, mid = 0.5 * (b - a), 0.5 * (a + b)
+        return half * sum(w * smooth(mid + half * n) for n, w in zip(nodes, weights))
+    edges = [0.1 * k for k in range(81)]
+    sums = np.concatenate([[0.0], np.cumsum([panel(a, b) for a, b in zip(edges, edges[1:])])])
+    return panel, sums, [(float(ri), float(a)) for ri, a in poles]
+
+
+def bardeen_rstar(r):
+    """Bardeen's tortoise coordinate at r_s = 1 and g = 1/3, dr_*/dr = 1/f, as the
+    Eddington-Finkelstein charts fix it, vanishing at r = 0. 1/f has a simple pole at each
+    horizon, of residue 1/f'(r_i), so r_* is the sum over both of ln|1 - r/r_i|/f'(r_i) and the
+    integral from 0 of what is left of 1/f once those poles are taken out, which is smooth and is
+    summed by Gauss and Legendre's rule on panels a tenth of r_s wide."""
+    panel, sums, poles = _bardeen_smooth()
+
+    def one(x):
+        k = min(int(x / 0.1), len(sums) - 1)
+        rest = panel(0.1 * k, x) if x > 0.1 * k else 0.0
+        return float(sums[k]) + rest + sum(a * math.log(abs(1 - x / ri)) for ri, a in poles)
+    return np.array([one(float(x)) for x in np.atleast_1d(np.asarray(r, dtype=float))]).reshape(np.shape(r))
+
+
+def _bardeen(view, sign=0):
+    """The moment t = 0 of Bardeen's black hole, outside r_+ or inside r_-: along r in its static
+    chart (sign 0), and in its ingoing (1) or outgoing (-1) chart as v = r_* or u = -r_*, which
+    runs off toward the horizon the view ends on. Each chart covers one side of the moment, and
+    the other side lies over the same r."""
+    m, = moments("bardeen", view)
+    lo, hi = m.reach("static", "r")
+    if not sign:
+        return [Mark(m, along(0.0, lo, hi))]
+    r = near(lo, hi) if view == "outside" else np.concatenate([[0.0], (hi - (hi - lo) * np.geomspace(1.0, 1e-9, N))[1:]])
+    return [Mark(m, [np.column_stack([sign * bardeen_rstar(r), r])])]
+
+
+def _bardeen_both(sign=0):
+    return _bardeen("outside", sign) + _bardeen("inside", sign)
+
+
 def _c_metric(y):
     """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
     axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
@@ -765,6 +834,11 @@ FLAT = {
     ("reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _rnds("outgoing"),
     ("reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing", "chart"): lambda: _rnds("outgoing"),
     ("reissner_nordstrom_de_sitter", "cosmological", "plane"): lambda: _rnds("cosmological"),
+    ("bardeen", "static", "radial"): lambda: _bardeen_both(),
+    ("bardeen", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _bardeen_both(1),
+    ("bardeen", "eddington_finkelstein_ingoing", "chart"): lambda: _bardeen_both(1),
+    ("bardeen", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _bardeen_both(-1),
+    ("bardeen", "eddington_finkelstein_outgoing", "chart"): lambda: _bardeen_both(-1),
     ("schwarzschild_ads", "static", "radial"): lambda: _sads(),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _sads(1),
@@ -1334,6 +1408,18 @@ def checks():
     miss = max(abs(float((pulled - g_s[:2, :2]).subs(r, rv)[i, j])) for rv in rng.uniform(0.3, 3, 20)
                for i in range(2) for j in range(2))
     report("Bertotti-Robinson: x = b^2/r pulls the Poincare plane back onto the static one", miss, 1e-12)
+
+    # Bardeen: the tortoise coordinate's slope is the published g_rr of the static chart, it
+    # vanishes at the centre, and the horizons named here are the zeros of the published g^rr.
+    g_b, (tb, rb, *_) = metric("bardeen", "static", {"r_s": 1, "g": "1/3"})
+    grr = sp.lambdify(rb, g_b[1, 1], "numpy")
+    pts = np.concatenate([rng.uniform(0.02, 0.28, 8), rng.uniform(0.33, 0.74, 8), rng.uniform(0.82, 6, 8)])
+    h = 1e-5
+    miss = max(abs((bardeen_rstar(v + h) - bardeen_rstar(v - h)) / (2 * h) / grr(v) - 1) for v in pts)
+    report("Bardeen: dr_*/dr is the published g_rr", float(miss), 1e-7)
+    report("Bardeen: r_* = 0 at the centre", abs(float(bardeen_rstar(0.0))), 1e-15)
+    report("Bardeen: the horizons are the zeros of the published g^rr",
+           max(abs(1 / grr(ri)) for ri in BARDEEN_HORIZONS), 1e-13)
 
     # de Sitter: the static chart of the flat slicing, r = rho e^t_f and
     # t_s = t_f - ln(1 - rho^2 e^(2 t_f))/2, pulls the static plane back onto the flat one, and the

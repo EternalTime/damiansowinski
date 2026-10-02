@@ -107,6 +107,7 @@ import warnings
 from pathlib import Path
 
 import contourpy
+import mpmath
 import numpy as np
 import sympy as sp
 from scipy.integrate import IntegrationWarning, quad
@@ -291,6 +292,8 @@ class Slice:
         """The real roots of 1/g_xx where it is a rational function, largest first, as floats,
         each remembered exactly, so that slope() takes its limit at the root itself."""
         numerator = sp.numer(sp.together(1 / self.gxx))
+        if self._radical(numerator):
+            return self._radical_horizons(numerator)
         solved = sp.solve(numerator, self.x)
         roots = [z for z in solved if z.is_real]
         if any(z.is_real is None for z in solved):
@@ -299,6 +302,32 @@ class Slice:
             # are then taken as exact algebraic numbers.
             roots = sp.Poly(numerator, self.x).real_roots()
         roots = sorted(roots, key=float, reverse=True)
+        for z in roots:
+            self.exact[float(z)] = z
+        return [float(z) for z in roots]
+
+    def _radical(self, e):
+        """Whether e holds a power of x that is not a whole one, as Bardeen's (r^2 + g^2)^(3/2)."""
+        return any(not p.exp.is_Integer and p.base.has(self.x) for p in e.atoms(sp.Pow))
+
+    def _radical_horizons(self, numerator):
+        """The zeros of a numerator that is a polynomial in x and one square root, q = sqrt(S):
+        the real roots of its resultant with q^2 - S, which has no radical, kept where the
+        numerator itself vanishes, since the resultant also holds the zeros of the other branch,
+        q = -sqrt(S). Each is remembered as an exact algebraic number."""
+        bases = {p.base for p in numerator.atoms(sp.Pow) if not p.exp.is_Integer and p.base.has(self.x)}
+        if len(bases) != 1 or any((2 * p.exp).is_Integer is not True for p in numerator.atoms(sp.Pow)
+                                  if p.base in bases):
+            raise SystemExit(f"{self.metric_id}/{self.system_id}: 1/g_xx holds more than one square root")
+        S, q = bases.pop(), sp.Dummy("q")
+        in_q = numerator.replace(lambda p: p.is_Pow and p.base == S, lambda p: q ** (2 * p.exp))
+        resultant = sp.Poly(sp.resultant(in_q, q ** 2 - S, q), self.x)
+        value = sp.lambdify(self.x, numerator, "mpmath")
+        roots = []
+        with mpmath.workdps(60):
+            for z in sorted(set(resultant.real_roots()), key=float, reverse=True):
+                if abs(value(mpmath.mpf(str(z.evalf(60))))) < mpmath.mpf(10) ** -40:
+                    roots.append(z)
         for z in roots:
             self.exact[float(z)] = z
         return [float(z) for z in roots]
@@ -356,6 +385,18 @@ class Slice:
 
             def near(e):
                 exact = self.exact[root]
+                if self._radical(e):
+                    # A metric with a square root in it is no rational function of u, so it is
+                    # evaluated at root + u in sixty digits, the root itself taken to seventy,
+                    # which keeps what cancels at the root to far below any u the quadrature asks for.
+                    f = sp.lambdify(self.x, e, "mpmath")
+                    with mpmath.workdps(70):
+                        x0 = mpmath.mpf(str(exact.evalf(70)))
+
+                    def at(v):
+                        with mpmath.workdps(60):
+                            return float(f(x0 + mpmath.mpf(float(v))))
+                    return at
                 if exact.has(sp.CRootOf):
                     # A root with no form in radicals: each coefficient in u is reduced modulo
                     # the root's minimal polynomial, so that the terms which cancel at the root
@@ -2410,6 +2451,75 @@ def rn_metric(ck, src):
                       stops=["Nearer the singularity than $r = r_q^2/r_s$, $g_{rr} < 1$: the circles grow faster "
                              "than the distance out to them, and no surface in flat space carries that part of the "
                              "slice.", between]))
+    return views
+
+
+def bardeen(ck, src):
+    """Bardeen's regular black hole at g = r_s/3, as its other diagrams draw it, so that r+ =
+    0.775 and r- = 0.301 r_s. g_rr = 1/f with f = 1 - r_s r^2/(r^2 + g^2)^(3/2): outside r+ the
+    slice of constant t runs through the outer bifurcation sphere into a second exterior, as
+    Reissner-Nordstrom's does; between the horizons g_rr < 0 and it is not a moment of space;
+    inside r- it runs through the inner bifurcation sphere, the widest circle there, into a second
+    region inside r-. Here g_rr - 1 = (1 - f)/f stays positive all the way to the centre, where it
+    falls to zero as r_s r^2/g^3, so each side closes smoothly over r = 0 as a cap that the sphere
+    of radius sqrt(g^3/r_s), de Sitter's, osculates, and the slice inside r- is a closed surface:
+    Borde's change of topology."""
+    sl = Slice(src, "bardeen", "static", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1, "g": "1/3"})
+    rp, rm = [r for r in sl.horizons() if r > 0]
+    f = lambda r: 1 - r * r / (r * r + 1 / 9) ** 1.5    # noqa: E731
+    ck.add("Bardeen: the horizons are the two positive zeros of f, 0.7754 and 0.3010 r_s",
+           abs(f(rp)) + abs(f(rm)) + abs(rp - 0.77541917895417) + abs(rm - 0.30096280115211), 1e-12)
+    ck.stops("Bardeen, between the horizons", sl, np.linspace(rm, rp, 402)[1:-1])
+    top, radii = 6.0, (1.0, 2.0, 3.0, 4.0, 5.0)
+    size = 2 * top
+    near, far = two_sheets(ck, "Bardeen outside", sl, rp, top, radii, size,
+                           [(rp, "horizon", "$r = r_+$")], (" of the outer horizon", ""))
+    outside = Surface([near, far])
+    fig = figure_of([outside], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rp, 0.0, "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_s$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1$, $2$, $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the outer horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = ("$r_s = 1$, the unit of every length, and $g = r_s/3$, so that $r_+ = 0.775\\,r_s$ and "
+                "$r_- = 0.301\\,r_s$.")
+    between = ("Between the horizons, $r_- < r < r_+$, $g_{rr} < 0$: $r$ is a time there, and a slice of "
+               "constant $t$ is not a moment of space.")
+    views = [view("outside", "Outside $r_+$", "$r_s$", [outside], fig.done(), settings=settings, stops=[between])]
+
+    # Inside r-: each side a cap from the centre up to the widest circle, r-, and the two caps one closed surface.
+    size = 2 * rm
+    lo = Piece("inside", "sheet", sl, 0.0, rm, 0.0, 1,
+               (("axis", "the centre $r = 0$, where the cap is smooth"),
+                ("join", "the inner horizon $r = r_-$, the widest circle, where the slice runs on into the other "
+                         "region inside $r_-$")),
+               [(0.1, "r", None), (0.2, "r", None), (rm, "horizon", "$r = r_-$")], size)
+    half = lo.z[-1]
+    lo.z = lo.z - half
+    hi = Piece("other_inside", "sheet2", sl, 0.0, rm, half, -1,
+               (("axis", "the centre $r = 0$ of the other region"), ("join", "the inner horizon $r = r_-$")),
+               [(0.1, "r2", None), (0.2, "r2", None)], size)
+    for p in (lo, hi):
+        ck.isometry(f"Bardeen inside, {p.id}", p)
+    ck.join("Bardeen inside, the two sides at r-", lo, rm, hi, rm)
+    # At the centre the cap is de Sitter's sphere: z = r^2/(2a) to the order r^4, a = sqrt(g^3/r_s).
+    a = (1 / 3) ** 1.5
+    small = lo.x[(lo.x > 0) & (lo.x < 0.02)]
+    ck.add("Bardeen inside: the cap's curvature at the centre is that of the sphere of radius sqrt(g^3/r_s)",
+           float(np.max(np.abs(2 * a * (np.interp(small, lo.x, lo.z) - lo.z[0]) / small ** 2 - 1))), 2e-2)
+    inside = Surface([lo, hi])
+    fig = figure_of([inside], {"sheet": "cover"}, size, Camera(-90, 22))
+    ring_label(fig, [0, 0, 0], rm, 0.0, "$r = r_-$", dx=10)
+    ring_label(fig, [0, 0, 0], *lo.at(0.2), "$0.2\\,r_s$", side=-1)
+    fig.legend("fill", "cover", "the region $r < r_-$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $0.1$ and $0.2\\,r_s$")
+    fig.legend("line", "r2", "the same radii in the other region inside $r_-$")
+    fig.legend("line", "horizon", "the widest circle $r = r_-$, where the slice crosses the inner horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("inside", "Inside $r_-$", "$r_s$", [inside], fig.done(), settings=settings, stops=[between]))
     return views
 
 
@@ -6951,6 +7061,7 @@ DRAWN = {
     "ellis_bronnikov": ellis_bronnikov,
     "van_den_broeck": van_den_broeck,
     "rn_metric": rn_metric,
+    "bardeen": bardeen,
     "de_sitter": de_sitter,
     "einstein_static": einstein_static,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
@@ -7244,6 +7355,25 @@ CAPTIONS = {
         "The two sides meet smoothly at the throat $r = r_s$, the smallest circle. Clocks at rest there run at "
         "the rate $\\lambda$ of clocks far away, so the surface is the same at every moment, and light and "
         "matter cross from one side to the other.",
+    ],
+    ("bardeen", "outside"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Bardeen's black hole at one moment of $t$ outside its "
+        "outer horizon, drawn as a surface in flat space with every distance along it the metric distance. On "
+        "it $g_{rr} = (1 - r_sr^2/(r^2 + g^2)^{3/2})^{-1}$, and the slice passes through the outer horizon's "
+        "bifurcation sphere $r = r_+$, its throat, into a second exterior, as Schwarzschild's does through $r_s$.",
+        "The charge $g$ pulls the throat in from $r_s$ to $r_+ = 0.775\\,r_s$, and far out the surface rises as "
+        "Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{r_s/r}$. Between the horizons $r$ is a "
+        "time, and no slice of constant $t$ enters there.",
+    ],
+    ("bardeen", "inside"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the same black hole at one moment of $t$ inside its inner "
+        "horizon, where $r$ is again a distance and $t$ a time, drawn as a surface in flat space with every "
+        "distance along it the metric distance. The slice runs from the centre out to the inner horizon's "
+        "bifurcation sphere $r = r_-$, its widest circle, and on into a second region inside $r_-$, the same "
+        "surface turned over, down to that region's own centre.",
+        "The surface is closed: this moment of space is a sphere, finite and without an edge, where "
+        "Reissner-Nordström's ends at a singularity. Near each centre $dz/dr = \\sqrt{r_sr^2/g^3}$, the slope of "
+        "a sphere of radius $\\sqrt{g^3/r_s} = 0.192\\,r_s$, the equator of a moment of de Sitter space.",
     ],
     ("rn_metric", "outside"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a charged black hole at one moment of $t$ outside its "

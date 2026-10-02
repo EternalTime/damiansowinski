@@ -681,6 +681,9 @@ DILATON = {"r_s": 1, "r_d": "1/2"}
 # Schwarzschild-anti-de Sitter at r_s = 2L, where r^3 + L^2 r - L^2 r_s = (r - L)(r^2 + L r + 2L^2)
 # and the horizon is r_h = L, the black hole of Hawking and Page's temperature T_1.
 SADS = {"r_s": 2, "L": 1}
+# Bardeen's regular black hole at g = r_s/3, below the extremal 2 r_s/(3 sqrt 3) = 0.385 r_s: two
+# horizons, r_- = 0.301 r_s and r_+ = 0.775 r_s, about a regular centre.
+BARDEEN = {"r_s": 1, "g": "1/3"}
 
 # Damour and Solodukhin's wormhole at lambda = 1/5, where the throat's clocks run five times slow.
 DS = {"r_s": 1, "lambda": "1/5"}
@@ -819,6 +822,20 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, orient="outgoing", areal=True),
     Diagram("schwarzschild_ads", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 3, -2, 1), "$r/L$", "$u/L$", SADS, EQUATOR, orient="outgoing", areal=True),
+    # Bardeen's regular black hole on its plane of the time and r, in each chart: the cones close at
+    # two horizons, as Reissner-Nordstrom's do, and open again down to a centre that is regular.
+    Diagram("bardeen", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
+            "$r/r_s$", "$ct/r_s$", BARDEEN, EQUATOR, orient="ingoing", areal=True),
+    Diagram("bardeen", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 2, -1, 1), "$r/r_s$", "$(v - r)/r_s$", BARDEEN, EQUATOR,
+            to_display=FINKELSTEIN_IN, orient="ingoing", areal=True),
+    Diagram("bardeen", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 2, -0.5, 1.5), "$r/r_s$", "$v/r_s$", BARDEEN, EQUATOR, orient="ingoing", areal=True),
+    Diagram("bardeen", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 2, -1, 1), "$r/r_s$", "$(u + r)/r_s$", BARDEEN, EQUATOR,
+            to_display=FINKELSTEIN_OUT, orient="outgoing", areal=True),
+    Diagram("bardeen", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 2, -1.5, 0.5), "$r/r_s$", "$u/r_s$", BARDEEN, EQUATOR, orient="outgoing", areal=True),
     # The Kaluza-Klein monopole at m = 1 on its plane of t and the radius, in each chart, and through the
     # nut in Gross and Perry's: no horizon, and rays that slow toward the nut as sqrt(r/(r + 4m)).
     Diagram("kaluza_klein_monopole", "gross_perry", "radial", "$t$ and $r$", ("t", "r"), (0, 16, -8, 8),
@@ -1891,6 +1908,47 @@ CAPTIONS = {
         "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
         "null coordinate. The ingoing family turns vertical at $r_h$ and leans toward larger $r$ inside it.",
+    ],
+    ("bardeen", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $g = r_s/3$, the same at every "
+        "other angle by spherical symmetry. There $g^{rr} = 1 - r_sr^2/(r^2 + g^2)^{3/2}$ vanishes twice, at "
+        "$r_+ = 0.775\\,r_s$ and $r_- = 0.301\\,r_s$, and the cones close at both. Between them $r$ is the time "
+        "and the cones point to smaller $r$. Inside $r_-$, $t$ is a time again, and the cones open toward 45° "
+        "as $r \\to 0$, where $g^{rr} \\approx 1 - r_sr^2/g^3$, as in de Sitter space.",
+        "The chart alone does not fix which way is future in the two inner regions. We take it from the ingoing "
+        "Eddington-Finkelstein chart, which makes the region between the horizons the black hole. The left "
+        "edge, $r = 0$, is a regular centre, where the Kretschmann scalar is $24r_s^2/g^6$.",
+    ],
+    ("bardeen", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $g = r_s/3$ with $v - r$ as the "
+        "vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has "
+        "$dv/dr = 2(1 - r_sr^2/(r^2 + g^2)^{3/2})^{-1}$, so it stands vertical at both horizons, "
+        "$r_+ = 0.775\\,r_s$ and $r_- = 0.301\\,r_s$: each is an outgoing ray that stays where it is.",
+        "The cones cross both horizons smoothly. Between them both edges of every future cone point to smaller "
+        "$r$, and inside $r_-$ the outgoing edge points outward again, so an outgoing ray there climbs toward "
+        "$r_-$ and never reaches it. An ingoing ray reaches the regular centre $r = 0$ at a finite $v$ and "
+        "passes through it, to continue as an outgoing ray.",
+    ],
+    ("bardeen", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a "
+        "null coordinate. The outgoing family turns vertical at $r_+$, leans back toward smaller $r$ between the "
+        "horizons, and turns vertical again at $r_-$.",
+    ],
+    ("bardeen", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $g = r_s/3$ with $u + r$ as the "
+        "vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family stands vertical "
+        "at both horizons, $r_+ = 0.775\\,r_s$ and $r_- = 0.301\\,r_s$. Between them both edges of every "
+        "future cone point to larger $r$: this is the white hole, which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$. An outgoing ray leaves the regular centre $r = 0$ and crosses both horizons on its "
+        "way to infinity.",
+    ],
+    ("bardeen", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
+        "null coordinate. The ingoing family turns vertical at $r_-$ and at $r_+$, and leans toward larger $r$ "
+        "between them.",
     ],
     ("kaluza_klein_monopole", "gross_perry", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = 0$, $x_5 = 0$) of the Kaluza-Klein monopole, each point in the "
@@ -5804,6 +5862,11 @@ def _sads_rstar(r):
     return 0.25 * np.log(np.abs(r - 1)) - 0.125 * np.log(r * r + r + 2) + 5 / (4 * w) * np.arctan((2 * r + 1) / w)
 
 
+def _bardeen_away(x, r):
+    lo, hi = slices.BARDEEN_HORIZONS
+    return (np.abs(r - lo) > 0.05) & (np.abs(r - hi) > 0.05)
+
+
 def _sds_away(x, r):
     return (np.abs(r - 1.0852) > 0.05) & (np.abs(r - 3.2146) > 0.05)
 
@@ -5986,6 +6049,12 @@ CLOSED_FORMS = {
         (lambda u, r: u + 2 * _rnds_rstar(r), lambda u, r: u, _rnds_away),
     ("reissner_nordstrom_de_sitter", "cosmological", "plane"):
         (lambda tau, rho: _rnds_cosmic(tau, rho, 1), lambda tau, rho: _rnds_cosmic(tau, rho, -1), _rnds_cosmic_away),
+    ("bardeen", "static", "radial"):
+        (lambda t, r: t + slices.bardeen_rstar(r), lambda t, r: t - slices.bardeen_rstar(r), _bardeen_away),
+    ("bardeen", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * slices.bardeen_rstar(r), _bardeen_away),
+    ("bardeen", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * slices.bardeen_rstar(r), lambda u, r: u, _bardeen_away),
     ("schwarzschild_de_sitter", "static", "radial"):
         (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):
