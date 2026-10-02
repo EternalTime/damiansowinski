@@ -1201,6 +1201,7 @@ TBH_MASSLESS = {"mu": 0, "L": 1, "k": -1}
 TBH_NEGATIVE = {"mu": "-120/343", "L": 1, "k": -1}
 TBH_POINT = {"rho": "1/2", "phi": "0"}
 TBH_THETA = {"theta": "1", "phi": "0"}
+AB_PLANE = {"chi": "1", "phi": "0"}
 TBH_CASES = (("flat", "$k = 0$", TBH_FLAT, (0, 3, -1.5, 1.5)),
              ("massless", "$k = -1$, $\\mu = 0$", TBH_MASSLESS, (0, 3, -1.5, 1.5)),
              ("negative", "$k = -1$, $\\mu < 0$", TBH_NEGATIVE, (0, 1.5, -0.75, 0.75)))
@@ -4044,6 +4045,48 @@ DIAGRAMS = [
     Diagram("wahlquist", "whittaker", "through", "through the centre", ("t", "X"),
             (0, 1.1, -1.1, 1.1), "$x$", "$ct/R_0$", WAHLQUIST_STATIC, EQUATOR, mirror=True, families=SIDEWAYS,
             cones=(4, 8), lines=(("surface", "r", WAHLQUIST_X_S, "the surface of zero pressure, $X = X_s$"),)),
+    # Ehlers and Kundt's A- and B-metrics at b = 1. AII in its static region, beyond its horizon, in
+    # Kruskal's chart, whose singularity is the pair of hyperbolas UV = -1 at the sides, and in the
+    # inertial coordinates of the flat spacetime at b = 0, above the hyperbola sigma = b; BI in its
+    # static chart, in the de Sitter slicing, through the neck and in the inertial coordinates,
+    # outside the hyperbolas r = b; AIII; BII in its static chart and through its axis; and BIII.
+    Diagram("ab_metrics", "a2_static", "radial", "$t$ and $r$", ("t", "r"), (0, 1, -0.5, 0.5),
+            "$r/b$", "$ct/b$", {"b": 1}, AB_PLANE),
+    Diagram("ab_metrics", "a2_cone", "beyond", "$\\sigma$ and $z$", ("\\sigma", "z"), (-1.5, 1.5, 1, 4),
+            "$z/b$", "$\\sigma/b$", {"b": 1}, AB_PLANE, tau="sigma", families=SIDEWAYS),
+    Diagram("ab_metrics", "a2_kruskal", "kruskal", "$U$ and $V$", ("U", "V"), (-2, 2, -2, 2),
+            "$(V - U)/2$", "$(U + V)/2$", {"b": 1}, AB_PLANE, to_display=NULL_TO_TR, families=SIDEWAYS,
+            tau="U + V", where="1 + U*V", singular_zero="1 + U*V"),
+    Diagram("ab_metrics", "a2_cartesian", "TX", "$T$ and $X$", ("T", "X"), (-3, 3, 0, 6),
+            "$X/b$", "$T/b$", {"b": 1}, {"Y": "0", "Z": "0"}, tau="T**2 - X**2", families=SIDEWAYS, where="T**2 - X**2 - 1"),
+    Diagram("ab_metrics", "b1_static", "radial", "$\\tau$ and $r$", ("\\tau", "r"), (1, 4, -1.5, 1.5),
+            "$r/b$", "$\\tau$", {"b": 1}, {"theta": "pi/2", "z": "0"}, tau="tau"),
+    Diagram("ab_metrics", "b1_static", "surface", "$\\tau$ and $\\theta$", ("\\tau", "\\theta"),
+            (0, math.pi, -math.pi / 2, math.pi / 2), "$\\theta$", "$\\tau$", {"b": 1}, {"r": "2", "z": "0"},
+            tau="tau", families=SIDEWAYS),
+    Diagram("ab_metrics", "b1_cone", "radial", "$\\tau$ and $r$", ("\\tau", "r"), (1, 4, -1.5, 1.5),
+            "$r/b$", "$\\tau$", {"b": 1}, {"phi": "0", "z": "0"}, tau="tau"),
+    Diagram("ab_metrics", "b1_cone", "de_sitter", "$\\tau$ and $\\phi$", ("\\tau", "\\phi"),
+            (0, 2 * math.pi, -2, 2), "$\\phi$", "$\\tau$", {"b": 1}, {"r": "2", "z": "0"}, tau="tau",
+            families=SIDEWAYS, periodic=("\\phi",)),
+    Diagram("ab_metrics", "b1_neck", "through", "through the neck", ("\\tau", "\\rho"), (-1, 1, -2, 2),
+            "$\\rho$", "$\\tau$", {"b": 1}, {"phi": "0", "z": "0"}, tau="tau", families=SIDEWAYS,
+            lines=(("throat", "r", "0", "the neck, $\\rho = 0$"),)),
+    Diagram("ab_metrics", "b1_cartesian", "TX", "$T$ and $X$", ("T", "X"), (-3, 3, -3, 3),
+            "$X/b$", "$T/b$", {"b": 1}, {"Y": "0", "Z": "0"}, tau="T/sqrt(X**2)", families=SIDEWAYS, where="X**2 - T**2 - 1"),
+    Diagram("ab_metrics", "a3", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/b$", "$ct/b$", {"b": 1}, AB_PLANE),
+    Diagram("ab_metrics", "b2_static", "radial", "$\\tau$ and $r$", ("\\tau", "r"), (0, 1, -1, 1),
+            "$r/b$", "$\\tau$", {"b": 1}, {"chi": "asinh(1)", "z": "0"}, tau="tau"),
+    Diagram("ab_metrics", "b2_static", "wedge", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"), (0, 3, -1.5, 1.5),
+            "$\\chi$", "$\\tau$", {"b": 1}, {"r": "1/2", "z": "0"}, tau="tau"),
+    Diagram("ab_metrics", "b2_neck", "through", "through the axis", ("\\tau", "\\rho"), (-2, 2, -2, 2),
+            "$\\rho$", "$\\tau$", {"b": 1}, {"chi": "0", "z": "0"}, tau="tau", families=SIDEWAYS,
+            lines=(("surface", "r", "0", "the axis, $\\rho = 0$"),)),
+    Diagram("ab_metrics", "b2_neck", "ads", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"), (-2, 2, -2, 2),
+            "$\\chi$", "$\\tau$", {"b": 1}, {"rho": "1", "z": "0"}, tau="tau", families=SIDEWAYS),
+    Diagram("ab_metrics", "b3", "radial", "$\\tau$ and $r$", ("\\tau", "r"), (0, 3, -1.5, 1.5),
+            "$r/b$", "$\\tau$", {"b": 1}, {"x": "0", "z": "0"}, tau="tau"),
 ]
 
 
@@ -9126,6 +9169,124 @@ CAPTIONS = {
         "curves of the plane: light launched along one is turned toward larger $r$, away from the boundary, "
         "$\\ddot{r} = (\\beta^2/r^3)\\,\\dot{t}^2$.",
     ] for system, origin in (("poincare_5d", "$x_1 = x_2 = 0$"), ("poincare_6d", "$x_1 = x_2 = x_3 = 0$"))},
+    ("ab_metrics", "a2_static", "radial"): [
+        "The plane of $t$ and $r$ ($\\chi = 1$, $\\phi = 0$) in the static region of A II, between the singularity "
+        "$r = 0$ and the horizon $r = b$. A ray has $c\\,dt/dr = \\pm r/(b - r)$, so the cones are widest at the "
+        "singularity, a timelike line that light reaches and leaves in a finite time, and close toward the "
+        "horizon, which a ray takes infinite $t$ to reach.",
+        "The Killing vector $\\partial_t$ is timelike in this region alone. Beyond the horizon it is the "
+        "translation along the tachyon's line.",
+    ],
+    ("ab_metrics", "a2_cone", "beyond"): [
+        "The plane of $\\sigma$ and $z$ ($\\chi = 1$, $\\phi = 0$) beyond the horizon of A II, where the time is "
+        "$\\sigma$. A ray has $dz/d\\sigma = \\pm\\sigma/(\\sigma - b)$: the cones lie open flat at the horizon "
+        "$\\sigma = b$, the lower edge, and narrow to 45° as $\\sigma$ grows and the curvature "
+        "$12b^2/\\sigma^6$ dies away.",
+        "The metric depends on the time $\\sigma$, so the field here changes, and $z$, the length along the "
+        "tachyon's line, is a symmetry.",
+    ],
+    ("ab_metrics", "a2_kruskal", "kruskal"): [
+        "The plane of $U$ and $V$ ($\\chi = 1$, $\\phi = 0$), drawn with $(V - U)/2$ across and $(U + V)/2$ up, "
+        "so that every light ray runs at 45°. The singularity $r = 0$ is the pair of hyperbolas $UV = -1$ at the "
+        "sides, each a timelike line, and the horizons $r = b$ are the lines $UV = 0$.",
+        "Above and below the horizons, where $UV > 0$, the radius is a time, and the two regions are the future "
+        "and the past of the tachyon's line. At the sides, where $UV < 0$, lie two static regions. The diagram is "
+        "Kruskal's of Schwarzschild's black hole with space and time exchanged [kruskal1960, gott1974].",
+    ],
+    ("ab_metrics", "a2_cartesian", "TX"): [
+        "The plane of $T$ and $X$ ($Y = 0$, $Z = 0$) inside the future cone of the tachyon's line, which crosses "
+        "the plane at the origin. The region drawn lies above the hyperbola $\\sigma = b$, the horizon, and with "
+        "$T = \\sigma\\cosh\\chi$ and $X = \\sigma\\sinh\\chi$ a ray keeps "
+        "$\\chi \\mp 2\\,\\mathrm{arcosh}\\sqrt{\\sigma/b}$.",
+        "Between the hyperbola and the cone $T = \\pm X$ the field is static, and the direction of time there is "
+        "$Z$, out of this plane. The cone is the singularity $\\sigma = 0$, the shock that closes on the "
+        "tachyon's line and opens again [hruska2019].",
+    ],
+    ("ab_metrics", "b1_static", "radial"): [
+        "The plane of $\\tau$ and $r$ ($\\theta = \\pi/2$, $z = 0$) of B I, outside $r = b$. A ray keeps "
+        "$\\tau \\mp 2\\,\\mathrm{arcosh}\\sqrt{r/b}$: the cones close toward $r = b$, which light still leaves in "
+        "a finite $\\tau$, and far away they open as $r$, as they do in flat spacetime for the time of "
+        "accelerated observers.",
+        "The left edge $r = b$ is the neck, where the length along $z$ shrinks to nothing and the Kretschmann "
+        "scalar takes its largest value, $12/b^4$.",
+    ],
+    ("ab_metrics", "b1_static", "surface"): [
+        "The plane of $\\tau$ and $\\theta$ ($r = 2b$, $z = 0$), a surface of constant $r$ and $z$ with the metric "
+        "$r^2(-\\sin^2\\theta\\,d\\tau^2 + d\\theta^2)$. A ray keeps $\\tau \\mp \\ln\\tan(\\theta/2)$, and the "
+        "cones close toward $\\theta = 0$ and $\\theta = \\pi$, two Killing horizons that a ray takes infinite "
+        "$\\tau$ to reach.",
+        "The surface is the static part of a de Sitter space of two dimensions and radius $r$, and the "
+        "coordinates $\\tau$ and $\\phi$ of the de Sitter slicing cover the whole of that space.",
+    ],
+    ("ab_metrics", "b1_cone", "radial"): [
+        "The plane of $\\tau$ and $r$ ($\\phi = 0$, $z = 0$) outside the cone, in the time $\\tau$ of the "
+        "de Sitter slicing. A ray keeps $\\tau \\mp 2\\,\\mathrm{arcosh}\\sqrt{r/b}$, and the neck $r = b$ is the "
+        "left edge.",
+        "In the inertial coordinates of the flat spacetime at $b = 0$ a line of constant $r$ is the hyperbola "
+        "$X^2 - T^2 = r^2$, an observer accelerating away from the tachyon's line.",
+    ],
+    ("ab_metrics", "b1_cone", "de_sitter"): [
+        "The plane of $\\tau$ and $\\phi$ ($r = 2b$, $z = 0$), a de Sitter space of two dimensions and radius "
+        "$r$, with $\\phi = 0$ and $\\phi = 2\\pi$ one line. A ray keeps $\\phi \\mp 2\\arctan\\tanh(\\tau/2)$, so "
+        "in all the time after $\\tau = 0$ it goes a quarter of the way round.",
+        "The circle of $\\phi$ has circumference $2\\pi r\\cosh\\tau$. It shrinks to $2\\pi r$ at $\\tau = 0$ and "
+        "grows again, as the cylinder of the shock closes on the tachyon's line and opens [hruska2019].",
+    ],
+    ("ab_metrics", "b1_neck", "through"): [
+        "The plane of $\\tau$ and $\\rho$ ($\\phi = 0$, $z = 0$) through the neck of B I, with "
+        "$r = b/(1 - \\rho^2)$. A ray keeps $\\tau \\mp 2\\,\\mathrm{artanh}\\,\\rho$ and crosses the neck from one "
+        "asymptotically flat region, $\\rho \\to 1$, to the other, $\\rho \\to -1$.",
+        "Each side edge is an infinity, where $r \\to \\infty$. The Kretschmann scalar is largest on the neck, "
+        "$12/b^4$, and the singularity $r = 0$ is nowhere in the spacetime [hruska2019].",
+    ],
+    ("ab_metrics", "b1_cartesian", "TX"): [
+        "The plane of $T$ and $X$ ($Y = 0$, $Z = 0$) outside the cone of the tachyon's line, which crosses the "
+        "plane at the origin. The region drawn lies outside the hyperbolas $X^2 - T^2 = b^2$, the neck $r = b$, "
+        "on both sides of the line, and with $T = r\\sinh\\tau$ and $X = r\\cosh\\tau$ a ray on the right keeps "
+        "$\\tau \\mp 2\\,\\mathrm{arcosh}\\sqrt{r/b}$.",
+        "The metric continues through the neck into a second region of the same shape, so the cone "
+        "$T = \\pm X$, where $r$ would be zero, is never reached [hruska2019].",
+    ],
+    ("ab_metrics", "a3", "radial"): [
+        "The plane of $t$ and $r$ ($\\chi = 1$, $\\phi = 0$) of A III, Taub's plane symmetric vacuum. A ray has "
+        "$c\\,dt/dr = \\pm r/b$ and keeps $ct \\mp r^2/2b$, so the cones are widest at the singularity $r = 0$, "
+        "which light reaches in a finite time, and close as $r$ grows.",
+        "A particle let go at rest moves away from $r = 0$. The singularity repels, and its Newtonian image is a "
+        "half line of negative mass [martins1996].",
+    ],
+    ("ab_metrics", "b2_static", "radial"): [
+        "The plane of $\\tau$ and $r$ ($\\chi = \\ln(1 + \\sqrt{2})$, $z = 0$) of B II, between the singularity "
+        "$r = 0$ and $r = b$. A ray keeps $\\tau \\mp 2\\arcsin\\sqrt{r/b}$, so light crosses from the singularity "
+        "to $r = b$ in $\\Delta\\tau = \\pi$.",
+        "At $r = b$ the length along $z$ shrinks to nothing, on an axis that the coordinate $\\rho$ runs through.",
+    ],
+    ("ab_metrics", "b2_static", "wedge"): [
+        "The plane of $\\tau$ and $\\chi$ ($r = b/2$, $z = 0$), a surface of constant $r$ and $z$ with the metric "
+        "$r^2(-\\sinh^2\\chi\\,d\\tau^2 + d\\chi^2)$, an anti-de Sitter space of two dimensions in the coordinates "
+        "of an accelerated observer. A ray keeps $\\tau \\mp \\ln\\tanh(\\chi/2)$: the cones close toward "
+        "$\\chi = 0$, a Killing horizon, and open as $\\sinh\\chi$ far away, where a ray reaches "
+        "$\\chi \\to \\infty$ in a finite $\\tau$.",
+    ],
+    ("ab_metrics", "b2_neck", "through"): [
+        "The plane of $\\tau$ and $\\rho$ ($\\chi = 0$, $z = 0$) through the axis of B II, with "
+        "$r = b/(1 + \\rho^2)$. A ray keeps $\\tau \\mp 2\\arctan\\rho$: it crosses the axis $\\rho = 0$, where "
+        "$r = b$, and runs between the singularity at $\\rho \\to -\\infty$ and the singularity at "
+        "$\\rho \\to \\infty$ in $\\Delta\\tau = 2\\pi$.",
+        "The Kretschmann scalar is $12(1 + \\rho^2)^6/b^4$, smallest on the axis.",
+    ],
+    ("ab_metrics", "b2_neck", "ads"): [
+        "The plane of $\\tau$ and $\\chi$ ($\\rho = 1$, $z = 0$), an anti-de Sitter space of two dimensions in "
+        "its static coordinates, with the metric $-\\cosh^2\\chi\\,d\\tau^2 + d\\chi^2$ times $b^2/4$. A ray keeps "
+        "$\\tau \\mp 2\\arctan\\tanh(\\chi/2)$ and crosses from one boundary, $\\chi \\to -\\infty$, to the other "
+        "in $\\Delta\\tau = \\pi$.",
+    ],
+    ("ab_metrics", "b3", "radial"): [
+        "The plane of $\\tau$ and $r$ ($x = 0$, $z = 0$) of B III. A ray has $d\\tau/dr = \\pm 1/\\sqrt{br}$ and "
+        "keeps $\\tau \\mp 2\\sqrt{r/b}$, so the cones close toward the singularity $r = 0$, which light still "
+        "reaches in a finite $\\tau$, and open as $r$ grows.",
+        "The metric is Levi-Civita's field of a line of mass at $\\sigma = 1/4$ in other coordinates "
+        "[podolsky2018].",
+    ],
 }
 
 
@@ -13274,6 +13435,58 @@ def _lw_forms():
 
 
 CLOSED_FORMS.update(_lw_forms())
+
+
+def _ab_forms():
+    """Ehlers and Kundt's metrics at b = 1: the two null coordinates of each plane drawn. AII keeps
+    ct +- r_* with r_* = -r - ln(1 - r) in its static region, sigma_* +- z with
+    sigma_* = sigma + ln(sigma - 1) beyond its horizon, and chi -+ 2 arcosh(sqrt(sigma)) on the
+    inertial plane; BI keeps tau -+ 2 arcosh(sqrt(r)) along r, tau -+ ln tan(theta/2) on its static
+    surface, phi -+ gd(tau) on its de Sitter space and tau -+ 2 artanh(rho) through the neck; AIII
+    keeps ct -+ r^2/2; BII keeps tau -+ 2 arcsin(sqrt(r)), tau -+ ln tanh(chi/2), tau -+ 2 arctan(rho)
+    and tau -+ gd(chi); and BIII keeps tau -+ 2 sqrt(r)."""
+    def gd(x):
+        return 2 * np.arctan(np.tanh(x / 2))
+
+    def pair(f):
+        return (lambda x0, r: x0 + f(r), lambda x0, r: x0 - f(r))
+
+    def cone(T, X, sign):
+        sigma = np.sqrt(np.maximum(T ** 2 - X ** 2, 1.0))
+        return 2 * np.arccosh(np.sqrt(sigma)) + sign * np.arctanh(X / T)
+
+    def outside(T, X, sign):
+        r = np.sqrt(np.maximum(X ** 2 - T ** 2, 1.0))
+        return np.arctanh(T / X) + sign * 2 * np.arccosh(np.sqrt(r))
+
+    along_r = pair(lambda r: 2 * np.arccosh(np.sqrt(np.maximum(r, 1.0))))
+    return {
+        ("ab_metrics", "a2_static", "radial"): (*pair(lambda r: -r - np.log(1 - r)), lambda t, r: r < 0.97),
+        ("ab_metrics", "a2_cone", "beyond"):
+            (lambda s, z: s + np.log(s - 1) + z, lambda s, z: s + np.log(s - 1) - z, lambda s, z: s > 1.03),
+        ("ab_metrics", "a2_kruskal", "kruskal"): (lambda U, V: V, lambda U, V: U, None),
+        ("ab_metrics", "a2_cartesian", "TX"):
+            (lambda T, X: cone(T, X, 1), lambda T, X: cone(T, X, -1), lambda T, X: T ** 2 - X ** 2 > 1.05),
+        ("ab_metrics", "b1_static", "radial"): (*along_r, lambda t, r: r > 1.02),
+        ("ab_metrics", "b1_static", "surface"):
+            (*pair(lambda th: np.log(np.tan(th / 2))), lambda t, th: (th > 0.05) & (th < math.pi - 0.05)),
+        ("ab_metrics", "b1_cone", "radial"): (*along_r, lambda t, r: r > 1.02),
+        ("ab_metrics", "b1_cone", "de_sitter"): (lambda tau, phi: gd(tau) + phi, lambda tau, phi: gd(tau) - phi, None),
+        ("ab_metrics", "b1_neck", "through"): (*pair(lambda rho: 2 * np.arctanh(rho)), lambda t, rho: np.abs(rho) < 0.97),
+        ("ab_metrics", "b1_cartesian", "TX"):
+            (lambda T, X: outside(T, X, 1), lambda T, X: outside(T, X, -1),
+             lambda T, X: (X > 0) & (X ** 2 - T ** 2 > 1.05)),
+        ("ab_metrics", "a3", "radial"): (*pair(lambda r: r ** 2 / 2), None),
+        ("ab_metrics", "b2_static", "radial"):
+            (*pair(lambda r: 2 * np.arcsin(np.sqrt(np.clip(r, 0, 1)))), lambda t, r: (r > 0.02) & (r < 0.98)),
+        ("ab_metrics", "b2_static", "wedge"): (*pair(lambda chi: np.log(np.tanh(chi / 2))), lambda t, chi: chi > 0.05),
+        ("ab_metrics", "b2_neck", "through"): (*pair(lambda rho: 2 * np.arctan(rho)), None),
+        ("ab_metrics", "b2_neck", "ads"): (*pair(gd), None),
+        ("ab_metrics", "b3", "radial"): (*pair(lambda r: 2 * np.sqrt(r)), lambda t, r: r > 0.02),
+    }
+
+
+CLOSED_FORMS.update(_ab_forms())
 
 
 def verify(metrics=()):

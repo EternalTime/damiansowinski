@@ -1171,6 +1171,49 @@ def _plebanski_hacyan(chart):
     return [Mark(equator, along(0.0, 0.0 if rindler else lo, hi)), Mark(sphere, points=[(0.0, 1.0)])]
 
 
+def ab_static(tau, phi):
+    """Ehlers and Kundt's map from the de Sitter slicing of BI to their static chart, on a surface
+    of constant r and z: tanh(tau_s) = tanh(tau)/cos(phi) and cos(theta) = cosh(tau) sin(phi),
+    where cosh(tau) |sin(phi)| < 1. Returns (tau_s, theta)."""
+    return np.arctanh(np.tanh(tau) / np.cos(phi)), np.arccos(np.cosh(tau) * np.sin(phi))
+
+
+def _ab_metrics(system, view):
+    """The moments of BI's neck, tau of the de Sitter slicing from the neck r = b out to the
+    embedding's reach. On the planes of tau and r of the de Sitter slicing and of the static chart,
+    whose plane theta = pi/2 is phi = 0 with the same time, a line of constant time; through the
+    neck the same line on both sheets, rho = +-sqrt(1 - b/r); on the de Sitter space at r = 2b, which
+    every moment drawn reaches, the whole circle of phi; on the static surface at r = 2b the curve
+    ab_static, which runs off to the horizons theta = 0 and pi; and on the inertial plane the two
+    rays T = X tanh(tau), from r = b outward."""
+    out = []
+    for m in moments("ab_metrics", "neck"):
+        lo, hi = m.reach("b1_cone", "r")
+        tau = m.time
+        if (system, view) in (("b1_cone", "radial"), ("b1_static", "radial")):
+            lines = along(tau, lo, hi)
+        elif system == "b1_neck":
+            lines = along(tau, -math.sqrt(1 - 1 / hi), math.sqrt(1 - 1 / hi))
+        elif (system, view) == ("b1_cone", "de_sitter"):
+            if not lo <= 2.0 <= hi:
+                raise ValueError("the circle r = 2b lies outside the embedding")
+            lines = [[(tau, 0.0), (tau, 2 * math.pi)]]
+        elif (system, view) == ("b1_static", "surface"):
+            if not lo <= 2.0 <= hi:
+                raise ValueError("the circle r = 2b lies outside the embedding")
+            edge = math.asin(1 / math.cosh(tau))
+            phi = edge * np.tanh(np.linspace(-12, 12, N))
+            phi = phi[np.cosh(tau) * np.abs(np.sin(phi)) < 1 - 1e-12]
+            lines = [np.column_stack(ab_static(tau, phi))]
+        elif system == "b1_cartesian":
+            r = np.array([lo, hi])
+            lines = [np.column_stack([r * math.sinh(tau), sign * r * math.cosh(tau)]) for sign in (1, -1)]
+        else:
+            raise KeyError((system, view))
+        out.append(Mark(m, lines))
+    return out
+
+
 def nhek_radius(y):
     """Bardeen and Horowitz's Poincare radius, in r_0, of the event at y on the moment tau = 0 of
     their global chart, where t = 0 too: r = sqrt(1 + y^2) + y."""
@@ -2404,6 +2447,12 @@ FLAT = {
     ("plebanski_hacyan", "sphere_rindler", "wedge"): lambda: _plebanski_hacyan("sphere_rindler"),
     ("plebanski_hacyan", "anti_nariai", "wedge"): lambda: _plebanski_hacyan("anti_nariai"),
     ("plebanski_hacyan", "anti_nariai_static", "radial"): lambda: _plebanski_hacyan("anti_nariai_static"),
+    ("ab_metrics", "b1_static", "radial"): lambda: _ab_metrics("b1_static", "radial"),
+    ("ab_metrics", "b1_static", "surface"): lambda: _ab_metrics("b1_static", "surface"),
+    ("ab_metrics", "b1_cone", "radial"): lambda: _ab_metrics("b1_cone", "radial"),
+    ("ab_metrics", "b1_cone", "de_sitter"): lambda: _ab_metrics("b1_cone", "de_sitter"),
+    ("ab_metrics", "b1_neck", "through"): lambda: _ab_metrics("b1_neck", "through"),
+    ("ab_metrics", "b1_cartesian", "TX"): lambda: _ab_metrics("b1_cartesian", "TX"),
     ("nariai", "static", "patch"): lambda: _nariai("static"),
     ("nariai", "global", "circle"): lambda: _nariai("global"),
     ("interior_schwarzschild", "spherical", "radial"): lambda: one("interior_schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
@@ -2765,6 +2814,20 @@ HIDDEN = {
     ("plebanski_hacyan", "plane"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_null"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_static"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("ab_metrics", "a2_static", "radial"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_cone", "beyond"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_kruskal", "kruskal"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_cartesian", "TX"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a3", "radial"): "A III, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "b2_static", "radial"): "B II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "b2_static", "wedge"): "B II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "b2_neck", "through"): "B II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "b2_neck", "ads"): "B II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "b3", "radial"): "B III, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_static"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_cone"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_kruskal"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
+    ("ab_metrics", "a2_cartesian"): "A II, another of Ehlers and Kundt's spacetimes than the B I whose neck is embedded",
     ("nordstrom_scalar", "conformal", "tx"): "a plane wave of the theory, another spacetime than the point mass and the dust universe whose moments are embedded",
     ("nordstrom_scalar", "conformal"): "a plane wave of the theory, another spacetime than the point mass and the dust universe whose moments are embedded",
     ("nordstrom_scalar", "uniform", "tz"): "the uniform field, another spacetime than the point mass and the dust universe whose moments are embedded",
@@ -3407,6 +3470,33 @@ def checks():
     miss = max(abs(float(T_s.subs({tg: a, cg: b})) - float(nariai_static_t(a, float(R_s.subs({tg: a, cg: b})))))
                for a, b in pts)
     report("Nariai: nariai_static_t is the global moment in the static chart", miss, 1e-12)
+
+    # Ehlers and Kundt's BI: tanh(tau_s) = tanh(tau)/cos(phi) and cos(theta) = cosh(tau) sin(phi)
+    # carry the de Sitter slicing into the static chart, pulling the static metric back onto it,
+    # and T = r sinh(tau), X = r cosh(tau) cos(phi), Y = r cosh(tau) sin(phi) carry it into the
+    # inertial chart; ab_static is the first map.
+    g_s, (ts, rs, ths, zs) = metric("ab_metrics", "b1_static", {"b": 1})
+    g_c, (tc, rc, pc, zc) = metric("ab_metrics", "b1_cone", {"b": 1})
+    image = [sp.atanh(sp.tanh(tc) / sp.cos(pc)), rc, sp.acos(sp.cosh(tc) * sp.sin(pc)), zc]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (tc, rc, pc, zc)[j]))
+    pulled = J.T * g_s.subs(dict(zip((ts, rs, ths, zs), image)), simultaneous=True) * J
+    pts = [(a, b, c) for a, b, c in zip(rng.uniform(-0.8, 0.8, 30), rng.uniform(1.2, 4, 30), rng.uniform(-0.6, 0.6, 30))
+           if math.cosh(a) * abs(math.sin(c)) < 0.95]
+    miss = max(abs(complex((pulled - g_c).subs({tc: a, rc: b, pc: c})[i, j])) for a, b, c in pts
+               for i in range(4) for j in range(4))
+    report("A- and B-metrics: Ehlers and Kundt's map pulls the static chart of BI back onto the de Sitter slicing",
+           miss, 1e-10)
+    miss = max(max(abs(float(image[0].subs({tc: a, pc: c})) - float(ab_static(a, c)[0])),
+                   abs(float(image[2].subs({tc: a, pc: c})) - float(ab_static(a, c)[1]))) for a, _, c in pts)
+    report("A- and B-metrics: ab_static is that map on a surface of constant r and z", miss, 1e-12)
+    g_i, (Ti, Xi, Yi, Zi) = metric("ab_metrics", "b1_cartesian", {"b": 1})
+    image = [rc * sp.sinh(tc), rc * sp.cosh(tc) * sp.cos(pc), rc * sp.cosh(tc) * sp.sin(pc), zc]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (tc, rc, pc, zc)[j]))
+    pulled = J.T * g_i.subs(dict(zip((Ti, Xi, Yi, Zi), image)), simultaneous=True) * J
+    miss = max(abs(complex(sp.N((pulled - g_c).subs({tc: a, rc: b, pc: c})[i, j]))) for a, b, c in pts
+               for i in range(4) for j in range(4))
+    report("A- and B-metrics: T = r sinh(tau), X = r cosh(tau) cos(phi), Y = r cosh(tau) sin(phi) pulls the "
+           "inertial chart of BI back onto the de Sitter slicing", miss, 1e-9)
 
     # McVittie: R = ar(1 + 1/(4ar))^2 and the same t carry the isotropic plane onto the areal one,
     # with H = (da/dt)/a and sqrt(1 - 1/R) = (4ar - 1)/(4ar + 1) outside the throat, at the scale

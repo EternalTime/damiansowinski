@@ -768,6 +768,17 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `null/unit` and `null/near`: each plane meets each moment in one event behind or on the front, $V = ct_k/\sqrt2$ and $U = (\rho^2 - 1)ct_k/\sqrt2$: four points.
 - The conformal views of the retarded chart and of either side: each moment through Minkowski's map behind the front and the string's frame's ahead of it, met on the front; the null chart's view: four points on the front.
 
+### The A- and B-metrics
+
+- The embedding is five moments of B I's neck, $\tau = -0.8$, $-0.4$, $0$, $0.4$ and $0.8$ of the de Sitter slicing at $z = 0$, each from the neck $r = b$ out to the circle of radius $6\,b$ or to $r = b\cosh^2\tau/\sinh^2\tau$, where the surface lies level.
+- `b1_cone/radial` and `b1_static/radial`: level lines from $r = b$ to the reach; the static chart's plane $\theta = \pi/2$ is $\phi = 0$ with the same time.
+- `b1_neck/through`: the same line on both sheets, $\rho = \pm\sqrt{1 - b/r}$.
+- `b1_cone/de_sitter`, at $r = 2\,b$, which every moment reaches: the whole circle of $\phi$.
+- `b1_static/surface`, at $r = 2\,b$: the curve $\tanh\tau_s = \tanh\tau/\cos\phi$, $\cos\theta = \cosh\tau\sin\phi$, which runs off to the horizons $\theta = 0$ and $\pi$; `slices.ab_static`.
+- `b1_cartesian/TX`: the two rays $T = X\tanh\tau$, from $r = b$ outward.
+- The four conformal views of B I: level lines of $\tau$ across both sheets.
+- A II, A III, B II and B III are other spacetimes of the same page, and no drawing of theirs marks a moment.
+
 ### Vaidya
 
 - The embedding is four moments of constant $v - r$ in the ingoing chart, $-3$, $-1.5$, $-0.5$ and $1\,r_s$, since a moment of constant $v$ is a light cone; each runs from $r = 0$ to $4\,r_s$, flat inside the shell, which falls along $v = 0$ and so crosses the moment at $r = -(v - r)$, and Flamm's paraboloid moved in by $r_s$ outside it.
@@ -837,6 +848,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Israel's shell | level lines inside the shell and against $v - r$, curves in Schwarzschild's chart | none | four curves |
 | The charged shell | level lines inside the shell, against $v - r$ and in the isotropic chart; curves in the static chart and against $u + r$ | none | four curves, and a level line for the shell at rest |
 | Penrose's impulsive wave | level lines either side of the front, a bent line on the retarded equator, points on the null planes; none on the plane $30°$ from the string | none | four curves, four points on the null plane |
+| The A- and B-metrics | five level lines on four views of B I, five curves on its static surface, ten rays on its inertial plane | none | five level lines, four times |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
 
 As drawn in 4de26cc, the Krasnikov tube's slice is a line, Reissner-Nordström's are two lines, and Vaidya's ingoing view carries all four lines.

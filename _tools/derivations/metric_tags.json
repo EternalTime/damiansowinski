@@ -1,4 +1,280 @@
 {
+ "ab_metrics/a2_cartesian": {
+  "stamp": "3eb583e685ec5064",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "Z",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/a2_cone": {
+  "stamp": "88645e5d1f911c62",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/a2_kruskal": {
+  "stamp": "15d778bdad94a0bf",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/a2_static": {
+  "stamp": "c526e83eceb45faa",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/a3": {
+  "stamp": "a281e712062fee9d",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/b1_cartesian": {
+  "stamp": "a3fa9d52d463321d",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "Z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/b1_cone": {
+  "stamp": "4e537a9687b6e62f",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/b1_neck": {
+  "stamp": "753a4f467cc89950",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/b1_static": {
+  "stamp": "cfdfe0f4e15d0f16",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\tau",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/b2_neck": {
+  "stamp": "e6801a45f17bc9c9",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\tau",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/b2_static": {
+  "stamp": "4d6764c5366d8b43",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\tau",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ab_metrics/b3": {
+  "stamp": "28f04ebd6f893ce9",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\tau",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "ads_soliton/five_dimensional": {
   "stamp": "c1ffbc06a841acbc",
   "relations": {},

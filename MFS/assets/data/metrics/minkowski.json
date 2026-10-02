@@ -228,6 +228,11 @@
       "id": "brill_waves",
       "kind": "family",
       "text": "One moment of a spacetime that is flat space with a gravitational wave on it and nothing else. Brill proved in 1959 that the wave's mass is positive and vanishes only when the slice is a moment of Minkowski's spacetime [brill1959]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a tachyon in it. At $b = 0$ A II and B I are the inside and the outside of the cone $T^2 = X^2 + Y^2$ about a spacelike line of Minkowski space [hruska2019]."
     }
   ],
   "references": [
@@ -298,7 +303,8 @@
     "einstein1914fokker",
     "delacruz1967",
     "podolsky2000snapping",
-    "brill1959"
+    "brill1959",
+    "hruska2019"
   ],
   "coordinates": [
     {

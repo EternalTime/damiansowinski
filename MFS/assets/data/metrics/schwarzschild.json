@@ -383,6 +383,11 @@
       "id": "brill_waves",
       "kind": "family",
       "text": "One moment of a spacetime with gravitational waves in it and no matter. Far away its slice is Schwarzschild's with a positive mass, and a strong enough wave collapses to a black hole [brill1959, alcubierre2000collapse]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "family",
+      "text": "Schwarzschild's field is A I in Ehlers and Kundt's table of the static vacuum fields of type D. The others have a hyperbolic or a flat plane where the sphere is, or have the time and the angle exchanged [hruska2019, martins1996]."
     }
   ],
   "references": [
@@ -489,7 +494,9 @@
     "friedman1993",
     "doroshkevich1965",
     "brill1959",
-    "alcubierre2000collapse"
+    "alcubierre2000collapse",
+    "hruska2019",
+    "martins1996"
   ],
   "coordinates": [
     {

@@ -4,8 +4,880 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 139,
+  "count": 140,
   "spacetimes": [
+    {
+      "id": "ab_metrics",
+      "name": "The A- and B-Metrics of Ehlers and Kundt",
+      "short_name": "A- and B-Metrics",
+      "description": "The static vacuum fields of algebraic type D beside Schwarzschild's, which Tullio Levi-Civita constructed and Jürgen Ehlers and Wolfgang Kundt named in 1962: the A-metrics have a hyperbolic or a flat plane where Schwarzschild's field has a sphere, and the B-metrics exchange the time with an angle. Two of them, A II and B I, are the field of a tachyon, Schwarzschild's mass boosted past the speed of light, with a cone of unbounded curvature between them.",
+      "tags": [
+        "vacuum",
+        "static",
+        "stationary",
+        "Petrov type D",
+        "tachyon",
+        "Cherenkov cone",
+        "shock wave",
+        "hyperbolic symmetry",
+        "plane symmetric",
+        "Killing horizon",
+        "horizon",
+        "curvature singularity",
+        "Kruskal extension",
+        "maximal extension",
+        "wormhole",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The constant $b$ is a length. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "A I, the first of the family. B I is Schwarzschild's metric with the time and the angle exchanged [martins1996], and A II and B I together are Schwarzschild's field boosted past the speed of light [hruska2019]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "At $b = 0$ A II and B I are flat, the inside and the outside of the cone $T^2 = X^2 + Y^2$ in Minkowski space. A III, B II, and B III have no flat member."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "Class C of Ehlers and Kundt's table, the static vacuum fields of type D that admit no isotropy group [ehlerskundt1962, bicak2009]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "generalisation",
+          "text": "Levi-Civita's field of a line of mass holds two of the family. B III is the cylinder at $\\sigma = 1/4$ [podolsky2018], and A III, Taub's plane symmetric vacuum, is the cylinder at $\\sigma = -1/2$ [martins1996, wang1997]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "generalisation",
+          "text": "A II and A III with a negative cosmological constant added, the black holes with hyperbolic and flat horizons [hruska2019]. As $L \\to \\infty$ the hyperbolic hole with $\\mu = -b$ is A II."
+        },
+        {
+          "id": "kasner",
+          "kind": "dual",
+          "text": "A III with $b$ made negative, so that its radius is a time, is Kasner's universe with exponents $(-\\tfrac{1}{3}, \\tfrac{2}{3}, \\tfrac{2}{3})$."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "family",
+          "text": "Schwarzschild's mass boosted to the speed of light exactly. As the tachyon slows to $c$ its two cones close into one plane of shock moving with it [hruska2019]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "The continued B I joins two asymptotically flat regions through a neck at $r = b$, as Einstein and Rosen's bridge joins two through Schwarzschild's horizon [hruska2019]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "family",
+          "text": "Schwarzschild's A I with the NUT parameter $l$ added. The B-metrics take a parameter of the same kind, which removes their singularity as $l$ removes Schwarzschild's, and Jerzy Plebański called that family the anti-NUT solution [podolsky2018]."
+        }
+      ],
+      "references": [
+        "schwarzschild1916",
+        "hruska2019",
+        "bicak2009",
+        "ehlerskundt1962",
+        "martins1996",
+        "kinnersley1970",
+        "weyl1917",
+        "taub1951",
+        "podolsky2018",
+        "wang1997",
+        "peres1970",
+        "schulman1971",
+        "gott1974",
+        "kruskal1960"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ab_metrics.json",
+      "charts": [
+        {
+          "id": "a2_static",
+          "name": "A II, Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\chi",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, b)",
+            "\\chi \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\chi, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. The surfaces of constant $t$ and $r$ are hyperbolic planes of curvature $-1/r^2$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{b}{r} - 1\\right)c^2dt^2 + \\dfrac{dr^2}{\\dfrac{b}{r} - 1} + r^2\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{b}{r} - 1\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(\\dfrac{b}{r} - 1\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sinh^2\\chi"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12b^2}{r^6}"
+        },
+        {
+          "id": "a2_cone",
+          "name": "A II, Inside the Cone",
+          "coordinates": [
+            "\\sigma",
+            "z",
+            "\\chi",
+            "\\phi"
+          ],
+          "domains": [
+            "\\sigma \\in (b, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            }
+          ],
+          "convention": "We use coordinates $(\\sigma, z, \\chi, \\phi)$, where the time $\\sigma$ is a length and continues the static chart's $r$ beyond the horizon $r = b$, and $z$ continues its $ct$.",
+          "line_element": "ds^2 = -\\dfrac{d\\sigma^2}{1 - \\dfrac{b}{\\sigma}} + \\left(1 - \\dfrac{b}{\\sigma}\\right)dz^2 + \\sigma^2\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "-\\left(1 - \\dfrac{b}{\\sigma}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1 - \\dfrac{b}{\\sigma}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\sigma^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\sigma^2\\sinh^2\\chi"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12b^2}{\\sigma^6}"
+        },
+        {
+          "id": "a2_kruskal",
+          "name": "A II, Kruskal",
+          "coordinates": [
+            "U",
+            "V",
+            "\\chi",
+            "\\phi"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "UV > -1 \\;\\text{(where } r > 0\\text{)}",
+            "UV = 0 \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            },
+            {
+              "symbol": "r = b\\left(1 + \\mathrm{W}\\left(e^{-1}UV\\right)\\right)",
+              "description": "Radius of the hyperbolic planes, a length, the solution of $\\left(r/b - 1\\right)e^{r/b} = UV$, with $\\mathrm{W}$ the principal branch of Lambert's function, $\\mathrm{W}(x)\\,e^{\\mathrm{W}(x)} = x$; its derivatives are $\\partial_U r = b^2\\,V e^{-r/b}/r$ and $\\partial_V r = b^2\\,U e^{-r/b}/r$"
+            }
+          ],
+          "convention": "We use coordinates $(U, V, \\chi, \\phi)$, with $U$ and $V$ null and dimensionless. Where $r < b$ they are $U = -\\sqrt{1 - r/b}\\,e^{(r - ct)/2b}$ and $V = \\sqrt{1 - r/b}\\,e^{(r + ct)/2b}$ in the static chart's $t$ and $r$, and the radius $r$ is a function of $UV$.",
+          "line_element": "ds^2 = -\\dfrac{4b^3}{r}e^{-r/b}\\,dU\\,dV + r^2\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{2b^3}{r}e^{-r/b}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{2b^3}{r}e^{-r/b}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sinh^2\\chi"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12b^2}{r^6}"
+        },
+        {
+          "id": "a2_cartesian",
+          "name": "A II, Inertial",
+          "coordinates": [
+            "T",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "X \\in (-\\infty, \\infty)",
+            "Y \\in (-\\infty, \\infty)",
+            "Z \\in (-\\infty, \\infty)",
+            "T^2 > X^2 + Y^2 \\;\\text{(inside the cone)}",
+            "\\sigma = b \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            },
+            {
+              "symbol": "\\sigma = \\sqrt{T^2 - X^2 - Y^2}",
+              "description": "Interval from the line $T = X = Y = 0$, a length, the time $\\sigma$ of the chart inside the cone"
+            }
+          ],
+          "convention": "We use the inertial coordinates $(T, X, Y, Z)$ of the flat spacetime at $b = 0$, all lengths, with $T$ the time multiplied by $c$. They are $T = \\sigma\\cosh\\chi$, $X = \\sigma\\sinh\\chi\\cos\\phi$, $Y = \\sigma\\sinh\\chi\\sin\\phi$, and $Z = z$ in the coordinates $(\\sigma, z, \\chi, \\phi)$ beyond the horizon.",
+          "line_element": "ds^2 = -dT^2 + dX^2 + dY^2 + dZ^2 - \\dfrac{b}{\\sigma}\\left(dZ^2 + \\dfrac{\\left(T\\,dT - X\\,dX - Y\\,dY\\right)^2}{\\sigma\\left(\\sigma - b\\right)}\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{\\sigma^3 + b\\,X^2 + b\\,Y^2}{\\sigma^2\\left(\\sigma - b\\right)}"
+            },
+            {
+              "indices": [
+                "T",
+                "X"
+              ],
+              "value": "\\dfrac{b\\,T\\,X}{\\sigma^2\\left(\\sigma - b\\right)}"
+            },
+            {
+              "indices": [
+                "X",
+                "T"
+              ],
+              "value": "\\dfrac{b\\,T\\,X}{\\sigma^2\\left(\\sigma - b\\right)}"
+            },
+            {
+              "indices": [
+                "T",
+                "Y"
+              ],
+              "value": "\\dfrac{b\\,T\\,Y}{\\sigma^2\\left(\\sigma - b\\right)}"
+            },
+            {
+              "indices": [
+                "Y",
+                "T"
+              ],
+              "value": "\\dfrac{b\\,T\\,Y}{\\sigma^2\\left(\\sigma - b\\right)}"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "\\dfrac{\\sigma^3 - \\sigma^2\\,b - b\\,X^2}{\\sigma^2\\left(\\sigma - b\\right)}"
+            },
+            {
+              "indices": [
+                "X",
+                "Y"
+              ],
+              "value": "-\\dfrac{b\\,X\\,Y}{\\sigma^2\\left(\\sigma - b\\right)}"
+            },
+            {
+              "indices": [
+                "Y",
+                "X"
+              ],
+              "value": "-\\dfrac{b\\,X\\,Y}{\\sigma^2\\left(\\sigma - b\\right)}"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "\\dfrac{\\sigma^3 - \\sigma^2\\,b - b\\,Y^2}{\\sigma^2\\left(\\sigma - b\\right)}"
+            },
+            {
+              "indices": [
+                "Z",
+                "Z"
+              ],
+              "value": "\\dfrac{\\sigma - b}{\\sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12b^2}{\\sigma^6}"
+        },
+        {
+          "id": "b1_static",
+          "name": "B I, Static",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in (b, \\infty)",
+            "\\theta \\in (0, \\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, r, \\theta, z)$, with the time $\\tau$ dimensionless and $z$ a length.",
+          "line_element": "ds^2 = r^2\\left(-\\sin^2\\theta\\,d\\tau^2 + d\\theta^2\\right) + \\dfrac{dr^2}{1 - \\dfrac{b}{r}} + \\left(1 - \\dfrac{b}{r}\\right)dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-r^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{b}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1 - \\dfrac{b}{r}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12b^2}{r^6}"
+        },
+        {
+          "id": "b1_cone",
+          "name": "B I, Outside the Cone",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in (b, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, r, \\phi, z)$, with the time $\\tau$ dimensionless and $z$ a length. The surfaces of constant $r$ and $z$ are de Sitter spaces of two dimensions and radius $r$.",
+          "line_element": "ds^2 = r^2\\left(-d\\tau^2 + \\cosh^2\\tau\\,d\\phi^2\\right) + \\dfrac{dr^2}{1 - \\dfrac{b}{r}} + \\left(1 - \\dfrac{b}{r}\\right)dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-r^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{b}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\cosh^2\\tau"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1 - \\dfrac{b}{r}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12b^2}{r^6}"
+        },
+        {
+          "id": "b1_neck",
+          "name": "B I, Through the Neck",
+          "coordinates": [
+            "\\tau",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\rho \\in (-1, 1)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "\\rho = 0 \\;\\text{(the neck)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\rho, \\phi, z)$, with $\\tau$ and $\\rho$ dimensionless and $z$ a length. The radius is $r = b/(1 - \\rho^2)$, so each sign of $\\rho$ covers $r > b$ once.",
+          "line_element": "ds^2 = \\dfrac{b^2}{\\left(1 - \\rho^2\\right)^2}\\left(-d\\tau^2 + \\cosh^2\\tau\\,d\\phi^2\\right) + \\dfrac{4b^2\\,d\\rho^2}{\\left(1 - \\rho^2\\right)^4} + \\rho^2dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{b^2}{\\left(\\rho^2 - 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{4b^2}{\\left(\\rho^2 - 1\\right)^4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{b^2\\cosh^2\\tau}{\\left(\\rho^2 - 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12\\left(1 - \\rho^2\\right)^6}{b^4}"
+        },
+        {
+          "id": "b1_cartesian",
+          "name": "B I, Inertial",
+          "coordinates": [
+            "T",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "X \\in (-\\infty, \\infty)",
+            "Y \\in (-\\infty, \\infty)",
+            "Z \\in (-\\infty, \\infty)",
+            "X^2 + Y^2 > T^2 + b^2 \\;\\text{(outside the cone, } r > b\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            },
+            {
+              "symbol": "r = \\sqrt{X^2 + Y^2 - T^2}",
+              "description": "Interval from the line $T = X = Y = 0$, a length, the radius $r$ of the chart outside the cone"
+            }
+          ],
+          "convention": "We use the inertial coordinates $(T, X, Y, Z)$ of the flat spacetime at $b = 0$, all lengths, with $T$ the time multiplied by $c$. They are $T = r\\sinh\\tau$, $X = r\\cosh\\tau\\cos\\phi$, $Y = r\\cosh\\tau\\sin\\phi$, and $Z = z$ in the coordinates $(\\tau, r, \\phi, z)$ of the de Sitter slicing.",
+          "line_element": "ds^2 = -dT^2 + dX^2 + dY^2 + dZ^2 - \\dfrac{b}{r}\\left(dZ^2 - \\dfrac{\\left(T\\,dT - X\\,dX - Y\\,dY\\right)^2}{r\\left(r - b\\right)}\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{r^3 - b\\,X^2 - b\\,Y^2}{r^2\\left(r - b\\right)}"
+            },
+            {
+              "indices": [
+                "T",
+                "X"
+              ],
+              "value": "-\\dfrac{b\\,T\\,X}{r^2\\left(r - b\\right)}"
+            },
+            {
+              "indices": [
+                "X",
+                "T"
+              ],
+              "value": "-\\dfrac{b\\,T\\,X}{r^2\\left(r - b\\right)}"
+            },
+            {
+              "indices": [
+                "T",
+                "Y"
+              ],
+              "value": "-\\dfrac{b\\,T\\,Y}{r^2\\left(r - b\\right)}"
+            },
+            {
+              "indices": [
+                "Y",
+                "T"
+              ],
+              "value": "-\\dfrac{b\\,T\\,Y}{r^2\\left(r - b\\right)}"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "\\dfrac{r^3 - r^2\\,b + b\\,X^2}{r^2\\left(r - b\\right)}"
+            },
+            {
+              "indices": [
+                "X",
+                "Y"
+              ],
+              "value": "\\dfrac{b\\,X\\,Y}{r^2\\left(r - b\\right)}"
+            },
+            {
+              "indices": [
+                "Y",
+                "X"
+              ],
+              "value": "\\dfrac{b\\,X\\,Y}{r^2\\left(r - b\\right)}"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "\\dfrac{r^3 - r^2\\,b + b\\,Y^2}{r^2\\left(r - b\\right)}"
+            },
+            {
+              "indices": [
+                "Z",
+                "Z"
+              ],
+              "value": "\\dfrac{r - b}{r}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12b^2}{r^6}"
+        },
+        {
+          "id": "a3",
+          "name": "A III",
+          "coordinates": [
+            "t",
+            "r",
+            "\\chi",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\chi, \\phi)$, with $t$ carrying dimensions of time and $\\chi$ dimensionless, and take components in the chart $x^0 = ct$. The surfaces of constant $t$ and $r$ are flat planes with polar coordinates $r\\chi$ and $\\phi$.",
+          "line_element": "ds^2 = -\\dfrac{b}{r}c^2dt^2 + \\dfrac{r}{b}dr^2 + r^2\\left(d\\chi^2 + \\chi^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{b}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r}{b}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,\\chi^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12b^2}{r^6}"
+        },
+        {
+          "id": "b2_static",
+          "name": "B II, Static",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\chi",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in (0, b)",
+            "\\chi \\in (0, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, r, \\chi, z)$, with the time $\\tau$ dimensionless and $z$ a length. The surfaces of constant $r$ and $z$ are anti-de Sitter spaces of two dimensions and radius $r$.",
+          "line_element": "ds^2 = r^2\\left(-\\sinh^2\\chi\\,d\\tau^2 + d\\chi^2\\right) + \\dfrac{dr^2}{\\dfrac{b}{r} - 1} + \\left(\\dfrac{b}{r} - 1\\right)dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-r^2\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(\\dfrac{b}{r} - 1\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{b}{r} - 1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12b^2}{r^6}"
+        },
+        {
+          "id": "b2_neck",
+          "name": "B II, Through the Axis",
+          "coordinates": [
+            "\\tau",
+            "\\rho",
+            "\\chi",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\rho \\in (-\\infty, \\infty)",
+            "\\chi \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\rho = 0 \\;\\text{(the axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\rho, \\chi, z)$, with $\\tau$, $\\rho$, and $\\chi$ dimensionless and $z$ a length. The radius is $r = b/(1 + \\rho^2)$, and $\\tau$ and $\\chi$ are the static coordinates of anti-de Sitter space of two dimensions.",
+          "line_element": "ds^2 = \\dfrac{b^2}{\\left(1 + \\rho^2\\right)^2}\\left(-\\cosh^2\\chi\\,d\\tau^2 + d\\chi^2\\right) + \\dfrac{4b^2\\,d\\rho^2}{\\left(1 + \\rho^2\\right)^4} + \\rho^2dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{b^2\\cosh^2\\chi}{\\left(\\rho^2 + 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{4b^2}{\\left(\\rho^2 + 1\\right)^4}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{b^2}{\\left(\\rho^2 + 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12\\left(1 + \\rho^2\\right)^6}{b^4}"
+        },
+        {
+          "id": "b3",
+          "name": "B III",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "x",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Ehlers and Kundt's constant, a length; in the A I metric it is the Schwarzschild radius $2GM/c^2$ of a mass $M$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, r, x, z)$, with $\\tau$ and $x$ dimensionless and $z$ a length.",
+          "line_element": "ds^2 = r^2\\left(-d\\tau^2 + dx^2\\right) + \\dfrac{r}{b}dr^2 + \\dfrac{b}{r}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-r^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r}{b}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{b}{r}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12b^2}{r^6}"
+        }
+      ]
+    },
     {
       "id": "aichelburg_sexl",
       "name": "Aichelburg-Sexl Ultraboost",
@@ -86,6 +958,11 @@
           "id": "penrose_impulsive_wave",
           "kind": "family",
           "text": "The same cut and paste done along a light cone, which makes an impulsive wave on a sphere that expands [penrose1972impulsive, podolsky1999expanding]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "family",
+          "text": "The same mass boosted past the speed of light. The field of that tachyon is two of Ehlers and Kundt's metrics, A II inside a cone of shock and B I outside it [hruska2019]."
         }
       ],
       "references": [
@@ -115,7 +992,8 @@
         "khan1971",
         "podolsky1998impulsive",
         "horowitz2012",
-        "podolsky1999nonexpanding"
+        "podolsky1999nonexpanding",
+        "hruska2019"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/aichelburg_sexl.json",
@@ -6787,6 +7665,11 @@
           "id": "plebanski_hacyan",
           "kind": "family",
           "text": "The anti-Nariai universe has a C-metric of its own. Óscar Dias and José Lemos found it in 2003 as a limit toward a degenerate horizon of the accelerating black holes with a negative cosmological constant [dias2003]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "family",
+          "text": "Classes A and B of the table Ehlers and Kundt put the C-metric in. Their fields admit an isotropy group, and the fields of class C admit none [ehlerskundt1962, bicak2009]."
         }
       ],
       "references": [
@@ -6815,7 +7698,8 @@
         "podolsky2008",
         "kamran2009",
         "emparan2000",
-        "dias2003"
+        "dias2003",
+        "bicak2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -10923,6 +11807,11 @@
           "id": "rp3_geon",
           "kind": "locally_same",
           "text": "The bridge folded in half. Misner and Wheeler made each point of one sheet the same as the opposite point of the other, which leaves one sheet and a bridge that leads back into it [misner1957]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "family",
+          "text": "B I continued through $r = b$ is a bridge of the same kind, two asymptotically flat regions joined at a neck [hruska2019]."
         }
       ],
       "references": [
@@ -10948,7 +11837,8 @@
         "marolf2009",
         "clifton2012",
         "hoffmann1935",
-        "tahvildarzadeh2011"
+        "tahvildarzadeh2011",
+        "hruska2019"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -18745,6 +19635,11 @@
           "id": "petrov_homogeneous",
           "kind": "family",
           "text": "A vacuum that is the same at every time as well as at every place. Joan Josep Ferrando and Juan Antonio Sáez found it in one family with Kasner's, the vacuums of Petrov's type I with a symmetry aligned to the curvature [ferrando2006]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "dual",
+          "text": "Kasner's universe with exponents $(-\\tfrac{1}{3}, \\tfrac{2}{3}, \\tfrac{2}{3})$ and a radius in the place of its time is A III of Ehlers and Kundt's table, which is Abraham Taub's plane symmetric vacuum [martins1996]."
         }
       ],
       "references": [
@@ -18764,7 +19659,8 @@
         "geroch1969",
         "kasner1925",
         "belinskii1978",
-        "ferrando2006"
+        "ferrando2006",
+        "martins1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -22980,6 +23876,11 @@
           "id": "light_beam",
           "kind": "family",
           "text": "A beam of light in the place of the line of matter. Its field travels with the light and is twice that of a rod with the same energy per unit length [bonnor1969light]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "special_case",
+          "text": "Two of Ehlers and Kundt's static vacuum fields of type D are Levi-Civita's cylinder at one value of $\\sigma$ each: B III at $\\sigma = 1/4$ [podolsky2018], and A III, Taub's plane symmetric vacuum, at $\\sigma = -1/2$ [martins1996, wang1997]."
         }
       ],
       "references": [
@@ -23012,7 +23913,9 @@
         "levicivita1917",
         "bertotti1959",
         "bonnor1980",
-        "bonnor1969light"
+        "bonnor1969light",
+        "podolsky2018",
+        "martins1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json",
@@ -26363,6 +27266,11 @@
           "id": "brill_waves",
           "kind": "family",
           "text": "One moment of a spacetime that is flat space with a gravitational wave on it and nothing else. Brill proved in 1959 that the wave's mass is positive and vanishes only when the slice is a moment of Minkowski's spacetime [brill1959]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "generalisation",
+          "text": "Flat spacetime with a tachyon in it. At $b = 0$ A II and B I are the inside and the outside of the cone $T^2 = X^2 + Y^2$ about a spacelike line of Minkowski space [hruska2019]."
         }
       ],
       "references": [
@@ -26433,7 +27341,8 @@
         "einstein1914fokker",
         "delacruz1967",
         "podolsky2000snapping",
-        "brill1959"
+        "brill1959",
+        "hruska2019"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -36795,6 +37704,11 @@
           "id": "brill_waves",
           "kind": "family",
           "text": "One moment of a spacetime with gravitational waves in it and no matter. Far away its slice is Schwarzschild's with a positive mass, and a strong enough wave collapses to a black hole [brill1959, alcubierre2000collapse]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "family",
+          "text": "Schwarzschild's field is A I in Ehlers and Kundt's table of the static vacuum fields of type D. The others have a hyperbolic or a flat plane where the sphere is, or have the time and the angle exchanged [hruska2019, martins1996]."
         }
       ],
       "references": [
@@ -36901,7 +37815,9 @@
         "friedman1993",
         "doroshkevich1965",
         "brill1959",
-        "alcubierre2000collapse"
+        "alcubierre2000collapse",
+        "hruska2019",
+        "martins1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -41118,6 +42034,11 @@
           "id": "eguchi_hanson",
           "kind": "limit",
           "text": "Continue Taub-NUT to Euclidean signature, where its NUT parameter is a length $L$, set $m = L(1 + a^4/8L^4)$, and let $L \\to \\infty$ with $r^2 - L^2$ held fixed. The limit is Eguchi and Hanson's gravitational instanton, a space of four dimensions with no time and with Taub-NUT's isometry group $U(2)$ [eguchihanson1979, gibbonshawking1979]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "family",
+          "text": "Taub-NUT is A I, Schwarzschild's metric, with the NUT parameter added. The B-metrics take a parameter of the same kind, and Jerzy Plebański called that family the anti-NUT solution [podolsky2018]."
         }
       ],
       "references": [
@@ -41143,7 +42064,8 @@
         "brill1964",
         "bini2003",
         "eguchihanson1979",
-        "gibbonshawking1979"
+        "gibbonshawking1979",
+        "podolsky2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
@@ -42429,6 +43351,11 @@
           "id": "plebanski_hacyan",
           "kind": "limit",
           "text": "The limit toward the horizon of the hyperbolic hole at its least mass, $\\mu = -2L/(3\\sqrt{3})$. It is anti-de Sitter space of two dimensions times a hyperbolic plane of radius $L/\\sqrt{3}$, the anti-Nariai universe [caldarelli2001extremal, cardoso2004]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "special_case",
+          "text": "The hyperbolic and the flat hole without the cosmological constant, $L \\to \\infty$, are A II and A III of Ehlers and Kundt's table, with $\\mu = -b$ [hruska2019]."
         }
       ],
       "references": [
@@ -42455,7 +43382,8 @@
         "cai2002",
         "horowitz1998",
         "caldarelli2001extremal",
-        "cardoso2004"
+        "cardoso2004",
+        "hruska2019"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",
