@@ -2831,6 +2831,8 @@ FLAT = {
     **{("erez_rosen", "prolate_spheroidal", f"equator_{shape}"): lambda shape=shape: one(
         "erez_rosen", lambda m: along(0.0, *(r - 1 for r in m.reach("spherical", "r"))), view_id=shape)
        for shape in ("prolate", "oblate")},
+    ("bowers_liang", "areal", "radial"): lambda: one("bowers_liang", lambda m: along(0.0, *m.reach("areal", "r"))),
+    ("bowers_liang", "areal", "through"): lambda: one("bowers_liang", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("tolman_vii", "spherical", "radial"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "spherical", "through"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "tolman", "radial"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),

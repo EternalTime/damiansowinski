@@ -433,6 +433,11 @@
       "id": "eih_many_bodies",
       "kind": "generalisation",
       "text": "Many bodies in slow motion. Close to each the field is Schwarzschild's far from its horizon, and between them it is known to the first order beyond Newton [will2014]."
+    },
+    {
+      "id": "bowers_liang",
+      "kind": "composite",
+      "text": "A star of uniform density with unequal pressures, and Schwarzschild's vacuum outside it. Given enough pressure across the radius, its surface can lie at any radius outside $r_s$ [bowers1974]."
     }
   ],
   "references": [
@@ -550,7 +555,8 @@
     "bransdicke1961",
     "agnese1995",
     "bondi1962",
-    "will2014"
+    "will2014",
+    "bowers1974"
   ],
   "coordinates": [
     {

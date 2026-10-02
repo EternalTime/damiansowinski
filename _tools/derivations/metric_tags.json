@@ -1855,6 +1855,33 @@
    "\\phi"
   ]
  },
+ "bowers_liang/areal": {
+  "stamp": "1f743aace5aec4ed",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "brans_dicke_sphere/harmonic": {
   "stamp": "399a7c6fd07c04f1",
   "relations": {},

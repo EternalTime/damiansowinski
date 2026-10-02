@@ -2343,6 +2343,55 @@ def tolman_vii(ck, src):
                  settings="$r_s = 1$, the unit of every length, and $R = 2\\,r_s$, so $\\beta = 1/4$.")]
 
 
+def bowers_liang(ck, src):
+    """Bowers and Liang's anisotropic star at Schwarzschild's limit, R = 9 r_s/8, with Q = 1/4,
+    as the spacetime diagrams and the conformal diagram draw it. The density is uniform, so
+    g_rr = 1/(1 - r^2 r_s/R^3) whatever Q is, and the slice is the cap of a sphere of radius
+    a = sqrt(R^3/r_s) that Schwarzschild's star has: z = a - sqrt(a^2 - r^2) from the centre.
+    The cap ends at the angle arcsin(r/a) = arcsin sqrt(r_s/R) from its pole, which is 70.5
+    degrees at R = 9 r_s/8, the widest a star of equal pressures holds up. Outside it is Flamm's
+    paraboloid from the schwarzschild entry, and at r = R both give g_rr = 1/(1 - r_s/R), so the
+    cap meets the paraboloid with one tangent. The vacuum paraboloid is drawn on under the cap,
+    down to the throat the star does not have."""
+    R, top = 1.125, 4.0
+    size = 2 * top
+    inner = Slice(src, "bowers_liang", "areal", "r", "\\phi", {"t": 0, **EQUATOR}, nr.BOWERS_LIANG_STAR)
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1})
+    vacuum = Piece("vacuum", "reference", outer, 1.0, R, 0.0, 1,
+                   (("throat", "the throat $r = r_s$ of the vacuum, which the star replaces"), ("join", None)),
+                   [(1.0, "reference", None)], size, reference=True)
+    zR = vacuum.at(R)[1]
+    ext = Piece("exterior", "sheet", outer, R, top, zR, 1,
+                (("join", "the surface of the star, $r = R$"), ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                [(R, "surface", "$r = R$")] + [(r, "r", None) for r in (2, 3)] + [(top, "r", None)], size)
+    star = Piece("star", "star", inner, 0.0, R, 0.0, 1,
+                 (("axis", "the centre $r = 0$, where the cap is smooth"), ("join", "the surface of the star, $r = R$")),
+                 [(r, "r", None) for r in (0.375, 0.75)], size)
+    # The cap is built from its centre and moved up to meet the exterior at R.
+    star.z = star.z + (zR - star.z[-1])
+    surface = Surface([star, ext, vacuum])
+    ck.isometry("Bowers-Liang, the star", star)
+    ck.isometry("Bowers-Liang, the exterior", ext)
+    ck.join("Bowers-Liang, the star meets the exterior at r = R", star, R, ext, R)
+    a = math.sqrt(R ** 3)
+    ck.form("Bowers-Liang, the cap z = a - sqrt(a^2 - r^2)", star,
+            lambda r: star.z[0] + a - np.sqrt(a * a - r * r), size)
+    ck.form("Bowers-Liang, the exterior is Flamm's", ext, lambda r: 2 * np.sqrt(r - 1), size)
+
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *ext.at(R), "$r = R$", dx=10)
+    ring_label(fig, [0, 0, 0], *ext.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *ext.at(top), "$4\\,r_s$")
+    fig.legend("fill", "star", "the star, $r \\le R$, a cap of a sphere of radius $\\sqrt{R^3/r_s}$")
+    fig.legend("fill", "cover", "the exterior, Flamm's paraboloid")
+    fig.legend("line", "r", "$r$ constant, at $0.375$ and $0.75\\,r_s$ inside and $2$, $3$ and $4\\,r_s$ outside")
+    fig.legend("line", "surface", "the surface of the star, $r = R$")
+    fig.legend("line", "reference", "the vacuum paraboloid inside $R$, down to its throat at $r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("star", "The star and its exterior", "$r_s$", [surface], fig.done(),
+                 settings="$r_s = 1$, the unit of every length, and $R = 9r_s/8$.")]
+
+
 def misner_zapolsky(ck, src):
     """Three moments. The areal chart's equator at t = 0: g_rr = 7/4 and g_phiphi = r^2, so
     dz/dr = sqrt(3)/2, a cone whose apex is the centre, where the density is infinite. A cone is
@@ -14904,6 +14953,7 @@ DRAWN = {
     "interior_schwarzschild": interior_schwarzschild,
     "gravastar": gravastar,
     "tolman_vii": tolman_vii,
+    "bowers_liang": bowers_liang,
     "misner_zapolsky": misner_zapolsky,
     "bonnor_charged_dust": bonnor_charged_dust,
     "tov": tov,
@@ -15276,6 +15326,17 @@ CAPTIONS = {
         "circle with one tangent plane, and the surface is smooth across the surface of the star. The "
         "vacuum paraboloid would run on down to a throat at $r_s$. The star, at $R = 1.5\\,r_s$, ends it "
         "above there, and its circles shrink to a point at the centre.",
+    ],
+    ("bowers_liang", "star"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the star at one moment of $t$ ($R = 9r_s/8$), drawn as a "
+        "surface in flat space with every distance along it the metric distance. The density is uniform, so "
+        "$g_{rr} = 1/(1 - r^2r_s/R^3)$ is the metric of a sphere of radius $\\sqrt{R^3/r_s}$ for every $Q$, and "
+        "the slice is the cap of that sphere that Schwarzschild's star has. The two pressures shape $g_{tt}$ "
+        "alone.",
+        "The cap ends $\\arcsin\\sqrt{r_s/R} = 70.5°$ from its pole, the widest cap a star of equal pressures "
+        "holds up, and meets Flamm's paraboloid in one circle with one tangent plane. For $Q < 1/2$ a wider "
+        "cap is in equilibrium, as far as $r_s/R = 1 - 3^{-1/Q}$, and as $Q \\to 0$ that limit is the equator of "
+        "the sphere, $R = r_s$.",
     ],
     ("gravastar", "gravastar"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a gravastar at one moment of $t$ ($R = 1.25\\,r_s$, "

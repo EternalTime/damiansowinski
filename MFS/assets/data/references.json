@@ -1,5 +1,5 @@
 {
-  "version": "f594bc637cbd9dfd",
+  "version": "bde4a788fd0fc5e3",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -27455,6 +27455,97 @@
         "eprint": "2302.05715",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2302.05715"
+      }
+    },
+    "bowers1974": {
+      "type": "article",
+      "fields": {
+        "title": "Anisotropic Spheres in General Relativity",
+        "author": "Bowers, Richard L. and Liang, E. P. T.",
+        "journal": "The Astrophysical Journal",
+        "volume": "188",
+        "pages": "657--665",
+        "year": "1974",
+        "doi": "10.1086/152760",
+        "url": "https://doi.org/10.1086/152760"
+      }
+    },
+    "bondi1964": {
+      "type": "article",
+      "fields": {
+        "title": "Massive spheres in general relativity",
+        "author": "Bondi, Hermann",
+        "journal": "Proceedings of the Royal Society of London. Series A. Mathematical and Physical Sciences",
+        "volume": "282",
+        "number": "1390",
+        "pages": "303--317",
+        "year": "1964",
+        "doi": "10.1098/rspa.1964.0234",
+        "url": "https://doi.org/10.1098/rspa.1964.0234"
+      }
+    },
+    "dev2003": {
+      "type": "article",
+      "fields": {
+        "title": "Anisotropic Stars {II}: Stability",
+        "author": "Dev, Krsna and Gleiser, Marcelo",
+        "journal": "General Relativity and Gravitation",
+        "volume": "35",
+        "number": "8",
+        "pages": "1435--1457",
+        "year": "2003",
+        "doi": "10.1023/A:1024534702166",
+        "eprint": "gr-qc/0303077",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/A:1024534702166"
+      }
+    },
+    "andreasson2008": {
+      "type": "article",
+      "fields": {
+        "title": "Sharp bounds on $2m/r$ of general spherically symmetric static objects",
+        "author": "Andr\\'easson, Håkan",
+        "journal": "Journal of Differential Equations",
+        "volume": "245",
+        "number": "8",
+        "pages": "2243--2266",
+        "year": "2008",
+        "doi": "10.1016/j.jde.2008.05.010",
+        "eprint": "gr-qc/0702137",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.jde.2008.05.010"
+      }
+    },
+    "yagi2015bald": {
+      "type": "article",
+      "fields": {
+        "title": "Relating follicly-challenged compact stars to bald black holes: A link between two no-hair properties",
+        "author": "Yagi, Kent and Yunes, Nicol\\'as",
+        "journal": "Physical Review D",
+        "volume": "91",
+        "number": "10",
+        "pages": "103003",
+        "year": "2015",
+        "doi": "10.1103/PhysRevD.91.103003",
+        "eprint": "1502.04131",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.91.103003"
+      }
+    },
+    "raposo2019": {
+      "type": "article",
+      "fields": {
+        "title": "Anisotropic stars as ultracompact objects in general relativity",
+        "author": "Raposo, Guilherme and Pani, Paolo and Bezares, Miguel and Palenzuela, Carlos and Cardoso, Vitor",
+        "journal": "Physical Review D",
+        "volume": "99",
+        "number": "10",
+        "pages": "104072",
+        "year": "2019",
+        "doi": "10.1103/PhysRevD.99.104072",
+        "eprint": "1811.07917",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.99.104072"
       }
     }
   }
