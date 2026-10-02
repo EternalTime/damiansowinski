@@ -901,6 +901,20 @@ def time_machine_ring(spec, camera=Camera(-62, 20), size=0.26):
 
 
 CAPTIONS = {
+    ("petrov_homogeneous", "petrov", "turning"): [
+        "The slice $z = 0$ of $t$, $r$, and $\\phi$ in Petrov's chart, $t$ up, with future light cones on the line "
+        "$t = 0$, $\\phi = 0$ at $r = 0$, $\\pm\\pi\\ell/2\\sqrt{3}$, and $\\pm\\pi\\ell/\\sqrt{3}$. Each cone has turned "
+        "through $\\sqrt{3}\\,r/2\\ell$ in the plane of $t$ and $\\phi$ from the upright one at $r = 0$, so the cones at "
+        "the two ends lie on their sides and open opposite ways. The cones also widen along $r$ as "
+        "$e^{r/2\\ell}$, since a step of $t$ or $\\phi$ is a longer distance at larger $r$.",
+        "The closed curve is timelike and future directed all the way round. From the event $A$ it runs toward "
+        "$+\\phi$ on the plane $r = \\pi\\ell/\\sqrt{3}$, where that is the future, losing $t$ as it goes, to the event "
+        "$B$. From there it crosses to $r = -\\pi\\ell/\\sqrt{3}$ on a spiral that follows the turning cones, to the "
+        "event $C$, runs toward $-\\phi$ to the event $D$, losing $t$ again, and crosses back to arrive at $A$ as it "
+        "leaves. A rocket on it moves at $0.8\\,c$ past the observers whose clocks run along the axes of the "
+        "cones, and every coordinate runs over "
+        "the whole real line.",
+    ],
     ("gott_time_machine", "centre_of_momentum", "loop"): [
         "The slice $z = 0$ of $t$, $x$, and $y$ in the centre of momentum frame, $t$ up, for two strings "
         "with $4G\\mu/c^2 = 1/3$, each removing a wedge of $120°$, moving at $v = 4c/5$ on the lines "
@@ -1201,6 +1215,10 @@ FIGURES = [
     # Kundt's simplest wave on the flat space it crosses: the fronts rolled round the null cone.
     Projection("kundt_waves", "kerr_schild", "fronts", "the wave fronts round their envelope",
                lambda spec: kundt_fronts(spec), nr.KUNDT, {"Y": "0"}),
+    # Petrov's homogeneous vacuum in units of its one length: the cones turning along r, and a
+    # closed timelike curve round them.
+    Projection("petrov_homogeneous", "petrov", "turning", "light cones turning along $r$",
+               lambda spec: petrov_loop(spec), nr.PETROV, {"z": "0"}),
     # Gott's closed timelike curve round both strings, at the values the flat views of Grant's
     # charts are drawn at: half deficit angle pi/3, v = 4c/5 and d = l/2.
     Projection("gott_time_machine", "centre_of_momentum", "loop", "a closed timelike curve round both strings",
@@ -1439,6 +1457,112 @@ def gott_loop(spec, x0=1.5, camera=Camera(-65, 24)):
     fig.legend("line", "axis", "from an event on one face to the same event on the other")
     fig.legend("line", "ctc", f"a closed timelike curve, at ${max(speeds):.2f}\\,c$")
     fig.legend("cone", "cone", "future light cone")
+    return fig.done(), sl
+
+
+def petrov_loop_events(kappa=1.25, beta=0.8):
+    """The closed timelike curve of Petrov's homogeneous vacuum that petrov_loop draws, at ell = 1:
+    its four corners as (t, r, phi), and a function giving each of its four stretches as points.
+
+    The light cones of the plane of t and phi turn through sqrt(3) r/2, so on the plane
+    r_1 = pi/sqrt(3) the future is +phi and on the plane -r_1 it is -phi. The curve runs along
+    +phi on the first from A to B, with dt = -beta dphi, crosses to the second from B to C, runs
+    along -phi from C to D with dt = beta dphi, and crosses back from D to A. A crossing moves in r
+    at unit rate while it moves along the cones' axis, cos(sqrt(3) r/2) d_t + sin(sqrt(3) r/2) d_phi,
+    at the rate kappa e^(-r/2), which makes its tangent's norm 1 - kappa^2. Written on
+    w = e^(2 pi i/3), d(t + i phi) = kappa e^(w r) |dr|, so t + i phi moves by Z(r) = kappa e^(w r)/w
+    along a logarithmic spiral, and by I = Z(r_1) - Z(-r_1) over a whole crossing, the same both
+    ways. With phi running from -A_1 to A_1 on the first plane and from A_3 to -A_3 on the second,
+    the curve closes when A_3 - A_1 = Im I and beta (A_1 + A_3) = Re I."""
+    r1 = np.pi / np.sqrt(3)
+    w = np.exp(2j * np.pi / 3)
+
+    def Z(r):
+        return kappa * np.exp(w * r) / w
+    whole = Z(r1) - Z(-r1)
+    A1 = (whole.real / beta - whole.imag) / 2
+    A3 = (whole.real / beta + whole.imag) / 2
+    A, B = np.array([beta * A1, r1, -A1]), np.array([-beta * A1, r1, A1])
+    C, D = np.array([beta * A3, -r1, A3]), np.array([-beta * A3, -r1, -A3])
+
+    def stretch(k, n=121):
+        u = np.linspace(0.0, 1.0, n)
+        if k == 0:
+            return A[None, :] + u[:, None] * (B - A)[None, :]
+        if k == 2:
+            return C[None, :] + u[:, None] * (D - C)[None, :]
+        r = r1 - 2 * r1 * u if k == 1 else -r1 + 2 * r1 * u
+        start = B if k == 1 else D
+        moved = (Z(r1) - Z(r)) if k == 1 else (Z(r) - Z(-r1))
+        return np.column_stack([start[0] + moved.real, r, start[2] + moved.imag])
+    return (A, B, C, D), stretch
+
+
+def petrov_loop(spec, kappa=1.25, beta=0.8, camera=Camera(-65, 24)):
+    """Petrov's homogeneous vacuum on the slice z = 0 of t, r and phi in Petrov's chart, drawn
+    cartesian with t up, r across and phi into the page: future light cones on the line
+    t = 0, phi = 0 at five values of r a quarter of a turn of the phase apart, from -pi/sqrt(3) to
+    pi/sqrt(3), each oriented by cos(sqrt(3) r/2) d_t + sin(sqrt(3) r/2) d_phi, which is checked
+    timelike of norm -e^r, and the closed timelike curve of petrov_loop_events round them.
+
+    Every step of the curve is checked timelike and future directed against the published metric,
+    its speed past the observers who move along the cones' axis is checked to be beta on the two
+    planes and 1/kappa on the crossings, and the curve is checked to close. No coordinate is
+    periodic, so the curve closes in the chart as drawn."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "cartesian", spec.params, spec.fixed)
+    r1 = np.pi / np.sqrt(3)
+
+    def arrow(r):
+        a = np.sqrt(3) * r / 2
+        return np.array([np.cos(a), 0.0, np.sin(a)])
+    for r in np.linspace(-r1, r1, 25):
+        v = arrow(r)
+        if not abs(v @ sl.metric((0.0, r, 0.0)) @ v + np.exp(r)) < 1e-12 * np.exp(abs(r)):
+            raise SystemExit(f"{key(spec)}: the cones' axis is not timelike of norm -e^r at r = {r}")
+    (A, B, C, D), stretch = petrov_loop_events(kappa, beta)
+    legs = [stretch(k) for k in range(4)]
+    ends = [(A, B), (B, C), (C, D), (D, A)]
+    speeds = []
+    for leg, (first, last) in zip(legs, ends):
+        if not (np.abs(leg[0] - first).max() < 1e-12 and np.abs(leg[-1] - last).max() < 1e-12):
+            raise SystemExit(f"{key(spec)}: the curve does not close")
+        for a_, b_ in zip(leg, leg[1:]):
+            k, mid = b_ - a_, (a_ + b_) / 2
+            g, v = sl.metric(tuple(mid)), arrow(mid[1])
+            if not (k @ g @ k < 0 and k @ g @ v < 0):
+                raise SystemExit(f"{key(spec)}: a step of the curve is not timelike and future directed")
+            gamma = -(k @ g @ v) / np.sqrt((k @ g @ k) * (v @ g @ v))
+            speeds.append(float(np.sqrt(1 - 1 / gamma ** 2)))
+    n = len(legs[0]) - 1
+    for k, wanted in enumerate((beta, 1 / kappa, beta, 1 / kappa)):
+        if not np.abs(np.array(speeds[k * n:(k + 1) * n]) - wanted).max() < 2e-4:
+            raise SystemExit(f"{key(spec)}: the curve's speed on stretch {k} is not {wanted:g} c")
+
+    draw = lambda e: sl.to_drawing((e[..., 0], e[..., 1], e[..., 2]))
+    fig = Figure(spec.view, spec.label, camera)
+    wide = float(abs(A[2])) * 1.05
+    cones_at = [-r1, -r1 / 2, 0.0, r1 / 2, r1]
+    fig.line("floor", np.array([[-r1, -wide, 0], [r1, -wide, 0], [r1, wide, 0], [-r1, wide, 0]]), closed=True)
+    for r in cones_at[1:-1]:
+        fig.line("floor", np.array([[r, -wide, 0], [r, wide, 0]]))
+    fig.line("axis", np.array([[-r1 - 0.5, 0, 0], [r1 + 0.5, 0, 0]]))
+    top = float(max(abs(A[0]), abs(B[0]))) * 1.1
+    fig.line("axis", np.array([[0, 0, -top], [0, 0, top]]))
+    for leg in legs:
+        fig.line("ctc", draw(leg))
+    cones = [future_cone(sl, (0.0, r, 0.0), 0.6, tuple(arrow(r))) for r in cones_at]
+    for apex, rim in sorted(cones, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    for e, text, anchor, dx, dy in ((A, "$A$", "r", -6, 0), (B, "$B$", "l", 6, 0), (C, "$C$", "l", 6, 0),
+                                    (D, "$D$", "r", -6, 0)):
+        fig.label(draw(e), text, anchor, dx=dx, dy=dy)
+    fig.label(np.array([0.0, 0.0, top]), "$t$", "b", dy=-4)
+    fig.label(np.array([r1 + 0.5, 0.0, 0.0]), "$r$", "l", dx=4)
+    fig.label(np.array([r1, wide, 0.0]), "$r = \\pi\\ell/\\sqrt{3}$", "tl", dx=4, dy=4)
+    fig.label(np.array([-r1, wide, 0.0]), "$-\\pi\\ell/\\sqrt{3}$", "tl", dx=4, dy=4)
+    fig.legend("cone", "cone", "future light cone on the line $t = 0$, $\\phi = 0$")
+    fig.legend("line", "ctc", f"a closed timelike curve, at ${max(speeds):.1f}\\,c$")
+    fig.legend("line", "floor", "the plane $t = 0$, with a line of constant $r$ under each cone")
     return fig.done(), sl
 
 

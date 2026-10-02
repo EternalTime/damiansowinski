@@ -67,6 +67,11 @@
       "id": "kundt_waves",
       "kind": "family",
       "text": "The waves of the same type whose rays do not expand. A wave of type N without twist belongs to one class or the other, with or without a cosmological constant [bicak1999]."
+    },
+    {
+      "id": "penrose_impulsive_wave",
+      "kind": "limit",
+      "text": "The impulsive limit of the waves of type N: the profile shrinks to a delta on one spherical front, with flat spacetime on either side of it [podolsky1999expanding]."
     }
   ],
   "references": [
@@ -96,7 +101,8 @@
     "cornish2000",
     "podolsky2005",
     "podolsky1998",
-    "bicak1999"
+    "bicak1999",
+    "podolsky1999expanding"
   ],
   "coordinates": [
     {

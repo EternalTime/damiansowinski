@@ -75,6 +75,11 @@
       "id": "light_beam",
       "kind": "family",
       "text": "A beam of light in the place of the line of matter. Its field travels with the light and is twice that of a rod with the same energy per unit length [bonnor1969light]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "special_case",
+      "text": "Two of Ehlers and Kundt's static vacuum fields of type D are Levi-Civita's cylinder at one value of $\\sigma$ each: B III at $\\sigma = 1/4$ [podolsky2018], and A III, Taub's plane symmetric vacuum, at $\\sigma = -1/2$ [martins1996, wang1997]."
     }
   ],
   "references": [
@@ -107,7 +112,9 @@
     "levicivita1917",
     "bertotti1959",
     "bonnor1980",
-    "bonnor1969light"
+    "bonnor1969light",
+    "podolsky2018",
+    "martins1996"
   ],
   "coordinates": [
     {

@@ -70,6 +70,11 @@
       "id": "hotta_tanaka",
       "kind": "family",
       "text": "An impulsive wave of the same kind with a positive cosmological constant: a sphere of fixed area in de Sitter space with a null particle at each pole [hotta1993, podolsky1998impulsive]."
+    },
+    {
+      "id": "petrov_homogeneous",
+      "kind": "family",
+      "text": "Kaigorodov's counterpart with no cosmological constant: the other vacuum whose four symmetries reach every event exactly once. Gary Gibbons and Steffen Gielen found Kaigorodov's group among the deformations of Petrov's [gibbons2008petrov]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "son2008",
     "duval2009",
     "griffiths2004",
-    "hotta1993"
+    "hotta1993",
+    "gibbons2008petrov"
   ],
   "coordinates": [
     {

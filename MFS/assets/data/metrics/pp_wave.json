@@ -93,6 +93,11 @@
       "id": "chandrasekhar_xanthopoulos",
       "kind": "composite",
       "text": "Two plane waves of this family, each an impulse with a shock wave behind it, sent at each other head on. They focus each other onto a horizon [chandrasekhar1986]."
+    },
+    {
+      "id": "penrose_impulsive_wave",
+      "kind": "family",
+      "text": "An impulsive wave with a spherical front, the other kind Penrose's cut and paste makes beside the impulsive waves with plane fronts [podolsky1999expanding]."
     }
   ],
   "references": [
@@ -132,7 +137,8 @@
     "balasubramanian2008",
     "duval2009",
     "bicak1999",
-    "chandrasekhar1986"
+    "chandrasekhar1986",
+    "podolsky1999expanding"
   ],
   "coordinates": [
     {

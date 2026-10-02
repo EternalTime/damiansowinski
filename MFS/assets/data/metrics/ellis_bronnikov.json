@@ -58,6 +58,11 @@
       "id": "einstein_rosen_bridge",
       "kind": "family",
       "text": "Einstein and Nathan Rosen's charged bridge with no mass has the same space, $dr^2 + (r^2 + \\ell^2)d\\Omega^2$ with the charge radius for $\\ell$, held open by a Maxwell field of negative energy. Its $g_{tt}$ vanishes at the throat, which is a horizon [einstein1935]."
+    },
+    {
+      "id": "exponential_metric",
+      "kind": "family",
+      "text": "Another wormhole of the same scalar field, this one with a mass. It is the branch $k = 0$ of the anti-Fisher family, in which Ellis's wormhole is the member with no mass, and its far side ends on a singular horizon [bronnikov2011]."
     }
   ],
   "references": [

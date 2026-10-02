@@ -74,6 +74,16 @@
       "id": "hotta_tanaka",
       "kind": "limit_source",
       "text": "Aichelburg and Sexl's boost done to the Schwarzschild-de Sitter black hole. Its shock is a sphere of fixed area on a cosmological horizon, and this plane is its limit as the cosmological constant goes to zero [hotta1993, podolsky1999nonexpanding]."
+    },
+    {
+      "id": "penrose_impulsive_wave",
+      "kind": "family",
+      "text": "The same cut and paste done along a light cone, which makes an impulsive wave on a sphere that expands [penrose1972impulsive, podolsky1999expanding]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "family",
+      "text": "The same mass boosted past the speed of light. The field of that tachyon is two of Ehlers and Kundt's metrics, A II inside a cone of shock and B I outside it [hruska2019]."
     }
   ],
   "references": [
@@ -103,7 +113,8 @@
     "khan1971",
     "podolsky1998impulsive",
     "horowitz2012",
-    "podolsky1999nonexpanding"
+    "podolsky1999nonexpanding",
+    "hruska2019"
   ],
   "coordinates": [
     {

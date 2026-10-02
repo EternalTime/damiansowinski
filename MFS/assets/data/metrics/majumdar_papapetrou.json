@@ -87,6 +87,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "family",
       "text": "Two extremal black holes of opposite charge. Gravity and the charges both pull, so a strut on the axis holds the pair apart [emparan2000]."
+    },
+    {
+      "id": "charged_shell",
+      "kind": "family",
+      "text": "One charge in the same balance, spread on a shell. Arnowitt, Deser, and Misner shrank it to a point in 1960 and found the mass fixed by the charge, with the single hole's field outside [arnowitt1960]."
     }
   ],
   "references": [
@@ -119,7 +124,8 @@
     "gibbonshawking1978",
     "ishihara2006",
     "brill1963",
-    "emparan2000"
+    "emparan2000",
+    "arnowitt1960"
   ],
   "coordinates": [
     {

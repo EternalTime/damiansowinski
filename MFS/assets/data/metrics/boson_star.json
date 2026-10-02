@@ -75,6 +75,11 @@
       "id": "misner_brill_lindquist",
       "kind": "programme",
       "text": "Wheeler's geometrodynamics had a second way to get mass with no matter, the wormhole. Charles Misner's slice of 1960 has two masses at rest that are the two mouths of one wormhole in empty space [misner1957, misner1960]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "programme",
+      "text": "Dieter Brill weighed a bundle of gravitational waves at one moment in 1959 and proved its mass positive [brill1959]. With James Hartle he built the gravitational geon five years later [brillhartle1964]."
     }
   ],
   "references": [
@@ -104,7 +109,8 @@
     "bartnik1988",
     "volkov1999",
     "misner1957",
-    "misner1960"
+    "misner1960",
+    "brill1959"
   ],
   "coordinates": [
     {

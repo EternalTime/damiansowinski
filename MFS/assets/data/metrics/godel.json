@@ -56,6 +56,11 @@
       "id": "bonnor_rotating_dust",
       "kind": "family",
       "text": "A cloud of rigidly rotating dust with no cosmological constant, flat far away and singular at its centre. Its closed timelike curves stay inside a torus about that centre, where Gödel's pass through every event [bonnor1977cloud, astesiano2024]."
+    },
+    {
+      "id": "petrov_homogeneous",
+      "kind": "family",
+      "text": "A spacetime with nothing in it that is also the same at every event and also holds closed timelike curves. It is the field outside a cylinder of rotating dust [bonnor1979petrov, gibbons2008petrov]."
     }
   ],
   "references": [
@@ -81,7 +86,9 @@
     "ori2005",
     "som1968",
     "bonnor1977cloud",
-    "astesiano2024"
+    "astesiano2024",
+    "bonnor1979petrov",
+    "gibbons2008petrov"
   ],
   "coordinates": [
     {

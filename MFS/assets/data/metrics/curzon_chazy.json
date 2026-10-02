@@ -56,6 +56,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "family",
       "text": "Bonnor's pair of extremal black holes. In Weyl's coordinates each of the two is a single point of the axis, as the Curzon-Chazy particle is [emparanteo2001]."
+    },
+    {
+      "id": "erez_rosen",
+      "kind": "family",
+      "text": "A Weyl field too, built on the potential of Schwarzschild's rod with a quadrupole term added, where Curzon and Chazy's is built on a point's [bicak2000, boshkayev2019]."
     }
   ],
   "references": [
@@ -82,7 +87,8 @@
     "bonnor1977cloud",
     "astesiano2024",
     "bicak1993",
-    "emparanteo2001"
+    "emparanteo2001",
+    "boshkayev2019"
   ],
   "coordinates": [
     {
