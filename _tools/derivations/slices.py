@@ -1499,6 +1499,16 @@ FLAT = {
     ("melvin", "ernst", "radial"): lambda: one("melvin", lambda m: along(0.0, *m.reach("ernst", "r")), view_id="ernst"),
     # Levi-Civita's plane z = 0 at t = 0, read in Weyl's coordinates; in the Kasner form r is the
     # proper distance, r = rho^Sigma/Sigma with Sigma = 3/4 at sigma = 1/4.
+    # The particle's cone, with Gott and Alpert's planet at its apex or without, is read in the conical
+    # chart out from the apex, whose r is the wedge chart's, R/alpha of the circumference radius and
+    # (ell/alpha)(rho/ell)^alpha of the isotropic radius, at alpha = 3/4 and ell = 1; the planet's own
+    # plane carries the planet alone.
+    **{("point_particle_2plus1", system, "radial"): (lambda of=of: one(
+        "point_particle_2plus1", lambda m: along(0.0, *(of(r) for r in m.reach("conical", "r", reference=True)))))
+       for system, of in (("conical", lambda r: r), ("wedge", lambda r: r), ("circumference", lambda r: 0.75 * r),
+                          ("isotropic", lambda r: (0.75 * r) ** (4 / 3)))},
+    ("point_particle_2plus1", "planet", "radial"): lambda: one(
+        "point_particle_2plus1", lambda m: along(0.0, *m.reach("planet", "\\chi")), view_id="cone"),
     ("levi_civita", "weyl", "radial"): lambda: one("levi_civita", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("levi_civita", "kasner", "radial"): lambda: one(
         "levi_civita", lambda m: along(0.0, *(levi_civita_r(x) for x in m.reach("weyl", "\\rho")))),
@@ -1548,6 +1558,10 @@ HIDDEN = {
     ("som_raychaudhuri", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves; the embedding stops at r = sqrt(3) r_c/2",
     **{("spinning_string", system, "inside"): "inside r_c the circles are closed timelike curves; the embedding begins at r_c"
        for system in ("proper_radius", "rescaled_radius", "helical")},
+    **{("point_particle_2plus1", "two_bodies", view): "two particles at rest, another spacetime than the one particle whose cone is embedded"
+       for view in ("between", "beyond")},
+    ("point_particle_2plus1", "two_bodies"): "two particles at rest, another spacetime than the one particle whose cone is embedded",
+    ("point_particle_2plus1", "moving", "wedge"): "the particle in motion, whose moment of the frame's t is not the moment of its rest frame that is embedded",
     ("tolman_bondi", "comoving_synchronous", "collapse"): "the marginally bound cloud, E = 0, whose moments are planes; the cloud embedded is released from rest",
     ("vaidya", "eddington_finkelstein_outgoing", "shell"): "the exploding shell, the time reverse of the imploding shell embedded",
     **{("curzon_chazy", system, "axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"

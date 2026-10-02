@@ -875,6 +875,22 @@ The field of a point mass that accelerates by shining light unevenly, found by W
 - chart Rectilinear: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} - 2\alpha r\cos\theta\right)c^2du^2 - 2c\,du\,dr + r^2\left(d\theta + \alpha\sin\theta\,c\,du\right)^2 + r^2\sin^2\theta\,d\phi^2$$
 - chart Robinson-Trautman: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} - \dfrac{2r\,\partial_u p}{p}\right)c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{p^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Point Particles in Three Dimensions
+
+Gravity with one dimension of space removed, where a mass makes no field around itself. Spacetime is flat everywhere off a particle's world line, and space around the particle is a cone, missing a wedge whose angle is set by the mass.
+
+- id: `point_particle_2plus1`
+- tags: point particle, conical, angular deficit, flat, locally flat, three-dimensional gravity, lower-dimensional gravity, topological defect, gravitational lensing, circular symmetry, static, stationary, exact solution, Lorentzian, Einstein equations, three-dimensional, idealized model
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/point_particle_2plus1.json
+- chart Conical: coordinates $(t, r, \phi)$, $$ds^2 = -c^2dt^2 + dr^2 + \alpha^2r^2d\phi^2$$
+- chart Wedge Removed: coordinates $(t, r, \theta)$, $$ds^2 = -c^2dt^2 + dr^2 + r^2d\theta^2$$
+- chart Circumference Radius: coordinates $(t, R, \phi)$, $$ds^2 = -c^2dt^2 + \dfrac{dR^2}{\alpha^2} + R^2d\phi^2$$
+- chart Isotropic: coordinates $(t, \rho, \phi)$, $$ds^2 = -c^2dt^2 + \left(\dfrac{\rho}{\ell}\right)^{2\alpha - 2}\left(d\rho^2 + \rho^2d\phi^2\right)$$
+- chart Two Bodies at Rest: coordinates $(t, x, y)$, $$ds^2 = -c^2dt^2 + \Omega\left(dx^2 + dy^2\right)$$
+- chart Moving Particle: coordinates $(t, x, y)$, $$ds^2 = -c^2dt^2 + dx^2 + dy^2$$
+- chart Uniform Planet: coordinates $(t, \chi, \phi)$, $$ds^2 = -c^2dt^2 + a^2d\chi^2 + a^2\sin^2\chi\,d\phi^2$$
+
 ### pp-wave Plane Gravitational Waves
 
 A class of exact solutions describing gravitational waves with plane fronts and parallel rays. They model the radiation field of rapidly moving sources and exact gravitational wave geometries.

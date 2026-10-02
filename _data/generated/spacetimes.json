@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 83,
+  "count": 84,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -1143,6 +1143,11 @@
           "id": "witten_black_hole",
           "kind": "family",
           "text": "A black hole in two dimensions, found in string theory. Times a circle, it is the string dual of the BTZ hole without rotation [horowitz1993]."
+        },
+        {
+          "id": "point_particle_2plus1",
+          "kind": "family",
+          "text": "With no cosmological constant a mass in three dimensions makes a cone and no black hole. Hans-Jürgen Matschull collided two such particles in anti-de Sitter space in 1999 and got this black hole [deser1984, matschull1999]."
         }
       ],
       "references": [
@@ -1165,7 +1170,8 @@
         "hawking1999rotation",
         "solodukhin2005",
         "damour2007",
-        "aminneborg1996"
+        "aminneborg1996",
+        "matschull1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -6913,6 +6919,11 @@
           "id": "ori_time_machine",
           "kind": "family",
           "text": "A time machine whose vacuum core fits in a finite region. Amos Ori built it in 2005 so that causality first fails on one closed null geodesic, fixed by data on a compact surface [ori2005]."
+        },
+        {
+          "id": "point_particle_2plus1",
+          "kind": "piece",
+          "text": "Each string, seen end on, is a point particle in three dimensions, and Gott's pair is two of them passing. The proofs that the pair cannot be built were all done there, with particles [deser1992, carroll1994]."
         }
       ],
       "references": [
@@ -12611,6 +12622,11 @@
           "id": "som_raychaudhuri",
           "kind": "generalisation",
           "text": "Flat spacetime with $\\Omega r^2d\\phi/c$ added to $c\\,dt$: a homogeneous universe of charged dust in rigid rotation, with closed timelike curves beyond $r = c/\\Omega$ [som1968]."
+        },
+        {
+          "id": "point_particle_2plus1",
+          "kind": "locally_same",
+          "text": "Minkowski space of three dimensions with a wedge removed along a particle's world line. In a world with two dimensions of space that missing wedge is all the gravity a mass has [deser1984]."
         }
       ],
       "references": [
@@ -12665,7 +12681,8 @@
         "earman1993",
         "pitowsky1990",
         "randall1999a",
-        "som1968"
+        "som1968",
+        "deser1984"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -16080,6 +16097,470 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{48m^2}{r^6}"
+        }
+      ]
+    },
+    {
+      "id": "point_particle_2plus1",
+      "name": "Point Particles in Three Dimensions",
+      "short_name": "Point Particles in Three Dimensions",
+      "description": "Gravity with one dimension of space removed, where a mass makes no field around itself. Spacetime is flat everywhere off a particle's world line, and space around the particle is a cone, missing a wedge whose angle is set by the mass.",
+      "tags": [
+        "point particle",
+        "conical",
+        "angular deficit",
+        "flat",
+        "locally flat",
+        "three-dimensional gravity",
+        "lower-dimensional gravity",
+        "topological defect",
+        "gravitational lensing",
+        "circular symmetry",
+        "static",
+        "stationary",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "three-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+)",
+      "convention": "We keep factors of $c$ explicit. A particle of mass $m$ enters through $\\alpha = 1 - 4Gm/c^2$, with $G$ Newton's constant in three dimensions, and removes a wedge of angle $2\\pi(1 - \\alpha) = 8\\pi Gm/c^2$.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "generalisation",
+          "text": "The particle with a dimension added along it. A straight cosmic string is this cone times a line, and a slice across the string is the particle's space [gott1985, carroll1994]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "Flat spacetime of three dimensions with a wedge cut out along a world line and the two faces glued together. Off the particle the curvature vanishes [staruszkiewicz1963]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "generalisation",
+          "text": "The particle given spin, and a dimension along it. Time then jumps by $8\\pi GJ/c^4$ on each circuit, and close in the circles around it are closed timelike curves [deser1984]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "composite",
+          "text": "Two of these particles passing one another, each drawn out into a string. If each moves fast enough, a traveler circling the pair returns to their own past [gott1991]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The same world with a negative cosmological constant grows a black hole. The cones lie between anti-de Sitter space and the lightest hole, and two particles that collide hard enough make one [banados1992, matschull1999]."
+        }
+      ],
+      "references": [
+        "staruszkiewicz1963",
+        "carlip2005",
+        "deser1984",
+        "giddings1984",
+        "gott1984",
+        "gott1985",
+        "carroll1994",
+        "gott1991",
+        "deser1992",
+        "carroll1992",
+        "thooft1992",
+        "deser1988",
+        "thooft1988",
+        "witten1988",
+        "deser1984cosmological",
+        "banados1992",
+        "matschull1999"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/point_particle_2plus1.json",
+      "charts": [
+        {
+          "id": "conical",
+          "name": "Conical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the particle, a conical singularity)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha",
+              "description": "$\\alpha = 1 - 4Gm/c^2$, with $m$ the particle's mass and $G$ Newton's constant in three dimensions, $0 < \\alpha \\le 1$; the deficit angle is $2\\pi(1 - \\alpha)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\phi)$, with $t$ carrying dimensions of time, $r$ the proper distance from the particle, and $\\phi$ periodic in $2\\pi$, the deficit carried by $g_{\\phi\\phi} = \\alpha^2r^2$, the form Gott gave the cosmic string. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dr^2 + \\alpha^2r^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\alpha^2\\,r^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "wedge",
+          "name": "Wedge Removed",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, 2\\pi\\alpha)",
+            "\\theta \\sim \\theta + 2\\pi\\alpha",
+            "r = 0 \\;\\text{(the particle, a conical singularity)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha",
+              "description": "$\\alpha = 1 - 4Gm/c^2$, with $m$ the particle's mass and $G$ Newton's constant in three dimensions, $0 < \\alpha \\le 1$; the deficit angle is $2\\pi(1 - \\alpha)$"
+            }
+          ],
+          "convention": "We use Staruszkiewicz's flat coordinates $(t, r, \\theta)$, with $t$ carrying dimensions of time, $r$ the proper distance from the particle, and $\\theta = \\alpha\\phi$ periodic in $2\\pi\\alpha$, so that the line element is Minkowski's. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dr^2 + r^2d\\theta^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "circumference",
+          "name": "Circumference Radius",
+          "coordinates": [
+            "t",
+            "R",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "R \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "R = 0 \\;\\text{(the particle, a conical singularity)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha",
+              "description": "$\\alpha = 1 - 4Gm/c^2$, with $m$ the particle's mass and $G$ Newton's constant in three dimensions, $0 < \\alpha \\le 1$; the deficit angle is $2\\pi(1 - \\alpha)$"
+            }
+          ],
+          "convention": "We use Staruszkiewicz's coordinates $(t, R, \\phi)$, with $t$ carrying dimensions of time, $\\phi$ periodic in $2\\pi$, and $R = \\alpha r$ for $r$ the proper distance from the particle, so that the circle of constant $t$ and $R$ has circumference $2\\pi R$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\dfrac{dR^2}{\\alpha^2} + R^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\dfrac{1}{\\alpha^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = 0 \\;\\text{(the particle, a conical singularity)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha",
+              "description": "$\\alpha = 1 - 4Gm/c^2$, with $m$ the particle's mass and $G$ Newton's constant in three dimensions, $0 < \\alpha \\le 1$; the deficit angle is $2\\pi(1 - \\alpha)$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "An arbitrary length; changing it rescales the isotropic coordinates, which is a change of coordinates"
+            }
+          ],
+          "convention": "We use Deser, Jackiw, and 't Hooft's isotropic coordinates $(t, \\rho, \\phi)$, with $t$ carrying dimensions of time, $\\phi$ periodic in $2\\pi$, and $\\rho$ a radius in which space is conformally flat, at the proper distance $r = (\\ell/\\alpha)(\\rho/\\ell)^\\alpha$ from the particle. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\left(\\dfrac{\\rho}{\\ell}\\right)^{2\\alpha - 2}\\left(d\\rho^2 + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2\\alpha - 2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2\\left(\\dfrac{\\rho}{\\ell}\\right)^{2\\alpha - 2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "two_bodies",
+          "name": "Two Bodies at Rest",
+          "coordinates": [
+            "t",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "(x, y) = (\\pm d, 0) \\;\\text{(the particles, conical singularities)}",
+            "\\alpha_1 + \\alpha_2 > 1 \\;\\text{(space is open)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha_1",
+              "description": "$\\alpha_1 = 1 - 4Gm_1/c^2$ for the particle of mass $m_1$ at $(x, y) = (d, 0)$, which removes a wedge of angle $2\\pi(1 - \\alpha_1)$"
+            },
+            {
+              "symbol": "\\alpha_2",
+              "description": "$\\alpha_2 = 1 - 4Gm_2/c^2$ for the particle of mass $m_2$ at $(x, y) = (-d, 0)$, which removes a wedge of angle $2\\pi(1 - \\alpha_2)$; far from both the deficit angle is $2\\pi(2 - \\alpha_1 - \\alpha_2)$"
+            },
+            {
+              "symbol": "d",
+              "description": "Half the coordinate distance between the two particles, a length"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "An arbitrary length; changing it rescales the isotropic coordinates, which is a change of coordinates"
+            },
+            {
+              "symbol": "\\rho_1 = \\sqrt{(x - d)^2 + y^2}",
+              "description": "Coordinate distance from the particle of mass $m_1$"
+            },
+            {
+              "symbol": "\\rho_2 = \\sqrt{(x + d)^2 + y^2}",
+              "description": "Coordinate distance from the particle of mass $m_2$"
+            },
+            {
+              "symbol": "\\Omega = \\left(\\dfrac{\\rho_1}{\\ell}\\right)^{2\\alpha_1 - 2}\\left(\\dfrac{\\rho_2}{\\ell}\\right)^{2\\alpha_2 - 2}",
+              "description": "Conformal factor of space, the product of the two particles' own factors"
+            }
+          ],
+          "convention": "We use the isotropic coordinates $(t, x, y)$ of Staruszkiewicz and of Deser, Jackiw, and 't Hooft for two particles at rest, with $t$ carrying dimensions of time and $x$ and $y$ lengths in which space is conformally flat. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\Omega\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\Omega"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\Omega"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "moving",
+          "name": "Moving Particle",
+          "coordinates": [
+            "t",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "x = vt,\\; y = 0 \\;\\text{(the particle, a conical singularity)}",
+            "|y| < \\gamma(vt - x)\\tan\\left(\\pi(1 - \\alpha)\\right) \\;\\text{(the wedge removed, for } \\alpha > 1/2\\text{)}",
+            "(t, x, y) \\sim (t, x, -y) \\;\\text{(on the faces of the wedge)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha",
+              "description": "$\\alpha = 1 - 4Gm/c^2$, with $m$ the particle's mass and $G$ Newton's constant in three dimensions, $0 < \\alpha \\le 1$; the deficit angle is $2\\pi(1 - \\alpha)$"
+            },
+            {
+              "symbol": "v",
+              "description": "Speed of the particle along $x$"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Lorentz factor of the particle, $\\gamma = (1 - v^2/c^2)^{-1/2}$"
+            }
+          ],
+          "convention": "We use the inertial coordinates $(t, x, y)$ of a frame in which the particle moves along $x$ at speed $v$, with $t$ carrying dimensions of time and the missing wedge trailing the particle, its two faces identified at equal $t$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "planet",
+          "name": "Uniform Planet",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\chi_0]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\cos\\chi_0 = \\alpha \\;\\text{(matching to the cone)}",
+            "a\\chi_0 \\;\\text{(proper radius of the planet)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Radius of the sphere the planet is a cap of, fixed by its mass per unit area $\\sigma$ through $a^{-2} = 8\\pi G\\sigma/c^2$"
+            },
+            {
+              "symbol": "\\chi_0",
+              "description": "Polar angle of the planet's edge, where the cap meets the cone, with $\\cos\\chi_0 = \\alpha = 1 - 4Gm/c^2$ for a planet of mass $m$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\chi, \\phi)$ inside Gott and Alpert's planet of uniform density, with $t$ carrying dimensions of time and $\\chi$ the polar angle from the centre on a cap of a sphere of radius $a$ that reaches $\\chi_0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2d\\chi^2 + a^2\\sin^2\\chi\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2}{a^2}",
+          "kretschmann": "K = \\dfrac{4}{a^4}"
         }
       ]
     },
@@ -19783,6 +20264,11 @@
           "id": "som_raychaudhuri",
           "kind": "family",
           "text": "Soleng's thick string with $M = \\Omega r^2/c$ and $\\rho = r$ all the way out, a homogeneous universe of charged dust in rigid rotation. Its closed timelike curves lie outside $r = c/\\Omega$, where the string's lie inside $r_c$ [soleng1994, som1968]."
+        },
+        {
+          "id": "point_particle_2plus1",
+          "kind": "special_case",
+          "text": "A slice across the string with the spin taken away. Deser, Jackiw, and 't Hooft met the spinning string as a spinning particle in three dimensions, in the paper that gives the cones of the particles without spin [deser1984]."
         }
       ],
       "references": [
@@ -22192,6 +22678,11 @@
           "id": "string_wave",
           "kind": "generalisation",
           "text": "The string plucked. A wave of any shape runs along it at the speed of light, and the cone around it becomes a pp-wave [garfinkle1990]."
+        },
+        {
+          "id": "point_particle_2plus1",
+          "kind": "special_case",
+          "text": "The string with the dimension along it taken away. A slice across the string is the space around a point mass in a world of two dimensions, the cone Andrzej Staruszkiewicz found in 1963 [staruszkiewicz1963, deser1984]."
         }
       ],
       "references": [
@@ -22216,7 +22707,8 @@
         "hawking1995",
         "barriola1989",
         "deser1992time",
-        "garfinkle1990"
+        "garfinkle1990",
+        "staruszkiewicz1963"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",

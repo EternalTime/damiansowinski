@@ -150,6 +150,11 @@
       "id": "som_raychaudhuri",
       "kind": "generalisation",
       "text": "Flat spacetime with $\\Omega r^2d\\phi/c$ added to $c\\,dt$: a homogeneous universe of charged dust in rigid rotation, with closed timelike curves beyond $r = c/\\Omega$ [som1968]."
+    },
+    {
+      "id": "point_particle_2plus1",
+      "kind": "locally_same",
+      "text": "Minkowski space of three dimensions with a wedge removed along a particle's world line. In a world with two dimensions of space that missing wedge is all the gravity a mass has [deser1984]."
     }
   ],
   "references": [
@@ -204,7 +209,8 @@
     "earman1993",
     "pitowsky1990",
     "randall1999a",
-    "som1968"
+    "som1968",
+    "deser1984"
   ],
   "coordinates": [
     {

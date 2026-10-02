@@ -120,5 +120,52 @@ class Orders(unittest.TestCase):
         print_charts.hartle_thorne_kerr(chart)
 
 
+@unittest.skipUnless(HAS_SYMPY and importlib.util.find_spec("scipy") is not None, "null_rays.py needs sympy and scipy")
+class PointParticles(unittest.TestCase):
+    """Point particles in three dimensions, held to numbers the drawings never use."""
+
+    @classmethod
+    def setUpClass(cls):
+        sys.path.insert(0, str(DERIVATIONS))
+        import null_rays
+        import print_charts
+        cls.nr, cls.pc = null_rays, print_charts
+
+    @classmethod
+    def tearDownClass(cls):
+        sys.path.remove(str(DERIVATIONS))
+
+    def test_two_particles_of_alpha_three_quarters_stand_a_beta_function_apart(self):
+        """The proper distance between two particles at x = +-d is d times the integral of
+        (1 - s^2)^(-1/4) from -1 to 1, which is B(1/2, 3/4), and beyond a particle the distance
+        grows as the square root far away, 2 sqrt(x), as on a cone of alpha = 1/2."""
+        import math
+        beta = math.gamma(0.5) * math.gamma(0.75) / math.gamma(1.25)
+        distance = self.nr._two_particles_distance
+        self.assertAlmostEqual(2 * float(distance(1.0)), beta, places=12)
+        self.assertAlmostEqual(float(distance(-1.0)), -float(distance(1.0)), places=14)
+        far = float(distance(4.0e6)) - float(distance(1.0e6))
+        self.assertAlmostEqual(far / (2 * math.sqrt(4.0e6) - 2 * math.sqrt(1.0e6)), 1.0, places=6)
+
+    def test_every_chart_passes_its_own_check(self):
+        """Each flat chart is the conical chart pulled back, the two bodies are one particle when
+        the other has no mass, and the planet is dust at rest that meets the cone."""
+        import chart_printer as cp
+        for system in self.pc.PARTICLE_CHARTS:
+            spec = self.pc.point_particle_2plus1(system)
+            chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+            self.pc.point_particle_check(chart, system)
+
+    def test_a_misstated_deficit_is_refused(self):
+        """The wedge chart against a cone of another alpha: the pullback misses."""
+        import chart_printer as cp
+        import sympy as sp
+        spec = self.pc.point_particle_2plus1("wedge")
+        chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"],
+                         spec["chart_line_element"].replace("r^2d\\theta^2", "4r^2d\\theta^2"))
+        with self.assertRaises(AssertionError):
+            self.pc.point_particle_check(chart, "wedge")
+
+
 if __name__ == "__main__":
     unittest.main()

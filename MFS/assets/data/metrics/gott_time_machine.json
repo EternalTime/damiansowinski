@@ -56,6 +56,11 @@
       "id": "ori_time_machine",
       "kind": "family",
       "text": "A time machine whose vacuum core fits in a finite region. Amos Ori built it in 2005 so that causality first fails on one closed null geodesic, fixed by data on a compact surface [ori2005]."
+    },
+    {
+      "id": "point_particle_2plus1",
+      "kind": "piece",
+      "text": "Each string, seen end on, is a point particle in three dimensions, and Gott's pair is two of them passing. The proofs that the pair cannot be built were all done there, with particles [deser1992, carroll1994]."
     }
   ],
   "references": [

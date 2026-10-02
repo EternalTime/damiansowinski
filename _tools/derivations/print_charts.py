@@ -6,8 +6,8 @@ khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_sh
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
-black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole and
-som_raychaudhuri, and Godel's cylindrical chart.
+black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
+som_raychaudhuri and point_particle_2plus1, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -8070,6 +8070,343 @@ def som_raychaudhuri_pullback(chart):
 
 
 CHARTS["som_raychaudhuri"] = [lambda s=s: som_raychaudhuri(s) for s in SR_CHARTS]
+
+# -- Point particles in three dimensions ----------------------------------------------------
+
+PARTICLE_CHARTS = ("conical", "wedge", "circumference", "isotropic", "two_bodies", "moving", "planet")
+
+
+def cone_factor(distance, exponent):
+    return "\\left(\\dfrac{" + distance + "}{\\ell}\\right)^{" + exponent + "}"
+
+
+def conformal_cones(particles, ell, state, finish=sp.factor, named=None):
+    """A pretty printer for a chart whose space is flat away from conical points and is written
+    conformally flat, as Deser, Jackiw and 't Hooft write it: a product over the particles of
+    (rho_i/ell)^(2 alpha_i - 2) times a flat plane. `particles` lists, for each one, the
+    expression the metric carries a power of, its degree in the lengths (the radius itself, 1, or
+    the squared distance, 2), its alpha and the text of its distance. Every value is a rational
+    function times whole powers of those conformal factors, which are printed as they stand, and
+    `finish` writes the rational function; a chart that names the product of its conformal factors
+    passes the name's symbol as `named`, and a power of the product is written as that power of
+    the name. `state["printer"]` is the chart's printer, which the chart's check puts there before
+    anything is printed."""
+    L = sp.Dummy(positive=True)
+    T = [sp.Dummy(positive=True) for _ in particles]
+    W = [sp.Dummy(positive=True) for _ in particles]
+    alphas = [alpha for _, _, alpha, _ in particles]
+    table = {}
+
+    def split(power):
+        # A base rho or rho^2 is T ell or T ell^2, so its power is a power of T and one of ell.
+        out = sp.Integer(1)
+        for base, k in sp.factor(power.base).as_powers_dict().items():
+            e = sp.expand(k * power.exp)
+            if base == L:
+                out *= L ** e
+                continue
+            for (expression, degree, _, _), t in zip(particles, T):
+                if sp.expand(base - expression) == 0:
+                    out *= t ** e * L ** sp.expand(degree * e)
+                    break
+            else:
+                raise AssertionError(f"{power} is a power of no distance from a particle")
+        return out
+
+    def conformal(power):
+        # T^(k alpha + n) is W^(k degree/2) T^(n + k), with W = T^((2/degree)(alpha - 1)).
+        i = T.index(power.base)
+        expression, degree, alpha, _ = particles[i]
+        whole, symbolic = sp.expand(power.exp).as_coeff_Add()
+        k = sp.cancel(symbolic / alpha)
+        if not (k * degree / 2).is_Integer:
+            raise AssertionError(f"{power} is no power of the conformal factor")
+        return W[i] ** (k * degree / 2) * (expression / L ** degree) ** (whole + k)
+
+    def pretty(value):
+        value = sp.sympify(value).subs(ell, L)
+        value = value.replace(lambda e: e.is_Pow and e.exp.has(*alphas), split)
+        value = sp.powsimp(sp.together(value), force=True)
+        value = value.replace(lambda e: e.is_Pow and e.base in T, conformal)
+        value = sp.factor(sp.powsimp(value, force=True)).subs(L, ell)
+        if any(e.is_Pow and e.exp.has(*alphas) for e in sp.preorder_traversal(value)):
+            raise AssertionError(f"{value} keeps a power that holds a mass")
+        found = value.as_powers_dict()
+        ks = tuple(found.get(w, sp.Integer(0)) for w in W)
+        rest = sp.cancel(value / sp.Mul(*[w ** k for w, k in zip(W, ks)]))
+        if rest.has(*W):
+            raise AssertionError(f"{value} is not one power of each conformal factor")
+        out = finish(rest)
+        if not any(ks):
+            return out
+        if named is not None and len(set(ks)) == 1:
+            return named ** ks[0] * out
+        printer = state["printer"]
+        text = "".join(cone_factor(tex, printer.positive_first(sp.expand(k * (2 * alpha - 2))))
+                       for (_, _, alpha, tex), k in zip(particles, ks) if k)
+        placeholder = table.setdefault(text, sp.Symbol(f"CONEFACTOR{len(table)}", positive=True))
+        printer.overrides[placeholder] = text
+        return placeholder * out
+
+    return pretty
+
+
+def point_particle_2plus1(system):
+    """Point particles in three dimensions, with alpha = 1 - 4Gm/c^2, in six charts that are flat away
+    from the particles and one of a source of finite size:
+
+    conical        dr^2 + alpha^2 r^2 dphi^2, with phi periodic in 2 pi and r the proper distance from
+                   the particle, Deser, Jackiw and 't Hooft's (2.8c) with the angle left periodic in
+                   2 pi, the form Gott gave the cosmic string in 1985;
+    wedge          theta = alpha phi, Minkowski's line element with theta periodic in 2 pi alpha:
+                   Staruszkiewicz's (8) and (9), Deser, Jackiw and 't Hooft's (2.8c);
+    circumference  R = alpha r, the radius of the circle itself, dR^2/alpha^2 + R^2 dphi^2:
+                   Staruszkiewicz's (6), with his e^N = 1/alpha, and Deser and Jackiw's (2.4) of 1988;
+    isotropic      (rho/ell)^(2 alpha - 2)(drho^2 + rho^2 dphi^2), Deser, Jackiw and 't Hooft's (2.8a),
+                   which is the conical chart at r = (ell/alpha)(rho/ell)^alpha, their (2.8b);
+    two_bodies     two particles at rest at (x, y) = (+-d, 0), the product of the two conformal factors
+                   times dx^2 + dy^2: Staruszkiewicz's (17) and Deser, Jackiw and 't Hooft's (2.7);
+    moving         an inertial frame in which the particle moves along x at speed v, Minkowski's line
+                   element with the wedge trailing the particle, Staruszkiewicz's cutting and Deser,
+                   Jackiw and 't Hooft's (5.6);
+    planet         Gott and Alpert's planet of uniform density, a cap of a sphere of radius a,
+                   a^2(dchi^2 + sin^2(chi) dphi^2), out to chi_0 with cos(chi_0) = alpha.
+
+    The wedge, circumference, isotropic and moving charts are checked to be the conical chart pulled
+    back, and the two-body chart to be flat away from the particles, to be the isotropic chart about
+    either particle when the other has no mass, and to carry the sum of the two masses far away.
+    The planet is checked to be dust at rest, G^t_t = -1/a^2 its only Einstein component, and to
+    meet the cone at chi_0 with the circles and their rate of growth agreeing.
+    point_particle_2plus1.md is the derivation."""
+    reals = "(-\\infty, \\infty)"
+    flat = "\\text{flat: every curvature tensor vanishes}"
+    particle = "= 0 \\;\\text{(the particle, a conical singularity)}"
+    state = {}
+    spec = {}
+    if system == "conical":
+        name, coords, parameters = "Conical", ["t", "r", "\\phi"], ["\\alpha"]
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "r " + particle, flat]
+        space = "dr^2 + \\alpha^2r^2d\\phi^2"
+    elif system == "wedge":
+        name, coords, parameters = "Wedge Removed", ["t", "r", "\\theta"], ["\\alpha"]
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)", "\\theta \\in [0, 2\\pi\\alpha)",
+                   "\\theta \\sim \\theta + 2\\pi\\alpha", "r " + particle, flat]
+        space = "dr^2 + r^2d\\theta^2"
+    elif system == "circumference":
+        name, coords, parameters = "Circumference Radius", ["t", "R", "\\phi"], ["\\alpha"]
+        domains = ["t \\in " + reals, "R \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "R " + particle, flat]
+        space = "\\dfrac{dR^2}{\\alpha^2} + R^2d\\phi^2"
+    elif system == "planet":
+        name, coords, parameters = "Uniform Planet", ["t", "\\chi", "\\phi"], ["a", "\\chi_0"]
+        domains = ["t \\in " + reals, "\\chi \\in [0, \\chi_0]", "\\phi \\in [0, 2\\pi)",
+                   "\\cos\\chi_0 = \\alpha \\;\\text{(matching to the cone)}",
+                   "a\\chi_0 \\;\\text{(proper radius of the planet)}"]
+        space = "a^2d\\chi^2 + a^2\\sin^2\\chi\\,d\\phi^2"
+    elif system == "isotropic":
+        name, coords, parameters = "Isotropic", ["t", "\\rho", "\\phi"], ["\\alpha", "\\ell"]
+        domains = ["t \\in " + reals, "\\rho \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "\\rho " + particle, flat]
+        space = cone_factor("\\rho", "2\\alpha - 2") + "\\left(d\\rho^2 + \\rho^2d\\phi^2\\right)"
+        spec["components"] = {
+            "metric_components": {("\\rho", "\\rho"): cone_factor("\\rho", "2\\alpha - 2"),
+                                  ("\\phi", "\\phi"): "\\rho^2" + cone_factor("\\rho", "2\\alpha - 2")},
+            "inverse_metric_components": {("\\rho", "\\rho"): cone_factor("\\rho", "2 - 2\\alpha"),
+                                          ("\\phi", "\\phi"): "\\dfrac{1}{\\rho^2}" + cone_factor("\\rho", "2 - 2\\alpha")}}
+    elif system == "two_bodies":
+        name, coords = "Two Bodies at Rest", ["t", "x", "y"]
+        factor = cone_factor("\\rho_1", "2\\alpha_1 - 2") + cone_factor("\\rho_2", "2\\alpha_2 - 2")
+        parameters = ["\\alpha_1", "\\alpha_2", "d", "\\ell",
+                      "\\rho_1 = \\sqrt{(x - d)^2 + y^2}", "\\rho_2 = \\sqrt{(x + d)^2 + y^2}", "\\Omega = " + factor]
+        domains = ["t \\in " + reals, "x \\in " + reals, "y \\in " + reals,
+                   "(x, y) = (\\pm d, 0) \\;\\text{(the particles, conical singularities)}",
+                   "\\alpha_1 + \\alpha_2 > 1 \\;\\text{(space is open)}", flat]
+        space = "\\Omega\\left(dx^2 + dy^2\\right)"
+    else:
+        name, coords, parameters = "Moving Particle", ["t", "x", "y"], ["\\alpha", "v", "\\gamma"]
+        domains = ["t \\in " + reals, "x \\in " + reals, "y \\in " + reals,
+                   "x = vt,\\; y = 0 \\;\\text{(the particle, a conical singularity)}",
+                   "|y| < \\gamma(vt - x)\\tan\\left(\\pi(1 - \\alpha)\\right) \\;\\text{(the wedge removed, for } \\alpha > 1/2\\text{)}",
+                   "(t, x, y) \\sim (t, x, -y) \\;\\text{(on the faces of the wedge)}", flat]
+        space = "dx^2 + dy^2"
+    probe = vm.Reader(coords, parameters, ())
+    first, second = probe.symbol[coords[1]], probe.symbol[coords[2]]
+    lead = [*[v for k, v in probe.parameters.items() if k.startswith("alpha") or k == "a"], first, second]
+    if system == "isotropic":
+        alpha, ell = probe.parameters["alpha"], probe.parameters["ell"]
+        spec["pretty"] = conformal_cones([(first, 1, alpha, "\\rho")], ell, state)
+    if system == "two_bodies":
+        a1, a2, d, ell = (probe.parameters[n] for n in ("alpha_1", "alpha_2", "d", "ell"))
+        squares = [(first - d) ** 2 + second ** 2, (first + d) ** 2 + second ** 2]
+        rhos = [sp.Symbol("rho_1", positive=True), sp.Symbol("rho_2", positive=True)]
+
+        def distances(value):
+            # A factor (x -+ d)^2 + y^2 is written as the squared distance it is.
+            out = sp.Integer(1)
+            for f, k in sp.factor(value).as_powers_dict().items():
+                for square, rho in zip(squares, rhos):
+                    if sp.expand(f - square) == 0:
+                        f = rho ** 2
+                out *= f ** k
+            return out
+
+        brackets = {}
+
+        def finish(rest, bare=False):
+            # Each particle's part by itself, (alpha_i - 1) times a rational function of the
+            # coordinates over rho_i^2, since the two potentials add: the sum is written in one
+            # bracket, the first particle's term first, and a sum of negative terms as minus it.
+            A = [sp.Dummy() for _ in range(2)]
+            numerator, denominator = sp.fraction(sp.together(rest.subs({a1: A[0] + 1, a2: A[1] + 1})))
+            parts = sp.Poly(numerator, *A).terms()
+            if len(parts) < 2:
+                return distances(sp.factor(rest))
+            printer = state["printer"]
+            number = sp.Integer(1)
+            bodies = []
+            for powers, coefficient in sorted(parts, reverse=True):
+                masses = sp.Mul(*[(alpha - 1) ** k for alpha, k in zip((a1, a2), powers)], evaluate=False)
+                c, term = distances(sp.factor(coefficient / denominator)).as_coeff_Mul()
+                body = printer.term(masses * term)
+                negative = body.startswith("-")
+                bodies.append((-c if negative else c, body[1:] if negative else body))
+            # A number every term carries, as the 2 of a geodesic equation, stands before the bracket.
+            if len({abs(c) for c, _ in bodies}) == 1:
+                number = abs(bodies[0][0])
+            if all(c.is_negative for c, _ in bodies):
+                number = -number
+            text = ""
+            for i, (c, body) in enumerate(bodies):
+                c = c / number
+                text += (("-" if i == 0 else " - ") if c.is_negative else ("" if i == 0 else " + "))
+                text += ("" if abs(c) == 1 else cp._num(abs(c))) + body
+            # `bare` leaves the brackets to Chart.single_term, which writes its own round a sum.
+            placeholder = brackets.setdefault((text, bare), sp.Symbol(f"TWOBODIES{len(brackets)}", positive=True))
+            printer.overrides[placeholder] = text if bare else "\\left(" + text + "\\right)"
+            return number * placeholder
+
+        Omega = sp.Symbol("Omega", positive=True)
+        spec["pretty"] = conformal_cones([(sp.expand(squares[0]), 2, a1, "\\rho_1"), (sp.expand(squares[1]), 2, a2, "\\rho_2")],
+                                         ell, state, finish, Omega)
+        spec["bracketed"] = conformal_cones(
+            [(sp.expand(squares[0]), 2, a1, "\\rho_1"), (sp.expand(squares[1]), 2, a2, "\\rho_2")],
+            ell, state, lambda rest: finish(rest, True), Omega)
+        lead = [Omega, a1, a2, first, second, d, *rhos, ell]
+
+    def check(chart):
+        state["printer"] = chart.printer
+        point_particle_check(chart, system)
+
+    return {
+        "metric_id": "point_particle_2plus1",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": "ds^2 = -c^2dt^2 + " + space},
+        "chart_line_element": "ds^2 = -dt^2 + " + space,
+        "printer": {"lead": lead},
+        "check": check,
+        **spec,
+    }
+
+
+def point_particle_chart(system):
+    spec = point_particle_2plus1(system)
+    return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+
+def point_particle_check(chart, system):
+    """Every chart is checked to be flat. The wedge chart is the conical one at phi = theta/alpha,
+    exactly. The isotropic chart is the conical one at r = (ell/alpha)(rho/ell)^alpha, and the two
+    bodies' chart with the second mass put to zero is the isotropic chart about the first, at
+    rho = rho_1 and phi the angle about it, and the same with the two exchanged; those maps carry
+    powers of alpha and are checked at random points in forty digits. Far from two bodies the
+    conformal factor is that of one particle with alpha = alpha_1 + alpha_2 - 1, the sum of the two
+    masses, which is checked on the limit of its logarithmic derivative. The moving chart is the
+    wedge chart of the particle's rest frame, t' = gamma(t - v x/c^2), x' = gamma(x - v t), boosted,
+    with the wedge about the negative x' axis, exactly."""
+    n = len(chart.symbols)
+    p = chart.reader.parameters
+    x0, x1, x2 = chart.symbols
+    if system == "planet":
+        # Dust at rest: G^t_t = -1/a^2 and nothing else, so the mass per area is c^2/(8 pi G a^2), and
+        # the cap out to chi_0 weighs (c^2/4G)(1 - cos chi_0). At chi_0 its circle, a sin(chi_0), and
+        # that circle's growth with proper distance, cos(chi_0), are the cone's alpha r and alpha.
+        lowered = chart.geo.einstein_ll()
+        G = chart.geo.ginv * sp.Matrix(n, n, lambda i, j: lowered[i][j])
+        want = sp.zeros(n, n)
+        want[0, 0] = -1 / p["a"] ** 2
+        if (G - want).applyfunc(vm.norm) != sp.zeros(n, n):
+            raise AssertionError("point_particle_2plus1: the planet is not dust at rest of density c^2/(8 pi G a^2)")
+        circle = chart.geo.g[2, 2]
+        growth = sp.diff(circle, x1) ** 2 / (4 * circle * chart.geo.g[1, 1])       # (d sqrt(g_phiphi)/dl)^2
+        if sp.simplify(growth.subs(x1, p["chi_0"]) - sp.cos(p["chi_0"]) ** 2) != 0:
+            raise AssertionError("point_particle_2plus1: the planet's circles do not grow as the cone's at chi_0")
+        return
+    riemann = chart.geo.riemann_llll()
+    if any(vm.norm(vm._at(riemann, index)) != 0 for index in vm._indices(n, 4)):
+        raise AssertionError(f"point_particle_2plus1: the {system} chart is not flat")
+    if system == "conical":
+        return
+
+    def pulled(source, image, at):
+        at = {**at, **dict(zip(source.symbols, image))}
+        J = sp.Matrix(n, n, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        return J.T * source.geo.g.subs(at, simultaneous=True) * J - chart.geo.g
+
+    def numerically(difference, what):
+        rng = random.Random(0)
+        for _ in range(6):
+            point = {s: sp.Rational(rng.randint(10 ** 3, 2 * 10 ** 3), 10 ** 3)
+                     for s in sorted(difference.free_symbols, key=str)}
+            for name in ("alpha", "alpha_1", "alpha_2"):
+                if name in p:
+                    point[p[name]] = point.get(p[name], sp.Integer(2)) / 2
+            for i in range(n):
+                for j in range(n):
+                    if abs(complex(difference[i, j].xreplace(point).evalf(40))) > 1e-25:
+                        raise AssertionError(f"point_particle_2plus1: {what} in slot "
+                                             f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    if system == "wedge":
+        source = point_particle_chart("conical")
+        difference = pulled(source, [x0, x1, x2 / p["alpha"]], {source.reader.parameters["alpha"]: p["alpha"]})
+        if difference.applyfunc(vm.norm) != sp.zeros(n, n):
+            raise AssertionError("point_particle_2plus1: the conical chart pulled back misses the wedge chart")
+    elif system == "circumference":
+        source = point_particle_chart("conical")
+        difference = pulled(source, [x0, x1 / p["alpha"], x2], {source.reader.parameters["alpha"]: p["alpha"]})
+        if difference.applyfunc(vm.norm) != sp.zeros(n, n):
+            raise AssertionError("point_particle_2plus1: the conical chart pulled back misses the circumference chart")
+    elif system == "isotropic":
+        source = point_particle_chart("conical")
+        alpha, ell = p["alpha"], p["ell"]
+        difference = pulled(source, [x0, ell * (x1 / ell) ** alpha / alpha, x2],
+                            {source.reader.parameters["alpha"]: alpha})
+        numerically(difference, "the conical chart pulled back misses the isotropic chart")
+    elif system == "two_bodies":
+        source = point_particle_chart("isotropic")
+        sa, sl = source.reader.parameters["alpha"], source.reader.parameters["ell"]
+        a1, a2, d, ell = (p[k] for k in ("alpha_1", "alpha_2", "d", "ell"))
+        g = chart.geo.g.applyfunc(chart.reader.surface)
+        for mine, other, centre in ((a1, a2, d), (a2, a1, -d)):
+            image = [x0, sp.sqrt((x1 - centre) ** 2 + x2 ** 2), sp.atan2(x2, x1 - centre)]
+            J = sp.Matrix(n, n, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+            at = {sa: mine, sl: ell, **dict(zip(source.symbols, image))}
+            difference = J.T * source.geo.g.subs(at, simultaneous=True) * J - g.subs(other, 1)
+            numerically(difference, "the two bodies with one mass put to zero miss the isotropic chart")
+        # Far away, x d(ln g_xx)/dx on the axis tends to 2(alpha_1 + alpha_2 - 1) - 2.
+        slope = sp.limit(vm.norm(x1 * sp.diff(sp.log(g[1, 1]), x1)).subs(x2, 0), x1, sp.oo)
+        if sp.simplify(slope - (2 * (a1 + a2 - 1) - 2)) != 0:
+            raise AssertionError("point_particle_2plus1: far from two bodies the masses do not add")
+    else:
+        source = point_particle_chart("wedge")
+        c, v, gamma = chart.reader.c, p["v"], p["gamma"]
+        beta = sp.Symbol("beta", positive=True)
+        X = (x1 - beta * x0) / sp.sqrt(1 - beta ** 2)
+        image = [(x0 - beta * x1) / sp.sqrt(1 - beta ** 2), sp.sqrt(X ** 2 + x2 ** 2), sp.atan2(x2, X)]
+        difference = pulled(source, image, {})
+        if difference.applyfunc(sp.simplify) != sp.zeros(n, n):
+            raise AssertionError("point_particle_2plus1: the rest frame's wedge chart boosted misses the moving chart")
+
+
+CHARTS["point_particle_2plus1"] = [lambda s=s: point_particle_2plus1(s) for s in PARTICLE_CHARTS]
 
 
 def write(spec):

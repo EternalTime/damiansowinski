@@ -1,0 +1,1709 @@
+{
+  "id": "point_particle_2plus1",
+  "name": "Point Particles in Three Dimensions",
+  "short_name": "Point Particles in Three Dimensions",
+  "description": "Gravity with one dimension of space removed, where a mass makes no field around itself. Spacetime is flat everywhere off a particle's world line, and space around the particle is a cone, missing a wedge whose angle is set by the mass.",
+  "tags": [
+    "point particle",
+    "conical",
+    "angular deficit",
+    "flat",
+    "locally flat",
+    "three-dimensional gravity",
+    "lower-dimensional gravity",
+    "topological defect",
+    "gravitational lensing",
+    "circular symmetry",
+    "static",
+    "stationary",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "three-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+)",
+  "convention": "We keep factors of $c$ explicit. A particle of mass $m$ enters through $\\alpha = 1 - 4Gm/c^2$, with $G$ Newton's constant in three dimensions, and removes a wedge of angle $2\\pi(1 - \\alpha) = 8\\pi Gm/c^2$.",
+  "history": "Cut a wedge out of a sheet of paper and tape the two edges together. The sheet is as flat as it was everywhere but at the tip, and whoever walks a circle around the tip gets home early. How does Einstein's gravity work in a universe with two dimensions of space and one of time? Andrzej Staruszkiewicz was the first to work it out, and his answer of 1963 is that paper cone [staruszkiewicz1963, carlip2005]. Gravity there, he wrote, is \"a theory without a field of gravitation; where no matter is present, space is flat\", and he expected a body at rest to make \"the product of a cone and straight line of time-like nature\" [staruszkiewicz1963].¶The mass sets the size of the wedge: a particle of mass $m$ removes an angle $8\\pi Gm/c^2$ and leaves space flat everywhere else [deser1984]. So what do two masses do to each other? Staruszkiewicz wrote down two bodies at rest side by side and called their existence \"a special feature of three-dimensional gravitation theory\" [staruszkiewicz1963]. For bodies in motion he gave a tailor's recipe: pick a straight world line for each body in flat spacetime, cut a wedge out along each, and \"bring the edges together\" [staruszkiewicz1963]. Steven Carlip writes that progress then \"continued sporadically over the next twenty years\" [carlip2005].¶Steven Giddings, James Abbott, and Karel Kuchař came back to it as \"a preparation for studying quantum models\", since here \"the gravitational field has no dynamical degrees of freedom\" [giddings1984]. J. Richard Gott and Mark Alpert came by way of Edwin Abbott's novel Flatland of 1884, taking up Alexander Dewdney's challenge to scientists to work out how their disciplines would operate in such a world [gott1984]. Their point mass is a cone whose \"angle deficit at the apex is proportional to the mass\", and their planet of uniform density is a cap of a sphere set into the cone [gott1984]. Stanley Deser, Roman Jackiw, and Gerard 't Hooft, who credit Staruszkiewicz with the solutions for one and two bodies at rest, wrote space around any number of them in one line [deser1984]. The three papers reached their journals between 26 November 1982 and 29 June 1983 [gott1984, giddings1984, deser1984].¶How heavy can a particle be? A wedge can open only so far: at $m = c^2/4G$ the cone has closed into a cylinder, and Deser, Jackiw, and 't Hooft read a heavier particle as a lighter one sitting at infinity [deser1984]. Two or more particles may weigh up to twice that together, and at exactly $c^2/2G$ the missing wedges add to two full turns and space closes on itself [deser1984]. Gott and Alpert's picture of that universe is a convex polyhedron with a mass at every corner [gott1984]. Deser, Jackiw, and 't Hooft wrote that a beam of light sent at a particle \"would be split and reunited on the other side of the singularity\", which is how a mass that pulls on nothing can still be found [deser1984].¶Add a dimension along the particle and it is a straight cosmic string, whose exact exterior Gott found in 1985 to be this same cone [gott1985, carroll1994]. Six years later he sent two of them past each other and found that, if each moves fast enough that $\\gamma\\sin(4\\pi Gm/c^2) > 1$, with $\\gamma$ its Lorentz factor, a traveler circling the pair returns to their own past [gott1991]. That ran into a sentence of Deser, Jackiw, and 't Hooft's, that such curves \"are not possible in a space with n moving spinless particles\" [deser1984]. They answered that the pair, taken as one body, would be moving faster than light though each particle is slower: it has \"a tachyonic center of mass\", which no physical source has [deser1992]. Sean Carroll, Edward Farhi, and Alan Guth tried to build the pair from particles at rest and found \"never enough mass in an open universe\" [carroll1992]. A closed universe has enough, and there 't Hooft showed that space shrinks to a \"big crunch\" before the curve can close [carroll1994, thooft1992].¶In 1988 Deser and Jackiw found how a quantum particle scatters off the cone, 't Hooft how two of the particles scatter off each other, and Edward Witten that the whole theory is exactly soluble [deser1988, thooft1988, witten1988]. Give this world a negative cosmological constant, as Deser and Jackiw did in 1984, and it grows a black hole, which Máximo Bañados, Claudio Teitelboim, and Jorge Zanelli found in 1992 [deser1984cosmological, banados1992]. Anti-de Sitter space sits below the lightest black hole across \"a mass gap of one unit\", and the cones lie in between, where Bañados, Teitelboim, and Zanelli set them aside as naked singularities [banados1992]. Two of the particles thrown at each other there become that black hole once their energy passes a threshold, which is Hans-Jürgen Matschull's result of 1999 [matschull1999]. By Carlip's account in 2005 there was \"not yet a comprehensive review of gravitating point particles in 2+1 dimensions\" [carlip2005].",
+  "related": [
+    {
+      "id": "cosmic_string",
+      "kind": "generalisation",
+      "text": "The particle with a dimension added along it. A straight cosmic string is this cone times a line, and a slice across the string is the particle's space [gott1985, carroll1994]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "locally_same",
+      "text": "Flat spacetime of three dimensions with a wedge cut out along a world line and the two faces glued together. Off the particle the curvature vanishes [staruszkiewicz1963]."
+    },
+    {
+      "id": "spinning_string",
+      "kind": "generalisation",
+      "text": "The particle given spin, and a dimension along it. Time then jumps by $8\\pi GJ/c^4$ on each circuit, and close in the circles around it are closed timelike curves [deser1984]."
+    },
+    {
+      "id": "gott_time_machine",
+      "kind": "composite",
+      "text": "Two of these particles passing one another, each drawn out into a string. If each moves fast enough, a traveler circling the pair returns to their own past [gott1991]."
+    },
+    {
+      "id": "btz",
+      "kind": "family",
+      "text": "The same world with a negative cosmological constant grows a black hole. The cones lie between anti-de Sitter space and the lightest hole, and two particles that collide hard enough make one [banados1992, matschull1999]."
+    }
+  ],
+  "references": [
+    "staruszkiewicz1963",
+    "carlip2005",
+    "deser1984",
+    "giddings1984",
+    "gott1984",
+    "gott1985",
+    "carroll1994",
+    "gott1991",
+    "deser1992",
+    "carroll1992",
+    "thooft1992",
+    "deser1988",
+    "thooft1988",
+    "witten1988",
+    "deser1984cosmological",
+    "banados1992",
+    "matschull1999"
+  ],
+  "coordinates": [
+    {
+      "id": "conical",
+      "name": "Conical",
+      "coords": [
+        "t",
+        "r",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "r = 0 \\;\\text{(the particle, a conical singularity)}",
+        "\\text{flat: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\alpha",
+          "description": "$\\alpha = 1 - 4Gm/c^2$, with $m$ the particle's mass and $G$ Newton's constant in three dimensions, $0 < \\alpha \\le 1$; the deficit angle is $2\\pi(1 - \\alpha)$"
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\phi)$, with $t$ carrying dimensions of time, $r$ the proper distance from the particle, and $\\phi$ periodic in $2\\pi$, the deficit carried by $g_{\\phi\\phi} = \\alpha^2r^2$, the form Gott gave the cosmic string. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dr^2 + \\alpha^2r^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\alpha^2\\,r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{\\alpha^2\\,r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\alpha^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\alpha^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\alpha^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\alpha^2\\,r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{r} - \\alpha^2\\,r\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "wedge",
+      "name": "Wedge Removed",
+      "coords": [
+        "t",
+        "r",
+        "\\theta"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, 2\\pi\\alpha)",
+        "\\theta \\sim \\theta + 2\\pi\\alpha",
+        "r = 0 \\;\\text{(the particle, a conical singularity)}",
+        "\\text{flat: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\alpha",
+          "description": "$\\alpha = 1 - 4Gm/c^2$, with $m$ the particle's mass and $G$ Newton's constant in three dimensions, $0 < \\alpha \\le 1$; the deficit angle is $2\\pi(1 - \\alpha)$"
+        }
+      ],
+      "convention": "We use Staruszkiewicz's flat coordinates $(t, r, \\theta)$, with $t$ carrying dimensions of time, $r$ the proper distance from the particle, and $\\theta = \\alpha\\phi$ periodic in $2\\pi\\alpha$, so that the line element is Minkowski's. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dr^2 + r^2d\\theta^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{r} - r\\,\\dot{\\theta}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} = 0"
+      ]
+    },
+    {
+      "id": "circumference",
+      "name": "Circumference Radius",
+      "coords": [
+        "t",
+        "R",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "R \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "R = 0 \\;\\text{(the particle, a conical singularity)}",
+        "\\text{flat: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\alpha",
+          "description": "$\\alpha = 1 - 4Gm/c^2$, with $m$ the particle's mass and $G$ Newton's constant in three dimensions, $0 < \\alpha \\le 1$; the deficit angle is $2\\pi(1 - \\alpha)$"
+        }
+      ],
+      "convention": "We use Staruszkiewicz's coordinates $(t, R, \\phi)$, with $t$ carrying dimensions of time, $\\phi$ periodic in $2\\pi$, and $R = \\alpha r$ for $r$ the proper distance from the particle, so that the circle of constant $t$ and $R$ has circumference $2\\pi R$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + \\dfrac{dR^2}{\\alpha^2} + R^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "R",
+            "R"
+          ],
+          "value": "\\dfrac{1}{\\alpha^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "R^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "R",
+            "R"
+          ],
+          "value": "\\alpha^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{R^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\alpha^2\\,R"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "\\dfrac{1}{R}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "R"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "R"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{R} - \\alpha^2\\,R\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{R}\\dot{R}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "isotropic",
+      "name": "Isotropic",
+      "coords": [
+        "t",
+        "\\rho",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\rho \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "\\rho = 0 \\;\\text{(the particle, a conical singularity)}",
+        "\\text{flat: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\alpha",
+          "description": "$\\alpha = 1 - 4Gm/c^2$, with $m$ the particle's mass and $G$ Newton's constant in three dimensions, $0 < \\alpha \\le 1$; the deficit angle is $2\\pi(1 - \\alpha)$"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "An arbitrary length; changing it rescales the isotropic coordinates, which is a change of coordinates"
+        }
+      ],
+      "convention": "We use Deser, Jackiw, and 't Hooft's isotropic coordinates $(t, \\rho, \\phi)$, with $t$ carrying dimensions of time, $\\phi$ periodic in $2\\pi$, and $\\rho$ a radius in which space is conformally flat, at the proper distance $r = (\\ell/\\alpha)(\\rho/\\ell)^\\alpha$ from the particle. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + \\left(\\dfrac{\\rho}{\\ell}\\right)^{2\\alpha - 2}\\left(d\\rho^2 + \\rho^2d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2\\alpha - 2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\rho^2\\left(\\dfrac{\\rho}{\\ell}\\right)^{2\\alpha - 2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2\\alpha}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{\\rho^2}\\left(\\dfrac{\\rho}{\\ell}\\right)^{2 - 2\\alpha}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\alpha - 1}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\alpha\\,\\rho"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\alpha}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\alpha}{\\rho}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(\\alpha - 1\\right)\\left(\\dfrac{\\rho}{\\ell}\\right)^{2\\alpha - 2}}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\alpha\\,\\rho\\left(\\dfrac{\\rho}{\\ell}\\right)^{2\\alpha - 2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\alpha\\,\\rho\\left(\\dfrac{\\rho}{\\ell}\\right)^{2\\alpha - 2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\alpha\\,\\rho\\left(\\dfrac{\\rho}{\\ell}\\right)^{2\\alpha - 2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{\\rho} + \\dfrac{\\alpha - 1}{\\rho}\\dot{\\rho}^2 - \\alpha\\,\\rho\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\alpha}{\\rho}\\dot{\\rho}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "two_bodies",
+      "name": "Two Bodies at Rest",
+      "coords": [
+        "t",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "(x, y) = (\\pm d, 0) \\;\\text{(the particles, conical singularities)}",
+        "\\alpha_1 + \\alpha_2 > 1 \\;\\text{(space is open)}",
+        "\\text{flat: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\alpha_1",
+          "description": "$\\alpha_1 = 1 - 4Gm_1/c^2$ for the particle of mass $m_1$ at $(x, y) = (d, 0)$, which removes a wedge of angle $2\\pi(1 - \\alpha_1)$"
+        },
+        {
+          "symbol": "\\alpha_2",
+          "description": "$\\alpha_2 = 1 - 4Gm_2/c^2$ for the particle of mass $m_2$ at $(x, y) = (-d, 0)$, which removes a wedge of angle $2\\pi(1 - \\alpha_2)$; far from both the deficit angle is $2\\pi(2 - \\alpha_1 - \\alpha_2)$"
+        },
+        {
+          "symbol": "d",
+          "description": "Half the coordinate distance between the two particles, a length"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "An arbitrary length; changing it rescales the isotropic coordinates, which is a change of coordinates"
+        },
+        {
+          "symbol": "\\rho_1 = \\sqrt{(x - d)^2 + y^2}",
+          "description": "Coordinate distance from the particle of mass $m_1$"
+        },
+        {
+          "symbol": "\\rho_2 = \\sqrt{(x + d)^2 + y^2}",
+          "description": "Coordinate distance from the particle of mass $m_2$"
+        },
+        {
+          "symbol": "\\Omega = \\left(\\dfrac{\\rho_1}{\\ell}\\right)^{2\\alpha_1 - 2}\\left(\\dfrac{\\rho_2}{\\ell}\\right)^{2\\alpha_2 - 2}",
+          "description": "Conformal factor of space, the product of the two particles' own factors"
+        }
+      ],
+      "convention": "We use the isotropic coordinates $(t, x, y)$ of Staruszkiewicz and of Deser, Jackiw, and 't Hooft for two particles at rest, with $t$ carrying dimensions of time and $x$ and $y$ lengths in which space is conformally flat. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + \\Omega\\left(dx^2 + dy^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\Omega"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\Omega"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{\\Omega}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{\\Omega}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\Omega\\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\Omega\\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\Omega\\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\Omega\\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\Omega\\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\Omega\\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\Omega\\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\Omega\\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{x} + \\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)\\dot{x}^2 + 2\\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)\\dot{x}\\dot{y} - \\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)\\dot{y}^2 = 0",
+        "\\ddot{y} - \\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)\\dot{x}^2 + 2\\left(\\dfrac{\\left(\\alpha_1 - 1\\right)\\left(x - d\\right)}{\\rho_1^2} + \\dfrac{\\left(\\alpha_2 - 1\\right)\\left(x + d\\right)}{\\rho_2^2}\\right)\\dot{x}\\dot{y} + \\left(\\dfrac{y\\left(\\alpha_1 - 1\\right)}{\\rho_1^2} + \\dfrac{y\\left(\\alpha_2 - 1\\right)}{\\rho_2^2}\\right)\\dot{y}^2 = 0"
+      ]
+    },
+    {
+      "id": "moving",
+      "name": "Moving Particle",
+      "coords": [
+        "t",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "x = vt,\\; y = 0 \\;\\text{(the particle, a conical singularity)}",
+        "|y| < \\gamma(vt - x)\\tan\\left(\\pi(1 - \\alpha)\\right) \\;\\text{(the wedge removed, for } \\alpha > 1/2\\text{)}",
+        "(t, x, y) \\sim (t, x, -y) \\;\\text{(on the faces of the wedge)}",
+        "\\text{flat: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\alpha",
+          "description": "$\\alpha = 1 - 4Gm/c^2$, with $m$ the particle's mass and $G$ Newton's constant in three dimensions, $0 < \\alpha \\le 1$; the deficit angle is $2\\pi(1 - \\alpha)$"
+        },
+        {
+          "symbol": "v",
+          "description": "Speed of the particle along $x$"
+        },
+        {
+          "symbol": "\\gamma",
+          "description": "Lorentz factor of the particle, $\\gamma = (1 - v^2/c^2)^{-1/2}$"
+        }
+      ],
+      "convention": "We use the inertial coordinates $(t, x, y)$ of a frame in which the particle moves along $x$ at speed $v$, with $t$ carrying dimensions of time and the missing wedge trailing the particle, its two faces identified at equal $t$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": []
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": []
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{x} = 0",
+        "\\ddot{y} = 0"
+      ]
+    },
+    {
+      "id": "planet",
+      "name": "Uniform Planet",
+      "coords": [
+        "t",
+        "\\chi",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\chi \\in [0, \\chi_0]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\cos\\chi_0 = \\alpha \\;\\text{(matching to the cone)}",
+        "a\\chi_0 \\;\\text{(proper radius of the planet)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Radius of the sphere the planet is a cap of, fixed by its mass per unit area $\\sigma$ through $a^{-2} = 8\\pi G\\sigma/c^2$"
+        },
+        {
+          "symbol": "\\chi_0",
+          "description": "Polar angle of the planet's edge, where the cap meets the cone, with $\\cos\\chi_0 = \\alpha = 1 - 4Gm/c^2$ for a planet of mass $m$"
+        }
+      ],
+      "convention": "We use coordinates $(t, \\chi, \\phi)$ inside Gott and Alpert's planet of uniform density, with $t$ carrying dimensions of time and $\\chi$ the polar angle from the centre on a cap of a sphere of radius $a$ that reaches $\\chi_0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + a^2d\\chi^2 + a^2\\sin^2\\chi\\,d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\sin^2\\chi"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "1"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-a^2\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "a^2\\sin^2\\chi"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\chi"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\csc^2\\chi}{a^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2}{a^2}",
+      "kretschmann": "K = \\dfrac{4}{a^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{a^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{a^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{\\chi} - \\sin\\chi\\cos\\chi\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

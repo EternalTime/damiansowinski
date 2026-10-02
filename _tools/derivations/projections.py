@@ -840,6 +840,27 @@ CAPTIONS = {
         "together, light from both sides arrives, and an observer there sees a source far to the left "
         "twice, at equal brightness and $\\delta$ apart.",
     ],
+    ("point_particle_2plus1", "conical", "beam"): [
+        "Space around the particle seen from above, $t$ left out, drawn with $r$ as the radius and the angle "
+        "$\\alpha\\phi$, in which space is flat and every light ray straight. That angle runs short of a full turn "
+        "by the deficit $\\delta = 2\\pi(1 - \\alpha)$, so a wedge of $\\delta$ is missing. With $\\phi$ measured "
+        "from the direction the beam is heading, the wedge lies behind the particle, and its two edges, "
+        "$\\phi = 0$ and $\\phi = 2\\pi$, are one line. A beam of parallel light arrives from the left, each ray a "
+        "null geodesic, turned by $\\Gamma^r{}_{\\phi\\phi}$ and $\\Gamma^\\phi{}_{r\\phi}$ alone.",
+        "Every ray stays straight: one that reaches an edge of the wedge carries on from the same point of the "
+        "other edge, in the same direction relative to it, so the rays that passed above the particle cross "
+        "those that passed below, here at a right angle. In the two sectors beside the wedge light from both "
+        "sides arrives, and an observer there sees a source far to the left twice, $\\delta$ apart.",
+    ],
+    ("point_particle_2plus1", "moving", "wedge"): [
+        "Space and time around a particle moving along $+x$ at $v = 3c/5$ ($\\alpha = 3/4$, $\\gamma = 5/4$), "
+        "$t$ up. The line element is Minkowski's, and the particle shows in the wedge it trails, drawn at three "
+        "times: the two faces of the wedge are one line, and an event on one face is the event straight across "
+        "from it on the other, at the same $t$.",
+        "At rest the wedge is $\\delta = 2\\pi(1 - \\alpha) = 90°$ wide. In this frame lengths along $x$ are contracted and lengths "
+        "along $y$ are untouched, so its half angle opens from $\\delta/2$ to "
+        "$\\arctan(\\gamma\\tan(\\delta/2))$, and the wedge is $103°$ wide.",
+    ],
     ("spinning_string", "proper_radius", "tipping"): [
         "The slice $z = 0$ of $t$, $r$, and $\\phi$, with $t$ up and $r$ as the radius, which puts the null "
         "directions straight out from the string at 45°. The cones stand at $t = 0$ around the circles "
@@ -979,6 +1000,12 @@ FIGURES = [
     # The deficit the conformal diagram draws with, 4 G mu/c^2 = 0.1, so delta = 36 degrees.
     Projection("cosmic_string", "conical", "beam", "light passing the string", lambda spec: string_rays(spec),
                {"mu": "1/40", "G": 1, "delta": "pi/5"}, {"z": "0"}, fields=("christoffel",)),
+    # The particle its cone is embedded at, alpha = 3/4, so delta = 90 degrees.
+    Projection("point_particle_2plus1", "conical", "beam", "light passing the particle",
+               lambda spec: string_rays(spec, body="particle"), {"alpha": "3/4"}, {}, fields=("christoffel",)),
+    # The same particle at three fifths of the speed of light, its wedge trailing it.
+    Projection("point_particle_2plus1", "moving", "wedge", "the wedge behind a moving particle",
+               lambda spec: moving_wedge(spec), {"alpha": "3/4", "v": "3/5", "gamma": "5/4"}, {}),
     # Bonnor's uniform beam at the profile its flat views declare.
     Projection("light_beam", "cartesian", "lens", "light sent with the beam and against it",
                lambda spec: beam_rays(spec), {}, {"y": "0"}, input=nr.LB_ONE_INPUT, fields=("christoffel",),
@@ -1032,8 +1059,9 @@ def draw(spec):
 
 # ---------------------------------------------------------------- light passing a cosmic string
 
-def string_rays(spec, n=12, half_width=1.8, left=-3.0, right=3.0, height=2.1):
-    """A parallel beam of light passing a cosmic string, on the plane z = 0 seen from above.
+def string_rays(spec, n=12, half_width=1.8, left=-3.0, right=3.0, height=2.1, body="string"):
+    """A parallel beam of light passing a cosmic string, on the plane z = 0 seen from above, or
+    passing a point particle in three dimensions, whose space is that plane, as `body` names it.
 
     The plane's metric, dr^2 + g_phiphi dphi^2 with g_phiphi = k^2 r^2, is flat, and the angle
     psi = pi + k (phi - pi) unrolls it isometrically onto the page, with the wedge
@@ -1110,15 +1138,15 @@ def string_rays(spec, n=12, half_width=1.8, left=-3.0, right=3.0, height=2.1):
     for m in slices.moments(spec.metric):
         reach = m.reach("conical", "r", reference=True)
         if not reach[0] == 0:
-            raise SystemExit(f"{key(spec)}: the embedding's cone does not reach the string")
+            raise SystemExit(f"{key(spec)}: the embedding's cone does not reach the {body}")
         a = np.linspace(wedge, 2 * np.pi - wedge, 721)
         arc = np.column_stack([reach[1] * np.cos(a), reach[1] * np.sin(a)])
         disc = clip_box(np.vstack([[0.0, 0.0], arc]), left, right, height)
         rims = [flat(run) for run in slices.clip_runs(arc, (left, -height), (right, height))]
         fig.slice(m, fills=[[flat(disc)]], lines=rims)
     fig.label(np.array([2.4, 0.0, 0.0]), "$\\delta$", "c")
-    fig.label(np.array([0.0, -0.12, 0.0]), "the string", "t", cls="small", dy=4)
-    fig.legend("line", "above", "light passing above the string")
+    fig.label(np.array([0.0, -0.12, 0.0]), f"the {body}", "t", cls="small", dy=4)
+    fig.legend("line", "above", f"light passing above the {body}")
     fig.legend("line", "below", "light passing below it")
     fig.legend("fill", "wedge", f"the missing wedge, $\\delta = {round(np.degrees(2 * wedge))}°$; its two edges are one line")
     fig.legend("fill", "double", "where light from both sides arrives")
@@ -1213,6 +1241,85 @@ def gott_loop(spec, x0=1.5, camera=Camera(-65, 24)):
     fig.legend("line", "edge", "the two faces of each wedge at one time of its string's rest frame")
     fig.legend("line", "axis", "from an event on one face to the same event on the other")
     fig.legend("line", "ctc", f"a closed timelike curve, at ${max(speeds):.2f}\\,c$")
+    fig.legend("cone", "cone", "future light cone")
+    return fig.done(), sl
+
+
+def moving_wedge(spec, top=2.0, reach=2.4, camera=Camera(-65, 24)):
+    """A point particle in three dimensions moving along +x, in the frame where it moves, drawn
+    cartesian with t up: its world line, and the wedge it trails at three times of that frame.
+
+    In the particle's rest frame, x1 = gamma (x - beta ct), ct1 = gamma (ct - beta x), the wedge is
+    |y| < -x1 tan(delta/2) with delta = 2 pi (1 - alpha), about the negative x1 axis, and its faces are
+    identified at equal ct1 by the rotation through delta about the particle. Two identified events
+    share ct1 and x1, so they share t and x as well and differ by the sign of y: in the frame where
+    the particle moves the faces are identified at equal t, across the wedge, and the wedge's half
+    angle there is arctan(gamma tan(delta/2)), wider than at rest. Every one of those statements is
+    checked on the events drawn, against the published metric, which is checked to be Minkowski's."""
+    sl = Slice(spec.metric, spec.system, ("t", "x", "y"), "cartesian", spec.params, spec.fixed)
+    g = sl.metric((0.0, 0.0, 0.0))
+    if not (np.array_equal(g, np.diag([-1.0, 1.0, 1.0])) and np.array_equal(sl.metric((0.7, -1.3, 2.1)), g)):
+        raise SystemExit(f"{key(spec)}: the published metric on the slice is not Minkowski's")
+    value = {k: float(nr.number(v)) for k, v in spec.params.items()}
+    alpha, beta, gamma = value["alpha"], value["v"], value["gamma"]
+    if not abs(gamma - 1 / np.sqrt(1 - beta ** 2)) < 1e-14:
+        raise SystemExit(f"{key(spec)}: gamma is not the one v fixes")
+    half = np.pi * (1 - alpha)
+    if not 0 < half < np.pi / 2:
+        raise SystemExit(f"{key(spec)}: the wedge is no narrower than a half plane")
+    wide = float(np.arctan(gamma * np.tan(half)))
+
+    def lab(ct1, x1, y):
+        """An event of the particle's rest frame in the chart's (ct, x, y)."""
+        return np.array([gamma * (ct1 + beta * x1), gamma * (x1 + beta * ct1), y])
+
+    def rest(e):
+        return np.array([gamma * (e[0] - beta * e[1]), gamma * (e[1] - beta * e[0]), e[2]])
+
+    def face(t, s, sign):
+        """The event of the face y = sign |y| at the chart's time t and the rest distance s from the particle."""
+        x1 = -s * np.cos(half)
+        return lab(t / gamma - beta * x1, x1, sign * s * np.sin(half))
+
+    rot = np.array([[np.cos(2 * half), -np.sin(2 * half)], [np.sin(2 * half), np.cos(2 * half)]])
+    times = (-top / 2, 0.0, top / 2)
+    for t in times:
+        for s_ in (0.5, reach):
+            up, down = face(t, s_, 1), face(t, s_, -1)
+            u1, d1 = rest(up), rest(down)
+            carried = rot @ u1[1:]
+            angle = np.arctan2(up[2], beta * t - up[1])
+            if not (abs(up[0] - t) < 1e-12 and abs(down[0] - t) < 1e-12 and abs(up[1] - down[1]) < 1e-12
+                    and abs(u1[0] - d1[0]) < 1e-12 and np.abs(carried - d1[1:]).max() < 1e-12
+                    and abs(angle - wide) < 1e-12):
+                raise SystemExit(f"{key(spec)}: the faces drawn are not the identified faces of the wedge")
+    k = np.array([1.0, beta, 0.0])
+    if not k @ g @ k < 0:
+        raise SystemExit(f"{key(spec)}: the particle's world line is not timelike")
+
+    draw = lambda e: sl.to_drawing((e[0], e[1], e[2]))
+    fig = Figure(spec.view, spec.label, camera)
+    far = max(abs(draw(face(t, reach, 1))[0]) for t in times) * 1.05
+    deep = abs(draw(face(0.0, reach, 1))[1]) * 1.1
+    fig.line("floor", np.array([[-far, -deep, 0], [far, -deep, 0], [far, deep, 0], [-far, deep, 0]]), closed=True)
+    fig.line("floor", np.array([[-far, 0, 0], [far, 0, 0]]))
+    fig.line("floor", np.array([[0, -deep, 0], [0, deep, 0]]))
+    fig.line("world", np.array([draw(np.array([-top, -beta * top, 0.0])), draw(np.array([top, beta * top, 0.0]))]))
+    for t in times:
+        here = np.array([t, beta * t, 0.0])
+        for sign in (1, -1):
+            fig.line("edge", np.array([draw(here), draw(face(t, reach, sign))]))
+        for s_ in (reach / 2, reach):
+            fig.line("axis", np.array([draw(face(t, s_, 1)), draw(face(t, s_, -1))]))
+    ahead = [np.array([t, beta * t + 1.0, 0.0]) for t in times[:2]]
+    cones = [future_cone(sl, tuple(e), 0.5, "tau") for e in ahead]
+    for apex, rim in sorted(cones, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    fig.label(draw(np.array([top, beta * top, 0.0])), "the particle", "b", cls="small", dy=-4)
+    fig.label(np.array([0.0, 0.0, top]), "$t$", "b", dy=-4)
+    fig.legend("line", "world", f"the particle, moving along $+x$ at ${beta:.1f}\\,c$")
+    fig.legend("line", "edge", f"the two faces of its wedge at three times, ${2 * np.degrees(wide):.0f}°$ apart")
+    fig.legend("line", "axis", "from an event on one face to the same event on the other, at one $t$")
     fig.legend("cone", "cone", "future light cone")
     return fig.done(), sl
 

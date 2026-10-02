@@ -2710,6 +2710,21 @@ class EmbeddingDiagrams(unittest.TestCase):
         for chi, rho, z in core:
             near(rho, math.sin(chi), f"Gott rho at {chi}")
             near(z - core[0][2], 1 - math.cos(chi), f"Gott z at {chi}")
+        # The point particle at alpha = 3/4: the cone outside Gott and Alpert's planet and down to
+        # its apex, and the planet, a cap of a unit sphere out to cos(chi_0) = 3/4, where they meet.
+        for pid in ("exterior", "apex"):
+            for r, rho, z in piece("point_particle_2plus1", pid, view=1):
+                near(rho, 0.75 * r, f"the particle's cone rho at {r}")
+                near(z, math.sqrt(1 - 0.75 ** 2) * r, f"the particle's cone z at {r}")
+        planet = piece("point_particle_2plus1", "core", view=1)
+        for chi, rho, z in planet:
+            near(rho, math.sin(chi), f"the planet's rho at {chi}")
+            near(z - planet[0][2], 1 - math.cos(chi), f"the planet's z at {chi}")
+        self.assertAlmostEqual(planet[-1][0], math.acos(0.75), places=12)
+        outside = piece("point_particle_2plus1", "exterior", view=1)
+        self.assertAlmostEqual(outside[0][0], math.tan(math.acos(0.75)), places=12)
+        near(planet[-1][1], outside[0][1], "the planet's edge and the cone's are one circle")
+        near(planet[-1][2], outside[0][2], "at one height")
         for number in range(len(self.embedding["frw"]["views"][0]["surfaces"])):
             hemisphere = piece("frw", "near", number)
             a = -hemisphere[0][2]
@@ -3231,9 +3246,9 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
                     self.assertGreater(label["clear"], 0, where)
             for layer in figure["layers"]:
                 self.assertIn(layer.get("flat", False), (False, True), where)
-        # Only the cone laid flat lies in the plane of the page.
+        # Only a cone laid flat lies in the plane of the page: the cosmic string's and the point particle's.
         flat = {name for name, view in self.views if any(layer.get("flat") for layer in view["figure"]["layers"])}
-        self.assertEqual(flat, {"cosmic_string"})
+        self.assertEqual(flat, {"cosmic_string", "point_particle_2plus1"})
 
     def test_a_label_that_names_a_circle_stands_beside_its_end(self):
         # The end of a circle on the page is (+-rho, z cos e) from where the axis meets z = 0, the
@@ -3350,7 +3365,8 @@ class StacksAndMovies(unittest.TestCase):
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("vaidya", "shell"): "$v - r$",
-              ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("milne", "hyperboloids"): "$ct$",
+              ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("point_particle_2plus1", "unroll"): "$\\Delta\\phi$",
+              ("milne", "hyperboloids"): "$ct$",
               ("einstein_rosen_waves", "pulse"): "$ct$", ("nariai", "universe"): "$ct$",
               ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
               ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
@@ -3449,7 +3465,8 @@ class StacksAndMovies(unittest.TestCase):
             self.assertEqual(len({f["label"] for f in movie["frames"]}), len(values), f"{where}: two frames share a name")
             frame_label, = [L for L in view["figure"]["labels"] if L.get("frame")]
             self.assertEqual(frame_label["text"], movie["frames"][0]["label"], where)
-            if metric_id == "cosmic_string":
+            if metric_id in ("cosmic_string", "point_particle_2plus1"):
+                # A cone unrolling is one moment, moved without stretching.
                 continue
             # A movie in time passes through every moment of its flat views, which are its frames.
             for surface in view["surfaces"]:
@@ -3925,8 +3942,9 @@ class TurningLightConeFigures(unittest.TestCase):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
         self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
-                                   "kerr_newman/dragging", "near_horizon_extreme_kerr/dragging", "som_raychaudhuri/tipping",
-                                   "spinning_string/tipping", "stockum_dust/tipping", "wormhole_time_machine/trip"})
+                                   "kerr_newman/dragging", "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
+                                   "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
+                                   "wormhole_time_machine/trip"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -3995,7 +4013,7 @@ class TurningLightConeFigures(unittest.TestCase):
         # side, t left out, so neither has another side.
         still = {f"{name}/{figure['id']}" for name, data in diagram_files().items()
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
-        self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens"})
+        self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "point_particle_2plus1/beam"})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -4145,6 +4163,10 @@ class Slices(unittest.TestCase):
               # and the centre of momentum chart about the strings.
               "gott_time_machine/grant_rindler/plane", "conformal gott_time_machine/grant_rindler",
               "gott_time_machine/centre_of_momentum/loop",
+              # Two point particles at rest, another spacetime than the one particle embedded, and the
+              # particle in motion, whose frame's moment is not its rest frame's.
+              "point_particle_2plus1/two_bodies/between", "point_particle_2plus1/two_bodies/beyond",
+              "conformal point_particle_2plus1/two_bodies", "point_particle_2plus1/moving/wedge",
               # Bell and Szekeres's regular chart, whose planes of T and Z lie off eta = 0, where the ring is.
               "bell_szekeres/regular/plane", "conformal bell_szekeres/regular",
               # The spinning string's cylinders inside r_c, whose circles are closed timelike curves.
@@ -4238,6 +4260,9 @@ class Slices(unittest.TestCase):
                     **{f"conformal randall_sundrum/{v}": {"two_walls"} for v in ("proper_distance", "conformal", "poincare")},
                     "randall_sundrum/two_walls/tphi": {"pseudosphere"},
                     "conformal randall_sundrum/two_walls": {"pseudosphere"},
+                    # Gott and Alpert's planet replaces the apex of the point particle's cone in the same way.
+                    "conformal point_particle_2plus1/planet": {"unroll"},
+                    "point_particle_2plus1/planet/radial": {"unroll"},
                     # Hayward's static hole and the hole that forms and evaporates are two spacetimes of one
                     # line element: the static and Eddington-Finkelstein drawings mark the static moment, outside
                     # r_+ and inside r_-, and the forming and evaporating ones the slices of constant v - r.
@@ -4713,6 +4738,16 @@ class Slices(unittest.TestCase):
         if key.startswith("zipoy_voorhees/prolate_spheroidal/"):
             # The prolate spheroidal x is r/m - 1 of the circles the embedding reaches in r, at m = 1.
             return (lambda X: 0.0), [r - 1 for r in self.reach(surface)]
+        if key.startswith("point_particle_2plus1/"):
+            # The cone is read in the conical chart from its apex, at alpha = 3/4 and ell = 1: the wedge
+            # chart's r is the same, the circumference radius is alpha r and the isotropic radius
+            # (alpha r)^(1/alpha); the planet's own plane carries the planet, in chi.
+            system = key.split("/")[1]
+            if system == "planet":
+                return (lambda X: 0.0), list(self.reach(surface, "planet"))
+            of = {"conical": lambda r: r, "wedge": lambda r: r, "circumference": lambda r: 0.75 * r,
+                  "isotropic": lambda r: (0.75 * r) ** (4 / 3)}[system]
+            return (lambda X: 0.0), [of(r) for r in self.reach(surface, "conical", reference=True)]
         if key == "levi_civita/kasner/radial":
             # The Kasner form's r is the proper distance from the axis, rho^Sigma/Sigma with
             # Sigma = 3/4 at sigma = 1/4, of the circles the embedding reaches in Weyl's rho.
@@ -4883,7 +4918,7 @@ class Slices(unittest.TestCase):
                     rings = [[floor(p) for p in ring] for rings in mark["fills"] for ring in rings]
                     rims = [[floor(p) for p in line] for line in mark["lines"]]
                     where = f"{metric_id}/{figure['id']}"
-                    if metric_id == "cosmic_string":
+                    if metric_id in ("cosmic_string", "point_particle_2plus1"):
                         hi = self.reach(surface, "conical", reference=True)[1]
                         self.assertLessEqual(max(max(r) for r in rings), hi + 1e-3, where)
                         self.assertTrue(all(abs(r - hi) < 1e-3 for rim in rims for r in rim), where)

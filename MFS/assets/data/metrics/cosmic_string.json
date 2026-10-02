@@ -68,6 +68,11 @@
       "id": "string_wave",
       "kind": "generalisation",
       "text": "The string plucked. A wave of any shape runs along it at the speed of light, and the cone around it becomes a pp-wave [garfinkle1990]."
+    },
+    {
+      "id": "point_particle_2plus1",
+      "kind": "special_case",
+      "text": "The string with the dimension along it taken away. A slice across the string is the space around a point mass in a world of two dimensions, the cone Andrzej Staruszkiewicz found in 1963 [staruszkiewicz1963, deser1984]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "hawking1995",
     "barriola1989",
     "deser1992time",
-    "garfinkle1990"
+    "garfinkle1990",
+    "staruszkiewicz1963"
   ],
   "coordinates": [
     {
