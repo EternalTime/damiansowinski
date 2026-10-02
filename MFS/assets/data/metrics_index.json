@@ -331,7 +331,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "fc1a50b5b067cdbc",
+    "version": "bcb482c27a0cb820",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -872,7 +872,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "1d3050d1ef86fe25",
+    "version": "7692f9b94eeb1003",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
@@ -2325,10 +2325,47 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "23bf07a161a99c44",
+    "version": "fbfd4f522930ffed",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
+  },
+  {
+    "id": "kerr_bertotti_robinson",
+    "name": "Kerr-Bertotti-Robinson",
+    "tags": [
+      "electrovacuum",
+      "Einstein-Maxwell",
+      "electromagnetic field",
+      "magnetic field",
+      "uniform field",
+      "rotating",
+      "rotating black hole",
+      "black hole",
+      "charged black hole",
+      "electric charge",
+      "stationary",
+      "axisymmetric",
+      "angular momentum",
+      "mass",
+      "ergoregion",
+      "frame dragging",
+      "ring singularity",
+      "curvature singularity",
+      "horizon",
+      "event horizon",
+      "Cauchy horizon",
+      "not asymptotically flat",
+      "Petrov type D",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "cff9cc87f49fe075",
+    "diagrams": "327c12a1d8899ef8",
+    "embedding": "0eafcc3d5202928b"
   },
   {
     "id": "kerr_de_sitter",
@@ -2406,7 +2443,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6aab7ad6c0f9b571",
+    "version": "c5d49fe57463b85d",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "76f39633ed5e928c",
     "embedding": "21f2586270043652"
@@ -2915,7 +2952,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a2c1c9b4490838dc",
+    "version": "7a3687cfad530f17",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "edd5386c486f11df",
     "embedding": "86969fc37532f407"
@@ -3987,7 +4024,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "99bbebfc612328f9",
+    "version": "6b640c91b3b9b12d",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

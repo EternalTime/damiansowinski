@@ -2590,6 +2590,10 @@ FLAT = {
     ("kerr_newman", "boyer_lindquist", "radial"): lambda: one("kerr_newman", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_newman", "boyer_lindquist", "principal"): lambda: one("kerr_newman", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_newman", "boyer_lindquist", "above"): lambda: kerr_above("kerr_newman"),
+    # Podolsky and Ovcharenko's spinning hole: the moment t = 0 meets each plane of t and r of the
+    # Boyer-Lindquist chart along t = 0 outside r_+.
+    **{("kerr_bertotti_robinson", "boyer_lindquist", view): lambda: one(
+        "kerr_bertotti_robinson", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))) for view in ("radial", "equator")},
     # Homogeneous planes: every moment runs across the whole drawing.
     # A moment of the areal time t is the line tau = -ln t of the logarithmic chart.
     ("gowdy", "areal", "plane"): lambda: one("gowdy", lambda m: along(m.time, *m.reach("areal", "\\theta"))),
@@ -2976,6 +2980,7 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("kerr_bertotti_robinson", "static", "radial"): "the hole with no spin, a = 0, another member of the family than the spinning hole whose equator is embedded",
     ("tilted_universes", "flat_model", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
     ("tilted_universes", "inertial", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
     ("kasner_magnetic", "rosen", "etax"): "the axisymmetric universe, exponents (0, 0, 1), another spacetime than the one embedded",

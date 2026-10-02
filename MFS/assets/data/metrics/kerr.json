@@ -195,6 +195,11 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "The form the metric of an isolated body takes on its outgoing light cones. Kerr's black hole is a member with no news, written in such coordinates by S. J. Fletcher and A. W. C. Lun in 2003 [sachs1962, fletcher2003]."
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "kind": "generalisation",
+      "text": "Kerr's hole in a magnetic field that points along its axis and is uniform far away, an exact solution of type D. With the field switched off it is Kerr's metric again [podolsky2025]."
     }
   ],
   "references": [
@@ -256,7 +261,8 @@
     "belinskii1979",
     "boshkayev2019",
     "sachs1962",
-    "fletcher2003"
+    "fletcher2003",
+    "podolsky2025"
   ],
   "coordinates": [
     {

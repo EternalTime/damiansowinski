@@ -16,7 +16,7 @@ born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, pet
 rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar,
 moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
-tilted_universes, bowers_liang and kasner_magnetic, and Godel's cylindrical chart.
+tilted_universes, bowers_liang, kasner_magnetic and kerr_bertotti_robinson, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -26425,6 +26425,341 @@ def tilted_universes_check(chart, system):
 
 
 CHARTS["tilted_universes"] = [lambda s=s: tilted_universes(s) for s in TILTED_CHARTS]
+
+
+# -- Kerr's black hole in Bertotti and Robinson's field ---------------------------------
+
+KBR_CHARTS = ["boyer_lindquist", "static"]
+KBR_I1 = "I_1 = 1 - \\dfrac{B^2a^2}{2}"
+KBR_I2 = "I_2 = 1 - B^2a^2"
+# The conicity is a constant of its own in both charts, so that no value spells it out; its value,
+# 1/P on the axis, is the one kerr_bertotti_robinson_conicity gives.
+KBR_C = "C"
+KBR_DELTA = "\\Delta = \\left(1 - \\dfrac{B^2m^2I_2}{I_1^2}\\right)r^2 - \\dfrac{2mI_2}{I_1}r + a^2"
+KBR_SIGMA = "\\Sigma = r^2 + a^2\\cos^2\\theta"
+KBR_P = "P = 1 + B^2\\left(\\dfrac{m^2I_2}{I_1^2} - a^2\\right)\\cos^2\\theta"
+KBR_Q = "Q = \\left(1 + B^2r^2\\right)\\Delta"
+KBR_OMEGA = "\\Omega = \\sqrt{1 + B^2r^2 - B^2\\Delta\\cos^2\\theta}"
+KBR_A = "A = P\\left(r^2 + a^2\\right)^2 - a^2Q\\sin^2\\theta"
+KBR_DRAG = "\\omega = \\dfrac{a\\left(P\\left(r^2 + a^2\\right) - Q\\right)}{A}"
+KBR_N = "N = \\dfrac{PQ\\Sigma}{A\\Omega^2}"
+KBR_F = "F = \\dfrac{\\Sigma}{\\Omega^2}"
+KBR_W = "W = \\dfrac{A\\sin^2\\theta}{\\Sigma\\Omega^2}"
+KBR_PARAMETERS = ["m", "a", "B", KBR_I1, KBR_I2, KBR_C, KBR_DELTA, KBR_SIGMA, KBR_P, KBR_Q, KBR_OMEGA, KBR_A,
+                  KBR_DRAG, KBR_N, KBR_F, KBR_W]
+KBR_STATIC_C = "C"
+KBR_STATIC_P = "P = 1 + B^2m^2\\cos^2\\theta"
+KBR_STATIC_F = "f = \\left(1 + B^2r^2\\right)\\left(1 - B^2m^2 - \\dfrac{2m}{r}\\right)"
+KBR_STATIC_OMEGA = "\\Omega = \\sqrt{1 + B^2r^2 - B^2\\left(\\left(1 - B^2m^2\\right)r^2 - 2mr\\right)\\cos^2\\theta}"
+KBR_STATIC_PARAMETERS = ["m", "B", KBR_STATIC_C, KBR_STATIC_P, KBR_STATIC_F, KBR_STATIC_OMEGA]
+# The Kretschmann scalar of the static chart: 48 Psi_2^2, with Podolsky and Ovcharenko's
+# Psi_2 = -(m/r^3)(1 + B^2 m r cos^2(theta)) Omega^2, plus 2 R_{ab} R^{ab} = 128 |Phi_0 Phi_2 - Phi_1^2|^2
+# of their Maxwell scalars; at m = 0 it is Bertotti and Robinson's 8 B^4.
+KBR_STATIC_KRETSCHMANN = (
+    "\\dfrac{48m^2\\left(1 + B^2mr\\cos^2\\theta\\right)^2\\Omega^4}{r^6}"
+    " + \\dfrac{8B^4\\left(f\\,P\\sin^2\\theta + \\left(1 - B^2m^2\\left(1 - 2\\cos^2\\theta\\right)"
+    " + B^2mr\\left(2 - \\left(1 - B^2m^2\\right)\\cos^2\\theta\\right)\\right)^2\\cos^2\\theta\\right)^2}{\\Omega^4}")
+
+
+def kerr_bertotti_robinson_line(system, c):
+    """The line element of a chart, with c the text that stands before the differential of the
+    time: empty in the chart x^0 = ct, and c where the time is the named one."""
+    if system == "static":
+        return ("ds^2 = \\dfrac{1}{\\Omega^2}\\left(-f\\," + (c + "^2" if c else "") + "dt^2 + \\dfrac{dr^2}{f}"
+                " + r^2\\left(\\dfrac{d\\theta^2}{P} + C^2P\\sin^2\\theta\\,d\\phi^2\\right)\\right)")
+    return ("ds^2 = -N\\," + (c + "^2" if c else "") + "dt^2 + F\\left(\\dfrac{dr^2}{Q} + \\dfrac{d\\theta^2}{P}\\right)"
+            " + W\\left(C\\,d\\phi - \\omega\\," + (c + "\\," if c else "") + "dt\\right)^2")
+
+
+def kerr_bertotti_robinson_pretty(value):
+    """How a value is written: over one denominator and factored, with the held names and their
+    derivatives standing as symbols while it is factored. Where the cosine of the polar angle
+    stands beside a sine that divides the whole, as in the mixed Einstein tensor of the static
+    chart, the cosine is written as the cotangent times the sine, and whichever form is shorter
+    is kept, so that no value carries a cosecant against a sum of sines."""
+    def factored(expression):
+        e, forward, back = cp.symbolize(sp.sympify(expression))
+        number, out = sp.Integer(1), sp.Integer(1)
+        for f in sp.Mul.make_args(sp.factor(sp.together(e))):
+            if f.is_Number:
+                number *= f
+            else:
+                out *= f
+        return _keep_coeff(number, out.xreplace(back))
+    plain = factored(value)
+    angles = [s for s in sp.sympify(value).free_symbols if s.name == "theta"]
+    if not angles:
+        return plain
+    th = angles[0]
+    if not (plain.has(sp.cos(th)) and plain.has(sp.sin(th))):
+        return plain
+    K = sp.Dummy("cot")
+    other = factored(sp.sympify(value).subs(sp.cos(th), K * sp.sin(th)))
+    if other.has(sp.cos(th)):
+        return plain
+    other = other.subs(K, sp.cot(th))
+    return other if sp.count_ops(other) < sp.count_ops(plain) else plain
+
+
+def kerr_bertotti_robinson(system):
+    """Podolsky and Ovcharenko's Kerr black hole in Bertotti and Robinson's uniform field, their
+    line element: ds^2 = Omega^-2 (-(Q/Sigma)(c dt - a sin^2(theta) dphi_s)^2 + Sigma dr^2/Q
+    + Sigma dtheta^2/P + (P sin^2(theta)/Sigma)(a c dt - (r^2 + a^2) dphi_s)^2), with their rho^2
+    written Sigma and their angle phi_s = C phi of period 2 pi C, C the conicity that makes both
+    halves of the axis regular. The first chart writes it in the four functions of a stationary
+    field with an axis, ds^2 = -N c^2 dt^2 + F (dr^2/Q + dtheta^2/P) + W (C dphi - omega c dt)^2,
+    with the squared lapse N = P Q Sigma/(A Omega^2) and the dragging rate
+    omega = a (P (r^2 + a^2) - Q)/A of their observers of no angular momentum, their R written A,
+    F = Sigma/Omega^2 and W = A sin^2(theta)/(Sigma Omega^2). The second chart is the hole with no
+    spin, their line element of that case, with their calligraphic Q written f.
+
+    Q, P, omega, N, F and W, and in the static chart Omega, f and P, are names the chart defines,
+    held as functions while the tensors are built (vm.HELD), so every value is written in them
+    and their derivatives. kerr_bertotti_robinson_check holds each chart to the Einstein-Maxwell
+    equations with their potential and to its limits, and kerr_bertotti_robinson.md beside this
+    file is the derivation."""
+    D = sp.Derivative
+    coords = ["t", "r", "\\theta", "\\phi"]
+    static = system == "static"
+    parameters = KBR_STATIC_PARAMETERS if static else KBR_PARAMETERS
+    held = vm.HELD[("kerr_bertotti_robinson", system)]
+    probe = vm.Reader(coords, parameters, (), held=held)
+    r, th = probe.symbol["r"], probe.symbol["\\theta"]
+    lead = []
+    if static:
+        Omega, f, P = (probe.parameters[name] for name in ("Omega", "f", "P"))
+        lead = [D(Omega, (r, 2)), D(Omega, r, th), D(Omega, (th, 2)), D(f, (r, 2)), D(P, (th, 2)),
+                D(Omega, r), D(Omega, th), D(f, r), D(P, th), f, P, Omega]
+        name = "Schwarzschild-Bertotti-Robinson"
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "f = 0 \\;\\text{(the horizon } r_h = \\dfrac{2m}{1 - B^2m^2}\\text{)}"]
+    else:
+        Q, P, omega, N, F, W = (probe.parameters[name] for name in held)
+        for function in (N, F, W, omega):
+            lead += [D(function, (r, 2)), D(function, r, th), D(function, (th, 2))]
+        lead += [D(Q, (r, 2)), D(P, (th, 2))]
+        for function in (N, F, W, omega):
+            lead += [D(function, r), D(function, th)]
+        lead += [D(Q, r), D(P, th), omega, N, F, W, Q, P]
+        name = "Podolský-Ovcharenko (Boyer-Lindquist)"
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (r_+, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = I_1\\dfrac{mI_2 \\pm \\sqrt{m^2I_2 - a^2I_1^2}}"
+                   "{I_1^2 - B^2m^2I_2}\\text{)}"]
+    spec = {
+        "metric_id": "kerr_bertotti_robinson",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": kerr_bertotti_robinson_line(system, "c")},
+        "chart_line_element": kerr_bertotti_robinson_line(system, ""),
+        "printer": {"lead": lead},
+        "pretty": kerr_bertotti_robinson_pretty,
+        "check": lambda chart: kerr_bertotti_robinson_check(chart, system),
+    }
+    if static:
+        spec["after"] = kerr_bertotti_robinson_scalars
+    return spec
+
+
+def kerr_bertotti_robinson_scalars(math, chart):
+    """The two scalars of the static chart, stated as functions of the coordinates: with the three
+    held names written out the Ricci scalar vanishes, the trace of Maxwell's stress, and the
+    Kretschmann scalar is KBR_STATIC_KRETSCHMANN."""
+    surface = chart.reader.surface
+    if vm.norm(surface(chart.geo.ricci_scalar())) != 0:
+        raise AssertionError("kerr_bertotti_robinson/static: the Ricci scalar does not vanish")
+    if vm.norm(surface(chart.reader(KBR_STATIC_KRETSCHMANN) - chart.geo.kretschmann())) != 0:
+        raise AssertionError("kerr_bertotti_robinson/static: the Kretschmann scalar is not the one stated")
+    math["ricci_scalar"] = "R = 0"
+    math["kretschmann"] = "K = " + KBR_STATIC_KRETSCHMANN
+    return math
+
+
+def kerr_bertotti_robinson_potential(chart, system):
+    """Podolsky and Ovcharenko's complex potential at the duality angle gamma = 0, whose real part
+    doubled is the potential, in the chart x^0 = ct with phi_s = C phi: (1/2B)(Omega_r (a dt - (r^2 + a^2) dphi_s)/(r + i a cos)
+    + i (Omega_theta/sin)(dt - a sin^2 dphi_s)/(r + i a cos) + (Omega - 1) dphi_s). The static
+    chart is the same at a = 0."""
+    t, r, th, phi = chart.symbols
+    B, C = (chart.reader.parameters[name] for name in ("B", "C"))
+    a = sp.Integer(0) if system == "static" else chart.reader.parameters["a"]
+    Omega = chart.reader.parameters["Omega"]
+    for _ in range(3):
+        Omega = sp.sympify(Omega).subs(chart.reader.held).doit()
+    z = r + sp.I * a * sp.cos(th)
+    first = [a, 0, 0, -(r ** 2 + a ** 2) * C]
+    second = [1, 0, 0, -a * sp.sin(th) ** 2 * C]
+    out = []
+    for i in range(4):
+        part = (sp.diff(Omega, r) * first[i] / z + sp.I * sp.diff(Omega, th) / sp.sin(th) * second[i] / z) / (2 * B)
+        if i == 3:
+            part += (Omega - 1) * C / (2 * B)
+        out.append(part)
+    return out
+
+
+def kerr_bertotti_robinson_written(chart, value):
+    """A value with the chart's held names written out by their definitions."""
+    for _ in range(3):
+        value = sp.sympify(value).subs(chart.reader.held).doit()
+    return value
+
+
+def kerr_bertotti_robinson_einstein_maxwell(chart, system, point, digits=40):
+    """The largest component of G_{mu nu} - 2 (F_{mu a} F_nu^a - g_{mu nu} F^2/4) over the largest
+    of G_{mu nu}, and the Ricci scalar over the same, at a point of rational coordinates and
+    parameters, in `digits` digits: every derivative is taken of the written out metric and
+    potential and evaluated there."""
+    x = chart.symbols
+    n = 4
+
+    def number(e):
+        return sp.N(e.subs(point), digits)
+    g = kerr_bertotti_robinson_written(chart, chart.geo.g)
+    G = sp.Matrix(n, n, lambda i, j: number(g[i, j]))
+    d1 = [[[number(sp.diff(g[i, j], x[k])) if k in (1, 2) else sp.Integer(0) for k in range(n)] for j in range(n)]
+          for i in range(n)]
+    d2 = [[[[number(sp.diff(g[i, j], x[k], x[l])) if {k, l} <= {1, 2} else sp.Integer(0) for l in range(n)]
+            for k in range(n)] for j in range(n)] for i in range(n)]
+    Gi = G.inv()
+    dGi = [-Gi * sp.Matrix(n, n, lambda i, j: d1[i][j][k]) * Gi for k in range(n)]
+
+    def lowered(l, j, k):
+        return d1[l][j][k] + d1[l][k][j] - d1[j][k][l]
+    gamma = [[[sum(Gi[i, l] * lowered(l, j, k) for l in range(n)) / 2 for k in range(n)] for j in range(n)]
+             for i in range(n)]
+
+    def dgamma(i, j, k, along):
+        return sum(dGi[along][i, l] * lowered(l, j, k)
+                   + Gi[i, l] * (d2[l][j][k][along] + d2[l][k][j][along] - d2[j][k][l][along]) for l in range(n)) / 2
+    ricci = sp.Matrix(n, n, lambda j, k: sum(
+        dgamma(i, j, k, i) - dgamma(i, j, i, k)
+        + sum(gamma[i][i][l] * gamma[l][j][k] - gamma[i][k][l] * gamma[l][j][i] for l in range(n)) for i in range(n)))
+    scalar = sum(Gi[i, j] * ricci[i, j] for i in range(n) for j in range(n))
+    potential = kerr_bertotti_robinson_potential(chart, system)
+    # The field is twice the real part of the complex one, taken once the numbers are in.
+    F = sp.Matrix(n, n, lambda i, j: 2 * sp.re(number(sp.diff(potential[j], x[i]) - sp.diff(potential[i], x[j]))))
+    mixed = F * Gi
+    square = sum((Gi * F * Gi)[i, j] * F[i, j] for i in range(n) for j in range(n))
+    stress = sp.Matrix(n, n, lambda i, j: sum(F[i, k] * mixed[j, k] for k in range(n)) - G[i, j] * square / 4)
+    einstein = ricci - G * scalar / 2
+    size = max(abs(einstein[i, j]) for i in range(n) for j in range(n))
+    return max(abs((einstein - 2 * stress)[i, j]) for i in range(n) for j in range(n)) / size, abs(scalar) / size
+
+
+def kerr_bertotti_robinson_conicity(reader, system):
+    """The conicity, their C, 1/P on the axis, which makes both halves of the axis
+    regular with phi of period 2 pi."""
+    m, B = reader.parameters["m"], reader.parameters["B"]
+    if system == "static":
+        return 1 / (1 + B ** 2 * m ** 2)
+    a = reader.parameters["a"]
+    I1, I2 = 1 - B ** 2 * a ** 2 / 2, 1 - B ** 2 * a ** 2
+    return 1 / (1 + B ** 2 * (m ** 2 * I2 / I1 ** 2 - a ** 2))
+
+
+def kerr_bertotti_robinson_check(chart, system):
+    """Each chart: with its held names written out, the Einstein tensor is twice Maxwell's stress
+    of Podolsky and Ovcharenko's potential and the Ricci scalar vanishes at two points of rational
+    coordinates, to 30 digits; C P is 1 at both poles, so the axis is regular with phi of period
+    2 pi; and the horizons are the roots of Delta in their formula. The first chart is
+    their line element with phi_s = C phi, slot by slot; at B = 0 it is the published
+    Boyer-Lindquist chart of kerr with GM/c^2 = m, and at a = 0 the static chart. The static chart
+    at B = 0 is the published chart of schwarzschild with r_s = 2m, its horizon is at
+    2m/(1 - B^2 m^2) with the surface gravity (1 + B^2 m^2)^2/(4m), and at m = 0 its Weyl tensor
+    vanishes."""
+    t, r, th, phi = chart.symbols
+    reader = chart.reader
+    m, B, C = (reader.parameters[name] for name in ("m", "B", "C"))
+    static = system == "static"
+    points = [{r: sp.Rational(23, 10), th: sp.Rational(4, 5), m: sp.Rational(2, 5), B: sp.Rational(1, 5)},
+              {r: sp.Rational(7, 2), th: sp.Rational(11, 5), m: 1, B: sp.Rational(3, 10)}]
+    if not static:
+        a = reader.parameters["a"]
+        points[0][a], points[1][a] = sp.Rational(7, 20), sp.Rational(1, 2)
+    conicity = kerr_bertotti_robinson_conicity(reader, system)
+    for point in points:
+        point[C] = conicity.subs(point)
+        residual, scalar = kerr_bertotti_robinson_einstein_maxwell(chart, system, point)
+        if residual > sp.Float("1e-30") or scalar > sp.Float("1e-30"):
+            raise AssertionError(f"kerr_bertotti_robinson/{system}: the Einstein-Maxwell equations fail at {point}")
+    written = lambda e: kerr_bertotti_robinson_written(chart, e)  # noqa: E731
+    P = written(reader.parameters["P"])
+    for pole in (0, sp.pi):
+        if vm.norm(conicity * P.subs(th, pole) - 1) != 0:
+            raise AssertionError(f"kerr_bertotti_robinson/{system}: C P on the axis is not 1")
+    g = written(chart.geo.g)
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        R = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        values = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        return entry, R, values
+
+    def same(here, metric_id, system_id, swap_of, what):
+        entry, R, values = published(metric_id, system_id)
+        swap = {R.symbol[n]: reader.symbol[n] for n in entry["coords"]}
+        swap.update(swap_of(R))
+        for i in range(4):
+            for j in range(4):
+                text = values.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+                if vm.norm(R(text).subs(swap, simultaneous=True) - here[i, j]) != 0:
+                    raise AssertionError(f"kerr_bertotti_robinson/{system}: {what} misses the published metric of "
+                                         f"{metric_id} in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if static:
+        same(g.subs({B: 0, C: 1}), "schwarzschild", "spherical", lambda R: {R.parameters["r_s"]: 2 * m}, "at B = 0 the chart")
+        f = written(reader.parameters["f"])
+        horizon = 2 * m / (1 - B ** 2 * m ** 2)
+        if vm.norm(f.subs(r, horizon)) != 0:
+            raise AssertionError("kerr_bertotti_robinson/static: f does not vanish at 2m/(1 - B^2 m^2)")
+        if vm.norm(sp.diff(f, r).subs(r, horizon) / 2 - (1 + B ** 2 * m ** 2) ** 2 / (4 * m)) != 0:
+            raise AssertionError("kerr_bertotti_robinson/static: the surface gravity is not (1 + B^2 m^2)^2/(4m)")
+        # At m = 0 the three held names are those of Bertotti and Robinson's universe, and each
+        # distinct Weyl component is written out with them.
+        massless = {name: sp.sympify(value).subs(m, 0) for name, value in reader.held.items()}
+        weyl = chart.geo.weyl_llll()
+        distinct = {sp.sympify(weyl[i][j][k][l]).subs(m, 0) for i in range(4) for j in range(4) for k in range(4)
+                    for l in range(4)}
+        if any(vm.norm(e.subs(massless).doit()) != 0 for e in distinct):
+            raise AssertionError("kerr_bertotti_robinson/static: the Weyl tensor does not vanish at m = 0")
+        return
+    a = reader.parameters["a"]
+    I1, I2, Delta, Sigma, Q, Omega = (written(reader.parameters[name]) for name in ("I_1", "I_2", "Delta", "Sigma", "Q", "Omega"))
+    # Their line element, with phi_s = C phi.
+    Cw = C
+    first = sp.Matrix([1, 0, 0, -a * sp.sin(th) ** 2 * Cw])
+    second = sp.Matrix([a, 0, 0, -(r ** 2 + a ** 2) * Cw])
+    theirs = (-Q / Sigma * first * first.T + P * sp.sin(th) ** 2 / Sigma * second * second.T) / Omega ** 2
+    theirs[1, 1] += Sigma / (Q * Omega ** 2)
+    theirs[2, 2] += Sigma / (P * Omega ** 2)
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(theirs[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"kerr_bertotti_robinson: the chart misses Podolsky and Ovcharenko's line element "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    # Their formula for the horizons.
+    root = sp.sqrt(m ** 2 * I2 - a ** 2 * I1 ** 2)
+    numbers = {m: 1, a: sp.Rational(1, 2), B: sp.Rational(3, 10)}
+    for sign in (1, -1):
+        horizon = (m * I2 + sign * root) * I1 / (I1 ** 2 - B ** 2 * m ** 2 * I2)
+        if abs(sp.N(Delta.subs(r, horizon).subs(numbers), 40)) > sp.Float("1e-30"):
+            raise AssertionError("kerr_bertotti_robinson: Delta does not vanish at their horizons")
+    same(g.subs({B: 0, C: 1}), "kerr", "boyer_lindquist",
+         lambda R: {R.parameters["M"]: m, R.parameters["G"]: R.c ** 2, R.parameters["a"]: a}, "at B = 0 the chart")
+    spec = kerr_bertotti_robinson("static")
+    other = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                     held=vm.HELD[("kerr_bertotti_robinson", "static")])
+    swap = dict(zip(other.symbols, chart.symbols))
+    swap.update({other.reader.parameters[name]: reader.parameters[name] for name in ("m", "B", "C")})
+    there = kerr_bertotti_robinson_written(other, other.geo.g).xreplace(swap)
+    here = g.subs(a, 0)
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(there[i, j] - here[i, j]) != 0:
+                raise AssertionError(f"kerr_bertotti_robinson: at a = 0 the chart misses the static chart in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["kerr_bertotti_robinson"] = [lambda s=s: kerr_bertotti_robinson(s) for s in KBR_CHARTS]
 
 
 def write(spec):
