@@ -1525,6 +1525,172 @@ def self_creating_universe_check(chart, system):
         raise AssertionError(f"self_creating_universe: the {system} chart is not on the region its text names")
 
 
+# -- The universe from nothing ---------------------------------------------------------
+
+UFN_CHARTS = ("closed", "four_sphere", "scale_factor", "conformal", "lapse")
+UFN_SPHERE = "\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)"
+UFN_ANGLES = ["\\chi \\in [0, \\pi]", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def universe_from_nothing(system):
+    """Vilenkin's universe created from nothing, Phys. Lett. B 117, 25 (1982), and the saddle of Hartle
+    and Hawking's no boundary wave function: the southern half of a four sphere of radius l joined at
+    its equator to the waist of de Sitter's closed universe. Five charts: the closed slicing, his (2)
+    and (4), a = l cosh(ct/l), and Spradlin, Strominger and Volovich's global chart (7) to (9)\\; the
+    four sphere, his (5), a = l cos(tau/l) with ct changed to -i tau\\; the scale factor chart, his (3)
+    and its Euclidean form solved for the time, one line element that is Riemannian for a < l and
+    Lorentzian for a > l\\; the conformal chart, Spradlin, Strominger and Volovich's (10) and (11)\\; and
+    Feldbrugge, Lehners and Turok's gauge, their (14) with N -> N/a and (19), in which a^2 is a
+    quadratic in the time. universe_from_nothing_check holds each to the sphere or the hyperboloid of
+    radius l pulled back, to R_mu_nu = (3/l^2) g_mu_nu and no Weyl tensor, and the two halves to
+    meeting on a 3-sphere of radius l at rest. universe_from_nothing.md records each chart's source."""
+    charts = {
+        "closed": {
+            "name": "Closed Slicing", "coords": ["t", "\\chi", "\\theta", "\\phi"],
+            "domains": ["t \\in [0, \\infty)"] + UFN_ANGLES
+                       + ["t = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"],
+            "line": lambda c: f"ds^2 = -{c + '^2' if c else ''}dt^2 + \\ell^2\\cosh^2({c}t/\\ell){UFN_SPHERE}"},
+        "four_sphere": {
+            "name": "Four Sphere", "coords": ["\\tau", "\\chi", "\\theta", "\\phi"],
+            "domains": ["\\tau \\in [-\\pi\\ell/2, 0]"] + UFN_ANGLES
+                       + ["\\tau = -\\pi\\ell/2 \\;\\text{(the south pole)}",
+                          "\\tau = 0 \\;\\text{(the equator, joined to the waist of the closed slicing)}"],
+            "line": lambda c: f"ds^2 = d\\tau^2 + \\ell^2\\cos^2(\\tau/\\ell){UFN_SPHERE}"},
+        "scale_factor": {
+            "name": "Scale Factor", "coords": ["a", "\\chi", "\\theta", "\\phi"],
+            "domains": ["a \\in [0, \\infty)"] + UFN_ANGLES
+                       + ["a = 0 \\;\\text{(the south pole)}",
+                          "a = \\ell \\;\\text{(the join, Riemannian below and Lorentzian above)}"],
+            "line": lambda c: f"ds^2 = \\dfrac{{da^2}}{{1 - \\dfrac{{a^2}}{{\\ell^2}}}} + a^2{UFN_SPHERE}"},
+        "conformal": {
+            "name": "Conformal", "coords": ["\\eta", "\\chi", "\\theta", "\\phi"],
+            "domains": ["\\eta \\in [0, \\pi/2)"] + UFN_ANGLES
+                       + ["\\eta = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"],
+            "line": lambda c: ("ds^2 = \\dfrac{\\ell^2}{\\cos^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\theta^2"
+                               " + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)")},
+        "lapse": {
+            "name": "Quadratic Gauge", "coords": ["t", "\\chi", "\\theta", "\\phi"],
+            "domains": ["t \\in [0, \\infty)"] + UFN_ANGLES
+                       + ["t = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"],
+            "line": lambda c: (f"ds^2 = -\\dfrac{{\\ell^2{c + '^2' if c else ''}dt^2}}{{\\ell^2 + {c + '^2' if c else ''}t^2}}"
+                               f" + \\left(\\ell^2 + {c + '^2' if c else ''}t^2\\right){UFN_SPHERE}")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], ["\\ell"], ())
+    ell = probe.parameters["ell"]
+    first = probe.symbol[chart["coords"][0]]
+    printing = {
+        "closed": lambda: {"printer": {"lead": [ell], "arguments": {probe.c * first / ell: "ct/\\ell"}},
+                           "time": "t", "pretty": nariai_hyperbolic(probe.c * first / ell)},
+        "four_sphere": lambda: {"printer": {"lead": [ell], "arguments": {first / ell: "\\tau/\\ell"}},
+                                "pretty": ufn_circular(first / ell)},
+        "scale_factor": lambda: {"printer": {"lead": [ell], "rising": [first], "flip": False}},
+        "conformal": lambda: {"printer": {"lead": [ell]}, "pretty": nariai_conformal(first)},
+        "lapse": lambda: {"printer": {"lead": [ell]}, "time": "t"},
+    }[system]()
+    return {
+        "metric_id": "universe_from_nothing",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": ["\\ell"], "line_element": chart["line"]("c")},
+        "chart_line_element": chart["line"](""),
+        "check": lambda c: universe_from_nothing_check(c, system),
+        **printing,
+    }
+
+
+def ufn_circular(x):
+    """Each value of the four sphere factored, with (sin x + 1)(sin x - 1), which the factoring
+    leaves standing, written as -cos^2 x, so that sin x cos x stays as it is and a ratio of the two
+    reads as tan x."""
+    def pretty(value):
+        v = sp.factor(value)
+        if v.has(sp.sin(x) + 1) and v.has(sp.sin(x) - 1):
+            v = sp.factor(sp.trigsimp(v))
+        return v
+    return pretty
+
+
+def ufn_embedding(system, coords, ell, branch=None):
+    """(X_0, X_1, ..., X_4) of the chart's events, with (X_1, ..., X_4) = a n for the unit vector n
+    of the 3-sphere's angles: on the hyperboloid -X_0^2 + X_1^2 + ... + X_4^2 = l^2 in Minkowski
+    space for the Lorentzian charts, and on the sphere X_0^2 + ... + X_4^2 = l^2 in Euclid's for the
+    four sphere, X_0 = l sin(tau/l) negative on the southern half. The scale factor chart lands on
+    the sphere for branch "below", a < l, and on the hyperboloid for "above", a > l."""
+    x0, chi, theta, phi = coords
+    n = [sp.cos(chi), sp.sin(chi) * sp.cos(theta), sp.sin(chi) * sp.sin(theta) * sp.cos(phi),
+         sp.sin(chi) * sp.sin(theta) * sp.sin(phi)]
+    X0, a = {
+        "closed": lambda: (ell * sp.sinh(x0 / ell), ell * sp.cosh(x0 / ell)),
+        "four_sphere": lambda: (ell * sp.sin(x0 / ell), ell * sp.cos(x0 / ell)),
+        "conformal": lambda: (ell * sp.tan(x0), ell / sp.cos(x0)),
+        "lapse": lambda: (x0, sp.sqrt(ell ** 2 + x0 ** 2)),
+        "scale_factor": lambda: ((-sp.sqrt(ell ** 2 - x0 ** 2) if branch == "below" else sp.sqrt(x0 ** 2 - ell ** 2)),
+                                 x0),
+    }[system]()
+    return [X0] + [a * k for k in n]
+
+
+def universe_from_nothing_check(chart, system):
+    """The chart is the four sphere or de Sitter's hyperboloid of radius l pulled back, Riemannian
+    or Lorentzian as its text says, an Einstein space with Lambda = 3/l^2 and no Weyl tensor\\; the
+    scale factor chart is both, the sphere below a = l and the hyperboloid above it. The four sphere's
+    equator tau = 0 and the waist t = 0 of the closed slicing are each a 3-sphere of radius l whose
+    radius does not change across it, so the two halves join with no shell between them."""
+    ell = chart.reader.parameters["ell"]
+    x0 = chart.symbols[0]
+    pos = {ell: sp.Symbol("ell_", positive=True)}
+
+    def zero(expr, at=None):
+        e = sp.sympify(expr).subs(pos)
+        if at:
+            e = e.subs(at)
+        return sp.simplify(sp.expand_trig(e.rewrite(sp.exp))) == 0
+
+    branches = {"scale_factor": [("below", 1), ("above", -1)]}.get(system, [(None, 1 if system == "four_sphere" else -1)])
+    g = chart.geo.g
+    for branch, sign in branches:
+        P = ufn_embedding(system, chart.symbols, ell, branch)
+        # Inside each branch the scale factor is set to a multiple of l that keeps its roots real,
+        # a = l s, and the comparison made symbolically in s on that side.
+        # On each side of a = l the scale factor is written a = l(1 + s) or l/(1 + s) with s > 0, so
+        # that every root is of a positive number and the comparison is exact.
+        at = None
+        if branch:
+            s = sp.Symbol("s_", positive=True)
+            at = {x0: pos[ell] * (1 + s) if branch == "above" else pos[ell] / (1 + s)}
+        J = sp.Matrix([[sp.diff(p, v) for v in chart.symbols] for p in P])
+        pulled = J.T * sp.diag(sign, 1, 1, 1, 1) * J
+        for i in range(4):
+            for j in range(i, 4):
+                if not zero(pulled[i, j] - g[i, j], at):
+                    raise AssertionError(f"universe_from_nothing: the {'sphere' if sign > 0 else 'hyperboloid'} "
+                                         f"pulled back misses the {system} chart{' ' + branch if branch else ''} "
+                                         f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        if not zero(sign * P[0] ** 2 + sum(p ** 2 for p in P[1:]) - ell ** 2, at):
+            raise AssertionError(f"universe_from_nothing: the {system} chart leaves its surface")
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(ricci[a][b] - 3 * g[a, b] / ell ** 2) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError(f"universe_from_nothing: R_mu_nu is not (3/l^2) g_mu_nu in the {system} chart")
+    if any(vm.norm(value) != 0 for value in sp.flatten(chart.geo.weyl_llll())):
+        raise AssertionError(f"universe_from_nothing: the {system} chart has a Weyl tensor")
+    det = sp.simplify(g.det().subs(pos))
+    probe = {chart.symbols[1]: sp.pi / 3, chart.symbols[2]: sp.pi / 4, pos[ell]: 1}
+    for value, want in {"closed": [(0, -1), (1, -1)], "four_sphere": [(-sp.Rational(1, 2), 1)],
+                        "conformal": [(0, -1), (1, -1)], "lapse": [(0, -1), (2, -1)],
+                        "scale_factor": [(sp.Rational(1, 2), 1), (2, -1)]}[system]:
+        if sp.sign(det.subs(probe).subs(x0, value)) != want:
+            raise AssertionError(f"universe_from_nothing: the {system} chart has the wrong signature at "
+                                 f"{chart.coords_tex[0]} = {value}")
+    # The join: on tau = 0 and t = 0 (and eta = 0) the 3-sphere has radius l and is at rest.
+    if system in ("closed", "four_sphere", "conformal", "lapse"):
+        radius = sp.sqrt(g[1, 1]).subs(pos)
+        if not zero(radius.subs(x0, 0) - pos[ell]) or not zero(sp.diff(radius, x0).subs(x0, 0)):
+            raise AssertionError(f"universe_from_nothing: the {system} chart does not reach the join at rest "
+                                 "on a 3-sphere of radius l")
+
+
+
+
 # -- Aichelburg-Sexl ------------------------------------------------------------------
 
 def aichelburg_sexl(system):
@@ -3066,6 +3232,7 @@ MELVIN_GEODESICS = [
 CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
 CHARTS["elliptic_de_sitter"] = [lambda s=s: elliptic_de_sitter(s) for s in EDS_CHARTS]
 CHARTS["self_creating_universe"] = [lambda s=s: self_creating_universe(s) for s in SCU_CHARTS]
+CHARTS["universe_from_nothing"] = [lambda s=s: universe_from_nothing(s) for s in UFN_CHARTS]
 CHARTS["schwarzschild_ads"] = [lambda s=s: schwarzschild_ads(s) for s in SADS_CHARTS]
 CHARTS["topological_black_hole"] = [lambda s=s: topological_black_hole(s) for s in TBH_CHARTS]
 

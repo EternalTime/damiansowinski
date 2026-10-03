@@ -6219,6 +6219,127 @@ def de_sitter(ck, src):
     return views
 
 
+def universe_from_nothing(ck, src):
+    """The Lorentzian half of the universe from nothing, the upper half 0 <= T < pi/2 of de Sitter's
+    global square, X = chi across and T up, drawn at l = 1, one view per Lorentzian chart. Its lower
+    edge T = 0 is the waist, a 3-sphere of radius l, where the southern half of the four sphere is
+    joined on; the four sphere is Riemannian and has no place in a conformal diagram.
+
+    On the hyperboloid X0 = tan T and a = 1/cos T, so the closed slicing enters as tan T = sinh(t),
+    the scale factor chart above its join as cos T = 1/a, the conformal chart as T = eta, and
+    Feldbrugge, Lehners and Turok's gauge as tan T = t, each with X = chi. Each is checked against
+    the published metric and against the hyperboloid."""
+    params = {"ell": 1}
+    settings = "$\\ell = 1$."
+    maps = {
+        "closed": lambda t, chi: np.arctan(np.sinh(np.asarray(t, dtype=float))),
+        "scale_factor": lambda a, chi: np.arccos(1 / np.asarray(a, dtype=float)),
+        "conformal": lambda eta, chi: np.asarray(eta, dtype=float),
+        "lapse": lambda t, chi: np.arctan(np.asarray(t, dtype=float)),
+    }
+
+    def pq_of(system):
+        def pq(x0, chi):
+            T, X = maps[system](x0, chi), np.asarray(chi, dtype=float)
+            return (T - X) / 2, (T + X) / 2
+        return pq
+
+    planes = {
+        "closed": Plane(src, "universe_from_nothing", "closed", ("t", "\\chi"), EQUATOR, params),
+        "scale_factor": Plane(src, "universe_from_nothing", "scale_factor", ("a", "\\chi"), EQUATOR, params),
+        "conformal": Plane(src, "universe_from_nothing", "conformal", ("\\eta", "\\chi"), EQUATOR, params),
+        "lapse": Plane(src, "universe_from_nothing", "lapse", ("t", "\\chi"), EQUATOR, params),
+    }
+    samples = {"closed": (0.0, 6.0), "scale_factor": (1.001, 60.0), "conformal": (0.0, 1.55), "lapse": (0.0, 40.0)}
+    names = {"closed": "closed slicing", "scale_factor": "scale factor", "conformal": "conformal",
+             "lapse": "quadratic gauge"}
+    for system, plane in planes.items():
+        lo, hi = samples[system]
+        ck.chart(f"Universe from nothing, {names[system]}", plane, pq_of(system), ck.uniform(lo, hi),
+                 ck.uniform(0.01, 3.13), lambda x0, chi: (1, 0))
+    # Each chart lands where the hyperboloid puts it: X0 = tan T and a = 1/cos T.
+    land = {
+        "closed": (ck.uniform(0, 5, 2000), lambda t: (np.sinh(t), np.cosh(t))),
+        "scale_factor": (ck.uniform(1.001, 40, 2000), lambda a: (np.sqrt(a * a - 1), a)),
+        "conformal": (ck.uniform(0, 1.5, 2000), lambda e: (np.tan(e), 1 / np.cos(e))),
+        "lapse": (ck.uniform(0, 30, 2000), lambda t: (t, np.sqrt(1 + t * t))),
+    }
+    for system, (x0, embed) in land.items():
+        p, q = pq_of(system)(x0, np.zeros_like(x0))
+        T = p + q
+        X0, a = embed(x0)
+        scale = 1 + np.abs(X0) + a
+        ck.limit(f"Universe from nothing: the {names[system]} lands where the hyperboloid puts it",
+                 np.concatenate([(np.tan(T) - X0) / scale, (1 / np.cos(T) - a) / scale]), 0, 1e-9)
+    ck.limit("Universe from nothing: every chart's waist lands on T = 0",
+             [p + q for p, q in [pq_of(s)(np.array([x]), np.array([1.0])) for s, x in
+                                 (("closed", 0.0), ("scale_factor", 1.0), ("conformal", 0.0), ("lapse", 0.0))]],
+             np.zeros((4, 1)), 1e-12)
+    ck.finite("Universe from nothing: the waist is regular", planes["closed"].kretschmann(np.zeros(50), ck.uniform(0.1, 3, 50)))
+
+    box = [-0.35, PI + 0.35, -0.3, HALF + 0.3]
+    half = [[0, 0], [PI, 0], [PI, HALF], [0, HALF]]
+
+    def frame(v):
+        v.fill("region", half)
+        v.fill("cover", half)
+        v.line("scri", [[[0, HALF], [PI, HALF]]])
+        v.line("centre", [[[0, 0], [0, HALF]], [[PI, 0], [PI, HALF]]])
+        v.line("surface", [[[0, 0], [PI, 0]]])
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "b", dy=-5)
+        v.label_xt([HALF, 0], "waist", "t", "coord", dy=5)
+        v.label_xt([0, 1.2], "$\\chi = 0$", "r", dx=-6)
+        v.label_xt([PI, 1.2], "$\\chi = \\pi$", "l", dx=6)
+        v.legend("scri", "future infinity $\\mathscr{I}^+$, spacelike")
+        v.legend("centre", "the pole $\\chi = 0$ of the 3-sphere and its antipode $\\chi = \\pi$")
+        v.legend("surface", "the waist, a 3-sphere of radius $\\ell$, where the southern half of the "
+                            "four sphere is joined on")
+
+    s_chi = np.linspace(0, PI, 600)
+    views = []
+    v = View("closed", "Closed slicing", box, "closed")
+    frame(v)
+    grid(v, "t", pq_of("closed"), (0.25, 0.5, 1, 2), s_chi)
+    grid(v, "r", lambda chi, t: pq_of("closed")(t, chi), (PI / 4, HALF, 3 * PI / 4), np.geomspace(1e-6, 40, 500))
+    v.legend("cover", "the closed slicing above its waist, which $t$ and $\\chi$ cover")
+    v.legend("t", "$ct$ constant, at $1/4$, $1/2$, $1$ and $2$ times $\\ell$")
+    v.legend("r", "$\\chi$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$, comoving observers")
+    v.set(settings=settings)
+    views.append(v)
+
+    v = View("scale_factor", "Scale factor", box, "scale_factor")
+    frame(v)
+    grid(v, "t", pq_of("scale_factor"), (1.25, 2, 4, 8), s_chi)
+    grid(v, "r", lambda chi, a: pq_of("scale_factor")(a, chi), (PI / 4, HALF, 3 * PI / 4),
+         1 + np.geomspace(1e-9, 60, 500))
+    v.legend("cover", "the half above the join $a = \\ell$, which $a$ and $\\chi$ cover")
+    v.legend("t", "$a$ constant, at $1.25$, $2$, $4$ and $8$ times $\\ell$")
+    v.legend("r", "$\\chi$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    v.set(settings=settings)
+    views.append(v)
+
+    v = View("conformal", "Conformal", box, "conformal")
+    frame(v)
+    grid(v, "t", pq_of("conformal"), (PI / 8, PI / 4, 3 * PI / 8), s_chi)
+    grid(v, "r", lambda chi, e: pq_of("conformal")(e, chi), (PI / 4, HALF, 3 * PI / 4), np.linspace(0, HALF, 300))
+    v.legend("cover", "the half above the waist, which $\\eta$ and $\\chi$ cover")
+    v.legend("t", "$\\eta$ constant, at $\\pi/8$, $\\pi/4$ and $3\\pi/8$")
+    v.legend("r", "$\\chi$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    v.set(settings=settings)
+    views.append(v)
+
+    v = View("lapse", "Quadratic gauge", box, "lapse")
+    frame(v)
+    grid(v, "t", pq_of("lapse"), (0.25, 0.5, 1, 2), s_chi)
+    grid(v, "r", lambda chi, t: pq_of("lapse")(t, chi), (PI / 4, HALF, 3 * PI / 4), np.geomspace(1e-6, 1e6, 500))
+    v.legend("cover", "the half above the waist, which $t$ and $\\chi$ cover")
+    v.legend("t", "$ct$ constant, at $1/4$, $1/2$, $1$ and $2$ times $\\ell$")
+    v.legend("r", "$\\chi$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    v.set(settings=settings)
+    views.append(v)
+    return views
+
+
 SCU_BETA = 1.0          # a boost of rapidity 1, so that several copies fit the drawing
 
 
@@ -22530,6 +22651,7 @@ DRAWN = {
     "de_sitter": de_sitter,
     "elliptic_de_sitter": elliptic_de_sitter,
     "self_creating_universe": self_creating_universe,
+    "universe_from_nothing": universe_from_nothing,
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "string_bh_three_four_charges": string_bh_three_four_charges, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
@@ -24251,6 +24373,29 @@ CAPTIONS = {
         "$q = \\pi/4 + \\arctan(H\\eta + H\\rho/c)$, with $\\rho^2 = x^2 + y^2 + z^2$.",
         "The slicing covers the half above the observer's past horizon, so its $t \\to -\\infty$ "
         "is a null line where the coordinates end, and the spacetime goes on below it.",
+    ],
+    ("universe_from_nothing", "closed"): [
+        "The Lorentzian half of the universe from nothing on the upper half of de Sitter's square, from the "
+        "waist $T = 0$ to future infinity, each point in the diagram a 2-sphere. The closed slicing enters as "
+        "$\\tan T = \\sinh(ct/\\ell)$ and $X = \\chi$, and covers the whole half.",
+        "The southern half of the four sphere is joined on along the lower edge, where every line of "
+        "constant $t$ is a 3-sphere of radius $\\ell\\cosh(ct/\\ell)$ and the lowest is the waist, of "
+        "radius $\\ell$.",
+    ],
+    ("universe_from_nothing", "scale_factor"): [
+        "The scale factor chart above its join, $\\cos T = \\ell/a$ and $X = \\chi$, each point in the "
+        "diagram a 2-sphere. The join $a = \\ell$ is the lower edge, where the same line element turns "
+        "Riemannian and carries on as the four sphere.",
+    ],
+    ("universe_from_nothing", "conformal"): [
+        "The conformal chart, $T = \\eta$ and $X = \\chi$, each point in the diagram a 2-sphere. Its metric is "
+        "the Einstein static universe's times $\\ell^2/\\cos^2\\eta$, which diverges on future infinity "
+        "$\\eta = \\pi/2$.",
+    ],
+    ("universe_from_nothing", "lapse"): [
+        "Feldbrugge, Lehners and Turok's gauge, $\\tan T = ct/\\ell$ and $X = \\chi$, each point in the "
+        "diagram a 2-sphere. Its lines of constant $t$ are those of the closed slicing, with $ct = "
+        "\\ell\\sinh(ct_c/\\ell)$ for the proper time $t_c$ of the closed slicing.",
     ],
     ("self_creating_universe", "static"): [
         "De Sitter space, the hyperboloid $W^2 + X^2 + Y^2 + Z^2 - V^2 = r_0^2$ in flat space of five dimensions "

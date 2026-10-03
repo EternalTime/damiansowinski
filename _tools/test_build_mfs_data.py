@@ -4870,6 +4870,10 @@ class Slices(unittest.TestCase):
               *(f"conformal moving_mirror/{view}" for view in (
                   "inertial_thermal", "inertial_collapse", "inertial_uniform", "null", "mirror_rest", "thermal",
                   "collapse", "rindler")),
+              # The bowl and skirt of the universe from nothing is a slice that holds the time, the four
+              # sphere and de Sitter space together, which is no moment of space, so no drawing marks one.
+              *(f"universe_from_nothing/{system}/radial" for system in ("closed", "scale_factor", "conformal", "lapse")),
+              *(f"conformal universe_from_nothing/{system}" for system in ("closed", "scale_factor", "conformal", "lapse")),
               # A plane wave and the uniform field of Nordstrom's theory, other spacetimes than the point
               # mass and the dust universe whose moments are embedded.
               "nordstrom_scalar/conformal/tx", "nordstrom_scalar/uniform/tz",

@@ -143,6 +143,11 @@
       "id": "self_creating_universe",
       "kind": "locally_same",
       "text": "De Sitter space with each event identified with its images under a boost. J. Richard Gott and Li-Xin Li proposed it in 1998 as a universe whose earliest stretch of time is a loop [gott1998]."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "composite",
+      "text": "Half of de Sitter's closed universe, from its waist on, joined to half of its Euclidean four sphere. It is Vilenkin's universe created from nothing and the saddle of Hartle and Hawking's no boundary proposal [vilenkin1982, feldbrugge2017]."
     }
   ],
   "references": [
@@ -188,7 +193,9 @@
     "ruban1969",
     "gibbonshawking1979",
     "page2009",
-    "gott1998"
+    "gott1998",
+    "vilenkin1982",
+    "feldbrugge2017"
   ],
   "coordinates": [
     {

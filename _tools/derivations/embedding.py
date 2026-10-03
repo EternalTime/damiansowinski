@@ -469,13 +469,17 @@ class Slice:
     def proper(self, a, b):
         """The proper distance along the slice from x = a to x = b at fixed phi."""
         g, _, _, lo, hi = self._between(a, b)
-        return integrate(lambda s: math.sqrt(g(s)), lo, hi)
+        # On a timelike surface in Minkowski space, as de Sitter space's skirt, g_xx < 0 and this is
+        # the proper time along the profile.
+        return integrate(lambda s: math.sqrt(abs(g(s))), lo, hi)
 
     def across(self, a, b, turn):
         """The metric length of the line from x = a to b that turns steadily through
         `turn` radians per unit of proper distance."""
         g, gpp, _, lo, hi = self._between(a, b)
-        return integrate(lambda s: math.sqrt(g(s) * (1 + gpp(s) * turn ** 2)), lo, hi)
+        # The square of the line element is g_xx + g_phiphi turn^2 |g_xx| per unit dx^2, timelike
+        # where that is negative, and its magnitude is what is measured.
+        return integrate(lambda s: math.sqrt(abs(g(s) + gpp(s) * turn ** 2 * abs(g(s)))), lo, hi)
 
     def rise(self, a, b):
         """z(b) - z(a) of the surface of revolution, the quadrature of sqrt(g_xx - (drho/dx)^2),
@@ -1347,9 +1351,14 @@ class Checks:
         pts = np.array(piece.data()["points"])
         x, rho, z = pts[:, 0], pts[:, 1], pts[:, 2]
         sl = piece.sl
-        # In Minkowski space a chord's length is sqrt(drho^2 - dz^2), and every chord of a
-        # surface drawn there is spacelike.
-        chords = (np.sqrt(np.diff(rho) ** 2 - np.diff(z) ** 2) if sl.lorentz
+        # In Minkowski space a chord's interval is drho^2 - dz^2: spacelike on a slice whose g_xx is
+        # positive, as the hyperbolic plane, and timelike on one whose g_xx is negative, as the skirt
+        # of de Sitter space, where its length is sqrt(dz^2 - drho^2), checked to have that sign.
+        timelike = sl.lorentz and bool(np.all(sl.gxx_at(0.5 * (x[1:] + x[:-1])) < 0))
+        if timelike:
+            interval = np.diff(rho) ** 2 - np.diff(z) ** 2
+            self.add(f"{where}: every chord timelike, as g_xx < 0", float(max(0.0, np.max(interval))), 0.0)
+        chords = (np.sqrt(np.abs(np.diff(rho) ** 2 - np.diff(z) ** 2)) if sl.lorentz
                   else np.hypot(np.diff(rho), np.diff(z)))
         proper = np.array([sl.proper(a, b) for a, b in zip(x, x[1:])])
         self.add(f"{where}: along each chord", float(np.max(np.abs(chords - proper) / proper)), ALONG)
@@ -1360,13 +1369,16 @@ class Checks:
         worst = 0.0
         for i in range(len(x) - 1):
             a, b, L = x[i], x[i + 1], proper[i]
+            # On a timelike surface the line turns by less, so that it stays well inside the light
+            # cone and its length is not the small difference of two large ones.
+            turn = min(DPHI, 0.3 * L / max(rho[i], rho[i + 1])) if timelike else DPHI
             P = np.array([rho[i], 0.0, z[i]])
-            Q = np.array([rho[i + 1] * math.cos(DPHI), rho[i + 1] * math.sin(DPHI), z[i + 1]])
+            Q = np.array([rho[i + 1] * math.cos(turn), rho[i + 1] * math.sin(turn), z[i + 1]])
             d = Q - P
-            space = float(math.sqrt(d[0] ** 2 + d[1] ** 2 - d[2] ** 2) if sl.lorentz else np.linalg.norm(d))
-            length = sl.across(a, b, DPHI / L)
+            space = float(math.sqrt(abs(d[0] ** 2 + d[1] ** 2 - d[2] ** 2)) if sl.lorentz else np.linalg.norm(d))
+            length = sl.across(a, b, turn / L)
             worst = max(worst, abs(space - length) / length)
-        self.add(f"{where}: across, {DPHI} round the axis", worst, ACROSS)
+        self.add(f"{where}: across, {'at most ' if timelike else ''}{DPHI} round the axis", worst, ACROSS)
         want = np.sqrt(np.maximum(sl.gpp_at(x), 0.0))
         self.add(f"{where}: around, rho = sqrt(g_phiphi)", float(np.max(np.abs(rho - want))) / self.size, AROUND)
 
@@ -9322,6 +9334,65 @@ def misner(ck, src):
 
 
 
+UFN_TOP = 2.5                                  # the skirt is drawn up to a = 2.5 l
+
+
+def universe_from_nothing(ck, src):
+    """The bowl and its skirt: the slice chi = theta = pi/2 of the scale factor chart at l = 1, whose
+    metric da^2/(1 - a^2) + a^2 dphi^2 is the whole universe from nothing in one line element. Below
+    the join a = 1 it is positive definite, the southern hemisphere of a sphere of radius l in flat
+    space, z = -sqrt(1 - a^2), from the south pole a = 0 up to the equator; above it g_aa < 0, and it
+    is a timelike surface in Minkowski space dX^2 + dY^2 - dZ^2, the hyperboloid of one sheet
+    Z = sqrt(a^2 - 1), de Sitter space of two dimensions from its waist upward. Both meet the circle
+    a = 1 with a vertical tangent, where 1/g_aa vanishes, so the two pieces join with one tangent.
+    The geometry is the same at every moment, so it is one surface and no movie."""
+    fixed_at = {"chi": "pi/2", "theta": "pi/2"}
+    sl = Slice(src, "universe_from_nothing", "scale_factor", "a", "\\phi", fixed_at, {"ell": 1})
+    msl = Slice(src, "universe_from_nothing", "scale_factor", "a", "\\phi", fixed_at, {"ell": 1}, space="minkowski")
+    join = sl.horizons()[0]
+    ck.add("Universe from nothing: 1/g_aa vanishes at the join a = l", abs(join - 1.0) + abs(msl.horizons()[0] - 1.0),
+           1e-15)
+    top = UFN_TOP
+    size = 2 * top
+    below = np.linspace(0, 1, 402)[1:-1]
+    above = np.linspace(1, top, 402)[1:]
+    ck.add("Universe from nothing: g_aa > 0 below the join, a Riemannian surface",
+           float(max(0.0, -np.min(sl.gxx_at(below)))), 0.0)
+    ck.add("Universe from nothing: g_aa < 0 above the join, a Lorentzian surface",
+           float(max(0.0, np.max(msl.gxx_at(above)))), 0.0)
+    ck.stops("Universe from nothing, above the join in flat space", sl, above)
+    text = "the equator $a = \\ell$ of the four sphere, which is the waist of de Sitter space"
+    bowl = Piece("four_sphere", "sheet", sl, 0.0, join, -1.0, 1,
+                 (("axis", "the south pole $a = 0$ of the four sphere, a point like any other on it"), ("join", text)),
+                 [(0.5, "r", None), (math.sqrt(3) / 2, "r", None), (join, "horizon", "$a = \\ell$")], size)
+    skirt = Piece("de_sitter", "sheet", msl, join, top, 0.0, 1,
+                  (("join", text), ("edge", "the skirt runs on as the universe inflates, to $a \\to \\infty$")),
+                  [(1.5, "r", None), (2.0, "r", None), (top, "r", "$2.5\\,\\ell$")], size)
+    ck.isometry("Universe from nothing, the four sphere in flat space", bowl)
+    ck.isometry("Universe from nothing, de Sitter space in Minkowski space", skirt)
+    for p in (bowl, skirt):
+        ck.radius(f"Universe from nothing, {p.id}, rho = a", p, lambda a: a, size)
+    ck.form("Universe from nothing, the hemisphere z = -sqrt(l^2 - a^2)", bowl,
+            lambda a: -np.sqrt(np.maximum(1 - a * a, 0)), size)
+    ck.form("Universe from nothing, the hyperboloid Z = sqrt(a^2 - l^2)", skirt,
+            lambda a: np.sqrt(np.maximum(a * a - 1, 0)), size)
+    ck.join("Universe from nothing, the four sphere in flat space and de Sitter space in Minkowski space at a = l",
+            bowl, join, skirt, join)
+    surface = Surface([bowl, skirt])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *bowl.at(join), "$a = \\ell$", dx=10)
+    ring_label(fig, [0, 0, 0], *skirt.at(top), "$a = 2.5\\,\\ell$", dx=10)
+    fig.legend("fill", "cover", "the slice $\\chi = \\theta = \\pi/2$ of the scale factor chart, which $a$ and "
+                                "$\\phi$ cover")
+    fig.legend("line", "r", "$a$ constant, at $\\ell/2$ and $\\sqrt{3}\\,\\ell/2$ on the four sphere and at $1.5$, "
+                            "$2$ and $2.5$ times $\\ell$ on de Sitter space, each there a moment of the closed slicing")
+    fig.legend("line", "horizon", "the join $a = \\ell$, where the bowl and the skirt share a vertical tangent")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("bowl", "The four sphere and de Sitter space", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell = 1$, the unit of every length. Every length along the skirt above $a = \\ell$ is "
+                          "measured with $dX^2 + dY^2 - dZ^2$, where it is timelike along the profile.")]
+
+
 SCU_MOMENTS = (0.25, 0.5, 1.0, 1.5)            # c tau in the de Sitter radius r_0
 
 
@@ -15449,6 +15520,7 @@ DRAWN = {
     "schwarzschild": schwarzschild,
     "misner": misner,
     "self_creating_universe": self_creating_universe,
+    "universe_from_nothing": universe_from_nothing,
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
     "ori_time_machine": ori_time_machine,
@@ -17668,6 +17740,15 @@ CAPTIONS = {
         "The cylinders open from a line on the Cauchy horizon $\\tau = 0$, where the circles are closed null "
         "geodesics, and widen and lengthen as the universe inflates. Before the horizon the same circles are "
         "closed timelike curves.",
+    ],
+    ("universe_from_nothing", "bowl"): [
+        "The slice $\\chi = \\theta = \\pi/2$ of the universe from nothing, its metric $da^2/(1 - a^2/\\ell^2) + "
+        "a^2\\,d\\phi^2$, with every distance along the surface the metric distance. Below $a = \\ell$ it is a "
+        "hemisphere of radius $\\ell$ in flat space, from the south pole of the four sphere up to its equator.",
+        "Above $a = \\ell$ the same line element is Lorentzian, and the slice is the hyperboloid "
+        "$Z = \\sqrt{a^2 - \\ell^2}$ in Minkowski space $dX^2 + dY^2 - dZ^2$, de Sitter space from its waist "
+        "upward, each circle a moment of the closed slicing. The bowl and the skirt meet on the circle "
+        "$a = \\ell$ with one vertical tangent.",
     ],
     ("ori_time_machine", "throat"): [
         "The slice $y = 0$ of Ori's vacuum core as $t$ runs from $-2\\,\\ell^2$ to $-0.1\\,\\ell^2$, each moment "

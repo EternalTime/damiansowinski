@@ -2107,6 +2107,20 @@ Black holes in anti-de Sitter space whose horizons are planes, cylinders, tori, 
 - chart Black Brane: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-\left(1 - \dfrac{z^3}{z_h^3}\right)c^2dt^2 + dx^2 + dy^2 + \dfrac{dz^2}{1 - \dfrac{z^3}{z_h^3}}\right)$$
 - chart Hyperbolic: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(-1 - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{-1 - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sinh^2\theta\,d\phi^2\right)$$
 
+### The Universe from Nothing
+
+Half of a four sphere joined at its equator to the waist of de Sitter's closed universe: the geometry of Alexander Vilenkin's universe created by tunnelling from nothing (1982) and of the no boundary proposal of James Hartle and Stephen Hawking (1983). The south pole of the sphere is a point like any other on it, so the universe has no first moment and no edge, and above the equator it inflates.
+
+- id: `universe_from_nothing`
+- tags: de Sitter, instanton, Euclidean quantum gravity, Euclidean signature, Riemannian, Lorentzian, quantum cosmology, wave function of the universe, no boundary proposal, tunnelling, signature change, four sphere, three sphere, closed universe, inflation, expanding universe, vacuum energy, bounce, cosmology, cosmological constant, positive cosmological constant, constant curvature, exact solution, Einstein equations, four-dimensional, idealized model, Einstein space, conformally flat, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/universe_from_nothing.json
+- chart Closed Slicing: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \ell^2\cosh^2(ct/\ell)\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Four Sphere: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = d\tau^2 + \ell^2\cos^2(\tau/\ell)\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Scale Factor: coordinates $(a, \chi, \theta, \phi)$, $$ds^2 = \dfrac{da^2}{1 - \dfrac{a^2}{\ell^2}} + a^2\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Conformal: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = \dfrac{\ell^2}{\cos^2\eta}\left(-d\eta^2 + d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Quadratic Gauge: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -\dfrac{\ell^2c^2dt^2}{\ell^2 + c^2t^2} + \left(\ell^2 + c^2t^2\right)\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+
 ### Vaidya Radiating Star
 
 A dynamical solution describing the spacetime of a radiating or accreting spherical mass with outgoing or ingoing null dust. It models radiating stars and the evaporation or growth of black holes.

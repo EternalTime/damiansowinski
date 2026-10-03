@@ -72,6 +72,11 @@
       "id": "datt_ruban_t_models",
       "kind": "family",
       "text": "Dust whose spheres all share one radius at each moment, the solution Ruban set beside Nariai's in 1969: both are left out when the radius of the spheres is taken to change from shell to shell [ruban1969, krasinski2001ruban]."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "family",
+      "text": "The nucleation of a de Sitter universe without black holes, half a four sphere joined to de Sitter's waist. Bousso and Hawking gave the rate of pair creation relative to it [bousso1996]."
     }
   ],
   "references": [

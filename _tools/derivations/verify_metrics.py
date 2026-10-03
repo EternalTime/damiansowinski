@@ -925,6 +925,13 @@ DIMENSIONS = {
         "\\tau": "T", "x": "L", "y": "L", "z": "L", "r_0": "L", "\\beta": "L"},
     ("self_creating_universe", "conformal"): {
         "\\eta": "L", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\beta": "L"},
+    # The universe from nothing: l is the radius of the four sphere and of de Sitter's waist. The
+    # four sphere's tau and the scale factor a are lengths, with no c, and the conformal eta is a pure number.
+    ("universe_from_nothing", "closed"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("universe_from_nothing", "four_sphere"): {"\\tau": "L", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("universe_from_nothing", "scale_factor"): {"a": "L", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("universe_from_nothing", "conformal"): {"\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("universe_from_nothing", "lapse"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
     # The collapse is two charts. Inside, the comoving polar angle chi is dimensionless
     # and the scale factor carries the length, so an areal radius is a sin(chi) and a dot
     # on a is dimensionless; chi_0 marks the surface and a_m is the scale factor at
