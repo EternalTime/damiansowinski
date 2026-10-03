@@ -49,6 +49,7 @@ import random
 import re
 import sys
 import time
+import unicodedata
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -129,6 +130,47 @@ RETIRED = {
     "plane-fronted wave": "pp-wave",
     "pure radiation": "null dust",
     "three-dimensional gravity": "2+1 dimensional gravity",
+    # Merged when the whole collection was revisited on 3 October 2026.
+    "alternative theory of gravity": "alternative theories of gravity",
+    "gravitomagnetic": "gravitomagnetism",
+    "Lense-Thirring": "frame dragging",
+    "Painlevé-Gullstrand": "Painlevé-Gullstrand coordinates",
+    "point masses": "point mass",
+    "point particle": "point mass",
+    "NUT charge": "NUT parameter",
+    "nut": "nuts and bolts",
+    "bolt": "nuts and bolts",
+    "extremal black hole": "extremal",
+    "extremal horizon": "extremal",
+    "degenerate horizon": "extremal",
+    "circular symmetry": "circularly symmetric",
+    "plane symmetric": "planar symmetry",
+    "Bekenstein-Hawking entropy": "black hole entropy",
+    "binary black hole": "black hole collision",
+    "colliding black holes": "black hole collision",
+    "black hole merger": "black hole collision",
+    "periastron advance": "perihelion precession",
+    "tachyonic momentum": "tachyon",
+    "accelerating black hole": "accelerating",
+    "boost symmetry": "boost",
+    "Hawking-Page transition": "phase transition",
+    "membrane": "brane",
+    "three-brane": "D3-brane",
+    "positive mass theorem": "positive energy",
+    "Schwarzschild interior": "black hole interior",
+    "supersymmetry": "supersymmetric",
+    "Kaup limit": "maximum mass",
+    "magnetic dipole": "dipole",
+    "cosmic dipole": "dipole",
+    "Euclidean signature": "Riemannian",
+    "instanton": "gravitational instanton",
+    "dumb hole": "acoustic black hole",
+    "homothetic": "self-similar",
+    "ergosphere": "ergoregion",
+    "charged": "electric charge",
+    "regular": "no singularity",
+    "conical": "angular deficit",
+    "solid angle deficit": "angular deficit",
 }
 
 # A spacetime's charts are taken as charts of one region, each a chart of the whole
@@ -381,6 +423,10 @@ OVERRULED = {
     ("israel_shell", "vacuum"): (
         False, "both regions are empty and the shell of dust between them is in no chart, since g_rr "
                "jumps across it; the spacetime has matter on r = R"),
+    ("black_to_white_hole", "vacuum"): (
+        False, "flat space inside and Kruskal's vacuum outside, but the thin shell of light between them "
+               "is in no chart, and neither is the quantum region where the black hole turns white; the "
+               "Lambert function hid the vacuum of the Kruskal chart until 3 October 2026"),
     ("israel_shell", "stationary"): (
         False, "each side is static in its own chart, and the shell between them, at r = R, "
                "falls through both, so the spacetime as a whole has no time translation"),
@@ -450,6 +496,23 @@ OVERRULED = {
                "class is static in every patch and only stationary as a whole, and the Lewis "
                "class is static in no patch"),
 }
+
+
+def _not_zero(number):
+    """Whether an exact number is surely not zero.
+
+    A rational number is what it is. Another can be zero and not look it: at a point of the
+    Kruskal chart of the A II metric, held by Lambert's function, a component of its Ricci
+    tensor comes to 10 e W(x) exp(W(x))/133 - 1 with x = 133/(10 e), which is zero since
+    W(x) exp(W(x)) = x, and which sympy leaves standing. Such a number is surely not zero
+    only if it is far from zero at sixty digits; one that is near is left to the canonical form.
+    """
+    import sympy as sp
+    if number == 0:
+        return False
+    if number.is_Rational:
+        return True
+    return bool(sp.Abs(sp.N(number, 60)) > sp.Float("1e-40", 60))
 
 
 def _witness(reader, symbols):
@@ -546,6 +609,48 @@ def decided_tags(metric_id, charts):
         if signs == {-1}:
             implied.add("negative cosmological constant")
     return owned, implied
+
+
+def spelling(tag):
+    """What two spellings of one keyword have in common: the tag without its capitals, its
+    accents, its spaces and its punctuation, each word made singular. "Gravitational waves",
+    "gravitational-wave" and "gravitational wave" are one; so are "alternative theory of
+    gravity" and "alternative theories of gravity"."""
+    text = unicodedata.normalize("NFKD", tag).encode("ascii", "ignore").decode().lower()
+    return "".join(_singular(word) for word in re.findall(r"[a-z0-9]+", text))
+
+
+def _singular(word):
+    if word.endswith("ies") and len(word) > 4:
+        return word[:-3] + "y"
+    if word.endswith(("sses", "xes", "ches", "shes")):
+        return word[:-2]
+    if word.endswith("s") and not word.endswith(("ss", "us", "is")):
+        return word[:-1]
+    return word
+
+
+def keyword_faults(metrics):
+    """What is wrong with the keywords of the collection as a whole, as sentences.
+
+    A keyword carried by one spacetime alone finds nothing a search for the spacetime's name
+    would not, and is either a label of its own or a category the others it is true of lack,
+    so none is kept. The tags of OWNED are the exception, since the charts decide them: the
+    one spacetime of eleven dimensions carries its dimension alone. Two keywords spelled
+    alike, which spelling() says, are one keyword cut in two.
+    """
+    carriers = {}
+    for metric in metrics:
+        for tag in dict.fromkeys(metric["tags"]):
+            carriers.setdefault(tag, []).append(metric["id"])
+    faults = [f"{tag!r} is carried by {ids[0]} alone" for tag, ids in sorted(carriers.items())
+              if len(ids) == 1 and tag not in OWNED]
+    alike = {}
+    for tag in sorted(carriers):
+        alike.setdefault(spelling(tag), []).append(tag)
+    faults += [" and ".join(repr(tag) for tag in tags) + " are spelled alike"
+               for tags in alike.values() if len(tags) > 1]
+    return faults
 
 
 def tag_faults(metric, facts):
@@ -659,9 +764,9 @@ def compute(metric_id, entry, seconds):
     def zero(expression):
         expression = sp.sympify(expression)
         # A chart that holds names, as Ernst and Wild's does, has a value written out only once
-        # it vanishes at a point of rational coordinates: one that does not vanish there is not
-        # zero, and its canonical form, written out, can take minutes.
-        if witness is not None and expression != 0 and witness(expression) != 0:
+        # it vanishes at a point of rational coordinates: one that is surely not zero there is
+        # not zero, and its canonical form, written out, can take minutes.
+        if witness is not None and expression != 0 and _not_zero(witness(expression)):
             return False
         return vm.norm(written(expression)) == 0
 
@@ -674,7 +779,7 @@ def compute(metric_id, entry, seconds):
     apart = False
     if witness is not None and not ricci_flat:
         there = witness(geometry.ricci_scalar()) / n
-        apart = any(witness(ricci[a][b] - there * g[a, b]) != 0 for a in range(n) for b in range(a, n))
+        apart = any(_not_zero(witness(ricci[a][b] - there * g[a, b])) for a in range(n) for b in range(a, n))
     if not ricci_flat and not apart:
         k = vm.norm(written(geometry.ricci_scalar())) / n
         constant = not (k.free_symbols & set(symbols)) and not k.atoms(sp.core.function.AppliedUndef) \
@@ -914,6 +1019,43 @@ def _sphere(g, symbols, coords, zero, whole):
     return [coords[i] for i in best] or None
 
 
+def compute_within(metric_id, entry, budget, seconds):
+    """compute() in a child process that is stopped after `seconds`.
+
+    The budget bounds each tensor, but not every step of sympy between them: on 3 October
+    2026 a run of --all sat for a quarter of an hour on the toroidal chart of Bach and Weyl's
+    ring and computed nothing after it. A chart that overruns raises verify_metrics.Timeout
+    like one whose tensor does, and the facts kept for it stay as they were."""
+    import multiprocessing
+    import verify_metrics as vm
+
+    context = multiprocessing.get_context("fork")
+    receive, send = context.Pipe(duplex=False)
+
+    def child():
+        try:
+            send.send(("facts", compute(metric_id, entry, budget)))
+        except vm.Timeout as error:
+            send.send(("timeout", str(error)))
+        except BaseException as error:  # noqa: BLE001 - carried to the parent and raised there
+            send.send(("error", f"{type(error).__name__}: {error}"))
+
+    worker = context.Process(target=child, daemon=True)
+    worker.start()
+    send.close()
+    if not receive.poll(seconds):
+        worker.kill()
+        worker.join()
+        raise vm.Timeout(f"the chart took more than {seconds:g} s")
+    kind, value = receive.recv()
+    worker.join()
+    if kind == "timeout":
+        raise vm.Timeout(value)
+    if kind == "error":
+        raise RuntimeError(f"{metric_id}/{entry['id']}: {value}")
+    return value
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--system", action="append", default=[],
@@ -923,6 +1065,8 @@ def main():
                         help="compute, compare with metric_tags.json and write nothing")
     parser.add_argument("--budget", type=float, default=300,
                         help="seconds sympy may spend on one tensor")
+    parser.add_argument("--chart-seconds", type=float, default=180,
+                        help="seconds one chart may take in all before it is left unfinished")
     arguments = parser.parse_args()
 
     sys.path.insert(0, str(HERE))
@@ -945,7 +1089,7 @@ def main():
             continue
         started = time.time()
         try:
-            computed = compute(metric_id, entry, arguments.budget)
+            computed = compute_within(metric_id, entry, arguments.budget, arguments.chart_seconds)
         except vm.Timeout as error:
             unfinished.append(f"{name}: {error}")
             print(f"  UNFINISHED {name}: {error}", flush=True)

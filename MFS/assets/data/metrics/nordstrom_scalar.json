@@ -5,7 +5,7 @@
   "description": "Gravity as one scalar field on flat spacetime, which Einstein and Fokker rewrote as a conformally flat spacetime whose curvature scalar is fixed by the trace of the stress-energy tensor of matter. Light keeps the cones of Minkowski space while clocks and rods change from place to place.",
   "tags": [
     "scalar gravity",
-    "alternative theory of gravity",
+    "alternative theories of gravity",
     "scalar field",
     "conformally flat",
     "four-dimensional",
@@ -16,7 +16,8 @@
     "no horizon",
     "point mass",
     "cosmology",
-    "dust"
+    "dust",
+    "equivalence principle"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The conformal factor $\\Phi$ is a pure number, Nordström's potential divided by its value far from every mass.",

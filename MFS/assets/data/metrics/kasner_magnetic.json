@@ -21,7 +21,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "BKL"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The magnetic field points along $z$.",

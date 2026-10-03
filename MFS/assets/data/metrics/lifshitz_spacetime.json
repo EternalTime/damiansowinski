@@ -4,9 +4,6 @@
   "short_name": "Lifshitz",
   "description": "A spacetime whose symmetry rescales time and space by different powers, $t \\to \\lambda^z t$ while $x \\to \\lambda x$, written down by Shamit Kachru, Xiao Liu, and Michael Mulligan in 2008 as the gravitational dual of a Lifshitz critical point. At $z = 1$ it is anti-de Sitter space, and for $z > 1$ every curvature scalar is constant while the tidal forces diverge on a null singularity at $r = 0$.",
   "tags": [
-    "Lifshitz",
-    "anisotropic scaling",
-    "dynamical exponent",
     "holography",
     "critical phenomena",
     "negative cosmological constant",
@@ -15,7 +12,6 @@
     "naked singularity",
     "homogeneous",
     "planar symmetry",
-    "massive vector field",
     "string theory",
     "static",
     "stationary",

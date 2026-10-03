@@ -6,7 +6,6 @@
   "tags": [
     "topological defect",
     "cosmic string",
-    "conical",
     "angular deficit",
     "rotating",
     "angular momentum",
@@ -27,7 +26,8 @@
     "four-dimensional",
     "idealized model",
     "vacuum",
-    "conformally flat"
+    "conformally flat",
+    "Einstein-Cartan theory"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit. The string has mass $\\mu$ and angular momentum $J$ per unit length, which enter through $b = 1 - 4G\\mu/c^2$ and the length $a = 4GJ/c^3$.",

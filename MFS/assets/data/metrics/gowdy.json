@@ -9,7 +9,6 @@
     "inhomogeneous",
     "gravitational wave",
     "closed universe",
-    "Gowdy",
     "exact solution",
     "time-dependent",
     "curvature singularity",
@@ -17,7 +16,9 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "BKL",
+    "torus"
   ],
   "signature": "(-,+,+,+)",
   "convention": "Every coordinate is a pure number and the length $L$ carries the dimensions, so no factor of $c$ appears. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

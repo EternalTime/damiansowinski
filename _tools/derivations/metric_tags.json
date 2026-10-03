@@ -1406,7 +1406,7 @@
   "relations": {},
   "orders": null,
   "dimension": 4,
-  "ricci_flat": false,
+  "ricci_flat": true,
   "einstein": null,
   "conformally_flat": false,
   "killing": [

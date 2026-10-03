@@ -5,7 +5,7 @@
   "description": "A homogeneous universe of charged dust in rigid rotation, held in a uniform magnetic field along the axis of rotation. Its line element is the shortest of Gödel's kind, and the circles about any world line of the dust are closed timelike curves beyond $r = c/\\Omega$.",
   "tags": [
     "dust",
-    "charged",
+    "electric charge",
     "magnetic field",
     "rotating",
     "closed timelike curves",
@@ -18,7 +18,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "rigid rotation"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and $\\Omega$ is the angular velocity of the dust, so $c/\\Omega$ is the one length of the solution. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

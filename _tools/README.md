@@ -31,6 +31,7 @@ After writing or editing a chart, compute its facts, which needs sympy and takes
 It computes only the charts that are new or whose coordinates, domains, line element or parameters changed, and writes `_tools/derivations/metric_tags.json`, which is committed.
 `_tools/test_metric_tags.py` then says which of the eight tags the spacetime lacks and which it carries wrongly, and fails until the file's `tags` agree; it needs no sympy and runs in the normal suite.
 `--all` computes every chart again, about five minutes on 2 October 2026 for 216 charts, and `--check` computes and compares without writing.
+Each chart is computed in a child process given `--chart-seconds`, 180 by default, after which it is stopped and reported unfinished and its facts are kept as they were, so one chart that sympy cannot finish holds up no other; the toroidal chart of Bach and Weyl's ring is one.
 
 A curvature tag needs every chart of the spacetime to have it, since charts of one region agree about curvature.
 A symmetry needs one chart to show it, since a Killing vector shows only in coordinates adapted to it.
@@ -46,6 +47,12 @@ A new spacetime needs an entry in either only when the test's answer is wrong fo
 
 Every other tag is checked by hand against the History and its sources.
 `RETIRED` in the same file lists the near-duplicates that were merged, as `vacuum solution` into `vacuum`, and the test refuses a tag on that list, so use the name it was merged into.
+
+A keyword is a category, and a category holds more than one spacetime.
+The test refuses a keyword that one spacetime alone carries, since a search for it finds nothing a search for that spacetime's name would not; only the eight tags the charts decide are exempt, as the one spacetime of eleven dimensions has to say so.
+It refuses as well two keywords spelled alike, the same words but for capitals, accents, spaces, punctuation or a plural, `spelling` in `metric_tags.py`, since they cut one category in two.
+So a new spacetime takes its keywords from those already in use, which `MFS/assets/data/metrics_index.json` lists by spacetime, and a keyword new to the collection goes on every spacetime it is true of, each one's history bearing it out, or not at all.
+On 3 October 2026, with every queued spacetime published, the captain had the whole set revisited: 610 keywords became 363, the near-duplicates merged into `RETIRED` and the labels of one spacetime dropped or put on the others they are true of.
 The page's search finds a tag whatever its capitals and only from the start of one of its words, `mfsTagMatches` in `_layouts/mfs.html`, which the same test file runs in Node.
 
 ### Related spacetimes

@@ -17,7 +17,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "quantum inequality"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and $\\rho$, $a$, and $M$ are lengths. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

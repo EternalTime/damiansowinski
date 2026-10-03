@@ -15,7 +15,9 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "BKL",
+    "homogeneous"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit. The expansion exponents obey $p_1 + p_2 + p_3 = 1$ and $p_1^2 + p_2^2 + p_3^2 = 1$, and every component assumes both conditions.",

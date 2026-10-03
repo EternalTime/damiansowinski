@@ -4,7 +4,6 @@
   "short_name": "Gravastar",
   "description": "A star with no horizon and no singularity that passes for a black hole from outside, proposed by Pawel Mazur and Emil Mottola in 2001. A ball of de Sitter space, a vacuum with $p = -\\rho$, fills the inside of a thin shell at $R > r_s$, and Schwarzschild's vacuum lies outside it, the three layers Matt Visser and David Wiltshire reduced it to.",
   "tags": [
-    "gravastar",
     "black hole mimicker",
     "exotic compact object",
     "no horizon",

@@ -23,7 +23,8 @@
     "conformally flat",
     "stationary",
     "static",
-    "spherically symmetric"
+    "spherically symmetric",
+    "dark energy"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit. The cosmological constant $\\Lambda$ is positive and carries an inverse length squared. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

@@ -31,7 +31,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "black hole shadow"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The mass parameter $m$ and the spin parameter $a$ are lengths, and the field strength $B$ is an inverse length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

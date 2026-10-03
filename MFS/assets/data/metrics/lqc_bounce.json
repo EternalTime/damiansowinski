@@ -10,7 +10,6 @@
     "bounce",
     "big bang",
     "no singularity",
-    "superinflation",
     "cosmology",
     "expanding universe",
     "FLRW",
@@ -25,7 +24,8 @@
     "four-dimensional",
     "idealized model",
     "conformally flat",
-    "spherically symmetric"
+    "spherically symmetric",
+    "quantum cosmology"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The bounce time is $t_b = 1/\\sqrt{24\\pi G\\rho_c}$, with $\\rho_c$ the critical density of loop quantum cosmology. We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",

@@ -6,12 +6,10 @@
   "tags": [
     "domain wall",
     "topological defect",
-    "repulsive gravity",
     "thin shell",
     "locally flat",
     "planar symmetry",
     "reflection symmetry",
-    "de Sitter world volume",
     "event horizon",
     "closed universe",
     "time-dependent",
@@ -21,7 +19,8 @@
     "four-dimensional",
     "idealized model",
     "conformally flat",
-    "spherically symmetric"
+    "spherically symmetric",
+    "black hole pair creation"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $\\delta$ is the Dirac delta.",

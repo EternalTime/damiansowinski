@@ -13,9 +13,9 @@
     "angular momentum",
     "mass",
     "NUT parameter",
-    "gravitomagnetic",
+    "gravitomagnetism",
     "closed timelike curves",
-    "ergosphere",
+    "ergoregion",
     "frame dragging",
     "ring singularity",
     "curvature singularity",
@@ -28,7 +28,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "black hole shadow"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit; the mass enters as the length $m = GM/c^2$, and the rotation parameter $a$ and the NUT parameter $l$ are lengths.",

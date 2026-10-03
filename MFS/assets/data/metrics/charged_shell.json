@@ -6,7 +6,6 @@
   "tags": [
     "dust",
     "thin shell",
-    "charged",
     "electric charge",
     "electromagnetic field",
     "Einstein-Maxwell",
@@ -18,7 +17,7 @@
     "charged black hole",
     "extremal",
     "isotropic coordinates",
-    "point particle",
+    "point mass",
     "mass",
     "curvature singularity",
     "timelike singularity",
@@ -35,7 +34,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "point charge"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$ and the charge radius is $r_q$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

@@ -8,7 +8,7 @@
     "Einstein-Maxwell",
     "electromagnetic field",
     "magnetic field",
-    "magnetic dipole",
+    "dipole",
     "static",
     "stationary",
     "axisymmetric",
@@ -16,7 +16,6 @@
     "charged black hole",
     "multiple black holes",
     "extremal",
-    "degenerate horizon",
     "horizon",
     "event horizon",
     "conical singularity",
@@ -28,7 +27,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "black hole pair creation"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The parameter $m$ is a length, and the mass $M$ has $GM/c^2 = 2m$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

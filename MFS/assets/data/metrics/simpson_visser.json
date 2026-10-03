@@ -5,16 +5,14 @@
   "description": "Schwarzschild's metric with $\\sqrt{r^2 + a^2}$ written for the areal radius, which Alex Simpson and Matt Visser proposed in 2019. One length $a$ carries it from Schwarzschild's black hole through a regular black hole, whose inside bounces into another universe, and a one way wormhole to a traversable wormhole.",
   "tags": [
     "regular black hole",
-    "black bounce",
     "black hole",
     "wormhole",
     "traversable",
-    "one way wormhole",
     "black hole mimicker",
     "throat",
     "horizon",
     "event horizon",
-    "extremal horizon",
+    "extremal",
     "white hole",
     "exotic matter",
     "energy condition violation",
@@ -28,7 +26,8 @@
     "maximal extension",
     "Lorentzian",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "black hole shadow"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The Schwarzschild radius of the mass parameter $m$ is $r_s = 2Gm/c^2$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

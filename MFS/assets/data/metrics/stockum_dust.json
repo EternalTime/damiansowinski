@@ -15,7 +15,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "rigid rotation"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The parameter $R$ sets the scale of the dust cylinder. We work in units with $G = c = 1$ throughout, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

@@ -29,7 +29,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "black hole shadow"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The mass is the length $m = GM/c^2$, and the length $\\ell$ sets the cosmological constant $3/\\ell^2$ of the de Sitter core at the centre. We keep factors of $c$ explicit.",

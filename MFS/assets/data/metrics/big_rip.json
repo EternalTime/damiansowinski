@@ -25,7 +25,8 @@
     "idealized model",
     "four-dimensional",
     "conformally flat",
-    "spherically symmetric"
+    "spherically symmetric",
+    "dark energy"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

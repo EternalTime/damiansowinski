@@ -7,7 +7,6 @@
     "cosmology",
     "Einstein-Cartan theory",
     "torsion",
-    "spin",
     "dust",
     "bounce",
     "no singularity",
@@ -21,7 +20,8 @@
     "idealized model",
     "conformally flat",
     "spherically symmetric",
-    "four-dimensional"
+    "four-dimensional",
+    "alternative theories of gravity"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The length $\\ell = c/\\sqrt{6\\pi G\\rho_0}$ sets every scale, with $\\rho_0$ the mass density of the dust at $t = 0$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, of the Christoffel connection, which carries no torsion.",

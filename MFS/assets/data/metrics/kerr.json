@@ -12,7 +12,7 @@
     "axisymmetric",
     "angular momentum",
     "mass",
-    "ergosphere",
+    "ergoregion",
     "frame dragging",
     "ring singularity",
     "curvature singularity",
@@ -25,7 +25,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "black hole shadow"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit, and the two parameters are the mass $M$ and the spin per unit mass $a = J/(Mc)$, which carries dimensions of length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

@@ -26,7 +26,9 @@
     "Einstein equations",
     "four-dimensional",
     "idealized model",
-    "Einstein space"
+    "Einstein space",
+    "Birkhoff theorem",
+    "black hole pair creation"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the cosmological constant $\\Lambda$ carries an inverse length squared. The horizons $r_h < r_c$ are the two positive roots of $1 - r_s/r - \\Lambda r^2/3$. We keep factors of $c$ explicit.",

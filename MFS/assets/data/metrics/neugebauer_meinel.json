@@ -11,7 +11,7 @@
     "angular momentum",
     "mass",
     "frame dragging",
-    "gravitomagnetic",
+    "gravitomagnetism",
     "ergoregion",
     "no horizon",
     "asymptotically flat",
@@ -22,7 +22,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "thin disc"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The disc has the coordinate radius $\\rho_0$ and turns at the angular velocity $\\Omega$, light from its centre reaches infinity with the redshift $e^{-V_0} - 1$, and $\\mu = 2\\Omega^2\\rho_0^2e^{-2V_0}/c^2$.",

@@ -4,8 +4,7 @@
   "short_name": "Point Particles in Three Dimensions",
   "description": "Gravity with one dimension of space removed, where a mass makes no field around itself. Spacetime is flat everywhere off a particle's world line, and space around the particle is a cone, missing a wedge whose angle is set by the mass.",
   "tags": [
-    "point particle",
-    "conical",
+    "point mass",
     "angular deficit",
     "flat",
     "locally flat",
@@ -13,7 +12,7 @@
     "lower-dimensional gravity",
     "topological defect",
     "gravitational lensing",
-    "circular symmetry",
+    "circularly symmetric",
     "static",
     "stationary",
     "exact solution",
@@ -22,7 +21,8 @@
     "three-dimensional",
     "idealized model",
     "vacuum",
-    "conformally flat"
+    "conformally flat",
+    "tachyon"
   ],
   "signature": "(-,+,+)",
   "convention": "We keep factors of $c$ explicit. A particle of mass $m$ enters through $\\alpha = 1 - 4Gm/c^2$, with $G$ Newton's constant in three dimensions, and removes a wedge of angle $2\\pi(1 - \\alpha) = 8\\pi Gm/c^2$.",

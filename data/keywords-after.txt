@@ -1,0 +1,372 @@
+# Keywords (tags) of My Favorite Spacetimes, after the revisit
+# on the branch fm/mfs-keywords-revisit, before its commit, over 185 spacetimes
+distinct keywords: 363
+keywords used by only one spacetime: 1
+
+## Every keyword, with the number of spacetimes that carry it
+ 184  idealized model
+ 181  Lorentzian
+ 162  Einstein equations
+ 162  four-dimensional
+ 155  exact solution
+ 112  stationary
+  78  static
+  74  curvature singularity
+  72  spherically symmetric
+  69  horizon
+  69  mass
+  62  black hole
+  61  event horizon
+  60  time-dependent
+  59  asymptotically flat
+  51  vacuum
+  46  causal structure
+  43  axisymmetric
+  37  cosmology
+  36  conformally flat
+  33  cosmological constant
+  30  homogeneous
+  28  no horizon
+  28  rotating
+  26  Cauchy horizon
+  26  electromagnetic field
+  24  naked singularity
+  23  dust
+  23  electric charge
+  23  maximal extension
+  22  anti-de Sitter
+  21  angular momentum
+  20  energy condition violation
+  20  frame dragging
+  20  holography
+  20  matched solution
+  19  closed timelike curves
+  19  extremal
+  19  white hole
+  18  AdS/CFT
+  18  gravitational wave
+  18  higher dimensions
+  18  wormhole
+  17  charged black hole
+  16  electrovacuum
+  16  exotic matter
+  16  negative cosmological constant
+  15  Einstein space
+  15  expanding universe
+  15  no singularity
+  15  positive cosmological constant
+  15  scalar field
+  15  string theory
+  14  black hole thermodynamics
+  14  coordinate singularity
+  14  Einstein-Maxwell
+  14  ergoregion
+  13  apparent horizon
+  13  five-dimensional
+  13  inner horizon
+  13  ring singularity
+  12  cylindrical symmetry
+  12  de Sitter
+  12  harmonic function
+  12  Petrov type D
+  12  rotating black hole
+  12  throat
+  11  big bang
+  11  black hole shadow
+  11  isotropic coordinates
+  11  thin shell
+  11  traversable
+  10  angular deficit
+  10  Hawking radiation
+  10  Hawking temperature
+  10  negative energy
+  10  soliton
+  10  three-dimensional
+  10  topological defect
+   9  anisotropic
+   9  closed universe
+   9  constant curvature
+   9  flat
+   9  gravitational collapse
+   9  isotropic
+   9  not asymptotically flat
+   9  null dust
+   9  radiating
+   9  supersymmetric
+   9  topology
+   8  2+1 dimensional gravity
+   8  alternative theories of gravity
+   8  comoving
+   8  conical singularity
+   8  cosmological horizon
+   8  FLRW
+   8  geodesically complete
+   8  gravitomagnetism
+   8  inhomogeneous
+   8  multiple black holes
+   8  perfect fluid
+   8  pp-wave
+   8  stellar interior
+   8  Weyl class
+   7  Bianchi classification
+   7  black hole mimicker
+   7  bounce
+   7  compact dimension
+   7  cosmic censorship
+   7  hyperbolic space
+   7  Kaluza-Klein
+   7  NUT parameter
+   7  Petrov type N
+   7  plane wave
+   7  reflection symmetry
+   7  spatially homogeneous
+   7  time machine
+   6  BKL
+   6  black hole entropy
+   6  black hole pair creation
+   6  cosmic string
+   6  dilaton
+   6  Einstein-Rosen bridge
+   6  energy conditions
+   6  impulsive wave
+   6  inflation
+   6  instability
+   6  Kasner
+   6  Killing horizon
+   6  Kruskal extension
+   6  magnetic field
+   6  minimally coupled scalar field
+   6  Petrov type I
+   6  point mass
+   6  regular centre
+   6  shock wave
+   6  superposition
+   6  three sphere
+   6  time symmetric
+   5  black hole uniqueness
+   5  brane
+   5  chronology horizon
+   5  circularly symmetric
+   5  directional singularity
+   5  equation of state
+   5  faster-than-light
+   5  geon
+   5  gravitational instanton
+   5  gravitational lensing
+   5  gravitational redshift
+   5  information paradox
+   5  Kundt class
+   5  locally flat
+   5  near-horizon limit
+   5  no-hair theorem
+   5  product spacetime
+   5  quadrupole
+   5  retarded time
+   5  Riemannian
+   5  six-dimensional
+   5  strong cosmic censorship
+   5  timelike singularity
+   5  warp drive
+   4  accreting
+   4  anisotropic pressure
+   4  approximate solution
+   4  Birkhoff theorem
+   4  black hole evaporation
+   4  black hole interior
+   4  black string
+   4  BTZ black hole
+   4  harmonic coordinates
+   4  initial data
+   4  junction conditions
+   4  lower-dimensional gravity
+   4  magnetic charge
+   4  magnetic monopole
+   4  massless scalar field
+   4  maximally symmetric
+   4  maximum mass
+   4  Misner space
+   4  multiply connected
+   4  neutron star
+   4  no time
+   4  null Killing vector
+   4  null source
+   4  numerical solution
+   4  Painlevé-Gullstrand coordinates
+   4  phantom field
+   4  planar symmetry
+   4  quantum inequality
+   4  rigid rotation
+   4  self-dual
+   4  supergravity
+   4  superradiance
+   4  Vaidya
+   3  accelerating
+   3  acoustic metric
+   3  algebraically special
+   3  black brane
+   3  boost
+   3  boosted black hole
+   3  braneworld
+   3  bubble
+   3  cigar
+   3  colliding plane waves
+   3  compact
+   3  critical collapse
+   3  dark energy
+   3  de Sitter core
+   3  dipole
+   3  echoes
+   3  Einstein-Maxwell-dilaton
+   3  Einstein-scalar
+   3  equivalence principle
+   3  exotic compact object
+   3  expanding
+   3  exterior
+   3  Flamm's paraboloid
+   3  fold singularity
+   3  geometrodynamics
+   3  Gregory-Laflamme instability
+   3  Hopf fibration
+   3  hydrostatic equilibrium
+   3  hyperspherical symmetry
+   3  inverse scattering
+   3  Kerr-Schild
+   3  light deflection
+   3  loop quantum gravity
+   3  mass inflation
+   3  multi-centre
+   3  nonlinear
+   3  nonlinear electrodynamics
+   3  null congruence
+   3  null singularity
+   3  numerical relativity
+   3  nuts and bolts
+   3  orbifold
+   3  Page curve
+   3  perihelion precession
+   3  positive energy
+   3  post-Newtonian
+   3  quantum gravity
+   3  quasar
+   3  quasinormal modes
+   3  regular black hole
+   3  self-similar
+   3  separable
+   3  singularity theorems
+   3  solar system
+   3  spacelike singularity
+   3  structure formation
+   3  tachyon
+   3  tangential pressure
+   3  Taub-NUT
+   3  ten-dimensional
+   3  topological censorship
+   3  torus
+   3  trapped surface
+   3  two-dimensional
+   3  vanishing scalar invariants
+   3  weak field
+   2  acoustic black hole
+   2  Aharonov-Bohm effect
+   2  analogue gravity
+   2  black hole collision
+   2  black hole hair
+   2  black ring
+   2  Bondi mass
+   2  boson star
+   2  Brans-Dicke
+   2  chronology protection
+   2  circular orbits
+   2  collisionless
+   2  compactness
+   2  complex scalar field
+   2  conformal transformation
+   2  constraint equations
+   2  cosmic microwave background
+   2  critical phenomena
+   2  cut and paste
+   2  D3-brane
+   2  dark matter
+   2  dilaton gravity
+   2  Dirac quantisation
+   2  Dirac string
+   2  domain wall
+   2  double null coordinates
+   2  dyon
+   2  Einstein-Cartan theory
+   2  Einstein-Klein-Gordon
+   2  Einstein-Yang-Mills
+   2  Euclidean black hole
+   2  Euclidean quantum gravity
+   2  fluid flow
+   2  gauge field
+   2  ghost images
+   2  Gibbons-Hawking
+   2  globally hyperbolic
+   2  gravitational memory
+   2  Hamiltonian constraint
+   2  horizon topology
+   2  Killing-Cauchy horizon
+   2  Kähler
+   2  laboratory experiment
+   2  Lambert W function
+   2  Lewis class
+   2  line mass
+   2  locally isotropic
+   2  locally rotationally symmetric
+   2  loop quantum cosmology
+   2  low energy string theory
+   2  lukewarm
+   2  mass defect
+   2  massless particle
+   2  minimal surface
+   2  negative mass
+   2  news function
+   2  no field equations
+   2  not time orientable
+   2  open universe
+   2  p-brane
+   2  particle-like solution
+   2  phase transition
+   2  photon sphere
+   2  point charge
+   2  prolate spheroidal coordinates
+   2  quantum cosmology
+   2  quantum field theory in curved spacetime
+   2  radiation
+   2  Rindler
+   2  Robinson-Trautman
+   2  scalar charge
+   2  scalar gravity
+   2  scalar hair
+   2  scalar-tensor theory
+   2  Schwarzschild-de Sitter
+   2  self consistency
+   2  shear-free
+   2  shell crossing
+   2  sound
+   2  spatial slice
+   2  special relativity
+   2  spontaneous compactification
+   2  stiff fluid
+   2  strong energy condition
+   2  supertranslation
+   2  Swiss cheese
+   2  tests of general relativity
+   2  thin disc
+   2  topological geon
+   2  torsion
+   2  trapping horizon
+   2  tunnelling
+   2  twist-free
+   2  ultrarelativistic
+   2  uniform field
+   2  vacuum energy
+   2  void
+   2  warped anti-de Sitter
+   2  weak energy condition
+   2  Yang-Mills field
+   1  eleven-dimensional
+
+## Keywords used by only one spacetime
+eleven-dimensional  (freund_rubin) - decided by the charts, the only spacetime of eleven dimensions, so exempt
