@@ -121,6 +121,16 @@
       "id": "btz_multi_holes_wormholes",
       "kind": "composite",
       "text": "More cuts through anti-de Sitter space make several BTZ exteriors joined behind their horizons, or one exterior with a handle inside. Dieter Brill and Alan Steif found the first in 1995 [brill1996, steif1996, aminneborg1998]."
+    },
+    {
+      "id": "quantum_btz",
+      "kind": "generalisation",
+      "text": "The same hole with the backreaction of strongly coupled quantum fields included exactly, read off a black hole on a brane in anti-de Sitter space of four dimensions. One more term in its metric, falling off as $1/r$, puts a curvature singularity at its centre [emparan2002holograms, emparan2020qbtz]."
+    },
+    {
+      "id": "jackiw_teitelboim_black_hole",
+      "kind": "family",
+      "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Without rotation, this hole is that one times a circle whose radius is its dilaton [achucarro1993]."
     }
   ],
   "references": [
@@ -152,7 +162,10 @@
     "visser1998",
     "brill1996",
     "steif1996",
-    "aminneborg1998"
+    "aminneborg1998",
+    "emparan2002holograms",
+    "emparan2020qbtz",
+    "achucarro1993"
   ],
   "coordinates": [
     {

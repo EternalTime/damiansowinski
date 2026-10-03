@@ -1,5 +1,5 @@
 {
-  "version": "a7e62a6fcb9f67c5",
+  "version": "6858432b8b61d483",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -20131,6 +20131,178 @@
         "url": "https://doi.org/10.1103/PhysRevD.59.026005"
       }
     },
+    "bah2021": {
+      "type": "article",
+      "fields": {
+        "title": "Topological stars and black holes",
+        "author": "Bah, Ibrahima and Heidmann, Pierre",
+        "journal": "Physical Review Letters",
+        "volume": "126",
+        "number": "15",
+        "pages": "151101",
+        "year": "2021",
+        "doi": "10.1103/PhysRevLett.126.151101",
+        "eprint": "2011.08851",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.126.151101"
+      }
+    },
+    "bah2021weyl": {
+      "type": "article",
+      "fields": {
+        "title": "Topological stars, black holes and generalized charged {Weyl} solutions",
+        "author": "Bah, Ibrahima and Heidmann, Pierre",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2021",
+        "number": "9",
+        "pages": "147",
+        "year": "2021",
+        "doi": "10.1007/JHEP09(2021)147",
+        "eprint": "2012.13407",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP09(2021)147"
+      }
+    },
+    "bah2022solitons": {
+      "type": "article",
+      "fields": {
+        "title": "{Schwarzschild}-like topological solitons",
+        "author": "Bah, Ibrahima and Heidmann, Pierre and Weck, Peter",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "8",
+        "pages": "269",
+        "year": "2022",
+        "doi": "10.1007/JHEP08(2022)269",
+        "eprint": "2203.12625",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP08(2022)269"
+      }
+    },
+    "bah2022stability": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of topological solitons, and black string to bubble transition",
+        "author": "Bah, Ibrahima and Dey, Anindya and Heidmann, Pierre",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "4",
+        "pages": "168",
+        "year": "2022",
+        "doi": "10.1007/JHEP04(2022)168",
+        "eprint": "2112.11474",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP04(2022)168"
+      }
+    },
+    "stotyn2011": {
+      "type": "article",
+      "fields": {
+        "title": "Magnetic charge can locally stabilize {Kaluza-Klein} bubbles",
+        "author": "Stotyn, Sean and Mann, Robert B.",
+        "journal": "Physics Letters B",
+        "volume": "705",
+        "number": "3",
+        "pages": "269--272",
+        "year": "2011",
+        "doi": "10.1016/j.physletb.2011.10.015",
+        "eprint": "1105.1854",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2011.10.015"
+      }
+    },
+    "miyamoto2006": {
+      "type": "article",
+      "fields": {
+        "title": "New stable phase of non-uniform charged black strings",
+        "author": "Miyamoto, Umpei and Kudoh, Hideaki",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2006",
+        "number": "12",
+        "pages": "048",
+        "year": "2006",
+        "doi": "10.1088/1126-6708/2006/12/048",
+        "eprint": "gr-qc/0609046",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2006/12/048"
+      }
+    },
+    "bena2013": {
+      "type": "article",
+      "fields": {
+        "title": "Resolving the structure of black holes: philosophizing with a hammer",
+        "author": "Bena, Iosif and Warner, Nicholas P.",
+        "journal": "arXiv preprint arXiv:1311.4538",
+        "year": "2013",
+        "eprint": "1311.4538",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1311.4538"
+      }
+    },
+    "gibbons2014fuzzballs": {
+      "type": "article",
+      "fields": {
+        "title": "Global structure of five-dimensional fuzzballs",
+        "author": "Gibbons, G. W. and Warner, N. P.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "31",
+        "number": "2",
+        "pages": "025016",
+        "year": "2014",
+        "doi": "10.1088/0264-9381/31/2/025016",
+        "eprint": "1305.0957",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/31/2/025016"
+      }
+    },
+    "mathur2005": {
+      "type": "article",
+      "fields": {
+        "title": "The fuzzball proposal for black holes: an elementary review",
+        "author": "Mathur, Samir D.",
+        "journal": "Fortschritte der Physik",
+        "volume": "53",
+        "number": "7-8",
+        "pages": "793--827",
+        "year": "2005",
+        "doi": "10.1002/prop.200410203",
+        "eprint": "hep-th/0502050",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1002/prop.200410203"
+      }
+    },
+    "heidmann2023": {
+      "type": "article",
+      "fields": {
+        "title": "Cavity effect in the quasinormal mode spectrum of topological stars",
+        "author": "Heidmann, Pierre and Speeney, Nicholas and Berti, Emanuele and Bah, Ibrahima",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "2",
+        "pages": "024021",
+        "year": "2023",
+        "doi": "10.1103/PhysRevD.108.024021",
+        "eprint": "2305.14412",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.108.024021"
+      }
+    },
+    "dima2024": {
+      "type": "article",
+      "fields": {
+        "title": "Spectroscopy of magnetized black holes and topological stars",
+        "author": "Dima, Alexandru and Melis, Marco and Pani, Paolo",
+        "journal": "Physical Review D",
+        "volume": "110",
+        "number": "8",
+        "pages": "084067",
+        "year": "2024",
+        "doi": "10.1103/PhysRevD.110.084067",
+        "eprint": "2406.19327",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.110.084067"
+      }
+    },
     "gibbons1983": {
       "type": "article",
       "fields": {
@@ -27317,6 +27489,81 @@
         "url": "https://doi.org/10.1038/nphys4151"
       }
     },
+    "moncrief1980": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of stationary, spherical accretion onto a {Schwarzschild} black hole",
+        "author": "Moncrief, V.",
+        "journal": "The Astrophysical Journal",
+        "volume": "235",
+        "pages": "1038--1046",
+        "year": "1980",
+        "doi": "10.1086/157707",
+        "url": "https://doi.org/10.1086/157707"
+      }
+    },
+    "barcelo2011": {
+      "type": "article",
+      "fields": {
+        "title": "Analogue Gravity",
+        "author": "Barcel\\'o, Carlos and Liberati, Stefano and Visser, Matt",
+        "journal": "Living Reviews in Relativity",
+        "volume": "14",
+        "number": "1",
+        "pages": "3",
+        "year": "2011",
+        "doi": "10.12942/lrr-2011-3",
+        "eprint": "gr-qc/0505065",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.12942/lrr-2011-3"
+      }
+    },
+    "jacobson1991": {
+      "type": "article",
+      "fields": {
+        "title": "Black-hole evaporation and ultrashort distances",
+        "author": "Jacobson, Theodore",
+        "journal": "Physical Review D",
+        "volume": "44",
+        "number": "6",
+        "pages": "1731--1739",
+        "year": "1991",
+        "doi": "10.1103/PhysRevD.44.1731",
+        "url": "https://doi.org/10.1103/PhysRevD.44.1731"
+      }
+    },
+    "steinhauer2016": {
+      "type": "article",
+      "fields": {
+        "title": "Observation of quantum {Hawking} radiation and its entanglement in an analogue black hole",
+        "author": "Steinhauer, Jeff",
+        "journal": "Nature Physics",
+        "volume": "12",
+        "number": "10",
+        "pages": "959--965",
+        "year": "2016",
+        "doi": "10.1038/nphys3863",
+        "eprint": "1510.00621",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1038/nphys3863"
+      }
+    },
+    "munozdenova2019": {
+      "type": "article",
+      "fields": {
+        "title": "Observation of thermal {Hawking} radiation and its temperature in an analogue black hole",
+        "author": "Mu\\~noz de Nova, Juan Ram\\'on and Golubkov, Katrine and Kolobov, Victor I. and Steinhauer, Jeff",
+        "journal": "Nature",
+        "volume": "569",
+        "number": "7758",
+        "pages": "688--691",
+        "year": "2019",
+        "doi": "10.1038/s41586-019-1241-0",
+        "eprint": "1809.00913",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1038/s41586-019-1241-0"
+      }
+    },
     "maitra1966": {
       "type": "article",
       "fields": {
@@ -27940,6 +28187,118 @@
         "url": "https://arxiv.org/abs/1507.05534"
       }
     },
+    "kelly2020": {
+      "type": "article",
+      "fields": {
+        "title": "Effective loop quantum gravity framework for vacuum spherically symmetric spacetimes",
+        "author": "Kelly, Jarod George and Santacruz, Robert and Wilson-Ewing, Edward",
+        "journal": "Physical Review D",
+        "volume": "102",
+        "number": "10",
+        "pages": "106024",
+        "year": "2020",
+        "doi": "10.1103/PhysRevD.102.106024",
+        "eprint": "2006.09302",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2006.09302"
+      }
+    },
+    "kelly2021": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole collapse and bounce in effective loop quantum gravity",
+        "author": "Kelly, Jarod George and Santacruz, Robert and Wilson-Ewing, Edward",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "38",
+        "number": "4",
+        "pages": "04LT01",
+        "year": "2021",
+        "doi": "10.1088/1361-6382/abd3e2",
+        "eprint": "2006.09325",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2006.09325"
+      }
+    },
+    "lewandowski2023": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum Oppenheimer-Snyder and Swiss Cheese Models",
+        "author": "Lewandowski, Jerzy and Ma, Yongge and Yang, Jinsong and Zhang, Cong",
+        "journal": "Physical Review Letters",
+        "volume": "130",
+        "number": "10",
+        "pages": "101501",
+        "year": "2023",
+        "doi": "10.1103/PhysRevLett.130.101501",
+        "eprint": "2210.02253",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2210.02253"
+      }
+    },
+    "husain2022": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum Gravity of Dust Collapse: Shock Waves from Black Holes",
+        "author": "Husain, Viqar and Kelly, Jarod George and Santacruz, Robert and Wilson-Ewing, Edward",
+        "journal": "Physical Review Letters",
+        "volume": "128",
+        "number": "12",
+        "pages": "121301",
+        "year": "2022",
+        "doi": "10.1103/PhysRevLett.128.121301",
+        "eprint": "2109.08667",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2109.08667"
+      }
+    },
+    "bonanno2024": {
+      "type": "article",
+      "fields": {
+        "title": "Dust Collapse in Asymptotic Safety: A Path to Regular Black Holes",
+        "author": "Bonanno, Alfio and Malafarina, Daniele and Panassiti, Antonio",
+        "journal": "Physical Review Letters",
+        "volume": "132",
+        "number": "3",
+        "pages": "031401",
+        "year": "2024",
+        "doi": "10.1103/PhysRevLett.132.031401",
+        "eprint": "2308.10890",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2308.10890"
+      }
+    },
+    "ashtekar2006bounce": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum Nature of the Big Bang",
+        "author": "Ashtekar, Abhay and Pawlowski, Tomasz and Singh, Parampreet",
+        "journal": "Physical Review Letters",
+        "volume": "96",
+        "number": "14",
+        "pages": "141301",
+        "year": "2006",
+        "doi": "10.1103/PhysRevLett.96.141301",
+        "eprint": "gr-qc/0602086",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0602086"
+      }
+    },
+    "gambini2020": {
+      "type": "article",
+      "fields": {
+        "title": "Spherically symmetric loop quantum gravity: analysis of improved dynamics",
+        "author": "Gambini, Rodolfo and Olmedo, Javier and Pullin, Jorge",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "37",
+        "number": "20",
+        "pages": "205012",
+        "year": "2020",
+        "doi": "10.1088/1361-6382/aba842",
+        "eprint": "2006.01513",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2006.01513"
+      }
+    },
     "strominger1996": {
       "type": "article",
       "fields": {
@@ -28130,6 +28489,143 @@
         "eprint": "hep-th/9510017",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevLett.75.4724"
+      }
+    },
+    "teitelboim1983": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitation and {Hamiltonian} structure in two spacetime dimensions",
+        "author": "Teitelboim, Claudio",
+        "journal": "Physics Letters B",
+        "volume": "126",
+        "number": "1-2",
+        "pages": "41--45",
+        "year": "1983",
+        "doi": "10.1016/0370-2693(83)90012-6",
+        "url": "https://doi.org/10.1016/0370-2693(83)90012-6"
+      }
+    },
+    "jackiw1985": {
+      "type": "article",
+      "fields": {
+        "title": "Lower dimensional gravity",
+        "author": "Jackiw, Roman",
+        "journal": "Nuclear Physics B",
+        "volume": "252",
+        "pages": "343--356",
+        "year": "1985",
+        "doi": "10.1016/0550-3213(85)90448-1",
+        "url": "https://doi.org/10.1016/0550-3213(85)90448-1"
+      }
+    },
+    "brown1986black": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes in two spacetime dimensions",
+        "author": "Brown, J. David and Henneaux, Marc and Teitelboim, Claudio",
+        "journal": "Physical Review D",
+        "volume": "33",
+        "number": "2",
+        "pages": "319--323",
+        "year": "1986",
+        "doi": "10.1103/PhysRevD.33.319",
+        "url": "https://doi.org/10.1103/PhysRevD.33.319"
+      }
+    },
+    "lemos1994": {
+      "type": "article",
+      "fields": {
+        "title": "Nonsingular constant curvature two-dimensional black hole",
+        "author": "Lemos, José P. S. and Sá, Paulo M.",
+        "journal": "Modern Physics Letters A",
+        "volume": "9",
+        "number": "9",
+        "pages": "771--774",
+        "year": "1994",
+        "doi": "10.1142/S0217732394000587",
+        "eprint": "gr-qc/9309023",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0217732394000587"
+      }
+    },
+    "achucarro1993": {
+      "type": "article",
+      "fields": {
+        "title": "Relating black holes in two and three dimensions",
+        "author": "Achúcarro, Ana and Ortiz, Miguel E.",
+        "journal": "Physical Review D",
+        "volume": "48",
+        "number": "8",
+        "pages": "3600--3605",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.48.3600",
+        "eprint": "hep-th/9304068",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.48.3600"
+      }
+    },
+    "almheiri2015": {
+      "type": "article",
+      "fields": {
+        "title": "Models of {AdS}$_2$ backreaction and holography",
+        "author": "Almheiri, Ahmed and Polchinski, Joseph",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2015",
+        "number": "11",
+        "pages": "014",
+        "year": "2015",
+        "doi": "10.1007/JHEP11(2015)014",
+        "eprint": "1402.6334",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP11(2015)014"
+      }
+    },
+    "maldacena2016": {
+      "type": "article",
+      "fields": {
+        "title": "Conformal symmetry and its breaking in two-dimensional nearly anti-de {Sitter} space",
+        "author": "Maldacena, Juan and Stanford, Douglas and Yang, Zhenbin",
+        "journal": "Progress of Theoretical and Experimental Physics",
+        "volume": "2016",
+        "number": "12",
+        "pages": "12C104",
+        "year": "2016",
+        "doi": "10.1093/ptep/ptw124",
+        "eprint": "1606.01857",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1093/ptep/ptw124"
+      }
+    },
+    "almheiri2020": {
+      "type": "article",
+      "fields": {
+        "title": "The {Page} curve of {Hawking} radiation from semiclassical geometry",
+        "author": "Almheiri, Ahmed and Mahajan, Raghu and Maldacena, Juan and Zhao, Ying",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "3",
+        "pages": "149",
+        "year": "2020",
+        "doi": "10.1007/JHEP03(2020)149",
+        "eprint": "1908.10996",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP03(2020)149"
+      }
+    },
+    "mertens2023": {
+      "type": "article",
+      "fields": {
+        "title": "Solvable models of quantum black holes: a review on {Jackiw-Teitelboim} gravity",
+        "author": "Mertens, Thomas G. and Turiaci, Gustavo J.",
+        "journal": "Living Reviews in Relativity",
+        "volume": "26",
+        "number": "1",
+        "pages": "4",
+        "year": "2023",
+        "doi": "10.1007/s41114-023-00046-1",
+        "eprint": "2210.10846",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s41114-023-00046-1"
       }
     },
     "gott1998": {
@@ -28546,6 +29042,504 @@
         "eprint": "hep-th/9905111",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1016/S0370-1573(99)00083-6"
+      }
+    },
+    "goenner2004": {
+      "type": "article",
+      "fields": {
+        "title": "On the History of Unified Field Theories",
+        "author": "Goenner, Hubert F. M.",
+        "journal": "Living Reviews in Relativity",
+        "volume": "7",
+        "number": "1",
+        "pages": "2",
+        "year": "2004",
+        "doi": "10.12942/lrr-2004-2",
+        "url": "https://doi.org/10.12942/lrr-2004-2"
+      }
+    },
+    "bach2012": {
+      "type": "article",
+      "fields": {
+        "title": "Republication of: New solutions to {Einstein}'s equations of gravitation. {B}. Explicit determination of static, axially symmetric fields. By {Rudolf Bach}. With a supplement on the static two-body problem. By {H. Weyl}",
+        "author": "Bach, Rudolf and Weyl, Hermann",
+        "journal": "General Relativity and Gravitation",
+        "volume": "44",
+        "number": "3",
+        "pages": "817--832",
+        "year": "2012",
+        "doi": "10.1007/s10714-011-1312-5",
+        "url": "https://doi.org/10.1007/s10714-011-1312-5"
+      }
+    },
+    "semerak2016": {
+      "type": "article",
+      "fields": {
+        "title": "Static axisymmetric rings in general relativity: How diverse they are",
+        "author": "Semer\\'ak, O.",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "10",
+        "pages": "104021",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.104021",
+        "eprint": "1611.03299",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.94.104021"
+      }
+    },
+    "antoci2001": {
+      "type": "article",
+      "fields": {
+        "title": "Revisiting {Weyl}'s calculation of the gravitational pull in {Bach}'s two-body solution",
+        "author": "Antoci, Salvatore and Liebscher, Dierck-Ekkehard and Mihich, Luigi",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "18",
+        "number": "17",
+        "pages": "3463--3471",
+        "year": "2001",
+        "doi": "10.1088/0264-9381/18/17/307",
+        "eprint": "gr-qc/0104035",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/18/17/307"
+      }
+    },
+    "hoenselaers1995": {
+      "type": "article",
+      "fields": {
+        "title": "The {Weyl} solution for a ring in a homogeneous field",
+        "author": "Hoenselaers, C.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "12",
+        "number": "1",
+        "pages": "141--148",
+        "year": "1995",
+        "doi": "10.1088/0264-9381/12/1/012",
+        "url": "https://doi.org/10.1088/0264-9381/12/1/012"
+      }
+    },
+    "dafonseca2005": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesics around {Weyl-Bach}'s ring solution",
+        "author": "D'Afonseca, L. A. and Letelier, P. S. and Oliveira, S. R.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "22",
+        "number": "17",
+        "pages": "3803--3814",
+        "year": "2005",
+        "doi": "10.1088/0264-9381/22/17/028",
+        "eprint": "gr-qc/0507033",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/22/17/028"
+      }
+    },
+    "semerak1999": {
+      "type": "article",
+      "fields": {
+        "title": "The structure of superposed {Weyl} fields",
+        "author": "Semer\\'ak, O. and Zellerin, T. and Ž\\'aček, M.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "308",
+        "number": "3",
+        "pages": "691--704",
+        "year": "1999",
+        "doi": "10.1046/j.1365-8711.1999.02748.x",
+        "url": "https://doi.org/10.1046/j.1365-8711.1999.02748.x"
+      }
+    },
+    "basovnik2016": {
+      "type": "article",
+      "fields": {
+        "title": "Geometry of deformed black holes. {II}. {Schwarzschild} hole surrounded by a {Bach-Weyl} ring",
+        "author": "Basovn\\'ik, M. and Semer\\'ak, O.",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "4",
+        "pages": "044007",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.044007",
+        "eprint": "1608.05961",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.94.044007"
+      }
+    },
+    "clement2016": {
+      "type": "article",
+      "fields": {
+        "title": "{NUT} wormholes",
+        "author": "Cl\\'ement, G\\'erard and Gal'tsov, Dmitri and Guenouche, Mourad",
+        "journal": "Physical Review D",
+        "volume": "93",
+        "number": "2",
+        "pages": "024048",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.93.024048",
+        "eprint": "1509.07854",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.93.024048"
+      }
+    },
+    "clement2018": {
+      "type": "article",
+      "fields": {
+        "title": "Motion of charged particles in a {NUTty} {Einstein-Maxwell} spacetime and causality violation",
+        "author": "Cl\\'ement, G\\'erard and Guenouche, Mourad",
+        "journal": "General Relativity and Gravitation",
+        "volume": "50",
+        "number": "6",
+        "pages": "60",
+        "year": "2018",
+        "doi": "10.1007/s10714-018-2388-y",
+        "eprint": "1606.08457",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-018-2388-y"
+      }
+    },
+    "halla2023": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational lensing in {Brill} spacetimes",
+        "author": "Halla, Mourad and Perlick, Volker",
+        "journal": "Physical Review D",
+        "volume": "107",
+        "number": "2",
+        "pages": "024048",
+        "year": "2023",
+        "doi": "10.1103/PhysRevD.107.024048",
+        "eprint": "2210.01611",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.107.024048"
+      }
+    },
+    "alekseev1996": {
+      "type": "article",
+      "fields": {
+        "title": "{Schwarzschild} black hole immersed in a homogeneous electromagnetic field",
+        "author": "Alekseev, George A. and Garcia, Alberto A.",
+        "journal": "Physical Review D",
+        "volume": "53",
+        "number": "4",
+        "pages": "1853--1867",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.53.1853",
+        "url": "https://doi.org/10.1103/PhysRevD.53.1853"
+      }
+    },
+    "vandenbergh2020": {
+      "type": "article",
+      "fields": {
+        "title": "Non-aligned {Einstein-Maxwell} {Robinson-Trautman} fields of {Petrov} type {D}",
+        "author": "Van den Bergh, Norbert and Carminati, John",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "37",
+        "number": "21",
+        "pages": "215010",
+        "year": "2020",
+        "doi": "10.1088/1361-6382/abbba3",
+        "eprint": "2009.11516",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2009.11516"
+      }
+    },
+    "astorino2025": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes in the external {Bertotti-Robinson-Bonnor-Melvin} electromagnetic field",
+        "author": "Astorino, Marco",
+        "journal": "Physical Review D",
+        "volume": "112",
+        "number": "10",
+        "pages": "104077",
+        "year": "2025",
+        "doi": "10.1103/c5lw-53yd",
+        "eprint": "2508.12908",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2508.12908"
+      }
+    },
+    "wang2026": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesics and shadows in the {Kerr-Bertotti-Robinson} black hole spacetime",
+        "author": "Wang, Xinyu and Hou, Yehui and Wan, Xi and Guo, Minyong and Chen, Bin",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2026",
+        "number": "02",
+        "pages": "050",
+        "year": "2026",
+        "doi": "10.1088/1475-7516/2026/02/050",
+        "eprint": "2507.22494",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2507.22494"
+      }
+    },
+    "gray2026": {
+      "type": "article",
+      "fields": {
+        "title": "Hidden symmetries and separability structures of {Ovcharenko-Podolský} and conformal-to-{Carter} spacetimes",
+        "author": "Gray, Finnian and Kubizňák, David and Ovcharenko, Hryhorii and Podolský, Jiří",
+        "journal": "Physical Review D",
+        "volume": "113",
+        "number": "4",
+        "pages": "044050",
+        "year": "2026",
+        "doi": "10.1103/8832-htpg",
+        "eprint": "2511.21538",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2511.21538"
+      }
+    },
+    "ovcharenko2026": {
+      "type": "article",
+      "fields": {
+        "title": "Static black holes in an external uniform electromagnetic field: {Reissner-Nordström} black holes accelerating in {Bertotti-Robinson} spacetime",
+        "author": "Ovcharenko, Hryhorii and Podolský, Jiří",
+        "journal": "Physical Review D",
+        "volume": "114",
+        "number": "2",
+        "pages": "024068",
+        "year": "2026",
+        "doi": "10.1103/824d-8zbj",
+        "eprint": "2602.15462",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2602.15462"
+      }
+    },
+    "ovcharenko2026b": {
+      "type": "article",
+      "fields": {
+        "title": "{Kerr-Newman} and genuine {Kerr} black holes in the {Bertotti-Robinson} magnetic field",
+        "author": "Ovcharenko, Hryhorii and Podolský, Jiří",
+        "journal": "arXiv preprint arXiv:2608.21672",
+        "year": "2026",
+        "eprint": "2608.21672",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2608.21672"
+      }
+    },
+    "blazquez2021": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable wormholes in Einstein-Dirac-Maxwell theory",
+        "author": "Bl\\'azquez-Salcedo, Jose Luis and Knoll, Christian and Radu, Eugen",
+        "journal": "Physical Review Letters",
+        "volume": "126",
+        "number": "10",
+        "pages": "101102",
+        "year": "2021",
+        "doi": "10.1103/PhysRevLett.126.101102",
+        "eprint": "2010.07317",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.126.101102"
+      }
+    },
+    "blazquez2020": {
+      "type": "article",
+      "fields": {
+        "title": "Constructing spherically symmetric Einstein-Dirac systems with multiple spinors: Ansatz, wormholes and other analytical solutions",
+        "author": "Bl\\'azquez-Salcedo, Jose Luis and Knoll, Christian",
+        "journal": "The European Physical Journal C",
+        "volume": "80",
+        "number": "2",
+        "pages": "174",
+        "year": "2020",
+        "doi": "10.1140/epjc/s10052-020-7706-3",
+        "eprint": "1910.03565",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-020-7706-3"
+      }
+    },
+    "danielson2021": {
+      "type": "article",
+      "fields": {
+        "title": "Bl\\'azquez-Salcedo-Knoll-Radu wormholes are not solutions to the Einstein-Dirac-Maxwell equations",
+        "author": "Danielson, Daine L. and Satishchandran, Gautam and Wald, Robert M. and Weinbaum, Robert J.",
+        "journal": "Physical Review D",
+        "volume": "104",
+        "number": "12",
+        "pages": "124055",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.104.124055",
+        "eprint": "2108.13361",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.104.124055"
+      }
+    },
+    "konoplya2022": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable wormholes in general relativity",
+        "author": "Konoplya, R. A. and Zhidenko, A.",
+        "journal": "Physical Review Letters",
+        "volume": "128",
+        "number": "9",
+        "pages": "091104",
+        "year": "2022",
+        "doi": "10.1103/PhysRevLett.128.091104",
+        "eprint": "2106.05034",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.128.091104"
+      }
+    },
+    "bolokhov2021": {
+      "type": "article",
+      "fields": {
+        "title": "A note on ``Traversable wormholes in Einstein-Dirac-Maxwell theory''",
+        "author": "Bolokhov, S. V. and Bronnikov, K. A. and Krasnikov, S. and Skvortsova, M. V.",
+        "journal": "Gravitation and Cosmology",
+        "volume": "27",
+        "number": "4",
+        "pages": "401--402",
+        "year": "2021",
+        "doi": "10.1134/S0202289321040034",
+        "eprint": "2104.10933",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1134/S0202289321040034"
+      }
+    },
+    "bronnikovkim2003": {
+      "type": "article",
+      "fields": {
+        "title": "Possible wormholes in a brane world",
+        "author": "Bronnikov, K. A. and Kim, Sung-Won",
+        "journal": "Physical Review D",
+        "volume": "67",
+        "number": "6",
+        "pages": "064027",
+        "year": "2003",
+        "doi": "10.1103/PhysRevD.67.064027",
+        "eprint": "gr-qc/0212112",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.67.064027"
+      }
+    },
+    "kain2023": {
+      "type": "article",
+      "fields": {
+        "title": "Are Einstein-Dirac-Maxwell wormholes traversable?",
+        "author": "Kain, Ben",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "4",
+        "pages": "044019",
+        "year": "2023",
+        "doi": "10.1103/PhysRevD.108.044019",
+        "eprint": "2305.11217",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.108.044019"
+      }
+    },
+    "emparan2000branes": {
+      "type": "article",
+      "fields": {
+        "title": "Exact description of black holes on branes",
+        "author": "Emparan, Roberto and Horowitz, Gary T. and Myers, Robert C.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "01",
+        "pages": "007",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/01/007",
+        "eprint": "hep-th/9911043",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/01/007"
+      }
+    },
+    "emparan2000branes2": {
+      "type": "article",
+      "fields": {
+        "title": "Exact description of black holes on branes II: comparison with BTZ black holes and black strings",
+        "author": "Emparan, Roberto and Horowitz, Gary T. and Myers, Robert C.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "01",
+        "pages": "021",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/01/021",
+        "eprint": "hep-th/9912135",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/01/021"
+      }
+    },
+    "karch2001": {
+      "type": "article",
+      "fields": {
+        "title": "Locally localized gravity",
+        "author": "Karch, Andreas and Randall, Lisa",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2001",
+        "number": "05",
+        "pages": "008",
+        "year": "2001",
+        "doi": "10.1088/1126-6708/2001/05/008",
+        "eprint": "hep-th/0011156",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2001/05/008"
+      }
+    },
+    "emparan2020qbtz": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum BTZ black hole",
+        "author": "Emparan, Roberto and Frassino, Antonia Micol and Way, Benson",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "11",
+        "pages": "137",
+        "year": "2020",
+        "doi": "10.1007/JHEP11(2020)137",
+        "eprint": "2007.15999",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP11(2020)137"
+      }
+    },
+    "emparan2020scc": {
+      "type": "article",
+      "fields": {
+        "title": "Strong cosmic censorship in the BTZ black hole",
+        "author": "Emparan, Roberto and Tomašević, Marija",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "06",
+        "pages": "038",
+        "year": "2020",
+        "doi": "10.1007/JHEP06(2020)038",
+        "eprint": "2002.02083",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP06(2020)038"
+      }
+    },
+    "emparan2022ds3": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes in dS$_3$",
+        "author": "Emparan, Roberto and Pedraza, Juan F. and Svesko, Andrew and Tomašević, Marija and Visser, Manus R.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "11",
+        "pages": "073",
+        "year": "2022",
+        "doi": "10.1007/JHEP11(2022)073",
+        "eprint": "2207.03302",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP11(2022)073"
+      }
+    },
+    "casals2017": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum Backreaction on Three-Dimensional Black Holes and Naked Singularities",
+        "author": "Casals, Marc and Fabbri, Alessandro and Martínez, Cristián and Zanelli, Jorge",
+        "journal": "Physical Review Letters",
+        "volume": "118",
+        "number": "13",
+        "pages": "131102",
+        "year": "2017",
+        "doi": "10.1103/PhysRevLett.118.131102",
+        "eprint": "1608.05366",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.118.131102"
       }
     }
   }

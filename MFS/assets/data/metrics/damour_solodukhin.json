@@ -63,6 +63,11 @@
       "id": "btz",
       "kind": "family",
       "text": "The black hole of three dimensions, where the change was first made. Solodukhin added $\\lambda^2$ to its $g_{tt}$ in 2005, which removes the horizon and leaves a wormhole whose perturbations evolve quasiperiodically [solodukhin2005]."
+    },
+    {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "kind": "family",
+      "text": "The wormhole of an electric field and two massless Dirac fields, where the electric field carries all of the energy density and the Dirac fields only a radial tension and a tangential pressure [blazquez2021]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "vagnozzi2023",
     "ellis1973",
     "bronnikov1973",
-    "simpson2019"
+    "simpson2019",
+    "blazquez2021"
   ],
   "coordinates": [
     {

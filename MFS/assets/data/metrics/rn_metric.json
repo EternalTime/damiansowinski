@@ -179,6 +179,31 @@
       "id": "three_brane_throat",
       "kind": "family",
       "text": "The three-brane of string theory is its cousin in ten dimensions, a charged sheet whose extreme member joins flat space to an infinite throat [gibbons1993]."
+    },
+    {
+      "id": "brill_charged_taub_nut",
+      "kind": "generalisation",
+      "text": "Reissner and Nordström's hole with a NUT parameter $l$. The twist takes the singularity out of $r = 0$, and where too much charge would bare it, $r_q^2 > r_s^2/4 + l^2$, Brill's metric is a wormhole [brill1964, clement2016]."
+    },
+    {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "kind": "family",
+      "text": "A static wormhole of Einstein-Dirac-Maxwell theory whose $g_{tt}$ is the extreme black hole's. As its charge grows to the radius of its throat it becomes that black hole, $r_q = r_s/2$ [blazquez2021]."
+    },
+    {
+      "id": "topological_star",
+      "kind": "family",
+      "text": "A star from five dimensions with a mass, a magnetic charge, and no horizon. For some masses and charges the star, its black string, and Reissner and Nordström's black hole all exist, and the star is the widest of the three [bah2021]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "family",
+      "text": "A tower of regions like Reissner and Nordström's, from a correction to Schwarzschild's $f$ that falls off as $r^{-4}$ and a ball of dust that bounces inside it [lewandowski2023]."
+    },
+    {
+      "id": "jackiw_teitelboim_black_hole",
+      "kind": "limit",
+      "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Bring the mass down toward the charge and zoom in on the horizon: in that limit the plane of $t$ and $r$ becomes that black hole, with the area of the sphere as its dilaton [mertens2023]."
     }
   ],
   "references": [
@@ -224,7 +249,13 @@
     "arnowitt1960",
     "krasinski2012",
     "bonnor1975",
-    "horowitz1996four"
+    "horowitz1996four",
+    "brill1964",
+    "clement2016",
+    "blazquez2021",
+    "bah2021",
+    "lewandowski2023",
+    "mertens2023"
   ],
   "coordinates": [
     {

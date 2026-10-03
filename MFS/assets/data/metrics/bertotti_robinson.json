@@ -119,6 +119,16 @@
       "id": "freund_rubin",
       "kind": "family",
       "text": "Freund and Rubin's spontaneous compactification of eleven dimensions. Their first example, Maxwell's field pointing across two dimensions of four, is this universe [freund1980]."
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "kind": "generalisation",
+      "text": "Put a spinning black hole into Bertotti and Robinson's field and it is Podolský and Ovcharenko's hole of 2025, which is this universe again when its mass is taken away [podolsky2025]."
+    },
+    {
+      "id": "jackiw_teitelboim_black_hole",
+      "kind": "family",
+      "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions, whose metric is anti-de Sitter space of two dimensions with a dilaton that marks a horizon. With no horizon and its curvature radius set to $b$, its static chart is the plane of $t$ and $r$ of Bertotti and Robinson's static chart."
     }
   ],
   "references": [

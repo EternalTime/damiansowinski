@@ -81,6 +81,11 @@
       "id": "kerr_melvin",
       "kind": "generalisation",
       "text": "Ernst's black hole set spinning, by Ernst and Wild in 1976. At $a = 0$ their metric is Ernst's [ernst1976c]."
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "kind": "family",
+      "text": "A spinning black hole in the other uniform magnetic field, Bertotti and Robinson's. The two fields carry the same potential in geometries of different symmetry, cylindrical here and spherical there [astorino2025]."
     }
   ],
   "references": [
@@ -112,7 +117,8 @@
     "emparan2000",
     "fairhurst2001",
     "kastor2015",
-    "rosen1962"
+    "rosen1962",
+    "astorino2025"
   ],
   "coordinates": [
     {

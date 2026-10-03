@@ -62,6 +62,11 @@
       "id": "bonnor_charged_dust",
       "kind": "family",
       "text": "Dust held up by its charge, in a sphere or a spheroid. Flattened to a disc the spheroid keeps a finite redshift, as these discs do, and shrunk at a fixed shape its redshift has no limit [bonnor1975]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "A Weyl field built on Newton's potential of a hoop, as the discs are on that of a disc. The hoop is a singularity, and the discs are sheets of counterrotating dust."
     }
   ],
   "references": [

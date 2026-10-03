@@ -54,6 +54,11 @@
       "id": "schwarzschild_ads",
       "kind": "family",
       "text": "The round black hole of anti-de Sitter space, which trades places with anti-de Sitter space in Hawking and Page's phase transition. The flat black hole does the same with the soliton [hawking1983, surya2001]."
+    },
+    {
+      "id": "topological_star",
+      "kind": "family",
+      "text": "The same exchange of time and a circle in flat space of five dimensions, where the bubble needs magnetic flux to give it mass and hold it open [bah2021]."
     }
   ],
   "references": [
@@ -74,7 +79,8 @@
     "brendle2024",
     "surya2001",
     "nishioka2010",
-    "hawking1983"
+    "hawking1983",
+    "bah2021"
   ],
   "coordinates": [
     {
