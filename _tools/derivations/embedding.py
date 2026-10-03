@@ -4053,6 +4053,132 @@ def einstein_static(ck, src):
                  settings="$R = 1$, the unit of every length.")]
 
 
+def poincare_dodecahedral(ck, src):
+    """The equator theta = pi/2 of space today in Luminet's universe, the moment eta = 0.38882 of the
+    conformal chart at which a = a_0, the unit: g_chichi = 1 and g_phiphi = sin^2 chi, the round sphere
+    of radius a_0, rho = sin chi and z = -cos chi, as Einstein's static universe is drawn. The binary
+    icosahedral group is turned so that a face of our cell has its centre at theta = pi/2, phi = 0,
+    dodecahedral.turned(), and the sphere is a great sphere of the 3-sphere through 1, i and j. On it
+    the faces between two cells g and h, g^-1 h one of the twelve nearest images, are the great
+    circles n.(g - h) = 0, kept where g and h are both nearer than every other image of the observer.
+    The faces of our own cell are drawn apart from the faces between other cells."""
+    import dodecahedral as dd
+    now = nr.PD_NOW
+    sl = Slice(src, "poincare_dodecahedral", "conformal", "\\chi", "\\phi", {"eta": now, **EQUATOR}, {},
+               functions={"a": "1"})
+    size = 2.0
+    inner, outer = math.pi / 10, 0.38814
+    # Two hemispheres, so that each is a graph over its circles and every curve on it can be checked there.
+    sphere = Piece("sphere", "sheet", sl, 0.0, math.pi / 2, -1.0, 1,
+                   (("axis", "our position, $\\chi = 0$"), ("join", None)),
+                   [(inner, "r", None), (outer, "r", None)], size)
+    far = Piece("far", "sheet", sl, math.pi / 2, math.pi, 0.0, 1,
+                (("join", "the equator $\\chi = \\pi/2$, where the two halves of the sphere meet"),
+                 ("axis", "the antipode $\\chi = \\pi$")), [], size)
+    for half, name in ((sphere, "near"), (far, "far")):
+        ck.isometry(f"Poincare dodecahedral, the {name} hemisphere today", half)
+        ck.radius(f"Poincare dodecahedral, the {name} hemisphere rho = a_0 sin chi", half, np.sin, size)
+        ck.form(f"Poincare dodecahedral, the {name} hemisphere z = -a_0 cos chi", half, lambda chi: -np.cos(chi), size)
+
+    G = np.array(dd.turned())
+    ck.add("Poincare dodecahedral: the group has 120 elements, 1 first", abs(len(G) - 120) + float(np.abs(G[0] - [1, 0, 0, 0]).max()), 1e-12)
+    ck.add("Poincare dodecahedral: a face of our cell has its centre along +i",
+           min(float(np.abs(g - [math.cos(math.pi / 5), math.sin(math.pi / 5), 0, 0]).max()) for g in G), 1e-12)
+    flat = G[:, :3]                     # the sphere is z = 0 of (w, x, y, z)
+    s = np.linspace(0.0, 2 * math.pi, 4001)
+    walls, cuts = [], []
+    for a in range(120):
+        for b in range(a + 1, 120):
+            if abs(float(G[a] @ G[b]) - math.cos(math.pi / 5)) > 1e-9:
+                continue
+            m = flat[a] - flat[b]
+            if np.linalg.norm(m) < 1e-12:
+                continue
+            m = m / np.linalg.norm(m)
+            e1 = np.cross(m, [0.0, 0.0, 1.0] if abs(m[2]) < 0.9 else [1.0, 0.0, 0.0])
+            e1 /= np.linalg.norm(e1)
+            e2 = np.cross(m, e1)
+            n = np.outer(np.cos(s), e1) + np.outer(np.sin(s), e2)
+            scores = n @ flat.T
+            best = scores.max(axis=1)
+            keep = (scores[:, a] >= best - 1e-9) & (scores[:, b] >= best - 1e-9)
+            if not keep.any():
+                continue
+            # Runs of kept points, joined across s = 2 pi.
+            idx = np.flatnonzero(keep)
+            runs, start = [], idx[0]
+            for i, j in zip(idx, idx[1:]):
+                if j != i + 1:
+                    runs.append((start, i))
+                    start = j
+            runs.append((start, idx[-1]))
+            if len(runs) > 1 and runs[0][0] == 0 and runs[-1][1] == len(s) - 1:
+                first = runs.pop(0)
+                last = runs.pop()
+                runs.append((last[0], first[1] + len(s) - 1))
+            for i, j in runs:
+                if j - i < 2:
+                    continue
+                k = np.arange(i, j + 1) % (len(s) - 1)
+                pts = n[k]
+                curve = np.column_stack([pts[:, 1], pts[:, 2], -pts[:, 0]])
+                (walls if a == 0 else cuts).append(curve)
+    cells = int(len(set(np.argmax(np.random.default_rng(1).normal(size=(20000, 3)) @ flat.T, axis=1).tolist())))
+    ck.add("Poincare dodecahedral: the great sphere crosses 46 cells", abs(cells - 46), 0.5)
+    # Our cell's section reaches from the face centre at chi = pi/10 to near its corners.
+    reach = [math.acos(-c[2]) for w in walls for c in w]
+    ck.add("Poincare dodecahedral: the section of our cell runs from chi = pi/10", abs(min(reach) - inner), 2e-4)
+    ck.add("Poincare dodecahedral: and never beyond the corners at 0.38814", max(0.0, max(reach) - outer), 1e-6)
+    ck.add("Poincare dodecahedral: every face drawn lies on the sphere of radius a_0",
+           max(abs(float(np.linalg.norm(c, axis=1).max()) - 1) for c in walls + cuts), 1e-12)
+    def halves(curve):
+        """The runs of a curve on each hemisphere, z < 0 on ours and z > 0 on the far one, each run
+        ended on the equator where it crosses it."""
+        out = []
+        side = curve[:, 2] > 0
+        start = 0
+        for i in range(1, len(curve) + 1):
+            if i == len(curve) or side[i] != side[start]:
+                run = list(curve[start:i])
+                if i < len(curve):
+                    p, q = curve[i - 1], curve[i]
+                    cross = p + (q - p) * (p[2] / (p[2] - q[2]))
+                    cross[2] = 0.0
+                    cross[:2] /= np.linalg.norm(cross[:2])
+                    run.append(cross)
+                if start > 0:
+                    p, q = curve[start - 1], curve[start]
+                    cross = p + (q - p) * (p[2] / (p[2] - q[2]))
+                    cross[2] = 0.0
+                    cross[:2] /= np.linalg.norm(cross[:2])
+                    run.insert(0, cross)
+                if len(run) > 1:
+                    out.append((far if side[start] else sphere, np.array(run)))
+                start = i
+        return out
+    def drawn(piece, run):
+        """The run with each point's height read off the piece's profile as it is drawn, a polyline of
+        circles, which near the equator stands up to 1e-4 a_0 off the round sphere."""
+        profile = sorted((rho, z) for _, rho, z in piece.data()["points"])
+        rhos, zs = [p[0] for p in profile], [p[1] for p in profile]
+        run = np.array(run, dtype=float)
+        run[:, 2] = np.interp(np.hypot(run[:, 0], run[:, 1]), rhos, zs)
+        return run
+    curves = [Curve(piece, cls, drawn(piece, run)) for cls, group in (("wall", walls), ("cut", cuts))
+              for c in group for piece, run in halves(c)]
+    surface = Surface([sphere, far], curves=curves)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the equator of space today, a sphere of radius $a_0$")
+    fig.legend("line", "wall", "the faces of our own cell where they cross it")
+    fig.legend("line", "cut", "the faces of the other cells it passes through")
+    fig.legend("line", "r", "$\\chi = \\pi/10$ and $0.388$, the largest sphere inside our cell and the smallest around it")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("today", "The equator today", "$a_0$", [surface], fig.done(),
+                 settings="Luminet's universe today, $\\eta = 0.3888$, with the radius $a_0$ of curvature the unit "
+                          "of every length, and the group turned so that a face of our cell has its centre at "
+                          "$\\theta = \\pi/2$, $\\phi = 0$.")]
+
+
 def schwarzschild_de_sitter(ck, src):
     """Kottler's static slice t = 0 at r_s = 1 and Lambda = 1/5, so that the horizons, the two
     positive roots of the published g^rr, sit at r_h = 1.085 and r_c = 3.215. g_rr = 1/f with
@@ -16110,6 +16236,7 @@ DRAWN = {
     "kopczynski_trautman": kopczynski_trautman,
     "ab_metrics": ab_metrics,
     "small_universes": small_universes,
+    "poincare_dodecahedral": poincare_dodecahedral,
     "tilted_universes": tilted_universes,
     "alcubierre": alcubierre,
     "natario": natario,
@@ -17366,6 +17493,15 @@ CAPTIONS = {
         "where $a = 1$, and grows again. The turn is smooth: near it $a \\approx 1 + c^2t^2/3\\ell^2$, and the "
         "expansion accelerates until $a^3 = 4$, at $ct = \\sqrt{3}\\,\\ell$, after which the dust slows it as in "
         "Friedmann's universe.",
+    ],
+    ("poincare_dodecahedral", "today"): [
+        "The equator ($\\theta = \\pi/2$) of space today in Luminet's universe, drawn as a surface in flat space with "
+        "every distance along it the metric distance: a sphere of radius $a_0$ with our position at its foot. The "
+        "120 dodecahedral cells that tile the 3-sphere cross it in a pattern of spherical polygons, 46 of them, and "
+        "each is a copy of the same piece of space.",
+        "Our own cell meets the sphere in the polygon about the foot, which reaches out to $\\chi = \\pi/10$ at the "
+        "centre of a face and to nearly $0.388$ toward the corners. The sphere of last scattering today has the "
+        "radius $\\chi = 0.376$, so it runs out of our cell into the twelve around it.",
     ],
     ("small_universes", "torus"): [
         "The slice $z = 0$ of a torus of dust at three moments, $ct = L/96$, $L/12$, and $9L/32$, each drawn "

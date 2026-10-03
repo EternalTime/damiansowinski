@@ -143,6 +143,11 @@
       "id": "self_creating_universe",
       "kind": "locally_same",
       "text": "De Sitter space with each event identified with its images under a boost. J. Richard Gott and Li-Xin Li proposed it in 1998 as a universe whose earliest stretch of time is a loop [gott1998]."
+    },
+    {
+      "id": "poincare_dodecahedral",
+      "kind": "family",
+      "text": "A closed Friedmann universe with points of its space identified under a group of 120 rotations of the 3-sphere. With nothing in it but a positive cosmological constant it is de Sitter space so identified, and it never stops expanding."
     }
   ],
   "references": [

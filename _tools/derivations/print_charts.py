@@ -18,7 +18,7 @@ moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, disto
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, brill_charged_taub_nut,
-bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star and quantum_oppenheimer_snyder, and Godel's cylindrical chart.
+bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder and poincare_dodecahedral, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -26391,6 +26391,154 @@ def small_universes_check(chart, system):
 
 
 CHARTS["small_universes"] = [lambda s=s: small_universes(s) for s in SMALL_CHARTS]
+
+
+# -- The Poincare dodecahedral universe ---------------------------------------------------------
+
+PD_CHARTS = ("comoving", "conformal", "toroidal")
+PD_SPHERE = "d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+PD_TORUS = "\\dfrac{dv^2}{2v\\left(1 - 2v\\right)} + \\left(1 - 2v\\right)d\\alpha^2 + 2v\\,d\\gamma^2"
+PD_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+PD_GROUP = "(t, p) \\sim (t, h p) \\;\\text{for every } h \\in I^*"
+PD_RATE = "\\left(\\left(a'\\right)^2 + 1\\right)"
+
+
+def poincare_dodecahedral(system):
+    """The Poincare dodecahedral universe of Luminet, Weeks, Riazuelo, Lehoucq and Uzan: a closed
+    Friedmann universe whose space is the 3-sphere divided by the binary icosahedral group I* of
+    order 120. The local geometry is Friedmann's, so each chart is his closed line element with the
+    scale factor left free, the radius of curvature of space, a length; what the quotient adds is
+    in the domains. The three charts are Aurich, Lustig and Steiner's: their (6) with (8), in the
+    cosmic time and in the conformal time eta, dimensionless with a d eta = c dt, and their (29),
+    coordinates (v, alpha, gamma) of the 3-sphere in which a Clifford translation along the circles
+    w + z ij = sqrt(1 - 2v) e^(alpha ij) is a shift of alpha and gamma together.
+    poincare_dodecahedral_check holds each to the unit 3-sphere of R^4 pulled back;
+    poincare_dodecahedral.md records each chart's source."""
+    check = lambda chart: poincare_dodecahedral_check(chart, system)  # noqa: E731
+    if system == "conformal":
+        coords, parameters = ["\\eta", "\\chi", "\\theta", "\\phi"], ["a = a(\\eta)"]
+        line = "ds^2 = a^2\\left(-d\\eta^2 + " + PD_SPHERE + "\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "poincare_dodecahedral",
+            "system": {"id": system, "name": "Conformal Time", "coords": coords,
+                       "domains": ["\\eta \\in (-\\infty, \\infty)", "\\chi \\in [0, \\pi]"] + PD_ANGLES
+                       + [PD_GROUP.replace("(t, p) \\sim (t, h p)", "(\\eta, p) \\sim (\\eta, h p)")],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"primed": ["a"], "lead": [probe.parameters["a"]]},
+            "ricci_scalar": "6\\left(\\dfrac{a''}{a^3} + \\dfrac{1}{a^2}\\right)",
+            "kretschmann": ("12\\left(\\left(\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^4}\\right)^2"
+                            " + \\left(\\dfrac{\\left(a'\\right)^2 + a^2}{a^4}\\right)^2\\right)"),
+            "check": check,
+        }
+    if system == "toroidal":
+        coords, parameters = ["t", "v", "\\alpha", "\\gamma"], ["a = a(t)"]
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "poincare_dodecahedral",
+            "system": {"id": system, "name": "Toroidal", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "v \\in [0, 1/2]", "\\alpha \\in [0, 2\\pi)",
+                                   "\\gamma \\in [0, 2\\pi)",
+                                   "(t, v, \\alpha, \\gamma) \\sim (t, v, \\alpha + \\pi/5, \\gamma + \\pi/5)"
+                                   " \\;\\text{and the other images under } I^*"],
+                       "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + a^2\\left(" + PD_TORUS + "\\right)"},
+            "chart_line_element": "ds^2 = -dt^2 + a^2\\left(" + PD_TORUS + "\\right)",
+            "printer": {"primed": ["a"], "lead": [probe.parameters["a"]], "overrides": {SMALL_Q: PD_RATE}},
+            "pretty": poincare_dodecahedral_pretty(probe),
+            "bracketed": lambda value: sp.expand(poincare_dodecahedral_pretty(probe)(value)),
+            # A product with the factor 1 - 2v is written with the scale factor and its derivative first.
+            "rewrite": [("a\\left(1 - 2v\\right)a''", "a\\,a''\\left(1 - 2v\\right)"),
+                        ("a\\left(1 - 2v\\right)a'", "a\\,a'\\left(1 - 2v\\right)"),
+                        ("2a\\,v\\,a''", "2v\\,a\\,a''"), ("2a\\,v\\,a'", "2v\\,a\\,a'")],
+            "ricci_scalar": "6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)",
+            "kretschmann": "12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)^2\\right)",
+            "check": check,
+        }
+    coords, parameters = ["t", "\\chi", "\\theta", "\\phi"], ["a = a(t)"]
+    probe = vm.Reader(coords, parameters, ())
+    return {
+        "metric_id": "poincare_dodecahedral",
+        "system": {"id": system, "name": "Comoving", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "\\chi \\in [0, \\pi]"] + PD_ANGLES + [PD_GROUP],
+                   "parameters": parameters,
+                   "line_element": "ds^2 = -c^2dt^2 + a^2\\left(" + PD_SPHERE + "\\right)"},
+        "chart_line_element": "ds^2 = -dt^2 + a^2\\left(" + PD_SPHERE + "\\right)",
+        "printer": {"primed": ["a"], "lead": [probe.parameters["a"]], "overrides": {SMALL_Q: PD_RATE}},
+        "pretty": poincare_dodecahedral_pretty(probe),
+        "bracketed": lambda value: sp.expand(poincare_dodecahedral_pretty(probe)(value)),
+        "ricci_scalar": "6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)",
+        "kretschmann": "12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)^2\\right)",
+        "check": check,
+    }
+
+
+def poincare_dodecahedral_pretty(probe):
+    """A `pretty` for the charts in cosmic time: the curvature of space with its expansion,
+    a'^2 + 1, kept as the one factor it is, as the small universes keep a'^2 - 1."""
+    rate = sp.Derivative(probe.parameters["a"], probe.symbol["t"])
+    D = sp.Symbol("PDD")
+
+    def pretty(value):
+        value = sp.sympify(value)
+        power = 0
+        while value != 0:
+            numerator = sp.fraction(sp.together(value))[0].xreplace({rate: D})
+            if sp.rem(sp.expand(numerator), D ** 2 + 1, D) != 0:
+                break
+            value, power = sp.cancel(sp.together(value / (rate ** 2 + 1))), power + 1
+        return sp.factor(value) * SMALL_Q ** power
+    return pretty
+
+
+def poincare_dodecahedral_sphere(system, symbols):
+    """The point (w, x, y, z) of the unit 3-sphere at the chart's spatial coordinates: Aurich, Lustig
+    and Steiner's (7), w = cos chi, x + i y = sin chi sin theta e^(i phi), z = sin chi cos theta, and
+    their (29), w + i z = sqrt(1 - 2v) e^(i alpha), x + i y = sqrt(2v) e^(i gamma)."""
+    if system == "toroidal":
+        v, alpha, gamma = symbols
+        return [sp.sqrt(1 - 2 * v) * sp.cos(alpha), sp.sqrt(2 * v) * sp.cos(gamma),
+                sp.sqrt(2 * v) * sp.sin(gamma), sp.sqrt(1 - 2 * v) * sp.sin(alpha)]
+    chi, theta, phi = symbols
+    return [sp.cos(chi), sp.sin(chi) * sp.sin(theta) * sp.cos(phi), sp.sin(chi) * sp.sin(theta) * sp.sin(phi),
+            sp.sin(chi) * sp.cos(theta)]
+
+
+def poincare_dodecahedral_check(chart, system):
+    """Each chart is conformally flat, its time is orthogonal to space, and its space is the unit
+    3-sphere of R^4 pulled back, times a^2: the line element is Friedmann's closed universe.
+    In the toroidal chart the shift of alpha and gamma by s is the left multiplication of the
+    quaternion w + x i + y j + z ij by cos s + sin s ij, Aurich, Lustig and Steiner's (18), so the
+    identification the chart states is one of their right handed Clifford translations."""
+    geo, g = chart.geo, chart.geo.g
+    weyl = geo.weyl_llll()
+    if any(vm.norm(vm._at(weyl, index)) != 0 for index in vm._indices(4, 4)):
+        raise AssertionError(f"poincare_dodecahedral: the {system} chart is not conformally flat")
+    a = chart.reader.parameters["a"]
+    space = chart.symbols[1:]
+    image = poincare_dodecahedral_sphere(system, space)
+    J = sp.Matrix(4, 3, lambda i, j: sp.diff(image[i], space[j]))
+    if any(sp.simplify(x) != 0 for x in sp.flatten(a ** 2 * J.T * J - g[1:, 1:])):
+        raise AssertionError(f"poincare_dodecahedral: the {system} chart's space is not the 3-sphere of radius a")
+    if any(g[0, i] != 0 for i in range(1, 4)):
+        raise AssertionError(f"poincare_dodecahedral: the {system} chart's time is not orthogonal to space")
+    lapse = -a ** 2 if system == "conformal" else -1
+    if sp.simplify(g[0, 0] - lapse) != 0:
+        raise AssertionError(f"poincare_dodecahedral: the {system} chart's time is not Friedmann's")
+    if system == "toroidal":
+        s = sp.Symbol("pd_s", real=True)
+        v, alpha, gamma = space
+        w, x, y, z = image
+        # (cos s + sin s ij)(w + x i + y j + z ij), by (18) with a_k = cos s, b_k = c_k = 0, d_k = sin s.
+        product = [sp.cos(s) * w - sp.sin(s) * z, sp.cos(s) * x - sp.sin(s) * y,
+                   sp.cos(s) * y + sp.sin(s) * x, sp.sin(s) * w + sp.cos(s) * z]
+        shifted = poincare_dodecahedral_sphere(system, (v, alpha + s, gamma + s))
+        if any(sp.simplify(sp.expand_trig(p - q)) != 0 for p, q in zip(product, shifted)):
+            raise AssertionError("poincare_dodecahedral: the shift of alpha and gamma is not a Clifford translation")
+
+
+CHARTS["poincare_dodecahedral"] = [lambda s=s: poincare_dodecahedral(s) for s in PD_CHARTS]
 
 
 # -- Schwarzschild's black hole in a tidal field -------------------------------------------
