@@ -149,6 +149,12 @@ REGIONS = {
                "collapse, and the uniformly accelerating one, which alone is at rest in a static chart; a mirror "
                "on a general world line leaves the spacetime to its right no symmetry",
     },
+    "bubbling_ads": {
+        "regions": [["rings"]],
+        "why": "global and plane_wave are two members of the family, the black disc and the black half plane, "
+               "each with symmetries the general pattern of droplets lacks: the disc is static, and every other "
+               "pattern twists the time, V dphi in Lin, Lunin and Maldacena's metric (2.4)",
+    },
     "kerr_bertotti_robinson": {
         "regions": [["boyer_lindquist"]],
         "why": "static is the hole with no spin, a = 0, a special case of the family, which alone is static",

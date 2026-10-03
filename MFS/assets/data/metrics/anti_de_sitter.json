@@ -162,6 +162,11 @@
       "id": "vuorio_warped_ads",
       "kind": "family",
       "text": "Anti-de Sitter space of three dimensions with its light cones squashed or stretched along one direction, the vacua of gravity with a mass for the graviton. Stretched, as in Vuorio's universe, they hold closed timelike curves through every event [rooman1998]."
+    },
+    {
+      "id": "bubbling_ads",
+      "kind": "family",
+      "text": "Anti-de Sitter space of five dimensions times a 5-sphere is a black disc on Lin, Lunin, and Maldacena's plane of droplets, and every other pattern of black and white is a smooth spacetime of its own with no horizon [lin2004]."
     }
   ],
   "references": [
@@ -213,7 +218,8 @@
     "freund1980",
     "emparan2002holograms",
     "emparan2020qbtz",
-    "mertens2023"
+    "mertens2023",
+    "lin2004"
   ],
   "coordinates": [
     {

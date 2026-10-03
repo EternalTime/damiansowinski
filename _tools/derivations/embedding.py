@@ -8510,6 +8510,48 @@ def three_brane_throat(ck, src):
 FR_SEVEN = {"alpha": "pi/2", "beta": "pi/2", "gamma": "pi/2", "kappa": "pi/2", "xi": "pi/2", "omega": "pi/2"}
 
 
+def bubbling_ads(ck, src):
+    """Lin, Lunin and Maldacena's black disc at L = 1, the plane of the droplets y = 0 at the moment
+    t = 0, at one point of each 3-sphere. In the global chart the disc is rho = 0, the centre of
+    anti-de Sitter space, where the plane is the hemisphere L^2 (d theta^2 + cos^2 theta d psi^2) of
+    the 5-sphere from its rim theta = 0 to its pole theta = pi/2, and the white plane outside it is
+    theta = 0, the cylinder L^2 (d rho^2 + d psi^2), drawn out to rho = 2. The two meet on the edge of
+    the disc, r = L^2, where theta = rho = 0, with one tangent: a hemisphere of radius L capping a
+    cylinder of radius L."""
+    name = "bubbling anti-de Sitter"
+    spheres = {"alpha": "pi/2", "beta": "pi/2", "gamma": "0", "kappa": "pi/2", "xi": "pi/2", "omega": "0"}
+    cap = Slice(src, "bubbling_ads", "global", "\\theta", "\\psi", {"t": 0, "rho": 0, **spheres}, {"L": 1})
+    tube = Slice(src, "bubbling_ads", "global", "\\rho", "\\psi", {"t": 0, "theta": 0, **spheres}, {"L": 1})
+    size, depth = 3.0, 2.0
+    disc = Piece("disc", "star", cap, 0.0, math.pi / 2, 0.0, 1,
+                 (("join", "the edge of the black disc, $\\theta = 0$"),
+                  ("axis", "the centre of the black disc, $\\theta = \\pi/2$, where the circle of $\\psi$ shrinks")),
+                 [(math.pi / 6, "r", None), (math.pi / 3, "r", None)], size)
+    white = Piece("white", "sheet", tube, 0.0, depth, 0.0, -1,
+                  (("join", "the edge of the black disc, $\\rho = 0$"),
+                   ("edge", "the cylinder runs on to $\\rho \\to \\infty$, the boundary of anti-de Sitter space")),
+                  [(0.0, "surface", None)] + [(k / 2, "r", None) for k in (1, 2, 3)] + [(depth, "r", None)], size)
+    ck.isometry(f"{name}, the black disc", disc)
+    ck.isometry(f"{name}, the white plane", white)
+    ck.join(f"{name}, the disc meets the white plane on its edge", disc, 0.0, white, 0.0)
+    ck.form(f"{name}, the hemisphere z = L sin(theta)", disc, np.sin, size)
+    ck.radius(f"{name}, the hemisphere rho = L cos(theta)", disc, np.cos, size)
+    ck.form(f"{name}, the cylinder z = -L rho", white, lambda x: -x, size)
+    ck.radius(f"{name}, the cylinder of radius L", white, lambda x: np.ones_like(x), size)
+    surface = Surface([disc, white])
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *white.at(0.0), "$r = L^2$")
+    ring_label(fig, [0, 0, 0], *white.at(1.0), "$\\rho = 1$")
+    ring_label(fig, [0, 0, 0], *white.at(depth), "$2$")
+    fig.legend("fill", "star", "the black disc, a hemisphere of the 5-sphere at the centre of anti-de Sitter space")
+    fig.legend("fill", "cover", "the white plane outside it, a line of anti-de Sitter space times the circle of $\\psi$")
+    fig.legend("line", "surface", "the edge of the black disc, $r = L^2$")
+    fig.legend("line", "r", "$\\theta$ constant on the disc, every $\\pi/6$, and $\\rho$ constant on the plane, every $1/2$")
+    fig.legend("line", "meridian", "$\\psi$ constant, every $15°$")
+    return [view("plane", "The plane of the droplets", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, the unit of every length.")]
+
+
 def freund_rubin(ck, src):
     """Freund and Rubin's anti-de Sitter space times a 7-sphere of radius 2L, at L = 1, in three
     views of the moment t = 0. The surface of rho and phi of the global chart, on the equator of
@@ -16314,6 +16356,7 @@ DRAWN = {
     "cremmer_scherk": cremmer_scherk,
     "three_brane_throat": three_brane_throat,
     "freund_rubin": freund_rubin,
+    "bubbling_ads": bubbling_ads,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
@@ -18074,6 +18117,16 @@ CAPTIONS = {
         "The surface of $\\omega$ and $\\psi$ ($x = y = 0$, $\\sigma = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\pi/2$) "
         "at one event of $t$, $x$, $y$, and $\\sigma$, a great 2-sphere of the 7-sphere, radius $2L$ and area "
         "$16\\pi L^2$, the same at every event.",
+    ],
+    ("bubbling_ads", "plane"): [
+        "The plane of the droplets of the black disc, $y = 0$ ($\\alpha = \\beta = \\pi/2$, $\\gamma = 0$, "
+        "$\\kappa = \\xi = \\pi/2$, $\\omega = 0$), at one moment of $t$, drawn as a surface in flat space with "
+        "every distance along it the metric distance.",
+        "The black disc is the centre of anti-de Sitter space, $\\rho = 0$, where the plane is the hemisphere "
+        "$L^2\\left(d\\theta^2 + \\cos^2\\theta\\,d\\psi^2\\right)$ of the 5-sphere. The white plane outside it is "
+        "$\\theta = 0$, the cylinder $L^2\\left(d\\rho^2 + d\\psi^2\\right)$, a line of anti-de Sitter space times "
+        "the great circle of $\\psi$, which runs on to the boundary. The two meet with one tangent on the edge of the "
+        "disc, $r = L^2$, where both 3-spheres shrink to a point.",
     ],
     ("cremmer_scherk", "equator"): [
         "One flat dimension and the equator of the sphere ($y = z = 0$, $\\theta = \\pi/2$) of Cremmer and "

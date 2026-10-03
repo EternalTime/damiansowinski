@@ -19,7 +19,7 @@ cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_b
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, freund_rubin, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
-jackiw_teitelboim_black_hole, unruh_acoustic_hole and vuorio_warped_ads, and Godel's cylindrical chart.
+jackiw_teitelboim_black_hole, unruh_acoustic_hole, vuorio_warped_ads and bubbling_ads, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -28224,7 +28224,7 @@ def unruh_acoustic_hole(system):
     omega = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
     if system == "laboratory":
         name, coords = "Laboratory", ["t", "r", "\\theta", "\\phi"]
-        domains = ["t \\in " + reals, "r \\in (0, \\infty)"] + sphere + ["r = r_0 \;\\text{(the sonic horizon)}"]
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)"] + sphere + ["r = r_0 \\;\\text{(the sonic horizon)}"]
         line = "ds^2 = -c^2dt^2 + \\left(dr + \\dfrac{c\\,r_0^2}{r^2}dt\\right)^2" + omega
         chart_line = "ds^2 = -dt^2 + \\left(dr + \\dfrac{r_0^2}{r^2}dt\\right)^2" + omega
         lead = "-\\left(1 - \\dfrac{r_0^4}{r^4}\\right)"
@@ -30181,6 +30181,182 @@ def write_free_chart(system):
 
 
 CHARTS["vuorio_warped_ads"] = [lambda s=s: vuorio_warped_ads(s) for s in VUORIO_CHARTS]
+
+
+# -- Lin, Lunin and Maldacena's bubbling anti-de Sitter space -----------------------------
+
+BUBBLING_CHARTS = ["rings", "global", "plane_wave"]
+BUBBLING_S3 = "\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\,d\\gamma^2\\right)\\right)"
+BUBBLING_S3T = "\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\,d\\omega^2\\right)\\right)"
+BUBBLING_SPHERES = [("\\alpha", "\\beta", "\\gamma"), ("\\kappa", "\\xi", "\\omega")]
+
+
+def bubbling_ads(system):
+    """Lin, Lunin and Maldacena's half supersymmetric geometries of type IIB supergravity with the
+    symmetry of two 3-spheres, hep-th/0409174: their metric (2.4) with h^-2 = 2y cosh G on the polar
+    coordinates r and phi of the plane of the droplets, which they use for every concentric pattern,
+    their (2.13) to (2.17), with G and their V_phi, written V, free; the black disc in the global
+    chart of anti-de Sitter space times a 5-sphere, their (2.16) with r_0 = L^2, their t kept and
+    their tilde phi written psi; and the black half plane in their (2.11), the maximally
+    supersymmetric plane wave of Blau, Figueroa-O'Farrill, Hull and Papadopoulos (hep-th/0110242,
+    their (1) at 4 lambda^2 = 1). The time is their pure number t in every chart, so nothing is
+    multiplied by c. Their Cartesian form, with G, V_1 and V_2 free functions of three coordinates,
+    prints to 6.3 MB, the Weyl tensor 3.7 MB of it, and is kept out of the published charts;
+    bubbling_ads_check holds it, through bubbling_ads.py, to the half plane and to the field
+    equation, and bubbling_ads.md records each chart's source."""
+    angles = [a for sphere in BUBBLING_SPHERES for a in sphere]
+    sphere_domains = lambda s: [s[0] + " \\in [0, \\pi]", s[1] + " \\in [0, \\pi]", s[2] + " \\in [0, 2\\pi)"]
+    if system == "rings":
+        name = "Concentric droplets"
+        coords = ["t", "r", "\\phi", "y"] + angles
+        domains = [PH_LINE.format("t"), "r \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", "y \\in [0, \\infty)"]
+        domains += sphere_domains(BUBBLING_SPHERES[0]) + sphere_domains(BUBBLING_SPHERES[1])
+        parameters = ["G = G(r,y)", "V = V(r,y)"]
+        line = ("ds^2 = -2y\\cosh G\\left(dt + V\\,d\\phi\\right)^2"
+                " + \\dfrac{dr^2 + r^2d\\phi^2 + dy^2}{2y\\cosh G} + y\\,e^{G}" + BUBBLING_S3 + " + y\\,e^{-G}" + BUBBLING_S3T)
+        printer = {}
+    elif system == "global":
+        name = "Global (the disc)"
+        coords = ["t", "\\rho"] + list(BUBBLING_SPHERES[0]) + ["\\theta", "\\psi"] + list(BUBBLING_SPHERES[1])
+        domains = [PH_LINE.format("t"), "\\rho \\in [0, \\infty)"] + sphere_domains(BUBBLING_SPHERES[0])
+        domains += ["\\theta \\in [0, \\pi/2]", "\\psi \\in [0, 2\\pi)"] + sphere_domains(BUBBLING_SPHERES[1])
+        parameters = ["L"]
+        line = ("ds^2 = L^2\\left(-\\cosh^2\\rho\\,dt^2 + d\\rho^2 + \\sinh^2\\rho" + BUBBLING_S3
+                + " + d\\theta^2 + \\cos^2\\theta\\,d\\psi^2 + \\sin^2\\theta" + BUBBLING_S3T + "\\right)")
+        probe = vm.Reader(coords, ["L"], ())
+        printer = {"lead": [probe.symbol["\\rho"], probe.parameters["L"]], "flip": False}
+    else:
+        name = "Plane Wave (the half plane)"
+        coords = ["t", "x", "r_1"] + list(BUBBLING_SPHERES[0]) + ["r_2"] + list(BUBBLING_SPHERES[1])
+        domains = [PH_LINE.format("t"), PH_LINE.format("x"), "r_1 \\in [0, \\infty)"]
+        domains += sphere_domains(BUBBLING_SPHERES[0]) + ["r_2 \\in [0, \\infty)"] + sphere_domains(BUBBLING_SPHERES[1])
+        parameters = []
+        line = ("ds^2 = -2\\,dt\\,dx - \\left(r_1^2 + r_2^2\\right)dt^2 + dr_1^2 + r_1^2" + BUBBLING_S3
+                + " + dr_2^2 + r_2^2" + BUBBLING_S3T)
+        printer = {}
+    spec = {"metric_id": "bubbling_ads", "check": lambda chart, s=system: bubbling_ads_check(chart, s),
+            "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line, "printer": printer}
+    if system == "rings":
+        spec["kretschmann_text"] = bondi_sachs_scalar
+    return spec
+
+
+def bubbling_ads_check(chart, system):
+    """The global chart has the Riemann tensor of anti-de Sitter space of radius L on its first five
+    coordinates and of a sphere of radius L on the other five, nothing across the two, and so a
+    mixed Ricci tensor of -4/L^2 and +4/L^2. The plane wave's one Ricci component is R_tt = 8, the
+    Laplacian of r_1^2 + r_2^2 over the eight transverse directions halved, and Lin, Lunin and
+    Maldacena's Cartesian metric at the half plane w < 0 is the plane wave carried along y = r_1 r_2,
+    w = (r_1^2 - r_2^2)/2. The chart of concentric droplets is their polar metric, bubbling_ads.metric,
+    and at the disc of radius L^2 it is the global chart carried along y = L^2 sinh(rho) sin(theta),
+    r = L^2 cosh(rho) cos(theta), phi = psi - t; each pullback is held at three points in thirty
+    digits. The disc and a black ring in the polar metric, and the half plane and the same ring in
+    the Cartesian one, solve R_MN = F_MPQRS F_N^PQRS/96 with Lin, Lunin and Maldacena's 5-form, at
+    two points each, to a part in 1e9, by bubbling_ads.field_equation_residual."""
+    import bubbling_ads as ba
+    name = f"bubbling_ads/{system}"
+    n = 10
+    g = sp.Matrix(chart.geo.g)
+    rng = random.Random(10)
+
+    def zero(e):
+        e = sp.sympify(e)
+        if e == 0 or sp.simplify(e) == 0:
+            return True
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 140), 100) for s in sorted(e.free_symbols, key=str)}
+            if abs(sp.N(e.subs(at), 40)) > sp.Float(10) ** -30:
+                return False
+        return True
+
+    def residual(kind, funcs_of, points, label):
+        base = ba.generic(kind)[0]
+        worst = ba.field_equation_residual(kind, funcs_of(*base[1:]), points)
+        if worst > 1e-9:
+            raise AssertionError(f"{name}: {label} misses R_MN = F_MPQRS F_N^PQRS/96 by {worst}")
+
+    ricci = chart.geo.ricci_ll()
+    if system == "global":
+        L = chart.reader.parameters["L"]
+        riemann = chart.geo.riemann_llll()
+        for a, b, c, d in vm._indices(n, 4):
+            if a >= b or c >= d or (a, b) > (c, d):
+                continue
+            blocks = {i < 5 for i in (a, b, c, d)}
+            want = 0
+            if len(blocks) == 1:
+                want = (-1 if a < 5 else 1) / L ** 2 * (g[a, c] * g[b, d] - g[a, d] * g[b, c])
+            if not zero(riemann[a][b][c][d] - want):
+                raise AssertionError(f"{name}: not anti-de Sitter space times a sphere in slot {a}{b}{c}{d}")
+        for i in range(n):
+            if not zero(sp.sympify(ricci[i][i]) / g[i, i] - (-4 if i < 5 else 4) / L ** 2):
+                raise AssertionError(f"{name}: R^M_N is not -4/L^2 and +4/L^2")
+        return
+    if system == "plane_wave":
+        for i in range(n):
+            for j in range(n):
+                if not zero(sp.sympify(ricci[i][j]) - (8 if i == j == 0 else 0)):
+                    raise AssertionError(f"{name}: the Ricci tensor is not R_tt = 8 alone")
+        T, X, r1 = chart.symbols[:3]
+        r2 = chart.symbols[6]
+        x, w, y = sp.symbols("x w y", real=True)
+        G, V1, V2 = ba.half_plane(x, w, y)
+        here = ba.metric("cartesian", (sp.Symbol("t"), x, w, y), G, (V1, V2))
+        images = {sp.Symbol("t"): T, x: X, w: (r1 ** 2 - r2 ** 2) / 2, y: r1 * r2}
+        _bubbling_pulled(name, "the half plane", here, g, images, (T, X, r1, r2), (sp.Symbol("t"), x, w, y),
+                         [0, 1, 2, 6], chart.symbols, rng)
+        residual("cartesian", ba.half_plane, [(0.4, 0.9, 0.7), (-1.3, -0.2, 0.35)], "the half plane")
+        residual("cartesian", lambda x, w, y: ba.concentric(x, w, y, ba.RING), [(0.4, 0.9, 0.7)], "the ring")
+        return
+    t, r, phi, y = chart.symbols[:4]
+    G, V = (chart.reader.parameters[k] for k in ("G", "V"))
+    mine = ba.metric("polar", (t, r, phi, y), G, V).subs(dict(zip(ba.ANGLES, chart.symbols[4:])))
+    plain = {G: sp.Symbol("_G", real=True), V: sp.Symbol("_V", real=True)}
+    if any(not zero((mine[i, j] - g[i, j]).subs(plain)) for i in range(n) for j in range(n)):
+        raise AssertionError(f"{name}: not Lin, Lunin and Maldacena's metric on the polar coordinates")
+    L = sp.Rational(13, 10)
+    spec = bubbling_ads("global")
+    there = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    T, rho = there.symbols[:2]
+    theta, psi = there.symbols[5:7]
+    images = {t: T, r: L ** 2 * sp.cosh(rho) * sp.cos(theta), phi: psi - T, y: L ** 2 * sp.sinh(rho) * sp.sin(theta)}
+    disc = g.subs(dict(zip((G, V), ba.concentric_polar(r, y, [L ** 2]))), simultaneous=True)
+    _bubbling_pulled(name, "the disc", disc, there.geo.g.subs(there.reader.parameters["L"], L), images,
+                     (T, rho, theta, psi), (t, r, phi, y), [0, 1, 5, 6], there.symbols, rng, chart.symbols)
+    residual("polar", lambda r, p, y: ba.concentric_polar(r, y, [sp.Rational(3, 2)]), [(0.4, 0.3, 0.7), (1.3, 2.0, 0.35)],
+             "the disc")
+    residual("polar", lambda r, p, y: ba.concentric_polar(r, y, ba.RING), [(0.4, 0.3, 0.7), (1.3, 2.0, 0.35)], "the ring")
+
+
+def _bubbling_pulled(name, label, here, there_g, images, plane, base, slots, there_symbols, rng, here_symbols=None):
+    """The metric `here`, on `base` and two 3-spheres, carried to the other chart along `images` of
+    its base in the other chart's coordinates `plane` (sitting in its slots `slots`), equals
+    `there_g` at three points in thirty digits; each 3-sphere goes to the other chart's in order."""
+    import bubbling_ads as ba
+    spheres = [s for s in range(10) if s not in slots]
+    angles = list(here_symbols[4:]) if here_symbols is not None else list(ba.ANGLES)
+    to_there = dict(images)
+    to_there.update({angles[k]: there_symbols[spheres[k]] for k in range(6)})
+    full = list(slots) + spheres
+    J = sp.zeros(10, 10)
+    for i in range(4):
+        for a in range(4):
+            J[i, a] = sp.diff(images[base[i]], plane[a])
+    for k in range(6):
+        J[4 + k, 4 + k] = 1
+    for _ in range(3):
+        at = {s: sp.Rational(rng.randint(20, 140), 100) for s in there_symbols}
+        pulled = J.subs(at).evalf(40).T * sp.Matrix(here).subs(to_there, simultaneous=True).subs(at).evalf(40) * J.subs(at).evalf(40)
+        want = sp.Matrix(there_g).subs(at).evalf(40)
+        for i in range(10):
+            for j in range(10):
+                if abs(pulled[i, j] - want[full[i], full[j]]) > 1e-30:
+                    raise AssertionError(f"{name}: {label} is not the other chart pulled back, slot {i}{j}")
+
+
+CHARTS["bubbling_ads"] = [lambda s=s: bubbling_ads(s) for s in BUBBLING_CHARTS]
 
 
 def write(spec):
