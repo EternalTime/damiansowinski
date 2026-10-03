@@ -1,0 +1,292 @@
+"""The graph of relations drawn behind the spacetimes page, MFS/assets/graph.js and the script
+beside its canvas in _layouts/mfs.html, as the captain asked on 3 October 2026.
+
+The graph is drawn from the site's own data: the list's index and the relations
+build_mfs_data.py writes from each spacetime's `related`. What the search finds is what the
+graph gathers, since the list and the graph are handed one answer, mfsSearch's, and clearing
+the search sends every spacetime back to its place in the whole collection. A layout is the
+same for the same data every time, and a search's layout depends on the spacetimes it found
+and the relations between them alone. The geometry is run here in Node as the page runs it;
+`node _tools/background_graph.mjs` holds the page as drawn to the same rules.
+"""
+
+import json
+import re
+import shutil
+import subprocess
+import unittest
+
+import build_mfs_data as build
+
+GRAPH = build.ROOT / "MFS" / "assets" / "graph.js"
+PAGE = build.ROOT / "_layouts" / "mfs.html"
+# The room the graph has beside the list on a desktop of 1440 by 900 at the usual text size,
+# and on narrower windows, where fewer names have the room.
+ROOMS = ((1140, 720), (700, 600), (420, 520))
+
+
+def read(path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def page_function(source, name):
+    """A function of the page's search script, as the page defines it."""
+    found = re.search(r"      function " + name + r"\(.*?\n      \}\n", source, re.S)
+    if not found:
+        raise AssertionError(f"the page no longer defines {name}")
+    return found.group(0)
+
+
+def node(script, payload):
+    """`script` run in Node with the graph's geometry as G and `payload` as input, its output read as JSON."""
+    if shutil.which("node") is None:
+        raise unittest.SkipTest("node is not installed")
+    prelude = f"const G = require({json.dumps(str(GRAPH))}); const input = JSON.parse(require('fs').readFileSync(0, 'utf8'));\n"
+    run = subprocess.run(["node", "-e", prelude + script], input=json.dumps(payload),
+                         capture_output=True, text=True, timeout=600)
+    if run.returncode != 0:
+        raise AssertionError(run.stderr[-3000:])
+    return json.loads(run.stdout)
+
+
+def word_matches(tag, q):
+    """A tag matched from the start of one of its words, written apart from the page's mfsTagMatches."""
+    t = tag.lower()
+    return any(t.startswith(q, i) and (i == 0 or t[i - 1] in " -/") for i in range(len(t)))
+
+
+class Relations(unittest.TestCase):
+    """The graph's relations are every two spacetimes that list each other, once, and nothing else."""
+
+    def test_every_relation_is_one_pair_of_the_graph(self):
+        metrics = build.load_metrics()
+        listed = {tuple(sorted((m["id"], r["id"]))) for m in metrics for r in m["related"]}
+        edges = read(build.RELATIONS_FILE)["edges"]
+        self.assertEqual(len(edges), len(listed))
+        self.assertEqual({tuple(e) for e in edges}, listed)
+        self.assertEqual(edges, sorted(edges))
+        for one, other in edges:
+            self.assertLess(one, other)
+
+    def test_the_relations_file_is_what_the_build_writes(self):
+        self.assertEqual(build.RELATIONS_FILE.read_text(encoding="utf-8"),
+                         build.serialise_relations(build.build_relations(build.load_metrics())))
+
+    def test_the_graph_counts_each_spacetime_s_relations(self):
+        index, relations = read(build.INDEX_FILE), read(build.RELATIONS_FILE)
+        graph = node("process.stdout.write(JSON.stringify(G.model(input[0], input[1])));", [index, relations])
+        self.assertEqual([s["id"] for s in graph["spacetimes"]], [m["id"] for m in index])
+        degree = {m["id"]: 0 for m in index}
+        for one, other in relations["edges"]:
+            degree[one] += 1
+            degree[other] += 1
+        self.assertEqual({s["id"]: s["degree"] for s in graph["spacetimes"]}, degree)
+        self.assertEqual(len(graph["edges"]), len(relations["edges"]))
+
+
+class SearchToGraph(unittest.TestCase):
+    """Typing a keyword gathers exactly the spacetimes the list then shows, the spacetimes carrying
+    it, and clearing the search brings back the whole graph."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.source = PAGE.read_text(encoding="utf-8")
+        cls.index = read(build.INDEX_FILE)
+        cls.relations = read(build.RELATIONS_FILE)
+        cls.keywords = sorted({t for m in cls.index for t in m["tags"]})
+        search = page_function(cls.source, "mfsTagMatches") + page_function(cls.source, "mfsSearch")
+        # Each keyword typed as the reader types it, and what the page's search and the graph make of it.
+        script = search + """
+        const [index, relations, queries, W, H] = input;
+        const graph = G.model(index, relations), all = graph.spacetimes.map((s, i) => i);
+        const home = G.gathered(graph, all, W, H).places.map(p => ({ x: p[0], y: p[1], z: p[2] }));
+        const out = {};
+        for (const q of queries) {
+          const found = mfsSearch(index, q), ids = found && found.map(m => m.id);
+          const members = ids && G.placesOf(graph, ids);
+          const goal = G.goal(home, members, members && G.gathered(graph, members, W, H).places);
+          out[q] = { listed: (found || index).map(m => m.id), front: graph.spacetimes.filter((s, i) => !goal.behind[i]).map(s => s.id),
+                     home: JSON.stringify(goal.to) === JSON.stringify(home) };
+        }
+        process.stdout.write(JSON.stringify(out));
+        """
+        typed = [k for k in cls.keywords] + [k.upper() for k in cls.keywords[:20]] + ["  vacuum  ", "", "   "]
+        cls.results = node(script, [cls.index, cls.relations, typed, *ROOMS[0]])
+
+    def carrying(self, q):
+        return [m["id"] for m in self.index if q in m["name"].lower() or any(word_matches(t, q) for t in m["tags"])]
+
+    def test_typing_a_keyword_gathers_the_spacetimes_carrying_it(self):
+        for keyword in self.keywords:
+            with self.subTest(keyword):
+                result = self.results[keyword]
+                self.assertEqual(result["front"], self.carrying(keyword.lower()))
+                self.assertFalse(result["home"])
+                exact = [m["id"] for m in self.index if keyword in m["tags"]]
+                self.assertTrue(set(exact) <= set(result["front"]))
+
+    def test_the_graph_gathers_what_the_list_shows(self):
+        for typed, result in self.results.items():
+            with self.subTest(typed):
+                self.assertEqual(result["front"], result["listed"])
+
+    def test_a_keyword_no_name_holds_gathers_its_carriers_and_nothing_else(self):
+        # "conformally flat" is the keyword the captain searched for on 2 October 2026.
+        for keyword in ("conformally flat", "wormhole", "Petrov type D", "cosmological constant"):
+            with self.subTest(keyword):
+                carriers = [m["id"] for m in self.index
+                            if any(word_matches(t, keyword.lower()) for t in m["tags"])]
+                self.assertTrue(carriers)
+                self.assertEqual(self.results[keyword]["front"], carriers)
+
+    def test_capitals_and_spaces_round_a_keyword_change_nothing(self):
+        for keyword in self.keywords[:20]:
+            with self.subTest(keyword):
+                self.assertEqual(self.results[keyword.upper()]["front"], self.results[keyword]["front"])
+        self.assertEqual(self.results["  vacuum  "]["front"], self.results["vacuum"]["front"])
+
+    def test_clearing_the_search_brings_back_the_whole_graph(self):
+        everyone = [m["id"] for m in self.index]
+        for cleared in ("", "   "):
+            with self.subTest(repr(cleared)):
+                self.assertTrue(self.results[cleared]["home"])
+                self.assertEqual(self.results[cleared]["front"], everyone)
+                self.assertEqual(self.results[cleared]["listed"], everyone)
+
+    def test_the_list_hands_the_graph_the_search_s_answer(self):
+        render = page_function(self.source, "renderResults")
+        self.assertIn("var found = mfsSearch(METRIC_INDEX, query);", render)
+        self.assertIn("window._mfsGraph.show(METRIC_INDEX, found && found.map(function(m) { return m.id; }));", render)
+        self.assertIn("var matches = found || METRIC_INDEX;", render)
+        self.assertEqual(self.source.count("window._mfsGraph.show("), 1)
+        self.assertEqual(self.source.count("mfsSearch("), 2)
+
+
+class Layout(unittest.TestCase):
+    """A layout is the same for the same data, a search's layout is its spacetimes' alone, and
+    every layout keeps the points apart and the names to the forty the room holds."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.index = read(build.INDEX_FILE)
+        cls.relations = read(build.RELATIONS_FILE)
+
+    def layouts(self, members_by_name, rooms):
+        script = """
+        const [index, relations, groups, rooms] = input;
+        const graph = G.model(index, relations), out = {};
+        for (const [name, ids] of Object.entries(groups)) {
+          const members = ids ? G.placesOf(graph, ids) : graph.spacetimes.map((s, i) => i);
+          out[name] = { arranged: G.arranged(graph, members), rooms: rooms.map(([W, H]) => G.gathered(graph, members, W, H)) };
+        }
+        process.stdout.write(JSON.stringify(out));
+        """
+        return node(script, [self.index, self.relations, members_by_name, rooms])
+
+    def test_the_same_data_gives_the_same_layout_every_time(self):
+        groups = {"all": None, "vacuum": [m["id"] for m in self.index if "vacuum" in m["tags"]]}
+        first, second = self.layouts(groups, ROOMS), self.layouts(groups, ROOMS)
+        self.assertEqual(first, second)
+
+    def test_a_search_s_layout_is_its_spacetimes_and_their_relations_alone(self):
+        members = [m["id"] for m in self.index if "wormhole" in m["tags"]]
+        script = """
+        const [index, relations, members] = input;
+        const whole = G.model(index, relations);
+        const own = new Set(members);
+        // The same spacetimes with every relation to a spacetime outside them taken away, and
+        // with the rest of the collection taken away.
+        const cut = G.model(index, { edges: relations.edges.filter(e => own.has(e[0]) && own.has(e[1])) });
+        const alone = G.model(index.filter(m => own.has(m.id)), relations);
+        const ids = g => G.placesOf(g, members);
+        process.stdout.write(JSON.stringify([G.arranged(whole, ids(whole)), G.arranged(cut, ids(cut)), G.arranged(alone, ids(alone))]));
+        """
+        whole, cut, alone = node(script, [self.index, self.relations, members])
+        self.assertEqual(len(whole), len(members))
+        self.assertEqual(whole, cut)
+        self.assertEqual(whole, alone)
+
+    def test_the_whole_graph_fills_its_room_with_its_points_apart_and_forty_names_at_most(self):
+        script = """
+        const [index, relations, rooms] = input;
+        const graph = G.model(index, relations), all = graph.spacetimes.map((s, i) => i);
+        let most = 0;
+        graph.spacetimes.forEach(s => { most = Math.max(most, s.degree); });
+        const out = rooms.map(([W, H]) => {
+          const laid = G.gathered(graph, all, W, H), camera = G.start();
+          const items = laid.places.map((p, i) => {
+            const at = G.seen(camera, { x: p[0], y: p[1], z: p[2] }, W, H), f = G.drawnAt(at.scale), s = graph.spacetimes[i];
+            const lines = G.twoLines(s.name);
+            return { x: at.x, y: at.y, near: at.near, weight: s.degree, f: f, r: G.radius(f, s.degree, most),
+                     w: Math.max(...lines.map(l => l.length)) * G.LETTER * f, h: lines.length * G.LINE * f,
+                     rank: 2, must: false, side: -1 };
+          });
+          const sides = G.labels(items, W, H);
+          return { named: laid.named, written: sides.filter(s => s >= 0).length, apart: G.apartAll(items),
+                   inside: items.every(it => it.x - it.r >= 0 && it.x + it.r <= W && it.y - it.r >= 0 && it.y + it.r <= H) };
+        });
+        process.stdout.write(JSON.stringify(out));
+        """
+        results = node(script, [self.index, self.relations, ROOMS])
+        for (W, H), result in zip(ROOMS, results):
+            with self.subTest(room=(W, H)):
+                self.assertTrue(result["apart"])
+                self.assertTrue(result["inside"])
+                self.assertLessEqual(result["written"], 40)
+                self.assertGreaterEqual(result["written"], result["named"])
+        self.assertEqual(results[0]["named"], 40)
+
+    def test_a_point_grows_linearly_with_its_relations(self):
+        sizes = node("process.stdout.write(JSON.stringify([0, 5, 10, 15, 20].map(d => G.radius(1, d, 20))));", [])
+        steps = [b - a for a, b in zip(sizes, sizes[1:])]
+        for step in steps:
+            self.assertAlmostEqual(step, steps[0])
+        self.assertAlmostEqual(sizes[-1] / sizes[0], 3.0)
+
+    def test_a_gathering_springs_to_its_place_and_stands_still(self):
+        moved = node("process.stdout.write(JSON.stringify([0, 0.1, 0.3, 0.6, 1.0, 1.2, 2].map(G.sprung)));", [])
+        self.assertEqual(moved[0], 0)
+        self.assertEqual(moved[-2:], [1, 1])
+        self.assertLess(max(moved), 1.02)
+        self.assertGreater(moved[3], 0.9)
+
+
+class OnThePage(unittest.TestCase):
+    """The graph lies behind every panel and is not drawn on a phone."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.source = PAGE.read_text(encoding="utf-8")
+
+    def test_the_graph_lies_under_every_panel(self):
+        canvas = self.source.index('<canvas id="mfs-graph"')
+        self.assertLess(self.source.index('<canvas id="wavy-grid"'), canvas)
+        self.assertLess(canvas, self.source.index('<div id="mfs-search-panel"'))
+        rule = re.search(r"#mfs-graph \{(.*?)\}", self.source, re.S).group(1)
+        self.assertIn("z-index: 1;", rule)
+        for panel in ("mfs-search-panel", "mfs-coffee-panel", "mfs-content-panel"):
+            self.assertRegex(self.source, r'<div id="' + panel + r'" style="position:fixed;z-index:15;')
+        # It takes the place the spacetime's panel rests in, to the right of the list.
+        self.assertIn("top: var(--mfs-top); right: 0;", rule)
+        self.assertIn("width: calc(100vw - var(--mfs-left-w) - 20px); height: calc(var(--mfs-bottom) - var(--mfs-top));", rule)
+
+    def test_a_phone_draws_no_graph(self):
+        phone = self.source[self.source.index("@media screen and (max-width: 37.5em)"):]
+        self.assertIn("#mfs-graph { display: none !important; }", phone[:phone.index("</style>")])
+
+    def test_the_graph_steps_aside_while_a_spacetime_is_open(self):
+        for hook, on in (("window._mfsShowMetric = function", "true"), ("window._mfsPageBack = function", "true"),
+                         ("window._mfsPageAway = function", "false")):
+            with self.subTest(hook):
+                body = self.source[self.source.index(hook):][:600]
+                self.assertIn(f"window._mfsGraph.open({on});", body)
+        self.assertIn("window._mfsGraph.leave();", self.source)
+
+    def test_the_page_reads_its_own_build_of_the_graph(self):
+        self.assertIn("""<script defer src="{{ '/MFS/assets/graph.js' | relative_url }}?v={{ site.time | date: "%s" }}"></script>""",
+                      self.source)
+        self.assertIn("""var RELATIONS = '{{ "/MFS/assets/data/relations.json" | relative_url }}?v=' + V;""", self.source)
+
+
+if __name__ == "__main__":
+    unittest.main()
