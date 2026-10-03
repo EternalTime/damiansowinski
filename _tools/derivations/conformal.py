@@ -9561,6 +9561,141 @@ def draining_bathtub(ck, src):
     return views
 
 
+def unruh_acoustic_hole(ck, src):
+    """Unruh's acoustic black hole on the equator, the fluid of constant density falling in at
+    c r_0^2/r^2, at r_0 = c = 1.
+
+    Orthogonal to the spheres the metric is -f dtau^2 + dr^2/f in Unruh's time, f = 1 - 1/r^4,
+    with one horizon at r = 1. Two roots of f are imaginary, so the tortoise coordinate holds an
+    arctangent besides the logarithm, r* = r + ln|(r - 1)/(r + 1)|/4 - arctan(r)/2, which vanishes
+    at r = 0. The surface gravity is f'(1)/2 = 2, so U = -exp(-2u) and V = exp(2v) with u, v =
+    tau -+ r* give UV = (1 - r) exp(4r - 2 arctan r)/(1 + r), analytic through the horizon, and
+    r = 0, where UV = 1, lies on the straight line T = pi/2: Kruskal's diagram for Schwarzschild,
+    cell for cell. The laboratory's time is t = tau + ln|(r - 1)/(r + 1)|/4 + arctan(r)/2, so v =
+    t + r - arctan r is regular for every r > 0 and the laboratory chart is the ingoing one,
+    q = arctan exp(2v) and p = arctan(UV exp(-2v)), covering the exterior and the black hole and
+    nothing else: the line V = 0 is t -> -infinity. The fluid is all there is, so it is drawn alone,
+    with the edge t -> -infinity where Kruskal's diagram runs on, as the draining bathtub is."""
+    hole = {"r_0": 1}
+    un = Plane(src, "unruh_acoustic_hole", "unruh", ("\\tau", "r"), EQUATOR, hole)
+    assert un.g[0, 1] == 0 and sp.simplify(un.g[0, 0] * un.g[1, 1] + 1) == 0
+    assert sp.simplify(-un.g[0, 0] - (1 - un.x1 ** -4)) == 0
+
+    def rstar(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(divide="ignore"):
+            return r + np.log(np.abs((r - 1) / (r + 1))) / 4 - np.arctan(r) / 2
+
+    def uv(r):
+        r = np.asarray(r, dtype=float)
+        return (1 - r) / (1 + r) * np.exp(4 * r - 2 * np.arctan(r))
+
+    def exterior(tau, r):
+        tau, r = np.asarray(tau, dtype=float), np.asarray(r, dtype=float)
+        return -atan_exp(-2 * (tau - rstar(r))), atan_exp(2 * (tau + rstar(r)))
+
+    def ingoing(t, r):
+        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+        # UV exp(-2v) written out, (1 - r) exp(2r - 2t)/(1 + r), so that no exponential overflows.
+        return np.arctan((1 - r) / (1 + r) * np.exp(2 * r - 2 * t)), atan_exp(2 * (t + r - np.arctan(r)))
+
+    ck.chart("Unruh's acoustic hole, Unruh's time, exterior", un, exterior,
+             ck.uniform(-3, 3), ck.uniform(1.001, 6), lambda t, r: (1, 0))
+    lab = Plane(src, "unruh_acoustic_hole", "laboratory", ("t", "r"), EQUATOR, hole)
+    ck.chart("Unruh's acoustic hole, laboratory", lab, ingoing,
+             ck.uniform(-3, 3), ck.uniform(0.01, 6), lambda t, r: (1, -1 / r ** 2))
+
+    rr = np.linspace(0.05, 5, 50)
+    out, h = rr[rr > 1.2], 1e-6
+    ck.limit("Unruh's acoustic hole: dr*/dr is 1/f", (rstar(out + h) - rstar(out - h)) / (2 * h),
+             1 / (1 - out ** -4.0), 1e-6)
+    p, q = ingoing(np.array([-3.0, 0, 3]), np.full(3, 1e-9))
+    ck.limit("Unruh's acoustic hole: r -> 0 lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = ingoing(np.array([0.0]), np.array([1e8]))
+    ck.limit("Unruh's acoustic hole: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-3)
+    p, q = ingoing(np.array([-40.0, -40.0]), np.array([0.5, 3.0]))
+    ck.limit("Unruh's acoustic hole: t -> -infinity lands on V = 0", q, [0, 0], 1e-12)
+    pp, qq = ingoing(0.3 + 0 * rr, rr)
+    ck.limit("Unruh's acoustic hole: tan p tan q is UV = (1 - r) e^(4r - 2 arctan r)/(1 + r)",
+             np.log(np.abs(np.tan(pp) * np.tan(qq))), np.log(np.abs(uv(rr))), 1e-8)
+    ck.limit("Unruh's acoustic hole: UV changes sign on the horizon", np.sign(np.tan(pp) * np.tan(qq)), np.sign(1 - rr))
+    shift = np.log(np.abs((3.0 - 1) / (3.0 + 1))) / 4 + np.arctan(3.0) / 2
+    ck.limit("Unruh's acoustic hole: the laboratory and Unruh's coordinates put one event at one point",
+             ingoing(0.7 + shift, 3.0), exterior(0.7, 3.0), 1e-12)
+    K = lab.kretschmann
+    ck.diverges("Unruh's acoustic hole: the Kretschmann scalar diverges at r = 0", K(0, 1e-1), K(0, 1e-2))
+    ck.finite("Unruh's acoustic hole: the Kretschmann scalar is finite on the horizon",
+              K(np.zeros(3), np.array([0.999, 1, 1.001])))
+
+    box = [-HALF - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    whole = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]]
+    outside = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    R_OUT, R_IN, TS = (1.05, 1.25, 1.5, 2, 3), (0.5, 0.75, 0.9), (-4, -2, -1, 0, 1, 2, 4)
+    t = spread(-np.inf, np.inf, 500, 9)
+
+    def edges(v):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]]])
+        v.line("horizon", [[[0, 0], [HALF, HALF]]])
+        v.line("chartedge", [[[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]]], zig=True)
+        for at in ((PI, 0), (HALF, HALF), (HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([HALF, HALF], "$i^+$", "b", dy=-6)
+        v.label_xt([HALF, -HALF], "$i^-$", "t", dy=6)
+        v.label_xt([3 * Q4, Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-4)
+        v.label_xt([3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=4)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([HALF, -0.95], "outside", cls="region")
+        v.label_xt([-Q4 / 2, 1.15], "black hole", cls="region")
+        v.legend("singular", "$r = 0$, the sink, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.legend("horizon", "the horizon $r = r_0$")
+        v.legend("chartedge", "$t \\to -\\infty$, where the laboratory's time begins")
+        v.legend("r", "$r$ constant")
+
+    space, = slices.moments("unruh_acoustic_hole", "space")
+    funnel, = slices.moments("unruh_acoustic_hole", "funnel")
+    lo, hi = space.reach("laboratory", "r")
+    flo, fhi = funnel.reach("unruh", "r")
+    r_space = np.concatenate([np.linspace(max(lo, 1e-9), 0.999, 200), 1 + np.exp(np.linspace(-12, math.log(hi - 1), 200))])
+    r_funnel = flo + np.exp(np.linspace(-30, math.log(fhi - flo), 300))
+
+    def marks(v):
+        v.slice(space, [ingoing(0 * r_space, r_space)])
+        v.slice(funnel, [exterior(0 * r_funnel, r_funnel)], label="$\\tau = 0$")
+
+    views = []
+    v = View("laboratory", "Laboratory", box, "laboratory")
+    v.fill("region", whole)
+    v.fill("cover", whole)
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    rr = spread(0, np.inf, 600, 14)
+    for tt in TS:
+        v.curve("t", *ingoing(np.full_like(rr, tt), rr))
+    edges(v)
+    v.legend("cover", "the whole of the fluid, which $t$ and $r > 0$ cover")
+    v.legend("t", "$t$ constant, in units of $r_0/c$")
+    marks(v)
+    views.append(v)
+
+    v = View("unruh", "Unruh's time", box, "unruh")
+    v.fill("region", whole)
+    v.fill("cover", outside)
+    for r in R_OUT:
+        v.curve("r", *exterior(t, np.full_like(t, r)))
+    rr = spread(1, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *exterior(np.full_like(rr, tt), rr))
+    edges(v)
+    v.legend("cover", "the region that $\\tau$ and $r > r_0$ cover")
+    v.legend("t", "$\\tau$ constant, in units of $r_0/c$")
+    marks(v)
+    views.append(v)
+    return views
+
+
 def point_particle_2plus1(ck, src):
     """A point particle in three dimensions at alpha = 3/4, the particle its cone is embedded at.
     The half plane of fixed angle is flat and totally geodesic, -c^2dt^2 + dr^2 in the proper
@@ -22046,6 +22181,7 @@ def moving_mirror(ck, src):
 DRAWN = {
     "moving_mirror": moving_mirror,
     "draining_bathtub": draining_bathtub,
+    "unruh_acoustic_hole": unruh_acoustic_hole,
     "lifshitz_spacetime": lifshitz_spacetime,
     "born_infeld_charge": born_infeld_charge,
     "aichelburg_sexl": aichelburg_sexl,
@@ -23141,6 +23277,25 @@ CAPTIONS = {
         "meets the edge $t \\to -\\infty$.",
         "The time $T = t - (|A|/(2c^2))\\ln(c^2r^2/A^2 - 1)$ runs to $+\\infty$ along the horizon, so the chart "
         "ends there, while the laboratory's $t$ goes through.",
+    ],
+    ("unruh_acoustic_hole", "laboratory"): [
+        "A fluid falling into $r = 0$ at $c\\,r_0^2/r^2$, each point in the diagram a sphere of area $4\\pi r^2$. "
+        "Orthogonal to the spheres the metric is $-f\\,c^2d\\tau^2 + dr^2/f$ in Unruh's time, with $f = 1 - "
+        "r_0^4/r^4$ and $r_* = r + \\tfrac{1}{4}r_0\\ln|(r - r_0)/(r + r_0)| - \\tfrac{1}{2}r_0\\arctan(r/r_0)$. "
+        "The Kruskal coordinates $U = -e^{-2u/r_0}$ and $V = e^{2v/r_0}$, with $u, v = c\\tau \\mp r_*$, make "
+        "it regular through the horizon, and with $p = \\arctan U$ and $q = \\arctan V$ the sink $r = 0$, where "
+        "$UV = 1$, lies on the line $T = \\pi/2$.",
+        "The laboratory's $t$ and $r > 0$ cover the outside and the black hole, and those two regions are all "
+        "the fluid there is. Every line of constant $t$ runs from the sink through the horizon out to $i^0$. "
+        "The dashed edge is $t \\to -\\infty$: a sound ray followed back in time reaches it after a finite "
+        "affine length and an endless time on the laboratory's clock.",
+    ],
+    ("unruh_acoustic_hole", "unruh"): [
+        "The same fluid, with the region Unruh's time covers. The coordinates $\\tau$ and $r > r_0$ cover the "
+        "outside alone, and its lines of constant $\\tau$ all meet at the corner where the horizon meets the "
+        "edge $t \\to -\\infty$.",
+        "The time $\\tau = t - (r_0/4c)\\ln|(r - r_0)/(r + r_0)| - (r_0/2c)\\arctan(r/r_0)$ runs to $+\\infty$ "
+        "along the horizon, so the chart ends there, while the laboratory's $t$ goes through.",
     ],
     ("btz", "static"): [
         "The black hole without rotation ($M = 1$, $J = 0$), maximally extended, each point in the "

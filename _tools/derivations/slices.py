@@ -1546,6 +1546,32 @@ def _bathtub(system):
             Mark(funnel, along(0.0, flo, fhi), label="$T = 0$")]
 
 
+def unruh_shift(r):
+    """How far Unruh's time runs ahead of the laboratory's for the hole the diagrams draw, r_0 = c = 1:
+    tau - t = -ln|(r - 1)/(r + 1)|/4 - arctan(r)/2, from c dtau = c dt - r_0^2 r^2 dr/(r^4 - r_0^4)."""
+    r = np.asarray(r, dtype=float)
+    return -np.log(np.abs((r - 1) / (r + 1))) / 4 - np.arctan(r) / 2
+
+
+def _unruh(system):
+    """The two moments of Unruh's acoustic black hole on a plane of time and r. The laboratory's t = 0,
+    flat space, is a line of constant t in the laboratory chart and the curve tau = unruh_shift(r) in
+    Unruh's time, outside the horizon; Unruh's tau = 0 is a line of constant tau there and the curve
+    t = -unruh_shift(r) in the laboratory chart. Each curve runs off toward the horizon, so its points
+    crowd there."""
+    space, = moments("unruh_acoustic_hole", "space")
+    funnel, = moments("unruh_acoustic_hole", "funnel")
+    lo, hi = space.reach("laboratory", "r")
+    flo, fhi = funnel.reach("unruh", "r")
+    if system == "laboratory":
+        r = near(flo, fhi)
+        return [Mark(space, along(0.0, lo, hi)),
+                Mark(funnel, [np.column_stack([-unruh_shift(r), r])], label="$\\tau = 0$")]
+    r = near(flo, hi)
+    return [Mark(space, [np.column_stack([unruh_shift(r), r])]),
+            Mark(funnel, along(0.0, flo, fhi), label="$\\tau = 0$")]
+
+
 def sads_rstar(r):
     """Schwarzschild-anti-de Sitter's tortoise coordinate at r_s = 2 and L = 1, where 1/f =
     r/((r - 1)(r^2 + r + 2)), as the Eddington-Finkelstein charts fix it, vanishing at r = 0:
@@ -2285,6 +2311,8 @@ FLAT = {
     ("btz", "stationary", "static"): lambda: _btz(),
     ("draining_bathtub", "laboratory", "drain"): lambda: _bathtub("laboratory"),
     ("draining_bathtub", "kerr_like", "exterior"): lambda: _bathtub("kerr_like"),
+    ("unruh_acoustic_hole", "laboratory", "infall"): lambda: _unruh("laboratory"),
+    ("unruh_acoustic_hole", "unruh", "exterior"): lambda: _unruh("unruh"),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
     ("btz", "eddington_finkelstein_outgoing", "static"): lambda: _btz(-1),
     ("reissner_nordstrom_de_sitter", "static", "radial"): lambda: _rnds("static"),
@@ -3997,6 +4025,17 @@ def checks():
     report("Draining bathtub: t = T + ln(r^2 - 1)/2 pulls the laboratory chart back onto the Kerr-like one", miss, 1e-10)
     miss = float(np.max(np.abs(bathtub_shift(np.array([1.5, 2.0, 4.0])) + 0.5 * np.log(np.array([1.25, 3.0, 15.0])))))
     report("Draining bathtub: the laboratory's t = 0 is T = -ln(r^2 - 1)/2", miss, 1e-14)
+    # Unruh's acoustic black hole: t = tau + ln|(r - 1)/(r + 1)|/4 + arctan(r)/2 pulls the laboratory chart
+    # back onto Unruh's time in every slot.
+    hole = {"r_0": 1}
+    g_lab, (tl, rl, thl, phl) = metric("unruh_acoustic_hole", "laboratory", hole)
+    g_un, (tu, ru, thu, phu) = metric("unruh_acoustic_hole", "unruh", hole)
+    image = [tu + sp.log((ru - 1) / (ru + 1)) / 4 + sp.atan(ru) / 2, ru, thu, phu]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (tu, ru, thu, phu)[j]))
+    pulled = J.T * g_lab.subs(dict(zip((tl, rl, thl, phl), image)), simultaneous=True) * J
+    miss = max(abs(complex((pulled - g_un).subs({ru: a, thu: 1.1})[i, j])) for a in rng.uniform(1.05, 5, 20)
+               for i in range(4) for j in range(4))
+    report("Unruh's acoustic hole: t = tau + ln((r - 1)/(r + 1))/4 + arctan(r)/2 pulls the laboratory chart back", miss, 1e-10)
     return failures
 
 
