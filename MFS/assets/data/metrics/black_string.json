@@ -74,6 +74,11 @@
       "id": "topological_star",
       "kind": "generalisation",
       "text": "The black string with a magnetic field through its spheres and a second radius $r_B$, where the circle shrinks to a point. Put $r_B$ outside the horizon and the horizon is gone: the string has become a star whose space ends on a bubble [bah2021]."
+    },
+    {
+      "id": "kerr_scalar_hair",
+      "kind": "family",
+      "text": "Another family that branches off where an instability sets in: spinning black holes with a cloud of scalar field branch off Kerr's at the threshold of superradiance, and Herdeiro and Radu set them beside the rippled strings of the Gregory-Laflamme instability [herdeiro2014]."
     }
   ],
   "references": [
@@ -100,7 +105,8 @@
     "elvang2006",
     "elvang2007",
     "gibbons1995",
-    "bah2021"
+    "bah2021",
+    "herdeiro2014"
   ],
   "coordinates": [
     {

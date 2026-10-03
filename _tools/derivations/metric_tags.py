@@ -143,11 +143,24 @@ REGIONS = {
                "vector of that chart extends to no symmetry of the whole spacetime (Brill 1996, section 4; "
                "Aminneborg, Bengtsson, Brill, Holst and Peldan 1998, section V)",
     },
+    "btz_shock_wave": {
+        "regions": [["kruskal", "discontinuous"]],
+        "why": "exterior covers one outside alone, where the black hole is static; a shift of its Killing "
+               "time t is a boost of the Kruskal u and v that rescales the shift alpha, so it carries the "
+               "shock to another one and is no symmetry of the whole spacetime (Shenker and Stanford 2014, "
+               "sections 3.1 and 3.2)",
+    },
     "moving_mirror": {
         "regions": [["inertial", "null", "mirror_rest"]],
         "why": "thermal, collapse and rindler are three mirrors, Carlitz and Willey's, the one that imitates a "
                "collapse, and the uniformly accelerating one, which alone is at rest in a static chart; a mirror "
                "on a general world line leaves the spacetime to its right no symmetry",
+    },
+    "bubbling_ads": {
+        "regions": [["rings"]],
+        "why": "global and plane_wave are two members of the family, the black disc and the black half plane, "
+               "each with symmetries the general pattern of droplets lacks: the disc is static, and every other "
+               "pattern twists the time, V dphi in Lin, Lunin and Maldacena's metric (2.4)",
     },
     "kerr_bertotti_robinson": {
         "regions": [["boyer_lindquist"]],
@@ -157,6 +170,11 @@ REGIONS = {
         "regions": [["weyl", "corotating", "bardeen_wagoner", "spheroidal"]],
         "why": "black_hole_limit is the limit mu -> mu_0 outside the disc, the extreme Kerr metric, "
                "and no disc of the family",
+    },
+    "kerr_scalar_hair": {
+        "regions": [["herdeiro_radu"]],
+        "why": "kerr_member is the member with no field, Kerr's metric in the same coordinates (Herdeiro and "
+               "Radu 2015, appendix A), a special case that is a vacuum where the family carries the field",
     },
     "chandrasekhar_xanthopoulos": {
         "regions": [["prolate", "angular", "boyer_lindquist"]],
@@ -196,6 +214,11 @@ REGIONS = {
     },
     "israel_shell": {
         "regions": [["interior"], ["exterior", "exterior_ingoing"]],
+        "why": "the flat space inside the shell and the vacuum outside it are two regions of one spacetime",
+    },
+    "black_to_white_hole": {
+        "regions": [["interior"], ["kruskal", "schwarzschild", "painleve_gullstrand_ingoing",
+                                   "painleve_gullstrand_outgoing", "lemaitre"]],
         "why": "the flat space inside the shell and the vacuum outside it are two regions of one spacetime",
     },
     "charged_shell": {
@@ -337,6 +360,10 @@ OVERRULED = {
         False, "the hyperbolic chart is spherical about one observer, and so is the local geometry, but the "
                "identifications that close space leave only a discrete group of the rotations about any "
                "point: the torus is globally anisotropic, and a closed hyperbolic space is not even homogeneous"),
+    ("poincare_dodecahedral", "spherically symmetric"): (
+        False, "the comoving and conformal charts are spherical about one observer, and so is the local "
+               "geometry, but the binary icosahedral group that closes space leaves only a finite group of the "
+               "rotations about any point"),
     ("chandrasekhar_xanthopoulos", "stationary"): (
         False, "where both waves have passed r lies between Kerr's horizons and inside the ergosphere, "
                "|cos theta| <= (m - r)/sqrt(m^2 - a^2), an end of theta that is not read, and there "

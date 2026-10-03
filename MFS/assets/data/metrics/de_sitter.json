@@ -143,6 +143,21 @@
       "id": "self_creating_universe",
       "kind": "locally_same",
       "text": "De Sitter space with each event identified with its images under a boost. J. Richard Gott and Li-Xin Li proposed it in 1998 as a universe whose earliest stretch of time is a loop [gott1998]."
+    },
+    {
+      "id": "poincare_dodecahedral",
+      "kind": "family",
+      "text": "A closed Friedmann universe with points of its space identified under a group of 120 rotations of the 3-sphere. With nothing in it but a positive cosmological constant it is de Sitter space so identified, and it never stops expanding."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "composite",
+      "text": "Half of de Sitter's closed universe, from its waist on, joined to half of its Euclidean 4-sphere. It is Vilenkin's universe created from nothing and the saddle of Hartle and Hawking's no-boundary proposal [vilenkin1982, feldbrugge2017]."
+    },
+    {
+      "id": "big_rip",
+      "kind": "limit_source",
+      "text": "Phantom energy with $w < -1$ in place of the cosmological constant, pulling the universe apart at a finite time. De Sitter space is its limit $w \\to -1$, where that time moves off to infinity [chiba2005]."
     }
   ],
   "references": [
@@ -188,7 +203,10 @@
     "ruban1969",
     "gibbonshawking1979",
     "page2009",
-    "gott1998"
+    "gott1998",
+    "vilenkin1982",
+    "feldbrugge2017",
+    "chiba2005"
   ],
   "coordinates": [
     {

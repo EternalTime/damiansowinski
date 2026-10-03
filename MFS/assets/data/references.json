@@ -1,5 +1,5 @@
 {
-  "version": "54398486d7537212",
+  "version": "c248c10e1ca52226",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -751,8 +751,10 @@
         "author": "Ellis, Homer G",
         "journal": "Journal of Mathematical Physics",
         "volume": "14",
+        "number": "1",
         "pages": "104--118",
         "year": "1973",
+        "doi": "10.1063/1.1666161",
         "url": "https://euclid.colorado.edu/~ellis/RelativityPapers/EtFlThDrPaMoGeRe.pdf"
       }
     },
@@ -797,8 +799,10 @@
         "author": "Morris, Michael S and Thorne, Kip S",
         "journal": "American Journal of Physics",
         "volume": "56",
+        "number": "5",
         "pages": "395--412",
         "year": "1988",
+        "doi": "10.1119/1.15620",
         "url": "https://www.pas.rochester.edu/~tim/introframe/AmJPhysBlackHoles.pdf"
       }
     },
@@ -4942,8 +4946,12 @@
         "author": "James, Oliver and von Tunzelmann, Eug\\'enie and Franklin, Paul and Thorne, Kip S.",
         "journal": "American Journal of Physics",
         "volume": "83",
+        "number": "6",
         "pages": "486--499",
         "year": "2015",
+        "doi": "10.1119/1.4916949",
+        "eprint": "1502.03809",
+        "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1119/1.4916949"
       }
     },
@@ -6661,6 +6669,9 @@
         "number": "6",
         "pages": "065001",
         "year": "2015",
+        "doi": "10.1088/0264-9381/32/6/065001",
+        "eprint": "1502.03808",
+        "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/0264-9381/32/6/065001"
       }
     },
@@ -26728,6 +26739,54 @@
         "url": "https://arxiv.org/abs/astro-ph/0310253"
       }
     },
+    "roukema2004": {
+      "type": "article",
+      "fields": {
+        "title": "A hint of Poincaré dodecahedral topology in the {WMAP} first year sky map",
+        "author": "Roukema, Boudewijn F. and Lew, Bartosz and Cechowska, Magdalena and Marecki, Andrzej and Bajtlik, Stanislaw",
+        "journal": "Astronomy \\& Astrophysics",
+        "volume": "423",
+        "number": "3",
+        "pages": "821--831",
+        "year": "2004",
+        "doi": "10.1051/0004-6361:20040337",
+        "eprint": "astro-ph/0402608",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/0402608"
+      }
+    },
+    "aurich2005": {
+      "type": "article",
+      "fields": {
+        "title": "{CMB} anisotropy of the Poincaré dodecahedron",
+        "author": "Aurich, Ralf and Lustig, Sven and Steiner, Frank",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "22",
+        "number": "11",
+        "pages": "2061--2083",
+        "year": "2005",
+        "doi": "10.1088/0264-9381/22/11/010",
+        "eprint": "astro-ph/0412569",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/0412569"
+      }
+    },
+    "key2007": {
+      "type": "article",
+      "fields": {
+        "title": "Extending the {WMAP} bound on the size of the Universe",
+        "author": "Key, Joey Shapiro and Cornish, Neil J. and Spergel, David N. and Starkman, Glenn D.",
+        "journal": "Physical Review D",
+        "volume": "75",
+        "number": "8",
+        "pages": "084034",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.75.084034",
+        "eprint": "astro-ph/0604616",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/0604616"
+      }
+    },
     "petersen2023": {
       "type": "article",
       "fields": {
@@ -29542,6 +29601,158 @@
         "url": "https://doi.org/10.1103/PhysRevLett.118.131102"
       }
     },
+    "herdeiro2014": {
+      "type": "article",
+      "fields": {
+        "title": "{Kerr} Black Holes with Scalar Hair",
+        "author": "Herdeiro, Carlos A. R. and Radu, Eugen",
+        "journal": "Physical Review Letters",
+        "volume": "112",
+        "number": "22",
+        "pages": "221101",
+        "year": "2014",
+        "doi": "10.1103/PhysRevLett.112.221101",
+        "eprint": "1403.2757",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.112.221101"
+      }
+    },
+    "herdeiro2015construction": {
+      "type": "article",
+      "fields": {
+        "title": "Construction and physical properties of {Kerr} black holes with scalar hair",
+        "author": "Herdeiro, Carlos and Radu, Eugen",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "32",
+        "number": "14",
+        "pages": "144001",
+        "year": "2015",
+        "doi": "10.1088/0264-9381/32/14/144001",
+        "eprint": "1501.04319",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/32/14/144001"
+      }
+    },
+    "herdeiro2015data": {
+      "type": "misc",
+      "fields": {
+        "title": "Data for {Kerr} black holes with scalar hair",
+        "author": "Herdeiro, Carlos and Radu, Eugen",
+        "howpublished": "Gravitation at Aveiro University",
+        "year": "2015",
+        "url": "https://gravitation.web.ua.pt/node/416"
+      }
+    },
+    "herdeiro2015review": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotically flat black holes with scalar hair: A review",
+        "author": "Herdeiro, Carlos A. R. and Radu, Eugen",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "24",
+        "number": "09",
+        "pages": "1542014",
+        "year": "2015",
+        "doi": "10.1142/S0218271815420146",
+        "eprint": "1504.08209",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271815420146"
+      }
+    },
+    "mayo1996": {
+      "type": "article",
+      "fields": {
+        "title": "No hair for spherical black holes: Charged and nonminimally coupled scalar field with self-interaction",
+        "author": "Mayo, Avraham E. and Bekenstein, Jacob D.",
+        "journal": "Physical Review D",
+        "volume": "54",
+        "number": "8",
+        "pages": "5059--5069",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.54.5059",
+        "eprint": "gr-qc/9602057",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.54.5059"
+      }
+    },
+    "press1972": {
+      "type": "article",
+      "fields": {
+        "title": "Floating Orbits, Superradiant Scattering and the Black-hole Bomb",
+        "author": "Press, William H. and Teukolsky, Saul A.",
+        "journal": "Nature",
+        "volume": "238",
+        "number": "5361",
+        "pages": "211--212",
+        "year": "1972",
+        "doi": "10.1038/238211a0",
+        "url": "https://doi.org/10.1038/238211a0"
+      }
+    },
+    "hod2012": {
+      "type": "article",
+      "fields": {
+        "title": "Stationary scalar clouds around rotating black holes",
+        "author": "Hod, Shahar",
+        "journal": "Physical Review D",
+        "volume": "86",
+        "number": "10",
+        "pages": "104026",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.86.104026",
+        "eprint": "1211.3202",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.86.104026"
+      }
+    },
+    "cunha2015": {
+      "type": "article",
+      "fields": {
+        "title": "Shadows of {Kerr} Black Holes with Scalar Hair",
+        "author": "Cunha, Pedro V. P. and Herdeiro, Carlos A. R. and Radu, Eugen and Rúnarsson, Helgi F.",
+        "journal": "Physical Review Letters",
+        "volume": "115",
+        "number": "21",
+        "pages": "211102",
+        "year": "2015",
+        "doi": "10.1103/PhysRevLett.115.211102",
+        "eprint": "1509.00021",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.115.211102"
+      }
+    },
+    "herdeiro2016proca": {
+      "type": "article",
+      "fields": {
+        "title": "{Kerr} black holes with {Proca} hair",
+        "author": "Herdeiro, Carlos and Radu, Eugen and Rúnarsson, Helgi",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "33",
+        "number": "15",
+        "pages": "154001",
+        "year": "2016",
+        "doi": "10.1088/0264-9381/33/15/154001",
+        "eprint": "1603.02687",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/33/15/154001"
+      }
+    },
+    "east2017": {
+      "type": "article",
+      "fields": {
+        "title": "Superradiant Instability and Backreaction of Massive Vector Fields around {Kerr} Black Holes",
+        "author": "East, William E. and Pretorius, Frans",
+        "journal": "Physical Review Letters",
+        "volume": "119",
+        "number": "4",
+        "pages": "041101",
+        "year": "2017",
+        "doi": "10.1103/PhysRevLett.119.041101",
+        "eprint": "1704.04791",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.119.041101"
+      }
+    },
     "deser1982": {
       "type": "article",
       "fields": {
@@ -29722,6 +29933,808 @@
         "url": "https://doi.org/10.1088/0264-9381/27/10/105001"
       }
     },
+    "hartle2022": {
+      "type": "misc",
+      "fields": {
+        "title": "The Genesis of the No-Boundary Wave Function of the Universe",
+        "author": "Hartle, James",
+        "year": "2022",
+        "eprint": "2202.07020",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2202.07020"
+      }
+    },
+    "vilenkin2002": {
+      "type": "incollection",
+      "fields": {
+        "title": "Quantum cosmology and eternal inflation",
+        "author": "Vilenkin, Alexander",
+        "booktitle": "The Future of Theoretical Physics and Cosmology: Celebrating Stephen Hawking's 60th Birthday",
+        "editor": "Gibbons, Gary W. and Shellard, E. Paul S. and Rankin, Stuart J.",
+        "pages": "649--666",
+        "publisher": "Cambridge University Press",
+        "year": "2003",
+        "eprint": "gr-qc/0204061",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0204061"
+      }
+    },
+    "vilenkin1984": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum creation of universes",
+        "author": "Vilenkin, Alexander",
+        "journal": "Physical Review D",
+        "volume": "30",
+        "number": "2",
+        "pages": "509--511",
+        "year": "1984",
+        "doi": "10.1103/PhysRevD.30.509",
+        "url": "https://doi.org/10.1103/PhysRevD.30.509"
+      }
+    },
+    "linde1984": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum creation of the inflationary universe",
+        "author": "Linde, A. D.",
+        "journal": "Lettere al Nuovo Cimento",
+        "volume": "39",
+        "number": "17",
+        "pages": "401--405",
+        "year": "1984",
+        "doi": "10.1007/BF02790571",
+        "url": "https://doi.org/10.1007/BF02790571"
+      }
+    },
+    "hartle2008": {
+      "type": "article",
+      "fields": {
+        "title": "No-Boundary Measure of the Universe",
+        "author": "Hartle, James B. and Hawking, S. W. and Hertog, Thomas",
+        "journal": "Physical Review Letters",
+        "volume": "100",
+        "number": "20",
+        "pages": "201301",
+        "year": "2008",
+        "doi": "10.1103/PhysRevLett.100.201301",
+        "eprint": "0711.4630",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0711.4630"
+      }
+    },
+    "feldbrugge2017": {
+      "type": "article",
+      "fields": {
+        "title": "Lorentzian quantum cosmology",
+        "author": "Feldbrugge, Job and Lehners, Jean-Luc and Turok, Neil",
+        "journal": "Physical Review D",
+        "volume": "95",
+        "number": "10",
+        "pages": "103508",
+        "year": "2017",
+        "doi": "10.1103/PhysRevD.95.103508",
+        "eprint": "1703.02076",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1703.02076"
+      }
+    },
+    "shenker2014": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes and the butterfly effect",
+        "author": "Shenker, Stephen H. and Stanford, Douglas",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2014",
+        "number": "03",
+        "pages": "067",
+        "year": "2014",
+        "doi": "10.1007/JHEP03(2014)067",
+        "eprint": "1306.0622",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP03(2014)067"
+      }
+    },
+    "shenker2014multiple": {
+      "type": "article",
+      "fields": {
+        "title": "Multiple shocks",
+        "author": "Shenker, Stephen H. and Stanford, Douglas",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2014",
+        "number": "12",
+        "pages": "046",
+        "year": "2014",
+        "doi": "10.1007/JHEP12(2014)046",
+        "eprint": "1312.3296",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP12(2014)046"
+      }
+    },
+    "sekino2008": {
+      "type": "article",
+      "fields": {
+        "title": "Fast scramblers",
+        "author": "Sekino, Yasuhiro and Susskind, Leonard",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2008",
+        "number": "10",
+        "pages": "065",
+        "year": "2008",
+        "doi": "10.1088/1126-6708/2008/10/065",
+        "eprint": "0808.2096",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2008/10/065"
+      }
+    },
+    "stanford2014": {
+      "type": "article",
+      "fields": {
+        "title": "Complexity and shock wave geometries",
+        "author": "Stanford, Douglas and Susskind, Leonard",
+        "journal": "Physical Review D",
+        "volume": "90",
+        "number": "12",
+        "pages": "126007",
+        "year": "2014",
+        "doi": "10.1103/PhysRevD.90.126007",
+        "eprint": "1406.2678",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.90.126007"
+      }
+    },
+    "roberts2015": {
+      "type": "article",
+      "fields": {
+        "title": "Localized shocks",
+        "author": "Roberts, Daniel A. and Stanford, Douglas and Susskind, Leonard",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2015",
+        "number": "03",
+        "pages": "051",
+        "year": "2015",
+        "doi": "10.1007/JHEP03(2015)051",
+        "eprint": "1409.8180",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP03(2015)051"
+      }
+    },
+    "maldacena2016chaos": {
+      "type": "article",
+      "fields": {
+        "title": "A bound on chaos",
+        "author": "Maldacena, Juan and Shenker, Stephen H. and Stanford, Douglas",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2016",
+        "number": "08",
+        "pages": "106",
+        "year": "2016",
+        "doi": "10.1007/JHEP08(2016)106",
+        "eprint": "1503.01409",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP08(2016)106"
+      }
+    },
+    "braginsky1987memory": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational-wave bursts with memory and experimental prospects",
+        "author": "Braginsky, Vladimir B. and Thorne, Kip S.",
+        "journal": "Nature",
+        "volume": "327",
+        "number": "6118",
+        "pages": "123--125",
+        "year": "1987",
+        "doi": "10.1038/327123a0",
+        "url": "https://doi.org/10.1038/327123a0"
+      }
+    },
+    "he2015bms": {
+      "type": "article",
+      "fields": {
+        "title": "BMS supertranslations and Weinberg's soft graviton theorem",
+        "author": "He, Temple and Lysov, Vyacheslav and Mitra, Prahar and Strominger, Andrew",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2015",
+        "number": "5",
+        "pages": "151",
+        "year": "2015",
+        "doi": "10.1007/JHEP05(2015)151",
+        "eprint": "1401.7026",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP05(2015)151"
+      }
+    },
+    "compere2016vacua": {
+      "type": "article",
+      "fields": {
+        "title": "Vacua of the gravitational field",
+        "author": "Comp\\`ere, Geoffrey and Long, Jiang",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2016",
+        "number": "7",
+        "pages": "137",
+        "year": "2016",
+        "doi": "10.1007/JHEP07(2016)137",
+        "eprint": "1601.04958",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP07(2016)137"
+      }
+    },
+    "compere2016final": {
+      "type": "article",
+      "fields": {
+        "title": "Classical static final state of collapse with supertranslation memory",
+        "author": "Comp\\`ere, Geoffrey and Long, Jiang",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "33",
+        "number": "19",
+        "pages": "195001",
+        "year": "2016",
+        "doi": "10.1088/0264-9381/33/19/195001",
+        "eprint": "1602.05197",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/33/19/195001"
+      }
+    },
+    "hawking2016softhair": {
+      "type": "article",
+      "fields": {
+        "title": "Soft Hair on Black Holes",
+        "author": "Hawking, Stephen W. and Perry, Malcolm J. and Strominger, Andrew",
+        "journal": "Physical Review Letters",
+        "volume": "116",
+        "number": "23",
+        "pages": "231301",
+        "year": "2016",
+        "doi": "10.1103/PhysRevLett.116.231301",
+        "eprint": "1601.00921",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.116.231301"
+      }
+    },
+    "hawking2017superrotation": {
+      "type": "article",
+      "fields": {
+        "title": "Superrotation charge and supertranslation hair on black holes",
+        "author": "Hawking, Stephen W. and Perry, Malcolm J. and Strominger, Andrew",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2017",
+        "number": "5",
+        "pages": "161",
+        "year": "2017",
+        "doi": "10.1007/JHEP05(2017)161",
+        "eprint": "1611.09175",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP05(2017)161"
+      }
+    },
+    "strominger2017superrotations": {
+      "type": "article",
+      "fields": {
+        "title": "Superrotations and black hole pair creation",
+        "author": "Strominger, Andrew and Zhiboedov, Alexander",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "34",
+        "number": "6",
+        "pages": "064002",
+        "year": "2017",
+        "doi": "10.1088/1361-6382/aa5b5f",
+        "eprint": "1610.00639",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aa5b5f"
+      }
+    },
+    "compere2018superboost": {
+      "type": "article",
+      "fields": {
+        "title": "Superboost transitions, refraction memory and super-Lorentz charge algebra",
+        "author": "Comp\\`ere, Geoffrey and Fiorucci, Adrien and Ruzziconi, Romain",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2018",
+        "number": "11",
+        "pages": "200",
+        "year": "2018",
+        "doi": "10.1007/JHEP11(2018)200",
+        "eprint": "1810.00377",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP11(2018)200"
+      }
+    },
+    "haggard2015fireworks": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum-gravity effects outside the horizon spark black to white hole tunneling",
+        "author": "Haggard, Hal M. and Rovelli, Carlo",
+        "journal": "Physical Review D",
+        "volume": "92",
+        "number": "10",
+        "pages": "104020",
+        "year": "2015",
+        "doi": "10.1103/PhysRevD.92.104020",
+        "eprint": "1407.0989",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.92.104020"
+      }
+    },
+    "rovelli2014planck": {
+      "type": "article",
+      "fields": {
+        "title": "{Planck} stars",
+        "author": "Rovelli, Carlo and Vidotto, Francesca",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "23",
+        "number": "12",
+        "pages": "1442026",
+        "year": "2014",
+        "doi": "10.1142/S0218271814420267",
+        "eprint": "1401.6562",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271814420267"
+      }
+    },
+    "barcelo2014mutiny": {
+      "type": "article",
+      "fields": {
+        "title": "Mutiny at the white-hole district",
+        "author": "Barcel\\'o, Carlos and Carballo-Rubio, Ra\\'ul and Garay, Luis J.",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "23",
+        "number": "12",
+        "pages": "1442022",
+        "year": "2014",
+        "doi": "10.1142/S021827181442022X",
+        "eprint": "1407.1391",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S021827181442022X"
+      }
+    },
+    "barcelo2015lifetime": {
+      "type": "article",
+      "fields": {
+        "title": "The lifetime problem of evaporating black holes: mutiny or resignation",
+        "author": "Barcel\\'o, Carlos and Carballo-Rubio, Ra\\'ul and Garay, Luis J. and Jannes, Gil",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "32",
+        "number": "3",
+        "pages": "035012",
+        "year": "2015",
+        "doi": "10.1088/0264-9381/32/3/035012",
+        "eprint": "1409.1501",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/32/3/035012"
+      }
+    },
+    "barcelo2011nongravity": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum non-gravity and stellar collapse",
+        "author": "Barcel\\'o, Carlos and Garay, Luis J. and Jannes, Gil",
+        "journal": "Foundations of Physics",
+        "volume": "41",
+        "number": "9",
+        "pages": "1532--1541",
+        "year": "2011",
+        "doi": "10.1007/s10701-011-9577-9",
+        "eprint": "1002.4651",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10701-011-9577-9"
+      }
+    },
+    "hajicek2001shells": {
+      "type": "article",
+      "fields": {
+        "title": "Singularity avoidance by collapsing shells in quantum gravity",
+        "author": "Hájíček, Petr and Kiefer, Claus",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "10",
+        "number": "6",
+        "pages": "775--779",
+        "year": "2001",
+        "doi": "10.1142/S0218271801001578",
+        "eprint": "gr-qc/0107102",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271801001578"
+      }
+    },
+    "delorenzo2016fireworks": {
+      "type": "article",
+      "fields": {
+        "title": "Improved black hole fireworks: Asymmetric black-hole-to-white-hole tunneling scenario",
+        "author": "De Lorenzo, Tommaso and Perez, Alejandro",
+        "journal": "Physical Review D",
+        "volume": "93",
+        "number": "12",
+        "pages": "124018",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.93.124018",
+        "eprint": "1512.04566",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.93.124018"
+      }
+    },
+    "christodoulou2016tunnelling": {
+      "type": "article",
+      "fields": {
+        "title": "{Planck} star tunneling time: An astrophysically relevant observable from background-free quantum gravity",
+        "author": "Christodoulou, Marios and Rovelli, Carlo and Speziale, Simone and Vilensky, Ilya",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "8",
+        "pages": "084035",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.084035",
+        "eprint": "1605.05268",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.94.084035"
+      }
+    },
+    "bianchi2018remnants": {
+      "type": "article",
+      "fields": {
+        "title": "White holes as remnants: a surprising scenario for the end of a black hole",
+        "author": "Bianchi, Eugenio and Christodoulou, Marios and D'Ambrosio, Fabio and Haggard, Hal M. and Rovelli, Carlo",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "35",
+        "number": "22",
+        "pages": "225003",
+        "year": "2018",
+        "doi": "10.1088/1361-6382/aae550",
+        "eprint": "1802.04264",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aae550"
+      }
+    },
+    "caldwell2003": {
+      "type": "article",
+      "fields": {
+        "title": "Phantom Energy: Dark Energy with $w<-1$ Causes a Cosmic Doomsday",
+        "author": "Caldwell, Robert R. and Kamionkowski, Marc and Weinberg, Nevin N.",
+        "journal": "Physical Review Letters",
+        "volume": "91",
+        "number": "7",
+        "pages": "071301",
+        "year": "2003",
+        "doi": "10.1103/PhysRevLett.91.071301",
+        "eprint": "astro-ph/0302506",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.91.071301"
+      }
+    },
+    "caldwell2002": {
+      "type": "article",
+      "fields": {
+        "title": "A phantom menace? Cosmological consequences of a dark energy component with super-negative equation of state",
+        "author": "Caldwell, R. R.",
+        "journal": "Physics Letters B",
+        "volume": "545",
+        "number": "1-2",
+        "pages": "23--29",
+        "year": "2002",
+        "doi": "10.1016/S0370-2693(02)02589-3",
+        "eprint": "astro-ph/9908168",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(02)02589-3"
+      }
+    },
+    "starobinsky2000": {
+      "type": "article",
+      "fields": {
+        "title": "Future and Origin of our Universe: Modern View",
+        "author": "Starobinsky, A. A.",
+        "journal": "Gravitation and Cosmology",
+        "volume": "6",
+        "pages": "157--163",
+        "year": "2000",
+        "eprint": "astro-ph/9912054",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9912054"
+      }
+    },
+    "mcinnes2002": {
+      "type": "article",
+      "fields": {
+        "title": "The dS/CFT Correspondence and the Big Smash",
+        "author": "McInnes, Brett",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2002",
+        "number": "08",
+        "pages": "029",
+        "year": "2002",
+        "doi": "10.1088/1126-6708/2002/08/029",
+        "eprint": "hep-th/0112066",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2002/08/029"
+      }
+    },
+    "chiba2005": {
+      "type": "article",
+      "fields": {
+        "title": "Classifying the future of universes with dark energy",
+        "author": "Chiba, Takeshi and Takahashi, Ryuichi and Sugiyama, Naoshi",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "22",
+        "number": "17",
+        "pages": "3745--3758",
+        "year": "2005",
+        "doi": "10.1088/0264-9381/22/17/023",
+        "eprint": "astro-ph/0501661",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/22/17/023"
+      }
+    },
+    "nojiri2005": {
+      "type": "article",
+      "fields": {
+        "title": "Properties of singularities in the (phantom) dark energy universe",
+        "author": "Nojiri, Shin'ichi and Odintsov, Sergei D. and Tsujikawa, Shinji",
+        "journal": "Physical Review D",
+        "volume": "71",
+        "number": "6",
+        "pages": "063004",
+        "year": "2005",
+        "doi": "10.1103/PhysRevD.71.063004",
+        "eprint": "hep-th/0501025",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.71.063004"
+      }
+    },
+    "barrow2004": {
+      "type": "article",
+      "fields": {
+        "title": "Sudden future singularities",
+        "author": "Barrow, John D.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "21",
+        "number": "11",
+        "pages": "L79--L82",
+        "year": "2004",
+        "doi": "10.1088/0264-9381/21/11/L03",
+        "eprint": "gr-qc/0403084",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/21/11/L03"
+      }
+    },
+    "fernandezjambrina2004": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesic behavior of sudden future singularities",
+        "author": "Fernández-Jambrina, L. and Lazkoz, Ruth",
+        "journal": "Physical Review D",
+        "volume": "70",
+        "number": "12",
+        "pages": "121503",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.70.121503",
+        "eprint": "gr-qc/0410124",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.70.121503"
+      }
+    },
+    "lin2004": {
+      "type": "article",
+      "fields": {
+        "title": "Bubbling AdS space and 1/2 BPS geometries",
+        "author": "Lin, Hai and Lunin, Oleg and Maldacena, Juan",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2004",
+        "number": "10",
+        "pages": "025",
+        "year": "2004",
+        "doi": "10.1088/1126-6708/2004/10/025",
+        "eprint": "hep-th/0409174",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2004/10/025"
+      }
+    },
+    "berenstein2004": {
+      "type": "article",
+      "fields": {
+        "title": "A toy model for the AdS/CFT correspondence",
+        "author": "Berenstein, David",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2004",
+        "number": "07",
+        "pages": "018",
+        "year": "2004",
+        "doi": "10.1088/1126-6708/2004/07/018",
+        "eprint": "hep-th/0403110",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2004/07/018"
+      }
+    },
+    "corley2002": {
+      "type": "article",
+      "fields": {
+        "title": "Exact correlators of giant gravitons from dual $N = 4$ SYM theory",
+        "author": "Corley, Steve and Jevicki, Antal and Ramgoolam, Sanjaye",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "5",
+        "number": "4",
+        "pages": "809--839",
+        "year": "2001",
+        "doi": "10.4310/ATMP.2001.v5.n4.a6",
+        "eprint": "hep-th/0111222",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.4310/ATMP.2001.v5.n4.a6"
+      }
+    },
+    "myers2001": {
+      "type": "article",
+      "fields": {
+        "title": "Superstars and giant gravitons",
+        "author": "Myers, Robert C. and Tafjord, Øyvind",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2001",
+        "number": "11",
+        "pages": "009",
+        "year": "2001",
+        "doi": "10.1088/1126-6708/2001/11/009",
+        "eprint": "hep-th/0109127",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2001/11/009"
+      }
+    },
+    "mcgreevy2000": {
+      "type": "article",
+      "fields": {
+        "title": "Invasion of the giant gravitons from anti-de Sitter space",
+        "author": "McGreevy, John and Susskind, Leonard and Toumbas, Nicolaos",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "06",
+        "pages": "008",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/06/008",
+        "eprint": "hep-th/0003075",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/06/008"
+      }
+    },
+    "blau2002": {
+      "type": "article",
+      "fields": {
+        "title": "A new maximally supersymmetric background of IIB superstring theory",
+        "author": "Blau, Matthias and Figueroa-O'Farrill, José and Hull, Christopher and Papadopoulos, George",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2002",
+        "number": "01",
+        "pages": "047",
+        "year": "2002",
+        "doi": "10.1088/1126-6708/2002/01/047",
+        "eprint": "hep-th/0110242",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2002/01/047"
+      }
+    },
+    "bojowald2001": {
+      "type": "article",
+      "fields": {
+        "title": "Absence of a Singularity in Loop Quantum Cosmology",
+        "author": "Bojowald, Martin",
+        "journal": "Physical Review Letters",
+        "volume": "86",
+        "number": "23",
+        "pages": "5227--5230",
+        "year": "2001",
+        "doi": "10.1103/PhysRevLett.86.5227",
+        "eprint": "gr-qc/0102069",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.86.5227"
+      }
+    },
+    "brunnemann2006": {
+      "type": "article",
+      "fields": {
+        "title": "On (cosmological) singularity avoidance in loop quantum gravity",
+        "author": "Brunnemann, Johannes and Thiemann, Thomas",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "5",
+        "pages": "1395--1427",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/5/001",
+        "eprint": "gr-qc/0505032",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/23/5/001"
+      }
+    },
+    "singh2006": {
+      "type": "article",
+      "fields": {
+        "title": "Loop cosmological dynamics and dualities with Randall-Sundrum braneworlds",
+        "author": "Singh, Parampreet",
+        "journal": "Physical Review D",
+        "volume": "73",
+        "number": "6",
+        "pages": "063508",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.73.063508",
+        "eprint": "gr-qc/0603043",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.73.063508"
+      }
+    },
+    "ashtekar2006improved": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum nature of the big bang: Improved dynamics",
+        "author": "Ashtekar, Abhay and Pawlowski, Tomasz and Singh, Parampreet",
+        "journal": "Physical Review D",
+        "volume": "74",
+        "number": "8",
+        "pages": "084003",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.74.084003",
+        "eprint": "gr-qc/0607039",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.74.084003"
+      }
+    },
+    "ashtekar2008robust": {
+      "type": "article",
+      "fields": {
+        "title": "Robustness of key features of loop quantum cosmology",
+        "author": "Ashtekar, Abhay and Corichi, Alejandro and Singh, Parampreet",
+        "journal": "Physical Review D",
+        "volume": "77",
+        "number": "2",
+        "pages": "024046",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.77.024046",
+        "eprint": "0710.3565",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.77.024046"
+      }
+    },
+    "ashtekar2009bianchi": {
+      "type": "article",
+      "fields": {
+        "title": "Loop quantum cosmology of Bianchi type I models",
+        "author": "Ashtekar, Abhay and Wilson-Ewing, Edward",
+        "journal": "Physical Review D",
+        "volume": "79",
+        "number": "8",
+        "pages": "083535",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.79.083535",
+        "eprint": "0903.3397",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.79.083535"
+      }
+    },
+    "ashtekar2011status": {
+      "type": "article",
+      "fields": {
+        "title": "Loop quantum cosmology: a status report",
+        "author": "Ashtekar, Abhay and Singh, Parampreet",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "28",
+        "number": "21",
+        "pages": "213001",
+        "year": "2011",
+        "doi": "10.1088/0264-9381/28/21/213001",
+        "eprint": "1108.0893",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/28/21/213001"
+      }
+    },
+    "cai2014": {
+      "type": "article",
+      "fields": {
+        "title": "Non-singular bounce scenarios in loop quantum cosmology and the effective field description",
+        "author": "Cai, Yi-Fu and Wilson-Ewing, Edward",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2014",
+        "number": "03",
+        "pages": "026",
+        "year": "2014",
+        "doi": "10.1088/1475-7516/2014/03/026",
+        "eprint": "1402.3009",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2014/03/026"
+      }
+    },
     "cahen1970": {
       "type": "article",
       "fields": {
@@ -29748,22 +30761,6 @@
         "year": "1984",
         "doi": "10.1016/0370-2693(84)90669-5",
         "url": "https://doi.org/10.1016/0370-2693(84)90669-5"
-      }
-    },
-    "blau2002": {
-      "type": "article",
-      "fields": {
-        "title": "A new maximally supersymmetric background of IIB superstring theory",
-        "author": "Blau, Matthias and Figueroa-O'Farrill, José and Hull, Christopher and Papadopoulos, George",
-        "journal": "Journal of High Energy Physics",
-        "volume": "2002",
-        "number": "01",
-        "pages": "047",
-        "year": "2002",
-        "doi": "10.1088/1126-6708/2002/01/047",
-        "eprint": "hep-th/0110242",
-        "archiveprefix": "arXiv",
-        "url": "https://doi.org/10.1088/1126-6708/2002/01/047"
       }
     },
     "metsaev2002": {

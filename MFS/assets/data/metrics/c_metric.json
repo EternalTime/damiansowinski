@@ -121,6 +121,11 @@
       "id": "quantum_btz",
       "kind": "family",
       "text": "The C-metric in anti-de Sitter space, cut along its surface $x = 0$ where a brane sits. By holography the metric on the brane is a black hole of three dimensions with quantum fields around it [emparan2000branes2, emparan2020qbtz]."
+    },
+    {
+      "id": "supertranslation_hair",
+      "kind": "family",
+      "text": "Flat space carried by a supertranslation. When the string of the C-metric snaps by making a pair of black holes, the spacetimes before and after differ by a finite superrotation, the partner of a supertranslation [strominger2017superrotations]."
     }
   ],
   "references": [
@@ -154,7 +159,8 @@
     "fairhurst2001",
     "ovcharenko2026",
     "emparan2000branes2",
-    "emparan2020qbtz"
+    "emparan2020qbtz",
+    "strominger2017superrotations"
   ],
   "coordinates": [
     {

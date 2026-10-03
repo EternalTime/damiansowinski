@@ -69,6 +69,11 @@
       "id": "tilted_universes",
       "kind": "family",
       "text": "The horn's coordinates with $y$ and $z$ left open and the matter drifting along $x$. Farnsworth's dust is the open universe of dust given such a tilt [anton2023]."
+    },
+    {
+      "id": "poincare_dodecahedral",
+      "kind": "family",
+      "text": "A closed Friedmann universe made smaller still by identifying points, its space a dodecahedron with each face glued to the face opposite it. It was proposed in 2003 for the weak correlations of the microwave sky at wide angles, and searches for its circles in the sky found none [luminet2003, key2007]."
     }
   ],
   "references": [
@@ -98,7 +103,8 @@
     "martinbenito2011",
     "desitter1917",
     "misner1967",
-    "anton2023"
+    "anton2023",
+    "key2007"
   ],
   "coordinates": [
     {

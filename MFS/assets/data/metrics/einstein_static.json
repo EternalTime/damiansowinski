@@ -76,6 +76,16 @@
       "id": "small_universes",
       "kind": "family",
       "text": "Universes that are finite by the way their space is connected, with no curvature needed to close it. Einstein's is finite because its space is a sphere [lachiezerey1995]."
+    },
+    {
+      "id": "poincare_dodecahedral",
+      "kind": "family",
+      "text": "A closed universe whose 3-sphere is cut into 120 dodecahedra, of which space keeps one, each face glued to the face opposite it. Its radius is free to change, and it was proposed in 2003 for the quiet microwave sky at wide angles [luminet2003]."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "conformal",
+      "text": "Multiplied by $1/\\cos^2(ct/R)$, the slab $0 \\le ct/R < \\pi/2$ of the Einstein static universe is the Lorentzian half of the universe from nothing, with $R = \\ell$."
     }
   ],
   "references": [
@@ -102,7 +112,8 @@
     "einstein1939",
     "florides1974",
     "bohmerlobo2008",
-    "lachiezerey1995"
+    "lachiezerey1995",
+    "luminet2003"
   ],
   "coordinates": [
     {

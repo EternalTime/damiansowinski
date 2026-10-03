@@ -136,6 +136,11 @@
       "id": "vuorio_warped_ads",
       "kind": "family",
       "text": "Anti-de Sitter space of three dimensions warped along a line, a vacuum of gravity with a mass for the graviton. Its spacelike stretched version holds black holes that are quotients of it, just as this hole is of anti-de Sitter space [anninos2009]."
+    },
+    {
+      "id": "btz_shock_wave",
+      "kind": "composite",
+      "text": "The black hole without rotation with a shell of null particles on its horizon, the field of a few quanta thrown in from one side long ago. Its two halves are joined along the horizon with a shift [shenker2014]."
     }
   ],
   "references": [
@@ -171,7 +176,8 @@
     "emparan2002holograms",
     "emparan2020qbtz",
     "achucarro1993",
-    "anninos2009"
+    "anninos2009",
+    "shenker2014"
   ],
   "coordinates": [
     {

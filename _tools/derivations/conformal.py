@@ -106,7 +106,9 @@ import slices
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
+import black_to_white_hole as bwh  # noqa: E402
 import boson_star as bs  # noqa: E402
+import bubbling_ads as ba  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
 import null_rays as nr  # noqa: E402
@@ -685,6 +687,65 @@ def label_on(v, pq, text, anchor="b", cls="coord", dx=0, dy=-3):
 
 S_ALL = spread(-np.inf, np.inf, 500, 9)
 S_POS = spread(0, np.inf, 500, 12)
+
+
+# ---------------------------------------------------------------- Flat space with supertranslation hair
+
+def supertranslation_hair(ck, src):
+    """Compere and Long's vacuum with the field C = ell (3 cos^2 theta - 1)/2, drawn at ell = 1 on
+    the equator, the plane every chart's rays keep to, one view for each chart.
+
+    On the equator the static chart's plane of t and rho is -dt^2 + drho^2 for rho > 5/2, the half
+    plane of two dimensional Minkowski space whose edge is the supertranslation horizon, so it is
+    Minkowski's triangle by p, q = arctan(t -+ (rho - 5/2)), with that edge where Minkowski's
+    centre is. The Bondi charts reach the same events through t = u + W + 1 and t = v - W - 1,
+    rho = W + 1, W = sqrt(r^2 + 9/4), so r = 0 is the same edge and their lines of constant u and v
+    are the light rays of the triangle. The shells of the embedding diagram are the events t = 0,
+    rho = rho_k, one point of each view."""
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    edge = 2.5
+
+    def W(r):
+        return np.sqrt(np.asarray(r, dtype=float) ** 2 + 2.25)
+    maps = {"static": lambda t, rho: mink_pq(t, np.asarray(rho, dtype=float) - edge),
+            "bondi_retarded": lambda u, r: mink_pq(np.asarray(u, dtype=float) + W(r) + 1, W(r) - 1.5),
+            "bondi_advanced": lambda v, r: mink_pq(np.asarray(v, dtype=float) - W(r) - 1, W(r) - 1.5)}
+    names = {"static": ("Static (Compère-Long)", ("t", "\\rho"), "$\\rho = 5\\ell/2$"),
+             "bondi_retarded": ("Bondi Gauge, Retarded", ("u", "r"), "$r = 0$"),
+             "bondi_advanced": ("Bondi Gauge, Advanced", ("v", "r"), "$r = 0$")}
+    shells = slices.moments("supertranslation_hair", "shells")
+    views = []
+    for system, fmap in maps.items():
+        label, plane_of, centre = names[system]
+        fixed = {"theta": "pi/2", "phi": "0"}
+        functions = {"C": "(3*cos(theta)**2 - 1)/2"} if system == "static" else {"sigma": "-3*sin(theta)**2/2"}
+        plane = Plane(src, "supertranslation_hair", system, plane_of, fixed, functions=functions)
+        lo = edge + 0.01 if system == "static" else 0.01
+        ck.chart(f"supertranslation hair {system}", plane, fmap, ck.uniform(-20, 20), lo + ck.uniform(0, 20),
+                 lambda a, b: (1, 0))
+        ck.finite(f"supertranslation hair {system}: the curvature vanishes at the edge",
+                  plane.kretschmann(ck.uniform(-5, 5, 50), np.full(50, lo)))
+        v = View(system, label, box, system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        if system == "static":
+            grid(v, "r", lambda rho, t: fmap(t, rho), (3, 3.5, 4.5, 6.5), S_ALL)
+            grid(v, "t", fmap, (-4, -2, -1, 0, 1, 2, 4), edge + S_POS)
+            v.legend("r", "$\\rho$ constant, at $3$, $3.5$, $4.5$ and $6.5\\,\\ell$")
+            v.legend("t", "$ct$ constant")
+        else:
+            x = "u" if system == "bondi_retarded" else "v"
+            grid(v, "r", lambda r, a: fmap(a, r), (0.5, 1, 2, 4), S_ALL)
+            grid(v, "null", fmap, (-4, -2, -1, 0, 1, 2, 4), S_POS)
+            v.legend("r", "$r$ constant, at $0.5$, $1$, $2$ and $4\\,\\ell$")
+            v.legend("null", f"${x}$ constant, every one a light ray")
+        triangle_edges(v, centre=centre, centre_class="chartedge")
+        v.legend("cover", "the region outside the supertranslation horizon, which the chart covers")
+        v.legend("chartedge", "the supertranslation horizon, where the coordinates end")
+        for m in shells:
+            v.slice(m, points=[mink_pq(0.0, m.time - edge)])
+        views.append(v)
+    return views
 
 
 # ---------------------------------------------------------------- Minkowski
@@ -6648,6 +6709,127 @@ def de_sitter(ck, src):
     return views
 
 
+def universe_from_nothing(ck, src):
+    """The Lorentzian half of the universe from nothing, the upper half 0 <= T < pi/2 of de Sitter's
+    global square, X = chi across and T up, drawn at l = 1, one view per Lorentzian chart. Its lower
+    edge T = 0 is the waist, a 3-sphere of radius l, where the southern half of the 4-sphere is
+    joined on; the 4-sphere is Riemannian and has no place in a conformal diagram.
+
+    On the hyperboloid X0 = tan T and a = 1/cos T, so the closed slicing enters as tan T = sinh(t),
+    the scale factor chart above its join as cos T = 1/a, the conformal chart as T = eta, and
+    Feldbrugge, Lehners and Turok's gauge as tan T = t, each with X = chi. Each is checked against
+    the published metric and against the hyperboloid."""
+    params = {"ell": 1}
+    settings = "$\\ell = 1$."
+    maps = {
+        "closed": lambda t, chi: np.arctan(np.sinh(np.asarray(t, dtype=float))),
+        "scale_factor": lambda a, chi: np.arccos(1 / np.asarray(a, dtype=float)),
+        "conformal": lambda eta, chi: np.asarray(eta, dtype=float),
+        "lapse": lambda t, chi: np.arctan(np.asarray(t, dtype=float)),
+    }
+
+    def pq_of(system):
+        def pq(x0, chi):
+            T, X = maps[system](x0, chi), np.asarray(chi, dtype=float)
+            return (T - X) / 2, (T + X) / 2
+        return pq
+
+    planes = {
+        "closed": Plane(src, "universe_from_nothing", "closed", ("t", "\\chi"), EQUATOR, params),
+        "scale_factor": Plane(src, "universe_from_nothing", "scale_factor", ("a", "\\chi"), EQUATOR, params),
+        "conformal": Plane(src, "universe_from_nothing", "conformal", ("\\eta", "\\chi"), EQUATOR, params),
+        "lapse": Plane(src, "universe_from_nothing", "lapse", ("t", "\\chi"), EQUATOR, params),
+    }
+    samples = {"closed": (0.0, 6.0), "scale_factor": (1.001, 60.0), "conformal": (0.0, 1.55), "lapse": (0.0, 40.0)}
+    names = {"closed": "closed slicing", "scale_factor": "scale factor", "conformal": "conformal",
+             "lapse": "quadratic gauge"}
+    for system, plane in planes.items():
+        lo, hi = samples[system]
+        ck.chart(f"Universe from nothing, {names[system]}", plane, pq_of(system), ck.uniform(lo, hi),
+                 ck.uniform(0.01, 3.13), lambda x0, chi: (1, 0))
+    # Each chart lands where the hyperboloid puts it: X0 = tan T and a = 1/cos T.
+    land = {
+        "closed": (ck.uniform(0, 5, 2000), lambda t: (np.sinh(t), np.cosh(t))),
+        "scale_factor": (ck.uniform(1.001, 40, 2000), lambda a: (np.sqrt(a * a - 1), a)),
+        "conformal": (ck.uniform(0, 1.5, 2000), lambda e: (np.tan(e), 1 / np.cos(e))),
+        "lapse": (ck.uniform(0, 30, 2000), lambda t: (t, np.sqrt(1 + t * t))),
+    }
+    for system, (x0, embed) in land.items():
+        p, q = pq_of(system)(x0, np.zeros_like(x0))
+        T = p + q
+        X0, a = embed(x0)
+        scale = 1 + np.abs(X0) + a
+        ck.limit(f"Universe from nothing: the {names[system]} lands where the hyperboloid puts it",
+                 np.concatenate([(np.tan(T) - X0) / scale, (1 / np.cos(T) - a) / scale]), 0, 1e-9)
+    ck.limit("Universe from nothing: every chart's waist lands on T = 0",
+             [p + q for p, q in [pq_of(s)(np.array([x]), np.array([1.0])) for s, x in
+                                 (("closed", 0.0), ("scale_factor", 1.0), ("conformal", 0.0), ("lapse", 0.0))]],
+             np.zeros((4, 1)), 1e-12)
+    ck.finite("Universe from nothing: the waist is regular", planes["closed"].kretschmann(np.zeros(50), ck.uniform(0.1, 3, 50)))
+
+    box = [-0.35, PI + 0.35, -0.3, HALF + 0.3]
+    half = [[0, 0], [PI, 0], [PI, HALF], [0, HALF]]
+
+    def frame(v):
+        v.fill("region", half)
+        v.fill("cover", half)
+        v.line("scri", [[[0, HALF], [PI, HALF]]])
+        v.line("centre", [[[0, 0], [0, HALF]], [[PI, 0], [PI, HALF]]])
+        v.line("surface", [[[0, 0], [PI, 0]]])
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "b", dy=-5)
+        v.label_xt([HALF, 0], "waist", "t", "coord", dy=5)
+        v.label_xt([0, 1.2], "$\\chi = 0$", "r", dx=-6)
+        v.label_xt([PI, 1.2], "$\\chi = \\pi$", "l", dx=6)
+        v.legend("scri", "future infinity $\\mathscr{I}^+$, spacelike")
+        v.legend("centre", "the pole $\\chi = 0$ of the 3-sphere and its antipode $\\chi = \\pi$")
+        v.legend("surface", "the waist, a 3-sphere of radius $\\ell$, where the southern half of the "
+                            "4-sphere is joined on")
+
+    s_chi = np.linspace(0, PI, 600)
+    views = []
+    v = View("closed", "Closed slicing", box, "closed")
+    frame(v)
+    grid(v, "t", pq_of("closed"), (0.25, 0.5, 1, 2), s_chi)
+    grid(v, "r", lambda chi, t: pq_of("closed")(t, chi), (PI / 4, HALF, 3 * PI / 4), np.geomspace(1e-6, 40, 500))
+    v.legend("cover", "the closed slicing above its waist, which $t$ and $\\chi$ cover")
+    v.legend("t", "$ct$ constant, at $1/4$, $1/2$, $1$ and $2$ times $\\ell$")
+    v.legend("r", "$\\chi$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$, comoving observers")
+    v.set(settings=settings)
+    views.append(v)
+
+    v = View("scale_factor", "Scale factor", box, "scale_factor")
+    frame(v)
+    grid(v, "t", pq_of("scale_factor"), (1.25, 2, 4, 8), s_chi)
+    grid(v, "r", lambda chi, a: pq_of("scale_factor")(a, chi), (PI / 4, HALF, 3 * PI / 4),
+         1 + np.geomspace(1e-9, 60, 500))
+    v.legend("cover", "the half above the join $a = \\ell$, which $a$ and $\\chi$ cover")
+    v.legend("t", "$a$ constant, at $1.25$, $2$, $4$ and $8$ times $\\ell$")
+    v.legend("r", "$\\chi$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    v.set(settings=settings)
+    views.append(v)
+
+    v = View("conformal", "Conformal", box, "conformal")
+    frame(v)
+    grid(v, "t", pq_of("conformal"), (PI / 8, PI / 4, 3 * PI / 8), s_chi)
+    grid(v, "r", lambda chi, e: pq_of("conformal")(e, chi), (PI / 4, HALF, 3 * PI / 4), np.linspace(0, HALF, 300))
+    v.legend("cover", "the half above the waist, which $\\eta$ and $\\chi$ cover")
+    v.legend("t", "$\\eta$ constant, at $\\pi/8$, $\\pi/4$ and $3\\pi/8$")
+    v.legend("r", "$\\chi$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    v.set(settings=settings)
+    views.append(v)
+
+    v = View("lapse", "Quadratic gauge", box, "lapse")
+    frame(v)
+    grid(v, "t", pq_of("lapse"), (0.25, 0.5, 1, 2), s_chi)
+    grid(v, "r", lambda chi, t: pq_of("lapse")(t, chi), (PI / 4, HALF, 3 * PI / 4), np.geomspace(1e-6, 1e6, 500))
+    v.legend("cover", "the half above the waist, which $t$ and $\\chi$ cover")
+    v.legend("t", "$ct$ constant, at $1/4$, $1/2$, $1$ and $2$ times $\\ell$")
+    v.legend("r", "$\\chi$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    v.set(settings=settings)
+    views.append(v)
+    return views
+
+
 SCU_BETA = 1.0          # a boost of rapidity 1, so that several copies fit the drawing
 
 
@@ -9393,6 +9575,91 @@ def three_brane_throat(ck, src):
     return views
 
 
+def bubbling_ads(ck, src):
+    """Lin, Lunin and Maldacena's bubbling anti-de Sitter space at L = 1. The black disc is anti-de
+    Sitter space of five dimensions times a 5-sphere, drawn in anti-de Sitter's strip from its global
+    chart by ads_global_pq with r = sinh(rho), the 5-sphere one radius at every event. The black ring
+    of bubbling_ads.RING is drawn on its axis, where the metric on the plane of t and y is
+    2y cosh G (-dt^2 + dy_*^2) with dy_*/dy = 1/(2y cosh G): conformal to the strip 0 <= y_* < Y_*
+    as it stands, p, q = (t -+ y_*)/2, with Y_* = 1.2526 the integral to y -> infinity, which
+    bubbling_ads.axis_tortoise takes by quadrature. The axis y = 0 is a regular centre, where the
+    3-sphere of kappa, xi and omega shrinks."""
+    name = "bubbling_ads"
+    views = []
+    plane = slices.moments(name, "plane")[0]
+    lo, hi = plane.reach("global", "\\rho")
+    T0, T1 = -0.3 * PI, 1.3 * PI
+    pl = Plane(src, name, "global", ("t", "\\rho"), {**nr.BA_SPHERES, "theta": "0", "psi": "0"}, {"L": 1})
+    ck.chart("bubbling anti-de Sitter, the disc", pl, lambda t, x: ads_global_pq(t, np.sinh(np.asarray(x, dtype=float))),
+             ck.uniform(-10, 10), ck.uniform(0.001, 5), lambda t, x: (1, 0))
+    ck.limit("bubbling anti-de Sitter, the disc: the Kretschmann scalar is 80/L^4 everywhere",
+             pl.kretschmann(np.array([0.0, 1.0, -2.0]), np.array([0.3, 0.7, 1.1])), [80] * 3, 1e-9)
+    v = View("global", "Global (the disc)", [-0.95, HALF + 0.55, T0, T1], "global")
+    strip(v, False, T0, T1)
+    v.fill("cover", [[0, T0], [HALF, T0], [HALF, T1], [0, T1]])
+    for c in (0.25, 0.5, 1, 2, 3):
+        X = float(np.arctan(np.sinh(c)))
+        v.line("r", [[[X, T0], [X, T1]]])
+    for k in range(-1, 6):
+        v.line("t", [[[0, k * Q4], [HALF, k * Q4]]])
+    v.segment("null", (0, 0), (0, HALF))
+    v.segment("null", (0, HALF), (HALF, HALF))
+    v.label_xt([0, 0], "$t = 0$", "r", "coord", dx=-6)
+    v.label_xt([0, HALF], "$\\pi/2$", "r", "coord", dx=-6)
+    v.label_xt([0, PI], "$\\pi$", "r", "coord", dx=-6)
+    v.set(fade={"top": 0.7, "bottom": 0.7})
+    v.legend("cover", "the whole universal cover, which $t$ and $\\rho$ cover")
+    v.legend("r", "$\\rho$ constant, at $0.25$, $0.5$, $1$, $2$ and $3$")
+    v.legend("t", "$t$ constant, every $\\pi/4$")
+    v.legend("boundary", "the conformal boundary, timelike")
+    v.legend("centre", "$\\rho = 0$, the black disc, a regular centre")
+    v.legend("null", "a radial light ray from the centre")
+    r = np.sinh(np.linspace(lo, hi, 2))
+    v.slice(plane, [ads_global_pq(0 * r, r)])
+    v.set(settings="$L = 1$, the unit of every length.")
+    views.append(v)
+
+    edge = ba.axis_tortoise(math.inf)
+    tortoise = np.vectorize(ba.axis_tortoise)
+
+    def ring_pq(t, y):
+        t, ys = np.asarray(t, dtype=float), tortoise(np.asarray(y, dtype=float))
+        return (t - ys) / 2, (t + ys) / 2
+    pl = Plane(src, name, "rings", ("t", "y"), {**nr.BA_SPHERES, "r": nr.BA_AXIS, "phi": "0"}, {},
+               functions=nr.BA_RING)
+    ck.chart("bubbling anti-de Sitter, the ring on its axis", pl, ring_pq, ck.uniform(-10, 10, 200),
+             ck.uniform(0.001, 20, 200), lambda t, y: (1, 0))
+    ck.limit("bubbling anti-de Sitter, the ring: y_* reaches the boundary at t = 1.2526", edge, 1.2526226756651, 1e-10)
+    ck.limit("bubbling anti-de Sitter, the disc of the same area: y_* = arctan(y)",
+             [ba.axis_tortoise(0.5, (1,)), ba.axis_tortoise(2.0, (1,))], np.arctan([0.5, 2.0]), 1e-10)
+    v = View("rings", "Concentric droplets (a black ring)", [-0.95, edge + 0.55, T0, T1], "rings")
+    v.fill("region", [[0, T0], [edge, T0], [edge, T1], [0, T1]])
+    v.fill("cover", [[0, T0], [edge, T0], [edge, T1], [0, T1]])
+    v.line("boundary", [[[edge, T0], [edge, T1]]])
+    v.line("centre", [[[0, T0], [0, T1]]])
+    v.label_xt([edge, (T0 + T1) / 2 + 0.6], "$\\mathscr{I}$", "l", dx=6)
+    for c in (0.25, 0.5, 1, 2, 4):
+        X = float(ba.axis_tortoise(c))
+        v.line("r", [[[X, T0], [X, T1]]])
+    for k in range(-1, 6):
+        v.line("t", [[[0, k * Q4], [edge, k * Q4]]])
+    v.segment("null", (0, 0), (0, edge))
+    v.segment("null", (0, edge), (edge, edge))
+    v.label_xt([0, 0], "$t = 0$", "r", "coord", dx=-6)
+    v.label_xt([0, edge], "$1.253$", "r", "coord", dx=-6)
+    v.label_xt([0, 2 * edge], "$2.505$", "r", "coord", dx=-6)
+    v.set(fade={"top": 0.7, "bottom": 0.7})
+    v.legend("cover", "the axis of the ring, which $t$ and $y$ cover")
+    v.legend("r", "$y$ constant, at $0.25$, $0.5$, $1$, $2$ and $4\\,L^2$")
+    v.legend("t", "$t$ constant, every $\\pi/4$")
+    v.legend("boundary", "the conformal boundary far away, timelike")
+    v.legend("centre", "$y = 0$, the centre of the white hole, a regular centre")
+    v.legend("null", "a light ray along the axis from $y = 0$")
+    v.set(settings="$L = 1$, the unit of every length.")
+    views.append(v)
+    return views
+
+
 def freund_rubin(ck, src):
     """Freund and Rubin's anti-de Sitter space times a 7-sphere of radius 2L, at L = 1. The sphere has
     one radius at every event, so the causal structure is that of anti-de Sitter space of four
@@ -10533,6 +10800,60 @@ def einstein_rosen_bridge(ck, src):
     views.append(v)
     order = ["bridge", "spherical", "isotropic", "charged_spherical", "charged_bridge"]
     return sorted(views, key=lambda v: order.index(v.d["id"]))
+
+
+def interstellar_wormhole(ck, src):
+    """The Dneg wormhole of James, von Tunzelmann, Franklin and Thorne at a = rho = 1 and M = 1/2. On its
+    plane of t and l the metric is -c^2dt^2 + dl^2 in every chart, with l over the whole line, so the
+    proper distance is its own tortoise coordinate and p, q = arctan((ct -+ l)/rho) give the full
+    diamond, as for Ellis's wormhole: the two flat ends each have their own i^0 and scri, and the
+    cylinder |l| <= a is the band between the mouths, which run from i^- to i^+. The proper distance
+    chart covers the whole diamond, the cylinder chart the band, and the flare chart the part beyond
+    l = a. The Kretschmann scalar is 4/rho^4 on the cylinder and finite beside each mouth."""
+    params = {"rho": 1, "a": 1, "M": "1/2"}
+    planes = {"proper_distance": Plane(src, "interstellar_wormhole", "proper_distance", ("t", "\\ell"), EQUATOR, params,
+                                       functions={"r": "iw_r(ell)"}),
+              "cylinder": Plane(src, "interstellar_wormhole", "cylinder", ("t", "\\ell"), EQUATOR, {"rho": 1, "a": 1}),
+              "flare": Plane(src, "interstellar_wormhole", "flare", ("t", "\\ell"), EQUATOR, params)}
+    spans = {"proper_distance": ck.uniform(-20, 20), "cylinder": ck.uniform(-1, 1), "flare": ck.uniform(1.0001, 20)}
+    for cid, plane in planes.items():
+        ck.chart(f"Interstellar's wormhole, {cid}", plane, mink_pq, ck.uniform(-20, 20), spans[cid], lambda t, l: (1, 0))
+    ck.limit("Interstellar's wormhole: the Kretschmann scalar on the cylinder is 4/rho^4",
+             planes["cylinder"].kretschmann(ck.uniform(-5, 5, 20), ck.uniform(-1, 1, 20)), 4 * np.ones(20), 1e-9)
+    ck.finite("Interstellar's wormhole: the curvature is finite beside the mouth",
+              planes["flare"].kretschmann(ck.uniform(-5, 5, 50), 1 + ck.uniform(1e-6, 1e-2, 50)))
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    wormhole = slices.moments("interstellar_wormhole")[0]
+    lo, hi = wormhole.reach("proper_distance", "\\ell")
+    mouth = [point(*pq) for pq in zip(*mink_pq(S_ALL, np.ones_like(S_ALL)))]
+    other = [point(*pq) for pq in zip(*mink_pq(S_ALL, -np.ones_like(S_ALL)))]
+    covers = {"proper_distance": DIAMOND, "cylinder": mouth + other[::-1], "flare": mouth + [[PI, 0]]}
+    words = {"proper_distance": "the whole spacetime, which $t$ and $\\ell$ cover",
+             "cylinder": "the cylinder $|\\ell| \\le a$, which the cylinder's $t$ and $\\ell$ cover",
+             "flare": "the flare $\\ell \\ge a$, which the flare's $t$ and $\\ell$ cover"}
+    reach = {"proper_distance": (lo, hi), "cylinder": (-1.0, 1.0), "flare": (1.0, hi)}
+    views = []
+    for vid, label in (("proper_distance", "Proper distance"), ("cylinder", "Cylinder"), ("flare", "Flare")):
+        v = View(vid, label, box, vid)
+        v.fill("region", DIAMOND)
+        v.fill("cover", covers[vid])
+        grid(v, "r", lambda l, t: mink_pq(t, l), (-4, -3, -2, 2, 3, 4), S_ALL)
+        grid(v, "t", mink_pq, (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+        for side in (1, -1):
+            v.curve("throat", *mink_pq(S_ALL, side * np.ones_like(S_ALL)))
+        diamond_edges(v)
+        label_on(v, mink_pq(0, 3), "$\\ell = 3\\rho$")
+        v.legend("cover", words[vid])
+        v.legend("r", "$\\ell$ constant, at $\\pm 2$, $\\pm 3$, and $\\pm 4\\rho$")
+        v.legend("t", "$ct$ constant, at $0$, $\\pm\\rho$, $\\pm 2\\rho$, and $\\pm 4\\rho$")
+        v.legend("throat", "the mouths $\\ell = \\pm a$, with the cylinder between them")
+        ls = np.linspace(*reach[vid], 2)
+        v.slice(wormhole, [mink_pq(0 * ls, ls)])
+        v.set(settings="$\\rho = 1$, $a = \\rho$, and $M = \\rho/2$; $p = \\arctan((ct - \\ell)/\\rho)$ and "
+                       "$q = \\arctan((ct + \\ell)/\\rho)$.")
+        views.append(v)
+    return views
 
 
 def einstein_dirac_maxwell_wormhole(ck, src):
@@ -12009,6 +12330,80 @@ def bartnik_mckinnon(ck, src):
 
 
 # ---------------------------------------------------------------- FRW
+
+def big_rip(ck, src):
+    """The universe of phantom energy alone at w = -3/2, which Chiba, Takahashi and Sugiyama draw
+    as the lower half of Minkowski space's diagram with the Big Rip at future spacelike infinity
+    (arXiv:astro-ph/0501661, their case E). The conformal chart is a^2 times Minkowski's in eta and
+    r, so p = arctan(eta - r) and q = arctan(eta + r), lengths in units of eta_0, and eta < 0 is
+    the triangle below T = 0. The comoving and Cartesian charts enter through the conformal time
+    eta = -eta_0 (-t/t_0)^(7/3), drawn at t_0 = 7/3 so that eta_0 = 3 c t_0/7 = 1. The Big Rip is
+    T = 0, where the Kretschmann scalar diverges; the hypotenuse is t -> -infinity, where a -> 0;
+    and the observer's event horizon is the ray q = 0, r = -eta, into the corner where the centre
+    meets the rip."""
+    params = {"w": "-3/2", "eta_0": 1}
+    moving = {"w": "-3/2", "t_0": "7/3"}
+    conf = Plane(src, "big_rip", "conformal", ("\\eta", "r"), EQUATOR, params)
+    como = Plane(src, "big_rip", "comoving", ("t", "r"), EQUATOR, moving)
+    cart = Plane(src, "big_rip", "cartesian", ("t", "x"), {"y": "0", "z": "0"}, moving)
+
+    def eta_of(t):
+        return -(-np.asarray(t, dtype=float) / (7 / 3)) ** (7 / 3)
+
+    def moving_pq(t, r):
+        return mink_pq(eta_of(t), r)
+    ck.chart("Big Rip conformal", conf, mink_pq, ck.uniform(-20, -0.01), ck.uniform(0.001, 20), lambda e, r: (1, 0))
+    ck.chart("Big Rip comoving", como, moving_pq, ck.uniform(-6, -0.05), ck.uniform(0.001, 20), lambda t, r: (1, 0))
+    ck.chart("Big Rip Cartesian", cart, moving_pq, ck.uniform(-6, -0.05), ck.uniform(0.001, 20), lambda t, x: (1, 0))
+    ck.diverges("Big Rip: the Kretschmann scalar diverges at the rip, t = 0",
+                como.kretschmann(-1e-3, 0.5), como.kretschmann(-1e-4, 0.5))
+    ck.diverges("Big Rip: the Kretschmann scalar diverges at the rip, eta = 0",
+                conf.kretschmann(-1e-6, 0.5), conf.kretschmann(-1e-7, 0.5))
+    ck.finite("Big Rip: r = 0 is a regular centre", conf.kretschmann(ck.uniform(-5, -0.5, 50), np.full(50, 1e-6)))
+    p, q = mink_pq(np.array([-1e-9]), np.array([3.0]))
+    ck.limit("Big Rip: eta -> 0 lands on T = 0", p + q, [0.0], 1e-6)
+    p, q = mink_pq(np.array([-1e9]), np.array([3.0]))
+    ck.limit("Big Rip: t -> -infinity lands on T = X - pi", (p + q) - ((q - p) - PI), [0.0], 1e-6)
+    p, q = mink_pq(np.array([-0.5, -1.0, -2.0]), np.array([0.5, 1.0, 2.0]))
+    ck.limit("Big Rip: the event horizon r = -eta is q = 0", q, [0.0, 0.0, 0.0], 1e-12)
+
+    box = [-0.35, PI + 0.35, -PI - 0.3, 0.3]
+    tri = [[0, 0], [PI, 0], [0, -PI]]
+    v = View("whole", "The whole universe", box)
+    v.fill("region", tri)
+    v.fill("cover", tri)
+    rr = spread(0, np.inf, 500, 12)
+    for t in (0.25, 0.5, 1, 2, 4):
+        eta = -t ** (7 / 3)
+        v.curve("t", *mink_pq(np.full_like(rr, eta), rr))
+    for r in (0.25, 0.5, 1, 2, 4):
+        v.curve("r", *mink_pq(-rr, np.full_like(rr, r)))
+    v.line("singular", [[[0, 0], [PI, 0]]], zig=True)
+    v.line("chartedge", [[[0, -PI], [PI, 0]]])
+    v.line("centre", [[[0, -PI], [0, 0]]])
+    v.line("horizon", [[[0, 0], [HALF, -HALF]]])
+    now = mink_pq(-1, 0)
+    v.point("mark", now)
+    v.label_xt([HALF, 0], "the Big Rip, $t = 0$", "b", dy=-8)
+    v.label_xt([0, -HALF], "$r = 0$", "r", dx=-6)
+    v.label(now, "$t = -t_0$", "r", "small", dx=-6)
+    label_on(v, mink_pq(-1, 1.6), "$-t_0$")
+    label_on(v, mink_pq(-(2 ** (7 / 3)), 3.0), "$-2t_0$")
+    v.legend("t", "cosmic time $t$ constant: $-t_0/4$, $-t_0/2$, $-t_0$, $-2t_0$ and $-4t_0$, with "
+                  "$\\eta = -\\eta_0(-t/t_0)^{7/3}$")
+    v.legend("r", "comoving $r$ constant, in units of $\\eta_0$: $1/4$, $1/2$, $1$, $2$ and $4$")
+    v.legend("mark", "the centre at $t = -t_0$, where $a = 1$")
+    v.legend("horizon", "the event horizon of the observer at $r = 0$, $r = -\\eta$")
+    v.legend("singular", "the Big Rip, where $a$ and the Kretschmann scalar diverge")
+    v.legend("chartedge", "$t \\to -\\infty$, the past edge, where $a \\to 0$")
+    v.legend("centre", "$r = 0$, the observer's world line")
+    v.legend("cover", "the whole spacetime, which every chart covers")
+    for m in slices.moments("big_rip"):
+        eta = -(-m.time) ** (7 / 3)
+        v.slice(m, lines=[mink_pq(np.full_like(rr, eta), rr)])
+    v.set(settings="$w = -3/2$, with $\\eta_0 = 3ct_0/7$ the unit of $\\eta$ and $r$.")
+    return [v]
+
 
 def frw(ck, src):
     """Dust universes, the scale factor solved from the published G^r_r = 0 of the conformal
@@ -15896,6 +16291,52 @@ def senovilla(ck, src):
     return [v]
 
 
+def lqc_bounce(ck, src):
+    """The bounce of loop quantum cosmology, in units of t_b.
+
+    The metric is a^2(-d eta^2 + dr^2 + r^2 dOmega^2) with eta = int c dt/a, and
+    eta(t) = t 2F1(1/6, 1/2; 3/2; -t^2) grows as (3/2)|t|^(2/3), without limit in both directions,
+    so p, q = arctan(eta -+ r) bring the universe onto the whole of Minkowski's half diamond: no
+    spacelike edge stands where the classical universe of a stiff fluid has its bang. The harmonic
+    chart is the same plane with t = sinh(tau). The published Kretschmann scalar is checked finite
+    all over the plane and greatest at the bounce, where it is 4/3 (c t_b = 1)."""
+    eta_of = nr._lqc_eta
+    com = Plane(src, "lqc_bounce", "comoving_spherical", ("t", "r"), EQUATOR, {"t_b": 1})
+
+    def comoving(t, r):
+        return mink_pq(eta_of(t), r)
+    ck.chart("LQC bounce comoving", com, comoving, ck.uniform(-6, 6), ck.uniform(0.01, 6), lambda t, r: (1, 0))
+    ck.limit("LQC bounce: the conformal time grows as (3/2) t^(2/3), without limit",
+             [eta_of(1e9) / 1.5e6, eta_of(1e12) / 1.5e8], [1.0, 1.0], 2e-3)
+    K = com.kretschmann
+    everywhere = K(ck.uniform(-6, 6, 400), ck.uniform(0, 6, 400))
+    ck.finite("LQC bounce: the Kretschmann scalar is finite all over the plane", everywhere)
+    ck.limit("LQC bounce: the Kretschmann scalar at the bounce is 4/3",
+             K(np.zeros(1), np.ones(1)), [4 / 3], 1e-9)
+    ck.limit("LQC bounce: the Kretschmann scalar is nowhere greater than at the bounce",
+             [max(0.0, float(np.max(everywhere)) - 4 / 3)], [0.0])
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    v = View("comoving", "Comoving", box, "comoving_spherical")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda r, t: comoving(t, r), (1, 2, 4), S_ALL)
+    grid(v, "t", comoving, (-8, -2, -0.5, 0.5, 2, 8), S_POS)
+    grid(v, "surface", comoving, (0,), S_POS)
+    triangle_edges(v)
+    v.legend("cover", "the whole spacetime, which the comoving chart covers")
+    v.legend("r", "comoving $r$ constant, in units of $ct_b$: the world lines of comoving observers")
+    v.legend("t", "$t/t_b$ constant: $\\pm 1/2$, $\\pm 2$, and $\\pm 8$")
+    v.legend("surface", "the bounce, $t = 0$, where the density is greatest and $a = 1$")
+    v.legend("centre", "$r = 0$, the world line of one comoving observer")
+    for m in slices.moments("lqc_bounce"):
+        along_r = np.array(m.reach("comoving_spherical", "r"))
+        v.slice(m, [mink_pq(np.full_like(along_r, float(eta_of(m.time))), along_r)])
+    v.set(settings="$t_b = 1$, with $ct_b$ the scale of $p = \\arctan((\\eta - r)/ct_b)$ and "
+                   "$q = \\arctan((\\eta + r)/ct_b)$, where $\\eta = \\int c\\,dt/a$.")
+    return [v]
+
+
 def kopczynski_trautman(ck, src):
     """Kopczynski and Trautman's universe, in units of l.
 
@@ -15961,6 +16402,94 @@ def kopczynski_trautman(ck, src):
                        "$q = \\arctan((\\eta + r)/\\ell)$.")
         views.append(v)
     return views
+
+
+def poincare_dodecahedral(ck, src):
+    """Luminet's universe on its plane of the conformal time eta and chi, along the line from us to the
+    centre of a face of our cell, Omega_m = 0.28 and Omega_0 = 1.013 with the radius of curvature a_0
+    today the unit and radiation left out, as its spacetime diagram declares. The metric on the plane
+    is a^2(-d eta^2 + d chi^2), so p, q = (eta -+ chi)/2 draw it with X = chi and T = eta, and one cell
+    along this line is the strip -pi/10 <= chi <= pi/10, its two faces one face: the Clifford translation
+    through pi/5 carries chi = -pi/10 onto pi/10. The scale factor solves
+    a' = H_0 sqrt(Omega_m a + Omega_Lambda a^4 - (Omega_0 - 1) a^2) in units of a_0, with H_0 a_0/c =
+    1/sqrt(Omega_0 - 1), from the bang a = 0 at eta = 0 to future infinity, where a diverges at the
+    finite eta_inf = 0.5168: Lambda makes future infinity a spacelike line. Our past light cone from today,
+    eta_0 = 0.3888, leaves the cell through both faces at eta_0 - pi/10 and comes back in through the
+    other, and our future light cone reaches eta_inf at chi = eta_inf - eta_0 = 0.128, short of the faces."""
+    from scipy.integrate import quad
+    om, o0 = nr.PD_OMEGA_M, nr.PD_OMEGA_0
+    ol, k, H = o0 - om, o0 - 1, nr.PD_RATE
+
+    def rate(a):
+        return H * np.sqrt(np.maximum(om * a + ol * a ** 4 - k * a ** 2, 0.0))
+
+    def eta_of(a):
+        return quad(lambda b: 1 / rate(b) if b > 0 else 0.0, 0, a, limit=400)[0]
+    grid = np.concatenate([np.geomspace(1e-9, 1, 4000), np.geomspace(1, 1e7, 4000)[1:]])
+    etas = np.cumsum(np.concatenate([[eta_of(grid[0])], [quad(lambda b: 1 / rate(b), x, y)[0]
+                                                         for x, y in zip(grid, grid[1:])]]))
+    eta_inf = etas[-1] + quad(lambda b: 1 / rate(b), grid[-1], np.inf)[0]
+    now, lss = float(np.interp(1.0, grid, etas)), float(np.interp(1 / 1101, grid, etas))
+    ck.limit("Poincare dodecahedral: today is eta = 0.38882", now, float(nr.PD_NOW), 1e-5)
+    ck.limit("Poincare dodecahedral: the last scattering, a = 1/1101, is eta = 0.012988", lss, float(nr.PD_LSS), 1e-6)
+    ck.limit("Poincare dodecahedral: future infinity is eta = 0.5168", eta_inf, 0.5168, 1e-4)
+
+    def fvals(e, c):
+        a = np.interp(e, etas, grid)
+        return {"a": (a, rate(a), H ** 2 / 2 * (om + 4 * ol * a ** 3 - 2 * k * a))}
+    pl = Plane(src, "poincare_dodecahedral", "conformal", ("\\eta", "\\chi"), EQUATOR, {}, numeric=["a"])
+    src.note("poincare_dodecahedral", "conformal", ["einstein_tensor"])
+
+    def pq(e, c):
+        e, c = np.asarray(e, dtype=float), np.asarray(c, dtype=float)
+        return (e - c) / 2, (e + c) / 2
+    ck.chart("Poincare dodecahedral, Luminet's universe in the conformal time", pl, pq,
+             ck.uniform(0.005, 0.51), ck.uniform(0.001, 3.1), lambda e, c: (1, 0), fvals)
+    # The scale factor solves the published G^chi_chi = -Lambda: a'^2 - 2 a a'' - a^2 = -Lambda a^4.
+    a = np.geomspace(1e-3, 1e3, 200)
+    lam = nr.PD_LAMBDA
+    second = H ** 2 / 2 * (om + 4 * ol * a ** 3 - 2 * k * a)
+    ck.limit("Poincare dodecahedral: the scale factor solves G^chi_chi = -Lambda",
+             (rate(a) ** 2 - 2 * a * second - a ** 2 + lam * a ** 4) / (1 + lam * a ** 4), 0.0, 1e-9)
+    ck.diverges("Poincare dodecahedral: the Kretschmann scalar diverges at the bang",
+                pl.kretschmann(np.array([1e-2]), np.array([0.05]), fvals),
+                pl.kretschmann(np.array([1e-3]), np.array([0.05]), fvals))
+
+    face, top = PI / 10, round(eta_inf, 4)
+    v = View("near", "Our cell", [-face - 0.2, face + 0.2, -0.08, top + 0.08], "conformal")
+    cell = [[-face, 0], [face, 0], [face, top], [-face, top]]
+    v.fill("region", cell)
+    v.fill("cover", cell)
+    v.line("t", [[[-face, lss], [face, lss]]])
+    v.line("boundary", [[[-face, 0], [-face, top]], [[face, 0], [face, top]]])
+    v.line("centre", [[[0, 0], [0, top]]])
+    v.line("singular", [[[-face, 0], [face, 0]]], zig=True)
+    v.line("scri", [[[-face, top], [face, top]]])
+    # Our past light cone, each half leaving through a face and coming back in through the other.
+    turn = now - face
+    v.line("null", [[[0, now], [face, turn]], [[-face, turn], [-face + turn, 0]],
+                    [[0, now], [-face, turn]], [[face, turn], [face - turn, 0]]])
+    reach = eta_inf - now
+    ck.limit("Poincare dodecahedral: light sent today reaches chi = 0.128 at future infinity", reach, 0.128, 5e-4)
+    v.line("event", [[[0, now], [reach, top]], [[0, now], [-reach, top]]])
+    v.point("mark", pq(now, 0))
+    v.label_xt([0, top], "$\\mathscr{I}^+$", "b", dy=-6)
+    v.label_xt([0, 0], "the big bang", "t", dy=8)
+    v.label_xt([face, top / 2], "$\\chi = \\pi/10$", "l", "coord", dx=6)
+    v.label_xt([-face, top / 2], "$\\chi = -\\pi/10$", "r", "coord", dx=-6)
+    v.label(pq(now, 0), "here, now", "r", "small", dx=-6)
+    v.legend("cover", "one cell along the line from us to the centre of a face, which $\\eta$ and $\\chi$ cover")
+    v.legend("boundary", "the faces $\\chi = \\pm\\pi/10$, glued into one face")
+    v.legend("centre", "$\\chi = 0$, our world line")
+    v.legend("t", "the last scattering of the microwaves, $a = a_0/1101$")
+    v.legend("null", "our past light cone, which leaves through each face and comes back in through the other")
+    v.legend("event", "the light we send today, which reaches future infinity at $\\chi = \\pm 0.128$")
+    v.legend("singular", "the big bang, where the Kretschmann scalar diverges")
+    v.legend("scri", "future infinity, a spacelike line at $\\eta = 0.5168$")
+    v.set(input=nr.PD_LCDM_INPUT)
+    for m in slices.moments("poincare_dodecahedral"):
+        v.slice(m, xt=[[[-face, now], [face, now]]], label="today, $\\eta = 0.3888$")
+    return [v]
 
 
 def small_universes(ck, src):
@@ -19256,6 +19785,109 @@ def neugebauer_meinel(ck, src):
     return views
 
 
+def kerr_scalar_hair(ck, src):
+    """Herdeiro and Radu's configuration IV on its axis, in units of the field's inverse length mu,
+    and the axis of Kerr's black hole of the same mass and angular momentum in the same chart.
+
+    On the axis the dragging drops out and the metric is -e^(2F_0) N c^2dt^2 + e^(2F_1) dr^2/N with
+    N = 1 - r_H/r. The tortoise coordinate r_*, with dr_*/dr = e^(F_1 - F_0)/N, is kerr_scalar_hair's:
+    near the horizon it falls to minus infinity as 2 r_H e^(F_1 - F_0) ln x, x = sqrt(r^2 - r_H^2), with
+    e^(F_1 - F_0) = 31.23 there, the horizon of a surface gravity c^2 e^(F_0 - F_1)/(2 r_H), and far away it
+    grows as r. So p, q = arctan((ct -+ r_*)/l) bring the half axis into a diamond with the future and
+    past horizons on its left and null infinity on its right; the functions enter from the authors'
+    data through the declared functions of the null rays. Kerr's axis in the same chart has
+    r_* = R + (2MR_+/r_H) ln((r - r_H)/r_H) - (2MR_-/r_H) ln(r/r_H) with R = r + b, R_+ = r_H + b,
+    R_- = b and GM/c^2 = r_H/2 + b, the Boyer-Lindquist tortoise coordinate of Kerr's axis."""
+    hair = nr._ksh_hair()
+    ell = 4.0
+    rH = hair.rH
+
+    def axis_pq(t, r):
+        rs = hair.tortoise_fast(r)
+        t = np.asarray(t, dtype=float)
+        return np.arctan((t - rs) / ell), np.arctan((t + rs) / ell)
+    axis = Plane(src, "kerr_scalar_hair", "herdeiro_radu", ("t", "r"), {"theta": "0", "varphi": "0"}, nr.KSH,
+                 functions=nr.KSH_AXIS)
+    ck.chart("Kerr with scalar hair, the axis", axis, axis_pq, ck.uniform(-30, 30, 400), ck.uniform(0.1005, 30, 400),
+             lambda t, r: (1, 0))
+    ck.limit("Kerr with scalar hair: e^(F_1 - F_0) = 31.23 on the horizon at the axis", hair.axis_gap, 31.2278, 1e-3)
+    ck.limit("Kerr with scalar hair: a ray climbs the axis from 0.2/mu to 4/mu in 11.62/mu of ct",
+             float(hair.tortoise_fast(4.0) - hair.tortoise_fast(0.2)), 11.6227, 1e-3)
+    ck.limit("Kerr with scalar hair: r_* runs to -infinity at the horizon",
+             float(hair.tortoise_fast(rH * (1 + 1e-12))), -100.0, 200.0)
+
+    views = []
+    v = View("hair_axis", "The axis", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "herdeiro_radu")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda r, t: axis_pq(t, r), (0.2, 0.5, 1, 2, 4), S_ALL)
+    grid(v, "t", axis_pq, (-16, -8, -4, 0, 4, 8, 16), spread(rH, np.inf, 500, 9))
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    v.line("horizon", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+    for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([-HALF, HALF], "$r = r_H$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$r = r_H$", "tr", dx=-5, dy=3)
+    label_on(v, axis_pq(0, 1), "$r = 1/\\mu$")
+    v.legend("cover", "the axis outside the horizon, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $0.2$, $0.5$, $1$, $2$, and $4/\\mu$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 4$, $\\pm 8$, and $\\pm 16/\\mu$")
+    v.legend("horizon", "$r = r_H$, the event horizon")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(restriction="The half axis $\\theta = 0$ outside the horizon only, totally geodesic, each point in the diagram a "
+                      "single event.",
+          settings=f"Herdeiro and Radu's configuration IV, $\\mu = 1$, the unit of every length, $r_H = 0.1/\\mu$, and "
+                   f"$\\ell = {ell:g}/\\mu$.")
+    views.append(v)
+
+    # Kerr's black hole of the same mass and angular momentum, in the same chart.
+    rk = float(sp.sympify(nr.KSH_KERR["r_H"]))
+    ct = -float(sp.sympify(nr.KSH_KERR["b"]))     # the paper's c_t
+    M, Rp, Rm = rk / 2 - ct, rk - ct, -ct
+
+    def kerr_star(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(all="ignore"):
+            return (r - ct) + 2 * M * Rp / rk * np.log((r - rk) / rk) - 2 * M * Rm / rk * np.log(r / rk)
+
+    def kerr_pq(t, r):
+        rs = kerr_star(r)
+        t = np.asarray(t, dtype=float)
+        return np.arctan((t - rs) / ell), np.arctan((t + rs) / ell)
+    member = Plane(src, "kerr_scalar_hair", "kerr_member", ("t", "r"), {"theta": "0", "varphi": "0"}, nr.KSH_KERR)
+    ck.chart("Kerr with scalar hair, the axis of the Kerr member", member, kerr_pq, ck.uniform(-30, 30, 400),
+             ck.uniform(rk * 1.0005, 30, 400), lambda t, r: (1, 0))
+    v = View("kerr_axis", "The axis of Kerr's black hole", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "kerr_member")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda r, t: kerr_pq(t, r), (1.5, 2, 3, 4), S_ALL)
+    grid(v, "t", kerr_pq, (-16, -8, -4, 0, 4, 8, 16), spread(rk, np.inf, 500, 9))
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    v.line("horizon", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+    for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([-HALF, HALF], "$r = r_H$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$r = r_H$", "tr", dx=-5, dy=3)
+    label_on(v, kerr_pq(0, 2), "$r = 2/\\mu$")
+    v.legend("cover", "the axis outside the horizon, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $1.5$, $2$, $3$, and $4/\\mu$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 4$, $\\pm 8$, and $\\pm 16/\\mu$")
+    v.legend("horizon", "$r = r_H$, the event horizon")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(restriction="The half axis $\\theta = 0$ outside the horizon only, totally geodesic, each point in the diagram a "
+                      "single event.",
+          settings=f"Kerr's black hole of the mass and angular momentum of configuration IV, $\\mu = 1$, the unit of every "
+                   f"length, $r_H = 0.982/\\mu$, $b = 0.442/\\mu$, and $\\ell = {ell:g}/\\mu$.")
+    views.append(v)
+    return views
+
+
 BONNOR_DIPOLE_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of m
 
 
@@ -22337,6 +22969,158 @@ def hotta_tanaka(ck, src):
     return [v]
 
 
+def btz_shock_wave(ck, src):
+    """Shenker and Stanford's shock wave on the plane of u and v at one phi, at l = R = 1 and
+    alpha = 1. In the Kruskal chart, which is continuous across the shock, the metric on the plane
+    is -4 du dv/(1 + u(v + alpha Theta(u)))^2, so u and v are null on both sides and
+    p = arctan(u), q = arctan(v + alpha/2) bring the whole plane into a finite drawing with light at
+    45 degrees, every ray moving left drawn as one line across the shock u = 0, the diagonal X = T.
+    Ahead of the shock the plane is the BTZ black hole's in u and v, so infinity is uv = -1 and
+    r = 0 is uv = 1; behind it the same in u and v + alpha. The shift alpha/2 in q makes the drawing
+    symmetric under (X, T) -> (-X, -T), which carries one half onto the other, and puts the moment
+    u + v = -alpha/2 that the embedding diagram draws on T = 0. The horizon v = 0 of the right
+    outside and v = -alpha of the left one stand on either side of the centre and miss each other
+    by alpha. The same map is checked on the discontinuous chart, with v = V - alpha Theta(U), and on
+    the exterior chart through Shenker and Stanford's (10), on both outsides; the jump alpha of V is
+    checked against the published Gamma^V_UU, and the plane is totally geodesic in all three."""
+    params = {"ell": 1, "R": 1, "alpha": 1}
+    alpha = 1.0
+    kruskal = Plane(src, "btz_shock_wave", "kruskal", ("u", "v"), {"phi": "0"}, params)
+    disc = Plane(src, "btz_shock_wave", "discontinuous", ("U", "V"), {"phi": "0"}, params, off_shock=True)
+    ext = Plane(src, "btz_shock_wave", "exterior", ("t", "r"), {"phi": "0"}, {"ell": 1, "R": 1})
+
+    def pq(u, v):
+        u, v = np.asarray(u, dtype=float), np.asarray(v, dtype=float)
+        return np.arctan(u), np.arctan(v + alpha / 2)
+
+    def step(u):
+        return (np.asarray(u, dtype=float) > 0).astype(float)
+
+    def inside(sign, n=4000):
+        """Random events of the plane on one side of the shock, |u(v + alpha Theta(u))| < 1."""
+        u = sign * np.exp(ck.uniform(-3, 3, n))
+        return u, ck.uniform(-0.98, 0.98, n) / u - alpha * (sign > 0)
+
+    for name, sign in (("ahead of the shock", -1), ("behind the shock", 1)):
+        u, v = inside(sign)
+        ck.chart(f"BTZ shock, Kruskal, {name}", kruskal, pq, u, v, lambda u, v: (1, 1))
+        ck.chart(f"BTZ shock, discontinuous, {name}", disc, lambda U, V: pq(U, V - alpha * step(U)), u,
+                 v + alpha * step(u), lambda U, V: (1, 1))
+
+    def outside(t, r, left=False):
+        """Shenker and Stanford's (10) at R = l = 1: the right outside has u < 0 < v with
+        -uv = (r - 1)/(r + 1) and v/(-u) = e^{2ct}, and the left one is the same with u and v + alpha
+        for -v and -u, its Killing time running to the past."""
+        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+        s = np.sqrt((r - 1) / (r + 1))
+        if left:
+            return pq(s * np.exp(-t), -s * np.exp(t) - alpha)
+        return pq(-s * np.exp(-t), s * np.exp(t))
+    ck.chart("BTZ shock, exterior, the right outside", ext, outside, ck.uniform(-6, 6), ck.uniform(1.001, 40),
+             lambda t, r: (1, 0))
+    ck.chart("BTZ shock, exterior, the left outside", ext, lambda t, r: outside(t, r, True), ck.uniform(-6, 6),
+             ck.uniform(1.001, 40), lambda t, r: (-1, 0))
+
+    # The jump from the published geodesic equation: V'' = -A delta'(U) U'^2 + ... with A the
+    # coefficient of delta'(U) in Gamma^V_UU, integrated twice across U = 0, gives Delta V = -A.
+    _, entry, R = nr.load("btz_shock_wave", "discontinuous")
+    src.note("btz_shock_wave", "discontinuous", ["christoffel"])
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    at = {R.parameters["ell"]: 1, R.parameters["R"]: 1, R.parameters["alpha"]: 1}
+    ull = entry["christoffel"]["variants"]["ull"]["nonzero"]
+    gamma = next(c for c in ull if c["indices"] == ["V", "U", "U"])
+    A = sp.expand(R(gamma["value"]).subs(at)).coeff(sp.DiracDelta(names["U"], 1))
+    ck.limit("BTZ shock: -Gamma^V_UU integrated twice across the shock is the jump alpha", [-float(A)], [alpha], 1e-12)
+    for system in ("kruskal", "discontinuous", "exterior"):
+        _, chart, S = nr.load("btz_shock_wave", system)
+        src.note("btz_shock_wave", system, ["christoffel"])
+        off = [c["indices"] for c in chart["christoffel"]["variants"]["ull"]["nonzero"]
+               if c["indices"][0] == "\\phi" and "\\phi" not in c["indices"][1:]]
+        ck.limit(f"BTZ shock, {system}: no published Christoffel symbol turns a ray out of the plane of one phi",
+                 [len(off)], [0], 0.5)
+    w = ck.uniform(-20, 20, 200)
+    ck.limit("BTZ shock: a ray moving left keeps its q across the shock",
+             pq(np.full_like(w, -1e-12), w)[1], pq(np.full_like(w, 1e-12), (w + alpha) - alpha)[1], 1e-9)
+    s = np.linspace(-0.99, 0.99, 50)
+    ck.limit("BTZ shock: the moment u + v = -alpha/2 is the line T = 0", xt(*pq(s, -alpha / 2 - s))[1], 0 * s, 1e-12)
+    ck.limit("BTZ shock: the horizons v = 0 and v = -alpha stand at q = +-arctan(alpha/2), missing each other",
+             [float(pq(0, 0)[1]), float(pq(0, -alpha)[1])], [math.atan(0.5), -math.atan(0.5)], 1e-12)
+    ck.finite("BTZ shock: the Kretschmann scalar is finite at r = 0 and on the horizon",
+              ext.kretschmann(np.zeros(3), np.array([1e-9, 1.0, 5.0])))
+
+    # The edges, each a curve of one side: u(v + alpha Theta(u)) = -1 is infinity and +1 is r = 0.
+    a = spread(0, np.inf, 600, 10)
+    ahead_bound = pq(-a, 1 / a)
+    behind_bound = pq(a, -1 / a - alpha)
+    ahead_sing = pq(-a, -1 / a)
+    behind_sing = pq(a, 1 / a - alpha)
+    corner = point(*pq(-1e12, 0.0))
+    region = ([point(*pq(0, -1e12))] + np.column_stack(xt(*ahead_sing)).tolist() + [corner]
+              + np.column_stack(xt(*ahead_bound)).tolist()[::-1] + [point(*pq(0, 1e12))]
+              + np.column_stack(xt(*behind_sing)).tolist() + [point(*pq(1e12, -alpha))]
+              + np.column_stack(xt(*behind_bound)).tolist()[::-1])
+    X = np.array([pt[0] for pt in region])
+    T = np.array([pt[1] for pt in region])
+    box = [float(X.min()) - 0.35, float(X.max()) + 0.35, float(T.min()) - 0.25, float(T.max()) + 0.25]
+
+    def exterior_fill(sign):
+        b = ahead_bound if sign < 0 else behind_bound
+        top = [point(*pq(0, 1e12))] if sign < 0 else [point(*pq(0, -1e12))]
+        hz = point(*pq(0, 0)) if sign < 0 else point(*pq(0, -alpha))
+        return [hz] + top + np.column_stack(xt(*b)).tolist() + [point(*pq(sign * 1e12, 0 if sign < 0 else -alpha))]
+
+    views = []
+    for vid, system in (("kruskal", "kruskal"), ("discontinuous", "discontinuous"), ("exterior", "exterior")):
+        v = View(vid, "The plane of $u$ and $v$", box, system)
+        v.fill("region", region)
+        if system == "exterior":
+            v.fill("cover", exterior_fill(-1))
+            v.fill("cover", exterior_fill(1))
+        else:
+            v.fill("cover", region)
+        for c in (-2, -1, -0.5, 0.5, 1, 2):
+            # u = c, over the part of the plane it crosses.
+            s = spread(-np.inf, np.inf, 600, 9)
+            shifted = s + alpha * (c > 0)
+            keep = np.abs(c * shifted) < 1
+            v.curve("null", *pq(np.where(keep, c, np.nan), np.where(keep, s, np.nan)))
+            # v + alpha/2 = c, a ray moving left, on through the shock.
+            vv = c - alpha / 2
+            uu = spread(-np.inf, np.inf, 600, 9)
+            keep = np.abs(uu * (vv + alpha * (uu > 0))) < 1
+            v.curve("null", *pq(np.where(keep, uu, np.nan), np.where(keep, vv, np.nan)))
+        v.curve("surface", *pq(np.zeros(600), spread(-np.inf, np.inf, 600, 12)))
+        right = -spread(0, np.inf, 400, 10)
+        left = spread(0, np.inf, 400, 10)
+        v.curve("horizon", *pq(right, np.zeros_like(right)))
+        v.curve("horizon", *pq(left, np.full_like(left, -alpha)))
+        v.curve("boundary", *ahead_bound)
+        v.curve("boundary", *behind_bound)
+        v.curve("singular", *ahead_sing, zig=True)
+        v.curve("singular", *behind_sing, zig=True)
+        # The two halves are each other's image under (X, T) -> (-X, -T), and so are their labels.
+        for sign in (1, -1):
+            v.label_xt([sign * 1.12, sign * 0.4], "exterior", cls="region")
+            v.label_xt([-sign * 0.05, sign * 0.8], "black hole" if sign > 0 else "white hole", cls="region")
+        v.legend("null", "$u$ constant at $\\pm\\ell/2$, $\\pm\\ell$ and $\\pm 2\\ell$ and $v + \\alpha/2$ constant at the "
+                         "same values, light rays, each ray moving left drawn on across the shock")
+        v.legend("surface", "the shock $u = 0$, the future horizon of the right outside and the past horizon of the left")
+        v.legend("horizon", "the past horizon $v = 0$ of the right outside and the future horizon $v = -\\alpha$ of the "
+                            "left, which miss each other by $\\alpha$")
+        v.legend("boundary", "the conformal boundary, timelike")
+        v.legend("singular", "$r = 0$, a singularity in the causal structure, where the curvature is finite")
+        v.set(restriction="The plane of $u$ and $v$ at one $\\phi$, the same at every $\\phi$, each point in the "
+                          "diagram a circle.",
+              settings="$\\ell = R = 1$ and $\\alpha = 1$; $p = \\arctan u$ and $q = \\arctan(v + \\alpha/2)$, with $u$ "
+                       "and $v$ the coordinates of the Kruskal chart, which are continuous across the shock.")
+        m, = slices.moments("btz_shock_wave", label=slices.BTZ_SHOCK_MOMENT)
+        lo, hi = m.reach("kruskal", "u")
+        su = np.linspace(lo, hi, 200)
+        v.slice(m, lines=[pq(su, -alpha / 2 - su)])
+        views.append(v)
+    return views
+
+
 def light_beam(ck, src):
     """Three planes of Bonnor's beams on which nothing turns a light ray, each flat and each
     Minkowski's diamond, in units of the beam's radius R with l = 4R.
@@ -24277,7 +25061,6 @@ def moving_mirror(ck, src):
     return views
 
 
-
 def maximally_supersymmetric_plane_wave(ck, src):
     """Marolf and Ross's picture of the plane wave, drawn at mu = 1: the slice of the Einstein
     static universe along a great circle of its 9-sphere, Berenstein and Nastase's alpha = 0, with
@@ -24458,7 +25241,213 @@ def maximally_supersymmetric_plane_wave(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Haggard and Rovelli's fireworks
+
+def black_to_white_hole(ck, src):
+    """Haggard and Rovelli's bounce of a shell of light, as black_to_white_hole.py draws it, r_s = 1:
+    the whole spacetime, each point a 2-sphere, Minkowski's triangle with the shell falling in from
+    the middle of I^- to the bounce at the centre and going out to the middle of I^+.
+
+    Inside the shell p = arctan u and q = arctan v, Minkowski's own maps, so the shell falling in is
+    q = 0, the shell going out is p = 0, the bounce is the origin and the centre is X = 0. Outside
+    it, in region II, p = arctan of the interior ray that each outgoing ray U continues across the
+    shell, so p is continuous there. q = q(V) is fixed by two conditions: q = 0 on the shell, where
+    region I's q is zero, and q(V) = -p(-V) beyond the ingoing ray through Delta, so that the surface
+    of time symmetry U + V = 0 is the line T = 0; between the shell and that ray it rises in
+    proportion to V and stays below the value that would put the geodesic from Delta to E on T = 0,
+    so the geodesic lies below T = 0, E at T = -pi/4, and the quantum region opens between the
+    geodesic and its mirror image. The flap after the bounce and the flat space inside the shell
+    going out are the mirror images, (p, q) -> (-q, -p) of the time reverse (U, V) -> (-V, -U).
+    q has a corner on the ray through Delta, which carries the corner where the flaps are glued.
+
+    One view per chart, each tinting what its chart covers: the flat interior inside both shells,
+    Kruskal's chart on both flaps, Schwarzschild's chart outside r_s on both, the ingoing
+    Painleve-Gullstrand and Lemaitre charts on the flap before the bounce and the outgoing
+    Painleve-Gullstrand chart on the flap after it."""
+    b = bwh
+    inner = Plane(src, "black_to_white_hole", "interior", ("u", "v"), EQUATOR, {})
+    krus = Plane(src, "black_to_white_hole", "kruskal", ("U", "V"), EQUATOR, {"r_s": 1})
+    static = Plane(src, "black_to_white_hole", "schwarzschild", ("t", "r"), EQUATOR, {"r_s": 1})
+    pg_in = Plane(src, "black_to_white_hole", "painleve_gullstrand_ingoing", ("t", "r"), EQUATOR, {"r_s": 1})
+    pg_out = Plane(src, "black_to_white_hole", "painleve_gullstrand_outgoing", ("t", "r"), EQUATOR, {"r_s": 1})
+    lem = Plane(src, "black_to_white_hole", "lemaitre", ("\\tau", "\\rho"), EQUATOR, {"r_s": 1})
+
+    def mirror(pq):
+        p, q = pq
+        return -np.asarray(q), -np.asarray(p)
+
+    def keep(x0, x1, inside, n=1500):
+        """The first n samples of (x0, x1) that inside() says are in the region."""
+        x0, x1 = np.asarray(x0), np.asarray(x1)
+        good = inside(x0, x1) > 0
+        return x0[good][:n], x1[good][:n]
+
+    # Region I and its mirror image, flat, in the null coordinates of the interior.
+    v = ck.uniform(-15, -0.01)
+    u = v - ck.uniform(0.01, 30)
+    ck.chart("Fireworks, flat inside the shell falling in", inner, b.conformal_one, u, v, lambda u, v: (1, 1))
+    u = ck.uniform(0.01, 15)
+    ck.chart("Fireworks, flat inside the shell going out", inner, b.conformal_one, u, u + ck.uniform(0.01, 30),
+             lambda u, v: (1, 1))
+    # Region II and its mirror image in Kruskal's chart.
+    U, V = keep(ck.uniform(-8, b.U_E), ck.uniform(b.V0, 8), b.region_two)
+    ck.chart("Fireworks, Kruskal's chart before the bounce", krus, b.conformal_two, U, V, lambda U, V: (1, 1))
+    U, V = keep(-ck.uniform(b.V0, 8), -ck.uniform(-8, b.U_E), lambda U, V: b.region_two(-V, -U))
+    ck.chart("Fireworks, Kruskal's chart after the bounce", krus, b.conformal_two_reversed, U, V, lambda U, V: (1, 1))
+    # Schwarzschild's chart outside r_s on either flap.
+    t, r = keep(ck.uniform(-10, 4), ck.uniform(1.01, 20), lambda t, r: b.region_two(*b.schwarzschild_UV(t, r)))
+    ck.chart("Fireworks, Schwarzschild's chart before the bounce", static,
+             lambda t, r: b.conformal_two(*b.schwarzschild_UV(t, r)), t, r, lambda t, r: (1, 0))
+    t, r = keep(ck.uniform(-4, 10), ck.uniform(1.01, 20),
+                lambda t, r: b.region_two(*mirror(b.schwarzschild_UV(t, r))))
+    ck.chart("Fireworks, Schwarzschild's chart after the bounce", static,
+             lambda t, r: b.conformal_two_reversed(*b.schwarzschild_UV(t, r)), t, r, lambda t, r: (1, 0))
+    # The Painleve-Gullstrand charts, through r_s, where their observers, falling in at dr/dt = -sqrt(r_s/r)
+    # or flying out at +sqrt(r_s/r), are the future directed vectors; and Lemaitre's.
+    t, r = keep(ck.uniform(-10, 4), ck.uniform(0.51, 20), lambda t, r: b.region_two(*b.painleve_UV(t, r)))
+    ck.chart("Fireworks, the ingoing Painleve-Gullstrand chart", pg_in,
+             lambda t, r: b.conformal_two(*b.painleve_UV(t, r)), t, r, lambda t, r: (1, -1 / np.sqrt(r)))
+    ck.chart("Fireworks, the outgoing Painleve-Gullstrand chart", pg_out,
+             lambda t, r: mirror(b.conformal_two(*b.painleve_UV(-t, r))), -t, r, lambda t, r: (1, 1 / np.sqrt(r)))
+    rho = t + 2 * r ** 1.5 / 3
+    ck.chart("Fireworks, Lemaitre's chart", lem, lambda tau, rho: b.conformal_two(*b.lemaitre_UV(tau, rho)),
+             t, rho, lambda tau, rho: (1, 0))
+
+    # The limits that place the shell, the surface of time symmetry and the quantum region.
+    ray = -spread(1.0, 40, 200)
+    ck.limit("Fireworks: the two sides put the shell falling in at one place",
+             np.concatenate(b.conformal_one(ray, 0 * ray)), np.concatenate(b.conformal_two(b.shell_U(ray), b.V0 + 0 * ray)),
+             1e-9)
+    far = spread(b.V_DELTA, 60, 200)
+    p, q = b.conformal_two(-far, far)
+    ck.limit("Fireworks: the surface of time symmetry outside Delta is T = 0", p + q, 0, 1e-12)
+    Ug, Vg, rg = b.geodesic()
+    p, q = b.conformal_two(Ug, Vg)
+    ck.limit("Fireworks: the geodesic from Delta to E stays below T = 0", np.maximum(p + q, 0), 0, 1e-12)
+    ck.limit("Fireworks: E is on the shell at p = -pi/4, q = 0", [p[-1], q[-1]], [-Q4, 0], 1e-9)
+    ck.limit("Fireworks: Delta is at r = 7/6 on U + V = 0", [rg[0], Ug[0] + Vg[0]], [7 / 6, 0], 1e-12)
+    ck.limit("Fireworks: the geodesic is spacelike and reaches E",
+             [float(np.all(np.diff(Ug) > 0) and np.all(np.diff(Vg) < 0)), Ug[-1], Vg[-1]], [1, b.U_E, b.V0], 1e-9)
+    ck.limit("Fireworks: the apparent horizon U = 0 is the interior ray u = -2r_s", [b.interior_u(0.0)], [-2], 1e-12)
+    ck.finite("Fireworks: the centre of the flat interior is regular",
+              inner.kretschmann(ck.uniform(-9, -1, 20), ck.uniform(-9, -1, 20) + 1e-6))
+
+    # The pieces in (p, q).
+    pE, qE = -Q4, 0.0
+    pD, qD = b.conformal_two(-b.V_DELTA, b.V_DELTA)
+    pD, qD = float(pD), float(qD)
+    edge = [point(pp, qq) for pp, qq in zip(p, q)]                 # Delta to E
+    edge_up = [point(*mirror((pp, qq))) for pp, qq in zip(p, q)]   # Delta to the image of E
+    i_minus, i_zero, i_plus = (-HALF, -HALF), (-HALF, HALF), (HALF, HALF)
+    region_one = [point(*i_minus), point(-HALF, 0), point(0, 0)]
+    region_one_up = [point(0, 0), point(0, HALF), point(*i_plus)]
+    region_two = ([point(-HALF, 0), point(pE, qE)] + edge[::-1]
+                  + [point(pD, qD), point(*i_zero)])
+    region_two_up = [[x, -t] for x, t in region_two]
+    quantum = [point(pE, qE), point(0, 0), point(0, -pE)] + edge_up[::-1][1:] + edge[1:-1]
+
+    def r_inside(r, up=False):
+        w = -2 * r - spread(0, np.inf, 400, 9)[::-1]
+        pq = b.conformal_one(w, w + 2 * r)
+        return mirror(pq) if up else pq
+
+    def r_outside(r, up=False):
+        V = b.V0 + spread(0, np.inf, 900, 10)
+        U = (1 - r) * np.exp(r) / V
+        good = b.region_two(U, V) > -1e-12
+        pq = b.conformal_two(np.where(good, U, np.nan), np.where(good, V, np.nan))
+        return mirror(pq) if up else pq
+
+    horizon_V = np.linspace(b.V0, float(b.sigma_V(0.0)), 60)
+    horizon = (np.full(60, float(b.p_of_U(0.0))), b.q_of_V(horizon_V))
+
+    views = []
+    covers = {
+        "interior": ([region_one, region_one_up], None,
+                     "inside the shell, falling in and going out, which $u$ and $v$ cover: flat"),
+        "kruskal": ([region_two], [region_two_up], None),
+        "schwarzschild": None,
+        "painleve_gullstrand_ingoing": ([region_two], None,
+                                        "the flap before the bounce, which the ingoing $t$ and $r$ cover"),
+        "painleve_gullstrand_outgoing": ([region_two_up], None,
+                                         "the flap after the bounce, which the outgoing $t$ and $r$ cover"),
+        "lemaitre": ([region_two], None, "the flap before the bounce, which $\\tau$ and $\\rho$ cover"),
+    }
+    # Schwarzschild's chart covers each flap outside r_s, the part of it beyond the apparent horizon.
+    beyond = [point(-HALF, 0), point(float(b.p_of_U(0.0)), 0)] + [point(*pq) for pq in zip(*horizon)]
+    outer = beyond + [point(pp, qq) for pp, qq in zip(p, q) if pp <= b.p_of_U(0.0)][::-1] + [point(pD, qD), point(*i_zero)]
+    outer_up = [[x, -t] for x, t in outer]
+    covers["schwarzschild"] = ([outer], [outer_up], None)
+    labels = {"interior": "Flat interior", "kruskal": "Kruskal's flaps", "schwarzschild": "Schwarzschild exterior",
+              "painleve_gullstrand_ingoing": "Before the bounce", "painleve_gullstrand_outgoing": "After the bounce",
+              "lemaitre": "Lemaître's chart"}
+    for system, (cover, cover2, words) in covers.items():
+        vw = View(system, labels[system], [-0.35, PI + 0.35, -PI - 0.3, PI + 0.3], system)
+        for piece in (region_one, region_one_up, region_two, region_two_up):
+            vw.fill("region", piece)
+        for piece in cover:
+            vw.fill("cover", piece)
+        for piece in cover2 or ():
+            vw.fill("cover2", piece)
+        vw.fill("removed", quantum)
+        for r in (0.5, 1, 2, 4):
+            vw.curve("r2", *r_inside(r))
+            vw.curve("r2", *r_inside(r, True))
+        for r in (0.6, 0.8, 1.25, 1.6, 2.5, 5):
+            vw.curve("r", *r_outside(r))
+            vw.curve("r", *r_outside(r, True))
+        vw.curve("apparent", *horizon)
+        vw.curve("apparent", *mirror(horizon))
+        vw.segment("surface", (-HALF, 0), (0, 0))
+        vw.segment("surface", (0, 0), (0, HALF))
+        vw.line("boundary", [edge, edge_up])
+        vw.segment("centre", i_minus, (0, 0))
+        vw.segment("centre", (0, 0), i_plus)
+        vw.segment("scri", i_minus, i_zero)
+        vw.segment("scri", i_zero, i_plus)
+        for pq in ((pE, qE), mirror((pE, qE)), (pD, qD)):
+            vw.point("mark", pq)
+        for pq, text, anchor, dx, dy in ((i_minus, "$i^-$", "t", 0, 6), (i_zero, "$i^0$", "l", 6, 0),
+                                         (i_plus, "$i^+$", "b", 0, -6)):
+            vw.point("infinity", pq)
+            vw.label(pq, text, anchor, dx=dx, dy=dy)
+        vw.label((-HALF, -Q4), "$\\mathscr{I}^-$", "tl", dx=6, dy=4)
+        vw.label((Q4, HALF), "$\\mathscr{I}^+$", "bl", dx=6, dy=-4)
+        vw.label((pE, qE), "$E$", "r", "small", dx=-6)
+        vw.label(mirror((pE, qE)), "$\\bar{E}$", "r", "small", dx=-6)
+        vw.label((pD, qD), "$\\Delta$", "l", "small", dx=6)
+        if words:
+            vw.legend("cover", words)
+        if system == "kruskal":
+            vw.legend("cover", "the flap before the bounce, which $U$ and $V$ cover")
+            vw.legend("cover2", "the flap after the bounce, its mirror image, which $U$ and $V$ cover again")
+        if system == "schwarzschild":
+            vw.legend("cover", "the flap before the bounce outside $r_s$, which $t$ and $r$ cover")
+            vw.legend("cover2", "the flap after the bounce outside $r_s$, which $t$ and $r$ cover again")
+        vw.legend("removed", "the quantum region, where no metric is given")
+        vw.legend("r", "$r$ constant outside the shell: $0.6$, $0.8$, $1.25$, $1.6$, $2.5$ and $5\\,r_s$")
+        vw.legend("r2", "$r$ constant inside the shell: $0.5$, $1$, $2$ and $4\\,r_s$")
+        vw.legend("surface", "the shell, a light ray in and a light ray out")
+        vw.legend("apparent", "the apparent horizons $r = r_s$, of the black hole and of the white hole")
+        vw.legend("boundary", "the edge of the quantum region, the geodesic from $\\Delta$ to $E$ and its mirror image")
+        vw.legend("centre", "$r = 0$, a regular centre")
+        vw.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        vw.set(input=nr.BWH_INPUT)
+        # Each moment of the embedding: Schwarzschild's slice ct = T outside the shell and the flat
+        # moment ct = -R inside it, meeting on the shell, which q = 0 carries on both sides.
+        for m in slices.moments("black_to_white_hole"):
+            lo, hi = m.reach("interior", "v")
+            v_in = np.linspace(lo, hi, 60)
+            r_lo, r_hi = m.reach("schwarzschild", "r")
+            r_out = r_lo + (r_hi - r_lo) * np.linspace(0, 1, 300) ** 2
+            vw.slice(m, [b.conformal_one(2 * lo - v_in, v_in),
+                         b.conformal_two(*b.schwarzschild_UV(np.full(300, m.time), r_out))])
+        views.append(vw)
+    return views
+
+
 DRAWN = {
+    "big_rip": big_rip,
     "moving_mirror": moving_mirror,
     "draining_bathtub": draining_bathtub,
     "unruh_acoustic_hole": unruh_acoustic_hole,
@@ -24467,6 +25456,7 @@ DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
     "penrose_impulsive_wave": penrose_impulsive_wave,
     "hotta_tanaka": hotta_tanaka,
+    "btz_shock_wave": btz_shock_wave,
     "kiselev": kiselev,
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "siklos": siklos,
@@ -24477,16 +25467,17 @@ DRAWN = {
     "ads_soliton": ads_soliton,
     "topological_star": topological_star,
     "coleman_de_luccia": coleman_de_luccia,
-    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
+    "minkowski": minkowski, "supertranslation_hair": supertranslation_hair, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "de_sitter": de_sitter,
     "elliptic_de_sitter": elliptic_de_sitter,
     "self_creating_universe": self_creating_universe,
+    "universe_from_nothing": universe_from_nothing,
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "string_bh_three_four_charges": string_bh_three_four_charges, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
-    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "three_brane_throat": three_brane_throat, "freund_rubin": freund_rubin, "maximally_supersymmetric_plane_wave": maximally_supersymmetric_plane_wave, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
+    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "three_brane_throat": three_brane_throat, "freund_rubin": freund_rubin, "maximally_supersymmetric_plane_wave": maximally_supersymmetric_plane_wave, "bubbling_ads": bubbling_ads, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
@@ -24494,7 +25485,7 @@ DRAWN = {
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
     "datt_ruban_t_models": datt_ruban_t_models,
-    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "bowers_liang": bowers_liang, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
+    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "black_to_white_hole": black_to_white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "bowers_liang": bowers_liang, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
     "bonnor_charged_dust": bonnor_charged_dust,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
@@ -24517,6 +25508,7 @@ DRAWN = {
     "israel_wilson_perjes": israel_wilson_perjes,
     "damour_solodukhin": damour_solodukhin,
     "einstein_dirac_maxwell_wormhole": einstein_dirac_maxwell_wormhole,
+    "interstellar_wormhole": interstellar_wormhole,
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
@@ -24531,12 +25523,15 @@ DRAWN = {
     "roberts": roberts,
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
+    "lqc_bounce": lqc_bounce,
     "kopczynski_trautman": kopczynski_trautman,
     "small_universes": small_universes,
+    "poincare_dodecahedral": poincare_dodecahedral,
     "tilted_universes": tilted_universes,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
     "neugebauer_meinel": neugebauer_meinel,
+    "kerr_scalar_hair": kerr_scalar_hair,
     "morgan_morgan": morgan_morgan,
     "bach_weyl_ring": bach_weyl_ring,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
@@ -24691,6 +25686,18 @@ CAPTIONS = {
         "midway between them, on the lines of constant $v + Au$. The lines of constant $u$ are light moving with "
         "the beams.",
     ],
+    **{("btz_shock_wave", vid): [
+        "The plane of $u$ and $v$ at one $\\phi$ ($\\alpha = 1$, $R = \\ell$), brought by $p = \\arctan u$ and "
+        "$q = \\arctan(v + \\alpha/2)$ of the Kruskal chart into a finite drawing, light at 45°. The shock $u = 0$ is the "
+        "diagonal through the centre, and each ray moving left crosses it as one line. Ahead of the shock, below "
+        "the diagonal, lie the right outside and the white hole, and behind it the left outside and the black hole, "
+        "each half the BTZ black hole's own [shenker2014].",
+        "The past horizon of the right outside and the future horizon of the left stand on either side of the centre, "
+        "$\\alpha$ apart in $v$, so no event sits on all four horizons. "
+        + {"kruskal": "The Kruskal chart covers the whole plane.",
+           "discontinuous": "The discontinuous chart covers the whole plane, its $V$ jumping by $\\alpha$ on the shock.",
+           "exterior": "The exterior chart covers either outside, tinted."}[vid],
+    ] for vid in ("kruskal", "discontinuous", "exterior")},
     ("hotta_tanaka", "shock"): [
         "The plane through the equator of the wave front ($\\theta = \\pi/2$), brought by "
         "$p = \\arctan(u/a) - \\pi/4$ and $q = \\arctan((v - \\Delta v\\,\\Theta(u))/a) + \\pi/4$ of the Kruskal "
@@ -24733,6 +25740,22 @@ CAPTIONS = {
         "with $T = p + q$ up and $X = q - p$ across.",
         "At $r = 0$ the tortoise coordinate falls to $-\\infty$, so that edge of the disc's diamond, where the "
         "centre line stood, is now the two null edges on the left, a horizon. The disc lies beyond them.",
+    ],
+    ("kerr_scalar_hair", "hair_axis"): [
+        "The half axis $\\theta = 0$ outside the horizon of Herdeiro and Radu's configuration IV, each point in the "
+        "diagram a single event. On the axis the metric is $-e^{2F_0}(1 - r_H/r)c^2dt^2 + e^{2F_1}dr^2/(1 - r_H/r)$, and "
+        "with $r_* = \\int e^{F_1 - F_0}dr/(1 - r_H/r)$ the maps $p = \\arctan((ct - r_*)/\\ell)$ and "
+        "$q = \\arctan((ct + r_*)/\\ell)$ bring it into the whole diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "At the horizon $e^{F_1 - F_0} = 31.2$, and $r_*$ falls to $-\\infty$ as $3.12\\ln(\\mu(r - r_H))/\\mu$, the "
+        "logarithm of a horizon of surface gravity $0.160\\,\\mu c^2$. The two null edges on the left are the future and "
+        "past horizons.",
+    ],
+    ("kerr_scalar_hair", "kerr_axis"): [
+        "The half axis $\\theta = 0$ outside the horizon of Kerr's black hole of the same mass and angular momentum, in "
+        "the same coordinates, each point in the diagram a single event. Its tortoise coordinate $r_*$ is Boyer and "
+        "Lindquist's on Kerr's axis in $R = r + b$, and the same maps bring it into the whole diamond.",
+        "The two null edges on the left are the horizon $r = r_H$, where $r_*$ falls as $2.71\\ln(\\mu(r - r_H))/\\mu$, "
+        "for the surface gravity $0.185\\,\\mu c^2$.",
     ],
     ("double_kerr", "weyl_axis_outside"): [
         "The axis $\\rho = 0$ above the upper hole of Herdeiro and Rebelo's pair ($J = GM^2/c$, $\\zeta = 4m$), each "
@@ -25165,6 +26188,29 @@ CAPTIONS = {
         "diagram a 2-sphere of radius $R$. The chart is Minkowski's spherical chart inside $R < cT$, drawn with "
         "Minkowski's own maps, and its lines of constant $R$ enter the Milne universe across the light cone $cT = R$ "
         "and run on to $i^+$.",
+    ],
+    ("supertranslation_hair", "static"): [
+        "The vacuum with the quadrupole field $C = \\tfrac{1}{2}\\ell\\left(3\\cos^2\\theta - 1\\right)$, with $\\ell$ any length, on "
+        "its equator ($\\theta = \\pi/2$, $\\phi = 0$), where the plane of "
+        "$t$ and $\\rho$ is flat and ends at $\\rho = 5\\ell/2$, the supertranslation horizon. With "
+        "$p, q = \\arctan\\left((ct \\mp (\\rho - 5\\ell/2))/\\ell\\right)$ it is Minkowski's triangle, drawn with "
+        "$T = p + q$ up and $X = q - p$ across, the horizon standing where Minkowski's centre stands.",
+        "Light runs at 45° and null infinity is Minkowski's, but a ray that reaches the left edge carries on into "
+        "flat space the chart does not cover. The dots are the shells of the embedding diagram at $t = 0$.",
+    ],
+    ("supertranslation_hair", "bondi_retarded"): [
+        "The retarded chart on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the field "
+        "$C = \\tfrac{1}{2}\\ell\\left(3\\cos^2\\theta - 1\\right)$, with $\\ell$ any length, drawn by the static chart's "
+        "triangle through $ct = cu + W + \\ell$ and $\\rho = W + \\ell$, with $W = \\sqrt{r^2 + \\sigma^2}$ and "
+        "$\\sigma = -3\\ell/2$ there. The lines of constant $u$ are the outgoing light rays, each from the left edge "
+        "$r = 0$, the supertranslation horizon, to $\\mathscr{I}^+$.",
+    ],
+    ("supertranslation_hair", "bondi_advanced"): [
+        "The advanced chart on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the field "
+        "$C = \\tfrac{1}{2}\\ell\\left(3\\cos^2\\theta - 1\\right)$, with $\\ell$ any length, drawn by the static chart's "
+        "triangle through $ct = cv - W - \\ell$ and $\\rho = W + \\ell$, with $W = \\sqrt{r^2 + \\sigma^2}$ and "
+        "$\\sigma = -3\\ell/2$ there. The lines of constant $v$ are the ingoing light rays, each from "
+        "$\\mathscr{I}^-$ to the left edge $r = 0$, the supertranslation horizon.",
     ],
     ("minkowski", "spherical"): [
         "Minkowski spacetime, each point in the diagram a 2-sphere of radius $r$. With $u = ct - r$ and $v = ct + r$ the metric on the plane of $t$ "
@@ -26385,6 +27431,29 @@ CAPTIONS = {
         "The slicing covers the half above the observer's past horizon, so its $t \\to -\\infty$ "
         "is a null line where the coordinates end, and the spacetime goes on below it.",
     ],
+    ("universe_from_nothing", "closed"): [
+        "The Lorentzian half of the universe from nothing on the upper half of de Sitter's square, from the "
+        "waist $T = 0$ to future infinity, each point in the diagram a 2-sphere. The closed slicing enters as "
+        "$\\tan T = \\sinh(ct/\\ell)$ and $X = \\chi$, and covers the whole half.",
+        "The southern half of the 4-sphere is joined on along the lower edge, where every line of "
+        "constant $t$ is a 3-sphere of radius $\\ell\\cosh(ct/\\ell)$ and the lowest is the waist, of "
+        "radius $\\ell$.",
+    ],
+    ("universe_from_nothing", "scale_factor"): [
+        "The scale factor chart above its join, $\\cos T = \\ell/a$ and $X = \\chi$, each point in the "
+        "diagram a 2-sphere. The join $a = \\ell$ is the lower edge, where the same line element turns "
+        "Riemannian and carries on as the 4-sphere.",
+    ],
+    ("universe_from_nothing", "conformal"): [
+        "The conformal chart, $T = \\eta$ and $X = \\chi$, each point in the diagram a 2-sphere. Its metric is "
+        "the Einstein static universe's times $\\ell^2/\\cos^2\\eta$, which diverges on future infinity "
+        "$\\eta = \\pi/2$.",
+    ],
+    ("universe_from_nothing", "lapse"): [
+        "Feldbrugge, Lehners and Turok's gauge, $\\tan T = ct/\\ell$ and $X = \\chi$, each point in the "
+        "diagram a 2-sphere. Its lines of constant $t$ are those of the closed slicing, with $ct = "
+        "\\ell\\sinh(ct_c/\\ell)$ for the proper time $t_c$ of the closed slicing.",
+    ],
     ("self_creating_universe", "static"): [
         "De Sitter space, the hyperboloid $W^2 + X^2 + Y^2 + Z^2 - V^2 = r_0^2$ in flat space of five dimensions "
         "with coordinates $V, W, X, Y, Z$, each event identified with its images under a boost in the plane of "
@@ -26645,6 +27714,23 @@ CAPTIONS = {
         "On the axis the chart's metric is $-2c\\,dU\\,dV/(1 + \\mu^2c^2U^2)$, conformal to Minkowski's plane, "
         "and the band is the diamond of a Minkowski plane's conformal diagram, two of its sides the lines "
         "$\\mu cu = \\pm\\pi/2$ and the other two on $\\mathscr{I}$.",
+    ],
+    ("bubbling_ads", "global"): [
+        "The black disc, anti-de Sitter space of five dimensions times a 5-sphere of the same radius $L$, its "
+        "universal cover, each point in the diagram a 3-sphere of anti-de Sitter space times the 5-sphere. With "
+        "$\\tan\\chi = \\sinh\\rho$ the metric on the plane of $t$ and $\\rho$ is "
+        "$\\frac{L^2}{\\cos^2\\chi}(-dt^2 + d\\chi^2)$, conformal to the strip $0 \\le \\chi < \\pi/2$.",
+        "The 5-sphere has the one radius $L$ at every event, so the strip is the conformal diagram of anti-de Sitter "
+        "space alone. A radial light ray from the centre reaches the timelike boundary at $t = \\pi/2$ and is back at "
+        "$t = \\pi$.",
+    ],
+    ("bubbling_ads", "rings"): [
+        "The black ring between $r = \\sqrt{2}\\,L^2$ and $r = L^2$ on its axis, through the centre of its white hole, "
+        "each point in the diagram the two 3-spheres. The metric on the plane of $t$ and $y$ is "
+        "$2y\\cosh G\\left(-dt^2 + dy_*^2\\right)$ with $dy_*/dy = 1/(2y\\cosh G)$, conformal to the strip "
+        "$0 \\le y_* < 1.253$ as it stands.",
+        "A light ray along the axis from $y = 0$ reaches the timelike boundary at $t = 1.253$ and is back at "
+        "$t = 2.505$; across the disc of the same black area, $\\pi L^4$, the strip is $\\pi/2$ wide.",
     ],
     ("freund_rubin", "global"): [
         "Anti-de Sitter space of four dimensions times a 7-sphere of radius $2L$, its universal cover, each point "
@@ -27090,6 +28176,25 @@ CAPTIONS = {
         "runs to $-\\infty$ there, and each half of the diamond becomes one exterior of the Schwarzschild "
         "spacetime with the throat its horizon.",
     ],
+    ("interstellar_wormhole", "proper_distance"): [
+        "Interstellar's wormhole ($a = \\rho$, $M = \\rho/2$), each point in the diagram a 2-sphere of radius "
+        "$r(\\ell)$. The metric on the plane of $t$ and $\\ell$ is $-c^2dt^2 + d\\ell^2$, with $\\ell$ over the whole "
+        "line, and $p, q = \\arctan((ct \\mp \\ell)/\\rho)$ bring it into the full diamond.",
+        "The two ends are two asymptotically flat regions, each with its own $i^0$ and $\\mathscr{I}^\\pm$, and the "
+        "cylinder is the band between the mouths, each of which runs from $i^-$ to $i^+$.",
+    ],
+    ("interstellar_wormhole", "cylinder"): [
+        "Interstellar's wormhole ($a = \\rho$), the band between the mouths $\\ell = \\pm a$, each point in the "
+        "diagram a 2-sphere of radius $\\rho$. The metric on the plane of $t$ and $\\ell$ is $-c^2dt^2 + d\\ell^2$, "
+        "and $p, q = \\arctan((ct \\mp \\ell)/\\rho)$ bring it into the diamond.",
+        "Light crosses the band from one mouth to the other in the time $2a/c$.",
+    ],
+    ("interstellar_wormhole", "flare"): [
+        "Interstellar's wormhole ($a = \\rho$, $M = \\rho/2$) beyond the mouth $\\ell = a$, each point in the "
+        "diagram a 2-sphere of radius $r(\\ell)$. The metric on the plane of $t$ and $\\ell$ is "
+        "$-c^2dt^2 + d\\ell^2$, and $p, q = \\arctan((ct \\mp \\ell)/\\rho)$ bring it into the diamond.",
+        "The flare beyond $\\ell = -a$ is its mirror image on the left.",
+    ],
     ("einstein_dirac_maxwell_wormhole", "areal"): [
         "The Einstein-Dirac-Maxwell wormhole ($Q_e = r_0/2$) in the areal radius on one side of the throat, each "
         "point in the diagram a 2-sphere of radius $r$. The metric on the plane of $t$ and $r$ is "
@@ -27488,6 +28593,15 @@ CAPTIONS = {
         "null lines on which the Kretschmann scalar diverges. Every star of the theory has its surface outside "
         "that sphere, so the diagram of a star is Minkowski's triangle, with a regular centre on its edge.",
     ],
+    ("big_rip", "whole"): [
+        "A flat universe of phantom energy at $w = -3/2$, each point in the diagram a 2-sphere. The metric "
+        "$a^2(-d\\eta^2 + dr^2 + r^2d\\Omega^2)$ is conformal to the half $\\eta < 0$ of Minkowski space, which "
+        "$p, q = \\arctan((\\eta \\mp r)/\\eta_0)$ bring into a triangle, the lower half of Minkowski space's "
+        "diagram [chiba2005].",
+        "The Big Rip is the straight line $T = 0$ and is spacelike, a finite proper time away from every observer. "
+        "The observer at $r = 0$ receives light only from below the ray into the corner where its world line meets "
+        "the rip, its event horizon, whose proper radius $3c(-t)/7$ shrinks to nothing at $t = 0$ [chiba2005].",
+    ],
     ("frw", "flat"): [
         "A flat universe of dust, each point in the diagram a 2-sphere. With $k = 0$, $G^r{}_r = 0$ gives $a \\propto \\eta^2$, and the metric "
         "$a^2(-d\\eta^2 + dr^2 + r^2d\\Omega^2)$ is conformal to the half $\\eta > 0$ of Minkowski "
@@ -27547,6 +28661,36 @@ CAPTIONS = {
     ("semiclosed_world", "isotropic"): [
         "A semiclosed world ($\\chi_0 = 3\\pi/4$), each point in the diagram a 2-sphere, with the exterior ruled in $t$ and the isotropic radius $r$. These coordinates cover both sheets together, the far one where $r > r_s/4$ and the one behind the throat where $r < r_s/4$, and each line of constant $t$ runs through the bifurcation sphere from one to the other.",
         "The time $t$ is a single static coordinate, so behind the throat it increases toward the past, and the lines of constant $t$ that rise on the right fall on the left.",
+    ],
+    ("black_to_white_hole", "interior"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "The null coordinates $u$ and $v$ cover the flat space inside both shells, the inside of the past and future light cones of the bounce.",
+    ],
+    ("black_to_white_hole", "kruskal"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "Kruskal's $U$ and $V$ cover each flap, the second as the mirror image of the first, and in Kruskal's own spacetime the two overlap in a sliver about $U + V = 0$ beside $\\Delta$.",
+    ],
+    ("black_to_white_hole", "schwarzschild"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "Schwarzschild's $t$ and $r$ cover each flap outside its apparent horizon, where $t$ runs to $\\pm\\infty$ along $r_s$.",
+    ],
+    ("black_to_white_hole", "painleve_gullstrand_ingoing"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "The ingoing Painlevé-Gullstrand $t$ and $r$ cover the flap before the bounce, through its apparent horizon and the trapped region behind it.",
+    ],
+    ("black_to_white_hole", "painleve_gullstrand_outgoing"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "The outgoing Painlevé-Gullstrand $t$ and $r$ cover the flap after the bounce, through the apparent horizon of the white hole and the region behind it.",
+    ],
+    ("black_to_white_hole", "lemaitre"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "Lemaître's $\\tau$ and $\\rho$ cover the flap before the bounce, through its apparent horizon and the trapped region behind it.",
     ],
     ("white_hole", "burst"): [
         "A spherically symmetric distribution of dust that leaves a singularity, comes to rest ($R_0 = 2\\,r_s$), "
@@ -27852,6 +28996,17 @@ CAPTIONS = {
         "affine parameter, and the fluid reaches $t \\to \\pm\\infty$ only after an infinite proper time. The Kretschmann "
         "scalar is finite on the whole half plane and greatest at the marked event, where it is $792\\,a^4$.",
     ],
+    ("lqc_bounce", "comoving"): [
+        "The bounce of loop quantum cosmology, each point in the diagram a 2-sphere. The metric is "
+        "$a^2(-d\\eta^2 + dr^2 + r^2d\\Omega^2)$ with the conformal time $\\eta = \\int c\\,dt/a$, which runs over the "
+        "whole real line, so $p, q = \\arctan((\\eta \\mp r)/ct_b)$ bring the universe onto the whole of Minkowski's "
+        "half diamond, with past and future null infinity for its edges.",
+        "The classical universe of a massless scalar field fills the upper half alone, with its big bang along "
+        "$T = 0$. Here the line $T = 0$ is the bounce, a regular moment where the Kretschmann scalar is "
+        "$4/3c^4t_b^4$, its greatest value, and every comoving world line and every light ray crosses it. The "
+        "moments of constant $t$ crowd toward the bounce, since $\\eta$ grows only as the $2/3$ power of $t$ far "
+        "from it.",
+    ],
     ("kopczynski_trautman", "comoving"): [
         "Kopczyński and Trautman's universe, each point in the diagram a 2-sphere. The metric is "
         "$a^2(-d\\eta^2 + dr^2 + r^2d\\Omega^2)$ with the conformal time $\\eta = \\int c\\,dt/a$, which runs "
@@ -27868,6 +29023,15 @@ CAPTIONS = {
         "since the two metrics differ by the factor $a^2$ alone.",
         "A ray that leaves $\\mathscr{I}^-$ crosses the turn and reaches $\\mathscr{I}^+$. The past light cone of "
         "any event widens without limit toward the past, so it meets the world line of every grain of dust.",
+    ],
+    ("poincare_dodecahedral", "near"): [
+        "Luminet's universe along the line from us to the centre of a face of our cell, each point in the diagram a "
+        "2-sphere. The metric on the plane is $a^2(-d\\eta^2 + d\\chi^2)$, so the drawing is the plane itself: the "
+        "cell runs from $\\chi = -\\pi/10$ to $\\pi/10$, and the two faces are one face, since what leaves "
+        "through one comes back in through the other.",
+        "The cosmological constant makes the conformal time finite, so future infinity is the spacelike line "
+        "$\\eta = 0.5168$. Our past light cone crosses the faces before it reaches the last scattering, and the "
+        "light we send today reaches future infinity at $\\chi = \\pm 0.128$, inside our own cell.",
     ],
     ("small_universes", "torus"): [
         "The plane of $t$ and $x$ of a torus of dust, each point in the diagram a 2-torus of area $a^2L^2$. The "
