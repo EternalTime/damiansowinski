@@ -1,0 +1,3022 @@
+{
+  "id": "lqc_bounce",
+  "name": "Big Bounce of Loop Quantum Cosmology",
+  "short_name": "Big Bounce",
+  "description": "The flat universe of a massless scalar field as loop quantum cosmology has it, in which the big bang is replaced by a bounce: the universe contracts to a greatest density, about 0.41 of the Planck density, and expands again. Abhay Ashtekar, Tomasz Pawlowski, and Parampreet Singh found the bounce in 2006, and its effective spacetime is a flat Friedmann universe whose scale factor is $(1 + t^2/t_b^2)^{1/6}$.",
+  "tags": [
+    "loop quantum cosmology",
+    "loop quantum gravity",
+    "quantum gravity",
+    "bounce",
+    "big bang",
+    "no singularity",
+    "superinflation",
+    "cosmology",
+    "expanding universe",
+    "FLRW",
+    "homogeneous",
+    "isotropic",
+    "scalar field",
+    "massless scalar field",
+    "minimally coupled scalar field",
+    "stiff fluid",
+    "time-dependent",
+    "Lorentzian",
+    "four-dimensional",
+    "idealized model",
+    "conformally flat",
+    "spherically symmetric"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The bounce time is $t_b = 1/\\sqrt{24\\pi G\\rho_c}$, with $\\rho_c$ the critical density of loop quantum cosmology. We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+  "history": "In loop quantum gravity area comes in pieces, and the smallest piece that is not zero is about two and a half times the square of the Planck length [ashtekar2008robust, ashtekar2009bianchi]. Martin Bojowald, at Penn State, carried that graininess into a universe that is the same everywhere and in every direction, and found that one over its size stays finite even at zero volume, where Einstein's theory sends it to infinity [bojowald2001]. Time in his universe moves in discrete steps, and the steps carry it through zero volume without stopping [bojowald2001]. In his words, \"space-time can be extended to a branch preceding the classical singularity independently of the matter coupled to the model\" [bojowald2001]. As the universe passes through zero volume its triad, three directions that measure space like the thumb and first two fingers of a hand, changes from one hand to the other [bojowald2001, ashtekar2006bounce].¶Johannes Brunnemann and Thomas Thiemann objected that an evolution equation which runs through zero volume does not by itself show that the singularity is gone, since it is phrased in no quantity anyone could observe [brunnemann2006]. Abhay Ashtekar, Tomasz Pawlowski, and Parampreet Singh, also at Penn State, asked what lay on the other side: \"is there just a quantum foam far removed from any classical space-time, or, is there another large, classical universe?\" [ashtekar2006bounce]. They made the scalar field the clock, since it only ever moves one way in a classical solution, built a quantum state that looks like a large classical universe at late times, and ran it backwards [ashtekar2006bounce]. The Wheeler-DeWitt equation of the older quantum cosmology carries such a state along the classical universe and into the big bang [ashtekar2006bounce]. Loop quantum cosmology carries it along until the density is enormous, and there the state bounces onto a universe that had been contracting [ashtekar2006bounce]. The answer was the second, and the quantum geometry between the two is \"a 'quantum bridge' between large classical universes, one contracting and the other expanding\" [ashtekar2006bounce].¶That first dynamics had a flaw: the more classical the state, the lower the density at its bounce, and for states that were perfectly reasonable the bounce could come at the density of water [ashtekar2006improved, ashtekar2008robust]. The cure lay in curvature, which is how far a vector turns when carried round a small loop, divided by the loop's area, as the loop shrinks to nothing [ashtekar2006improved]. Quantum geometry lets the loop shrink only as far as the smallest area [ashtekar2006improved]. In the second version of the dynamics, circulated in July 2006, the loop stops where its area, measured with the physical metric, reaches that smallest area, and the bounce comes \"precisely when the matter density enters the Planck regime\" whatever the state [ashtekar2006improved]. The effective equation of the expansion is then Friedmann's equation multiplied on its right by $1 - \\rho/\\rho_c$, $$H^2 = \\frac{8\\pi G}{3}\\rho\\left(1 - \\frac{\\rho}{\\rho_c}\\right),$$ with $H$ the rate of expansion, $\\rho$ the density of the scalar field, and $\\rho_c$ a critical density of the order of the Planck density [ashtekar2006improved]. While the density is small the factor is close to one and Einstein's theory returns, and as $\\rho$ climbs to $\\rho_c$ the rate of expansion falls to nought and the universe turns round [ashtekar2006improved].¶With Alejandro Corichi, Ashtekar and Singh took the scalar field for the clock already in the classical theory, and the model became exactly soluble [ashtekar2008robust]. Solved the same way, the Wheeler-DeWitt theory sends the volume of a dense set of states to zero in the distant past or future [ashtekar2008robust]. In loop quantum cosmology the volume of a dense set of states has a least value and grows without bound both ways, so the bounce is generic [ashtekar2008robust]. For every state the volume runs exactly as $V_{\\rm min}\\cosh(\\sqrt{12\\pi G}\\,\\phi)$, with $\\phi$ the scalar field counted from the bounce, the same forwards as backwards [ashtekar2008robust]. The density has an absolute upper bound on every physical state, equal to the critical density at which the bounces of 2006 had come [ashtekar2008robust]. Ashtekar and Edward Wilson-Ewing argued in 2009 that a homogeneous universe has to use twice the smallest area, which halves the critical density to about 0.41 of the Planck density [ashtekar2009bianchi, ashtekar2011status].¶How far can one trust a smooth spacetime through the bounce itself? The quantum state keeps to the effective equation right through the bounce, where the approximations behind that equation fail, an \"unreasonable efficacy\" Ashtekar, Pawlowski, and Singh found \"somewhat mysterious\" [ashtekar2006improved]. With a massless scalar field the effective spacetime is a flat Friedmann universe whose scale factor is in closed form, $$a(t) = \\left(1 + 24\\pi G\\rho_c t^2\\right)^{1/6},$$ one at the bounce, with $t$ the proper time of observers at rest in the expanding space [cai2014]. Far from $t = 0$ it grows as $|t|^{1/3}$, as the classical universe filled with a fluid whose pressure equals its density does, once on each side, and at $t = 0$ the density is $\\rho_c$ and the expansion stops [cai2014, ashtekar2006improved]. Just after the bounce the expansion speeds up, a short burst of superinflation that Singh found whenever the density lies between $\\rho_c/2$ and $\\rho_c$ [singh2006, ashtekar2011status]. The rate of expansion is greatest at half the critical density, about 0.93 per Planck time, and the curvature stays finite through the whole bounce [ashtekar2011status].¶A universe on a Randall-Sundrum brane obeys a Friedmann equation with a term in $\\rho^2$ too, with a plus sign where loop quantum cosmology has a minus, and Singh worked out the dualities between the two [singh2006]. Ashtekar and Wilson-Ewing carried the improved dynamics to universes that expand at different rates in different directions, and found the big bang resolved there too, with physics at the Planck scale \"much richer than in the isotropic case\" [ashtekar2009bianchi]. Ashtekar and Bojowald took the same quantum geometry inside the horizon of Schwarzschild's black hole [ashtekar2006]. Ashtekar, Pawlowski, and Singh were plain about what is missing: the equation that drives the quantum universe, its Hamiltonian constraint, \"is not systematically derived from the full theory\" [ashtekar2006improved].",
+  "related": [
+    {
+      "id": "frw",
+      "kind": "generalisation",
+      "text": "Friedmann's universe with any scale factor. Flat space and $a = (1 + t^2/t_b^2)^{1/6}$ make it this one, and with Einstein's equations the same scalar field drives it out of a big bang [ashtekar2006improved, cai2014]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "family",
+      "text": "A ball of dust whose inside obeys the same bouncing Friedmann equation, with the vacuum outside it fixed by the junction conditions [lewandowski2023]."
+    },
+    {
+      "id": "kasner_scalar",
+      "kind": "family",
+      "text": "The classical universe of a massless scalar field when it expands at different rates in different directions. Ashtekar and Wilson-Ewing carried loop quantum cosmology to it, and its big bang gives way too [ashtekar2009bianchi]."
+    },
+    {
+      "id": "senovilla",
+      "kind": "family",
+      "text": "A universe of radiation with no singularity in Einstein's theory, whose greatest density can be chosen as large or small as one likes [chinea1992]."
+    },
+    {
+      "id": "randall_sundrum",
+      "kind": "family",
+      "text": "A universe on Randall and Sundrum's brane obeys a Friedmann equation with a term in $\\rho^2$ as well, with the opposite sign [singh2006]."
+    },
+    {
+      "id": "kantowski_sachs",
+      "kind": "programme",
+      "text": "The homogeneous slices inside Schwarzschild's horizon, where Ashtekar and Bojowald took the same quantum geometry [ashtekar2006]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "family",
+      "text": "A black hole whose singularity gives way to a bounce into a new universe, a geometry Simpson and Visser wrote down by hand and called a black bounce [simpson2019]."
+    },
+    {
+      "id": "hayward",
+      "kind": "family",
+      "text": "Hayward's minimal model of a black hole with no singularity at its centre [hayward2006]."
+    }
+  ],
+  "references": [
+    "ashtekar2008robust",
+    "ashtekar2009bianchi",
+    "bojowald2001",
+    "ashtekar2006bounce",
+    "brunnemann2006",
+    "ashtekar2006improved",
+    "ashtekar2011status",
+    "cai2014",
+    "singh2006",
+    "ashtekar2006",
+    "lewandowski2023",
+    "chinea1992",
+    "simpson2019",
+    "hayward2006"
+  ],
+  "coordinates": [
+    {
+      "id": "cosmic",
+      "name": "Cosmic Time",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "t_b",
+          "description": "Bounce time, $t_b = 1/\\sqrt{24\\pi G\\rho_c}$, with $\\rho_c = \\sqrt{3}\\,c^5/32\\pi^2\\gamma^3G^2\\hbar$ the critical density, about $0.41$ of the Planck density for the Barbero-Immirzi parameter $\\gamma \\approx 0.24$, which makes $t_b$ about a fifth of the Planck time"
+        },
+        {
+          "symbol": "a = \\left(1 + t^2/t_b^2\\right)^{1/6}",
+          "description": "Scale factor, a pure number that is one at the bounce $t = 0$ and grows as $|t/t_b|^{1/3}$ far from it"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of the comoving observers and $x$, $y$, and $z$ comoving lengths, the distances between those observers at the bounce. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "a^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{a^2\\left(3t_b^2 - 2t^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(3t_b^2 - 2t^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{a^2\\left(3t_b^2 - 2t^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(3t_b^2 - 2t^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{a^2\\left(3t_b^2 - 2t^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(3t_b^2 - 2t^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{t^2\\,a^4}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2t^2 - 3t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{3a^4\\,c^2\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{3a^4\\,c^2\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{3a^4\\,c^2\\left(t_b^2 + t^2\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3t_b^2 - 2t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2t^2 - 3t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{t_b^2}{3a^2\\,c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{t_b^2}{3a^2\\,c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{t_b^2}{3a^2\\,c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{6t_b^2 - 2t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}",
+      "kretschmann": "K = \\dfrac{36t_b^4 - 48t_b^2\\,t^2 + 20t^4}{27c^4\\left(t_b^2 + t^2\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{a^2\\left(t^2 - 2t_b^2\\right)}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{a^2\\left(t^2 - 2t_b^2\\right)}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{a^2\\left(t^2 - 2t_b^2\\right)}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3a^2\\,c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3a^2\\,c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3a^2\\,c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}\\dot{x}^2 + \\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}\\dot{y}^2 + \\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}\\dot{z}^2 = 0",
+        "\\ddot{x} + \\dfrac{2t}{3c\\left(t_b^2 + t^2\\right)}\\dot{t}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{2t}{3c\\left(t_b^2 + t^2\\right)}\\dot{t}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{2t}{3c\\left(t_b^2 + t^2\\right)}\\dot{t}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "comoving_spherical",
+      "name": "Comoving Spherical",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in [0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "t_b",
+          "description": "Bounce time, $t_b = 1/\\sqrt{24\\pi G\\rho_c}$, with $\\rho_c = \\sqrt{3}\\,c^5/32\\pi^2\\gamma^3G^2\\hbar$ the critical density, about $0.41$ of the Planck density for the Barbero-Immirzi parameter $\\gamma \\approx 0.24$, which makes $t_b$ about a fifth of the Planck time"
+        },
+        {
+          "symbol": "a = \\left(1 + t^2/t_b^2\\right)^{1/6}",
+          "description": "Scale factor, a pure number that is one at the bounce $t = 0$ and grows as $|t/t_b|^{1/3}$ far from it"
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ the proper time of the comoving observers and $r$ the comoving radius, a length, the distance from the centre at the bounce. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "a^2\\,r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\,r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{a^2\\,r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{a^2\\,r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t\\,a^2\\,r^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{t\\,a^2\\,r^2\\sin^2\\theta}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{t}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{t\\,a^2\\,r^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t\\,a^2\\,r^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{t\\,a^2\\,r^2}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{t\\,a^2\\,r^2\\sin^2\\theta}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{t\\,a^2\\,r^2\\sin^2\\theta}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{t\\,a^2\\,r^2\\sin^2\\theta}{3c\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "a^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "a^2\\,r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\,r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\,r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\left(3t_b^2 - 2t^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(3t_b^2 - 2t^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\,r^2\\left(3t_b^2 - 2t^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\,r^2\\left(3t_b^2 - 2t^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,r^2\\left(3t_b^2 - 2t^2\\right)\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\,r^2\\left(3t_b^2 - 2t^2\\right)\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{3t_b^2 - 2t^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t^2\\,a^2\\,r^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2\\,r^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2\\,r^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t^2\\,a^2\\,r^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{t^2\\,a^2\\,r^2\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2\\,r^2\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{t^2\\,a^2\\,r^2\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2\\,r^2\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{t^2\\,a^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\,r^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\,r^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\,r^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,r^2\\left(2t^2 - 3t_b^2\\right)}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,r^2\\left(2t^2 - 3t_b^2\\right)\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\,r^2\\left(2t^2 - 3t_b^2\\right)\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,r^2\\left(2t^2 - 3t_b^2\\right)\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,r^2\\left(2t^2 - 3t_b^2\\right)\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t^2\\,a^4\\,r^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4\\,r^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4\\,r^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{t^2\\,a^4\\,r^2}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{t^2\\,a^4\\,r^2\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4\\,r^2\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4\\,r^2\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{t^2\\,a^4\\,r^2\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{t^2\\,a^4\\,r^4\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4\\,r^4\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{t^2\\,a^4\\,r^4\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t^2\\,a^4\\,r^4\\sin^2\\theta}{9c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2t^2 - 3t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{3a^4\\,c^2\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^2}{3a^4\\,c^2\\left(t_b^2 + t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\sin^2\\theta}{3a^4\\,c^2\\left(t_b^2 + t^2\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3t_b^2 - 2t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2t^2 - 3t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{t_b^2}{3a^2\\,c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t_b^2}{3a^2\\,c^2\\,r^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{t_b^2\\csc^2\\theta}{3a^2\\,c^2\\,r^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{6t_b^2 - 2t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}",
+      "kretschmann": "K = \\dfrac{36t_b^4 - 48t_b^2\\,t^2 + 20t^4}{27c^4\\left(t_b^2 + t^2\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\left(t^2 - 2t_b^2\\right)}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\,r^2\\left(t^2 - 2t_b^2\\right)}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,r^2\\left(t^2 - 2t_b^2\\right)\\sin^2\\theta}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3a^2\\,c^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{t^2 - 2t_b^2}{3a^2\\,c^2\\,r^2\\left(t_b^2 + t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(t^2 - 2t_b^2\\right)\\csc^2\\theta}{3a^2\\,c^2\\,r^2\\left(t_b^2 + t^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{t\\,a^2}{3c\\left(t_b^2 + t^2\\right)}\\dot{r}^2 + \\dfrac{t\\,a^2\\,r^2}{3c\\left(t_b^2 + t^2\\right)}\\dot{\\theta}^2 + \\dfrac{t\\,a^2\\,r^2\\sin^2\\theta}{3c\\left(t_b^2 + t^2\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{r} + \\dfrac{2t}{3c\\left(t_b^2 + t^2\\right)}\\dot{t}\\dot{r} - r\\,\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2t}{3c\\left(t_b^2 + t^2\\right)}\\dot{t}\\dot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2t}{3c\\left(t_b^2 + t^2\\right)}\\dot{t}\\dot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "harmonic",
+      "name": "Harmonic Time",
+      "coords": [
+        "\\tau",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "\\tau \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "t_b",
+          "description": "Bounce time, $t_b = 1/\\sqrt{24\\pi G\\rho_c}$, with $\\rho_c = \\sqrt{3}\\,c^5/32\\pi^2\\gamma^3G^2\\hbar$ the critical density, about $0.41$ of the Planck density for the Barbero-Immirzi parameter $\\gamma \\approx 0.24$, which makes $t_b$ about a fifth of the Planck time"
+        },
+        {
+          "symbol": "a = \\cosh^{1/3}(\\tau/t_b)",
+          "description": "Scale factor, a pure number that is one at the bounce $\\tau = 0$"
+        }
+      ],
+      "convention": "We use the harmonic time $\\tau$, which runs in step with the scalar field and is related to the cosmic time by $t = t_b\\sinh(\\tau/t_b)$, and the comoving lengths $x$, $y$, and $z$. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+      "line_element": "ds^2 = -a^6c^2d\\tau^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-a^6"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "a^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-\\dfrac{1}{a^6}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{t_b\\,a^3\\,c}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^7\\,c}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^7\\,c}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^7\\,c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^3\\,c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^3\\,c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^3\\,c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^3\\,c}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^3\\,c}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^3\\,c}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{a^3\\sinh(\\tau/t_b)}{t_b\\,c}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a\\,c}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a\\,c}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a\\,c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a\\,c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a\\,c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a\\,c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a\\,c}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a\\,c}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a\\,c}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{5 - 2a^6}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{5 - 2a^6}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{5 - 2a^6}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{5 - 2a^6}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{5 - 2a^6}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{5 - 2a^6}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{5 - 2a^6}{9t_b^2\\,a^6\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{5 - 2a^6}{9t_b^2\\,a^6\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{5 - 2a^6}{9t_b^2\\,a^6\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{5 - 2a^6}{9t_b^2\\,a^6\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{5 - 2a^6}{9t_b^2\\,a^6\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{5 - 2a^6}{9t_b^2\\,a^6\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^{10}\\,c^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "-\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2a^6 - 5}{9t_b^2\\,a^4\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{9t_b^2\\,a^8\\,c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2a^6 - 5}{3t_b^2\\,a^6\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{3t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{3t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{3t_b^2\\,a^{10}\\,c^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{5 - 2a^6}{3t_b^2\\,a^{12}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{3t_b^2\\,a^{12}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{3t_b^2\\,a^{12}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{3t_b^2\\,a^{12}\\,c^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2a^6 - 5}{3t_b^2\\,a^{18}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{3t_b^2\\,a^{14}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{3t_b^2\\,a^{14}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{3t_b^2\\,a^{14}\\,c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{2\\left(a^3 - 2\\right)\\left(a^3 + 2\\right)}{3t_b^2\\,a^{12}\\,c^2}",
+      "kretschmann": "K = \\dfrac{20a^{12} - 88a^6 + 104}{27t_b^4\\,a^{24}\\,c^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{3t_b^2\\,a^6\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{a^6 - 3}{3t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{a^6 - 3}{3t_b^2\\,a^{10}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{a^6 - 3}{3t_b^2\\,a^{10}\\,c^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\sinh^2(\\tau/t_b)}{3t_b^2\\,a^{12}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{a^6 - 3}{3t_b^2\\,a^{12}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{a^6 - 3}{3t_b^2\\,a^{12}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{a^6 - 3}{3t_b^2\\,a^{12}\\,c^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\sinh^2(\\tau/t_b)}{3t_b^2\\,a^{18}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{a^6 - 3}{3t_b^2\\,a^{14}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{a^6 - 3}{3t_b^2\\,a^{14}\\,c^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{a^6 - 3}{3t_b^2\\,a^{14}\\,c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} + \\dfrac{\\sinh(\\tau/t_b)}{t_b\\,a^3\\,c}\\dot{\\tau}^2 + \\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^7\\,c}\\dot{x}^2 + \\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^7\\,c}\\dot{y}^2 + \\dfrac{\\sinh(\\tau/t_b)}{3t_b\\,a^7\\,c}\\dot{z}^2 = 0",
+        "\\ddot{x} + \\dfrac{2\\sinh(\\tau/t_b)}{3t_b\\,a^3\\,c}\\dot{\\tau}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{2\\sinh(\\tau/t_b)}{3t_b\\,a^3\\,c}\\dot{\\tau}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{2\\sinh(\\tau/t_b)}{3t_b\\,a^3\\,c}\\dot{\\tau}\\dot{z} = 0"
+      ]
+    }
+  ]
+}

@@ -141,6 +141,11 @@
       "id": "big_rip",
       "kind": "special_case",
       "text": "Flat space filled with phantom energy alone, with $w = p/\\rho c^2 < -1$, whose scale factor reaches infinity at a finite time, the Big Rip [caldwell2003, chiba2005]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "special_case",
+      "text": "The flat universe of a massless scalar field as loop quantum cosmology has it, $a = (1 + t^2/t_b^2)^{1/6}$, which bounces where Einstein's equations put a big bang [cai2014, ashtekar2006improved]."
     }
   ],
   "references": [
@@ -209,7 +214,9 @@
     "luminet2003",
     "vilenkin1982",
     "caldwell2003",
-    "chiba2005"
+    "chiba2005",
+    "cai2014",
+    "ashtekar2006improved"
   ],
   "coordinates": [
     {

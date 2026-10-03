@@ -66,6 +66,11 @@
       "id": "mass_inflation",
       "kind": "family",
       "text": "The growth of the mass at an inner horizon. Husain, Kelly, Santacruz, and Wilson-Ewing found none at the inner horizons of their quantum collapse of dust [husain2022]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "The whole universe bouncing, filled with a massless scalar field, the setting where Ashtekar, Pawlowski, and Singh found the bouncing Friedmann equation [ashtekar2006improved]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "gambini2020",
     "husain2022",
     "bonanno2024",
-    "hayward2006"
+    "hayward2006",
+    "ashtekar2006improved"
   ],
   "coordinates": [
     {

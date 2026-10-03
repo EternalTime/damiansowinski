@@ -88,6 +88,11 @@
       "id": "big_rip",
       "kind": "family",
       "text": "A universe filled with phantom energy, the kind of scalar field that holds up this bounce, which pulls the universe apart at a finite time [caldwell2002, caldwell2003]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "A bounce of a whole universe, which loop quantum cosmology puts where the big bang was [ashtekar2006bounce]."
     }
   ],
   "references": [
@@ -111,7 +116,8 @@
     "ansoldi2008",
     "hayward2006",
     "caldwell2002",
-    "caldwell2003"
+    "caldwell2003",
+    "ashtekar2006bounce"
   ],
   "coordinates": [
     {
