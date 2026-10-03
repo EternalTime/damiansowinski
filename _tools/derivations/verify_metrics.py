@@ -147,6 +147,8 @@ each time it is taken, since the bodies that make the potentials move slowly.
 """
 
 import argparse
+import functools
+import inspect
 import json
 import re
 import signal
@@ -154,6 +156,7 @@ import sys
 from pathlib import Path
 
 import sympy as sp
+from sympy.polys import compatibility, factortools
 from sympy.polys.polyerrors import BasePolynomialError
 from sympy.polys.rings import PolyRing
 from sympy.parsing.sympy_parser import (
@@ -162,6 +165,37 @@ from sympy.parsing.sympy_parser import (
     split_symbols_custom,
     standard_transformations,
 )
+
+# The seed every factorisation of a polynomial in several variables draws its evaluation points
+# from. sympy factors such a polynomial by Wang's algorithm, which lifts the factors of the
+# polynomial at a point chosen at random, and draws that point from a generator seeded from the
+# operating system when sympy is imported, so the time one factorisation takes changed from run
+# to run, whatever PYTHONHASHSEED was. On 2 October 2026 the same tensor of Brill's charged
+# Taub-NUT took 2 seconds in one run and over 800 in another, in the Christoffel symbols, the
+# Riemann tensor or the geodesics. Drawn from this seed, each polynomial is lifted at the same
+# points in every run, whatever was factored before it, so a chart prints in the same time each
+# time; the factors are unique, so no printed value changes.
+WANG_SEED = 0
+
+
+def _seeded(wang):
+    """Wang's algorithm with its points drawn from WANG_SEED wherever the caller names no seed.
+    sympy calls it again with a larger modulus when a choice of points fails, and that call is
+    seeded the same way, through the module's name."""
+    if "seed" not in inspect.signature(wang).parameters:
+        raise ImportError("sympy's dmp_zz_wang takes no seed, so its factorisations cannot be seeded")
+
+    @functools.wraps(wang)
+    def seeded(f, u, K, mod=None, seed=None):
+        return wang(f, u, K, mod=mod, seed=WANG_SEED if seed is None else seed)
+    seeded.seeded = True
+    return seeded
+
+
+if not getattr(factortools.dmp_zz_wang, "seeded", False):
+    factortools.dmp_zz_wang = _seeded(factortools.dmp_zz_wang)
+    # The ring's own method calls the name it imported.
+    compatibility.dmp_zz_wang = factortools.dmp_zz_wang
 
 ROOT = Path(__file__).resolve().parents[2]
 METRICS_DIR = ROOT / "MFS" / "assets" / "data" / "metrics"

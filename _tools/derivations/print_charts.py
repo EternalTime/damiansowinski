@@ -10240,8 +10240,9 @@ class KerrTaubNutForms(KerrDeSitterForms):
         difference, and the rest as Kerr-de Sitter's are."""
         powers = {}
         number = sp.Integer(1)
-        # The generators are named in one order, so that the factoring takes the same course, and the
-        # same time, whatever order a run's hashes would have put them in.
+        # The generators are named in one order, so that the factoring takes the same course in every
+        # run. A run once took forty minutes where others took six, which was put down to the order;
+        # it was the random points of sympy's factoring, which verify_metrics.py seeds (WANG_SEED).
         gens = [g for g in (self.r, self.C, self.s, self.a, self.l, self.m, self.P, self.chi, self.Delta)
                 if value.has(g)]
         for f in sp.Mul.make_args(sp.factor(value, *gens)):
@@ -10589,9 +10590,10 @@ class BrillForms:
         C, s = self.C, self.s
         out = sp.Integer(1)
         powers = {}
-        # The generators are named in one order: left to choose, sympy orders them by the run's
-        # hashes, and under some orders one Weyl component of Brill's universe did not factor in
-        # twenty minutes, where under this order every chart prints in about ten seconds.
+        # The generators are named in one order, so that the factoring takes the same course in every
+        # run. One Weyl component of Brill's universe once did not factor in twenty minutes, which was
+        # put down to the order; it was the random points of sympy's factoring, which
+        # verify_metrics.py seeds (WANG_SEED).
         gens = [g for g in (self.x, C, s, self.m, self.l, self.q) if sp.together(value).has(g) or g is C]
         for f in sp.Mul.make_args(sp.factor(self.in_cosine(sp.together(value)), *gens)):
             base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
