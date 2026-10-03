@@ -83,6 +83,11 @@
       "id": "hayward",
       "kind": "family",
       "text": "A regular black hole with a centre and a core of de Sitter space. Simpson and Visser counted Hayward's among the traditional regular black holes, which close over a regular centre where theirs opens through a throat [simpson2019, hayward2006]."
+    },
+    {
+      "id": "big_rip",
+      "kind": "family",
+      "text": "A universe filled with phantom energy, the kind of scalar field that holds up this bounce, which pulls the universe apart at a finite time [caldwell2002, caldwell2003]."
     }
   ],
   "references": [
@@ -104,7 +109,9 @@
     "riaz2022",
     "damour2007",
     "ansoldi2008",
-    "hayward2006"
+    "hayward2006",
+    "caldwell2002",
+    "caldwell2003"
   ],
   "coordinates": [
     {

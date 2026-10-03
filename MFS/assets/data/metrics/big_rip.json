@@ -1,0 +1,3157 @@
+{
+  "id": "big_rip",
+  "name": "Big Rip Universe",
+  "short_name": "Big Rip",
+  "description": "A flat Friedmann universe filled with phantom energy, whose pressure is more negative than minus its energy density. The density grows as space expands, and the scale factor reaches infinity at a finite time, the Big Rip, pulling apart every bound system on the way.",
+  "tags": [
+    "cosmology",
+    "expanding universe",
+    "homogeneous",
+    "isotropic",
+    "FLRW",
+    "phantom field",
+    "perfect fluid",
+    "equation of state",
+    "energy condition violation",
+    "exotic matter",
+    "curvature singularity",
+    "spacelike singularity",
+    "event horizon",
+    "causal structure",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model",
+    "four-dimensional",
+    "conformally flat",
+    "spherically symmetric"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "In 2003 Robert R. Caldwell, Marc Kamionkowski, and Nevin N. Weinberg worked out the end of a universe filled with phantom energy, with $w = p/\\rho c^2 = -3/2$: clusters of galaxies erased a billion years before the end, the Milky Way sixty million years before, the solar system unbound three months before, the Earth exploding thirty minutes before, and atoms torn apart $10^{-19}$ seconds before [caldwell2003]. Phantom energy grows denser as the universe expands, since its pressure $p$ is more negative than minus its energy density $\\rho c^2$ [caldwell2003]. The expansion speeds up with it, and the scale factor reaches infinity a finite time from now, about 22 billion years for $w = -3/2$ and a Hubble rate of $70$ km/s/Mpc today [caldwell2003]. They named that moment the Big Rip, and wrote that the slogan of \"cosmic futurologists\", Robert Frost's \"Some say the world will end in fire, Some say in ice\", would have to change, \"for a new fate may await our world\" [caldwell2003, nojiri2005].¶The phantom itself is four years older, the work of Caldwell alone at Dartmouth College in August 1999 [caldwell2002]. Most observations of the day allowed every equation of state right down to $w = -1$, the cosmological constant, and Caldwell asked \"what lies on the other side of this boundary\" [caldwell2002]. He called the new component a phantom, \"something which is apparent to the sight or other senses but has no corporeal existence\" [caldwell2002]. His toy model is a scalar field with the sign of its kinetic term switched, so that the field runs up its potential toward larger energy [caldwell2002]. Its scale factor already diverges at a finite time: for $w = -3$, in a universe ruled by matter until a time $t_m$, at $t = 3t_m/2$ [caldwell2002].¶That December the same ending turned up on a list of possible futures drawn up by Alexei A. Starobinsky, at the Landau Institute in Moscow: \"hitting a space-time singularity during an expansion phase\" [starobinsky2000]. For a constant $w < -1$ he worked out how long the universe has left, and with the bound $w > -1.5$ from the supernovae he found more than 22 billion years [starobinsky2000]. The name Big Smash came from Brett McInnes, at the National University of Singapore, in 2002: \"Instead of suffering a 'crunch', the universe is 'smashed'\" [mcinnes2002]. He also built phantom universes that escape it, with a $w$ that changes in time, which settle into de Sitter space at late times [mcinnes2002].¶Why would a phantom tear apart a solar system that a cosmological constant leaves alone? In general relativity the pull of gravity comes from the density plus three times the pressure, and a planet on an orbit of radius $R$ about a star of mass $M$ comes loose roughly when $-(4\\pi/3)(\\rho + 3p)R^3 \\simeq M$, in units with $G = c = 1$ [caldwell2003]. For $w \\geq -1$ the left side only shrinks as the universe expands, so whatever is bound today stays bound [caldwell2003]. For a phantom it grows without limit, and every bound system comes apart a time $P\\sqrt{2|1 + 3w|}/(6\\pi|1 + w|)$ before the end, with $P$ the period of its orbit, whatever the Hubble rate and the amount of matter [caldwell2003]. The horizon closes in at the same time, and two points farther apart than $3c\\,\\delta t\\,(1 + w)/(1 + 3w)$ a time $\\delta t$ before the end can no longer signal each other [caldwell2003].¶In a survey of the futures of universes with dark energy in 2005, Takeshi Chiba, Ryuichi Takahashi, and Naoshi Sugiyama drew the conformal diagram [chiba2005]. With phantom energy alone it is the lower half of Minkowski space's diagram, as de Sitter space's is, with the Big Rip along its top edge at future spacelike infinity [chiba2005]. Every observer has an event horizon, and with the rip at $t = 0$ its proper radius $3(1 + w)(-ct)/(1 + 3w)$ shrinks to nothing there [chiba2005]. In the four types of ending sorted out the same year by Shin'ichi Nojiri, Sergei D. Odintsov, and Shinji Tsujikawa, the Big Rip is type I, where the scale factor, the density, and the pressure all diverge [nojiri2005].¶Type II is the sudden singularity of John D. Barrow, at Cambridge, from 2004 [nojiri2005, barrow2004]. There the scale factor, the expansion rate, and the density all stay finite, and only the pressure and the acceleration diverge, even with $\\rho > 0$ and $\\rho + 3p/c^2 > 0$ [barrow2004]. When Leonardo Fernández-Jambrina and Ruth Lazkoz followed geodesics into it, the geodesics ran on through, and the tidal forces were \"not strong enough to produce a Big Rip\" [fernandezjambrina2004]. The spacetime carries on beyond a sudden singularity, and a body that crosses it is not necessarily torn apart [fernandezjambrina2004]. At a Big Rip the scale factor and all of its derivatives blow up, and structure is destroyed [fernandezjambrina2004].",
+  "related": [
+    {
+      "id": "frw",
+      "kind": "generalisation",
+      "text": "Friedmann's universe with its scale factor left free and its space allowed to curve. Its flat case filled with phantom energy alone is this universe [chiba2005]."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "limit",
+      "text": "The limit $w \\to -1$, with the expansion rate at $a = 1$ held fixed: the Big Rip moves off to infinite time, and the scale factor becomes de Sitter's exponential. Both conformal diagrams are the lower half of Minkowski space's [chiba2005]."
+    },
+    {
+      "id": "ellis_bronnikov",
+      "kind": "family",
+      "text": "A wormhole held open by a scalar field whose kinetic term has the opposite of the usual sign, the kind of field Robert Caldwell used for his phantom energy [ellis1973, caldwell2002]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "family",
+      "text": "A black hole whose singularity opens into a bounce. Kirill Bronnikov and Rahul Kumar Walia found it a source in a phantom scalar field with a potential and a magnetic field, and the phantom field is the kind behind phantom energy [bronnikov2022, caldwell2002]."
+    }
+  ],
+  "references": [
+    "caldwell2003",
+    "nojiri2005",
+    "caldwell2002",
+    "starobinsky2000",
+    "mcinnes2002",
+    "chiba2005",
+    "barrow2004",
+    "fernandezjambrina2004",
+    "ellis1973",
+    "bronnikov2022"
+  ],
+  "coordinates": [
+    {
+      "id": "cartesian",
+      "name": "Comoving Cartesian",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, 0)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "t \\to 0 \\;\\text{(the Big Rip)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "w",
+          "description": "Equation of state of the phantom energy, $w = p/\\rho c^2 < -1$, with $\\rho$ its mass density and $p$ its pressure"
+        },
+        {
+          "symbol": "t_0",
+          "description": "Time left before the Big Rip at the moment $a = 1$, $t_0 = 2/(3|1 + w|H_0)$ with $H_0$ the Hubble rate at that moment"
+        },
+        {
+          "symbol": "a = \\left(-\\dfrac{t}{t_0}\\right)^{\\frac{2}{3(1 + w)}}",
+          "description": "Scale factor, equal to $1$ at $t = -t_0$ and growing without bound as $t \\to 0$; the Hubble rate is $H = 2/(3(1 + w)t)$"
+        }
+      ],
+      "convention": "We use comoving coordinates $(t, x, y, z)$, with $t$ the proper time of a comoving observer, negative before the Big Rip at $t = 0$, and $x$, $y$, and $z$ lengths, the proper distances at $t = -t_0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "a^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{4a^4}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(1 + 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(1 + 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(1 + 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3a^2\\,c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3a^2\\,c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3a^2\\,c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{4\\left(1 - 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}",
+      "kretschmann": "K = \\dfrac{16\\left(5 + 6w + 9w^2\\right)}{27c^4\\,t^4\\left(1 + w\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4a^2\\,w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{4a^2\\,w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{4a^2\\,w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{4w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{4w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4w}{3a^2\\,c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{4w}{3a^2\\,c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{4w}{3a^2\\,c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}\\dot{x}^2 + \\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}\\dot{y}^2 + \\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}\\dot{z}^2 = 0",
+        "\\ddot{x} + \\dfrac{4}{3c\\,t\\left(1 + w\\right)}\\dot{t}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{4}{3c\\,t\\left(1 + w\\right)}\\dot{t}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{4}{3c\\,t\\left(1 + w\\right)}\\dot{t}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "comoving",
+      "name": "Comoving Spherical",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, 0)",
+        "r \\in [0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "t \\to 0 \\;\\text{(the Big Rip)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "w",
+          "description": "Equation of state of the phantom energy, $w = p/\\rho c^2 < -1$, with $\\rho$ its mass density and $p$ its pressure"
+        },
+        {
+          "symbol": "t_0",
+          "description": "Time left before the Big Rip at the moment $a = 1$, $t_0 = 2/(3|1 + w|H_0)$ with $H_0$ the Hubble rate at that moment"
+        },
+        {
+          "symbol": "a = \\left(-\\dfrac{t}{t_0}\\right)^{\\frac{2}{3(1 + w)}}",
+          "description": "Scale factor, equal to $1$ at $t = -t_0$ and growing without bound as $t \\to 0$; the Hubble rate is $H = 2/(3(1 + w)t)$"
+        }
+      ],
+      "convention": "We use comoving coordinates $(t, r, \\theta, \\phi)$, with $t$ the proper time of a comoving observer, negative before the Big Rip at $t = 0$, and $r$ a length, the proper radius at $t = -t_0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "a^2\\,r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\,r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{a^2\\,r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{a^2\\,r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\sin^2\\theta}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2\\sin^2\\theta}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\sin^2\\theta}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\sin^2\\theta}{3c\\,t\\left(1 + w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "a^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "a^2\\,r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\,r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\,r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4a^2\\,r^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{4a^2\\,r^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4a^2\\,r^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4a^2\\,r^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4a^2\\,r^2\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4a^2\\,r^2\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4a^2\\,r^2\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4a^2\\,r^2\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4a^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\left(1 + 3w\\right)\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4a^4\\,r^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{4a^4\\,r^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4a^4\\,r^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{4a^4\\,r^2}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4a^4\\,r^2\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4a^4\\,r^2\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4a^4\\,r^2\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4a^4\\,r^2\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4a^4\\,r^4\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4a^4\\,r^4\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4a^4\\,r^4\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4a^4\\,r^4\\sin^2\\theta}{9c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(1 + 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2a^2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\left(1 - w\\right)\\sin^2\\theta}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(1 + 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(1 + 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3a^2\\,c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)}{3a^2\\,c^2\\,t^2\\,r^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(1 - w\\right)\\csc^2\\theta}{3a^2\\,c^2\\,t^2\\,r^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{4\\left(1 - 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}",
+      "kretschmann": "K = \\dfrac{16\\left(5 + 6w + 9w^2\\right)}{27c^4\\,t^4\\left(1 + w\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4a^2\\,w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4a^2\\,r^2\\,w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4a^2\\,r^2\\,w\\sin^2\\theta}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4w}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4w}{3a^2\\,c^2\\,t^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4w}{3a^2\\,c^2\\,t^2\\,r^2\\left(1 + w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4w\\csc^2\\theta}{3a^2\\,c^2\\,t^2\\,r^2\\left(1 + w\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2a^2}{3c\\,t\\left(1 + w\\right)}\\dot{r}^2 + \\dfrac{2a^2\\,r^2}{3c\\,t\\left(1 + w\\right)}\\dot{\\theta}^2 + \\dfrac{2a^2\\,r^2\\sin^2\\theta}{3c\\,t\\left(1 + w\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{r} + \\dfrac{4}{3c\\,t\\left(1 + w\\right)}\\dot{t}\\dot{r} - r\\,\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{4}{3c\\,t\\left(1 + w\\right)}\\dot{t}\\dot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{4}{3c\\,t\\left(1 + w\\right)}\\dot{t}\\dot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "conformal",
+      "name": "Conformal",
+      "coords": [
+        "\\eta",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\eta \\in (-\\infty, 0)",
+        "r \\in [0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\eta \\to 0 \\;\\text{(the Big Rip)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "w",
+          "description": "Equation of state of the phantom energy, $w = p/\\rho c^2 < -1$, with $\\rho$ its mass density and $p$ its pressure"
+        },
+        {
+          "symbol": "\\eta_0",
+          "description": "A length, $\\eta_0 = 3(1 + w)ct_0/(1 + 3w)$, the conformal time left before the Big Rip at the moment $a = 1$"
+        },
+        {
+          "symbol": "a = \\left(-\\dfrac{\\eta}{\\eta_0}\\right)^{\\frac{2}{1 + 3w}}",
+          "description": "Scale factor, equal to $1$ at $\\eta = -\\eta_0$ and growing without bound as $\\eta \\to 0$"
+        }
+      ],
+      "convention": "We use coordinates $(\\eta, r, \\theta, \\phi)$, with $\\eta$ the conformal time, a length with $d\\eta = c\\,dt/a$ that is negative before the Big Rip at $\\eta = 0$, and $r$ the comoving radius, a length. We take components in the chart $x^0 = \\eta$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = a^2\\left(-d\\eta^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-a^2"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "a^2\\,r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\,r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{a^2\\,r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{a^2\\,r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r^2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^2\\sin^2\\theta}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{2a^2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2a^2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{2a^2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2a^2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2\\sin^2\\theta}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\sin^2\\theta}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\sin^2\\theta}{\\eta\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "a^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "a^2\\,r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\,r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\,r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2r^2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2r^2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4r^2}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{4r^2}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4r^2}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4r^2}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{4}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4}{\\eta^2\\left(1 + 3w\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{2a^2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{2a^2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2a^2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2a^2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2a^2\\,r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2a^2\\,r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4a^2\\,r^2}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{4a^2\\,r^2}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4a^2\\,r^2}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{4a^2\\,r^2}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4a^2\\,r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4a^2\\,r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4a^2\\,r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4a^2\\,r^2\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4a^2\\,r^4\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4a^2\\,r^4\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4a^2\\,r^4\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4a^2\\,r^4\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{6}{\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{6\\left(1 - w\\right)}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6r^2\\left(1 - w\\right)}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6r^2\\left(1 - w\\right)\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{6}{a^2\\,\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{6\\left(1 - w\\right)}{a^2\\,\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6\\left(1 - w\\right)}{a^2\\,\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6\\left(1 - w\\right)}{a^2\\,\\eta^2\\left(1 + 3w\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{6}{a^4\\,\\eta^2\\left(1 + 3w\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{6\\left(1 - w\\right)}{a^4\\,\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6\\left(1 - w\\right)}{a^4\\,\\eta^2\\,r^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6\\left(1 - w\\right)\\csc^2\\theta}{a^4\\,\\eta^2\\,r^2\\left(1 + 3w\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{12\\left(1 - 3w\\right)}{a^2\\,\\eta^2\\left(1 + 3w\\right)^2}",
+      "kretschmann": "K = \\dfrac{48\\left(5 + 6w + 9w^2\\right)}{a^4\\,\\eta^4\\left(1 + 3w\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{12}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{12w}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{12r^2\\,w}{\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{12r^2\\,w\\sin^2\\theta}{\\eta^2\\left(1 + 3w\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{12}{a^2\\,\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{12w}{a^2\\,\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{12w}{a^2\\,\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{12w}{a^2\\,\\eta^2\\left(1 + 3w\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{12}{a^4\\,\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{12w}{a^4\\,\\eta^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{12w}{a^4\\,\\eta^2\\,r^2\\left(1 + 3w\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{12w\\csc^2\\theta}{a^4\\,\\eta^2\\,r^2\\left(1 + 3w\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\eta} + \\dfrac{2}{\\eta\\left(1 + 3w\\right)}\\dot{\\eta}^2 + \\dfrac{2}{\\eta\\left(1 + 3w\\right)}\\dot{r}^2 + \\dfrac{2r^2}{\\eta\\left(1 + 3w\\right)}\\dot{\\theta}^2 + \\dfrac{2r^2\\sin^2\\theta}{\\eta\\left(1 + 3w\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{r} + \\dfrac{4}{\\eta\\left(1 + 3w\\right)}\\dot{\\eta}\\dot{r} - r\\,\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{4}{\\eta\\left(1 + 3w\\right)}\\dot{\\eta}\\dot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{4}{\\eta\\left(1 + 3w\\right)}\\dot{\\eta}\\dot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

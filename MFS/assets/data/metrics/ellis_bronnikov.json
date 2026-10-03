@@ -68,6 +68,11 @@
       "id": "einstein_dirac_maxwell_wormhole",
       "kind": "family",
       "text": "A wormhole held open by an electric field and two massless Dirac fields, found by Blázquez-Salcedo, Knoll and Radu in 2021 while looking for one that needs no field of the wrong sign [blazquez2021]."
+    },
+    {
+      "id": "big_rip",
+      "kind": "family",
+      "text": "A universe filled with phantom energy, the same kind of field with its kinetic term of the opposite sign, which pulls the universe apart at a finite time [caldwell2002, caldwell2003]."
     }
   ],
   "references": [
@@ -89,7 +94,9 @@
     "tsukamoto2021",
     "bronnikov2011",
     "einstein1935",
-    "blazquez2021"
+    "blazquez2021",
+    "caldwell2002",
+    "caldwell2003"
   ],
   "coordinates": [
     {

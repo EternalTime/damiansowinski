@@ -10582,6 +10582,77 @@ def kasner(ck, src):
                        "spacetime diagrams.")]
 
 
+def big_rip(ck, src):
+    """The plane y = 0 of the Big Rip at w = -3/2, the value its spacetime diagrams declare, from
+    t = -3t_0/2 to -t_0/2, in units of c t_0. At every moment the plane is flat, a^2(dx^2 + dz^2) with
+    a = (-t/t_0)^(-4/3), and the ring of galaxies at rest on x^2 + z^2 = (c t_0/2)^2, which the
+    published Christoffel symbols keep at rest, is the circle of proper radius a c t_0/2. Beside it
+    is the event horizon of the observer at the centre, the circle of comoving radius
+    eta_0 (-t/t_0)^(7/3), eta_0 = 3 c t_0/7, whose proper radius 3(1 + w) c(-t)/(1 + 3w) = 3c(-t)/7 is
+    Chiba, Takahashi and Sugiyama's R_c, checked. The ring grows without bound and the horizon
+    shrinks to the centre, and the ring leaves the horizon at (-t/t_0)^(7/3) = 7/6."""
+    at_rest(ck, src, "big_rip", "cartesian")
+    params = {"w": "-3/2", "t_0": 1}
+    ring_radius, eta0 = 0.5, 3 / 7
+    named = ("-1.5", "-1.25", "-1", "-0.75", "-0.5")
+    keys = [float(s) for s in named]
+    moments, key_at = ring_moments(keys, 0.025,
+                                   lambda k: (f"$t = {named[k]}\\,t_0$", keys[k], {"t": named[k], "y": 0}),
+                                   lambda t: (f"$t = {t:g}\\,t_0$", t, {"t": repr(t), "y": 0}))
+    top = 1.5
+    size = 2 * top
+    alpha = np.linspace(0, 2 * math.pi, 361)
+    frames = []
+    for label, time, fixed_at in moments:
+        sl = FlatPlane(src, "big_rip", "cartesian", "x", "z", fixed_at, params)
+        where = f"Big Rip, {label}"
+        plane = disc(sl, "plane", top, "the centre of the ring", "the plane runs on, flat, to infinity", [], size)
+        ck.isometry(where, plane)
+        a = (-time) ** (-4 / 3)
+        ck.add(f"{where}: the plane's scale factor is (-t/t_0)^(-4/3)", float(np.max(np.abs(sl.scale - a))), 1e-12)
+        ring, dots = particles(ck, where, sl, plane, ring_radius * np.cos(alpha), ring_radius * np.sin(alpha))
+        ck.add(f"{where}: the ring's proper radius is a c t_0/2",
+               float(np.max(np.abs(np.hypot(ring.points[:, 0], ring.points[:, 1]) - a * ring_radius))), 1e-12)
+        comoving = eta0 * (-time) ** (7 / 3)
+        P = sl.draw(comoving * np.cos(alpha), comoving * np.sin(alpha))
+        ck.on_piece(f"{where}, the event horizon", plane, P)
+        ck.add(f"{where}: the horizon's proper radius is 3(1 + w)c(-t)/(1 + 3w)",
+               float(np.max(np.abs(np.hypot(P[:, 0], P[:, 1]) - 3 * (-1 / 2) * (-time) / (1 + 3 * (-3 / 2))))), 1e-12)
+        horizon = Curve(plane, "horizon", P, closed=True)
+        frames.append(Surface([plane], label=label, time=time, curves=[ring, horizon], dots=dots))
+    surfaces = [frames[i] for i in key_at]
+    # Proper radii: the ring's a c t_0/2 against the horizon's 3c(-t)/7, equal at (-t/t_0)^(7/3) = 7/6.
+    ck.exact("Big Rip: the ring lies inside the horizon at t = -3t_0/2 and outside it at t = -t_0",
+             ring_radius * 1.5 ** (-4 / 3) < 3 * 1.5 / 7 and ring_radius > 3 / 7)
+    cross = (7 / 6) ** (3 / 7)
+    ck.add("Big Rip: the ring meets the horizon at t = -(7/6)^(3/7) t_0",
+           abs(ring_radius * cross ** (-4 / 3) - 3 * cross / 7), 1e-12)
+
+    def plane_at(u, a, b):
+        sl = FlatPlane(src, "big_rip", "cartesian", "x", "z", {"t": repr(float(u)), "y": 0}, params)
+        return float(np.max(np.abs(ring_radius * sl.scale - [a, b])))
+    tube = stack(ck, "Big Rip", surfaces, lambda u: (ring_radius * (-u) ** (-4 / 3),) * 2, 1.0, plane_at, size,
+                 "the ring's world tube runs on before $t = -3t_0/2$ and widens without bound toward $t = 0$")
+    tube_fig = stack_figure(tube, size, "$t$", [
+        ("fill", "cover", "the ring at every moment from $t = -3t_0/2$ to $t = -t_0/2$, each at the height of its time"),
+        ("line", "particles", "the ring at the five moments of the flat view, twelve of its galaxies marked"),
+        ("line", "worldline", "the world lines of the twelve galaxies, at rest in the chart"),
+        ("line", "axis", "the axis of time, through the centre of the ring")])
+    fig, played = ring_movie(frames, size, "$t$")
+    fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
+    fig.legend("line", "particles", "a ring of galaxies at rest in the chart on $x^2 + z^2 = (ct_0/2)^2$, twelve of "
+                                    "them marked, of proper radius $act_0/2$")
+    fig.legend("line", "horizon", "the event horizon of the observer at the centre, of proper radius $3c(-t)/7$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = ("$w = -3/2$, with $ct_0$ the unit of every length and the ring of radius $ct_0/2$ at $t = -t_0$, "
+                "where $a = 1$.")
+    given = "$w = -3/2$, as in the spacetime diagrams."
+    return [view("tube", "The ring's world tube", "$ct_0$", [tube], tube_fig, settings=settings, input=given,
+                 height="$t$, a height of $ct_0$ for each $t_0$"),
+            view("ring", "A ring of galaxies", "$ct_0$", surfaces, fig.done(), movie=played, settings=settings,
+                 input=given)]
+
+
 def kasner_scalar(ck, src):
     """The plane y = 0 of Kasner's universe with a scalar field at t = 1/4, 1/2, 1 and 2, at the
     exponents (2/13, 4/13, 7/13) and q = 10/13 the spacetime diagrams declare, each flat,
@@ -16096,6 +16167,7 @@ DRAWN = {
     "eih_many_bodies": eih_many_bodies,
     "mixmaster": mixmaster,
     "kasner": kasner,
+    "big_rip": big_rip,
     "kasner_scalar": kasner_scalar,
     "kasner_magnetic": kasner_magnetic,
     "bianchi": bianchi,
@@ -18628,6 +18700,20 @@ CAPTIONS = {
         "$2\\sqrt{2}\\,\\ell$ while the curvature stays finite. Subrahmanyan Chandrasekhar and Basilis "
         "Xanthopoulos found this spacetime in 1986, the collision of two plane gravitational waves that ends on "
         "the inner horizon of Kerr's metric.",
+    ],
+    ("big_rip", "ring"): [
+        "The plane $y = 0$ of the Big Rip at $w = -3/2$ as $t$ runs from $-3t_0/2$ to $-t_0/2$, each moment drawn as a "
+        "surface in flat space with every distance along it the metric distance. At every moment the plane is flat, "
+        "$a^2(dx^2 + dz^2)$, so the drawing is a flat disc, and the expansion shows in a ring of galaxies at rest in "
+        "the chart, which stay at rest because the metric has no $\\Gamma^i{}_{tt}$.",
+        "The ring's proper radius $act_0/2$ grows without bound toward the rip at $t = 0$, while the event horizon of "
+        "the observer at the centre shrinks as $3c(-t)/7$ [chiba2005]. The ring leaves the horizon at "
+        "$t = -(7/6)^{3/7}\\,t_0$, and after that no signal from its galaxies reaches the centre again.",
+    ],
+    ("big_rip", "tube"): [
+        "The world tube of a ring of galaxies at rest in the chart ($w = -3/2$), each moment from $t = -3t_0/2$ to "
+        "$t = -t_0/2$ a circle at the height of its time. Its radius $act_0/2$ grows as $(-t/t_0)^{-4/3}$, so the "
+        "tube flares out toward the Big Rip at $t = 0$.",
     ],
     ("kasner", "ring"): [
         "The plane $y = 0$ of Kasner's universe as $t$ runs from $1/4$ to $2$, each moment drawn as a surface in flat space with "

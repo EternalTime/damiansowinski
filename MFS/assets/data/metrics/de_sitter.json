@@ -143,6 +143,11 @@
       "id": "self_creating_universe",
       "kind": "locally_same",
       "text": "De Sitter space with each event identified with its images under a boost. J. Richard Gott and Li-Xin Li proposed it in 1998 as a universe whose earliest stretch of time is a loop [gott1998]."
+    },
+    {
+      "id": "big_rip",
+      "kind": "limit_source",
+      "text": "Phantom energy with $w < -1$ in place of the cosmological constant, pulling the universe apart at a finite time. De Sitter space is its limit $w \\to -1$, where that time moves off to infinity [chiba2005]."
     }
   ],
   "references": [
@@ -188,7 +193,8 @@
     "ruban1969",
     "gibbonshawking1979",
     "page2009",
-    "gott1998"
+    "gott1998",
+    "chiba2005"
   ],
   "coordinates": [
     {
