@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 177,
+  "count": 178,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -5816,6 +5816,11 @@
           "id": "pp_wave",
           "kind": "programme",
           "text": "The plane waves of Bondi, Pirani, and Robinson are paper III of the series in which the radiating metric is papers VII and VIII [bondipirani1959, bondi1962, sachs1962]. A plane wave has no source, and these two papers gave the waves one."
+        },
+        {
+          "id": "supertranslation_hair",
+          "kind": "special_case",
+          "text": "Flat space with supertranslation hair, the member with no mass and a shear $\\sigma(\\theta)$ that never changes, so there is no news. With $W = \\sqrt{r^2 + \\sigma^2}$ it has $e^{2\\beta} = r/W$ and $re^{\\gamma} = W + \\sigma$ [compere2016vacua]."
         }
       ],
       "references": [
@@ -5845,7 +5850,8 @@
         "kinnersley1969",
         "cornish2000",
         "fletcher2003",
-        "bondipirani1959"
+        "bondipirani1959",
+        "compere2016vacua"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bondi_sachs.json",
@@ -10088,6 +10094,11 @@
           "id": "quantum_btz",
           "kind": "family",
           "text": "The C-metric in anti-de Sitter space, cut along its surface $x = 0$ where a brane sits. By holography the metric on the brane is a black hole of three dimensions with quantum fields around it [emparan2000branes2, emparan2020qbtz]."
+        },
+        {
+          "id": "supertranslation_hair",
+          "kind": "family",
+          "text": "Flat space carried by a supertranslation. When the string of the C-metric snaps by making a pair of black holes, the spacetimes before and after differ by a finite superrotation, the partner of a supertranslation [strominger2017superrotations]."
         }
       ],
       "references": [
@@ -10121,7 +10132,8 @@
         "fairhurst2001",
         "ovcharenko2026",
         "emparan2000branes2",
-        "emparan2020qbtz"
+        "emparan2020qbtz",
+        "strominger2017superrotations"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -36209,6 +36221,11 @@
           "id": "unruh_acoustic_hole",
           "kind": "generalisation",
           "text": "Flat spacetime with the speed of sound for $c$ and a fluid falling through it into a point. Where the fall passes the speed of sound, sound is trapped, and the sphere there should glow with thermal sound [unruh1981]."
+        },
+        {
+          "id": "supertranslation_hair",
+          "kind": "locally_same",
+          "text": "The same flat geometry in the coordinates of a supertranslation, which Compère and Long found to be a different vacuum, with a field on the sphere of directions [compere2016vacua]."
         }
       ],
       "references": [
@@ -36290,7 +36307,8 @@
         "chan2024",
         "ellis1974",
         "visser1998",
-        "unruh1981"
+        "unruh1981",
+        "compere2016vacua"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -48512,6 +48530,11 @@
           "id": "interstellar_wormhole",
           "kind": "family",
           "text": "The wormhole of the film Interstellar flares out of each mouth roughly as space opens out from Schwarzschild's horizon, a shape its builders chose for the flare with the mass and the mouth's radius set free of one another [james2015]."
+        },
+        {
+          "id": "supertranslation_hair",
+          "kind": "family",
+          "text": "Flat space with a supertranslation field on the sphere of directions. Compère and Long put the same field on this black hole as the final state of a collapse that was not spherical [compere2016final]."
         }
       ],
       "references": [
@@ -48640,7 +48663,8 @@
         "bah2021",
         "lewandowski2023",
         "unruh1981",
-        "james2015"
+        "james2015",
+        "compere2016final"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -53230,6 +53254,300 @@
           ],
           "ricci_scalar": "R = \\dfrac{12\\eta_0^4}{\\left(v - r\\right)^6}\\left(1 + \\dfrac{2r_s}{r} - \\dfrac{v\\,r_s}{r^2}\\right)",
           "kretschmann": "K = \\dfrac{12\\eta_0^8\\left(v^4\\,r_s^2 - 4v^3\\,r\\,r_s^2 + 14v^2\\,r^2\\,r_s^2 - 8v\\,r^4\\,r_s - 36v\\,r^3\\,r_s^2 + 20r^6 + 48r^5\\,r_s + 45r^4\\,r_s^2\\right)}{r^6\\left(v - r\\right)^{12}}"
+        }
+      ]
+    },
+    {
+      "id": "supertranslation_hair",
+      "name": "Flat Space with Supertranslation Hair",
+      "short_name": "Supertranslation Hair",
+      "description": "Minkowski space in the coordinates of a supertranslation, written in closed form by Geoffrey Compère and Jiang Long in 2016. Every component of the Riemann tensor vanishes, and each function on the sphere of directions gives a different vacuum, between which a burst of gravitational waves carries space.",
+      "tags": [
+        "vacuum",
+        "flat",
+        "conformally flat",
+        "static",
+        "stationary",
+        "axisymmetric",
+        "asymptotically flat",
+        "retarded time",
+        "supertranslation",
+        "gravitational memory",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "Minkowski space itself, in the coordinates a supertranslation carries it to. Every component of the Riemann tensor vanishes in both [compere2016vacua]."
+        },
+        {
+          "id": "bondi_sachs",
+          "kind": "generalisation",
+          "text": "Bondi's radiating metric, whose axisymmetric chart holds the retarded chart here as the member with $e^{2\\beta} = r/W$ and $re^{\\gamma} = W + \\sigma$. The shear $\\sigma$ does not depend on $u$, so there is no news [compere2016vacua]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Compère and Long put the same supertranslation field on Schwarzschild's black hole in isotropic coordinates, as the final state of a collapse that was not spherical [compere2016final]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "A spherical shell of light falling in, as in Vaidya's metric, leaves a black hole with no supertranslation field [compere2016final]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "A cosmic string that snaps by making a pair of black holes, a process described by the C-metric, changes the spacetime by a finite superrotation, the partner of a supertranslation [strominger2017superrotations]."
+        }
+      ],
+      "references": [
+        "braginsky1987memory",
+        "christodoulou1991",
+        "strominger2016",
+        "bondi1962",
+        "sachs1962bms",
+        "he2015bms",
+        "compere2016vacua",
+        "compere2016final",
+        "hawking2016softhair",
+        "hawking2017superrotation",
+        "strominger2017superrotations",
+        "compere2018superboost"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/supertranslation_hair.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static (Compère-Long)",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho > C + \\max\\left(C'', C'\\cot\\theta\\right) \\;\\text{(outside the supertranslation horizon)}",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "C = C(\\theta)",
+              "description": "The supertranslation field, a length that depends on the direction; here it is axisymmetric. $C = a\\cos\\theta$ moves the origin a distance $a$ along the axis, and a constant moves the zero of $\\rho$. The prime is $C' = dC/d\\theta$."
+            },
+            {
+              "symbol": "B = \\left(\\rho - C\\right)\\sin\\theta - C'\\cos\\theta",
+              "description": "A length, the radius of the circle of constant $t$, $\\rho$, and $\\theta$ about the axis of symmetry."
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\theta, \\phi)$, with $t$ carrying dimensions of time, $\\rho$ a length along each line of constant $\\theta$ and $\\phi$, which is a straight line, and $\\theta$ and $\\phi$ the angles about the axis of symmetry. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + d\\rho^2 + \\left(\\rho - C - C''\\right)^2d\\theta^2 + B^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(\\rho - C - C''\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "B^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "bondi_retarded",
+          "name": "Bondi Gauge, Retarded",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the supertranslation horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\sigma = \\sigma(\\theta)",
+              "description": "The shear of the surfaces of constant $u$ and $r$, a length, $\\sigma = \\tfrac{1}{2}\\left(C'\\cot\\theta - C''\\right)$ with $C(\\theta)$ the supertranslation field; far away $g_{\\theta\\theta} = r^2 + 2\\sigma r + \\dots$, and $\\sigma$ does not depend on $u$, so the vacuum carries no news."
+            },
+            {
+              "symbol": "W = \\sqrt{r^2 + \\sigma^2}",
+              "description": "A length, the shorthand $W = \\sqrt{r^2 + \\sigma^2}$, which is $\\rho - \\tfrac{1}{2}\\left(C'' + C'\\cot\\theta\\right) - C$ in the static chart."
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$ of Bondi's form: the retarded time $u$, carrying dimensions of time, is constant on each outgoing light cone, $\\theta$ and $\\phi$ are constant along each of its rays, and $r$ is the luminosity distance, with $4\\pi r^2$ the area of the surface of constant $u$ and $r$. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2du^2 - \\dfrac{2r}{W}c\\,du\\,dr + 2\\left(\\partial_\\theta\\sigma\\left(1 - \\dfrac{\\sigma}{W}\\right) + 2\\sigma\\cot\\theta\\right)c\\,du\\,d\\theta + \\left(W + \\sigma\\right)^2d\\theta^2 + \\left(W - \\sigma\\right)^2\\sin^2\\theta\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-\\dfrac{r}{W}"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-\\dfrac{r}{W}"
+            },
+            {
+              "indices": [
+                "u",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "u"
+              ],
+              "value": "\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(W + \\sigma\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(W - \\sigma\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "bondi_advanced",
+          "name": "Bondi Gauge, Advanced",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the supertranslation horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\sigma = \\sigma(\\theta)",
+              "description": "The shear of the surfaces of constant $v$ and $r$, a length, $\\sigma = \\tfrac{1}{2}\\left(C'\\cot\\theta - C''\\right)$ with $C(\\theta)$ the supertranslation field; far away $g_{\\theta\\theta} = r^2 + 2\\sigma r + \\dots$, and $\\sigma$ does not depend on $v$, so the vacuum carries no news."
+            },
+            {
+              "symbol": "W = \\sqrt{r^2 + \\sigma^2}",
+              "description": "A length, the shorthand $W = \\sqrt{r^2 + \\sigma^2}$, which is $\\rho - \\tfrac{1}{2}\\left(C'' + C'\\cot\\theta\\right) - C$ in the static chart."
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$ of Bondi's form about past null infinity: the advanced time $v$, carrying dimensions of time, is constant on each ingoing light cone, $\\theta$ and $\\phi$ are constant along each of its rays, and $r$ is the luminosity distance, with $4\\pi r^2$ the area of the surface of constant $v$ and $r$. We take components in the chart $x^0 = cv$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dv^2 + \\dfrac{2r}{W}c\\,dv\\,dr - 2\\left(\\partial_\\theta\\sigma\\left(1 - \\dfrac{\\sigma}{W}\\right) + 2\\sigma\\cot\\theta\\right)c\\,dv\\,d\\theta + \\left(W + \\sigma\\right)^2d\\theta^2 + \\left(W - \\sigma\\right)^2\\sin^2\\theta\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "\\dfrac{r}{W}"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "\\dfrac{r}{W}"
+            },
+            {
+              "indices": [
+                "v",
+                "\\theta"
+              ],
+              "value": "-\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "v"
+              ],
+              "value": "-\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(W + \\sigma\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(W - \\sigma\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
         }
       ]
     },
@@ -58125,6 +58443,11 @@
           "id": "bondi_sachs",
           "kind": "generalisation",
           "text": "Vaidya's metric with the mass allowed to differ from one direction to another and the spheres allowed to change shape. Gravitational waves then carry mass off as Vaidya's light does [bondi1962]."
+        },
+        {
+          "id": "supertranslation_hair",
+          "kind": "family",
+          "text": "Flat space with a supertranslation field on the sphere of directions. A spherical shell of light falling in, as here, leaves its black hole with no such field [compere2016final]."
         }
       ],
       "references": [
@@ -58160,7 +58483,8 @@
         "adler2005",
         "zeldovichnovikovstarobinskii1974",
         "good2016",
-        "bondi1962"
+        "bondi1962",
+        "compere2016final"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",

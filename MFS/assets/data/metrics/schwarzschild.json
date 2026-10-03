@@ -478,6 +478,11 @@
       "id": "interstellar_wormhole",
       "kind": "family",
       "text": "The wormhole of the film Interstellar flares out of each mouth roughly as space opens out from Schwarzschild's horizon, a shape its builders chose for the flare with the mass and the mouth's radius set free of one another [james2015]."
+    },
+    {
+      "id": "supertranslation_hair",
+      "kind": "family",
+      "text": "Flat space with a supertranslation field on the sphere of directions. Compère and Long put the same field on this black hole as the final state of a collapse that was not spherical [compere2016final]."
     }
   ],
   "references": [
@@ -606,7 +611,8 @@
     "bah2021",
     "lewandowski2023",
     "unruh1981",
-    "james2015"
+    "james2015",
+    "compere2016final"
   ],
   "coordinates": [
     {

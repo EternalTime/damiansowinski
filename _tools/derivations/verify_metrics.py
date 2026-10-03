@@ -1998,6 +1998,18 @@ DIMENSIONS = {
     ("quantum_oppenheimer_snyder", "interior_comoving"): {
         "\\tau": "T", "\\chi": "L", "\\theta": "1", "\\phi": "1", "a": "1", "\\chi_0": "L",
     },
+    # Flat space with supertranslation hair: Compere and Long's supertranslation field C and the
+    # shear sigma it makes are lengths, and so are rho, the distance along each straight line of
+    # constant angle, the luminosity distance r and the shorthand W = sqrt(r^2 + sigma^2).
+    ("supertranslation_hair", "static"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "C": "L", "B": "L",
+    },
+    ("supertranslation_hair", "bondi_retarded"): {
+        "u": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\sigma": "L", "W": "L",
+    },
+    ("supertranslation_hair", "bondi_advanced"): {
+        "v": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\sigma": "L", "W": "L",
+    },
     ("hayward", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
     },
@@ -2383,6 +2395,15 @@ HELD = {
 # Belan's x = sqrt(X^2 + Z^2 - c^2T^2) is: written out, each of the chart's four hundred values
 # is a polynomial of the sixth degree in that root, and the chart did not finish in ten minutes.
 RATES = {
+    # Compere and Long's vacua: B, the radius of a circle about the axis in the static chart, and
+    # W = sqrt(r^2 + sigma^2) in the two Bondi charts. Each is fixed by its rates up to a constant,
+    # and the metric is flat for every value of that constant, so no value holds a relation of the
+    # name that the rates leave out.
+    ("supertranslation_hair", "static"): {
+        "B": {"\\rho": "\\sin\\theta", "\\theta": "\\left(\\rho - C - C''\\right)\\cos\\theta"},
+    },
+    **{("supertranslation_hair", chart): {"W": {"r": "\\dfrac{r}{W}", "\\theta": "\\dfrac{\\sigma\\,\\partial_\\theta\\sigma}{W}"}}
+       for chart in ("bondi_retarded", "bondi_advanced")},
     # 2x du is the null covector of the Kerr-Schild form, (1 + u^2) c dT - 2u dX - (1 - u^2) dZ.
     ("kundt_waves", "kerr_schild"): {
         "x": {"T": "-c\\left(v + u\\left(1 + uv\\right)\\right)", "X": "1 + 2uv",
@@ -3610,10 +3631,13 @@ class Reader:
         """The expression with every derivative of a held name written by the declared first
         derivatives, to any order, so that it holds the names and no derivative of them. The
         names are functions of the coordinates with no relation among them, as the coordinates
-        of another chart are, so two values that agree agree as rational functions of them."""
+        of another chart are, so two values that agree agree as rational functions of them. A
+        declared function that is not a held name, as the supertranslation field C beside the held
+        B of Compere and Long's vacua, keeps its derivatives as they stand."""
         expression = sp.sympify(expression)
+        declared = {function for function, _ in self.functions.values()} - set(self.held)
         for _ in range(8):
-            derivatives = expression.atoms(sp.Derivative)
+            derivatives = {d for d in expression.atoms(sp.Derivative) if d.expr not in declared}
             if not derivatives:
                 return expression
             written = {}

@@ -2409,6 +2409,20 @@ def _rt_fronts():
     return [Mark(m, [[(m.time, 0.0), (m.time, 100.0)]]) for m in moments("robinson_trautman", "fronts")]
 
 
+def _sth_shells(system):
+    """Compere and Long's shells, the surfaces of constant t = 0 and rho at ell = 1, each one event of
+    each plane on the equator: (0, rho) on the static plane, and with rho = W + ell there and
+    W = sqrt(r^2 + 9/4), the point u = -rho, r = sqrt((rho - 1)^2 - 9/4) of the retarded plane and
+    v = rho at the same r of the advanced one."""
+    marks = []
+    for m in moments("supertranslation_hair", "shells"):
+        rho = m.time
+        r = math.sqrt((rho - 1) ** 2 - 2.25)
+        at = {"static": (0.0, rho), "bondi_retarded": (-rho, r), "bondi_advanced": (rho, r)}[system]
+        marks.append(Mark(m, points=[at]))
+    return marks
+
+
 BONDI_SPHERE = "the sphere $cu = 10\\,m_0$, $r = 10\\,m_0$"
 
 
@@ -2518,6 +2532,8 @@ FLAT = {
        for system in ("boyer_lindquist", "rotating") for view in ("radial", "equator")},
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
     ("bondi_sachs", "bondi", "equator"): _bondi_sphere(),
+    **{("supertranslation_hair", system, "equator"): (lambda s=system: _sth_shells(s))
+       for system in ("static", "bondi_retarded", "bondi_advanced")},
     ("bondi_sachs", "bondi", "axis"): _bondi_sphere(),
     ("bondi_sachs", "compactified", "equator"): _bondi_sphere(inverse=True),
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,

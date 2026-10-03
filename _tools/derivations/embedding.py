@@ -14985,6 +14985,58 @@ def robinson_trautman(ck, src):
                  input=nr.RT_INPUT)]
 
 
+STH_MOMENTS = (2.6, 3.0, 3.5, 4.5, 6.0)    # rho in units of ell, from the ridge outward
+STH_FIELD = "(3*cos(theta)**2 - 1)/2"       # Compere and Long's C at ell = 1, as null_rays declares it
+
+
+def supertranslation_hair(ck, src):
+    """The shells of Compere and Long's vacuum with the field C = ell (3 cos^2 theta - 1)/2, the
+    surfaces of theta and phi of the static chart at t = 0 and one rho, from rho = 2.6 ell, just
+    outside the supertranslation horizon's ridge at the equator, rho = 5 ell/2, out to 6 ell. The
+    metric of a shell is (rho - C - C'')^2 dtheta^2 + B^2 dphi^2, B = (rho - C) sin theta - C' cos theta,
+    a surface of revolution with circles of radius B, and every shell is drawn where it lies in the
+    Cartesian coordinates of the flat space it is cut from, by their second paper's map
+    X = (rho - C) n - C' e_theta: each profile is checked against B and against the height
+    z = (rho - C) cos theta + C' sin theta, which puts the equator at z = 0. Each shell is convex, its
+    principal radii rho - C - C'' = rho - ell (5 - 9 cos^2 theta)/2 and B/sin(theta) both positive,
+    so it is oblate, 2(rho + ell/2) across the equator against 2(rho - ell) from pole to pole, and its
+    meridian bends hardest at the equator, where its radius of curvature rho - 5 ell/2 falls to zero
+    on the ridge. Played as a movie in rho with a frame every 0.1 ell."""
+    marks = [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)]
+    size = 2 * (STH_MOMENTS[-1] + 0.5)
+
+    def moment(rho):
+        where = f"supertranslation hair, rho = {rho:.2f} ell"
+        sl = Slice(src, "supertranslation_hair", "static", "\\theta", "\\phi", {"t": 0, "rho": repr(rho)},
+                   functions={"C": STH_FIELD})
+        shell = Piece("shell", "sheet", sl, 0.0, math.pi, -sl.rise(0.0, math.pi / 2), 1,
+                      (("axis", "the pole $\\theta = 0$, on the axis of symmetry"),
+                       ("axis", "the pole $\\theta = \\pi$")), marks, size)
+        ck.isometry(where, shell)
+        C = lambda th: (3 * np.cos(th) ** 2 - 1) / 2  # noqa: E731
+        dC = lambda th: -3 * np.sin(th) * np.cos(th)  # noqa: E731
+        ck.radius(f"{where}, rho = B", shell, lambda th: (rho - C(th)) * np.sin(th) - dC(th) * np.cos(th), size)
+        # The profile starts from the pole theta = 0 at the bottom, so its height is minus the Cartesian z.
+        ck.form(f"{where}, z = (rho - C) cos(theta) + C' sin(theta)", shell,
+                lambda th: -((rho - C(th)) * np.cos(th) + dC(th) * np.sin(th)), size)
+        ck.add(f"{where}: the equator has the radius rho + ell/2", abs(float(sl.rho_at(math.pi / 2)) - (rho + 0.5)), 1e-9)
+        ck.add(f"{where}: a pole stands rho - ell from the equator", abs(sl.rise(0.0, math.pi / 2) - (rho - 1)), 1e-6)
+        return Surface([shell], label=f"$\\rho = {rho:g}\\,\\ell$", time=rho)
+
+    values, keys = movie_values(list(STH_MOMENTS), 0.1)
+    frames = [moment(rho) for rho in values]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the shell, which $\\theta$ and $\\phi$ cover but for its poles")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("shells", "The shells of constant $\\rho$", "$\\ell$", surfaces, fig.done(),
+                 movie=movie(frames, "$\\rho$", [f.time for f in frames]),
+                 settings="$\\ell$ is the unit of every length; each moment is a surface of constant $t$ and "
+                          "$\\rho$, drawn where it lies in the flat space it is cut from.",
+                 input=nr.STH_INPUT)]
+
+
 def bondi_sachs(ck, src):
     """The sphere of constant u and r of Bondi's chart, at the world tube r = 10 m_0 and at the
     middle of the burst the spacetime diagram declares, cu = 10 m_0, where the shear is greatest:
@@ -16647,6 +16699,7 @@ DRAWN = {
     "erez_rosen": erez_rosen,
     "distorted_schwarzschild": distorted_schwarzschild,
     "robinson_trautman": robinson_trautman,
+    "supertranslation_hair": supertranslation_hair,
     "bondi_sachs": bondi_sachs,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
@@ -16902,6 +16955,17 @@ CAPTIONS = {
         "$0.9983\\,\\pi r$ long, an oblate sphere flattened by half a percent. A quarter of the burst earlier and "
         "later it is prolate by a quarter of a percent, and before the burst it is round. A burst that carries off "
         "a thousandth of the mass strains space by this much ten masses out.",
+    ],
+    ("supertranslation_hair", "shells"): [
+        "The shells of the vacuum with the field $C = \\tfrac{1}{2}\\ell\\left(3\\cos^2\\theta - 1\\right)$, the surfaces "
+        "of constant $t$ and $\\rho$ from $\\rho = 2.6\\,\\ell$ out to $6\\,\\ell$, each drawn where it lies in the flat "
+        "space it is cut from, so every distance along it is the metric distance. The circle at $\\theta$ has the "
+        "radius $B = \\left(\\rho - C\\right)\\sin\\theta - C'\\cos\\theta$, and the height is "
+        "$\\left(\\rho - C\\right)\\cos\\theta + C'\\sin\\theta$, by Compère and Long's map.",
+        "Every shell is oblate, $2\\left(\\rho + \\ell/2\\right)$ across the equator and $2\\left(\\rho - \\ell\\right)$ "
+        "from pole to pole, where a sphere of radius $\\rho$ is $2\\rho$ both ways. Its meridian bends hardest at the "
+        "equator, with the radius of curvature $\\rho - 5\\ell/2$, so the shells grow a ridge round the equator as "
+        "$\\rho$ falls, and at $\\rho = 5\\ell/2$ the ridge lies on the supertranslation horizon.",
     ],
     ("robinson_trautman", "fronts"): [
         "A wave front of the Robinson-Trautman spacetime ($u$ and $r$ constant) at five retarded times, each "
