@@ -58,6 +58,11 @@
       "id": "distorted_schwarzschild",
       "kind": "family",
       "text": "The same recipe with the other quadrupole, the one that grows with distance and belongs to matter far away. It bends the horizon and leaves it regular, and Doroshkevich, Zel'dovich, and Novikov gave it in the same paper [doroshkevich1965]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "A Weyl field too, built on Newton's potential of a hoop, where Erez and Rosen's is built on a rod's with a quadrupole term added."
     }
   ],
   "references": [

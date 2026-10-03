@@ -109,6 +109,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `cartesian/circle`, the plane of $t$ and $\phi$ at $x = y = z = 0$: the cylinder meets it in its ring $x = 0$, the whole line $ct = 0$ from $\phi = 0$ to $2\pi$. The sphere stands at $x = a$, off this plane, and is not marked.
 - `cartesian`, the diamond of the plane of $t$ and $x$: the line $T = 0$ from $x = -a$ to $a$ and the point at $x = a$.
 
+### The three-brane and its throat
+
+- The embedding has two views at the moment $t = 0$, of two spacetimes: the three-brane's surface of $\rho$ and $\phi$ in the isotropic chart, $\rho$ from $L/20$ to $3L$, and the throat's cylinder of $\sigma$ and $\phi$ in the chart of the proper distance, $\sigma$ from $-L$ to $L$.
+- `isotropic/radial`, `areal/radial` and `horizon/radial`: the line $ct = 0$ over that stretch, which is $r = (\rho^4 + L^4)^{1/4}$ in the areal radius and $w = \rho/r$. The throat's cylinder is not marked.
+- `throat/radial` and `throat_proper/radial`: the line $ct = 0$ from $\sigma = -L$ to $L$, which is $r = L/e$ to $eL$. The three-brane's surface is not marked.
+- The conformal views of the three-brane: the line $T = 0$ of the exterior, $X = 2\arctan(\rho_*/L)$. The conformal views of the throat: the line $T = 0$ of the wedge.
+
 ### Near-horizon extreme Kerr
 
 - The embedding has two views at the moment $\tau = 0$ of the global chart: the equator, $y$ from $-2.25$ to $2.25$ with $\phi$, and the sphere of $\theta$ and $\phi$ at one event, drawn at $y = 0$.
@@ -384,6 +391,14 @@ The three embedding views are three spacetimes of one page, each the equator of 
 - `einstein_eddington_finkelstein/finkelstein`, drawn against $v - r$: the Einstein metric's moment, $v = r_*$, with `slices.kkbh_rstar`.
 - `dyonic/radial` and the conformal view `equal` draw the hole of equal charges, another member of the family than the holes of one charge embedded: not visible.
 - `electric`, `magnetic` and `einstein`, the conformal views: the line $T = 0$ through the bifurcation surface over the same stretch of $r$ on both sides; `ingoing` carries the electric hole's and `einstein_ingoing` the Einstein metric's.
+
+### The wormhole of Einstein-Dirac-Maxwell theory
+
+- The embedding is the equator at one moment of $t$, drawn at $t = 0$ at $r_0 = 1$ and $Q_e = 1/2$, $r$ from the throat $r_0$ to $6\,r_0$ on both sides.
+- `areal/radial`, one side of the throat: the line $ct = 0$ from $r = r_0$ to the box's edge at $6\,r_0$, which the embedding also reaches.
+- `bronnikov_kim/radial`, both sides in $u = \pm\sqrt{r - r_0}$: the line $ct = 0$ from $u = -\sqrt{5}$ to $\sqrt{5}$, cut to the box at $|u| = 2$.
+- `compact/radial`, both sides in $x = \pm\sqrt{1 - r_0/r}$: the line $ct = 0$ from $x = -0.913$ to $0.913$.
+- All three conformal views, the diamond in the tortoise coordinate: the line $T = 0$ through the throat from $6\,r_0$ on one side to $6\,r_0$ on the other, the same on each.
 
 ### Kaluza-Klein monopole
 
@@ -816,6 +831,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Bertotti-Robinson | line and point, twice | none | line and point, twice |
 | Plebański-Hacyan | line and point, twice; point, twice; none on the three views of the product with a flat plane | none | line and point, twice; point, twice; none on the three views of the product with a flat plane |
 | Cremmer-Scherk | line and point; line on the plane of the time and $\phi$ | none | line and point |
+| three-brane | line, five times | none | line, five times |
 | Bianchi I | four lines | none | none drawn |
 | cosmic string | none | whole drawing | line, line |
 | de Sitter | line, line, curve | none | line, line |

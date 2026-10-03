@@ -167,6 +167,11 @@ ROOT = Path(__file__).resolve().parents[2]
 METRICS_DIR = ROOT / "MFS" / "assets" / "data" / "metrics"
 
 DEFAULT_BUDGET_SECONDS = 120
+# The systems whose slowest tensor needs more than the default, each with what it takes. The
+# toroidal chart of Bach and Weyl's ring writes psi with the radical sqrt(cosh(zeta) - cos(sigma))
+# and e^(zeta/2) beside both elliptic integrals, and its Kretschmann scalar took 100 to 130 seconds
+# on 2 October 2026, as the machine was loaded.
+SYSTEM_BUDGET_SECONDS = {("bach_weyl_ring", "toroidal"): 480}
 
 LENGTH = sp.Symbol("L", positive=True)
 TIME = sp.Symbol("T", positive=True)
@@ -281,6 +286,33 @@ DIMENSIONS = {
     ("melvin", "ernst"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "B": "1/L",
     },
+    # Ernst and Wild's Kerr hole in Melvin's universe: m = GM/c^2 and a are lengths and B an
+    # inverse length; k, the value of H on the axis, H and the squared lapse N are pure numbers,
+    # Sigma, Delta, F and P areas, A the square of an area, and the dragging rate omega an inverse
+    # length, as the rate Omega at which the second chart's azimuth turns is.
+    ("kerr_melvin", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "B": "1/L", "k": "1",
+        "\\Sigma": "L**2", "\\Delta": "L**2", "A": "L**4", "H": "1", "\\omega": "1/L",
+        "N": "1", "F": "L**2", "P": "L**2",
+    },
+    ("kerr_melvin", "rotating"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "m": "L", "a": "L", "B": "1/L", "k": "1",
+        "\\Sigma": "L**2", "\\Delta": "L**2", "A": "L**4", "H": "1", "\\omega": "1/L",
+        "N": "1", "F": "L**2", "P": "L**2", "\\Omega": "1/L",
+    },
+    # Podolsky and Ovcharenko's Kerr hole in Bertotti and Robinson's field: m = GM/c^2 and a are
+    # lengths and B an inverse length; I_1, I_2, the conicity C, P, the conformal factor Omega and
+    # the squared lapse N are pure numbers, Delta, Sigma, Q, F and W areas, A the square of an area,
+    # and the dragging rate omega an inverse length. The static chart's f is a pure number.
+    ("kerr_bertotti_robinson", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "B": "1/L", "I_1": "1", "I_2": "1",
+        "C": "1", "\\Delta": "L**2", "\\Sigma": "L**2", "P": "1", "Q": "L**2", "\\Omega": "1", "A": "L**4",
+        "\\omega": "1/L", "N": "1", "F": "L**2", "W": "L**2",
+    },
+    ("kerr_bertotti_robinson", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "B": "1/L", "C": "1", "P": "1", "f": "1",
+        "\\Omega": "1",
+    },
     # sigma = G lambda/c^2, the mass per unit length lambda as a pure number, and the conicity C
     # are dimensionless. A power of the radius whose exponent holds sigma, or one of Kasner's
     # exponents, is read with the radius in a fixed unit, so rho^{2 - 4 sigma} is an area and
@@ -346,6 +378,20 @@ DIMENSIONS = {
     },
     ("erez_rosen", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "q": "1", "L": "1", "\\psi": "1",
+        "\\gamma": "1",
+    },
+    # Bach and Weyl's ring: m = GM/c^2 and the ring's radius a in Weyl's coordinates are lengths,
+    # l_2 is the greatest distance to the ring and kappa the parameter of the elliptic integrals.
+    ("bach_weyl_ring", "weyl"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "m": "L", "a": "L", "l_2": "L", "\\kappa": "1",
+        "\\psi": "1", "\\gamma": "1",
+    },
+    ("bach_weyl_ring", "toroidal"): {
+        "t": "T", "\\zeta": "1", "\\sigma": "1", "\\phi": "1", "m": "L", "a": "L", "\\kappa": "1",
+        "\\psi": "1", "\\gamma": "1",
+    },
+    ("bach_weyl_ring", "oblate_spheroidal"): {
+        "t": "T", "\\xi": "1", "\\eta": "1", "\\phi": "1", "m": "L", "a": "L", "\\kappa": "1", "\\psi": "1",
         "\\gamma": "1",
     },
     # m = GM/c^2 is a length and the quadrupole parameter q of the external field a pure number; U and
@@ -574,6 +620,13 @@ DIMENSIONS = {
     ("kasner_magnetic", "rosen"): {
         "\\eta": "1", "x": "L", "y": "L", "z": "L", "\\ell": "L",
     },
+    # Many black holes and wormholes in three dimensions: the one length is the anti-de Sitter
+    # radius. The disc's rho and the stereographic x and y are lengths, as Brill's lectures write
+    # them, and M is the pure number of the Banados-Teitelboim-Zanelli chart.
+    ("btz_multi_holes_wormholes", "sausage"): {"t": "T", "\\rho": "L", "\\phi": "1", "\\ell": "L"},
+    ("btz_multi_holes_wormholes", "stereographic"): {"\\tau": "T", "x": "L", "y": "L", "\\ell": "L"},
+    ("btz_multi_holes_wormholes", "free_fall"): {"T": "T", "\\rho": "L", "\\phi": "1", "\\ell": "L"},
+    ("btz_multi_holes_wormholes", "exterior"): {"t": "T", "r": "L", "\\phi": "1", "\\ell": "L", "M": "1"},
     # The other entry that keeps G and a mass explicit rather than folding them into a
     # length. The spin per unit mass a = J/(Mc) is a length, which is what makes
     # r^2 + a^2cos^2(theta) and r^2 - 2GMr/c^2 + a^2 areas.
@@ -889,6 +942,14 @@ DIMENSIONS = {
     ("plebanski_hacyan", "exceptional"): {"u": "L", "w": "L", "x": "L", "y": "L", "a": "L", "f": "1/L", "g": "1/L"},
     # Cremmer and Scherk's Minkowski space times a sphere: a is the sphere's radius.
     ("cremmer_scherk", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\theta": "1", "\\phi": "1", "a": "L"},
+    # The three-brane: L is the radius of its throat, and H, Gibbons, Horowitz and Townsend's w and
+    # the five angles of the sphere are pure numbers.
+    **{("three_brane_throat", chart): {
+        "t": "T", "x": "L", "y": "L", "z": "L", radial: unit, "\\alpha": "1", "\\beta": "1", "\\psi": "1",
+        "\\theta": "1", "\\phi": "1", "L": "L", **extra}
+       for chart, radial, unit, extra in (("isotropic", "\\rho", "L", {"H": "1"}), ("areal", "r", "L", {}),
+                                          ("horizon", "w", "1", {"r": "L"}), ("throat", "r", "L", {}),
+                                          ("throat_proper", "\\sigma", "L", {}))},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
@@ -906,6 +967,16 @@ DIMENSIONS = {
     ("elliptic_de_sitter", "kruskal"): {"U": "1", "V": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
     ("elliptic_de_sitter", "static"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
     ("elliptic_de_sitter", "planar"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\ell": "L"},
+    # Gott and Li's de Sitter space identified under a boost: beta is a length, the period of ct
+    # in the static chart and of l in the Kantowski-Sachs chart, and r_0 the de Sitter radius.
+    ("self_creating_universe", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\beta": "L"},
+    ("self_creating_universe", "kantowski_sachs"): {
+        "\\tau": "T", "l": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\beta": "L"},
+    ("self_creating_universe", "steady_state"): {
+        "\\tau": "T", "x": "L", "y": "L", "z": "L", "r_0": "L", "\\beta": "L"},
+    ("self_creating_universe", "conformal"): {
+        "\\eta": "L", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\beta": "L"},
     # The collapse is two charts. Inside, the comoving polar angle chi is dimensionless
     # and the scale factor carries the length, so an areal radius is a sin(chi) and a dot
     # on a is dimensionless; chi_0 marks the surface and a_m is the scale factor at
@@ -1030,6 +1101,13 @@ DIMENSIONS = {
     ("majumdar_papapetrou", "isotropic"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
     },
+    # The draining bathtub. Here c is the speed of sound, and the chart is x^0 = ct with that c. The
+    # strengths A and B of the radial flow and of the swirl are a speed times a length.
+    ("draining_bathtub", "laboratory"): {"t": "T", "r": "L", "\\theta": "1", "A": "L**2/T", "B": "L**2/T"},
+    ("draining_bathtub", "kerr_like"): {"T": "T", "r": "L", "\\phi": "1", "A": "L**2/T", "B": "L**2/T"},
+    ("draining_bathtub", "vortex_filament"): {
+        "t": "T", "r": "L", "\\theta": "1", "z": "L", "A": "L**2/T", "B": "L**2/T",
+    },
     # Bonnor's stars of charged dust. The potential U is a pure number, as Majumdar and Papapetrou's
     # is; the mass parameter m = GM/c^2, the radius r_0, the focal radius a and Lemos and Weinberg's
     # core length b are lengths, and the spheroidal u and its surface u_0 are pure numbers.
@@ -1056,6 +1134,28 @@ DIMENSIONS = {
     },
     ("bonnor_charged_dust", "quasi_black_hole"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "b": "L", "U": "1",
+    },
+    # The black holes of string theory with three and four charges. The radius r_0 of the horizon
+    # and the charge radii r_i are lengths, r_0^2 sinh^2 alpha_i = r_i^2 in five dimensions and
+    # r_0 sinh^2 alpha_i = r_i in four, and f and the harmonic functions H_i are pure numbers.
+    ("string_bh_three_four_charges", "five_charges"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "r_1": "L", "r_2": "L",
+        "r_3": "L", "f": "1", "H_1": "1", "H_2": "1", "H_3": "1",
+    },
+    ("string_bh_three_four_charges", "five_extreme"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_1": "L", "r_2": "L", "r_3": "L",
+        "H_1": "1", "H_2": "1", "H_3": "1",
+    },
+    ("string_bh_three_four_charges", "five_areal"): {
+        "t": "T", "\\rho": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "r_q": "L",
+    },
+    ("string_bh_three_four_charges", "four_charges"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "r_1": "L", "r_2": "L", "r_3": "L",
+        "r_4": "L", "f": "1", "H_1": "1", "H_2": "1", "H_3": "1", "H_4": "1",
+    },
+    ("string_bh_three_four_charges", "four_extreme"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_1": "L", "r_2": "L", "r_3": "L", "r_4": "L",
+        "H_1": "1", "H_2": "1", "H_3": "1", "H_4": "1",
     },
     # Israel, Wilson and Perjes's W = |U| is a pure number, as Majumdar and Papapetrou's U is, and
     # omega stands beside c dt, so it is a length; the spin a and the NUT parameter l are lengths too.
@@ -1178,6 +1278,30 @@ DIMENSIONS = {
     ("kerr_taub_nut", "plebanski"): {
         "\\tau": "L", "q": "L", "p": "L", "\\sigma": "1/L", "m": "L", "a": "L", "l": "L",
         "Q": "L**2", "P": "L**2",
+    },
+    # Brill's charged Taub-NUT. The mass enters as the length m = GM/c^2, as on the Taub-NUT page,
+    # and the NUT parameter l and the charge radius r_q are lengths. Sigma and Delta are areas. The
+    # times v and u are lengths. In the chart of Brill's universe tau is a length that stands as
+    # the time, psi is an Euler angle, and U is an area.
+    ("brill_charged_taub_nut", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L", "r_q": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("brill_charged_taub_nut", "one_string"): {
+        "t_N": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L", "r_q": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("brill_charged_taub_nut", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L", "r_q": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("brill_charged_taub_nut", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L", "r_q": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("brill_charged_taub_nut", "taub"): {
+        "\\tau": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L", "r_q": "L",
+        "\\Sigma": "L**2", "U": "L**2",
     },
     # The Kaluza-Klein monopole has one length, m, with G nowhere in the line element. Gross
     # and Perry's fifth coordinate x_5 is a length of period 16 pi m, and the Hopf angle psi is a pure
@@ -1644,6 +1768,18 @@ DIMENSIONS = {
     ("damour_solodukhin", "einstein_rosen"): {
         "t": "T", "u": "L**(1/2)", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\lambda": "1",
     },
+    # Blazquez-Salcedo, Knoll and Radu's charge and mass are lengths beside the throat's radius r_0.
+    # Bronnikov and Kim's u has u^2 = r - r_0, so it carries the square root of a length, and the
+    # compact x, r = r_0/(1 - x^2), is a pure number.
+    ("einstein_dirac_maxwell_wormhole", "areal"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "Q_e": "L", "M": "L",
+    },
+    ("einstein_dirac_maxwell_wormhole", "bronnikov_kim"): {
+        "t": "T", "u": "L**(1/2)", "\\theta": "1", "\\phi": "1", "r_0": "L", "Q_e": "L", "M": "L",
+    },
+    ("einstein_dirac_maxwell_wormhole", "compact"): {
+        "t": "T", "x": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "Q_e": "L", "M": "L",
+    },
     # Einstein and Rosen's u has u^2 = r - r_s on the neutral bridge, the square root of a length, and
     # u^2 = r^2 - r_q^2 on the charged one, a length; r_q is the charge radius, their epsilon/sqrt(2).
     ("einstein_rosen_bridge", "bridge"): {
@@ -2091,6 +2227,9 @@ HELD = {
     # the logarithm of Schwarzschild's 1 - 2m/r: held, as the first Morgan-Morgan disc's are.
     ("erez_rosen", "prolate_spheroidal"): ("psi", "gamma"),
     ("erez_rosen", "spherical"): ("psi", "gamma"),
+    # Weyl's two functions for Bach and Weyl's ring, complete elliptic integrals over radicals:
+    # held, as Erez and Rosen's are.
+    **{("bach_weyl_ring", chart): ("psi", "gamma") for chart in ("weyl", "toroidal", "oblate_spheroidal")},
     # The distortion U and V of Schwarzschild's black hole in a tidal field, polynomials in the
     # coordinates, and Weyl's own psi and gamma in his chart: held, so that every value is written
     # in them and their derivatives, as Erez and Rosen's are.
@@ -2129,6 +2268,27 @@ HELD = {
     # Maitra's two functions, each a logarithm of 1 + s beside powers of the root s: held, a value
     # is a rational function of r, a, s, k and e^gamma.
     ("maitra_dust", "cylindrical"): ("k", "gamma"),
+    # Ernst and Wild's hole in the four functions of a stationary field with an axis, the squared
+    # lapse N, F, P and the dragging rate omega, and Kerr's Delta: held, every value is written in
+    # the five and their derivatives, as the line element is. Written out, the Riemann tensor did
+    # not print in five minutes; held, the whole chart takes seconds.
+    ("kerr_melvin", "boyer_lindquist"): ("Delta", "omega", "N", "F", "P"),
+    ("kerr_melvin", "rotating"): ("Delta", "omega", "N", "F", "P"),
+    # The harmonic functions H_i of the black holes of string theory, and f of the charts off
+    # extremality: held, a value is a rational function of them and r, as the line element is.
+    ("string_bh_three_four_charges", "five_charges"): ("f", "H_1", "H_2", "H_3"),
+    ("string_bh_three_four_charges", "five_extreme"): ("H_1", "H_2", "H_3"),
+    ("string_bh_three_four_charges", "four_charges"): ("f", "H_1", "H_2", "H_3", "H_4"),
+    ("string_bh_three_four_charges", "four_extreme"): ("H_1", "H_2", "H_3", "H_4"),
+    # The areal radius of the three-brane on Gibbons, Horowitz and Townsend's chart, a fourth root
+    # of 1 - w^4: held, a value is a rational function of w and r.
+    ("three_brane_throat", "horizon"): ("r",),
+    # Podolsky and Ovcharenko's Kerr hole in Bertotti and Robinson's field, in the same four functions
+    # of a stationary field with an axis, the squared lapse N, F, W and the dragging rate omega, with
+    # their Q and P: held, every value is written in the six and their derivatives. The static chart
+    # holds the conformal factor Omega, f and P, as its line element writes them.
+    ("kerr_bertotti_robinson", "boyer_lindquist"): ("Q", "P", "omega", "N", "F", "W"),
+    ("kerr_bertotti_robinson", "static"): ("Omega", "f", "P"),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2177,6 +2337,42 @@ RATES = {
                            " - \\left(\\partial_\\theta\\psi\\right)^2\\right)"
                            " - 2\\left(r - m\\right)\\sin\\theta\\,\\partial_r\\psi\\,\\partial_\\theta\\psi\\right)"},
     },
+    # Bach and Weyl's ring: psi's derivatives hold the two complete elliptic integrals, whose own
+    # derivatives are written in the two again, and gamma's are Weyl's quadrature in each chart.
+    ("bach_weyl_ring", "weyl"): {
+        "psi": {"\\rho": "\\dfrac{m}{\\pi\\rho\\,l_2}\\left(\\mathrm{K}\\left(\\kappa\\right)"
+                         " - \\dfrac{\\left(a^2 - \\rho^2 + z^2\\right)\\mathrm{E}\\left(\\kappa\\right)}"
+                         "{\\left(1 - \\kappa\\right)l_2^2}\\right)",
+                "z": "\\dfrac{2m\\,z\\,\\mathrm{E}\\left(\\kappa\\right)}{\\pi\\left(1 - \\kappa\\right)l_2^3}"},
+        "gamma": {"\\rho": "\\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2\\right)",
+                  "z": "2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi"},
+    },
+    # The toroidal chart's rates of psi are written with no psi in them: psi, the radical and K are
+    # related, and a rate written in all three would be compared as if they were not.
+    ("bach_weyl_ring", "toroidal"): {
+        "psi": {"\\zeta": "-\\dfrac{\\sqrt{2}\\,m}{\\pi a}e^{-\\zeta/2}\\sqrt{\\cosh\\zeta - \\cos\\sigma}\\left("
+                          "\\dfrac{\\mathrm{K}\\left(\\kappa\\right)}{2}\\left(\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma} - \\coth\\zeta\\right)"
+                          " + \\dfrac{e^{\\zeta}\\mathrm{E}\\left(\\kappa\\right)}{2\\sinh\\zeta}\\right)",
+                "\\sigma": "-\\dfrac{\\sqrt{2}\\,m}{\\pi a}e^{-\\zeta/2}\\sqrt{\\cosh\\zeta - \\cos\\sigma}"
+                           "\\dfrac{\\mathrm{K}\\left(\\kappa\\right)\\sin\\sigma}{2\\left(\\cosh\\zeta - \\cos\\sigma\\right)}"},
+        "gamma": {"\\zeta": "\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma}\\left(\\left(1 - \\cosh\\zeta\\cos\\sigma\\right)"
+                            "\\left(\\left(\\partial_\\zeta\\psi\\right)^2 - \\left(\\partial_\\sigma\\psi\\right)^2\\right)"
+                            " - 2\\sinh\\zeta\\sin\\sigma\\,\\partial_\\zeta\\psi\\,\\partial_\\sigma\\psi\\right)",
+                  "\\sigma": "\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma}\\left(\\sinh\\zeta\\sin\\sigma"
+                             "\\left(\\left(\\partial_\\zeta\\psi\\right)^2 - \\left(\\partial_\\sigma\\psi\\right)^2\\right)"
+                             " + 2\\left(1 - \\cosh\\zeta\\cos\\sigma\\right)\\partial_\\zeta\\psi\\,\\partial_\\sigma\\psi\\right)"},
+    },
+    ("bach_weyl_ring", "oblate_spheroidal"): {
+        "psi": {"\\xi": "\\dfrac{2m\\,\\xi\\,\\mathrm{E}\\left(\\kappa\\right)}{\\pi a\\sqrt{1 + \\xi^2}\\left(\\xi^2 + \\eta^2\\right)}",
+                "\\eta": "\\dfrac{2m\\,\\eta\\sqrt{1 + \\xi^2}\\left(\\mathrm{E}\\left(\\kappa\\right) - \\left(1 - \\kappa\\right)\\mathrm{K}\\left(\\kappa\\right)\\right)}"
+                         "{\\pi a\\left(1 - \\eta^2\\right)\\left(\\xi^2 + \\eta^2\\right)}"},
+        "gamma": {"\\xi": "\\dfrac{1 - \\eta^2}{\\xi^2 + \\eta^2}\\left(\\xi\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2"
+                          " - \\xi\\left(1 - \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2"
+                          " - 2\\eta\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi\\right)",
+                  "\\eta": "\\dfrac{1 + \\xi^2}{\\xi^2 + \\eta^2}\\left(\\eta\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2"
+                           " - \\eta\\left(1 - \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2"
+                           " + 2\\xi\\left(1 - \\eta^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi\\right)"},
+    },
     ("misner_zapolsky", "tolman_v"): {"Z": {"r": "\\dfrac{7Z - 4}{3r}"}},
     # The black hole in a tidal field in Weyl's chart: psi's derivatives are rational in rho, z and the
     # prolate spheroidal x and y the chart names, and gamma's are Weyl's quadrature. Written out and
@@ -2205,6 +2401,21 @@ RATES = {
         "k": {"r": "\\dfrac{2r}{a\\left(1 + s\\right)}"},
         "gamma": {"r": "-\\dfrac{2r}{a^2\\left(1 + s\\right)^2}"},
     },
+    # The harmonic functions of the black holes of string theory fall as r^-2 in five dimensions
+    # and as r^-1 in four, and f rises the same way, so each slope is the name less one over r.
+    ("string_bh_three_four_charges", "five_charges"): {
+        "f": {"r": "\\dfrac{2\\left(1 - f\\right)}{r}"},
+        **{f"H_{i}": {"r": f"-\\dfrac{{2\\left(H_{i} - 1\\right)}}{{r}}"} for i in (1, 2, 3)}},
+    ("string_bh_three_four_charges", "five_extreme"): {
+        f"H_{i}": {"r": f"-\\dfrac{{2\\left(H_{i} - 1\\right)}}{{r}}"} for i in (1, 2, 3)},
+    ("string_bh_three_four_charges", "four_charges"): {
+        "f": {"r": "\\dfrac{1 - f}{r}"},
+        **{f"H_{i}": {"r": f"-\\dfrac{{H_{i} - 1}}{{r}}"} for i in (1, 2, 3, 4)}},
+    ("string_bh_three_four_charges", "four_extreme"): {
+        f"H_{i}": {"r": f"-\\dfrac{{H_{i} - 1}}{{r}}"} for i in (1, 2, 3, 4)},
+    # r = L (1 - w^4)^(-1/4), so dr/dw = w^3 r/(1 - w^4): L is the constant of integration, and the
+    # line element is written in w and r alone, so the two have no relation a value could hold.
+    ("three_brane_throat", "horizon"): {"r": {"w": "\\dfrac{w^3r}{1 - w^4}"}},
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across
@@ -2344,6 +2555,72 @@ class EllipticF(sp.Function):
         return sp.Expr._from_mpmath(value, prec)
 
 
+class EllipticK(sp.Function):
+    """The complete elliptic integral of the first kind, K(m), the integral of
+    1/sqrt(1 - m sin^2 t) from t = 0 to pi/2, with m the parameter, the square of the modulus:
+    what the reader reads \\mathrm{K}\\left(m\\right) as. It is sympy's elliptic_k under a name of
+    its own, as EllipticF is, so that it carries its own numbers for lambdify, and its derivative
+    is (E - (1 - m) K)/(2 m (1 - m))."""
+    nargs = 1
+    is_real = True
+
+    @classmethod
+    def eval(cls, m):
+        if m == 0:
+            return sp.pi / 2
+
+    @staticmethod
+    def _imp_(m):
+        import mpmath
+        if isinstance(m, mpmath.mpf):
+            return mpmath.ellipk(m)
+        from scipy.special import ellipk
+        return ellipk(m)
+
+    def fdiff(self, argindex=1):
+        (m,) = self.args
+        return (EllipticE(m) - (1 - m) * EllipticK(m)) / (2 * m * (1 - m))
+
+    def _eval_evalf(self, prec):
+        import mpmath
+        m = self.args[0]._to_mpmath(prec + 20)
+        with mpmath.workprec(prec + 20):
+            value = mpmath.ellipk(m)
+        return sp.Expr._from_mpmath(value, prec)
+
+
+class EllipticE(sp.Function):
+    """The complete elliptic integral of the second kind, E(m), the integral of
+    sqrt(1 - m sin^2 t) from t = 0 to pi/2, with m the parameter: what the reader reads
+    \\mathrm{E}\\left(m\\right) as. Its derivative is (E - K)/(2 m)."""
+    nargs = 1
+    is_real = True
+
+    @classmethod
+    def eval(cls, m):
+        if m == 0:
+            return sp.pi / 2
+
+    @staticmethod
+    def _imp_(m):
+        import mpmath
+        if isinstance(m, mpmath.mpf):
+            return mpmath.ellipe(m)
+        from scipy.special import ellipe
+        return ellipe(m)
+
+    def fdiff(self, argindex=1):
+        (m,) = self.args
+        return (EllipticE(m) - EllipticK(m)) / (2 * m)
+
+    def _eval_evalf(self, prec):
+        import mpmath
+        m = self.args[0]._to_mpmath(prec + 20)
+        with mpmath.workprec(prec + 20):
+            value = mpmath.ellipe(m)
+        return sp.Expr._from_mpmath(value, prec)
+
+
 FUNCTIONS = {
     "sin": sp.sin, "cos": sp.cos, "tan": sp.tan, "cot": sp.cot,
     "sec": sp.sec, "csc": sp.csc, "sinh": sp.sinh, "cosh": sp.cosh,
@@ -2360,6 +2637,9 @@ FUNCTIONS = {
     # The incomplete elliptic integral of the first kind, \\mathrm{F}(\\varphi \\mid m), for the mass
     # function of Born and Infeld's point charge.
     "ELLIPF": EllipticF,
+    # The complete elliptic integrals of the first and second kinds, \\mathrm{K}(m) and
+    # \\mathrm{E}(m) with m the parameter, for the potential of Bach and Weyl's ring.
+    "ELLIPK": EllipticK, "ELLIPE": EllipticE,
 }
 
 
@@ -3150,6 +3430,16 @@ class Reader:
                 value = function
             self.parameters[plain] = self.local[plain] = value
             self.known.add(plain)
+        # A definition may hold a name defined before it, as the squared lapse of Ernst and Wild's
+        # hole holds H, which holds Kerr's A, which holds Delta: each is written out here, so that
+        # one substitution of the held names leaves none, in the checker and in every drawing.
+        for function in list(self.held):
+            value = self.held[function]
+            for _ in self.held:
+                if not value.atoms(sp.core.function.AppliedUndef) & set(self.held):
+                    break
+                value = value.subs(self.held).doit()
+            self.held[function] = value
         # A held name whose first derivatives the system declares in RATES is never written out:
         # each declared derivative is checked here against the name's own definition, and
         # surface() then writes every derivative of the name by them.
@@ -3213,6 +3503,19 @@ class Reader:
         expression = expression.subs(self.held).doit() if self.held else expression
         expression = on_the_shock(expression) if self.pulse else expression
         return self.truncated(expression) if self.order else expression
+
+    def written(self, expression):
+        """The expression with its held names written out one at a time: each held name and each
+        derivative of one in it is written out on its own and put in canonical form before it is
+        set back. It is what surface() gives, reached another way, for a chart whose names run to
+        pages: differentiated inside the whole expression, the squared lapse of Ernst and Wild's
+        hole spread its quotients through every term, and a value that took two minutes this way
+        did not finish that way."""
+        held = set(self.held)
+        out = {}
+        for atom in expression.atoms(sp.Derivative) | (expression.atoms(sp.core.function.AppliedUndef) & held):
+            out[atom] = norm(atom.subs(self.held).doit())
+        return expression.xreplace(out)
 
     def by_rates(self, expression):
         """The expression with every derivative of a held name written by the declared first
@@ -3436,6 +3739,7 @@ class Reader:
         text = text.replace("\\mathrm{arsinh}", " ASINH ").replace("\\arcsin", " ASIN ")
         text = text.replace("\\mathrm{W}", " LAMBERTW ")
         text = text.replace("\\mathrm{F}", " ELLIPF ").replace("\\mid", ",")
+        text = text.replace("\\mathrm{K}", " ELLIPK ").replace("\\mathrm{E}", " ELLIPE ")
         text = expand_superscript_braces(text)
         text = text.replace("^", "**")
         # A trig call written bare, as \sin^2\theta or \cot\theta rather than sin(theta).
@@ -4042,6 +4346,20 @@ def beyond_order(reader, value):
     return reader.order is not None and norm(value - reader.truncated(value)) != 0
 
 
+def agree_held(reader, value, expected):
+    """Whether two values of a system that holds names agree as functions of those names, in
+    which case they agree written out as well and need not be. It is asked only of a system
+    with no declared rates, order, pulse or relation among its parameters, where surface() does
+    nothing but write the names out, held_alone: Ernst and Wild's chart holds five names whose
+    second derivatives run to pages, and its Riemann tensor compared written out did not finish."""
+    return held_alone(reader) and norm(value - expected) == 0
+
+
+def held_alone(reader):
+    """Whether surface() does nothing to a value of this system but write its held names out."""
+    return bool(reader.held) and not (reader.rates or reader.order or reader.pulse or reader.relations)
+
+
 def compare_block(report, reader, where, published, computed, variance, coords, time_coords, c, cut=True):
     """Every published component against sympy, and every omitted one against zero. In a
     system kept to an order a value has to be cut at it as well, unless `cut` is off, as it
@@ -4066,9 +4384,11 @@ def compare_block(report, reader, where, published, computed, variance, coords, 
             continue
         if cut and beyond_order(reader, value):
             report.disagree(where, f"{names} published as {entry['value']} carries a term beyond the order kept")
+        expected = _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords)
+        if agree_held(reader, value, expected):
+            continue
         value = reader.surface(value)
-        expected = reader.surface(
-            _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords))
+        expected = reader.surface(expected)
         if norm(value - expected) != 0:
             report.disagree(where, f"{names} published as {entry['value']} "
                                    f"({norm(value)}), sympy says {norm(expected)}")
@@ -4113,6 +4433,8 @@ def compare_scalar(report, reader, where, published, computed):
         return
     if beyond_order(reader, value):
         report.disagree(where, f"published as {published.strip()} carries a term beyond the order kept")
+    if away is None and agree_held(reader, value, computed):
+        return
     value = reader.surface(value)
     computed = reader.surface(computed)
     if away is not None:
@@ -4141,19 +4463,24 @@ def compare_geodesics(report, reader, where, published, gamma, coords, time_coor
             continue
         if beyond_order(reader, residual):
             report.disagree(where, f"{equation!r} carries a term beyond the order kept")
-        residual = reader.surface(residual)
+        held = residual
+        residual = residual if held_alone(reader) else reader.surface(residual)
         carried = [name for name in coords if residual.has(reader.ddot[name])]
         if len(carried) != 1:
             report.disagree(where, f"{equation!r} carries second derivatives of {carried}, expected one")
             continue
         name = carried[0]
         mu = coords.index(name)
-        expected = reader.surface(reader.ddot[name] + sum(
+        expected = reader.ddot[name] + sum(
             gamma[mu][nu][rho]
             * c ** variance_weight("ull", coords, [mu, nu, rho], time_coords)
             * reader.dot[coords[nu]] * reader.dot[coords[rho]]
             for nu in range(len(coords)) for rho in range(len(coords))
-        ))
+        )
+        if agree_held(reader, held, expected) or agree_held(reader, held, -expected):
+            continue
+        residual = reader.surface(held)
+        expected = reader.surface(expected)
         if norm(residual - expected) != 0 and norm(residual + expected) != 0:
             report.disagree(where, f"{name} equation {equation!r} is not the geodesic equation, "
                                    f"sympy makes the residual {norm(expected)}")
@@ -4165,6 +4492,7 @@ RANK4_VARIANTS = {"llll": (None, "llll"), "ulll": ((0,), "ulll")}
 
 def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     where = f"{metric_id}/{entry['id']}"
+    seconds = max(seconds, SYSTEM_BUDGET_SECONDS.get((metric_id, entry["id"]), 0))
     coords = entry["coords"]
     report.systems += 1
 

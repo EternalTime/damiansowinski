@@ -54,6 +54,11 @@
       "text": "The same world with a negative cosmological constant grows a black hole. The cones lie between anti-de Sitter space and the lightest hole, and two particles that collide hard enough make one [banados1992, matschull1999]."
     },
     {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "family",
+      "text": "With a negative cosmological constant the same cutting and gluing makes black holes, any number of them joined behind their horizons. Alan Steif put particles and holes on one hyperbolic plane in 1995 [steif1996, brill1996]."
+    },
+    {
       "id": "quantum_btz",
       "kind": "family",
       "text": "With a negative cosmological constant and quantum fields around it, the cone of a particle is dressed with a horizon, which hides its singularity [emparan2002holograms, emparan2020qbtz]."
@@ -77,6 +82,8 @@
     "deser1984cosmological",
     "banados1992",
     "matschull1999",
+    "steif1996",
+    "brill1996",
     "emparan2002holograms",
     "emparan2020qbtz"
   ],

@@ -63,6 +63,11 @@
       "id": "belinski_zakharov",
       "kind": "family",
       "text": "Pomeransky derived the hole of five dimensions as two solitons, by Belinski and Zakharov's inverse scattering method [pomeransky2006]."
+    },
+    {
+      "id": "string_bh_three_four_charges",
+      "kind": "family",
+      "text": "Two ways of dressing Tangherlini's hole of five dimensions: spin here, three charges there. Cvetič and Youm's rotating solution has both at once [cvetic1996rotating]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "murata2008",
     "grossperry1983",
     "elvang2007",
-    "pomeransky2006"
+    "pomeransky2006",
+    "cvetic1996rotating"
   ],
   "coordinates": [
     {
