@@ -9361,14 +9361,14 @@ def universe_from_nothing(ck, src):
     ck.add("Universe from nothing: g_aa < 0 above the join, a Lorentzian surface",
            float(max(0.0, np.max(msl.gxx_at(above)))), 0.0)
     ck.stops("Universe from nothing, above the join in flat space", sl, above)
-    text = "the equator $a = \\ell$ of the four sphere, which is the waist of de Sitter space"
+    text = "the equator $a = \\ell$ of the 4-sphere, which is the waist of de Sitter space"
     bowl = Piece("four_sphere", "sheet", sl, 0.0, join, -1.0, 1,
-                 (("axis", "the south pole $a = 0$ of the four sphere, a point like any other on it"), ("join", text)),
+                 (("axis", "the south pole $a = 0$ of the 4-sphere, a point like any other on it"), ("join", text)),
                  [(0.5, "r", None), (math.sqrt(3) / 2, "r", None), (join, "horizon", "$a = \\ell$")], size)
     skirt = Piece("de_sitter", "sheet", msl, join, top, 0.0, 1,
                   (("join", text), ("edge", "the skirt runs on as the universe inflates, to $a \\to \\infty$")),
                   [(1.5, "r", None), (2.0, "r", None), (top, "r", "$2.5\\,\\ell$")], size)
-    ck.isometry("Universe from nothing, the four sphere in flat space", bowl)
+    ck.isometry("Universe from nothing, the 4-sphere in flat space", bowl)
     ck.isometry("Universe from nothing, de Sitter space in Minkowski space", skirt)
     for p in (bowl, skirt):
         ck.radius(f"Universe from nothing, {p.id}, rho = a", p, lambda a: a, size)
@@ -9376,7 +9376,7 @@ def universe_from_nothing(ck, src):
             lambda a: -np.sqrt(np.maximum(1 - a * a, 0)), size)
     ck.form("Universe from nothing, the hyperboloid Z = sqrt(a^2 - l^2)", skirt,
             lambda a: np.sqrt(np.maximum(a * a - 1, 0)), size)
-    ck.join("Universe from nothing, the four sphere in flat space and de Sitter space in Minkowski space at a = l",
+    ck.join("Universe from nothing, the 4-sphere in flat space and de Sitter space in Minkowski space at a = l",
             bowl, join, skirt, join)
     surface = Surface([bowl, skirt])
     fig = figure_of([surface], {"sheet": "cover"}, size)
@@ -9384,11 +9384,11 @@ def universe_from_nothing(ck, src):
     ring_label(fig, [0, 0, 0], *skirt.at(top), "$a = 2.5\\,\\ell$", dx=10)
     fig.legend("fill", "cover", "the slice $\\chi = \\theta = \\pi/2$ of the scale factor chart, which $a$ and "
                                 "$\\phi$ cover")
-    fig.legend("line", "r", "$a$ constant, at $\\ell/2$ and $\\sqrt{3}\\,\\ell/2$ on the four sphere and at $1.5$, "
+    fig.legend("line", "r", "$a$ constant, at $\\ell/2$ and $\\sqrt{3}\\,\\ell/2$ on the 4-sphere and at $1.5$, "
                             "$2$ and $2.5$ times $\\ell$ on de Sitter space, each there a moment of the closed slicing")
     fig.legend("line", "horizon", "the join $a = \\ell$, where the bowl and the skirt share a vertical tangent")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
-    return [view("bowl", "The four sphere and de Sitter space", "$\\ell$", [surface], fig.done(),
+    return [view("bowl", "The 4-sphere and de Sitter space", "$\\ell$", [surface], fig.done(),
                  settings="$\\ell = 1$, the unit of every length. Every length along the skirt above $a = \\ell$ is "
                           "measured with $dX^2 + dY^2 - dZ^2$, where it is timelike along the profile.")]
 
@@ -17744,7 +17744,7 @@ CAPTIONS = {
     ("universe_from_nothing", "bowl"): [
         "The slice $\\chi = \\theta = \\pi/2$ of the universe from nothing, its metric $da^2/(1 - a^2/\\ell^2) + "
         "a^2\\,d\\phi^2$, with every distance along the surface the metric distance. Below $a = \\ell$ it is a "
-        "hemisphere of radius $\\ell$ in flat space, from the south pole of the four sphere up to its equator.",
+        "hemisphere of radius $\\ell$ in flat space, from the south pole of the 4-sphere up to its equator.",
         "Above $a = \\ell$ the same line element is Lorentzian, and the slice is the hyperboloid "
         "$Z = \\sqrt{a^2 - \\ell^2}$ in Minkowski space $dX^2 + dY^2 - dZ^2$, de Sitter space from its waist "
         "upward, each circle a moment of the closed slicing. The bowl and the skirt meet on the circle "

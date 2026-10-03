@@ -925,8 +925,8 @@ DIMENSIONS = {
         "\\tau": "T", "x": "L", "y": "L", "z": "L", "r_0": "L", "\\beta": "L"},
     ("self_creating_universe", "conformal"): {
         "\\eta": "L", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\beta": "L"},
-    # The universe from nothing: l is the radius of the four sphere and of de Sitter's waist. The
-    # four sphere's tau and the scale factor a are lengths, with no c, and the conformal eta is a pure number.
+    # The universe from nothing: l is the radius of the 4-sphere and of de Sitter's waist. The
+    # 4-sphere's tau and the scale factor a are lengths, with no c, and the conformal eta is a pure number.
     ("universe_from_nothing", "closed"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
     ("universe_from_nothing", "four_sphere"): {"\\tau": "L", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
     ("universe_from_nothing", "scale_factor"): {"a": "L", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},

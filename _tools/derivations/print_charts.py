@@ -1534,10 +1534,10 @@ UFN_ANGLES = ["\\chi \\in [0, \\pi]", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 
 
 def universe_from_nothing(system):
     """Vilenkin's universe created from nothing, Phys. Lett. B 117, 25 (1982), and the saddle of Hartle
-    and Hawking's no boundary wave function: the southern half of a four sphere of radius l joined at
+    and Hawking's no-boundary wave function: the southern half of a 4-sphere of radius l joined at
     its equator to the waist of de Sitter's closed universe. Five charts: the closed slicing, his (2)
     and (4), a = l cosh(ct/l), and Spradlin, Strominger and Volovich's global chart (7) to (9)\\; the
-    four sphere, his (5), a = l cos(tau/l) with ct changed to -i tau\\; the scale factor chart, his (3)
+    4-sphere, his (5), a = l cos(tau/l) with ct changed to -i tau\\; the scale factor chart, his (3)
     and its Euclidean form solved for the time, one line element that is Riemannian for a < l and
     Lorentzian for a > l\\; the conformal chart, Spradlin, Strominger and Volovich's (10) and (11)\\; and
     Feldbrugge, Lehners and Turok's gauge, their (14) with N -> N/a and (19), in which a^2 is a
@@ -1548,10 +1548,10 @@ def universe_from_nothing(system):
         "closed": {
             "name": "Closed Slicing", "coords": ["t", "\\chi", "\\theta", "\\phi"],
             "domains": ["t \\in [0, \\infty)"] + UFN_ANGLES
-                       + ["t = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"],
+                       + ["t = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"],
             "line": lambda c: f"ds^2 = -{c + '^2' if c else ''}dt^2 + \\ell^2\\cosh^2({c}t/\\ell){UFN_SPHERE}"},
         "four_sphere": {
-            "name": "Four Sphere", "coords": ["\\tau", "\\chi", "\\theta", "\\phi"],
+            "name": "4-Sphere", "coords": ["\\tau", "\\chi", "\\theta", "\\phi"],
             "domains": ["\\tau \\in [-\\pi\\ell/2, 0]"] + UFN_ANGLES
                        + ["\\tau = -\\pi\\ell/2 \\;\\text{(the south pole)}",
                           "\\tau = 0 \\;\\text{(the equator, joined to the waist of the closed slicing)}"],
@@ -1565,13 +1565,13 @@ def universe_from_nothing(system):
         "conformal": {
             "name": "Conformal", "coords": ["\\eta", "\\chi", "\\theta", "\\phi"],
             "domains": ["\\eta \\in [0, \\pi/2)"] + UFN_ANGLES
-                       + ["\\eta = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"],
+                       + ["\\eta = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"],
             "line": lambda c: ("ds^2 = \\dfrac{\\ell^2}{\\cos^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\theta^2"
                                " + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)")},
         "lapse": {
             "name": "Quadratic Gauge", "coords": ["t", "\\chi", "\\theta", "\\phi"],
             "domains": ["t \\in [0, \\infty)"] + UFN_ANGLES
-                       + ["t = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"],
+                       + ["t = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"],
             "line": lambda c: (f"ds^2 = -\\dfrac{{\\ell^2{c + '^2' if c else ''}dt^2}}{{\\ell^2 + {c + '^2' if c else ''}t^2}}"
                                f" + \\left(\\ell^2 + {c + '^2' if c else ''}t^2\\right){UFN_SPHERE}")},
     }
@@ -1599,7 +1599,7 @@ def universe_from_nothing(system):
 
 
 def ufn_circular(x):
-    """Each value of the four sphere factored, with (sin x + 1)(sin x - 1), which the factoring
+    """Each value of the 4-sphere factored, with (sin x + 1)(sin x - 1), which the factoring
     leaves standing, written as -cos^2 x, so that sin x cos x stays as it is and a ratio of the two
     reads as tan x."""
     def pretty(value):
@@ -1614,7 +1614,7 @@ def ufn_embedding(system, coords, ell, branch=None):
     """(X_0, X_1, ..., X_4) of the chart's events, with (X_1, ..., X_4) = a n for the unit vector n
     of the 3-sphere's angles: on the hyperboloid -X_0^2 + X_1^2 + ... + X_4^2 = l^2 in Minkowski
     space for the Lorentzian charts, and on the sphere X_0^2 + ... + X_4^2 = l^2 in Euclid's for the
-    four sphere, X_0 = l sin(tau/l) negative on the southern half. The scale factor chart lands on
+    4-sphere, X_0 = l sin(tau/l) negative on the southern half. The scale factor chart lands on
     the sphere for branch "below", a < l, and on the hyperboloid for "above", a > l."""
     x0, chi, theta, phi = coords
     n = [sp.cos(chi), sp.sin(chi) * sp.cos(theta), sp.sin(chi) * sp.sin(theta) * sp.cos(phi),
@@ -1631,9 +1631,9 @@ def ufn_embedding(system, coords, ell, branch=None):
 
 
 def universe_from_nothing_check(chart, system):
-    """The chart is the four sphere or de Sitter's hyperboloid of radius l pulled back, Riemannian
+    """The chart is the 4-sphere or de Sitter's hyperboloid of radius l pulled back, Riemannian
     or Lorentzian as its text says, an Einstein space with Lambda = 3/l^2 and no Weyl tensor\\; the
-    scale factor chart is both, the sphere below a = l and the hyperboloid above it. The four sphere's
+    scale factor chart is both, the sphere below a = l and the hyperboloid above it. The 4-sphere's
     equator tau = 0 and the waist t = 0 of the closed slicing are each a 3-sphere of radius l whose
     radius does not change across it, so the two halves join with no shell between them."""
     ell = chart.reader.parameters["ell"]

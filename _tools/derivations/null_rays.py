@@ -3378,7 +3378,7 @@ DIAGRAMS = [
             cones=(4, 6), where_is_infinity=True,
             marked=(("event", {"x0": "-1/2", "r": "1/2"}, 0, "the Cauchy horizon, $\\rho = -\\eta$"),)),
     # The universe from nothing at l = 1: the plane of the time and chi of each Lorentzian chart, from the
-    # waist where the four sphere is joined on, upward; the scale factor chart above its join a = l.
+    # waist where the 4-sphere is joined on, upward; the scale factor chart above its join a = l.
     Diagram("universe_from_nothing", "closed", "radial", "$t$ and $\\chi$", ("t", "\\chi"), (0, math.pi, 0, 3),
             "$\\chi$", "$ct/\\ell$", UFN, EQUATOR, families=SIDEWAYS),
     Diagram("universe_from_nothing", "scale_factor", "radial", "$a$ and $\\chi$", ("a", "\\chi"),
@@ -7826,7 +7826,7 @@ CAPTIONS = {
     ],
     ("universe_from_nothing", "closed", "radial"): [
         "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) above the waist $t = 0$, where the "
-        "four sphere is joined on. On it $ds^2 = -c^2dt^2 + \\ell^2\\cosh^2(ct/\\ell)\\,d\\chi^2$, so the cones "
+        "4-sphere is joined on. On it $ds^2 = -c^2dt^2 + \\ell^2\\cosh^2(ct/\\ell)\\,d\\chi^2$, so the cones "
         "close up as the 3-sphere inflates.",
         "A ray covers $\\Delta\\chi = \\arctan\\sinh(ct/\\ell)$ in the time $t$ after the waist and no more "
         "than $\\pi/2$ ever, so light sent from the pole $\\chi = 0$ at $t = 0$ reaches the equator "
@@ -7835,7 +7835,7 @@ CAPTIONS = {
     ("universe_from_nothing", "scale_factor", "radial"): [
         "The plane of $a$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) above the join $a = \\ell$, where "
         "$g_{aa} = 1/(1 - a^2/\\ell^2)$ is negative and the radius $a$ of the 3-sphere is the time. Below the "
-        "join the same line element is Riemannian, the four sphere.",
+        "join the same line element is Riemannian, the 4-sphere.",
         "On the join $g_{aa}$ diverges and the cones lie flat along it, since the 3-sphere grows at no rate there. "
         "The rays keep $\\mathrm{arcsec}(a/\\ell) \\pm \\chi$.",
     ],
