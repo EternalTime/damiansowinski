@@ -448,6 +448,11 @@
       "id": "kerr_melvin",
       "kind": "generalisation",
       "text": "A spinning black hole in a magnetic universe. With no spin and no field, $a = 0$ and $B = 0$, it is Schwarzschild's black hole [ernst1976c]."
+    },
+    {
+      "id": "unruh_acoustic_hole",
+      "kind": "family",
+      "text": "A black hole for sound, a fluid falling into a point faster than sound inside $r_0$. Near its horizon its metric takes the form of Schwarzschild's near his, so it should glow as a black hole does [unruh1981]."
     }
   ],
   "references": [
@@ -569,7 +574,8 @@
     "bowers1974",
     "visser1998",
     "berti2004",
-    "ernst1976c"
+    "ernst1976c",
+    "unruh1981"
   ],
   "coordinates": [
     {

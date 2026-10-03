@@ -1031,6 +1031,10 @@ DIMENSIONS = {
     ("draining_bathtub", "vortex_filament"): {
         "t": "T", "r": "L", "\\theta": "1", "z": "L", "A": "L**2/T", "B": "L**2/T",
     },
+    # Unruh's acoustic black hole, the spherical flow at constant density, with c the speed of sound and the
+    # chart x^0 = ct with that c. The horizon radius r_0 is a length.
+    ("unruh_acoustic_hole", "laboratory"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L"},
+    ("unruh_acoustic_hole", "unruh"): {"\\tau": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L"},
     # Bonnor's stars of charged dust. The potential U is a pure number, as Majumdar and Papapetrou's
     # is; the mass parameter m = GM/c^2, the radius r_0, the focal radius a and Lemos and Weinberg's
     # core length b are lengths, and the spheroidal u and its surface u_0 are pure numbers.

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 160,
+  "count": 161,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1281,6 +1281,11 @@
           "id": "tippett_tsang",
           "kind": "family",
           "text": "A bubble built on Alcubierre's recipe whose path closes on itself in spacetime. Benjamin Tippett and David Tsang sent it round a circle in the plane of $t$ and $x$ in 2017, and a rider who keeps accelerating inside it meets her own past [tippett2017]."
+        },
+        {
+          "id": "unruh_acoustic_hole",
+          "kind": "family",
+          "text": "Flat space with a flow through it, as a warp drive is, with a fluid falling into a point for the flow and the speed of sound for $c$. Where the fall passes the speed of sound, sound meets a horizon [unruh1981, visser1998]."
         }
       ],
       "references": [
@@ -1298,7 +1303,9 @@
         "krasnikov1998",
         "everett1997",
         "everett1996",
-        "tippett2017"
+        "tippett2017",
+        "unruh1981",
+        "visser1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/alcubierre.json",
@@ -13051,6 +13058,11 @@
           "id": "minkowski",
           "kind": "special_case",
           "text": "The bathtub with the water at rest, $A = B = 0$: flat spacetime with the speed of sound for its $c$. The water itself moves in flat space throughout, and the curvature is for sound alone [visser1998]."
+        },
+        {
+          "id": "unruh_acoustic_hole",
+          "kind": "family",
+          "text": "Unruh's own sonic black hole: a fluid falling straight into a point from every side, in three dimensions of space. With no swirl its ergosurface lies on its horizon [unruh1981, visser1998]."
         }
       ],
       "references": [
@@ -32410,6 +32422,11 @@
           "id": "draining_bathtub",
           "kind": "generalisation",
           "text": "Flat spacetime with the speed of sound for $c$ and water flowing through it. A drain that swirls gives sound a horizon and an ergoregion, in a laboratory that stays flat [visser1998]."
+        },
+        {
+          "id": "unruh_acoustic_hole",
+          "kind": "generalisation",
+          "text": "Flat spacetime with the speed of sound for $c$ and a fluid falling through it into a point. Where the fall passes the speed of sound, sound is trapped, and the sphere there should glow with thermal sound [unruh1981]."
         }
       ],
       "references": [
@@ -32490,7 +32507,8 @@
         "maitra1966",
         "chan2024",
         "ellis1974",
-        "visser1998"
+        "visser1998",
+        "unruh1981"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -35896,6 +35914,11 @@
           "id": "draining_bathtub",
           "kind": "family",
           "text": "Natário's line element with water for the flow and the speed of sound for $c$. The shift is a vortex that drains, with speed $A/r$ inward and $B/r$ around, and sound in the water meets a horizon and an ergoregion [visser1998]."
+        },
+        {
+          "id": "unruh_acoustic_hole",
+          "kind": "family",
+          "text": "Natário's form with a fluid for the flow and the speed of sound for $c$. The fluid falls into a point at $c\\,r_0^2/r^2$, and sound in it meets a horizon at $r_0$ [visser1998]."
         }
       ],
       "references": [
@@ -43675,6 +43698,11 @@
           "id": "kerr_melvin",
           "kind": "generalisation",
           "text": "A spinning black hole in a magnetic universe. With no spin and no field, $a = 0$ and $B = 0$, it is Schwarzschild's black hole [ernst1976c]."
+        },
+        {
+          "id": "unruh_acoustic_hole",
+          "kind": "family",
+          "text": "A black hole for sound, a fluid falling into a point faster than sound inside $r_0$. Near its horizon its metric takes the form of Schwarzschild's near his, so it should glow as a black hole does [unruh1981]."
         }
       ],
       "references": [
@@ -43796,7 +43824,8 @@
         "bowers1974",
         "visser1998",
         "berti2004",
-        "ernst1976c"
+        "ernst1976c",
+        "unruh1981"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -51125,6 +51154,206 @@
           ],
           "ricci_scalar": "R = -\\dfrac{12}{L^2}",
           "kretschmann": "K = \\dfrac{12\\mu^2}{r^6} + \\dfrac{24}{L^4}"
+        }
+      ]
+    },
+    {
+      "id": "unruh_acoustic_hole",
+      "name": "Unruh's Acoustic Black Hole",
+      "short_name": "Unruh Acoustic Black Hole",
+      "description": "The spacetime that sound travels through in a fluid falling steadily into a point from every side. Inside $r = r_0$ the fluid falls faster than sound, so no sound gets out, and the sphere $r = r_0$ is a horizon that should glow with thermal sound. It solves no field equation of gravity, and its horizon has been made in a Bose-Einstein condensate.",
+      "tags": [
+        "analogue gravity",
+        "acoustic black hole",
+        "acoustic metric",
+        "dumb hole",
+        "sound",
+        "fluid flow",
+        "black hole",
+        "horizon",
+        "event horizon",
+        "Hawking radiation",
+        "Painlevé-Gullstrand",
+        "laboratory experiment",
+        "Bose-Einstein condensate",
+        "no field equations",
+        "curvature singularity",
+        "spherically symmetric",
+        "stationary",
+        "static",
+        "four-dimensional",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "Here $c$ is the speed of sound in the fluid, constant throughout it, and it stands wherever the speed of light does in a spacetime of gravity; we keep it explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "draining_bathtub",
+          "kind": "family",
+          "text": "The same idea in two dimensions, water swirling down a drain, which gives sound an ergoregion outside its horizon. Unruh's fluid falls straight in, so its ergosurface lies on its horizon [visser1998]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Near its horizon Unruh's metric takes the form of Schwarzschild's near his, and its temperature follows the same law. Away from the horizon they part: the canonical fluid falls as $1/r^2$, where Painlevé and Gullstrand's space falls as $1/\\sqrt{r}$ [unruh1981, visser1998]."
+        },
+        {
+          "id": "natario",
+          "kind": "family",
+          "text": "The same form, flat space with a flow through it. Natário's shift vector is the fluid's velocity here, and his $c$ is the speed of sound [natario2002, visser1998]."
+        },
+        {
+          "id": "alcubierre",
+          "kind": "family",
+          "text": "Another flat space with a flow through it, a bubble carried along by its shift vector. Here the flow is a fluid falling into a point, and $c$ is the speed of sound [alcubierre1994, visser1998]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The fluid with no flow, $r_0 = 0$: flat spacetime with the speed of sound for its $c$ [visser1998]."
+        }
+      ],
+      "references": [
+        "barcelo2011",
+        "unruh1981",
+        "moncrief1980",
+        "visser1998",
+        "jacobson1991",
+        "steinhauer2016",
+        "munozdenova2019",
+        "natario2002",
+        "alcubierre1994"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/unruh_acoustic_hole.json",
+      "charts": [
+        {
+          "id": "laboratory",
+          "name": "Laboratory",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(the sonic horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Radius of the sonic horizon, where the fluid falls inward at the speed of sound: the fluid's radial velocity is $-c\\,r_0^2/r^2$"
+            }
+          ],
+          "convention": "We use the laboratory's coordinates $(t, r, \\theta, \\phi)$: its time $t$, carrying dimensions of time, and spherical coordinates centred on the sink. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\left(dr + \\dfrac{c\\,r_0^2}{r^2}dt\\right)^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_0^4}{r^4}\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "r"
+              ],
+              "value": "\\dfrac{r_0^2}{r^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "t"
+              ],
+              "value": "\\dfrac{r_0^2}{r^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6r_0^4}{r^6}",
+          "kretschmann": "K = \\dfrac{468r_0^8}{r^{12}}"
+        },
+        {
+          "id": "unruh",
+          "name": "Unruh's Time",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in (r_0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Radius of the sonic horizon, where the fluid falls inward at the speed of sound: the fluid's radial velocity is $-c\\,r_0^2/r^2$"
+            }
+          ],
+          "convention": "We use Unruh's time $\\tau$ outside the horizon, with $c\\,d\\tau = c\\,dt - r_0^2r^2\\,dr/(r^4 - r_0^4)$ for the laboratory's $t$, so that the metric has no cross term. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_0^4}{r^4}\\right)c^2d\\tau^2 + \\dfrac{dr^2}{1 - \\dfrac{r_0^4}{r^4}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_0^4}{r^4}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^4}{\\left(r + r_0\\right)\\left(r - r_0\\right)\\left(r^2 + r_0^2\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6r_0^4}{r^6}",
+          "kretschmann": "K = \\dfrac{468r_0^8}{r^{12}}"
         }
       ]
     },

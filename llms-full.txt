@@ -2067,6 +2067,17 @@ Black holes in anti-de Sitter space whose horizons are planes, cylinders, tori, 
 - chart Black Brane: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-\left(1 - \dfrac{z^3}{z_h^3}\right)c^2dt^2 + dx^2 + dy^2 + \dfrac{dz^2}{1 - \dfrac{z^3}{z_h^3}}\right)$$
 - chart Hyperbolic: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(-1 - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{-1 - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sinh^2\theta\,d\phi^2\right)$$
 
+### Unruh's Acoustic Black Hole
+
+The spacetime that sound travels through in a fluid falling steadily into a point from every side. Inside $r = r_0$ the fluid falls faster than sound, so no sound gets out, and the sphere $r = r_0$ is a horizon that should glow with thermal sound. It solves no field equation of gravity, and its horizon has been made in a Bose-Einstein condensate.
+
+- id: `unruh_acoustic_hole`
+- tags: analogue gravity, acoustic black hole, acoustic metric, dumb hole, sound, fluid flow, black hole, horizon, event horizon, Hawking radiation, Painlevé-Gullstrand, laboratory experiment, Bose-Einstein condensate, no field equations, curvature singularity, spherically symmetric, stationary, static, four-dimensional, Lorentzian, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/unruh_acoustic_hole.json
+- chart Laboratory: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \left(dr + \dfrac{c\,r_0^2}{r^2}dt\right)^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Unruh's Time: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_0^4}{r^4}\right)c^2d\tau^2 + \dfrac{dr^2}{1 - \dfrac{r_0^4}{r^4}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Vaidya Radiating Star
 
 A dynamical solution describing the spacetime of a radiating or accreting spherical mass with outgoing or ingoing null dust. It models radiating stars and the evaporation or growth of black holes.

@@ -3517,6 +3517,13 @@ DIAGRAMS = [
     Diagram("draining_bathtub", "vortex_filament", "drain", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$c\\,r/|A|$", "$c^2t/|A|$", {"A": -1, "B": "sqrt(3)"}, {"z": "0"}, quotient="theta",
             mark_gtt="the ergosurface", cone=BTZ_CONE),
+    # Unruh's acoustic black hole, the fluid of constant density falling in at c r_0^2/r^2, in units of the
+    # horizon radius r_0. The laboratory's t = 0 climbs in Unruh's time as -ln(r - r_0)/4 toward the horizon,
+    # so his view runs from -2.5 to 1.5, where that curve leaves the box a measurable 0.001 r_0 off the edge.
+    Diagram("unruh_acoustic_hole", "laboratory", "infall", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/r_0$", "$ct/r_0$", {"r_0": 1}, EQUATOR),
+    Diagram("unruh_acoustic_hole", "unruh", "exterior", "$\\tau$ and $r$", ("\\tau", "r"), (1, 5, -2.5, 1.5),
+            "$r/r_0$", "$c\\tau/r_0$", {"r_0": 1}, EQUATOR, tau="tau"),
     Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
     Diagram("bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
@@ -8361,6 +8368,21 @@ CAPTIONS = {
         "symmetric in $T$ as Schwarzschild's are in his own time.",
         "The cones close at the horizon $r = |A|/c$, which is the edge of the chart: $T$ runs to infinity "
         "there along every ray. The dotted line is the ergosurface, $g_{TT} = 0$ at $r = 2|A|/c$.",
+    ],
+    ("unruh_acoustic_hole", "laboratory", "infall"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of a fluid falling into $r = 0$ at "
+        "$c\\,r_0^2/r^2$. Its null curves are the radial sound rays, $dr/dt = -c\\,r_0^2/r^2 \\pm c$: sound "
+        "moving at $c$ through a fluid that carries it inward.",
+        "The outgoing rays stand still at the horizon $r = r_0$, where the fluid falls as fast as sound runs "
+        "out, and inside it both edges of every future cone point to $r = 0$. Each moment of constant $t$ is "
+        "flat space, and the Kretschmann scalar $468\\,r_0^8/r^{12}$ diverges at $r = 0$.",
+    ],
+    ("unruh_acoustic_hole", "unruh", "exterior"): [
+        "The plane of $\\tau$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the horizon, in Unruh's time. "
+        "Its null curves are the radial sound rays, $c\\,d\\tau/dr = \\pm 1/(1 - r_0^4/r^4)$, symmetric in "
+        "$\\tau$ as Schwarzschild's are in his own time.",
+        "The cones close at the horizon $r = r_0$, the edge of the chart: $\\tau$ runs to infinity there along "
+        "every ray, while the laboratory's $t$ goes through.",
     ],
     ("draining_bathtub", "vortex_filament", "drain"): [
         "The plane of $t$ and $r$ ($z = 0$) of a vortex filament with a line sink ($A < 0$, $B = "
@@ -14096,6 +14118,13 @@ CLOSED_FORMS = {
     ("draining_bathtub", "kerr_like", "exterior"):
         (lambda T, r: T + r + np.log((r - 1) / (r + 1)) / 2, lambda T, r: T - r - np.log((r - 1) / (r + 1)) / 2,
          _away(1.0)),
+    # Unruh's acoustic black hole at r_0 = c = 1: dr/dt = -1/r^2 -+ 1 in the laboratory, and
+    # c dtau/dr = -+ r^4/(r^4 - 1) in Unruh's time, r_* = r + ln|(r - 1)/(r + 1)|/4 - arctan(r)/2.
+    ("unruh_acoustic_hole", "laboratory", "infall"):
+        (lambda t, r: t + r - np.arctan(r), lambda t, r: t - r - np.log(np.abs((r - 1) / (r + 1))) / 2, _away(1.0)),
+    ("unruh_acoustic_hole", "unruh", "exterior"):
+        (lambda T, r: T + r + np.log((r - 1) / (r + 1)) / 4 - np.arctan(r) / 2,
+         lambda T, r: T - r - np.log((r - 1) / (r + 1)) / 4 + np.arctan(r) / 2, _away(1.0)),
     ("schwarzschild", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"):
