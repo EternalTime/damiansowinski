@@ -1637,7 +1637,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f3230cf63192cb96",
+    "version": "b6f062db2fdaf73f",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a"
@@ -2173,6 +2173,30 @@
     "embedding": "4a468cbcc8c8e211"
   },
   {
+    "id": "interstellar_wormhole",
+    "name": "Interstellar",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "throat",
+      "no horizon",
+      "exotic matter",
+      "energy condition violation",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "asymptotically flat",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "eb25c92665fa39db",
+    "diagrams": "69dbfb95c62e9269",
+    "conformal": "c33cf1f478015cab",
+    "embedding": "f16f1b3336ecf8c5"
+  },
+  {
     "id": "israel_shell",
     "name": "Israel Shell",
     "tags": [
@@ -2493,7 +2517,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a00f81a7eb099e5c",
+    "version": "b354b04a7524e98f",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -3432,7 +3456,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ae483ccfba45f876",
+    "version": "5d4dc40f32a750e2",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
@@ -3883,7 +3907,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "43e098149891e543",
+    "version": "61693d8a40d237f7",
     "diagrams": "4fa9e29b17d51d20",
     "conformal": "ec15d211d9118915",
     "embedding": "b7a09dddf9867ddf"
@@ -4268,7 +4292,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4a16475c8a1f764b",
+    "version": "2322efb7b83ab71d",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -5114,7 +5138,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3cd87c89c38eb513",
+    "version": "a57e8b814024a55d",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"

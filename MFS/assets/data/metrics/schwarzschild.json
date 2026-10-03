@@ -458,6 +458,11 @@
       "id": "kerr_bertotti_robinson",
       "kind": "generalisation",
       "text": "Schwarzschild's hole set spinning in a magnetic field that is uniform far away. With no field and no spin it is Schwarzschild's metric, and with no spin alone its horizon moves outward as the field grows [podolsky2025]."
+    },
+    {
+      "id": "interstellar_wormhole",
+      "kind": "family",
+      "text": "The wormhole of the film Interstellar flares out of each mouth roughly as space opens out from Schwarzschild's horizon, a shape its builders chose for the flare with the mass and the mouth's radius set free of one another [james2015]."
     }
   ],
   "references": [
@@ -582,7 +587,8 @@
     "ernst1976c",
     "antoci2001",
     "basovnik2016",
-    "podolsky2025"
+    "podolsky2025",
+    "james2015"
   ],
   "coordinates": [
     {

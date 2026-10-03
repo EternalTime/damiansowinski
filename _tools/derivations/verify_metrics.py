@@ -1760,6 +1760,17 @@ DIMENSIONS = {
     ("einstein_dirac_maxwell_wormhole", "compact"): {
         "t": "T", "x": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "Q_e": "L", "M": "L",
     },
+    # James, von Tunzelmann, Franklin and Thorne's Dneg wormhole: rho, a and M are lengths, and so
+    # is the proper distance l; the flare's x = 2(l - a)/(pi M) is a pure number.
+    ("interstellar_wormhole", "proper_distance"): {
+        "t": "T", "\\ell": "L", "\\theta": "1", "\\phi": "1", "r": "L", "\\rho": "L", "a": "L", "M": "L",
+    },
+    ("interstellar_wormhole", "cylinder"): {
+        "t": "T", "\\ell": "L", "\\theta": "1", "\\phi": "1", "\\rho": "L", "a": "L",
+    },
+    ("interstellar_wormhole", "flare"): {
+        "t": "T", "\\ell": "L", "\\theta": "1", "\\phi": "1", "\\rho": "L", "a": "L", "M": "L", "x": "1", "r": "L",
+    },
     # Einstein and Rosen's u has u^2 = r - r_s on the neutral bridge, the square root of a length, and
     # u^2 = r^2 - r_q^2 on the charged one, a length; r_q is the charge radius, their epsilon/sqrt(2).
     ("einstein_rosen_bridge", "bridge"): {
@@ -2722,6 +2733,11 @@ def _canonical(expression):
     # fractions and the logarithm of each spelling would otherwise be a generator of its own.
     if expression.has(sp.log):
         expression = expression.replace(lambda x: isinstance(x, sp.log), lambda x: sp.log(sp.factor(x.args[0])))
+    # So is an arctangent's, and sympy then takes out its sign, arctan(-u) = -arctan(u), so that the
+    # flare of Interstellar's wormhole reads arctan(2(l - a)/(pi M)) and arctan(2a/(pi M) - 2l/(pi M)) as
+    # one generator and its negative.
+    if expression.has(sp.atan):
+        expression = expression.replace(lambda x: isinstance(x, sp.atan), lambda x: sp.atan(sp.factor(x.args[0])))
     # The reader writes a mixed partial in the order the coordinates are listed and diff
     # writes it in its own; doit puts both in diff's, so they become one generator.
     if expression.has(sp.Derivative):

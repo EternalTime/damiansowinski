@@ -18,7 +18,8 @@ moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, disto
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, brill_charged_taub_nut,
-bach_weyl_ring, kerr_bertotti_robinson and einstein_dirac_maxwell_wormhole, and Godel's cylindrical chart.
+bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole and interstellar_wormhole, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -41,7 +42,7 @@ witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, ma
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
-kerr_melvin.md and einstein_dirac_maxwell_wormhole.md beside this file.
+kerr_melvin.md, einstein_dirac_maxwell_wormhole.md and interstellar_wormhole.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 """
 import argparse
@@ -28808,6 +28809,139 @@ def einstein_dirac_maxwell_wormhole_check(chart, system):
 
 
 CHARTS["einstein_dirac_maxwell_wormhole"] = [lambda s=s: einstein_dirac_maxwell_wormhole(s) for s in EDM_CHARTS]
+
+
+# -- Interstellar's wormhole ----------------------------------------------------------------
+
+IW_CHARTS = ["proper_distance", "cylinder", "flare"]
+IW_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+IW_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+IW_X = "x = \\dfrac{2\\left(\\ell - a\\right)}{\\pi M}"
+IW_R = "r = \\rho + M\\left(x\\arctan(x) - \\dfrac{1}{2}\\ln\\left(1 + x^2\\right)\\right)"
+
+
+def interstellar_wormhole(system):
+    """The Dneg wormhole of James, von Tunzelmann, Franklin and Thorne, Am. J. Phys. 83, 486 (2015),
+    without gravity: their (1), ds^2 = -dt^2 + dl^2 + r(l)^2 dOmega^2, with r = rho on the cylinder
+    |l| <= a, their (5c), and r = rho + M(x arctan x - ln(1 + x^2)/2) with x = 2(|l| - a)/(pi M)
+    beyond it, their (5a) and (5b). Three charts in their coordinates: the whole wormhole with r(l)
+    left free, so its values hold for every r(l) and for theirs in particular; the cylinder, where
+    r = rho; and the flare beyond the mouth l = a, where r is written out, the flare beyond l = -a
+    being its mirror image. The flare's values are printed in x, arctan(x) and r: every value is
+    written with l = a + pi M x/2, and rho, which enters only through r, as r - M(x arctan x -
+    ln(1 + x^2)/2), so that no logarithm is left. interstellar_wormhole_check holds each chart to
+    the curvature of an ultrastatic spherical metric, -r''/r and (1 - r'^2)/r^2, and the flare to
+    the paper's dr/dl = (2/pi) arctan x, continuous with the cylinder at the mouth.
+    interstellar_wormhole.md beside this file records the source of each chart."""
+    coords = ["t", "\\ell", "\\theta", "\\phi"]
+    time_ = "t \\in (-\\infty, \\infty)"
+    if system == "proper_distance":
+        name, parameters = "Proper Distance", ["r = r(\\ell)", "\\rho", "a", "M"]
+        domains = [time_, "\\ell \\in (-\\infty, \\infty)"] + IW_ANGLES + [
+            "|\\ell| \\le a \\;\\text{(the cylinder)}", "\\ell = \\pm a \\;\\text{(the two mouths)}"]
+        radius = "r^2"
+    elif system == "cylinder":
+        name, parameters = "Cylinder", ["\\rho", "a"]
+        domains = [time_, "\\ell \\in [-a, a]"] + IW_ANGLES + ["\\ell = \\pm a \\;\\text{(the two mouths)}"]
+        radius = "\\rho^2"
+    else:
+        name, parameters = "Flare", ["\\rho", "a", "M", IW_X, IW_R]
+        domains = [time_, "\\ell \\in [a, \\infty)"] + IW_ANGLES + ["\\ell = a \\;\\text{(the mouth)}"]
+        radius = "r^2"
+
+    def line(c2):
+        return "ds^2 = -" + c2 + "dt^2 + d\\ell^2 + " + radius + IW_SPHERE
+
+    probe = vm.Reader(coords, parameters, ())
+    ell, th = probe.symbol["\\ell"], probe.symbol["\\theta"]
+    spec = {
+        "metric_id": "interstellar_wormhole",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "check": lambda chart: interstellar_wormhole_check(chart, system),
+    }
+    if system == "proper_distance":
+        r = probe.parameters["r"]
+        spec["printer"] = {"lead": [r, ell], "flip": False}
+        return spec
+    rho, a = probe.parameters["rho"], probe.parameters["a"]
+    if system == "cylinder":
+        spec["printer"] = {"lead": [rho], "flip": False}
+        return spec
+    M = probe.parameters["M"]
+    X, A, R = sp.symbols("IWx IWarctan IWr", real=True)
+    # The two sums every curvature value is written in: 1 + x^2, and pi^2 - 4 arctan(x)^2, which is
+    # pi^2 (1 - r'^2).
+    Y, S = sp.symbols("IWy IWs", positive=True)
+    x = probe.parameters["x"]
+
+    def pretty(value):
+        # arctan of x, or of -x as norm writes it, is A; the logarithm is of 1 + x^2.
+        def arctan(e):
+            if sp.expand(e.args[0] - x) == 0:
+                return A
+            if sp.expand(e.args[0] + x) == 0:
+                return -A
+            return e
+
+        def logarithm(e):
+            return sp.log(1 + X ** 2) if sp.expand(sp.together(e.args[0] - (1 + x ** 2))) == 0 else e
+
+        value = sp.sympify(value).replace(lambda e: isinstance(e, sp.atan), arctan)
+        value = value.replace(lambda e: isinstance(e, sp.log), logarithm)
+        value = value.subs(ell, a + sp.pi * M * X / 2)
+        value = value.subs(rho, R - M * (X * A - sp.log(1 + X ** 2) / 2))
+        value = sp.expand(value).subs(A ** 2, (sp.pi ** 2 - S) / 4).subs(X ** 2, Y - 1)
+        value = sp.factor(sp.expand(value))
+        if value.has(sp.log) or value.has(ell) or value.has(a):
+            raise AssertionError(f"interstellar_wormhole: a flare value is not one of x, arctan(x) and r: {value}")
+        return value
+
+    spec["printer"] = {"lead": [R, A, X, M], "factors": [sp.pi, M, R, A, X],
+                       "overrides": {X: "x", A: "\\arctan(x)", R: "r", sp.pi: "\\pi"},
+                       "named": {Y: "1 + x^2", S: "\\pi^2 - 4\\arctan(x)^2"}}
+    spec["pretty"] = pretty
+    spec["bracketed"] = pretty
+    # The frame curvature -r''/r along the radius and (1 - r'^2)/r^2 across it, with r' = (2/pi) arctan x
+    # and r'' = 4/(pi^2 M (1 + x^2)).
+    spec["ricci_scalar"] = ("\\dfrac{2\\left(\\pi^2 - 4\\arctan(x)^2\\right)}{\\pi^2\\,r^2}"
+                            " - \\dfrac{16}{\\pi^2M\\,r\\left(1 + x^2\\right)}")
+    spec["kretschmann"] = ("\\dfrac{128}{\\pi^4M^2r^2\\left(1 + x^2\\right)^2}"
+                           " + \\dfrac{4\\left(\\pi^2 - 4\\arctan(x)^2\\right)^2}{\\pi^4r^4}")
+    return spec
+
+
+def interstellar_wormhole_check(chart, system):
+    """The frame curvature of -dt^2 + dl^2 + r(l)^2 dOmega^2: R^{l theta}_{l theta} = -r''/r and
+    R^{theta phi}_{theta phi} = (1 - r'^2)/r^2, so K = 8 r''^2/r^2 + 4 (1 - r'^2)^2/r^4; on the cylinder
+    r = rho, and on the flare r' = (2/pi) arctan x, their footnote 19, which is 0 at the mouth, as on
+    the cylinder, and tends to 1 far away."""
+    P = chart.reader.parameters
+    ell = chart.symbols[1]
+    r = P["rho"] if system == "cylinder" else P["r"]
+    dr, ddr = sp.diff(r, ell), sp.diff(r, ell, 2)
+
+    def zero(value, what):
+        if vm.norm(sp.sympify(value)) != 0:
+            raise AssertionError(f"interstellar_wormhole: {what} in the {system} chart")
+
+    zero(chart.geo.kretschmann() - (8 * ddr ** 2 / r ** 2 + 4 * (1 - dr ** 2) ** 2 / r ** 4),
+         "the Kretschmann scalar is not 8r''^2/r^2 + 4(1 - r'^2)^2/r^4")
+    zero(chart.geo.ricci_scalar() - (2 * (1 - dr ** 2) / r ** 2 - 4 * ddr / r),
+         "the Ricci scalar is not 2(1 - r'^2)/r^2 - 4r''/r")
+    if system == "flare":
+        M, a, x = P["M"], P["a"], P["x"]
+        zero(dr - 2 * sp.atan(x) / sp.pi, "dr/dl is not (2/pi) arctan x")
+        zero(ddr - 4 / (sp.pi ** 2 * M * (1 + x ** 2)), "d^2r/dl^2 is not 4/(pi^2 M (1 + x^2))")
+        if r.subs(ell, a) != P["rho"] or dr.subs(ell, a) != 0:
+            raise AssertionError("interstellar_wormhole: the flare does not meet the cylinder smoothly at l = a")
+        positive = {M: sp.Symbol("IWM", positive=True), a: sp.Symbol("IWa", positive=True)}
+        if sp.limit(dr.subs(positive), ell, sp.oo) != 1:
+            raise AssertionError("interstellar_wormhole: dr/dl does not tend to 1 far away")
+
+
+CHARTS["interstellar_wormhole"] = [lambda s=s: interstellar_wormhole(s) for s in IW_CHARTS]
 
 
 def write(spec):
