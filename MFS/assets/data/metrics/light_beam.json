@@ -57,6 +57,11 @@
       "id": "vaidya",
       "kind": "family",
       "text": "Light as the source again, here streaming out of a star evenly in all directions. Prahlad Vaidya found the field around the star in 1951 [vaidya1951]."
+    },
+    {
+      "id": "maximally_supersymmetric_plane_wave",
+      "kind": "family",
+      "text": "A plane wave of ten dimensions whose profile is quadratic and the same in all eight directions across it, as the profile inside the beam is in two. Light leaving its axis comes back to it after a time $\\pi/\\mu c$ [blau2002, marolf2002]."
     }
   ],
   "references": [
@@ -80,7 +85,9 @@
     "bonnor2009",
     "bonnor1954",
     "bonnor1994",
-    "vaidya1951"
+    "vaidya1951",
+    "blau2002",
+    "marolf2002"
   ],
   "coordinates": [
     {

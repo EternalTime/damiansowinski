@@ -156,6 +156,12 @@ REGIONS = {
                "collapse, and the uniformly accelerating one, which alone is at rest in a static chart; a mirror "
                "on a general world line leaves the spacetime to its right no symmetry",
     },
+    "bubbling_ads": {
+        "regions": [["rings"]],
+        "why": "global and plane_wave are two members of the family, the black disc and the black half plane, "
+               "each with symmetries the general pattern of droplets lacks: the disc is static, and every other "
+               "pattern twists the time, V dphi in Lin, Lunin and Maldacena's metric (2.4)",
+    },
     "kerr_bertotti_robinson": {
         "regions": [["boyer_lindquist"]],
         "why": "static is the hole with no spin, a = 0, a special case of the family, which alone is static",
@@ -164,6 +170,11 @@ REGIONS = {
         "regions": [["weyl", "corotating", "bardeen_wagoner", "spheroidal"]],
         "why": "black_hole_limit is the limit mu -> mu_0 outside the disc, the extreme Kerr metric, "
                "and no disc of the family",
+    },
+    "kerr_scalar_hair": {
+        "regions": [["herdeiro_radu"]],
+        "why": "kerr_member is the member with no field, Kerr's metric in the same coordinates (Herdeiro and "
+               "Radu 2015, appendix A), a special case that is a vacuum where the family carries the field",
     },
     "chandrasekhar_xanthopoulos": {
         "regions": [["prolate", "angular", "boyer_lindquist"]],

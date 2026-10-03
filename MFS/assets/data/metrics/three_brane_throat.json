@@ -82,6 +82,16 @@
       "id": "freund_rubin",
       "kind": "family",
       "text": "The sister in eleven dimensions: anti-de Sitter space of four dimensions times a 7-sphere, the throat of a stack of membranes, with the sphere twice the radius [gibbons1993, maldacena1998]."
+    },
+    {
+      "id": "bubbling_ads",
+      "kind": "family",
+      "text": "Lin, Lunin, and Maldacena's droplets. The throat is a black disc on their plane, and small droplets spread far apart are stacks of three-branes pulled apart from each other [lin2004]."
+    },
+    {
+      "id": "maximally_supersymmetric_plane_wave",
+      "kind": "limit",
+      "text": "The Penrose limit of the throat along a light ray circling its 5-sphere, a plane wave of ten dimensions that keeps all 32 supersymmetries of type IIB supergravity [blau2002penrose, berenstein2002]."
     }
   ],
   "references": [
@@ -99,7 +109,10 @@
     "gubser1996",
     "klebanov1997",
     "gubser1998",
-    "witten1998"
+    "witten1998",
+    "lin2004",
+    "blau2002penrose",
+    "berenstein2002"
   ],
   "coordinates": [
     {

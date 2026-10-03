@@ -229,12 +229,14 @@ from scipy.special import expi as scipy_expi
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import boson_star as bs  # noqa: E402
+import bubbling_ads  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
 import black_to_white_hole as bwh  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
 import charged_shell as cshell  # noqa: E402
 import israel_shell as ishell  # noqa: E402
+import kerr_scalar_hair as ksh  # noqa: E402
 import ori_shell  # noqa: E402
 import quantum_os as qos  # noqa: E402
 import slices  # noqa: E402
@@ -343,6 +345,15 @@ FR_CIRCLE = {"x": "0", "y": "0", "sigma": "0", **FR_SEVEN}
 BIG_RIP = {"w": "-3/2", "t_0": 1}
 BIG_RIP_CONFORMAL = {"w": "-3/2", "eta_0": 1}
 BIG_RIP_HORIZON = "the event horizon of the observer at the centre"
+
+# Lin, Lunin and Maldacena's bubbling anti-de Sitter space holds a point of each 3-sphere fixed. The
+# global chart's planes lie in the plane of the droplets, y = 0, at theta = 0; the chart of concentric
+# droplets is drawn at a black ring on its axis, which the rotations of the plane and both spheres fix.
+BA_SPHERES = {"alpha": "pi/2", "beta": "pi/2", "gamma": "0", "kappa": "pi/2", "xi": "pi/2", "omega": "0"}
+BA_RING = bubbling_ads.functions_text()
+# The inverse metric is printed over r^2, 0/0 on the axis, so the axis is drawn at BA_AXIS from it,
+# where the twist V, which falls as r^2, moves the metric of the plane by less than 10^-8.
+BA_AXIS = "1/10**4"
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -2513,6 +2524,43 @@ DECLARED_FUNCTIONS.update(_nm_declare({
 NM_OMEGA = repr(nm_disc.omega_disc(NM_MU))
 
 
+# Herdeiro and Radu's black hole with scalar hair as every one of its diagrams draws it: their
+# configuration IV, in units of the field's inverse length mu, r_H = 0.1, w = 0.82 and m = 1, read
+# from their published data by kerr_scalar_hair.Hair. The functions below are its F_0, F_1, F_2 and W
+# on the axis, ksh_*a, and on the equator, ksh_*e, each with two derivatives along r; across either
+# surface every function is even, so the rows hold the plane's metric and its first derivatives.
+@lru_cache(maxsize=1)
+def _ksh_hair():
+    return ksh.Hair()
+
+
+def _ksh_on(name, theta):
+    return lambda r, order: _ksh_hair()(name, np.asarray(r, dtype=float), theta, dr=order)
+
+
+DECLARED_FUNCTIONS.update(_nm_declare({
+    f"ksh_{short}{where}": _ksh_on(name, theta)
+    for short, name in (("f0", "F_0"), ("f1", "F_1"), ("f2", "F_2"), ("w", "W"))
+    for where, theta in (("a", 0.0), ("e", math.pi / 2))
+}))
+KSH_AXIS = {"F_0": "ksh_f0a(r)", "F_1": "ksh_f1a(r)", "F_2": "ksh_f2a(r)", "W": "ksh_wa(r)"}
+KSH_EQUATOR = {"F_0": "ksh_f0e(r)", "F_1": "ksh_f1e(r)", "F_2": "ksh_f2e(r)", "W": "ksh_we(r)"}
+KSH = {"r_H": "1/10"}
+KSH_INPUT = ("Herdeiro and Radu's configuration IV, in units of the field's inverse length $\\mu$: $r_H = 0.1/\\mu$, "
+             "the field turns at $\\omega = 0.82\\,\\mu c$ with $m = 1$, and $GM/c^2 = 0.933/\\mu$ and "
+             "$GJ/c^3 = 0.740/\\mu^2$, with $M$ the mass and $J$ the angular momentum. The four functions are those of the "
+             "authors' numerical solution, interpolated between its grid points.")
+# Kerr's black hole of the same mass and angular momentum, in the same chart: r_H = 2 sqrt(M^2 - a^2)
+# and b = -c_t = M - sqrt(M^2 - a^2) with a = J/M, kerr_scalar_hair.kerr_for(0.9330, 0.7403).
+KSH_KERR = {"r_H": "0.98173", "b": "0.44217"}
+KSH_KERR_INPUT = ("Kerr's black hole of the mass and angular momentum of Herdeiro and Radu's configuration IV, "
+                  "$GM/c^2 = 0.933/\\mu$ and $GJ/c^3 = 0.740/\\mu^2$ with $M$ the mass and $J$ the angular momentum, "
+                  "in units of the field's inverse length $\\mu$: "
+                  "$r_H = 0.982/\\mu$ and $b = 0.442/\\mu$.")
+KSH_CONE = "future cone of no angular momentum"
+KSH_PEAK = (("surface", "r", "0.957", "the radius at which the field is largest, $r = 0.96/\\mu$"),)
+
+
 # Einstein's static field of 1912 is drawn through a star of uniform density by his equation of
 # March, which is linear in the square root of N: Giulini's interior solution
 # sqrt(N) = sinh(omega r)/(omega r cosh(omega R)) joined at the surface r = R to the exterior
@@ -4162,6 +4210,26 @@ DIAGRAMS = [
     Diagram("freund_rubin", "proper", "circle", "$t$ and $\\psi$", ("t", "\\psi"),
             (0, 4 * math.pi, -2 * math.pi, 2 * math.pi), "$2\\psi$", "$ct/L$", {"L": 1}, FR_CIRCLE,
             to_display=((0, 2), (1, 0)), families=SIDEWAYS, periodic=("\\psi",)),
+    # Lin, Lunin and Maldacena's bubbling anti-de Sitter space at L = 1: the global chart on the plane of
+    # the time and rho and on the great circle of psi at the centre, the edge of the black disc; the
+    # chart of concentric droplets at the black ring of bubbling_ads.RING on its axis; the plane wave on its axis.
+    Diagram("bubbling_ads", "global", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 3, -1.5, 1.5),
+            "$\\rho$", "$t$", {"L": 1}, {**BA_SPHERES, "theta": "0", "psi": "0"}),
+    Diagram("bubbling_ads", "global", "edge", "$t$ and $\\psi$ on the edge of the disc", ("t", "\\psi"),
+            (0, 2 * math.pi, -math.pi, math.pi), "$\\psi$", "$t$", {"L": 1}, {**BA_SPHERES, "rho": "0", "theta": "0"},
+            families=SIDEWAYS, periodic=("\\psi",)),
+    Diagram("bubbling_ads", "rings", "ring_axis", "$t$ and $y$ on the axis of a black ring", ("t", "y"),
+            (0, 3, -1.5, 1.5), "$y/L^2$", "$t$", {}, {**BA_SPHERES, "r": BA_AXIS, "phi": "0"}, functions=BA_RING,
+            kretschmann=False,
+            input="The black ring between the circles $r = \\sqrt{2}\\,L^2$ and $r = L^2$ of the plane of the "
+                  "droplets, white inside and out, with every area in units of $L^2$ for the radius $L$ of the "
+                  "anti-de Sitter space it nears far away. Its black area $\\pi L^4$ is that of the disc of radius "
+                  "$L^2$."),
+    Diagram("bubbling_ads", "plane_wave", "axis", "$t$ and $x$ on the axis", ("t", "x"), (-2, 2, -2, 2),
+            "$Z$", "$T$", {}, {**BA_SPHERES, "r_1": "0", "r_2": "0"}, to_display=UV_TO_TZ, tau="t + 2*x",
+            families=SIDEWAYS,
+            input="On the axis the metric is $-2\\,dt\\,dx$ whatever unit $\\ell^2$ the area $x$ is measured in, "
+                  "so the drawing is the same for every $\\ell$."),
     Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
             (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
@@ -4665,6 +4733,15 @@ DIAGRAMS = [
     # Kopczynski and Trautman's universe in units of l, through its turn at t = 0: the comoving
     # charts with the explicit scale factor, and the conformal chart with a(eta) solved from its own
     # Einstein tensor and the pressure of the spins.
+    # The bounce of loop quantum cosmology in units of t_b, through the bounce at t = 0: the cosmic and
+    # comoving spherical charts with the explicit scale factor (1 + t^2/t_b^2)^(1/6), and the harmonic
+    # chart, whose time runs with the scalar field and in which a unit lasts a^3 of proper time.
+    Diagram("lqc_bounce", "cosmic", "tx", "$t$ and $x$", ("t", "x"), (-3, 3, -3, 3),
+            "$x/ct_b$", "$t/t_b$", {"t_b": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
+    Diagram("lqc_bounce", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/ct_b$", "$t/t_b$", {"t_b": 1}, EQUATOR, areal=True),
+    Diagram("lqc_bounce", "harmonic", "taux", "$\\tau$ and $x$", ("\\tau", "x"), (-3, 3, -2.5, 2.5),
+            "$x/ct_b$", "$\\tau/t_b$", {"t_b": 1}, {"y": "0", "z": "0"}, tau="tau", families=SIDEWAYS),
     Diagram("kopczynski_trautman", "comoving_cartesian", "tx", "$t$ and $x$", ("t", "x"), (-3, 3, -3, 3),
             "$x/\\ell$", "$ct/\\ell$", {"ell": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
     Diagram("kopczynski_trautman", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
@@ -4901,6 +4978,21 @@ DIAGRAMS = [
     Diagram("neugebauer_meinel", "black_hole_limit", "equator", "$t$ and $r$ on the equator", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1}, {"theta": "pi/2"}, quotient="phi", mark_gtt="the ergosurface", cone=NM_CONE,
             input=NM_LIMIT_INPUT),
+    # Herdeiro and Radu's configuration IV on its two totally geodesic planes, the axis, where the
+    # dragging drops out, and the equator with varphi divided out, and Kerr's black hole of the same
+    # mass and angular momentum on the same two planes of the same chart. The rows declare the
+    # functions of one plane, so none reads the Kretschmann scalar.
+    Diagram("kerr_scalar_hair", "herdeiro_radu", "axis", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$\\mu r$", "$\\mu ct$", KSH, {"theta": "0", "varphi": "0"}, orient="ingoing", kretschmann=False,
+            functions=KSH_AXIS, input=KSH_INPUT),
+    Diagram("kerr_scalar_hair", "herdeiro_radu", "equator", "$t$ and $r$ on the equator", ("t", "r"), (0, 4, -2, 2),
+            "$\\mu r$", "$\\mu ct$", KSH, {"theta": "pi/2"}, orient="ingoing", kretschmann=False, quotient="varphi",
+            mark_gtt="the ergosurface", cone=KSH_CONE, functions=KSH_EQUATOR, input=KSH_INPUT, lines=KSH_PEAK),
+    Diagram("kerr_scalar_hair", "kerr_member", "axis", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$\\mu r$", "$\\mu ct$", KSH_KERR, {"theta": "0", "varphi": "0"}, orient="ingoing", input=KSH_KERR_INPUT),
+    Diagram("kerr_scalar_hair", "kerr_member", "equator", "$t$ and $r$ on the equator", ("t", "r"), (0, 4, -2, 2),
+            "$\\mu r$", "$\\mu ct$", KSH_KERR, {"theta": "pi/2"}, orient="ingoing", quotient="varphi",
+            mark_gtt="the ergosurface", cone=KSH_CONE, input=KSH_KERR_INPUT),
     # The first Morgan-Morgan disc on its two totally geodesic planes. Weyl's chart draws the
     # axis through the centre of the disc and the plane z = 0, disc and vacuum together; the oblate
     # spheroidal chart draws the axis above the disc, the plane outside the rim, and the disc itself.
@@ -9783,6 +9875,41 @@ CAPTIONS = {
         "A ray takes the time $4\\pi L/c$ to go once round the sphere, four times as long as a ray takes to cross "
         "anti-de Sitter space from its boundary to the centre and back out.",
     ],
+    ("bubbling_ads", "global", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = \\psi = 0$, $\\alpha = \\beta = \\pi/2$, $\\gamma = 0$, "
+        "$\\kappa = \\xi = \\pi/2$, $\\omega = 0$) in the global chart, each point in the plane a 3-sphere of "
+        "anti-de Sitter space of radius $L\\sinh\\rho$. At $\\theta = 0$ the 3-sphere of the 5-sphere has shrunk to "
+        "a point, so the plane lies in the plane of the droplets, $y = 0$, in the white outside the black disc, "
+        "at $r = L^2\\cosh\\rho$ and $\\phi = -t$.",
+        "The rays have $d\\rho/dt = \\pm\\cosh\\rho$, so a ray from the centre reaches $\\rho \\to \\infty$, "
+        "the boundary of anti-de Sitter space, at $t = \\pi/2$.",
+    ],
+    ("bubbling_ads", "global", "edge"): [
+        "The plane of $t$ and $\\psi$ ($\\rho = \\theta = 0$, $\\alpha = \\beta = \\pi/2$, $\\gamma = 0$, "
+        "$\\kappa = \\xi = \\pi/2$, $\\omega = 0$), a great circle of the 5-sphere at the centre of anti-de Sitter "
+        "space over one turn, its two edges one line. On it the metric is $L^2\\left(-dt^2 + d\\psi^2\\right)$, so "
+        "the rays are null geodesics at 45°.",
+        "The circle is the edge of the black disc, $r = L^2$ at $\\phi = \\psi - t$, so the ray $\\psi = t$ stays at "
+        "one point of the edge while $t$ runs, and each point of the border between black and white is a light ray "
+        "going round the 5-sphere.",
+    ],
+    ("bubbling_ads", "rings", "ring_axis"): [
+        "The plane of $t$ and $y$ on the axis of a black ring ($r = \\phi = 0$, $\\alpha = \\beta = \\pi/2$, "
+        "$\\gamma = 0$, $\\kappa = \\xi = \\pi/2$, $\\omega = 0$), through the centre of its white hole. On the "
+        "axis the twist vanishes and the metric on the plane is $-2y\\cosh G\\,dt^2 + dy^2/(2y\\cosh G)$, and the "
+        "rotations of the plane and of both 3-spheres hold the axis fixed, so the rays are null geodesics.",
+        "At $y = 0$ the 3-sphere of $\\kappa$, $\\xi$, and $\\omega$ shrinks to a point and a ray passes "
+        "through it. A ray from $y = 0$ reaches $y \\to \\infty$, the boundary of the anti-de Sitter space far "
+        "away, at $t = 1.253$; from the centre of the black disc of the same area it takes $t = \\pi/2$.",
+    ],
+    ("bubbling_ads", "plane_wave", "axis"): [
+        "The plane of $t$ and $x$ on the axis of the plane wave ($r_1 = r_2 = 0$, $\\alpha = \\beta = \\pi/2$, "
+        "$\\gamma = 0$, $\\kappa = \\xi = \\pi/2$, $\\omega = 0$), drawn with $T = x/\\ell^2 + t/2$ and "
+        "$Z = x/\\ell^2 - t/2$ for $\\ell$ any length, since the chart's own $t$ and $x$ are both null. On the "
+        "axis the metric is $-2\\,dt\\,dx$, flat, and the rays are null geodesics at 45°.",
+        "Off the axis a ray is pulled back toward it, $\\ddot r_1 = -r_1\\dot t^2$ and $\\ddot r_2 = -r_2\\dot t^2$ "
+        "with $\\dot t$ constant, so every ray that leaves the axis returns to it after $\\Delta t = \\pi$.",
+    ],
     ("interior_schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the "
         "chart ($r \\in [0, R]$), for a star with $R = 1.5\\,r_s$. The cones are "
@@ -10962,6 +11089,39 @@ CAPTIONS = {
         "left edge the circles have the circumference $4\\pi m$ of the throat, and $\\omega$ has risen to $1/2m$, "
         "the angular velocity of the horizon and of the disc.",
     ],
+    ("kerr_scalar_hair", "herdeiro_radu", "axis"): [
+        "The plane of $t$ and $r$ on the axis ($\\theta = 0$, $\\varphi = 0$) of Herdeiro and Radu's configuration IV. On "
+        "the axis the dragging drops out of the metric, which is $-e^{2F_0}(1 - r_H/r)c^2dt^2 + e^{2F_1}dr^2/(1 - r_H/r)$, "
+        "and a ray has $c\\,dt/dr = \\pm e^{F_1 - F_0}/(1 - r_H/r)$; every rotation about the axis fixes the plane, so "
+        "the rays are null geodesics.",
+        "The field vanishes on the axis. The cones close toward the horizon $r = r_H$, which a ray reaches only as "
+        "$t \\to \\pm\\infty$, and where $e^{F_1 - F_0} = 31.2$. A ray climbs from $r = 0.2/\\mu$ to $4/\\mu$ in "
+        "$11.6/\\mu$ of the time $ct$, and a clock at rest at $r = 0.2/\\mu$ runs at $0.197$ of the rate of one far away.",
+    ],
+    ("kerr_scalar_hair", "herdeiro_radu", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of configuration IV drawn in $t$ and $r$ with $\\varphi$ divided out, "
+        "each point in the diagram a circle about the axis. Its null curves are the shadows on $t$ and $r$ of the null "
+        "geodesics with no angular momentum, which turn about the axis at $d\\varphi/d(ct) = W$.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = 0.365/\\mu$, inside which no observer keeps "
+        "$\\varphi$ fixed. The field is largest at $r = 0.96/\\mu$, where frames are dragged at $cW = 0.12\\,\\mu c$, "
+        "and at the horizon they turn with it at $\\Omega_H = 0.82\\,\\mu c$.",
+    ],
+    ("kerr_scalar_hair", "kerr_member", "axis"): [
+        "The plane of $t$ and $r$ on the axis ($\\theta = 0$, $\\varphi = 0$) of Kerr's black hole with the mass and "
+        "angular momentum of configuration IV, in Herdeiro and Radu's coordinates. Every rotation about the axis fixes "
+        "the plane, so the rays are null geodesics, those of Kerr's axis in the Boyer-Lindquist radius $R = r + b$.",
+        "The cones close toward the horizon $r = r_H = 0.982/\\mu$. Its equatorial circumference is "
+        "$2\\pi \\times 1.87/\\mu$ and its area $33.4/\\mu^2$, nine times the area $3.65/\\mu^2$ of the horizon of the "
+        "hairy black hole with the same mass and angular momentum.",
+    ],
+    ("kerr_scalar_hair", "kerr_member", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the same Kerr black hole drawn in $t$ and $r$ with $\\varphi$ divided "
+        "out, each point in the diagram a circle about the axis. The null curves are the shadows of the null geodesics "
+        "with no angular momentum.",
+        "The dotted line is the ergosurface, at $r = 1.424/\\mu$, which is the Boyer-Lindquist radius $R = 2GM/c^2$. "
+        "The horizon turns at $\\Omega_H = 0.299\\,\\mu c$, a little over a third of the angular velocity of the hairy "
+        "black hole's horizon.",
+    ],
     ("bach_weyl_ring", "weyl", "axis"): [
         "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of the Bach-Weyl ring ($m = a/2$), the axis that threads "
         "the ring through its centre, $z = 0$. On the axis $\\gamma = 0$ and $\\psi = -m/\\sqrt{z^2 + a^2}$, so the metric "
@@ -11097,6 +11257,32 @@ CAPTIONS = {
         "The fluid's world lines are the vertical lines. It contracts before $t = 0$ and expands after it, and its "
         "density, $15a^2c^4/(8\\pi G\\cosh^4(act)\\cosh^4(3a\\rho))$, is greatest at the marked event and falls away "
         "from it in every direction.",
+    ],
+    ("lqc_bounce", "cosmic", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$), each vertical line the world line of a comoving observer. The edges "
+        "of the cones are $dx/dt = \\pm c/a$, so they stand at 45° at the bounce, $t = 0$, where $a = 1$ and the "
+        "density is greatest, and close up on either side of it as $a$ grows.",
+        "Every ray comes in from $t = -\\infty$ and runs on to $t = +\\infty$, through a Kretschmann scalar that is "
+        "greatest at the bounce, where it is $4/3c^4t_b^4$. The comoving distance a ray crosses, $\\int c\\,dt/a$, "
+        "grows as $|t|^{2/3}$ without limit in both directions, so any two comoving observers can signal each other.",
+    ],
+    ("lqc_bounce", "comoving_spherical", "radial"): [
+        "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$), each point in the plane a 2-sphere "
+        "of areal radius $R = ar$. The universe contracts below $t = 0$ and expands above it, and the cones are "
+        "widest at the bounce.",
+        "On the dotted curve $|\\nabla R|^2 = 0$, which is $r = 3c(t_b^2 + t^2)/a|t|$, the Hubble sphere. It "
+        "lies at infinity at the bounce, where the expansion rate vanishes, and comes nearest the centre at "
+        "$t = \\pm\\sqrt{3/2}\\,t_b$, where $r \\approx 5.26\\,ct_b$. Beyond it both families "
+        "of rays converge before the bounce and both diverge after it.",
+    ],
+    ("lqc_bounce", "harmonic", "taux"): [
+        "The plane of the harmonic time $\\tau$ and $x$ ($y = z = 0$), with $t = t_b\\sinh(\\tau/t_b)$. A unit of "
+        "$\\tau$ lasts $a^3$ units of the comoving observers' proper time, so the edges of the cones are "
+        "$dx/d\\tau = \\pm c\\,a^2 = \\pm c\\cosh^{2/3}(\\tau/t_b)$, at 45° at the bounce and opening out on "
+        "either side of it.",
+        "The scalar field is a fixed multiple of $\\tau$, so the lines of constant $\\tau$ are the moments at "
+        "which the field has one value. Each ray is a ray of the cosmic chart, with $x \\pm \\int c\\,dt/a$ "
+        "constant along it.",
     ],
     ("kopczynski_trautman", "comoving_cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$), each vertical line the world line of a grain of dust. The edges of "
@@ -15729,6 +15915,14 @@ def _two_particles_distance(x):
     return np.sign(x) * (out + beyond(np.maximum(a - 1.0, 0.0) ** 0.75))
 
 
+def _lqc_eta(t):
+    """The conformal time of the bounce of loop quantum cosmology at the proper time t, in units of t_b:
+    eta = int_0^t dt/a = t 2F1(1/6, 1/2; 3/2; -t^2), which grows as (3/2)|t|^(2/3)."""
+    from scipy.special import hyp2f1
+    t = np.asarray(t, dtype=float)
+    return t * hyp2f1(1 / 6, 0.5, 1.5, -t ** 2)
+
+
 def _kt_eta(t):
     """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l."""
     from scipy.special import hyp2f1
@@ -16386,6 +16580,12 @@ CLOSED_FORMS = {
     ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("senovilla", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     # Kopczynski and Trautman: eta(t) = int dt/(1 + t^2)^(1/3) = t 2F1(1/3, 1/2; 3/2; -t^2) in units of l.
+    # The bounce of loop quantum cosmology: eta(t) = int dt/(1 + t^2)^(1/6) = t 2F1(1/6, 1/2; 3/2; -t^2) in units of
+    # t_b, and t = sinh(tau) in the harmonic chart.
+    ("lqc_bounce", "cosmic", "tx"): (lambda t, x: x + _lqc_eta(t), lambda t, x: x - _lqc_eta(t), None),
+    ("lqc_bounce", "comoving_spherical", "radial"): (lambda t, r: _lqc_eta(t) + r, lambda t, r: _lqc_eta(t) - r, None),
+    ("lqc_bounce", "harmonic", "taux"):
+        (lambda tau, x: x + _lqc_eta(np.sinh(tau)), lambda tau, x: x - _lqc_eta(np.sinh(tau)), None),
     ("kopczynski_trautman", "comoving_cartesian", "tx"): (lambda t, x: _kt_eta(t) + x, lambda t, x: _kt_eta(t) - x, None),
     ("kopczynski_trautman", "comoving_spherical", "radial"):
         (lambda t, r: _kt_eta(t) + r, lambda t, r: _kt_eta(t) - r, None),
@@ -16483,6 +16683,16 @@ CLOSED_FORMS = {
     ("freund_rubin", "poincare", "radial"): (lambda t, r: t - 1 / r, lambda t, r: t + 1 / r, lambda t, r: r > 0.05),
     ("freund_rubin", "proper", "radial"): (lambda t, s: t - np.exp(-s), lambda t, s: t + np.exp(-s), None),
     ("freund_rubin", "proper", "circle"): (lambda t, p: t + 2 * p, lambda t, p: t - 2 * p, None),
+    # Bubbling anti-de Sitter space at L = 1: t -+ arctan(sinh rho) on the global chart, t -+ phi round the edge
+    # of the disc, t -+ y_* on the ring's axis with y_* the quadrature bubbling_ads.axis_tortoise, and the
+    # plane wave's null t and x on its axis.
+    ("bubbling_ads", "global", "radial"):
+        (lambda t, r: t + np.arctan(np.sinh(r)), lambda t, r: t - np.arctan(np.sinh(r)), None),
+    ("bubbling_ads", "global", "edge"): (lambda t, p: t + p, lambda t, p: t - p, None),
+    ("bubbling_ads", "rings", "ring_axis"):
+        (lambda t, y: t + np.vectorize(bubbling_ads.axis_tortoise)(y), lambda t, y: t - np.vectorize(bubbling_ads.axis_tortoise)(y),
+         None),
+    ("bubbling_ads", "plane_wave", "axis"): (lambda u, v: v, lambda u, v: u, None),
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     # The throat of extreme Kerr at r_0 = 1: each plane is conformal to a chart of AdS2, whose rays

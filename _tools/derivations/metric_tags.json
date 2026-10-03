@@ -2651,6 +2651,126 @@
   ],
   "sphere": null
  },
+ "bubbling_ads/global": {
+  "stamp": "6597ab92ec57a92f",
+  "relations": {},
+  "orders": null,
+  "dimension": 10,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\gamma",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\psi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\omega",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\alpha",
+   "\\beta",
+   "\\gamma"
+  ]
+ },
+ "bubbling_ads/plane_wave": {
+  "stamp": "f9df342ba3016aba",
+  "relations": {},
+  "orders": null,
+  "dimension": 10,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\gamma",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\omega",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\alpha",
+   "\\beta",
+   "\\gamma"
+  ]
+ },
+ "bubbling_ads/rings": {
+  "stamp": "9b5c77a0b767af7e",
+  "relations": {},
+  "orders": null,
+  "dimension": 10,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   },
+   {
+    "coord": "\\gamma",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\omega",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\alpha",
+   "\\beta",
+   "\\gamma"
+  ]
+ },
  "c_metric/hong_teo": {
   "stamp": "643b2c69e832ec0c",
   "relations": {},
@@ -7533,6 +7653,54 @@
   ],
   "sphere": null
  },
+ "kerr_scalar_hair/herdeiro_radu": {
+  "stamp": "1eaf0318ecde96f6",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\varphi",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "kerr_scalar_hair/kerr_member": {
+  "stamp": "3b9b72059e8d67ea",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\varphi",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "kerr_taub_nut/boyer_lindquist": {
   "stamp": "f737ac6fcbf922d4",
   "relations": {},
@@ -8649,6 +8817,87 @@
    "\\phi"
   ]
  },
+ "lqc_bounce/comoving_spherical": {
+  "stamp": "6018a230e2227eb6",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "lqc_bounce/cosmic": {
+  "stamp": "58ba3c1d6ad9b4da",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "lqc_bounce/harmonic": {
+  "stamp": "c6e82491be0d1e34",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "maitra_dust/cylindrical": {
   "stamp": "22eb067e116ef463",
   "relations": {},
@@ -8821,6 +9070,162 @@
    "\\theta",
    "\\phi"
   ]
+ },
+ "maximally_supersymmetric_plane_wave/brinkmann": {
+  "stamp": "df9f5586bc9490c7",
+  "relations": {},
+  "orders": null,
+  "dimension": 10,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "u",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "v",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "maximally_supersymmetric_plane_wave/conformally_flat": {
+  "stamp": "4fda108caccf96bb",
+  "relations": {},
+  "orders": null,
+  "dimension": 10,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "V",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "X_1",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "X_2",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "X_3",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "X_4",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "X_5",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "X_6",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "X_7",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "X_8",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "maximally_supersymmetric_plane_wave/rosen": {
+  "stamp": "4345d27a8805d03d",
+  "relations": {},
+  "orders": null,
+  "dimension": 10,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "v",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y_1",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y_2",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y_3",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y_4",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y_5",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y_6",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y_7",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y_8",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
  },
  "mcvittie/areal": {
   "stamp": "6b25ad149b9a8828",
