@@ -55,6 +55,11 @@
       "id": "kopczynski_trautman",
       "kind": "family",
       "text": "Another universe that bounces with no singularity, this one of spinning dust in the Einstein-Cartan theory. It is homogeneous and it violates an energy condition of the singularity theorems, which Senovilla's universe keeps [hehl1974, trautman2006]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "A universe whose bounce comes from loop quantum cosmology, at a critical density of about 0.41 of the Planck density [ashtekar2011status]."
     }
   ],
   "references": [
@@ -71,7 +76,8 @@
     "raychaudhuri1998",
     "senovilla1996",
     "hehl1974",
-    "trautman2006"
+    "trautman2006",
+    "ashtekar2011status"
   ],
   "coordinates": [
     {

@@ -105,6 +105,11 @@
       "text": "Papers VII and VIII of the series whose paper III gave the exact plane waves. They turn from the wave to its source and show that an isolated body loses mass as it radiates [bondi1962, sachs1962]."
     },
     {
+      "id": "bubbling_ads",
+      "kind": "family",
+      "text": "In ten dimensions the plane wave with $H = -\\left(r_1^2 + r_2^2\\right)$ and a 5-form keeps all the supersymmetry of type IIB supergravity [blau2002]. On Lin, Lunin, and Maldacena's plane of droplets it is a black half plane [lin2004]."
+    },
+    {
       "id": "maximally_supersymmetric_plane_wave",
       "kind": "family",
       "text": "A plane wave of ten dimensions with $H = -\\mu^2\\left(x_1^2 + \\dots + x_8^2\\right)$, the same in every direction across it, held up by a 5-form field of supergravity. It keeps every supersymmetry of the theory [blau2002]."
@@ -151,7 +156,8 @@
     "podolsky1999expanding",
     "bondi1962",
     "sachs1962",
-    "blau2002"
+    "blau2002",
+    "lin2004"
   ],
   "coordinates": [
     {

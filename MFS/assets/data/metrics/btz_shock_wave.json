@@ -1,0 +1,2268 @@
+{
+  "id": "btz_shock_wave",
+  "name": "Shenker-Stanford Shock Wave in the BTZ Black Hole",
+  "short_name": "Shenker-Stanford Shock Wave",
+  "description": "The eternal black hole of Bañados, Teitelboim, and Zanelli with a shock wave lying on its horizon, the field of a few quanta thrown in from one side long ago. The two halves of the black hole are joined along the horizon with a shift $\\alpha$ that grows exponentially with the time since the quanta were let go, so the wormhole between the two outsides grows longer. It is the geometry of the butterfly effect in holography.",
+  "tags": [
+    "shock wave",
+    "impulsive wave",
+    "null shell",
+    "null source",
+    "black hole",
+    "BTZ black hole",
+    "anti-de Sitter",
+    "negative cosmological constant",
+    "cosmological constant",
+    "wormhole",
+    "Einstein-Rosen bridge",
+    "horizon",
+    "event horizon",
+    "AdS/CFT",
+    "holography",
+    "thermofield double",
+    "butterfly effect",
+    "scrambling",
+    "quantum chaos",
+    "circularly symmetric",
+    "2+1 dimensional gravity",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model",
+    "conformally flat",
+    "three-dimensional"
+  ],
+  "signature": "(-,+,+)",
+  "convention": "The anti-de Sitter radius $\\ell$ and the radius $R$ of the horizon are lengths, with $\\Lambda = -1/\\ell^2$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A few quanta dropped into a black hole long ago carry almost no energy, but near the horizon, relative to the present moment, their energy has grown exponentially with the time since they were let go [shenker2014]. In June 2013, at Stanford University, Stephen H. Shenker and Douglas Stanford followed such quanta into the black hole of three dimensions found by Máximo Bañados, Claudio Teitelboim, and Jorge Zanelli in 1992 [shenker2014, banados1992]. They took its eternal form, two outsides joined through the horizon, which by a proposal of Juan Maldacena's is two copies of one quantum system in a single entangled state, the thermofield double [shenker2014, maldacena2003]. In that state a region of one system can be strongly entangled with the matching region of the other, even when both regions are small [shenker2014]. What becomes of that entanglement once a few quanta have fallen in from one side, long ago?¶Relative to the moment $t = 0$, the quanta are boosted [shenker2014]. A shift of the Killing time $t$ is a boost in the Kruskal coordinates $u$ and $v$, so quanta of energy $E$ let go from the left boundary a time $t_w$ earlier cross that moment with a proper energy that grows as $e^{Rt_w/\\ell^2}$, with $R$ the radius of the horizon and $\\ell$ the radius of anti-de Sitter space [shenker2014]. Shenker and Stanford glued a black hole of mass $M$ to one of mass $M + E$ along the path of the quanta, and let $E/M \\to 0$ and $t_w \\to \\infty$ with $\\alpha = \\frac{E}{4M}e^{Rt_w/\\ell^2}$ held fixed [shenker2014]. In that limit the path lies on the horizon $u = 0$, the two black holes have one mass, and the region behind the quanta is the same black hole with $v$ shifted to $v + \\alpha$: $$ds^2 = \\frac{-4\\ell^2\\,du\\,dv + R^2\\left[1 - u\\left(v + \\alpha\\Theta(u)\\right)\\right]^2d\\phi^2}{\\left[1 + u\\left(v + \\alpha\\Theta(u)\\right)\\right]^2},$$ with $\\Theta$ the step function and $\\phi$ the angle round the black hole [shenker2014]. The metric is continuous, its first derivatives jump on $u = 0$, and Einstein's equations put there \"a shell of null particles symmetrically distributed on the horizon\" [shenker2014].¶A shift of this kind is the gravitational field of matter moving at the speed of light along a horizon [dray1985, sfetsos1995]. At Utrecht, Tevian Dray and Gerard 't Hooft found the field of one massless particle running along the horizon of Schwarzschild's black hole, together with the conditions under which a shift in $v$ at $u = 0$ solves Einstein's equations, and published both in 1985 [dray1985]. Konstadinos Sfetsos, also at Utrecht, extended those conditions in 1994 to spacetimes with matter and a cosmological constant, and among his examples was a massless particle on the horizon of the black hole of Bañados, Teitelboim, and Zanelli [sfetsos1995]. Shenker and Stanford's shell spreads its energy evenly round the circle of the horizon, so their shift is the same at every angle $\\phi$ [shenker2014]. In the coordinates $U = u$ and $V = v + \\alpha\\Theta(u)$, which jump at the shock, the metric takes \"a more standard shock wave form\", the black hole's with the one term $4\\ell^2\\alpha\\,\\delta(U)\\,dU^2$ added to its numerator [shenker2014].¶No curvature invariant is large at the shock, since in a suitably boosted frame it carries very little energy [shenker2014]. The shock lengthens the bridge between the two outsides [shenker2014]. The horizons $v = 0$ and $v = -\\alpha$ miss each other by $\\alpha$, and the geodesic from the left boundary at $t = 0$ to the right one grows longer by $2\\ell\\ln(1 + \\alpha/2)$ [shenker2014]. For quanta at the black hole's own temperature, the mutual information between matching regions of the two sides falls to zero when $t_w$ reaches about $t_* = \\frac{\\beta}{2\\pi}\\ln S$, with $\\beta$ the inverse temperature and $S$ the entropy, and Shenker and Stanford called that time \"our central result\" [shenker2014]. The conjecture that \"black holes are the fastest scramblers in nature\", taking a time logarithmic in their number of degrees of freedom, was Yasuhiro Sekino and Leonard Susskind's, from 2008, and $t_*$ is such a time [sekino2008, shenker2014]. An observer who falls in from the right meets the shock and is \"abruptly shifted over\", with less proper time left before the singularity, and for quanta let go early enough Shenker and Stanford judged that \"this shock wave has many of the attributes of a firewall\" [shenker2014].¶What do more quanta, thrown in at other times, do? Six months on, Shenker and Stanford threw quanta in from the left at times alternating between $-t_w$ and $t_w$, which make \"an intersecting network of shock waves, supporting a very long wormhole\" [shenker2014multiple]. With $n$ shocks the bridge has a length of $n\\ell\\cosh^{-1}(1 + \\alpha^2/2)$, up to a part that does not grow with $n$ [shenker2014multiple]. A second perturbation made more than a scrambling time before the first pushes the first one's shock \"off the AdS boundary and onto the singularity\", and the first perturbation never reaches the boundary [shenker2014multiple]. Stanford and Susskind took the size of the bridge as a measure of the complexity of the quantum state, proposing in June 2014 that the complexity is the volume of the largest slice across the bridge divided by $G\\ell$, with $G$ Newton's constant, and found \"detailed agreement\" on these geometries [stanford2014]. Each reversal of the order of time along the string of perturbations, a switchback, takes two scrambling times off the complexity [stanford2014].¶A perturbation at a single point of the boundary makes a shock that is strongest there and weakens with distance [roberts2015]. Working out such localized shocks in September 2014, Daniel A. Roberts, Stanford, and Susskind found that the disturbance spreads over the boundary at the speed $v_B = \\sqrt{d/2(d - 1)}$, with $d$ the dimension of the boundary's spacetime, which for this black hole's circle, $d = 2$, is the speed of light [roberts2015]. Since $\\beta = 2\\pi\\ell^2/R$, the shift of a single shock grows as $\\alpha \\propto e^{2\\pi t_w/\\beta}$ [shenker2014]. By a conjecture that Juan Maldacena, Shenker, and Stanford made in March 2015 and argued for, chaos in a thermal quantum system with many degrees of freedom develops no faster than $e^{\\lambda_Lt}$, with $\\lambda_L \\le 2\\pi k_BT/\\hbar$ at the temperature $T$ [maldacena2016chaos]. Einstein gravity's growth, the $e^{2\\pi t_w/\\beta}$ of the shock, sits exactly on the bound [maldacena2016chaos, shenker2014]. The three found it \"tempting to speculate\" that a system with many degrees of freedom that sits on the bound has a dual description in Einstein gravity [maldacena2016chaos].",
+  "related": [
+    {
+      "id": "btz",
+      "kind": "piece",
+      "text": "The black hole the shock is laid on, without rotation. Its two halves, cut along the horizon $u = 0$ and joined again with $v$ shifted by $\\alpha$, make the shock wave, and at $\\alpha = 0$ they join as they were [shenker2014]."
+    },
+    {
+      "id": "einstein_rosen_bridge",
+      "kind": "family",
+      "text": "The bridge between the two outsides of Schwarzschild's black hole. Here the bridge joins two outsides of anti-de Sitter space, and the shock on the horizon makes it longer [shenker2014]."
+    },
+    {
+      "id": "aichelburg_sexl",
+      "kind": "family",
+      "text": "The shock wave of one massless particle in flat spacetime. Dray and 't Hooft recovered it from the same kind of shift across a null surface that puts this shock on a horizon [dray1985]."
+    },
+    {
+      "id": "hotta_tanaka",
+      "kind": "family",
+      "text": "Another shock lying on a horizon, in de Sitter space. Both are shifts across a horizon of the kind Sfetsos's conditions allow with a cosmological constant [sfetsos1995]."
+    },
+    {
+      "id": "schwarzschild_ads",
+      "kind": "family",
+      "text": "The black hole of anti-de Sitter space in four dimensions. Shenker and Stanford put the same shock on the horizon of such black holes in any number of dimensions and found the same scrambling time, $t_* = (\\beta/2\\pi)\\ln S$ [shenker2014]."
+    },
+    {
+      "id": "anti_de_sitter",
+      "kind": "family",
+      "text": "Off the shock the spacetime is anti-de Sitter space of three dimensions with its points identified, as the BTZ black hole is [banados1993]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "family",
+      "text": "More black holes of three dimensions made by cutting and gluing anti-de Sitter space. Their outsides are the BTZ black hole's, as both outsides of the shock wave are."
+    },
+    {
+      "id": "quantum_btz",
+      "kind": "family",
+      "text": "The BTZ black hole with the backreaction of strongly coupled quantum fields included exactly [emparan2020qbtz]. The shock wave changes the same black hole classically, with a shell of null particles on its horizon."
+    }
+  ],
+  "references": [
+    "shenker2014",
+    "banados1992",
+    "maldacena2003",
+    "dray1985",
+    "sfetsos1995",
+    "sekino2008",
+    "shenker2014multiple",
+    "stanford2014",
+    "roberts2015",
+    "maldacena2016chaos",
+    "banados1993",
+    "emparan2020qbtz"
+  ],
+  "coordinates": [
+    {
+      "id": "kruskal",
+      "name": "Kruskal",
+      "coords": [
+        "u",
+        "v",
+        "\\phi"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "-1 < u\\left(v + \\alpha\\Theta\\right) < 1",
+        "u = 0 \\;\\text{(the shock)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Radius of anti-de Sitter space, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+        },
+        {
+          "symbol": "R",
+          "description": "Radius of the horizon, a length, with $R^2 = 8Gm\\ell^2/c^2$ for a black hole of mass $m$"
+        },
+        {
+          "symbol": "\\alpha",
+          "description": "Shift across the shock, a pure number, $\\alpha = (E/4mc^2)e^{cRt_w/\\ell^2}$ with $E$ the energy of the quanta and $t_w$ the time before $t = 0$ at which they were let go"
+        },
+        {
+          "symbol": "\\Theta = \\tfrac{1}{2}\\left(1 + \\mathrm{sgn}(u)\\right)",
+          "description": "Step function of $u$, zero ahead of the shock and one behind it"
+        }
+      ],
+      "convention": "We use Shenker and Stanford's Kruskal coordinates $u$ and $v$, pure numbers both increasing to the future, with the shock on $u = 0$ and the outside on the right at $u < 0 < v$, and $\\phi$ the angle round the horizon, and the Dirac delta $\\delta(u)$ is the derivative of the step $\\Theta$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = \\dfrac{-4\\ell^2\\,du\\,dv + R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2d\\phi^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-\\dfrac{2\\ell^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-\\dfrac{2\\ell^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-\\dfrac{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}{2\\ell^2}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-\\dfrac{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}{2\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}{R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(v + \\alpha\\Theta\\right)}{u\\left(v + \\alpha\\Theta\\right) + 1}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{u\\,R^2\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}{\\ell^2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{2u}{u\\left(v + \\alpha\\Theta\\right) + 1}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(v + \\alpha\\Theta\\right)R^2\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}{\\ell^2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(v + \\alpha\\Theta\\right)}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{2\\left(v + \\alpha\\Theta\\right)}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2u}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{2u}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{4u\\,\\ell^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(v + \\alpha\\Theta\\right)R^2\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(v + \\alpha\\Theta\\right)R^2\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{2\\left(v + \\alpha\\Theta\\right)R^2\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{4\\left(v + \\alpha\\Theta\\right)\\ell^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2u\\,R^2\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2u\\,R^2\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{2u\\,R^2\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\ell^2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\ell^2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\ell^2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\ell^2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R^2\\,\\alpha\\,\\delta(u)}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{R^2\\,\\alpha\\,\\delta(u)}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-2\\alpha\\,\\delta(u)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "2\\alpha\\,\\delta(u)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{4\\ell^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{4\\ell^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{4\\ell^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{4\\ell^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "2R^2\\,\\alpha\\,\\delta(u)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-2R^2\\,\\alpha\\,\\delta(u)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-2R^2\\,\\alpha\\,\\delta(u)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "2R^2\\,\\alpha\\,\\delta(u)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{2R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{2R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{2R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{2R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "2\\alpha\\,\\delta(u)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{4}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{4}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\ell^2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\alpha\\,\\delta(u)}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\alpha\\,\\delta(u)}{2\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}{R^2\\,\\ell^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+      "kretschmann": "K = \\dfrac{12}{\\ell^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "2\\alpha\\,\\delta(u)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\ell^2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\alpha\\,\\delta(u)}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}{2\\ell^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}{2\\ell^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\alpha\\,\\delta(u)}{2\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}{R^2\\,\\ell^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} - \\dfrac{2\\left(v + \\alpha\\Theta\\right)}{u\\left(v + \\alpha\\Theta\\right) + 1}\\dot{u}^2 + \\dfrac{u\\,R^2\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}{\\ell^2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{v} - \\dfrac{2u}{u\\left(v + \\alpha\\Theta\\right) + 1}\\dot{v}^2 + \\dfrac{\\left(v + \\alpha\\Theta\\right)R^2\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}{\\ell^2\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{4\\left(v + \\alpha\\Theta\\right)}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}\\dot{u}\\dot{\\phi} + \\dfrac{4u}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)}\\dot{v}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "discontinuous",
+      "name": "Discontinuous Kruskal",
+      "coords": [
+        "U",
+        "V",
+        "\\phi"
+      ],
+      "domains": [
+        "U \\in (-\\infty, \\infty)",
+        "V \\in (-\\infty, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "-1 < UV < 1",
+        "U = 0 \\;\\text{(the shock)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Radius of anti-de Sitter space, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+        },
+        {
+          "symbol": "R",
+          "description": "Radius of the horizon, a length, with $R^2 = 8Gm\\ell^2/c^2$ for a black hole of mass $m$"
+        },
+        {
+          "symbol": "\\alpha",
+          "description": "Shift across the shock, a pure number, $\\alpha = (E/4mc^2)e^{cRt_w/\\ell^2}$ with $E$ the energy of the quanta and $t_w$ the time before $t = 0$ at which they were let go"
+        }
+      ],
+      "convention": "We use the coordinates $U = u$ and $V = v + \\alpha\\Theta(u)$ of Shenker and Stanford, pure numbers, with $V$ jumping by $\\alpha$ across the shock $U = 0$, and we read the Dirac delta $\\delta$ as the limit of a pulse even about the shock. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = \\dfrac{-4\\ell^2\\,dU\\,dV + 4\\ell^2\\alpha\\,\\delta(U)\\,dU^2 + R^2\\left(1 - UV\\right)^2d\\phi^2}{\\left(1 + UV\\right)^2}",
+      "metric_components": [
+        {
+          "indices": [
+            "U",
+            "U"
+          ],
+          "value": "4\\alpha\\,\\ell^2\\,\\delta(U)"
+        },
+        {
+          "indices": [
+            "U",
+            "V"
+          ],
+          "value": "-\\dfrac{2\\ell^2}{\\left(1 + UV\\right)^2}"
+        },
+        {
+          "indices": [
+            "V",
+            "U"
+          ],
+          "value": "-\\dfrac{2\\ell^2}{\\left(1 + UV\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{R^2\\left(1 - UV\\right)^2}{\\left(1 + UV\\right)^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "U",
+            "V"
+          ],
+          "value": "-\\dfrac{\\left(1 + UV\\right)^2}{2\\ell^2}"
+        },
+        {
+          "indices": [
+            "V",
+            "U"
+          ],
+          "value": "-\\dfrac{\\left(1 + UV\\right)^2}{2\\ell^2}"
+        },
+        {
+          "indices": [
+            "V",
+            "V"
+          ],
+          "value": "-\\dfrac{\\alpha\\,\\delta(U)}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\left(1 + UV\\right)^2}{R^2\\left(1 - UV\\right)^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "U"
+                ],
+                "value": "-\\dfrac{2V}{UV + 1}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{U\\,R^2\\left(UV - 1\\right)}{\\ell^2\\left(1 + UV\\right)}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "U"
+                ],
+                "value": "-\\left(2V\\,\\alpha\\,\\delta(U) + \\alpha\\,\\delta'(U)\\right)"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "V"
+                ],
+                "value": "-\\dfrac{2U}{UV + 1}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{V\\,R^2\\left(UV - 1\\right)}{\\ell^2\\left(1 + UV\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "U",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2V}{\\left(1 + UV\\right)\\left(UV - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "U"
+                ],
+                "value": "\\dfrac{2V}{\\left(1 + UV\\right)\\left(UV - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2U}{\\left(1 + UV\\right)\\left(UV - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{2U}{\\left(1 + UV\\right)\\left(UV - 1\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "U"
+                ],
+                "value": "2\\alpha\\,\\ell^2\\,\\delta'(U)"
+              },
+              {
+                "indices": [
+                  "U",
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{4U\\,\\ell^2}{\\left(1 + UV\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2V\\,R^2\\left(UV - 1\\right)}{\\left(1 + UV\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "U",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2V\\,R^2\\left(UV - 1\\right)}{\\left(1 + UV\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "U"
+                ],
+                "value": "\\dfrac{2V\\,R^2\\left(UV - 1\\right)}{\\left(1 + UV\\right)^3}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "U"
+                ],
+                "value": "\\dfrac{4V\\,\\ell^2}{\\left(1 + UV\\right)^3}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2U\\,R^2\\left(UV - 1\\right)}{\\left(1 + UV\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2U\\,R^2\\left(UV - 1\\right)}{\\left(1 + UV\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{2U\\,R^2\\left(UV - 1\\right)}{\\left(1 + UV\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "U",
+                  "V"
+                ],
+                "value": "\\dfrac{2}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "U",
+                  "V"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "V",
+                  "U"
+                ],
+                "value": "\\dfrac{2}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "U",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "U",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{2}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "U",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi",
+                  "U"
+                ],
+                "value": "\\dfrac{2}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "\\phi",
+                  "U",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R^2\\left(1 - UV\\right)^2}{\\ell^2\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "\\phi",
+                  "\\phi",
+                  "U"
+                ],
+                "value": "\\dfrac{R^2\\left(1 - UV\\right)^2}{\\ell^2\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R^2\\left(1 - UV\\right)^2}{\\ell^2\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{R^2\\left(1 - UV\\right)^2}{\\ell^2\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "U",
+                  "V"
+                ],
+                "value": "4\\alpha\\,\\delta(U)"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "V",
+                  "U"
+                ],
+                "value": "-4\\alpha\\,\\delta(U)"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "U",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\alpha\\,R^2\\,\\delta(U)}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi",
+                  "U"
+                ],
+                "value": "\\dfrac{\\alpha\\,R^2\\,\\delta(U)}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "U",
+                  "U",
+                  "\\phi"
+                ],
+                "value": "2\\alpha\\,\\delta(U)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "U",
+                  "\\phi",
+                  "U"
+                ],
+                "value": "-2\\alpha\\,\\delta(U)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V",
+                  "U",
+                  "V"
+                ],
+                "value": "\\dfrac{4\\ell^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "V",
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{4\\ell^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "U",
+                  "V"
+                ],
+                "value": "-\\dfrac{4\\ell^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "V",
+                  "U"
+                ],
+                "value": "\\dfrac{4\\ell^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "\\phi",
+                  "U",
+                  "\\phi"
+                ],
+                "value": "-2\\alpha\\,R^2\\,\\delta(U)"
+              },
+              {
+                "indices": [
+                  "U",
+                  "\\phi",
+                  "\\phi",
+                  "U"
+                ],
+                "value": "2\\alpha\\,R^2\\,\\delta(U)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "U",
+                  "U",
+                  "\\phi"
+                ],
+                "value": "2\\alpha\\,R^2\\,\\delta(U)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "U",
+                  "\\phi",
+                  "U"
+                ],
+                "value": "-2\\alpha\\,R^2\\,\\delta(U)"
+              },
+              {
+                "indices": [
+                  "U",
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2R^2\\left(1 - UV\\right)^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "-\\dfrac{2R^2\\left(1 - UV\\right)^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "U",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2R^2\\left(1 - UV\\right)^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi",
+                  "U"
+                ],
+                "value": "-\\dfrac{2R^2\\left(1 - UV\\right)^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "U",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2R^2\\left(1 - UV\\right)^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "U",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{2R^2\\left(1 - UV\\right)^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "U",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2R^2\\left(1 - UV\\right)^2}{\\left(1 + UV\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi",
+                  "U"
+                ],
+                "value": "\\dfrac{2R^2\\left(1 - UV\\right)^2}{\\left(1 + UV\\right)^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U"
+                ],
+                "value": "-6\\alpha\\,\\delta(U)"
+              },
+              {
+                "indices": [
+                  "U",
+                  "V"
+                ],
+                "value": "\\dfrac{4}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "\\dfrac{4}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2R^2\\left(1 - UV\\right)^2}{\\ell^2\\left(1 + UV\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U"
+                ],
+                "value": "-\\dfrac{2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "-\\dfrac{2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\alpha\\,\\delta(U)}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(1 + UV\\right)^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "\\dfrac{\\left(1 + UV\\right)^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{5\\alpha\\,\\delta(U)}{2\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(1 + UV\\right)^2}{R^2\\,\\ell^2\\left(1 - UV\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+      "kretschmann": "K = \\dfrac{12}{\\ell^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U"
+                ],
+                "value": "6\\alpha\\,\\delta(U)"
+              },
+              {
+                "indices": [
+                  "U",
+                  "V"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{2}{\\left(1 + UV\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R^2\\left(1 - UV\\right)^2}{\\ell^2\\left(1 + UV\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\alpha\\,\\delta(U)}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(1 + UV\\right)^2}{2\\ell^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\left(1 + UV\\right)^2}{2\\ell^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\alpha\\,\\delta(U)}{2\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(1 + UV\\right)^2}{R^2\\,\\ell^2\\left(1 - UV\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{U} - \\dfrac{2V}{UV + 1}\\dot{U}^2 + \\dfrac{U\\,R^2\\left(UV - 1\\right)}{\\ell^2\\left(1 + UV\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{V} - \\left(2V\\,\\alpha\\,\\delta(U) + \\alpha\\,\\delta'(U)\\right)\\dot{U}^2 - \\dfrac{2U}{UV + 1}\\dot{V}^2 + \\dfrac{V\\,R^2\\left(UV - 1\\right)}{\\ell^2\\left(1 + UV\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{4V}{\\left(1 + UV\\right)\\left(UV - 1\\right)}\\dot{U}\\dot{\\phi} + \\dfrac{4U}{\\left(1 + UV\\right)\\left(UV - 1\\right)}\\dot{V}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "exterior",
+      "name": "Exterior",
+      "coords": [
+        "t",
+        "r",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (R, \\infty)",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Radius of anti-de Sitter space, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+        },
+        {
+          "symbol": "R",
+          "description": "Radius of the horizon, a length, with $R^2 = 8Gm\\ell^2/c^2$ for a black hole of mass $m$"
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\phi)$ on either outside, with $t$ the Killing time, carrying dimensions of time, and $r$ the radius of the circle, and we take components in the chart $x^0 = ct$, so $\\dot{t}$ means $d(ct)/d\\lambda$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\dfrac{r^2 - R^2}{\\ell^2}c^2dt^2 + \\dfrac{\\ell^2\\,dr^2}{r^2 - R^2} + r^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{R^2 - r^2}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{\\ell^2}{r^2 - R^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{\\ell^2}{r^2 - R^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{r^2 - R^2}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r\\left(r^2 - R^2\\right)}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(R^2 - r^2\\right)}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r\\,\\ell^2}{\\left(r^2 - R^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{R^2 - r^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{R^2 - r^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R^2 - r^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{R^2 - r^2}{\\ell^4}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(r^2 - R^2\\right)}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^2\\left(r^2 - R^2\\right)}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\left(r^2 - R^2\\right)}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r^2\\left(r^2 - R^2\\right)}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2}{r^2 - R^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^2 - 2R^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^2}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2R^2 - 2r^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2}{r^2\\,\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+      "kretschmann": "K = \\dfrac{12}{\\ell^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{R^2 - r^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{r^2 - R^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2 - R^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r^2\\,\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2r}{r^2 - R^2}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{r\\left(r^2 - R^2\\right)}{\\ell^4}\\dot{t}^2 - \\dfrac{r}{r^2 - R^2}\\dot{r}^2 + \\dfrac{r\\left(R^2 - r^2\\right)}{\\ell^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

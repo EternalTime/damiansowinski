@@ -34,6 +34,11 @@
       "text": "Anti-de Sitter space of five dimensions times a 5-sphere, the throat of a stack of three-branes. Its Penrose limit along a light ray circling the sphere is this wave [blau2002penrose, berenstein2002]."
     },
     {
+      "id": "bubbling_ads",
+      "kind": "generalisation",
+      "text": "Lin, Lunin, and Maldacena's droplets. A black half plane on their plane of droplets is this wave, and zooming in on the border of any droplet gives it back [lin2004]."
+    },
+    {
       "id": "freund_rubin",
       "kind": "family",
       "text": "Anti-de Sitter space of four dimensions times a 7-sphere, which keeps all the supersymmetry of eleven dimensions. The same limit along a light ray circling its sphere gives the plane wave of eleven dimensions that Kowalski-Glikman found, the counterpart of this one [blau2002penrose, kowalski1984]."
@@ -67,7 +72,8 @@
     "berenstein2002holography",
     "penrose1965plane",
     "hubeny2002",
-    "bonnor1969light"
+    "bonnor1969light",
+    "lin2004"
   ],
   "coordinates": [
     {

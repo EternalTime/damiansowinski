@@ -164,6 +164,16 @@
       "text": "Anti-de Sitter space of three dimensions with its light cones squashed or stretched along one direction, the vacua of gravity with a mass for the graviton. Stretched, as in Vuorio's universe, they hold closed timelike curves through every event [rooman1998]."
     },
     {
+      "id": "btz_shock_wave",
+      "kind": "family",
+      "text": "Off its shock, the shock wave in the BTZ black hole is anti-de Sitter space of three dimensions with its points identified [banados1993]."
+    },
+    {
+      "id": "bubbling_ads",
+      "kind": "family",
+      "text": "Anti-de Sitter space of five dimensions times a 5-sphere is a black disc on Lin, Lunin, and Maldacena's plane of droplets, and every other pattern of black and white is a smooth spacetime of its own with no horizon [lin2004]."
+    },
+    {
       "id": "maximally_supersymmetric_plane_wave",
       "kind": "family",
       "text": "A plane wave of ten dimensions, the Penrose limit of anti-de Sitter space of five dimensions times a 5-sphere along a light ray circling the sphere [blau2002penrose, berenstein2002]."
@@ -219,6 +229,7 @@
     "emparan2002holograms",
     "emparan2020qbtz",
     "mertens2023",
+    "lin2004",
     "blau2002penrose",
     "berenstein2002"
   ],

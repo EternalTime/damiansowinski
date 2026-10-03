@@ -83,6 +83,11 @@
       "id": "gott_time_machine",
       "kind": "family",
       "text": "Sören Holst put Gott's time machine in anti-de Sitter space using the chart in which these spacetimes are drawn, with Poincaré's disc at every moment. With Hans-Jürgen Matschull he showed that the pair of particles there is a rotating BTZ hole [holst1996, holst1999]."
+    },
+    {
+      "id": "btz_shock_wave",
+      "kind": "family",
+      "text": "The BTZ black hole with a shock wave on its horizon, another way of changing the inside of the black hole while each outside stays the BTZ black hole's."
     }
   ],
   "references": [

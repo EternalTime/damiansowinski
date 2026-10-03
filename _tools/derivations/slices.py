@@ -1077,6 +1077,38 @@ def _israel_shell(view):
     return [Mark(m, found) for m in moments("israel_shell") for found in [lines(m)] if found]
 
 
+def _black_to_white_hole(view):
+    """Haggard and Rovelli's shell of light falling in: each moment is Schwarzschild's slice ct = T over
+    the piece read in that chart, from the shell out, and the moment of the flat time ct = -R at
+    which it meets the shell, over the piece read along v in the interior, from the centre to the
+    shell. In the interior's plane the moment runs from (u, v) = (-R, -R) to (-2R, 0); in Kruskal's
+    U = -sqrt(r - 1) e^((r - T)/2) and V = sqrt(r - 1) e^((r + T)/2); in the ingoing
+    Painleve-Gullstrand chart t = T + 2 sqrt(r) + ln((sqrt(r) - 1)/(sqrt(r) + 1)); and in Lemaitre's
+    the same t as tau, with rho = tau + 2 r^(3/2)/3, all at r_s = 1."""
+    import black_to_white_hole as bwh
+
+    def lines(m):
+        T = m.time
+        if view == "bounce":
+            lo, hi = m.reach("interior", "v")
+            return [[(2 * lo - v, v) for v in (lo, hi)]]
+        lo, hi = m.reach("schwarzschild", "r")
+        if view == "radial":
+            return along(T, lo, hi)
+        r = lo + (hi - lo) * np.linspace(0, 1, N) ** 2
+        if view == "kruskal":
+            # The moment ct = -3 r_s meets the shell at U = -12, three widths of the drawing to the right.
+            if T < -2.5:
+                return []
+            U, V = bwh.schwarzschild_UV(np.full(N, T), r)
+            return [list(zip(U, V))]
+        t = T + 2 * np.sqrt(r) + np.log((np.sqrt(r) - 1) / (np.sqrt(r) + 1))
+        if view == "painleve":
+            return [list(zip(t, r))]
+        return [list(zip(t, t + 2 * r ** 1.5 / 3))]
+    return [Mark(m, found) for m in moments("black_to_white_hole") for found in [lines(m)] if found]
+
+
 def _charged_shell(view):
     """The charged shell of dust: each moment of the falling shell is the slice v - r = w of the
     ingoing chart over the piece read in it, outside the shell, and the moment of the flat time T at
@@ -1139,6 +1171,14 @@ def _penrose_wave(view):
 TILTED_MOMENT = 3.0                        # the eta of the surface of Farnsworth's dust that is embedded
 TILTED_LABEL = "$\\eta = 3$"
 SMALL_NOW = 1.2 - 0.22 * math.log(11)      # the moment the small universes' horn is embedded at, in a_0
+PD_NOW = 0.38882                            # the conformal time today in Luminet's universe, as null_rays.PD_NOW
+
+
+def _lqc_eta(t):
+    """The conformal time of the bounce of loop quantum cosmology at the proper time t, in units of t_b:
+    eta = t 2F1(1/6, 1/2; 3/2; -t^2)."""
+    from scipy.special import hyp2f1
+    return float(t * hyp2f1(1 / 6, 0.5, 1.5, -t * t))
 
 
 def _kt_eta(t):
@@ -1566,6 +1606,30 @@ def _btz_multi(system):
         return [Mark(m, [np.column_stack([-2 * (1 + rho ** 2) / (1 - rho ** 2), 4 * rho / (1 - rho ** 2)])])]
     horizon = 2 * math.acosh(2) / math.pi
     return [Mark(m, along(0.0, horizon, horizon * (1 + hi ** 2) / (1 - hi ** 2)))]
+
+
+BTZ_SHOCK_MOMENT = "$u + v = -\\alpha/2$"
+
+
+def _btz_shock(system):
+    """The moment u + v = -alpha/2 of Shenker and Stanford's Kruskal chart at l = R = 1 and alpha = 1,
+    over the embedding's reach in u. In the Kruskal chart it is that line; in the discontinuous
+    chart, V = v + alpha Theta(u), it is V = -1/2 - U ahead of the shock and V = 1/2 - U behind
+    it, broken at U = 0. In the exterior chart, ahead of the shock, u < -1/2 and v = -1/2 - u > 0,
+    it is r = (1 - uv)/(1 + uv) and ct = ln(v/(-u))/2, the map of Shenker and Stanford's (10), running
+    off toward the horizon as u tends to -1/2. Behind the shock the moment's part outside the left
+    horizon is the same curve, since u(v + alpha) is alpha|u|/2 - u^2 on both sides."""
+    m, = moments("btz_shock_wave", label=BTZ_SHOCK_MOMENT)
+    lo, hi = m.reach("kruskal", "u")
+    if system == "kruskal":
+        u = np.linspace(lo, hi, N)
+        return [Mark(m, [np.column_stack([u, -0.5 - u])])]
+    if system == "discontinuous":
+        ahead, behind = np.linspace(lo, 0.0, N), np.linspace(0.0, hi, N)
+        return [Mark(m, [np.column_stack([ahead, -0.5 - ahead]), np.column_stack([behind, 0.5 - behind])])]
+    u = -near(0.5, -lo)
+    v = -0.5 - u
+    return [Mark(m, [np.column_stack([np.log(v / -u) / 2, (1 - u * v) / (1 + u * v)])])]
 
 
 def btz_rstar(r):
@@ -2385,6 +2449,20 @@ def _rt_fronts():
     return [Mark(m, [[(m.time, 0.0), (m.time, 100.0)]]) for m in moments("robinson_trautman", "fronts")]
 
 
+def _sth_shells(system):
+    """Compere and Long's shells, the surfaces of constant t = 0 and rho at ell = 1, each one event of
+    each plane on the equator: (0, rho) on the static plane, and with rho = W + ell there and
+    W = sqrt(r^2 + 9/4), the point u = -rho, r = sqrt((rho - 1)^2 - 9/4) of the retarded plane and
+    v = rho at the same r of the advanced one."""
+    marks = []
+    for m in moments("supertranslation_hair", "shells"):
+        rho = m.time
+        r = math.sqrt((rho - 1) ** 2 - 2.25)
+        at = {"static": (0.0, rho), "bondi_retarded": (-rho, r), "bondi_advanced": (rho, r)}[system]
+        marks.append(Mark(m, points=[at]))
+    return marks
+
+
 BONDI_SPHERE = "the sphere $cu = 10\\,m_0$, $r = 10\\,m_0$"
 
 
@@ -2494,10 +2572,14 @@ FLAT = {
        for system in ("boyer_lindquist", "rotating") for view in ("radial", "equator")},
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
     ("bondi_sachs", "bondi", "equator"): _bondi_sphere(),
+    **{("supertranslation_hair", system, "equator"): (lambda s=system: _sth_shells(s))
+       for system in ("static", "bondi_retarded", "bondi_advanced")},
     ("bondi_sachs", "bondi", "axis"): _bondi_sphere(),
     ("bondi_sachs", "compactified", "equator"): _bondi_sphere(inverse=True),
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),
+    **{("btz_shock_wave", system, view): (lambda system=system: _btz_shock(system))
+       for system, view in (("kruskal", "plane"), ("discontinuous", "plane"), ("exterior", "radial"))},
     ("draining_bathtub", "laboratory", "drain"): lambda: _bathtub("laboratory"),
     ("draining_bathtub", "kerr_like", "exterior"): lambda: _bathtub("kerr_like"),
     ("btz_multi_holes_wormholes", "sausage", "fold"): lambda: _btz_multi("sausage"),
@@ -2603,6 +2685,14 @@ FLAT = {
     # The Einstein-Dirac-Maxwell wormhole at r_0 = 1 and Q_e = 1/2: one side in the areal radius from the
     # throat r = r_0 out, and both sides through the throat, where u = +-sqrt(r - r_0) and
     # x = +-sqrt(1 - r_0/r).
+    # Interstellar's wormhole at a = rho = 1 and M = 1/2: the moment t = 0 through the whole wormhole in
+    # the proper distance, along the cylinder between its mouths l = -+a, and along the flare from l = a out.
+    ("interstellar_wormhole", "proper_distance", "radial"): lambda: one(
+        "interstellar_wormhole", lambda m: along(0.0, *m.reach("proper_distance", "\\ell"))),
+    ("interstellar_wormhole", "cylinder", "radial"): lambda: one(
+        "interstellar_wormhole", lambda m: along(0.0, -1.0, 1.0)),
+    ("interstellar_wormhole", "flare", "radial"): lambda: one(
+        "interstellar_wormhole", lambda m: along(0.0, 1.0, m.reach("proper_distance", "\\ell")[1])),
     ("einstein_dirac_maxwell_wormhole", "areal", "radial"): lambda: one(
         "einstein_dirac_maxwell_wormhole", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("einstein_dirac_maxwell_wormhole", "bronnikov_kim", "radial"): lambda: one(
@@ -2978,6 +3068,13 @@ FLAT = {
     # which is chi = arctan(sinh rho) and r = sinh rho on the conformal and static charts, and the
     # cylinder over its reach in the proper distance sigma, which is r = e^sigma on the Poincare chart.
     # On the plane of t and psi at sigma = 0 the cylinder is its ring sigma = 0, the whole line t = 0.
+    # Bubbling anti-de Sitter space at L = 1: the plane of the droplets of the black disc at t = 0 is the
+    # cylinder theta = 0 over its reach in rho, the whole line t = 0 of the global chart's radial plane,
+    # and its edge rho = theta = 0 is the whole circle of psi at t = 0.
+    ("bubbling_ads", "global", "radial"): lambda: one(
+        "bubbling_ads", lambda m: along(0.0, *m.reach("global", "\\rho")), view_id="plane"),
+    ("bubbling_ads", "global", "edge"): lambda: one(
+        "bubbling_ads", lambda m: along(0.0, 0.0, 2 * math.pi), view_id="plane"),
     ("freund_rubin", "global", "radial"): lambda: one(
         "freund_rubin", lambda m: along(0.0, *m.reach("global", "\\rho")), view_id="anti_de_sitter"),
     ("freund_rubin", "conformal", "radial"): lambda: one(
@@ -3025,6 +3122,11 @@ FLAT = {
     ("gowdy", "areal", "plane"): lambda: one("gowdy", lambda m: along(m.time, *m.reach("areal", "\\theta"))),
     ("gowdy", "logarithmic", "plane"): lambda: one(
         "gowdy", lambda m: along(-math.log(m.time), *m.reach("areal", "\\theta"))),
+    # The Big Rip: every moment of t runs across the whole drawing, and in the conformal chart, drawn
+    # in units of eta_0 = 3 c t_0/7, it is the line eta = -eta_0 (-t/t_0)^(7/3), at w = -3/2.
+    ("big_rip", "cartesian", "tx"): lambda: one("big_rip", lambda m: across(m.time, 0.0, BIG)),
+    ("big_rip", "comoving", "radial"): lambda: one("big_rip", lambda m: along(m.time, 0.0, BIG)),
+    ("big_rip", "conformal", "radial"): lambda: one("big_rip", lambda m: along(-(-m.time) ** (7 / 3), 0.0, BIG)),
     ("kasner", "cartesian", "tx"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
     ("kasner", "cartesian", "tz"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
     # Kasner's universe with a scalar field: a moment of t is the line tau = -ln t of the logarithmic
@@ -3231,6 +3333,8 @@ FLAT = {
     ("neugebauer_meinel", "spheroidal", "plane"): lambda: one(
         "neugebauer_meinel", lambda m: along(0.0, 0.0, math.sqrt(m.reach("bardeen_wagoner", "\\rho")[1] ** 2 - 1))),
     ("neugebauer_meinel", "weyl", "axis"): lambda: _nm_centre("$t = 0$, $z = 0$"),
+    ("kerr_scalar_hair", "herdeiro_radu", "equator"): lambda: one(
+        "kerr_scalar_hair", lambda m: along(0.0, *m.reach("herdeiro_radu", "r"))),
     ("neugebauer_meinel", "spheroidal", "axis"): lambda: _nm_centre("$t = 0$, $\\xi = 0$"),
     # The plane z = 0 of the first Morgan-Morgan disc at t = 0: Weyl's rho from the axis out, the
     # oblate spheroidal chart's eta across the disc and its xi = sqrt(rho^2/a^2 - 1) outside the rim.
@@ -3337,6 +3441,14 @@ FLAT = {
     # Einstein's static field of 1912: the equator outside a body by the equation of March at t = 0.
     ("einstein_1912_static", "march", "radial"): lambda: one(
         "einstein_1912_static", lambda m: along(0.0, *m.reach("march", "r"))),
+    # The bounce of loop quantum cosmology at each moment of its movie, out to the observer at r = c t_b, on
+    # each chart: the line of that t across x in the cosmic chart, and of tau = t_b asinh(t/t_b) in the harmonic.
+    ("lqc_bounce", "comoving_spherical", "radial"): lambda: one(
+        "lqc_bounce", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
+    ("lqc_bounce", "cosmic", "tx"): lambda: one(
+        "lqc_bounce", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
+    ("lqc_bounce", "harmonic", "taux"): lambda: one(
+        "lqc_bounce", lambda m: across(math.asinh(m.time), *m.reach("comoving_spherical", "r"))),
     # Kopczynski and Trautman's universe at each moment of its movie, out to the dust at r = l on each chart.
     ("kopczynski_trautman", "comoving_spherical", "radial"): lambda: one(
         "kopczynski_trautman", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
@@ -3352,6 +3464,9 @@ FLAT = {
         "small_universes", lambda m: across(2 * (1.5 * m.time) ** (1 / 3), 0.0, BIG), view_id="torus")
        for view in ("cell", "images")},
     # The horn is embedded at the moment its spacetime diagram starts the dust from, ct = 6/5 - (11/50) ln 11.
+    # Luminet's universe today, eta = 0.38882 of its conformal chart, along the line to the centre of a face.
+    ("poincare_dodecahedral", "conformal", "near"): lambda: one(
+        "poincare_dodecahedral", lambda m: along(PD_NOW, *m.reach("conformal", "\\chi")), label="today, $\\eta = 0.3888$"),
     ("small_universes", "horn", "along"): lambda: one(
         "small_universes", lambda m: along(SMALL_NOW, *m.reach("horn", "x")), view_id="horn"),
     # Farnsworth's dust is embedded on its surface of homogeneity eta = 3, where u = (sinh 3 - 3)/2 W.
@@ -3399,6 +3514,13 @@ FLAT = {
     ("penrose_impulsive_wave", "retarded", "near"): lambda: [],
     ("penrose_impulsive_wave", "null", "unit"): lambda: _penrose_wave("unit"),
     ("penrose_impulsive_wave", "null", "near"): lambda: _penrose_wave("near"),
+    # Haggard and Rovelli's shell of light falling in: Schwarzschild's slice outside the shell and the
+    # flat moment inside it, in every chart that holds the flap before the bounce.
+    ("black_to_white_hole", "interior", "bounce"): lambda: _black_to_white_hole("bounce"),
+    ("black_to_white_hole", "kruskal", "falling"): lambda: _black_to_white_hole("kruskal"),
+    ("black_to_white_hole", "schwarzschild", "radial"): lambda: _black_to_white_hole("radial"),
+    ("black_to_white_hole", "painleve_gullstrand_ingoing", "falling"): lambda: _black_to_white_hole("painleve"),
+    ("black_to_white_hole", "lemaitre", "falling"): lambda: _black_to_white_hole("lemaitre"),
     ("israel_shell", "interior", "radial"): lambda: _israel_shell("radial"),
     ("israel_shell", "interior", "through"): lambda: _israel_shell("through"),
     ("israel_shell", "exterior", "radial"): lambda: _israel_shell("schwarzschild"),
@@ -3434,6 +3556,9 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("bubbling_ads", "rings"): "the black ring, another member of the family than the black disc whose plane of droplets is embedded",
+    ("bubbling_ads", "rings", "ring_axis"): "the black ring, another member of the family than the black disc whose plane of droplets is embedded",
+    ("bubbling_ads", "plane_wave", "axis"): "the black half plane, another member of the family than the black disc whose plane of droplets is embedded",
     ("kerr_bertotti_robinson", "static", "radial"): "the hole with no spin, a = 0, another member of the family than the spinning hole whose equator is embedded",
     ("tilted_universes", "flat_model", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
     ("tilted_universes", "inertial", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
@@ -3450,6 +3575,8 @@ HIDDEN = {
     **{("moving_mirror", view): MIRROR_NO_MOMENT
        for view in ("inertial_thermal", "inertial_collapse", "inertial_uniform", "null", "mirror_rest", "thermal",
                     "collapse", "rindler")},
+    ("poincare_dodecahedral", "comoving", "through"): "closed dust from its bang to its crunch, another member of the family than Luminet's universe, whose moment today is embedded",
+    ("poincare_dodecahedral", "toroidal", "circle"): "closed dust from its bang to its crunch, another member of the family than Luminet's universe, whose moment today is embedded",
     ("small_universes", "hyperbolic", "radial"): "a closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's",
     ("kundt_waves", "kundt", "front"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "near"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
@@ -3567,6 +3694,8 @@ HIDDEN = {
     ("tolman_bondi", "comoving_synchronous", "collapse"): "the marginally bound cloud, E = 0, whose moments are planes; the cloud embedded is released from rest",
     ("white_hole", "novikov_comoving", "vacuole"): "Novikov's marginally bound core in its vacuole, whose moments are planes; the core embedded is the bound one, which comes to rest",
     ("white_hole", "exterior_kruskal", "kruskal"): "the surface's way out through the past horizon, drawn about U = -1, V = 0; the moments embedded run on to the rest at V = sqrt(2) e^(2 + pi/2), a dozen widths of the drawing away, where Kruskal's coordinates crowd the white hole out of sight",
+    ("black_to_white_hole", "kruskal", "rising"): "the flap after the bounce, the time reverse of the flap whose moments are embedded",
+    ("black_to_white_hole", "painleve_gullstrand_outgoing", "rising"): "the flap after the bounce, the time reverse of the flap whose moments are embedded",
     ("vaidya", "eddington_finkelstein_outgoing", "shell"): "the exploding shell, the time reverse of the imploding shell embedded",
     ("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell"): "the leaving shell, the time reverse of the falling shell embedded",
     ("bonnor_vaidya", "leaving"): "the leaving shell, the time reverse of the falling shell embedded",
@@ -3591,6 +3720,12 @@ HIDDEN = {
     **{("neugebauer_meinel", "black_hole_limit", view): "the limit mu -> mu_0, the extreme Kerr metric; the moment embedded is the disc's at mu = 3"
        for view in ("axis", "equator")},
     ("neugebauer_meinel", "limit_axis"): "the limit mu -> mu_0, the extreme Kerr metric; the moment embedded is the disc's at mu = 3",
+    ("kerr_scalar_hair", "herdeiro_radu", "axis"): "the axis, which the embedded equatorial plane meets nowhere outside the horizon",
+    ("kerr_scalar_hair", "hair_axis"): "the axis, which the embedded equatorial plane meets nowhere outside the horizon",
+    **{("kerr_scalar_hair", "kerr_member", view): "Kerr's black hole of the same mass and angular momentum, another member of the "
+       "family than configuration IV, whose equator is embedded" for view in ("axis", "equator")},
+    ("kerr_scalar_hair", "kerr_axis"): "Kerr's black hole of the same mass and angular momentum, another member of the family "
+       "than configuration IV, whose equator is embedded",
     **{("zipoy_voorhees", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     **{("zipoy_voorhees", f"{system}_axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
@@ -4399,6 +4534,16 @@ def checks():
     miss = max(abs(complex((pulled - g_un).subs({ru: a, thu: 1.1})[i, j])) for a in rng.uniform(1.05, 5, 20)
                for i in range(4) for j in range(4))
     report("Unruh's acoustic hole: t = tau + ln((r - 1)/(r + 1))/4 + arctan(r)/2 pulls the laboratory chart back", miss, 1e-10)
+    # The bounce of loop quantum cosmology: t = t_b sinh(tau/t_b) pulls the cosmic chart back onto the harmonic
+    # one in every slot, so the moment t of the embedding is the line tau = t_b asinh(t/t_b).
+    g_cos, (tc, xc, yc, zc) = metric("lqc_bounce", "cosmic", {"t_b": 1})
+    g_har, (th, xh, yh, zh) = metric("lqc_bounce", "harmonic", {"t_b": 1})
+    image = [sp.sinh(th), xh, yh, zh]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (th, xh, yh, zh)[j]))
+    pulled = J.T * g_cos.subs(dict(zip((tc, xc, yc, zc), image)), simultaneous=True) * J
+    miss = max(abs(complex((pulled - g_har).subs(th, u)[i, j])) for u in rng.uniform(-3, 3, 20)
+               for i in range(4) for j in range(4))
+    report("LQC bounce: t = t_b sinh(tau/t_b) pulls the cosmic chart back onto the harmonic one", miss, 1e-10)
     return failures
 
 

@@ -80,6 +80,11 @@
       "id": "brill_waves",
       "kind": "programme",
       "text": "Dieter Brill weighed a bundle of gravitational waves at one moment in 1959 and proved its mass positive [brill1959]. With James Hartle he built the gravitational geon five years later [brillhartle1964]."
+    },
+    {
+      "id": "kerr_scalar_hair",
+      "kind": "family",
+      "text": "A spinning boson star can hold a small black hole at its centre, as long as the field turns with the horizon. Herdeiro and Radu's black holes run from Kerr's to spinning boson stars as the horizon shrinks to nothing [herdeiro2014]."
     }
   ],
   "references": [
@@ -110,7 +115,8 @@
     "volkov1999",
     "misner1957",
     "misner1960",
-    "brill1959"
+    "brill1959",
+    "herdeiro2014"
   ],
   "coordinates": [
     {
