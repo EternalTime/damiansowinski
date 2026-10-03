@@ -1,5 +1,5 @@
 {
-  "version": "dc874f67ecdf8670",
+  "version": "ce0e41fda8838ad6",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -29720,6 +29720,134 @@
         "eprint": "0906.3559",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/0264-9381/27/10/105001"
+      }
+    },
+    "bojowald2001": {
+      "type": "article",
+      "fields": {
+        "title": "Absence of a Singularity in Loop Quantum Cosmology",
+        "author": "Bojowald, Martin",
+        "journal": "Physical Review Letters",
+        "volume": "86",
+        "number": "23",
+        "pages": "5227--5230",
+        "year": "2001",
+        "doi": "10.1103/PhysRevLett.86.5227",
+        "eprint": "gr-qc/0102069",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.86.5227"
+      }
+    },
+    "brunnemann2006": {
+      "type": "article",
+      "fields": {
+        "title": "On (cosmological) singularity avoidance in loop quantum gravity",
+        "author": "Brunnemann, Johannes and Thiemann, Thomas",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "5",
+        "pages": "1395--1427",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/5/001",
+        "eprint": "gr-qc/0505032",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/23/5/001"
+      }
+    },
+    "singh2006": {
+      "type": "article",
+      "fields": {
+        "title": "Loop cosmological dynamics and dualities with Randall-Sundrum braneworlds",
+        "author": "Singh, Parampreet",
+        "journal": "Physical Review D",
+        "volume": "73",
+        "number": "6",
+        "pages": "063508",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.73.063508",
+        "eprint": "gr-qc/0603043",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.73.063508"
+      }
+    },
+    "ashtekar2006improved": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum nature of the big bang: Improved dynamics",
+        "author": "Ashtekar, Abhay and Pawlowski, Tomasz and Singh, Parampreet",
+        "journal": "Physical Review D",
+        "volume": "74",
+        "number": "8",
+        "pages": "084003",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.74.084003",
+        "eprint": "gr-qc/0607039",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.74.084003"
+      }
+    },
+    "ashtekar2008robust": {
+      "type": "article",
+      "fields": {
+        "title": "Robustness of key features of loop quantum cosmology",
+        "author": "Ashtekar, Abhay and Corichi, Alejandro and Singh, Parampreet",
+        "journal": "Physical Review D",
+        "volume": "77",
+        "number": "2",
+        "pages": "024046",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.77.024046",
+        "eprint": "0710.3565",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.77.024046"
+      }
+    },
+    "ashtekar2009bianchi": {
+      "type": "article",
+      "fields": {
+        "title": "Loop quantum cosmology of Bianchi type I models",
+        "author": "Ashtekar, Abhay and Wilson-Ewing, Edward",
+        "journal": "Physical Review D",
+        "volume": "79",
+        "number": "8",
+        "pages": "083535",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.79.083535",
+        "eprint": "0903.3397",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.79.083535"
+      }
+    },
+    "ashtekar2011status": {
+      "type": "article",
+      "fields": {
+        "title": "Loop quantum cosmology: a status report",
+        "author": "Ashtekar, Abhay and Singh, Parampreet",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "28",
+        "number": "21",
+        "pages": "213001",
+        "year": "2011",
+        "doi": "10.1088/0264-9381/28/21/213001",
+        "eprint": "1108.0893",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/28/21/213001"
+      }
+    },
+    "cai2014": {
+      "type": "article",
+      "fields": {
+        "title": "Non-singular bounce scenarios in loop quantum cosmology and the effective field description",
+        "author": "Cai, Yi-Fu and Wilson-Ewing, Edward",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2014",
+        "number": "03",
+        "pages": "026",
+        "year": "2014",
+        "doi": "10.1088/1475-7516/2014/03/026",
+        "eprint": "1402.3009",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2014/03/026"
       }
     }
   }

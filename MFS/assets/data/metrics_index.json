@@ -386,6 +386,38 @@
     "embedding": "7fea7a854b8ceca4"
   },
   {
+    "id": "lqc_bounce",
+    "name": "Big Bounce",
+    "tags": [
+      "loop quantum cosmology",
+      "loop quantum gravity",
+      "quantum gravity",
+      "bounce",
+      "big bang",
+      "no singularity",
+      "superinflation",
+      "cosmology",
+      "expanding universe",
+      "FLRW",
+      "homogeneous",
+      "isotropic",
+      "scalar field",
+      "massless scalar field",
+      "minimally coupled scalar field",
+      "stiff fluid",
+      "time-dependent",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model",
+      "conformally flat",
+      "spherically symmetric"
+    ],
+    "version": "4dac216dbb32c6b3",
+    "diagrams": "3db667c16a7e7f5b",
+    "conformal": "ccbbac884fd12a06",
+    "embedding": "10fc45eaf22d2da9"
+  },
+  {
     "id": "black_saturn",
     "name": "Black Saturn",
     "tags": [
@@ -1796,7 +1828,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "3fa59a3e5cf8649a",
+    "version": "879db2d8fe146c7b",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2131,7 +2163,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6a2ee5464d44bc22",
+    "version": "c34543d996e74b16",
     "diagrams": "a15527f5015cc33a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3"
@@ -2407,7 +2439,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9f9b5fa68928d0f5",
+    "version": "44e0ff404b8adc10",
     "diagrams": "af83133484b3c126",
     "conformal": "5aa345afee4654d8",
     "embedding": "46d9d6d9484b8e00"
@@ -2489,7 +2521,7 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "a159211d1d01c441",
+    "version": "5130a409071e30d9",
     "diagrams": "8b8ed11a7a64599d",
     "embedding": "592f4ab4aaa693fe"
   },
@@ -4080,7 +4112,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "09f39eecb3faaad0",
+    "version": "8df6a77fe112c918",
     "diagrams": "43178260a751b2b6",
     "conformal": "b740810dfc5bf7e8",
     "embedding": "aa0bb4ff5da3747e"
@@ -4116,7 +4148,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "89a8b6f690c0d7c5",
+    "version": "1cbeca41c558424d",
     "diagrams": "f78be2d481dc49b2",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"
@@ -4603,7 +4635,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ff13ef83cd6ce0fa",
+    "version": "943ec9ad7f985686",
     "diagrams": "ba9dba288cd26f63",
     "conformal": "e6b2c492ab043d17",
     "embedding": "e135a6bb032eedc2"
@@ -4665,7 +4697,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f6354fcb890c5b8a",
+    "version": "0b7259ca44c9b9f4",
     "diagrams": "b272a6aeea9e0b62",
     "conformal": "09d52a3611b8d1c6",
     "embedding": "044c6a18e30bb001"

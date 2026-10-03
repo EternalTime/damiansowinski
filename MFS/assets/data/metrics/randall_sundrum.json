@@ -84,6 +84,11 @@
       "id": "quantum_btz",
       "kind": "family",
       "text": "A brane with two dimensions of space in anti-de Sitter space of four, curved like anti-de Sitter space itself, with a black hole on it. By holography it is a black hole of three dimensions with the backreaction of quantum fields included exactly [emparan2002holograms, emparan2020qbtz]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "A universe whose Friedmann equation, from loop quantum cosmology, carries a term in $\\rho^2$ with a minus sign, where a universe on the brane has a plus [singh2006]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "cremmer1976",
     "horvath1977",
     "freund1980",
-    "emparan2020qbtz"
+    "emparan2020qbtz",
+    "singh2006"
   ],
   "coordinates": [
     {

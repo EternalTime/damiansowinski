@@ -83,6 +83,11 @@
       "id": "hayward",
       "kind": "family",
       "text": "A regular black hole with a centre and a core of de Sitter space. Simpson and Visser counted Hayward's among the traditional regular black holes, which close over a regular centre where theirs opens through a throat [simpson2019, hayward2006]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "A bounce of a whole universe, which loop quantum cosmology puts where the big bang was [ashtekar2006bounce]."
     }
   ],
   "references": [
@@ -104,7 +109,8 @@
     "riaz2022",
     "damour2007",
     "ansoldi2008",
-    "hayward2006"
+    "hayward2006",
+    "ashtekar2006bounce"
   ],
   "coordinates": [
     {

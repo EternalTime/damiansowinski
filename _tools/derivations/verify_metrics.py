@@ -856,6 +856,12 @@ DIMENSIONS = {
     ("senovilla", "cylindrical"): {
         "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "a": "1/L",
     },
+    # The bounce of loop quantum cosmology keeps c. Its bounce time t_b is a time, its scale factor
+    # a, named for (1 + t^2/t_b^2)^(1/6) or cosh^(1/3)(tau/t_b), a pure number, and x, y and z
+    # comoving lengths.
+    ("lqc_bounce", "cosmic"): {"t": "T", "x": "L", "y": "L", "z": "L", "t_b": "T", "a": "1"},
+    ("lqc_bounce", "comoving_spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "t_b": "T", "a": "1"},
+    ("lqc_bounce", "harmonic"): {"\\tau": "T", "x": "L", "y": "L", "z": "L", "t_b": "T", "a": "1"},
     # The travelling wave on a string: u = ct - z and v = ct + z are lengths, so no coordinate is a
     # time and the profile F is a pure number, as is b = 1 - 4G mu/c^2. The string's displacements
     # A(u) and B(u) are lengths, as are the isotropic x and y, their distance rho from the string

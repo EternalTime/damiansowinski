@@ -84,6 +84,11 @@
       "id": "quantum_oppenheimer_snyder",
       "kind": "family",
       "text": "Another black hole with two horizons above a least mass and none below it, this one fixed by a ball of dust that bounces in loop quantum cosmology [lewandowski2023]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "A universe whose big bang gives way to a bounce in loop quantum cosmology [ashtekar2006bounce]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "simpson2019",
     "mazur2004",
     "carballorubio2021",
-    "lewandowski2023"
+    "lewandowski2023",
+    "ashtekar2006bounce"
   ],
   "coordinates": [
     {
