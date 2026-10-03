@@ -674,6 +674,15 @@ def maitra_dust(spec):
     return fig.done(), sl
 
 
+def vuorio_warped_ads(spec):
+    """The light cones of Vuorio's universe about one integral curve of d_t, m = Omega = 1, drawn
+    polar with r, the proper distance from the axis, as its radius: g_rr = -g_tt = 1, so c dt = +-dr
+    runs at 45 degrees. Space has two dimensions, so the figure is the whole spacetime out to 2 r_c
+    and no slice of it."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
+    return about_axis(spec, sl, (0.5, 1.5), ("r = r_c", "r = 3r_c/2"))
+
+
 def ergoregion(spec, camera=Camera(-90, 30), horizon_between=(1.0, 1.9), ergo_below=3.0):
     """The light cones of a rotating hole on its equator, the slice theta = pi/2 of t, r and
     phi, drawn polar with r itself as its radius, down to the horizon.
@@ -1316,6 +1325,19 @@ CAPTIONS = {
         "without reaching it. Every circle of constant $t$ and $r$ stays outside the cones, and $t$ rises along "
         "every timelike curve.",
     ],
+    ("vuorio_warped_ads", "cylindrical", "tipping"): [
+        "The whole of Vuorio's universe ($m = \\Omega$) about the axis $r = 0$, one integral curve of "
+        "$\\partial_t$, with $ct$ up and $r$ as the radius, which puts the null directions $c\\,dt = \\pm dr$ "
+        "at 45°. Space has two dimensions, so the figure holds the whole spacetime out to $2r_c$. The cones stand "
+        "at $t = 0$ on the axis and around the circles $r = r_c/2$, $r_c$, and $3r_c/2$, with $r_c = \\ln 3/\\Omega$. "
+        "On the axis they are upright, and farther out the cross term $g_{t\\phi}$ tips them over toward "
+        "$+\\phi$, counterclockwise seen from above.",
+        "At $r = r_c$, where $g_{\\phi\\phi}$ vanishes, one edge of every cone lies along the circle of "
+        "constant $t$ and $r$, which is a closed null curve. Beyond it the cones have tipped past the "
+        "horizontal, and the circle $r = 3r_c/2$, run counterclockwise as its arrows point, lies inside "
+        "every one of them: a closed timelike curve through each of its events. The spacetime is homogeneous, "
+        "so the cones tip over in the same way about every integral curve of $\\partial_t$.",
+    ],
     ("alcubierre", "cartesian", "bubble"): [
         "The slice $z = 0$ of $t$, $x$, and $y$ through a bubble moving at twice the speed of "
         "light along $x$, with $t$ up, $ct$ and $x$ drawn at one scale, at the moment $t = 0$ when the "
@@ -1453,6 +1475,8 @@ FIGURES = [
                {"omega": 1}, {"z": "0"}),
     Projection("som_raychaudhuri", "cylindrical", "tipping", "light cones about the axis", som_raychaudhuri,
                {"Omega": 1}, {"z": "0"}),
+    Projection("vuorio_warped_ads", "cylindrical", "tipping", "light cones about the axis", vuorio_warped_ads,
+               {"Omega": 1, "m": 1}, {}),
     Projection("maitra_dust", "cylindrical", "tipping", "light cones about the axis", maitra_dust,
                {"a": 1}, {"z": "0"}),
     Projection("bonnor_rotating_dust", "cylindrical", "tipping", "light cones about the axis", bonnor_rotating_dust,

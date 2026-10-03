@@ -119,7 +119,8 @@ class Drawings(unittest.TestCase):
         answers = {"special_case": "generalisation", "programme": "programme"}
         related = load("metrics")["related"]
         self.assertEqual([r["id"] for r in related],
-                         ["schwarzschild", "vaidya", "robinson_trautman", "photon_rocket", "minkowski", "kerr", "pp_wave"])
+                         ["schwarzschild", "vaidya", "robinson_trautman", "photon_rocket", "minkowski", "kerr", "pp_wave",
+                          "supertranslation_hair"])
         for entry in related:
             back = [r for r in load("metrics", entry["id"])["related"] if r["id"] == "bondi_sachs"]
             self.assertEqual([r["kind"] for r in back], [answers[entry["kind"]]], entry["id"])

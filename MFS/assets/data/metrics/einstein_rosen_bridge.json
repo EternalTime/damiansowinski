@@ -102,6 +102,11 @@
       "id": "einstein_dirac_maxwell_wormhole",
       "kind": "family",
       "text": "A static wormhole whose two sheets, written in $u$ with $r = r_0 + u^2$, join at a throat that is no horizon. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's [bronnikovkim2003, blazquez2021]."
+    },
+    {
+      "id": "btz_shock_wave",
+      "kind": "family",
+      "text": "The bridge of the BTZ black hole with a shock wave on its horizon, which makes the bridge longer [shenker2014]."
     }
   ],
   "references": [
@@ -132,7 +137,8 @@
     "brill1996",
     "steif1996",
     "bronnikovkim2003",
-    "blazquez2021"
+    "blazquez2021",
+    "shenker2014"
   ],
   "coordinates": [
     {

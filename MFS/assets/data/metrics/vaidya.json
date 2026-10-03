@@ -124,6 +124,11 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "Vaidya's metric with the mass allowed to differ from one direction to another and the spheres allowed to change shape. Gravitational waves then carry mass off as Vaidya's light does [bondi1962]."
+    },
+    {
+      "id": "supertranslation_hair",
+      "kind": "family",
+      "text": "Flat space with a supertranslation field on the sphere of directions. A spherical shell of light falling in, as here, leaves its black hole with no such field [compere2016final]."
     }
   ],
   "references": [
@@ -159,7 +164,8 @@
     "adler2005",
     "zeldovichnovikovstarobinskii1974",
     "good2016",
-    "bondi1962"
+    "bondi1962",
+    "compere2016final"
   ],
   "coordinates": [
     {

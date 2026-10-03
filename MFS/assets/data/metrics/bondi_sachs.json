@@ -60,6 +60,11 @@
       "id": "pp_wave",
       "kind": "programme",
       "text": "The plane waves of Bondi, Pirani, and Robinson are paper III of the series in which the radiating metric is papers VII and VIII [bondipirani1959, bondi1962, sachs1962]. A plane wave has no source, and these two papers gave the waves one."
+    },
+    {
+      "id": "supertranslation_hair",
+      "kind": "special_case",
+      "text": "Flat space with supertranslation hair, the member with no mass and a shear $\\sigma(\\theta)$ that never changes, so there is no news. With $W = \\sqrt{r^2 + \\sigma^2}$ it has $e^{2\\beta} = r/W$ and $re^{\\gamma} = W + \\sigma$ [compere2016vacua]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "kinnersley1969",
     "cornish2000",
     "fletcher2003",
-    "bondipirani1959"
+    "bondipirani1959",
+    "compere2016vacua"
   ],
   "coordinates": [
     {

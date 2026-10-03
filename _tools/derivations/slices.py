@@ -964,6 +964,28 @@ def _bd_reach(m, of_r):
     return [of_r(2 / (1 - math.exp(-2 * u))) for u in (hi, lo)]
 
 
+def jackiw_teitelboim(chart):
+    """The moment t = 0 of the black hole of Jackiw and Teitelboim's gravity, the meridians
+    theta = 0 and pi of its Euclidean disc, as far as the embedding reaches in the proper distance
+    rho, at L = r_h = 1: r = cosh(rho) in the static chart, outside the horizon; the line U + V = 0
+    through the bifurcation point, V = -U = tanh(rho/2), on both sides in the Kruskal chart; tau = 0
+    with sigma = pi/2 +- arctan(sinh(rho)) in the global chart; and T = 0 with z = 2 e^(-+rho) in the
+    Poincare chart, out to the edge of its box at z = 6."""
+    m = moments("jackiw_teitelboim_black_hole")[0]
+    lo, hi = m.reach("proper_distance", "\\rho")
+    if chart == "proper_distance":
+        return [Mark(m, along(0.0, lo, hi))]
+    if chart == "static":
+        return [Mark(m, along(0.0, math.cosh(lo), math.cosh(hi)))]
+    if chart == "kruskal":
+        w = math.tanh(hi / 2)
+        return [Mark(m, [[(w, -w), (-w, w)]])]
+    if chart == "global":
+        a = math.atan(math.sinh(hi))
+        return [Mark(m, along(0.0, math.pi / 2 - a, math.pi / 2 + a))]
+    return [Mark(m, along(0.0, 2 * math.exp(-hi), min(6.0, 2 * math.exp(hi))))]
+
+
 def witten(chart):
     """The moment t = 0 of Witten's black hole outside the horizon, the meridian theta = 0 of his
     cigar, as far as the embedding reaches in his proper distance r, at lambda = m = 1: level in
@@ -1547,6 +1569,30 @@ def _btz_multi(system):
     return [Mark(m, along(0.0, horizon, horizon * (1 + hi ** 2) / (1 - hi ** 2)))]
 
 
+BTZ_SHOCK_MOMENT = "$u + v = -\\alpha/2$"
+
+
+def _btz_shock(system):
+    """The moment u + v = -alpha/2 of Shenker and Stanford's Kruskal chart at l = R = 1 and alpha = 1,
+    over the embedding's reach in u. In the Kruskal chart it is that line; in the discontinuous
+    chart, V = v + alpha Theta(u), it is V = -1/2 - U ahead of the shock and V = 1/2 - U behind
+    it, broken at U = 0. In the exterior chart, ahead of the shock, u < -1/2 and v = -1/2 - u > 0,
+    it is r = (1 - uv)/(1 + uv) and ct = ln(v/(-u))/2, the map of Shenker and Stanford's (10), running
+    off toward the horizon as u tends to -1/2. Behind the shock the moment's part outside the left
+    horizon is the same curve, since u(v + alpha) is alpha|u|/2 - u^2 on both sides."""
+    m, = moments("btz_shock_wave", label=BTZ_SHOCK_MOMENT)
+    lo, hi = m.reach("kruskal", "u")
+    if system == "kruskal":
+        u = np.linspace(lo, hi, N)
+        return [Mark(m, [np.column_stack([u, -0.5 - u])])]
+    if system == "discontinuous":
+        ahead, behind = np.linspace(lo, 0.0, N), np.linspace(0.0, hi, N)
+        return [Mark(m, [np.column_stack([ahead, -0.5 - ahead]), np.column_stack([behind, 0.5 - behind])])]
+    u = -near(0.5, -lo)
+    v = -0.5 - u
+    return [Mark(m, [np.column_stack([np.log(v / -u) / 2, (1 - u * v) / (1 + u * v)])])]
+
+
 def btz_rstar(r):
     """The BTZ hole's r_* = (1/2) ln|(r - 1)/(r + 1)| at M = 1, l = 1, vanishing as r -> infinity,
     which fixes the Eddington-Finkelstein charts' v = ct + r_* and u = ct - r_*."""
@@ -1591,6 +1637,32 @@ def _bathtub(system):
     r = near(flo, hi)
     return [Mark(plane, [np.column_stack([bathtub_shift(r), r])]),
             Mark(funnel, along(0.0, flo, fhi), label="$T = 0$")]
+
+
+def unruh_shift(r):
+    """How far Unruh's time runs ahead of the laboratory's for the hole the diagrams draw, r_0 = c = 1:
+    tau - t = -ln|(r - 1)/(r + 1)|/4 - arctan(r)/2, from c dtau = c dt - r_0^2 r^2 dr/(r^4 - r_0^4)."""
+    r = np.asarray(r, dtype=float)
+    return -np.log(np.abs((r - 1) / (r + 1))) / 4 - np.arctan(r) / 2
+
+
+def _unruh(system):
+    """The two moments of Unruh's acoustic black hole on a plane of time and r. The laboratory's t = 0,
+    flat space, is a line of constant t in the laboratory chart and the curve tau = unruh_shift(r) in
+    Unruh's time, outside the horizon; Unruh's tau = 0 is a line of constant tau there and the curve
+    t = -unruh_shift(r) in the laboratory chart. Each curve runs off toward the horizon, so its points
+    crowd there."""
+    space, = moments("unruh_acoustic_hole", "space")
+    funnel, = moments("unruh_acoustic_hole", "funnel")
+    lo, hi = space.reach("laboratory", "r")
+    flo, fhi = funnel.reach("unruh", "r")
+    if system == "laboratory":
+        r = near(flo, fhi)
+        return [Mark(space, along(0.0, lo, hi)),
+                Mark(funnel, [np.column_stack([-unruh_shift(r), r])], label="$\\tau = 0$")]
+    r = near(flo, hi)
+    return [Mark(space, [np.column_stack([unruh_shift(r), r])]),
+            Mark(funnel, along(0.0, flo, fhi), label="$\\tau = 0$")]
 
 
 def sads_rstar(r):
@@ -2338,6 +2410,20 @@ def _rt_fronts():
     return [Mark(m, [[(m.time, 0.0), (m.time, 100.0)]]) for m in moments("robinson_trautman", "fronts")]
 
 
+def _sth_shells(system):
+    """Compere and Long's shells, the surfaces of constant t = 0 and rho at ell = 1, each one event of
+    each plane on the equator: (0, rho) on the static plane, and with rho = W + ell there and
+    W = sqrt(r^2 + 9/4), the point u = -rho, r = sqrt((rho - 1)^2 - 9/4) of the retarded plane and
+    v = rho at the same r of the advanced one."""
+    marks = []
+    for m in moments("supertranslation_hair", "shells"):
+        rho = m.time
+        r = math.sqrt((rho - 1) ** 2 - 2.25)
+        at = {"static": (0.0, rho), "bondi_retarded": (-rho, r), "bondi_advanced": (rho, r)}[system]
+        marks.append(Mark(m, points=[at]))
+    return marks
+
+
 BONDI_SPHERE = "the sphere $cu = 10\\,m_0$, $r = 10\\,m_0$"
 
 
@@ -2447,16 +2533,22 @@ FLAT = {
        for system in ("boyer_lindquist", "rotating") for view in ("radial", "equator")},
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
     ("bondi_sachs", "bondi", "equator"): _bondi_sphere(),
+    **{("supertranslation_hair", system, "equator"): (lambda s=system: _sth_shells(s))
+       for system in ("static", "bondi_retarded", "bondi_advanced")},
     ("bondi_sachs", "bondi", "axis"): _bondi_sphere(),
     ("bondi_sachs", "compactified", "equator"): _bondi_sphere(inverse=True),
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),
+    **{("btz_shock_wave", system, view): (lambda system=system: _btz_shock(system))
+       for system, view in (("kruskal", "plane"), ("discontinuous", "plane"), ("exterior", "radial"))},
     ("draining_bathtub", "laboratory", "drain"): lambda: _bathtub("laboratory"),
     ("draining_bathtub", "kerr_like", "exterior"): lambda: _bathtub("kerr_like"),
     ("btz_multi_holes_wormholes", "sausage", "fold"): lambda: _btz_multi("sausage"),
     ("btz_multi_holes_wormholes", "stereographic", "fold"): lambda: _btz_multi("stereographic"),
     ("btz_multi_holes_wormholes", "free_fall", "fold"): lambda: _btz_multi("free_fall"),
     ("btz_multi_holes_wormholes", "exterior", "radial"): lambda: _btz_multi("exterior"),
+    ("unruh_acoustic_hole", "laboratory", "infall"): lambda: _unruh("laboratory"),
+    ("unruh_acoustic_hole", "unruh", "exterior"): lambda: _unruh("unruh"),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
     ("btz", "eddington_finkelstein_outgoing", "static"): lambda: _btz(-1),
     ("reissner_nordstrom_de_sitter", "static", "radial"): lambda: _rnds("static"),
@@ -2554,6 +2646,14 @@ FLAT = {
     # The Einstein-Dirac-Maxwell wormhole at r_0 = 1 and Q_e = 1/2: one side in the areal radius from the
     # throat r = r_0 out, and both sides through the throat, where u = +-sqrt(r - r_0) and
     # x = +-sqrt(1 - r_0/r).
+    # Interstellar's wormhole at a = rho = 1 and M = 1/2: the moment t = 0 through the whole wormhole in
+    # the proper distance, along the cylinder between its mouths l = -+a, and along the flare from l = a out.
+    ("interstellar_wormhole", "proper_distance", "radial"): lambda: one(
+        "interstellar_wormhole", lambda m: along(0.0, *m.reach("proper_distance", "\\ell"))),
+    ("interstellar_wormhole", "cylinder", "radial"): lambda: one(
+        "interstellar_wormhole", lambda m: along(0.0, -1.0, 1.0)),
+    ("interstellar_wormhole", "flare", "radial"): lambda: one(
+        "interstellar_wormhole", lambda m: along(0.0, 1.0, m.reach("proper_distance", "\\ell")[1])),
     ("einstein_dirac_maxwell_wormhole", "areal", "radial"): lambda: one(
         "einstein_dirac_maxwell_wormhole", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("einstein_dirac_maxwell_wormhole", "bronnikov_kim", "radial"): lambda: one(
@@ -2624,6 +2724,11 @@ FLAT = {
         "ppn_metric", lambda m: along(0.0, *(r + 1 for r in m.reach("isotropic", "r")))),
     ("ppn_metric", "rotating", "equator"): lambda: one(
         "ppn_metric", lambda m: along(0.0, *m.reach("isotropic", "r"))),
+    # The black hole of Jackiw and Teitelboim's gravity: the moment t = 0 outside the horizon in the
+    # static and proper distance charts, and on both sides of it in the others.
+    **{("jackiw_teitelboim_black_hole", chart, view): (lambda chart=chart: jackiw_teitelboim(chart))
+       for chart, view in (("static", "radial"), ("proper_distance", "radial"), ("kruskal", "plane"),
+                           ("global", "strip"), ("poincare", "tz"))},
     # Witten's black hole in two dimensions: the moment t = 0 outside the horizon in each chart, and
     # on both sides of it on the Kruskal plane.
     **{("witten_black_hole", chart, view): (lambda chart=chart: witten(chart))
@@ -2920,6 +3025,24 @@ FLAT = {
         view_id="throat"),
     ("three_brane_throat", "throat_proper", "radial"): lambda: one(
         "three_brane_throat", lambda m: along(0.0, *m.reach("throat_proper", "\\sigma")), view_id="throat"),
+    # Freund and Rubin's moment t = 0 at L = 1: the hyperbolic plane over its reach in the global rho,
+    # which is chi = arctan(sinh rho) and r = sinh rho on the conformal and static charts, and the
+    # cylinder over its reach in the proper distance sigma, which is r = e^sigma on the Poincare chart.
+    # On the plane of t and psi at sigma = 0 the cylinder is its ring sigma = 0, the whole line t = 0.
+    ("freund_rubin", "global", "radial"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, *m.reach("global", "\\rho")), view_id="anti_de_sitter"),
+    ("freund_rubin", "conformal", "radial"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, *(math.atan(math.sinh(x)) for x in m.reach("global", "\\rho"))),
+        view_id="anti_de_sitter"),
+    ("freund_rubin", "static", "radial"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, *(math.sinh(x) for x in m.reach("global", "\\rho"))),
+        view_id="anti_de_sitter"),
+    ("freund_rubin", "poincare", "radial"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, *(math.exp(x) for x in m.reach("proper", "\\sigma"))), view_id="circle"),
+    ("freund_rubin", "proper", "radial"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, *m.reach("proper", "\\sigma")), view_id="circle"),
+    ("freund_rubin", "proper", "circle"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, 0.0, 2 * math.pi), label="$t = 0$, $\\sigma = 0$", view_id="circle"),
     ("cremmer_scherk", "cartesian", "tx"): lambda: _cremmer_scherk("tx"),
     ("cremmer_scherk", "cartesian", "circle"): lambda: _cremmer_scherk("circle"),
     ("plebanski_hacyan", "sphere", "tz"): lambda: _plebanski_hacyan("sphere"),
@@ -2986,6 +3109,17 @@ FLAT = {
     ("som_raychaudhuri", "cartesian", "tx"): lambda: one(
         "som_raychaudhuri", lambda m: across(0.0, 0.0, m.reach("cylindrical", "r")[1])),
     ("som_raychaudhuri", "cylindrical", "inside"): lambda: one("som_raychaudhuri", _godel_cylinder(0.5)),
+    # Vuorio's moment t = 0 of the cylindrical chart, m = Omega = 1: the cylinder at r_c/2 inside its
+    # reach; the plane through the centre of Poincare's disc at R = tanh(r/2), with the same t; and
+    # the planes u = 0 and y = 0, where phi = 0 or pi, the twisting forms differ by nothing along the
+    # drawn line, so t is the cylindrical chart's, and sigma = x = +-r.
+    ("vuorio_warped_ads", "cylindrical", "inside"): lambda: one("vuorio_warped_ads", _godel_cylinder(math.log(3) / 2)),
+    ("vuorio_warped_ads", "disc", "plane"): lambda: one(
+        "vuorio_warped_ads", lambda m: across(0.0, 0.0, math.tanh(m.reach("cylindrical", "r")[1] / 2))),
+    ("vuorio_warped_ads", "fibred", "plane"): lambda: one(
+        "vuorio_warped_ads", lambda m: across(0.0, 0.0, m.reach("cylindrical", "r")[1])),
+    ("vuorio_warped_ads", "horospherical", "tx"): lambda: one(
+        "vuorio_warped_ads", lambda m: across(0.0, 0.0, m.reach("cylindrical", "r")[1])),
     # The spinning string's moment t = 0 outside the null circle: the whole line t = 0 of each
     # cylinder outside it, and in the helical chart c tau = a phi~/b, one turn of the helix.
     **{("spinning_string", system, "outside"): lambda R=R: one("spinning_string", _spinning_cylinder(R))
@@ -3466,6 +3600,7 @@ HIDDEN = {
     ("godel", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves and no surface of constant t is a moment of space; the embedding stops at sinh^2 r = 1/sqrt 2",
     ("stockum_dust", "cylindrical", "beyond"): "beyond r = R the circles are closed timelike curves; the embedding stops at r = 0.83 R",
     ("som_raychaudhuri", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves; the embedding stops at r = sqrt(3) r_c/2",
+    ("vuorio_warped_ads", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves; the embedding stops at sinh^2(r/2) = (sqrt 3 - 1)/3",
     # Petrov's plane of r and z, t = 0 and phi = 0, meets each plane of t and phi, each cylinder
     # outside the dust and the slice z = 0 of the figure where no line or region of the moment lies.
     **{("petrov_homogeneous", "petrov", view): "the embedded plane of r and z meets this plane of t and phi in the one event t = 0, phi = 0"
@@ -3939,6 +4074,35 @@ def checks():
                for b in (0.1, 0.4, 0.76) for c in (0, sp.pi - 1e-12))
     report("Godel: t = 0 on the plane y = 0 is t_x = 0 at x = +-2r", miss, 1e-9)
 
+    # Vuorio's universe, m = Omega = 1: Rooman and Spindel's transformation, e^x = cosh r + cos(phi)
+    # sinh r, y e^x = sinh r sin(phi) and t_h = t + 2(2 arctan(e^(-r) tan(phi/2)) - phi), carries the
+    # horospherical metric onto the cylindrical one, and R = tanh(r/2) the disc's; on the plane
+    # y = 0, phi = 0 or pi, t_h = t and x = +-r. On the plane u = 0 the fibred chart's metric is the
+    # cylindrical one's on phi = 0 or pi with sigma = +-r, -dt^2 + dsigma^2.
+    g_y, (ty, ry, py) = metric("vuorio_warped_ads", "cylindrical", {"Omega": 1, "m": 1})
+    g_h, (th, xh, yh) = metric("vuorio_warped_ads", "horospherical", {"Omega": 1, "m": 1})
+    g_d, (td, Rd, pd) = metric("vuorio_warped_ads", "disc", {"Omega": 1, "m": 1})
+    g_f, (tf, sf, uf) = metric("vuorio_warped_ads", "fibred", {"Omega": 1, "m": 1})
+    X = sp.log(sp.cosh(ry) + sp.cos(py) * sp.sinh(ry))
+    Y = sp.sinh(ry) * sp.sin(py) * sp.exp(-X)
+    Th = ty + 2 * (2 * sp.atan(sp.exp(-ry) * sp.tan(py / 2)) - py)
+    for name, g_o, coords, new in (("horospherical", g_h, (th, xh, yh), [Th, X, Y]),
+                                   ("disc", g_d, (td, Rd, pd), [ty, sp.tanh(ry / 2), py])):
+        J = sp.Matrix([[sp.diff(f, v) for v in (ty, ry, py)] for f in new])
+        pulled = J.T * g_o.subs(dict(zip(coords, new)), simultaneous=True) * J
+        miss = 0.0
+        for a, b, c in zip(rng.uniform(-1, 1, 12), rng.uniform(0.05, 1.5, 12), rng.uniform(-2.5, 2.5, 12)):
+            diff = (pulled - g_y).subs({ty: a, ry: b, py: c})
+            miss = max(miss, max(abs(float(diff[i, j])) for i in range(3) for j in range(3)))
+        report(f"Vuorio: the {name} metric pulls back onto the cylindrical", miss, 1e-10)
+    miss = max(abs(float(Th.subs({ty: 0, ry: b, py: c}))) + abs(float(X.subs({ry: b, py: c}) - (b if c == 0 else -b)))
+               for b in (0.1, 0.5, 0.95) for c in (0, sp.pi - 1e-12))
+    report("Vuorio: t = 0 on the plane y = 0 is t_h = 0 at x = +-r", miss, 1e-9)
+    on_plane = (g_f[:2, :2].subs(uf, 0) - sp.diag(-1, 1)).applyfunc(sp.simplify)
+    plane = g_y[:2, :2].subs(py, 0)
+    report("Vuorio: the fibred plane u = 0 is the cylindrical plane phi = 0, -dt^2 + dsigma^2",
+           float(max(abs(sp.N(v)) for v in list(on_plane) + list(plane - sp.diag(-1, 1)))), 1e-12)
+
     # Anti-de Sitter: the Poincare plane y = 0, z = L at t = 0 has static radius
     # r^2 = x^2 + x^4/4L^2, read from the embedding space.
     x = np.linspace(-2.5, 2.5, 11)
@@ -4280,6 +4444,17 @@ def checks():
     report("Draining bathtub: t = T + ln(r^2 - 1)/2 pulls the laboratory chart back onto the Kerr-like one", miss, 1e-10)
     miss = float(np.max(np.abs(bathtub_shift(np.array([1.5, 2.0, 4.0])) + 0.5 * np.log(np.array([1.25, 3.0, 15.0])))))
     report("Draining bathtub: the laboratory's t = 0 is T = -ln(r^2 - 1)/2", miss, 1e-14)
+    # Unruh's acoustic black hole: t = tau + ln|(r - 1)/(r + 1)|/4 + arctan(r)/2 pulls the laboratory chart
+    # back onto Unruh's time in every slot.
+    hole = {"r_0": 1}
+    g_lab, (tl, rl, thl, phl) = metric("unruh_acoustic_hole", "laboratory", hole)
+    g_un, (tu, ru, thu, phu) = metric("unruh_acoustic_hole", "unruh", hole)
+    image = [tu + sp.log((ru - 1) / (ru + 1)) / 4 + sp.atan(ru) / 2, ru, thu, phu]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (tu, ru, thu, phu)[j]))
+    pulled = J.T * g_lab.subs(dict(zip((tl, rl, thl, phl), image)), simultaneous=True) * J
+    miss = max(abs(complex((pulled - g_un).subs({ru: a, thu: 1.1})[i, j])) for a in rng.uniform(1.05, 5, 20)
+               for i in range(4) for j in range(4))
+    report("Unruh's acoustic hole: t = tau + ln((r - 1)/(r + 1))/4 + arctan(r)/2 pulls the laboratory chart back", miss, 1e-10)
     return failures
 
 

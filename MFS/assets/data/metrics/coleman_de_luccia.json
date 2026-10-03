@@ -63,6 +63,11 @@
       "id": "self_creating_universe",
       "kind": "family",
       "text": "A de Sitter space whose earliest region is a loop in time. Gott and Li have bubbles like these forming in its inflating region, and in their fuller scenario a baby universe born in one of them is the de Sitter space the bubbles formed in [gott1998]."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "family",
+      "text": "Coleman's bounce carried from a false vacuum to the whole universe: half a 4-sphere joined at its equator to the waist of a closed de Sitter universe, which Vilenkin had created from nothing [vilenkin1982]."
     }
   ],
   "references": [
@@ -85,7 +90,8 @@
     "feeney2011",
     "degrassi2012",
     "caldwell1996",
-    "gott1998"
+    "gott1998",
+    "vilenkin1982"
   ],
   "coordinates": [
     {

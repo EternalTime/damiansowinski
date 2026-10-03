@@ -131,6 +131,11 @@
       "id": "poincare_dodecahedral",
       "kind": "locally_same",
       "text": "The closed universe, $k = +1$, with points of its space identified under a group of 120 rotations of the 3-sphere, so that space is a dodecahedron with each face glued to the face opposite it. Every local measurement agrees with Friedmann's, and space holds a hundred and twentieth of the volume [luminet2003]."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "family",
+      "text": "A closed universe filled only with the energy density of a vacuum, whose scale factor $\\ell\\cosh(ct/\\ell)$ bounces at $\\ell$, joined at that bounce to half a 4-sphere [vilenkin1982]."
     }
   ],
   "references": [
@@ -196,7 +201,8 @@
     "lachiezerey1995",
     "anton2023",
     "lewandowski2023",
-    "luminet2003"
+    "luminet2003",
+    "vilenkin1982"
   ],
   "coordinates": [
     {

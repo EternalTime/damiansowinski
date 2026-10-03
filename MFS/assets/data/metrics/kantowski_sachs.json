@@ -65,6 +65,11 @@
       "id": "self_creating_universe",
       "kind": "special_case",
       "text": "The inflating region of Gott and Li's universe, de Sitter space identified under a boost, with $a = \\sinh(ct/r_0)$ and $b = r_0\\cosh(ct/r_0)$ for the de Sitter radius $r_0$ [gott1998]."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "family",
+      "text": "The geometry of the no-boundary proposal on the round minisuperspace, half a 4-sphere joined to de Sitter's waist [hartle1983]. Laflamme and Shellard carried the proposal over to the Kantowski-Sachs minisuperspace [laflamme1987]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "bronnikov2022",
     "novikov1965",
     "ruban1968",
-    "gott1998"
+    "gott1998",
+    "hartle1983"
   ],
   "coordinates": [
     {

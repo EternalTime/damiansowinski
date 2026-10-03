@@ -62,6 +62,11 @@
       "id": "quantum_btz",
       "kind": "family",
       "text": "With a negative cosmological constant and quantum fields around it, the cone of a particle is dressed with a horizon, which hides its singularity [emparan2002holograms, emparan2020qbtz]."
+    },
+    {
+      "id": "vuorio_warped_ads",
+      "kind": "family",
+      "text": "With a mass for the graviton, empty space in three dimensions need not be flat. Vuorio's universe is such a vacuum, whose light cones tip over as Gödel's do [vuorio1985]."
     }
   ],
   "references": [
@@ -85,7 +90,8 @@
     "steif1996",
     "brill1996",
     "emparan2002holograms",
-    "emparan2020qbtz"
+    "emparan2020qbtz",
+    "vuorio1985"
   ],
   "coordinates": [
     {

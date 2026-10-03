@@ -268,6 +268,16 @@
       "id": "draining_bathtub",
       "kind": "generalisation",
       "text": "Flat spacetime with the speed of sound for $c$ and water flowing through it. A drain that swirls gives sound a horizon and an ergoregion, in a laboratory that stays flat [visser1998]."
+    },
+    {
+      "id": "unruh_acoustic_hole",
+      "kind": "generalisation",
+      "text": "Flat spacetime with the speed of sound for $c$ and a fluid falling through it into a point. Where the fall passes the speed of sound, sound is trapped, and the sphere there should glow with thermal sound [unruh1981]."
+    },
+    {
+      "id": "supertranslation_hair",
+      "kind": "locally_same",
+      "text": "The same flat geometry in the coordinates of a supertranslation, which Compère and Long found to be a different vacuum, with a field on the sphere of directions [compere2016vacua]."
     }
   ],
   "references": [
@@ -348,7 +358,9 @@
     "maitra1966",
     "chan2024",
     "ellis1974",
-    "visser1998"
+    "visser1998",
+    "unruh1981",
+    "compere2016vacua"
   ],
   "coordinates": [
     {

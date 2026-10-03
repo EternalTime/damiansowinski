@@ -875,6 +875,20 @@ The static, spherically symmetric spacetime of a mass that also carries a massle
 - chart Isotropic: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -h^{2\gamma}c^2dt^2 + \left(1 + \dfrac{b}{4\rho}\right)^4h^{2(1-\gamma)}\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Harmonic: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -e^{-2mu}c^2dt^2 + \dfrac{k^2e^{2mu}}{\sinh^2(ku)}\left(\dfrac{k^2du^2}{\sinh^2(ku)} + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Freund-Rubin Compactification
+
+Anti-de Sitter space of four dimensions times a 7-sphere of twice its radius, a solution of supergravity in eleven dimensions. A field with four indices fills the four large dimensions evenly, and Peter Freund and Mark Rubin found in 1980 that it splits the eleven into four and seven of its own accord. In 1997 Juan Maldacena found it again as the throat of a stack of membranes.
+
+- id: `freund_rubin`
+- tags: static, stationary, eleven-dimensional, higher dimensions, supergravity, Kaluza-Klein, compact dimension, spontaneous compactification, product spacetime, homogeneous, anti-de Sitter, AdS/CFT, holography, M-theory, membrane, throat, near-horizon limit, supersymmetric, no horizon, regular, exact solution, Lorentzian, idealized model
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/freund_rubin.json
+- chart Global: coordinates $(t, \rho, \theta, \phi, \alpha, \beta, \gamma, \kappa, \xi, \omega, \psi)$, $$ds^2 = -\cosh^2\rho\,c^2dt^2 + L^2\left(d\rho^2 + \sinh^2\rho\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right) + 4L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\gamma^2 + \sin^2\gamma\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\left(d\omega^2 + \sin^2\omega\,d\psi^2\right)\right)\right)\right)\right)\right)$$
+- chart Conformal: coordinates $(t, \chi, \theta, \phi, \alpha, \beta, \gamma, \kappa, \xi, \omega, \psi)$, $$ds^2 = \dfrac{1}{\cos^2\chi}\left(-c^2dt^2 + L^2d\chi^2 + L^2\sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right) + 4L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\gamma^2 + \sin^2\gamma\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\left(d\omega^2 + \sin^2\omega\,d\psi^2\right)\right)\right)\right)\right)\right)$$
+- chart Static: coordinates $(t, r, \theta, \phi, \alpha, \beta, \gamma, \kappa, \xi, \omega, \psi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + 4L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\gamma^2 + \sin^2\gamma\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\left(d\omega^2 + \sin^2\omega\,d\psi^2\right)\right)\right)\right)\right)\right)$$
+- chart Poincaré: coordinates $(t, x, y, r, \alpha, \beta, \gamma, \kappa, \xi, \omega, \psi)$, $$ds^2 = \dfrac{r^2}{L^2}\left(-c^2dt^2 + dx^2 + dy^2\right) + \dfrac{L^2}{r^2}dr^2 + 4L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\gamma^2 + \sin^2\gamma\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\left(d\omega^2 + \sin^2\omega\,d\psi^2\right)\right)\right)\right)\right)\right)$$
+- chart Proper Distance: coordinates $(t, x, y, \sigma, \alpha, \beta, \gamma, \kappa, \xi, \omega, \psi)$, $$ds^2 = e^{2\sigma/L}\left(-c^2dt^2 + dx^2 + dy^2\right) + d\sigma^2 + 4L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\gamma^2 + \sin^2\gamma\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\left(d\omega^2 + \sin^2\omega\,d\psi^2\right)\right)\right)\right)\right)\right)$$
+
 ### Friedmann-Lemaître-Robertson-Walker Expanding Universe
 
 The Friedmann-Lemaître-Robertson-Walker metric describing a homogeneous, isotropic expanding universe.
@@ -1051,6 +1065,18 @@ The gravitational field of two massless particles in de Sitter space, the Schwar
 - chart Null Cylindrical: coordinates $(u, v, \rho, \phi)$, $$ds^2 = \dfrac{-du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{4GE}{c^4}\left(\left(1 - \dfrac{\rho^2}{4a^2}\right)\ln\left(\dfrac{\rho^2}{4a^2}\right) + 2 + \dfrac{\rho^2}{2a^2}\right)\delta(u)\,du^2}{\left(1 + \dfrac{\rho^2 - uv}{4a^2}\right)^2}$$
 - chart Kundt: coordinates $(u, w, \theta, \phi)$, $$ds^2 = \sin^2\theta\cos^2\phi\left(-2\,du\,dw + \dfrac{w^2}{a^2}du^2\right) + a^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{4GE}{c^4}\sin\theta\cos\phi\left(\cos\theta\,\ln\left(\dfrac{1 + \cos\theta}{1 - \cos\theta}\right) - 2\right)\delta(u)\,du^2$$
 
+### Interstellar's Wormhole
+
+The wormhole Oliver James, Eugénie von Tunzelmann, Paul Franklin, and Kip Thorne designed for Christopher Nolan's film Interstellar of 2014, which they call the Dneg wormhole after the effects studio Double Negative. A cylinder of length $2a$, every sphere along it of radius $\rho$, joins two flat spaces, each through a mouth that flares out over a length set by $M$, and clocks everywhere keep the same time, $g_{tt} = -1$.
+
+- id: `interstellar_wormhole`
+- tags: wormhole, traversable, throat, no horizon, exotic matter, energy condition violation, static, stationary, spherically symmetric, asymptotically flat, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/interstellar_wormhole.json
+- chart Proper Distance: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -c^2dt^2 + d\ell^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Cylinder: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -c^2dt^2 + d\ell^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Flare: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -c^2dt^2 + d\ell^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Israel's Collapsing Shell of Dust
 
 A thin spherical shell of dust falling under its own weight, with flat spacetime inside it and Schwarzschild's vacuum outside. Werner Israel solved its motion in 1966 with the junction conditions he wrote for a surface that carries matter. The event horizon forms at the centre of the flat interior before the shell arrives.
@@ -1074,6 +1100,20 @@ Majumdar and Papapetrou's balanced charges set spinning: the stationary electrov
 - chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -\dfrac{\left(c\,dt + \omega\,d\phi\right)^2}{W^2} + W^2\left(d\rho^2 + \rho^2d\phi^2 + dz^2\right)$$
 - chart Oblate Spheroidal: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Sigma_0}{\Sigma}\left(c\,dt + \dfrac{am\left(2r + m\right)\sin^2\theta}{\Sigma_0}d\phi\right)^2 + \Sigma\left(\dfrac{dr^2}{r^2 + a^2} + d\theta^2\right) + \dfrac{\Sigma\left(r^2 + a^2\right)\sin^2\theta}{\Sigma_0}d\phi^2$$
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{\left(r - m\right)^2}{r^2 + l^2}\left(c\,dt + 2l\cos\theta\,d\phi\right)^2 + \dfrac{r^2 + l^2}{\left(r - m\right)^2}dr^2 + \left(r^2 + l^2\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### Jackiw-Teitelboim Black Hole
+
+A black hole in two spacetime dimensions, in the gravity of Teitelboim and Jackiw, where a scalar field, the dilaton, holds the curvature at $R = -2/L^2$. Every solution is a piece of anti-de Sitter space of two dimensions, and the dilaton tells the black hole from empty space: its value on the horizon is the entropy. The same gravity governs the throat of a nearly extreme charged black hole, and in it the quantum mechanics of a black hole can be solved exactly.
+
+- id: `jackiw_teitelboim_black_hole`
+- tags: black hole, two-dimensional, dilaton, dilaton gravity, Jackiw-Teitelboim gravity, lower-dimensional gravity, anti-de Sitter, constant curvature, Hawking radiation, Hawking temperature, black hole thermodynamics, black hole entropy, holography, AdS/CFT, information paradox, Page curve, horizon, event horizon, Kruskal extension, Euclidean black hole, exact solution, Lorentzian, idealized model, Einstein space, cosmological constant, negative cosmological constant, conformally flat, static, stationary
+- signature: (-,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/jackiw_teitelboim_black_hole.json
+- chart Static: coordinates $(t, r)$, $$ds^2 = -\dfrac{r^2 - r_h^2}{L^2}\,c^2dt^2 + \dfrac{L^2}{r^2 - r_h^2}\,dr^2$$
+- chart Proper Distance: coordinates $(t, \rho)$, $$ds^2 = -\dfrac{r_h^2}{L^2}\sinh^2(\rho/L)\,c^2dt^2 + d\rho^2$$
+- chart Kruskal: coordinates $(U, V)$, $$ds^2 = -\dfrac{4L^2\,dU\,dV}{\left(1 + UV\right)^2}$$
+- chart Global: coordinates $(\tau, \sigma)$, $$ds^2 = \dfrac{L^2}{\sin^2\sigma}\left(-d\tau^2 + d\sigma^2\right)$$
+- chart Poincaré: coordinates $(T, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-c^2dT^2 + dz^2\right)$$
 
 ### Kaluza-Klein Black Holes
 
@@ -1984,6 +2024,18 @@ A universe filled with radiation and arranged around an axis, which contracts, i
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/senovilla.json
 - chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = \cosh^4(act)\cosh^2(3a\rho)\left(-c^2dt^2 + d\rho^2\right) + \dfrac{\cosh^4(act)\sinh^2(3a\rho)}{9a^2\cosh^{2/3}(3a\rho)}d\phi^2 + \dfrac{dz^2}{\cosh^2(act)\cosh^{2/3}(3a\rho)}$$
 
+### Shenker-Stanford Shock Wave in the BTZ Black Hole
+
+The eternal black hole of Bañados, Teitelboim, and Zanelli with a shock wave lying on its horizon, the field of a few quanta thrown in from one side long ago. The two halves of the black hole are joined along the horizon with a shift $\alpha$ that grows exponentially with the time since the quanta were let go, so the wormhole between the two outsides grows longer. It is the geometry of the butterfly effect in holography.
+
+- id: `btz_shock_wave`
+- tags: shock wave, impulsive wave, null shell, null source, black hole, BTZ black hole, anti-de Sitter, negative cosmological constant, cosmological constant, wormhole, Einstein-Rosen bridge, horizon, event horizon, AdS/CFT, holography, thermofield double, butterfly effect, scrambling, quantum chaos, circularly symmetric, 2+1 dimensional gravity, exact solution, Lorentzian, Einstein equations, idealized model, conformally flat, three-dimensional
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/btz_shock_wave.json
+- chart Kruskal: coordinates $(u, v, \phi)$, $$ds^2 = \dfrac{-4\ell^2\,du\,dv + R^2\left(1 - u\left(v + \alpha\Theta\right)\right)^2d\phi^2}{\left(1 + u\left(v + \alpha\Theta\right)\right)^2}$$
+- chart Discontinuous Kruskal: coordinates $(U, V, \phi)$, $$ds^2 = \dfrac{-4\ell^2\,dU\,dV + 4\ell^2\alpha\,\delta(U)\,dU^2 + R^2\left(1 - UV\right)^2d\phi^2}{\left(1 + UV\right)^2}$$
+- chart Exterior: coordinates $(t, r, \phi)$, $$ds^2 = -\dfrac{r^2 - R^2}{\ell^2}c^2dt^2 + \dfrac{\ell^2\,dr^2}{r^2 - R^2} + r^2d\phi^2$$
+
 ### Siklos Waves and the Kaigorodov Spacetime
 
 Exact gravitational waves crossing anti-de Sitter space: a pp-wave multiplied by anti-de Sitter's conformal factor, with fronts that are hyperbolic planes. The simplest, Kaigorodov's spacetime, is homogeneous, and its singularity shows in no curvature scalar.
@@ -2063,6 +2115,18 @@ A black hole in the Einstein-de Sitter universe, Schwarzschild's metric multipli
 - chart Kerr-Schild Conformal Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = \dfrac{\eta^4}{\eta_0^4}\left(-\left(1 - \dfrac{r_s}{r}\right)d\eta^2 + \dfrac{2r_s}{r}d\eta\,dr + \left(1 + \dfrac{r_s}{r}\right)dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Schwarzschild Time: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{\eta^4}{\eta_0^4}\left(-\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = \dfrac{\left(v - r\right)^4}{\eta_0^4}\left(-\left(1 - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
+### Flat Space with Supertranslation Hair
+
+Minkowski space in the coordinates of a supertranslation, written in closed form by Geoffrey Compère and Jiang Long in 2016. Every component of the Riemann tensor vanishes, and each function on the sphere of directions gives a different vacuum, between which a burst of gravitational waves carries space.
+
+- id: `supertranslation_hair`
+- tags: vacuum, flat, conformally flat, static, stationary, axisymmetric, asymptotically flat, retarded time, supertranslation, gravitational memory, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/supertranslation_hair.json
+- chart Static (Compère-Long): coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -c^2dt^2 + d\rho^2 + \left(\rho - C - C''\right)^2d\theta^2 + B^2d\phi^2$$
+- chart Bondi Gauge, Retarded: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -c^2du^2 - \dfrac{2r}{W}c\,du\,dr + 2\left(\partial_\theta\sigma\left(1 - \dfrac{\sigma}{W}\right) + 2\sigma\cot\theta\right)c\,du\,d\theta + \left(W + \sigma\right)^2d\theta^2 + \left(W - \sigma\right)^2\sin^2\theta\,d\phi^2$$
+- chart Bondi Gauge, Advanced: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -c^2dv^2 + \dfrac{2r}{W}c\,dv\,dr - 2\left(\partial_\theta\sigma\left(1 - \dfrac{\sigma}{W}\right) + 2\sigma\cot\theta\right)c\,dv\,d\theta + \left(W + \sigma\right)^2d\theta^2 + \left(W - \sigma\right)^2\sin^2\theta\,d\phi^2$$
 
 ### Szekeres Inhomogeneous Dust Cosmologies
 
@@ -2210,6 +2274,31 @@ A smooth spacetime of five dimensions with no horizon and no singularity, which 
 - chart Extremal, Isotropic: coordinates $(t, \rho, \theta, \phi, y)$, $$ds^2 = \left(1 + \dfrac{m}{\rho}\right)^{-1}\left(-c^2dt^2 + dy^2\right) + \left(1 + \dfrac{m}{\rho}\right)^2\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Einstein Metric, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \sqrt{1 - \dfrac{r_B}{r}}\left(-\left(1 - \dfrac{r_S}{r}\right)c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_S}{r}\right)\left(1 - \dfrac{r_B}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### The Universe from Nothing
+
+Half of a 4-sphere joined at its equator to the waist of de Sitter's closed universe: the geometry of Alexander Vilenkin's universe created by tunnelling from nothing (1982) and of the no-boundary proposal of James Hartle and Stephen Hawking (1983). The south pole of the sphere is a point like any other on it, so the universe has no first moment and no edge, and above the equator it inflates.
+
+- id: `universe_from_nothing`
+- tags: de Sitter, instanton, Euclidean quantum gravity, Euclidean signature, Riemannian, Lorentzian, quantum cosmology, wave function of the universe, no-boundary proposal, tunnelling, signature change, 4-sphere, three sphere, closed universe, inflation, expanding universe, vacuum energy, bounce, cosmology, cosmological constant, positive cosmological constant, constant curvature, exact solution, Einstein equations, four-dimensional, idealized model, Einstein space, conformally flat, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/universe_from_nothing.json
+- chart Closed Slicing: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \ell^2\cosh^2(ct/\ell)\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart 4-Sphere: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = d\tau^2 + \ell^2\cos^2(\tau/\ell)\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Scale Factor: coordinates $(a, \chi, \theta, \phi)$, $$ds^2 = \dfrac{da^2}{1 - \dfrac{a^2}{\ell^2}} + a^2\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Conformal: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = \dfrac{\ell^2}{\cos^2\eta}\left(-d\eta^2 + d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Quadratic Gauge: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -\dfrac{\ell^2c^2dt^2}{\ell^2 + c^2t^2} + \left(\ell^2 + c^2t^2\right)\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+
+### Unruh's Acoustic Black Hole
+
+The spacetime that sound travels through in a fluid falling steadily into a point from every side. Inside $r = r_0$ the fluid falls faster than sound, so no sound gets out, and the sphere $r = r_0$ is a horizon that should glow with thermal sound. It solves no field equation of gravity, and its horizon has been made in a Bose-Einstein condensate.
+
+- id: `unruh_acoustic_hole`
+- tags: analogue gravity, acoustic black hole, acoustic metric, dumb hole, sound, fluid flow, black hole, horizon, event horizon, Hawking radiation, Painlevé-Gullstrand, laboratory experiment, Bose-Einstein condensate, no field equations, curvature singularity, spherically symmetric, stationary, static, four-dimensional, Lorentzian, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/unruh_acoustic_hole.json
+- chart Laboratory: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \left(dr + \dfrac{c\,r_0^2}{r^2}dt\right)^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Unruh's Time: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_0^4}{r^4}\right)c^2d\tau^2 + \dfrac{dr^2}{1 - \dfrac{r_0^4}{r^4}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Vaidya Radiating Star
 
 A dynamical solution describing the spacetime of a radiating or accreting spherical mass with outgoing or ingoing null dust. It models radiating stars and the evaporation or growth of black holes.
@@ -2267,6 +2356,19 @@ Matt Visser's traversable wormhole of 1989: two copies of the Schwarzschild exte
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json
 - chart Schwarzschild: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Through the Throat: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{a + |\ell|}\right)c^2dt^2 + \dfrac{d\ell^2}{1 - \dfrac{r_s}{a + |\ell|}} + \left(a + |\ell|\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### Vuorio's Universe and Warped Anti-de Sitter Space
+
+An empty space of gravity in three dimensions with a mass for the graviton, whose time twists about every point. It is anti-de Sitter space with its light cones stretched or squashed along one direction, and stretched, as in Vuorio's universe, it holds closed timelike curves through every event.
+
+- id: `vuorio_warped_ads`
+- tags: topologically massive gravity, alternative theories of gravity, 2+1 dimensional gravity, lower-dimensional gravity, closed timelike curves, rotating, homogeneous, anti-de Sitter, warped anti-de Sitter, cosmological constant, exact solution, Lorentzian, idealized model, stationary, three-dimensional
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/vuorio_warped_ads.json
+- chart Cylindrical: coordinates $(t, r, \phi)$, $$ds^2 = -\left(c\,dt + \dfrac{4\Omega}{m^2}\sinh^2\left(\dfrac{mr}{2}\right)d\phi\right)^2 + dr^2 + \dfrac{\sinh^2(mr)}{m^2}\,d\phi^2$$
+- chart Poincaré disc: coordinates $(t, R, \phi)$, $$ds^2 = -\left(c\,dt + \dfrac{4\Omega R^2}{m^2\left(1 - R^2\right)}\,d\phi\right)^2 + \dfrac{4\left(dR^2 + R^2d\phi^2\right)}{m^2\left(1 - R^2\right)^2}$$
+- chart Fibred: coordinates $(t, \sigma, u)$, $$ds^2 = -\left(c\,dt + \dfrac{2\Omega}{m^2}\sinh\sigma\,du\right)^2 + \dfrac{1}{m^2}\left(d\sigma^2 + \cosh^2\sigma\,du^2\right)$$
+- chart Horospherical: coordinates $(t, x, y)$, $$ds^2 = -\left(c\,dt + \dfrac{2\Omega}{m}e^{mx}\,dy\right)^2 + dx^2 + e^{2mx}\,dy^2$$
 
 ### Wahlquist's Rotating Perfect Fluid
 
