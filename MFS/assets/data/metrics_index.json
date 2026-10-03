@@ -386,6 +386,44 @@
     "embedding": "7fea7a854b8ceca4"
   },
   {
+    "id": "black_to_white_hole",
+    "name": "Black Hole Fireworks",
+    "tags": [
+      "black hole",
+      "white hole",
+      "bounce",
+      "tunnelling",
+      "quantum gravity",
+      "loop quantum gravity",
+      "Planck star",
+      "gravitational collapse",
+      "thin shell",
+      "null dust",
+      "matched solution",
+      "junction conditions",
+      "Kruskal extension",
+      "apparent horizon",
+      "trapped surface",
+      "no singularity",
+      "time symmetric",
+      "information paradox",
+      "Hawking radiation",
+      "acoustic metric",
+      "Painlevé-Gullstrand coordinates",
+      "Lemaître coordinates",
+      "time-dependent",
+      "spherically symmetric",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8d338522ee610692",
+    "diagrams": "66048e8162c31d68",
+    "conformal": "6f624a51fd25bcd5",
+    "embedding": "83bb4961a98c0272"
+  },
+  {
     "id": "black_saturn",
     "name": "Black Saturn",
     "tags": [
@@ -2131,7 +2169,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6a2ee5464d44bc22",
+    "version": "0e75301e29334dc4",
     "diagrams": "a15527f5015cc33a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3"
@@ -2253,7 +2291,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7c3dfe8a0b6ec0d6",
+    "version": "3756cc785f60a8fe",
     "diagrams": "e28989ef92105e2d",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b"
@@ -3346,7 +3384,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "f156b78b1da1464d",
+    "version": "04829be7931d1374",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -3788,7 +3826,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "876faa35c411c0e6",
+    "version": "75b5bf442f0a61a7",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -4470,7 +4508,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f5d87a34d00d7a5b",
+    "version": "9eea431262fb92ce",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -5397,7 +5435,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "ea56edda506f39ce",
+    "version": "11ca5b9762e1866a",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"
@@ -5580,7 +5618,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e1e2cd0c3ada375d",
+    "version": "37cf3a1ab7814f4f",
     "diagrams": "526e1debafad2074",
     "conformal": "05af67c07226ebb3",
     "embedding": "f02661da1ce5940b"

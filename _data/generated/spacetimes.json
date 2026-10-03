@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 179,
+  "count": 180,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -4759,6 +4759,478 @@
           ],
           "ricci_scalar": "R = 2\\left(\\dfrac{a_1''}{a_1} + \\dfrac{a_2''}{a_2} + \\dfrac{a_3''}{a_3} + \\dfrac{a_1'\\,a_2'}{a_1\\,a_2} + \\dfrac{a_1'\\,a_3'}{a_1\\,a_3} + \\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)",
           "kretschmann": "K = 4\\left(\\left(\\dfrac{a_1''}{a_1}\\right)^2 + \\left(\\dfrac{a_2''}{a_2}\\right)^2 + \\left(\\dfrac{a_3''}{a_3}\\right)^2 + \\left(\\dfrac{a_1'\\,a_2'}{a_1\\,a_2}\\right)^2 + \\left(\\dfrac{a_1'\\,a_3'}{a_1\\,a_3}\\right)^2 + \\left(\\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "black_to_white_hole",
+      "name": "Black Hole Fireworks, the Tunnelling of a Black Hole into a White Hole",
+      "short_name": "Black Hole Fireworks",
+      "description": "A shell of light falls in, makes a black hole, and after a long time comes back out of a white hole, in one spacetime with no event horizon and no singularity. Outside a finite region around the bounce the metric is an exact solution of Einstein's equations, flat inside the shell and Schwarzschild's outside it, glued to its own time reverse. Hal Haggard and Carlo Rovelli built it in 2014, and Carlos Barceló, Raúl Carballo-Rubio, and Luis Garay proposed a bounce of the same shape with a short wait.",
+      "tags": [
+        "black hole",
+        "white hole",
+        "bounce",
+        "tunnelling",
+        "quantum gravity",
+        "loop quantum gravity",
+        "Planck star",
+        "gravitational collapse",
+        "thin shell",
+        "null dust",
+        "matched solution",
+        "junction conditions",
+        "Kruskal extension",
+        "apparent horizon",
+        "trapped surface",
+        "no singularity",
+        "time symmetric",
+        "information paradox",
+        "Hawking radiation",
+        "acoustic metric",
+        "Painlevé-Gullstrand coordinates",
+        "Lemaître coordinates",
+        "time-dependent",
+        "spherically symmetric",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and $r_s = 2GM/c^2$ is the Schwarzschild radius of the shell of mass $M$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The outside of the shell, used twice: a black hole flap before the bounce and its time reverse, a white hole flap, after it. Together the two flaps cover part of Kruskal's spacetime twice [haggard2015fireworks]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "The inside of the shell, flat on both sides of the bounce. It fills the inside of the light cone of the bounce, the past half before the shell turns round and the future half after it [haggard2015fireworks]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "piece",
+          "text": "Vaidya's shell of null dust falling into flat space is this spacetime before the bounce, outside the quantum region, and his shell going out is this spacetime after it."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "family",
+          "text": "The same collapse made of dust. Israel's shell falls in with flat space inside it and Schwarzschild's outside, as this shell of light does, and this one comes back out [haggard2015fireworks]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "The star of Barceló, Carballo-Rubio, and Garay's version of the bounce. In their proposal Oppenheimer and Snyder's ball of dust reaches the Planck density, bounces, and climbs back out through a white hole [barcelo2014mutiny]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "family",
+          "text": "Another white hole that does not last for ever. Novikov's core waits behind its past horizon from the big bang, and here the white hole is the time reverse of the collapse that came before it [novikov1965, haggard2015fireworks]."
+        },
+        {
+          "id": "hayward",
+          "kind": "family",
+          "text": "Another end to a collapse with no singularity and no event horizon. Hayward's black hole forms and evaporates with a regular centre, and Haggard and Rovelli count it among the models behind theirs [hayward2006, haggard2015fireworks]."
+        }
+      ],
+      "references": [
+        "haggard2015fireworks",
+        "barcelo2014mutiny",
+        "hajicek2001shells",
+        "barcelo2011nongravity",
+        "rovelli2014planck",
+        "kruskal1960",
+        "barcelo2015lifetime",
+        "barcelo2005",
+        "oppenheimersnyder1939",
+        "delorenzo2016fireworks",
+        "christodoulou2016tunnelling",
+        "bianchi2018remnants",
+        "novikov1965",
+        "hayward2006"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_to_white_hole.json",
+      "charts": [
+        {
+          "id": "interior",
+          "name": "Flat Interior",
+          "coordinates": [
+            "u",
+            "v",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in [u, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "v \\le 0 \\;\\text{(inside the shell falling in)}",
+            "u \\ge 0 \\;\\text{(inside the shell going out)}"
+          ],
+          "parameters": [],
+          "convention": "We use the null coordinates $(u, v, \\theta, \\phi)$ of flat space, $u = ct - r$ and $v = ct + r$, both lengths, with $r = (v - u)/2$ the distance from the centre and the bounce at $u = v = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du\\,dv + \\dfrac{(v - u)^2}{4}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(v - u\\right)^2}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(v - u\\right)^2\\sin^2\\theta}{4}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "kruskal",
+          "name": "Kruskal Exterior",
+          "coordinates": [
+            "U",
+            "V",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "V \\ge V_0 \\;\\text{(outside the shell falling in)}",
+            "UV < 1 \\;\\text{(where } r > 0\\text{)}",
+            "U = 0 \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the shell, $r_s = 2GM/c^2$ for its mass $M$"
+            },
+            {
+              "symbol": "r = r_s\\left(1 + \\mathrm{W}\\left(-e^{-1}UV\\right)\\right)",
+              "description": "Areal radius, a length, the solution of $\\left(1 - r/r_s\\right)e^{r/r_s} = UV$, with $\\mathrm{W}$ the principal branch of Lambert's function, $\\mathrm{W}(x)\\,e^{\\mathrm{W}(x)} = x$; its derivatives are $\\partial_U r = -r_s^2\\,V e^{-r/r_s}/r$ and $\\partial_V r = -r_s^2\\,U e^{-r/r_s}/r$"
+            }
+          ],
+          "convention": "We use Kruskal's null coordinates $(U, V, \\theta, \\phi)$, numbers normalised so that the shell falls in along the light ray $V = V_0$ and the surface of time symmetry outside the quantum region is $U + V = 0$, with the areal radius $r$ a function of $UV$ and $\\mathrm{W}$ Lambert's function. The flap after the bounce is the mirror image $(U, V) \\to (-V, -U)$, where the shell goes out along $U = -V_0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{4r_s^3}{r}e^{-r/r_s}\\,dU\\,dV + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{2r_s^3}{r}e^{-r/r_s}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{2r_s^3}{r}e^{-r/r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "schwarzschild",
+          "name": "Schwarzschild Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R(t), \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r > r_s"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the shell, $r_s = 2GM/c^2$ for its mass $M$"
+            }
+          ],
+          "convention": "We use Schwarzschild coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $t = 0$ on the surface of time symmetry, and $R(t)$ is the areal radius of the shell. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "painleve_gullstrand_ingoing",
+          "name": "Ingoing Painlevé-Gullstrand",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R(t), \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the shell, $r_s = 2GM/c^2$ for its mass $M$"
+            }
+          ],
+          "convention": "We use Painlevé-Gullstrand coordinates $(t, r, \\theta, \\phi)$ before the bounce, with $t$ carrying dimensions of time, the proper time of observers falling in from rest at infinity, and $R(t)$ is the areal radius of the shell. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + 2\\sqrt{\\dfrac{r_s}{r}}\\,c\\,dt\\,dr + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r - r_s}{r}"
+            },
+            {
+              "indices": [
+                "t",
+                "r"
+              ],
+              "value": "\\dfrac{\\sqrt{r_s}}{\\sqrt{r}}"
+            },
+            {
+              "indices": [
+                "r",
+                "t"
+              ],
+              "value": "\\dfrac{\\sqrt{r_s}}{\\sqrt{r}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "painleve_gullstrand_outgoing",
+          "name": "Outgoing Painlevé-Gullstrand",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R(t), \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the shell, $r_s = 2GM/c^2$ for its mass $M$"
+            }
+          ],
+          "convention": "We use Painlevé-Gullstrand coordinates $(t, r, \\theta, \\phi)$ after the bounce, with $t$ carrying dimensions of time, the proper time of observers flying out to rest at infinity, and $R(t)$ is the areal radius of the shell. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 - 2\\sqrt{\\dfrac{r_s}{r}}\\,c\\,dt\\,dr + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r - r_s}{r}"
+            },
+            {
+              "indices": [
+                "t",
+                "r"
+              ],
+              "value": "-\\dfrac{\\sqrt{r_s}}{\\sqrt{r}}"
+            },
+            {
+              "indices": [
+                "r",
+                "t"
+              ],
+              "value": "-\\dfrac{\\sqrt{r_s}}{\\sqrt{r}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "lemaitre",
+          "name": "Lemaître",
+          "coordinates": [
+            "\\tau",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\rho \\in (c\\tau, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r \\ge R \\;\\text{(outside the shell falling in)}",
+            "\\rho - c\\tau = \\dfrac{2r_s}{3} \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the shell, $r_s = 2GM/c^2$ for its mass $M$"
+            },
+            {
+              "symbol": "r = r_s^{1/3}\\left(\\dfrac{3}{2}\\left(\\rho - c\\tau\\right)\\right)^{2/3}",
+              "description": "Areal radius, a length; its derivatives are $\\partial_\\rho r = \\sqrt{r_s/r}$ and $\\partial_\\tau r = -c\\sqrt{r_s/r}$"
+            }
+          ],
+          "convention": "We use Lemaître's coordinates $(\\tau, \\rho, \\theta, \\phi)$ before the bounce, with $\\tau$ carrying dimensions of time, the proper time of observers falling in from rest at infinity, each of whom keeps its $\\rho$, a length, and $R$ is the areal radius of the shell. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + \\dfrac{r_s}{r}\\,d\\rho^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{r_s}{r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
         }
       ]
     },
@@ -23211,6 +23683,11 @@
           "id": "quantum_oppenheimer_snyder",
           "kind": "family",
           "text": "Another black hole with two horizons above a least mass and none below it, this one fixed by a ball of dust that bounces in loop quantum cosmology [lewandowski2023]."
+        },
+        {
+          "id": "black_to_white_hole",
+          "kind": "family",
+          "text": "Another end to a collapse with no event horizon, a shell of light that tunnels from a black hole into a white hole. Haggard and Rovelli count Hayward's black hole among the models behind theirs [haggard2015fireworks]."
         }
       ],
       "references": [
@@ -23234,7 +23711,8 @@
         "simpson2019",
         "mazur2004",
         "carballorubio2021",
-        "lewandowski2023"
+        "lewandowski2023",
+        "haggard2015fireworks"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hayward.json",
@@ -24580,6 +25058,11 @@
           "id": "charged_shell",
           "kind": "generalisation",
           "text": "Israel's shell given a charge, with Reissner-Nordström's field outside. With more charge than rest mass it turns round inside the inner horizon and leaves into another exterior [delacruz1967]."
+        },
+        {
+          "id": "black_to_white_hole",
+          "kind": "family",
+          "text": "The same collapse made of light, which Haggard and Rovelli let bounce and come back out through a white hole [haggard2015fireworks]."
         }
       ],
       "references": [
@@ -24601,7 +25084,8 @@
         "boulware1973",
         "hajicek1992",
         "visser1989nuclphysb",
-        "visser2004"
+        "visser2004",
+        "haggard2015fireworks"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_shell.json",
@@ -36249,6 +36733,11 @@
           "id": "supertranslation_hair",
           "kind": "locally_same",
           "text": "The same flat geometry in the coordinates of a supertranslation, which Compère and Long found to be a different vacuum, with a field on the sphere of directions [compere2016vacua]."
+        },
+        {
+          "id": "black_to_white_hole",
+          "kind": "composite",
+          "text": "Inside Haggard and Rovelli's bouncing shell of light space is flat, before the bounce and after it [haggard2015fireworks]."
         }
       ],
       "references": [
@@ -36331,7 +36820,8 @@
         "ellis1974",
         "visser1998",
         "unruh1981",
-        "compere2016vacua"
+        "compere2016vacua",
+        "haggard2015fireworks"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -41274,6 +41764,11 @@
           "id": "quantum_oppenheimer_snyder",
           "kind": "family",
           "text": "The same ball of dust with the bounce of loop quantum cosmology inside it. The dust stops at a critical density and comes back out through a white hole into another universe [lewandowski2023]."
+        },
+        {
+          "id": "black_to_white_hole",
+          "kind": "family",
+          "text": "Barceló, Carballo-Rubio, and Garay let this ball of dust bounce at the Planck density and climb back out through a white hole [barcelo2014mutiny]."
         }
       ],
       "references": [
@@ -41298,7 +41793,8 @@
         "neeman1965",
         "lindquist1957",
         "ruban1968",
-        "lewandowski2023"
+        "lewandowski2023",
+        "barcelo2014mutiny"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -48798,6 +49294,11 @@
           "id": "supertranslation_hair",
           "kind": "family",
           "text": "Flat space with a supertranslation field on the sphere of directions. Compère and Long put the same field on this black hole as the final state of a collapse that was not spherical [compere2016final]."
+        },
+        {
+          "id": "black_to_white_hole",
+          "kind": "composite",
+          "text": "A shell of light falls into a black hole and comes back out of a white hole. Haggard and Rovelli cut both flaps from Schwarzschild's spacetime and put a quantum region between them [haggard2015fireworks]."
         }
       ],
       "references": [
@@ -48927,7 +49428,8 @@
         "lewandowski2023",
         "unruh1981",
         "james2015",
-        "compere2016final"
+        "compere2016final",
+        "haggard2015fireworks"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -58717,6 +59219,11 @@
           "id": "supertranslation_hair",
           "kind": "family",
           "text": "Flat space with a supertranslation field on the sphere of directions. A spherical shell of light falling in, as here, leaves its black hole with no such field [compere2016final]."
+        },
+        {
+          "id": "black_to_white_hole",
+          "kind": "composite",
+          "text": "Haggard and Rovelli's black hole fireworks glue this imploding shell, flat inside and Schwarzschild's outside, to its own time reverse, with a quantum region between [haggard2015fireworks]."
         }
       ],
       "references": [
@@ -58753,7 +59260,8 @@
         "zeldovichnovikovstarobinskii1974",
         "good2016",
         "bondi1962",
-        "compere2016final"
+        "compere2016final",
+        "haggard2015fireworks"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
@@ -60875,6 +61383,11 @@
           "id": "vaidya",
           "kind": "family",
           "text": "A white hole that sends out light. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation leaving one [zeldovichnovikovstarobinskii1974, vaidya1953]."
+        },
+        {
+          "id": "black_to_white_hole",
+          "kind": "family",
+          "text": "A white hole that follows a black hole in one spacetime. Haggard and Rovelli glue a collapsing shell of light to its time reverse with a quantum region between [haggard2015fireworks]."
         }
       ],
       "references": [
@@ -60897,7 +61410,8 @@
         "lakeroeder1976",
         "blau1989",
         "oripoisson1994",
-        "vaidya1953"
+        "vaidya1953",
+        "haggard2015fireworks"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/white_hole.json",

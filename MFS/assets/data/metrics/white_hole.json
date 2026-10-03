@@ -61,6 +61,11 @@
       "id": "vaidya",
       "kind": "family",
       "text": "A white hole that sends out light. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation leaving one [zeldovichnovikovstarobinskii1974, vaidya1953]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "family",
+      "text": "A white hole that follows a black hole in one spacetime. Haggard and Rovelli glue a collapsing shell of light to its time reverse with a quantum region between [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "lakeroeder1976",
     "blau1989",
     "oripoisson1994",
-    "vaidya1953"
+    "vaidya1953",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {

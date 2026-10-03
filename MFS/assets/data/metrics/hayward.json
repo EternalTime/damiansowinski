@@ -84,6 +84,11 @@
       "id": "quantum_oppenheimer_snyder",
       "kind": "family",
       "text": "Another black hole with two horizons above a least mass and none below it, this one fixed by a ball of dust that bounces in loop quantum cosmology [lewandowski2023]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "family",
+      "text": "Another end to a collapse with no event horizon, a shell of light that tunnels from a black hole into a white hole. Haggard and Rovelli count Hayward's black hole among the models behind theirs [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "simpson2019",
     "mazur2004",
     "carballorubio2021",
-    "lewandowski2023"
+    "lewandowski2023",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {

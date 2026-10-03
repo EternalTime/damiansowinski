@@ -129,6 +129,11 @@
       "id": "supertranslation_hair",
       "kind": "family",
       "text": "Flat space with a supertranslation field on the sphere of directions. A spherical shell of light falling in, as here, leaves its black hole with no such field [compere2016final]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "composite",
+      "text": "Haggard and Rovelli's black hole fireworks glue this imploding shell, flat inside and Schwarzschild's outside, to its own time reverse, with a quantum region between [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -165,7 +170,8 @@
     "zeldovichnovikovstarobinskii1974",
     "good2016",
     "bondi1962",
-    "compere2016final"
+    "compere2016final",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {

@@ -123,6 +123,7 @@ import nm_disc  # noqa: E402
 import boson_star as bs  # noqa: E402
 import two_holes  # noqa: E402
 import brill_wave  # noqa: E402
+import black_to_white_hole as bwh  # noqa: E402
 import null_rays as nr  # noqa: E402
 import quantum_os as qos  # noqa: E402
 import conformal  # noqa: E402
@@ -16666,6 +16667,72 @@ def moving_mirror(ck, src):
                         "right of the mirror."])]
 
 
+
+def black_to_white_hole(ck, src):
+    """Haggard and Rovelli's shell of light falling in, as the other diagrams draw it, r_s = 1, from
+    Schwarzschild's ct = -3 r_s to the surface of time symmetry, ct = 0. Each moment is the slice of
+    Schwarzschild's t outside the shell, from the shell's radius R(t), the solution of
+    ct = 2 ln V0 - R - ln(R - 1), to the rim r = 4 r_s, on which the published metric pulls back to
+    dr^2/(1 - r_s/r) + r^2 dphi^2, so dz/dr = sqrt(r_s/(r - r_s)) and z = 2 sqrt(r_s (r - r_s)),
+    Flamm's paraboloid; and inside it the moment of the flat interior's time at which the slice
+    meets the shell, ct = -R, read along u = -2R - v from the centre v = -R to the shell v = 0, a
+    flat disc, which is checked. The shell folds the surface by the angle whose tangent is
+    sqrt(r_s/(R - r_s)). Every moment lies below the quantum region: at ct = 0 the slice outside the
+    shell runs from R = 1.12 r_s through Delta, at 7r_s/6, and on to the rim. The moments after the
+    bounce are these in the reverse order, the time reverse."""
+    top = 4.0
+    size = 2 * top
+    b = bwh
+    rim = ("edge", "the surface runs on, as Flamm's paraboloid, to $r \\to \\infty$")
+
+    def moment(T):
+        where = f"Fireworks, ct = {T:g}"
+        R = float(b.shell_radius_schwarzschild(T))
+        ck.add(f"{where}, the shell is on the slice", abs(float(b.shell_schwarzschild_time(R)) - T), 1e-10)
+        # At ct = 0 the slice beyond Delta is the surface of time symmetry, the edge of region II.
+        ck.add(f"{where}, the slice is region II outside the shell",
+               max(0.0, -float(np.min(b.region_two(*b.schwarzschild_UV(np.full(50, T), np.linspace(R + 1e-6, top, 50)))))),
+               1e-12)
+        outer = Slice(src, "black_to_white_hole", "schwarzschild", "r", "\\phi", {"theta": "pi/2", "t": repr(T)},
+                      {"r_s": 1})
+        flat = Slice(src, "black_to_white_hole", "interior", "v", "\\phi", {"theta": "pi/2"}, {},
+                     along={"u": f"{-2 * R!r} - v"})
+        ck.plane(f"{where}, inside the shell", flat, np.linspace(-R + 1e-3 * R, 0.0, 200))
+        inside = Piece("inside", "sheet", flat, -R, 0.0, 0.0, 1,
+                       (("axis", "the centre $r = 0$, where space is flat"),
+                        ("crease", "the shell of light, where the surface folds")),
+                       [(0.0, "surface", None)], size)
+        outside = Piece("outside", "sheet", outer, R, top, 0.0, 1, (("crease", "the shell"), rim),
+                        [(r, "r", None) for r in (2.0, 3.0, top) if r > R], size)
+        shift = -outside.z[-1]
+        inside.z, outside.z = inside.z + shift, outside.z + shift
+        ck.add(f"{where}, the two sides meet at the shell: one point",
+               float(np.max(np.abs(np.array(inside.at(0.0)) - outside.at(R)))), JOIN)
+        ck.form(f"{where}, outside the shell z = 2 sqrt(r_s (r - r_s)) - 2 sqrt(r_s (R - r_s))", outside,
+                lambda r, R=R, shift=shift: 2 * (np.sqrt(r - 1) - np.sqrt(R - 1)) + shift, size)
+        tangent = outside.sl.slope(R, "+")
+        ck.add(f"{where}, the fold at the shell is sqrt(r_s/(R - r_s))",
+               abs(float(tangent[1] / tangent[0]) / math.sqrt(1 / (R - 1)) - 1), 1e-6)
+        for p in (inside, outside):
+            ck.isometry(f"{where}, {p.id}", p)
+        return Surface([inside, outside], label=f"$ct = {T:g}\\,r_s$", time=T)
+
+    # A frame every r_s/16 of ct, from -3 r_s to the surface of time symmetry.
+    frames = [moment(-3.0 + k / 16) for k in range(49)]
+    ck.add("Fireworks: at ct = 0 the shell is at 1.12 r_s, inside Delta",
+           float(not 1 < b.shell_radius_schwarzschild(0.0) < b.R_DELTA), 0.5)
+    surfaces = [frames[k] for k in (0, 16, 32, 48)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the slice, flat inside the shell and of constant $t$ outside it")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$ and $4\\,r_s$")
+    fig.legend("line", "surface", "the shell of light, where the surface folds")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("collapse", "The falling shell", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", [f.time for f in frames]),
+                 settings="$r_s = 1$, the unit of every length; each moment is a slice of Schwarzschild's $t$ outside "
+                          "the shell and of the flat time inside it.",
+                 input=nr.BWH_INPUT)]
+
 DRAWN = {
     "moving_mirror": moving_mirror,
     "aichelburg_sexl": aichelburg_sexl,
@@ -16714,6 +16781,7 @@ DRAWN = {
     "hiscock": hiscock,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
+    "black_to_white_hole": black_to_white_hole,
     "israel_shell": israel_shell,
     "charged_shell": charged_shell,
     "penrose_impulsive_wave": penrose_impulsive_wave,
@@ -18233,6 +18301,18 @@ CAPTIONS = {
         "creation, which shrinks onto the centre at $v - r = 8\\,m_0$ and takes the spike with it. After that a "
         "flat disc grows from the centre at half the speed of light in $v - r$, its rim the last ray $u_0$, and "
         "the radiation ahead of it carries the curvature away.",
+    ],
+    ("black_to_white_hole", "collapse"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of light falling in, from "
+        "Schwarzschild's $ct = -3\\,r_s$ to the surface of time symmetry, $ct = 0$, each moment drawn as a "
+        "surface in flat space with every distance along it the metric distance. Outside the shell each moment "
+        "is a slice of constant $t$, Flamm's paraboloid $z^2 = 4r_s(r - r_s)$, and inside it the moment of the "
+        "flat time at which that slice meets the shell, a flat disc. The energy of the shell folds the surface "
+        "where the two meet.",
+        "By Schwarzschild's clock the shell never reaches $r_s$: it closes on the throat of the paraboloid and is "
+        "at $1.12\\,r_s$ at $ct = 0$, where the slice outside it runs through $\\Delta$, at $7r_s/6$. The moments "
+        "after the bounce are the same surfaces in the reverse order, the shell climbing back out of the white "
+        "hole.",
     ],
     ("vaidya", "shell"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of radiation falling inward, from "
