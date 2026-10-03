@@ -1643,6 +1643,22 @@ DIMENSIONS = {
         "t": "T", "r": "L", "\\tau": "L", "x": "L", "y": "L", "r_0": "L", "L": "L",
     },
     ("ads_soliton", "three_dimensional"): {"t": "T", "r": "L", "\\tau": "L", "r_0": "L", "L": "L"},
+    # The topological star keeps two lengths, r_S and r_B, Bah and Heidmann's, and its fifth
+    # coordinate y is a length. The chart about the bubble has their rho, a pure number, the angle
+    # psi = y/R_y, and r as a name for r_B + (r_B - r_S) rho^2/4. The black string's advanced time
+    # v = ct + r_* is a length, and the extremal string keeps one length m = r_S = r_B, with the
+    # isotropic radius rho = r - m a length.
+    ("topological_star", "bah_heidmann"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "y": "L", "r_S": "L", "r_B": "L",
+    },
+    ("topological_star", "bubble"): {
+        "t": "T", "\\rho": "1", "\\theta": "1", "\\phi": "1", "\\psi": "1", "r_S": "L", "r_B": "L", "r": "L",
+    },
+    ("topological_star", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "y": "L", "r_S": "L", "r_B": "L",
+    },
+    ("topological_star", "extremal"): {"t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "y": "L", "m": "L"},
+    ("topological_star", "einstein"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_S": "L", "r_B": "L"},
     # The charged black hole in de Sitter space keeps the three lengths of its parents: r_s, the
     # charge radius r_q and Lambda, a curvature. Its cosmological chart, which exists at
     # r_q = r_s/2, carries the Hubble rate H, a frequency with 3H^2/c^2 = Lambda, as de Sitter's

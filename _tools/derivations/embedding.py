@@ -4880,6 +4880,129 @@ def schrodinger_spacetime(ck, src):
                         "space carries it."])]
 
 
+def topological_star(ck, src):
+    """Two surfaces of the star's moment t = 0, at r_B = 1 and r_S = 3/4, where the circle of the
+    fifth dimension has the radius R_y = 2 sqrt(r_B^3/(r_B - r_S)) = 4.
+
+    The cigar, the surface of rho and psi of the chart about the bubble at one point of the sphere:
+    g_rhorho = 4 r^2/(4 + rho^2) and g_psipsi = r_B^3 rho^2/r with r = r_B + (r_B - r_S) rho^2/4. Its
+    circles have the radius R = R_y sqrt(1 - r_B/r) = 4 rho/sqrt(16 + rho^2), nought on the bubble and
+    R_y far away, and along the surface dR/ds = R_y r_B sqrt(1 - r_S/r)/(2 r^2), which is 1 on the
+    bubble, where the surface is as smooth as the origin of a plane, and falls from there wherever
+    r > 5 r_S/4, which holds from the bubble on since r_B = 4 r_S/3. So flat space carries all of
+    it, which is checked. Drawn to rho = 8, where r = 5 r_B.
+
+    The equator, the surface of r and phi of Bah and Heidmann's chart at one y: g_rr =
+    1/((1 - r_S/r)(1 - r_B/r)) and the circles have the radius r. It stands vertical on the
+    bubble's equator r = r_B, the smallest circle, and the line of rho through the origin of the
+    plane of rho and psi carries it on to the opposite side of the circle, y + pi R_y, drawn as the
+    second sheet. Each height is checked against scipy's quadrature of its slope, written by
+    hand. The geometry is static, so each view is one surface and no movie."""
+    from scipy.integrate import quad
+    name = "topological star"
+    params = {"r_S": "3/4", "r_B": 1}
+    rS = 0.75
+
+    # The cigar.
+    sl = Slice(src, "topological_star", "bubble", "\\rho", "\\psi", {"t": 0, **EQUATOR, "phi": 0}, params)
+    top = 8.0
+
+    def radius(x):
+        return 4 * x / np.sqrt(16 + x ** 2)
+
+    def slope(x):
+        # dR/ds with s the proper distance: R_y r_B sqrt(1 - r_S/r)/(2 r^2).
+        r = 1 + np.asarray(x, dtype=float) ** 2 / 16
+        return 2 * np.sqrt(1 - rS / r) / r ** 2
+
+    def cigar_height(x):
+        # dz/drho = sqrt(g_rhorho (1 - (dR/ds)^2)).
+        def of(u):
+            r = 1 + u * u / 16
+            return 2 * r / math.sqrt(4 + u * u) * math.sqrt(max(1 - float(slope(u)) ** 2, 0.0))
+        return np.array([quad(of, 0.0, v, epsabs=1e-12, epsrel=1e-12, limit=200)[0] for v in np.atleast_1d(x)])
+    length = float(sl.proper(0.0, top))
+    size = max(2 * float(radius(top)), float(cigar_height(top)[0]))
+    cigar = Piece("cigar", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the bubble $\\rho = 0$, where the circle of the fifth dimension shrinks to a point"),
+                   ("edge", "the surface runs on to $\\rho \\to \\infty$, a cylinder of radius $R_y$")),
+                  [(x, "r", None) for x in (2.0, 4.0, 6.0)] + [(top, "r", "$\\rho = 8$")], size)
+    ck.isometry(f"{name}, the cigar", cigar)
+    ck.radius(f"{name}, the cigar: its circles have the radius R_y sqrt(1 - r_B/r)", cigar, radius, size)
+    ck.form(f"{name}, the cigar: the quadrature of its height", cigar, cigar_height, size)
+    xs = np.linspace(0.0, 40.0, 801)
+    ck.add(f"{name}, the cigar: dR/ds is 1 on the bubble", abs(float(slope(0.0)) - 1), 1e-14)
+    ck.add(f"{name}, the cigar: dR/ds falls from the bubble on, so flat space carries the surface",
+           float(max(np.max(np.diff(slope(xs))), 0.0)), 0.0)
+    h = 1e-5
+    ck.add(f"{name}, the cigar: dR/ds is the slope of R against the proper distance",
+           float(np.max(np.abs((radius(xs[1:] + h) - radius(xs[1:] - h)) / (2 * h)
+                               * np.sqrt(4 + xs[1:] ** 2) / (2 * (1 + xs[1:] ** 2 / 16)) - slope(xs[1:])))), 1e-8)
+    ck.add(f"{name}, the cigar: far away its circles have the radius R_y = 4 r_B", abs(float(radius(1e9)) - 4), 1e-8)
+    surface = Surface([cigar])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *cigar.at(4.0), "$\\rho = 4$")
+    ring_label(fig, [0, 0, 0], *cigar.at(top), "$\\rho = 8$")
+    fig.legend("fill", "cover", "the surface of $\\rho$ and $\\psi$ at one moment and one point of the sphere, "
+                                "which the chart about the bubble covers whole")
+    fig.legend("line", "r", "$\\rho$ constant, at $2$, $4$, $6$, and $8$, where $r = 1.25$, $2$, $3.25$, and $5\\,r_B$")
+    fig.legend("line", "meridian", "$\\psi$ constant, every $15°$")
+    views = [view("cigar", "The fifth dimension", "$r_B$", [surface], fig.done(),
+                  settings="$r_B = 1$, the unit of every length, and $r_S = 3r_B/4$, where $R_y = 4r_B$, on the "
+                           "surface of $\\rho$ and $\\psi$ ($\\theta = \\pi/2$, $\\phi = 0$).")]
+    # The proper distance from the bubble is sqrt((r - r_S)(r - r_B)) + (r_S + r_B) arsinh(rho/2).
+    ck.add(f"{name}, the cigar: from the bubble to rho = 8, r = 5 r_B, is 7.79 r_B",
+           abs(length - (math.sqrt((5 - rS) * 4) + (rS + 1) * math.asinh(4.0))) + abs(round(length, 2) - 7.79), 1e-6)
+
+    # The equator, on two opposite sides of the circle.
+    sl = Slice(src, "topological_star", "bah_heidmann", "r", "\\phi", {"t": 0, **EQUATOR, "y": 0}, params)
+    roots = sorted(sl.horizons())
+    ck.add(f"{name}, the equator: 1/g_rr vanishes on the bubble r_B and at r_S inside it",
+           abs(roots[-1] - 1.0) + abs(roots[0] - rS), 1e-12)
+    ck.stops(f"{name}, between r_S and the bubble", sl, np.linspace(rS, 1.0, 202)[1:-1])
+    top = 6.0
+    size = 2 * top
+    radii = (1.5, 2.0, 3.0, 4.0, 5.0)
+    near = Piece("near", "sheet", sl, 1.0, top, 0.0, 1,
+                 (("throat", "the bubble's equator $r = r_B$, the smallest circle, where the opposite side of "
+                             "the circle $y$ begins"),
+                  ("edge", "the surface runs on to $r \\to \\infty$")),
+                 [(1.0, "horizon", "$r = r_B$")] + [(r, "r", None) for r in radii] + [(top, "r", "$r = 6\\,r_B$")], size)
+    far = Piece("far", "sheet2", sl, 1.0, top, 0.0, -1,
+                (("throat", "the bubble's equator $r = r_B$"), ("edge", "the surface runs on to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    ck.join(f"{name}, the two sheets on the bubble", near, 1.0, far, 1.0)
+
+    def height(r):
+        # (r - r_B)(g_rr - 1) = ((r_S + r_B) r - r_S r_B)/(r - r_S), and with r = r_B + s^2 the
+        # 1/sqrt(r - r_B) on the bubble is gone.
+        def of(u):
+            x = 1 + u * u
+            return 2 * math.sqrt(((rS + 1) * x - rS) / (x - rS))
+        return np.array([quad(of, 0.0, math.sqrt(x - 1), epsabs=1e-12, epsrel=1e-12, limit=200)[0]
+                         for x in np.atleast_1d(r)])
+    for p in (near, far):
+        ck.isometry(f"{name}, the equator, {p.id}", p)
+        ck.radius(f"{name}, the equator, {p.id}, rho = r", p, lambda r: r, size)
+        ck.form(f"{name}, the equator, {p.id}, the quadrature of its height", p, lambda r, s=p.sense: s * height(r), size)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(1.0), "$r = r_B$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_B$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_B$")
+    fig.legend("fill", "cover", "the equatorial plane at $t = 0$ and $y = 0$, which $r \\ge r_B$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$, and $6\\,r_B$")
+    fig.legend("line", "r2", "the same radii at $y = \\pi R_y$, the opposite side of the circle")
+    fig.legend("line", "horizon", "the bubble's equator $r = r_B$, where the two sides of the circle meet")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("equator", "The equator", "$r_B$", [surface], fig.done(),
+                      settings="$r_B = 1$, the unit of every length, and $r_S = 3r_B/4$, where $R_y = 4r_B$, on the "
+                               "plane of $r$ and $\\phi$ ($\\theta = \\pi/2$) at $y = 0$ and $y = \\pi R_y$.",
+                      stops=["Inside the bubble, where $r_S < r < r_B$, both $g_{rr}$ and $g_{yy}$ are negative: the "
+                             "chart describes no space there, and the surface ends on the bubble."]))
+    return views
+
+
 def hayward(ck, src):
     """Hayward's regular black hole at ell = 12m/(7 sqrt 7), where the horizons, the two positive
     roots of the published g^rr, are r_- = 6m/7 and r_+ = 12m/7. g_rr = 1/F with F = 1 - 2mr^2/
@@ -15852,6 +15975,7 @@ DRAWN = {
     "reissner_nordstrom_ads": reissner_nordstrom_ads,
     "topological_black_hole": topological_black_hole,
     "ads_soliton": ads_soliton,
+    "topological_star": topological_star,
     "siklos": siklos,
     "kundt_waves": kundt_waves,
     "schrodinger_spacetime": schrodinger_spacetime,
@@ -16708,6 +16832,26 @@ CAPTIONS = {
         "out to them, as on the static slice of anti-de Sitter space, and the surface climbs at "
         "$dZ/dr = \\sqrt{1 - 1/f}$ from level toward a light cone of Minkowski space, as the hyperboloid of "
         "anti-de Sitter space does. Both parts lie level at the circle, so they meet there with one tangent plane.",
+    ],
+    ("topological_star", "cigar"): [
+        "The surface of $\\rho$ and $\\psi$ of the star at one moment of $t$ and one point of the sphere "
+        "($r_S = 3r_B/4$), the circle of the fifth dimension against the distance from the bubble, drawn as a "
+        "surface in flat space with every distance along it the metric distance. The circle at the radius $r$ has "
+        "the circumference $2\\pi R_y\\sqrt{1 - r_B/r}$: it closes to a point on the bubble and widens toward a "
+        "cylinder of radius $R_y = 4r_B$ far away.",
+        "With the period $2\\pi R_y$ of $y$, $R_y = 2\\sqrt{r_B^3/(r_B - r_S)}$, the bubble is a smooth point of "
+        "the surface, as the origin of a plane is, and any other period makes it the apex of a cone. Far from "
+        "the bubble the cylinder is Kaluza and Klein's fifth dimension, a circle of one size at every point of "
+        "space.",
+    ],
+    ("topological_star", "equator"): [
+        "The equatorial plane of the star at the moment $t = 0$ ($\\theta = \\pi/2$, $r_S = 3r_B/4$) on two "
+        "opposite sides of the circle of the fifth dimension, $y = 0$ and $y = \\pi R_y$, joined along the "
+        "bubble's equator $r = r_B$. Each sheet climbs at $dz/dr = \\sqrt{g_{rr} - 1}$ with "
+        "$g_{rr} = (1 - r_S/r)^{-1}(1 - r_B/r)^{-1}$ and stands vertical on the bubble.",
+        "The circle $r = r_B$ is the smallest on the surface, and space ends there. A traveller who walks "
+        "inward along one sheet reaches it after a finite distance and walks out again along the other, half "
+        "way round the fifth dimension from where they set out.",
     ],
     ("ads_soliton", "tip"): [
         "The surface of $\\rho$ and $\\phi$ of the soliton at one moment of $t$ and one $x$ ($r_0 = L$), the circle "

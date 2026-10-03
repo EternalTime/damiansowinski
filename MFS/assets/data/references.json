@@ -1,5 +1,5 @@
 {
-  "version": "d71025e928e6b8da",
+  "version": "9840222205e17c0d",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -20129,6 +20129,178 @@
         "doi": "10.1103/PhysRevD.59.026005",
         "eprint": "arXiv:hep-th/9808079",
         "url": "https://doi.org/10.1103/PhysRevD.59.026005"
+      }
+    },
+    "bah2021": {
+      "type": "article",
+      "fields": {
+        "title": "Topological stars and black holes",
+        "author": "Bah, Ibrahima and Heidmann, Pierre",
+        "journal": "Physical Review Letters",
+        "volume": "126",
+        "number": "15",
+        "pages": "151101",
+        "year": "2021",
+        "doi": "10.1103/PhysRevLett.126.151101",
+        "eprint": "2011.08851",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.126.151101"
+      }
+    },
+    "bah2021weyl": {
+      "type": "article",
+      "fields": {
+        "title": "Topological stars, black holes and generalized charged {Weyl} solutions",
+        "author": "Bah, Ibrahima and Heidmann, Pierre",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2021",
+        "number": "9",
+        "pages": "147",
+        "year": "2021",
+        "doi": "10.1007/JHEP09(2021)147",
+        "eprint": "2012.13407",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP09(2021)147"
+      }
+    },
+    "bah2022solitons": {
+      "type": "article",
+      "fields": {
+        "title": "{Schwarzschild}-like topological solitons",
+        "author": "Bah, Ibrahima and Heidmann, Pierre and Weck, Peter",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "8",
+        "pages": "269",
+        "year": "2022",
+        "doi": "10.1007/JHEP08(2022)269",
+        "eprint": "2203.12625",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP08(2022)269"
+      }
+    },
+    "bah2022stability": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of topological solitons, and black string to bubble transition",
+        "author": "Bah, Ibrahima and Dey, Anindya and Heidmann, Pierre",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "4",
+        "pages": "168",
+        "year": "2022",
+        "doi": "10.1007/JHEP04(2022)168",
+        "eprint": "2112.11474",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP04(2022)168"
+      }
+    },
+    "stotyn2011": {
+      "type": "article",
+      "fields": {
+        "title": "Magnetic charge can locally stabilize {Kaluza-Klein} bubbles",
+        "author": "Stotyn, Sean and Mann, Robert B.",
+        "journal": "Physics Letters B",
+        "volume": "705",
+        "number": "3",
+        "pages": "269--272",
+        "year": "2011",
+        "doi": "10.1016/j.physletb.2011.10.015",
+        "eprint": "1105.1854",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2011.10.015"
+      }
+    },
+    "miyamoto2006": {
+      "type": "article",
+      "fields": {
+        "title": "New stable phase of non-uniform charged black strings",
+        "author": "Miyamoto, Umpei and Kudoh, Hideaki",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2006",
+        "number": "12",
+        "pages": "048",
+        "year": "2006",
+        "doi": "10.1088/1126-6708/2006/12/048",
+        "eprint": "gr-qc/0609046",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2006/12/048"
+      }
+    },
+    "bena2013": {
+      "type": "article",
+      "fields": {
+        "title": "Resolving the structure of black holes: philosophizing with a hammer",
+        "author": "Bena, Iosif and Warner, Nicholas P.",
+        "journal": "arXiv preprint arXiv:1311.4538",
+        "year": "2013",
+        "eprint": "1311.4538",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1311.4538"
+      }
+    },
+    "gibbons2014fuzzballs": {
+      "type": "article",
+      "fields": {
+        "title": "Global structure of five-dimensional fuzzballs",
+        "author": "Gibbons, G. W. and Warner, N. P.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "31",
+        "number": "2",
+        "pages": "025016",
+        "year": "2014",
+        "doi": "10.1088/0264-9381/31/2/025016",
+        "eprint": "1305.0957",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/31/2/025016"
+      }
+    },
+    "mathur2005": {
+      "type": "article",
+      "fields": {
+        "title": "The fuzzball proposal for black holes: an elementary review",
+        "author": "Mathur, Samir D.",
+        "journal": "Fortschritte der Physik",
+        "volume": "53",
+        "number": "7-8",
+        "pages": "793--827",
+        "year": "2005",
+        "doi": "10.1002/prop.200410203",
+        "eprint": "hep-th/0502050",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1002/prop.200410203"
+      }
+    },
+    "heidmann2023": {
+      "type": "article",
+      "fields": {
+        "title": "Cavity effect in the quasinormal mode spectrum of topological stars",
+        "author": "Heidmann, Pierre and Speeney, Nicholas and Berti, Emanuele and Bah, Ibrahima",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "2",
+        "pages": "024021",
+        "year": "2023",
+        "doi": "10.1103/PhysRevD.108.024021",
+        "eprint": "2305.14412",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.108.024021"
+      }
+    },
+    "dima2024": {
+      "type": "article",
+      "fields": {
+        "title": "Spectroscopy of magnetized black holes and topological stars",
+        "author": "Dima, Alexandru and Melis, Marco and Pani, Paolo",
+        "journal": "Physical Review D",
+        "volume": "110",
+        "number": "8",
+        "pages": "084067",
+        "year": "2024",
+        "doi": "10.1103/PhysRevD.110.084067",
+        "eprint": "2406.19327",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.110.084067"
       }
     },
     "gibbons1983": {

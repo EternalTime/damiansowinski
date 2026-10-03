@@ -458,6 +458,11 @@
       "id": "kerr_bertotti_robinson",
       "kind": "generalisation",
       "text": "Schwarzschild's hole set spinning in a magnetic field that is uniform far away. With no field and no spin it is Schwarzschild's metric, and with no spin alone its horizon moves outward as the field grows [podolsky2025]."
+    },
+    {
+      "id": "topological_star",
+      "kind": "dual",
+      "text": "A star of five dimensions with no horizon. Without its magnetic field it is Schwarzschild's metric with the time made into a circle, whose horizon has become a bubble where space ends [bah2021]."
     }
   ],
   "references": [
@@ -582,7 +587,8 @@
     "ernst1976c",
     "antoci2001",
     "basovnik2016",
-    "podolsky2025"
+    "podolsky2025",
+    "bah2021"
   ],
   "coordinates": [
     {

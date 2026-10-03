@@ -2128,6 +2128,69 @@ def _schrodinger():
     return [Mark(m, points=[(0.0, 0.0)])]
 
 
+def topological_star_smooth(r, rS, rB):
+    """The part of Bah and Heidmann's tortoise coordinate that is smooth across r_S:
+    sqrt(r (r - r_B)) + (r_B + 2 r_S) arsinh(sqrt(r/r_B - 1))."""
+    r = np.asarray(r, dtype=float)
+    u = np.sqrt(np.maximum(r - rB, 0.0))
+    return np.sqrt(r) * u + (rB + 2 * rS) * np.arcsinh(u / math.sqrt(rB))
+
+
+def topological_string_ratio(r, rS, rB):
+    """(a - b)/(a + b) with a = sqrt(r_S (r - r_B)) and b = sqrt((r_S - r_B) r), for the black
+    string r_S > r_B: positive outside the horizon r_S, negative inside it, -1 on the bubble, and
+    exp(2 kappa r_*) = exp(2 kappa smooth) |ratio| with kappa = sqrt(r_S - r_B)/(2 r_S^(3/2))."""
+    r = np.asarray(r, dtype=float)
+    a, b = np.sqrt(rS * np.maximum(r - rB, 0.0)), np.sqrt((rS - rB) * r)
+    return (a - b) / (a + b)
+
+
+def topological_star_rstar(r, rS, rB):
+    """Bah and Heidmann's tortoise coordinate from the bubble: the integral of
+    dr/((1 - r_S/r) sqrt(1 - r_B/r)) from r_B, which with u = sqrt(r - r_B) is the integral of
+    2 (u^2 + r_B)^(3/2) du/(u^2 + r_B - r_S),
+
+        sqrt(r (r - r_B)) + (r_B + 2 r_S) arsinh(sqrt(r/r_B - 1)) + 2 r_S^(3/2) A/sqrt|r_B - r_S|,
+
+    with A = arctan(sqrt(r_S (r - r_B)/((r_B - r_S) r))) for the star, r_B > r_S, where it is finite
+    on the bubble and grows as r + (r_S + r_B/2) ln r far away, and
+    A = ln|(sqrt(r_S (r - r_B)) - sqrt((r_S - r_B) r))/(sqrt(r_S (r - r_B)) + sqrt((r_S - r_B) r))|/2
+    for the black string, r_S > r_B, which diverges on the horizon r_S as ln|r - r_S|/(2 kappa)
+    with kappa = sqrt(r_S - r_B)/(2 r_S^(3/2)) and vanishes on the bubble behind it."""
+    r = np.asarray(r, dtype=float)
+    smooth = topological_star_smooth(r, rS, rB)
+    if rB > rS:
+        return smooth + 2 * rS ** 1.5 / math.sqrt(rB - rS) * np.arctan(
+            math.sqrt(rS) * np.sqrt(np.maximum(r - rB, 0.0)) / (math.sqrt(rB - rS) * np.sqrt(r)))
+    with np.errstate(divide="ignore"):
+        return smooth + rS ** 1.5 / math.sqrt(rS - rB) * np.log(np.abs(topological_string_ratio(r, rS, rB)))
+
+
+def extremal_string_rstar(rho, m=1.0):
+    """The tortoise coordinate of the extremal string in its isotropic radius, the primitive of
+    (1 + m/rho)^(3/2): sqrt(rho (rho + m)) + 3 m arsinh(sqrt(rho/m)) - 2 m sqrt(1 + m/rho), which
+    runs to minus infinity on the degenerate horizon rho = 0."""
+    rho = np.asarray(rho, dtype=float)
+    return np.sqrt(rho * (rho + m)) + 3 * m * np.arcsinh(np.sqrt(rho / m)) - 2 * m * np.sqrt(1 + m / rho)
+
+
+def _topological_star(chart):
+    """The star's moment t = 0 as its two embedding views read it, at r_B = 1 and r_S = 3/4: the
+    cigar in the chart about the bubble, along rho from the bubble, and the equator in Bah and
+    Heidmann's chart, along r from r_B, with r = r_B + (r_B - r_S) rho^2/4 = 1 + rho^2/16 between
+    them. On the line through the bubble both run on to its other side, psi + pi."""
+    marks = []
+    for m in moments("topological_star"):
+        if m.view["id"] == "cigar":
+            lo, hi = m.reach("bubble", "\\rho")
+            ends = (lo, hi) if chart == "bubble" else (1 + lo ** 2 / 16, 1 + hi ** 2 / 16)
+        else:
+            lo, hi = m.reach("bah_heidmann", "r")
+            ends = (4 * math.sqrt(lo - 1), 4 * math.sqrt(hi - 1)) if chart == "bubble" else (lo, hi)
+        marks.append(Mark(m, across(0.0, *ends) if chart == "bubble" else along(0.0, *ends)))
+    return marks
+
+
 def _c_metric(y):
     """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
     axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
@@ -2420,6 +2483,8 @@ FLAT = {
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _sads(-1),
     ("schwarzschild_ads", "eddington_finkelstein_outgoing", "chart"): lambda: _sads(-1),
+    ("topological_star", "bah_heidmann", "radial"): lambda: _topological_star("bah_heidmann"),
+    ("topological_star", "bubble", "through"): lambda: _topological_star("bubble"),
     ("ads_soliton", "horowitz_myers", "radial"): lambda: _soliton("horowitz_myers"),
     ("ads_soliton", "poincare", "tz"): lambda: _soliton("poincare"),
     ("ads_soliton", "polar", "radial"): lambda: _soliton("polar"),
@@ -3328,6 +3393,12 @@ HIDDEN = {
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_outgoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
+    ("topological_star", "eddington_finkelstein_ingoing", "finkelstein"): "the black string, r_S > r_B, another spacetime than the star whose moment is embedded",
+    ("topological_star", "extremal", "radial"): "the extremal string, r_S = r_B, another spacetime than the star whose moment is embedded",
+    ("topological_star", "einstein", "radial"): "the Einstein metric of four dimensions, another spacetime than the star of five whose moment is embedded",
+    ("topological_star", "black_string"): "the black string, r_S > r_B, another spacetime than the star whose moment is embedded",
+    ("topological_star", "einstein"): "the Einstein metric of four dimensions, another spacetime than the star of five whose moment is embedded",
+    ("topological_star", "extremal"): "the extremal string, r_S = r_B, another spacetime than the star whose moment is embedded",
     ("ads_soliton", "five_dimensional", "radial"): "the soliton of five dimensions, another spacetime than the soliton of four whose moment is embedded",
     ("ads_soliton", "three_dimensional", "radial"): "the soliton of three dimensions, which is anti-de Sitter space, another spacetime than the soliton of four whose moment is embedded",
     **{("topological_black_hole", system, "negative"): "the hyperbolic hole of negative mass, another spacetime than the flat hole and the hyperbolic hole without mass whose moments are embedded"
