@@ -555,6 +555,18 @@ Taub-NUT with an electric charge, the solution of the Einstein-Maxwell equations
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(du - 2l\left(1 - \cos\theta\right)d\phi\right)^2 - 2\,dr\left(du - 2l\left(1 - \cos\theta\right)d\phi\right) + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Brill's Universe: coordinates $(\tau, \psi, \theta, \phi)$, $$ds^2 = -\dfrac{\Sigma}{U}d\tau^2 + \dfrac{4l^2U}{\Sigma}\left(d\psi + \cos\theta\,d\phi\right)^2 + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Bubbling Anti-de Sitter Space
+
+Every smooth solution of type IIB supergravity in ten dimensions that keeps half of its supersymmetry and the symmetry of two 3-spheres, each one fixed by colouring a plane black and white. A black disc is anti-de Sitter space of five dimensions times a 5-sphere, a black half plane is the maximally supersymmetric plane wave, and any other pattern of droplets is a new geometry with no horizon. Hai Lin, Oleg Lunin, and Juan Maldacena found them in 2004, with the plane the phase space of free fermions in the dual gauge theory.
+
+- id: `bubbling_ads`
+- tags: stationary, ten-dimensional, higher dimensions, string theory, supergravity, supersymmetric, anti-de Sitter, AdS/CFT, holography, D3-brane, brane, plane wave, pp-wave, superposition, topology, no horizon, no singularity, regular, exact solution, Lorentzian, idealized model
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bubbling_ads.json
+- chart Concentric droplets: coordinates $(t, r, \phi, y, \alpha, \beta, \gamma, \kappa, \xi, \omega)$, $$ds^2 = -2y\cosh G\left(dt + V\,d\phi\right)^2 + \dfrac{dr^2 + r^2d\phi^2 + dy^2}{2y\cosh G} + y\,e^{G}\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\,d\gamma^2\right)\right) + y\,e^{-G}\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\,d\omega^2\right)\right)$$
+- chart Global (the disc): coordinates $(t, \rho, \alpha, \beta, \gamma, \theta, \psi, \kappa, \xi, \omega)$, $$ds^2 = L^2\left(-\cosh^2\rho\,dt^2 + d\rho^2 + \sinh^2\rho\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\,d\gamma^2\right)\right) + d\theta^2 + \cos^2\theta\,d\psi^2 + \sin^2\theta\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\,d\omega^2\right)\right)\right)$$
+- chart Plane Wave (the half plane): coordinates $(t, x, r_1, \alpha, \beta, \gamma, r_2, \kappa, \xi, \omega)$, $$ds^2 = -2\,dt\,dx - \left(r_1^2 + r_2^2\right)dt^2 + dr_1^2 + r_1^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\,d\gamma^2\right)\right) + dr_2^2 + r_2^2\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\,d\omega^2\right)\right)$$
+
 ### C-Metric Accelerating Black Holes
 
 An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.

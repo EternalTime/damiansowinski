@@ -82,6 +82,11 @@
       "id": "freund_rubin",
       "kind": "family",
       "text": "The sister in eleven dimensions: anti-de Sitter space of four dimensions times a 7-sphere, the throat of a stack of membranes, with the sphere twice the radius [gibbons1993, maldacena1998]."
+    },
+    {
+      "id": "bubbling_ads",
+      "kind": "family",
+      "text": "Lin, Lunin, and Maldacena's droplets. The throat is a black disc on their plane, and small droplets spread far apart are stacks of three-branes pulled apart from each other [lin2004]."
     }
   ],
   "references": [
@@ -99,7 +104,8 @@
     "gubser1996",
     "klebanov1997",
     "gubser1998",
-    "witten1998"
+    "witten1998",
+    "lin2004"
   ],
   "coordinates": [
     {

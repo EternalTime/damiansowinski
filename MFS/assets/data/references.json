@@ -1,5 +1,5 @@
 {
-  "version": "dc874f67ecdf8670",
+  "version": "b3146c64385aefcf",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -29720,6 +29720,102 @@
         "eprint": "0906.3559",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/0264-9381/27/10/105001"
+      }
+    },
+    "lin2004": {
+      "type": "article",
+      "fields": {
+        "title": "Bubbling AdS space and 1/2 BPS geometries",
+        "author": "Lin, Hai and Lunin, Oleg and Maldacena, Juan",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2004",
+        "number": "10",
+        "pages": "025",
+        "year": "2004",
+        "doi": "10.1088/1126-6708/2004/10/025",
+        "eprint": "hep-th/0409174",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2004/10/025"
+      }
+    },
+    "berenstein2004": {
+      "type": "article",
+      "fields": {
+        "title": "A toy model for the AdS/CFT correspondence",
+        "author": "Berenstein, David",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2004",
+        "number": "07",
+        "pages": "018",
+        "year": "2004",
+        "doi": "10.1088/1126-6708/2004/07/018",
+        "eprint": "hep-th/0403110",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2004/07/018"
+      }
+    },
+    "corley2002": {
+      "type": "article",
+      "fields": {
+        "title": "Exact correlators of giant gravitons from dual $N = 4$ SYM theory",
+        "author": "Corley, Steve and Jevicki, Antal and Ramgoolam, Sanjaye",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "5",
+        "number": "4",
+        "pages": "809--839",
+        "year": "2001",
+        "doi": "10.4310/ATMP.2001.v5.n4.a6",
+        "eprint": "hep-th/0111222",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.4310/ATMP.2001.v5.n4.a6"
+      }
+    },
+    "myers2001": {
+      "type": "article",
+      "fields": {
+        "title": "Superstars and giant gravitons",
+        "author": "Myers, Robert C. and Tafjord, Øyvind",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2001",
+        "number": "11",
+        "pages": "009",
+        "year": "2001",
+        "doi": "10.1088/1126-6708/2001/11/009",
+        "eprint": "hep-th/0109127",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2001/11/009"
+      }
+    },
+    "mcgreevy2000": {
+      "type": "article",
+      "fields": {
+        "title": "Invasion of the giant gravitons from anti-de Sitter space",
+        "author": "McGreevy, John and Susskind, Leonard and Toumbas, Nicolaos",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "06",
+        "pages": "008",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/06/008",
+        "eprint": "hep-th/0003075",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/06/008"
+      }
+    },
+    "blau2002": {
+      "type": "article",
+      "fields": {
+        "title": "A new maximally supersymmetric background of IIB superstring theory",
+        "author": "Blau, Matthias and Figueroa-O'Farrill, José and Hull, Christopher and Papadopoulos, George",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2002",
+        "number": "01",
+        "pages": "047",
+        "year": "2002",
+        "doi": "10.1088/1126-6708/2002/01/047",
+        "eprint": "hep-th/0110242",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2002/01/047"
       }
     }
   }

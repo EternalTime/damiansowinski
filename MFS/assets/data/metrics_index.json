@@ -98,7 +98,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "f9c8ac2b6ad5cfa1",
+    "version": "c12fa6d3cace8fcc",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -908,6 +908,37 @@
     "diagrams": "a6411ef1f1dca001",
     "conformal": "139a18a90eb98719",
     "embedding": "65bf7e933e8622ef"
+  },
+  {
+    "id": "bubbling_ads",
+    "name": "Bubbling Anti-de Sitter",
+    "tags": [
+      "stationary",
+      "ten-dimensional",
+      "higher dimensions",
+      "string theory",
+      "supergravity",
+      "supersymmetric",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "holography",
+      "D3-brane",
+      "brane",
+      "plane wave",
+      "pp-wave",
+      "superposition",
+      "topology",
+      "no horizon",
+      "no singularity",
+      "regular",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "d15b7b17d1affb6c",
+    "diagrams": "bdaefdbb18d751c9",
+    "conformal": "b92adf8ac5f81806",
+    "embedding": "eabc5caf8eb84bcd"
   },
   {
     "id": "c_metric",
@@ -1773,7 +1804,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "81e903872ecb6a31",
+    "version": "374740dcac0bb454",
     "diagrams": "5e0c638643e61027",
     "conformal": "fdaf25d52bb0d79a",
     "embedding": "c496b535987be512"
@@ -4004,7 +4035,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f174753a07eb83b3",
+    "version": "ada20a0b36952f5f",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -4963,7 +4994,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "d12f88e92ae5d458",
+    "version": "d0fbbe2d700347ed",
     "diagrams": "e574af654990108c",
     "conformal": "631507c8e742808c",
     "embedding": "7006f557a81541c6"
