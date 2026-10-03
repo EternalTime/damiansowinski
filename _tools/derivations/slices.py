@@ -1568,6 +1568,30 @@ def _btz_multi(system):
     return [Mark(m, along(0.0, horizon, horizon * (1 + hi ** 2) / (1 - hi ** 2)))]
 
 
+BTZ_SHOCK_MOMENT = "$u + v = -\\alpha/2$"
+
+
+def _btz_shock(system):
+    """The moment u + v = -alpha/2 of Shenker and Stanford's Kruskal chart at l = R = 1 and alpha = 1,
+    over the embedding's reach in u. In the Kruskal chart it is that line; in the discontinuous
+    chart, V = v + alpha Theta(u), it is V = -1/2 - U ahead of the shock and V = 1/2 - U behind
+    it, broken at U = 0. In the exterior chart, ahead of the shock, u < -1/2 and v = -1/2 - u > 0,
+    it is r = (1 - uv)/(1 + uv) and ct = ln(v/(-u))/2, the map of Shenker and Stanford's (10), running
+    off toward the horizon as u tends to -1/2. Behind the shock the moment's part outside the left
+    horizon is the same curve, since u(v + alpha) is alpha|u|/2 - u^2 on both sides."""
+    m, = moments("btz_shock_wave", label=BTZ_SHOCK_MOMENT)
+    lo, hi = m.reach("kruskal", "u")
+    if system == "kruskal":
+        u = np.linspace(lo, hi, N)
+        return [Mark(m, [np.column_stack([u, -0.5 - u])])]
+    if system == "discontinuous":
+        ahead, behind = np.linspace(lo, 0.0, N), np.linspace(0.0, hi, N)
+        return [Mark(m, [np.column_stack([ahead, -0.5 - ahead]), np.column_stack([behind, 0.5 - behind])])]
+    u = -near(0.5, -lo)
+    v = -0.5 - u
+    return [Mark(m, [np.column_stack([np.log(v / -u) / 2, (1 - u * v) / (1 + u * v)])])]
+
+
 def btz_rstar(r):
     """The BTZ hole's r_* = (1/2) ln|(r - 1)/(r + 1)| at M = 1, l = 1, vanishing as r -> infinity,
     which fixes the Eddington-Finkelstein charts' v = ct + r_* and u = ct - r_*."""
@@ -2498,6 +2522,8 @@ FLAT = {
     ("bondi_sachs", "compactified", "equator"): _bondi_sphere(inverse=True),
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),
+    **{("btz_shock_wave", system, view): (lambda system=system: _btz_shock(system))
+       for system, view in (("kruskal", "plane"), ("discontinuous", "plane"), ("exterior", "radial"))},
     ("draining_bathtub", "laboratory", "drain"): lambda: _bathtub("laboratory"),
     ("draining_bathtub", "kerr_like", "exterior"): lambda: _bathtub("kerr_like"),
     ("btz_multi_holes_wormholes", "sausage", "fold"): lambda: _btz_multi("sausage"),

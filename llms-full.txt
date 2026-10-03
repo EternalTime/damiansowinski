@@ -2012,6 +2012,18 @@ A universe filled with radiation and arranged around an axis, which contracts, i
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/senovilla.json
 - chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = \cosh^4(act)\cosh^2(3a\rho)\left(-c^2dt^2 + d\rho^2\right) + \dfrac{\cosh^4(act)\sinh^2(3a\rho)}{9a^2\cosh^{2/3}(3a\rho)}d\phi^2 + \dfrac{dz^2}{\cosh^2(act)\cosh^{2/3}(3a\rho)}$$
 
+### Shenker-Stanford Shock Wave in the BTZ Black Hole
+
+The eternal black hole of Bañados, Teitelboim, and Zanelli with a shock wave lying on its horizon, the field of a few quanta thrown in from one side long ago. The two halves of the black hole are joined along the horizon with a shift $\alpha$ that grows exponentially with the time since the quanta were let go, so the wormhole between the two outsides grows longer. It is the geometry of the butterfly effect in holography.
+
+- id: `btz_shock_wave`
+- tags: shock wave, impulsive wave, null shell, null source, black hole, BTZ black hole, anti-de Sitter, negative cosmological constant, cosmological constant, wormhole, Einstein-Rosen bridge, horizon, event horizon, AdS/CFT, holography, thermofield double, butterfly effect, scrambling, quantum chaos, circularly symmetric, 2+1 dimensional gravity, exact solution, Lorentzian, Einstein equations, idealized model, conformally flat, three-dimensional
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/btz_shock_wave.json
+- chart Kruskal: coordinates $(u, v, \phi)$, $$ds^2 = \dfrac{-4\ell^2\,du\,dv + R^2\left(1 - u\left(v + \alpha\Theta\right)\right)^2d\phi^2}{\left(1 + u\left(v + \alpha\Theta\right)\right)^2}$$
+- chart Discontinuous Kruskal: coordinates $(U, V, \phi)$, $$ds^2 = \dfrac{-4\ell^2\,dU\,dV + 4\ell^2\alpha\,\delta(U)\,dU^2 + R^2\left(1 - UV\right)^2d\phi^2}{\left(1 + UV\right)^2}$$
+- chart Exterior: coordinates $(t, r, \phi)$, $$ds^2 = -\dfrac{r^2 - R^2}{\ell^2}c^2dt^2 + \dfrac{\ell^2\,dr^2}{r^2 - R^2} + r^2d\phi^2$$
+
 ### Siklos Waves and the Kaigorodov Spacetime
 
 Exact gravitational waves crossing anti-de Sitter space: a pp-wave multiplied by anti-de Sitter's conformal factor, with fronts that are hyperbolic planes. The simplest, Kaigorodov's spacetime, is homogeneous, and its singularity shows in no curvature scalar.

@@ -19,7 +19,7 @@ cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_b
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, freund_rubin, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
-jackiw_teitelboim_black_hole, unruh_acoustic_hole, vuorio_warped_ads and interstellar_wormhole, and Godel's
+jackiw_teitelboim_black_hole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole and btz_shock_wave, and Godel's
 cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
@@ -46,6 +46,7 @@ brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_unive
 kerr_melvin.md, einstein_dirac_maxwell_wormhole.md, jackiw_teitelboim_black_hole.md and interstellar_wormhole.md
 beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
+btz_shock_wave.md beside this file records the charts of the shock wave in the BTZ black hole.
 """
 import argparse
 import fcntl
@@ -30147,6 +30148,188 @@ def einstein_dirac_maxwell_wormhole_check(chart, system):
 
 
 CHARTS["einstein_dirac_maxwell_wormhole"] = [lambda s=s: einstein_dirac_maxwell_wormhole(s) for s in EDM_CHARTS]
+# -- The shock wave in the BTZ black hole --------------------------------------------------
+
+BTZ_SHOCK_CHARTS = ["kruskal", "discontinuous", "exterior"]
+BTZ_SHOCK_STEP = "\\Theta = \\tfrac{1}{2}\\left(1 + \\mathrm{sgn}(u)\\right)"
+
+
+def btz_shock_charts():
+    """The three charts of Shenker and Stanford's shock wave on the horizon of the eternal black
+    hole of Banados, Teitelboim and Zanelli without rotation, each with its coordinates,
+    parameters, domains and line elements; btz_shock_wave.md beside this file derives each.
+
+    kruskal: Shenker and Stanford's (14), the black hole's Kruskal chart (8) on either side of
+    the shock u = 0 with v shifted to v + alpha behind it, written with the step Theta(u).
+    discontinuous: their (15), in U = u and V = v + alpha Theta(u), the black hole's chart with
+    4 l^2 alpha delta(U) dU^2 added to the numerator, the form of Dray and 't Hooft.
+    exterior: their (6) and (7) without rotation, R^2 = 8 G M l^2, on either outside."""
+    shifted = "u\\left(v + \\alpha\\Theta\\right)"
+    return {
+        "kruskal": {
+            "name": "Kruskal", "coords": ["u", "v", "\\phi"], "parameters": ["\\ell", "R", "\\alpha", BTZ_SHOCK_STEP],
+            "domains": ["u \\in (-\\infty, \\infty)", "v \\in (-\\infty, \\infty)", "\\phi \\in [0, 2\\pi)",
+                        "-1 < " + shifted + " < 1", "u = 0 \\;\\text{(the shock)}"],
+            "line": ("ds^2 = \\dfrac{-4\\ell^2\\,du\\,dv + R^2\\left(1 - " + shifted + "\\right)^2d\\phi^2}"
+                     "{\\left(1 + " + shifted + "\\right)^2}")},
+        "discontinuous": {
+            "name": "Discontinuous Kruskal", "coords": ["U", "V", "\\phi"], "parameters": ["\\ell", "R", "\\alpha"],
+            "domains": ["U \\in (-\\infty, \\infty)", "V \\in (-\\infty, \\infty)", "\\phi \\in [0, 2\\pi)",
+                        "-1 < UV < 1", "U = 0 \\;\\text{(the shock)}"],
+            "line": ("ds^2 = \\dfrac{-4\\ell^2\\,dU\\,dV + 4\\ell^2\\alpha\\,\\delta(U)\\,dU^2"
+                     " + R^2\\left(1 - UV\\right)^2d\\phi^2}{\\left(1 + UV\\right)^2}")},
+        "exterior": {
+            "name": "Exterior", "coords": ["t", "r", "\\phi"], "parameters": ["\\ell", "R"],
+            "domains": ["t \\in (-\\infty, \\infty)", "r \\in (R, \\infty)", "\\phi \\in [0, 2\\pi)"],
+            "line": ("ds^2 = -\\dfrac{r^2 - R^2}{\\ell^2}c^2dt^2 + \\dfrac{\\ell^2\\,dr^2}{r^2 - R^2} + r^2d\\phi^2"),
+            "chart": ("ds^2 = -\\dfrac{r^2 - R^2}{\\ell^2}dt^2 + \\dfrac{\\ell^2\\,dr^2}{r^2 - R^2} + r^2d\\phi^2"),
+            "time": "t"},
+    }
+
+
+def btz_shock_pretty(value):
+    """A value of the discontinuous chart with the black hole's smooth part and the coefficient of
+    each delta factored on their own, so that the shock reads as a term beside the black hole."""
+    value = sp.sympify(value)
+    deltas = sorted(value.atoms(sp.DiracDelta), key=sp.default_sort_key)
+    if not deltas:
+        return sp.factor(value)
+    marks = {d: sp.Dummy(f"d{i}") for i, d in enumerate(deltas)}
+    numerator, denominator = sp.fraction(sp.together(value.xreplace(marks)))
+    poly = sp.Poly(sp.expand(numerator), *marks.values())
+    back = {m: d for d, m in marks.items()}
+    out = sp.Integer(0)
+    for monomial, coefficient in poly.terms():
+        out += sp.factor(coefficient / denominator) * sp.Mul(
+            *[g ** k for g, k in zip(poly.gens, monomial)]).xreplace(back)
+    return out
+
+
+def btz_shock_shifted(u, v, alpha):
+    """A `pretty` for the Kruskal chart, and the placeholders it prints with, as (pretty, overrides).
+
+    The checker hands every value back in u, v and sgn(u), with a delta of u where the first
+    derivatives of the metric jump. Ahead of the shock, sgn(u) = -1, every value is the black
+    hole's in u and v, and behind it, sgn(u) = 1, the same function of u and v + alpha, which is
+    checked; so the value is written once, ahead of the shock, with v + alpha Theta for v, as the
+    line element is written, and the delta's term closes it."""
+    W, D = sp.Symbol("_shifted"), sp.Symbol("_delta" + u.name)
+    overrides = {W: "\\left(v + \\alpha\\Theta\\right)", D: "\\delta(" + cp.tex_name(u.name) + ")"}
+    s = sp.sign(u)
+
+    def pretty(value):
+        value = sp.sympify(value).replace(lambda e: isinstance(e, sp.Abs) and e.args[0] == u, lambda e: u * s)
+        value = value.xreplace({sp.DiracDelta(u): D})
+        impulse, smooth = sp.diff(value, D), value.subs(D, 0)
+        if impulse.has(D) or sp.simplify(value - smooth - impulse * D) != 0:
+            raise ValueError(f"{value} is not linear in the delta of {u}")
+        ahead, behind = (sp.together(smooth.subs(s, k)) for k in (-1, 1))
+        if sp.simplify(behind - ahead.subs(v, v + alpha)) != 0:
+            raise ValueError(f"{value} behind the shock is not its value ahead of it at v + alpha")
+        impulse = sp.simplify(impulse.subs(s, 1))
+        if impulse.has(u):
+            raise ValueError(f"the delta of {value} multiplies a function of {u}")
+        return sp.factor(ahead).subs(v, W) + D * sp.factor(impulse)
+    return pretty, overrides
+
+
+def btz_shock_squares(value):
+    """A value of the exterior chart factored, with (r + R)(r - R) written r^2 - R^2."""
+    numerator, denominator = sp.fraction(sp.factor(value))
+    return cp.merge_squares(numerator) / cp.merge_squares(denominator)
+
+
+def btz_shock_wave(system):
+    """Shenker and Stanford's shock wave in the black hole of Banados, Teitelboim and Zanelli, in
+    the chart named; btz_shock_charts gives each and btz_shock_check holds each to the others and
+    to Shenker and Stanford's stress tensor (16)."""
+    chart = btz_shock_charts()[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    ell, R = probe.parameters["ell"], probe.parameters["R"]
+    x = [probe.symbol[name] for name in chart["coords"]]
+    spec = {
+        "metric_id": "btz_shock_wave",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line"]},
+        "chart_line_element": chart.get("chart", chart["line"]),
+        "ricci_scalar": "-\\dfrac{6}{\\ell^2}", "kretschmann": "\\dfrac{12}{\\ell^4}",
+        "check": lambda built: btz_shock_check(built, system),
+    }
+    if system == "kruskal":
+        pretty, overrides = btz_shock_shifted(x[0], x[1], probe.parameters["alpha"])
+        shifted, delta = overrides
+        spec.update({
+            "pretty": pretty, "bracketed": pretty,
+            "printer": {"lead": [x[0], shifted, x[1], R, ell], "last": [delta], "overrides": overrides,
+                        "flip": False},
+            # The denominator is set as the line element sets it, and so is the square in the numerator.
+            "rewrite": [("\\left(u\\left(v + \\alpha\\Theta\\right) + 1\\right)",
+                         "\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)"),
+                        ("\\left(u\\left(v + \\alpha\\Theta\\right) - 1\\right)^2",
+                         "\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2")],
+        })
+    elif system == "discontinuous":
+        spec.update({"pretty": btz_shock_pretty, "bracketed": btz_shock_pretty,
+                     "printer": {"lead": [x[0], x[1], probe.parameters["alpha"], R, ell], "flip": False,
+                                 "last": [sp.DiracDelta]},
+                     "rewrite": [("U\\,V", "UV"), ("\\left(UV + 1\\right)", "\\left(1 + UV\\right)"),
+                                 ("\\left(UV - 1\\right)^2", "\\left(1 - UV\\right)^2")]})
+    else:
+        spec.update({"pretty": btz_shock_squares, "printer": {"lead": [x[1], R, ell]}, "time": chart["time"]})
+    return spec
+
+
+def btz_shock_check(chart, system):
+    """Each chart is Shenker and Stanford's spacetime.
+
+    The discontinuous chart is the black hole's Kruskal chart (8) off the shock, and its Ricci
+    tensor is -(2/l^2) g plus 2 alpha delta(U) in the slot UU, which with Lambda = -1/l^2 is their
+    (16), T_UU = alpha delta(U)/(4 pi G). The Kruskal chart is the discontinuous one pulled back
+    along U = u, V = v + alpha Theta(u): on either side of u = 0 its metric is the black hole's in
+    u and v ahead of the shock and in u and v + alpha behind it, and its Ricci tensor carries the
+    same 2 alpha delta(u). The exterior chart is the Kruskal chart ahead of the shock pulled back
+    along u = -sqrt((r - R)/(r + R)) e^{-Rct/l^2}, v = sqrt((r - R)/(r + R)) e^{Rct/l^2}, their (10)."""
+    reader = chart.reader
+    ell, R = reader.parameters["ell"], reader.parameters["R"]
+    g = chart.geo.g
+    name = f"btz_shock_wave {system}"
+
+    def btz(a, b):
+        """The black hole's Kruskal metric (8) in the null coordinates a and b."""
+        return sp.Matrix([[0, -2 * ell ** 2 / (1 + a * b) ** 2, 0], [-2 * ell ** 2 / (1 + a * b) ** 2, 0, 0],
+                          [0, 0, R ** 2 * (1 - a * b) ** 2 / (1 + a * b) ** 2]])
+
+    ricci = chart.geo.ricci_ll()
+    if system == "exterior":
+        t, r, _ = chart.symbols
+        root = sp.sqrt((r - R) / (r + R))
+        u, v = -root * sp.exp(-R * t / ell ** 2), root * sp.exp(R * t / ell ** 2)
+        e = sp.Matrix([u, v, chart.symbols[2]]).jacobian(chart.symbols)
+        pulled = e.T * btz(u, v) * e
+        if any(sp.simplify(pulled[i, j] - g[i, j]) != 0 for i in range(3) for j in range(3)):
+            raise AssertionError(f"{name}: not the black hole's Kruskal chart pulled back")
+        if any(vm.norm(ricci[i][j] + 2 * g[i, j] / ell ** 2) != 0 for i in range(3) for j in range(3)):
+            raise AssertionError(f"{name}: the Ricci tensor is not -(2/l^2) g")
+        return
+    a, b = chart.symbols[:2]
+    alpha = reader.parameters["alpha"]
+    if system == "discontinuous":
+        off = g.applyfunc(lambda e: vm.off_support(e, a))
+        if vm.norm(off - btz(a, b)) != sp.zeros(3, 3):
+            raise AssertionError(f"{name}: off the shock the chart is not the black hole's")
+    else:
+        s = sp.sign(a)
+        ahead, behind = (g.applyfunc(lambda e: e.subs(s, k)) for k in (-1, 1))
+        if vm.norm(ahead - btz(a, b)) != sp.zeros(3, 3) or vm.norm(behind - btz(a, b + alpha)) != sp.zeros(3, 3):
+            raise AssertionError(f"{name}: the two sides are not the black hole's, shifted by alpha behind the shock")
+    for i in range(3):
+        for j in range(3):
+            source = 2 * alpha * sp.DiracDelta(a) if (i, j) == (0, 0) else 0
+            if vm.norm(ricci[i][j] + 2 * g[i, j] / ell ** 2 - source) != 0:
+                raise AssertionError(f"{name}: R + (2/l^2) g is not Shenker and Stanford's shell in slot {i}{j}")
+
+
+CHARTS["btz_shock_wave"] = [lambda s=s: btz_shock_wave(s) for s in BTZ_SHOCK_CHARTS]
 
 
 # -- Vuorio's universe and warped anti-de Sitter space --------------------------------------

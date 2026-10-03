@@ -2653,6 +2653,15 @@ BTZ_MULTI_INPUT = ("Anti-de Sitter space between the four totally geodesic surfa
                    "exterior and a torus inside, of mass $M = (2\\,\\mathrm{arccosh}\\,2/\\pi)^2 \\approx 0.703$, "
                    "and adjacent surfaces glued make three black holes.")
 
+# The shock wave in the BTZ black hole as its diagrams draw it, at l = R = 1 and alpha = 1.
+BTZ_SHOCK = {"ell": 1, "R": 1, "alpha": 1}
+BTZ_SHOCK_WHERE = "(1 - u*(v + (1 + sign(u))/2))*(1 + u*(v + (1 + sign(u))/2))"
+BTZ_SHOCK_FAMILY = 0
+BTZ_SHOCK_RIGHT = "the past horizon of the right outside, $v = 0$"
+BTZ_SHOCK_LEFT = "the future horizon of the left outside, $v = -\\alpha$"
+BTZ_SHOCK_INPUT = ("$\\delta(U)$ drawn as the pulse $e^{-U^2/w^2}/(w\\sqrt{\\pi})$ with $w = 0.05$, a shell of "
+                   "null particles of that thickness in $U$ carrying the same shift $\\alpha$.")
+
 DIAGRAMS = [
     *[Diagram("hotta_tanaka", "conformally_flat", view, f"$\\theta = {tex}$", ("\\eta", "\\rho"), (0, 4, -4.3, -0.3),
               "$\\rho/a$", "$\\eta/a$", HT, {"theta": theta, "phi": "0"}, tau="eta", delta=AS_PULSE, step=0.0005,
@@ -3889,6 +3898,23 @@ DIAGRAMS = [
             "$r/r_0$", "$ct/r_0$", {"r_0": 1}, EQUATOR),
     Diagram("unruh_acoustic_hole", "unruh", "exterior", "$\\tau$ and $r$", ("\\tau", "r"), (1, 5, -2.5, 1.5),
             "$r/r_0$", "$c\\tau/r_0$", {"r_0": 1}, EQUATOR, tau="tau"),
+    # Shenker and Stanford's shock wave in the BTZ black hole at l = R = 1 and alpha = 1: the plane of
+    # u and v of the Kruskal chart, where no ray is moved by the shock and the region behind it is
+    # the black hole's moved by -alpha along v; the plane of U and V, where the region behind it is
+    # the black hole's own and each ray moving left jumps by alpha in V, the delta drawn as a pulse;
+    # and the plane of t and r of either outside.
+    Diagram("btz_shock_wave", "kruskal", "plane", "$u$ and $v$", ("u", "v"), (-2.25, 1.75, -2, 2),
+            "$(v - u)/2$", "$(u + v)/2$", BTZ_SHOCK, {"phi": "0"}, to_display=NULL_TO_TR, tau="u + v",
+            families=SIDEWAYS, where=BTZ_SHOCK_WHERE,
+            lines=(("shell", "x0", "0", "the shock, $u = 0$"),),
+            marked=(("event", {"x0": "0", "r": "0"}, BTZ_SHOCK_FAMILY, BTZ_SHOCK_RIGHT, "past"),
+                    ("event", {"x0": "0", "r": "-1"}, BTZ_SHOCK_FAMILY, BTZ_SHOCK_LEFT, "future"))),
+    Diagram("btz_shock_wave", "discontinuous", "plane", "$U$ and $V$", ("U", "V"), (-1.6, 1.6, -1.6, 1.6),
+            "$(V - U)/2$", "$(U + V)/2$", BTZ_SHOCK, {"phi": "0"}, to_display=NULL_TO_TR, tau="U + V",
+            families=SIDEWAYS, delta=AS_PULSE, step=0.0005, where="(1 - U*V)*(1 + U*V)",
+            lines=(("shell", "x0", "0", "the shock, $U = 0$"),), input=BTZ_SHOCK_INPUT),
+    Diagram("btz_shock_wave", "exterior", "radial", "$t$ and $r$", ("t", "r"), (0.5, 3.5, -1.5, 1.5),
+            "$r/\\ell$", "$ct/\\ell$", {"ell": 1, "R": 1}, {"phi": "0"}, where="r - 1", edge_horizon=True),
     Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
     Diagram("bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
@@ -9062,6 +9088,33 @@ CAPTIONS = {
         "as in anti-de Sitter space.",
         "Out here the spacetime is the exterior of a Bañados-Teitelboim-Zanelli hole of the same mass. The "
         "static symmetry along $t$ holds in this region alone.",
+    ],
+    ("btz_shock_wave", "kruskal", "plane"): [
+        "The plane of $u$ and $v$ ($\\phi = 0$) at $R = \\ell$ and $\\alpha = 1$, the same at every $\\phi$, drawn "
+        "with $(v - u)/2$ across and $(u + v)/2$ up. Only $g_{uv}$ is nonzero on it, so the light rays are the lines "
+        "$u = $ const and $v = $ const, at 45°, and the shock is the line $u = 0$. Ahead of the shock, where "
+        "$u < 0$, infinity is the hyperbola $uv = -1$ and the singularity $r = 0$ is $uv = 1$, and behind it both "
+        "are the same hyperbolas with $v$ moved by $-\\alpha$.",
+        "The past horizon of the right outside, $v = 0$, and the future horizon of the left outside, "
+        "$v = -\\alpha$, miss each other by $\\alpha$ [shenker2014]. No Christoffel symbol turns a ray out of the "
+        "plane, so every curve drawn is a null geodesic.",
+    ],
+    ("btz_shock_wave", "discontinuous", "plane"): [
+        "The plane of $U$ and $V$ ($\\phi = 0$) at $R = \\ell$ and $\\alpha = 1$, the same at every $\\phi$, "
+        "drawn with $(V - U)/2$ across and $(U + V)/2$ up. Off the shock $U = 0$ the metric on this plane is the "
+        "black hole's, $-4\\ell^2\\,dU\\,dV/(1 + UV)^2$, with infinity on $UV = -1$ and the singularity $r = 0$ "
+        "on $UV = 1$, and light runs at 45°. The rays moving right keep their $U$ and run beside the shock. Each "
+        "ray moving left crosses it and comes out with $V$ larger by $\\alpha$, the jump of $V = v + "
+        "\\alpha\\Theta(u)$ [shenker2014].",
+        "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",
+    ],
+    ("btz_shock_wave", "exterior", "radial"): [
+        "The plane of $t$ and $r$ ($\\phi = 0$) of either outside at $R = \\ell$, the same at every $\\phi$. The "
+        "cones close at the horizon $r = R$, where $g^{rr} = (r^2 - R^2)/\\ell^2$ vanishes, and a ray reaches "
+        "$r \\to \\infty$ in a finite time, as in anti-de Sitter space.",
+        "Each outside is the BTZ black hole's, and the shock lies on its edge, on the future horizon of the right "
+        "outside and the past horizon of the left [shenker2014]. Quanta let go from the left boundary a time $t_w$ "
+        "before $t = 0$ make the shift $\\alpha = (E/4mc^2)e^{cRt_w/\\ell^2}$ [shenker2014].",
     ],
     ("btz", "stationary", "static"): [
         "The plane of $t$ and $r$ ($\\phi = 0$) of the hole without rotation ($M = 1$, $J = 0$), the "
@@ -16705,6 +16758,33 @@ def _bcd_forms():
 
 
 CLOSED_FORMS.update(_bcd_forms())
+def _btz_shock_before(U, V):
+    """The value of V a ray moving left had before the pulse the discontinuous chart's delta is
+    drawn as, at alpha = l = 1: on such a ray 4 p dU^2 - 4 dU dV/(1 + UV)^2 = 0, so
+    dV/dU = p(U)(1 + UV)^2, carried back from the point to U = -0.4, where the pulse
+    p = 20 e^{-400U^2}/sqrt(pi) is below 10^-26. It is constant along the ray, and a jump of
+    exactly 1 in the limit of a narrow pulse."""
+    U, V = np.broadcast_arrays(np.asarray(U, dtype=float), np.asarray(V, dtype=float))
+    out = np.array(V, dtype=float)
+    pulse = lambda u: 20 * np.exp(-400 * u * u) / np.sqrt(np.pi)
+    for i in zip(*np.nonzero(U > -0.4)):
+        start = min(float(U[i]), 0.4)
+        solved = solve_ivp(lambda u, v: pulse(u) * (1 + u * v) ** 2, (start, -0.4), [float(V[i])],
+                           rtol=1e-12, atol=1e-13, max_step=0.005)
+        out[i] = solved.y[0, -1]
+    return out
+
+
+# The shock wave in the BTZ black hole: in the Kruskal chart a ray keeps u or v; in the discontinuous
+# chart a ray moving right keeps U, and one moving left keeps the V it had before the pulse; outside,
+# t -+ r_*.
+CLOSED_FORMS.update({
+    ("btz_shock_wave", "kruskal", "plane"): (lambda u, v: v, lambda u, v: u, None),
+    ("btz_shock_wave", "discontinuous", "plane"):
+        (_btz_shock_before, lambda U, V: U, None),
+    ("btz_shock_wave", "exterior", "radial"):
+        (lambda t, r: t + _btz_rstar(r, BTZ_STATIC), lambda t, r: t - _btz_rstar(r, BTZ_STATIC), _away(1.0)),
+})
 
 
 def verify(metrics=()):
