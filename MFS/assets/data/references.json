@@ -1,5 +1,5 @@
 {
-  "version": "74bf5615064f62cd",
+  "version": "b4c3518e71f44981",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -28832,6 +28832,150 @@
         "eprint": "2305.11217",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.108.044019"
+      }
+    },
+    "haggard2015fireworks": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum-gravity effects outside the horizon spark black to white hole tunneling",
+        "author": "Haggard, Hal M. and Rovelli, Carlo",
+        "journal": "Physical Review D",
+        "volume": "92",
+        "number": "10",
+        "pages": "104020",
+        "year": "2015",
+        "doi": "10.1103/PhysRevD.92.104020",
+        "eprint": "1407.0989",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.92.104020"
+      }
+    },
+    "rovelli2014planck": {
+      "type": "article",
+      "fields": {
+        "title": "{Planck} stars",
+        "author": "Rovelli, Carlo and Vidotto, Francesca",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "23",
+        "number": "12",
+        "pages": "1442026",
+        "year": "2014",
+        "doi": "10.1142/S0218271814420267",
+        "eprint": "1401.6562",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271814420267"
+      }
+    },
+    "barcelo2014mutiny": {
+      "type": "article",
+      "fields": {
+        "title": "Mutiny at the white-hole district",
+        "author": "Barcel\\'o, Carlos and Carballo-Rubio, Ra\\'ul and Garay, Luis J.",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "23",
+        "number": "12",
+        "pages": "1442022",
+        "year": "2014",
+        "doi": "10.1142/S021827181442022X",
+        "eprint": "1407.1391",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S021827181442022X"
+      }
+    },
+    "barcelo2015lifetime": {
+      "type": "article",
+      "fields": {
+        "title": "The lifetime problem of evaporating black holes: mutiny or resignation",
+        "author": "Barcel\\'o, Carlos and Carballo-Rubio, Ra\\'ul and Garay, Luis J. and Jannes, Gil",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "32",
+        "number": "3",
+        "pages": "035012",
+        "year": "2015",
+        "doi": "10.1088/0264-9381/32/3/035012",
+        "eprint": "1409.1501",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/32/3/035012"
+      }
+    },
+    "barcelo2011nongravity": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum non-gravity and stellar collapse",
+        "author": "Barcel\\'o, Carlos and Garay, Luis J. and Jannes, Gil",
+        "journal": "Foundations of Physics",
+        "volume": "41",
+        "number": "9",
+        "pages": "1532--1541",
+        "year": "2011",
+        "doi": "10.1007/s10701-011-9577-9",
+        "eprint": "1002.4651",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10701-011-9577-9"
+      }
+    },
+    "hajicek2001shells": {
+      "type": "article",
+      "fields": {
+        "title": "Singularity avoidance by collapsing shells in quantum gravity",
+        "author": "Hájíček, Petr and Kiefer, Claus",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "10",
+        "number": "6",
+        "pages": "775--779",
+        "year": "2001",
+        "doi": "10.1142/S0218271801001578",
+        "eprint": "gr-qc/0107102",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271801001578"
+      }
+    },
+    "delorenzo2016fireworks": {
+      "type": "article",
+      "fields": {
+        "title": "Improved black hole fireworks: Asymmetric black-hole-to-white-hole tunneling scenario",
+        "author": "De Lorenzo, Tommaso and Perez, Alejandro",
+        "journal": "Physical Review D",
+        "volume": "93",
+        "number": "12",
+        "pages": "124018",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.93.124018",
+        "eprint": "1512.04566",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.93.124018"
+      }
+    },
+    "christodoulou2016tunnelling": {
+      "type": "article",
+      "fields": {
+        "title": "{Planck} star tunneling time: An astrophysically relevant observable from background-free quantum gravity",
+        "author": "Christodoulou, Marios and Rovelli, Carlo and Speziale, Simone and Vilensky, Ilya",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "8",
+        "pages": "084035",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.084035",
+        "eprint": "1605.05268",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.94.084035"
+      }
+    },
+    "bianchi2018remnants": {
+      "type": "article",
+      "fields": {
+        "title": "White holes as remnants: a surprising scenario for the end of a black hole",
+        "author": "Bianchi, Eugenio and Christodoulou, Marios and D'Ambrosio, Fabio and Haggard, Hal M. and Rovelli, Carlo",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "35",
+        "number": "22",
+        "pages": "225003",
+        "year": "2018",
+        "doi": "10.1088/1361-6382/aae550",
+        "eprint": "1802.04264",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aae550"
       }
     }
   }

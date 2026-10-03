@@ -230,6 +230,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import boson_star as bs  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
+import black_to_white_hole as bwh  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
 import charged_shell as cshell  # noqa: E402
@@ -1884,6 +1885,54 @@ class israel_r_adv(sp.Function):
     _imp_ = staticmethod(ishell.radius_at_advanced)
 
 
+# Haggard and Rovelli's black hole fireworks as every one of its diagrams draws it, in units of r_s,
+# with the shell along V = 3/5 and the quantum region bounded by the geodesic from Delta, at
+# r = 7r_s/6 on the surface of time symmetry, to the point E of the shell at r = r_s/2;
+# black_to_white_hole.py holds the construction. Each chart declares the part of it that is region
+# II, the flat interior's v < 0 or u > 0 aside, as a function of its own coordinates, and the
+# shell's radius as a function of its own time.
+BWH = {"r_s": 1}
+BWH_INPUT = ("A shell of light of Schwarzschild radius $r_s$ along $V = V_0 = 3/5$, the quantum region bounded "
+             "by the spacelike geodesic from the point $E$ of the shell at $r = r_s/2$ to the point $\\Delta$ "
+             "of the surface of time symmetry at $r = 7r_s/6$, Haggard and Rovelli's choices with "
+             "$V_0$ and $E$ set where they can be seen.")
+
+
+class bwh_sigma(sp.Function):
+    """V on the future edge of region II above Kruskal's outgoing ray U, black_to_white_hole.sigma_V."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(bwh.sigma_V)
+
+
+class bwh_inside_sch(sp.Function):
+    """Positive where Schwarzschild's t and r lie in region II, outside r_s."""
+    nargs = 2
+    is_real = True
+    _imp_ = staticmethod(lambda t, r: np.where(np.asarray(r) > 1, bwh.region_two(*bwh.schwarzschild_UV(t, r)), -1.0))
+
+
+class bwh_inside_pg(sp.Function):
+    """Positive where the ingoing Painleve-Gullstrand t and r lie in region II."""
+    nargs = 2
+    is_real = True
+    _imp_ = staticmethod(lambda t, r: bwh.region_two(*bwh.painleve_UV(t, r)))
+
+
+class bwh_shell_sch(sp.Function):
+    """The radius of the shell at Schwarzschild's time t, black_to_white_hole.shell_radius_schwarzschild."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(bwh.shell_radius_schwarzschild)
+
+
+class bwh_shell_pg(sp.Function):
+    """The radius of the shell at the Painleve-Gullstrand time t, black_to_white_hole.shell_radius_painleve."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(bwh.shell_radius_painleve)
+
+
 # The charged shell of dust as its diagrams draw it, in units of r_s: the shell with r_q = 12/25 and
 # mu = 1/5, which falls in from infinity, crosses r_+ = 16/25 and r_- = 9/25, turns round at
 # R = 119/375 and leaves through the horizons of the next exterior; charged_shell.py holds its motion.
@@ -2210,7 +2259,8 @@ DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__:
                       "charged_r_in": charged_r_in, "charged_r_out": charged_r_out,
                       "charged_r_inside": charged_r_inside, "charged_r_adv": charged_r_adv,
                       "charged_r_ret": charged_r_ret,
-                      "lw_r": lw_r}
+                      "lw_r": lw_r, "bwh_sigma": bwh_sigma, "bwh_inside_sch": bwh_inside_sch,
+                      "bwh_inside_pg": bwh_inside_pg, "bwh_shell_sch": bwh_shell_sch, "bwh_shell_pg": bwh_shell_pg}
 
 
 # Neugebauer and Meinel's disc as every one of its diagrams draws it: mu = 3, the disc whose Ernst
@@ -4692,6 +4742,48 @@ DIAGRAMS = [
             input="Uniform dust inside the shell $r_1 = r_s$, a vacuum out to the shell $r_2 = 4r_s$, and uniform "
                   "dust beyond it: $F = r_s(r/r_1)^3$, $r_s$, and $r_s(r/r_2)^3$, with the delay $b = r_2 - r_1$, "
                   "$r_2 - r$, and $0$, as Novikov takes it."),
+    # Haggard and Rovelli's black hole fireworks: the flat space inside the shell, which is the inside
+    # of the light cone of the bounce, past and future; region II in Kruskal's chart and its time
+    # reverse; and region II in Schwarzschild's chart, in the two Painleve-Gullstrand charts, before
+    # the bounce and after it, and in Lemaitre's chart, drawn against rho - c tau.
+    Diagram("black_to_white_hole", "interior", "bounce", "through the bounce", ("u", "v"), (0, 3.5, -2.25, 1.25),
+            "$(v - u)/2r_s$", "$(u + v)/2r_s$", {}, EQUATOR, to_display=NULL_TO_TR, tau="u + v", areal=True,
+            where="Max(-v, u)", input=BWH_INPUT,
+            points=(("mark", ("-1", "0"), "the point $E$, where the shell enters the quantum region, at $u = -r_s$"),)),
+    Diagram("black_to_white_hole", "kruskal", "falling", "the black hole flap", ("U", "V"), (-1, 3, -2.5, 1.5),
+            "$(V - U)/2$", "$(U + V)/2$", BWH, EQUATOR, to_display=NULL_TO_TR, families=SIDEWAYS, tau="U + V",
+            where="Min(V - Rational(3, 5), bwh_sigma(U) - V)", input=BWH_INPUT,
+            marked=(("event", {"x0": "0", "r": "601/1000"}, 1, "the apparent horizon $r = r_s$, the outgoing ray $U = 0$"),),
+            points=(("mark", (repr(bwh.U_E), "3/5"), "the point $E$, where the shell enters the quantum region"),
+                    ("mark", (repr(-bwh.V_DELTA), repr(bwh.V_DELTA)), "the point $\\Delta$, where the quantum region reaches furthest out"))),
+    Diagram("black_to_white_hole", "kruskal", "rising", "the white hole flap", ("U", "V"), (-1, 3, -1.5, 2.5),
+            "$(V - U)/2$", "$(U + V)/2$", BWH, EQUATOR, to_display=NULL_TO_TR, families=SIDEWAYS, tau="U + V",
+            where="Min(-U - Rational(3, 5), bwh_sigma(-V) + U)", input=BWH_INPUT,
+            marked=(("event", {"x0": "-601/1000", "r": "0"}, 0, "the apparent horizon $r = r_s$, the ingoing ray $V = 0$", "past"),),
+            points=(("mark", ("-3/5", repr(-bwh.U_E)), "the mirror image of the point $E$, where the shell enters the quantum region"),
+                    ("mark", (repr(-bwh.V_DELTA), repr(bwh.V_DELTA)), "the point $\\Delta$, where the quantum region reaches furthest out"))),
+    Diagram("black_to_white_hole", "schwarzschild", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -3, 1),
+            "$r/r_s$", "$ct/r_s$", BWH, EQUATOR, orient="ingoing", areal=True, where="bwh_inside_sch(t, r)",
+            input=BWH_INPUT, curves=(("shell", "bwh_shell_sch(t)", "the shell falling in, $r = R(t)$"),),
+            points=(("mark", ("0", "7/6"), "the point $\\Delta$, where the quantum region reaches furthest out"),)),
+    Diagram("black_to_white_hole", "painleve_gullstrand_ingoing", "falling", "before the bounce", ("t", "r"),
+            (0, 3, -2, 1), "$r/r_s$", "$ct/r_s$", BWH, EQUATOR, areal=True, where="bwh_inside_pg(t, r)",
+            input=BWH_INPUT, curves=(("shell", "bwh_shell_pg(t)", "the shell falling in, $r = R(t)$"),),
+            points=(("mark", (repr(float(bwh.shell_painleve_time(bwh.EPS))), "1/2"), "the point $E$, where the shell enters the quantum region"),
+                    ("mark", (repr(float(bwh.edge_painleve_time(bwh.R_DELTA))), "7/6"), "the point $\\Delta$, where the quantum region reaches furthest out"))),
+    Diagram("black_to_white_hole", "painleve_gullstrand_outgoing", "rising", "after the bounce", ("t", "r"),
+            (0, 3, -1, 2), "$r/r_s$", "$ct/r_s$", BWH, EQUATOR, areal=True, where="bwh_inside_pg(-t, r)",
+            input=BWH_INPUT, curves=(("shell", "bwh_shell_pg(-t)", "the shell going out, $r = R(t)$"),),
+            points=(("mark", (repr(-float(bwh.shell_painleve_time(bwh.EPS))), "1/2"), "the mirror image of the point $E$, where the shell enters the quantum region"),
+                    ("mark", (repr(-float(bwh.edge_painleve_time(bwh.R_DELTA))), "7/6"), "the point $\\Delta$, where the quantum region reaches furthest out"))),
+    Diagram("black_to_white_hole", "lemaitre", "falling", "against $\\rho - c\\tau$", ("\\tau", "\\rho"),
+            (0, 3.5, -2.5, 1), "$(\\rho - c\\tau)/r_s$", "$c\\tau/r_s$", BWH, EQUATOR, to_display=((-1, 1), (1, 0)),
+            tau="tau", areal=True, where="bwh_inside_pg(tau, (3*(rho - tau)/2)**Rational(2, 3))", input=BWH_INPUT,
+            curves=(("shell", "tau + 2*bwh_shell_pg(tau)**Rational(3, 2)/3", "the shell falling in, $r = R$"),),
+            points=(("mark", (repr(float(bwh.shell_painleve_time(bwh.EPS))),
+                              repr(float(bwh.shell_painleve_time(bwh.EPS)) + 2 * bwh.EPS ** 1.5 / 3)), "the point $E$, where the shell enters the quantum region"),
+                    ("mark", (repr(float(bwh.edge_painleve_time(bwh.R_DELTA))),
+                              repr(float(bwh.edge_painleve_time(bwh.R_DELTA)) + 2 * bwh.R_DELTA ** 1.5 / 3)), "the point $\\Delta$, where the quantum region reaches furthest out"))),
     # The T-models of Datt and Ruban, in units of r_s: one tube of dust, mu = (2 + tanh(r))/(2 pi) and
     # epsilon = 1, in the proper time of the dust, in the cycloid's parameter and in the radius of its
     # spheres; Ruban's T-model on de Sitter space with the same mu, in units of l, which begins on the
@@ -10547,6 +10639,71 @@ CAPTIONS = {
         "right of the past horizon the world outside $r_s$. The ingoing rays that set out earliest, $V$ just above "
         "zero, run beside the past horizon, and the surface crosses every one of them on its way out.",
     ],
+    ("black_to_white_hole", "interior", "bounce"): [
+        "The plane of $u$ and $v$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the shell, drawn with $(v - u)/2 = r$ "
+        "across and $(u + v)/2 = ct$ up, so that every light ray runs at 45°. Space here is flat. The shell falls "
+        "in along $v = 0$, reaches the centre at the bounce, $u = v = 0$, and goes out along $u = 0$, so the flat "
+        "region is the inside of the past and future light cones of the bounce.",
+        "Outside those cones lie the quantum region and the two flaps of Kruskal's spacetime, where these "
+        "coordinates do not reach. The shell enters the quantum region at $E$, at $u = -r_s$ and $r = r_s/2$, "
+        "and its stretch from $E$ to the bounce borders the quantum region on the inside.",
+    ],
+    ("black_to_white_hole", "kruskal", "falling"): [
+        "The plane of $U$ and $V$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell before the bounce, drawn "
+        "with $(V - U)/2$ across and $(U + V)/2$ up, so that every light ray runs at 45°. The shell falls in along "
+        "$V = 3/5$, the lower left edge. The upper edge is the surface of time symmetry $U + V = 0$ out from $\\Delta$, "
+        "at $r = 7r_s/6$, and the spacelike geodesic from $\\Delta$ to $E$, where the shell has reached "
+        "$r = r_s/2$.",
+        "The quantum region lies above that edge. The outgoing ray $U = 0$ is the apparent horizon $r = r_s$, "
+        "and between it, the shell, and the geodesic every sphere is trapped: both families of light move to "
+        "smaller $r$.",
+    ],
+    ("black_to_white_hole", "kruskal", "rising"): [
+        "The plane of $U$ and $V$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell after the bounce, the mirror "
+        "image of the black hole flap in $(U, V) \\to (-V, -U)$, drawn in the same coordinates of Kruskal's "
+        "spacetime. The shell goes out along $U = -3/5$, the upper left edge, and the lower edge is the mirror image of the first "
+        "flap's upper edge, with the quantum region below it.",
+        "The two flaps overlap in Kruskal's spacetime, in a sliver about $U + V = 0$ between $r = 1.12\\,r_s$, "
+        "where the shell crosses it, and $\\Delta$: the bounce covers that part of Kruskal's spacetime twice. "
+        "The ingoing ray $V = 0$ is the apparent horizon of the white hole, and between it, the shell, and the "
+        "edge every sphere is past trapped: both families of light move to larger $r$.",
+    ],
+    ("black_to_white_hole", "schwarzschild", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell and outside $r_s$ before "
+        "the bounce, with $t = 0$ on the surface of time symmetry. The shell comes in from far away and slows as "
+        "it nears $r_s$, which it reaches only as $t \\to \\infty$, and at $t = 0$ it is at $r = 1.12\\,r_s$.",
+        "Beyond $\\Delta$, at $r = 7r_s/6$, the flap ends on $t = 0$, and its mirror image above it is the flap "
+        "after the bounce. Between $\\Delta$ and $r_s$ its edge is the geodesic to $E$, which climbs to "
+        "$t \\to \\infty$ along $r_s$; beyond that edge lies the quantum region.",
+    ],
+    ("black_to_white_hole", "painleve_gullstrand_ingoing", "falling"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell before the bounce, in the "
+        "Painlevé-Gullstrand time, which runs on through $r_s$. The shell crosses $r_s$ at $ct = -1.41\\,r_s$ and "
+        "reaches $E$, at $r = r_s/2$, at $ct = -1.18\\,r_s$.",
+        "The upper edge is the geodesic from $E$ out to $\\Delta$, at $r = 7r_s/6$ and $ct = -1.10\\,r_s$, and "
+        "beyond $\\Delta$ the surface of time symmetry, where Schwarzschild's $t$ is zero; above it lies the "
+        "quantum region, and further out the flap after the bounce. Inside $r_s$ both edges of every cone point "
+        "to smaller $r$.",
+    ],
+    ("black_to_white_hole", "painleve_gullstrand_outgoing", "rising"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell after the bounce, in the "
+        "Painlevé-Gullstrand time of observers flying out, the time reverse of the chart before the bounce. The "
+        "shell leaves the mirror image of $E$, at $r = r_s/2$, at $ct = 1.18\\,r_s$ and crosses $r_s$ at "
+        "$ct = 1.41\\,r_s$.",
+        "The lower edge is the mirror image of the geodesic, from $\\Delta$ at $ct = 1.10\\,r_s$ in to the image "
+        "of $E$, and beyond $\\Delta$ the surface of time symmetry; below it lie the quantum region and the flap "
+        "before the bounce. Inside $r_s$ both edges of every cone point to larger $r$.",
+    ],
+    ("black_to_white_hole", "lemaitre", "falling"): [
+        "The plane of $\\tau$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell before the bounce, "
+        "drawn with $\\rho - c\\tau = 2r^{3/2}/3\\sqrt{r_s}$ across, so that every sphere of fixed $r$ is a "
+        "vertical line and $r_s$ is at $2r_s/3$. Each observer of the chart falls from rest at infinity along a "
+        "line of fixed $\\rho$, which runs down to the right at 45°, and its proper time is $\\tau$, the "
+        "Painlevé-Gullstrand time.",
+        "The shell reaches $E$, at $r = r_s/2$, at $c\\tau = -1.18\\,r_s$. The upper edge is the geodesic from "
+        "$E$ out to $\\Delta$, at $r = 7r_s/6$, and beyond it the surface of time symmetry, with the quantum "
+        "region above it.",
+    ],
     ("white_hole", "novikov_comoving", "vacuole"): [
         "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through Novikov's vacuole, "
         "where every shell keeps its $r$. The Friedmann universe beyond $r_2$ leaves its singularity at $t = 0$, "
@@ -15758,6 +15915,39 @@ CLOSED_FORMS.update({
         (lambda u, r: u + 2 * _bv_rstar(r), lambda u, r: u, _bv_away(-1)),
     # In the homothetic chart an ingoing ray keeps V.
     ("bonnor_vaidya", "homothetic", "scaling"): (lambda V, R: V, None, None),
+})
+
+
+# Haggard and Rovelli's fireworks at r_s = 1: v and u in the flat interior, V and U in Kruskal's chart,
+# ct -+ r_* in Schwarzschild's, and in the Painleve-Gullstrand charts the same written in their time,
+# v = t - 2 sqrt(r) + r + 2 ln(sqrt(r) + 1) and u = t - 2 sqrt(r) - r - 2 ln|sqrt(r) - 1| before the
+# bounce, and the time reverse after it; Lemaitre's chart is the first with t = tau and
+# r = (3 (rho - tau)/2)^(2/3).
+def _bwh_pg(t, r, sign=1):
+    s = np.sqrt(r)
+    t = sign * t
+    v, u = t - 2 * s + r + 2 * np.log(s + 1), t - 2 * s - r - 2 * np.log(np.abs(s - 1))
+    return (v, u) if sign == 1 else (-u, -v)
+
+
+def _bwh_lemaitre_r(tau, rho):
+    return np.cbrt(1.5 * (rho - tau)) ** 2
+
+
+CLOSED_FORMS.update({
+    ("black_to_white_hole", "interior", "bounce"): (lambda u, v: v, lambda u, v: u, None),
+    ("black_to_white_hole", "kruskal", "falling"): (lambda U, V: V, lambda U, V: U, None),
+    ("black_to_white_hole", "kruskal", "rising"): (lambda U, V: V, lambda U, V: U, None),
+    ("black_to_white_hole", "schwarzschild", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), _away(1)),
+    ("black_to_white_hole", "painleve_gullstrand_ingoing", "falling"):
+        (lambda t, r: _bwh_pg(t, r)[0], lambda t, r: _bwh_pg(t, r)[1], _away(1)),
+    ("black_to_white_hole", "painleve_gullstrand_outgoing", "rising"):
+        (lambda t, r: _bwh_pg(t, r, -1)[0], lambda t, r: _bwh_pg(t, r, -1)[1], _away(1)),
+    ("black_to_white_hole", "lemaitre", "falling"):
+        (lambda tau, rho: _bwh_pg(tau, _bwh_lemaitre_r(tau, rho))[0],
+         lambda tau, rho: _bwh_pg(tau, _bwh_lemaitre_r(tau, rho))[1],
+         lambda tau, rho: np.abs(_bwh_lemaitre_r(tau, rho) - 1) > 0.05),
 })
 
 

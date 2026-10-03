@@ -102,6 +102,11 @@
       "id": "misner_zapolsky",
       "kind": "programme",
       "text": "The static star of infinite central density that Oppenheimer and Volkoff found earlier in 1939. They called it unstable, and wrote that the nonstatic solutions for heavier stars were \"now being investigated\" [oppenheimer1939]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "family",
+      "text": "Barceló, Carballo-Rubio, and Garay let this ball of dust bounce at the Planck density and climb back out through a white hole [barcelo2014mutiny]."
     }
   ],
   "references": [
@@ -125,7 +130,8 @@
     "novikov1965",
     "neeman1965",
     "lindquist1957",
-    "ruban1968"
+    "ruban1968",
+    "barcelo2014mutiny"
   ],
   "coordinates": [
     {

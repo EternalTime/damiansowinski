@@ -124,6 +124,11 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "Vaidya's metric with the mass allowed to differ from one direction to another and the spheres allowed to change shape. Gravitational waves then carry mass off as Vaidya's light does [bondi1962]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "composite",
+      "text": "Haggard and Rovelli's black hole fireworks glue this imploding shell, flat inside and Schwarzschild's outside, to its own time reverse, with a quantum region between [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -159,7 +164,8 @@
     "adler2005",
     "zeldovichnovikovstarobinskii1974",
     "good2016",
-    "bondi1962"
+    "bondi1962",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {

@@ -268,6 +268,11 @@
       "id": "draining_bathtub",
       "kind": "generalisation",
       "text": "Flat spacetime with the speed of sound for $c$ and water flowing through it. A drain that swirls gives sound a horizon and an ergoregion, in a laboratory that stays flat [visser1998]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "composite",
+      "text": "Inside Haggard and Rovelli's bouncing shell of light space is flat, before the bounce and after it [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -348,7 +353,8 @@
     "maitra1966",
     "chan2024",
     "ellis1974",
-    "visser1998"
+    "visser1998",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {
