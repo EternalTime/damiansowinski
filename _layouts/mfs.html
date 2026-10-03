@@ -89,6 +89,9 @@
   <!-- The geometry that turns a figure drawn in three dimensions, an embedding diagram or a figure
        of light cones, which wireTurning() uses once a reader drags one. -->
   <script defer src="{{ '/MFS/assets/turn.js' | relative_url }}"></script>
+  <!-- The geometry of the graph of relations drawn behind the page, which the script beside its
+       canvas uses and a worker runs. -->
+  <script defer src="{{ '/MFS/assets/graph.js' | relative_url }}?v={{ site.time | date: "%s" }}"></script>
 </head>
 <body>
 
@@ -111,6 +114,437 @@
   </script>
 
   <canvas id="wavy-grid" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;"></canvas>
+
+  <!-- The graph of the relations between the spacetimes, behind the page in the room to the
+       right of the list, where the spacetime's panel rests, while no spacetime is open. It is
+       drawn on a layer of its own under every panel, so it covers none of them and a panel
+       takes every press made on it; it is drawn only while it moves, and on a phone, where the
+       panels fill the screen in one column, it is not drawn at all. _tools/README.md, "The
+       graph behind the list", says what it does; MFS/assets/graph.js is its geometry. -->
+  <canvas id="mfs-graph" aria-hidden="true"></canvas>
+  <style>
+    #mfs-graph {
+      position: fixed; z-index: 1; top: var(--mfs-top); right: 0;
+      width: calc(100vw - var(--mfs-left-w) - 20px); height: calc(var(--mfs-bottom) - var(--mfs-top));
+      touch-action: none; opacity: 0; visibility: hidden;
+      transition: opacity 400ms ease, visibility 0s 400ms;
+    }
+    #mfs-graph.mfs-graph-on { opacity: 1; visibility: visible; transition: opacity 400ms ease, visibility 0s; }
+    #mfs-graph.mfs-graph-over { cursor: pointer; }
+    #mfs-graph.mfs-graph-held { cursor: grabbing; }
+    @media (prefers-reduced-motion: reduce) {
+      #mfs-graph, #mfs-graph.mfs-graph-on { transition: none; }
+    }
+  </style>
+  <script>
+    /* The graph shows what the list shows. The list tells it, each time it is drawn, the index
+       and the ids of the spacetimes a search found, or null while nothing is searched
+       (window._mfsGraph.show); the list's panels when they have slid in, after which it comes in
+       (window._mfsGraph.enter); the spacetime's panel when a spacetime is open
+       (window._mfsGraph.open), and the exit sign when the page is left (window._mfsGraph.leave).
+       While nothing is searched the whole collection is gathered in the room; a search gathers
+       what it found into a view of its own, filling the room, and sends everything else back
+       behind it, and clearing the search brings the whole collection back. Each change moves on
+       MfsGraph.sprung, and a reader who asked for less movement is put straight there. A drag
+       turns the figure, two clicks bring back the view it opened at, the pointer on a spacetime
+       writes its name and lights its relations, and a press on one opens it, as its name in the
+       list does. */
+    (function() {
+      var canvas = document.getElementById('mfs-graph');
+      var ctx = canvas.getContext('2d');
+      var V = '{{ site.time | date: "%s" }}';
+      var RELATIONS = '{{ "/MFS/assets/data/relations.json" | relative_url }}?v=' + V;
+      var GEOMETRY = '{{ "/MFS/assets/graph.js" | relative_url }}?v=' + V;
+      // How long a pause in typing or in resizing the window is waited for before the layout is
+      // asked for, so a word typed letter by letter is gathered once.
+      var SETTLING = 120;
+      // The back of the collection gives up FOG of its colour to the ground.
+      var FOG = 0.55;
+      // A press that travels less than SLACK is a press on whatever it landed on.
+      var SLACK = 4;
+      // Depth is drawn in this many shades, and nearness draws a point and its name in steps of
+      // one SCALES-th of their plain size.
+      var DEPTHS = 16, SCALES = 32;
+
+      var index = null, found = null, opened = false, leaving = false, entered = false, relations = null, asked = false;
+      var G = null, graph = null, most = 0, worker = null, local = null, seq = 0, waiting = {};
+      var home = null, room = [0, 0], laidFor = '', doneFor = '';
+      var stands = null, behind = [], trip = null, camera = null, items = [], sides = [];
+      var widths = [], hovered = -1, frame = 0, timer = 0;
+
+      function onPhone() {
+        return getComputedStyle(document.documentElement).getPropertyValue('--mfs-phone').trim() === '1';
+      }
+      function reducedMotion() {
+        return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      }
+
+      // Every colour is the page's own, read once, and depth is a colour too: a thing at the back
+      // of the collection is drawn part of the way to the ground.
+      var sheet = getComputedStyle(document.documentElement);
+      function colour(name) {
+        var hex = sheet.getPropertyValue(name).trim();
+        return [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
+      }
+      function mixed(a, b, t) {
+        return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+      }
+      var GROUND = colour('--bg-black'), POINT = colour('--mfs-cyan-dark'), NAME = colour('--mfs-cyan-light'),
+          PINK = colour('--pink-light'), PINK_DARK = colour('--pink-dark'), BACK = colour('--border-dark');
+      var EDGE = mixed(POINT, GROUND, 0.55), EDGE_BACK = mixed(BACK, GROUND, 0.45);
+      function deep(c, near) {
+        var t = FOG * (1 - near);
+        return 'rgb(' + Math.round(c[0] + (GROUND[0] - c[0]) * t) + ',' + Math.round(c[1] + (GROUND[1] - c[1]) * t) +
+          ',' + Math.round(c[2] + (GROUND[2] - c[2]) * t) + ')';
+      }
+
+      /* The layouts are worked out in a worker running MFS/assets/graph.js, and on the page's own
+         thread only where no worker can be had. A request is the members, by their places in
+         the graph, and the room; its answer comes back by its number. */
+      function answerer() {
+        if (worker || local) return;
+        try {
+          worker = new Worker(GEOMETRY);
+          worker.onmessage = function(event) { answered(event.data); };
+          // A worker that fails takes its requests with it, so they are asked again on this thread.
+          worker.onerror = function() {
+            worker = null;
+            local = G.layouts();
+            local({ graph: graph });
+            waiting = {};
+            laidFor = '';
+            update();
+          };
+        } catch (e) {
+          worker = null;
+        }
+        if (worker) worker.postMessage({ graph: graph });
+        else { local = G.layouts(); local({ graph: graph }); }
+      }
+      function ask(members, done) {
+        var message = { seq: ++seq, members: members, W: room[0], H: room[1] };
+        waiting[message.seq] = done;
+        if (worker) worker.postMessage(message);
+        else setTimeout(function() { answered(local(message)); }, 0);
+      }
+      function answered(reply) {
+        var done = waiting[reply.seq];
+        delete waiting[reply.seq];
+        if (done) done(reply.places);
+      }
+
+      // The room the graph has, which is where the spacetime's panel rests, in CSS pixels.
+      function measureRoom() {
+        return [canvas.clientWidth, canvas.clientHeight];
+      }
+      function shown() {
+        return !!home && entered && !opened && !leaving && !onPhone();
+      }
+
+      /* Whatever changed, the graph is brought up to date: on a phone nothing is fetched or
+         worked out; elsewhere the relations are fetched once, and the whole collection and the
+         search's spacetimes are gathered for the room as it is, and everything sets off for its
+         place once both are known. */
+      function update() {
+        if (!G || !index || onPhone()) { reveal(); return; }
+        if (!relations) {
+          if (!asked) {
+            asked = true;
+            // Without its relations there is no graph, and the page goes on without it.
+            fetch(RELATIONS).then(function(r) { return r.json(); })
+              .then(function(data) { relations = data; update(); }, function() {});
+          }
+          return;
+        }
+        if (!graph) {
+          graph = G.model(index, relations);
+          graph.spacetimes.forEach(function(s) { most = Math.max(most, s.degree); });
+          stands = graph.spacetimes.map(function() { return { x: 0, y: 0, z: 0 }; });
+          behind = graph.spacetimes.map(function() { return false; });
+          camera = G.start();
+          measureNames();
+          answerer();
+        }
+        room = measureRoom();
+        if (!room[0] || !room[1]) return;
+        var members = found ? G.placesOf(graph, found) : null;
+        var key = room.join(' ') + ' ' + (members ? members.join(',') : '*');
+        if (key === laidFor) { reveal(); return; }
+        var all = graph.spacetimes.map(function(s, i) { return i; }), mine = key;
+        laidFor = key;
+        ask(all, function(whole) {
+          if (members) ask(members, function(places) { if (mine === laidFor) setOff(mine, whole, members, places); });
+          else if (mine === laidFor) setOff(mine, whole, null, null);
+        });
+      }
+      function updateSoon() {
+        clearTimeout(timer);
+        timer = setTimeout(function() { timer = 0; update(); }, SETTLING);
+      }
+
+      // Everything sets off for where the search puts it (MfsGraph.goal), and the view turns
+      // back to the one the graph opened at. The first layout is where the graph starts.
+      function setOff(key, whole, members, places) {
+        var first = !home;
+        doneFor = key;
+        home = whole.map(function(p) { return { x: p[0], y: p[1], z: p[2] }; });
+        var to = G.goal(home, members, places);
+        behind = to.behind;
+        if (first) {
+          stands = to.to;
+          trip = null;
+        } else {
+          trip = { from: stands, to: to.to, camera: camera, set: performance.now() };
+          if (reducedMotion() || !canvas.classList.contains('mfs-graph-on')) trip.set -= G.SETTLE * 1000;
+        }
+        reveal();
+        draw();
+      }
+
+      // Shown once the list is in, while no spacetime is open, on any screen but a phone's, and
+      // hidden by its opacity alone, so the page around it is never laid out again for it.
+      function reveal() {
+        var on = shown();
+        if (on === canvas.classList.contains('mfs-graph-on')) return;
+        canvas.classList.toggle('mfs-graph-on', on);
+        if (on) draw();
+        else { hover(-1); }
+      }
+
+      // How wide each name is at its size, asked of the page once and again when its face arrives.
+      function font(f) {
+        return Math.round(G.SIZE * f * 100) / 100 + "px 'Source Code Pro', monospace";
+      }
+      function measureNames() {
+        if (!graph) return;
+        pictures = {}; pictured = 0;
+        ctx.font = font(1);
+        widths = graph.spacetimes.map(function(s) {
+          var lines = G.twoLines(s.name), w = 0;
+          lines.forEach(function(line) { w = Math.max(w, Math.ceil(ctx.measureText(line).width)); });
+          return { lines: lines, w: w };
+        });
+      }
+
+      function render() {
+        frame = 0;
+        if (!home || !canvas.classList.contains('mfs-graph-on')) return;
+        var W = canvas.clientWidth, H = canvas.clientHeight, ratio = window.devicePixelRatio || 1;
+        if (!W || !H) return;
+        if (canvas.width !== Math.round(W * ratio) || canvas.height !== Math.round(H * ratio)) {
+          canvas.width = Math.round(W * ratio);
+          canvas.height = Math.round(H * ratio);
+        }
+        if (trip) {
+          var seconds = (performance.now() - trip.set) / 1000, p = G.sprung(seconds);
+          if (seconds >= G.SETTLE) {
+            stands = trip.to;
+            camera = G.start();
+            trip = null;
+            // Standing still, the names are given their room afresh, in the order a view opens with.
+            items.forEach(function(item) { item.side = -1; });
+          } else {
+            stands = trip.from.map(function(a, i) {
+              var b = trip.to[i];
+              return { x: a.x + (b.x - a.x) * p, y: a.y + (b.y - a.y) * p, z: a.z + (b.z - a.z) * p };
+            });
+            camera = G.blend(trip.camera, G.start(), p);
+            draw();
+          }
+        }
+        var before = items;
+        items = graph.spacetimes.map(function(s, i) {
+          var at = G.seen(camera, stands[i], W, H), f = Math.round(G.drawnAt(at.scale) * SCALES) / SCALES, m = widths[i];
+          return { x: at.x, y: at.y, near: at.near, weight: s.degree, f: f, r: G.radius(f, s.degree, most),
+                   w: m.w * f, h: m.lines.length * G.LINE * f, rank: i === hovered ? 0 : behind[i] ? 3 : 2,
+                   must: i === hovered, behind: behind[i] && i !== hovered, side: before[i] ? before[i].side : -1 };
+        });
+        sides = G.labels(items, W, H);
+        sides.forEach(function(side, i) { items[i].side = side; });
+
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.clearRect(0, 0, W, H);
+        ctx.lineWidth = 1;
+        // Lines and points are drawn a colour at a time, depth taken in DEPTHS steps, so a frame
+        // is a few dozen paths and not a thousand. What a search left out is drawn first, under
+        // everything it gathered, and the relations of the spacetime under the pointer last.
+        var paths = [], byColour = {};
+        function path(colour) {
+          if (!byColour[colour]) { byColour[colour] = new Path2D(); paths.push(colour); }
+          return byColour[colour];
+        }
+        function level(near) {
+          return Math.round(near * DEPTHS) / DEPTHS;
+        }
+        function stroke() {
+          paths.forEach(function(c) { ctx.strokeStyle = c; ctx.stroke(byColour[c]); });
+          paths = []; byColour = {};
+        }
+        function fill() {
+          paths.forEach(function(c) { ctx.fillStyle = c; ctx.fill(byColour[c]); });
+          paths = []; byColour = {};
+        }
+        [true, false].forEach(function(back) {
+          graph.edges.forEach(function(e) {
+            var a = items[e[0]], b = items[e[1]], lit = hovered >= 0 && (e[0] === hovered || e[1] === hovered);
+            if ((a.behind || b.behind) !== back || lit) return;
+            var line = path(deep(back ? EDGE_BACK : EDGE, level((a.near + b.near) / 2)));
+            line.moveTo(a.x, a.y); line.lineTo(b.x, b.y);
+          });
+          stroke();
+        });
+        if (hovered >= 0) {
+          graph.edges.forEach(function(e) {
+            if (e[0] !== hovered && e[1] !== hovered) return;
+            var a = items[e[0]], b = items[e[1]], line = path(deep(PINK_DARK, 1));
+            line.moveTo(a.x, a.y); line.lineTo(b.x, b.y);
+          });
+          stroke();
+        }
+        // The points, those standing behind first. Points in front never lie on each other, so
+        // the order they are drawn in among themselves shows nowhere.
+        [true, false].forEach(function(back) {
+          items.forEach(function(item, i) {
+            if (item.behind !== back || i === hovered) return;
+            var dot = path(deep(back ? BACK : POINT, level(item.near)));
+            dot.moveTo(item.x + item.r, item.y); dot.arc(item.x, item.y, item.r, 0, 2 * Math.PI);
+          });
+          fill();
+        });
+        if (hovered >= 0) {
+          var mark = path(deep(PINK_DARK, 1)), on = items[hovered];
+          mark.arc(on.x, on.y, on.r, 0, 2 * Math.PI);
+          fill();
+        }
+        // The names, each stamped from its picture (written()), at whole pixels of the screen so
+        // a name standing still is as sharp as text.
+        items.forEach(function(item, i) {
+          if (sides[i] < 0) return;
+          var b = G.box(item, sides[i]), name = written(i, item.f, i === hovered ? deep(PINK, 1) : deep(NAME, level(item.near)), ratio);
+          ctx.drawImage(name.canvas, Math.round((b[0] - name.pad) * ratio) / ratio, Math.round((b[1] - name.pad) * ratio) / ratio, name.w, name.h);
+        });
+      }
+      /* A name written once into a picture of its own, for its size and its colour, and stamped
+         from it in every frame after: text is laid out and drawn afresh each time it is written,
+         and forty names written in each frame of a gathering held the page's thread for half of
+         every frame on a slow processor. Sizes and colours are taken in steps, so a name has a
+         few pictures and not one a frame. A name is written over the lines behind it on the
+         ground's own colour, as the timeline writes it. */
+      var pictures = {}, pictured = 0, PICTURES = 500;
+      function written(i, f, colour, ratio) {
+        var key = i + ' ' + f + ' ' + colour + ' ' + ratio;
+        if (pictures[key]) return pictures[key];
+        if (pictured >= PICTURES) { pictures = {}; pictured = 0; }
+        var lines = widths[i].lines, pad = 3, w = widths[i].w * f + 2 * pad, h = lines.length * G.LINE * f + 2 * pad;
+        var picture = document.createElement('canvas');
+        picture.width = Math.ceil(w * ratio);
+        picture.height = Math.ceil(h * ratio);
+        var pen = picture.getContext('2d');
+        pen.scale(ratio, ratio);
+        pen.font = font(f);
+        pen.textBaseline = 'middle';
+        pen.lineJoin = 'round';
+        pen.lineWidth = 4;
+        pen.strokeStyle = 'rgb(' + GROUND.join(',') + ')';
+        pen.fillStyle = colour;
+        lines.forEach(function(line, k) {
+          var y = pad + (k + 0.5) * G.LINE * f;
+          pen.strokeText(line, pad, y);
+          pen.fillText(line, pad, y);
+        });
+        pictured++;
+        return (pictures[key] = { canvas: picture, pad: pad, w: picture.width / ratio, h: picture.height / ratio });
+      }
+      function draw() {
+        if (frame) return;
+        frame = requestAnimationFrame(render);
+      }
+
+      // The hand: a drag turns the figure, two clicks bring back the view it opened at, and a
+      // press on a spacetime opens it.
+      var held = null, travelled = 0;
+      function where(event) {
+        var r = canvas.getBoundingClientRect();
+        return [event.clientX - r.left, event.clientY - r.top];
+      }
+      function hover(i) {
+        if (i === hovered) return;
+        hovered = i;
+        canvas.classList.toggle('mfs-graph-over', i >= 0);
+        draw();
+      }
+      canvas.addEventListener('pointerdown', function(event) {
+        if (!event.isPrimary || event.button !== 0) return;
+        try { canvas.setPointerCapture(event.pointerId); } catch (e) {}
+        held = where(event);
+        travelled = 0;
+      });
+      canvas.addEventListener('pointermove', function(event) {
+        var p = where(event);
+        if (!held) { hover(G.hit(items, sides, p[0], p[1])); return; }
+        var dx = p[0] - held[0], dy = p[1] - held[1];
+        held = p;
+        travelled += Math.abs(dx) + Math.abs(dy);
+        if (travelled < SLACK) return;
+        canvas.classList.add('mfs-graph-held');
+        if (trip) { stands = trip.to; trip = null; }
+        camera = G.turned(camera, dx * G.TURN, dy * G.TURN);
+        draw();
+      });
+      function letGo(event) {
+        if (!held) return;
+        var press = event.type === 'pointerup' && travelled < SLACK, p = where(event);
+        held = null;
+        canvas.classList.remove('mfs-graph-held');
+        if (!press) return;
+        var i = G.hit(items, sides, p[0], p[1]);
+        if (i >= 0 && window._mfsOpen) window._mfsOpen(graph.spacetimes[i].id);
+      }
+      canvas.addEventListener('pointerup', letGo);
+      canvas.addEventListener('pointercancel', letGo);
+      canvas.addEventListener('pointerleave', function() { if (!held) hover(-1); });
+      canvas.addEventListener('dblclick', function() {
+        if (!home || G.isStart(camera)) return;
+        trip = { from: stands, to: trip ? trip.to : stands, camera: camera, set: performance.now() };
+        if (reducedMotion()) trip.set -= G.SETTLE * 1000;
+        draw();
+      });
+
+      window.addEventListener('resize', function() { reveal(); updateSoon(); });
+
+      window._mfsGraph = {
+        show: function(list, ids) {
+          var first = !index;
+          index = list;
+          found = ids;
+          if (first) update(); else updateSoon();
+        },
+        // The list's panels have slid in, and the graph comes in after them.
+        enter: function() { entered = true; reveal(); },
+        open: function(on) { opened = on; if (on) hover(-1); reveal(); },
+        leave: function() { leaving = true; reveal(); },
+        // What the graph shows now, which _tools/background_graph.mjs reads: whether it is drawn,
+        // whether it stands still at what was last asked of it, and the spacetimes in front, each
+        // with where its point is seen in the window.
+        shows: function() {
+          var r = canvas.getBoundingClientRect();
+          return {
+            on: canvas.classList.contains('mfs-graph-on'),
+            settled: !!home && !timer && doneFor === laidFor && !trip,
+            whole: !found,
+            front: graph && home ? graph.spacetimes.map(function(s, i) {
+              return { id: s.id, x: items[i] ? r.left + items[i].x : null, y: items[i] ? r.top + items[i].y : null, named: sides[i] >= 0 };
+            }).filter(function(s, i) { return !behind[i]; }) : []
+          };
+        }
+      };
+      document.addEventListener('DOMContentLoaded', function() {
+        G = window.MfsGraph;
+        update();
+        document.fonts.ready.then(function() { measureNames(); draw(); });
+      });
+    })();
+  </script>
 
   <!-- The title comes before the panels so that on a phone, where it is in the flow of the
        page rather than fixed over it, it heads the column they stack in. The title and the
@@ -501,14 +935,23 @@
         return false;
       }
 
-      function renderResults(METRIC_INDEX, query) {
+      /* The spacetimes a search finds, in the index's order: each whose name holds what is
+         typed or one of whose tags mfsTagMatches finds, and null while nothing is typed, which
+         lists them all. The list shows them and the graph behind it gathers them, so the two
+         never disagree. */
+      function mfsSearch(index, query) {
         var q = query.trim().toLowerCase();
-        var matches = q === ''
-          ? METRIC_INDEX
-          : METRIC_INDEX.filter(function(m) {
-              return m.name.toLowerCase().indexOf(q) !== -1 ||
-                     m.tags.some(function(t) { return mfsTagMatches(t, q); });
-            });
+        if (q === '') return null;
+        return index.filter(function(m) {
+          return m.name.toLowerCase().indexOf(q) !== -1 ||
+                 m.tags.some(function(t) { return mfsTagMatches(t, q); });
+        });
+      }
+
+      function renderResults(METRIC_INDEX, query) {
+        var found = mfsSearch(METRIC_INDEX, query);
+        var matches = found || METRIC_INDEX;
+        window._mfsGraph.show(METRIC_INDEX, found && found.map(function(m) { return m.id; }));
 
         results.innerHTML = matches.map(function(m) {
           return '<div class="mfs-result' + (m.id === _open ? ' mfs-result-active' : '') +
@@ -1112,6 +1555,7 @@
             p.style.pointerEvents = 'all';
             p.style.transition    = '';
           });
+          window._mfsGraph.enter();
         }, SLIDE_DUR);
       }, SLIDE_DELAY);
 
@@ -3984,6 +4428,7 @@
          again, as soon as it is set. */
       window._mfsPageAway = function() {
         _away = true;
+        window._mfsGraph.open(false);
         _slides++;
         hideNote();
         var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -3995,6 +4440,7 @@
       window._mfsPageBack = function() {
         if (!_away) return;
         _away = false;
+        window._mfsGraph.open(true);
         if (_drawn === _shown) slideIn(); else showNote(Math.max(0, _gone - performance.now()) + NOTE_GRACE);
         bringIntoView(_drawn === _shown ? contentPanel : loadingNote);
       };
@@ -4002,6 +4448,7 @@
         var el = document.getElementById('mfs-content-panel');
         var seq = ++_shown;
         _away = false;
+        window._mfsGraph.open(true);
         var isVisible = el && (el.style.transform === 'translateX(0px)' || el.style.transform === 'translateX(0)');
         showNote((isVisible ? SLIDE_DUR : Math.max(0, _gone - performance.now())) + NOTE_GRACE);
         bringIntoView(loadingNote);
@@ -4772,6 +5219,10 @@
       #mfs-coffee-panel { max-height: none !important; }
       #mfs-search-input { font-size: max(1rem, 16px) !important; }
 
+      /* The graph of relations has no room beside the list here, and a layer behind panels
+         that fill the screen would only lie under the reader's finger, so it is not drawn. */
+      #mfs-graph { display: none !important; }
+
       /* Empty until a spacetime is chosen, and then it takes its place below the list. */
       #mfs-content-panel:empty { display: none; }
       /* The loading line stays out of the flow, at the place the panel's top takes below the
@@ -4906,6 +5357,8 @@
         // slide content panel back out to the right, and let go of the loading line
         if (window._mfsHideLoading) window._mfsHideLoading();
         if (window._mfsSlideOutRight) window._mfsSlideOutRight(RAMP_MS * 0.6);
+        // and the graph behind the list fades with them
+        window._mfsGraph.leave();
 
         window._mfsRampDown(RAMP_MS, function() {
           window.location.href = href + '?from=mfs';

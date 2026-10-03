@@ -8,7 +8,8 @@ Run from anywhere:
 Reads   MFS/assets/data/metrics/*.json, MFS/assets/data/diagrams/*.json,
         MFS/assets/data/conformal/*.json, MFS/assets/data/embedding/*.json
         and assets/data/references.bib
-Writes  MFS/assets/data/metrics_index.json and MFS/assets/data/references.json
+Writes  MFS/assets/data/metrics_index.json, MFS/assets/data/references.json and
+        MFS/assets/data/relations.json, the relations the graph behind the list draws
 
 Pass --check to verify the written files are up to date without changing them.
 
@@ -38,6 +39,7 @@ METRICS_DIR = ROOT / "MFS" / "assets" / "data" / "metrics"
 INDEX_FILE = ROOT / "MFS" / "assets" / "data" / "metrics_index.json"
 BIB_FILE = ROOT / "assets" / "data" / "references.bib"
 REFERENCES_FILE = ROOT / "MFS" / "assets" / "data" / "references.json"
+RELATIONS_FILE = ROOT / "MFS" / "assets" / "data" / "relations.json"
 DIAGRAMS_DIR = ROOT / "MFS" / "assets" / "data" / "diagrams"
 CONFORMAL_DIR = ROOT / "MFS" / "assets" / "data" / "conformal"
 EMBEDDING_DIR = ROOT / "MFS" / "assets" / "data" / "embedding"
@@ -679,6 +681,21 @@ def relation_problems(metrics):
     return problems
 
 
+def build_relations(metrics):
+    """The relations the graph behind the list draws, MFS/assets/graph.js: every two spacetimes
+    that list each other under `related`, once, as their two ids in order, the pairs in order.
+    check_relations holds every relation to running both ways, so a pair either file lists is
+    a pair of the graph."""
+    pairs = {tuple(sorted((metric["id"], entry["id"]))) for metric in metrics for entry in metric["related"]}
+    return {"edges": [list(pair) for pair in sorted(pairs)]}
+
+
+def serialise_relations(relations):
+    """The relations with one pair to a line, which is short to read and to compare."""
+    lines = ",\n".join("    " + json.dumps(pair, ensure_ascii=False) for pair in relations["edges"])
+    return '{\n  "edges": [\n' + lines + "\n  ]\n}\n"
+
+
 def check_relations(metrics):
     """Refuse a relation that leads nowhere, runs one way only, or disagrees with its reverse."""
     problems = relation_problems(metrics)
@@ -940,6 +957,7 @@ def main(argv=None):
         outputs = {
             INDEX_FILE: serialise(build_index(metrics, diagrams, conformal, embedding)),
             REFERENCES_FILE: serialise(references),
+            RELATIONS_FILE: serialise_relations(build_relations(metrics)),
         }
     except DataError as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -964,7 +982,7 @@ def main(argv=None):
         print("run python3 _tools/build_mfs_data.py", file=sys.stderr)
         return 1
     if args.check:
-        print("index, bibliography and diagram stamps are up to date")
+        print("index, bibliography, relations and diagram stamps are up to date")
     return 0
 
 

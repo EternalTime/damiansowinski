@@ -173,6 +173,32 @@ The stylesheet with the views' rules stands before the script for that reason: t
 A spacetime has an address of its own, `/MFS/?spacetime=<id>`, which the address bar shows once one is open and which opens the page on that spacetime with the list never shown and its contents sliding in once it is drawn.
 `showContents`, `enter`, `mark`, `_mfsContents` and `_mfsOpen` in `_layouts/mfs.html` carry it, and `page_timing.mjs` holds every spacetime to it: the contents against the headings, each entry's jump, the one entry marked after each jump and at each section scrolled to, every slide starting from the left with the other view out of the panel, the page leaving with its contents before the list returns and coming back with them, the list as it comes back, and the page opened at an address.
 
+## The graph behind the list
+
+While no spacetime is open, the graph of the relations between the spacetimes stands in the room to the right of the list, where the spacetime's panel rests, as the captain asked on 3 October 2026.
+A spacetime is a point, two spacetimes that list each other under "Related Spacetimes" are a line, and a point is wider the more spacetimes it is related to, linearly, so the most related is three times the least related across.
+It is the graph of the application's timeline, `Scripts/timeline-page.html` and `Scripts/build-timeline.py` in that repository, brought here with its numbers: stress majorization in three dimensions, the spring a gathering moves on, at most forty names and the rule for where each is written.
+`MFS/assets/graph.js` is its geometry, the script beside its canvas in `_layouts/mfs.html` draws it, and `_tools/build_mfs_data.py` writes the relations it draws, `MFS/assets/data/relations.json`, from each spacetime's `related`, so a new spacetime is in the graph once that command has run.
+
+The graph shows what the list shows.
+`mfsSearch` in `_layouts/mfs.html` is the search's one answer, and the list draws it and hands it to the graph: while nothing is typed the whole collection is gathered in the room, a search gathers the spacetimes it finds into a view of their own filling the room and sends the rest back behind them, faded and without names, and clearing the search brings the whole collection back.
+Each change moves on a spring and stands still once it has arrived, and a reader who asked for reduced motion is put straight there.
+The layouts are worked out in a worker running `graph.js`, a pause in typing of 120ms after the last key, so the list never waits on them, and the canvas is drawn only while something on it moves.
+A drag turns the figure, two clicks bring back the view it opened at, the pointer on a spacetime writes its name and lights its relations in pink, and a press on one opens it as its name in the list does.
+
+It lies under every panel, on a layer of its own just above the grid, so a panel takes every press made on it and nothing of it covers a panel.
+It fades out while a spacetime is open or loading and when the page is left, and comes back with the list.
+On a phone, where the panels fill the screen in one column, it is not drawn and its relations are never fetched.
+Nothing on it glows: its names are written over the lines behind them on the ground's own colour, as the timeline writes them.
+
+`_tools/test_background_graph.py` runs the geometry and the page's search in Node: every keyword typed gathers exactly the spacetimes carrying it, which are the ones the list shows, clearing the search brings every spacetime back to its place, the same data gives the same layout, and a search's layout depends on its spacetimes and the relations between them alone.
+The page as drawn is held to the same with
+
+    node _tools/background_graph.mjs http://127.0.0.1:4000
+    node _tools/background_graph.mjs http://127.0.0.1:4000 --phone
+
+which types keywords a key at a time, checks what the graph gathers against the list and the index, presses a spacetime in the graph, and on a phone checks that no tap can land on it.
+
 ## The page on a phone
 
 A screen narrower than 600px, or a touch screen under 500px tall, gets the same panels in one column that the page scrolls through: the title, the list with the coffee panel, then the spacetime.
