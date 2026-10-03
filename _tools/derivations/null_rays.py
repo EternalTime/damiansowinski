@@ -4418,6 +4418,15 @@ DIAGRAMS = [
     # Kopczynski and Trautman's universe in units of l, through its turn at t = 0: the comoving
     # charts with the explicit scale factor, and the conformal chart with a(eta) solved from its own
     # Einstein tensor and the pressure of the spins.
+    # The bounce of loop quantum cosmology in units of t_b, through the bounce at t = 0: the cosmic and
+    # comoving spherical charts with the explicit scale factor (1 + t^2/t_b^2)^(1/6), and the harmonic
+    # chart, whose time runs with the scalar field and in which a unit lasts a^3 of proper time.
+    Diagram("lqc_bounce", "cosmic", "tx", "$t$ and $x$", ("t", "x"), (-3, 3, -3, 3),
+            "$x/ct_b$", "$t/t_b$", {"t_b": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
+    Diagram("lqc_bounce", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/ct_b$", "$t/t_b$", {"t_b": 1}, EQUATOR, areal=True),
+    Diagram("lqc_bounce", "harmonic", "taux", "$\\tau$ and $x$", ("\\tau", "x"), (-3, 3, -2.5, 2.5),
+            "$x/ct_b$", "$\\tau/t_b$", {"t_b": 1}, {"y": "0", "z": "0"}, tau="tau", families=SIDEWAYS),
     Diagram("kopczynski_trautman", "comoving_cartesian", "tx", "$t$ and $x$", ("t", "x"), (-3, 3, -3, 3),
             "$x/\\ell$", "$ct/\\ell$", {"ell": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
     Diagram("kopczynski_trautman", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
@@ -10651,6 +10660,32 @@ CAPTIONS = {
         "density, $15a^2c^4/(8\\pi G\\cosh^4(act)\\cosh^4(3a\\rho))$, is greatest at the marked event and falls away "
         "from it in every direction.",
     ],
+    ("lqc_bounce", "cosmic", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$), each vertical line the world line of a comoving observer. The edges "
+        "of the cones are $dx/dt = \\pm c/a$, so they stand at 45° at the bounce, $t = 0$, where $a = 1$ and the "
+        "density is greatest, and close up on either side of it as $a$ grows.",
+        "Every ray comes in from $t = -\\infty$ and runs on to $t = +\\infty$, through a Kretschmann scalar that is "
+        "greatest at the bounce, where it is $4/3c^4t_b^4$. The comoving distance a ray crosses, $\\int c\\,dt/a$, "
+        "grows as $|t|^{2/3}$ without limit in both directions, so any two comoving observers can signal each other.",
+    ],
+    ("lqc_bounce", "comoving_spherical", "radial"): [
+        "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$), each point in the plane a 2-sphere "
+        "of areal radius $R = ar$. The universe contracts below $t = 0$ and expands above it, and the cones are "
+        "widest at the bounce.",
+        "On the dotted curve $|\\nabla R|^2 = 0$, which is $r = 3c(t_b^2 + t^2)/a|t|$, the Hubble sphere. It "
+        "lies at infinity at the bounce, where the expansion rate vanishes, and comes nearest the centre at "
+        "$t = \\pm\\sqrt{3/2}\\,t_b$, where $r \\approx 5.26\\,ct_b$. Beyond it both families "
+        "of rays converge before the bounce and both diverge after it.",
+    ],
+    ("lqc_bounce", "harmonic", "taux"): [
+        "The plane of the harmonic time $\\tau$ and $x$ ($y = z = 0$), with $t = t_b\\sinh(\\tau/t_b)$. A unit of "
+        "$\\tau$ lasts $a^3$ units of the comoving observers' proper time, so the edges of the cones are "
+        "$dx/d\\tau = \\pm c\\,a^2 = \\pm c\\cosh^{2/3}(\\tau/t_b)$, at 45° at the bounce and opening out on "
+        "either side of it.",
+        "The scalar field is a fixed multiple of $\\tau$, so the lines of constant $\\tau$ are the moments at "
+        "which the field has one value. Each ray is a ray of the cosmic chart, with $x \\pm \\int c\\,dt/a$ "
+        "constant along it.",
+    ],
     ("kopczynski_trautman", "comoving_cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$), each vertical line the world line of a grain of dust. The edges of "
         "the cones are $dx/d(ct) = \\pm 1/a$, so they stand at 45° at $t = 0$, where $a = 1$ and the dust is densest, "
@@ -15188,6 +15223,14 @@ def _two_particles_distance(x):
     return np.sign(x) * (out + beyond(np.maximum(a - 1.0, 0.0) ** 0.75))
 
 
+def _lqc_eta(t):
+    """The conformal time of the bounce of loop quantum cosmology at the proper time t, in units of t_b:
+    eta = int_0^t dt/a = t 2F1(1/6, 1/2; 3/2; -t^2), which grows as (3/2)|t|^(2/3)."""
+    from scipy.special import hyp2f1
+    t = np.asarray(t, dtype=float)
+    return t * hyp2f1(1 / 6, 0.5, 1.5, -t ** 2)
+
+
 def _kt_eta(t):
     """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l."""
     from scipy.special import hyp2f1
@@ -15832,6 +15875,12 @@ CLOSED_FORMS = {
     ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("senovilla", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     # Kopczynski and Trautman: eta(t) = int dt/(1 + t^2)^(1/3) = t 2F1(1/3, 1/2; 3/2; -t^2) in units of l.
+    # The bounce of loop quantum cosmology: eta(t) = int dt/(1 + t^2)^(1/6) = t 2F1(1/6, 1/2; 3/2; -t^2) in units of
+    # t_b, and t = sinh(tau) in the harmonic chart.
+    ("lqc_bounce", "cosmic", "tx"): (lambda t, x: x + _lqc_eta(t), lambda t, x: x - _lqc_eta(t), None),
+    ("lqc_bounce", "comoving_spherical", "radial"): (lambda t, r: _lqc_eta(t) + r, lambda t, r: _lqc_eta(t) - r, None),
+    ("lqc_bounce", "harmonic", "taux"):
+        (lambda tau, x: x + _lqc_eta(np.sinh(tau)), lambda tau, x: x - _lqc_eta(np.sinh(tau)), None),
     ("kopczynski_trautman", "comoving_cartesian", "tx"): (lambda t, x: _kt_eta(t) + x, lambda t, x: _kt_eta(t) - x, None),
     ("kopczynski_trautman", "comoving_spherical", "radial"):
         (lambda t, r: _kt_eta(t) + r, lambda t, r: _kt_eta(t) - r, None),

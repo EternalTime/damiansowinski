@@ -3316,6 +3316,9 @@ class EmbeddingDiagrams(unittest.TestCase):
         flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5),
                         ("hiscock", "history", 5), *(("nordstrom_scalar", "dust", k) for k in range(5)),
                         *(("kopczynski_trautman", "universe", k) for k in range(5)),
+                        # The bounce of loop quantum cosmology is a flat Friedmann universe as well, so each of
+                        # its moments is a flat plane, on which its comoving observers close in and draw apart.
+                        *(("lqc_bounce", "universe", k) for k in range(5)),
                         # Space is flat in Einstein's static field of 1912, so the equator outside a body is a
                         # plane, drawn under Flamm's paraboloid of the same mass.
                         ("einstein_1912_static", "equator", 0),
@@ -3662,6 +3665,7 @@ class StacksAndMovies(unittest.TestCase):
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
               ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
+              ("lqc_bounce", "universe"): "$t$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
@@ -4854,6 +4858,14 @@ BARTNIK_MCKINNON_REACH = {"isotropic": 7.147807396, "tortoise": 24.219163201, "f
 ROBERTS_P = {"disperses": 0.9, "threshold": 1.0, "collapses": 2.0}
 
 
+def lqc_bounce_eta(t, n=2000):
+    """The conformal time of the bounce of loop quantum cosmology at the proper time t, in units of t_b:
+    the integral of dt/(1 + t^2)^(1/6) from the bounce, by Simpson's rule."""
+    h = t / n
+    f = [(1 + (k * h) ** 2) ** (-1 / 6) for k in range(n + 1)]
+    return h / 3 * (f[0] + f[-1] + 4 * sum(f[1:-1:2]) + 2 * sum(f[2:-1:2]))
+
+
 def kopczynski_trautman_eta(t, n=2000):
     """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l:
     the integral of dt/(1 + t^2)^(1/3) from the turn, by Simpson's rule."""
@@ -5625,6 +5637,14 @@ class Slices(unittest.TestCase):
             system = key.split("/")[1]
             height = kopczynski_trautman_eta(t) if system == "conformal" else t
             return (lambda X: height), ([-hi, hi] if system == "comoving_cartesian" else [lo, hi])
+        if key.startswith("lqc_bounce/"):
+            # A moment of the comoving observers' time, out to the observer at r = c t_b: the line of that time
+            # on the comoving charts, through the centre on the Cartesian ones, and of tau = asinh(t) on the
+            # harmonic chart.
+            lo, hi = self.reach(surface)
+            system = key.split("/")[1]
+            height = math.asinh(t) if system == "harmonic" else t
+            return (lambda X: height), ([lo, hi] if system == "comoving_spherical" else [-hi, hi])
         if key == "ppn_metric/cartesian/axis":
             # The line through the body's centre: the equator at t = 0 on both sides of the body.
             lo, hi = self.reach(surface)
@@ -7045,6 +7065,11 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * eta), 2e-3,
                                             f"{where} at {(X, T)}")
+                    elif metric_id == "lqc_bounce":
+                        # p, q = arctan((eta -+ r)/c t_b), so tan p + tan q = 2 eta(t) on a moment of the observers' time.
+                        for X, T in points:
+                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2)
+                                                - 2 * lqc_bounce_eta(t)), 2e-3, f"{where} at {(X, T)}")
                     elif metric_id == "kopczynski_trautman":
                         # p, q = arctan((eta -+ r)/l), so tan p + tan q = 2 eta(t)/l on a moment of the dust's time.
                         for X, T in points:

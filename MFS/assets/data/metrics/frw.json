@@ -126,6 +126,11 @@
       "id": "quantum_oppenheimer_snyder",
       "kind": "composite",
       "text": "A ball cut from the flat universe of dust and run through the bounce of loop quantum cosmology, with the vacuum the junction conditions fix outside it [lewandowski2023]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "special_case",
+      "text": "The flat universe of a massless scalar field as loop quantum cosmology has it, $a = (1 + t^2/t_b^2)^{1/6}$, which bounces where Einstein's equations put a big bang [cai2014, ashtekar2006improved]."
     }
   ],
   "references": [
@@ -190,7 +195,9 @@
     "ellis1971",
     "lachiezerey1995",
     "anton2023",
-    "lewandowski2023"
+    "lewandowski2023",
+    "cai2014",
+    "ashtekar2006improved"
   ],
   "coordinates": [
     {
