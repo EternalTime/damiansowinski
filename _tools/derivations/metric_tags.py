@@ -337,6 +337,10 @@ OVERRULED = {
         False, "the hyperbolic chart is spherical about one observer, and so is the local geometry, but the "
                "identifications that close space leave only a discrete group of the rotations about any "
                "point: the torus is globally anisotropic, and a closed hyperbolic space is not even homogeneous"),
+    ("poincare_dodecahedral", "spherically symmetric"): (
+        False, "the comoving and conformal charts are spherical about one observer, and so is the local "
+               "geometry, but the binary icosahedral group that closes space leaves only a finite group of the "
+               "rotations about any point"),
     ("chandrasekhar_xanthopoulos", "stationary"): (
         False, "where both waves have passed r lies between Kerr's horizons and inside the ergosphere, "
                "|cos theta| <= (m - r)/sqrt(m^2 - a^2), an end of theta that is not read, and there "

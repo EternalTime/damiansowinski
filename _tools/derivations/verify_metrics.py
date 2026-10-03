@@ -2031,6 +2031,12 @@ DIMENSIONS = {
     # The horn's x, y and z are pure numbers, y and z flat coordinates on the horospheres of hyperbolic
     # space with pure numbers for periods, and the scale factor is again the radius of curvature.
     ("small_universes", "horn"): {"t": "T", "x": "1", "y": "1", "z": "1", "a": "L", "b_2": "1", "b_3": "1"},
+    # The Poincare dodecahedral universe: the coordinates of the unit 3-sphere are pure numbers and the
+    # scale factor is the radius of curvature of space, a length, as Aurich, Lustig and Steiner's R(t)
+    # is; their conformal time, a d eta = c dt, is then a pure number too.
+    ("poincare_dodecahedral", "comoving"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
+    ("poincare_dodecahedral", "conformal"): {"\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
+    ("poincare_dodecahedral", "toroidal"): {"t": "T", "v": "1", "\\alpha": "1", "\\gamma": "1", "a": "L"},
     # The tilted universes of Bianchi's type V: r, y and z are pure numbers, as the horn's are, the
     # time u = ct + Cr of the surfaces of homogeneity is a length, and so are the tilt C, the two
     # scale factors X and Y, and W, which sets the density of Farnsworth's dust; his parameter eta

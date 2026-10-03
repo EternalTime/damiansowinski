@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 170,
+  "count": 171,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -12876,6 +12876,11 @@
           "id": "self_creating_universe",
           "kind": "locally_same",
           "text": "De Sitter space with each event identified with its images under a boost. J. Richard Gott and Li-Xin Li proposed it in 1998 as a universe whose earliest stretch of time is a loop [gott1998]."
+        },
+        {
+          "id": "poincare_dodecahedral",
+          "kind": "family",
+          "text": "A closed Friedmann universe with points of its space identified under a group of 120 rotations of the 3-sphere. With nothing in it but a positive cosmological constant it is de Sitter space so identified, and it never stops expanding."
         }
       ],
       "references": [
@@ -15135,6 +15140,11 @@
           "id": "small_universes",
           "kind": "family",
           "text": "Universes that are finite by the way their space is connected, with no curvature needed to close it. Einstein's is finite because its space is a sphere [lachiezerey1995]."
+        },
+        {
+          "id": "poincare_dodecahedral",
+          "kind": "family",
+          "text": "A closed universe whose 3-sphere is cut into 120 dodecahedra, of which space keeps one, each face glued to the face opposite it. Its radius is free to change, and it was proposed in 2003 for the quiet microwave sky at wide angles [luminet2003]."
         }
       ],
       "references": [
@@ -15161,7 +15171,8 @@
         "einstein1939",
         "florides1974",
         "bohmerlobo2008",
-        "lachiezerey1995"
+        "lachiezerey1995",
+        "luminet2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
@@ -16968,6 +16979,11 @@
           "id": "self_creating_universe",
           "kind": "family",
           "text": "De Sitter space with events identified under a boost. The boost keeps the direction of time and makes closed timelike curves, in a region of finite spacetime volume behind a Cauchy horizon [gott1998]."
+        },
+        {
+          "id": "poincare_dodecahedral",
+          "kind": "family",
+          "text": "A closed Friedmann universe with points of space identified under a group of 120 rotations of the 3-sphere, so that space is a dodecahedron with each face glued to the face opposite it. The identification moves points within one moment and keeps the direction of time [luminet2003]."
         }
       ],
       "references": [
@@ -16983,7 +16999,8 @@
         "misner1967",
         "louko1998",
         "lachiezerey1995",
-        "gott1998"
+        "gott1998",
+        "luminet2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/elliptic_de_sitter.json",
@@ -18481,6 +18498,11 @@
           "id": "quantum_oppenheimer_snyder",
           "kind": "composite",
           "text": "A ball cut from the flat universe of dust and run through the bounce of loop quantum cosmology, with the vacuum the junction conditions fix outside it [lewandowski2023]."
+        },
+        {
+          "id": "poincare_dodecahedral",
+          "kind": "locally_same",
+          "text": "The closed universe, $k = +1$, with points of its space identified under a group of 120 rotations of the 3-sphere, so that space is a dodecahedron with each face glued to the face opposite it. Every local measurement agrees with Friedmann's, and space holds a hundred and twentieth of the volume [luminet2003]."
         }
       ],
       "references": [
@@ -18545,7 +18567,8 @@
         "ellis1971",
         "lachiezerey1995",
         "anton2023",
-        "lewandowski2023"
+        "lewandowski2023",
+        "luminet2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -42048,6 +42071,246 @@
       ]
     },
     {
+      "id": "poincare_dodecahedral",
+      "name": "Poincaré Dodecahedral Universe",
+      "short_name": "Poincaré Dodecahedral",
+      "description": "A closed Friedmann universe whose space is a dodecahedron with each face glued to the face opposite it after a tenth of a turn, the 3-sphere divided by the binary icosahedral group. Every local measurement agrees with Friedmann's, and space is 120 times smaller than the 3-sphere of the same curvature. Jean-Pierre Luminet, Jeffrey R. Weeks, Alain Riazuelo, Roland Lehoucq, and Jean-Philippe Uzan proposed it in 2003 for the weak correlations of the microwave background at wide angles.",
+      "tags": [
+        "cosmology",
+        "topology",
+        "multiply connected",
+        "compact",
+        "closed universe",
+        "three sphere",
+        "dodecahedron",
+        "expanding universe",
+        "FLRW",
+        "homogeneous",
+        "locally isotropic",
+        "ghost images",
+        "cosmic microwave background",
+        "time-dependent",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "four-dimensional",
+        "conformally flat"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the scale factor $a$ is the radius of curvature of space, a length. Space is the 3-sphere with the points $p$ and $hp$ identified for every map $h$ in $I^*$, and $I^*$ is the binary icosahedral group, 120 rotations of the 3-sphere that move every point but the identity. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "locally_same",
+          "text": "Friedmann's closed universe, $k = +1$, before any points are identified. Every local measurement agrees with Friedmann's, and the dodecahedral universe holds a hundred and twentieth of its volume [luminet2003]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "family",
+          "text": "Einstein's closed universe of 1917, whose space is the whole 3-sphere held at one radius. The dodecahedral universe cuts the same 3-sphere into 120 dodecahedra and keeps one of them [luminet2003]."
+        },
+        {
+          "id": "small_universes",
+          "kind": "family",
+          "text": "Friedmann universes made finite by identifying points of flat or hyperbolic space. Space here is closed already, and identifying its points makes it 120 times smaller [luminet2003]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "The closed universe with nothing in it but a positive cosmological constant, $a = \\ell\\cosh(ct/\\ell)$, is de Sitter space. With points of its space identified under the same group it is a dodecahedral universe that never stops expanding."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "family",
+          "text": "De Sitter space with each event identified with its antipode, an older universe made by identifying points. There the identification reverses time, and here it moves points of space within one moment."
+        }
+      ],
+      "references": [
+        "luminet2003",
+        "lachiezerey1995",
+        "aurich2005",
+        "key2007",
+        "gott1980",
+        "cornish2004",
+        "roukema2004"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/poincare_dodecahedral.json",
+      "charts": [
+        {
+          "id": "comoving",
+          "name": "Comoving",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(t, p) \\sim (t, h p) \\;\\text{for every } h \\in I^*"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor ($a > 0$), a length, the radius of curvature of space at the time $t$; the volume of space is $\\pi^2a^3/60$"
+            }
+          ],
+          "convention": "We use cosmic time $t$ and the angles $(\\chi, \\theta, \\phi)$ of the unit 3-sphere about one observer, with $a\\chi$ the distance from that observer. We take components in the chart $x^0 = ct$, a prime is $a' = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)",
+          "kretschmann": "K = 12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)^2\\right)"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(\\eta, p) \\sim (\\eta, h p) \\;\\text{for every } h \\in I^*"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Scale factor ($a > 0$), a length, the radius of curvature of space at the conformal time $\\eta$"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$, a pure number with $a\\,d\\eta = c\\,dt$, and the angles $(\\chi, \\theta, \\phi)$ of the unit 3-sphere about one observer. A prime is $a' = da/d\\eta$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a^2\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a^3} + \\dfrac{1}{a^2}\\right)",
+          "kretschmann": "K = 12\\left(\\left(\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^4}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 + a^2}{a^4}\\right)^2\\right)"
+        },
+        {
+          "id": "toroidal",
+          "name": "Toroidal",
+          "coordinates": [
+            "t",
+            "v",
+            "\\alpha",
+            "\\gamma"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "v \\in [0, 1/2]",
+            "\\alpha \\in [0, 2\\pi)",
+            "\\gamma \\in [0, 2\\pi)",
+            "(t, v, \\alpha, \\gamma) \\sim (t, v, \\alpha + \\pi/5, \\gamma + \\pi/5) \\;\\text{and the other images under } I^*"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor ($a > 0$), a length, the radius of curvature of space at the time $t$"
+            }
+          ],
+          "convention": "We use cosmic time $t$ and the coordinates $(v, \\alpha, \\gamma)$ of the unit 3-sphere at the point $(\\sqrt{1 - 2v}\\cos\\alpha, \\sqrt{2v}\\cos\\gamma, \\sqrt{2v}\\sin\\gamma, \\sqrt{1 - 2v}\\sin\\alpha)$ of $\\mathbb{R}^4$, in which a shift of $\\alpha$ and $\\gamma$ together is a Clifford translation. We take components in the chart $x^0 = ct$, a prime is $a' = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(\\dfrac{dv^2}{2v\\left(1 - 2v\\right)} + \\left(1 - 2v\\right)d\\alpha^2 + 2v\\,d\\gamma^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "\\dfrac{a^2}{2v\\left(1 - 2v\\right)}"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "a^2\\left(1 - 2v\\right)"
+            },
+            {
+              "indices": [
+                "\\gamma",
+                "\\gamma"
+              ],
+              "value": "2a^2\\,v"
+            }
+          ],
+          "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)",
+          "kretschmann": "K = 12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)^2\\right)"
+        }
+      ]
+    },
+    {
       "id": "point_particle_2plus1",
       "name": "Point Particles in Three Dimensions",
       "short_name": "Point Particles in Three Dimensions",
@@ -50086,6 +50349,11 @@
           "id": "tilted_universes",
           "kind": "family",
           "text": "The horn's coordinates with $y$ and $z$ left open and the matter drifting along $x$. Farnsworth's dust is the open universe of dust given such a tilt [anton2023]."
+        },
+        {
+          "id": "poincare_dodecahedral",
+          "kind": "family",
+          "text": "A closed Friedmann universe made smaller still by identifying points, its space a dodecahedron with each face glued to the face opposite it. It was proposed in 2003 for the weak correlations of the microwave sky at wide angles, and searches for its circles in the sky found none [luminet2003, key2007]."
         }
       ],
       "references": [
@@ -50115,7 +50383,8 @@
         "martinbenito2011",
         "desitter1917",
         "misner1967",
-        "anton2023"
+        "anton2023",
+        "key2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/small_universes.json",

@@ -1735,6 +1735,18 @@ The products of two surfaces of constant curvature that solve the Einstein-Maxwe
 - chart Anti-Nariai, Static: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{a^2} - 1\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{a^2} - 1} + a^2\left(d\theta^2 + \sinh^2\theta\,d\phi^2\right)$$
 - chart Exceptional: coordinates $(u, w, x, y)$, $$ds^2 = -2\,du\,dw - \left(\dfrac{w^2}{a^2} + f\,x + g\,y\right)du^2 + dx^2 + dy^2$$
 
+### Poincaré Dodecahedral Universe
+
+A closed Friedmann universe whose space is a dodecahedron with each face glued to the face opposite it after a tenth of a turn, the 3-sphere divided by the binary icosahedral group. Every local measurement agrees with Friedmann's, and space is 120 times smaller than the 3-sphere of the same curvature. Jean-Pierre Luminet, Jeffrey R. Weeks, Alain Riazuelo, Roland Lehoucq, and Jean-Philippe Uzan proposed it in 2003 for the weak correlations of the microwave background at wide angles.
+
+- id: `poincare_dodecahedral`
+- tags: cosmology, topology, multiply connected, compact, closed universe, three sphere, dodecahedron, expanding universe, FLRW, homogeneous, locally isotropic, ghost images, cosmic microwave background, time-dependent, Lorentzian, Einstein equations, idealized model, four-dimensional, conformally flat
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/poincare_dodecahedral.json
+- chart Comoving: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Conformal Time: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Toroidal: coordinates $(t, v, \alpha, \gamma)$, $$ds^2 = -c^2dt^2 + a^2\left(\dfrac{dv^2}{2v\left(1 - 2v\right)} + \left(1 - 2v\right)d\alpha^2 + 2v\,d\gamma^2\right)$$
+
 ### Point Particles in Three Dimensions
 
 Gravity with one dimension of space removed, where a mass makes no field around itself. Spacetime is flat everywhere off a particle's world line, and space around the particle is a cone, missing a wedge whose angle is set by the mass.

@@ -126,6 +126,11 @@
       "id": "quantum_oppenheimer_snyder",
       "kind": "composite",
       "text": "A ball cut from the flat universe of dust and run through the bounce of loop quantum cosmology, with the vacuum the junction conditions fix outside it [lewandowski2023]."
+    },
+    {
+      "id": "poincare_dodecahedral",
+      "kind": "locally_same",
+      "text": "The closed universe, $k = +1$, with points of its space identified under a group of 120 rotations of the 3-sphere, so that space is a dodecahedron with each face glued to the face opposite it. Every local measurement agrees with Friedmann's, and space holds a hundred and twentieth of the volume [luminet2003]."
     }
   ],
   "references": [
@@ -190,7 +195,8 @@
     "ellis1971",
     "lachiezerey1995",
     "anton2023",
-    "lewandowski2023"
+    "lewandowski2023",
+    "luminet2003"
   ],
   "coordinates": [
     {

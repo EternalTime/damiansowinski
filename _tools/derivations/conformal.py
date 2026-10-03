@@ -15735,6 +15735,94 @@ def kopczynski_trautman(ck, src):
     return views
 
 
+def poincare_dodecahedral(ck, src):
+    """Luminet's universe on its plane of the conformal time eta and chi, along the line from us to the
+    centre of a face of our cell, Omega_m = 0.28 and Omega_0 = 1.013 with the radius of curvature a_0
+    today the unit and radiation left out, as its spacetime diagram declares. The metric on the plane
+    is a^2(-d eta^2 + d chi^2), so p, q = (eta -+ chi)/2 draw it with X = chi and T = eta, and one cell
+    along this line is the strip -pi/10 <= chi <= pi/10, its two faces one face: the Clifford translation
+    through pi/5 carries chi = -pi/10 onto pi/10. The scale factor solves
+    a' = H_0 sqrt(Omega_m a + Omega_Lambda a^4 - (Omega_0 - 1) a^2) in units of a_0, with H_0 a_0/c =
+    1/sqrt(Omega_0 - 1), from the bang a = 0 at eta = 0 to future infinity, where a diverges at the
+    finite eta_inf = 0.5168: Lambda makes future infinity a spacelike line. Our past light cone from today,
+    eta_0 = 0.3888, leaves the cell through both faces at eta_0 - pi/10 and comes back in through the
+    other, and our future light cone reaches eta_inf at chi = eta_inf - eta_0 = 0.128, short of the faces."""
+    from scipy.integrate import quad
+    om, o0 = nr.PD_OMEGA_M, nr.PD_OMEGA_0
+    ol, k, H = o0 - om, o0 - 1, nr.PD_RATE
+
+    def rate(a):
+        return H * np.sqrt(np.maximum(om * a + ol * a ** 4 - k * a ** 2, 0.0))
+
+    def eta_of(a):
+        return quad(lambda b: 1 / rate(b) if b > 0 else 0.0, 0, a, limit=400)[0]
+    grid = np.concatenate([np.geomspace(1e-9, 1, 4000), np.geomspace(1, 1e7, 4000)[1:]])
+    etas = np.cumsum(np.concatenate([[eta_of(grid[0])], [quad(lambda b: 1 / rate(b), x, y)[0]
+                                                         for x, y in zip(grid, grid[1:])]]))
+    eta_inf = etas[-1] + quad(lambda b: 1 / rate(b), grid[-1], np.inf)[0]
+    now, lss = float(np.interp(1.0, grid, etas)), float(np.interp(1 / 1101, grid, etas))
+    ck.limit("Poincare dodecahedral: today is eta = 0.38882", now, float(nr.PD_NOW), 1e-5)
+    ck.limit("Poincare dodecahedral: the last scattering, a = 1/1101, is eta = 0.012988", lss, float(nr.PD_LSS), 1e-6)
+    ck.limit("Poincare dodecahedral: future infinity is eta = 0.5168", eta_inf, 0.5168, 1e-4)
+
+    def fvals(e, c):
+        a = np.interp(e, etas, grid)
+        return {"a": (a, rate(a), H ** 2 / 2 * (om + 4 * ol * a ** 3 - 2 * k * a))}
+    pl = Plane(src, "poincare_dodecahedral", "conformal", ("\\eta", "\\chi"), EQUATOR, {}, numeric=["a"])
+    src.note("poincare_dodecahedral", "conformal", ["einstein_tensor"])
+
+    def pq(e, c):
+        e, c = np.asarray(e, dtype=float), np.asarray(c, dtype=float)
+        return (e - c) / 2, (e + c) / 2
+    ck.chart("Poincare dodecahedral, Luminet's universe in the conformal time", pl, pq,
+             ck.uniform(0.005, 0.51), ck.uniform(0.001, 3.1), lambda e, c: (1, 0), fvals)
+    # The scale factor solves the published G^chi_chi = -Lambda: a'^2 - 2 a a'' - a^2 = -Lambda a^4.
+    a = np.geomspace(1e-3, 1e3, 200)
+    lam = nr.PD_LAMBDA
+    second = H ** 2 / 2 * (om + 4 * ol * a ** 3 - 2 * k * a)
+    ck.limit("Poincare dodecahedral: the scale factor solves G^chi_chi = -Lambda",
+             (rate(a) ** 2 - 2 * a * second - a ** 2 + lam * a ** 4) / (1 + lam * a ** 4), 0.0, 1e-9)
+    ck.diverges("Poincare dodecahedral: the Kretschmann scalar diverges at the bang",
+                pl.kretschmann(np.array([1e-2]), np.array([0.05]), fvals),
+                pl.kretschmann(np.array([1e-3]), np.array([0.05]), fvals))
+
+    face, top = PI / 10, round(eta_inf, 4)
+    v = View("near", "Our cell", [-face - 0.2, face + 0.2, -0.08, top + 0.08], "conformal")
+    cell = [[-face, 0], [face, 0], [face, top], [-face, top]]
+    v.fill("region", cell)
+    v.fill("cover", cell)
+    v.line("t", [[[-face, lss], [face, lss]]])
+    v.line("boundary", [[[-face, 0], [-face, top]], [[face, 0], [face, top]]])
+    v.line("centre", [[[0, 0], [0, top]]])
+    v.line("singular", [[[-face, 0], [face, 0]]], zig=True)
+    v.line("scri", [[[-face, top], [face, top]]])
+    # Our past light cone, each half leaving through a face and coming back in through the other.
+    turn = now - face
+    v.line("null", [[[0, now], [face, turn]], [[-face, turn], [-face + turn, 0]],
+                    [[0, now], [-face, turn]], [[face, turn], [face - turn, 0]]])
+    reach = eta_inf - now
+    ck.limit("Poincare dodecahedral: light sent today reaches chi = 0.128 at future infinity", reach, 0.128, 5e-4)
+    v.line("event", [[[0, now], [reach, top]], [[0, now], [-reach, top]]])
+    v.point("mark", pq(now, 0))
+    v.label_xt([0, top], "$\\mathscr{I}^+$", "b", dy=-6)
+    v.label_xt([0, 0], "the big bang", "t", dy=8)
+    v.label_xt([face, top / 2], "$\\chi = \\pi/10$", "l", "coord", dx=6)
+    v.label_xt([-face, top / 2], "$\\chi = -\\pi/10$", "r", "coord", dx=-6)
+    v.label(pq(now, 0), "here, now", "r", "small", dx=-6)
+    v.legend("cover", "one cell along the line from us to the centre of a face, which $\\eta$ and $\\chi$ cover")
+    v.legend("boundary", "the faces $\\chi = \\pm\\pi/10$, glued into one face")
+    v.legend("centre", "$\\chi = 0$, our world line")
+    v.legend("t", "the last scattering of the microwaves, $a = a_0/1101$")
+    v.legend("null", "our past light cone, which leaves through each face and comes back in through the other")
+    v.legend("event", "the light we send today, which reaches future infinity at $\\chi = \\pm 0.128$")
+    v.legend("singular", "the big bang, where the Kretschmann scalar diverges")
+    v.legend("scri", "future infinity, a spacelike line at $\\eta = 0.5168$")
+    v.set(input=nr.PD_LCDM_INPUT)
+    for m in slices.moments("poincare_dodecahedral"):
+        v.slice(m, xt=[[[-face, now], [face, now]]], label="today, $\\eta = 0.3888$")
+    return [v]
+
+
 def small_universes(ck, src):
     """Ellis's torus of dust on its plane of the time and x, y and z held fixed, each point a 2-torus
     of area a^2 L^2, at the cubic torus and the scale factor its other diagrams declare, in units of
@@ -23893,6 +23981,7 @@ DRAWN = {
     "curzon_chazy": curzon_chazy,
     "kopczynski_trautman": kopczynski_trautman,
     "small_universes": small_universes,
+    "poincare_dodecahedral": poincare_dodecahedral,
     "tilted_universes": tilted_universes,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
@@ -27153,6 +27242,15 @@ CAPTIONS = {
         "since the two metrics differ by the factor $a^2$ alone.",
         "A ray that leaves $\\mathscr{I}^-$ crosses the turn and reaches $\\mathscr{I}^+$. The past light cone of "
         "any event widens without limit toward the past, so it meets the world line of every grain of dust.",
+    ],
+    ("poincare_dodecahedral", "near"): [
+        "Luminet's universe along the line from us to the centre of a face of our cell, each point in the diagram a "
+        "2-sphere. The metric on the plane is $a^2(-d\\eta^2 + d\\chi^2)$, so the drawing is the plane itself: the "
+        "cell runs from $\\chi = -\\pi/10$ to $\\pi/10$, and the two faces are one face, since what leaves "
+        "through one comes back in through the other.",
+        "The cosmological constant makes the conformal time finite, so future infinity is the spacelike line "
+        "$\\eta = 0.5168$. Our past light cone crosses the faces before it reaches the last scattering, and the "
+        "light we send today reaches future infinity at $\\chi = \\pm 0.128$, inside our own cell.",
     ],
     ("small_universes", "torus"): [
         "The plane of $t$ and $x$ of a torus of dust, each point in the diagram a 2-torus of area $a^2L^2$. The "

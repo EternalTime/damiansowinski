@@ -1195,7 +1195,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "b5bafac5b9ce65ac",
+    "version": "75302f5e3d1aafaf",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -1438,7 +1438,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "d6df40ccec7e1f99",
+    "version": "420c134d05b439e5",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -1612,7 +1612,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "0fc87af1c485e26c",
+    "version": "a54fe376d156b7cf",
     "diagrams": "e73839d0a0529179",
     "conformal": "2fed97c5ab6ddc3d",
     "embedding": "954af1b6ad40d276"
@@ -1763,7 +1763,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "3fa59a3e5cf8649a",
+    "version": "5578767cd88cbbfe",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -3889,6 +3889,35 @@
     "embedding": "b7a09dddf9867ddf"
   },
   {
+    "id": "poincare_dodecahedral",
+    "name": "Poincaré Dodecahedral",
+    "tags": [
+      "cosmology",
+      "topology",
+      "multiply connected",
+      "compact",
+      "closed universe",
+      "three sphere",
+      "dodecahedron",
+      "expanding universe",
+      "FLRW",
+      "homogeneous",
+      "locally isotropic",
+      "ghost images",
+      "cosmic microwave background",
+      "time-dependent",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "four-dimensional",
+      "conformally flat"
+    ],
+    "version": "5b294e408528f347",
+    "diagrams": "15ccd759bdb6a22a",
+    "conformal": "f8b6ad40c581351e",
+    "embedding": "d0dbf15e01a964ff"
+  },
+  {
     "id": "point_particle_2plus1",
     "name": "Point Particles in Three Dimensions",
     "tags": [
@@ -4624,7 +4653,7 @@
       "four-dimensional",
       "conformally flat"
     ],
-    "version": "258a4979d70f3be4",
+    "version": "aaef6f50bd79aad6",
     "diagrams": "0e11382338963c29",
     "conformal": "60e261619c0672af",
     "embedding": "31ff007c1a714047"

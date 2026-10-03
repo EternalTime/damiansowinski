@@ -4936,6 +4936,9 @@ class Slices(unittest.TestCase):
               "kundt_waves/simplest_wave/front", "kundt_waves/simplest_wave/depth", "kundt_waves/kerr_schild/fronts",
               # A closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's.
               "small_universes/hyperbolic/radial",
+              # Closed dust from its bang to its crunch, another member of the family than Luminet's
+              # universe, whose moment today is embedded.
+              "poincare_dodecahedral/comoving/through", "poincare_dodecahedral/toroidal/circle",
               # Rosen's chart draws the axisymmetric universe, exponents (0, 0, 1); the ring embedded is
               # of the universe that starts at (-2/7, 3/7, 6/7).
               "kasner_magnetic/rosen/etax", "kasner_magnetic/rosen/etaz",
@@ -5587,6 +5590,9 @@ class Slices(unittest.TestCase):
             # Farnsworth's dust is embedded on its surface eta = 3, which is u = (sinh 3 - 3)/2 W, from its rim up.
             height = 3.0 if key.split("/")[1] == "farnsworth" else (math.sinh(3.0) - 3.0) / 2
             return (lambda X: height), list(self.reach(surface))
+        if key == "poincare_dodecahedral/conformal/near":
+            # Today in Luminet's universe, eta = 0.38882 of the conformal chart, along the line from us.
+            return (lambda X: 0.38882), list(self.reach(surface))
         if key == "small_universes/horn/along":
             # The horn is embedded at the moment a = a_0, ct = (6/5 - (11/50) ln 11) a_0, from its rim up.
             return (lambda X: 1.2 - 0.22 * math.log(11)), list(self.reach(surface))
@@ -6972,6 +6978,12 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * eta), 2e-3,
                                             f"{where} at {(X, T)}")
+                    elif metric_id == "poincare_dodecahedral":
+                        # X = chi and T = eta: today in Luminet's universe, eta = 0.38882, across one cell along
+                        # the line to the centre of a face, from chi = -pi/10 to pi/10.
+                        self.assertTrue(all(abs(T - 0.3888) < 2e-4 for _, T in points), where)
+                        self.assertEqual(sorted(X for X, _ in points), [round(-math.pi / 10, 4), round(math.pi / 10, 4)],
+                                         where)
                     elif metric_id == "kopczynski_trautman":
                         # p, q = arctan((eta -+ r)/l), so tan p + tan q = 2 eta(t)/l on a moment of the dust's time.
                         for X, T in points:

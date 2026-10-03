@@ -932,6 +932,52 @@ def _small_images(lo, hi):
             *(("world", "r", f"{n} + 3/10", SMALL_GALAXY) for n in range(lo, hi)))
 
 
+# The Poincare dodecahedral universe. Along the great circle through an observer and the centre of a face,
+# which a Clifford translation through pi/5 carries onto itself, the cell's faces stand at chi = pi/10 and
+# every pi/5 on, and the observer's images at every pi/5. The comoving and toroidal charts are drawn with
+# closed dust at rest at its largest radius a_m, the unit, a = a_m (1 - cos psi)/2 and
+# ct = a_m (psi - sin psi)/2, psi the conformal time, from its bang at t = 0 to its crunch at ct = pi a_m.
+# The conformal chart is drawn with Luminet and coauthors' universe, Omega_m = 0.28 and
+# Omega_Lambda = Omega_0 - Omega_m with Omega_0 = 1.013, in units of the radius of curvature a_0 today,
+# where H_0 a_0/c = 1/sqrt(Omega_0 - 1) and Lambda = 3 Omega_Lambda H_0^2/c^2; radiation is left out.
+PD_CLOSED = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0]}
+PD_CLOSED_TORUS = {"funcs": ["a"], "eqs": [["\\alpha", "\\alpha"]], "rates": [0.0], "start": [1.0]}
+PD_OMEGA_M, PD_OMEGA_0 = 0.28, 1.013
+PD_RATE = 1 / math.sqrt(PD_OMEGA_0 - 1)
+PD_LAMBDA = 3 * (PD_OMEGA_0 - PD_OMEGA_M) * PD_RATE ** 2
+PD_LCDM = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [PD_RATE], "sources": [repr(-PD_LAMBDA)]}
+PD_NOW, PD_LSS = "0.38882", "0.012988"      # the conformal times of today and of a = a_0/1101, checked below
+PD_CLOSED_INPUT = ("Closed dust at rest at its largest radius $a_m$, the unit: $a(t)$ solved from this spacetime's "
+                   "own $G^{X}{}_{X} = 0$ with $a = a_m$ and $a' = 0$ at $ct = \\pi a_m/2$, so that "
+                   "$a = a_m(1 - \\cos\\psi)/2$ and $ct = a_m(\\psi - \\sin\\psi)/2$ in the conformal time $\\psi$.")
+PD_LCDM_INPUT = ("The universe of Luminet and coauthors, $\\Omega_m = 0.28$ and $\\Omega_\\Lambda = 0.733$, so that "
+                 "$\\Omega_0 = 1.013$, with the radius $a_0$ of curvature today the unit and radiation left out: "
+                 "$a(\\eta)$ solved from this spacetime's own $G^\\chi{}_\\chi = -\\Lambda$ with "
+                 "$\\Lambda = 3\\Omega_\\Lambda H_0^2/c^2 = 169.15/a_0^2$ for the Hubble rate $H_0$ today, starting "
+                 "today from $a = a_0$ and $a' = H_0a_0^2/c = 8.771\\,a_0$, when the conformal time since the bang "
+                 "is $0.3888$.")
+PD_FACES = "where the circle crosses a face of a cell, $\\chi = \\pi/10$ and every $\\pi/5$ on"
+PD_IMAGES = "our own world line at $\\chi = 0$ and its images, every $\\pi/5$ round the circle"
+
+
+def _pd_images(lo, hi, faces=PD_FACES, images=PD_IMAGES):
+    """The faces and our images along the circle between n = lo and hi, in units of pi/10."""
+    return (*(("surface", "r", f"{n}*pi/10", faces) for n in range(lo, hi + 1) if n % 2),
+            *(("world", "r", f"{n}*pi/10", images) for n in range(lo, hi + 1) if n % 2 == 0))
+
+
+def _pd_psi(t):
+    """The conformal time of the closed dust at its comoving time t since the bang, in units of a_m: the
+    root of (psi - sin psi)/2 = t on (0, 2 pi), by bisection."""
+    t = np.atleast_1d(np.asarray(t, dtype=float))
+    lo, hi = np.zeros_like(t), np.full_like(t, 2 * np.pi)
+    for _ in range(80):
+        mid = (lo + hi) / 2
+        low = (mid - np.sin(mid)) / 2 < t
+        lo, hi = np.where(low, mid, lo), np.where(low, hi, mid)
+    return (lo + hi) / 2
+
+
 KT_SPIN = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [0.0], "start": [1.0], "origin": "rest",
            "sources": ["-4/(3*a**6)"]}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
@@ -4391,6 +4437,38 @@ DIAGRAMS = [
                     "the circle of $y$"),),
             marked=(("past", {"x0": SMALL_NOW, "r": "3/2"}, "both", "the past light cone of the event marked", "past"),),
             points=(("mark", (SMALL_NOW, "3/2"), "an event at $x = 3/2$ on the dashed line"),)),
+    # The Poincare dodecahedral universe along the great circle through us and the centre of a face: closed
+    # dust from its bang to its crunch in the comoving and toroidal charts, all ten cells round the circle,
+    # and Luminet's universe in the conformal chart, from the bang to future infinity, near our own cell.
+    Diagram("poincare_dodecahedral", "comoving", "through", "round the circle", ("t", "\\chi"),
+            (0, math.pi, 0, math.pi), "$\\chi$", "$ct/a_m$", {}, EQUATOR, mirror=True,
+            families=SIDEWAYS, cones=(4, 8), dust=PD_CLOSED, reference="$a = a_m$",
+            input=PD_CLOSED_INPUT.replace("{X}", "\\chi"),
+            lines=_pd_images(-9, 9),
+            marked=(("past", {"x0": "pi/2", "r": "0"}, "both", "our past light cone at the moment of greatest expansion",
+                     "past"),),
+            points=(("mark", ("pi/2", "0"), "here, at the moment of greatest expansion"),)),
+    Diagram("poincare_dodecahedral", "toroidal", "circle", "round the circle", ("t", "\\alpha"),
+            (0, 2 * math.pi, 0, math.pi), "$\\alpha$", "$ct/a_m$", {}, {"v": "0", "gamma": "0"},
+            families=SIDEWAYS, periodic=("\\alpha",), cones=(4, 8), dust=PD_CLOSED_TORUS, reference="$a = a_m$",
+            input=PD_CLOSED_INPUT.replace("{X}", "\\alpha"),
+            lines=(*(("surface", "r", f"{n}*pi/10", "the faces of the cells, $\\alpha = \\pi/10$ and every $\\pi/5$ on")
+                     for n in range(1, 20, 2)),
+                   *(("world", "r", f"{n}*pi/5", "our own world line at $\\alpha = 0$ and its images, every $\\pi/5$")
+                     for n in range(0, 11))),
+            marked=(("past", {"x0": "pi/2", "r": "pi"}, "both", "the past light cone of the event marked", "past"),),
+            points=(("mark", ("pi/2", "pi"), "the image at $\\alpha = \\pi$, at the moment of greatest expansion"),)),
+    Diagram("poincare_dodecahedral", "conformal", "near", "near our cell", ("\\eta", "\\chi"), (0, 0.8, 0, 0.52),
+            "$\\chi$", "$\\eta$", {}, EQUATOR, tau="eta", families=SIDEWAYS, dust=PD_LCDM, reference="$a = a_0$",
+            input=PD_LCDM_INPUT,
+            lines=(("surface", "r", "pi/10", "the face of our cell, $\\chi = \\pi/10$"),
+                   ("world", "r", "pi/5", "our nearest image, $\\chi = \\pi/5$"),
+                   ("surface", "r", "3*pi/10", "the far face of its cell, $\\chi = 3\\pi/10$"),
+                   ("shell", "x0", PD_LSS, "the last scattering of the microwaves, $a = a_0/1101$")),
+            marked=(("past", {"x0": PD_NOW, "r": "0"}, "both", "our past light cone today", "past"),
+                    ("past", {"x0": PD_NOW, "r": "pi/5"}, "both", "the past light cone of our nearest image today",
+                     "past")),
+            points=(("mark", (PD_NOW, "0"), "here and now"),)),
     # Tilted universes: Farnsworth's dust on the plane of its time and r, in the parameter eta and in the
     # time u of the surfaces of homogeneity, and the flat model in its own chart and in inertial coordinates,
     # where it is Ellis and King's picture of the whimper.
@@ -10440,6 +10518,35 @@ CAPTIONS = {
         "both ends, so the universe is conformal to the whole of Minkowski space. The dotted curve is the Hubble "
         "sphere, where $|\\nabla R|^2 = 0$ for the areal radius $R = ar$.",
     ],
+    ("poincare_dodecahedral", "comoving", "through"): [
+        "A closed universe of dust along a great circle through us and the centre of a face of our cell, in the "
+        "plane $\\theta = \\pi/2$, with $x = \\chi$ on the right at $\\phi = 0$ and $x = -\\chi$ on the left at "
+        "$\\phi = \\pi$. A Clifford translation through $\\pi/5$ carries the circle onto itself, so it passes "
+        "through ten copies of the cell, and the edges $x = \\pm\\pi$ are one line, the world line of our image at "
+        "the antipode.",
+        "The cones are $d\\chi/d(ct) = \\pm 1/a$, wide open near the bang and the crunch, where the Kretschmann "
+        "scalar diverges. Our past light cone at the moment of greatest expansion crosses the world line of an "
+        "image of us at every $\\pi/5$, five in each direction, the last of them at the bang.",
+    ],
+    ("poincare_dodecahedral", "toroidal", "circle"): [
+        "The same closed universe of dust on the great circle $v = 0$ of the toroidal coordinates, along which "
+        "$\\alpha$ alone moves, its two edges $\\alpha = 0$ and $\\alpha = 2\\pi$ one line. The "
+        "identification $(\\alpha, \\gamma) \\to (\\alpha + \\pi/5, \\gamma + \\pi/5)$ moves every point of this "
+        "circle a tenth of the way round it, so the vertical lines are one world line drawn ten times.",
+        "Light from the bang crosses five cells by the moment of greatest expansion and ten by the crunch: the "
+        "conformal time $\\psi$ runs from $0$ to $2\\pi$, and along the circle a ray keeps $\\psi \\pm \\alpha$ "
+        "fixed.",
+    ],
+    ("poincare_dodecahedral", "conformal", "near"): [
+        "Luminet's universe in the conformal time, along the line from us to the centre of a face of our cell. "
+        "The metric on the plane is $a^2(-d\\eta^2 + d\\chi^2)$, so the rays are straight lines at 45°, and the "
+        "drawing runs from the bang at $\\eta = 0$ to $\\eta = 0.5168$, where $a$ diverges and the universe "
+        "reaches its future infinity.",
+        "Our past light cone today meets the last scattering at $\\chi = 0.3758$, beyond the face of our cell at "
+        "$\\pi/10 = 0.3142$, and so does the past light cone of our nearest image on the other side of the "
+        "face. The two spheres of last scattering cross, and from $\\tan(\\pi/10) = \\tan(0.3758)\\cos\\alpha$ "
+        "each pair of matched circles has the angular radius $\\alpha = 34.6°$.",
+    ],
     ("small_universes", "torus", "cell"): [
         "The plane of $t$ and $x$ ($y = z = 0$) of a torus of dust, a cylinder drawn unrolled, its edges $x = 0$ "
         "and $x = L$ one line. The edges of the cones are $dx/d(ct) = \\pm 1/a$, wide open near the big bang "
@@ -15584,6 +15691,12 @@ CLOSED_FORMS = {
         (lambda t, r: _kt_eta(t) + r, lambda t, r: _kt_eta(t) - r, None),
     ("kopczynski_trautman", "conformal", "radial"): (lambda e, r: e + r, lambda e, r: e - r, None),
     # The small universes' open dust: the conformal time of the parametric solution, found by Newton's method.
+    # The Poincare dodecahedral universe: psi(t) of the closed dust, and the conformal chart's own eta.
+    ("poincare_dodecahedral", "comoving", "through"): (lambda t, c: _pd_psi(t) + c, lambda t, c: _pd_psi(t) - c,
+                                                      lambda t, c: np.abs(t - np.pi / 2) < 1.55),
+    ("poincare_dodecahedral", "toroidal", "circle"): (lambda t, c: _pd_psi(t) + c, lambda t, c: _pd_psi(t) - c,
+                                                     lambda t, c: np.abs(t - np.pi / 2) < 1.55),
+    ("poincare_dodecahedral", "conformal", "near"): (lambda e, c: e + c, lambda e, c: e - c, None),
     ("small_universes", "hyperbolic", "radial"): (lambda t, c: _small_eta(t) + c, lambda t, c: _small_eta(t) - c,
                                                   lambda t, c: t > 0.02),
     ("small_universes", "horn", "along"): (lambda t, x: _small_eta(t) + x, lambda t, x: _small_eta(t) - x,

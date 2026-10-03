@@ -1117,6 +1117,7 @@ def _penrose_wave(view):
 TILTED_MOMENT = 3.0                        # the eta of the surface of Farnsworth's dust that is embedded
 TILTED_LABEL = "$\\eta = 3$"
 SMALL_NOW = 1.2 - 0.22 * math.log(11)      # the moment the small universes' horn is embedded at, in a_0
+PD_NOW = 0.38882                            # the conformal time today in Luminet's universe, as null_rays.PD_NOW
 
 
 def _kt_eta(t):
@@ -3268,6 +3269,9 @@ FLAT = {
         "small_universes", lambda m: across(2 * (1.5 * m.time) ** (1 / 3), 0.0, BIG), view_id="torus")
        for view in ("cell", "images")},
     # The horn is embedded at the moment its spacetime diagram starts the dust from, ct = 6/5 - (11/50) ln 11.
+    # Luminet's universe today, eta = 0.38882 of its conformal chart, along the line to the centre of a face.
+    ("poincare_dodecahedral", "conformal", "near"): lambda: one(
+        "poincare_dodecahedral", lambda m: along(PD_NOW, *m.reach("conformal", "\\chi")), label="today, $\\eta = 0.3888$"),
     ("small_universes", "horn", "along"): lambda: one(
         "small_universes", lambda m: along(SMALL_NOW, *m.reach("horn", "x")), view_id="horn"),
     # Farnsworth's dust is embedded on its surface of homogeneity eta = 3, where u = (sinh 3 - 3)/2 W.
@@ -3366,6 +3370,8 @@ HIDDEN = {
     **{("moving_mirror", view): MIRROR_NO_MOMENT
        for view in ("inertial_thermal", "inertial_collapse", "inertial_uniform", "null", "mirror_rest", "thermal",
                     "collapse", "rindler")},
+    ("poincare_dodecahedral", "comoving", "through"): "closed dust from its bang to its crunch, another member of the family than Luminet's universe, whose moment today is embedded",
+    ("poincare_dodecahedral", "toroidal", "circle"): "closed dust from its bang to its crunch, another member of the family than Luminet's universe, whose moment today is embedded",
     ("small_universes", "hyperbolic", "radial"): "a closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's",
     ("kundt_waves", "kundt", "front"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "near"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
