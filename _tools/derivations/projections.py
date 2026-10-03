@@ -1197,6 +1197,32 @@ CAPTIONS = {
         "Poincaré chart, whose $t = \\tan(\\omega T)/\\omega$ and $r = R/\\cos\\omega T$ both run to infinity there: "
         "a ray leaves that chart at a finite value of its affine parameter, and in the global chart it swings on.",
     ],
+    ("maximally_supersymmetric_plane_wave", "brinkmann", "focus"): [
+        "The surface $x_2 = x_3 = \\dots = x_8 = 0$ of the Brinkmann chart seen from the side, $v$ left out, with "
+        "$x_1$ across and $cu$ up, in units of $1/\\mu$. Light that leaves the event at the origin with any number "
+        "$s$ for its slope swings back across the axis as $x_1 = s\\sin(\\mu cu)/\\mu$ and meets again at "
+        "$\\mu cu = \\pi$ and $2\\pi$, and light running parallel to the axis at $u = 0$, at any distance $a$ "
+        "from it, crosses it at $\\mu cu = \\pi/2$ as $x_1 = a\\cos(\\mu cu)$.",
+        "The wave pulls toward its axis in all eight directions across it alike, so every light ray swings "
+        "with the angular frequency $\\mu c$ in $u$. Each curve is a null geodesic, since the reflection of each "
+        "other direction across the wave keeps it in the surface.",
+    ],
+    ("maximally_supersymmetric_plane_wave", "rosen", "focus"): [
+        "The surface $y_2 = y_3 = \\dots = y_8 = 0$ of the Rosen chart seen from the side, $v$ left out, with "
+        "$y_1$ across and $cu$ up, in units of $1/\\mu$. Light from the event at the origin of the Brinkmann chart "
+        "runs straight up at constant $y_1$, since $x_i = y_i\\sin(\\mu cu)$, and light parallel to the axis "
+        "there, at any distance $a$ from it, runs along $y_1 = a\\cot(\\mu cu)$, out to infinity at both edges.",
+        "The chart ends at $u = 0$ and $\\mu cu = \\pi$, the two foci of the light from the origin, where "
+        "every value of $y_1$ to $y_8$ names one event. Each curve is a null geodesic.",
+    ],
+    ("maximally_supersymmetric_plane_wave", "conformally_flat", "focus"): [
+        "The surface $X_2 = X_3 = \\dots = X_8 = 0$ of the conformally flat chart seen from the side, $V$ left "
+        "out, with $X_1$ across and $cU$ up, in units of $1/\\mu$. The metric is Minkowski's times "
+        "$1/(1 + \\mu^2c^2U^2)$, so every light ray runs straight: $X_1 = s\\,cU$ from the origin, for any "
+        "number $s$, and $X_1 = a$ parallel to the axis, at any distance $a$ from it.",
+        "The rays parallel to the axis cross it at $\\mu cu = \\pi/2$ of the Brinkmann chart, which is "
+        "$U = \\infty$, the edge of this chart. Each curve is a null geodesic.",
+    ],
     ("wormhole_time_machine", "lorentz", "trip"): [
         "The slice $Y = 0$ of $T$, $Z$, and $X$ in the Lorentz frame of the left mouth, $T$ up, with the mouths "
         "drawn as their world lines. The left mouth rests at $Z = 0$, and the right one leaves $Z = 10\\,r_0$ "
@@ -1503,6 +1529,12 @@ FIGURES = [
     # Schrodinger spacetime's global chart at the values its flat views are drawn at, omega = c/beta.
     Projection("schrodinger_spacetime", "global", "trap", "light in the trap", lambda spec: trap_rays(spec),
                {**nr.SCHRODINGER, "omega": 1}, {"X": "0"}, fields=("christoffel",)),
+    # The maximally supersymmetric plane wave in units of 1/mu: one family of light rays in each
+    # chart that keeps a time, on the surface where every direction across the wave but the first is zero.
+    *[Projection("maximally_supersymmetric_plane_wave", chart, "focus", "light focused by the wave",
+                 lambda spec, chart=chart: msw_rays(spec, chart), {"mu": 1},
+                 {f"{letter}_{i}": "0" for i in range(2, 9)}, fields=("christoffel",))
+      for chart, letter in (("brinkmann", "x"), ("rosen", "y"), ("conformally_flat", "X"))],
     # Kundt's simplest wave on the flat space it crosses: the fronts rolled round the null cone.
     Projection("kundt_waves", "kerr_schild", "fronts", "the wave fronts round their envelope",
                lambda spec: kundt_fronts(spec), nr.KUNDT, {"Y": "0"}),
@@ -2411,3 +2443,167 @@ def trap_rays(spec, depths=(1.0, 0.8, 0.6, 0.45, 0.35, 0.3), span=math.pi):
     fig.legend("line", "edge", "the edges of the Poincaré chart, $\\omega T = \\pm\\pi/2$")
     fig.legend("line", "axis", "the boundary $R = 0$")
     return fig.done(pad=0.02), sl
+
+
+# ---------------------------------------------------------------- light focused by the maximally supersymmetric wave
+
+# The light rays of the plane wave's three charts that keep a time: each its time, its null
+# coordinate and the first direction across the wave, the window of that time, and the two
+# families' closed forms in units mu = c = 1, the drawing's units. Family A leaves the axis at
+# the time 0 with slope s across it; family B is parallel to the axis at the time 0, at distance a.
+MSW_RAYS = {
+    "brinkmann": (("u", "v", "x_1"), (0.0, 2 * math.pi),
+                  lambda s, t: s * np.sin(t), lambda a, t: a * np.cos(t)),
+    "rosen": (("u", "v", "y_1"), (0.0, math.pi),
+              lambda s, t: s + 0 * t, lambda a, t: a / np.tan(t)),
+    "conformally_flat": (("U", "V", "X_1"), (0.0, 3.0),
+                         lambda s, t: s * t, lambda a, t: a + 0 * t),
+}
+MSW_SLOPES = (0.5, 1.0, 2.0)
+MSW_HEIGHTS = (0.5, 1.0, 1.5)
+MSW_HALF = 2.2
+MSW_DISC = 1.5            # the radius of the embedding diagram's discs, its `top`
+
+
+def msw_rays(spec, chart):
+    """Light rays of the maximally supersymmetric plane wave on the surface where every direction
+    across the wave but the first is zero, seen from the side with the null coordinate left out:
+    the first direction across the page and the time up it, at mu = 1.
+
+    The reflection of each other direction across the wave keeps every geodesic launched in the
+    surface in it, which is checked on the published Christoffel symbols. Each ray is a null
+    geodesic of the chart, integrated in its time, its null coordinate and its first direction
+    across with those symbols, from a point where it crosses the axis or runs parallel to it, its
+    null component solved from the published metric, whose g of the null coordinate with itself
+    vanishes. It is checked null against the published metric all the way and against its closed
+    form, which the tracing never uses: in the Brinkmann chart x_1 = s sin(mu c u) for the rays
+    from the event at the origin and a cos(mu c u) for those parallel to the axis there, Marolf
+    and Ross's null geodesics; in the Rosen chart y_1 = s and a cot(mu c u), the same rays through
+    x_i = y_i sin(mu c u); in the conformally flat chart X_1 = s cU and a, straight lines, the same
+    rays through x_i = X_i cos(mu c u) and mu c U = tan(mu c u)."""
+    names3, (t0, t1), along, parallel = MSW_RAYS[chart]
+    sl = Slice(spec.metric, spec.system, names3, "cartesian", spec.params, spec.fixed)
+    _, entry, reader = nr.load(spec.metric, spec.system)
+    names = entry["coords"]
+    keep = [names.index(c) for c in names3]
+    syms = [reader.symbol[c] for c in names3]
+    gamma = {}
+    for c in entry["christoffel"]["variants"]["ull"]["nonzero"]:
+        ix = tuple(names.index(n) for n in c["indices"])
+        value = sl.prep(reader(c["value"]))
+        if value == 0 or not all(i in keep for i in ix[1:]):
+            # A symbol with another direction below multiplies a velocity a ray in the surface has none of.
+            continue
+        if ix[0] not in keep:
+            raise SystemExit(f"{key(spec)}: Gamma^{c['indices'][0]}_{c['indices'][1]}{c['indices'][2]} "
+                             "does not vanish on the surface, so a ray launched in it leaves it")
+        if value.free_symbols - set(syms):
+            raise SystemExit(f"{key(spec)}: a Christoffel symbol depends on a coordinate off the surface")
+        gamma[tuple(keep.index(i) for i in ix)] = sp.lambdify(syms, value, "numpy")
+    if abs(sl.metric((0.7, 0.3, 0.9))[1, 1]) > 0:
+        raise SystemExit(f"{key(spec)}: the null coordinate is not null")
+
+    def rhs(_, w):
+        k = w[3:]
+        acc = np.zeros(3)
+        for (a, b, c), f in gamma.items():
+            acc[a] -= float(f(*w[:3])) * k[b] * k[c]
+        return np.concatenate([k, acc])
+
+    def trace(t_start, z, slope, sense, form, lo, hi):
+        g = sl.metric((t_start, 0.0, z))
+        # k = (1, k_n, slope) null: g_tt + 2 g_tn k_n + 2 g_tz slope + g_zz slope^2 = 0, with g_nn = 0.
+        kn = -(g[0, 0] + 2 * g[0, 2] * slope + g[2, 2] * slope ** 2) / (2 * (g[0, 1] + g[1, 2] * slope))
+        start = [t_start, 0.0, z, sense, sense * kn, sense * slope]
+
+        def leave(_, w):
+            return min(w[0] - lo + 1e-9, hi - w[0] + 1e-9, MSW_HALF - abs(w[2]) + 1e-9)
+        leave.terminal = True
+        sol = solve_ivp(rhs, (0, 400), start, events=leave, rtol=1e-12, atol=1e-12, method="DOP853", max_step=0.005)
+        t, n, x = sol.y[:3]
+        if sol.status != 1 or min(abs(t[-1] - lo), abs(t[-1] - hi), abs(MSW_HALF - abs(x[-1]))) > 1e-6:
+            raise SystemExit(f"{key(spec)}: a ray stops before the edge of the window")
+        k = sol.y[3:].T
+        null = max(abs(float(kk @ sl.metric(p) @ kk)) for p, kk in zip(sol.y[:3].T[::10], k[::10]))
+        if not null < 1e-9:
+            raise SystemExit(f"{key(spec)}: a ray misses null by {null:.1e}")
+        miss = float(np.abs(x - form(t)).max())
+        if not miss < 1e-8:
+            raise SystemExit(f"{key(spec)}: a ray misses its closed form by {miss:.1e}")
+        return np.column_stack([x, t])
+
+    fig = Figure(spec.view, spec.label, Camera(-90, 90))
+    fig.flat()
+    flat = lambda P: np.column_stack([P, np.zeros(len(P))])
+    eps = 1e-6
+    lo, hi = (t0 + eps, t1 - eps) if chart == "rosen" else (t0, t1)
+    fig.line("axis", flat(np.array([[0.0, t0], [0.0, t1]])))
+    if chart == "rosen":
+        for edge in (t0, t1):
+            fig.line("edge", flat(np.array([[-MSW_HALF, edge], [MSW_HALF, edge]])))
+    for a in MSW_HEIGHTS:
+        for side in (-1, 1):
+            form = lambda t, a=side * a: parallel(a, t)
+            if chart == "rosen":
+                # The parallel rays cross the axis at mu c u = pi/2, the middle of the chart.
+                mid = math.pi / 2
+                back = trace(mid, 0.0, -side * a, -1, form, lo, hi)
+                on = trace(mid, 0.0, -side * a, 1, form, lo, hi)
+                fig.line("below", flat(np.vstack([back[::-1], on[1:]])))
+            else:
+                fig.line("below", flat(trace(t0, side * a, 0.0, 1, form, lo, hi)))
+    for s in MSW_SLOPES:
+        for side in (-1, 1):
+            form = lambda t, s=side * s: along(s, t)
+            if chart == "rosen":
+                mid = math.pi / 2
+                back = trace(mid, side * s, 0.0, -1, form, lo, hi)
+                on = trace(mid, side * s, 0.0, 1, form, lo, hi)
+                fig.line("above", flat(np.vstack([back[::-1], on[1:]])))
+            else:
+                fig.line("above", flat(trace(t0, 0.0, side * s, 1, form, lo, hi)))
+    # Each wave front of the embedding diagram, the plane of x_1 and x_2 at one u, crosses the surface
+    # in the line of that u. The Rosen chart holds it for 0 < mu c u < pi, as y_1 = x_1/sin(mu c u), and
+    # the conformally flat chart while mu c U = tan(mu c u) stays in the window, as X_1 = x_1/cos(mu c u).
+    if chart in ("rosen", "conformally_flat"):
+        for m in slices.moments(spec.metric):
+            if chart == "rosen" and 0 < m.time < math.pi:
+                at, reach = m.time, MSW_DISC / math.sin(m.time)
+            elif chart == "conformally_flat" and abs(m.time) < math.pi / 2 and math.tan(m.time) <= t1:
+                at, reach = math.tan(m.time), MSW_DISC / math.cos(m.time)
+            else:
+                continue
+            reach = min(reach, MSW_HALF)
+            fig.slice(m, lines=[np.array([[-reach, at, 0.0], [reach, at, 0.0]])])
+    if chart == "brinkmann":
+        # Each wave front of the embedding diagram, the plane of x_1 and x_2 at one u, crosses the
+        # surface in the line of that u, out to the radius 1.5/mu of the flat disc it is drawn as,
+        # in the ring's view and in the tube's alike.
+        for m in slices.moments(spec.metric):
+            fig.slice(m, lines=[np.array([[-MSW_DISC, m.time, 0.0], [MSW_DISC, m.time, 0.0]])])
+        for k in (1, 2):
+            fig.point("string", np.array([0.0, k * math.pi, 0.0]))
+        fig.label(np.array([0.0, math.pi, 0.0]), "$\\mu cu = \\pi$", "l", cls="small", dx=8)
+        fig.label(np.array([0.0, 2 * math.pi, 0.0]), "$\\mu cu = 2\\pi$", "l", cls="small", dx=8)
+        fig.legend("line", "above", "light leaving the event at the origin across the axis, with slopes "
+                                    "$\\pm 1/2$, $\\pm 1$ and $\\pm 2$")
+        fig.legend("line", "below", "light running parallel to the axis at $u = 0$, at $\\mu x_1 = \\pm 1/2$, "
+                                    "$\\pm 1$ and $\\pm 3/2$")
+        fig.legend("line", "axis", "the axis, $x_1 = 0$")
+        fig.legend("point", "string", "the foci, where the light from the origin meets again")
+    elif chart == "rosen":
+        fig.label(np.array([MSW_HALF, t0, 0.0]), "$u = 0$", "br", cls="small", dy=-4)
+        fig.label(np.array([MSW_HALF, t1, 0.0]), "$\\mu cu = \\pi$", "tr", cls="small", dy=4)
+        fig.legend("line", "above", "light from the event at the origin of the Brinkmann chart, at "
+                                    "$\\mu y_1 = \\pm 1/2$, $\\pm 1$ and $\\pm 2$")
+        fig.legend("line", "below", "light running parallel to the axis at $u = 0$ in the Brinkmann chart, at "
+                                    "$\\mu x_1 = \\pm 1/2$, $\\pm 1$ and $\\pm 3/2$")
+        fig.legend("line", "axis", "the axis, $y_1 = 0$")
+        fig.legend("line", "edge", "the edges of the chart, $u = 0$ and $\\mu cu = \\pi$")
+    else:
+        fig.legend("line", "above", "light leaving the event at the origin across the axis, with slopes "
+                                    "$\\pm 1/2$, $\\pm 1$ and $\\pm 2$")
+        fig.legend("line", "below", "light running parallel to the axis at $U = 0$, at $\\mu X_1 = \\pm 1/2$, "
+                                    "$\\pm 1$ and $\\pm 3/2$")
+        fig.legend("line", "axis", "the axis, $X_1 = 0$")
+    return fig.done(pad=0.03), sl

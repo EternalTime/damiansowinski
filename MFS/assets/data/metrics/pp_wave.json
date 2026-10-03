@@ -103,6 +103,11 @@
       "id": "bondi_sachs",
       "kind": "programme",
       "text": "Papers VII and VIII of the series whose paper III gave the exact plane waves. They turn from the wave to its source and show that an isolated body loses mass as it radiates [bondi1962, sachs1962]."
+    },
+    {
+      "id": "maximally_supersymmetric_plane_wave",
+      "kind": "family",
+      "text": "A plane wave of ten dimensions with $H = -\\mu^2\\left(x_1^2 + \\dots + x_8^2\\right)$, the same in every direction across it, held up by a 5-form field of supergravity. It keeps every supersymmetry of the theory [blau2002]."
     }
   ],
   "references": [
@@ -145,7 +150,8 @@
     "chandrasekhar1986",
     "podolsky1999expanding",
     "bondi1962",
-    "sachs1962"
+    "sachs1962",
+    "blau2002"
   ],
   "coordinates": [
     {
