@@ -220,6 +220,11 @@
       "id": "kerr_scalar_hair",
       "kind": "generalisation",
       "text": "Kerr's black hole with a cloud of massive complex scalar field that turns with the horizon, $\\omega = m\\Omega_H$, and neither falls in nor escapes. The family branches off Kerr's along the line of black holes that can hold such a cloud [herdeiro2014]."
+    },
+    {
+      "id": "interstellar_wormhole",
+      "kind": "programme",
+      "text": "The wormhole of the same film, Interstellar, drawn by the same team with the same code as Gargantua [james2015, james2015lensing]."
     }
   ],
   "references": [
@@ -288,7 +293,8 @@
     "gibbons2013",
     "semerak2016",
     "podolsky2025",
-    "herdeiro2014"
+    "herdeiro2014",
+    "james2015"
   ],
   "coordinates": [
     {

@@ -1085,6 +1085,78 @@
   ],
   "sphere": null
  },
+ "big_rip/cartesian": {
+  "stamp": "51206be22b243ff0",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "big_rip/comoving": {
+  "stamp": "2d4c45301ac5f435",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "big_rip/conformal": {
+  "stamp": "a6c0ff89edde47b3",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "black_saturn/polar": {
   "stamp": "0bf4aacf6db52eac",
   "relations": {},
@@ -1304,6 +1376,150 @@
   ],
   "sphere": [
    "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "black_to_white_hole/interior": {
+  "stamp": "6f40f3b82dcb1588",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "black_to_white_hole/kruskal": {
+  "stamp": "474f811ce0075f68",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "black_to_white_hole/lemaitre": {
+  "stamp": "3861e4c9f1af5f7a",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "black_to_white_hole/painleve_gullstrand_ingoing": {
+  "stamp": "f9e8aff04dd11373",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "black_to_white_hole/painleve_gullstrand_outgoing": {
+  "stamp": "1670000d09de3df5",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "black_to_white_hole/schwarzschild": {
+  "stamp": "500dd36fb0d2739f",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
    "\\theta",
    "\\phi"
   ]
@@ -2370,6 +2586,69 @@
   },
   "conformally_flat": true,
   "killing": [],
+  "sphere": null
+ },
+ "btz_shock_wave/discontinuous": {
+  "stamp": "e53c9aee6ecb81e0",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "btz_shock_wave/exterior": {
+  "stamp": "8ebc7b593ddcff0c",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-2/ell**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "btz_shock_wave/kruskal": {
+  "stamp": "28980ef2bb054357",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
   "sphere": null
  },
  "c_metric/hong_teo": {
@@ -4739,6 +5018,208 @@
    "\\phi"
   ]
  },
+ "freund_rubin/conformal": {
+  "stamp": "702df3d3c1953434",
+  "relations": {},
+  "orders": null,
+  "dimension": 11,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\psi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\alpha",
+   "\\beta",
+   "\\gamma",
+   "\\kappa",
+   "\\xi",
+   "\\omega",
+   "\\psi"
+  ]
+ },
+ "freund_rubin/global": {
+  "stamp": "e8478f346d79e335",
+  "relations": {},
+  "orders": null,
+  "dimension": 11,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\psi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\alpha",
+   "\\beta",
+   "\\gamma",
+   "\\kappa",
+   "\\xi",
+   "\\omega",
+   "\\psi"
+  ]
+ },
+ "freund_rubin/poincare": {
+  "stamp": "88cf0d3946304f12",
+  "relations": {},
+  "orders": null,
+  "dimension": 11,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\psi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\alpha",
+   "\\beta",
+   "\\gamma",
+   "\\kappa",
+   "\\xi",
+   "\\omega",
+   "\\psi"
+  ]
+ },
+ "freund_rubin/proper": {
+  "stamp": "dae16ef6c0b6b504",
+  "relations": {},
+  "orders": null,
+  "dimension": 11,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\psi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\alpha",
+   "\\beta",
+   "\\gamma",
+   "\\kappa",
+   "\\xi",
+   "\\omega",
+   "\\psi"
+  ]
+ },
+ "freund_rubin/static": {
+  "stamp": "4c606bd8fc39e7c0",
+  "relations": {},
+  "orders": null,
+  "dimension": 11,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\psi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\alpha",
+   "\\beta",
+   "\\gamma",
+   "\\kappa",
+   "\\xi",
+   "\\omega",
+   "\\psi"
+  ]
+ },
  "frw/comoving_spherical": {
   "stamp": "a353515a39ee2f6f",
   "relations": {},
@@ -5814,6 +6295,93 @@
    "\\phi"
   ]
  },
+ "interstellar_wormhole/cylinder": {
+  "stamp": "c31f84579a7c6ee0",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\ell",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "interstellar_wormhole/flare": {
+  "stamp": "49ccec45bf99f2c0",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "interstellar_wormhole/proper_distance": {
+  "stamp": "3d09abf796c6f763",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "israel_shell/exterior": {
   "stamp": "bde8539b950c854c",
   "relations": {},
@@ -5963,6 +6531,104 @@
     "timelike": true,
     "hypersurface_orthogonal": false,
     "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "jackiw_teitelboim_black_hole/global": {
+  "stamp": "eeecb460175589ca",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\tau",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "jackiw_teitelboim_black_hole/kruskal": {
+  "stamp": "e21456abcee8ae0b",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
+ "jackiw_teitelboim_black_hole/poincare": {
+  "stamp": "877bb6d3d3297077",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "T",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "jackiw_teitelboim_black_hole/proper_distance": {
+  "stamp": "99912e673fc0167f",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "jackiw_teitelboim_black_hole/static": {
+  "stamp": "26717d438a8f1f1f",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
    }
   ],
   "sphere": null
@@ -10106,6 +10772,74 @@
    "\\phi"
   ]
  },
+ "poincare_dodecahedral/comoving": {
+  "stamp": "8125683b1897297f",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "poincare_dodecahedral/conformal": {
+  "stamp": "a07fe6108666ccab",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "poincare_dodecahedral/toroidal": {
+  "stamp": "087d15e9376c7861",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\alpha",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\gamma",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "point_particle_2plus1/circumference": {
   "stamp": "e83e9ae93f197703",
   "relations": {},
@@ -12956,6 +13690,78 @@
    "\\phi"
   ]
  },
+ "supertranslation_hair/bondi_advanced": {
+  "stamp": "7d838b917c494a7e",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "v",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "supertranslation_hair/bondi_retarded": {
+  "stamp": "79fae2a0b88e8cbb",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "u",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "supertranslation_hair/static": {
+  "stamp": "548406b125c96232",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "szekeres/axisymmetric": {
   "stamp": "f1b6b004e1900387",
   "relations": {},
@@ -14083,6 +14889,185 @@
    "\\phi"
   ]
  },
+ "universe_from_nothing/closed": {
+  "stamp": "125ea9b94262fed1",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/ell**2",
+   "sign": 1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "universe_from_nothing/conformal": {
+  "stamp": "77e08eb32b5f6f1f",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/ell**2",
+   "sign": 1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "universe_from_nothing/four_sphere": {
+  "stamp": "46bbc363d4ebf95e",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/ell**2",
+   "sign": 1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "universe_from_nothing/lapse": {
+  "stamp": "672b44c37ce415cd",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/ell**2",
+   "sign": 1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "universe_from_nothing/scale_factor": {
+  "stamp": "53b60c16ea92c935",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/ell**2",
+   "sign": 1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "unruh_acoustic_hole/laboratory": {
+  "stamp": "4fb058f9f33b2836",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "unruh_acoustic_hole/unruh": {
+  "stamp": "6d0f1ba2589be021",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\tau",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "vaidya/eddington_finkelstein_ingoing": {
   "stamp": "12fa67b03da6a9b5",
   "relations": {},
@@ -14189,6 +15174,102 @@
    "\\theta",
    "\\phi"
   ]
+ },
+ "vuorio_warped_ads/cylindrical": {
+  "stamp": "08af0ac07f63d099",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "vuorio_warped_ads/disc": {
+  "stamp": "f5e327eea65fd1b7",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "vuorio_warped_ads/fibred": {
+  "stamp": "aec2a9d015663be3",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "u",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "vuorio_warped_ads/horospherical": {
+  "stamp": "db677827381f67ae",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   }
+  ],
+  "sphere": null
  },
  "wahlquist/mars": {
   "stamp": "c20292647fbf3eb7",

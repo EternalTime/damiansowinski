@@ -64,6 +64,11 @@
       "id": "cremmer_scherk",
       "kind": "family",
       "text": "Cremmer and Scherk's solution of 1976: Minkowski space of four dimensions times a sphere of radius $a$ in six dimensions, the sphere held by a monopole's field and the flat dimensions by $\\Lambda = 1/2a^2$ [horvath1977]. The flat plane times a sphere is the same balance with two flat dimensions."
+    },
+    {
+      "id": "interstellar_wormhole",
+      "kind": "composite",
+      "text": "Interstellar's wormhole has a piece of the flat plane times a sphere for its middle, with $b$ the wormhole's radius $\\rho$: a cylinder of length $2a$ whose two ends flare out into flat space [james2015]."
     }
   ],
   "references": [
@@ -79,7 +84,8 @@
     "caldarelli2001extremal",
     "dias2003",
     "podolsky2003kundt",
-    "horvath1977"
+    "horvath1977",
+    "james2015"
   ],
   "coordinates": [
     {

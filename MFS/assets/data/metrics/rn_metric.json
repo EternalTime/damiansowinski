@@ -199,6 +199,11 @@
       "id": "quantum_oppenheimer_snyder",
       "kind": "family",
       "text": "A tower of regions like Reissner and Nordström's, from a correction to Schwarzschild's $f$ that falls off as $r^{-4}$ and a ball of dust that bounces inside it [lewandowski2023]."
+    },
+    {
+      "id": "jackiw_teitelboim_black_hole",
+      "kind": "limit",
+      "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Bring the mass down toward the charge and zoom in on the horizon: in that limit the plane of $t$ and $r$ becomes that black hole, with the area of the sphere as its dilaton [mertens2023]."
     }
   ],
   "references": [
@@ -249,7 +254,8 @@
     "clement2016",
     "blazquez2021",
     "bah2021",
-    "lewandowski2023"
+    "lewandowski2023",
+    "mertens2023"
   ],
   "coordinates": [
     {

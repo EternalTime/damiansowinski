@@ -48,6 +48,11 @@
       "id": "maitra_dust",
       "kind": "family",
       "text": "Uncharged dust that turns faster near its axis than far from it, with no magnetic field to help. Its circles about the axis stay spacelike at every radius [maitra1966, chan2024]."
+    },
+    {
+      "id": "vuorio_warped_ads",
+      "kind": "family",
+      "text": "Empty spaces of gravity in three dimensions with a mass for the graviton, a timelike line twisted over a hyperbolic plane of curvature $-m^2$. This universe's plane of $t$, $r$, and $\\phi$ is the same line element at $m = 0$ [reboucas2009]."
     }
   ],
   "references": [
@@ -68,7 +73,8 @@
     "drukker2003",
     "soleng1994",
     "maitra1966",
-    "chan2024"
+    "chan2024",
+    "reboucas2009"
   ],
   "coordinates": [
     {

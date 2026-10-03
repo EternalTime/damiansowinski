@@ -1,0 +1,1292 @@
+{
+  "id": "supertranslation_hair",
+  "name": "Flat Space with Supertranslation Hair",
+  "short_name": "Supertranslation Hair",
+  "description": "Minkowski space in the coordinates of a supertranslation, written in closed form by Geoffrey Compère and Jiang Long in 2016. Every component of the Riemann tensor vanishes, and each function on the sphere of directions gives a different vacuum, between which a burst of gravitational waves carries space.",
+  "tags": [
+    "vacuum",
+    "flat",
+    "conformally flat",
+    "static",
+    "stationary",
+    "axisymmetric",
+    "asymptotically flat",
+    "retarded time",
+    "supertranslation",
+    "gravitational memory",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit.",
+  "history": "A gravitational wave detector measures the distance between mirrors that hang free, and a burst passing through can leave that distance changed for good [braginsky1987memory, christodoulou1991]. Vladimir B. Braginsky and Kip S. Thorne named such signals bursts with memory: the strain rises, oscillates for a few cycles, and \"settles down into a non-zero final value\" [braginsky1987memory]. Part of the change comes from the energy carried off by the waves themselves, a nonlinear effect which Demetrios Christodoulou showed to be \"of the same order of magnitude as the linear effects\" [christodoulou1991]. Far from the source the memory has an exact form: the positions and clock times of an array of detectors before and after a pulse \"differ by a BMS supertranslation\", in the words of Andrew Strominger and Alexander Zhiboedov [strominger2016].¶The letters stand for Hermann Bondi, M. G. J. van der Burg, A. W. K. Metzner, and R. Sachs, who found, studying radiating spacetimes in 1962, that the coordinate changes keeping such a spacetime flat far away make up a group larger than Poincaré's [bondi1962, sachs1962bms]. Moving a source shifts the time at which its light reaches a distant sphere of observers by an amount proportional to the cosine of the angle between the move and the line of sight [bondi1962, sachs1962bms]. A supertranslation lets that shift be any function of the direction [bondi1962, sachs1962bms]. Empty flat space is then one vacuum among many, each with zero energy and each carried to the next by a supertranslation [he2015bms, compere2016vacua]. In the quantum theory the gravitons of zero energy are \"the Goldstone bosons of spontaneously broken supertranslation invariance\", in the phrase of Temple He, Vyacheslav Lysov, Prahar Mitra, and Andrew Strominger [he2015bms]. What does one of the other vacua look like at a finite distance?¶At the Université Libre de Bruxelles in January 2016, Geoffrey Compère and Jiang Long summed the series by which a supertranslation enters the metric, a series with no last term, and wrote the result in closed form [compere2016vacua]. In static coordinates the vacuum with the field $C$ is $$ds^2 = -c^2dt^2 + d\\rho^2 + \\left[\\left(\\rho - C\\right)^2\\gamma_{AB} - 2\\left(\\rho - C\\right)D_AD_BC + D_AD_EC\\,D_BD^EC\\right]d\\theta^A d\\theta^B,$$ where $\\theta^A$ are the two angles, $\\gamma_{AB}$ is the metric of the round sphere, $D_A$ is its derivative, and the constant part of $C$ is left out [compere2016vacua]. Every component of its Riemann tensor vanishes, since it is Minkowski space in other coordinates [compere2016vacua]. In Cartesian coordinates each line of constant angle is a straight line pointing in its own direction, and the surfaces of constant $\\rho$, round spheres when $C = 0$, are shells whose shape depends on $C$ [compere2016final]. The distance $r$ from the origin follows a rule they named after Pythagoras, $r^2 = (\\rho - C)^2 + D_AC\\,D^AC$ [compere2016final].¶Followed inward, the shells grow sharp edges, and the coordinates end where the metric of a shell has zero determinant [compere2016vacua, compere2016final]. There the vacuum holds a defect \"which carries no Poincaré charges but which generically carries superrotation charges\" [compere2016vacua]. Compère and Long later named the surface the supertranslation horizon, and since geodesics reach it at a finite affine parameter and carry on through, they concluded that it is \"a smooth surface where space does not end\" [compere2016final]. For the simplest quadrupole field its embedding in flat space has cusps along lines and at points [compere2016final]. No experiment within a finite solid angle sees the field, and detecting it takes \"an array of rulers around the central object\" [compere2016final].¶Does a black hole remember how it formed? Two weeks before Compère and Long, Stephen W. Hawking, Malcolm J. Perry, and Andrew Strominger had argued that the conservation laws of supertranslations \"require black holes to carry a large amount of soft (i.e., zero-energy) supertranslation hair\" [hawking2016softhair]. Compère and Long put the same field on Schwarzschild's black hole in isotropic coordinates, with $C$ in the final state of a collapse fixed by how the energy falling in and coming out is spread over the sky [compere2016final]. A shell of light falling in evenly, as in Vaidya's metric, leaves no field, and the collapse ends in Schwarzschild's black hole [compere2016final]. Throwing an asymmetric shock wave into a black hole supertranslates it, and black holes with different hair differ in the superrotation charges measured at infinity [hawking2017superrotation].¶Rotations and boosts have an infinite extension of their own, the superrotations [compere2016vacua, strominger2017superrotations]. At null infinity they act on the sphere of directions as Virasoro generators do [strominger2017superrotations]. A finite superrotation of the vacuum makes the energy unbounded below, so Compère and Long ruled such transformations out around the vacua [compere2016vacua]. In Strominger and Zhiboedov's account a finite superrotation does happen, when a cosmic string snaps by nucleating a pair of black holes, a process described by the C-metric, and the spacetimes before and after the string decays differ by one [strominger2017superrotations]. In 2018 Compère, Adrien Fiorucci, and Romain Ruzziconi wrote the orbit of Minkowski space under supertranslations and super-Lorentz transformations in closed form, and tied the jumps between those vacua to the displacement memory and to a refraction memory [compere2018superboost].",
+  "related": [
+    {
+      "id": "minkowski",
+      "kind": "locally_same",
+      "text": "Minkowski space itself, in the coordinates a supertranslation carries it to. Every component of the Riemann tensor vanishes in both [compere2016vacua]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "generalisation",
+      "text": "Bondi's radiating metric, whose axisymmetric chart holds the retarded chart here as the member with $e^{2\\beta} = r/W$ and $re^{\\gamma} = W + \\sigma$. The shear $\\sigma$ does not depend on $u$, so there is no news [compere2016vacua]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "Compère and Long put the same supertranslation field on Schwarzschild's black hole in isotropic coordinates, as the final state of a collapse that was not spherical [compere2016final]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "family",
+      "text": "A spherical shell of light falling in, as in Vaidya's metric, leaves a black hole with no supertranslation field [compere2016final]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "family",
+      "text": "A cosmic string that snaps by making a pair of black holes, a process described by the C-metric, changes the spacetime by a finite superrotation, the partner of a supertranslation [strominger2017superrotations]."
+    }
+  ],
+  "references": [
+    "braginsky1987memory",
+    "christodoulou1991",
+    "strominger2016",
+    "bondi1962",
+    "sachs1962bms",
+    "he2015bms",
+    "compere2016vacua",
+    "compere2016final",
+    "hawking2016softhair",
+    "hawking2017superrotation",
+    "strominger2017superrotations",
+    "compere2018superboost"
+  ],
+  "coordinates": [
+    {
+      "id": "static",
+      "name": "Static (Compère-Long)",
+      "coords": [
+        "t",
+        "\\rho",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\rho > C + \\max\\left(C'', C'\\cot\\theta\\right) \\;\\text{(outside the supertranslation horizon)}",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "C = C(\\theta)",
+          "description": "The supertranslation field, a length that depends on the direction; here it is axisymmetric. $C = a\\cos\\theta$ moves the origin a distance $a$ along the axis, and a constant moves the zero of $\\rho$. The prime is $C' = dC/d\\theta$."
+        },
+        {
+          "symbol": "B = \\left(\\rho - C\\right)\\sin\\theta - C'\\cos\\theta",
+          "description": "A length, the radius of the circle of constant $t$, $\\rho$, and $\\theta$ about the axis of symmetry."
+        }
+      ],
+      "convention": "We use coordinates $(t, \\rho, \\theta, \\phi)$, with $t$ carrying dimensions of time, $\\rho$ a length along each line of constant $\\theta$ and $\\phi$, which is a straight line, and $\\theta$ and $\\phi$ the angles about the axis of symmetry. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + d\\rho^2 + \\left(\\rho - C - C''\\right)^2d\\theta^2 + B^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\left(\\rho - C - C''\\right)^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "B^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{\\left(\\rho - C - C''\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{B^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(\\rho - C - C''\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-B\\sin\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{\\rho - C - C''}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{1}{\\rho - C - C''}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{C' + C'''}{\\rho - C - C''}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{B\\cos\\theta}{\\rho - C - C''}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sin\\theta}{B}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\sin\\theta}{B}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\rho - C - C''\\right)\\cos\\theta}{B}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(\\rho - C - C''\\right)\\cos\\theta}{B}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(\\rho - C - C''\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\left(\\rho - C - C''\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\left(\\rho - C - C''\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-B\\sin\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "B\\sin\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "B\\sin\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(C' + C'''\\right)\\left(\\rho - C - C''\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-B\\left(\\rho - C - C''\\right)\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "B\\left(\\rho - C - C''\\right)\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "B\\left(\\rho - C - C''\\right)\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{\\rho} - \\left(\\rho - C - C''\\right)\\dot{\\theta}^2 - B\\sin\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{\\rho - C - C''}\\dot{\\rho}\\dot{\\theta} - \\dfrac{C' + C'''}{\\rho - C - C''}\\dot{\\theta}^2 - \\dfrac{B\\cos\\theta}{\\rho - C - C''}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\sin\\theta}{B}\\dot{\\rho}\\dot{\\phi} + \\dfrac{2\\left(\\rho - C - C''\\right)\\cos\\theta}{B}\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "bondi_retarded",
+      "name": "Bondi Gauge, Retarded",
+      "coords": [
+        "u",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r = 0 \\;\\text{(the supertranslation horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\sigma = \\sigma(\\theta)",
+          "description": "The shear of the surfaces of constant $u$ and $r$, a length, $\\sigma = \\tfrac{1}{2}\\left(C'\\cot\\theta - C''\\right)$ with $C(\\theta)$ the supertranslation field; far away $g_{\\theta\\theta} = r^2 + 2\\sigma r + \\dots$, and $\\sigma$ does not depend on $u$, so the vacuum carries no news."
+        },
+        {
+          "symbol": "W = \\sqrt{r^2 + \\sigma^2}",
+          "description": "A length, the shorthand $W = \\sqrt{r^2 + \\sigma^2}$, which is $\\rho - \\tfrac{1}{2}\\left(C'' + C'\\cot\\theta\\right) - C$ in the static chart."
+        }
+      ],
+      "convention": "We use coordinates $(u, r, \\theta, \\phi)$ of Bondi's form: the retarded time $u$, carrying dimensions of time, is constant on each outgoing light cone, $\\theta$ and $\\phi$ are constant along each of its rays, and $r$ is the luminosity distance, with $4\\pi r^2$ the area of the surface of constant $u$ and $r$. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2du^2 - \\dfrac{2r}{W}c\\,du\\,dr + 2\\left(\\partial_\\theta\\sigma\\left(1 - \\dfrac{\\sigma}{W}\\right) + 2\\sigma\\cot\\theta\\right)c\\,du\\,d\\theta + \\left(W + \\sigma\\right)^2d\\theta^2 + \\left(W - \\sigma\\right)^2\\sin^2\\theta\\,d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "u",
+            "r"
+          ],
+          "value": "-\\dfrac{r}{W}"
+        },
+        {
+          "indices": [
+            "r",
+            "u"
+          ],
+          "value": "-\\dfrac{r}{W}"
+        },
+        {
+          "indices": [
+            "u",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "u"
+          ],
+          "value": "\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\left(W + \\sigma\\right)^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\left(W - \\sigma\\right)^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "r"
+          ],
+          "value": "-\\dfrac{W}{r}"
+        },
+        {
+          "indices": [
+            "r",
+            "u"
+          ],
+          "value": "-\\dfrac{W}{r}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{\\left(W^4\\sin^2\\theta + 2W^3\\,\\sigma\\sin^2\\theta - 3W^2\\,\\sigma^2\\sin^2\\theta + 4W^2\\,\\sigma^2 + 4W^2\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta + W^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - 4W\\,\\sigma^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta - 2W\\,\\sigma\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta + \\sigma^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta\\right)\\csc^2\\theta}{r^2\\left(W + \\sigma\\right)^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{r\\left(W + \\sigma\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "r"
+          ],
+          "value": "\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{r\\left(W + \\sigma\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{\\left(W + \\sigma\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{\\left(W - \\sigma\\right)^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "W + \\sigma"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\left(W - \\sigma\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(r - W\\right)\\left(r + W\\right)}{r\\,W^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2W^2\\,\\sigma\\cos\\theta + W^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta - 2W\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W^2\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2W^2\\,\\sigma\\cos\\theta + W^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta - 2W\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W^2\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(W - \\sigma\\right)\\left(W^4\\sin^2\\theta + 3W^3\\,\\sigma\\sin^2\\theta - 2W^3\\,\\sigma + 2W^3\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta + W^3\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta + 6W^2\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta + W^2\\,\\sigma\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta - W^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - 4W\\,\\sigma\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - \\sigma^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta\\right)\\csc^2\\theta}{r\\,W^2\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(W - \\sigma\\right)\\left(W^2\\sin^2\\theta - W\\,\\sigma\\sin^2\\theta + 2W\\,\\sigma + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta\\right)}{r\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r}{W\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{W\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(W - \\sigma\\right)\\sin\\theta\\cos\\theta}{W + \\sigma}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r}{W\\left(W - \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{W\\left(W - \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(r - W\\right)\\left(r + W\\right)}{W^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r\\,\\sigma\\,\\partial_\\theta\\sigma}{W^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\,\\sigma\\,\\partial_\\theta\\sigma}{W^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2W^3\\,\\sigma - 2W^3\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta - W^3\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta + W^2\\,\\sigma\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta + W^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - \\sigma^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta\\right)\\csc^2\\theta}{W^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r\\left(W + \\sigma\\right)}{W}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r\\left(W + \\sigma\\right)}{W}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\left(W + \\sigma\\right)}{W}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(W - \\sigma\\right)\\sin^2\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(W - \\sigma\\right)\\sin^2\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\left(W - \\sigma\\right)\\sin^2\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(W + \\sigma\\right)^2\\,\\partial_\\theta\\sigma}{W}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(W - \\sigma\\right)^2\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\sin\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(W - \\sigma\\right)^2\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\sin\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(W - \\sigma\\right)^2\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\sin\\theta}{W}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} + \\left(W + \\sigma\\right)\\dot{\\theta}^2 + \\left(W - \\sigma\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{r} - \\dfrac{\\left(r - W\\right)\\left(r + W\\right)}{r\\,W^2}\\dot{r}^2 + \\dfrac{2\\left(2W^2\\,\\sigma\\cos\\theta + W^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta - 2W\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W^2\\left(W + \\sigma\\right)}\\dot{r}\\dot{\\theta} - \\dfrac{\\left(W - \\sigma\\right)\\left(W^4\\sin^2\\theta + 3W^3\\,\\sigma\\sin^2\\theta - 2W^3\\,\\sigma + 2W^3\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta + W^3\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta + 6W^2\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta + W^2\\,\\sigma\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta - W^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - 4W\\,\\sigma\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - \\sigma^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta\\right)\\csc^2\\theta}{r\\,W^2\\left(W + \\sigma\\right)}\\dot{\\theta}^2 - \\dfrac{\\left(W - \\sigma\\right)\\left(W^2\\sin^2\\theta - W\\,\\sigma\\sin^2\\theta + 2W\\,\\sigma + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta\\right)}{r\\left(W + \\sigma\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2r}{W\\left(W + \\sigma\\right)}\\dot{r}\\dot{\\theta} - \\dfrac{2\\sigma\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W\\left(W + \\sigma\\right)}\\dot{\\theta}^2 - \\dfrac{\\left(W - \\sigma\\right)\\sin\\theta\\cos\\theta}{W + \\sigma}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2r}{W\\left(W - \\sigma\\right)}\\dot{r}\\dot{\\phi} + \\dfrac{2\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "bondi_advanced",
+      "name": "Bondi Gauge, Advanced",
+      "coords": [
+        "v",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "v \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r = 0 \\;\\text{(the supertranslation horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\sigma = \\sigma(\\theta)",
+          "description": "The shear of the surfaces of constant $v$ and $r$, a length, $\\sigma = \\tfrac{1}{2}\\left(C'\\cot\\theta - C''\\right)$ with $C(\\theta)$ the supertranslation field; far away $g_{\\theta\\theta} = r^2 + 2\\sigma r + \\dots$, and $\\sigma$ does not depend on $v$, so the vacuum carries no news."
+        },
+        {
+          "symbol": "W = \\sqrt{r^2 + \\sigma^2}",
+          "description": "A length, the shorthand $W = \\sqrt{r^2 + \\sigma^2}$, which is $\\rho - \\tfrac{1}{2}\\left(C'' + C'\\cot\\theta\\right) - C$ in the static chart."
+        }
+      ],
+      "convention": "We use coordinates $(v, r, \\theta, \\phi)$ of Bondi's form about past null infinity: the advanced time $v$, carrying dimensions of time, is constant on each ingoing light cone, $\\theta$ and $\\phi$ are constant along each of its rays, and $r$ is the luminosity distance, with $4\\pi r^2$ the area of the surface of constant $v$ and $r$. We take components in the chart $x^0 = cv$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dv^2 + \\dfrac{2r}{W}c\\,dv\\,dr - 2\\left(\\partial_\\theta\\sigma\\left(1 - \\dfrac{\\sigma}{W}\\right) + 2\\sigma\\cot\\theta\\right)c\\,dv\\,d\\theta + \\left(W + \\sigma\\right)^2d\\theta^2 + \\left(W - \\sigma\\right)^2\\sin^2\\theta\\,d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "r"
+          ],
+          "value": "\\dfrac{r}{W}"
+        },
+        {
+          "indices": [
+            "r",
+            "v"
+          ],
+          "value": "\\dfrac{r}{W}"
+        },
+        {
+          "indices": [
+            "v",
+            "\\theta"
+          ],
+          "value": "-\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "v"
+          ],
+          "value": "-\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\left(W + \\sigma\\right)^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\left(W - \\sigma\\right)^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "v",
+            "r"
+          ],
+          "value": "\\dfrac{W}{r}"
+        },
+        {
+          "indices": [
+            "r",
+            "v"
+          ],
+          "value": "\\dfrac{W}{r}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{\\left(W^4\\sin^2\\theta + 2W^3\\,\\sigma\\sin^2\\theta - 3W^2\\,\\sigma^2\\sin^2\\theta + 4W^2\\,\\sigma^2 + 4W^2\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta + W^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - 4W\\,\\sigma^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta - 2W\\,\\sigma\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta + \\sigma^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta\\right)\\csc^2\\theta}{r^2\\left(W + \\sigma\\right)^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{r\\left(W + \\sigma\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "r"
+          ],
+          "value": "\\dfrac{\\left(2W\\,\\sigma\\cos\\theta + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{r\\left(W + \\sigma\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{\\left(W + \\sigma\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{\\left(W - \\sigma\\right)^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(W + \\sigma\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(W - \\sigma\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(r - W\\right)\\left(r + W\\right)}{r\\,W^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2W^2\\,\\sigma\\cos\\theta + W^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta - 2W\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W^2\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2W^2\\,\\sigma\\cos\\theta + W^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta - 2W\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W^2\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(W - \\sigma\\right)\\left(W^4\\sin^2\\theta + 3W^3\\,\\sigma\\sin^2\\theta - 2W^3\\,\\sigma + 2W^3\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta + W^3\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta + 6W^2\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta + W^2\\,\\sigma\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta - W^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - 4W\\,\\sigma\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - \\sigma^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta\\right)\\csc^2\\theta}{r\\,W^2\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(W - \\sigma\\right)\\left(W^2\\sin^2\\theta - W\\,\\sigma\\sin^2\\theta + 2W\\,\\sigma + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta\\right)}{r\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r}{W\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{W\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\sigma\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W\\left(W + \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(W - \\sigma\\right)\\sin\\theta\\cos\\theta}{W + \\sigma}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r}{W\\left(W - \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{W\\left(W - \\sigma\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(r - W\\right)\\left(r + W\\right)}{W^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r\\,\\sigma\\,\\partial_\\theta\\sigma}{W^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r\\,\\sigma\\,\\partial_\\theta\\sigma}{W^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2W^3\\,\\sigma - 2W^3\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta - W^3\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta + W^2\\,\\sigma\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta + W^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - \\sigma^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta\\right)\\csc^2\\theta}{W^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r\\left(W + \\sigma\\right)}{W}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r\\left(W + \\sigma\\right)}{W}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\left(W + \\sigma\\right)}{W}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(W - \\sigma\\right)\\sin^2\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(W - \\sigma\\right)\\sin^2\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\left(W - \\sigma\\right)\\sin^2\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(W + \\sigma\\right)^2\\,\\partial_\\theta\\sigma}{W}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(W - \\sigma\\right)^2\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\sin\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(W - \\sigma\\right)^2\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\sin\\theta}{W}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(W - \\sigma\\right)^2\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\sin\\theta}{W}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{v} - \\left(W + \\sigma\\right)\\dot{\\theta}^2 - \\left(W - \\sigma\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{r} - \\dfrac{\\left(r - W\\right)\\left(r + W\\right)}{r\\,W^2}\\dot{r}^2 + \\dfrac{2\\left(2W^2\\,\\sigma\\cos\\theta + W^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta - 2W\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta - \\sigma^2\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W^2\\left(W + \\sigma\\right)}\\dot{r}\\dot{\\theta} - \\dfrac{\\left(W - \\sigma\\right)\\left(W^4\\sin^2\\theta + 3W^3\\,\\sigma\\sin^2\\theta - 2W^3\\,\\sigma + 2W^3\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta + W^3\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta + 6W^2\\,\\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta + W^2\\,\\sigma\\,\\partial_\\theta^2\\sigma\\,\\sin^2\\theta - W^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - 4W\\,\\sigma\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta - \\sigma^2\\left(\\partial_\\theta\\sigma\\right)^2\\,\\sin^2\\theta\\right)\\csc^2\\theta}{r\\,W^2\\left(W + \\sigma\\right)}\\dot{\\theta}^2 - \\dfrac{\\left(W - \\sigma\\right)\\left(W^2\\sin^2\\theta - W\\,\\sigma\\sin^2\\theta + 2W\\,\\sigma + W\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta - \\sigma\\,\\partial_\\theta\\sigma\\,\\sin\\theta\\cos\\theta\\right)}{r\\left(W + \\sigma\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2r}{W\\left(W + \\sigma\\right)}\\dot{r}\\dot{\\theta} - \\dfrac{2\\sigma\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W\\left(W + \\sigma\\right)}\\dot{\\theta}^2 - \\dfrac{\\left(W - \\sigma\\right)\\sin\\theta\\cos\\theta}{W + \\sigma}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2r}{W\\left(W - \\sigma\\right)}\\dot{r}\\dot{\\phi} + \\dfrac{2\\left(W\\cos\\theta - \\partial_\\theta\\sigma\\,\\sin\\theta\\right)\\csc\\theta}{W}\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}
