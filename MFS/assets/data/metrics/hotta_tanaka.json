@@ -53,6 +53,11 @@
       "id": "penrose_impulsive_wave",
       "kind": "family",
       "text": "An impulsive wave on a sphere that expands at the speed of light through flat spacetime, built by the same cut and paste along a light cone [podolsky1999expanding]."
+    },
+    {
+      "id": "btz_shock_wave",
+      "kind": "family",
+      "text": "A shock lying on the horizon of the BTZ black hole in anti-de Sitter space of three dimensions, the field of a shell of null particles [shenker2014, sfetsos1995]."
     }
   ],
   "references": [
@@ -73,7 +78,8 @@
     "leblond2002",
     "aalsma2020",
     "aalsma2021",
-    "podolsky1999expanding"
+    "podolsky1999expanding",
+    "shenker2014"
   ],
   "coordinates": [
     {

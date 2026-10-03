@@ -50,7 +50,7 @@
       "idealized model",
       "Petrov type N"
     ],
-    "version": "d0dc9300a388b6c0",
+    "version": "427687c147e359f3",
     "diagrams": "a6fabc19c0e551be",
     "conformal": "2771060b42b8605b",
     "embedding": "9b0e2bc9b72fa37e"
@@ -98,7 +98,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "2fda8589564b14ef",
+    "version": "59c372305f6e7974",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -234,7 +234,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "249de17b815927ba",
+    "version": "6a6202e7b7b0f35f",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -1554,7 +1554,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3c26ca14df17737a",
+    "version": "f3b31a0b1c43c87e",
     "diagrams": "8393e9b253125f33",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -2167,7 +2167,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "5ebb867ccf4c428e",
+    "version": "1e91cb5865646206",
     "diagrams": "582c49f296d53450",
     "conformal": "1c0299b48c135ff5",
     "embedding": "4a468cbcc8c8e211"
@@ -3135,7 +3135,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "81a83b682a397c93",
+    "version": "e5203e2e2cd083aa",
     "diagrams": "cfadfa6a6d870e02",
     "conformal": "4d5f7414085f41e0",
     "embedding": "cd281d7fc89e697d"
@@ -4014,7 +4014,7 @@
       "stationary",
       "three-dimensional"
     ],
-    "version": "7c71987c49aea04a",
+    "version": "067f486b7f5f76e2",
     "diagrams": "9e27900d07c618e4",
     "conformal": "4fb359269e6b0ef1",
     "embedding": "aa11b776d61eb469"
@@ -4442,7 +4442,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "9100220cfa800dbd",
+    "version": "1f8b62d2e0e10d3f",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -4574,6 +4574,43 @@
     "diagrams": "ba9dba288cd26f63",
     "conformal": "e6b2c492ab043d17",
     "embedding": "e135a6bb032eedc2"
+  },
+  {
+    "id": "btz_shock_wave",
+    "name": "Shenker-Stanford Shock Wave",
+    "tags": [
+      "shock wave",
+      "impulsive wave",
+      "null shell",
+      "null source",
+      "black hole",
+      "BTZ black hole",
+      "anti-de Sitter",
+      "negative cosmological constant",
+      "cosmological constant",
+      "wormhole",
+      "Einstein-Rosen bridge",
+      "horizon",
+      "event horizon",
+      "AdS/CFT",
+      "holography",
+      "thermofield double",
+      "butterfly effect",
+      "scrambling",
+      "quantum chaos",
+      "circularly symmetric",
+      "2+1 dimensional gravity",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "conformally flat",
+      "three-dimensional"
+    ],
+    "version": "3ca9de828d4aca3a",
+    "diagrams": "9feb8b9b0371232c",
+    "conformal": "53ebebdf4e877f10",
+    "embedding": "64e28e383710d26c"
   },
   {
     "id": "siklos",

@@ -634,6 +634,13 @@ DIMENSIONS = {
     ("btz_multi_holes_wormholes", "stereographic"): {"\\tau": "T", "x": "L", "y": "L", "\\ell": "L"},
     ("btz_multi_holes_wormholes", "free_fall"): {"T": "T", "\\rho": "L", "\\phi": "1", "\\ell": "L"},
     ("btz_multi_holes_wormholes", "exterior"): {"t": "T", "r": "L", "\\phi": "1", "\\ell": "L", "M": "1"},
+    # The shock wave in the BTZ black hole: Shenker and Stanford's Kruskal u and v and their
+    # discontinuous U and V are pure numbers, the anti-de Sitter radius l and the radius R of the
+    # horizon are lengths, and the shift alpha is a pure number, as is the step Theta.
+    ("btz_shock_wave", "kruskal"): {"u": "1", "v": "1", "\\phi": "1", "\\ell": "L", "R": "L", "\\alpha": "1",
+                                    "\\Theta": "1"},
+    ("btz_shock_wave", "discontinuous"): {"U": "1", "V": "1", "\\phi": "1", "\\ell": "L", "R": "L", "\\alpha": "1"},
+    ("btz_shock_wave", "exterior"): {"t": "T", "r": "L", "\\phi": "1", "\\ell": "L", "R": "L"},
     # The other entry that keeps G and a mass explicit rather than folding them into a
     # length. The spin per unit mass a = J/(Mc) is a length, which is what makes
     # r^2 + a^2cos^2(theta) and r^2 - 2GMr/c^2 + a^2 areas.
@@ -2468,7 +2475,7 @@ RATES = {
 # where two values are compared. See on_the_shock.
 IMPULSES = {
     ("hotta_tanaka", "conformally_flat"), ("hotta_tanaka", "global"), ("hotta_tanaka", "kruskal"),
-    ("hotta_tanaka", "null_cylindrical"),
+    ("hotta_tanaka", "null_cylindrical"), ("btz_shock_wave", "discontinuous"),
 }
 
 

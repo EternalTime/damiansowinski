@@ -1,5 +1,5 @@
 {
-  "version": "d49c94e1ffd7d446",
+  "version": "7f746e64517db605",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -29440,6 +29440,102 @@
         "eprint": "1608.05366",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevLett.118.131102"
+      }
+    },
+    "shenker2014": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes and the butterfly effect",
+        "author": "Shenker, Stephen H. and Stanford, Douglas",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2014",
+        "number": "03",
+        "pages": "067",
+        "year": "2014",
+        "doi": "10.1007/JHEP03(2014)067",
+        "eprint": "1306.0622",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP03(2014)067"
+      }
+    },
+    "shenker2014multiple": {
+      "type": "article",
+      "fields": {
+        "title": "Multiple shocks",
+        "author": "Shenker, Stephen H. and Stanford, Douglas",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2014",
+        "number": "12",
+        "pages": "046",
+        "year": "2014",
+        "doi": "10.1007/JHEP12(2014)046",
+        "eprint": "1312.3296",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP12(2014)046"
+      }
+    },
+    "sekino2008": {
+      "type": "article",
+      "fields": {
+        "title": "Fast scramblers",
+        "author": "Sekino, Yasuhiro and Susskind, Leonard",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2008",
+        "number": "10",
+        "pages": "065",
+        "year": "2008",
+        "doi": "10.1088/1126-6708/2008/10/065",
+        "eprint": "0808.2096",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2008/10/065"
+      }
+    },
+    "stanford2014": {
+      "type": "article",
+      "fields": {
+        "title": "Complexity and shock wave geometries",
+        "author": "Stanford, Douglas and Susskind, Leonard",
+        "journal": "Physical Review D",
+        "volume": "90",
+        "number": "12",
+        "pages": "126007",
+        "year": "2014",
+        "doi": "10.1103/PhysRevD.90.126007",
+        "eprint": "1406.2678",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.90.126007"
+      }
+    },
+    "roberts2015": {
+      "type": "article",
+      "fields": {
+        "title": "Localized shocks",
+        "author": "Roberts, Daniel A. and Stanford, Douglas and Susskind, Leonard",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2015",
+        "number": "03",
+        "pages": "051",
+        "year": "2015",
+        "doi": "10.1007/JHEP03(2015)051",
+        "eprint": "1409.8180",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP03(2015)051"
+      }
+    },
+    "maldacena2016chaos": {
+      "type": "article",
+      "fields": {
+        "title": "A bound on chaos",
+        "author": "Maldacena, Juan and Shenker, Stephen H. and Stanford, Douglas",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2016",
+        "number": "08",
+        "pages": "106",
+        "year": "2016",
+        "doi": "10.1007/JHEP08(2016)106",
+        "eprint": "1503.01409",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP08(2016)106"
       }
     }
   }

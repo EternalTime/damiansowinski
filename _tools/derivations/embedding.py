@@ -11938,6 +11938,96 @@ def btz(ck, src):
                           "length along the surface beyond $r = \\sqrt{2}\\,\\ell$ is measured with $dX^2 + dY^2 - dZ^2$.")]
 
 
+def btz_shock_wave(ck, src):
+    """The moment u + v = -alpha/2 of Shenker and Stanford's Kruskal chart at l = R = 1 and alpha = 1,
+    through both outsides and across the shock. With w = |u| the moment has u(v + alpha Theta(u)) =
+    alpha w/2 - w^2 on both sides of the shock, so its metric 4 du^2/(1 + alpha w/2 - w^2)^2 +
+    rho^2 dphi^2, rho = (1 - alpha w/2 + w^2)/(1 + alpha w/2 - w^2), is the same function of w on
+    either side: the moment is the black hole's Kruskal time -alpha/2 ahead of the shock and its
+    own Kruskal time alpha/2 behind it, and crosses the shock halfway between the two horizons,
+    where the geodesic from t = 0 on the left boundary to t = 0 on the right one crosses it.
+
+    The circle is R on the shock, and leaving it either way rho falls at drho/ds = -alpha R/2l,
+    so the two halves meet there at an angle, the delta of the curvature. drho/dw = 2(2w - alpha)/
+    (1 + alpha w/2 - w^2)^2 vanishes at w = alpha/4, a neck of radius (16 - alpha^2)/(16 + alpha^2)
+    R = 15R/17, one in each interior, and the slice crosses the horizons v = 0 and v = -alpha at
+    w = 1/2 with radius R. Out at w_l = (sqrt(33) - 3)/4, where (drho/ds)^2 = 1, the surface lies
+    level, and beyond it the circles grow faster than the distance out to them, as on the BTZ
+    hole's t = 0, so it runs on in three dimensional Minkowski space to w = 1, rho = 3R. Each half
+    is read in the Kruskal chart along the coordinate that grows away from the shock, u behind it
+    and v ahead of it."""
+    p = {"ell": 1, "R": 1, "alpha": 1}
+    sl = Slice(src, "btz_shock_wave", "kruskal", "u", "\\phi", {}, p, along={"v": "-1/2 - u"})
+    msl = Slice(src, "btz_shock_wave", "kruskal", "u", "\\phi", {}, p, along={"v": "-1/2 - u"}, space="minkowski")
+    level = (math.sqrt(33.0) - 3) / 4
+    top, size = 1.0, 6.0
+
+    def rho_of(w):
+        w = np.abs(np.asarray(w, dtype=float))
+        return (1 - w / 2 + w * w) / (1 + w / 2 - w * w)
+
+    h = 1e-7
+    for name, sign in (("behind", 1), ("ahead", -1)):
+        ck.add(f"BTZ shock, {name}: the circle on the shock is R", abs(float(sl.rho_at(np.array([0.0]))[0]) - 1), 1e-12)
+        ck.add(f"BTZ shock, {name}: the surface lies level at w = (sqrt(33) - 3)/4",
+               abs(float(sl.defect_at(np.array([sign * level]))[0])), 1e-12)
+        ck.add(f"BTZ shock, {name}: leaving the shock drho/ds = -alpha R/2l",
+               abs((float(sl.rho_at(np.array([sign * h]))[0]) - 1) / sl.proper(min(0.0, sign * h), max(0.0, sign * h))
+                   + 0.5), 1e-6)
+        ck.add(f"BTZ shock, {name}: the neck at w = alpha/4 has radius 15R/17",
+               abs(float(sl.rho_at(np.array([sign * 0.25]))[0]) - 15 / 17), 1e-12)
+        ck.add(f"BTZ shock, {name}: the horizon at w = 1/2 is a circle of radius R",
+               abs(float(sl.rho_at(np.array([sign * 0.5]))[0]) - 1), 1e-12)
+        ck.stops(f"BTZ shock, {name}, beyond the level circle in flat space", sl,
+                 sign * np.linspace(level, 1.25, 200)[1:])
+        inward = sign * np.linspace(0.0, level, 402)[1:-1]
+        ck.add(f"BTZ shock, {name}: between the shock and the level circle no surface in Minkowski space carries "
+               "the slice", float(max(0.0, np.max(-msl.defect_at(inward)))), 0.0)
+        if not np.all(msl.defect_at(inward) > 0):
+            ck.items[-1]["ok"] = False
+
+    crease = "the shock $u = 0$, where the two halves meet at an angle"
+    join = "the level circle, flat space nearer the shock and Minkowski space beyond"
+    edge = "the sheet runs on toward a light cone, to infinity"
+    near = Piece("behind", "sheet", sl, 0.0, level, 0.0, 1, (("join", crease), ("join", join)),
+                 [(0.0, "surface", "$u = 0$"), (0.25, "throat", None), (0.5, "horizon", None), (level, "space", None)], size)
+    out = Piece("behind_minkowski", "sheet", msl, level, top, near.at(level)[1], 1, (("join", join), ("edge", edge)),
+                [(top, "r", None)], size)
+    far = Piece("ahead", "sheet2", sl, -level, 0.0, -sl.rise(-level, 0.0), 1, (("join", join), ("join", crease)),
+                [(-level, "space", None), (-0.5, "horizon", None), (-0.25, "throat", None)], size)
+    far_out = Piece("ahead_minkowski", "sheet2", msl, -top, -level, far.at(-level)[1] - msl.rise(-top, -level), 1,
+                    (("edge", edge), ("join", join)), [(-top, "r2", None)], size)
+    for piece in (near, out, far, far_out):
+        space = "in Minkowski space" if piece.sl.lorentz else "in flat space"
+        ck.isometry(f"BTZ shock, {piece.id} {space}", piece)
+        ck.radius(f"BTZ shock, {piece.id} {space}", piece, rho_of, size)
+    ck.add("BTZ shock: the two halves meet on the shock in one circle",
+           float(np.max(np.abs(np.array(near.at(0.0)) - np.array(far.at(0.0))))), 1e-9)
+    # At the level circle g_xx = (drho/dx)^2, so the profile is level on both sides and the pieces share
+    # one tangent there; sympy's one sided limit cannot be taken through |u|, so the level is read directly.
+    for a, b, xa in ((near, out, level), (far, far_out, -level)):
+        where = f"BTZ shock, {a.id} in flat space and {b.id} in Minkowski space at the level circle"
+        ck.add(f"{where}: one point", float(np.max(np.abs(np.array(a.at(xa)) - np.array(b.at(xa))))), 1e-12)
+        ck.add(f"{where}: one tangent, level on both sides", abs(float(msl.defect_at(np.array([xa]))[0])), 1e-12)
+
+    surface = Surface([near, out, far, far_out])
+    fig = figure_of([surface], {}, size)
+    ring_label(fig, [0, 0, 0], *near.at(0.0), "$R$")
+    ring_label(fig, [0, 0, 0], *near.at(0.25), "$15R/17$")
+    ring_label(fig, [0, 0, 0], *out.at(top), "$3R$")
+    fig.legend("line", "surface", "the shock $u = 0$, a circle of radius $R$, where the two halves meet at an angle")
+    fig.legend("line", "throat", "the two necks, at $u = \\pm\\alpha/4$, one inside each horizon")
+    fig.legend("line", "horizon", "the horizons $v = 0$ and $v = -\\alpha$, circles of radius $R$")
+    fig.legend("line", "space", "where the surface lies level: flat space nearer the shock, Minkowski space beyond")
+    fig.legend("line", "r", "the circle of radius $3R$ behind the shock, at $u = 1$")
+    fig.legend("line", "r2", "the same circle ahead of the shock, at $u = -1$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("bridge", "Across the shock", "$R$", [surface], fig.done(),
+                 settings="$\\ell = R = 1$, the unit of every length, and $\\alpha = 1$, on the moment $u + v = "
+                          "-\\alpha/2$ of the Kruskal chart. Every length along the surface beyond the level circles "
+                          "is measured with $dX^2 + dY^2 - dZ^2$.")]
+
+
 def draining_bathtub(ck, src):
     """Two moments of a drain at A = -1 and B = sqrt 3 with c = 1, so that the horizon |A|/c is
     the unit of length and the ergosurface lies at 2, as the spacetime diagrams draw it.
@@ -16230,6 +16320,7 @@ DRAWN = {
     "draining_bathtub": draining_bathtub,
     "btz_multi_holes_wormholes": btz_multi_holes_wormholes,
     "unruh_acoustic_hole": unruh_acoustic_hole,
+    "btz_shock_wave": btz_shock_wave,
     "c_metric": c_metric,
     "einstein_rosen_waves": einstein_rosen_waves,
     "gowdy": gowdy,
@@ -16431,6 +16522,19 @@ CAPTIONS = {
         "wormhole with one exterior and a torus inside. Glue adjacent cuts and they close into three loops, of "
         "lengths $\\mathrm{arccosh}\\,2\\;\\ell$ twice and $2\\,\\mathrm{arccosh}\\,2\\;\\ell$, the horizons of three "
         "black holes.",
+    ],
+    ("btz_shock_wave", "bridge"): [
+        "The moment $u + v = -\\alpha/2$ of the Kruskal chart ($\\alpha = 1$, $R = \\ell$) through both outsides "
+        "and across the shock, in flat space out to the circles where it lies level and in three dimensional "
+        "Minkowski space ($dX^2 + dY^2 - dZ^2$) beyond them, every distance along the surface the metric "
+        "distance. It crosses the shock halfway between the horizons $v = 0$ and $v = -\\alpha$, where the "
+        "geodesic from $t = 0$ on one boundary to $t = 0$ on the other crosses it [shenker2014].",
+        "With $w = |u|$ the metric on the moment is $4\\ell^2dw^2/(1 + \\alpha w/2 - w^2)^2 + \\rho^2d\\phi^2$, "
+        "$\\rho = R(1 - \\alpha w/2 + w^2)/(1 + \\alpha w/2 - w^2)$, the same on both sides of the shock. Leaving "
+        "the shock either way the circles shrink at $d\\rho/ds = -\\alpha R/2\\ell$, so the two halves meet "
+        "there at an angle, the delta of the curvature on the shell of null particles. Each half narrows to a neck "
+        "of radius $R(16 - \\alpha^2)/(16 + \\alpha^2) = 15R/17$ inside its horizon and widens again, so the "
+        "single throat of the BTZ black hole's $t = 0$ has become two, with the bridge between them longer.",
     ],
     ("btz", "throat"): [
         "The moment $t = 0$ of the hole without rotation ($M = 1$, $J = 0$) through both of its exteriors, "

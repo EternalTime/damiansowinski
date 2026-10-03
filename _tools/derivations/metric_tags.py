@@ -143,6 +143,13 @@ REGIONS = {
                "vector of that chart extends to no symmetry of the whole spacetime (Brill 1996, section 4; "
                "Aminneborg, Bengtsson, Brill, Holst and Peldan 1998, section V)",
     },
+    "btz_shock_wave": {
+        "regions": [["kruskal", "discontinuous"]],
+        "why": "exterior covers one outside alone, where the black hole is static; a shift of its Killing "
+               "time t is a boost of the Kruskal u and v that rescales the shift alpha, so it carries the "
+               "shock to another one and is no symmetry of the whole spacetime (Shenker and Stanford 2014, "
+               "sections 3.1 and 3.2)",
+    },
     "moving_mirror": {
         "regions": [["inertial", "null", "mirror_rest"]],
         "why": "thermal, collapse and rindler are three mirrors, Carlitz and Willey's, the one that imitates a "
