@@ -18,7 +18,7 @@ moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, disto
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, brill_charged_taub_nut,
-bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz and topological_star, and Godel's cylindrical chart.
+bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star and quantum_oppenheimer_snyder, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -28155,6 +28155,254 @@ def tilted_universes_check(chart, system):
 
 
 CHARTS["tilted_universes"] = [lambda s=s: tilted_universes(s) for s in TILTED_CHARTS]
+
+
+# -- The quantum Oppenheimer-Snyder black hole ------------------------------------------
+
+QOS_CHARTS = ("static", "painleve_gullstrand", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing",
+              "interior_comoving")
+QOS_F = "\\left(1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}\\right)"
+QOS_FALL = "\\sqrt{\\dfrac{2m}{r}\\left(1 - \\dfrac{\\alpha m}{2r^3}\\right)}"
+QOS_TURN = "\\left(\\alpha m/2\\right)^{1/3}"
+
+
+def quantum_oppenheimer_snyder(system):
+    """The quantum Oppenheimer-Snyder black hole: the ball of dust of loop quantum cosmology and
+    the vacuum that the junction conditions put outside it, f = 1 - 2m/r + alpha m^2/r^4, with
+    m = GM/c^2 and alpha = 16 sqrt(3) pi gamma^3 l_p^2 an area.
+
+    static                          J. Lewandowski, Y. Ma, J. Yang and C. Zhang, Phys. Rev. Lett. 130,
+                                    101501 (2023), their (4), determined for r >= r_b = (alpha m/2)^(1/3);
+    painleve_gullstrand             J. G. Kelly, R. Santacruz and E. Wilson-Ewing, Phys. Rev. D 102,
+                                    106024 (2020), their effective metric in Painleve-Gullstrand coordinates, with R_S = 2m and gamma^2 Delta = alpha/4,
+                                    valid for the same radii, x >= x_min;
+    eddington_finkelstein_ingoing,  the charts on the tortoise coordinate dr_*/dr = 1/f, the first of
+    eddington_finkelstein_outgoing  which covers both horizons the surface crosses on its way in;
+    interior_comoving               the flat Friedmann ball of Lewandowski, Ma, Yang and Zhang's (1),
+                                    with the scale factor free.
+
+    quantum_os_check holds each chart to its source before it is written, and
+    quantum_oppenheimer_snyder.md beside this file records the junction."""
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    bare = QOS_F[6:-7]
+    marks = ["r = r_b = " + QOS_TURN + " \\;\\text{(where the surface of the dust turns round)}",
+             "r = r_\\pm \\;\\text{(the horizons, for}\\; m > 4\\sqrt{\\alpha}/3\\sqrt{3}\\text{)}"]
+    radial = "r \\in [" + QOS_TURN + ", \\infty)"
+
+    def check(chart):
+        return quantum_os_check(chart, system)
+
+    if system == "interior_comoving":
+        coords, parameters = ["\\tau", "\\chi", "\\theta", "\\phi"], ["a = a(\\tau)", "\\chi_0"]
+        probe = vm.Reader(coords, parameters, ())
+        inside = "d\\chi^2 + \\chi^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+        return {
+            "metric_id": "quantum_oppenheimer_snyder",
+            "system": {"id": system, "name": "Comoving Dust Interior", "coords": coords,
+                       "domains": ["\\tau \\in (-\\infty, \\infty)", "\\chi \\in [0, \\chi_0]"] + angles,
+                       "parameters": parameters,
+                       "line_element": "ds^2 = -c^2d\\tau^2 + a^2\\left(" + inside + "\\right)"},
+            "chart_line_element": "ds^2 = -d\\tau^2 + a^2\\left(" + inside + "\\right)",
+            "printer": {"dotted": ["a"], "lead": [probe.parameters["a"]]},
+            "ricci_scalar": "\\dfrac{6\\left(a\\ddot{a} + \\dot{a}^2\\right)}{a^2}",
+            "kretschmann": "\\dfrac{12\\left(a^2\\ddot{a}^2 + \\dot{a}^4\\right)}{a^4}",
+            "check": check,
+        }
+    parameters = ["m", "\\alpha"]
+    if system == "static":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Exterior"
+        line = "ds^2 = -" + QOS_F + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + QOS_F + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + QOS_F, ("r", "r"): QOS_F + "^{-1}"}
+        inverse = {("t", "t"): "-" + QOS_F + "^{-1}", ("r", "r"): bare}
+    elif system == "painleve_gullstrand":
+        coords = ["\\tau", "r", "\\theta", "\\phi"]
+        name = "Painlevé-Gullstrand Exterior"
+        line = ("ds^2 = -" + QOS_F + "c^2d\\tau^2 + 2" + QOS_FALL + "\\,c\\,d\\tau\\,dr + dr^2" + sphere)
+        chart_line = "ds^2 = -" + QOS_F + "d\\tau^2 + 2" + QOS_FALL + "\\,d\\tau\\,dr + dr^2" + sphere
+        metric = {("\\tau", "\\tau"): "-" + QOS_F, ("\\tau", "r"): QOS_FALL, ("r", "\\tau"): QOS_FALL}
+        inverse = {("\\tau", "r"): QOS_FALL, ("r", "\\tau"): QOS_FALL, ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein Exterior"
+        line = "ds^2 = -" + QOS_F + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + QOS_F, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    probe = vm.Reader(coords, parameters, ())
+    r, m, alpha = probe.symbol["r"], probe.parameters["m"], probe.parameters["alpha"]
+    spec = {
+        "metric_id": "quantum_oppenheimer_snyder",
+        "system": {"id": system, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)", radial] + angles + marks,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        # A product is written as the line element writes it, alpha m^2, and a sum by falling powers of r.
+        "printer": {"lead": [r, m, alpha], "factors": [alpha, m, r], "flip": False},
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        # Kelly, Santacruz and Wilson-Ewing's Kretschmann scalar, with R_S = 2m and gamma^2 Delta = alpha/4.
+        "kretschmann": ("\\dfrac{48m^2}{r^6}\\left(1 - \\dfrac{5\\alpha m}{r^3} + "
+                        "\\dfrac{39\\alpha^2m^2}{4r^6}\\right)"),
+        "check": check,
+    }
+    if system == "painleve_gullstrand":
+        # Every radical is the speed at which the slices fall inward, so each value is written as a
+        # rational function plus a rational function times it.
+        fall = sp.Symbol("QOS_fall", positive=True)
+        spec["printer"] = {"lead": [r, m, alpha], "factors": [alpha, m, r, fall], "flip": False,
+                           "overrides": {fall: QOS_FALL}}
+        spec["pretty"] = spec["bracketed"] = quantum_os_fall(r, m, alpha, fall)
+    return spec
+
+
+def quantum_os_fall(r, m, alpha, fall):
+    """A pretty printer for the Painleve-Gullstrand chart, whose every value is A + B N with A and
+    B rational in r, m and alpha and N = sqrt(2m/r - alpha m^2/r^4) the speed of the slices. With r
+    and m positive and alpha written by the speed, alpha = (2 m r^3 - S^2 r^4)/m^2, each radical is
+    a power of S and the value is rational in r, m and S; its even and odd parts in S are then
+    rational in S^2, which is written back as 2m/r - alpha m^2/r^4."""
+    S, x, mass, area = (sp.Symbol(n, positive=True) for n in ("QOS_S", "QOS_r", "QOS_m", "QOS_alpha"))
+
+    def pretty(value):
+        value = sp.sympify(value).subs(fall, sp.sqrt(2 * m / r - alpha * m ** 2 / r ** 4))
+        if value == 0:
+            return value
+        value = value.subs({r: x, m: mass}).subs(alpha, (2 * mass * x ** 3 - S ** 2 * x ** 4) / mass ** 2)
+        value = value.replace(lambda p: p.is_Pow and p.exp.is_Rational and p.exp.q == 2,
+                              lambda p: sp.sqrt(sp.factor(sp.cancel(p.base))) ** p.exp.p)
+        value = sp.cancel(sp.together(value))
+        if any(not p.exp.is_Integer for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"quantum_oppenheimer_snyder: {value} is not a rational function and one times "
+                                 "the speed of the slices")
+        mirrored = value.subs(S, -S)
+        back = {S: sp.sqrt(2 * mass / x - area * mass ** 2 / x ** 4)}
+        even = sp.cancel(sp.expand(sp.cancel((value + mirrored) / 2).subs(back)))
+        odd = sp.cancel(sp.expand(sp.cancel((value - mirrored) / (2 * S)).subs(back)))
+        if any(not p.exp.is_Integer for e in (even, odd) for p in e.atoms(sp.Pow)):
+            raise AssertionError(f"quantum_oppenheimer_snyder: {value} keeps a radical in its even or odd part")
+        names = {x: r, mass: m, area: alpha}
+        return sp.factor(even.subs(names)) + fall * sp.factor(odd.subs(names))
+
+    return pretty
+
+
+def quantum_os_check(chart, system):
+    """Outside, every chart carries the stress tensor Lewandowski, Ma, Yang and Zhang read off
+    their (4): in the mixed components G^t_t = G^r_r = -3 alpha m^2/r^6, which is their energy
+    density 3 alpha G M^2/(8 pi r^6), and G^theta_theta = G^phi_phi = 6 alpha m^2/r^6, with the
+    Ricci scalar -6 alpha m^2/r^6 of Kelly, Santacruz and Wilson-Ewing's (40). The static chart is
+    Schwarzschild's published metric at alpha = 0; f = 1 at r_b^3 = alpha m/2 and falls below 1
+    outside it; f and its slope vanish together at r = 3m/2 = 2 sqrt(alpha/3) when
+    m^2 = 16 alpha/27, the least mass with a horizon; and with Lewandowski, Ma, Yang and Zhang's
+    beta, m^2 = 4 beta^4 alpha/(1 - beta^2)^3, f vanishes at their r_+-. Each other exterior chart
+    is the static one pulled back: Painleve and Gullstrand's along c dt = c dtau - N dr/f with
+    N^2 = 1 - f, and the Eddington-Finkelstein ones along c dt = dv - dr/f and du + dr/f.
+
+    Inside, the scale factor of Kelly, Santacruz and Wilson-Ewing's solution (Class. Quantum Grav.
+    38, 04LT01, the radius L(t) of their star), a^3 = 1 + 9 c^2 tau^2/alpha, is dust that obeys the Friedmann equation
+    of loop quantum cosmology, G^tau_tau = -kappa rho (1 - rho/rho_c) with kappa rho = 12/(alpha a^3)
+    and rho_c its value at a = 1. On the surface chi_0^3 = alpha m/2 the areal radius R = a chi_0
+    obeys (dR/d(c tau))^2 = 1 - f(R), the radial geodesic of the exterior that falls from rest at
+    infinity, which with the areal radius continuous is the junction of their appendix."""
+    geo, g = chart.geo, chart.geo.g
+    P = chart.reader.parameters
+    name = "quantum_oppenheimer_snyder"
+    if system == "interior_comoving":
+        tau, chi = chart.symbols[0], chart.symbols[1]
+        a = P["a"]
+        A, mass = sp.Symbol("alpha", positive=True), sp.Symbol("m", positive=True)
+        x = sp.Symbol("x", real=True)
+        scale = (1 + 9 * x ** 2 / A) ** sp.Rational(1, 3)
+        bounce = {sp.Derivative(a, (tau, 2)): sp.diff(scale, x, 2), sp.Derivative(a, tau): sp.diff(scale, x), a: scale}
+        mixed = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+        density = 12 / (A * scale ** 3)
+        want = -density * (1 - density / (12 / A))
+        if sp.simplify(vm._at(mixed, (0, 0)).subs(bounce) - want) != 0:
+            raise AssertionError(f"{name}: the bouncing scale factor misses the Friedmann equation of loop quantum cosmology")
+        for i in range(4):
+            for j in range(4):
+                if i != j and vm._at(mixed, (i, j)) != 0:
+                    raise AssertionError(f"{name}: the interior has a flux in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        if any(vm.norm(v) != 0 for v in sp.flatten(geo.weyl_llll())):
+            raise AssertionError(f"{name}: the interior is not conformally flat")
+        # The junction: the areal radius of the surface is a radial geodesic of the exterior with E = 1.
+        R = scale * (A * mass / 2) ** sp.Rational(1, 3)
+        f = 1 - 2 * mass / R + A * mass ** 2 / R ** 4
+        if sp.simplify(sp.diff(R, x) ** 2 - (1 - f)) != 0:
+            raise AssertionError(f"{name}: the surface of the dust is not the exterior's geodesic that falls from rest")
+        if sp.simplify(R.subs(x, 0) ** 3 - A * mass / 2) != 0:
+            raise AssertionError(f"{name}: the surface does not turn round at r_b")
+        return
+    r, m, alpha = chart.reader.symbol["r"], P["m"], P["alpha"]
+    f = 1 - 2 * m / r + alpha * m ** 2 / r ** 4
+    mixed = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+    want = sp.diag(-3 * alpha * m ** 2 / r ** 6, -3 * alpha * m ** 2 / r ** 6,
+                   6 * alpha * m ** 2 / r ** 6, 6 * alpha * m ** 2 / r ** 6)
+    for i in range(4):
+        for j in range(4):
+            if sp.simplify(vm._at(mixed, (i, j)) - want[i, j]) != 0:
+                raise AssertionError(f"{name}: the {system} chart misses the stress tensor of the quantum correction "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if sp.simplify(geo.ricci_scalar() + 6 * alpha * m ** 2 / r ** 6) != 0:
+        raise AssertionError(f"{name}: the Ricci scalar of the {system} chart is not -6 alpha m^2/r^6")
+    if system == "static":
+        if vm.norm(g[0, 0] + f) != 0 or vm.norm(g[1, 1] - 1 / f) != 0:
+            raise AssertionError(f"{name}: the static chart is not -f c^2dt^2 + dr^2/f")
+        entry = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "spherical")
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        same = dict(zip((reader.symbol[c] for c in entry["coords"]), chart.symbols))
+        same[reader.parameters["r_s"]] = 2 * m
+        for i in range(4):
+            text = there.get((chart.coords_tex[i], chart.coords_tex[i]), "0")
+            if sp.simplify(g[i, i].subs(alpha, 0) - reader(text).subs(same, simultaneous=True)) != 0:
+                raise AssertionError(f"{name}: the static chart at alpha = 0 is not Schwarzschild's published metric "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[i]}")
+        x, mass, area, beta = sp.symbols("x mass area beta", positive=True)
+        F = f.subs({r: x, m: mass, alpha: area})
+        turn = (area * mass / 2) ** sp.Rational(1, 3)
+        if sp.simplify(F.subs(x, turn) - 1) != 0 or sp.simplify(sp.diff(F, x).subs(x, turn) * turn + 6 * mass / turn) != 0:
+            raise AssertionError(f"{name}: f is not 1, falling, at r_b")
+        least = {area: 27 * mass ** 2 / 16, x: 3 * mass / 2}
+        if sp.simplify(F.subs(least)) != 0 or sp.simplify(sp.diff(F, x).subs(least)) != 0:
+            raise AssertionError(f"{name}: the horizons do not merge at r = 3m/2 when m^2 = 16 alpha/27")
+        if sp.simplify((3 * mass / 2).subs(mass, 4 * sp.sqrt(area) / (3 * sp.sqrt(3))) - 2 * sp.sqrt(area / 3)) != 0:
+            raise AssertionError(f"{name}: the merged horizon is not at 2 sqrt(alpha/3)")
+        for sign in (1, -1):
+            root = beta * (1 + sign * sp.sqrt(2 * beta - 1)) * sp.sqrt(area) / sp.sqrt((1 + beta) * (1 - beta) ** 3)
+            at = F.subs(mass, 2 * beta ** 2 * sp.sqrt(area) / (1 - beta ** 2) ** sp.Rational(3, 2)).subs(x, root)
+            for value in (sp.Rational(11, 20), sp.Rational(3, 5), sp.Rational(9, 10)):
+                if abs(at.subs({beta: value, area: 1}).evalf(40)) > sp.Float(10) ** -30:
+                    raise AssertionError(f"{name}: f does not vanish at Lewandowski, Ma, Yang and Zhang's r_+-")
+        return
+    spec = quantum_oppenheimer_snyder("static")
+    static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    at = dict(zip(static.symbols[1:], chart.symbols[1:]))
+    at.update({static.reader.parameters[k]: P[k] for k in ("m", "alpha")})
+    old = static.geo.g.subs(at, simultaneous=True)
+    J = sp.eye(4)
+    if system == "painleve_gullstrand":
+        # The shift is the chart's own radical, whose square is 1 - f, the speed of a fall from rest far away.
+        N = g[0, 1]
+        if sp.simplify(sp.expand(N ** 2 - (1 - f))) != 0:
+            raise AssertionError(f"{name}: the shift of the Painleve-Gullstrand chart is not sqrt(1 - f)")
+        J[0, 1] = -N / f
+    else:
+        J[0, 1] = (1 if chart.coords_tex[0] == "u" else -1) / f
+    pulled = J.T * old * J
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"{name}: the static chart pulled back misses the {system} chart in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["quantum_oppenheimer_snyder"] = [lambda s=s: quantum_oppenheimer_snyder(s) for s in QOS_CHARTS]
 
 
 # -- The quantum BTZ black hole ----------------------------------------------------------

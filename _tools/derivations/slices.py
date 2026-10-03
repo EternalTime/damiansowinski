@@ -1883,6 +1883,26 @@ def _bardeen_both(sign=0):
     return _bardeen("outside", sign) + _bardeen("inside", sign)
 
 
+def _qos(view, chart):
+    """The moment t = 0 of the quantum Oppenheimer-Snyder black hole, outside r_+ or inside r_-,
+    from r_b: along r in its static chart, in its ingoing or outgoing chart as v = r_* or u = -r_*,
+    and in its Painleve-Gullstrand chart as T = r_* - lead(r), each running off toward the horizon
+    the view ends on, as Bardeen's do."""
+    import quantum_os as qos
+    m, = moments("quantum_oppenheimer_snyder", view)
+    lo, hi = m.reach("static", "r")
+    if chart == "static":
+        return [Mark(m, along(0.0, lo, hi))]
+    r = near(lo, hi) if view == "outside" else np.concatenate([[lo], (hi - (hi - lo) * np.geomspace(1.0, 1e-9, N))[1:]])
+    time = {"ingoing": qos.tortoise(r), "outgoing": -qos.tortoise(r),
+            "painleve_gullstrand": qos.tortoise(r) - qos.lead(r)}[chart]
+    return [Mark(m, [np.column_stack([time, r])])]
+
+
+def _qos_both(chart):
+    return _qos("outside", chart) + _qos("inside", chart)
+
+
 # Born and Infeld's point charge as every diagram draws it, in units of r_0: (r_s, r_q) of
 # Hoffmann's particle, whose mass is the energy of its field, and of the black hole, null_rays.BI_PARTICLE
 # and BI_HOLE, with the black hole's one horizon.
@@ -2450,6 +2470,14 @@ FLAT = {
     ("bardeen", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _bardeen_both(-1),
     ("bardeen", "eddington_finkelstein_outgoing", "chart"): lambda: _bardeen_both(-1),
     ("hayward", "static", "radial"): lambda: _hayward(),
+    ("quantum_oppenheimer_snyder", "static", "radial"): lambda: _qos_both("static"),
+    ("quantum_oppenheimer_snyder", "painleve_gullstrand", "collapse"): lambda: _qos_both("painleve_gullstrand"),
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _qos_both("ingoing"),
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_ingoing", "chart"): lambda: _qos_both("ingoing"),
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _qos_both("outgoing"),
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_outgoing", "chart"): lambda: _qos_both("outgoing"),
+    # The dust holds no part of the moments of constant t, which are moments of the vacuum outside it.
+    ("quantum_oppenheimer_snyder", "interior_comoving", "through"): lambda: [],
     ("hayward", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _hayward(1),
     ("hayward", "eddington_finkelstein_ingoing", "chart"): lambda: _hayward(1),
     ("hayward", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _hayward(-1),

@@ -340,6 +340,49 @@ def bardeen_horizons():
     return roots
 
 
+QOS_ALPHA = 1.25                  # alpha in units of m^2, as every diagram of the quantum Oppenheimer-Snyder hole takes it
+
+
+def qos_roots():
+    """The zeros of r^4 - 2r^3 + alpha at alpha = 5/4, without numpy: the two real ones by bisection and
+    the complex pair from the quadratic left over, r^2 + br + c with b = r_- + r_+ - 2, c = alpha/(r_- r_+)."""
+    def P(r):
+        return r ** 4 - 2 * r ** 3 + QOS_ALPHA
+    real = []
+    for lo, hi in ((1.0, 1.5), (1.5, 2.0)):
+        for _ in range(200):
+            mid = (lo + hi) / 2
+            lo, hi = (mid, hi) if P(lo) * P(mid) > 0 else (lo, mid)
+        real.append((lo + hi) / 2)
+    b, c = real[0] + real[1] - 2, QOS_ALPHA / (real[0] * real[1])
+    return real, complex(-b / 2, math.sqrt(4 * c - b * b) / 2)
+
+
+def qos_rstar(r):
+    """The tortoise coordinate at m = 1 and alpha = 5/4, dr_*/dr = 1/f, zero at r_b = (alpha/2)^(1/3)."""
+    real, z = qos_roots()
+
+    def raw(x):
+        out = x + sum(w ** 4 / (4 * w ** 3 - 6 * w ** 2) * math.log(abs(x - w)) for w in real)
+        return out + 2 * (z ** 4 / (4 * z ** 3 - 6 * z ** 2) * cmath.log(x - z)).real
+    return raw(r) - raw((QOS_ALPHA / 2) ** (1 / 3))
+
+
+def qos_lead(r, n=2000):
+    """The integral of 1/(1 + N) from r_b to r, N = sqrt(2/r - alpha/r^4), by Simpson's rule in the
+    variable s with r = r_b + s^2, which takes away the square root N has at r_b."""
+    rb = (QOS_ALPHA / 2) ** (1 / 3)
+    top = math.sqrt(max(r - rb, 0.0))
+    if top == 0:
+        return 0.0
+
+    def g(s):
+        x = rb + s * s
+        return 2 * s / (1 + math.sqrt(max(2 / x - QOS_ALPHA / x ** 4, 0.0)))
+    h = top / n
+    return h / 3 * (g(0) + g(top) + sum((4 if k % 2 else 2) * g(k * h) for k in range(1, n)))
+
+
 def bardeen_rstar(r):
     """Bardeen's tortoise coordinate, dr_*/dr = 1/f and r_* = 0 at the centre, without numpy: the
     logarithm of each horizon, ln|1 - r/r_i|/f'(r_i), and the integral from 0 of what is left of
@@ -4854,7 +4897,13 @@ class Slices(unittest.TestCase):
     # The drawings on which no moment of the spacetime's embedding lies: other universes,
     # another cloud, the time reversed shell, and cylinders where no surface of constant t is
     # a moment of space.
-    HIDDEN = {# A tube of Datt and Ruban's dust that runs on in both directions, and Ruban's tube on de Sitter
+    HIDDEN = {# The ball of dust of the quantum Oppenheimer-Snyder black hole, which holds no part of the
+              # moments of constant t embedded, moments of the vacuum outside it.
+              "quantum_oppenheimer_snyder/interior_comoving/through",
+              # The collapse keeps one exterior below the bounce and one above it, and the dust stands where the
+              # eternal vacuum's moments run through their bifurcation spheres.
+              "conformal quantum_oppenheimer_snyder/collapse",
+              # A tube of Datt and Ruban's dust that runs on in both directions, and Ruban's tube on de Sitter
               # space, other spacetimes than the T-sphere whose moments are embedded.
               "datt_ruban_t_models/comoving/tube", "datt_ruban_t_models/ruban/tube",
               "datt_ruban_t_models/areal/expansion", "datt_ruban_t_models/de_sitter/tube",
@@ -5732,6 +5781,15 @@ class Slices(unittest.TestCase):
                 J = h / 3 * (of(0) + of(r) + sum((4 if k % 2 else 2) * of(k * h) for k in range(1, n)))
                 return r + 97 / 144 * math.log(abs((r - 1) / (r + 1))) - J / 2
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith(("quantum_oppenheimer_snyder/eddington_finkelstein", "quantum_oppenheimer_snyder/painleve")):
+            # At m = 1 and alpha = 5/4 the static t = 0 is v = r_* and u = -r_*, with dr_*/dr = 1/f and
+            # r_* = 0 at r_b, drawn against v - r and u + r or against v and u, and the Painleve-Gullstrand
+            # T = r_* - L(r), with L the integral of 1/(1 + N) from r_b, N = sqrt(2/r - alpha/r^4).
+            sign = -1 if "outgoing" in key else 1
+            finkelstein = key.endswith("finkelstein")
+            if "painleve" in key:
+                return (lambda X: qos_rstar(X) - qos_lead(X)), list(self.reach(surface))
+            return (lambda X: sign * (qos_rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key.startswith("bardeen/eddington_finkelstein"):
             # At r_s = 1 and g = 1/3 the static t = 0 is v = r_* and u = -r_*, with dr_*/dr = 1/f and
             # r_* = 0 at the centre, drawn against v - r and u + r or against v and u. It runs off
@@ -7037,7 +7095,7 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - want), 2e-3 * (1 + tp * tp) * (1 + tq * tq), f"{where} at {(X, T)}")
-                    elif metric_id in ("bardeen", "reissner_nordstrom_ads"):
+                    elif metric_id in ("bardeen", "reissner_nordstrom_ads", "quantum_oppenheimer_snyder"):
                         # Inside r- the moment runs through the inner bifurcation sphere, at T = pi, and
                         # outside r+ through the outer one, at T = 0, or a period up, at T = 2 pi, on the
                         # outgoing chart's view, whose exterior is the one above the white hole.

@@ -463,6 +463,11 @@
       "id": "topological_star",
       "kind": "dual",
       "text": "A star of five dimensions with no horizon. Without its magnetic field it is Schwarzschild's metric with the time made into a circle, whose horizon has become a bubble where space ends [bah2021]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric with one more term, $f = 1 - 2m/r + \\alpha m^2/r^4$ with $r_s = 2m$, the vacuum outside a ball of dust that bounces as loop quantum cosmology has it [lewandowski2023]."
     }
   ],
   "references": [
@@ -588,7 +593,8 @@
     "antoci2001",
     "basovnik2016",
     "podolsky2025",
-    "bah2021"
+    "bah2021",
+    "lewandowski2023"
   ],
   "coordinates": [
     {
