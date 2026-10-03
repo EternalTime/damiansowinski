@@ -2720,6 +2720,11 @@
       "id": "einstein_dirac_maxwell_wormhole",
       "kind": "family",
       "text": "A wormhole of Einstein-Dirac-Maxwell theory. Its numerical cousins, with massive, charged fermions, turned out to carry a shell of charge at the throat [danielson2021]."
+    },
+    {
+      "id": "interstellar_wormhole",
+      "kind": "family",
+      "text": "A smooth cousin built for the film Interstellar, whose mouths flare into flat space over a length $M$. As $M \\to 0$ with no cylinder between the mouths, it becomes this wormhole with no mass [james2015, visser1989prd]."
     }
   ],
   "references": [
@@ -2744,6 +2749,7 @@
     "friedman1990",
     "morris1988prl",
     "damour2007",
-    "danielson2021"
+    "danielson2021",
+    "james2015"
   ]
 }

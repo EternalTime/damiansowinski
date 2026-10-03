@@ -215,6 +215,11 @@
       "id": "kerr_bertotti_robinson",
       "kind": "generalisation",
       "text": "Kerr's hole in a magnetic field that points along its axis and is uniform far away, an exact solution of type D. With the field switched off it is Kerr's metric again [podolsky2025]."
+    },
+    {
+      "id": "interstellar_wormhole",
+      "kind": "programme",
+      "text": "The wormhole of the same film, Interstellar, drawn by the same team with the same code as Gargantua [james2015, james2015lensing]."
     }
   ],
   "references": [
@@ -282,7 +287,8 @@
     "ernst1976c",
     "gibbons2013",
     "semerak2016",
-    "podolsky2025"
+    "podolsky2025",
+    "james2015"
   ],
   "coordinates": [
     {
