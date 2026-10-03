@@ -76,6 +76,11 @@
       "id": "small_universes",
       "kind": "family",
       "text": "Universes that are finite by the way their space is connected, with no curvature needed to close it. Einstein's is finite because its space is a sphere [lachiezerey1995]."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "conformal",
+      "text": "Multiplied by $1/\\cos^2(ct/R)$, the slab $0 \\le ct/R < \\pi/2$ of the Einstein static universe is the Lorentzian half of the universe from nothing, with $R = \\ell$."
     }
   ],
   "references": [

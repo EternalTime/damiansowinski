@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 163,
+  "count": 164,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -10261,6 +10261,11 @@
           "id": "self_creating_universe",
           "kind": "family",
           "text": "A de Sitter space whose earliest region is a loop in time. Gott and Li have bubbles like these forming in its inflating region, and in their fuller scenario a baby universe born in one of them is the de Sitter space the bubbles formed in [gott1998]."
+        },
+        {
+          "id": "universe_from_nothing",
+          "kind": "family",
+          "text": "Coleman's bounce carried from a false vacuum to the whole universe: half a four sphere joined at its equator to the waist of a closed de Sitter universe, which Vilenkin had created from nothing [vilenkin1982]."
         }
       ],
       "references": [
@@ -10283,7 +10288,8 @@
         "feeney2011",
         "degrassi2012",
         "caldwell1996",
-        "gott1998"
+        "gott1998",
+        "vilenkin1982"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/coleman_de_luccia.json",
@@ -11930,6 +11936,11 @@
           "id": "self_creating_universe",
           "kind": "locally_same",
           "text": "De Sitter space with each event identified with its images under a boost. J. Richard Gott and Li-Xin Li proposed it in 1998 as a universe whose earliest stretch of time is a loop [gott1998]."
+        },
+        {
+          "id": "universe_from_nothing",
+          "kind": "composite",
+          "text": "Half of de Sitter's closed universe, from its waist on, joined to half of its Euclidean four sphere. It is Vilenkin's universe created from nothing and the saddle of Hartle and Hawking's no boundary proposal [vilenkin1982, feldbrugge2017]."
         }
       ],
       "references": [
@@ -11975,7 +11986,9 @@
         "ruban1969",
         "gibbonshawking1979",
         "page2009",
-        "gott1998"
+        "gott1998",
+        "vilenkin1982",
+        "feldbrugge2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -14189,6 +14202,11 @@
           "id": "small_universes",
           "kind": "family",
           "text": "Universes that are finite by the way their space is connected, with no curvature needed to close it. Einstein's is finite because its space is a sphere [lachiezerey1995]."
+        },
+        {
+          "id": "universe_from_nothing",
+          "kind": "conformal",
+          "text": "Multiplied by $1/\\cos^2(ct/R)$, the slab $0 \\le ct/R < \\pi/2$ of the Einstein static universe is the Lorentzian half of the universe from nothing, with $R = \\ell$."
         }
       ],
       "references": [
@@ -17234,6 +17252,11 @@
           "id": "tilted_universes",
           "kind": "generalisation",
           "text": "The open universe of dust with its matter set drifting along one direction. With the tilt $C = 0$ Farnsworth's solution is Friedmann's [anton2023]."
+        },
+        {
+          "id": "universe_from_nothing",
+          "kind": "family",
+          "text": "A closed universe filled only with the energy density of a vacuum, whose scale factor $\\ell\\cosh(ct/\\ell)$ bounces at $\\ell$, joined at that bounce to half a four sphere [vilenkin1982]."
         }
       ],
       "references": [
@@ -17297,7 +17320,8 @@
         "trautman2006",
         "ellis1971",
         "lachiezerey1995",
-        "anton2023"
+        "anton2023",
+        "vilenkin1982"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -18792,6 +18816,11 @@
           "id": "malament_hogarth",
           "kind": "generalisation",
           "text": "Any spacetime with closed timelike curves has the Malament-Hogarth property, as John Byron Manchak observed in 2010 [manchak2010]."
+        },
+        {
+          "id": "universe_from_nothing",
+          "kind": "family",
+          "text": "The beginning Gott and Li set out to replace: half a four sphere joined to de Sitter's waist, whose south pole they called the earliest point in Euclidean time [gott1998, vilenkin1982]."
         }
       ],
       "references": [
@@ -19793,6 +19822,11 @@
           "id": "de_sitter",
           "kind": "family",
           "text": "De Sitter space in imaginary time is the 4-sphere of radius $\\sqrt{3/\\Lambda}$, the first compact gravitational instanton. Its cosmological horizon is a bolt, and a quarter of the bolt's area is the horizon's entropy [gibbonshawking1979, page2009]."
+        },
+        {
+          "id": "universe_from_nothing",
+          "kind": "family",
+          "text": "Half of the four sphere, the instanton of de Sitter space, joined at its equator to the waist of de Sitter's closed universe as Vilenkin's universe created from nothing [vilenkin1982]."
         }
       ],
       "references": [
@@ -19811,7 +19845,8 @@
         "chenlebrunweber2008",
         "chenteo2011",
         "sorkin1983",
-        "grossperry1983"
+        "grossperry1983",
+        "vilenkin1982"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gravitational_instantons.json",
@@ -23787,6 +23822,11 @@
           "id": "self_creating_universe",
           "kind": "special_case",
           "text": "The inflating region of Gott and Li's universe, de Sitter space identified under a boost, with $a = \\sinh(ct/r_0)$ and $b = r_0\\cosh(ct/r_0)$ for the de Sitter radius $r_0$ [gott1998]."
+        },
+        {
+          "id": "universe_from_nothing",
+          "kind": "family",
+          "text": "The geometry of the no boundary proposal on the round minisuperspace, half a four sphere joined to de Sitter's waist [hartle1983]. Laflamme and Shellard carried the proposal over to the Kantowski-Sachs minisuperspace [laflamme1987]."
         }
       ],
       "references": [
@@ -23809,7 +23849,8 @@
         "bronnikov2022",
         "novikov1965",
         "ruban1968",
-        "gott1998"
+        "gott1998",
+        "hartle1983"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kantowski_sachs.json",
@@ -36413,6 +36454,11 @@
           "id": "datt_ruban_t_models",
           "kind": "family",
           "text": "Dust whose spheres all share one radius at each moment, the solution Ruban set beside Nariai's in 1969: both are left out when the radius of the spheres is taken to change from shell to shell [ruban1969, krasinski2001ruban]."
+        },
+        {
+          "id": "universe_from_nothing",
+          "kind": "family",
+          "text": "The nucleation of a de Sitter universe without black holes, half a four sphere joined to de Sitter's waist. Bousso and Hawking gave the rate of pair creation relative to it [bousso1996]."
         }
       ],
       "references": [
@@ -52565,6 +52611,392 @@
           ],
           "ricci_scalar": "R = -\\dfrac{12}{L^2}",
           "kretschmann": "K = \\dfrac{12\\mu^2}{r^6} + \\dfrac{24}{L^4}"
+        }
+      ]
+    },
+    {
+      "id": "universe_from_nothing",
+      "name": "The Universe from Nothing",
+      "short_name": "Universe from nothing",
+      "description": "Half of a four sphere joined at its equator to the waist of de Sitter's closed universe: the geometry of Alexander Vilenkin's universe created by tunnelling from nothing (1982) and of the no boundary proposal of James Hartle and Stephen Hawking (1983). The south pole of the sphere is a point like any other on it, so the universe has no first moment and no edge, and above the equator it inflates.",
+      "tags": [
+        "de Sitter",
+        "instanton",
+        "Euclidean quantum gravity",
+        "Euclidean signature",
+        "Riemannian",
+        "Lorentzian",
+        "quantum cosmology",
+        "wave function of the universe",
+        "no boundary proposal",
+        "tunnelling",
+        "signature change",
+        "four sphere",
+        "three sphere",
+        "closed universe",
+        "inflation",
+        "expanding universe",
+        "vacuum energy",
+        "bounce",
+        "cosmology",
+        "cosmological constant",
+        "positive cosmological constant",
+        "constant curvature",
+        "exact solution",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "Einstein space",
+        "conformally flat",
+        "spherically symmetric"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The four sphere's chart is Riemannian, of signature $(+,+,+,+)$, and the scale factor chart is Riemannian where $a < \\ell$ and Lorentzian where $a > \\ell$.",
+      "related": [
+        {
+          "id": "de_sitter",
+          "kind": "piece",
+          "text": "The Lorentzian half: de Sitter's closed universe from its waist on, joined there to half a four sphere [vilenkin1982]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "family",
+          "text": "Riemannian solutions of Einstein's equations of the same kind as the four sphere, which Vilenkin called \"the well-known de Sitter instanton\" [vilenkin1982]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "family",
+          "text": "Vilenkin took the bounce, Coleman's Euclidean description of tunnelling, from a false vacuum to the whole universe [vilenkin1982]. Coleman and De Luccia's bubble is a round bounce whose continuation is an open universe inside a wall [coleman1980]."
+        },
+        {
+          "id": "self_creating_universe",
+          "kind": "family",
+          "text": "Gott and Li took the start of this universe to be like the south pole of the Earth, the earliest point in Euclidean time, and built a de Sitter universe that begins in a region of closed timelike curves [gott1998]."
+        },
+        {
+          "id": "nariai",
+          "kind": "family",
+          "text": "Its Euclidean section is the instanton for the pair creation of black holes during inflation. Raphael Bousso and Stephen Hawking calculated that rate from the no boundary proposal and found that the tunnelling proposal makes unphysical predictions [bousso1996]."
+        },
+        {
+          "id": "kantowski_sachs",
+          "kind": "family",
+          "text": "Raymond Laflamme and Paul Shellard studied the wave function of the universe of the no boundary proposal on the Kantowski-Sachs minisuperspace [laflamme1987]."
+        },
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "Vilenkin began from a closed Friedmann universe filled with the energy density of a vacuum, whose scale factor is $\\ell\\cosh(ct/\\ell)$ [vilenkin1982]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "conformal",
+          "text": "The conformal chart is the Einstein static universe's metric times $\\ell^2/\\cos^2\\eta$, so the half above the waist is conformal to the slab $0 \\le \\eta < \\pi/2$ of it, with its radius equal to $\\ell$."
+        }
+      ],
+      "references": [
+        "vilenkin1982",
+        "hartle2022",
+        "vilenkin2002",
+        "hartle1983",
+        "feldbrugge2017",
+        "vilenkin1984",
+        "linde1984",
+        "hartle2008",
+        "coleman1980",
+        "gott1998",
+        "bousso1996",
+        "laflamme1987"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/universe_from_nothing.json",
+      "charts": [
+        {
+          "id": "closed",
+          "name": "Closed Slicing",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in [0, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "t = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ the proper time of the comoving observers since the waist $t = 0$ and $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere of radius $a = \\ell\\cosh(ct/\\ell)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\ell^2\\cosh^2(ct/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "four_sphere",
+          "name": "Four Sphere",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in [-\\pi\\ell/2, 0]",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tau = -\\pi\\ell/2 \\;\\text{(the south pole)}",
+            "\\tau = 0 \\;\\text{(the equator, joined to the waist of the closed slicing)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$ on the southern half of a four sphere of radius $\\ell$, with $\\tau = ict$ the Euclidean time of the closed slicing, a length, and $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere of latitude $\\tau$, of radius $a = \\ell\\cos(\\tau/\\ell)$. The chart is Riemannian, and a dot in the geodesic equations is a derivative with respect to arc length.",
+          "line_element": "ds^2 = d\\tau^2 + \\ell^2\\cos^2(\\tau/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\ell^2\\cos^2(\\tau/\\ell)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "scale_factor",
+          "name": "Scale Factor",
+          "coordinates": [
+            "a",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "a \\in [0, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "a = 0 \\;\\text{(the south pole)}",
+            "a = \\ell \\;\\text{(the join, Riemannian below and Lorentzian above)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+            }
+          ],
+          "convention": "We use the radius $a$ of the 3-sphere as the coordinate, a length, with $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere. Below $a = \\ell$ the metric is Riemannian, the four sphere with $a = \\ell\\cos(\\tau/\\ell)$, and above it Lorentzian, with $a$ a time and $a = \\ell\\cosh(ct/\\ell)$ in the closed slicing. A dot in the geodesic equations is a derivative with respect to an affine parameter, or to arc length where $a < \\ell$.",
+          "line_element": "ds^2 = \\dfrac{da^2}{1 - \\dfrac{a^2}{\\ell^2}} + a^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "a",
+                "a"
+              ],
+              "value": "\\dfrac{\\ell^2}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in [0, \\pi/2)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\eta = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$, a pure number with $\\tan\\eta = \\sinh(ct/\\ell)$ in the closed slicing, which is itself the chart's $x^0$, and the angles $\\chi$, $\\theta$, and $\\phi$ on the 3-sphere. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\ell^2}{\\cos^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{\\ell^2}{\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{\\ell^2}{\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "lapse",
+          "name": "Quadratic Gauge",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in [0, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "t = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+            }
+          ],
+          "convention": "We use Feldbrugge, Lehners and Turok's gauge, in which the lapse is $\\ell c/a$ and the squared radius $a^2 = \\ell^2 + c^2t^2$ of the 3-sphere grows as a quadratic in the time $t$, with $ct = \\ell\\sinh(ct_c/\\ell)$ for the proper time $t_c$ of the closed slicing. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\ell^2c^2dt^2}{\\ell^2 + c^2t^2} + \\left(\\ell^2 + c^2t^2\\right)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\ell^2}{\\ell^2 + c^2\\,t^2}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\ell^2 + c^2\\,t^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
         }
       ]
     },

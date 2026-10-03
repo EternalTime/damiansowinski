@@ -70,6 +70,11 @@
       "id": "de_sitter",
       "kind": "family",
       "text": "De Sitter space in imaginary time is the 4-sphere of radius $\\sqrt{3/\\Lambda}$, the first compact gravitational instanton. Its cosmological horizon is a bolt, and a quarter of the bolt's area is the horizon's entropy [gibbonshawking1979, page2009]."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "family",
+      "text": "Half of the four sphere, the instanton of de Sitter space, joined at its equator to the waist of de Sitter's closed universe as Vilenkin's universe created from nothing [vilenkin1982]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "chenlebrunweber2008",
     "chenteo2011",
     "sorkin1983",
-    "grossperry1983"
+    "grossperry1983",
+    "vilenkin1982"
   ],
   "coordinates": [
     {

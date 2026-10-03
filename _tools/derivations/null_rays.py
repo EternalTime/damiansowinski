@@ -2458,6 +2458,9 @@ RP3_EDGE = "the edge $X = 0$, glued to itself by the antipodal map of the sphere
 
 
 
+# The universe from nothing is drawn at l = 1.
+UFN = {"ell": 1}
+
 # Gott and Li's self-creating universe is drawn at the de Sitter radius 1 and their beta = 2 pi r_0.
 SCU = {"r_0": 1, "beta": "2*pi"}
 SCU_HORIZON_X = "the Cauchy horizon, $x = \\pm r_0e^{-c\\tau/r_0}$"
@@ -3374,6 +3377,16 @@ DIAGRAMS = [
             (0, 1, -1, 0), "$x/r_0$", "$\\eta/r_0$", SCU, EQUATOR, mirror=True, tau="eta", families=SIDEWAYS,
             cones=(4, 6), where_is_infinity=True,
             marked=(("event", {"x0": "-1/2", "r": "1/2"}, 0, "the Cauchy horizon, $\\rho = -\\eta$"),)),
+    # The universe from nothing at l = 1: the plane of the time and chi of each Lorentzian chart, from the
+    # waist where the four sphere is joined on, upward; the scale factor chart above its join a = l.
+    Diagram("universe_from_nothing", "closed", "radial", "$t$ and $\\chi$", ("t", "\\chi"), (0, math.pi, 0, 3),
+            "$\\chi$", "$ct/\\ell$", UFN, EQUATOR, families=SIDEWAYS),
+    Diagram("universe_from_nothing", "scale_factor", "radial", "$a$ and $\\chi$", ("a", "\\chi"),
+            (0, math.pi, 1, 4), "$\\chi$", "$a/\\ell$", UFN, EQUATOR, tau="a", families=SIDEWAYS),
+    Diagram("universe_from_nothing", "conformal", "radial", "$\\eta$ and $\\chi$", ("\\eta", "\\chi"),
+            (0, math.pi, 0, math.pi / 2), "$\\chi$", "$\\eta$", UFN, EQUATOR, tau="eta", families=SIDEWAYS),
+    Diagram("universe_from_nothing", "lapse", "radial", "$t$ and $\\chi$", ("t", "\\chi"), (0, math.pi, 0, 3),
+            "$\\chi$", "$ct/\\ell$", UFN, EQUATOR, families=SIDEWAYS),
     # The RP3 geon at r_s = 1: Kruskal's plane on the half X >= 0, whose edge X = 0 is glued to itself by the
     # antipodal map of the sphere, hatched beyond the singularities T^2 - X^2 = 1, with both horizons marked;
     # Schwarzschild's chart of the one exterior; and the isotropic chart on its one sheet rho > r_s/4.
@@ -7810,6 +7823,35 @@ CAPTIONS = {
         "closes on itself after $\\eta$ shrinks by $e^{-\\beta/r_0}$. Inside the marked rays "
         "$\\rho = -\\eta$, the Cauchy horizon, those lines are closed timelike curves, and outside they are "
         "the spacelike circles of $l$.",
+    ],
+    ("universe_from_nothing", "closed", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) above the waist $t = 0$, where the "
+        "four sphere is joined on. On it $ds^2 = -c^2dt^2 + \\ell^2\\cosh^2(ct/\\ell)\\,d\\chi^2$, so the cones "
+        "close up as the 3-sphere inflates.",
+        "A ray covers $\\Delta\\chi = \\arctan\\sinh(ct/\\ell)$ in the time $t$ after the waist and no more "
+        "than $\\pi/2$ ever, so light sent from the pole $\\chi = 0$ at $t = 0$ reaches the equator "
+        "$\\chi = \\pi/2$ of the 3-sphere only at future infinity.",
+    ],
+    ("universe_from_nothing", "scale_factor", "radial"): [
+        "The plane of $a$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) above the join $a = \\ell$, where "
+        "$g_{aa} = 1/(1 - a^2/\\ell^2)$ is negative and the radius $a$ of the 3-sphere is the time. Below the "
+        "join the same line element is Riemannian, the four sphere.",
+        "On the join $g_{aa}$ diverges and the cones lie flat along it, since the 3-sphere grows at no rate there. "
+        "The rays keep $\\mathrm{arcsec}(a/\\ell) \\pm \\chi$.",
+    ],
+    ("universe_from_nothing", "conformal", "radial"): [
+        "The plane of $\\eta$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) from the waist $\\eta = 0$ to "
+        "future infinity $\\eta = \\pi/2$. On it $ds^2 = (\\ell^2/\\cos^2\\eta)(-d\\eta^2 + d\\chi^2)$, so "
+        "light runs at 45°.",
+        "A ray from the pole $\\chi = 0$ at the waist reaches $\\chi = \\pi/2$ on future infinity, so an "
+        "observer at the pole ever receives light from only the hemisphere about it on the waist.",
+    ],
+    ("universe_from_nothing", "lapse", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) in Feldbrugge, Lehners and Turok's "
+        "gauge, above the waist $t = 0$. On it $ds^2 = -\\ell^2c^2dt^2/(\\ell^2 + c^2t^2) + "
+        "(\\ell^2 + c^2t^2)\\,d\\chi^2$, with the squared radius of the 3-sphere a quadratic in $t$.",
+        "The rays keep $\\arctan(ct/\\ell) \\pm \\chi$, so the drawing is the closed slicing's with its "
+        "time stretched.",
     ],
     ("rp3_geon", "kruskal", "plane"): [
         "The plane of $T$ and $X$ ($\\theta = \\pi/2$, $\\phi = 0$) on the half $X \\ge 0$. On it "
@@ -14538,6 +14580,15 @@ CLOSED_FORMS = {
     ("self_creating_universe", "steady_state", "tx"):
         (lambda tau, x: x - np.exp(-tau), lambda tau, x: x + np.exp(-tau), None),
     ("self_creating_universe", "conformal", "through"): (lambda e, r: e + r, lambda e, r: e - r, lambda e, r: e < -0.02),
+    # The universe from nothing at l = 1: chi +- the conformal time, arctan(sinh t) in the closed slicing,
+    # arcsec(a) above the join, eta itself and arctan(t) in the quadratic gauge.
+    ("universe_from_nothing", "closed", "radial"):
+        (lambda t, c: np.arctan(np.sinh(t)) + c, lambda t, c: np.arctan(np.sinh(t)) - c, None),
+    ("universe_from_nothing", "scale_factor", "radial"):
+        (lambda a, c: np.arccos(1 / a) + c, lambda a, c: np.arccos(1 / a) - c, lambda a, c: a > 1.02),
+    ("universe_from_nothing", "conformal", "radial"): (lambda e, c: e + c, lambda e, c: e - c, None),
+    ("universe_from_nothing", "lapse", "radial"):
+        (lambda t, c: np.arctan(t) + c, lambda t, c: np.arctan(t) - c, None),
     # The RP3 geon at r_s = 1: T -+ X in Kruskal's plane, Schwarzschild's r_* in the exterior, and the same
     # r_* of the areal radius rho (1 + 1/4 rho)^2 in the isotropic chart.
     ("rp3_geon", "kruskal", "plane"): (lambda T, X: T + X, lambda T, X: T - X, None),

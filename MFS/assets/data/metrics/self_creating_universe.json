@@ -68,6 +68,11 @@
       "id": "malament_hogarth",
       "kind": "generalisation",
       "text": "Any spacetime with closed timelike curves has the Malament-Hogarth property, as John Byron Manchak observed in 2010 [manchak2010]."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "family",
+      "text": "The beginning Gott and Li set out to replace: half a four sphere joined to de Sitter's waist, whose south pole they called the earliest point in Euclidean time [gott1998, vilenkin1982]."
     }
   ],
   "references": [
