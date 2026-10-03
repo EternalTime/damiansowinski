@@ -16291,6 +16291,52 @@ def senovilla(ck, src):
     return [v]
 
 
+def lqc_bounce(ck, src):
+    """The bounce of loop quantum cosmology, in units of t_b.
+
+    The metric is a^2(-d eta^2 + dr^2 + r^2 dOmega^2) with eta = int c dt/a, and
+    eta(t) = t 2F1(1/6, 1/2; 3/2; -t^2) grows as (3/2)|t|^(2/3), without limit in both directions,
+    so p, q = arctan(eta -+ r) bring the universe onto the whole of Minkowski's half diamond: no
+    spacelike edge stands where the classical universe of a stiff fluid has its bang. The harmonic
+    chart is the same plane with t = sinh(tau). The published Kretschmann scalar is checked finite
+    all over the plane and greatest at the bounce, where it is 4/3 (c t_b = 1)."""
+    eta_of = nr._lqc_eta
+    com = Plane(src, "lqc_bounce", "comoving_spherical", ("t", "r"), EQUATOR, {"t_b": 1})
+
+    def comoving(t, r):
+        return mink_pq(eta_of(t), r)
+    ck.chart("LQC bounce comoving", com, comoving, ck.uniform(-6, 6), ck.uniform(0.01, 6), lambda t, r: (1, 0))
+    ck.limit("LQC bounce: the conformal time grows as (3/2) t^(2/3), without limit",
+             [eta_of(1e9) / 1.5e6, eta_of(1e12) / 1.5e8], [1.0, 1.0], 2e-3)
+    K = com.kretschmann
+    everywhere = K(ck.uniform(-6, 6, 400), ck.uniform(0, 6, 400))
+    ck.finite("LQC bounce: the Kretschmann scalar is finite all over the plane", everywhere)
+    ck.limit("LQC bounce: the Kretschmann scalar at the bounce is 4/3",
+             K(np.zeros(1), np.ones(1)), [4 / 3], 1e-9)
+    ck.limit("LQC bounce: the Kretschmann scalar is nowhere greater than at the bounce",
+             [max(0.0, float(np.max(everywhere)) - 4 / 3)], [0.0])
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    v = View("comoving", "Comoving", box, "comoving_spherical")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda r, t: comoving(t, r), (1, 2, 4), S_ALL)
+    grid(v, "t", comoving, (-8, -2, -0.5, 0.5, 2, 8), S_POS)
+    grid(v, "surface", comoving, (0,), S_POS)
+    triangle_edges(v)
+    v.legend("cover", "the whole spacetime, which the comoving chart covers")
+    v.legend("r", "comoving $r$ constant, in units of $ct_b$: the world lines of comoving observers")
+    v.legend("t", "$t/t_b$ constant: $\\pm 1/2$, $\\pm 2$, and $\\pm 8$")
+    v.legend("surface", "the bounce, $t = 0$, where the density is greatest and $a = 1$")
+    v.legend("centre", "$r = 0$, the world line of one comoving observer")
+    for m in slices.moments("lqc_bounce"):
+        along_r = np.array(m.reach("comoving_spherical", "r"))
+        v.slice(m, [mink_pq(np.full_like(along_r, float(eta_of(m.time))), along_r)])
+    v.set(settings="$t_b = 1$, with $ct_b$ the scale of $p = \\arctan((\\eta - r)/ct_b)$ and "
+                   "$q = \\arctan((\\eta + r)/ct_b)$, where $\\eta = \\int c\\,dt/a$.")
+    return [v]
+
+
 def kopczynski_trautman(ck, src):
     """Kopczynski and Trautman's universe, in units of l.
 
@@ -25297,6 +25343,7 @@ DRAWN = {
     "roberts": roberts,
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
+    "lqc_bounce": lqc_bounce,
     "kopczynski_trautman": kopczynski_trautman,
     "small_universes": small_universes,
     "poincare_dodecahedral": poincare_dodecahedral,
@@ -28742,6 +28789,17 @@ CAPTIONS = {
         "Every edge but the axis is at infinity: a light ray reaches $\\rho \\to \\infty$ only at an infinite value of its "
         "affine parameter, and the fluid reaches $t \\to \\pm\\infty$ only after an infinite proper time. The Kretschmann "
         "scalar is finite on the whole half plane and greatest at the marked event, where it is $792\\,a^4$.",
+    ],
+    ("lqc_bounce", "comoving"): [
+        "The bounce of loop quantum cosmology, each point in the diagram a 2-sphere. The metric is "
+        "$a^2(-d\\eta^2 + dr^2 + r^2d\\Omega^2)$ with the conformal time $\\eta = \\int c\\,dt/a$, which runs over the "
+        "whole real line, so $p, q = \\arctan((\\eta \\mp r)/ct_b)$ bring the universe onto the whole of Minkowski's "
+        "half diamond, with past and future null infinity for its edges.",
+        "The classical universe of a massless scalar field fills the upper half alone, with its big bang along "
+        "$T = 0$. Here the line $T = 0$ is the bounce, a regular moment where the Kretschmann scalar is "
+        "$4/3c^4t_b^4$, its greatest value, and every comoving world line and every light ray crosses it. The "
+        "moments of constant $t$ crowd toward the bounce, since $\\eta$ grows only as the $2/3$ power of $t$ far "
+        "from it.",
     ],
     ("kopczynski_trautman", "comoving"): [
         "Kopczyński and Trautman's universe, each point in the diagram a 2-sphere. The metric is "

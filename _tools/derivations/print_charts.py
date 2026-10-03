@@ -20,7 +20,7 @@ tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, freund_rubin, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
-poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair and bubbling_ads, and Godel's cylindrical chart.
+poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads and lqc_bounce, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -31819,6 +31819,145 @@ def _bubbling_pulled(name, label, here, there_g, images, plane, base, slots, the
 
 
 CHARTS["bubbling_ads"] = [lambda s=s: bubbling_ads(s) for s in BUBBLING_CHARTS]
+
+
+# -- The bounce of loop quantum cosmology ---------------------------------------------------
+
+LQC_CHARTS = ("cosmic", "comoving_spherical", "harmonic")
+LQC_SPACE = "\\left(dx^2 + dy^2 + dz^2\\right)"
+
+
+def lqc_bounce(system):
+    """The flat universe of a massless scalar field in the effective dynamics of loop quantum
+    cosmology, whose Friedmann equation is H^2 = (8 pi G/3) rho (1 - rho/rho_c) (Ashtekar,
+    Pawlowski and Singh, Phys. Rev. D 74, 084003 (2006), Appendix B), with rho = rho_c/a^6 for the
+    scalar field. The cosmic chart is Cai and Wilson-Ewing's closed form, JCAP 03 (2014) 026,
+    a = (1 + 24 pi G rho_c t^2)^(1/6) = (1 + t^2/t_b^2)^(1/6), and the comoving spherical chart the
+    same in spherical comoving coordinates; the harmonic chart is Ashtekar and Singh's
+    -a^6 dtau^2 + a^2 dx^2, Class. Quantum Grav. 28, 213001 (2011), in which the volume runs as
+    cosh(tau/t_b) (Ashtekar, Corichi and Singh, Phys. Rev. D 77, 024046 (2008)). Each line element names the scale factor a, and the
+    chart's own line element writes it out in x^0, since a name defined in the time is read in the
+    time the file prints. lqc_bounce_check holds both charts to the modified Friedmann equation and
+    the harmonic chart to the cosmic one pulled back; lqc_bounce.md beside this file records each
+    chart's source."""
+    coords = {"cosmic": ["t", "x", "y", "z"], "comoving_spherical": ["t", "r", "\\theta", "\\phi"],
+              "harmonic": ["\\tau", "x", "y", "z"]}[system]
+    if system == "comoving_spherical":
+        sphere = "\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)"
+        parameters = ["t_b", "a = \\left(1 + t^2/t_b^2\\right)^{1/6}"]
+        line = "ds^2 = -c^2dt^2 + a^2" + sphere
+        chart_line = "ds^2 = -dt^2 + \\left(1 + \\dfrac{t^2}{c^2t_b^2}\\right)^{1/3}" + sphere
+        name = "Comoving Spherical"
+    elif system == "cosmic":
+        parameters = ["t_b", "a = \\left(1 + t^2/t_b^2\\right)^{1/6}"]
+        line = "ds^2 = -c^2dt^2 + a^2" + LQC_SPACE
+        chart_line = "ds^2 = -dt^2 + \\left(1 + \\dfrac{t^2}{c^2t_b^2}\\right)^{1/3}" + LQC_SPACE
+        name = "Cosmic Time"
+    else:
+        parameters = ["t_b", "a = \\cosh^{1/3}(\\tau/t_b)"]
+        line = "ds^2 = -a^6c^2d\\tau^2 + a^2" + LQC_SPACE
+        chart_line = ("ds^2 = -\\cosh^2\\left(\\dfrac{\\tau}{ct_b}\\right)d\\tau^2"
+                      " + \\cosh^{2/3}\\left(\\dfrac{\\tau}{ct_b}\\right)" + LQC_SPACE)
+        name = "Harmonic Time"
+    probe = vm.Reader(coords, parameters, ())
+    time, tb = probe.symbol[coords[0]], probe.parameters["t_b"]
+    a = sp.Symbol("a", positive=True)
+    reals = "(-\\infty, \\infty)"
+    return {
+        "metric_id": "lqc_bounce",
+        "system": {"id": system, "name": name, "coords": coords,
+                   "domains": [f"{x} \\in {reals}" for x in coords] if system != "comoving_spherical" else
+                   ["t \\in " + reals, "r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"],
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "time": coords[0],
+        "printer": {"lead": [tb, time, a], "arguments": {time / tb: coords[0] + "/t_b"}},
+        "pretty": lqc_scale_factor(time, tb, a, system),
+        "check": lambda chart: lqc_bounce_check(chart, system),
+    }
+
+
+def lqc_scale_factor(time, tb, a, system):
+    """A `pretty` for the bounce that writes each value as a power of the scale factor a times a
+    function that holds no fractional power. In the cosmic chart a^6 = 1 + t^2/t_b^2 and the rest is
+    rational in t; in the harmonic chart a^3 = cosh(tau/t_b) and the rest is rational in a and
+    sinh(tau/t_b). Of the powers of a that leave no fractional power, the one is kept whose rest is
+    shortest and leaves no bare power of t_b below the line, so that t_b^2 + t^2 stays whole."""
+    if system != "harmonic":
+        root, step = 1 + time ** 2 / tb ** 2, 2
+    else:
+        u = time / tb
+        root, step = sp.cosh(u), 1
+
+    def fractional(e):
+        return any(not p.exp.is_Integer for p in e.atoms(sp.Pow) if p.exp.is_Rational)
+
+    hyperbolic = rooted_hyperbolic([(time / tb, 3)], sp.cosh(time / tb)) if system == "harmonic" else None
+
+    def rest(value, j):
+        # value / a^(step j), with a^(step j) = root^(j/3).
+        q = value * root ** sp.Rational(-j, 3)
+        if system != "harmonic":
+            q = sp.factor(sp.cancel(vm.norm(q)))
+            return None if fractional(q) else q
+        # rooted_hyperbolic leaves the cube root on cosh, cosh^(k/3) = a^k.
+        q = sp.factor(hyperbolic(q).subs(sp.cosh(time / tb), a ** 3))
+        return None if q.has(sp.cosh) or fractional(q) else q
+
+    def pretty(value):
+        value = sp.sympify(value)
+        best = None
+        # The harmonic chart's printer finds the power of cosh^(1/3) itself, so only j = 0 is tried.
+        for j in range(-12, 13) if system != "harmonic" else (0,):
+            q = rest(value, j)
+            if q is None:
+                continue
+            den = sp.fraction(q)[1]
+            bare = sum(e for b, e in den.as_powers_dict().items() if b == tb)
+            score = (10 * bare + sp.count_ops(q) + abs(j), abs(j))
+            if best is None or score < best[0]:
+                best = (score, q * a ** (step * j))
+        if best is None:
+            raise ValueError(f"lqc_bounce: {value} is no power of the scale factor times a function without roots")
+        return best[1]
+    return pretty
+
+
+def lqc_bounce_check(chart, system):
+    """The scale factor solves the modified Friedmann equation, (da/dt / a)^2 = (1/9t_b^2) a^-6
+    (1 - a^-6), which is H^2 = (8 pi G/3) rho (1 - rho/rho_c) with rho = rho_c/a^6 and
+    24 pi G rho_c t_b^2 = 1, and its rate of change is the same equation's root; the time tau of the
+    harmonic chart satisfies box tau = 0, so the scalar field, linear in it, solves the wave
+    equation; and the harmonic chart is the cosmic one pulled back through t = t_b sinh(tau/t_b)."""
+    x0 = chart.symbols[0]
+    tb = chart.reader.parameters["t_b"]
+    t = sp.Symbol("t", real=True)
+    a_cosmic = (1 + t ** 2 / tb ** 2) ** sp.Rational(1, 6)
+    H = sp.diff(a_cosmic, t) / a_cosmic
+    friedmann = H ** 2 - a_cosmic ** -6 * (1 - a_cosmic ** -6) / (9 * tb ** 2)
+    if vm.norm(friedmann) != 0:
+        raise AssertionError("lqc_bounce: the scale factor does not solve the modified Friedmann equation")
+    g = chart.geo.g
+    if system != "harmonic":
+        # x^0 = ct: g_11 is a^2 at t = x^0/c.
+        if vm.norm(g[1, 1] - a_cosmic.subs(t, x0 / chart.reader.c) ** 2) != 0:
+            raise AssertionError("lqc_bounce: the cosmic chart's g_xx is not a^2")
+        return
+    c = chart.reader.c
+    tau = x0 / c
+    # box tau = (1/sqrt(-g)) d_mu (sqrt(-g) g^mu nu d_nu tau), with tau = x^0/c.
+    sqrt_g = sp.sqrt(-g.det())
+    box = sp.diff(sqrt_g * chart.geo.ginv[0, 0] * sp.diff(tau, x0), x0) / sqrt_g
+    if vm.norm(box) != 0:
+        raise AssertionError("lqc_bounce: the harmonic time does not solve the wave equation")
+    # Pullback: c dt = cosh(tau/t_b) c dtau, a^2(t) = cosh^(2/3)(tau/t_b).
+    t_of = tb * sp.sinh(tau / tb)
+    lapse = sp.diff(c * t_of, x0)
+    if vm.norm(g[0, 0] + lapse ** 2) != 0 or vm.norm(g[1, 1] - a_cosmic.subs(t, t_of) ** 2) != 0:
+        raise AssertionError("lqc_bounce: the harmonic chart is not the cosmic one pulled back")
+
+
+CHARTS["lqc_bounce"] = [lambda s=s: lqc_bounce(s) for s in LQC_CHARTS]
 
 
 def write(spec):

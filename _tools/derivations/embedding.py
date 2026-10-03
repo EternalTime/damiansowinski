@@ -12188,6 +12188,44 @@ def nordstrom_scalar(ck, src):
     return views
 
 
+def lqc_bounce(ck, src):
+    """The equator of space in the bounce of loop quantum cosmology. A moment of the proper time t
+    has g_rr = a^2 and g_phiphi = a^2 r^2 with a = (1 + t^2/t_b^2)^(1/6): a flat plane on which the
+    comoving observer at the radius r stands the distance a r from the centre. It is drawn out to
+    r = c t_b at five moments from t = -3 t_b to 3 t_b, through the bounce at t = 0, where the disc
+    is smallest, and played as a movie with a frame every 0.1 t_b."""
+    named = (-3.0, -1.5, 0.0, 1.5, 3.0)
+    size = 2 * 10 ** (1 / 6)
+
+    def name(t):
+        return f"$t/t_b = {t + 0.0:g}$"
+
+    def moment(t):
+        a = (1 + t * t) ** (1 / 6)
+        sl = Slice(src, "lqc_bounce", "comoving_spherical", "r", "\\phi", {"t": repr(float(t)), **EQUATOR},
+                   {"t_b": 1})
+        disc = Piece("disc", "sheet", sl, 0.0, 1.0, 0.0, 1,
+                     (("axis", "the comoving observer at $r = 0$"), ("edge", "the plane runs on, to $r \\to \\infty$")),
+                     [(0.25, "r", None), (0.5, "r", None), (0.75, "r", None), (1.0, "r", None)], size)
+        where = f"lqc bounce at t = {t:g} t_b"
+        ck.plane(where, sl, np.linspace(1e-3, 20, 200))
+        ck.isometry(where, disc)
+        ck.radius(f"{where}, rho = a r", disc, lambda r, a=a: a * r, size)
+        ck.form(f"{where}, a plane", disc, lambda r: 0 * r, size)
+        return Surface([disc], label=name(t), time=t)
+
+    times, keys = movie_values(list(named), 0.1)
+    times = [round(t, 10) for t in times]
+    frames = [moment(t) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the equator of the moment, a flat plane, out to the observer at $r = ct_b$")
+    fig.legend("line", "r", "comoving observers at $r = ct_b/4$, $ct_b/2$, $3ct_b/4$, and $ct_b$, circles of radius $ar$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("universe", "The universe through its bounce", "$ct_b$", surfaces, fig.done(),
+                 movie=movie(frames, "$t$", times), settings="$t_b = 1$, with $ct_b$ the unit of every length.")]
+
+
 def kopczynski_trautman(ck, src):
     """The equator of space in Kopczynski and Trautman's universe. A moment of the proper time t has
     g_rr = a^2 and g_phiphi = a^2 r^2 with a = (1 + c^2t^2/l^2)^(1/3): a flat plane on which the grain
@@ -17031,6 +17069,7 @@ DRAWN = {
     "tippett_tsang": tippett_tsang,
     "nordstrom_scalar": nordstrom_scalar,
     "einstein_1912_static": einstein_1912_static,
+    "lqc_bounce": lqc_bounce,
     "kopczynski_trautman": kopczynski_trautman,
     "ab_metrics": ab_metrics,
     "small_universes": small_universes,
@@ -18348,6 +18387,16 @@ CAPTIONS = {
         "Time enters through the factor $\\cosh^2(act)$ alone, so every moment has one shape: the surface shrinks until "
         "the bounce at $t = 0$, and then grows. Far from the axis a circle's radius grows as the $2/3$ power of its "
         "distance from the axis, and the surface opens ever more slowly.",
+    ],
+    ("lqc_bounce", "universe"): [
+        "The equator ($\\theta = \\pi/2$) of space in the bounce of loop quantum cosmology as the comoving "
+        "observers' time runs from $t = -3\\,t_b$ to $3\\,t_b$, each moment drawn as a surface in flat space with "
+        "every distance along it the metric distance. Each moment is a flat plane, on which the observer at the "
+        "comoving radius $r$ stands a distance $ar$ from the centre, with $a = (1 + t^2/t_b^2)^{1/6}$.",
+        "The observers keep their places in the chart while every distance between them shrinks until the bounce, "
+        "$t = 0$, where $a = 1$, and grows again. Near the bounce $a \\approx 1 + t^2/6t_b^2$, and the rate of "
+        "expansion $H = t/3(t_b^2 + t^2)$ grows until $t = t_b$, where the density has fallen to half its greatest "
+        "value, and falls after it as in a classical universe of a stiff fluid, with $a$ growing as $|t|^{1/3}$.",
     ],
     ("kopczynski_trautman", "universe"): [
         "The equator ($\\theta = \\pi/2$) of space in Kopczyński and Trautman's universe as the dust's time runs "

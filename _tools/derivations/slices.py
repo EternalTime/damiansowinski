@@ -1174,6 +1174,13 @@ SMALL_NOW = 1.2 - 0.22 * math.log(11)      # the moment the small universes' hor
 PD_NOW = 0.38882                            # the conformal time today in Luminet's universe, as null_rays.PD_NOW
 
 
+def _lqc_eta(t):
+    """The conformal time of the bounce of loop quantum cosmology at the proper time t, in units of t_b:
+    eta = t 2F1(1/6, 1/2; 3/2; -t^2)."""
+    from scipy.special import hyp2f1
+    return float(t * hyp2f1(1 / 6, 0.5, 1.5, -t * t))
+
+
 def _kt_eta(t):
     """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l:
     eta = t 2F1(1/3, 1/2; 3/2; -t^2)."""
@@ -3434,6 +3441,14 @@ FLAT = {
     # Einstein's static field of 1912: the equator outside a body by the equation of March at t = 0.
     ("einstein_1912_static", "march", "radial"): lambda: one(
         "einstein_1912_static", lambda m: along(0.0, *m.reach("march", "r"))),
+    # The bounce of loop quantum cosmology at each moment of its movie, out to the observer at r = c t_b, on
+    # each chart: the line of that t across x in the cosmic chart, and of tau = t_b asinh(t/t_b) in the harmonic.
+    ("lqc_bounce", "comoving_spherical", "radial"): lambda: one(
+        "lqc_bounce", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
+    ("lqc_bounce", "cosmic", "tx"): lambda: one(
+        "lqc_bounce", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
+    ("lqc_bounce", "harmonic", "taux"): lambda: one(
+        "lqc_bounce", lambda m: across(math.asinh(m.time), *m.reach("comoving_spherical", "r"))),
     # Kopczynski and Trautman's universe at each moment of its movie, out to the dust at r = l on each chart.
     ("kopczynski_trautman", "comoving_spherical", "radial"): lambda: one(
         "kopczynski_trautman", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
@@ -4519,6 +4534,16 @@ def checks():
     miss = max(abs(complex((pulled - g_un).subs({ru: a, thu: 1.1})[i, j])) for a in rng.uniform(1.05, 5, 20)
                for i in range(4) for j in range(4))
     report("Unruh's acoustic hole: t = tau + ln((r - 1)/(r + 1))/4 + arctan(r)/2 pulls the laboratory chart back", miss, 1e-10)
+    # The bounce of loop quantum cosmology: t = t_b sinh(tau/t_b) pulls the cosmic chart back onto the harmonic
+    # one in every slot, so the moment t of the embedding is the line tau = t_b asinh(t/t_b).
+    g_cos, (tc, xc, yc, zc) = metric("lqc_bounce", "cosmic", {"t_b": 1})
+    g_har, (th, xh, yh, zh) = metric("lqc_bounce", "harmonic", {"t_b": 1})
+    image = [sp.sinh(th), xh, yh, zh]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (th, xh, yh, zh)[j]))
+    pulled = J.T * g_cos.subs(dict(zip((tc, xc, yc, zc), image)), simultaneous=True) * J
+    miss = max(abs(complex((pulled - g_har).subs(th, u)[i, j])) for u in rng.uniform(-3, 3, 20)
+               for i in range(4) for j in range(4))
+    report("LQC bounce: t = t_b sinh(tau/t_b) pulls the cosmic chart back onto the harmonic one", miss, 1e-10)
     return failures
 
 

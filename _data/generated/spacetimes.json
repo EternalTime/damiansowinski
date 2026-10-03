@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 183,
+  "count": 184,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -4771,6 +4771,280 @@
           ],
           "ricci_scalar": "R = 2\\left(\\dfrac{a_1''}{a_1} + \\dfrac{a_2''}{a_2} + \\dfrac{a_3''}{a_3} + \\dfrac{a_1'\\,a_2'}{a_1\\,a_2} + \\dfrac{a_1'\\,a_3'}{a_1\\,a_3} + \\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)",
           "kretschmann": "K = 4\\left(\\left(\\dfrac{a_1''}{a_1}\\right)^2 + \\left(\\dfrac{a_2''}{a_2}\\right)^2 + \\left(\\dfrac{a_3''}{a_3}\\right)^2 + \\left(\\dfrac{a_1'\\,a_2'}{a_1\\,a_2}\\right)^2 + \\left(\\dfrac{a_1'\\,a_3'}{a_1\\,a_3}\\right)^2 + \\left(\\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "lqc_bounce",
+      "name": "Big Bounce of Loop Quantum Cosmology",
+      "short_name": "Big Bounce",
+      "description": "The flat universe of a massless scalar field as loop quantum cosmology has it, in which the big bang is replaced by a bounce: the universe contracts to a greatest density, about 0.41 of the Planck density, and expands again. Abhay Ashtekar, Tomasz Pawlowski, and Parampreet Singh found the bounce in 2006, and its effective spacetime is a flat Friedmann universe whose scale factor is $(1 + t^2/t_b^2)^{1/6}$.",
+      "tags": [
+        "loop quantum cosmology",
+        "loop quantum gravity",
+        "quantum gravity",
+        "bounce",
+        "big bang",
+        "no singularity",
+        "superinflation",
+        "cosmology",
+        "expanding universe",
+        "FLRW",
+        "homogeneous",
+        "isotropic",
+        "scalar field",
+        "massless scalar field",
+        "minimally coupled scalar field",
+        "stiff fluid",
+        "time-dependent",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model",
+        "conformally flat",
+        "spherically symmetric"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The bounce time is $t_b = 1/\\sqrt{24\\pi G\\rho_c}$, with $\\rho_c$ the critical density of loop quantum cosmology. We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "Friedmann's universe with any scale factor. Flat space and $a = (1 + t^2/t_b^2)^{1/6}$ make it this one, and with Einstein's equations the same scalar field drives it out of a big bang [ashtekar2006improved, cai2014]."
+        },
+        {
+          "id": "quantum_oppenheimer_snyder",
+          "kind": "family",
+          "text": "A ball of dust whose inside obeys the same bouncing Friedmann equation, with the vacuum outside it fixed by the junction conditions [lewandowski2023]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "family",
+          "text": "The classical universe of a massless scalar field when it expands at different rates in different directions. Ashtekar and Wilson-Ewing carried loop quantum cosmology to it, and its big bang gives way too [ashtekar2009bianchi]."
+        },
+        {
+          "id": "senovilla",
+          "kind": "family",
+          "text": "A universe of radiation with no singularity in Einstein's theory, whose greatest density can be chosen as large or small as one likes [chinea1992]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "A universe on Randall and Sundrum's brane obeys a Friedmann equation with a term in $\\rho^2$ as well, with the opposite sign [singh2006]."
+        },
+        {
+          "id": "kantowski_sachs",
+          "kind": "programme",
+          "text": "The homogeneous slices inside Schwarzschild's horizon, where Ashtekar and Bojowald took the same quantum geometry [ashtekar2006]."
+        },
+        {
+          "id": "simpson_visser",
+          "kind": "family",
+          "text": "A black hole whose singularity gives way to a bounce into a new universe, a geometry Simpson and Visser wrote down by hand and called a black bounce [simpson2019]."
+        },
+        {
+          "id": "hayward",
+          "kind": "family",
+          "text": "Hayward's minimal model of a black hole with no singularity at its centre [hayward2006]."
+        }
+      ],
+      "references": [
+        "ashtekar2008robust",
+        "ashtekar2009bianchi",
+        "bojowald2001",
+        "ashtekar2006bounce",
+        "brunnemann2006",
+        "ashtekar2006improved",
+        "ashtekar2011status",
+        "cai2014",
+        "singh2006",
+        "ashtekar2006",
+        "lewandowski2023",
+        "chinea1992",
+        "simpson2019",
+        "hayward2006"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lqc_bounce.json",
+      "charts": [
+        {
+          "id": "cosmic",
+          "name": "Cosmic Time",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "t_b",
+              "description": "Bounce time, $t_b = 1/\\sqrt{24\\pi G\\rho_c}$, with $\\rho_c = \\sqrt{3}\\,c^5/32\\pi^2\\gamma^3G^2\\hbar$ the critical density, about $0.41$ of the Planck density for the Barbero-Immirzi parameter $\\gamma \\approx 0.24$, which makes $t_b$ about a fifth of the Planck time"
+            },
+            {
+              "symbol": "a = \\left(1 + t^2/t_b^2\\right)^{1/6}",
+              "description": "Scale factor, a pure number that is one at the bounce $t = 0$ and grows as $|t/t_b|^{1/3}$ far from it"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of the comoving observers and $x$, $y$, and $z$ comoving lengths, the distances between those observers at the bounce. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6t_b^2 - 2t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}",
+          "kretschmann": "K = \\dfrac{36t_b^4 - 48t_b^2\\,t^2 + 20t^4}{27c^4\\left(t_b^2 + t^2\\right)^4}"
+        },
+        {
+          "id": "comoving_spherical",
+          "name": "Comoving Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "t_b",
+              "description": "Bounce time, $t_b = 1/\\sqrt{24\\pi G\\rho_c}$, with $\\rho_c = \\sqrt{3}\\,c^5/32\\pi^2\\gamma^3G^2\\hbar$ the critical density, about $0.41$ of the Planck density for the Barbero-Immirzi parameter $\\gamma \\approx 0.24$, which makes $t_b$ about a fifth of the Planck time"
+            },
+            {
+              "symbol": "a = \\left(1 + t^2/t_b^2\\right)^{1/6}",
+              "description": "Scale factor, a pure number that is one at the bounce $t = 0$ and grows as $|t/t_b|^{1/3}$ far from it"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ the proper time of the comoving observers and $r$ the comoving radius, a length, the distance from the centre at the bounce. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6t_b^2 - 2t^2}{3c^2\\left(t_b^2 + t^2\\right)^2}",
+          "kretschmann": "K = \\dfrac{36t_b^4 - 48t_b^2\\,t^2 + 20t^4}{27c^4\\left(t_b^2 + t^2\\right)^4}"
+        },
+        {
+          "id": "harmonic",
+          "name": "Harmonic Time",
+          "coordinates": [
+            "\\tau",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "t_b",
+              "description": "Bounce time, $t_b = 1/\\sqrt{24\\pi G\\rho_c}$, with $\\rho_c = \\sqrt{3}\\,c^5/32\\pi^2\\gamma^3G^2\\hbar$ the critical density, about $0.41$ of the Planck density for the Barbero-Immirzi parameter $\\gamma \\approx 0.24$, which makes $t_b$ about a fifth of the Planck time"
+            },
+            {
+              "symbol": "a = \\cosh^{1/3}(\\tau/t_b)",
+              "description": "Scale factor, a pure number that is one at the bounce $\\tau = 0$"
+            }
+          ],
+          "convention": "We use the harmonic time $\\tau$, which runs in step with the scalar field and is related to the cosmic time by $t = t_b\\sinh(\\tau/t_b)$, and the comoving lengths $x$, $y$, and $z$. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -a^6c^2d\\tau^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-a^6"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(a^3 - 2\\right)\\left(a^3 + 2\\right)}{3t_b^2\\,a^{12}\\,c^2}",
+          "kretschmann": "K = \\dfrac{20a^{12} - 88a^6 + 104}{27t_b^4\\,a^{24}\\,c^4}"
         }
       ]
     },
@@ -20523,6 +20797,11 @@
           "id": "big_rip",
           "kind": "special_case",
           "text": "Flat space filled with phantom energy alone, with $w = p/\\rho c^2 < -1$, whose scale factor reaches infinity at a finite time, the Big Rip [caldwell2003, chiba2005]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "special_case",
+          "text": "The flat universe of a massless scalar field as loop quantum cosmology has it, $a = (1 + t^2/t_b^2)^{1/6}$, which bounces where Einstein's equations put a big bang [cai2014, ashtekar2006improved]."
         }
       ],
       "references": [
@@ -20591,7 +20870,9 @@
         "luminet2003",
         "vilenkin1982",
         "caldwell2003",
-        "chiba2005"
+        "chiba2005",
+        "cai2014",
+        "ashtekar2006improved"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -24419,6 +24700,11 @@
           "id": "black_to_white_hole",
           "kind": "family",
           "text": "Another end to a collapse with no event horizon, a shell of light that tunnels from a black hole into a white hole. Haggard and Rovelli count Hayward's black hole among the models behind theirs [haggard2015fireworks]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "family",
+          "text": "A universe whose big bang gives way to a bounce in loop quantum cosmology [ashtekar2006bounce]."
         }
       ],
       "references": [
@@ -24443,7 +24729,8 @@
         "mazur2004",
         "carballorubio2021",
         "lewandowski2023",
-        "haggard2015fireworks"
+        "haggard2015fireworks",
+        "ashtekar2006bounce"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hayward.json",
@@ -27727,6 +28014,11 @@
           "id": "universe_from_nothing",
           "kind": "family",
           "text": "The geometry of the no-boundary proposal on the round minisuperspace, half a 4-sphere joined to de Sitter's waist [hartle1983]. Laflamme and Shellard carried the proposal over to the Kantowski-Sachs minisuperspace [laflamme1987]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "programme",
+          "text": "The flat universe of loop quantum cosmology, whose big bang becomes a bounce. Ashtekar and Bojowald carried its quantum geometry to these slices inside Schwarzschild's horizon [ashtekar2006bounce, ashtekar2006]."
         }
       ],
       "references": [
@@ -27750,7 +28042,8 @@
         "novikov1965",
         "ruban1968",
         "gott1998",
-        "hartle1983"
+        "hartle1983",
+        "ashtekar2006bounce"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kantowski_sachs.json",
@@ -28377,6 +28670,11 @@
           "id": "kasner_magnetic",
           "kind": "family",
           "text": "Kasner's universe with a magnetic field in place of the scalar field. Kenneth Jacobs put the two contents together in 1969, a stiff fluid and a field along one axis [jacobs1969]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "family",
+          "text": "The isotropic member, $q^2 = 2/3$, as loop quantum cosmology has it, with a bounce in place of the big bang. Ashtekar and Wilson-Ewing carried the same quantum geometry to the anisotropic universes [ashtekar2009bianchi]."
         }
       ],
       "references": [
@@ -28392,7 +28690,8 @@
         "fournodavlos2023",
         "frenkel2020",
         "janis1968",
-        "jacobs1969"
+        "jacobs1969",
+        "ashtekar2009bianchi"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner_scalar.json",
@@ -46550,6 +46849,11 @@
           "id": "mass_inflation",
           "kind": "family",
           "text": "The growth of the mass at an inner horizon. Husain, Kelly, Santacruz, and Wilson-Ewing found none at the inner horizons of their quantum collapse of dust [husain2022]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "family",
+          "text": "The whole universe bouncing, filled with a massless scalar field, the setting where Ashtekar, Pawlowski, and Singh found the bouncing Friedmann equation [ashtekar2006improved]."
         }
       ],
       "references": [
@@ -46561,7 +46865,8 @@
         "gambini2020",
         "husain2022",
         "bonanno2024",
-        "hayward2006"
+        "hayward2006",
+        "ashtekar2006improved"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/quantum_oppenheimer_snyder.json",
@@ -46989,6 +47294,11 @@
           "id": "quantum_btz",
           "kind": "family",
           "text": "A brane with two dimensions of space in anti-de Sitter space of four, curved like anti-de Sitter space itself, with a black hole on it. By holography it is a black hole of three dimensions with the backreaction of quantum fields included exactly [emparan2002holograms, emparan2020qbtz]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "family",
+          "text": "A universe whose Friedmann equation, from loop quantum cosmology, carries a term in $\\rho^2$ with a minus sign, where a universe on the brane has a plus [singh2006]."
         }
       ],
       "references": [
@@ -47012,7 +47322,8 @@
         "cremmer1976",
         "horvath1977",
         "freund1980",
-        "emparan2020qbtz"
+        "emparan2020qbtz",
+        "singh2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json",
@@ -52187,6 +52498,11 @@
           "id": "kopczynski_trautman",
           "kind": "family",
           "text": "Another universe that bounces with no singularity, this one of spinning dust in the Einstein-Cartan theory. It is homogeneous and it violates an energy condition of the singularity theorems, which Senovilla's universe keeps [hehl1974, trautman2006]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "family",
+          "text": "A universe whose bounce comes from loop quantum cosmology, at a critical density of about 0.41 of the Planck density [ashtekar2011status]."
         }
       ],
       "references": [
@@ -52203,7 +52519,8 @@
         "raychaudhuri1998",
         "senovilla1996",
         "hehl1974",
-        "trautman2006"
+        "trautman2006",
+        "ashtekar2011status"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/senovilla.json",
@@ -53298,6 +53615,11 @@
           "id": "big_rip",
           "kind": "family",
           "text": "A universe filled with phantom energy, the kind of scalar field that holds up this bounce, which pulls the universe apart at a finite time [caldwell2002, caldwell2003]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "family",
+          "text": "A bounce of a whole universe, which loop quantum cosmology puts where the big bang was [ashtekar2006bounce]."
         }
       ],
       "references": [
@@ -53321,7 +53643,8 @@
         "ansoldi2008",
         "hayward2006",
         "caldwell2002",
-        "caldwell2003"
+        "caldwell2003",
+        "ashtekar2006bounce"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/simpson_visser.json",

@@ -372,6 +372,18 @@ A family of spatially homogeneous but generally anisotropic cosmologies classifi
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json
 - chart Type I, Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + a_1^2 dx^2 + a_2^2 dy^2 + a_3^2 dz^2$$
 
+### Big Bounce of Loop Quantum Cosmology
+
+The flat universe of a massless scalar field as loop quantum cosmology has it, in which the big bang is replaced by a bounce: the universe contracts to a greatest density, about 0.41 of the Planck density, and expands again. Abhay Ashtekar, Tomasz Pawlowski, and Parampreet Singh found the bounce in 2006, and its effective spacetime is a flat Friedmann universe whose scale factor is $(1 + t^2/t_b^2)^{1/6}$.
+
+- id: `lqc_bounce`
+- tags: loop quantum cosmology, loop quantum gravity, quantum gravity, bounce, big bang, no singularity, superinflation, cosmology, expanding universe, FLRW, homogeneous, isotropic, scalar field, massless scalar field, minimally coupled scalar field, stiff fluid, time-dependent, Lorentzian, four-dimensional, idealized model, conformally flat, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/lqc_bounce.json
+- chart Cosmic Time: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + a^2\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Comoving Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Harmonic Time: coordinates $(\tau, x, y, z)$, $$ds^2 = -a^6c^2d\tau^2 + a^2\left(dx^2 + dy^2 + dz^2\right)$$
+
 ### Big Rip Universe
 
 A flat Friedmann universe filled with phantom energy, whose pressure is more negative than minus its energy density. The density grows as space expands, and the scale factor reaches infinity at a finite time, the Big Rip, pulling apart every bound system on the way.
