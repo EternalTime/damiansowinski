@@ -7983,6 +7983,92 @@ def three_brane_throat(ck, src):
     return views
 
 
+FR_SEVEN = {"alpha": "pi/2", "beta": "pi/2", "gamma": "pi/2", "kappa": "pi/2", "xi": "pi/2", "omega": "pi/2"}
+
+
+def freund_rubin(ck, src):
+    """Freund and Rubin's anti-de Sitter space times a 7-sphere of radius 2L, at L = 1, in three
+    views of the moment t = 0. The surface of rho and phi of the global chart, on the equator of
+    anti-de Sitter space and at one point of the sphere, is the hyperbolic plane
+    L^2(d rho^2 + sinh^2 rho d phi^2), whose circles grow faster than the distance out to them, so
+    it is drawn in Minkowski space, the sheet Z = L cosh(rho) - L, out to rho = 2 with the light cone
+    it nears. The surface of sigma and psi of the chart of the proper distance, d sigma^2 + 4 L^2
+    d psi^2, is the cylinder of radius 2L with sigma for its height, a great circle of the sphere at
+    each point of a line of anti-de Sitter space. A great 2-sphere of the 7-sphere at one event,
+    omega and psi, is the sphere of radius 2L."""
+    name = "Freund-Rubin"
+    point = {"t": 0, "theta": "pi/2", **FR_SEVEN, "psi": 0}
+    hz = Slice(src, "freund_rubin", "global", "\\rho", "\\phi", point, {"L": 1}, space="minkowski")
+    ck.stops(f"{name}, the hyperbolic plane in flat space", hz, np.linspace(1e-3, 6, 400))
+    htop = 2.0
+    hsize = 2 * math.sinh(htop)
+    sheet = Piece("sheet", "sheet", hz, 0.0, htop, 0.0, 1,
+                  (("axis", "the centre $\\rho = 0$"),
+                   ("edge", "the sheet runs on toward the light cone, to the boundary $\\rho \\to \\infty$")),
+                  [(x, "r", None) for x in (0.5, 1.0, 1.5, htop)], hsize)
+    cone = FormPiece("cone", hz, np.linspace(0.0, htop, 81), np.sinh, lambda x: np.sinh(x) - 1.0,
+                     (("apex", "the apex of the light cone, a distance $L$ below the centre"),
+                      ("edge", "the cone runs on")), hsize)
+    ck.isometry(f"{name}, the hyperbolic plane", sheet)
+    ck.form(f"{name}, the hyperbolic plane: the hyperboloid Z = L cosh(rho) - L", sheet, lambda x: np.cosh(x) - 1, hsize)
+    ck.radius(f"{name}, the hyperbolic plane: rho = L sinh(rho)", sheet, np.sinh, hsize)
+    ck.add(f"{name}, the hyperbolic plane: from rho = 0 to rho = 2 is 2 L", abs(hz.proper(0.0, htop) - htop), 1e-9)
+    hsurface = Surface([sheet, cone])
+    fig = figure_of([hsurface], {"sheet": "cover"}, hsize)
+    ring_label(fig, [0, 0, 0], *sheet.at(1.0), "$\\rho = 1$")
+    ring_label(fig, [0, 0, 0], *sheet.at(htop), "$2$")
+    fig.legend("fill", "cover", "the equator of anti-de Sitter space at one moment, which $\\rho$ and $\\phi$ cover but for the centre")
+    fig.legend("line", "r", "$\\rho$ constant, at $0.5$, $1$, $1.5$ and $2$, each a proper distance $L/2$ from the last")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears as "
+                                    "$\\rho \\to \\infty$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("anti_de_sitter", "The anti-de Sitter factor", "$L$", [hsurface], fig.done(),
+                  settings="$L = 1$, the unit of every length. Every length along the sheet is measured with "
+                           "$dX^2 + dY^2 - dZ^2$.",
+                  stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, "
+                         "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of "
+                         "revolution in flat space carries the hyperbolic plane; Minkowski space carries it."])]
+
+    sl = Slice(src, "freund_rubin", "proper", "\\sigma", "\\psi", {"t": 0, "x": 0, "y": 0, **FR_SEVEN}, {"L": 1})
+    size = 4.0
+    tube = Piece("cylinder", "sheet", sl, -1.0, 1.0, -1.0, 1,
+                 (("edge", "the cylinder runs on for ever toward the Poincaré horizon, $\\sigma \\to -\\infty$"),
+                  ("edge", "the cylinder runs on for ever toward the boundary, $\\sigma \\to \\infty$")),
+                 [(k / 2, "r", None) for k in (-2, -1, 0, 1, 2)], size)
+    ck.isometry(f"{name}, a line of anti-de Sitter space and a great circle of the sphere", tube)
+    ck.form(f"{name}, the cylinder at the height sigma", tube, lambda x: x, size)
+    ck.radius(f"{name}, the cylinder of radius 2L", tube, lambda x: 2 * np.ones_like(x), size)
+    circle = Surface([tube])
+    fig = figure_of([circle], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tube.at(0.0), "$\\sigma = 0$")
+    ring_label(fig, [0, 0, 0], *tube.at(1.0), "$L$")
+    ring_label(fig, [0, 0, 0], *tube.at(-1.0), "$-L$")
+    fig.legend("fill", "cover", "a line of anti-de Sitter space and a great circle of the 7-sphere at one moment, which $\\sigma$ and $\\psi$ cover")
+    fig.legend("line", "r", "$\\sigma$ constant, every $L/2$ from $-L$ to $L$")
+    fig.legend("line", "meridian", "$\\psi$ constant, every $15°$")
+    settings = "$L = 1$, the unit of every length."
+    views.append(view("circle", "A great circle of the sphere", "$L$", [circle], fig.done(), settings=settings))
+
+    ball_slice = Slice(src, "freund_rubin", "proper", "\\omega", "\\psi",
+                       {"t": 0, "x": 0, "y": 0, "sigma": 0, **{k: v for k, v in FR_SEVEN.items() if k != "omega"}},
+                       {"L": 1})
+    size = 4.0
+    ball = Piece("sphere", "sheet", ball_slice, 0.0, math.pi, 0.0, 1,
+                 (("axis", "the pole $\\omega = 0$"), ("axis", "the pole $\\omega = \\pi$")),
+                 [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)], size)
+    ck.isometry(f"{name}, a great 2-sphere of the 7-sphere", ball)
+    ck.form(f"{name}, the sphere z = 2L(1 - cos omega)", ball, lambda w: 2 * (1 - np.cos(w)), size)
+    ck.radius(f"{name}, the sphere rho = 2L sin omega", ball, lambda w: 2 * np.sin(w), size)
+    sphere = Surface([ball])
+    fig = figure_of([sphere], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *ball.at(math.pi / 2), "$\\omega = \\pi/2$")
+    fig.legend("fill", "cover", "a great 2-sphere of the 7-sphere, which $\\omega$ and $\\psi$ cover but for its poles")
+    fig.legend("line", "r", "$\\omega$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\psi$ constant, every $15°$")
+    views.append(view("sphere", "The sphere", "$L$", [sphere], fig.done(), settings=settings))
+    return views
+
+
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m on the
 # axis, as their spacetime diagrams declare.
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
@@ -15499,6 +15585,7 @@ DRAWN = {
     "plebanski_hacyan": plebanski_hacyan,
     "cremmer_scherk": cremmer_scherk,
     "three_brane_throat": three_brane_throat,
+    "freund_rubin": freund_rubin,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
@@ -17104,6 +17191,28 @@ CAPTIONS = {
         "The limit that keeps the throat alone removes the flat plane at the top of the surface of the three-brane, "
         "and the cylinder runs on without end both ways. Every circle is one great circle of a 5-sphere of "
         "radius $L$.",
+    ],
+    ("freund_rubin", "anti_de_sitter"): [
+        "The surface of $\\rho$ and $\\phi$ ($\\theta = \\pi/2$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, "
+        "$\\psi = 0$) of anti-de Sitter space at one moment of $t$, the hyperbolic plane "
+        "$L^2(d\\rho^2 + \\sinh^2\\rho\\,d\\phi^2)$, drawn in three dimensional Minkowski space with every distance "
+        "along it, measured with $dX^2 + dY^2 - dZ^2$, the metric distance.",
+        "The circle a distance $L\\rho$ from the centre has circumference $2\\pi L\\sinh\\rho$, which grows faster "
+        "than the distance out to it, as no surface of revolution in flat space allows. In Minkowski space it is "
+        "one sheet of the hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, nearing the light cone, dashed, as it runs "
+        "out to the boundary of anti-de Sitter space.",
+    ],
+    ("freund_rubin", "circle"): [
+        "The surface of $\\sigma$ and $\\psi$ ($x = y = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$) "
+        "at one moment of $t$, a cylinder of radius $2L$ in flat space, $d\\sigma^2 + 4L^2d\\psi^2$, with every "
+        "distance along it the metric distance.",
+        "Each circle is a great circle of the 7-sphere, of circumference $4\\pi L$ at every point of anti-de Sitter "
+        "space, and the cylinder runs on without end toward the Poincaré horizon and toward the boundary.",
+    ],
+    ("freund_rubin", "sphere"): [
+        "The surface of $\\omega$ and $\\psi$ ($x = y = 0$, $\\sigma = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\pi/2$) "
+        "at one event of $t$, $x$, $y$, and $\\sigma$, a great 2-sphere of the 7-sphere, radius $2L$ and area "
+        "$16\\pi L^2$, the same at every event.",
     ],
     ("cremmer_scherk", "equator"): [
         "One flat dimension and the equator of the sphere ($y = z = 0$, $\\theta = \\pi/2$) of Cremmer and "

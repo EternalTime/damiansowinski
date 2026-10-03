@@ -98,7 +98,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "5f7f5d39c5106f9d",
+    "version": "5a9f8b4aecf0c124",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -331,7 +331,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "62ce6ddb315c85d1",
+    "version": "1f77807ae5839f0e",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -1011,7 +1011,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "c00cd865a18242b5",
+    "version": "d97d7559a11045ef",
     "diagrams": "48060486c9b55dec",
     "conformal": "f7ef5892e08fb949",
     "embedding": "90144612e008c71d"
@@ -1651,6 +1651,39 @@
     "embedding": "3cdd1185c95f1f46"
   },
   {
+    "id": "freund_rubin",
+    "name": "Freund-Rubin",
+    "tags": [
+      "static",
+      "stationary",
+      "eleven-dimensional",
+      "higher dimensions",
+      "supergravity",
+      "Kaluza-Klein",
+      "compact dimension",
+      "spontaneous compactification",
+      "product spacetime",
+      "homogeneous",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "holography",
+      "M-theory",
+      "membrane",
+      "throat",
+      "near-horizon limit",
+      "supersymmetric",
+      "no horizon",
+      "regular",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "81e903872ecb6a31",
+    "diagrams": "5e0c638643e61027",
+    "conformal": "fdaf25d52bb0d79a",
+    "embedding": "c496b535987be512"
+  },
+  {
     "id": "frw",
     "name": "Friedmann-Lemaître-Robertson-Walker",
     "tags": [
@@ -2213,7 +2246,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "ae80a83e8da71813",
+    "version": "aa391264f50c82c4",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -3432,7 +3465,7 @@
       "Einstein space",
       "stationary"
     ],
-    "version": "832182e837e22a84",
+    "version": "8221007082b5ba55",
     "diagrams": "37b04b7cf3bacecd",
     "conformal": "4fac9b552eb536ea",
     "embedding": "1199648bcf6666d8"
@@ -3835,7 +3868,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "dd08ac3dac8a3a08",
+    "version": "9f8e371b389e086f",
     "diagrams": "f78be2d481dc49b2",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"
@@ -3913,7 +3946,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "42410c071ceba59f",
+    "version": "8723478132d0dd63",
     "diagrams": "84d8aa4c800066d0",
     "conformal": "df06b8d369f90c16",
     "embedding": "b5e538549e42926e"
@@ -4194,7 +4227,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "9100220cfa800dbd",
+    "version": "551a0a141d9188d0",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -4682,7 +4715,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "06579253ae61a1ee",
+    "version": "d12f88e92ae5d458",
     "diagrams": "e574af654990108c",
     "conformal": "631507c8e742808c",
     "embedding": "7006f557a81541c6"

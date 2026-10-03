@@ -17,7 +17,7 @@ rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kas
 moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
-string_bh_three_four_charges, btz_multi_holes_wormholes and three_brane_throat, and Godel's
+string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat and freund_rubin, and Godel's
 cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
@@ -21267,6 +21267,199 @@ def three_brane_check(chart, system):
 
 
 CHARTS["three_brane_throat"] = [lambda s=s: three_brane(s) for s in THREE_BRANE_CHARTS]
+
+
+# -- Freund and Rubin's anti-de Sitter space times a seven-sphere ------------------------
+
+FREUND_RUBIN_CHARTS = ["global", "conformal", "static", "poincare", "proper"]
+FREUND_RUBIN_ANGLES = ["\\alpha", "\\beta", "\\gamma", "\\kappa", "\\xi", "\\omega", "\\psi"]
+FREUND_RUBIN_SPHERE = ("\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\gamma^2"
+                       " + \\sin^2\\gamma\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\left(d\\omega^2"
+                       " + \\sin^2\\omega\\,d\\psi^2\\right)\\right)\\right)\\right)\\right)\\right)")
+FREUND_RUBIN_TWO = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def freund_rubin(system):
+    """Anti-de Sitter space of four dimensions times a seven-sphere of twice its radius, the
+    solution of eleven-dimensional supergravity of Freund and Rubin's (6) with s = 4, d = 11: the
+    four-form F = f eps on the four large dimensions, and by their (7a) each small dimension is
+    curved half as much as each large one, with the opposite sign, so the sphere's radius is 2L,
+    Maldacena's R_sph = 2 R_AdS of his section 3.2. The anti-de Sitter factor is written in the charts
+    of Aharony, Gubser, Maldacena, Ooguri and Oz: the global chart (2.23) with tau = ct/L, the
+    conformal chart (2.24) with tan(chi) = sinh(rho), and the Poincare chart (2.27), which is
+    Maldacena's (7.3), with u = r/L^2; the static chart is the global one at r = L sinh(rho); the
+    proper distance chart is Gibbons and Townsend's (5) at p = 2, d = 11, gamma_x = 2/3 and a = 2L.
+    freund_rubin_check holds each chart to the field equations, and freund_rubin.md records each source."""
+    radial = {"global": "\\rho", "conformal": "\\chi", "static": "r", "poincare": "r", "proper": "\\sigma"}[system]
+    if system in ("global", "conformal", "static"):
+        coords = ["t", radial, "\\theta", "\\phi"] + FREUND_RUBIN_ANGLES
+        large = [PH_LINE.format("t")] + [{"global": "\\rho \\in [0, \\infty)", "conformal": "\\chi \\in [0, \\pi/2)",
+                                          "static": "r \\in [0, \\infty)"}[system]] + PH_SPHERE_DOMAINS
+    else:
+        coords = ["t", "x", "y", radial] + FREUND_RUBIN_ANGLES
+        large = [PH_LINE.format(c) for c in ("t", "x", "y")] + [{"poincare": "r \\in (0, \\infty)",
+                                                               "proper": "\\sigma \\in (-\\infty, \\infty)"}[system]]
+    angles = [a + " \\in [0, \\pi]" for a in FREUND_RUBIN_ANGLES[:-1]] + ["\\psi \\in [0, 2\\pi)"]
+    sphere = " + 4L^2" + FREUND_RUBIN_SPHERE
+    if system == "global":
+        name = "Global"
+        line = ("ds^2 = -\\cosh^2\\rho\\,{}dt^2 + L^2\\left(d\\rho^2 + \\sinh^2\\rho" + FREUND_RUBIN_TWO + "\\right)"
+                + sphere)
+    elif system == "conformal":
+        name = "Conformal"
+        line = ("ds^2 = \\dfrac{1}{\\cos^2\\chi}\\left(-{}dt^2 + L^2d\\chi^2 + L^2\\sin^2\\chi" + FREUND_RUBIN_TWO
+                + "\\right)" + sphere)
+    elif system == "static":
+        name = "Static"
+        f = "\\left(1 + \\dfrac{r^2}{L^2}\\right)"
+        line = ("ds^2 = -" + f + "{}dt^2 + \\dfrac{dr^2}{1 + \\dfrac{r^2}{L^2}} + r^2" + FREUND_RUBIN_TWO + sphere)
+    elif system == "poincare":
+        name = "Poincaré"
+        line = ("ds^2 = \\dfrac{r^2}{L^2}\\left(-{}dt^2 + dx^2 + dy^2\\right) + \\dfrac{L^2}{r^2}dr^2" + sphere)
+    else:
+        name = "Proper Distance"
+        line = "ds^2 = e^{2\\sigma/L}\\left(-{}dt^2 + dx^2 + dy^2\\right) + d\\sigma^2" + sphere
+    probe = vm.Reader(coords, ["L"], ())
+    lead = [probe.symbol[radial], probe.parameters["L"]]
+    return {"metric_id": "freund_rubin", "check": lambda chart, s=system: freund_rubin_check(chart, s),
+            "system": {"id": system, "name": name, "coords": coords, "domains": large + angles,
+                       "parameters": ["L"], "line_element": line.replace("{}", "c^2")},
+            "chart_line_element": line.replace("{}", ""),
+            "printer": {"lead": lead, "flip": False}}
+
+
+def freund_rubin_large(system, x, L):
+    """The diagonal of a chart's anti-de Sitter factor at the radial coordinate x, with x^0 = ct,
+    in the order of its four coordinates; the two angles of the global, conformal and static charts
+    carry the unit sphere's sin^2(theta) on phi."""
+    if system == "global":
+        return [-sp.cosh(x) ** 2, L ** 2, L ** 2 * sp.sinh(x) ** 2, L ** 2 * sp.sinh(x) ** 2]
+    if system == "conformal":
+        return [-1 / sp.cos(x) ** 2, L ** 2 / sp.cos(x) ** 2, L ** 2 * sp.tan(x) ** 2, L ** 2 * sp.tan(x) ** 2]
+    if system == "static":
+        return [-(1 + x ** 2 / L ** 2), 1 / (1 + x ** 2 / L ** 2), x ** 2, x ** 2]
+    if system == "poincare":
+        return [-x ** 2 / L ** 2, x ** 2 / L ** 2, x ** 2 / L ** 2, L ** 2 / x ** 2]
+    return [-sp.exp(2 * x / L), sp.exp(2 * x / L), sp.exp(2 * x / L), sp.Integer(1)]
+
+
+def freund_rubin_check(chart, system):
+    """Each chart against eleven-dimensional supergravity with Freund and Rubin's four-form, their
+    (1a) and (5a) at s = 4 read in the convention R_mu_nu = R^a_mu_a_nu, R_MN = 8 pi G (F_MPQR
+    F_N^PQR - g_MN F^2/12), for F = f times the volume form of the anti-de Sitter factor, their (6a),
+    with 8 pi G f^2 = 3/(4 L^2): F_mu_PQR F_nu^PQR is computed from the components, the field equation
+    (5b), d_mu(sqrt|g| F^mu...) = 0, holds, F ^ F vanishes as an eight-form on four dimensions, and
+    every component of the Ricci tensor matches. The anti-de Sitter factor has the Riemann tensor
+    -(g g - g g)/L^2 and the sphere +(g g - g g)/(4 L^2), the two blocks share no component, and
+    R^M_N is -3/L^2 on the first four dimensions and 3/(2 L^2) on the sphere, the ratio -2 of
+    Freund and Rubin's (7a) for each dimension. The static chart is the global one pulled back
+    along r = L sinh(rho), the conformal chart along tan(chi) = sinh(rho), and the proper distance
+    chart is the Poincare one along r = L e^(sigma/L)."""
+    name = f"freund_rubin/{system}"
+    radial_index = 1 if system in ("global", "conformal", "static") else 3
+    x, L = chart.symbols[radial_index], chart.reader.parameters["L"]
+    g = sp.Matrix(chart.geo.g)
+    n = 11
+    G, f = sp.Symbol("G", positive=True), sp.Symbol("f", positive=True)
+    radius, length = sp.Symbol("_radius", positive=True), sp.Symbol("_length", positive=True)
+    inside = {x: radius / (1 + radius)} if system == "conformal" else {x: radius}
+    rng = random.Random(11)
+
+    def zero(e):
+        e = sp.sympify(e)
+        if e == 0:
+            return True
+        e = e.subs(inside, simultaneous=True).subs(L, length)
+        if sp.simplify(e) == 0:
+            return True
+        # The exponentials of inverse hyperbolic functions that simplify leaves standing are settled
+        # at three points, to thirty digits.
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 160), 100) for s in sorted(e.free_symbols, key=str)}
+            if abs(sp.N(e.subs(at), 40)) > sp.Float(10) ** -30:
+                return False
+        return True
+
+    # The line element: the anti-de Sitter factor and 4 L^2 times the unit seven-sphere.
+    big = freund_rubin_large(system, x, L)
+    if system in ("global", "conformal", "static"):
+        big[3] = big[3] * sp.sin(chart.symbols[2]) ** 2
+    sines = [sp.sin(a) for a in chart.symbols[4:10]]
+    unit = [sp.Integer(1)]
+    for s in sines:
+        unit.append(unit[-1] * s ** 2)
+    wanted = sp.diag(*big, *[4 * L ** 2 * u for u in unit])
+    if any(not zero(g[i, j] - wanted[i, j]) for i in range(n) for j in range(n)):
+        raise AssertionError(f"{name}: the line element is not the anti-de Sitter factor and the sphere of radius 2L")
+
+    # The four-form on the anti-de Sitter factor, F_0123 = f sqrt|det g_4|, and its square.
+    root4 = sp.sqrt(-sp.Mul(*big))
+    ginv = [1 / g[i, i] for i in range(n)]
+    Fsq = {}
+    for mu in range(4):
+        others = [a for a in range(4) if a != mu]
+        Fsq[mu] = sp.factorial(3) * (f * root4) ** 2 * sp.Mul(*[ginv[a] for a in others])
+    square = 24 * (f * root4) ** 2 * sp.Mul(*ginv[:4])
+    if not zero(square + 24 * f ** 2):
+        raise AssertionError(f"{name}: F^2 is not -24 f^2")
+    root = root4 * sp.sqrt(sp.Mul(*[g[i, i] for i in range(4, n)]))
+    upper = f * root4 * sp.Mul(*ginv[:4])                    # F^0123
+    if any(not zero(sp.diff(root * upper, chart.symbols[mu])) for mu in range(4)):
+        raise AssertionError(f"{name}: the four-form misses its field equation")
+    ricci = chart.geo.ricci_ll()
+    on_shell = {G: 3 / (32 * sp.pi * L ** 2 * f ** 2)}
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                if ricci[i][j] != 0:
+                    raise AssertionError(f"{name}: the Ricci tensor is not diagonal")
+                continue
+            source = 8 * sp.pi * G * ((Fsq[i] if i < 4 else 0) - g[i, i] * square / 12)
+            if not zero(ricci[i][i] - source.subs(on_shell)):
+                raise AssertionError(f"{name}: R_MN = 8 pi G (F F - g F^2/12) fails in slot {chart.coords_tex[i]}")
+            mixed = sp.sympify(ricci[i][i]) * ginv[i]
+            if not zero(mixed - (-3 / L ** 2 if i < 4 else sp.Rational(3, 2) / L ** 2)):
+                raise AssertionError(f"{name}: R^M_N is not -3/L^2 on anti-de Sitter space and 3/(2L^2) on the sphere")
+
+    riemann = chart.geo.riemann_llll()
+    for a, b, c, d in vm._indices(n, 4):
+        if a >= b or c >= d or (a, b) > (c, d):
+            continue
+        blocks = {i < 4 for i in (a, b, c, d)}
+        if len(blocks) == 1:
+            k = -1 / L ** 2 if a < 4 else 1 / (4 * L ** 2)
+            want = k * (g[a, c] * g[b, d] - g[a, d] * g[b, c])
+        else:
+            want = 0
+        if not zero(riemann[a][b][c][d] - want):
+            raise AssertionError(f"{name}: the Riemann tensor is not that of anti-de Sitter space times a sphere "
+                                 f"in slot {a}{b}{c}{d}")
+
+    def pulled(of, image, slope):
+        spec = freund_rubin(of)
+        there = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        at = {there.symbols[radial_index]: image, there.reader.parameters["L"]: L}
+        at.update({a: b for a, b in zip(there.symbols, chart.symbols) if a != there.symbols[radial_index]})
+        J = sp.eye(n)
+        J[radial_index, radial_index] = slope
+        theirs = J.T * sp.Matrix(there.geo.g).subs(at, simultaneous=True) * J
+        if any(not zero(theirs[i, j] - g[i, j]) for i in range(n) for j in range(i, n)):
+            raise AssertionError(f"{name}: not the {of} chart pulled back")
+
+    if system == "static":
+        image = sp.asinh(x / L)
+        pulled("global", image, sp.diff(image, x))
+    elif system == "conformal":
+        image = sp.asinh(sp.tan(x))
+        pulled("global", image, sp.diff(image, x))
+    elif system == "proper":
+        image = L * sp.exp(x / L)
+        pulled("poincare", image, sp.diff(image, x))
+
+
+CHARTS["freund_rubin"] = [lambda s=s: freund_rubin(s) for s in FREUND_RUBIN_CHARTS]
+
+
 # -- Tippett and Tsang's time machine ---------------------------------------------------
 
 TIPPETT_TSANG_CHARTS = ["cartesian", "polar", "interior", "rindler"]

@@ -2758,6 +2758,24 @@ FLAT = {
         view_id="throat"),
     ("three_brane_throat", "throat_proper", "radial"): lambda: one(
         "three_brane_throat", lambda m: along(0.0, *m.reach("throat_proper", "\\sigma")), view_id="throat"),
+    # Freund and Rubin's moment t = 0 at L = 1: the hyperbolic plane over its reach in the global rho,
+    # which is chi = arctan(sinh rho) and r = sinh rho on the conformal and static charts, and the
+    # cylinder over its reach in the proper distance sigma, which is r = e^sigma on the Poincare chart.
+    # On the plane of t and psi at sigma = 0 the cylinder is its ring sigma = 0, the whole line t = 0.
+    ("freund_rubin", "global", "radial"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, *m.reach("global", "\\rho")), view_id="anti_de_sitter"),
+    ("freund_rubin", "conformal", "radial"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, *(math.atan(math.sinh(x)) for x in m.reach("global", "\\rho"))),
+        view_id="anti_de_sitter"),
+    ("freund_rubin", "static", "radial"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, *(math.sinh(x) for x in m.reach("global", "\\rho"))),
+        view_id="anti_de_sitter"),
+    ("freund_rubin", "poincare", "radial"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, *(math.exp(x) for x in m.reach("proper", "\\sigma"))), view_id="circle"),
+    ("freund_rubin", "proper", "radial"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, *m.reach("proper", "\\sigma")), view_id="circle"),
+    ("freund_rubin", "proper", "circle"): lambda: one(
+        "freund_rubin", lambda m: along(0.0, 0.0, 2 * math.pi), label="$t = 0$, $\\sigma = 0$", view_id="circle"),
     ("cremmer_scherk", "cartesian", "tx"): lambda: _cremmer_scherk("tx"),
     ("cremmer_scherk", "cartesian", "circle"): lambda: _cremmer_scherk("circle"),
     ("plebanski_hacyan", "sphere", "tz"): lambda: _plebanski_hacyan("sphere"),

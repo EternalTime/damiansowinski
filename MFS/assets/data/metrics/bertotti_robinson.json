@@ -114,6 +114,11 @@
       "id": "three_brane_throat",
       "kind": "family",
       "text": "The three-brane of string theory has the same throat six dimensions up, anti-de Sitter space of five dimensions times a sphere of five [gibbons1993]."
+    },
+    {
+      "id": "freund_rubin",
+      "kind": "family",
+      "text": "Freund and Rubin's spontaneous compactification of eleven dimensions. Their first example, Maxwell's field pointing across two dimensions of four, is this universe [freund1980]."
     }
   ],
   "references": [
@@ -144,7 +149,8 @@
     "ortaggio2002direct",
     "horvath1977",
     "podolsky2025",
-    "strominger1996"
+    "strominger1996",
+    "freund1980"
   ],
   "coordinates": [
     {

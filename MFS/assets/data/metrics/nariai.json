@@ -72,6 +72,11 @@
       "id": "datt_ruban_t_models",
       "kind": "family",
       "text": "Dust whose spheres all share one radius at each moment, the solution Ruban set beside Nariai's in 1969: both are left out when the radius of the spheres is taken to change from shell to shell [ruban1969, krasinski2001ruban]."
+    },
+    {
+      "id": "freund_rubin",
+      "kind": "family",
+      "text": "Anti-de Sitter space of four dimensions times a 7-sphere, another product of a spacetime and a sphere, held by a field with four indices in eleven dimensions [freund1980]."
     }
   ],
   "references": [
@@ -93,7 +98,8 @@
     "podolskybelan2004",
     "ortaggio2002direct",
     "ruban1969",
-    "krasinski2001ruban"
+    "krasinski2001ruban",
+    "freund1980"
   ],
   "coordinates": [
     {

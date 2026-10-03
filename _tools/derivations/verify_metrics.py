@@ -898,6 +898,14 @@ DIMENSIONS = {
        for chart, radial, unit, extra in (("isotropic", "\\rho", "L", {"H": "1"}), ("areal", "r", "L", {}),
                                           ("horizon", "w", "1", {"r": "L"}), ("throat", "r", "L", {}),
                                           ("throat_proper", "\\sigma", "L", {}))},
+    # Freund and Rubin's anti-de Sitter space times a seven-sphere: L is the radius of anti-de Sitter
+    # space, the conformal chart's chi and every angle are pure numbers, and the global chart's rho too.
+    **{("freund_rubin", chart): {
+        "t": "T", **{c: "L" for c in large}, radial: unit, **({} if large else {"\\theta": "1", "\\phi": "1"}), "\\alpha": "1",
+        "\\beta": "1", "\\gamma": "1", "\\kappa": "1", "\\xi": "1", "\\omega": "1", "\\psi": "1", "L": "L"}
+       for chart, radial, unit, large in (("global", "\\rho", "1", ()), ("conformal", "\\chi", "1", ()),
+                                          ("static", "r", "L", ()), ("poincare", "r", "L", ("x", "y")),
+                                          ("proper", "\\sigma", "L", ("x", "y")))},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",

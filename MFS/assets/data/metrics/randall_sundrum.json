@@ -74,6 +74,11 @@
       "id": "cremmer_scherk",
       "kind": "family",
       "text": "Compactification as Randall and Sundrum's title means it: extra dimensions rolled into a small sphere, in a solution of gravity with gauge fields in six dimensions [cremmer1976, horvath1977]."
+    },
+    {
+      "id": "freund_rubin",
+      "kind": "family",
+      "text": "Compactification in its form of 1980: seven of the eleven dimensions curled into a sphere, and the four large ones curved into anti-de Sitter space [freund1980]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "atlas2021",
     "koroteev2008",
     "cremmer1976",
-    "horvath1977"
+    "horvath1977",
+    "freund1980"
   ],
   "coordinates": [
     {
