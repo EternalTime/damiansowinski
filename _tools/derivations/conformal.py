@@ -19899,6 +19899,352 @@ def ads_soliton(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the topological star
+
+class TopologicalStringTower(Tower):
+    """A Tower for Bah and Heidmann's black string, r_S > r_B, whose plane of t and r has
+    dr*/dr = 1/((1 - r_S/r) sqrt(1 - r_B/r)), no rational function of r. Its r* is
+    slices.topological_star_rstar, zero on the bubble r = r_B, with the one logarithm
+    ln|ratio|/(2k), k = sqrt(r_S - r_B)/(2 r_S^(3/2)) the surface gravity, and the cells are a
+    Tower's, written in G(u) = arctan exp(-k u). With r*(r_B) = 0 the bubble is Kruskal's UV = 1."""
+
+    def __init__(self, rS, rB):
+        self.rS, self.rB = rS, rB
+        self.kp = math.sqrt(rS - rB) / (2 * rS ** 1.5)
+        self.rf = [rS]
+
+    def rstar(self, r):
+        return slices.topological_star_rstar(r, self.rS, self.rB)
+
+
+def topological_star(ck, src):
+    """The topological star on five surfaces.
+
+    The star, r_B = 1 and r_S = 3/4. On the plane of t and r at one y the metric is
+    f_S (-c^2dt^2 + dr_*^2) with dr_*/dr = 1/(f_S sqrt(f_B)), f_S = 1 - r_S/r and f_B = 1 - r_B/r,
+    and r_* = slices.topological_star_rstar runs from 0 on the bubble to infinity. So the plane is
+    conformal to Minkowski's half plane, and p, q = arctan((ct -+ r_*)/l) bring it into
+    Minkowski's triangle with the bubble, a regular point, on X = 0, Bah and Heidmann's figure 1;
+    l = 6 r_B spreads the lines of constant r, whose r_* grows fast. The bubble is the origin of
+    the plane of rho and psi, so the surface continues through it to psi + pi, and the chart about
+    the bubble is drawn as the whole diamond, r_* taken negative on the left. That view draws two
+    free particles released from rest at rho = 2 and 4: with N^2 = -g_tt and h = g_rhorho,
+    d^2 rho/d tau^2 = -(h'/2h)(d rho/d tau)^2 - E^2 (N^2)'/(2 h N^4) and dt/dtau = E/N^2,
+    E = N(rho_0), and the energy -g_tt dt/dtau from the published metric is checked to stay
+    constant along each curve drawn. The Einstein metric of four dimensions is sqrt(f_B) times
+    the same plane, so it has the same p and q, and its left edge is a curvature singularity.
+
+    The black string, r_S = 1 and r_B = 3/4: the TopologicalStringTower, Kruskal and Szekeres's
+    square with U = -+exp(-k(v - 2 r_*)) and V = exp(k v), in which the bubble r = r_B, where
+    r_* = 0, is the pair of straight lines UV = 1, T = +-pi/2, Bah and Heidmann's figure 2. The
+    ingoing chart's v is ct + r_*, so one formula, tan p = -ratio exp(2k smooth - k v), serves
+    every r > r_B.
+
+    The extremal string, m = 1: the plane of t and the isotropic radius rho is
+    (1 + m/rho)^(-1) (-c^2dt^2 + drho_*^2) with drho_*/drho = (1 + m/rho)^(3/2), and rho_* runs
+    over the whole line, to minus infinity on the degenerate horizon rho = 0, so the region
+    outside the horizon is a whole diamond whose left edges are the horizon."""
+    name = "topological_star"
+    ell = 6.0
+    star_at, string_at = {"r_S": "3/4", "r_B": 1}, {"r_S": 1, "r_B": "3/4"}
+    at = {**EQUATOR, "y": "0"}
+    forward = lambda t, x: (1, 0)
+
+    def rstar(r):
+        return slices.topological_star_rstar(r, 0.75, 1.0)
+
+    def star_pq(t, r):
+        return mink_pq(t, rstar(r), ell)
+
+    def bubble_pq(t, x):
+        x = np.asarray(x, dtype=float)
+        return mink_pq(t, np.sign(x) * rstar(1 + x ** 2 / 16), ell)
+
+    def extremal_pq(t, x):
+        return mink_pq(t, slices.extremal_string_rstar(x), ell)
+
+    bh = Plane(src, name, "bah_heidmann", ("t", "r"), at, star_at)
+    bu = Plane(src, name, "bubble", ("t", "\\rho"), {**EQUATOR, "psi": "0"}, star_at)
+    ei = Plane(src, name, "einstein", ("t", "r"), EQUATOR, star_at)
+    ex = Plane(src, name, "extremal", ("t", "\\rho"), at, {"m": 1})
+    ck.chart("the topological star, Bah and Heidmann's chart", bh, star_pq, ck.uniform(-30, 30),
+             1 + ck.uniform(0.001, 40), forward)
+    ck.chart("the topological star, the chart about the bubble", bu, bubble_pq, ck.uniform(-30, 30),
+             ck.uniform(0.01, 25), forward)
+    ck.chart("the topological star, the Einstein metric of four dimensions", ei, star_pq, ck.uniform(-30, 30),
+             1 + ck.uniform(0.001, 40), forward)
+    ck.chart("the extremal string, the isotropic chart", ex, extremal_pq, ck.uniform(-30, 30),
+             ck.uniform(0.01, 40), forward)
+    rr = np.array([1.05, 1.3, 2.0, 4.0, 9.0])
+    for label, plane in (("Bah and Heidmann's chart", bh), ("the Einstein metric", ei)):
+        g00, _, g11 = plane.metric(0 * rr, rr)[:3]
+        ck.limit(f"the topological star, {label}: dr*/dr is sqrt(-g_rr/g_tt) of the published metric",
+                 (rstar(rr + 1e-6) - rstar(rr - 1e-6)) / 2e-6 / np.sqrt(-g11 / g00), np.ones(5), 1e-6)
+    ck.limit("the topological star: r* vanishes on the bubble", [float(rstar(1.0))], [0.0], 1e-12)
+    p, q = star_pq(np.array([0.0, 3.0]), np.array([1.0, 1.0]))
+    ck.limit("the topological star: the bubble lands on X = 0", q - p, [0, 0], 1e-12)
+    p, q = star_pq(np.array([0.0]), np.array([1e12]))
+    ck.limit("the topological star: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-6)
+    t, x = ck.uniform(-20, 20, 500), ck.uniform(0.01, 20, 500)
+    ck.limit("the topological star: the chart about the bubble and Bah and Heidmann's draw one point at "
+             "r = r_B + (r_B - r_S) rho^2/4",
+             np.concatenate([a - b for a, b in zip(bubble_pq(t, x), star_pq(t, 1 + x ** 2 / 16))]), 0, 1e-12)
+    ck.finite("the topological star, Bah and Heidmann's chart: the bubble is a regular point",
+              bh.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1 + 1e-9)))
+    ck.finite("the topological star, the chart about the bubble: the bubble is a regular point",
+              bu.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    ck.limit("the topological star: the Kretschmann scalar on the bubble is 4.55/r_B^4",
+             [float(bh.kretschmann(0.0, 1.0))], [4.546875], 1e-9)
+    ck.diverges("the topological star, the Einstein metric: the Kretschmann scalar diverges at r = r_B",
+                ei.kretschmann(0, 1 + 1e-3), ei.kretschmann(0, 1 + 1e-4))
+    ck.finite("the extremal string: the Kretschmann scalar is finite on the degenerate horizon",
+              ex.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-9)))
+    ck.limit("the extremal string: the Kretschmann scalar on the horizon is 19/(4 m^4)",
+             [float(ex.kretschmann(0.0, 1e-9))], [4.75], 1e-6)
+    p, q = extremal_pq(np.array([0.0]), np.array([1e-12]))
+    ck.limit("the extremal string: rho -> 0 at t = 0 lands on the left corner, (X, T) = (-pi, 0)",
+             point(p[0], q[0]), [-PI, 0], 1e-4)
+
+    # Free particles of the star released from rest at rho_0, run in their proper time.
+    N2 = lambda x: (4 + x ** 2) / (16 + x ** 2)
+    dN2 = lambda x: 24 * x / (16 + x ** 2) ** 2
+    h = lambda x: (16 + x ** 2) ** 2 / (64 * (4 + x ** 2))
+    dlnh = lambda x: 4 * x / (16 + x ** 2) - 2 * x / (4 + x ** 2)
+    worlds, periods = [], []
+    for start in (2.0, 4.0):
+        E = math.sqrt(N2(start))
+        crossing = lambda _, y: y[0]
+        crossing.direction = -1
+        run = solve_ivp(lambda _, y: [y[1], -dlnh(y[0]) * y[1] ** 2 / 2 - E * E * dN2(y[0]) / (2 * h(y[0]) * N2(y[0]) ** 2),
+                                      E / N2(y[0])],
+                        (0, 1500), [start, 0.0, 0.0], rtol=1e-11, atol=1e-12, dense_output=True, events=crossing)
+        tau = np.linspace(0, 1500, 60001)
+        x, v, t = run.sol(tau)
+        g00, _, g11, _, _, _ = bu.metric(t, np.abs(x))
+        dxdt = v * N2(x) / E
+        energy = -g00 / np.sqrt(-(g00 + g11 * dxdt ** 2))
+        ck.limit(f"the topological star: the particle released at rho = {start:g} keeps its energy, a timelike geodesic",
+                 float(np.ptp(energy) / np.mean(energy)), 0, 1e-8)
+        ck.limit(f"the topological star: the particle released at rho = {start:g} has the energy of its release, "
+                 "sqrt(1 - r_S/r)", float(np.mean(energy)), E, 1e-8)
+        periods.append(float(run.sol(run.t_events[0][1])[2] - run.sol(run.t_events[0][0])[2]))
+        # Released at t = 0, the curve is its own mirror image in t.
+        worlds.append(bubble_pq(np.concatenate([-t[::-1], t]), np.concatenate([x[::-1], x])))
+    ck.limit("the topological star: a small swing through the bubble has the period 2 pi (8/sqrt 3) r_B/c = 29.0",
+             [2 * PI * 8 / math.sqrt(3)], [29.02], 0.01)
+    ck.limit("the topological star: the particles released at rho = 2 and 4 swing with the periods 35.6 and 52.8 r_B/c",
+             periods, [35.5624, 52.8262], 1e-3)
+
+    tri_box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    dia_box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    RS, TS = (1.25, 1.5, 2, 3, 5, 10), (-20, -10, -5, 0, 5, 10, 20)
+    surface = ("The surface $y = 0$ only, each point in the diagram a 2-sphere at one point of the circle of the "
+               "fifth dimension. Light rays with no momentum along the circle run at 45°.")
+    star_settings = "$r_B = 1$, the unit of every length, $r_S = 3r_B/4$, and $\\ell = 6r_B$."
+    moments = slices.moments(name)
+
+    def reach_r(m):
+        if m.view["id"] == "cigar":
+            lo, hi = m.reach("bubble", "\\rho")
+            return 1 + lo ** 2 / 16, 1 + hi ** 2 / 16
+        return m.reach("bah_heidmann", "r")
+    views = []
+
+    v = View("bah_heidmann", "Bah-Heidmann", tri_box, "bah_heidmann")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda r, t: star_pq(t, r), RS, S_ALL)
+    grid(v, "t", star_pq, TS, 1 + S_POS)
+    v.segment("null", (-HALF, 0), (0, 0))
+    v.segment("null", (0, 0), (0, HALF))
+    triangle_edges(v, centre="$r = r_B$")
+    label_on(v, star_pq(0, 2), "$r = 2\\,r_B$")
+    label_on(v, star_pq(0, 5), "$5\\,r_B$")
+    v.legend("cover", "the surface $y = 0$ from the bubble out, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $1.25$, $1.5$, $2$, $3$, $5$, and $10\\,r_B$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 5$, $\\pm 10$, and $\\pm 20\\,r_B$")
+    v.legend("null", "a light ray that reaches the bubble at $t = 0$ and leaves it again")
+    v.legend("centre", "the bubble $r = r_B$, a regular point, where the circle $y$ shrinks to a point")
+    v.set(settings=star_settings, restriction=surface)
+    for m in moments:
+        ends = np.array(reach_r(m))
+        v.slice(m, [star_pq(0 * ends, ends)])
+    views.append(v)
+
+    v = View("bubble", "About the Bubble", dia_box, "bubble")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    v.line("centre", [[[0, -PI], [0, PI]]])
+    grid(v, "r", lambda x, t: bubble_pq(t, x), (-12, -8, -4, -2, 2, 4, 8, 12), S_ALL)
+    grid(v, "t", bubble_pq, TS, S_ALL)
+    v.line("null", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+    for p, q in worlds:
+        v.curve("world", p, q)
+    diamond_edges(v)
+    label_on(v, bubble_pq(0, 8.0), "$\\rho = 8$")
+    label_on(v, bubble_pq(0, -8.0), "$8$")
+    v.label_xt([0, -1.2], "the bubble", "r", "small", dx=-5)
+    v.legend("cover", "the whole line through the bubble, which $t$ and $\\rho$ cover at $\\psi = 0$ and $\\psi = \\pi$")
+    v.legend("r", "$\\rho$ constant, at $2$, $4$, $8$, and $12$ on either side")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 5$, $\\pm 10$, and $\\pm 20\\,r_B$")
+    v.legend("null", "two light rays through the bubble")
+    v.legend("world", "free particles released from rest at $\\rho = 2$ and $\\rho = 4$")
+    v.legend("centre", "the bubble $\\rho = 0$, a regular point")
+    v.set(settings=star_settings,
+          restriction="The line through the bubble only ($\\theta = \\pi/2$, $\\phi = 0$), $\\psi = 0$ on the right "
+                      "and $\\psi = \\pi$ on the left, a totally geodesic surface, each point in the diagram a "
+                      "single event.")
+    for m in moments:
+        lo, hi = reach_r(m)
+        far = 4 * math.sqrt(hi - 1)
+        ends = np.array([-far, 0.0, far])
+        v.slice(m, [bubble_pq(0 * ends, ends)])
+    views.append(v)
+
+    # The black string.
+    rS, rB = 1.0, 0.75
+    T = TopologicalStringTower(rS, rB)
+    k = T.kp
+    static = Plane(src, name, "bah_heidmann", ("t", "r"), at, string_at)
+    for cell, region, lo, hi, future in (("I", "exterior", 1.001, 30, (1, 0)), ("II", "future interior", 0.7501, 0.999, (0, -1)),
+                                         ("IV", "past interior", 0.7501, 0.999, (0, 1)),
+                                         ("I'", "other exterior", 1.001, 30, (-1, 0))):
+        ck.chart(f"the black string, the static chart, {region}", static, lambda t, r, cell=cell: T.pq(cell, t, r),
+                 ck.uniform(-15, 15), ck.uniform(lo, hi), lambda t, r, future=future: future)
+    rr = np.array([0.8, 0.9, 1.4, 2.0, 7.0])
+    g00, _, g11 = static.metric(0 * rr, rr)[:3]
+    ck.limit("the black string: |dr*/dr| is sqrt(-g_rr/g_tt) of the published metric",
+             np.abs(T.rstar(rr + 1e-6) - T.rstar(rr - 1e-6)) / 2e-6 / np.sqrt(-g11 / g00), np.ones(5), 1e-6)
+    ck.limit("the black string: r* vanishes on the bubble r = r_B", [float(T.rstar(rB))], [0.0], 1e-12)
+    ck.limit("the black string: the surface gravity is sqrt(r_S - r_B)/(2 r_S^(3/2)) = 1/4", [k], [0.25], 1e-12)
+
+    def ingoing(w, r):
+        """(p, q) of the event at the advanced time v = ct + r_* = w, at any r > r_B."""
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return (np.arctan(-slices.topological_string_ratio(r, rS, rB)
+                          * np.exp(2 * k * slices.topological_star_smooth(r, rS, rB) - k * w)), atan_exp(k * w))
+    ef = Plane(src, name, "eddington_finkelstein_ingoing", ("v", "r"), at, string_at)
+
+    def future_ef(w, r):
+        # sqrt(f_B) times the sum of the plane's two future null directions, the outgoing (2, f_S sqrt f_B)
+        # and the ingoing (0, -1): its norm is -4 sqrt(f_B), timelike at every r > r_B.
+        r = np.asarray(r, dtype=float)
+        fS, root = 1 - rS / r, np.sqrt(1 - rB / r)
+        return 2 * root, fS * root ** 2 - root
+    ck.chart("the black string, ingoing Eddington-Finkelstein", ef, ingoing, ck.uniform(-15, 15),
+             rB + ck.uniform(0.001, 30), future_ef)
+    p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, rB + 1e-13))
+    ck.limit("the black string: r -> r_B inside the horizon lands on T = pi/2", p + q, [HALF] * 3, 1e-5)
+    p, q = T.pq("I", np.array([0.0]), np.array([1e8]))
+    ck.limit("the black string: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-3)
+    p, q = T.pq("I", np.array([3.0]), np.array([1 + 1e-13]))
+    ck.limit("the black string: r -> r_S at fixed t lands on the bifurcation surface", point(p[0], q[0]), [0, 0], 1e-3)
+    rs = np.linspace(0.76, 5, 60)
+    for cell, sel in (("I", rs > 1.001), ("II", rs < 0.999)):
+        pp, qq = T.pq(cell, 0.3 + 0 * rs[sel], rs[sel])
+        ck.limit(f"the black string {cell}: tan p tan q is Kruskal's UV = -ratio exp(2k smooth)",
+                 np.tan(pp) * np.tan(qq), -slices.topological_string_ratio(rs[sel], rS, rB)
+                 * np.exp(2 * k * slices.topological_star_smooth(rs[sel], rS, rB)), 1e-8)
+    for cell, r0 in (("I", 3.0), ("II", 0.9)):
+        ck.limit(f"the black string {cell}: the ingoing chart and the static chart put one event at one point",
+                 ingoing(2.0 + float(T.rstar(r0)), r0), T.pq(cell, 2.0, r0), 1e-12)
+    K = ef.kretschmann
+    ck.finite("the black string: the Kretschmann scalar is finite on the horizon and on the bubble",
+              K(np.zeros(4), np.array([rB + 1e-9, 0.999, 1.0, 1.001])))
+    ck.limit("the black string: the Kretschmann scalar on the bubble is 22.5/r_S^4",
+             [float(K(0.0, rB))], [22.4746], 1e-4)
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    R_OUT, R_IN = (1.05, 1.25, 1.5, 2, 3), (0.8, 0.9)
+    t = spread(-np.inf, np.inf, 500, 9)
+    whole = rB + spread(0, np.inf, 600, 14)
+    v = View("black_string", "Black String, Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    for w in (-12, -8, -4, 0, 4, 8, 12):
+        v.curve("null", *ingoing(np.full_like(whole, w), whole))
+    v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                    [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+    v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+    v.line("centre", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]])
+    for corner in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(corner)})
+    v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+    v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+    for sx in (1, -1):
+        v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+        v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+        v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+        v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+    v.label_xt([0, HALF], "$r = r_B$", "b", dy=-8)
+    v.label_xt([0, -HALF], "$r = r_B$", "t", dy=8)
+    v.label_xt([-Q4, Q4], "$r = r_S$", "tr", "small", dx=-6, dy=2)
+    v.label_xt([HALF, -0.95], "exterior", cls="region")
+    v.label_xt([-HALF, 0], "exterior", cls="region")
+    v.legend("cover", "the region that $v$ and $r > r_B$ cover")
+    v.legend("r", "$r$ constant, at $0.8$ and $0.9\\,r_S$ inside the horizon and $1.05$, $1.25$, $1.5$, $2$, and "
+                  "$3\\,r_S$ outside it")
+    v.legend("null", "$v$ constant, an ingoing light ray, every $4\\,r_S$")
+    v.legend("horizon", "the horizon $r = r_S$")
+    v.legend("centre", "the bubble $r = r_B$, where the circle $y$ shrinks to a point and the Kretschmann scalar "
+                       "is finite")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(settings="$r_S = 1$, the unit of every length, and $r_B = 3r_S/4$.", restriction=surface)
+    views.append(v)
+
+    v = View("extremal", "Extremal, Isotropic", dia_box, "extremal")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda x, t: extremal_pq(t, x), (0.05, 0.1, 0.25, 0.5, 1, 2, 5), S_ALL)
+    grid(v, "t", extremal_pq, TS, spread(0, np.inf, 600, 14))
+    v.line("scri", [[[PI, 0], [0, PI]], [[0, -PI], [PI, 0]]])
+    v.line("horizon", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+    for corner, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(corner)})
+        v.label_xt(corner, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([-HALF, HALF], "$\\rho = 0$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$\\rho = 0$", "tr", dx=-5, dy=3)
+    label_on(v, extremal_pq(0, 1.0), "$\\rho = m$")
+    v.legend("cover", "the region outside the horizon, which $t$ and $\\rho$ cover")
+    v.legend("r", "$\\rho$ constant, at $0.05$, $0.1$, $0.25$, $0.5$, $1$, $2$, and $5\\,m$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 5$, $\\pm 10$, and $\\pm 20\\,m$")
+    v.legend("horizon", "the degenerate horizon $\\rho = 0$")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(settings="$m = 1$, the unit of every length, and $\\ell = 6m$.", restriction=surface)
+    views.append(v)
+
+    v = View("einstein", "Einstein Metric, Four Dimensions", tri_box, "einstein")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda r, t: star_pq(t, r), RS, S_ALL)
+    grid(v, "t", star_pq, TS, 1 + S_POS)
+    v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    for corner, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(corner)})
+        v.label_xt(corner, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([0, 0.25], "$r = r_B$", "r", dx=-8)
+    label_on(v, star_pq(0, 2), "$r = 2\\,r_B$")
+    label_on(v, star_pq(0, 5), "$5\\,r_B$")
+    v.legend("cover", "the whole spacetime of four dimensions, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $1.25$, $1.5$, $2$, $3$, $5$, and $10\\,r_B$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 5$, $\\pm 10$, and $\\pm 20\\,r_B$")
+    v.legend("singular", "$r = r_B$, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(settings=star_settings)
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- the table
 
 # ---------------------------------------------------------------- the C-metric
@@ -23211,6 +23557,7 @@ DRAWN = {
     "domain_wall": domain_wall,
     "randall_sundrum": randall_sundrum,
     "ads_soliton": ads_soliton,
+    "topological_star": topological_star,
     "coleman_de_luccia": coleman_de_luccia,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
@@ -23610,6 +23957,55 @@ CAPTIONS = {
         "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring it into Minkowski's triangle.",
         "The edge $X = 0$ is $r = a$, which such a ray reaches in a finite time $t$. Inside it the circles about "
         "the axis are closed timelike curves, and the plane with them divided out has no light cones.",
+    ],
+    ("topological_star", "bah_heidmann"): [
+        "The plane of $t$ and $r$ of the star ($y = 0$, $r_S = 3r_B/4$), brought by "
+        "$p, q = \\arctan((ct \\mp r_*)/\\ell)$ into Minkowski's triangle, with "
+        "$r_* = \\int_{r_B}^{r} dr'/((1 - r_S/r')\\sqrt{1 - r_B/r'})$ and $\\ell$ any length, drawn at $6r_B$. "
+        "The left edge is the bubble $r = r_B$, a regular point where the circle $y$ has shrunk to a point, in "
+        "the place of Minkowski's centre $r = 0$.",
+        "Every light ray that reaches the bubble leaves it again, on the opposite side of the circle, and "
+        "arrives at $\\mathscr{I}^+$, so the diagram has neither a horizon nor a singularity. It is the diagram "
+        "Bah and Heidmann drew for the star.",
+    ],
+    ("topological_star", "bubble"): [
+        "The line through the bubble of the star ($\\theta = \\pi/2$, $\\phi = 0$, $r_S = 3r_B/4$), $\\psi = 0$ on "
+        "the right and $\\psi = \\pi$ on the left, brought into Minkowski's diamond by "
+        "$p, q = \\arctan((ct \\mp r_*)/\\ell)$ with $r_* = \\int_{r_B}^{r} dr'/((1 - r_S/r')\\sqrt{1 - r_B/r'})$ "
+        "taken negative on the left and $\\ell = 6r_B$. The bubble $\\rho = 0$ runs down the middle, and the two "
+        "halves are the plane of $t$ and $r$ at opposite sides of the circle of the fifth dimension.",
+        "Light crosses the bubble along straight lines. A free particle released from rest falls toward the "
+        "bubble, where clocks at rest run slowest, passes through it, and swings back and forth between the two "
+        "sides of the circle. The two drawn are released at $\\rho = 2$ and $\\rho = 4$, where $r = 1.25\\,r_B$ "
+        "and $2r_B$, and take $ct = 35.6\\,r_B$ and $52.8\\,r_B$ over each swing.",
+    ],
+    ("topological_star", "black_string"): [
+        "The plane of $v$ and $r$ of the black string ($y = 0$, $r_B = 3r_S/4$) in Kruskal's coordinates "
+        "$U = \\mp e^{-\\kappa(v - 2r_*)}$ and $V = e^{\\kappa v}$, with the surface gravity "
+        "$\\kappa = \\sqrt{r_S - r_B}/(2r_S^{3/2})$ and $dr_*/dr = (1 - r_S/r)^{-1}(1 - r_B/r)^{-1/2}$, drawn "
+        "with $p = \\arctan U$ and $q = \\arctan V$. With $r_* = 0$ on the bubble, the bubble is the pair of "
+        "straight lines $UV = 1$, where Schwarzschild's diagram has its singularity.",
+        "An observer who crosses the horizon reaches the bubble $r = r_B$ in a finite proper time. The "
+        "curvature is finite there, and the plane of $r$ and $y$ closes on the bubble as a cone of flat "
+        "spacetime closes on its tip. Bah and Heidmann's diagram of the black string ends on that line.",
+    ],
+    ("topological_star", "extremal"): [
+        "The plane of $t$ and $\\rho$ of the extremal string ($y = 0$), brought into a diamond by "
+        "$p, q = \\arctan((ct \\mp \\rho_*)/\\ell)$ with $d\\rho_*/d\\rho = (1 + m/\\rho)^{3/2}$ and $\\ell = 6m$. "
+        "The two edges on the right are null infinity, and the two on the left are the degenerate horizon "
+        "$\\rho = 0$, which a light ray reaches only as $t \\to \\infty$.",
+        "Along a moment of constant $t$ the horizon lies at an infinite proper distance, down a throat whose "
+        "geometry tends to anti-de Sitter space of three dimensions times a sphere. The Kretschmann scalar is "
+        "finite on it, $19/(4m^4)$.",
+    ],
+    ("topological_star", "einstein"): [
+        "The plane of $t$ and $r$ of the metric of four dimensions the star reduces to ($r_S = 3r_B/4$), each "
+        "point in the diagram a 2-sphere, drawn with the $p, q = \\arctan((ct \\mp r_*)/\\ell)$ of the star's own "
+        "plane, $r_* = \\int_{r_B}^{r} dr'/((1 - r_S/r')\\sqrt{1 - r_B/r'})$ and $\\ell = 6r_B$, since the two "
+        "metrics differ on it by a conformal factor. The left edge $r = r_B$ is a curvature singularity, "
+        "timelike, in the place of the bubble.",
+        "Light from $\\mathscr{I}^-$ reaches the singularity and light from the singularity reaches "
+        "$\\mathscr{I}^+$, so it is naked. In five dimensions the same edge is a regular point.",
     ],
     ("ads_soliton", "horowitz_myers"): [
         "The plane of $t$ and $r$ of the soliton ($\\tau = 0$, $x = 0$, $r_0 = L$). With "
