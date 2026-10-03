@@ -77,6 +77,11 @@
       "id": "born_infeld_charge",
       "kind": "family",
       "text": "A point charge of Born and Infeld's nonlinear electrodynamics, to which Hoffmann gave its gravity in 1935. Its charge is electric and its centre a conical point or a singularity, where Bardeen's monopole has a regular centre [hoffmann1935, gibbonsrasheed1995]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "family",
+      "text": "A black hole with an outer and an inner horizon that loop quantum gravity puts outside a bouncing ball of dust. Kelly, Santacruz, and Wilson-Ewing set its two horizons beside Bardeen's [kelly2020]."
     }
   ],
   "references": [
@@ -103,7 +108,8 @@
     "mazur2004",
     "carballorubio2021",
     "hoffmann1935",
-    "gibbonsrasheed1995"
+    "gibbonsrasheed1995",
+    "kelly2020"
   ],
   "coordinates": [
     {

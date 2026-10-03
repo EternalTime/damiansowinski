@@ -235,6 +235,7 @@ import nm_disc  # noqa: E402
 import charged_shell as cshell  # noqa: E402
 import israel_shell as ishell  # noqa: E402
 import ori_shell  # noqa: E402
+import quantum_os as qos  # noqa: E402
 import slices  # noqa: E402
 import verify_metrics as vm  # noqa: E402
 
@@ -1926,6 +1927,40 @@ class israel_r_adv(sp.Function):
     _imp_ = staticmethod(ishell.radius_at_advanced)
 
 
+# The quantum Oppenheimer-Snyder black hole as every diagram draws it, m = 1 and alpha = 5/4 m^2:
+# r_b = 0.855, r_- = 1.127 and r_+ = 1.777 m. quantum_os.py holds the surface of the dust, which
+# falls from rest far away, turns round at r_b at tau = 0 and goes back out, as a radius at the time of
+# each exterior chart: the Painleve-Gullstrand T, the advanced v and the retarded u.
+QOS = {"m": 1, "alpha": "5/4"}
+QOS_INTERIOR = {"chi_0": "(5/8)**Rational(1, 3)"}
+QOS_A = "(1 + 36*tau**2/5)**Rational(1, 3)"
+QOS_SURFACE = "the surface of the dust, $r = R$"
+QOS_INPUT = ("The surface of the dust, $\\chi_0 = r_b$, on the radial geodesic that falls from rest far away, "
+             "$R^3 = r_b^3 + 9mc^2\\tau^2/2$ with $\\tau$ its proper time, zero where it turns round, and "
+             "$t = 0$ there.")
+
+
+class qos_r_pg(sp.Function):
+    """The radius of the dust's surface at the Painleve-Gullstrand time, quantum_os.radius_at_slice_time."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(qos.radius_at_slice_time)
+
+
+class qos_r_adv(sp.Function):
+    """The radius of the dust's surface at the advanced time v, quantum_os.radius_at_advanced."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(qos.radius_at_advanced)
+
+
+class qos_r_ret(sp.Function):
+    """The radius of the dust's surface at the retarded time u, quantum_os.radius_at_retarded."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(qos.radius_at_retarded)
+
+
 # The charged shell of dust as its diagrams draw it, in units of r_s: the shell with r_q = 12/25 and
 # mu = 1/5, which falls in from infinity, crosses r_+ = 16/25 and r_- = 9/25, turns round at
 # R = 119/375 and leaves through the horizons of the next exterior; charged_shell.py holds its motion.
@@ -2252,7 +2287,8 @@ DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__:
                       "charged_r_in": charged_r_in, "charged_r_out": charged_r_out,
                       "charged_r_inside": charged_r_inside, "charged_r_adv": charged_r_adv,
                       "charged_r_ret": charged_r_ret,
-                      "lw_r": lw_r}
+                      "lw_r": lw_r, "qos_r_pg": qos_r_pg, "qos_r_adv": qos_r_adv,
+                      "qos_r_ret": qos_r_ret}
 
 
 # Neugebauer and Meinel's disc as every one of its diagrams draws it: mu = 3, the disc whose Ernst
@@ -2771,6 +2807,33 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, orient="outgoing", areal=True),
     Diagram("bardeen", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 2, -1.5, 0.5), "$r/r_s$", "$u/r_s$", BARDEEN, EQUATOR, orient="outgoing", areal=True),
+    # The quantum Oppenheimer-Snyder black hole outside its dust, in each chart, and the dust itself: the
+    # cones close at r_+ and r_-, the vacuum ends at r_b, and the surface of the dust turns round there.
+    Diagram("quantum_oppenheimer_snyder", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/m$", "$ct/m$", QOS, EQUATOR, orient="ingoing", areal=True),
+    Diagram("quantum_oppenheimer_snyder", "painleve_gullstrand", "collapse", "$\\tau$ and $r$", ("\\tau", "r"),
+            (0, 3, -2.25, 0.75), "$r/m$", "$c\\tau/m$", QOS, EQUATOR, tau="tau", areal=True,
+            where="r - qos_r_pg(tau)", curves=(("shell", "qos_r_pg(tau)", QOS_SURFACE),), input=QOS_INPUT),
+    Diagram("quantum_oppenheimer_snyder", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 3, -2.25, 0.75), "$r/m$", "$(v - r)/m$", QOS, EQUATOR, to_display=FINKELSTEIN_IN,
+            orient="ingoing", areal=True, where="r - qos_r_adv(v)", curves=(("shell", "qos_r_adv(v)", QOS_SURFACE),),
+            input=QOS_INPUT),
+    Diagram("quantum_oppenheimer_snyder", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 3, -1, 2), "$r/m$", "$v/m$", QOS, EQUATOR, orient="ingoing", areal=True,
+            where="r - qos_r_adv(v)", curves=(("shell", "qos_r_adv(v)", QOS_SURFACE),), input=QOS_INPUT),
+    Diagram("quantum_oppenheimer_snyder", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 3, -0.75, 2.25), "$r/m$", "$(u + r)/m$", QOS, EQUATOR, to_display=FINKELSTEIN_OUT,
+            orient="outgoing", areal=True, where="r - qos_r_ret(u)", curves=(("shell", "qos_r_ret(u)", QOS_SURFACE),),
+            input=QOS_INPUT),
+    Diagram("quantum_oppenheimer_snyder", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 3, -2, 1), "$r/m$", "$u/m$", QOS, EQUATOR, orient="outgoing", areal=True,
+            where="r - qos_r_ret(u)", curves=(("shell", "qos_r_ret(u)", QOS_SURFACE),), input=QOS_INPUT),
+    Diagram("quantum_oppenheimer_snyder", "interior_comoving", "through", "through the centre", ("\\tau", "\\chi"),
+            (0, qos.RB, -qos.RB, qos.RB), "$\\chi/m$", "$c\\tau/m$", QOS_INTERIOR, EQUATOR, mirror=True,
+            families=SIDEWAYS, cones=(4, 8), tau="tau", areal=True, functions={"a": QOS_A},
+            lines=(("surface", "r", "(5/8)**Rational(1, 3)", "the surface of the dust, $\\chi = \\chi_0$"),),
+            input="The bouncing scale factor $a = (1 + 9c^2\\tau^2/\\alpha)^{1/3}$ at $\\alpha = 5m^2/4$, with "
+                  "$\\chi_0 = r_b = 0.855\\,m$."),
     # Born and Infeld's point charge on its plane of the time and r, in each chart, in units of r_0:
     # Hoffmann's particle, whose cones stay open down to the conical singularity at the centre, and
     # the black hole, whose cones close at its one horizon, as Schwarzschild's do.
@@ -6293,6 +6356,63 @@ CAPTIONS = {
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
         "null coordinate. The ingoing family turns vertical at $r_-$ and at $r_+$, and leans toward larger $r$ "
         "between them.",
+    ],
+    ("quantum_oppenheimer_snyder", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the dust, drawn for $\\alpha = 5m^2/4$, "
+        "the same at every other angle by spherical symmetry. There $g^{rr} = 1 - 2m/r + \\alpha m^2/r^4$ vanishes "
+        "twice, at $r_+ = 1.777\\,m$ and $r_- = 1.127\\,m$, and the cones close at both. Between them $r$ is the "
+        "time and the cones point to smaller $r$, and inside $r_-$, $t$ is a time again.",
+        "The chart alone does not fix which way is future in the two inner regions, and we take it from the ingoing "
+        "Eddington-Finkelstein chart. The metric holds only outside $r_b = 0.855\\,m$, where $g^{rr} = 1$ and the "
+        "surface of the dust turns round.",
+    ],
+    ("quantum_oppenheimer_snyder", "painleve_gullstrand", "collapse"): [
+        "The plane of $\\tau$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the dust, drawn for "
+        "$\\alpha = 5m^2/4$, with the dust to the left of its surface. Each slice of constant $\\tau$ is flat, and "
+        "the cones tip inward at the speed $\\sqrt{2m/r - \\alpha m^2/r^4}$ of an observer falling from rest far "
+        "away. They close at $r_+ = 1.777\\,m$, where the outgoing edge stands vertical, and again at "
+        "$r_- = 1.127\\,m$.",
+        "The surface falls along one of those observers, crosses both horizons, and stops at $r_b = 0.855\\,m$ at "
+        "$\\tau = 0$, where the speed vanishes. It then climbs back toward $r_-$, which it reaches only as $\\tau$ "
+        "runs to infinity, where it leaves the chart through the horizon of the white hole.",
+    ],
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the dust, drawn for $\\alpha = 5m^2/4$ "
+        "with $v - r$ as the vertical axis, so that the ingoing rays, $v$ constant, run at 45°. The outgoing family "
+        "stands vertical at both horizons, $r_+ = 1.777\\,m$ and $r_- = 1.127\\,m$, and between them both edges of "
+        "every future cone point to smaller $r$.",
+        "The surface of the dust crosses both horizons on its way in, turns round at $r_b = 0.855\\,m$ at $v = 0$, "
+        "and climbs back toward $r_-$, which it reaches as $v$ runs to infinity. The dust lies to its left.",
+    ],
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a null "
+        "coordinate. The outgoing family turns vertical at $r_+$, leans back toward smaller $r$ between the horizons, "
+        "and turns vertical again at $r_-$.",
+    ],
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the dust, drawn for $\\alpha = 5m^2/4$ "
+        "with $u + r$ as the vertical axis, so that the outgoing rays, $u$ constant, run at 45°. The ingoing family "
+        "stands vertical at both horizons, and between them both edges of every future cone point to larger $r$: "
+        "this is the white hole.",
+        "The chart is the time reverse of the ingoing one, and so is the surface of the dust. It leaves $r_-$ as "
+        "$u$ comes in from minus infinity, turns round at $r_b = 0.855\\,m$ at $u = 0$, and climbs out through both "
+        "horizons into the next universe, with the dust to its left.",
+    ],
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a null "
+        "coordinate. The ingoing family turns vertical at $r_-$ and at $r_+$, and leans toward larger $r$ between them.",
+    ],
+    ("quantum_oppenheimer_snyder", "interior_comoving", "through"): [
+        "The line through the centre of the ball of dust in the plane $\\theta = \\pi/2$, in its own comoving "
+        "coordinates: $\\chi$ on the right is $\\phi = 0$ and on the left $\\phi = \\pi$, with the surface "
+        "$\\chi_0 = r_b$ on either side. The ball is a flat Friedmann universe of dust, "
+        "$-c^2d\\tau^2 + a^2(d\\chi^2 + \\chi^2\\,d\\Omega^2)$ with $a^3 = 1 + 9c^2\\tau^2/\\alpha$, and its light "
+        "rays obey $c\\,d\\tau = \\pm a\\,d\\chi$.",
+        "The cones are widest at the bounce, $\\tau = 0$, where $a = 1$ and the density is greatest, and narrow on "
+        "either side as the ball grows. The Kretschmann scalar stays finite at every moment, and the rays run "
+        "straight through the bounce.",
     ],
     ("born_infeld_charge", "static", "particle"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Hoffmann's particle, drawn for "

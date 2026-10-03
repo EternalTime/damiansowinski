@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 169,
+  "count": 170,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -3193,6 +3193,11 @@
           "id": "born_infeld_charge",
           "kind": "family",
           "text": "A point charge of Born and Infeld's nonlinear electrodynamics, to which Hoffmann gave its gravity in 1935. Its charge is electric and its centre a conical point or a singularity, where Bardeen's monopole has a regular centre [hoffmann1935, gibbonsrasheed1995]."
+        },
+        {
+          "id": "quantum_oppenheimer_snyder",
+          "kind": "family",
+          "text": "A black hole with an outer and an inner horizon that loop quantum gravity puts outside a bouncing ball of dust. Kelly, Santacruz, and Wilson-Ewing set its two horizons beside Bardeen's [kelly2020]."
         }
       ],
       "references": [
@@ -3219,7 +3224,8 @@
         "mazur2004",
         "carballorubio2021",
         "hoffmann1935",
-        "gibbonsrasheed1995"
+        "gibbonsrasheed1995",
+        "kelly2020"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bardeen.json",
@@ -18470,6 +18476,11 @@
           "id": "tilted_universes",
           "kind": "generalisation",
           "text": "The open universe of dust with its matter set drifting along one direction. With the tilt $C = 0$ Farnsworth's solution is Friedmann's [anton2023]."
+        },
+        {
+          "id": "quantum_oppenheimer_snyder",
+          "kind": "composite",
+          "text": "A ball cut from the flat universe of dust and run through the bounce of loop quantum cosmology, with the vacuum the junction conditions fix outside it [lewandowski2023]."
         }
       ],
       "references": [
@@ -18533,7 +18544,8 @@
         "trautman2006",
         "ellis1971",
         "lachiezerey1995",
-        "anton2023"
+        "anton2023",
+        "lewandowski2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -22333,6 +22345,11 @@
           "id": "hiscock",
           "kind": "family",
           "text": "The evaporating hole Hayward took the surface of pair creation from, with negative energy falling in and positive energy going out. Hiscock's keeps its singularity, and the last point of it is naked [hayward2006, hiscock1981]."
+        },
+        {
+          "id": "quantum_oppenheimer_snyder",
+          "kind": "family",
+          "text": "Another black hole with two horizons above a least mass and none below it, this one fixed by a ball of dust that bounces in loop quantum cosmology [lewandowski2023]."
         }
       ],
       "references": [
@@ -22355,7 +22372,8 @@
         "vagnozzi2023",
         "simpson2019",
         "mazur2004",
-        "carballorubio2021"
+        "carballorubio2021",
+        "lewandowski2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hayward.json",
@@ -33480,6 +33498,11 @@
           "id": "charged_shell",
           "kind": "programme",
           "text": "Israel's first trip through the inner horizon. With V. de la Cruz in 1967 he sent a shell of charged dust through it, round a turn inside, and out into another exterior [delacruz1967]."
+        },
+        {
+          "id": "quantum_oppenheimer_snyder",
+          "kind": "family",
+          "text": "A quantum relative with an inner horizon too. In the quantum collapse of dust of Husain, Kelly, Santacruz, and Wilson-Ewing there is no mass inflation at the inner horizons [husain2022]."
         }
       ],
       "references": [
@@ -33504,7 +33527,8 @@
         "carballorubio2021",
         "chan1996",
         "yurtsever1993",
-        "delacruz1967"
+        "delacruz1967",
+        "husain2022"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mass_inflation.json",
@@ -39729,6 +39753,11 @@
           "id": "misner_zapolsky",
           "kind": "programme",
           "text": "The static star of infinite central density that Oppenheimer and Volkoff found earlier in 1939. They called it unstable, and wrote that the nonstatic solutions for heavier stars were \"now being investigated\" [oppenheimer1939]."
+        },
+        {
+          "id": "quantum_oppenheimer_snyder",
+          "kind": "family",
+          "text": "The same ball of dust with the bounce of loop quantum cosmology inside it. The dust stops at a critical density and comes back out through a white hole into another universe [lewandowski2023]."
         }
       ],
       "references": [
@@ -39752,7 +39781,8 @@
         "novikov1965",
         "neeman1965",
         "lindquist1957",
-        "ruban1968"
+        "ruban1968",
+        "lewandowski2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -43201,6 +43231,427 @@
       ]
     },
     {
+      "id": "quantum_oppenheimer_snyder",
+      "name": "Quantum Oppenheimer-Snyder Black Hole",
+      "short_name": "Quantum Oppenheimer-Snyder",
+      "description": "Oppenheimer and Snyder's ball of dust with the bounce of loop quantum cosmology inside it, which Jerzy Lewandowski, Yongge Ma, Jinsong Yang, and Cong Zhang built in 2023. The dust falls, stops at a finite density, and comes back out, and the junction conditions fix the vacuum outside: Schwarzschild's metric with one more term, with two horizons above a least mass and none below it.",
+      "tags": [
+        "loop quantum gravity",
+        "loop quantum cosmology",
+        "quantum gravity",
+        "bounce",
+        "dust",
+        "gravitational collapse",
+        "matched solution",
+        "junction conditions",
+        "black hole",
+        "white hole",
+        "horizon",
+        "event horizon",
+        "inner horizon",
+        "Cauchy horizon",
+        "mass inflation",
+        "causal structure",
+        "maximal extension",
+        "asymptotically flat",
+        "time-dependent",
+        "spherically symmetric",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass is the length $m = GM/c^2$, and the area $\\alpha = 16\\sqrt{3}\\,\\pi\\gamma^3\\ell_p^2$ sets the quantum correction, with $\\gamma$ the Barbero-Immirzi parameter and $\\ell_p = \\sqrt{G\\hbar/c^3}$ the Planck length. We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "related": [
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "The classical collapse, whose dust falls to infinite density at its centre. With the bounce of loop quantum cosmology inside the ball, the junction conditions put Schwarzschild's metric with one more term outside it [lewandowski2023]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The outside at $\\alpha = 0$, where the quantum correction is gone and $f = 1 - 2m/r$ with $r_s = 2m$."
+        },
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "The inside of the ball, a flat Friedmann universe of dust whose scale factor bounces at $a = 1$ by the Friedmann equation of loop quantum cosmology [lewandowski2023, kelly2021]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The same tower of regions, with two horizons and universe after universe above them. Reissner and Nordström's correction to Schwarzschild's $f$ falls off as $r^{-2}$, and this one's as $r^{-4}$ [kelly2020, lewandowski2023]."
+        },
+        {
+          "id": "hayward",
+          "kind": "family",
+          "text": "Another black hole with two horizons above a least mass and none below it, written down by Hayward as a minimal model [hayward2006]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "family",
+          "text": "A black hole with an outer and an inner horizon and a regular centre. Kelly, Santacruz, and Wilson-Ewing set the two horizons of their vacuum beside Bardeen's [kelly2020]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "family",
+          "text": "The growth of the mass at an inner horizon. Husain, Kelly, Santacruz, and Wilson-Ewing found none at the inner horizons of their quantum collapse of dust [husain2022]."
+        }
+      ],
+      "references": [
+        "oppenheimersnyder1939",
+        "ashtekar2006bounce",
+        "lewandowski2023",
+        "kelly2021",
+        "kelly2020",
+        "gambini2020",
+        "husain2022",
+        "bonanno2024",
+        "hayward2006"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/quantum_oppenheimer_snyder.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [\\left(\\alpha m/2\\right)^{1/3}, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_b = \\left(\\alpha m/2\\right)^{1/3} \\;\\text{(where the surface of the dust turns round)}",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; m > 4\\sqrt{\\alpha}/3\\sqrt{3}\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Area that sets the quantum correction, $\\alpha = 16\\sqrt{3}\\,\\pi\\gamma^3\\ell_p^2$. The surface of the dust turns round at $r_b = (\\alpha m/2)^{1/3}$, and there are two horizons for $m > 4\\sqrt{\\alpha}/3\\sqrt{3}$, with $r_\\pm$ their radii and $\\kappa_\\pm$ their surface gravities, one for $m = 4\\sqrt{\\alpha}/3\\sqrt{3}$, and none below"
+            }
+          ],
+          "convention": "We use Lewandowski, Ma, Yang, and Zhang's coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6\\alpha\\,m^2}{r^6}",
+          "kretschmann": "K = \\dfrac{48m^2}{r^6}\\left(1 - \\dfrac{5\\alpha m}{r^3} + \\dfrac{39\\alpha^2m^2}{4r^6}\\right)"
+        },
+        {
+          "id": "painleve_gullstrand",
+          "name": "Painlevé-Gullstrand Exterior",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in [\\left(\\alpha m/2\\right)^{1/3}, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_b = \\left(\\alpha m/2\\right)^{1/3} \\;\\text{(where the surface of the dust turns round)}",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; m > 4\\sqrt{\\alpha}/3\\sqrt{3}\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Area that sets the quantum correction, $\\alpha = 16\\sqrt{3}\\,\\pi\\gamma^3\\ell_p^2$. The surface of the dust turns round at $r_b = (\\alpha m/2)^{1/3}$, and there are two horizons for $m > 4\\sqrt{\\alpha}/3\\sqrt{3}$, with $r_\\pm$ their radii and $\\kappa_\\pm$ their surface gravities, one for $m = 4\\sqrt{\\alpha}/3\\sqrt{3}$, and none below"
+            }
+          ],
+          "convention": "We use Kelly, Santacruz, and Wilson-Ewing's coordinates $(\\tau, r, \\theta, \\phi)$, whose $\\tau$ carries dimensions of time and is the proper time of an observer falling from rest far away, and take components in the chart $x^0 = c\\tau$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}\\right)c^2d\\tau^2 + 2\\sqrt{\\dfrac{2m}{r}\\left(1 - \\dfrac{\\alpha m}{2r^3}\\right)}\\,c\\,d\\tau\\,dr + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}\\right)"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "r"
+              ],
+              "value": "\\sqrt{\\dfrac{2m}{r}\\left(1 - \\dfrac{\\alpha m}{2r^3}\\right)}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tau"
+              ],
+              "value": "\\sqrt{\\dfrac{2m}{r}\\left(1 - \\dfrac{\\alpha m}{2r^3}\\right)}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6\\alpha\\,m^2}{r^6}",
+          "kretschmann": "K = \\dfrac{48m^2}{r^6}\\left(1 - \\dfrac{5\\alpha m}{r^3} + \\dfrac{39\\alpha^2m^2}{4r^6}\\right)"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein Exterior",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in [\\left(\\alpha m/2\\right)^{1/3}, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_b = \\left(\\alpha m/2\\right)^{1/3} \\;\\text{(where the surface of the dust turns round)}",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; m > 4\\sqrt{\\alpha}/3\\sqrt{3}\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Area that sets the quantum correction, $\\alpha = 16\\sqrt{3}\\,\\pi\\gamma^3\\ell_p^2$. The surface of the dust turns round at $r_b = (\\alpha m/2)^{1/3}$, and there are two horizons for $m > 4\\sqrt{\\alpha}/3\\sqrt{3}$, with $r_\\pm$ their radii and $\\kappa_\\pm$ their surface gravities, one for $m = 4\\sqrt{\\alpha}/3\\sqrt{3}$, and none below"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - 2m/r + \\alpha m^2/r^4\\right)^{-1}$ and $r_* = 0$ at $r = r_b$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6\\alpha\\,m^2}{r^6}",
+          "kretschmann": "K = \\dfrac{48m^2}{r^6}\\left(1 - \\dfrac{5\\alpha m}{r^3} + \\dfrac{39\\alpha^2m^2}{4r^6}\\right)"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein Exterior",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in [\\left(\\alpha m/2\\right)^{1/3}, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_b = \\left(\\alpha m/2\\right)^{1/3} \\;\\text{(where the surface of the dust turns round)}",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; m > 4\\sqrt{\\alpha}/3\\sqrt{3}\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Area that sets the quantum correction, $\\alpha = 16\\sqrt{3}\\,\\pi\\gamma^3\\ell_p^2$. The surface of the dust turns round at $r_b = (\\alpha m/2)^{1/3}$, and there are two horizons for $m > 4\\sqrt{\\alpha}/3\\sqrt{3}$, with $r_\\pm$ their radii and $\\kappa_\\pm$ their surface gravities, one for $m = 4\\sqrt{\\alpha}/3\\sqrt{3}$, and none below"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - 2m/r + \\alpha m^2/r^4\\right)^{-1}$ and $r_* = 0$ at $r = r_b$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{\\alpha m^2}{r^4}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6\\alpha\\,m^2}{r^6}",
+          "kretschmann": "K = \\dfrac{48m^2}{r^6}\\left(1 - \\dfrac{5\\alpha m}{r^3} + \\dfrac{39\\alpha^2m^2}{4r^6}\\right)"
+        },
+        {
+          "id": "interior_comoving",
+          "name": "Comoving Dust Interior",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\chi_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\tau)",
+              "description": "Scale factor of the dust, a pure number with $a = 1$ at the bounce, $a = \\left(1 + 9c^2\\tau^2/\\alpha\\right)^{1/3}$, which solves $\\dot{a}^2 = 4\\left(a^3 - 1\\right)/\\alpha a^4$"
+            },
+            {
+              "symbol": "\\chi_0",
+              "description": "Comoving radius of the surface of the dust, a length fixed by the mass through $\\chi_0^3 = \\alpha m/2$"
+            }
+          ],
+          "convention": "We use comoving coordinates $(\\tau, \\chi, \\theta, \\phi)$, where $\\tau$ is the proper time of the dust, $\\chi$ is the areal radius of a shell at the bounce, a length, and the ball is $\\chi \\le \\chi_0$. We take components in the chart $x^0 = c\\tau$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{d\\tau}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + a^2\\left(d\\chi^2 + \\chi^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,\\chi^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,\\chi^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\left(a\\ddot{a} + \\dot{a}^2\\right)}{a^2}",
+          "kretschmann": "K = \\dfrac{12\\left(a^2\\ddot{a}^2 + \\dot{a}^4\\right)}{a^4}"
+        }
+      ]
+    },
+    {
       "id": "randall_sundrum",
       "name": "Randall-Sundrum Braneworld",
       "short_name": "Randall-Sundrum",
@@ -43776,6 +44227,11 @@
           "id": "topological_star",
           "kind": "family",
           "text": "A star from five dimensions with a mass, a magnetic charge, and no horizon. For some masses and charges the star, its black string, and Reissner and Nordström's black hole all exist, and the star is the widest of the three [bah2021]."
+        },
+        {
+          "id": "quantum_oppenheimer_snyder",
+          "kind": "family",
+          "text": "A tower of regions like Reissner and Nordström's, from a correction to Schwarzschild's $f$ that falls off as $r^{-4}$ and a ball of dust that bounces inside it [lewandowski2023]."
         }
       ],
       "references": [
@@ -43825,7 +44281,8 @@
         "brill1964",
         "clement2016",
         "blazquez2021",
-        "bah2021"
+        "bah2021",
+        "lewandowski2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -46529,6 +46986,11 @@
           "id": "topological_star",
           "kind": "dual",
           "text": "A star of five dimensions with no horizon. Without its magnetic field it is Schwarzschild's metric with the time made into a circle, whose horizon has become a bubble where space ends [bah2021]."
+        },
+        {
+          "id": "quantum_oppenheimer_snyder",
+          "kind": "generalisation",
+          "text": "Schwarzschild's metric with one more term, $f = 1 - 2m/r + \\alpha m^2/r^4$ with $r_s = 2m$, the vacuum outside a ball of dust that bounces as loop quantum cosmology has it [lewandowski2023]."
         }
       ],
       "references": [
@@ -46654,7 +47116,8 @@
         "antoci2001",
         "basovnik2016",
         "podolsky2025",
-        "bah2021"
+        "bah2021",
+        "lewandowski2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

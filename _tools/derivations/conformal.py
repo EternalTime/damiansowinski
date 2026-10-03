@@ -110,6 +110,7 @@ import boson_star as bs  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
 import null_rays as nr  # noqa: E402
+import quantum_os as qos  # noqa: E402
 import verify_metrics as vm  # noqa: E402
 
 CONFORMAL_DIR = build.CONFORMAL_DIR
@@ -3234,6 +3235,284 @@ def bardeen(ck, src):
         view.slice(outside, [reflect(*low, True) if view.d["id"] == "outgoing" else low])
         view.slice(inside, [mid])
     return views
+
+
+# ---------------------------------------------------------------- the quantum Oppenheimer-Snyder black hole
+
+class QuantumOSTower(Tower):
+    """A Tower for f = 1 - 2m/r + alpha m^2/r^4 at m = 1 and alpha = 5/4, whose 1/f has four simple
+    poles, two of them complex, so its tortoise coordinate is quantum_os.tortoise, with r_*(r_b) = 0
+    in place of a Tower's r_*(0) = 0: the edge r = r_b of the vacuum then lies on the vertical lines
+    X = +-pi/2, where a Tower's centre lies. The roots, residues and surface gravities are taken in
+    forty digits from the published g^rr."""
+
+    def __init__(self, f, r):
+        self.f_sym = f
+        value, slope = sp.lambdify(r, f, "mpmath"), sp.lambdify(r, sp.diff(f, r), "mpmath")
+        with mpmath.workdps(40):
+            exact = [mpmath.findroot(value, mpmath.mpf(x)) for x in (qos.RP, qos.RM)]
+            self.rf = [float(x) for x in exact]
+            self.Af = [float(1 / slope(x)) for x in exact]
+        self.kappa = [abs(1 / (2 * a)) for a in self.Af]
+        self.kp = self.kappa[0]
+        assert self.Af[0] > 0 > self.Af[1], "the outer horizon is not where f rises through zero"
+
+    def rstar(self, r):
+        return qos.tortoise(r)
+
+
+def qos_relabel(v):
+    """The edge r = r_b of the vacuum, which a TowerDrawing draws as a regular centre, as a boundary."""
+    for layer in v.layers:
+        if layer["class"] == "centre":
+            layer["class"] = "boundary"
+    return v
+
+
+def quantum_oppenheimer_snyder(ck, src):
+    """The quantum Oppenheimer-Snyder black hole at m = 1 and alpha = 5/4, in four views.
+
+    The vacuum outside the dust, maximally extended, is Reissner-Nordstrom's tower with each
+    singularity replaced by the edge r = r_b, where the vacuum stops, so the cells are a Tower's: I
+    outside r+, II between the horizons, III between r_b and r-. The static chart covers one cell of
+    each kind, the ingoing chart I, II and III', the outgoing chart their time reverse, as Bardeen's.
+
+    The collapse puts the dust in. Its surface, quantum_os's radial geodesic that falls from rest at
+    infinity, runs in the ingoing chart from i- of an exterior through r+ and r- into III', turns round
+    on r_b there at tau = 0, the point (p, q) = (3 pi/4, pi/4), and runs on in the outgoing chart, the
+    reflection, through the white hole into the exterior above, to its i+. Inside, the dust is the
+    flat Friedmann ball in its conformal time eta = int dtau/a, whose light rays are eta -+ chi
+    constant. Every ray inside meets the surface, so each point of the ball is drawn at the p of the
+    outgoing ray through it where that ray reaches the surface, at eta - chi + chi_0, and at the q of
+    the ingoing ray where it left the surface, at eta + chi - chi_0. Rays of both families are then
+    lines of constant p and q, and the ball is the lens between the surface and its centre chi = 0."""
+    st = Plane(src, "quantum_oppenheimer_snyder", "static", ("t", "r"), EQUATOR, nr.QOS)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    T = QuantumOSTower(st.gi[1, 1], st.x1)
+    rp, rm = T.rf
+    name = "Quantum Oppenheimer-Snyder"
+    tower_checks(ck, name, st, T, qos.RB + 0.002, 15)
+    ck.limit(f"{name}: the horizons are the zeros of the published g^rr, 1.7774 and 1.1272 m", [rp, rm],
+             [qos.RP, qos.RM], 1e-12)
+    ck.limit(f"{name}: the surface gravities are 0.1756 and 0.5868 per m", T.kappa, [0.1756, 0.5868], 1e-4)
+    ck.limit(f"{name}: g^rr = 1 at r_b, where the vacuum ends", [float(sp.lambdify(st.x1, st.gi[1, 1])(qos.RB))], [1.0], 1e-12)
+    p, q = T.pq("III", np.array([-6.0, 0, 6]), np.full(3, qos.RB))
+    ck.limit(f"{name}: r -> r_b lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-9)
+    K = st.kretschmann
+    ck.finite(f"{name}: the Kretschmann scalar is finite at both horizons and at r_b",
+              K(np.zeros(3), np.array([rp, rm, qos.RB])))
+
+    def ingoing(w, r):
+        """(p, q) of the ingoing chart's (v, r): I and II with t = v - r*, and III' with t' = r* - v."""
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        rs = T.rstar(r)
+        p, q = np.empty(r.shape), np.empty(r.shape)
+        for cell, sel, t in (("I", r > rp, w - rs), ("II", (r <= rp) & (r >= rm), w - rs), ("III'", r < rm, rs - w)):
+            if sel.any():
+                u, v = t[sel] - rs[sel], t[sel] + rs[sel]
+                G = T.G
+                p[sel], q[sel] = {"I": (-G(u), G(-v)), "II": (G(u), G(-v)), "III'": (np.pi - G(-v), G(u))}[cell]
+        return p, q
+
+    def outgoing(u, r):
+        p, q = ingoing(-np.asarray(u, dtype=float), r)
+        return np.pi - q, np.pi - p
+    ein = Plane(src, "quantum_oppenheimer_snyder", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, nr.QOS)
+    eout = Plane(src, "quantum_oppenheimer_snyder", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, nr.QOS)
+    for lo, hi, where in ((rp + 1e-3, 40, "outside r+"), (rm + 1e-3, rp - 1e-3, "between the horizons"),
+                          (qos.RB + 1e-3, rm - 1e-3, "between r_b and r-")):
+        ck.chart(f"{name} ingoing Eddington-Finkelstein, {where}", ein, ingoing,
+                 ck.uniform(-15, 15), ck.uniform(lo, hi), lambda w, r: (1, -60))
+        ck.chart(f"{name} outgoing Eddington-Finkelstein, {where}", eout, outgoing,
+                 ck.uniform(-15, 15), ck.uniform(lo, hi), lambda u, r: (1, 60))
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             ingoing(0.4 + T.rstar(3.0), 3.0), T.pq("I", 0.4, 3.0), 1e-12)
+
+    # The surface of the dust, in by the ingoing chart and out by the outgoing one.
+    tau_in = -np.concatenate([np.geomspace(1e4, 3, 600), np.linspace(3, 0, 6001)[1:]])
+    tau_out = -tau_in[::-1]
+    ps_in, qs_in = ingoing(qos.advanced(tau_in), qos.radius(tau_in))
+    ps_out, qs_out = outgoing(-qos.advanced(-tau_out), qos.radius(tau_out))
+    taus = np.concatenate([tau_in, tau_out[1:]])
+    ps, qs = np.concatenate([ps_in, ps_out[1:]]), np.concatenate([qs_in, qs_out[1:]])
+    ck.limit(f"{name}: the surface turns round on r_b at (p, q) = (3 pi/4, pi/4)", [ps_in[-1], qs_in[-1], ps_out[0], qs_out[0]],
+             [3 * Q4, Q4, 3 * Q4, Q4], 1e-9)
+    ck.limit(f"{name}: the surface is timelike, p and q rising along it",
+             [float(np.all(np.diff(ps) > -1e-12)), float(np.all(np.diff(qs) > -1e-12))], [1, 1], 0.5)
+    # The ingoing chart reaches the expanding surface too, between r_b and r-, where both charts cover III'.
+    t_mid = np.array([0.1, 0.25])
+    ck.limit(f"{name}: both charts put the expanding surface at one point",
+             np.concatenate(ingoing(qos.advanced(t_mid), qos.radius(t_mid))),
+             np.concatenate(outgoing(-qos.advanced(-t_mid), qos.radius(t_mid))), 1e-6)
+
+    # The dust, in its conformal time, drawn by the null rays that meet the surface.
+    eta_tab = qos.conformal_time(taus)
+    probe = np.array([-30.0, -3.0, -0.4, 0.0, 0.2, 1.0, 10.0])
+    ck.limit(f"{name}: d eta/d(c tau) = 1/a", (qos.conformal_time(probe + 1e-6) - qos.conformal_time(probe - 1e-6))
+             / 2e-6 * qos.scale_factor(probe), np.ones(len(probe)), 1e-7)
+    chi0 = qos.RB
+
+    def at_surface(eta):
+        return np.interp(eta, eta_tab, ps), np.interp(eta, eta_tab, qs)
+
+    def inside(tau, chi):
+        eta = qos.conformal_time(tau)
+        return at_surface(eta - chi + chi0)[0], at_surface(eta + chi - chi0)[1]
+    dust = Plane(src, "quantum_oppenheimer_snyder", "interior_comoving", ("\\tau", "\\chi"), EQUATOR,
+                 {"chi_0": "(5/8)**Rational(1, 3)"}, functions={"a": nr.QOS_A})
+    ck.chart(f"{name}, the dust", dust, inside, ck.uniform(-3, 3), ck.uniform(0.01, chi0 - 0.01), lambda tau, chi: (1, 0))
+    ck.limit(f"{name}: the dust meets the exterior on its surface", np.concatenate(inside(taus[::97], np.full(len(taus[::97]), chi0))),
+             np.concatenate([ps[::97], qs[::97]]), 1e-6)
+    ck.finite(f"{name}: the Kretschmann scalar of the dust is finite through the bounce",
+              dust.kretschmann(np.linspace(-1, 1, 21), np.full(21, 0.3)))
+
+    D = TowerDrawing(T, True, qos.RB, regular=True)
+    box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(T, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(T, "II", 4, rm, rp), [rm, rp])
+    rIII = nice_all(even_radii(T, "III", 3, qos.RB, rm, xmax=HALF), [qos.RB, rm])
+    grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
+    horizons = f"the horizons $r_+ = {rp:.3f}\\,m$ and $r_- = {rm:.3f}\\,m$"
+    edge = f"$r = r_b = {qos.RB:.3f}\\,m$, the edge of the vacuum, where the surface of the dust turns round"
+
+    def finish(v):
+        D.labels(v)
+        v.set(fade={"top": 0.9, "bottom": 0.9})
+        v.legend("horizon", horizons)
+        v.legend("boundary", edge)
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        return qos_relabel(v)
+
+    views = []
+    v = View("tower", "Maximal extension", box, "static")
+    D.draw(v, grids, cover=[("I", False), ("II", False), ("III", False)])
+    finish(v)
+    v.legend("cover", "one exterior, one region between the horizons and one between $r_b$ and $r_-$, which "
+                      "$t$ and $r$ cover")
+    v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                  "in units of $m$")
+    v.legend("t", "$t$ constant")
+    views.append(v)
+
+    t = spread(-np.inf, np.inf, 500, 10)
+    rr = np.concatenate([spread(qos.RB, rm, 300, 14), spread(rm, rp, 300, 14), spread(rp, np.inf, 300, 14)])
+    covers = {"ingoing": [("I", False), ("II", False), ("III'", False)],
+              "outgoing": [("III'", False), ("II", True), ("I", True)]}
+    for vid, label, system, chart, coordinate, rays, way in (
+            ("ingoing", "Ingoing Eddington-Finkelstein", "eddington_finkelstein_ingoing", ingoing, "v",
+             (-4, -2, 0, 2, 4), "an ingoing"),
+            ("outgoing", "Outgoing Eddington-Finkelstein", "eddington_finkelstein_outgoing", outgoing, "u",
+             (-4, -2, 0, 2, 4), "an outgoing")):
+        v = View(vid, label, box, system)
+        for cell, up in TOWER:
+            v.fill("region", D.polygon(cell, up))
+        for cell, up in covers[vid]:
+            v.fill("cover", D.polygon(cell, up))
+        for r in rI + rII + rIII:
+            v.curve("r", *chart(t, np.full_like(t, r)))
+        for w in rays:
+            v.curve("null", *chart(np.full_like(rr, float(w)), rr))
+        for cell, up in TOWER:
+            D.edges(v, cell, up)
+        finish(v)
+        v.legend("cover", f"the region that ${coordinate}$ and $r$ cover")
+        v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                      "in units of $m$")
+        v.legend("null", f"${coordinate}$ constant, {way} light ray, at " + listed(rays) + " in units of $m$")
+        views.append(v)
+    settings = (f"$\\alpha = 5m^2/4$, so that $r_+ = {rp:.3f}\\,m$, $r_- = {rm:.3f}\\,m$, $r_b = {qos.RB:.3f}\\,m$, "
+                f"and $\\kappa_-/\\kappa_+ = {T.kappa[1] / T.kappa[0]:.2f}$.")
+    outside, inside_moment = slices.moments("quantum_oppenheimer_snyder", "outside")[0], slices.moments("quantum_oppenheimer_snyder", "inside")[0]
+    low = through_bifurcation(T, ("I'", "I"), *outside.reach("static", "r")[::-1])
+    mid = through_bifurcation(T, ("III'", "III"), *inside_moment.reach("static", "r"))
+    for view in views:
+        view.set(settings=settings)
+        view.slice(outside, [reflect(*low, True) if view.d["id"] == "outgoing" else low])
+        view.slice(inside_moment, [mid])
+
+    # The collapse: the exterior to the right of the surface, the dust to the left.
+    sX, sT = xt(ps, qs)
+
+    def outside_only(p, q):
+        X, Tt = xt(p, q)
+        keep = (Tt > sT[0]) & (Tt < sT[-1]) & (X > np.interp(Tt, sT, sX) + 1e-6)
+        return np.where(keep, p, np.nan), np.where(keep, q, np.nan)
+
+    def clipped_segment(v, cls, a, b):
+        s_ = np.linspace(0, 1, 801)
+        p = a[0] + (b[0] - a[0]) * s_
+        q = a[1] + (b[1] - a[1]) * s_
+        v.curve(cls, *outside_only(p, q))
+    v = View("collapse", "The collapse and the bounce", [-2.15, PI + 0.45, -HALF - 0.3, 2 * PI + HALF + 0.3])
+    ext_poly = [point(*pq) for pq in zip(ps, qs)][::5] + [point(ps[-1], qs[-1])]
+    ext_poly += [[HALF, 2 * PI + HALF], [PI, 2 * PI], [HALF, PI + HALF], [HALF, HALF], [PI, 0], [HALF, -HALF]]
+    v.fill("region", ext_poly)
+    eta_c = np.linspace(eta_tab[0] + 2 * chi0, eta_tab[-1] - 2 * chi0, 1500)
+    centre = (at_surface(eta_c + chi0)[0], at_surface(eta_c - chi0)[1])
+    lens = [point(*pq) for pq in zip(ps[::5], qs[::5])] + [point(*pq) for pq in zip(centre[0][::-4], centre[1][::-4])]
+    v.fill("region", lens)
+    v.fill("star", lens)
+    cells = [("I", False), ("II", False), ("III'", False), ("III", False), ("II", True), ("I", True)]
+    for cell, up in cells:
+        lo, hi = D.r_range(cell)
+        key = cell.rstrip("'")
+        for r in grids[key][0]:
+            v.curve("r", *outside_only(*reflect(*T.pq(cell, t, np.full_like(t, r)), up)))
+        rgrid = spread(lo, hi, 600, 16)
+        for tt in times:
+            v.curve("t", *outside_only(*reflect(*T.pq(cell, np.full_like(rgrid, tt), rgrid), up)))
+    for a, b in (((-HALF, 0), (0, 0)), ((0, 0), (0, HALF)), ((0, 0), (HALF, 0)), ((HALF, 0), (HALF, HALF)),
+                 ((0, HALF), (HALF, HALF)), ((HALF, HALF), (HALF, PI)), ((HALF, HALF), (PI, HALF))):
+        clipped_segment(v, "horizon", a, b)
+        clipped_segment(v, "horizon", reflect(*a, True), reflect(*b, True))
+    for a, b in (((-HALF, 0), (-HALF, HALF)), ((-HALF, HALF), (0, HALF))):
+        clipped_segment(v, "scri", a, b)
+        clipped_segment(v, "scri", reflect(*a, True), reflect(*b, True))
+    v.line("boundary", [[[HALF, HALF], [HALF, PI + HALF]]])
+    for eta in np.linspace(-6, 6, 7):
+        chis = np.linspace(0, chi0, 60)
+        v.curve("t2", *at_surface_pair(at_surface, eta, chis, chi0))
+    for chi in (chi0 / 3, 2 * chi0 / 3):
+        e = np.linspace(eta_tab[0] + chi0, eta_tab[-1] - chi0, 1500)
+        v.curve("r2", at_surface(e - chi + chi0)[0], at_surface(e + chi - chi0)[1])
+    v.curve("centre", *centre)
+    v.curve("surface", ps, qs)
+    v.point("mark", (3 * Q4, Q4))
+    for at, text, anchor, dx, dy in (([PI, 0], "$i^0$", "l", 6, 0), ([PI, 2 * PI], "$i^0$", "l", 6, 0),
+                                     ([HALF, -HALF], "$i^-$", "tl", 5, 2), ([HALF, 2 * PI + HALF], "$i^+$", "bl", 5, -2)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([3 * Q4, Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+    v.label_xt([3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=3)
+    v.label_xt([3 * Q4, 2 * PI + Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+    v.label_xt([3 * Q4, 2 * PI - Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=3)
+    v.label_xt([2.1, 0.0], "exterior", cls="region")
+    v.label_xt([2.1, 2 * PI], "exterior", cls="region")
+    v.label_xt([0, HALF + 0.35], "black hole", cls="region")
+    v.label_xt([0, 1.5 * PI - 0.35], "white hole", cls="region")
+    v.label_xt([1.0, 0.0], "dust", cls="region")
+    v.label((3 * Q4, Q4), "bounce", "l", "small", dx=8)
+    v.label_xt([HALF, PI], "$r_b$", "l", "small", dx=5)
+    v.set(settings=settings, input=nr.QOS_INPUT)
+    v.legend("star", "the dust, in its conformal time and $\\chi$, which $\\tau$ and $\\chi$ cover")
+    v.legend("r", "$r$ constant outside the dust")
+    v.legend("t", "$t$ constant outside the dust")
+    v.legend("t2", "the conformal time $\\int c\\,d\\tau/a$ constant inside, at $-6$, $-4$, $-2$, $0$, $2$, $4$ and $6$")
+    v.legend("r2", "$\\chi$ constant inside, the world lines of the dust")
+    v.legend("mark", "the bounce, $\\tau = 0$, where the surface turns round on $r_b$")
+    v.legend("surface", "the surface of the dust, a radial geodesic of the exterior that falls from rest far away")
+    v.legend("centre", "$\\chi = 0$, the centre of the ball")
+    v.legend("horizon", horizons)
+    v.legend("boundary", edge)
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    views.append(v)
+    return views
+
+
+def at_surface_pair(at_surface, eta, chis, chi0):
+    """A line of constant conformal time eta inside the dust, from the centre to the surface."""
+    return at_surface(eta - chis + chi0)[0], at_surface(eta + chis - chi0)[1]
 
 
 # ---------------------------------------------------------------- Born and Infeld's point charge
@@ -23559,7 +23838,7 @@ DRAWN = {
     "ads_soliton": ads_soliton,
     "topological_star": topological_star,
     "coleman_de_luccia": coleman_de_luccia,
-    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
+    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "de_sitter": de_sitter,
@@ -25196,6 +25475,51 @@ CAPTIONS = {
         "2-sphere of radius $r$. From $U = -e^{-\\kappa u}$ and $V = UV(r)/U$ they cover the exterior and the "
         "white hole, and their lines of constant $u$ are outgoing light rays, which leave $r = 0$ and cross the "
         "horizon outward.",
+    ],
+    ("quantum_oppenheimer_snyder", "tower"): [
+        "The vacuum outside the dust, maximally extended, each point in the diagram a 2-sphere of radius $r$. "
+        "The extension is a tower of regions that repeats up and down without end, as Reissner-Nordström's "
+        "does, and every region inside $r_-$ ends on the edge $r = r_b$ of the vacuum, where "
+        "Reissner-Nordström's ends on a timelike singularity. The tortoise coordinate $r_*$, with "
+        "$dr_*/dr = (1 - 2m/r + \\alpha m^2/r^4)^{-1}$ and $r_*(r_b) = 0$, is a sum of logarithms, one for each "
+        "zero of $r^4 - 2mr^3 + \\alpha m^2$, two of them real and two complex.",
+        "We place every region by the Kruskal coordinate of the outer horizon, $p = \\pm\\arctan "
+        "e^{-\\kappa_+ u}$ and $q = \\pm\\arctan e^{\\kappa_+ v}$ with $u, v = ct \\mp r_*$, and the regions "
+        "above the inner horizon are the reflection $(p, q) \\to (\\pi - q, \\pi - p)$ of those below. This map "
+        "is smooth across $r_+$ and puts the edge $r = r_b$ exactly on the vertical lines $X = \\pm\\pi/2$, where "
+        "it is timelike. Across $r_-$ it is continuous and cannot also be smooth, because the late light rays that "
+        "reach $\\mathscr{I}^+$ are the rays that pile up at the Cauchy horizon $r_-$.",
+        "The coordinates $t$ and $r$ cover one region of each kind: an exterior, a region between the horizons, and "
+        "a region between $r_b$ and $r_-$. Between the horizons their $t$ alone cannot tell the black hole from the "
+        "white hole, and we take the region to be the black hole an infalling observer enters.",
+    ],
+    ("quantum_oppenheimer_snyder", "ingoing"): [
+        "The same tower, with the region that the ingoing Eddington-Finkelstein coordinates $v$ and $r$ cover "
+        "tinted, each point in the diagram a 2-sphere of radius $r$. The advanced time $v = ct + r_*$ is constant "
+        "along every ingoing light ray, and it runs on across both horizons: from an exterior, through the black "
+        "hole, into the region inside $r_-$ on the far side.",
+        "That is the way the surface of the dust goes in. The coordinates end where an outgoing ray inside $r_-$ "
+        "reaches the horizon of the white hole above, at $v \\to \\infty$.",
+    ],
+    ("quantum_oppenheimer_snyder", "outgoing"): [
+        "The same tower, with the region that the outgoing Eddington-Finkelstein coordinates $u$ and $r$ cover "
+        "tinted, each point in the diagram a 2-sphere of radius $r$. The retarded time $u = ct - r_*$ is constant "
+        "along every outgoing light ray, and the coordinates are the time reverse of the ingoing ones: from the "
+        "region inside $r_-$, through the white hole above it, into the next exterior.",
+        "That is the way the surface of the dust comes back out, after it turns round on $r = r_b$.",
+    ],
+    ("quantum_oppenheimer_snyder", "collapse"): [
+        "The collapse and the bounce, each point in the diagram a 2-sphere: the dust on the left of its surface and "
+        "the vacuum on the right. The surface falls from $i^-$ of one exterior through the event horizon $r_+$ and "
+        "the inner horizon $r_-$, turns round on $r = r_b$, climbs out through the white hole, and ends at $i^+$ of "
+        "the next exterior.",
+        "Outside we keep the tower's map. Inside, the dust is a flat Friedmann ball in its conformal time "
+        "$\\eta = \\int c\\,d\\tau/a$, whose light rays are $\\eta \\mp \\chi$ constant, and we place each point of "
+        "the ball at the $p$ of the outgoing ray through it where that ray meets the surface, and at the $q$ of the "
+        "ingoing ray where it left the surface. So a ray keeps its line across the surface, and the whole ball is "
+        "the lens between the surface and its centre $\\chi = 0$, which runs from $i^-$ to $i^+$.",
+        "Someone who stays in the lower exterior sees the ball sink behind $r_+$ and never sees the bounce, and "
+        "someone in the upper exterior sees the white hole, and the dust coming out of it.",
     ],
     ("bardeen", "tower"): [
         "Bardeen's regular black hole, maximally extended, each point in the diagram a 2-sphere of radius $r$. "

@@ -124,6 +124,7 @@ import boson_star as bs  # noqa: E402
 import two_holes  # noqa: E402
 import brill_wave  # noqa: E402
 import null_rays as nr  # noqa: E402
+import quantum_os as qos  # noqa: E402
 import conformal  # noqa: E402
 from conformal import Sources  # noqa: E402
 from projections import Camera  # noqa: E402
@@ -441,7 +442,12 @@ class Slice:
                         with mpmath.workdps(60):
                             return float(f(x0 + mpmath.mpf(float(v))))
                     return at
-                if exact.has(sp.CRootOf):
+                n, d = sp.fraction(sp.together(e.subs(self.x, exact + u)))
+                n0, d0 = (sp.expand(part).subs(u, 0) for part in (n, d))
+                # A root in nested radicals, as a quartic's, whose expansion leaves a constant term
+                # that vanishes at the root but is not written as zero, is reduced as a CRootOf is.
+                nested = any(c != 0 and abs(complex(c.evalf(40))) < 1e-30 for c in (n0, d0))
+                if exact.has(sp.CRootOf) or nested:
                     # A root with no form in radicals: each coefficient in u is reduced modulo
                     # the root's minimal polynomial, so that the terms which cancel at the root
                     # are exactly zero, and only then evaluated, to forty digits.
@@ -3290,6 +3296,70 @@ def bardeen(ck, src):
     fig.legend("line", "horizon", "the widest circle $r = r_-$, where the slice crosses the inner horizon")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     views.append(view("inside", "Inside $r_-$", "$r_s$", [inside], fig.done(), settings=settings, stops=[between]))
+    return views
+
+
+def quantum_oppenheimer_snyder(ck, src):
+    """The quantum Oppenheimer-Snyder black hole at m = 1 and alpha = 5/4, as its other diagrams
+    draw it, so that r_b = 0.855, r_- = 1.127 and r_+ = 1.777 m. g_rr = 1/f with
+    f = 1 - 2m/r + alpha m^2/r^4: outside r+ the slice of constant t runs through the outer
+    bifurcation sphere into a second exterior, as Reissner-Nordstrom's does; between the horizons
+    g_rr < 0 and it is not a moment of space; inside r- it runs through the inner bifurcation sphere,
+    the widest circle there, into a second region inside r-, and g_rr - 1 = (1 - f)/f falls to zero
+    at r_b, where alpha m = 2 r_b^3 makes f = 1 and the surface lies level. The vacuum ends there,
+    where the surface of the dust turns round."""
+    sl = Slice(src, "quantum_oppenheimer_snyder", "static", "r", "\\phi", {"t": 0, **EQUATOR}, nr.QOS)
+    rp, rm = sorted((r for r in sl.horizons() if r > 0), reverse=True)
+    ck.add("Quantum Oppenheimer-Snyder: the horizons are the two positive zeros of f, 1.7774 and 1.1272 m",
+           abs(rp - qos.RP) + abs(rm - qos.RM) + abs(float(qos.f(rp))) + abs(float(qos.f(rm))), 1e-12)
+    ck.add("Quantum Oppenheimer-Snyder: f = 1 at r_b, where the surface lies level", abs(float(qos.f(qos.RB)) - 1), 1e-12)
+    ck.stops("Quantum Oppenheimer-Snyder, between the horizons", sl, np.linspace(rm, rp, 402)[1:-1])
+    top, radii = 6.0, (2.0, 3.0, 4.0, 5.0)
+    size = 2 * top
+    near, far = two_sheets(ck, "Quantum Oppenheimer-Snyder outside", sl, rp, top, radii, size,
+                           [(rp, "horizon", "$r = r_+$")], (" of the outer horizon", ""))
+    outside = Surface([near, far])
+    fig = figure_of([outside], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rp, 0.0, "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,m$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,m$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$, $4$, $5$ and $6\\,m$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the outer horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = ("$m = 1$, the unit of every length, and $\\alpha = 5m^2/4$, so that $r_+ = 1.777\\,m$, "
+                "$r_- = 1.127\\,m$, and $r_b = 0.855\\,m$.")
+    between = ("Between the horizons, $r_- < r < r_+$, $g_{rr} < 0$: $r$ is a time there, and a slice of "
+               "constant $t$ is not a moment of space.")
+    views = [view("outside", "Outside $r_+$", "$m$", [outside], fig.done(), settings=settings, stops=[between])]
+
+    # Inside r-: each side from r_b, where the surface lies level and the vacuum ends, up to the widest circle, r-.
+    size = 2 * rm
+    lo = Piece("inside", "sheet", sl, qos.RB, rm, 0.0, 1,
+               (("edge", "at $r = r_b$ the surface lies level, and the vacuum ends where the surface of the dust "
+                         "turns round"),
+                ("join", "the inner horizon $r = r_-$, the widest circle, where the slice runs on into the other "
+                         "region inside $r_-$")),
+               [(qos.RB, "chartedge", None), (1.0, "r", None), (rm, "horizon", "$r = r_-$")], size)
+    lo.z = lo.z - lo.z[-1]
+    hi = Piece("other_inside", "sheet2", sl, qos.RB, rm, -lo.z[0], -1,
+               (("edge", "at $r = r_b$"), ("join", "the inner horizon $r = r_-$")),
+               [(qos.RB, "chartedge", None), (1.0, "r2", None)], size)
+    for p in (lo, hi):
+        ck.isometry(f"Quantum Oppenheimer-Snyder inside, {p.id}", p)
+    ck.join("Quantum Oppenheimer-Snyder inside, the two sides at r-", lo, rm, hi, rm)
+    inside = Surface([lo, hi])
+    fig = figure_of([inside], {"sheet": "cover"}, size, Camera(-90, 22))
+    ring_label(fig, [0, 0, 0], rm, 0.0, "$r = r_-$", dx=10)
+    ring_label(fig, [0, 0, 0], *lo.at(qos.RB), "$r_b$", side=-1)
+    fig.legend("fill", "cover", "the region $r_b < r < r_-$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1\\,m$")
+    fig.legend("line", "r2", "the same radius in the other region inside $r_-$")
+    fig.legend("line", "horizon", "the widest circle $r = r_-$, where the slice crosses the inner horizon")
+    fig.legend("line", "chartedge", "$r = r_b$, where the surface lies level and the vacuum ends")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("inside", "Inside $r_-$", "$m$", [inside], fig.done(), settings=settings, stops=[between]))
     return views
 
 
@@ -15963,6 +16033,7 @@ DRAWN = {
     "van_den_broeck": van_den_broeck,
     "rn_metric": rn_metric,
     "bardeen": bardeen,
+    "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "born_infeld_charge": born_infeld_charge,
     "de_sitter": de_sitter,
     "einstein_static": einstein_static,
@@ -16698,6 +16769,23 @@ CAPTIONS = {
         "The surface is closed: this moment of space is a sphere, finite and without an edge, where "
         "Reissner-Nordström's ends at a singularity. Near each centre $dz/dr = \\sqrt{r_sr^2/g^3}$, the slope of "
         "a sphere of radius $\\sqrt{g^3/r_s} = 0.192\\,r_s$, the equator of a moment of de Sitter space.",
+    ],
+    ("quantum_oppenheimer_snyder", "outside"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the quantum black hole at one moment of $t$ outside its "
+        "outer horizon, drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "$g_{rr} = (1 - 2m/r + \\alpha m^2/r^4)^{-1}$, and the slice passes through the outer horizon's "
+        "bifurcation sphere $r = r_+$, its throat, into a second exterior, as Schwarzschild's does through $r = 2m$.",
+        "The quantum correction pulls the throat in from $2m$ to $r_+ = 1.777\\,m$, and far out the surface rises "
+        "as Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{2m/r}$. Between the horizons $r$ is a "
+        "time, and no slice of constant $t$ enters there.",
+    ],
+    ("quantum_oppenheimer_snyder", "inside"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the same black hole at one moment of $t$ inside its inner "
+        "horizon, where $r$ is again a distance and $t$ a time, drawn as a surface in flat space with every "
+        "distance along it the metric distance. The slice runs through the inner horizon's bifurcation sphere "
+        "$r = r_-$, its widest circle, into a second region inside $r_-$, the same surface turned over.",
+        "Moving in from $r_-$, $g_{rr}$ falls to $1$ at $r_b = (\\alpha m/2)^{1/3} = 0.855\\,m$, where the "
+        "surface lies level. There the vacuum ends, at the radius where the surface of the dust turns round.",
     ],
     ("einstein_dirac_maxwell_wormhole", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Einstein-Dirac-Maxwell wormhole at one moment of $t$ "

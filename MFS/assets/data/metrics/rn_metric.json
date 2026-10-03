@@ -194,6 +194,11 @@
       "id": "topological_star",
       "kind": "family",
       "text": "A star from five dimensions with a mass, a magnetic charge, and no horizon. For some masses and charges the star, its black string, and Reissner and Nordström's black hole all exist, and the star is the widest of the three [bah2021]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "family",
+      "text": "A tower of regions like Reissner and Nordström's, from a correction to Schwarzschild's $f$ that falls off as $r^{-4}$ and a ball of dust that bounces inside it [lewandowski2023]."
     }
   ],
   "references": [
@@ -243,7 +248,8 @@
     "brill1964",
     "clement2016",
     "blazquez2021",
-    "bah2021"
+    "bah2021",
+    "lewandowski2023"
   ],
   "coordinates": [
     {
