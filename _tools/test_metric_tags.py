@@ -115,6 +115,16 @@ class PublishedTags(unittest.TestCase):
     def test_no_merged_tag_is_a_tag_something_was_merged_into(self):
         self.assertEqual(set(mt.RETIRED) & {into for into in mt.RETIRED.values() if into}, set())
 
+    def test_every_tag_something_was_merged_into_is_carried(self):
+        carried = {tag for metric in self.metrics for tag in metric["tags"]}
+        self.assertEqual({into for into in mt.RETIRED.values() if into} - carried, set())
+
+    def test_no_keyword_is_carried_by_one_spacetime_or_spelled_like_another(self):
+        """610 keywords on 3 October 2026, 259 of them on one spacetime, and among them
+        "point mass" and "point masses" and "alternative theory of gravity" and "alternative
+        theories of gravity", until the captain had the whole collection revisited."""
+        self.assertEqual(mt.keyword_faults(self.metrics), [])
+
 
 class Rules(unittest.TestCase):
     """decided_tags() on charts made up for the purpose."""
@@ -186,6 +196,38 @@ class Rules(unittest.TestCase):
         self.assertIn("carries 'vacuum solution', which was merged into 'vacuum'", faults)
         self.assertIn("carries 'four-dimensional' twice", faults)
         self.assertEqual(mt.tag_faults(dict(metric, tags=["vacuum", "four-dimensional"]), facts), [])
+
+
+class Keywords(unittest.TestCase):
+    """keyword_faults() on collections made up for the purpose."""
+
+    def faults(self, **tags):
+        return mt.keyword_faults([{"id": metric_id, "tags": carried} for metric_id, carried in tags.items()])
+
+    def test_a_keyword_on_one_spacetime_is_a_fault_and_on_two_is_not(self):
+        self.assertEqual(self.faults(a=["vacuum", "geon"], b=["vacuum"]), ["'geon' is carried by a alone"])
+        self.assertEqual(self.faults(a=["geon"], b=["geon"]), [])
+
+    def test_a_tag_the_charts_decide_may_be_carried_alone(self):
+        self.assertEqual(self.faults(a=["eleven-dimensional", "static"], b=[]), [])
+
+    def test_a_spacetime_listing_a_keyword_twice_still_carries_it_alone(self):
+        self.assertEqual(self.faults(a=["geon", "geon"], b=[]), ["'geon' is carried by a alone"])
+
+    def test_two_keywords_differing_in_case_plural_or_punctuation_are_a_fault(self):
+        for one, other in (("Black hole", "black hole"), ("point mass", "point masses"),
+                           ("alternative theory of gravity", "alternative theories of gravity"),
+                           ("pp-wave", "pp wave"), ("Painlevé-Gullstrand", "Painleve Gullstrand"),
+                           ("2+1 dimensional gravity", "2+1-dimensional gravity")):
+            with self.subTest(one=one, other=other):
+                faults = self.faults(a=[one, other], b=[one, other])
+                self.assertEqual(len(faults), 1)
+                self.assertIn("spelled alike", faults[0])
+
+    def test_keywords_of_different_words_are_not_spelled_alike(self):
+        for one, other in (("compact", "compactness"), ("radiating", "radiation"), ("torus", "tori"),
+                           ("Kasner", "Kerr"), ("dust", "null dust")):
+            self.assertNotEqual(mt.spelling(one), mt.spelling(other), (one, other))
 
 
 class Domains(unittest.TestCase):
@@ -282,7 +324,7 @@ class PageFilter(unittest.TestCase):
         self.assertLessEqual(self.carrying("conformally flat", "asymptotically flat", "flat"), self.found("flat"))
         self.assertEqual(self.found("vacuum") & (self.carrying("electrovacuum") - self.carrying("vacuum")), set())
         no_hole = {m["id"] for m in published_metrics()
-                   if not any(word == "hole" for tag in m["tags"] for word in re.split(r"[ /-]", tag))}
+                   if not any(word.startswith("hole") for tag in m["tags"] for word in re.split(r"[ /-]", tag))}
         self.assertTrue(self.carrying("wormhole") & no_hole)
         self.assertEqual(self.found("hole") & no_hole, set())
 
@@ -305,6 +347,7 @@ class Computed(unittest.TestCase):
         "string_black_hole/wedge",          # a sphere with a wedge missing
         "tangherlini/spherical_six",        # a four sphere in six dimensions
         "spinning_string/proper_radius",    # locally static about a string that spins
+        "ab_metrics/a2_kruskal",            # vacuum by Lambert's W, which sympy leaves uncancelled
     )
 
     @classmethod
@@ -323,6 +366,14 @@ class Computed(unittest.TestCase):
             with self.subTest(chart=name):
                 metric_id, entry = self.entries[name]
                 self.assertEqual(mt.compute(metric_id, entry, 120), self.facts[name])
+
+    def test_a_number_is_surely_not_zero_only_if_it_is_rational_or_far_from_zero(self):
+        import sympy as sp
+        x = sp.Rational(133, 10) / sp.E
+        self.assertFalse(mt._not_zero(sp.Integer(0)))
+        self.assertTrue(mt._not_zero(sp.Rational(1, 10**60)))
+        self.assertFalse(mt._not_zero(sp.LambertW(x) * sp.exp(sp.LambertW(x)) / x - 1))
+        self.assertTrue(mt._not_zero(sp.LambertW(x) - 1))
 
     def test_the_relations_the_file_was_computed_under_are_the_checkers(self):
         import verify_metrics as vm

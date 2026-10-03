@@ -18,7 +18,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "scalar-tensor theory"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The parameter $\\ell > 0$ is the radius of the throat. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

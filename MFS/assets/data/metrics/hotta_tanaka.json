@@ -23,7 +23,8 @@
     "Einstein equations",
     "four-dimensional",
     "idealized model",
-    "Einstein space"
+    "Einstein space",
+    "cut and paste"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The de Sitter radius $a$ is a length, with $\\Lambda = 3/a^2$, and we keep factors of $G$ and $c$ explicit. We read the Dirac delta $\\delta$ as the limit of a pulse even about the shock, a prime on it a derivative with respect to its argument. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

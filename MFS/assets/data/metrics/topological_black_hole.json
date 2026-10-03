@@ -9,11 +9,6 @@
     "black hole",
     "black brane",
     "black string",
-    "planar black hole",
-    "toroidal black hole",
-    "hyperbolic black hole",
-    "topological black hole",
-    "higher genus horizon",
     "horizon topology",
     "topological censorship",
     "mass",
@@ -37,7 +32,8 @@
     "Einstein equations",
     "four-dimensional",
     "idealized model",
-    "Einstein space"
+    "Einstein space",
+    "torus"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The anti-de Sitter radius $L$, a length, fixes the cosmological constant through $\\Lambda = -3/L^2$. We keep factors of $c$ explicit.",

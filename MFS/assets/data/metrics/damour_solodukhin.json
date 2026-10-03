@@ -7,7 +7,6 @@
     "wormhole",
     "traversable",
     "black hole mimicker",
-    "black hole foil",
     "exotic compact object",
     "throat",
     "no horizon",
@@ -23,7 +22,8 @@
     "Flamm's paraboloid",
     "Lorentzian",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "black hole shadow"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

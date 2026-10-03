@@ -16,7 +16,8 @@
     "idealized model",
     "Lorentzian",
     "Einstein equations",
-    "four-dimensional"
+    "four-dimensional",
+    "quantum inequality"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit. The Riemann tensor is $R^\\mu{}_{\\nu\\sigma\\tau} = \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\tau} - \\partial_\\tau\\Gamma^\\mu{}_{\\nu\\sigma} + \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\tau} - \\Gamma^\\mu{}_{\\tau\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

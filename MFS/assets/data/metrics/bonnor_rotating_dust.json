@@ -21,7 +21,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "rigid rotation"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The length $a$ sets the rotation, with $a^2 = 2h$ for Bonnor's parameter $h$ and angular momentum $J = c^3a^2/2G$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

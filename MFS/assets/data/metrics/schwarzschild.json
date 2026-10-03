@@ -16,14 +16,15 @@
     "event horizon",
     "white hole",
     "maximal extension",
-    "geodesic completeness",
     "causal structure",
     "asymptotically flat",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "Birkhoff theorem",
+    "gravitational redshift"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$. We keep factors of $c$ explicit.",

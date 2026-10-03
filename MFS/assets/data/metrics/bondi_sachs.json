@@ -20,7 +20,9 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "supertranslation",
+    "gravitational memory"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit and write every mass as a length, $G/c^2$ times the mass. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

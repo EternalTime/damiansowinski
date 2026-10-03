@@ -19,7 +19,8 @@
     "four-dimensional",
     "idealized model",
     "naked singularity",
-    "cosmic censorship"
+    "cosmic censorship",
+    "Birkhoff theorem"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $G$ and $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

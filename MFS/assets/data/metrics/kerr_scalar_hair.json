@@ -17,7 +17,7 @@
     "boson star",
     "no-hair theorem",
     "black hole uniqueness",
-    "ergosphere",
+    "ergoregion",
     "frame dragging",
     "horizon",
     "event horizon",
@@ -29,7 +29,8 @@
     "stationary",
     "Lorentzian",
     "Einstein equations",
-    "four-dimensional"
+    "four-dimensional",
+    "black hole shadow"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",

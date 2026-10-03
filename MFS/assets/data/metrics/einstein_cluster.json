@@ -4,8 +4,6 @@
   "short_name": "Einstein Cluster",
   "description": "A static ball of particles on circular orbits in every direction, each held on its circle by the gravity of all the others, with no pressure along the radius. Einstein built it in 1939 to argue that no body can be squeezed inside its Schwarzschild radius, and it now serves as a model for halos of dark matter.",
   "tags": [
-    "Einstein cluster",
-    "star cluster",
     "circular orbits",
     "collisionless",
     "anisotropic",
@@ -18,15 +16,14 @@
     "mass",
     "no horizon",
     "dark matter",
-    "galactic halo",
     "isotropic coordinates",
     "three sphere",
-    "conical",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "gravitational redshift"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

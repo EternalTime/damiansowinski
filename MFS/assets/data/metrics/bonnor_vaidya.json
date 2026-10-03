@@ -5,8 +5,6 @@
   "description": "Vaidya's radiating star with a charge: the field of a spherical body that sends out, or takes in, null dust carrying electric charge as well as energy, found by William Bonnor and Prahlad Vaidya in 1970 as an exact solution of the Einstein-Maxwell equations. Its mass and its charge are functions of a null time, and where both are constant it is the charged black hole of Reissner and Nordström.",
   "tags": [
     "null dust",
-    "charged null dust",
-    "charged",
     "electric charge",
     "electromagnetic field",
     "Einstein-Maxwell",
@@ -26,9 +24,7 @@
     "naked singularity",
     "weak energy condition",
     "energy conditions",
-    "third law",
     "self-similar",
-    "homothetic",
     "Vaidya",
     "exact solution",
     "Lorentzian",
