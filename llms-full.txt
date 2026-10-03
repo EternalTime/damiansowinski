@@ -2165,6 +2165,19 @@ Matt Visser's traversable wormhole of 1989: two copies of the Schwarzschild exte
 - chart Schwarzschild: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Through the Throat: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{a + |\ell|}\right)c^2dt^2 + \dfrac{d\ell^2}{1 - \dfrac{r_s}{a + |\ell|}} + \left(a + |\ell|\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Vuorio's Universe and Warped Anti-de Sitter Space
+
+An empty space of gravity in three dimensions with a mass for the graviton, whose time twists about every point. It is anti-de Sitter space with its light cones stretched or squashed along one direction, and stretched, as in Vuorio's universe, it holds closed timelike curves through every event.
+
+- id: `vuorio_warped_ads`
+- tags: topologically massive gravity, alternative theories of gravity, 2+1 dimensional gravity, lower-dimensional gravity, closed timelike curves, rotating, homogeneous, anti-de Sitter, warped anti-de Sitter, cosmological constant, exact solution, Lorentzian, idealized model, stationary, three-dimensional
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/vuorio_warped_ads.json
+- chart Cylindrical: coordinates $(t, r, \phi)$, $$ds^2 = -\left(c\,dt + \dfrac{4\Omega}{m^2}\sinh^2\left(\dfrac{mr}{2}\right)d\phi\right)^2 + dr^2 + \dfrac{\sinh^2(mr)}{m^2}\,d\phi^2$$
+- chart Poincaré disc: coordinates $(t, R, \phi)$, $$ds^2 = -\left(c\,dt + \dfrac{4\Omega R^2}{m^2\left(1 - R^2\right)}\,d\phi\right)^2 + \dfrac{4\left(dR^2 + R^2d\phi^2\right)}{m^2\left(1 - R^2\right)^2}$$
+- chart Fibred: coordinates $(t, \sigma, u)$, $$ds^2 = -\left(c\,dt + \dfrac{2\Omega}{m^2}\sinh\sigma\,du\right)^2 + \dfrac{1}{m^2}\left(d\sigma^2 + \cosh^2\sigma\,du^2\right)$$
+- chart Horospherical: coordinates $(t, x, y)$, $$ds^2 = -\left(c\,dt + \dfrac{2\Omega}{m}e^{mx}\,dy\right)^2 + dx^2 + e^{2mx}\,dy^2$$
+
 ### Wahlquist's Rotating Perfect Fluid
 
 A rigidly rotating body of perfect fluid in closed form, its energy density and pressure tied by $\mu + 3p = \mu_0$, which Hugo Wahlquist found in 1968. The surface of zero pressure closes around the fluid, and no asymptotically flat vacuum can be joined to it.

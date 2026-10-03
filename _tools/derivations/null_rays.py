@@ -1050,6 +1050,8 @@ KS_INPUT = ("Dust: $a(t)$ and $b(t)$ solved from this spacetime's own $G^r{}_r =
 # Godel's radius r_c = ln(1 + sqrt 2), where sinh r = 1 and the circles of constant t, r and z
 # turn from spacelike to timelike; the views read it off the published g_phiphi as well.
 GODEL_RC = math.asinh(1.0)
+# Vuorio's null circle, sinh^2(Omega r/2) = 1/3, in units of 1/Omega.
+VUORIO_RC = math.log(3.0)
 
 # Kottler's black hole at Lambda r_s^2 = 1/5, so that r_h = 1.085 r_s and r_c = 3.215 r_s, and the
 # radius (3r_s/2Lambda)^(1/3) of its static observer in free fall, where f is greatest.
@@ -4009,6 +4011,26 @@ DIAGRAMS = [
             families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
     Diagram("som_raychaudhuri", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x/r_c$", "$ct/r_c$",
             {"Omega": 1}, {"y": "0", "z": "0"}, orient="vector", families=SIDEWAYS),
+    # Vuorio's universe, m = Omega = 1, in units of 1/Omega: the cylinders of t and phi about one
+    # integral curve of d_t at half and one and a half times r_c = ln 3, drawn as Godel's are, phi
+    # scaled by r; the plane of t and R through the centre of Poincare's disc; the plane of t and
+    # sigma through the geodesic sigma = 0 of the fibred chart; and the plane of t and x of the
+    # horospherical chart, Godel's own plane.
+    Diagram("vuorio_warped_ads", "cylindrical", "inside", "$t$ and $\\phi$ at $r = r_c/2$", ("t", "\\phi"),
+            tuple(s * math.pi * VUORIO_RC / 2 for s in (-1, 1, -1, 1)), "$\\Omega r\\phi$", "$\\Omega ct$",
+            {"Omega": 1, "m": 1}, {"r": "log(3)/2"}, to_display=((0, VUORIO_RC / 2), (1, 0)), orient="vector",
+            families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    Diagram("vuorio_warped_ads", "cylindrical", "beyond", "$t$ and $\\phi$ at $r = 3r_c/2$", ("t", "\\phi"),
+            tuple(s * math.pi * 3 * VUORIO_RC / 2 for s in (-1, 1, -1, 1)), "$\\Omega r\\phi$", "$\\Omega ct$",
+            {"Omega": 1, "m": 1}, {"r": "3*log(3)/2"}, to_display=((0, 3 * VUORIO_RC / 2), (1, 0)), orient="vector",
+            families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    Diagram("vuorio_warped_ads", "disc", "plane", "$t$ and $R$ through the centre", ("t", "R"), (0, 1, -1, 1),
+            "$R$", "$\\Omega ct$", {"Omega": 1, "m": 1}, {"phi": "0"}, mirror=True, orient="vector",
+            families=SIDEWAYS, cones=(4, 7)),
+    Diagram("vuorio_warped_ads", "fibred", "plane", "$t$ and $\\sigma$", ("t", "\\sigma"), (-2, 2, -2, 2),
+            "$\\sigma$", "$\\Omega ct$", {"Omega": 1, "m": 1}, {"u": "0"}, orient="vector", families=SIDEWAYS),
+    Diagram("vuorio_warped_ads", "horospherical", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2),
+            "$\\Omega x$", "$\\Omega ct$", {"Omega": 1, "m": 1}, {"y": "0"}, orient="vector", families=SIDEWAYS),
     # Maitra's dust in units of its length a: the plane z = 0 in t and r with phi divided out, where
     # the curves are the null geodesics of no angular momentum, and its circles at a and 5a
     # through time, unrolled as van Stockum's cylinders are, phi scaled by r.
@@ -9490,6 +9512,63 @@ CAPTIONS = {
         "The conformal factor is $\\psi = 1.17$ at the centre and falls toward $1$ far away, so the sphere "
         "that holds 99% of the mass sits at a smaller $R$ than its areal radius.",
     ],
+    ("vuorio_warped_ads", "cylindrical", "inside"): [
+        "The cylinder of $t$ and $\\phi$ ($r = r_c/2$, $r_c = \\ln 3/\\Omega$, $m = \\Omega$) about the axis "
+        "$r = 0$, one integral curve of $\\partial_t$ in Vuorio's universe. It is opened along the line "
+        "$\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. "
+        "The metric on it is the same at every point, so its null curves are straight: "
+        "$\\Omega c\\,dt = (2 - \\sqrt{3})\\,d\\phi$ moving to $+\\phi$ and "
+        "$\\Omega c\\,dt = -(5/\\sqrt{3} - 2)\\,d\\phi$ moving to $-\\phi$. The cross term tilts every cone toward "
+        "$+\\phi$, and a curve moving that way covers about $3.3$ times the $\\phi$ in a given $t$ that one moving "
+        "the other way does.",
+        "At this radius the curve moving to $+\\phi$ is a null geodesic: $\\Gamma^r{}_{t\\phi}$ and "
+        "$\\Gamma^r{}_{\\phi\\phi}$ cancel along it, and light sent that way circles the axis at $r = r_c/2$. "
+        "The curve moving to $-\\phi$ is not a geodesic, and light launched along it is turned away from the "
+        "axis. The horizontal lines, circles of constant $t$, lie outside every cone and are spacelike.",
+    ],
+    ("vuorio_warped_ads", "cylindrical", "beyond"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 3r_c/2$, $r_c = \\ln 3/\\Omega$, $m = \\Omega$), opened along "
+        "$\\phi = \\pm\\pi$ in the same way. Beyond $r_c$ the coefficient $g_{\\phi\\phi}$ is negative, and the "
+        "cones have tipped over past the horizontal: the null curve moving to $+\\phi$, "
+        "$\\Omega c\\,dt = -(5/\\sqrt{3} - 2)\\,d\\phi$, goes down in $t$, while the one moving to $-\\phi$, "
+        "$\\Omega c\\,dt = -(41/3\\sqrt{3} - 2)\\,d\\phi$, climbs steeply. Every horizontal line, run toward "
+        "$+\\phi$, points into the future cones, so the circle of constant $t$ and $r$ is a closed timelike curve.",
+        "The curve moving to $+\\phi$ comes round to its own $\\phi$ at a $t$ earlier by "
+        "$2\\pi(5/\\sqrt{3} - 2)/\\Omega c$ after each turn. None of the curves drawn here is a null geodesic: "
+        "light launched along one moving to $+\\phi$ is turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and "
+        "$\\Gamma^r{}_{\\phi\\phi}$, and light launched along one moving to $-\\phi$ is turned away from it.",
+    ],
+    ("vuorio_warped_ads", "disc", "plane"): [
+        "The plane of $t$ and $R$ through the centre of Poincaré's disc ($\\phi = 0$ to the right and "
+        "$\\phi = \\pi$ to the left, $m = \\Omega$, Vuorio's universe). The metric on it is "
+        "$-c^2dt^2 + 4\\,dR^2/\\Omega^2(1 - R^2)^2$, so the null curves are $\\Omega ct = \\pm 2\\,\\mathrm{artanh}\\,R$ "
+        "plus a constant, and the edge $R = 1$ lies at an infinite distance, which they approach only as $t$ grows "
+        "without bound.",
+        "The surfaces $t = $ const are spacelike only inside $R = 1/2$, where $g^{tt} = 4R^2 - 1$ is negative, so the "
+        "cones are oriented by $\\partial_t$, which is timelike everywhere. At $R = 1/2$ the circle of constant $t$ "
+        "and $R$ is null, and beyond it the circles are closed timelike curves, which cross this plane. The curves "
+        "drawn are not null geodesics: since $\\Gamma^\\phi{}_{tR} = -\\Omega/R$ is not zero, light launched along "
+        "one is turned out of the plane into $\\phi$.",
+    ],
+    ("vuorio_warped_ads", "fibred", "plane"): [
+        "The plane of $t$ and $\\sigma$ ($u = 0$, $m = \\Omega$, Vuorio's universe), through the geodesic "
+        "$\\sigma = 0$ of the hyperbolic plane. The metric on it is $-c^2dt^2 + d\\sigma^2/\\Omega^2$, so the curves "
+        "drawn are null and run at 45°.",
+        "The surfaces $t = $ const are spacelike only where $\\sinh^2\\sigma < 1/3$, where "
+        "$g^{tt} = (3\\sinh^2\\sigma - 1)/\\cosh^2\\sigma$ is negative, so the cones are oriented by $\\partial_t$, "
+        "which is timelike everywhere. The curves are not null geodesics: since "
+        "$\\Gamma^u{}_{t\\sigma} = -\\Omega/\\cosh\\sigma$ is not zero, light launched along one is turned out of "
+        "the plane into $u$.",
+    ],
+    ("vuorio_warped_ads", "horospherical", "tx"): [
+        "The plane of $t$ and $x$ ($y = 0$, $m = \\Omega$, Vuorio's universe), the plane Gödel drew his own "
+        "universe on. The metric on it is $-c^2dt^2 + dx^2$, so the curves drawn are null and run at 45°.",
+        "The surfaces $t = $ const are nowhere spacelike, since $g^{tt} = 3$ is positive, so the cones are oriented "
+        "by $\\partial_t$, which is timelike everywhere. The curves are not null geodesics: since "
+        "$\\Gamma^y{}_{tx} = -\\Omega e^{-\\Omega x}$ is not zero, light launched along one is turned out of the "
+        "plane into $y$. The closed timelike curves circle each integral curve of $\\partial_t$ beyond "
+        "$r_c = \\ln 3/\\Omega$, through $y$ as well as $x$, so they cross this plane.",
+    ],
     ("tov", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through a star of fluid with a polytrope "
         "for its equation of state, the same at every other angle by spherical symmetry. Its mass and redshift "
@@ -14950,6 +15029,11 @@ CLOSED_FORMS = {
         (lambda t, r: t + np.log(1 - 1 / r), lambda t, r: t - np.log(1 - 1 / r), lambda t, r: r > 1.02),
     ("godel", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("som_raychaudhuri", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("vuorio_warped_ads", "horospherical", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("vuorio_warped_ads", "fibred", "plane"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    # On Poincare's disc c dt = +-2 dR/(1 - R^2) at m = 1.
+    ("vuorio_warped_ads", "disc", "plane"): (lambda t, R: t + 2 * np.arctanh(R), lambda t, R: t - 2 * np.arctanh(R),
+                                              lambda t, R: np.abs(R) < 0.95),
     # Inside Schwarzschild's horizon dr/dT = +-T/(1 - T), so r +- (T + ln(1 - T)) is constant.
     ("kantowski_sachs", "schwarzschild_interior", "Tr"):
         (lambda T, r: r - T - np.log(1 - T), lambda T, r: r + T + np.log(1 - T), lambda T, r: T < 0.95),
@@ -15048,6 +15132,11 @@ CYLINDERS = {
     # Som and Raychaudhuri's block of t and phi is van Stockum's, with R = c/Omega.
     ("som_raychaudhuri", "cylindrical", "inside"): (-0.75, 0.25),
     ("som_raychaudhuri", "cylindrical", "beyond"): (-3.75, -0.75),
+    # Vuorio's universe, Omega = m = 1: k = -H - D moving left and D - H moving right, with
+    # H = 4 sinh^2(r/2) and D = sinh r, which at r = ln 3/2 are 1/sqrt 3 and 4/sqrt 3 - 2, and at
+    # 3 ln 3/2 are 13/3 sqrt 3 and 28/3 sqrt 3 - 2.
+    ("vuorio_warped_ads", "cylindrical", "inside"): (2 - 5 / math.sqrt(3), 2 - math.sqrt(3)),
+    ("vuorio_warped_ads", "cylindrical", "beyond"): (2 - 41 / (3 * math.sqrt(3)), 2 - 5 / math.sqrt(3)),
     # Bonnor's dust cloud in its plane z = 0: k = a^2/rho - rho moving left and a^2/rho + rho moving
     # right, at rho = a/2, inside the null circle, and at 3a/2.
     ("bonnor_rotating_dust", "cylindrical", "inside"): (1.5, 2.5),
@@ -15234,6 +15323,8 @@ TURNING = {
     ("godel", "cylindrical", "beyond"): ("away", "toward"),
     ("som_raychaudhuri", "cylindrical", "inside"): ("away", "geodesic"),
     ("som_raychaudhuri", "cylindrical", "beyond"): ("away", "toward"),
+    ("vuorio_warped_ads", "cylindrical", "inside"): ("away", "geodesic"),
+    ("vuorio_warped_ads", "cylindrical", "beyond"): ("away", "toward"),
     ("bonnor_rotating_dust", "cylindrical", "inside"): ("away", "toward"),
     ("bonnor_rotating_dust", "cylindrical", "outside"): ("away", "away"),
     ("maitra_dust", "cylindrical", "near"): ("away", "away"),

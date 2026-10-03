@@ -121,7 +121,7 @@ Q4 = PI / 4
 EQUATOR = {"theta": "pi/2", "phi": "0"}
 
 # The spacetimes with no conformal diagram, for which nothing is written.
-NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "maitra_dust", "taub_nut", "kasner", "kasner_scalar", "kasner_magnetic",
+NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "vuorio_warped_ads", "maitra_dust", "taub_nut", "kasner", "kasner_scalar", "kasner_magnetic",
              "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "gravitational_instantons",
