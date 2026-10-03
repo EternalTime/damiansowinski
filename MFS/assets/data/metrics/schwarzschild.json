@@ -473,6 +473,11 @@
       "id": "unruh_acoustic_hole",
       "kind": "family",
       "text": "A black hole for sound, a fluid falling into a point faster than sound inside $r_0$. Near its horizon its metric takes the form of Schwarzschild's near his, so it should glow as a black hole does [unruh1981]."
+    },
+    {
+      "id": "interstellar_wormhole",
+      "kind": "family",
+      "text": "The wormhole of the film Interstellar flares out of each mouth roughly as space opens out from Schwarzschild's horizon, a shape its builders chose for the flare with the mass and the mouth's radius set free of one another [james2015]."
     }
   ],
   "references": [
@@ -600,7 +605,8 @@
     "podolsky2025",
     "bah2021",
     "lewandowski2023",
-    "unruh1981"
+    "unruh1981",
+    "james2015"
   ],
   "coordinates": [
     {

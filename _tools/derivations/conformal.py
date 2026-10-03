@@ -10656,6 +10656,60 @@ def einstein_rosen_bridge(ck, src):
     return sorted(views, key=lambda v: order.index(v.d["id"]))
 
 
+def interstellar_wormhole(ck, src):
+    """The Dneg wormhole of James, von Tunzelmann, Franklin and Thorne at a = rho = 1 and M = 1/2. On its
+    plane of t and l the metric is -c^2dt^2 + dl^2 in every chart, with l over the whole line, so the
+    proper distance is its own tortoise coordinate and p, q = arctan((ct -+ l)/rho) give the full
+    diamond, as for Ellis's wormhole: the two flat ends each have their own i^0 and scri, and the
+    cylinder |l| <= a is the band between the mouths, which run from i^- to i^+. The proper distance
+    chart covers the whole diamond, the cylinder chart the band, and the flare chart the part beyond
+    l = a. The Kretschmann scalar is 4/rho^4 on the cylinder and finite beside each mouth."""
+    params = {"rho": 1, "a": 1, "M": "1/2"}
+    planes = {"proper_distance": Plane(src, "interstellar_wormhole", "proper_distance", ("t", "\\ell"), EQUATOR, params,
+                                       functions={"r": "iw_r(ell)"}),
+              "cylinder": Plane(src, "interstellar_wormhole", "cylinder", ("t", "\\ell"), EQUATOR, {"rho": 1, "a": 1}),
+              "flare": Plane(src, "interstellar_wormhole", "flare", ("t", "\\ell"), EQUATOR, params)}
+    spans = {"proper_distance": ck.uniform(-20, 20), "cylinder": ck.uniform(-1, 1), "flare": ck.uniform(1.0001, 20)}
+    for cid, plane in planes.items():
+        ck.chart(f"Interstellar's wormhole, {cid}", plane, mink_pq, ck.uniform(-20, 20), spans[cid], lambda t, l: (1, 0))
+    ck.limit("Interstellar's wormhole: the Kretschmann scalar on the cylinder is 4/rho^4",
+             planes["cylinder"].kretschmann(ck.uniform(-5, 5, 20), ck.uniform(-1, 1, 20)), 4 * np.ones(20), 1e-9)
+    ck.finite("Interstellar's wormhole: the curvature is finite beside the mouth",
+              planes["flare"].kretschmann(ck.uniform(-5, 5, 50), 1 + ck.uniform(1e-6, 1e-2, 50)))
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    wormhole = slices.moments("interstellar_wormhole")[0]
+    lo, hi = wormhole.reach("proper_distance", "\\ell")
+    mouth = [point(*pq) for pq in zip(*mink_pq(S_ALL, np.ones_like(S_ALL)))]
+    other = [point(*pq) for pq in zip(*mink_pq(S_ALL, -np.ones_like(S_ALL)))]
+    covers = {"proper_distance": DIAMOND, "cylinder": mouth + other[::-1], "flare": mouth + [[PI, 0]]}
+    words = {"proper_distance": "the whole spacetime, which $t$ and $\\ell$ cover",
+             "cylinder": "the cylinder $|\\ell| \\le a$, which the cylinder's $t$ and $\\ell$ cover",
+             "flare": "the flare $\\ell \\ge a$, which the flare's $t$ and $\\ell$ cover"}
+    reach = {"proper_distance": (lo, hi), "cylinder": (-1.0, 1.0), "flare": (1.0, hi)}
+    views = []
+    for vid, label in (("proper_distance", "Proper distance"), ("cylinder", "Cylinder"), ("flare", "Flare")):
+        v = View(vid, label, box, vid)
+        v.fill("region", DIAMOND)
+        v.fill("cover", covers[vid])
+        grid(v, "r", lambda l, t: mink_pq(t, l), (-4, -3, -2, 2, 3, 4), S_ALL)
+        grid(v, "t", mink_pq, (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+        for side in (1, -1):
+            v.curve("throat", *mink_pq(S_ALL, side * np.ones_like(S_ALL)))
+        diamond_edges(v)
+        label_on(v, mink_pq(0, 3), "$\\ell = 3\\rho$")
+        v.legend("cover", words[vid])
+        v.legend("r", "$\\ell$ constant, at $\\pm 2$, $\\pm 3$, and $\\pm 4\\rho$")
+        v.legend("t", "$ct$ constant, at $0$, $\\pm\\rho$, $\\pm 2\\rho$, and $\\pm 4\\rho$")
+        v.legend("throat", "the mouths $\\ell = \\pm a$, with the cylinder between them")
+        ls = np.linspace(*reach[vid], 2)
+        v.slice(wormhole, [mink_pq(0 * ls, ls)])
+        v.set(settings="$\\rho = 1$, $a = \\rho$, and $M = \\rho/2$; $p = \\arctan((ct - \\ell)/\\rho)$ and "
+                       "$q = \\arctan((ct + \\ell)/\\rho)$.")
+        views.append(v)
+    return views
+
+
 def einstein_dirac_maxwell_wormhole(ck, src):
     """Blazquez-Salcedo, Knoll and Radu's exact wormhole at r_0 = 1 and Q_e = 1/2, one view for each
     chart. On its plane of t and r the metric is (1 - M/r)^2 (-c^2dt^2 + dr_*^2), with the tortoise
@@ -24458,6 +24512,7 @@ DRAWN = {
     "israel_wilson_perjes": israel_wilson_perjes,
     "damour_solodukhin": damour_solodukhin,
     "einstein_dirac_maxwell_wormhole": einstein_dirac_maxwell_wormhole,
+    "interstellar_wormhole": interstellar_wormhole,
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
@@ -27027,6 +27082,25 @@ CAPTIONS = {
         "crosses the throat and there is no horizon. At $\\lambda = 0$ the factor vanishes at $r_s$, $r_*$ "
         "runs to $-\\infty$ there, and each half of the diamond becomes one exterior of the Schwarzschild "
         "spacetime with the throat its horizon.",
+    ],
+    ("interstellar_wormhole", "proper_distance"): [
+        "Interstellar's wormhole ($a = \\rho$, $M = \\rho/2$), each point in the diagram a 2-sphere of radius "
+        "$r(\\ell)$. The metric on the plane of $t$ and $\\ell$ is $-c^2dt^2 + d\\ell^2$, with $\\ell$ over the whole "
+        "line, and $p, q = \\arctan((ct \\mp \\ell)/\\rho)$ bring it into the full diamond.",
+        "The two ends are two asymptotically flat regions, each with its own $i^0$ and $\\mathscr{I}^\\pm$, and the "
+        "cylinder is the band between the mouths, each of which runs from $i^-$ to $i^+$.",
+    ],
+    ("interstellar_wormhole", "cylinder"): [
+        "Interstellar's wormhole ($a = \\rho$), the band between the mouths $\\ell = \\pm a$, each point in the "
+        "diagram a 2-sphere of radius $\\rho$. The metric on the plane of $t$ and $\\ell$ is $-c^2dt^2 + d\\ell^2$, "
+        "and $p, q = \\arctan((ct \\mp \\ell)/\\rho)$ bring it into the diamond.",
+        "Light crosses the band from one mouth to the other in the time $2a/c$.",
+    ],
+    ("interstellar_wormhole", "flare"): [
+        "Interstellar's wormhole ($a = \\rho$, $M = \\rho/2$) beyond the mouth $\\ell = a$, each point in the "
+        "diagram a 2-sphere of radius $r(\\ell)$. The metric on the plane of $t$ and $\\ell$ is "
+        "$-c^2dt^2 + d\\ell^2$, and $p, q = \\arctan((ct \\mp \\ell)/\\rho)$ bring it into the diamond.",
+        "The flare beyond $\\ell = -a$ is its mirror image on the left.",
     ],
     ("einstein_dirac_maxwell_wormhole", "areal"): [
         "The Einstein-Dirac-Maxwell wormhole ($Q_e = r_0/2$) in the areal radius on one side of the throat, each "

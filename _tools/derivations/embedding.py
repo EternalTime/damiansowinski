@@ -3161,6 +3161,80 @@ def einstein_dirac_maxwell_wormhole(ck, src):
                  settings="$r_0 = 1$, the unit of every length, and $Q_e = 1/2$, so that $M = 2/5$.")]
 
 
+def iw_height(ell):
+    """The height of Interstellar's wormhole's equator over the middle of its cylinder at a = rho = 1 and
+    M = 1/2, as a function of the proper distance l: dz/dl = sqrt(1 - r'^2), 1 on the cylinder and
+    sqrt(1 - (4/pi^2) arctan^2 x) beyond it, x = 2(|l| - a)/(pi M), by quadrature from the mouth."""
+    from scipy.integrate import quad
+    a, M = nr.IW_A, nr.IW_M
+    slope = lambda u: math.sqrt(1 - (2 / math.pi * math.atan(2 * u / (math.pi * M))) ** 2)
+    out = []
+    for x in np.atleast_1d(ell):
+        u = abs(float(x)) - a
+        z = abs(float(x)) if u <= 0 else a + quad(slope, 0, u, epsabs=1e-12, epsrel=1e-12)[0]
+        out.append(math.copysign(z, x))
+    return np.array(out)
+
+
+def interstellar_wormhole(ck, src):
+    """The equator of the Dneg wormhole of James, von Tunzelmann, Franklin and Thorne at one moment,
+    at a = rho and M = rho/2, the wormhole of their figure 3, in units of rho: on it the metric is
+    dl^2 + r(l)^2 dphi^2, so the surface rises as dz/dl = sqrt(1 - r'^2), their (6). On the cylinder
+    r' = 0, the surface is the vertical tube rho = 1, z = l, and beyond the mouths it flares out, from
+    vertical at the mouth toward a plane far away. It is read whole from the proper distance chart
+    with the declared r(l) of null_rays.iw_radius, and the cylinder chart and the flare chart are each
+    checked to give the same surface, as is iw_height's independent quadrature. The lensing width, the
+    distance in rho across which the surface turns from vertical to 45 degrees, is checked to be
+    1.42953 M, their (7). The wormhole is static, so the surface is the same at every moment."""
+    params = {"rho": 1, "a": 1, "M": "1/2"}
+    top = 5.0
+    sl = Slice(src, "interstellar_wormhole", "proper_distance", "\\ell", "\\phi", {"t": 0, **EQUATOR}, params,
+               functions={"r": "iw_r(ell)"})
+    rings = (-4.0, -3.0, -2.0, 2.0, 3.0, 4.0)
+    whole = Piece("whole", "sheet", sl, -top, top, float(iw_height(-top)[0]), 1,
+                  (("edge", "the side $\\ell < -a$ runs on, flattening, to $\\ell \\to -\\infty$"),
+                   ("edge", "the side $\\ell > a$ runs on, flattening, to $\\ell \\to \\infty$")),
+                  [(-top, "r", None)] + [(x, "r", None) for x in rings if x < 0]
+                  + [(-1.0, "throat", "$\\ell = -a$"), (1.0, "throat", "$\\ell = a$")]
+                  + [(x, "r", None) for x in rings if x > 0] + [(top, "r", None)],
+                  2 * top, knots=(-1.0, 0.0, 1.0))
+    size = 2 * max(float(np.max(whole.rho)), top)
+    ck.isometry("Interstellar's wormhole, through the cylinder", whole)
+    ck.form("Interstellar's wormhole, the quadrature of dz/dl = sqrt(1 - r'^2)", whole, iw_height, size)
+    ck.radius("Interstellar's wormhole, rho = r(l)", whole, lambda x: nr.iw_radius(x), size)
+    cylinder = Slice(src, "interstellar_wormhole", "cylinder", "\\ell", "\\phi", {"t": 0, **EQUATOR}, {"rho": 1, "a": 1})
+    tube = Piece("tube", "sheet", cylinder, -1.0, 1.0, -1.0, 1, size=size)
+    ck.isometry("Interstellar's wormhole, the cylinder chart", tube)
+    ck.form("Interstellar's wormhole, the cylinder chart is the vertical tube z = l", tube, lambda x: np.asarray(x), size)
+    ck.radius("Interstellar's wormhole, the cylinder chart's circles have the radius rho", tube,
+              lambda x: np.ones_like(np.asarray(x)), size)
+    flare_slice = Slice(src, "interstellar_wormhole", "flare", "\\ell", "\\phi", {"t": 0, **EQUATOR}, params)
+    flare = Piece("flare", "sheet", flare_slice, 1.0, top, 1.0, 1, size=size)
+    ck.isometry("Interstellar's wormhole, the flare chart", flare)
+    ck.form("Interstellar's wormhole, the flare chart gives the same surface", flare, iw_height, size)
+    # The lensing width: the surface is at 45 degrees where r' = 1/sqrt(2), at x = tan(pi/(2 sqrt 2)),
+    # where r - rho = M (x arctan x - ln(1 + x^2)/2) = 1.42953 M.
+    x45 = math.tan(math.pi / (2 * math.sqrt(2)))
+    ell45 = 1 + math.pi * nr.IW_M * x45 / 2
+    width = float(nr.iw_radius(ell45)) - 1
+    ck.add("Interstellar's wormhole: the lensing width is 1.42953 M", abs(width / nr.IW_M - 1.42953), 1e-5)
+    ck.add("Interstellar's wormhole: the surface stands at 45 degrees there",
+           abs(float(nr.iw_radius(ell45, 1)) - 1 / math.sqrt(2)), 1e-12)
+    surface = Surface([whole])
+
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *whole.at(1.0), "$\\ell = a$", dx=14)
+    ring_label(fig, [0, 0, 0], *whole.at(-1.0), "$\\ell = -a$", dx=14)
+    ring_label(fig, [0, 0, 0], *whole.at(3.0), "$3\\rho$")
+    fig.legend("fill", "cover", "the whole slice, which $t$ and $\\ell$ cover from one side to the other")
+    fig.legend("line", "r", "$\\ell$ constant, at $\\pm 2$, $\\pm 3$, $\\pm 4$, and $\\pm 5\\rho$")
+    fig.legend("line", "throat", "the two mouths $\\ell = \\pm a$, between which every circle has the radius $\\rho$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("wormhole", "The wormhole", "$\\rho$", [surface], fig.done(),
+                 settings="$\\rho = 1$, the unit of every length, $a = \\rho$, and $M = \\rho/2$, so that "
+                          "$W = 1.42953\\,M = 0.715\\rho$.")]
+
+
 def two_sheets(ck, name, sl, throat, top, radii, size, near_marks=(), texts=("", "")):
     """A slice of constant t through a bifurcation sphere, as Schwarzschild's: the exterior from
     the throat out to `top`, tinted, and the same surface turned over on the other side."""
@@ -16465,6 +16539,7 @@ DRAWN = {
     "teo_wormhole": teo_wormhole,
     "damour_solodukhin": damour_solodukhin,
     "einstein_dirac_maxwell_wormhole": einstein_dirac_maxwell_wormhole,
+    "interstellar_wormhole": interstellar_wormhole,
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
@@ -17125,6 +17200,14 @@ CAPTIONS = {
         "$r = r_-$, its widest circle, into a second region inside $r_-$, the same surface turned over.",
         "Moving in from $r_-$, $g_{rr}$ falls to $1$ at $r_b = (\\alpha m/2)^{1/3} = 0.855\\,m$, where the "
         "surface lies level. There the vacuum ends, at the radius where the surface of the dust turns round.",
+    ],
+    ("interstellar_wormhole", "wormhole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Interstellar's wormhole at one moment of $t$ ($a = \\rho$, "
+        "$M = \\rho/2$), drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "the metric is $d\\ell^2 + r(\\ell)^2d\\phi^2$, so the surface rises as $dz/d\\ell = \\sqrt{1 - (dr/d\\ell)^2}$.",
+        "Between the mouths $\\ell = \\pm a$ it is a vertical tube of radius $\\rho$, and beyond them it flares "
+        "out toward two flat planes, turning from vertical to $45°$ across the lensing width $W = 0.715\\rho$. "
+        "The surface is the same at every moment, since the wormhole is static.",
     ],
     ("einstein_dirac_maxwell_wormhole", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Einstein-Dirac-Maxwell wormhole at one moment of $t$ "
