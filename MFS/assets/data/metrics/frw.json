@@ -136,6 +136,11 @@
       "id": "universe_from_nothing",
       "kind": "family",
       "text": "A closed universe filled only with the energy density of a vacuum, whose scale factor $\\ell\\cosh(ct/\\ell)$ bounces at $\\ell$, joined at that bounce to half a 4-sphere [vilenkin1982]."
+    },
+    {
+      "id": "big_rip",
+      "kind": "special_case",
+      "text": "Flat space filled with phantom energy alone, with $w = p/\\rho c^2 < -1$, whose scale factor reaches infinity at a finite time, the Big Rip [caldwell2003, chiba2005]."
     }
   ],
   "references": [
@@ -202,7 +207,9 @@
     "anton2023",
     "lewandowski2023",
     "luminet2003",
-    "vilenkin1982"
+    "vilenkin1982",
+    "caldwell2003",
+    "chiba2005"
   ],
   "coordinates": [
     {

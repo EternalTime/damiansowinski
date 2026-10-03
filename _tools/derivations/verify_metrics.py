@@ -225,6 +225,18 @@ DIMENSIONS = {
     # Emparan, Frassino and Way's F, kappa and mu numbers, so that l F/r and mu l/r are numbers
     # beside r^2/l_3^2. The rotation a is a length, which makes a^2/r^2 a number and a/r^2 times
     # c dt an angle. The advanced and retarded times are lengths.
+    # The Big Rip: w is a number below -1, t_0 the time left at a = 1 and the scale factor a a
+    # number, so the comoving coordinates x, y, z and r are lengths, the proper lengths at
+    # t = -t_0. The conformal time eta and its scale eta_0 are lengths, d(eta) = c dt/a.
+    ("big_rip", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "w": "1", "t_0": "T", "a": "1",
+    },
+    ("big_rip", "comoving"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "w": "1", "t_0": "T", "a": "1",
+    },
+    ("big_rip", "conformal"): {
+        "\\eta": "L", "r": "L", "\\theta": "1", "\\phi": "1", "w": "1", "\\eta_0": "L", "a": "1",
+    },
     ("quantum_btz", "static"): {
         "t": "T", "r": "L", "\\phi": "1", "\\ell_3": "L", "M": "1", "\\ell": "L", "F": "1",
     },

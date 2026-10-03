@@ -12245,6 +12245,80 @@ def bartnik_mckinnon(ck, src):
 
 # ---------------------------------------------------------------- FRW
 
+def big_rip(ck, src):
+    """The universe of phantom energy alone at w = -3/2, which Chiba, Takahashi and Sugiyama draw
+    as the lower half of Minkowski space's diagram with the Big Rip at future spacelike infinity
+    (arXiv:astro-ph/0501661, their case E). The conformal chart is a^2 times Minkowski's in eta and
+    r, so p = arctan(eta - r) and q = arctan(eta + r), lengths in units of eta_0, and eta < 0 is
+    the triangle below T = 0. The comoving and Cartesian charts enter through the conformal time
+    eta = -eta_0 (-t/t_0)^(7/3), drawn at t_0 = 7/3 so that eta_0 = 3 c t_0/7 = 1. The Big Rip is
+    T = 0, where the Kretschmann scalar diverges; the hypotenuse is t -> -infinity, where a -> 0;
+    and the observer's event horizon is the ray q = 0, r = -eta, into the corner where the centre
+    meets the rip."""
+    params = {"w": "-3/2", "eta_0": 1}
+    moving = {"w": "-3/2", "t_0": "7/3"}
+    conf = Plane(src, "big_rip", "conformal", ("\\eta", "r"), EQUATOR, params)
+    como = Plane(src, "big_rip", "comoving", ("t", "r"), EQUATOR, moving)
+    cart = Plane(src, "big_rip", "cartesian", ("t", "x"), {"y": "0", "z": "0"}, moving)
+
+    def eta_of(t):
+        return -(-np.asarray(t, dtype=float) / (7 / 3)) ** (7 / 3)
+
+    def moving_pq(t, r):
+        return mink_pq(eta_of(t), r)
+    ck.chart("Big Rip conformal", conf, mink_pq, ck.uniform(-20, -0.01), ck.uniform(0.001, 20), lambda e, r: (1, 0))
+    ck.chart("Big Rip comoving", como, moving_pq, ck.uniform(-6, -0.05), ck.uniform(0.001, 20), lambda t, r: (1, 0))
+    ck.chart("Big Rip Cartesian", cart, moving_pq, ck.uniform(-6, -0.05), ck.uniform(0.001, 20), lambda t, x: (1, 0))
+    ck.diverges("Big Rip: the Kretschmann scalar diverges at the rip, t = 0",
+                como.kretschmann(-1e-3, 0.5), como.kretschmann(-1e-4, 0.5))
+    ck.diverges("Big Rip: the Kretschmann scalar diverges at the rip, eta = 0",
+                conf.kretschmann(-1e-6, 0.5), conf.kretschmann(-1e-7, 0.5))
+    ck.finite("Big Rip: r = 0 is a regular centre", conf.kretschmann(ck.uniform(-5, -0.5, 50), np.full(50, 1e-6)))
+    p, q = mink_pq(np.array([-1e-9]), np.array([3.0]))
+    ck.limit("Big Rip: eta -> 0 lands on T = 0", p + q, [0.0], 1e-6)
+    p, q = mink_pq(np.array([-1e9]), np.array([3.0]))
+    ck.limit("Big Rip: t -> -infinity lands on T = X - pi", (p + q) - ((q - p) - PI), [0.0], 1e-6)
+    p, q = mink_pq(np.array([-0.5, -1.0, -2.0]), np.array([0.5, 1.0, 2.0]))
+    ck.limit("Big Rip: the event horizon r = -eta is q = 0", q, [0.0, 0.0, 0.0], 1e-12)
+
+    box = [-0.35, PI + 0.35, -PI - 0.3, 0.3]
+    tri = [[0, 0], [PI, 0], [0, -PI]]
+    v = View("whole", "The whole universe", box)
+    v.fill("region", tri)
+    v.fill("cover", tri)
+    rr = spread(0, np.inf, 500, 12)
+    for t in (0.25, 0.5, 1, 2, 4):
+        eta = -t ** (7 / 3)
+        v.curve("t", *mink_pq(np.full_like(rr, eta), rr))
+    for r in (0.25, 0.5, 1, 2, 4):
+        v.curve("r", *mink_pq(-rr, np.full_like(rr, r)))
+    v.line("singular", [[[0, 0], [PI, 0]]], zig=True)
+    v.line("chartedge", [[[0, -PI], [PI, 0]]])
+    v.line("centre", [[[0, -PI], [0, 0]]])
+    v.line("horizon", [[[0, 0], [HALF, -HALF]]])
+    now = mink_pq(-1, 0)
+    v.point("mark", now)
+    v.label_xt([HALF, 0], "the Big Rip, $t = 0$", "b", dy=-8)
+    v.label_xt([0, -HALF], "$r = 0$", "r", dx=-6)
+    v.label(now, "$t = -t_0$", "r", "small", dx=-6)
+    label_on(v, mink_pq(-1, 1.6), "$-t_0$")
+    label_on(v, mink_pq(-(2 ** (7 / 3)), 3.0), "$-2t_0$")
+    v.legend("t", "cosmic time $t$ constant: $-t_0/4$, $-t_0/2$, $-t_0$, $-2t_0$ and $-4t_0$, with "
+                  "$\\eta = -\\eta_0(-t/t_0)^{7/3}$")
+    v.legend("r", "comoving $r$ constant, in units of $\\eta_0$: $1/4$, $1/2$, $1$, $2$ and $4$")
+    v.legend("mark", "the centre at $t = -t_0$, where $a = 1$")
+    v.legend("horizon", "the event horizon of the observer at $r = 0$, $r = -\\eta$")
+    v.legend("singular", "the Big Rip, where $a$ and the Kretschmann scalar diverge")
+    v.legend("chartedge", "$t \\to -\\infty$, the past edge, where $a \\to 0$")
+    v.legend("centre", "$r = 0$, the observer's world line")
+    v.legend("cover", "the whole spacetime, which every chart covers")
+    for m in slices.moments("big_rip"):
+        eta = -(-m.time) ** (7 / 3)
+        v.slice(m, lines=[mink_pq(np.full_like(rr, eta), rr)])
+    v.set(settings="$w = -3/2$, with $\\eta_0 = 3ct_0/7$ the unit of $\\eta$ and $r$.")
+    return [v]
+
+
 def frw(ck, src):
     """Dust universes, the scale factor solved from the published G^r_r = 0 of the conformal
     coordinates, lengths in units of 1/sqrt|k| where k is not zero:
@@ -24958,6 +25032,7 @@ def black_to_white_hole(ck, src):
     return views
 
 DRAWN = {
+    "big_rip": big_rip,
     "moving_mirror": moving_mirror,
     "draining_bathtub": draining_bathtub,
     "unruh_acoustic_hole": unruh_acoustic_hole,
@@ -28041,6 +28116,15 @@ CAPTIONS = {
         "The two edges on the left are the sphere $r = m/2$ in the infinite past and the infinite future of $t$, "
         "null lines on which the Kretschmann scalar diverges. Every star of the theory has its surface outside "
         "that sphere, so the diagram of a star is Minkowski's triangle, with a regular centre on its edge.",
+    ],
+    ("big_rip", "whole"): [
+        "A flat universe of phantom energy at $w = -3/2$, each point in the diagram a 2-sphere. The metric "
+        "$a^2(-d\\eta^2 + dr^2 + r^2d\\Omega^2)$ is conformal to the half $\\eta < 0$ of Minkowski space, which "
+        "$p, q = \\arctan((\\eta \\mp r)/\\eta_0)$ bring into a triangle, the lower half of Minkowski space's "
+        "diagram [chiba2005].",
+        "The Big Rip is the straight line $T = 0$ and is spacelike, a finite proper time away from every observer. "
+        "The observer at $r = 0$ receives light only from below the ray into the corner where its world line meets "
+        "the rip, its event horizon, whose proper radius $3c(-t)/7$ shrinks to nothing at $t = 0$ [chiba2005].",
     ],
     ("frw", "flat"): [
         "A flat universe of dust, each point in the diagram a 2-sphere. With $k = 0$, $G^r{}_r = 0$ gives $a \\propto \\eta^2$, and the metric "

@@ -3108,6 +3108,11 @@ FLAT = {
     ("gowdy", "areal", "plane"): lambda: one("gowdy", lambda m: along(m.time, *m.reach("areal", "\\theta"))),
     ("gowdy", "logarithmic", "plane"): lambda: one(
         "gowdy", lambda m: along(-math.log(m.time), *m.reach("areal", "\\theta"))),
+    # The Big Rip: every moment of t runs across the whole drawing, and in the conformal chart, drawn
+    # in units of eta_0 = 3 c t_0/7, it is the line eta = -eta_0 (-t/t_0)^(7/3), at w = -3/2.
+    ("big_rip", "cartesian", "tx"): lambda: one("big_rip", lambda m: across(m.time, 0.0, BIG)),
+    ("big_rip", "comoving", "radial"): lambda: one("big_rip", lambda m: along(m.time, 0.0, BIG)),
+    ("big_rip", "conformal", "radial"): lambda: one("big_rip", lambda m: along(-(-m.time) ** (7 / 3), 0.0, BIG)),
     ("kasner", "cartesian", "tx"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
     ("kasner", "cartesian", "tz"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
     # Kasner's universe with a scalar field: a moment of t is the line tau = -ln t of the logarithmic

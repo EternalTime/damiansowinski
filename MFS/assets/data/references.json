@@ -1,5 +1,5 @@
 {
-  "version": "a052d2bbc3519b90",
+  "version": "f6d671947df200cc",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -30231,6 +30231,132 @@
         "eprint": "1802.04264",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/1361-6382/aae550"
+      }
+    },
+    "caldwell2003": {
+      "type": "article",
+      "fields": {
+        "title": "Phantom Energy: Dark Energy with $w<-1$ Causes a Cosmic Doomsday",
+        "author": "Caldwell, Robert R. and Kamionkowski, Marc and Weinberg, Nevin N.",
+        "journal": "Physical Review Letters",
+        "volume": "91",
+        "number": "7",
+        "pages": "071301",
+        "year": "2003",
+        "doi": "10.1103/PhysRevLett.91.071301",
+        "eprint": "astro-ph/0302506",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.91.071301"
+      }
+    },
+    "caldwell2002": {
+      "type": "article",
+      "fields": {
+        "title": "A phantom menace? Cosmological consequences of a dark energy component with super-negative equation of state",
+        "author": "Caldwell, R. R.",
+        "journal": "Physics Letters B",
+        "volume": "545",
+        "number": "1-2",
+        "pages": "23--29",
+        "year": "2002",
+        "doi": "10.1016/S0370-2693(02)02589-3",
+        "eprint": "astro-ph/9908168",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(02)02589-3"
+      }
+    },
+    "starobinsky2000": {
+      "type": "article",
+      "fields": {
+        "title": "Future and Origin of our Universe: Modern View",
+        "author": "Starobinsky, A. A.",
+        "journal": "Gravitation and Cosmology",
+        "volume": "6",
+        "pages": "157--163",
+        "year": "2000",
+        "eprint": "astro-ph/9912054",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9912054"
+      }
+    },
+    "mcinnes2002": {
+      "type": "article",
+      "fields": {
+        "title": "The dS/CFT Correspondence and the Big Smash",
+        "author": "McInnes, Brett",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2002",
+        "number": "08",
+        "pages": "029",
+        "year": "2002",
+        "doi": "10.1088/1126-6708/2002/08/029",
+        "eprint": "hep-th/0112066",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2002/08/029"
+      }
+    },
+    "chiba2005": {
+      "type": "article",
+      "fields": {
+        "title": "Classifying the future of universes with dark energy",
+        "author": "Chiba, Takeshi and Takahashi, Ryuichi and Sugiyama, Naoshi",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "22",
+        "number": "17",
+        "pages": "3745--3758",
+        "year": "2005",
+        "doi": "10.1088/0264-9381/22/17/023",
+        "eprint": "astro-ph/0501661",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/22/17/023"
+      }
+    },
+    "nojiri2005": {
+      "type": "article",
+      "fields": {
+        "title": "Properties of singularities in the (phantom) dark energy universe",
+        "author": "Nojiri, Shin'ichi and Odintsov, Sergei D. and Tsujikawa, Shinji",
+        "journal": "Physical Review D",
+        "volume": "71",
+        "number": "6",
+        "pages": "063004",
+        "year": "2005",
+        "doi": "10.1103/PhysRevD.71.063004",
+        "eprint": "hep-th/0501025",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.71.063004"
+      }
+    },
+    "barrow2004": {
+      "type": "article",
+      "fields": {
+        "title": "Sudden future singularities",
+        "author": "Barrow, John D.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "21",
+        "number": "11",
+        "pages": "L79--L82",
+        "year": "2004",
+        "doi": "10.1088/0264-9381/21/11/L03",
+        "eprint": "gr-qc/0403084",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/21/11/L03"
+      }
+    },
+    "fernandezjambrina2004": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesic behavior of sudden future singularities",
+        "author": "Fernández-Jambrina, L. and Lazkoz, Ruth",
+        "journal": "Physical Review D",
+        "volume": "70",
+        "number": "12",
+        "pages": "121503",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.70.121503",
+        "eprint": "gr-qc/0410124",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.70.121503"
       }
     }
   }
