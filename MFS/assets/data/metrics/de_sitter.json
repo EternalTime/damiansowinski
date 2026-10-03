@@ -153,6 +153,11 @@
       "id": "universe_from_nothing",
       "kind": "composite",
       "text": "Half of de Sitter's closed universe, from its waist on, joined to half of its Euclidean 4-sphere. It is Vilenkin's universe created from nothing and the saddle of Hartle and Hawking's no-boundary proposal [vilenkin1982, feldbrugge2017]."
+    },
+    {
+      "id": "big_rip",
+      "kind": "limit_source",
+      "text": "Phantom energy with $w < -1$ in place of the cosmological constant, pulling the universe apart at a finite time. De Sitter space is its limit $w \\to -1$, where that time moves off to infinity [chiba2005]."
     }
   ],
   "references": [
@@ -200,7 +205,8 @@
     "page2009",
     "gott1998",
     "vilenkin1982",
-    "feldbrugge2017"
+    "feldbrugge2017",
+    "chiba2005"
   ],
   "coordinates": [
     {

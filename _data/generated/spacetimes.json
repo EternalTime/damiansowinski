@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 180,
+  "count": 181,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -4759,6 +4759,271 @@
           ],
           "ricci_scalar": "R = 2\\left(\\dfrac{a_1''}{a_1} + \\dfrac{a_2''}{a_2} + \\dfrac{a_3''}{a_3} + \\dfrac{a_1'\\,a_2'}{a_1\\,a_2} + \\dfrac{a_1'\\,a_3'}{a_1\\,a_3} + \\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)",
           "kretschmann": "K = 4\\left(\\left(\\dfrac{a_1''}{a_1}\\right)^2 + \\left(\\dfrac{a_2''}{a_2}\\right)^2 + \\left(\\dfrac{a_3''}{a_3}\\right)^2 + \\left(\\dfrac{a_1'\\,a_2'}{a_1\\,a_2}\\right)^2 + \\left(\\dfrac{a_1'\\,a_3'}{a_1\\,a_3}\\right)^2 + \\left(\\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "big_rip",
+      "name": "Big Rip Universe",
+      "short_name": "Big Rip",
+      "description": "A flat Friedmann universe filled with phantom energy, whose pressure is more negative than minus its energy density. The density grows as space expands, and the scale factor reaches infinity at a finite time, the Big Rip, pulling apart every bound system on the way.",
+      "tags": [
+        "cosmology",
+        "expanding universe",
+        "homogeneous",
+        "isotropic",
+        "FLRW",
+        "phantom field",
+        "perfect fluid",
+        "equation of state",
+        "energy condition violation",
+        "exotic matter",
+        "curvature singularity",
+        "spacelike singularity",
+        "event horizon",
+        "causal structure",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "four-dimensional",
+        "conformally flat",
+        "spherically symmetric"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "Friedmann's universe with its scale factor left free and its space allowed to curve. Its flat case filled with phantom energy alone is this universe [chiba2005]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "limit",
+          "text": "The limit $w \\to -1$, with the expansion rate at $a = 1$ held fixed: the Big Rip moves off to infinite time, and the scale factor becomes de Sitter's exponential. Both conformal diagrams are the lower half of Minkowski space's [chiba2005]."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "A wormhole held open by a scalar field whose kinetic term has the opposite of the usual sign, the kind of field Robert Caldwell used for his phantom energy [ellis1973, caldwell2002]."
+        },
+        {
+          "id": "simpson_visser",
+          "kind": "family",
+          "text": "A black hole whose singularity opens into a bounce. Kirill Bronnikov and Rahul Kumar Walia found it a source in a phantom scalar field with a potential and a magnetic field, and the phantom field is the kind behind phantom energy [bronnikov2022, caldwell2002]."
+        }
+      ],
+      "references": [
+        "caldwell2003",
+        "nojiri2005",
+        "caldwell2002",
+        "starobinsky2000",
+        "mcinnes2002",
+        "chiba2005",
+        "barrow2004",
+        "fernandezjambrina2004",
+        "ellis1973",
+        "bronnikov2022"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/big_rip.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Comoving Cartesian",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, 0)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "t \\to 0 \\;\\text{(the Big Rip)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "w",
+              "description": "Equation of state of the phantom energy, $w = p/\\rho c^2 < -1$, with $\\rho$ its mass density and $p$ its pressure"
+            },
+            {
+              "symbol": "t_0",
+              "description": "Time left before the Big Rip at the moment $a = 1$, $t_0 = 2/(3|1 + w|H_0)$ with $H_0$ the Hubble rate at that moment"
+            },
+            {
+              "symbol": "a = \\left(-\\dfrac{t}{t_0}\\right)^{\\frac{2}{3(1 + w)}}",
+              "description": "Scale factor, equal to $1$ at $t = -t_0$ and growing without bound as $t \\to 0$; the Hubble rate is $H = 2/(3(1 + w)t)$"
+            }
+          ],
+          "convention": "We use comoving coordinates $(t, x, y, z)$, with $t$ the proper time of a comoving observer, negative before the Big Rip at $t = 0$, and $x$, $y$, and $z$ lengths, the proper distances at $t = -t_0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\left(1 - 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}",
+          "kretschmann": "K = \\dfrac{16\\left(5 + 6w + 9w^2\\right)}{27c^4\\,t^4\\left(1 + w\\right)^4}"
+        },
+        {
+          "id": "comoving",
+          "name": "Comoving Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, 0)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "t \\to 0 \\;\\text{(the Big Rip)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "w",
+              "description": "Equation of state of the phantom energy, $w = p/\\rho c^2 < -1$, with $\\rho$ its mass density and $p$ its pressure"
+            },
+            {
+              "symbol": "t_0",
+              "description": "Time left before the Big Rip at the moment $a = 1$, $t_0 = 2/(3|1 + w|H_0)$ with $H_0$ the Hubble rate at that moment"
+            },
+            {
+              "symbol": "a = \\left(-\\dfrac{t}{t_0}\\right)^{\\frac{2}{3(1 + w)}}",
+              "description": "Scale factor, equal to $1$ at $t = -t_0$ and growing without bound as $t \\to 0$; the Hubble rate is $H = 2/(3(1 + w)t)$"
+            }
+          ],
+          "convention": "We use comoving coordinates $(t, r, \\theta, \\phi)$, with $t$ the proper time of a comoving observer, negative before the Big Rip at $t = 0$, and $r$ a length, the proper radius at $t = -t_0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\left(1 - 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}",
+          "kretschmann": "K = \\dfrac{16\\left(5 + 6w + 9w^2\\right)}{27c^4\\,t^4\\left(1 + w\\right)^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, 0)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\eta \\to 0 \\;\\text{(the Big Rip)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "w",
+              "description": "Equation of state of the phantom energy, $w = p/\\rho c^2 < -1$, with $\\rho$ its mass density and $p$ its pressure"
+            },
+            {
+              "symbol": "\\eta_0",
+              "description": "A length, $\\eta_0 = 3(1 + w)ct_0/(1 + 3w)$, the conformal time left before the Big Rip at the moment $a = 1$"
+            },
+            {
+              "symbol": "a = \\left(-\\dfrac{\\eta}{\\eta_0}\\right)^{\\frac{2}{1 + 3w}}",
+              "description": "Scale factor, equal to $1$ at $\\eta = -\\eta_0$ and growing without bound as $\\eta \\to 0$"
+            }
+          ],
+          "convention": "We use coordinates $(\\eta, r, \\theta, \\phi)$, with $\\eta$ the conformal time, a length with $d\\eta = c\\,dt/a$ that is negative before the Big Rip at $\\eta = 0$, and $r$ the comoving radius, a length. We take components in the chart $x^0 = \\eta$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a^2\\left(-d\\eta^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12\\left(1 - 3w\\right)}{a^2\\,\\eta^2\\left(1 + 3w\\right)^2}",
+          "kretschmann": "K = \\dfrac{48\\left(5 + 6w + 9w^2\\right)}{a^4\\,\\eta^4\\left(1 + 3w\\right)^4}"
         }
       ]
     },
@@ -13445,6 +13710,11 @@
           "id": "universe_from_nothing",
           "kind": "composite",
           "text": "Half of de Sitter's closed universe, from its waist on, joined to half of its Euclidean 4-sphere. It is Vilenkin's universe created from nothing and the saddle of Hartle and Hawking's no-boundary proposal [vilenkin1982, feldbrugge2017]."
+        },
+        {
+          "id": "big_rip",
+          "kind": "limit_source",
+          "text": "Phantom energy with $w < -1$ in place of the cosmological constant, pulling the universe apart at a finite time. De Sitter space is its limit $w \\to -1$, where that time moves off to infinity [chiba2005]."
         }
       ],
       "references": [
@@ -13492,7 +13762,8 @@
         "page2009",
         "gott1998",
         "vilenkin1982",
-        "feldbrugge2017"
+        "feldbrugge2017",
+        "chiba2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -17949,6 +18220,11 @@
           "id": "interstellar_wormhole",
           "kind": "family",
           "text": "A wormhole with three parameters, built for the film Interstellar because Christopher Nolan wanted to see how a wormhole's look depends on its shape, and Ellis's throat has one shape at every size [james2015]."
+        },
+        {
+          "id": "big_rip",
+          "kind": "family",
+          "text": "A universe filled with phantom energy, the same kind of field with its kinetic term of the opposite sign, which pulls the universe apart at a finite time [caldwell2002, caldwell2003]."
         }
       ],
       "references": [
@@ -17970,7 +18246,9 @@
         "tsukamoto2021",
         "bronnikov2011",
         "einstein1935",
-        "blazquez2021"
+        "blazquez2021",
+        "caldwell2002",
+        "caldwell2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json",
@@ -19794,6 +20072,11 @@
           "id": "universe_from_nothing",
           "kind": "family",
           "text": "A closed universe filled only with the energy density of a vacuum, whose scale factor $\\ell\\cosh(ct/\\ell)$ bounces at $\\ell$, joined at that bounce to half a 4-sphere [vilenkin1982]."
+        },
+        {
+          "id": "big_rip",
+          "kind": "special_case",
+          "text": "Flat space filled with phantom energy alone, with $w = p/\\rho c^2 < -1$, whose scale factor reaches infinity at a finite time, the Big Rip [caldwell2003, chiba2005]."
         }
       ],
       "references": [
@@ -19860,7 +20143,9 @@
         "anton2023",
         "lewandowski2023",
         "luminet2003",
-        "vilenkin1982"
+        "vilenkin1982",
+        "caldwell2003",
+        "chiba2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -52310,6 +52595,11 @@
           "id": "hayward",
           "kind": "family",
           "text": "A regular black hole with a centre and a core of de Sitter space. Simpson and Visser counted Hayward's among the traditional regular black holes, which close over a regular centre where theirs opens through a throat [simpson2019, hayward2006]."
+        },
+        {
+          "id": "big_rip",
+          "kind": "family",
+          "text": "A universe filled with phantom energy, the kind of scalar field that holds up this bounce, which pulls the universe apart at a finite time [caldwell2002, caldwell2003]."
         }
       ],
       "references": [
@@ -52331,7 +52621,9 @@
         "riaz2022",
         "damour2007",
         "ansoldi2008",
-        "hayward2006"
+        "hayward2006",
+        "caldwell2002",
+        "caldwell2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/simpson_visser.json",

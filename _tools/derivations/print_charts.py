@@ -20,7 +20,7 @@ tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, freund_rubin, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
-poincare_dodecahedral and black_to_white_hole, and Godel's cylindrical chart.
+poincare_dodecahedral, black_to_white_hole and big_rip, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -43,8 +43,8 @@ witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, ma
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
-kerr_melvin.md, einstein_dirac_maxwell_wormhole.md, jackiw_teitelboim_black_hole.md, interstellar_wormhole.md and
-supertranslation_hair.md beside this file.
+kerr_melvin.md, einstein_dirac_maxwell_wormhole.md, jackiw_teitelboim_black_hole.md, interstellar_wormhole.md,
+supertranslation_hair.md and big_rip.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 btz_shock_wave.md beside this file records the charts of the shock wave in the BTZ black hole.
 black_to_white_hole.md beside this file records the charts of the black hole fireworks and their junction.
@@ -31186,6 +31186,198 @@ def black_to_white_hole_check(chart, system):
 
 
 CHARTS["black_to_white_hole"] = [lambda s=s: black_to_white_hole(s) for s in BWH_CHARTS]
+
+
+# -- The Big Rip --------------------------------------------------------------------------
+
+BIG_RIP_CHARTS = ("cartesian", "comoving", "conformal")
+BIG_RIP_SCALE = "a = \\left(-\\dfrac{t}{t_0}\\right)^{\\frac{2}{3(1 + w)}}"
+BIG_RIP_CONFORMAL_SCALE = "a = \\left(-\\dfrac{\\eta}{\\eta_0}\\right)^{\\frac{2}{1 + 3w}}"
+
+
+def big_rip_scale(time, unit, exponent, a, c=None):
+    """A pretty printer for a chart of the Big Rip, whose every value is a rational function of
+    the parameters times one power of the time, which is negative. The checker's canonical form
+    writes the scale factor (-t/t_0)^q as (-1)^q t^q t_0^-q, so the powers of -1, of the time, of
+    its unit and of c are gathered first: the sign's exponent differs from the time's by a whole
+    number, and the part of the time's exponent that holds w is a whole multiple of q, which is
+    printed as that power of the name a. What is left is a power of the time with a whole
+    exponent, printed as it stands."""
+
+    def pretty(value):
+        value = sp.expand_power_base(sp.powdenest(sp.together(sp.sympify(value)), force=True), force=True)
+        sign, power, units, light, rest = (sp.Integer(0),) * 4 + (sp.Integer(1),)
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            # A reciprocal stands as the base of a power whose exponent holds w, as (1/eta_0)^q.
+            inner, m = base.as_base_exp()
+            if m.is_Number and inner in (time, unit) and base != inner:
+                base, k = inner, k * m
+            if base == -1:
+                sign += k
+            elif base == time:
+                power += k
+            elif base == unit:
+                units += k
+            elif c is not None and base == c:
+                light += k
+            else:
+                rest *= f
+        if rest.has(time) or rest.has(unit):
+            raise AssertionError(f"big_rip: {value} is not one power of the time")
+        turned = sp.expand(sign - power)
+        if not turned.is_Integer:
+            raise AssertionError(f"big_rip: the sign of {value} does not go with its power of the time")
+        power = sp.expand(power)
+        whole = sum((term for term in sp.Add.make_args(power) if term.is_Number), sp.Integer(0))
+        free = sp.cancel((power - whole) / exponent)
+        if not free.is_Rational:
+            raise AssertionError(f"big_rip: the power of the time in {value} is no whole power of a")
+        left = sp.expand(units + power - whole)
+        if not (left.is_Number and sp.expand(light).is_Number):
+            raise AssertionError(f"big_rip: the powers of the unit or of c in {value} do not pair with the time")
+        return (sp.factor(rest) * (-1) ** turned * (-time) ** whole * unit ** left * (c ** light if c is not None else 1)
+                * a ** free)
+
+    return pretty
+
+
+def big_rip(system):
+    """The flat Friedmann universe of phantom energy alone, a perfect fluid with p = w rho c^2 and
+    w < -1, with the Big Rip at t = 0: a(t) = (-t/t_0)^(2/3(1 + w)), the scale factor of Chiba,
+    Takahashi and Sugiyama's case E (arXiv:astro-ph/0501661, section 2.1), with their time
+    measured in the unit t_0, the time left at a = 1, which is Caldwell, Kamionkowski and
+    Weinberg's t_rip - t_0 (arXiv:astro-ph/0302506) when the matter is neglected. Three charts:
+    the comoving Cartesian chart of the flat universe, the comoving spherical chart and the
+    conformal chart, ds^2 = -c^2dt^2 + a^2(dr^2 + r^2 dOmega^2) = a^2(-d eta^2 + dr^2 + r^2 dOmega^2),
+    Chiba, Takahashi and Sugiyama's (1), with eta = -eta_0 (-t/t_0)^((1 + 3w)/3(1 + w)) and
+    eta_0 = 3(1 + w) c t_0/(1 + 3w). big_rip_check holds each to its source, and big_rip.md
+    beside this file is the derivation."""
+    sphere = "\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)"
+    if system == "conformal":
+        coords, parameters = ["\\eta", "r", "\\theta", "\\phi"], ["w", "\\eta_0", BIG_RIP_CONFORMAL_SCALE]
+        bare = ["w", "\\eta_0"]
+        line = ("ds^2 = a^2\\left(-d\\eta^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)")
+        chart_line = ("ds^2 = \\left(-\\dfrac{\\eta}{\\eta_0}\\right)^{\\frac{4}{1 + 3w}}\\left(-d\\eta^2 + dr^2 + "
+                      "r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)")
+        time_name = None
+    else:
+        coords = ["t", "x", "y", "z"] if system == "cartesian" else ["t", "r", "\\theta", "\\phi"]
+        parameters, bare = ["w", "t_0", BIG_RIP_SCALE], ["w", "t_0"]
+        space = "\\left(dx^2 + dy^2 + dz^2\\right)" if system == "cartesian" else sphere
+        line = f"ds^2 = -c^2dt^2 + a^2{space}"
+        chart_line = f"ds^2 = -dt^2 + \\left(-\\dfrac{{t}}{{ct_0}}\\right)^{{\\frac{{4}}{{3(1 + w)}}}}{space}"
+        time_name = "t"
+    probe = vm.Reader(coords, parameters, ())
+    x0 = probe.symbol[coords[0]]
+    w = probe.parameters["w"]
+    unit = probe.parameters["eta_0" if system == "conformal" else "t_0"]
+    a = sp.Symbol("a", positive=True)
+    exponent = 2 / (1 + 3 * w) if system == "conformal" else 2 / (3 * (1 + w))
+    names = {"cartesian": "Comoving Cartesian", "comoving": "Comoving Spherical", "conformal": "Conformal"}
+    flat = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)", "z \\in (-\\infty, \\infty)"]
+    sph = ["r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    first = "\\eta" if system == "conformal" else "t"
+    domains = ([f"{first} \\in (-\\infty, 0)"] + (flat if system == "cartesian" else sph)
+               + [f"{first} \\to 0 \\;\\text{{(the Big Rip)}}"])
+    spatial = [probe.symbol[n] for n in coords[1:]]
+    spec = {
+        "metric_id": "big_rip",
+        "system": {"id": system, "name": names[system], "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": [a, x0, *spatial], "rising": [w], "factors": [a, probe.c, x0, unit, *spatial]},
+        "pretty": big_rip_scale(x0, unit, exponent, a, probe.c if time_name else None),
+        "check": lambda chart: big_rip_check(chart, system),
+        # A sum in a numerator is printed with its common factor taken out.
+        "rewrite": [("{2 + 6w}", "{2\\left(1 + 3w\\right)}"), ("{2 - 2w}", "{2\\left(1 - w\\right)}"),
+                    ("{6 - 6w}", "{6\\left(1 - w\\right)}")],
+    }
+    if system == "conformal":
+        spec["ricci_scalar"] = "\\dfrac{12\\left(1 - 3w\\right)}{a^2\\,\\eta^2\\left(1 + 3w\\right)^2}"
+        spec["kretschmann"] = "\\dfrac{48\\left(5 + 6w + 9w^2\\right)}{a^4\\,\\eta^4\\left(1 + 3w\\right)^4}"
+    else:
+        spec["ricci_scalar"] = "\\dfrac{4\\left(1 - 3w\\right)}{3c^2\\,t^2\\left(1 + w\\right)^2}"
+        spec["kretschmann"] = "\\dfrac{16\\left(5 + 6w + 9w^2\\right)}{27c^4\\,t^4\\left(1 + w\\right)^4}"
+    if time_name:
+        spec["time"] = time_name
+    return spec
+
+
+def big_rip_check(chart, system):
+    """Every chart is a perfect fluid at rest with p = w rho c^2: the mixed Einstein tensor is
+    diagonal, with G^i_i = -w G^0_0 along each spatial axis, and G^0_0 = -3H^2/c^2 in the comoving
+    charts, Friedmann's equation with H = 2/(3(1 + w)t). The Cartesian chart is the comoving one
+    with x = r sin(theta) cos(phi), y = r sin(theta) sin(phi) and z = r cos(theta), and the
+    conformal chart is the comoving one pulled back along eta(t) = -eta_0 (-t/t_0)^((1 + 3w)/3(1 + w)),
+    with eta_0 = 3(1 + w) c t_0/(1 + 3w), Chiba, Takahashi and Sugiyama's conformal time."""
+    geo, g = chart.geo, chart.geo.g
+    P = chart.reader.parameters
+    w = P["w"]
+    einstein = geo.einstein_ll()
+    mixed = sp.Matrix(4, 4, lambda i, j: sum(geo.ginv[i, k] * vm._at(einstein, (k, j)) for k in range(4)))
+    for i in range(4):
+        for j in range(4):
+            if i != j and vm.norm(mixed[i, j]) != 0:
+                raise AssertionError(f"big_rip: the {system} chart has a flux G^{i}_{j}")
+    for i in range(1, 4):
+        if vm.norm(mixed[i, i] + w * mixed[0, 0]) != 0:
+            raise AssertionError(f"big_rip: the {system} chart's pressure is not w times its density")
+    x0 = chart.symbols[0]
+    if system != "conformal":
+        t0 = P["t_0"]
+        # x^0 = ct, so H/c = 2/(3(1 + w) x^0).
+        if vm.norm(mixed[0, 0] + 3 * (2 / (3 * (1 + w) * x0)) ** 2) != 0:
+            raise AssertionError(f"big_rip: the {system} chart misses Friedmann's equation")
+
+    def comoving():
+        source = big_rip("comoving")
+        return cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+
+    def same(matrix, what):
+        if any(vm.norm(v) != 0 for v in (matrix - g)):
+            raise AssertionError(f"big_rip: the {system} chart is not {what}")
+
+    if system == "cartesian":
+        there = comoving()
+        T, X, Y, Z = chart.symbols
+        r = sp.sqrt(X ** 2 + Y ** 2 + Z ** 2)
+        theta, phi = sp.acos(Z / r), sp.atan2(Y, X)
+        image = [T, r, theta, phi]
+        J = sp.Matrix([[sp.diff(f, v) for v in chart.symbols] for f in image])
+        at = dict(zip(there.symbols, image))
+        at.update({there.reader.parameters[n]: P[n] for n in ("w", "t_0")})
+        pulled = sp.simplify(J.T * there.geo.g.subs(at) * J)
+        if any(sp.simplify(v) != 0 for v in (pulled - g)):
+            raise AssertionError("big_rip: the Cartesian chart is not the comoving chart pulled back")
+    elif system == "conformal":
+        there = comoving()
+        eta0 = P["eta_0"]
+        Q = there.reader.parameters
+        t0 = sp.Symbol("t0", positive=True)
+        # With x^0 = ct on the comoving side: eta = -eta_0 (-x^0/(c t_0))^p, p = (1 + 3w)/(3(1 + w)).
+        p = (1 + 3 * w) / (3 * (1 + w))
+        u = sp.Symbol("u", positive=True)          # u = -x^0/(c t_0), positive before the rip
+        eta_of_u = -eta0 * u ** p
+        # deta/dx^0 = (deta/du)(du/dx^0) with du/dx^0 = -1/(c t_0); the comoving metric is
+        # -(dx^0)^2 + u^(2q) dl^2, q = 2/(3(1 + w)), and eta_0 = 3(1 + w) c t_0/(1 + 3w) = c t_0/p.
+        c = there.reader.c
+        deta = sp.diff(eta_of_u, u) * (-1 / (c * t0))
+        a2 = u ** (2 * 2 / (3 * (1 + w)))
+        conformal_a2 = (-eta_of_u / eta0) ** (4 / (1 + 3 * w))
+        at_eta0 = {eta0: c * t0 / p}
+        def powers(e):
+            return sp.simplify(sp.powsimp(sp.powdenest(sp.expand_power_base(e, force=True), force=True), force=True))
+        for value, what in ((powers((deta ** 2 * conformal_a2).subs(at_eta0)), "dx^0 to deta"),
+                            (powers(conformal_a2 / a2), "the scale factors")):
+            if sp.simplify(value - 1) != 0:
+                raise AssertionError(f"big_rip: the conformal chart's {what} misses the comoving chart: {value}")
+        # The conformal chart itself carries a^2 on every term.
+        if vm.norm(g[0, 0] + g[1, 1]) != 0:
+            raise AssertionError("big_rip: the conformal chart is not conformally flat in eta and r")
+
+
+CHARTS["big_rip"] = [lambda s=s: big_rip(s) for s in BIG_RIP_CHARTS]
 
 
 def write(spec):

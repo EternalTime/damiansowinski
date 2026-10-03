@@ -73,6 +73,11 @@
       "id": "interstellar_wormhole",
       "kind": "family",
       "text": "A wormhole with three parameters, built for the film Interstellar because Christopher Nolan wanted to see how a wormhole's look depends on its shape, and Ellis's throat has one shape at every size [james2015]."
+    },
+    {
+      "id": "big_rip",
+      "kind": "family",
+      "text": "A universe filled with phantom energy, the same kind of field with its kinetic term of the opposite sign, which pulls the universe apart at a finite time [caldwell2002, caldwell2003]."
     }
   ],
   "references": [
@@ -94,7 +99,9 @@
     "tsukamoto2021",
     "bronnikov2011",
     "einstein1935",
-    "blazquez2021"
+    "blazquez2021",
+    "caldwell2002",
+    "caldwell2003"
   ],
   "coordinates": [
     {
