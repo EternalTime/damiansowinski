@@ -6553,6 +6553,20 @@ class Slices(unittest.TestCase):
             # x = +-sqrt(1 - 1/r), one on each side of the throat.
             x = math.sqrt(1 - 1 / self.reach(surface)[1])
             return (lambda X: 0.0), [-x, x]
+        if key == "btz_shock_wave/kruskal/plane":
+            # The moment u + v = -1/2 at alpha = 1, drawn against (v - u)/2 and (u + v)/2: level at -1/4,
+            # over the embedding's reach in u, where (v - u)/2 = -1/4 - u.
+            lo, hi = self.reach(surface)
+            return (lambda X: -0.25), [-0.25 - hi, -0.25 - lo]
+        if key == "btz_shock_wave/exterior/radial":
+            # Outside the right horizon the moment has u < -1/2 and v = -1/2 - u, so uv = (1 - r)/(1 + r) at
+            # l = R = 1 gives u, and ct = ln(v/(-u))/2; it reaches r = 3 at u = -1 and runs off down the horizon.
+            def t_of(r):
+                k = (r - 1) / (r + 1)
+                u = (-0.5 - math.sqrt(0.25 + 4 * k)) / 2
+                return 0.5 * math.log((-0.5 - u) / -u)
+            lo = self.reach(surface)[0]
+            return t_of, [(1 + lo * (lo + 0.5)) / (1 - lo * (lo + 0.5))]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
@@ -6574,6 +6588,24 @@ class Slices(unittest.TestCase):
         through = key.endswith("/tx") and not view["mirror"]
         return (lambda X: 0.0), ([-hi, -lo, lo, hi] if through else [lo, hi])
 
+    def check_shock_moment(self, key, view, surface, mark):
+        """The moment u + v = -alpha/2 of the BTZ shock in the discontinuous chart, V = v + alpha Theta(u), at
+        alpha = 1: U + V = -1/2 ahead of the shock and 1/2 behind it, the two halves overlapping in (V - U)/2,
+        so each line is held to its own half, from the shock U = 0 to the embedding's reach in u."""
+        X0, X1, Y0, Y1 = view["box"]
+        lo, hi = self.reach(surface)
+        checked = 0
+        self.assertEqual(len(mark["lines"]), 2, key)
+        for line in mark["lines"]:
+            points = [(X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)) for u in line]
+            U = [Y - X for X, Y in points]
+            behind = sum(U) > 0
+            for (X, Y), u in zip(points, U):
+                self.assertAlmostEqual(u + (X + Y) - behind, -0.5, delta=1e-3, msg=f"{key} at {X, Y}")
+                checked += 1
+            self.assertEqual(sorted(round(e, 3) for e in (U[0], U[-1])), sorted([0.0, round(hi if behind else lo, 3)]))
+        return checked
+
     def test_every_slice_on_a_spacetime_diagram_lies_on_its_moment_and_ends_where_the_embedding_does(self):
         """Each point of a line or a point of a slice, carried back through the view's box and
         axes, lies on its moment, and a line stops at the embedding's reach or at the box."""
@@ -6590,6 +6622,9 @@ class Slices(unittest.TestCase):
                             continue
                         if key.startswith("simpson_visser/") and mark["view"] == "inside":
                             checked += self.check_bounce_moment(key, view, surface, mark)
+                            continue
+                        if key == "btz_shock_wave/discontinuous/plane":
+                            checked += self.check_shock_moment(key, view, surface, mark)
                             continue
                         if key == "tippett_tsang/polar/strip":
                             checked += self.check_polar_moment(key, view, surface, mark)
