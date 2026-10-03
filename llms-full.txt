@@ -1051,6 +1051,18 @@ The gravitational field of two massless particles in de Sitter space, the Schwar
 - chart Null Cylindrical: coordinates $(u, v, \rho, \phi)$, $$ds^2 = \dfrac{-du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{4GE}{c^4}\left(\left(1 - \dfrac{\rho^2}{4a^2}\right)\ln\left(\dfrac{\rho^2}{4a^2}\right) + 2 + \dfrac{\rho^2}{2a^2}\right)\delta(u)\,du^2}{\left(1 + \dfrac{\rho^2 - uv}{4a^2}\right)^2}$$
 - chart Kundt: coordinates $(u, w, \theta, \phi)$, $$ds^2 = \sin^2\theta\cos^2\phi\left(-2\,du\,dw + \dfrac{w^2}{a^2}du^2\right) + a^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{4GE}{c^4}\sin\theta\cos\phi\left(\cos\theta\,\ln\left(\dfrac{1 + \cos\theta}{1 - \cos\theta}\right) - 2\right)\delta(u)\,du^2$$
 
+### Interstellar's Wormhole
+
+The wormhole Oliver James, Eugénie von Tunzelmann, Paul Franklin, and Kip Thorne designed for Christopher Nolan's film Interstellar of 2014, which they call the Dneg wormhole after the effects studio Double Negative. A cylinder of length $2a$, every sphere along it of radius $\rho$, joins two flat spaces, each through a mouth that flares out over a length set by $M$, and clocks everywhere keep the same time, $g_{tt} = -1$.
+
+- id: `interstellar_wormhole`
+- tags: wormhole, traversable, throat, no horizon, exotic matter, energy condition violation, static, stationary, spherically symmetric, asymptotically flat, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/interstellar_wormhole.json
+- chart Proper Distance: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -c^2dt^2 + d\ell^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Cylinder: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -c^2dt^2 + d\ell^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Flare: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -c^2dt^2 + d\ell^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Israel's Collapsing Shell of Dust
 
 A thin spherical shell of dust falling under its own weight, with flat spacetime inside it and Schwarzschild's vacuum outside. Werner Israel solved its motion in 1966 with the junction conditions he wrote for a surface that carries matter. The event horizon forms at the centre of the flat interior before the shell arrives.

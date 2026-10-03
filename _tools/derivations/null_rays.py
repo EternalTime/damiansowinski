@@ -1667,6 +1667,67 @@ def teo_inverse(x):
     return np.cosh(w) ** 2, np.tanh(w)
 
 
+# Interstellar's wormhole as its diagrams draw it, in units of its radius rho: the cylinder of length
+# 2a = 2 rho and the flare of M = rho/2, the wormhole of James, von Tunzelmann, Franklin and Thorne's
+# figure 3, whose lensing width is W = 0.715 rho.
+IW = {"rho": 1, "a": 1, "M": "1/2"}
+IW_A, IW_M = 1.0, 0.5
+IW_INPUT = ("$a = \\rho$ and $M = \\rho/2$, the wormhole whose embedding diagram James, von Tunzelmann, Franklin, "
+            "and Thorne draw, with $r = \\rho$ on the cylinder and the flare beyond it.")
+
+
+def iw_radius(ell, order=0, a=IW_A, M=IW_M):
+    """The areal radius r(l) of Interstellar's wormhole in units of rho, or its derivative of the given
+    order up to the third: rho on the cylinder |l| <= a, and beyond it rho + M (x arctan x - ln(1 + x^2)/2)
+    with x = 2(|l| - a)/(pi M), whose derivatives along l are (2/pi) arctan x, 4/(pi^2 M (1 + x^2)) and
+    -16 x/(pi^3 M^2 (1 + x^2)^2), each odd one carrying the sign of l. r and r' are continuous at the
+    mouths, r'' jumps there from 0 to 4/(pi^2 M)."""
+    ell = np.asarray(ell, dtype=float)
+    x = 2 * np.maximum(np.abs(ell) - a, 0) / (np.pi * M)
+    side = np.sign(ell)
+    flare = np.abs(ell) > a
+    value = (1 + M * (x * np.arctan(x) - 0.5 * np.log1p(x * x)),
+             2 / np.pi * np.arctan(x) * side,
+             4 / (np.pi ** 2 * M * (1 + x * x)),
+             -16 * x * side / (np.pi ** 3 * M ** 2 * (1 + x * x) ** 2))[order]
+    return np.where(flare, value, 1.0 if order == 0 else 0.0)
+
+
+class iw_r(sp.Function):
+    """r/rho of Interstellar's wormhole as a function of l/rho, a declared function a row may name:
+    sympy differentiates it by iw_dr, iw_ddr and iw_dddr, and lambdify evaluates each with iw_radius."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda x: iw_radius(x, 0))
+
+    def fdiff(self, argindex=1):
+        return iw_dr(self.args[0])
+
+
+class iw_dr(sp.Function):
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda x: iw_radius(x, 1))
+
+    def fdiff(self, argindex=1):
+        return iw_ddr(self.args[0])
+
+
+class iw_ddr(sp.Function):
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda x: iw_radius(x, 2))
+
+    def fdiff(self, argindex=1):
+        return iw_dddr(self.args[0])
+
+
+class iw_dddr(sp.Function):
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda x: iw_radius(x, 3))
+
+
 class teo_rho(sp.Function):
     """r/b_0 as a function of l/b_0 on Teo's wormhole, a declared function a row may name: sympy
     differentiates it by d rho/dx = sigma and d sigma/dx = 1/(2 rho^2), which are dr/dl =
@@ -2210,7 +2271,7 @@ DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__:
                       "charged_r_in": charged_r_in, "charged_r_out": charged_r_out,
                       "charged_r_inside": charged_r_inside, "charged_r_adv": charged_r_adv,
                       "charged_r_ret": charged_r_ret,
-                      "lw_r": lw_r}
+                      "lw_r": lw_r, "iw_r": iw_r, "iw_dr": iw_dr, "iw_ddr": iw_ddr, "iw_dddr": iw_dddr}
 
 
 # Neugebauer and Meinel's disc as every one of its diagrams draws it: mu = 3, the disc whose Ernst
@@ -3174,6 +3235,16 @@ DIAGRAMS = [
             areal_contours=(1.5, 2.0, 3.0)),
     Diagram("einstein_dirac_maxwell_wormhole", "compact", "radial", "$t$ and $x$", ("t", "x"), (-1, 1, -1, 1),
             "$x$", "$ct/r_0$", EDM, EQUATOR, families=SIDEWAYS, areal=True, areal_contours=(1.5, 2.0, 3.0)),
+    # Interstellar's wormhole at a = rho and M = rho/2 on its plane of t and l, which is flat in every
+    # chart: the whole wormhole in the proper distance with r(l) declared, the cylinder, and one flare.
+    Diagram("interstellar_wormhole", "proper_distance", "radial", "$t$ and $\\ell$", ("t", "\\ell"),
+            (-4.5, 4.5, -4.5, 4.5), "$\\ell/\\rho$", "$ct/\\rho$", IW, EQUATOR, families=SIDEWAYS, areal=True,
+            areal_contours=(1.5, 2.0, 3.0), functions={"r": "iw_r(ell)"}, input=IW_INPUT, no_throat=True,
+            lines=(("shell", "r", "1", "the mouths $\\ell = \\pm a$"), ("shell", "r", "-1", None))),
+    Diagram("interstellar_wormhole", "cylinder", "radial", "$t$ and $\\ell$", ("t", "\\ell"), (-1, 1, -1, 1),
+            "$\\ell/\\rho$", "$ct/\\rho$", {"rho": 1, "a": 1}, EQUATOR, families=SIDEWAYS, cones=(5, 5)),
+    Diagram("interstellar_wormhole", "flare", "radial", "$t$ and $\\ell$", ("t", "\\ell"), (1, 4.5, -1.75, 1.75),
+            "$\\ell/\\rho$", "$ct/\\rho$", IW, EQUATOR, areal=True, areal_contours=(1.5, 2.0, 3.0), no_throat=True),
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -7485,6 +7556,31 @@ CAPTIONS = {
         "$t \\to \\infty$: the bridge is a horizon, as the neutral one is. The faint vertical lines are the spheres "
         "of areal radius $1.5\\,r_q$, $2\\,r_q$, and $3\\,r_q$, one of each on either sheet, and the Kretschmann "
         "scalar $56r_q^4/(u^2 + r_q^2)^4$ is $56/r_q^4$ on the bridge.",
+    ],
+    ("interstellar_wormhole", "proper_distance", "radial"): [
+        "The plane of $t$ and $\\ell$ ($\\theta = \\pi/2$, $\\phi = 0$) through the whole wormhole, drawn for "
+        "$a = \\rho$ and $M = \\rho/2$, with $\\ell < -a$ on one side, the cylinder $|\\ell| \\le a$ in the middle, "
+        "and $\\ell > a$ on the other side. The metric on this plane is $-c^2dt^2 + d\\ell^2$ at every $\\ell$, so "
+        "every ray is a straight line at 45° and $ct \\mp \\ell$ is constant along it.",
+        "All the geometry lies off the plane, in $g_{\\theta\\theta} = r(\\ell)^2$. The areal radius holds at its "
+        "least value $\\rho$ between the mouths $\\ell = \\pm a$ and grows beyond them, and the faint vertical lines "
+        "are the spheres of radius $1.5\\rho$, $2\\rho$, and $3\\rho$, at $|\\ell| = 2.27$, $2.97$, and $4.21\\rho$. "
+        "A ray crosses from one mouth to the other in the time $2a/c$.",
+    ],
+    ("interstellar_wormhole", "cylinder", "radial"): [
+        "The plane of $t$ and $\\ell$ ($\\theta = \\pi/2$, $\\phi = 0$) along the cylinder, from the mouth "
+        "$\\ell = -a$ to the mouth $\\ell = a$, drawn for $a = \\rho$. The metric on this plane is "
+        "$-c^2dt^2 + d\\ell^2$, so every ray is a straight line at 45°.",
+        "Every point of the plane is a sphere of radius $\\rho$, and the Kretschmann scalar is $4/\\rho^4$ "
+        "throughout.",
+    ],
+    ("interstellar_wormhole", "flare", "radial"): [
+        "The plane of $t$ and $\\ell$ ($\\theta = \\pi/2$, $\\phi = 0$) beyond the mouth $\\ell = a$, drawn for "
+        "$a = \\rho$ and $M = \\rho/2$, the same beyond $\\ell = -a$. The metric on this plane is "
+        "$-c^2dt^2 + d\\ell^2$, so every ray is a straight line at 45°.",
+        "The faint vertical lines are the spheres of radius $1.5\\rho$, $2\\rho$, and $3\\rho$, at "
+        "$\\ell = 2.27$, $2.97$, and $4.21\\rho$, crowded near the mouth, where $dr/d\\ell = \\tfrac{2}{\\pi}\\arctan x$ "
+        "starts from zero, and spaced as in flat space far out.",
     ],
     ("einstein_dirac_maxwell_wormhole", "areal", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on one side of the throat, drawn for "
@@ -15136,6 +15232,10 @@ CLOSED_FORMS = {
          lambda t, u: t - np.sign(u) * _rstar(np.sqrt(1 + u ** 2), [1, -1]), lambda t, u: np.abs(u) > 0.2),
     # With r_0 = 1 and Q_e = 1/2, and through the throat r = 1 + u^2 and r = 1/(1 - x^2), where r_* changes
     # sign with the coordinate.
+    # Interstellar's wormhole: every plane of t and l is flat, and the rays keep ct -+ l.
+    ("interstellar_wormhole", "proper_distance", "radial"): (lambda t, l: t + l, lambda t, l: t - l, None),
+    ("interstellar_wormhole", "cylinder", "radial"): (lambda t, l: t + l, lambda t, l: t - l, None),
+    ("interstellar_wormhole", "flare", "radial"): (lambda t, l: t + l, lambda t, l: t - l, None),
     ("einstein_dirac_maxwell_wormhole", "areal", "radial"):
         (lambda t, r: t + _edm_rstar(r), lambda t, r: t - _edm_rstar(r), lambda t, r: r > 1.0005),
     ("einstein_dirac_maxwell_wormhole", "bronnikov_kim", "radial"):

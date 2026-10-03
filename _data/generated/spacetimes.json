@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 167,
+  "count": 168,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -17306,6 +17306,11 @@
           "id": "einstein_dirac_maxwell_wormhole",
           "kind": "family",
           "text": "A wormhole held open by an electric field and two massless Dirac fields, found by Blázquez-Salcedo, Knoll and Radu in 2021 while looking for one that needs no field of the wrong sign [blazquez2021]."
+        },
+        {
+          "id": "interstellar_wormhole",
+          "kind": "family",
+          "text": "A wormhole with three parameters, built for the film Interstellar because Christopher Nolan wanted to see how a wormhole's look depends on its shape, and Ellis's throat has one shape at every size [james2015]."
         }
       ],
       "references": [
@@ -23328,6 +23333,278 @@
       ]
     },
     {
+      "id": "interstellar_wormhole",
+      "name": "Interstellar's Wormhole",
+      "short_name": "Interstellar",
+      "description": "The wormhole Oliver James, Eugénie von Tunzelmann, Paul Franklin, and Kip Thorne designed for Christopher Nolan's film Interstellar of 2014, which they call the Dneg wormhole after the effects studio Double Negative. A cylinder of length $2a$, every sphere along it of radius $\\rho$, joins two flat spaces, each through a mouth that flares out over a length set by $M$, and clocks everywhere keep the same time, $g_{tt} = -1$.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "throat",
+        "no horizon",
+        "exotic matter",
+        "energy condition violation",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "asymptotically flat",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and $\\rho$, $a$, and $M$ are lengths. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "morris_thorne",
+          "kind": "generalisation",
+          "text": "The general static wormhole of Michael Morris and Kip Thorne. In its proper distance chart with $\\Phi = 0$ and the areal radius chosen as the team chose it for the film, it is this wormhole [james2015, morris1988]."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "The wormhole the team began from and set aside: Ellis's throat has one shape at every size, and Christopher Nolan wanted a shape he could adjust [james2015]."
+        },
+        {
+          "id": "plebanski_hacyan",
+          "kind": "piece",
+          "text": "Along its cylinder, $|\\ell| \\le a$, this wormhole is the product of the flat plane of $t$ and $\\ell$ with a sphere of radius $\\rho$, Plebański and Hacyan's flat plane times a sphere with $b = \\rho$."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "As $M \\to 0$ the flares sharpen into edges, and with $a = 0$ as well this wormhole becomes two flat spaces, each with a ball of radius $\\rho$ cut out, joined across the edges, which is Visser's thin shell wormhole with no mass [james2015, visser1989prd]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Each mouth flares out roughly as space opens out from Schwarzschild's horizon, with $M$ in the part of the mass, and the mouth's radius $\\rho$ left free where the horizon's is $2M$ [james2015]."
+        },
+        {
+          "id": "kerr",
+          "kind": "programme",
+          "text": "Gargantua, the black hole of the same film, drawn from Kerr's metric by the same team with the same code [james2015lensing]."
+        }
+      ],
+      "references": [
+        "nolan2014interstellar",
+        "james2015",
+        "james2015lensing",
+        "morris1988",
+        "ellis1973",
+        "visser1989prd"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/interstellar_wormhole.json",
+      "charts": [
+        {
+          "id": "proper_distance",
+          "name": "Proper Distance",
+          "coordinates": [
+            "t",
+            "\\ell",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\ell \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "|\\ell| \\le a \\;\\text{(the cylinder)}",
+            "\\ell = \\pm a \\;\\text{(the two mouths)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r = r(\\ell)",
+              "description": "Areal radius, a length: $r = \\rho$ on the cylinder $|\\ell| \\le a$, and beyond it $r = \\rho + M\\left(x\\arctan x - \\tfrac{1}{2}\\ln\\left(1 + x^2\\right)\\right)$ with $x = 2\\left(|\\ell| - a\\right)/\\pi M$, so that $r$ and $\\partial_\\ell r = \\tfrac{2}{\\pi}\\arctan x$ are continuous at the mouths and $\\partial_\\ell r \\to \\pm 1$ far away"
+            },
+            {
+              "symbol": "\\rho",
+              "description": "Radius of the cylinder and of its two mouths, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Half the length of the cylinder, a length; the mouths are the spheres $\\ell = \\pm a$"
+            },
+            {
+              "symbol": "M",
+              "description": "Length over which each mouth flares out into flat space, the part a black hole's mass plays for its horizon; the lensing width, the distance across the embedded surface over which it turns from vertical to $45°$, is $W = 1.42953\\,M$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\ell, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\ell$ the proper distance along a radial line, zero halfway along the cylinder. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -c^2dt^2 + d\\ell^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\ell",
+                "\\ell"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4r\\,\\partial_\\ell^2 r + 2\\left(\\partial_\\ell r\\right)^2 - 2}{r^2}",
+          "kretschmann": "K = \\dfrac{8r^2\\left(\\partial_\\ell^2 r\\right)^2 - 8\\left(\\partial_\\ell r\\right)^2 + 4\\left(\\partial_\\ell r\\right)^4 + 4}{r^4}"
+        },
+        {
+          "id": "cylinder",
+          "name": "Cylinder",
+          "coordinates": [
+            "t",
+            "\\ell",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\ell \\in [-a, a]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\ell = \\pm a \\;\\text{(the two mouths)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\rho",
+              "description": "Radius of the cylinder and of its two mouths, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Half the length of the cylinder, a length; the mouths are the spheres $\\ell = \\pm a$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\ell, \\theta, \\phi)$ on the cylinder between the mouths, with $t$ carrying dimensions of time and $\\ell$ the proper distance along a radial line from its middle. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -c^2dt^2 + d\\ell^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\ell",
+                "\\ell"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2}{\\rho^2}",
+          "kretschmann": "K = \\dfrac{4}{\\rho^4}"
+        },
+        {
+          "id": "flare",
+          "name": "Flare",
+          "coordinates": [
+            "t",
+            "\\ell",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\ell \\in [a, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\ell = a \\;\\text{(the mouth)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\rho",
+              "description": "Radius of the cylinder and of its two mouths, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Half the length of the cylinder, a length; the mouths are the spheres $\\ell = \\pm a$"
+            },
+            {
+              "symbol": "M",
+              "description": "Length over which each mouth flares out into flat space, the part a black hole's mass plays for its horizon; the lensing width, the distance across the embedded surface over which it turns from vertical to $45°$, is $W = 1.42953\\,M$"
+            },
+            {
+              "symbol": "x = \\dfrac{2\\left(\\ell - a\\right)}{\\pi M}",
+              "description": "Distance beyond the mouth in units of $\\pi M/2$, a pure number"
+            },
+            {
+              "symbol": "r = \\rho + M\\left(x\\arctan(x) - \\dfrac{1}{2}\\ln\\left(1 + x^2\\right)\\right)",
+              "description": "Areal radius, a length, $\\rho$ at the mouth and growing as $\\ell$ far away"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\ell, \\theta, \\phi)$ beyond the mouth $\\ell = a$, with $t$ carrying dimensions of time and $\\ell$ the proper distance along a radial line from the middle of the cylinder; the flare beyond $\\ell = -a$ is its mirror image under $\\ell \\to -\\ell$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -c^2dt^2 + d\\ell^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\ell",
+                "\\ell"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(\\pi^2 - 4\\arctan(x)^2\\right)}{\\pi^2\\,r^2} - \\dfrac{16}{\\pi^2M\\,r\\left(1 + x^2\\right)}",
+          "kretschmann": "K = \\dfrac{128}{\\pi^4M^2r^2\\left(1 + x^2\\right)^2} + \\dfrac{4\\left(\\pi^2 - 4\\arctan(x)^2\\right)^2}{\\pi^4r^4}"
+        }
+      ]
+    },
+    {
       "id": "israel_shell",
       "name": "Israel's Collapsing Shell of Dust",
       "short_name": "Israel Shell",
@@ -26473,6 +26750,11 @@
           "id": "kerr_bertotti_robinson",
           "kind": "generalisation",
           "text": "Kerr's hole in a magnetic field that points along its axis and is uniform far away, an exact solution of type D. With the field switched off it is Kerr's metric again [podolsky2025]."
+        },
+        {
+          "id": "interstellar_wormhole",
+          "kind": "programme",
+          "text": "The wormhole of the same film, Interstellar, drawn by the same team with the same code as Gargantua [james2015, james2015lensing]."
         }
       ],
       "references": [
@@ -26540,7 +26822,8 @@
         "ernst1976c",
         "gibbons2013",
         "semerak2016",
-        "podolsky2025"
+        "podolsky2025",
+        "james2015"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -36544,6 +36827,11 @@
           "id": "einstein_dirac_maxwell_wormhole",
           "kind": "special_case",
           "text": "The wormhole held open by an electric field and two massless Dirac fields, with $e^{\\Phi} = 1 - M/r$ and $b = r_0 + Q_e^2/r_0 - Q_e^2/r$ [blazquez2021]."
+        },
+        {
+          "id": "interstellar_wormhole",
+          "kind": "special_case",
+          "text": "The wormhole of the film Interstellar: $\\Phi = 0$, and an areal radius that holds at $\\rho$ along a cylinder of length $2a$ and flares out at each end into flat space. Kip Thorne built it with the effects team of Double Negative in 2014, a quarter century after this paper [james2015]."
         }
       ],
       "references": [
@@ -36570,7 +36858,8 @@
         "boonserm2018",
         "agnese1995",
         "clement2016",
-        "blazquez2021"
+        "blazquez2021",
+        "james2015"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -41473,6 +41762,11 @@
           "id": "cremmer_scherk",
           "kind": "family",
           "text": "Cremmer and Scherk's solution of 1976: Minkowski space of four dimensions times a sphere of radius $a$ in six dimensions, the sphere held by a monopole's field and the flat dimensions by $\\Lambda = 1/2a^2$ [horvath1977]. The flat plane times a sphere is the same balance with two flat dimensions."
+        },
+        {
+          "id": "interstellar_wormhole",
+          "kind": "composite",
+          "text": "Interstellar's wormhole has a piece of the flat plane times a sphere for its middle, with $b$ the wormhole's radius $\\rho$: a cylinder of length $2a$ whose two ends flare out into flat space [james2015]."
         }
       ],
       "references": [
@@ -41488,7 +41782,8 @@
         "caldarelli2001extremal",
         "dias2003",
         "podolsky2003kundt",
-        "horvath1977"
+        "horvath1977",
+        "james2015"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/plebanski_hacyan.json",
@@ -46040,6 +46335,11 @@
           "id": "kerr_bertotti_robinson",
           "kind": "generalisation",
           "text": "Schwarzschild's hole set spinning in a magnetic field that is uniform far away. With no field and no spin it is Schwarzschild's metric, and with no spin alone its horizon moves outward as the field grows [podolsky2025]."
+        },
+        {
+          "id": "interstellar_wormhole",
+          "kind": "family",
+          "text": "The wormhole of the film Interstellar flares out of each mouth roughly as space opens out from Schwarzschild's horizon, a shape its builders chose for the flare with the mass and the mouth's radius set free of one another [james2015]."
         }
       ],
       "references": [
@@ -46164,7 +46464,8 @@
         "ernst1976c",
         "antoci2001",
         "basovnik2016",
-        "podolsky2025"
+        "podolsky2025",
+        "james2015"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -55373,6 +55674,11 @@
           "id": "einstein_dirac_maxwell_wormhole",
           "kind": "family",
           "text": "A wormhole of Einstein-Dirac-Maxwell theory. Its numerical cousins, with massive, charged fermions, turned out to carry a shell of charge at the throat [danielson2021]."
+        },
+        {
+          "id": "interstellar_wormhole",
+          "kind": "family",
+          "text": "A smooth cousin built for the film Interstellar, whose mouths flare into flat space over a length $M$. As $M \\to 0$ with no cylinder between the mouths, it becomes this wormhole with no mass [james2015, visser1989prd]."
         }
       ],
       "references": [
@@ -55397,7 +55703,8 @@
         "friedman1990",
         "morris1988prl",
         "damour2007",
-        "danielson2021"
+        "danielson2021",
+        "james2015"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",

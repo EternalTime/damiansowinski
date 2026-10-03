@@ -68,6 +68,11 @@
       "id": "einstein_dirac_maxwell_wormhole",
       "kind": "family",
       "text": "A wormhole held open by an electric field and two massless Dirac fields, found by Blázquez-Salcedo, Knoll and Radu in 2021 while looking for one that needs no field of the wrong sign [blazquez2021]."
+    },
+    {
+      "id": "interstellar_wormhole",
+      "kind": "family",
+      "text": "A wormhole with three parameters, built for the film Interstellar because Christopher Nolan wanted to see how a wormhole's look depends on its shape, and Ellis's throat has one shape at every size [james2015]."
     }
   ],
   "references": [

@@ -2434,6 +2434,14 @@ FLAT = {
     # The Einstein-Dirac-Maxwell wormhole at r_0 = 1 and Q_e = 1/2: one side in the areal radius from the
     # throat r = r_0 out, and both sides through the throat, where u = +-sqrt(r - r_0) and
     # x = +-sqrt(1 - r_0/r).
+    # Interstellar's wormhole at a = rho = 1 and M = 1/2: the moment t = 0 through the whole wormhole in
+    # the proper distance, along the cylinder between its mouths l = -+a, and along the flare from l = a out.
+    ("interstellar_wormhole", "proper_distance", "radial"): lambda: one(
+        "interstellar_wormhole", lambda m: along(0.0, *m.reach("proper_distance", "\\ell"))),
+    ("interstellar_wormhole", "cylinder", "radial"): lambda: one(
+        "interstellar_wormhole", lambda m: along(0.0, -1.0, 1.0)),
+    ("interstellar_wormhole", "flare", "radial"): lambda: one(
+        "interstellar_wormhole", lambda m: along(0.0, 1.0, m.reach("proper_distance", "\\ell")[1])),
     ("einstein_dirac_maxwell_wormhole", "areal", "radial"): lambda: one(
         "einstein_dirac_maxwell_wormhole", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("einstein_dirac_maxwell_wormhole", "bronnikov_kim", "radial"): lambda: one(
