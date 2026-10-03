@@ -74,6 +74,11 @@
       "id": "distorted_schwarzschild",
       "kind": "family",
       "text": "Schwarzschild's rod with the potential of distant matter added to it in Weyl's class. That deformation comes from outside the body, and the horizon stays regular under it [geroch1982]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "The Weyl field of a hoop about the axis, where Zipoy and Voorhees's is that of a rod along it."
     }
   ],
   "references": [

@@ -73,6 +73,11 @@
       "id": "belinski_zakharov",
       "kind": "family",
       "text": "The whole Kerr-NUT solution is two solitons added to flat space by Belinski and Zakharov's inverse scattering method [belinskii1979]."
+    },
+    {
+      "id": "brill_charged_taub_nut",
+      "kind": "family",
+      "text": "Taub-NUT with a charge, where this one is Taub-NUT with a spin. Dieter Brill found it in 1964, and Plebański and Demiański's family holds both [brill1964, plebanski1976, griffiths2005]."
     }
   ],
   "references": [
@@ -97,7 +102,8 @@
     "emond2022",
     "wahlquist1968",
     "mars2001",
-    "belinskii1979"
+    "belinskii1979",
+    "brill1964"
   ],
   "coordinates": [
     {

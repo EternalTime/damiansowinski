@@ -2715,6 +2715,11 @@
       "id": "israel_shell",
       "kind": "family",
       "text": "The shell of dust Werner Israel tried his junction conditions on in 1966, falling in on flat space [israel1966]."
+    },
+    {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "kind": "family",
+      "text": "A wormhole of Einstein-Dirac-Maxwell theory. Its numerical cousins, with massive, charged fermions, turned out to carry a shell of charge at the throat [danielson2021]."
     }
   ],
   "references": [
@@ -2738,6 +2743,7 @@
     "teo1998",
     "friedman1990",
     "morris1988prl",
-    "damour2007"
+    "damour2007",
+    "danielson2021"
   ]
 }

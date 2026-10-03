@@ -112,6 +112,11 @@
       "id": "three_brane_throat",
       "kind": "family",
       "text": "Parallel three-branes of string theory stand at rest by the same balance, with a harmonic function of the six dimensions across them [dufflu1991, gibbons1995]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "A ring of uncharged matter with the same Newtonian potential as a circle of infinitely many extremal black holes. Oldřich Semerák found that the charged ring lies a finite distance from its centre and Bach and Weyl's an infinite one [semerak2016]."
     }
   ],
   "references": [
@@ -151,7 +156,8 @@
     "einstein1938",
     "cvetic1996dyonic",
     "dufflu1991",
-    "gibbons1995"
+    "gibbons1995",
+    "semerak2016"
   ],
   "coordinates": [
     {

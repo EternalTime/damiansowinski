@@ -70,6 +70,11 @@
       "id": "topological_black_hole",
       "kind": "family",
       "text": "Black holes of anti-de Sitter space with flat and hyperbolic horizons. The hyperbolic hole of negative mass has an inner horizon and a conformal diagram like this one's [mann1997negative, brill1997]."
+    },
+    {
+      "id": "freund_rubin",
+      "kind": "family",
+      "text": "Anti-de Sitter space of four dimensions times a 7-sphere. Charged black holes of anti-de Sitter space solve the gauged supergravity of that compactification, their charge coming from a rotation in the directions of the sphere [chamblin1999, awada1983]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "brecher2005",
     "kehle2020",
     "mann1997negative",
-    "brill1997"
+    "brill1997",
+    "awada1983"
   ],
   "coordinates": [
     {
