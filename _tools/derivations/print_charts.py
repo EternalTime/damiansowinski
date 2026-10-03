@@ -18,7 +18,8 @@ moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, disto
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, brill_charged_taub_nut,
-bach_weyl_ring, kerr_bertotti_robinson and einstein_dirac_maxwell_wormhole, and Godel's cylindrical chart.
+bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole and black_to_white_hole, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -43,6 +44,7 @@ misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, pet
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
 kerr_melvin.md and einstein_dirac_maxwell_wormhole.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
+black_to_white_hole.md beside this file records the charts of the black hole fireworks and their junction.
 """
 import argparse
 import fcntl
@@ -28808,6 +28810,225 @@ def einstein_dirac_maxwell_wormhole_check(chart, system):
 
 
 CHARTS["einstein_dirac_maxwell_wormhole"] = [lambda s=s: einstein_dirac_maxwell_wormhole(s) for s in EDM_CHARTS]
+
+
+# -- Black hole fireworks: a black hole that tunnels into a white hole --------------------------
+
+BWH_CHARTS = ("interior", "kruskal", "schwarzschild", "painleve_gullstrand_ingoing", "painleve_gullstrand_outgoing",
+              "lemaitre")
+BWH_LEMAITRE_RADIUS = "r = r_s^{1/3}\\left(\\dfrac{3}{2}\\left(\\rho - c\\tau\\right)\\right)^{2/3}"
+
+
+def black_to_white_hole(system):
+    """The bounce of a shell of light from a black hole into a white hole, Haggard and Rovelli,
+    Phys. Rev. D 92, 104020 (2015), arXiv:1407.0989: flat space inside the shell, a piece of
+    Kruskal's spacetime outside it, glued to its time reverse, with a quantum region round the
+    bounce where no metric is given. Every chart is a piece of Minkowski's or Schwarzschild's
+    spacetime:
+
+    interior                       Haggard and Rovelli's region I, their (24), and De Lorenzo and
+                                   Perez's (9), Phys. Rev. D 93, 124018 (2016): the null
+                                   coordinates u = ct - r, v = ct + r of flat space;
+    kruskal                        Haggard and Rovelli's region II, their (3) and (4), with
+                                   32 m^3 = 4 r_s^3, the chart of white_hole;
+    schwarzschild                  the exterior in Schwarzschild's chart, their (34) to (38);
+    painleve_gullstrand_ingoing    Barcelo, Carballo-Rubio and Garay's acoustic metric, Int. J. Mod.
+    painleve_gullstrand_outgoing   Phys. D 23, 1442022 (2014), their (2) and (3), with v = -sqrt(r_s/r)
+                                   before the bounce and v = +sqrt(r_s/r) after it;
+    lemaitre                       Christodoulou, Rovelli, Speziale and Vilensky's (8) and (9), Phys.
+                                   Rev. D 94, 084035 (2016), with r_s = 2m.
+
+    black_to_white_hole_check holds the interior to Minkowski's published chart of the same name
+    and to a vanishing Riemann tensor, and every other chart to a vacuum and to Schwarzschild's
+    published chart pulled back; black_to_white_hole.md records the sources and the junction."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+    def check(chart):
+        return black_to_white_hole_check(chart, system)
+    if system == "interior":
+        coords = ["u", "v", "\\theta", "\\phi"]
+        line = "ds^2 = -du\\,dv + \\dfrac{(v - u)^2}{4}" + sphere
+        probe = vm.Reader(coords, [], ())
+        u, v = probe.symbol["u"], probe.symbol["v"]
+        return {
+            "metric_id": "black_to_white_hole",
+            "system": {"id": system, "name": "Flat Interior", "coords": coords,
+                       "domains": ["u \\in (-\\infty, \\infty)", "v \\in [u, \\infty)"] + angles
+                       + ["v \\le 0 \\;\\text{(inside the shell falling in)}",
+                          "u \\ge 0 \\;\\text{(inside the shell going out)}"],
+                       "parameters": [], "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [v, u], "factors": [v - u], "flip": False},
+            "check": check,
+        }
+    if system == "kruskal":
+        spec = dict(white_hole("exterior_kruskal"), metric_id="black_to_white_hole", check=check)
+        spec["system"] = dict(spec["system"], id=system, name="Kruskal Exterior",
+                              domains=["U \\in (-\\infty, \\infty)", "V \\in (-\\infty, \\infty)"] + angles
+                              + ["V \\ge V_0 \\;\\text{(outside the shell falling in)}",
+                                 "UV < 1 \\;\\text{(where } r > 0\\text{)}",
+                                 "U = 0 \\;\\text{(the apparent horizon)}"])
+        return spec
+    parameters = ["r_s"]
+    if system == "schwarzschild":
+        spec = dict(white_hole("exterior_schwarzschild"), metric_id="black_to_white_hole", check=check)
+        spec["system"] = dict(spec["system"], id=system, name="Schwarzschild Exterior",
+                              domains=["t \\in (-\\infty, \\infty)", "r \\in [R(t), \\infty)"] + angles + ["r > r_s"])
+        return spec
+    if system in ("painleve_gullstrand_ingoing", "painleve_gullstrand_outgoing"):
+        coords = ["t", "r", "\\theta", "\\phi"]
+        sign = "+" if system.endswith("ingoing") else "-"
+        flow = "\\sqrt{\\dfrac{r_s}{r}}"
+
+        def line(c, c2):
+            return ("ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)" + c2 + "dt^2 " + sign + " 2" + flow + "\\," + c
+                    + "dt\\,dr + dr^2 + r^2" + sphere)
+        probe = vm.Reader(coords, parameters, ())
+        r, rs = probe.symbol["r"], probe.parameters["r_s"]
+        name = "Ingoing Painlevé-Gullstrand" if sign == "+" else "Outgoing Painlevé-Gullstrand"
+        return {
+            "metric_id": "black_to_white_hole",
+            "system": {"id": system, "name": name, "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in [R(t), \\infty)"] + angles
+                       + ["r = r_s \\;\\text{(the apparent horizon)}"],
+                       "parameters": parameters, "line_element": line("c\\,", "c^2")},
+            "chart_line_element": line("", ""),
+            "printer": {"rising": [rs], "lead": [r, rs], "flip": False},
+            "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+            "check": check,
+        }
+    coords, parameters = ["\\tau", "\\rho", "\\theta", "\\phi"], ["r_s", BWH_LEMAITRE_RADIUS]
+    chart_parameters = ["r_s", BWH_LEMAITRE_RADIUS.replace("c\\tau", "\\tau")]
+
+    def line(c2):
+        return "ds^2 = -" + c2 + "d\\tau^2 + \\dfrac{r_s}{r}\\,d\\rho^2 + r^2" + sphere
+    probe = vm.Reader(coords, chart_parameters, (), held=("r",))
+    return {
+        "metric_id": "black_to_white_hole",
+        "system": {"id": system, "name": "Lemaître", "coords": coords,
+                   "domains": ["\\tau \\in (-\\infty, \\infty)", "\\rho \\in (c\\tau, \\infty)"] + angles
+                   + ["r \\ge R \\;\\text{(outside the shell falling in)}",
+                      "\\rho - c\\tau = \\dfrac{2r_s}{3} \\;\\text{(the apparent horizon)}"],
+                   "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "chart_parameters": chart_parameters,
+        "time": "\\tau",
+        # A sum rho - c tau leads with rho, and -(c tau - rho) is printed as rho - c tau.
+        "printer": {"lead": [probe.symbol["\\rho"], probe.parameters["r"], probe.parameters["r_s"]],
+                    "factors": [probe.parameters["r"], probe.parameters["r_s"], probe.symbol["\\rho"]], "flip": True},
+        "reduce": black_to_white_hole_lemaitre(probe),
+        "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+        "check": check,
+    }
+
+
+def black_to_white_hole_lemaitre(reader):
+    """A `reduce` for Lemaitre's chart, whose areal radius is held as a function r(tau, rho). In the
+    chart x^0 = c tau its definition, r^(3/2) = (3/2) sqrt(r_s) (rho - x^0), makes
+
+        d_0 r = -sqrt(r_s/r),    d_rho r = sqrt(r_s/r),
+
+    or, by the definition, -2r/(3(rho - x^0)) and 2r/(3(rho - x^0)), the form taken here: every
+    derivative of r is written by them, so that a value is a rational function of r, rho - x^0 and
+    r_s, with no root, the form in which the checker compares it."""
+    tau, rho = reader.symbol["\\tau"], reader.symbol["\\rho"]
+    r, rs = reader.parameters["r"], reader.parameters["r_s"]
+    rates = {tau: -2 * r / (3 * (rho - tau)), rho: 2 * r / (3 * (rho - tau))}
+    Q, R = sp.Dummy("Q", positive=True), sp.Dummy("R", positive=True)
+
+    def reduce(value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(reduce)
+        for _ in range(8):
+            derivatives = value.atoms(sp.Derivative)
+            if not derivatives:
+                break
+            written = {}
+            for d in derivatives:
+                (variable, order), *rest = d.variable_count
+                written[d] = sp.Derivative(rates[variable], (variable, order - 1), *rest).doit()
+            value = value.xreplace(written)
+        else:
+            raise AssertionError("black_to_white_hole: the derivatives of Lemaitre's areal radius do not settle")
+        # Every square of rho - x^0 is 4r^3/(9 r_s), so a value keeps at most its first power.
+        plain = sp.cancel(sp.together(value.subs(r, R).subs(rho, tau + Q)))
+        num, den = (sp.rem(sp.expand(x), Q ** 2 - 4 * R ** 3 / (9 * rs), Q) for x in sp.fraction(plain))
+        return sp.factor(sp.cancel((num / den).subs(Q, rho - tau))).subs(R, r)
+
+    return reduce
+
+
+def black_to_white_hole_check(chart, system):
+    """The interior is Minkowski's published chart spherical_null with c u and c v for its u and v,
+    and flat. Every other chart is a vacuum, and Schwarzschild's published chart pulled back: the
+    Kruskal chart by white_hole_check; the Painleve-Gullstrand charts along ct = cT -+ (2 sqrt(r_s r)
+    + r_s ln|(sqrt(r) - sqrt(r_s))/(sqrt(r) + sqrt(r_s))|), the upper sign before the bounce, where T
+    is Schwarzschild's time; and Lemaitre's chart along r = r_s^(1/3) (3(rho - c tau)/2)^(2/3) and
+    the Painleve-Gullstrand time, c tau = ct."""
+    geo, g = chart.geo, chart.geo.g
+    if system == "kruskal":
+        return white_hole_check(chart, "exterior_kruskal")
+    if system == "schwarzschild":
+        return white_hole_check(chart, "exterior_schwarzschild")
+    if system == "interior":
+        riemann = geo.riemann_ulll()
+        if any(vm.norm(riemann[a][b][c][d]) != 0 for a, b, c, d in itertools.product(range(4), repeat=4)):
+            raise AssertionError("black_to_white_hole: the interior is not flat")
+        published = next(c for c in json.loads((METRICS / "minkowski.json").read_text(encoding="utf-8"))
+                         ["coordinates"] if c["id"] == "spherical_null")
+        there = vm.Reader(published["coords"], [], ())
+        # Minkowski's u and v are times, so its published components in the chart cu, cv are ours.
+        swap = {there.symbol[n]: chart.reader.symbol[n] / there.c if n in ("u", "v") else chart.reader.symbol[n]
+                for n in published["coords"]}
+        values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+        for i in range(4):
+            for j in range(4):
+                text = values.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+                if vm.norm(there(text).subs(swap) - g[i, j]) != 0:
+                    raise AssertionError(f"black_to_white_hole: the interior misses Minkowski's spherical_null "
+                                         f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        ricci = geo.ricci_ll()
+        if any(vm.norm(ricci[a][b]) != 0 for a in range(4) for b in range(4)):
+            raise AssertionError("black_to_white_hole: the interior is not a vacuum")
+        return
+    ricci = geo.ricci_ll()
+    if any(vm.norm(chart.reader.surface(ricci[a][b])) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError(f"black_to_white_hole: the {system} chart is not a vacuum")
+    # Schwarzschild's metric in (T, r), pulled back along T(t, r) or along (T, r)(tau, rho).
+    T, x = sp.Symbol("T", real=True), sp.Symbol("x", positive=True)
+    rs = chart.reader.parameters["r_s"]
+    f = 1 - rs / x
+    schwarzschild = sp.diag(-f, 1 / f)
+    if system.startswith("painleve_gullstrand"):
+        t, r = chart.symbols[:2]
+        sign = 1 if system.endswith("ingoing") else -1
+        # dT/dr at fixed t: the chart's t is T + sign * h(r) with h' = sqrt(r_s/r)/f.
+        hprime = sp.sqrt(rs / r) / (1 - rs / r)
+        J = sp.Matrix([[1, -sign * hprime], [0, 1]])
+        pulled = J.T * schwarzschild.subs(x, r) * J
+        if any(vm.norm(pulled[i, j] - g[i, j]) != 0 for i in range(2) for j in range(2)):
+            raise AssertionError(f"black_to_white_hole: the {system} chart is not Schwarzschild's pulled back")
+        return
+    # In the chart x^0 = c tau: r = r_s^(1/3) (3(rho - tau)/2)^(2/3), the Painleve-Gullstrand time is tau,
+    # and the ingoing Painleve-Gullstrand metric pulled back along t = tau, r = r(tau, rho) is
+    # -d tau^2 + (r_s/r) d rho^2. Positive symbols of its own let the powers combine.
+    tau, rho, s = sp.symbols("tau rho s", positive=True)
+    radius = s ** sp.Rational(1, 3) * (sp.Rational(3, 2) * (rho - tau)) ** sp.Rational(2, 3)
+    pg = sp.Matrix([[-(1 - s / x), sp.sqrt(s / x)], [sp.sqrt(s / x), 1]])
+    J = sp.Matrix([[1, 0], [sp.diff(radius, tau), sp.diff(radius, rho)]])
+    pulled = J.T * pg.subs(x, radius) * J
+    want = sp.diag(-1, s / radius)
+    if any(sp.simplify(sp.powsimp(sp.expand_power_base(pulled[i, j] - want[i, j], force=True), force=True)) != 0
+           for i in range(2) for j in range(2)):
+        raise AssertionError("black_to_white_hole: Lemaitre's chart is not the Painleve-Gullstrand chart pulled back")
+    held = chart.reader.parameters["r"]
+    if vm.norm(g[0, 0] + 1) != 0 or vm.norm(g[1, 1] - rs / held) != 0 or vm.norm(g[0, 1]) != 0:
+        raise AssertionError("black_to_white_hole: Lemaitre's published line element is not -d tau^2 + (r_s/r) d rho^2")
+
+
+CHARTS["black_to_white_hole"] = [lambda s=s: black_to_white_hole(s) for s in BWH_CHARTS]
 
 
 def write(spec):

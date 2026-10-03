@@ -79,6 +79,11 @@
       "id": "hiscock",
       "kind": "family",
       "text": "The evaporating hole Hayward took the surface of pair creation from, with negative energy falling in and positive energy going out. Hiscock's keeps its singularity, and the last point of it is naked [hayward2006, hiscock1981]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "family",
+      "text": "Another end to a collapse with no event horizon, a shell of light that tunnels from a black hole into a white hole. Haggard and Rovelli count Hayward's black hole among the models behind theirs [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -101,7 +106,8 @@
     "vagnozzi2023",
     "simpson2019",
     "mazur2004",
-    "carballorubio2021"
+    "carballorubio2021",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {

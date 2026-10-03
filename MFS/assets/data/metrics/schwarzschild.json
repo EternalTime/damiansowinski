@@ -458,6 +458,11 @@
       "id": "kerr_bertotti_robinson",
       "kind": "generalisation",
       "text": "Schwarzschild's hole set spinning in a magnetic field that is uniform far away. With no field and no spin it is Schwarzschild's metric, and with no spin alone its horizon moves outward as the field grows [podolsky2025]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "composite",
+      "text": "A shell of light falls into a black hole and comes back out of a white hole. Haggard and Rovelli cut both flaps from Schwarzschild's spacetime and put a quantum region between them [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -582,7 +587,8 @@
     "ernst1976c",
     "antoci2001",
     "basovnik2016",
-    "podolsky2025"
+    "podolsky2025",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {

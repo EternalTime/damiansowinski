@@ -2093,6 +2093,24 @@ DIMENSIONS = {
     ("schrodinger_spacetime", "poincare_6d"): {
         "t": "T", "\\xi": "L", "x_1": "L", "x_2": "L", "x_3": "L", "r": "L", "L": "L", "\\beta": "L",
     },
+    # Haggard and Rovelli's bounce of a shell of light: the null coordinates of the flat interior,
+    # u = ct - r and v = ct + r, are lengths; Kruskal's U and V are numbers, with the factor
+    # 4 r_s^3 e^(-r/r_s)/r carrying the area; Schwarzschild's and Painleve and Gullstrand's t is a
+    # time; Lemaitre's tau is a time and rho a length.
+    ("black_to_white_hole", "interior"): {"u": "L", "v": "L", "\\theta": "1", "\\phi": "1"},
+    ("black_to_white_hole", "kruskal"): {
+        "U": "1", "V": "1", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
+    },
+    ("black_to_white_hole", "schwarzschild"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L"},
+    ("black_to_white_hole", "painleve_gullstrand_ingoing"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("black_to_white_hole", "painleve_gullstrand_outgoing"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("black_to_white_hole", "lemaitre"): {
+        "\\tau": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
+    },
 }
 
 # What a field carries when every coordinate is a length; the indices supply the rest.
@@ -2269,6 +2287,11 @@ HELD = {
     # holds the conformal factor Omega, f and P, as its line element writes them.
     ("kerr_bertotti_robinson", "boyer_lindquist"): ("Q", "P", "omega", "N", "F", "W"),
     ("kerr_bertotti_robinson", "static"): ("Omega", "f", "P"),
+    # The areal radius of Haggard and Rovelli's Kruskal chart, as white_hole's, and of Lemaitre's
+    # chart, a power 2/3 of rho - c tau: its values are rational in r and rho - c tau, each square
+    # of rho - c tau written 4r^3/(9 r_s), and compare once r is written out.
+    ("black_to_white_hole", "kruskal"): ("r",),
+    ("black_to_white_hole", "lemaitre"): ("r",),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names

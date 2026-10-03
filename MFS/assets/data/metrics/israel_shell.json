@@ -62,6 +62,11 @@
       "id": "charged_shell",
       "kind": "generalisation",
       "text": "Israel's shell given a charge, with Reissner-Nordström's field outside. With more charge than rest mass it turns round inside the inner horizon and leaves into another exterior [delacruz1967]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "family",
+      "text": "The same collapse made of light, which Haggard and Rovelli let bounce and come back out through a white hole [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "boulware1973",
     "hajicek1992",
     "visser1989nuclphysb",
-    "visser2004"
+    "visser2004",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {

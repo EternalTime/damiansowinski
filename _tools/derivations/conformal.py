@@ -106,6 +106,7 @@ import slices
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
+import black_to_white_hole as bwh  # noqa: E402
 import boson_star as bs  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
@@ -22978,6 +22979,211 @@ def moving_mirror(ck, src):
     return views
 
 
+
+# ---------------------------------------------------------------- Haggard and Rovelli's fireworks
+
+def black_to_white_hole(ck, src):
+    """Haggard and Rovelli's bounce of a shell of light, as black_to_white_hole.py draws it, r_s = 1:
+    the whole spacetime, each point a 2-sphere, Minkowski's triangle with the shell falling in from
+    the middle of I^- to the bounce at the centre and going out to the middle of I^+.
+
+    Inside the shell p = arctan u and q = arctan v, Minkowski's own maps, so the shell falling in is
+    q = 0, the shell going out is p = 0, the bounce is the origin and the centre is X = 0. Outside
+    it, in region II, p = arctan of the interior ray that each outgoing ray U continues across the
+    shell, so p is continuous there. q = q(V) is fixed by two conditions: q = 0 on the shell, where
+    region I's q is zero, and q(V) = -p(-V) beyond the ingoing ray through Delta, so that the surface
+    of time symmetry U + V = 0 is the line T = 0; between the shell and that ray it rises in
+    proportion to V and stays below the value that would put the geodesic from Delta to E on T = 0,
+    so the geodesic lies below T = 0, E at T = -pi/4, and the quantum region opens between the
+    geodesic and its mirror image. The flap after the bounce and the flat space inside the shell
+    going out are the mirror images, (p, q) -> (-q, -p) of the time reverse (U, V) -> (-V, -U).
+    q has a corner on the ray through Delta, which carries the corner where the flaps are glued.
+
+    One view per chart, each tinting what its chart covers: the flat interior inside both shells,
+    Kruskal's chart on both flaps, Schwarzschild's chart outside r_s on both, the ingoing
+    Painleve-Gullstrand and Lemaitre charts on the flap before the bounce and the outgoing
+    Painleve-Gullstrand chart on the flap after it."""
+    b = bwh
+    inner = Plane(src, "black_to_white_hole", "interior", ("u", "v"), EQUATOR, {})
+    krus = Plane(src, "black_to_white_hole", "kruskal", ("U", "V"), EQUATOR, {"r_s": 1})
+    static = Plane(src, "black_to_white_hole", "schwarzschild", ("t", "r"), EQUATOR, {"r_s": 1})
+    pg_in = Plane(src, "black_to_white_hole", "painleve_gullstrand_ingoing", ("t", "r"), EQUATOR, {"r_s": 1})
+    pg_out = Plane(src, "black_to_white_hole", "painleve_gullstrand_outgoing", ("t", "r"), EQUATOR, {"r_s": 1})
+    lem = Plane(src, "black_to_white_hole", "lemaitre", ("\\tau", "\\rho"), EQUATOR, {"r_s": 1})
+
+    def mirror(pq):
+        p, q = pq
+        return -np.asarray(q), -np.asarray(p)
+
+    def keep(x0, x1, inside, n=1500):
+        """The first n samples of (x0, x1) that inside() says are in the region."""
+        x0, x1 = np.asarray(x0), np.asarray(x1)
+        good = inside(x0, x1) > 0
+        return x0[good][:n], x1[good][:n]
+
+    # Region I and its mirror image, flat, in the null coordinates of the interior.
+    v = ck.uniform(-15, -0.01)
+    u = v - ck.uniform(0.01, 30)
+    ck.chart("Fireworks, flat inside the shell falling in", inner, b.conformal_one, u, v, lambda u, v: (1, 1))
+    u = ck.uniform(0.01, 15)
+    ck.chart("Fireworks, flat inside the shell going out", inner, b.conformal_one, u, u + ck.uniform(0.01, 30),
+             lambda u, v: (1, 1))
+    # Region II and its mirror image in Kruskal's chart.
+    U, V = keep(ck.uniform(-8, b.U_E), ck.uniform(b.V0, 8), b.region_two)
+    ck.chart("Fireworks, Kruskal's chart before the bounce", krus, b.conformal_two, U, V, lambda U, V: (1, 1))
+    U, V = keep(-ck.uniform(b.V0, 8), -ck.uniform(-8, b.U_E), lambda U, V: b.region_two(-V, -U))
+    ck.chart("Fireworks, Kruskal's chart after the bounce", krus, b.conformal_two_reversed, U, V, lambda U, V: (1, 1))
+    # Schwarzschild's chart outside r_s on either flap.
+    t, r = keep(ck.uniform(-10, 4), ck.uniform(1.01, 20), lambda t, r: b.region_two(*b.schwarzschild_UV(t, r)))
+    ck.chart("Fireworks, Schwarzschild's chart before the bounce", static,
+             lambda t, r: b.conformal_two(*b.schwarzschild_UV(t, r)), t, r, lambda t, r: (1, 0))
+    t, r = keep(ck.uniform(-4, 10), ck.uniform(1.01, 20),
+                lambda t, r: b.region_two(*mirror(b.schwarzschild_UV(t, r))))
+    ck.chart("Fireworks, Schwarzschild's chart after the bounce", static,
+             lambda t, r: b.conformal_two_reversed(*b.schwarzschild_UV(t, r)), t, r, lambda t, r: (1, 0))
+    # The Painleve-Gullstrand charts, through r_s, where their observers, falling in at dr/dt = -sqrt(r_s/r)
+    # or flying out at +sqrt(r_s/r), are the future directed vectors; and Lemaitre's.
+    t, r = keep(ck.uniform(-10, 4), ck.uniform(0.51, 20), lambda t, r: b.region_two(*b.painleve_UV(t, r)))
+    ck.chart("Fireworks, the ingoing Painleve-Gullstrand chart", pg_in,
+             lambda t, r: b.conformal_two(*b.painleve_UV(t, r)), t, r, lambda t, r: (1, -1 / np.sqrt(r)))
+    ck.chart("Fireworks, the outgoing Painleve-Gullstrand chart", pg_out,
+             lambda t, r: mirror(b.conformal_two(*b.painleve_UV(-t, r))), -t, r, lambda t, r: (1, 1 / np.sqrt(r)))
+    rho = t + 2 * r ** 1.5 / 3
+    ck.chart("Fireworks, Lemaitre's chart", lem, lambda tau, rho: b.conformal_two(*b.lemaitre_UV(tau, rho)),
+             t, rho, lambda tau, rho: (1, 0))
+
+    # The limits that place the shell, the surface of time symmetry and the quantum region.
+    ray = -spread(1.0, 40, 200)
+    ck.limit("Fireworks: the two sides put the shell falling in at one place",
+             np.concatenate(b.conformal_one(ray, 0 * ray)), np.concatenate(b.conformal_two(b.shell_U(ray), b.V0 + 0 * ray)),
+             1e-9)
+    far = spread(b.V_DELTA, 60, 200)
+    p, q = b.conformal_two(-far, far)
+    ck.limit("Fireworks: the surface of time symmetry outside Delta is T = 0", p + q, 0, 1e-12)
+    Ug, Vg, rg = b.geodesic()
+    p, q = b.conformal_two(Ug, Vg)
+    ck.limit("Fireworks: the geodesic from Delta to E stays below T = 0", np.maximum(p + q, 0), 0, 1e-12)
+    ck.limit("Fireworks: E is on the shell at p = -pi/4, q = 0", [p[-1], q[-1]], [-Q4, 0], 1e-9)
+    ck.limit("Fireworks: Delta is at r = 7/6 on U + V = 0", [rg[0], Ug[0] + Vg[0]], [7 / 6, 0], 1e-12)
+    ck.limit("Fireworks: the geodesic is spacelike and reaches E",
+             [float(np.all(np.diff(Ug) > 0) and np.all(np.diff(Vg) < 0)), Ug[-1], Vg[-1]], [1, b.U_E, b.V0], 1e-9)
+    ck.limit("Fireworks: the apparent horizon U = 0 is the interior ray u = -2r_s", [b.interior_u(0.0)], [-2], 1e-12)
+    ck.finite("Fireworks: the centre of the flat interior is regular",
+              inner.kretschmann(ck.uniform(-9, -1, 20), ck.uniform(-9, -1, 20) + 1e-6))
+
+    # The pieces in (p, q).
+    pE, qE = -Q4, 0.0
+    pD, qD = b.conformal_two(-b.V_DELTA, b.V_DELTA)
+    pD, qD = float(pD), float(qD)
+    edge = [point(pp, qq) for pp, qq in zip(p, q)]                 # Delta to E
+    edge_up = [point(*mirror((pp, qq))) for pp, qq in zip(p, q)]   # Delta to the image of E
+    i_minus, i_zero, i_plus = (-HALF, -HALF), (-HALF, HALF), (HALF, HALF)
+    region_one = [point(*i_minus), point(-HALF, 0), point(0, 0)]
+    region_one_up = [point(0, 0), point(0, HALF), point(*i_plus)]
+    region_two = ([point(-HALF, 0), point(pE, qE)] + edge[::-1]
+                  + [point(pD, qD), point(*i_zero)])
+    region_two_up = [[x, -t] for x, t in region_two]
+    quantum = [point(pE, qE), point(0, 0), point(0, -pE)] + edge_up[::-1][1:] + edge[1:-1]
+
+    def r_inside(r, up=False):
+        w = -2 * r - spread(0, np.inf, 400, 9)[::-1]
+        pq = b.conformal_one(w, w + 2 * r)
+        return mirror(pq) if up else pq
+
+    def r_outside(r, up=False):
+        V = b.V0 + spread(0, np.inf, 900, 10)
+        U = (1 - r) * np.exp(r) / V
+        good = b.region_two(U, V) > -1e-12
+        pq = b.conformal_two(np.where(good, U, np.nan), np.where(good, V, np.nan))
+        return mirror(pq) if up else pq
+
+    horizon_V = np.linspace(b.V0, float(b.sigma_V(0.0)), 60)
+    horizon = (np.full(60, float(b.p_of_U(0.0))), b.q_of_V(horizon_V))
+
+    views = []
+    covers = {
+        "interior": ([region_one, region_one_up], None,
+                     "inside the shell, falling in and going out, which $u$ and $v$ cover: flat"),
+        "kruskal": ([region_two], [region_two_up], None),
+        "schwarzschild": None,
+        "painleve_gullstrand_ingoing": ([region_two], None,
+                                        "the flap before the bounce, which the ingoing $t$ and $r$ cover"),
+        "painleve_gullstrand_outgoing": ([region_two_up], None,
+                                         "the flap after the bounce, which the outgoing $t$ and $r$ cover"),
+        "lemaitre": ([region_two], None, "the flap before the bounce, which $\\tau$ and $\\rho$ cover"),
+    }
+    # Schwarzschild's chart covers each flap outside r_s, the part of it beyond the apparent horizon.
+    beyond = [point(-HALF, 0), point(float(b.p_of_U(0.0)), 0)] + [point(*pq) for pq in zip(*horizon)]
+    outer = beyond + [point(pp, qq) for pp, qq in zip(p, q) if pp <= b.p_of_U(0.0)][::-1] + [point(pD, qD), point(*i_zero)]
+    outer_up = [[x, -t] for x, t in outer]
+    covers["schwarzschild"] = ([outer], [outer_up], None)
+    labels = {"interior": "Flat interior", "kruskal": "Kruskal's flaps", "schwarzschild": "Schwarzschild exterior",
+              "painleve_gullstrand_ingoing": "Before the bounce", "painleve_gullstrand_outgoing": "After the bounce",
+              "lemaitre": "Lemaître's chart"}
+    for system, (cover, cover2, words) in covers.items():
+        vw = View(system, labels[system], [-0.35, PI + 0.35, -PI - 0.3, PI + 0.3], system)
+        for piece in (region_one, region_one_up, region_two, region_two_up):
+            vw.fill("region", piece)
+        for piece in cover:
+            vw.fill("cover", piece)
+        for piece in cover2 or ():
+            vw.fill("cover2", piece)
+        vw.fill("removed", quantum)
+        for r in (0.5, 1, 2, 4):
+            vw.curve("r2", *r_inside(r))
+            vw.curve("r2", *r_inside(r, True))
+        for r in (0.6, 0.8, 1.25, 1.6, 2.5, 5):
+            vw.curve("r", *r_outside(r))
+            vw.curve("r", *r_outside(r, True))
+        vw.curve("apparent", *horizon)
+        vw.curve("apparent", *mirror(horizon))
+        vw.segment("surface", (-HALF, 0), (0, 0))
+        vw.segment("surface", (0, 0), (0, HALF))
+        vw.line("boundary", [edge, edge_up])
+        vw.segment("centre", i_minus, (0, 0))
+        vw.segment("centre", (0, 0), i_plus)
+        vw.segment("scri", i_minus, i_zero)
+        vw.segment("scri", i_zero, i_plus)
+        for pq in ((pE, qE), mirror((pE, qE)), (pD, qD)):
+            vw.point("mark", pq)
+        for pq, text, anchor, dx, dy in ((i_minus, "$i^-$", "t", 0, 6), (i_zero, "$i^0$", "l", 6, 0),
+                                         (i_plus, "$i^+$", "b", 0, -6)):
+            vw.point("infinity", pq)
+            vw.label(pq, text, anchor, dx=dx, dy=dy)
+        vw.label((-HALF, -Q4), "$\\mathscr{I}^-$", "tl", dx=6, dy=4)
+        vw.label((Q4, HALF), "$\\mathscr{I}^+$", "bl", dx=6, dy=-4)
+        vw.label((pE, qE), "$E$", "r", "small", dx=-6)
+        vw.label(mirror((pE, qE)), "$\\bar{E}$", "r", "small", dx=-6)
+        vw.label((pD, qD), "$\\Delta$", "l", "small", dx=6)
+        if words:
+            vw.legend("cover", words)
+        if system == "kruskal":
+            vw.legend("cover", "the flap before the bounce, which $U$ and $V$ cover")
+            vw.legend("cover2", "the flap after the bounce, its mirror image, which $U$ and $V$ cover again")
+        if system == "schwarzschild":
+            vw.legend("cover", "the flap before the bounce outside $r_s$, which $t$ and $r$ cover")
+            vw.legend("cover2", "the flap after the bounce outside $r_s$, which $t$ and $r$ cover again")
+        vw.legend("removed", "the quantum region, where no metric is given")
+        vw.legend("r", "$r$ constant outside the shell: $0.6$, $0.8$, $1.25$, $1.6$, $2.5$ and $5\\,r_s$")
+        vw.legend("r2", "$r$ constant inside the shell: $0.5$, $1$, $2$ and $4\\,r_s$")
+        vw.legend("surface", "the shell, a light ray in and a light ray out")
+        vw.legend("apparent", "the apparent horizons $r = r_s$, of the black hole and of the white hole")
+        vw.legend("boundary", "the edge of the quantum region, the geodesic from $\\Delta$ to $E$ and its mirror image")
+        vw.legend("centre", "$r = 0$, a regular centre")
+        vw.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        vw.set(input=nr.BWH_INPUT)
+        # Each moment of the embedding: Schwarzschild's slice ct = T outside the shell and the flat
+        # moment ct = -R inside it, meeting on the shell, which q = 0 carries on both sides.
+        for m in slices.moments("black_to_white_hole"):
+            lo, hi = m.reach("interior", "v")
+            v_in = np.linspace(lo, hi, 60)
+            r_lo, r_hi = m.reach("schwarzschild", "r")
+            r_out = r_lo + (r_hi - r_lo) * np.linspace(0, 1, 300) ** 2
+            vw.slice(m, [b.conformal_one(2 * lo - v_in, v_in),
+                         b.conformal_two(*b.schwarzschild_UV(np.full(300, m.time), r_out))])
+        views.append(vw)
+    return views
+
 DRAWN = {
     "moving_mirror": moving_mirror,
     "draining_bathtub": draining_bathtub,
@@ -23012,7 +23218,7 @@ DRAWN = {
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
     "datt_ruban_t_models": datt_ruban_t_models,
-    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "bowers_liang": bowers_liang, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
+    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "black_to_white_hole": black_to_white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "bowers_liang": bowers_liang, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
     "bonnor_charged_dust": bonnor_charged_dust,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
@@ -25850,6 +26056,36 @@ CAPTIONS = {
     ("semiclosed_world", "isotropic"): [
         "A semiclosed world ($\\chi_0 = 3\\pi/4$), each point in the diagram a 2-sphere, with the exterior ruled in $t$ and the isotropic radius $r$. These coordinates cover both sheets together, the far one where $r > r_s/4$ and the one behind the throat where $r < r_s/4$, and each line of constant $t$ runs through the bifurcation sphere from one to the other.",
         "The time $t$ is a single static coordinate, so behind the throat it increases toward the past, and the lines of constant $t$ that rise on the right fall on the left.",
+    ],
+    ("black_to_white_hole", "interior"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "The null coordinates $u$ and $v$ cover the flat space inside both shells, the inside of the past and future light cones of the bounce.",
+    ],
+    ("black_to_white_hole", "kruskal"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "Kruskal's $U$ and $V$ cover each flap, the second as the mirror image of the first, and in Kruskal's own spacetime the two overlap in a sliver about $U + V = 0$ beside $\\Delta$.",
+    ],
+    ("black_to_white_hole", "schwarzschild"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "Schwarzschild's $t$ and $r$ cover each flap outside its apparent horizon, where $t$ runs to $\\pm\\infty$ along $r_s$.",
+    ],
+    ("black_to_white_hole", "painleve_gullstrand_ingoing"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "The ingoing Painlevé-Gullstrand $t$ and $r$ cover the flap before the bounce, through its apparent horizon and the trapped region behind it.",
+    ],
+    ("black_to_white_hole", "painleve_gullstrand_outgoing"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "The outgoing Painlevé-Gullstrand $t$ and $r$ cover the flap after the bounce, through the apparent horizon of the white hole and the region behind it.",
+    ],
+    ("black_to_white_hole", "lemaitre"): [
+        "A shell of light that falls into a black hole and comes back out of a white hole ($V_0 = 3/5$, $E$ at $r = r_s/2$, $\\Delta$ at $r = 7r_s/6$), each point in the diagram a 2-sphere. The causal structure is Minkowski's, with no event horizon: the shell falls in from the middle of $\\mathscr{I}^-$, bounces at the centre at $T = 0$, and goes out to the middle of $\\mathscr{I}^+$. Inside the shell $p = \\arctan u$ and $q = \\arctan v$, and outside it $p$ continues each outgoing light ray across the shell, while $q$ puts the surface of time symmetry outside $\\Delta$ on the line $T = 0$ and the geodesic from $\\Delta$ to $E$ below it.",
+        "The quantum region lies between that geodesic and its mirror image, from $E$ and its mirror image on the shell out to $\\Delta$, outside the apparent horizons, and $\\bar{E}$ is the mirror image of $E$. Below it the black hole flap holds a trapped region, between the shell, the apparent horizon $r = r_s$, and the geodesic, and above it the white hole flap holds the mirror image of that region. The curves of constant $r$ outside the shell turn where they cross the two light rays through $\\Delta$, the corner where the flaps meet each other and the quantum region.",
+        "Lemaître's $\\tau$ and $\\rho$ cover the flap before the bounce, through its apparent horizon and the trapped region behind it.",
     ],
     ("white_hole", "burst"): [
         "A spherically symmetric distribution of dust that leaves a singularity, comes to rest ($R_0 = 2\\,r_s$), "
