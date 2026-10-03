@@ -448,6 +448,26 @@
       "id": "kerr_melvin",
       "kind": "generalisation",
       "text": "A spinning black hole in a magnetic universe. With no spin and no field, $a = 0$ and $B = 0$, it is Schwarzschild's black hole [ernst1976c]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "The Weyl field of a hoop, where Schwarzschild's is that of a rod on the axis [antoci2001]. A ring set around the hole changes the curvature inside the horizon strongly [basovnik2016]."
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "kind": "generalisation",
+      "text": "Schwarzschild's hole set spinning in a magnetic field that is uniform far away. With no field and no spin it is Schwarzschild's metric, and with no spin alone its horizon moves outward as the field grows [podolsky2025]."
+    },
+    {
+      "id": "topological_star",
+      "kind": "dual",
+      "text": "A star of five dimensions with no horizon. Without its magnetic field it is Schwarzschild's metric with the time made into a circle, whose horizon has become a bubble where space ends [bah2021]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric with one more term, $f = 1 - 2m/r + \\alpha m^2/r^4$ with $r_s = 2m$, the vacuum outside a ball of dust that bounces as loop quantum cosmology has it [lewandowski2023]."
     }
   ],
   "references": [
@@ -569,7 +589,12 @@
     "bowers1974",
     "visser1998",
     "berti2004",
-    "ernst1976c"
+    "ernst1976c",
+    "antoci2001",
+    "basovnik2016",
+    "podolsky2025",
+    "bah2021",
+    "lewandowski2023"
   ],
   "coordinates": [
     {

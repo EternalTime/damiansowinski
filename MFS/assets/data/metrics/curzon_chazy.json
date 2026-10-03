@@ -66,6 +66,11 @@
       "id": "distorted_schwarzschild",
       "kind": "family",
       "text": "A Weyl field too, the potential of Schwarzschild's rod plus the quadrupole potential of distant matter, where Curzon and Chazy's is the potential of a point [bicak2000, doroshkevich1965]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "generalisation",
+      "text": "The particle spread around a circle of radius $a$ in Weyl's coordinates. At $a = 0$ Bach and Weyl's ring is the Curzon-Chazy particle [semerak2016]."
     }
   ],
   "references": [
@@ -94,7 +99,8 @@
     "bicak1993",
     "emparanteo2001",
     "boshkayev2019",
-    "doroshkevich1965"
+    "doroshkevich1965",
+    "semerak2016"
   ],
   "coordinates": [
     {

@@ -1,0 +1,3736 @@
+{
+  "id": "quantum_btz",
+  "name": "Quantum BTZ Black Hole",
+  "short_name": "Quantum BTZ",
+  "description": "The black hole of three dimensions with the backreaction of strongly coupled quantum fields included exactly, read off a black hole on a brane in anti-de Sitter space of four dimensions. One more term in the metric of Bañados, Teitelboim, and Zanelli, $-\\ell F/r$, puts a curvature singularity at its centre and hides the conical singularities of negative mass behind horizons.",
+  "tags": [
+    "negative cosmological constant",
+    "cosmological constant",
+    "anti-de Sitter",
+    "black hole",
+    "BTZ black hole",
+    "rotating black hole",
+    "mass",
+    "angular momentum",
+    "horizon",
+    "event horizon",
+    "Cauchy horizon",
+    "curvature singularity",
+    "ring singularity",
+    "conical singularity",
+    "naked singularity",
+    "cosmic censorship",
+    "strong cosmic censorship",
+    "causal structure",
+    "black hole thermodynamics",
+    "black hole entropy",
+    "Hawking temperature",
+    "AdS/CFT",
+    "holography",
+    "braneworld",
+    "quantum field theory in curved spacetime",
+    "semiclassical gravity",
+    "2+1 dimensional gravity",
+    "circularly symmetric",
+    "exact solution",
+    "Lorentzian",
+    "idealized model",
+    "static",
+    "stationary",
+    "three-dimensional"
+  ],
+  "signature": "(-,+,+)",
+  "convention": "We keep factors of $c$ explicit. The length $\\ell_3$ is the anti-de Sitter radius of the brane, and $\\ell$ sets the strength of the backreaction.",
+  "history": "The black hole of Máximo Bañados, Claudio Teitelboim, and Jorge Zanelli, the BTZ black hole, is curved by the same amount at every point, since it is anti-de Sitter space of three dimensions with its points identified [banados1992, banados1993]. Quantum fields outside it still carry energy, and by Einstein's equations that energy should bend the geometry in turn [emparan2020qbtz]. Solving for the metric and the state of the fields together, from $G_{\\mu\\nu} = 8\\pi G\\langle T_{\\mu\\nu}\\rangle$, is \"often intractable\", so the usual approach takes the backreaction to be small and works one order at a time [emparan2020qbtz]. In three dimensions the problem can be solved exactly with holography, which trades strongly coupled quantum fields for classical gravity in four [emparan2020qbtz].¶Late in 1999, Roberto Emparan, Gary T. Horowitz, and Robert C. Myers built exact black holes bound to a brane, a wall with two dimensions of space inside anti-de Sitter space of four [emparan2000branes]. They took the metric of a black hole accelerating in anti-de Sitter space, the C-metric, cut it along a surface, and glued it to a copy of itself, so that the hole sits on the seam [emparan2000branes2, emparan2020qbtz]. Large holes on a flat brane appear as flattened pancakes, \"with a relatively small extent off the brane\" [emparan2000branes]. On a brane with a negative cosmological constant the largest are \"precisely BTZ black holes on the brane\", and in the fourth dimension they stretch out as black strings [emparan2000branes2]. The smaller ones stay close to the brane, and for one of them \"the horizon looks more like a cigar than a pancake\" [emparan2000branes2].¶Emparan, Alessandro Fabbri, and Nemanja Kaloper read the same holes again in 2002, as quantum black holes of three dimensions [emparan2002holograms]. Classical gravity in anti-de Sitter space is dual to a strongly coupled conformal field theory on its boundary, and a brane near that boundary carries the field theory together with gravity [emparan2002holograms]. A black hole on the brane that solves the classical equations in four dimensions is then the dual of a \"quantum-corrected\" black hole in three, with every planar diagram of the fields included [emparan2002holograms]. On a brane curved like anti-de Sitter space its metric is that of Bañados, Teitelboim, and Zanelli with one more term, which falls off as $1/r$ [emparan2002holograms]. For negative masses, where the classical metric has a naked conical singularity, they found \"classical conical spacetimes dressed with a horizon from the backreaction of the Casimir energy\" of the fields [emparan2002holograms]. No hole that stays near the brane is heavier than $m = c^2/(24\\mathcal{G}_3)$, which is $M = 1/3$, and above that the brane carries the classical metric \"without any corrections\" [emparan2002holograms, emparan2020qbtz].¶That analysis \"was incomplete\", and in 2020 Emparan, Antonia Micol Frassino, and Benson Way took the solution up again, rotation and all, and named it quBTZ [emparan2020qbtz]. The quantum correction is one term in the metric, $-\\ell F/r$, where the length $\\ell$ grows with the number of quantum fields and $F$ is fixed by the mass [emparan2020qbtz]. With it the curvature varies from point to point and diverges at $r = 0$, where the Kretschmann scalar $12/\\ell_3^4 + 6\\ell^2F^2/r^6$ grows without bound [emparan2020qbtz]. Gravity on the brane also picks up terms in the square of the curvature, which are those of new massive gravity [emparan2020qbtz]. For every mass between $M = 0$ and $M = 1/3$ there are two quantum holes, and both have \"higher temperature than the classical one with the same mass\" [emparan2020qbtz]. The rotating hole has a ring singularity at $r = 0$, \"which was not present in the classical rotating BTZ geometry\" [emparan2020qbtz].¶Which entropy obeys the first law of thermodynamics for such a hole? With quantum fields outside, the entropy of a black hole is a quarter of the area of its horizon plus the entanglement entropy of the fields across it, the generalised entropy $S_{\\rm gen}$ [emparan2020qbtz]. In four dimensions $S_{\\rm gen}$ is the area of the bulk horizon over $4G_4$, the formula of Shinsei Ryu and Tadashi Takayanagi for entanglement entropy applied to a braneworld [emparan2020qbtz, ryu2006]. With the mass and the angular momentum measured on the brane, it obeys the first law \"exactly, even in the presence of backreaction and with higher-curvature corrections\" [emparan2020qbtz]. The Bekenstein-Hawking entropy of the horizon on the brane does not [emparan2020qbtz]. The entropy lives in the bulk and the mass on the brane, quantities that \"belong in different worlds\", and their agreement is a test of the whole holographic reading [emparan2020qbtz].¶Quantum fields can stay regular on the inner horizon of the rotating BTZ hole at leading order, which seemed to break strong cosmic censorship [emparan2020scc]. Working in the four dimensional picture, Emparan and Marija Tomašević tied the inner horizon of the hole on the brane to that of a rotating hole in the bulk, and argued that the next order of backreaction makes it singular [emparan2020scc]. Marc Casals, Fabbri, Cristián Martínez, and Zanelli solved the semiclassical equations for a single conformally coupled scalar field to first order, and around the naked singularity of the rotating BTZ metric at negative mass its quantum effects form \"a horizon that shields it\" [casals2017]. In de Sitter space of three dimensions \"classical black holes do not exist\", and Emparan, Juan F. Pedraza, Andrew Svesko, Tomašević, and Manus R. Visser built quantum ones there from the same braneworld [emparan2022ds3]. The largest of them is as big as the cosmological horizon, in a limit like Nariai's [emparan2022ds3].",
+  "related": [
+    {
+      "id": "btz",
+      "kind": "special_case",
+      "text": "The classical hole. At $\\ell = 0$ the quantum term drops out, and the static chart is the metric of Bañados, Teitelboim, and Zanelli with no rotation [emparan2020qbtz]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "family",
+      "text": "The accelerating black hole, here taken in anti-de Sitter space of four dimensions. The quantum BTZ black hole is the metric induced on its surface $x = 0$, where the brane sits [emparan2000branes2, emparan2020qbtz]."
+    },
+    {
+      "id": "randall_sundrum",
+      "kind": "family",
+      "text": "Gravity bound to a brane in anti-de Sitter space. Here the brane has two dimensions of space and is curved like anti-de Sitter space itself, the setting of Andreas Karch and Lisa Randall, in which the graviton on the brane has a small mass [karch2001, emparan2020qbtz]."
+    },
+    {
+      "id": "point_particle_2plus1",
+      "kind": "family",
+      "text": "A point particle of three dimensions is a cone. With a negative cosmological constant and quantum fields around it, a cone of negative mass is dressed with a horizon [emparan2002holograms, emparan2020qbtz]."
+    },
+    {
+      "id": "anti_de_sitter",
+      "kind": "family",
+      "text": "At $M = -1$, where $F = 0$, the static chart is anti-de Sitter space of three dimensions, the lightest state of the brane [emparan2002holograms, emparan2020qbtz]."
+    }
+  ],
+  "references": [
+    "banados1992",
+    "banados1993",
+    "emparan2020qbtz",
+    "emparan2000branes",
+    "emparan2000branes2",
+    "emparan2002holograms",
+    "ryu2006",
+    "emparan2020scc",
+    "casals2017",
+    "emparan2022ds3",
+    "karch2001"
+  ],
+  "coordinates": [
+    {
+      "id": "static",
+      "name": "Static",
+      "coords": [
+        "t",
+        "r",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "r = r_+ \\;\\text{(the horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell_3",
+          "description": "Anti-de Sitter radius of the brane, a length; far from the hole the curvature is that of anti-de Sitter space with $\\Lambda = -1/\\ell_3^2$"
+        },
+        {
+          "symbol": "M",
+          "description": "Mass, dimensionless, $M = 8\\mathcal{G}_3 m/c^2$ for a hole of mass $m$, with $\\mathcal{G}_3$ the renormalised Newton's constant in three dimensions; the family covers $-1 \\le M \\le 1/3$, with $M = 4k/(3 + k)^2$ for a number $k > -1$"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Strength of the backreaction of the quantum fields, a length, $\\ell \\simeq 2c_{\\rm CFT}\\hbar\\mathcal{G}_3/c^3$ for small $\\ell/\\ell_3$ and a conformal field theory of central charge $c_{\\rm CFT}$; at $\\ell = 0$ the hole is the classical one of Bañados, Teitelboim, and Zanelli"
+        },
+        {
+          "symbol": "F",
+          "description": "Strength of the stress tensor of the quantum fields, dimensionless and fixed by the mass: $F = 8(1 + k)/(3 + k)^3$, where $M = 4k/(3 + k)^2$"
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\phi)$, with $t$ carrying dimensions of time and $\\phi$ of period $2\\pi$, and write $H = r^2/\\ell_3^2 - M - \\ell F/r$, whose positive root is the horizon $r_+$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -\\left(\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}} + r^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}\\right)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\left(\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}\\right)^{-1}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}\\right)^{-1}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2r\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2r\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2r\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 + M\\,\\ell_3^2\\,r - r^3}{\\ell_3^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell_3^2\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)}{2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - r^3}{r^2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{F\\,\\ell\\,\\ell_3^2 - r^3}{r^2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2r^2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2r^2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(4r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2r^2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4r^3 - F\\,\\ell\\,\\ell_3^2}{2r^2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^5}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{6}{\\ell_3^2}",
+      "kretschmann": "K = \\dfrac{12}{\\ell_3^4} + \\dfrac{6\\ell^2F^2}{r^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2r^2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2r^2\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^5}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{r\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}\\dot{t}^2 - \\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2r\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}\\dot{r}^2 + \\dfrac{F\\,\\ell\\,\\ell_3^2 + M\\,\\ell_3^2\\,r - r^3}{\\ell_3^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "eddington_finkelstein_ingoing",
+      "name": "Ingoing Eddington-Finkelstein",
+      "coords": [
+        "v",
+        "r",
+        "\\phi"
+      ],
+      "domains": [
+        "v \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "r = r_+ \\;\\text{(the horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell_3",
+          "description": "Anti-de Sitter radius of the brane, a length; far from the hole the curvature is that of anti-de Sitter space with $\\Lambda = -1/\\ell_3^2$"
+        },
+        {
+          "symbol": "M",
+          "description": "Mass, dimensionless, $M = 8\\mathcal{G}_3 m/c^2$ for a hole of mass $m$, with $\\mathcal{G}_3$ the renormalised Newton's constant in three dimensions; the family covers $-1 \\le M \\le 1/3$, with $M = 4k/(3 + k)^2$ for a number $k > -1$"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Strength of the backreaction of the quantum fields, a length, $\\ell \\simeq 2c_{\\rm CFT}\\hbar\\mathcal{G}_3/c^3$ for small $\\ell/\\ell_3$ and a conformal field theory of central charge $c_{\\rm CFT}$; at $\\ell = 0$ the hole is the classical one of Bañados, Teitelboim, and Zanelli"
+        },
+        {
+          "symbol": "F",
+          "description": "Strength of the stress tensor of the quantum fields, dimensionless and fixed by the mass: $F = 8(1 + k)/(3 + k)^3$, where $M = 4k/(3 + k)^2$"
+        }
+      ],
+      "convention": "We use coordinates $(v, r, \\phi)$, where the advanced time $v = ct + r_*$ is a length and the tortoise coordinate obeys $dr_*/dr = (r^2/\\ell_3^2 - M - \\ell F/r)^{-1}$ with $r_*(0) = 0$, and $r_+$ is the root of that denominator. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\left(\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}\\right)dv^2 + 2\\,dv\\,dr + r^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "-\\left(\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}\\right)"
+        },
+        {
+          "indices": [
+            "v",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "r",
+            "v"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "v",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "r",
+            "v"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 + M\\,\\ell_3^2\\,r - r^3}{\\ell_3^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - r^3}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{F\\,\\ell\\,\\ell_3^2 - r^3}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{F\\,\\ell\\,\\ell_3^2 - r^3}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - r^3}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(4r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^5}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{6}{\\ell_3^2}",
+      "kretschmann": "K = \\dfrac{12}{\\ell_3^4} + \\dfrac{6\\ell^2F^2}{r^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^5}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{v} + \\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}\\dot{v}^2 - r\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{r} + \\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}\\dot{v}^2 - \\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^2}\\dot{v}\\dot{r} + \\dfrac{F\\,\\ell\\,\\ell_3^2 + M\\,\\ell_3^2\\,r - r^3}{\\ell_3^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "eddington_finkelstein_outgoing",
+      "name": "Outgoing Eddington-Finkelstein",
+      "coords": [
+        "u",
+        "r",
+        "\\phi"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "r = r_+ \\;\\text{(the horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell_3",
+          "description": "Anti-de Sitter radius of the brane, a length; far from the hole the curvature is that of anti-de Sitter space with $\\Lambda = -1/\\ell_3^2$"
+        },
+        {
+          "symbol": "M",
+          "description": "Mass, dimensionless, $M = 8\\mathcal{G}_3 m/c^2$ for a hole of mass $m$, with $\\mathcal{G}_3$ the renormalised Newton's constant in three dimensions; the family covers $-1 \\le M \\le 1/3$, with $M = 4k/(3 + k)^2$ for a number $k > -1$"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Strength of the backreaction of the quantum fields, a length, $\\ell \\simeq 2c_{\\rm CFT}\\hbar\\mathcal{G}_3/c^3$ for small $\\ell/\\ell_3$ and a conformal field theory of central charge $c_{\\rm CFT}$; at $\\ell = 0$ the hole is the classical one of Bañados, Teitelboim, and Zanelli"
+        },
+        {
+          "symbol": "F",
+          "description": "Strength of the stress tensor of the quantum fields, dimensionless and fixed by the mass: $F = 8(1 + k)/(3 + k)^3$, where $M = 4k/(3 + k)^2$"
+        }
+      ],
+      "convention": "We use coordinates $(u, r, \\phi)$, where the retarded time $u = ct - r_*$ is a length and the tortoise coordinate obeys $dr_*/dr = (r^2/\\ell_3^2 - M - \\ell F/r)^{-1}$ with $r_*(0) = 0$, and $r_+$ is the root of that denominator. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\left(\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}\\right)du^2 - 2\\,du\\,dr + r^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\left(\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}\\right)"
+        },
+        {
+          "indices": [
+            "u",
+            "r"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "r"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 + M\\,\\ell_3^2\\,r - r^3}{\\ell_3^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(4r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{4r^3 - F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{4r^3 - F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{F\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{4r^3 - F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{4r^3 - F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4r^3 - F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^5}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{6}{\\ell_3^2}",
+      "kretschmann": "K = \\dfrac{12}{\\ell_3^4} + \\dfrac{6\\ell^2F^2}{r^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^5}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} - \\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}\\dot{u}^2 + r\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{r} + \\dfrac{\\left(2r^3 + F\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 - M\\,\\ell_3^2\\,r - F\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}\\dot{u}^2 + \\dfrac{2r^3 + F\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^2}\\dot{u}\\dot{r} + \\dfrac{F\\,\\ell\\,\\ell_3^2 + M\\,\\ell_3^2\\,r - r^3}{\\ell_3^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "brane",
+      "name": "C-Metric Brane",
+      "coords": [
+        "t",
+        "r",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi\\Delta)",
+        "r = r_+ \\;\\text{(the horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell_3",
+          "description": "Anti-de Sitter radius of the brane, a length; far from the hole the curvature is that of anti-de Sitter space with $\\Lambda = -1/\\ell_3^2$"
+        },
+        {
+          "symbol": "\\kappa",
+          "description": "Sign of the constant term, $\\kappa = -1$ for the quantum BTZ black hole of positive mass and $\\kappa = +1$ for a conical singularity dressed with a horizon, of negative mass"
+        },
+        {
+          "symbol": "\\mu",
+          "description": "Mass parameter of the black hole in the bulk, dimensionless and not negative; the smallest positive root $x_1$ of $1 - \\kappa x^2 - \\mu x^3$ is the axis of the bulk, and $\\mu = (1 - \\kappa x_1^2)/x_1^3$ in the chart with no rotation"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Strength of the backreaction of the quantum fields, a length, $\\ell \\simeq 2c_{\\rm CFT}\\hbar\\mathcal{G}_3/c^3$ for small $\\ell/\\ell_3$ and a conformal field theory of central charge $c_{\\rm CFT}$; at $\\ell = 0$ the hole is the classical one of Bañados, Teitelboim, and Zanelli"
+        }
+      ],
+      "convention": "We use the coordinates $(t, r, \\phi)$ of the anti-de Sitter C-metric on the brane $x = 0$, with $t$ carrying dimensions of time, $\\phi$ of period $2\\pi\\Delta$ with $\\Delta = 2x_1/(3 - \\kappa x_1^2)$, and $H = r^2/\\ell_3^2 + \\kappa - \\mu\\ell/r$, whose positive root is the horizon $r_+$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -\\left(\\dfrac{r^2}{\\ell_3^2} + \\kappa - \\dfrac{\\mu\\ell}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{\\dfrac{r^2}{\\ell_3^2} + \\kappa - \\dfrac{\\mu\\ell}{r}} + r^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(\\dfrac{r^2}{\\ell_3^2} + \\kappa - \\dfrac{\\mu\\ell}{r}\\right)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\left(\\dfrac{r^2}{\\ell_3^2} + \\kappa - \\dfrac{\\mu\\ell}{r}\\right)^{-1}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(\\dfrac{r^2}{\\ell_3^2} + \\kappa - \\dfrac{\\mu\\ell}{r}\\right)^{-1}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{r^2}{\\ell_3^2} + \\kappa - \\dfrac{\\mu\\ell}{r}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - \\kappa\\,\\ell_3^2\\,r - r^3}{\\ell_3^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell_3^2\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - r^3}{r^2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - r^3}{r^2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(r^3 - \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r^3 - \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r^2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r^2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r^3 - \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^3 - \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^3 - \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r^3 - \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(4r^3 - \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - 4r^3}{2r^2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4r^3 - \\mu\\,\\ell\\,\\ell_3^2}{2r^2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4r^3 - \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^5}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{6}{\\ell_3^2}",
+      "kretschmann": "K = \\dfrac{12}{\\ell_3^4} + \\dfrac{6\\mu^2\\ell^2}{r^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r^2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r^2\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^5}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{r\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}\\dot{t}^2 - \\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}\\dot{r}^2 + \\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - \\kappa\\,\\ell_3^2\\,r - r^3}{\\ell_3^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "rotating",
+      "name": "Rotating",
+      "coords": [
+        "t",
+        "r",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi\\Delta)",
+        "r = r_\\pm \\;\\text{(the horizons)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell_3",
+          "description": "Anti-de Sitter radius of the brane, a length; far from the hole the curvature is that of anti-de Sitter space with $\\Lambda = -1/\\ell_3^2$"
+        },
+        {
+          "symbol": "\\kappa",
+          "description": "Sign of the constant term, $\\kappa = -1$ for the quantum BTZ black hole of positive mass and $\\kappa = +1$ for a conical singularity dressed with a horizon, of negative mass"
+        },
+        {
+          "symbol": "\\mu",
+          "description": "Mass parameter of the black hole in the bulk, dimensionless and not negative; the smallest positive root $x_1$ of $1 - \\kappa x^2 - \\mu x^3$ is the axis of the bulk, and $\\mu = (1 - \\kappa x_1^2)/x_1^3$ in the chart with no rotation"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Strength of the backreaction of the quantum fields, a length, $\\ell \\simeq 2c_{\\rm CFT}\\hbar\\mathcal{G}_3/c^3$ for small $\\ell/\\ell_3$ and a conformal field theory of central charge $c_{\\rm CFT}$; at $\\ell = 0$ the hole is the classical one of Bañados, Teitelboim, and Zanelli"
+        },
+        {
+          "symbol": "a",
+          "description": "Rotation, a length, taken not negative; the hole with $a = 0$ does not rotate"
+        }
+      ],
+      "convention": "We use the coordinates $(t, r, \\phi)$ of the rotating anti-de Sitter C-metric on the brane $x = 0$, with $t$ carrying dimensions of time, and $H = r^2/\\ell_3^2 + \\kappa - \\mu\\ell/r + a^2/r^2$, whose two positive roots are the horizons $r_\\pm$. Points are identified along $\\phi \\to \\phi + 2\\pi\\Delta$ at fixed $ct + \\tilde{a}\\ell_3\\phi$, with $\\tilde{a} = ax_1^2/\\ell_3$ and $\\Delta = 2x_1/(3 - \\kappa x_1^2 - \\tilde{a}^2)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -\\left(\\dfrac{r^2}{\\ell_3^2} + \\kappa - \\dfrac{\\mu\\ell}{r} + \\dfrac{a^2}{r^2}\\right)c^2dt^2 + \\dfrac{dr^2}{\\dfrac{r^2}{\\ell_3^2} + \\kappa - \\dfrac{\\mu\\ell}{r} + \\dfrac{a^2}{r^2}} + r^2\\left(d\\phi - \\dfrac{a}{r^2}c\\,dt\\right)^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - \\kappa\\,\\ell_3^2\\,r - r^3}{\\ell_3^2\\,r}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-a"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-a"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{\\ell_3^2\\,r^2}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{\\ell_3^2\\,r^2}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-\\dfrac{a\\,\\ell_3^2}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-\\dfrac{a\\,\\ell_3^2}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}{\\ell_3^2\\,r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2}{r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a\\,\\ell_3^2\\,r}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{a\\,\\ell_3^2\\,r}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2a^2\\,\\ell_3^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r - 2r^4}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r^2\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r^2\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\ell_3^2\\,r\\left(2a^2\\,\\ell_3^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r - 2r^4\\right)}{2\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - r^3}{r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - r^3}{r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3\\mu\\,a^2\\,\\ell\\,\\ell_3^4 - 2\\mu^2\\,\\ell^2\\,\\ell_3^4\\,r + 2\\kappa\\,\\mu\\,\\ell\\,\\ell_3^4\\,r^2 + 4\\mu\\,\\ell\\,\\ell_3^2\\,r^4 - 2\\kappa\\,\\ell_3^2\\,r^5 - 2r^7}{2\\ell_3^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\mu\\,a^2\\,\\ell\\,\\ell_3^4 - 2\\mu^2\\,\\ell^2\\,\\ell_3^4\\,r + 2\\kappa\\,\\mu\\,\\ell\\,\\ell_3^4\\,r^2 + 4\\mu\\,\\ell\\,\\ell_3^2\\,r^4 - 2\\kappa\\,\\ell_3^2\\,r^5 - 2r^7}{2\\ell_3^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^3 + \\kappa\\,\\ell_3^2\\,r - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3\\mu\\,a\\,\\ell\\,\\ell_3^2}{2r^3\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\mu\\,a\\,\\ell\\,\\ell_3^2}{2r^3\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^7 + 2\\kappa\\,\\ell_3^2\\,r^5 - 4\\mu\\,\\ell\\,\\ell_3^2\\,r^4 - 2\\kappa\\,\\mu\\,\\ell\\,\\ell_3^4\\,r^2 + 2\\mu^2\\,\\ell^2\\,\\ell_3^4\\,r - 3\\mu\\,a^2\\,\\ell\\,\\ell_3^4}{2\\ell_3^2\\,r^3\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2r^7 + 2\\kappa\\,\\ell_3^2\\,r^5 - 4\\mu\\,\\ell\\,\\ell_3^2\\,r^4 - 2\\kappa\\,\\mu\\,\\ell\\,\\ell_3^4\\,r^2 + 2\\mu^2\\,\\ell^2\\,\\ell_3^4\\,r - 3\\mu\\,a^2\\,\\ell\\,\\ell_3^4}{2\\ell_3^2\\,r^3\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^7 + 2\\kappa\\,\\ell_3^2\\,r^5 - 4\\mu\\,\\ell\\,\\ell_3^2\\,r^4 - 2\\kappa\\,\\mu\\,\\ell\\,\\ell_3^4\\,r^2 + 2\\mu^2\\,\\ell^2\\,\\ell_3^4\\,r - 3\\mu\\,a^2\\,\\ell\\,\\ell_3^4}{2\\ell_3^2\\,r^3\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^7 + 2\\kappa\\,\\ell_3^2\\,r^5 - 4\\mu\\,\\ell\\,\\ell_3^2\\,r^4 - 2\\kappa\\,\\mu\\,\\ell\\,\\ell_3^4\\,r^2 + 2\\mu^2\\,\\ell^2\\,\\ell_3^4\\,r - 3\\mu\\,a^2\\,\\ell\\,\\ell_3^4}{2\\ell_3^2\\,r^3\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4r^7 + 4\\kappa\\,\\ell_3^2\\,r^5 - 5\\mu\\,\\ell\\,\\ell_3^2\\,r^4 - \\kappa\\,\\mu\\,\\ell\\,\\ell_3^4\\,r^2 + \\mu^2\\,\\ell^2\\,\\ell_3^4\\,r - 3\\mu\\,a^2\\,\\ell\\,\\ell_3^4}{2\\ell_3^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - 4r^3}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\mu\\,\\ell\\,\\ell_3^2 - 4r^3}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\mu\\,a\\,\\ell}{2r^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4r^3 - \\mu\\,\\ell\\,\\ell_3^2}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\left(4r^3 - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r^3\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\left(4r^3 - \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r^3\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4r^3 - \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4r^7 + 4\\kappa\\,\\ell_3^2\\,r^5 - 2\\mu\\,\\ell\\,\\ell_3^2\\,r^4 + 2\\kappa\\,\\mu\\,\\ell\\,\\ell_3^4\\,r^2 - 2\\mu^2\\,\\ell^2\\,\\ell_3^4\\,r + 3\\mu\\,a^2\\,\\ell\\,\\ell_3^4}{2\\ell_3^2\\,r^5\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{6}{\\ell_3^2}",
+      "kretschmann": "K = \\dfrac{12}{\\ell_3^4} + \\dfrac{6\\mu^2\\ell^2}{r^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2r^7 + 2\\kappa\\,\\ell_3^2\\,r^5 - \\mu\\,\\ell\\,\\ell_3^2\\,r^4 + \\kappa\\,\\mu\\,\\ell\\,\\ell_3^4\\,r^2 - \\mu^2\\,\\ell^2\\,\\ell_3^4\\,r + 3\\mu\\,a^2\\,\\ell\\,\\ell_3^4}{2\\ell_3^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\left(\\mu\\,\\ell\\,\\ell_3^2 - r^3\\right)}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\left(\\mu\\,\\ell\\,\\ell_3^2 - r^3\\right)}{\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2\\ell_3^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\mu\\,a\\,\\ell}{2r^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^3 - \\mu\\,\\ell\\,\\ell_3^2}{\\ell_3^2\\,r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r^3\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{2r^3\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r^7 + 2\\kappa\\,\\ell_3^2\\,r^5 - 4\\mu\\,\\ell\\,\\ell_3^2\\,r^4 - 2\\kappa\\,\\mu\\,\\ell\\,\\ell_3^4\\,r^2 + 2\\mu^2\\,\\ell^2\\,\\ell_3^4\\,r - 3\\mu\\,a^2\\,\\ell\\,\\ell_3^4}{2\\ell_3^2\\,r^5\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2r^3 + \\mu\\,\\ell\\,\\ell_3^2}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}\\dot{t}\\dot{r} - \\dfrac{2a\\,\\ell_3^2\\,r}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{r} + \\dfrac{\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}{2\\ell_3^4\\,r^4}\\dot{t}^2 + \\dfrac{2a^2\\,\\ell_3^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r - 2r^4}{2r\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}\\dot{r}^2 - \\dfrac{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}{\\ell_3^2\\,r}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{a\\left(2r^3 + \\mu\\,\\ell\\,\\ell_3^2\\right)}{r^2\\left(r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2\\right)}\\dot{t}\\dot{r} + \\dfrac{2r^3 + 2\\kappa\\,\\ell_3^2\\,r - 2\\mu\\,\\ell\\,\\ell_3^2}{r^4 + \\kappa\\,\\ell_3^2\\,r^2 - \\mu\\,\\ell\\,\\ell_3^2\\,r + a^2\\,\\ell_3^2}\\dot{r}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

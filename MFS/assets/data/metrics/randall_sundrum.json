@@ -74,6 +74,11 @@
       "id": "cremmer_scherk",
       "kind": "family",
       "text": "Compactification as Randall and Sundrum's title means it: extra dimensions rolled into a small sphere, in a solution of gravity with gauge fields in six dimensions [cremmer1976, horvath1977]."
+    },
+    {
+      "id": "quantum_btz",
+      "kind": "family",
+      "text": "A brane with two dimensions of space in anti-de Sitter space of four, curved like anti-de Sitter space itself, with a black hole on it. By holography it is a black hole of three dimensions with the backreaction of quantum fields included exactly [emparan2002holograms, emparan2020qbtz]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "atlas2021",
     "koroteev2008",
     "cremmer1976",
-    "horvath1977"
+    "horvath1977",
+    "emparan2020qbtz"
   ],
   "coordinates": [
     {

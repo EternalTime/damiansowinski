@@ -287,6 +287,18 @@ A Schwarzschild black hole with a straight cosmic string through it. Off the axi
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + b^2\sin^2\theta\,d\phi^2\right)$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + b^2\sin^2\theta\,d\phi^2\right)$$
 
+### Bach-Weyl Ring
+
+The static vacuum field of a thin circular ring of matter in Weyl's class, written down by Rudolf Bach in 1922 in a paper with a supplement by Hermann Weyl. Its Weyl potential is Newton's potential of a hoop, a complete elliptic integral. The ring is a naked singularity that lies a finite distance away from outside and an infinite distance away from inside.
+
+- id: `bach_weyl_ring`
+- tags: vacuum, static, stationary, axisymmetric, Weyl class, harmonic function, mass, curvature singularity, naked singularity, directional singularity, ring singularity, reflection symmetry, no horizon, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bach_weyl_ring.json
+- chart Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -e^{2\psi}c^2dt^2 + e^{-2\psi}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+- chart Toroidal: coordinates $(t, \zeta, \sigma, \phi)$, $$ds^2 = -e^{2\psi}c^2dt^2 + \dfrac{a^2e^{-2\psi}}{\left(\cosh\zeta - \cos\sigma\right)^2}\left(e^{2\gamma}\left(d\zeta^2 + d\sigma^2\right) + \sinh^2\zeta\,d\phi^2\right)$$
+- chart Oblate Spheroidal: coordinates $(t, \xi, \eta, \phi)$, $$ds^2 = -e^{2\psi}c^2dt^2 + a^2e^{-2\psi}\left(e^{2\gamma}\left(\xi^2 + \eta^2\right)\left(\dfrac{d\xi^2}{1 + \xi^2} + \dfrac{d\eta^2}{1 - \eta^2}\right) + \left(1 + \xi^2\right)\left(1 - \eta^2\right)d\phi^2\right)$$
+
 ### Bañados-Teitelboim-Zanelli Black Hole
 
 A rotating black hole in three spacetime dimensions with a negative cosmological constant. It has constant negative curvature everywhere, being anti-de Sitter space with points identified by a discrete boost, and it carries a temperature and an entropy that can be computed exactly.
@@ -529,6 +541,20 @@ One moment of a spacetime that holds gravitational waves and nothing else, which
 - chart Spherical: coordinates $(r, \theta, \phi)$, $$ds^2 = \psi^4\left(e^{2q}\left(dr^2 + r^2d\theta^2\right) + r^2\sin^2\theta\,d\phi^2\right)$$
 - chart Without Axial Symmetry: coordinates $(\rho, z, \phi)$, $$ds^2 = \psi^4\left(e^{2q}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
 
+### Brill's Charged Taub-NUT Spacetime
+
+Taub-NUT with an electric charge, the solution of the Einstein-Maxwell equations Dieter Brill found in 1964 as a closed universe filled with gravitational and electromagnetic radiation. It is the Taub-NUT metric at $r_q = 0$ and Reissner and Nordström's at $l = 0$, it has no curvature singularity while $l \neq 0$, and for $r_q^2 > m^2 + l^2$ it has no horizon either and is a wormhole.
+
+- id: `brill_charged_taub_nut`
+- tags: electrovacuum, stationary, axisymmetric, charged, charged black hole, black hole, wormhole, traversable, electric charge, mass, NUT parameter, gravitomagnetic, electromagnetic field, Einstein-Maxwell, closed timelike curves, horizon, event horizon, Cauchy horizon, causal structure, Petrov type D, not asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/brill_charged_taub_nut.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(c\,dt + 2l\cos\theta\,d\phi\right)^2 + \dfrac{\Sigma}{\Delta}dr^2 + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart One Misner String: coordinates $(t_N, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(c\,dt_N - 2l\left(1 - \cos\theta\right)d\phi\right)^2 + \dfrac{\Sigma}{\Delta}dr^2 + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(dv - 2l\left(1 - \cos\theta\right)d\phi\right)^2 + 2\,dr\left(dv - 2l\left(1 - \cos\theta\right)d\phi\right) + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(du - 2l\left(1 - \cos\theta\right)d\phi\right)^2 - 2\,dr\left(du - 2l\left(1 - \cos\theta\right)d\phi\right) + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Brill's Universe: coordinates $(\tau, \psi, \theta, \phi)$, $$ds^2 = -\dfrac{\Sigma}{U}d\tau^2 + \dfrac{4l^2U}{\Sigma}\left(d\psi + \cos\theta\,d\phi\right)^2 + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### C-Metric Accelerating Black Holes
 
 An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.
@@ -740,6 +766,18 @@ Einstein's theory of static gravity from his Prague year: space stays flat and t
 - chart Outside a Body, February: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{m}{r}\right)^2c^2dt^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Outside a Body, March: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{m}{2r}\right)^4c^2dt^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Einstein-Dirac-Maxwell Wormhole
+
+A static wormhole held open by an electric field and a pair of massless Dirac fields, the exact solution of Einstein-Dirac-Maxwell theory that Jose Luis Blázquez-Salcedo, Christian Knoll and Eugen Radu found in 2021. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's, its charge exceeds its mass, and the electric field runs through the throat from one side to the other.
+
+- id: `einstein_dirac_maxwell_wormhole`
+- tags: wormhole, traversable, throat, no horizon, exotic matter, energy condition violation, Einstein-Dirac-Maxwell, Dirac field, electric charge, charged, electromagnetic field, braneworld, static, stationary, spherically symmetric, asymptotically flat, exact solution, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/einstein_dirac_maxwell_wormhole.json
+- chart Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{M}{r}\right)^2c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_0}{r}\right)\left(1 - \dfrac{Q_e^2}{r_0\,r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Bronnikov-Kim: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{M}{r_0 + u^2}\right)^2c^2dt^2 + \dfrac{4r_0\left(r_0 + u^2\right)^2}{r_0^2 - Q_e^2 + r_0\,u^2}du^2 + \left(r_0 + u^2\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Compact: coordinates $(t, x, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{M\left(1 - x^2\right)}{r_0}\right)^2c^2dt^2 + \dfrac{4r_0^4}{\left(1 - x^2\right)^4\left(r_0^2 - Q_e^2\left(1 - x^2\right)\right)}dx^2 + \dfrac{r_0^2}{\left(1 - x^2\right)^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Einstein-Infeld-Hoffmann Field of Many Bodies
 
 The gravitational field of $N$ slowly moving bodies to the first order beyond Newton, the order at which the vacuum field equations fix how the bodies move. It is an approximate spacetime with a definite metric, the one the planets and the binary pulsar are timed in.
@@ -896,6 +934,19 @@ J. Richard Gott's exact solution of 1991: two straight, parallel cosmic strings 
 - chart String Rest Frame: coordinates $(t, r, \phi, z)$, $$ds^2 = -c^2dt^2 + dr^2 + \left(1 - \dfrac{4G\mu}{c^2}\right)^2 r^2 d\phi^2 + dz^2$$
 - chart Grant Rindler: coordinates $(\eta, \xi, Y, z)$, $$ds^2 = -\xi^2d\eta^2 + d\xi^2 + dY^2 + dz^2$$
 - chart Grant Milne: coordinates $(\tau, \chi, Y, z)$, $$ds^2 = -c^2d\tau^2 + c^2\tau^2d\chi^2 + dY^2 + dz^2$$
+
+### Gott and Li's Self-Creating Universe
+
+De Sitter space with each event identified with its images under a boost, proposed by J. Richard Gott and Li-Xin Li in 1998. It begins in a region of closed timelike curves of finite spacetime volume, with no earliest event, and a Cauchy horizon separates that region from an inflating universe in which nothing returns to its own past.
+
+- id: `self_creating_universe`
+- tags: de Sitter, positive cosmological constant, cosmological constant, constant curvature, closed timelike curves, chronology horizon, Cauchy horizon, chronology protection, self consistency, time machine, topology, multiply connected, boost, Misner space, inflation, expanding universe, cosmology, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, Einstein space, conformally flat, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/self_creating_universe.json
+- chart Static: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r^2}{r_0^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r^2}{r_0^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Kantowski-Sachs: coordinates $(\tau, l, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + \sinh^2(c\tau/r_0)\,dl^2 + r_0^2\cosh^2(c\tau/r_0)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Steady state: coordinates $(\tau, x, y, z)$, $$ds^2 = -c^2d\tau^2 + e^{2c\tau/r_0}\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Conformal: coordinates $(\eta, \rho, \theta, \phi)$, $$ds^2 = \dfrac{r_0^2}{\eta^2}\left(-d\eta^2 + d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
 ### Gowdy Cosmologies
 
@@ -1133,6 +1184,17 @@ The exact vacuum solution for a rotating, uncharged black hole, characterized by
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr.json
 - chart Kerr (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2GMr}{c^2\left(r^2 + a^2\cos^2\theta\right)}\right)c^2 dt^2 - \dfrac{4GMar\sin^2\theta}{c^2\left(r^2 + a^2\cos^2\theta\right)}c\,dt\,d\phi + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \dfrac{2GMr}{c^2}}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2 + \dfrac{2GMa^2r\sin^2\theta}{c^2\left(r^2 + a^2\cos^2\theta\right)}\right)\sin^2\theta\,d\phi^2$$
 
+### Kerr-Bertotti-Robinson Black Hole
+
+Kerr's rotating black hole in a magnetic field that points along its axis of rotation and is uniform far away, the exact solution of the Einstein-Maxwell equations that Jiří Podolský and Hryhorii Ovcharenko found in 2025. It is of Petrov type D, it is Kerr's metric with the field switched off and Bertotti and Robinson's universe with the mass taken away, and the spinning hole carries an electric charge.
+
+- id: `kerr_bertotti_robinson`
+- tags: electrovacuum, Einstein-Maxwell, electromagnetic field, magnetic field, uniform field, rotating, rotating black hole, black hole, charged black hole, electric charge, stationary, axisymmetric, angular momentum, mass, ergoregion, frame dragging, ring singularity, curvature singularity, horizon, event horizon, Cauchy horizon, not asymptotically flat, Petrov type D, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr_bertotti_robinson.json
+- chart Podolský-Ovcharenko (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -N\,c^2dt^2 + F\left(\dfrac{dr^2}{Q} + \dfrac{d\theta^2}{P}\right) + W\left(C\,d\phi - \omega\,c\,dt\right)^2$$
+- chart Schwarzschild-Bertotti-Robinson: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{1}{\Omega^2}\left(-f\,c^2dt^2 + \dfrac{dr^2}{f} + r^2\left(\dfrac{d\theta^2}{P} + C^2P\sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Kerr-de Sitter and Kerr-anti-de Sitter Black Holes
 
 The rotating black hole in a universe with a cosmological constant of either sign, which Brandon Carter found in 1968 among the spacetimes whose geodesic equations separate. With $\Lambda > 0$ an inner horizon, an event horizon, and a cosmological horizon surround the ring singularity, and with $\Lambda < 0$ its boundary is a rotating Einstein universe.
@@ -1349,6 +1411,19 @@ A spacetime construction containing a worldline of infinite proper length that l
 - signature: (-,+,+,+)
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = \Omega^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
+
+### Many Black Holes and Wormholes in Three Dimensions
+
+Anti-de Sitter space of three dimensions cut along timelike surfaces and glued back together, which makes any number of black holes joined behind their horizons, or one black hole with a wormhole of any genus inside it. Every exterior is that of a Bañados-Teitelboim-Zanelli black hole, and the whole spacetime is drawn on Poincaré's disc.
+
+- id: `btz_multi_holes_wormholes`
+- tags: black hole, multiple black holes, wormhole, BTZ black hole, anti-de Sitter, negative cosmological constant, cosmological constant, constant curvature, hyperbolic space, multiply connected, topology, topological geon, topological censorship, time symmetric, initial data, closed universe, Misner space, horizon, event horizon, causal structure, AdS/CFT, holography, three-dimensional, 2+1 dimensional gravity, exact solution, Lorentzian, Einstein equations, idealized model, Einstein space, conformally flat
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/btz_multi_holes_wormholes.json
+- chart Sausage: coordinates $(t, \rho, \phi)$, $$ds^2 = -\left(\dfrac{\ell^2 + \rho^2}{\ell^2 - \rho^2}\right)^2c^2dt^2 + \dfrac{4\ell^4}{\left(\ell^2 - \rho^2\right)^2}\left(d\rho^2 + \rho^2d\phi^2\right)$$
+- chart Stereographic: coordinates $(\tau, x, y)$, $$ds^2 = \dfrac{-c^2d\tau^2 + dx^2 + dy^2}{\left(1 - \dfrac{x^2 + y^2 - c^2\tau^2}{4\ell^2}\right)^2}$$
+- chart Free Fall: coordinates $(T, \rho, \phi)$, $$ds^2 = -c^2dT^2 + \cos^2(cT/\ell)\,\dfrac{4\ell^4}{\left(\ell^2 - \rho^2\right)^2}\left(d\rho^2 + \rho^2d\phi^2\right)$$
+- chart Exterior: coordinates $(t, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell^2} - M\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{\ell^2} - M} + r^2d\phi^2$$
 
 ### Mass Inflation Inside a Charged Black Hole
 
@@ -1701,6 +1776,34 @@ A class of exact solutions describing gravitational waves with plane fronts and 
 - chart Brinkmann: coordinates $(u, v, x, y)$, $$ds^2 = H\,c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
 - chart Exact Plane Wave: coordinates $(u, v, x, y)$, $$ds^2 = \left(A\left(x^2 - y^2\right) + 2Bxy\right)c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
 
+### Quantum BTZ Black Hole
+
+The black hole of three dimensions with the backreaction of strongly coupled quantum fields included exactly, read off a black hole on a brane in anti-de Sitter space of four dimensions. One more term in the metric of Bañados, Teitelboim, and Zanelli, $-\ell F/r$, puts a curvature singularity at its centre and hides the conical singularities of negative mass behind horizons.
+
+- id: `quantum_btz`
+- tags: negative cosmological constant, cosmological constant, anti-de Sitter, black hole, BTZ black hole, rotating black hole, mass, angular momentum, horizon, event horizon, Cauchy horizon, curvature singularity, ring singularity, conical singularity, naked singularity, cosmic censorship, strong cosmic censorship, causal structure, black hole thermodynamics, black hole entropy, Hawking temperature, AdS/CFT, holography, braneworld, quantum field theory in curved spacetime, semiclassical gravity, 2+1 dimensional gravity, circularly symmetric, exact solution, Lorentzian, idealized model, static, stationary, three-dimensional
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/quantum_btz.json
+- chart Static: coordinates $(t, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell_3^2} - M - \dfrac{\ell F}{r}\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{\ell_3^2} - M - \dfrac{\ell F}{r}} + r^2d\phi^2$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell_3^2} - M - \dfrac{\ell F}{r}\right)dv^2 + 2\,dv\,dr + r^2d\phi^2$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell_3^2} - M - \dfrac{\ell F}{r}\right)du^2 - 2\,du\,dr + r^2d\phi^2$$
+- chart C-Metric Brane: coordinates $(t, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell_3^2} + \kappa - \dfrac{\mu\ell}{r}\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{\ell_3^2} + \kappa - \dfrac{\mu\ell}{r}} + r^2d\phi^2$$
+- chart Rotating: coordinates $(t, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell_3^2} + \kappa - \dfrac{\mu\ell}{r} + \dfrac{a^2}{r^2}\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{\ell_3^2} + \kappa - \dfrac{\mu\ell}{r} + \dfrac{a^2}{r^2}} + r^2\left(d\phi - \dfrac{a}{r^2}c\,dt\right)^2$$
+
+### Quantum Oppenheimer-Snyder Black Hole
+
+Oppenheimer and Snyder's ball of dust with the bounce of loop quantum cosmology inside it, which Jerzy Lewandowski, Yongge Ma, Jinsong Yang, and Cong Zhang built in 2023. The dust falls, stops at a finite density, and comes back out, and the junction conditions fix the vacuum outside: Schwarzschild's metric with one more term, with two horizons above a least mass and none below it.
+
+- id: `quantum_oppenheimer_snyder`
+- tags: loop quantum gravity, loop quantum cosmology, quantum gravity, bounce, dust, gravitational collapse, matched solution, junction conditions, black hole, white hole, horizon, event horizon, inner horizon, Cauchy horizon, mass inflation, causal structure, maximal extension, asymptotically flat, time-dependent, spherically symmetric, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/quantum_oppenheimer_snyder.json
+- chart Static Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Painlevé-Gullstrand Exterior: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}\right)c^2d\tau^2 + 2\sqrt{\dfrac{2m}{r}\left(1 - \dfrac{\alpha m}{2r^3}\right)}\,c\,d\tau\,dr + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein Exterior: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein Exterior: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Comoving Dust Interior: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \chi^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Randall-Sundrum Braneworld
 
 A flat wall with three dimensions of space in anti-de Sitter space of five dimensions, found by Lisa Randall and Raman Sundrum in 1999. Every length along the wall's directions shrinks as $e^{-k|y|}$ with the distance $y$ from it, which between two walls turns the Planck scale into the weak scale, and with one wall keeps gravity four dimensional beside a fifth dimension of infinite size.
@@ -2009,6 +2112,20 @@ The black holes of string theory whose entropy was first counted from their micr
 - chart Four Charges, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{f\,c^2dt^2}{\sqrt{H_1\,H_2\,H_3\,H_4}} + \sqrt{H_1\,H_2\,H_3\,H_4}\left(\dfrac{dr^2}{f} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Extreme, Four Charges, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{\sqrt{H_1\,H_2\,H_3\,H_4}} + \sqrt{H_1\,H_2\,H_3\,H_4}\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Three-Brane and Its Throat
+
+A flat sheet of three dimensions in a spacetime of ten, carrying the charge of the 5-form field of type IIB supergravity. Far from the sheet spacetime is flat, and close to it a throat of infinite length opens, anti-de Sitter space of five dimensions times a sphere of five, both of one radius. Juan Maldacena took the limit that keeps the throat alone in 1997 and conjectured that string theory there is a gauge theory in four dimensions.
+
+- id: `three_brane_throat`
+- tags: static, stationary, ten-dimensional, higher dimensions, string theory, supergravity, three-brane, D3-brane, p-brane, black brane, brane, extremal, supersymmetric, self-dual, harmonic function, multi-centre, isotropic coordinates, throat, near-horizon limit, anti-de Sitter, AdS/CFT, holography, horizon, degenerate horizon, Killing horizon, no singularity, asymptotically flat, soliton, maximal extension, reflection symmetry, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/three_brane_throat.json
+- chart Isotropic: coordinates $(t, x, y, z, \rho, \alpha, \beta, \psi, \theta, \phi)$, $$ds^2 = H^{-1/2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right) + H^{1/2}\left(d\rho^2 + \rho^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)\right)\right)$$
+- chart Areal Radius: coordinates $(t, x, y, z, r, \alpha, \beta, \psi, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{L^4}{r^4}\right)^{1/2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right) + \left(1 - \dfrac{L^4}{r^4}\right)^{-2}dr^2 + r^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)\right)$$
+- chart Gibbons-Horowitz-Townsend: coordinates $(t, x, y, z, w, \alpha, \beta, \psi, \theta, \phi)$, $$ds^2 = w^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right) + r^2\left(\dfrac{dw^2}{w^2\left(1 - w^4\right)^2} + d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)\right)$$
+- chart Throat: coordinates $(t, x, y, z, r, \alpha, \beta, \psi, \theta, \phi)$, $$ds^2 = \dfrac{r^2}{L^2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right) + \dfrac{L^2}{r^2}dr^2 + L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)\right)$$
+- chart Throat, Proper Distance: coordinates $(t, x, y, z, \sigma, \alpha, \beta, \psi, \theta, \phi)$, $$ds^2 = e^{2\sigma/L}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right) + d\sigma^2 + L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)\right)$$
+
 ### Tilted Universes and the Whimper
 
 Homogeneous universes whose matter drifts through the surfaces of homogeneity, so that an observer riding with it sees a lopsided sky. In the simplest of them, Farnsworth's dust of 1967, those surfaces turn from spacelike to timelike across a Cauchy horizon, and the light rays along the horizon end where the density and the curvature are finite: a whimper, as George Ellis and A. R. King named it in 1974.
@@ -2080,6 +2197,20 @@ Black holes in anti-de Sitter space whose horizons are planes, cylinders, tori, 
 - chart Black String: coordinates $(t, r, \phi, z)$, $$ds^2 = -\left(\dfrac{r^2}{L^2} - \dfrac{\mu}{r}\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{L^2} - \dfrac{\mu}{r}} + r^2d\phi^2 + \dfrac{r^2}{L^2}dz^2$$
 - chart Black Brane: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-\left(1 - \dfrac{z^3}{z_h^3}\right)c^2dt^2 + dx^2 + dy^2 + \dfrac{dz^2}{1 - \dfrac{z^3}{z_h^3}}\right)$$
 - chart Hyperbolic: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(-1 - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{-1 - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sinh^2\theta\,d\phi^2\right)$$
+
+### Topological Star
+
+A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2020 as the simplest topological star, on a line element that also describes a black string with the same bubble behind its horizon.
+
+- id: `topological_star`
+- tags: static, stationary, five-dimensional, four-dimensional, soliton, no horizon, regular, black hole mimicker, microstate geometry, fuzzball, bubble, bolt, cigar, topology, magnetic charge, electromagnetic field, Einstein-Maxwell, Kaluza-Klein, compact dimension, higher dimensions, black string, horizon, event horizon, extremal, orbifold, dilaton, Einstein-Maxwell-dilaton, naked singularity, photon sphere, quasinormal modes, echoes, Gregory-Laflamme instability, instability, string theory, mass, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/topological_star.json
+- chart Bah-Heidmann: coordinates $(t, r, \theta, \phi, y)$, $$ds^2 = -\left(1 - \dfrac{r_S}{r}\right)c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_S}{r}\right)\left(1 - \dfrac{r_B}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \left(1 - \dfrac{r_B}{r}\right)dy^2$$
+- chart About the Bubble: coordinates $(t, \rho, \theta, \phi, \psi)$, $$ds^2 = -\dfrac{\left(r_B - r_S\right)\left(4 + \rho^2\right)}{4r}c^2dt^2 + \dfrac{4r^2}{4 + \rho^2}d\rho^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{r_B^3\rho^2}{r}d\psi^2$$
+- chart Black String, Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi, y)$, $$ds^2 = -\left(1 - \dfrac{r_S}{r}\right)dv^2 + 2\sqrt{\dfrac{r}{r - r_B}}\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \left(1 - \dfrac{r_B}{r}\right)dy^2$$
+- chart Extremal, Isotropic: coordinates $(t, \rho, \theta, \phi, y)$, $$ds^2 = \left(1 + \dfrac{m}{\rho}\right)^{-1}\left(-c^2dt^2 + dy^2\right) + \left(1 + \dfrac{m}{\rho}\right)^2\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Einstein Metric, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \sqrt{1 - \dfrac{r_B}{r}}\left(-\left(1 - \dfrac{r_S}{r}\right)c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_S}{r}\right)\left(1 - \dfrac{r_B}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
 ### Vaidya Radiating Star
 

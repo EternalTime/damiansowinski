@@ -111,6 +111,16 @@
       "text": "The extreme black holes of string theory end in this throat, in the limit toward the horizon. Strominger and Vafa's hole of five dimensions has the same throat with a 3-sphere [strominger1996]."
     },
     {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "The three-brane of string theory has the same throat six dimensions up, anti-de Sitter space of five dimensions times a sphere of five [gibbons1993]."
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "kind": "generalisation",
+      "text": "Put a spinning black hole into Bertotti and Robinson's field and it is Podolský and Ovcharenko's hole of 2025, which is this universe again when its mass is taken away [podolsky2025]."
+    },
+    {
       "id": "jackiw_teitelboim_black_hole",
       "kind": "family",
       "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions, whose metric is anti-de Sitter space of two dimensions with a dilaton that marks a horizon. With no horizon and its curvature radius set to $b$, its static chart is the plane of $t$ and $r$ of Bertotti and Robinson's static chart."

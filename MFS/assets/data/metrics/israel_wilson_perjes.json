@@ -54,6 +54,11 @@
       "id": "double_kerr",
       "kind": "family",
       "text": "Two spinning black holes with no charge, on one axis. Their spins do not balance their attraction, and a strut on the axis holds them apart [kramer1980, neugebauer2009]."
+    },
+    {
+      "id": "brill_charged_taub_nut",
+      "kind": "family",
+      "text": "The single source of complex mass is Brill's charged Taub-NUT at $r_q^2 = m^2 + l^2$, where its two horizons meet. With more charge than that Brill's metric has no horizon and is a wormhole [clement2016]."
     }
   ],
   "references": [
@@ -72,7 +77,8 @@
     "tod1983",
     "kallosh1994anomaly",
     "kramer1980",
-    "neugebauer2009"
+    "neugebauer2009",
+    "clement2016"
   ],
   "coordinates": [
     {

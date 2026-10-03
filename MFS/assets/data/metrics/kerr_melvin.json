@@ -59,6 +59,11 @@
       "id": "bertotti_robinson",
       "kind": "family",
       "text": "The other universe made of a uniform electromagnetic field. Podolský and Ovcharenko's Kerr hole of 2025 sits in a field that is Bertotti and Robinson's when its mass is taken away [podolsky2025]."
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "kind": "family",
+      "text": "Kerr's hole in the other uniform magnetic field, Bertotti and Robinson's, found by Jiří Podolský and Hryhorii Ovcharenko in 2025. It is of type D, its ergoregion stays near the hole, and it carries a charge close to $maB$ when $aB$ is small [podolsky2025, ovcharenko2026b]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "booth2015",
     "astorino2016",
     "blandford1977",
-    "podolsky2025"
+    "podolsky2025",
+    "ovcharenko2026b"
   ],
   "coordinates": [
     {

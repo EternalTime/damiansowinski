@@ -1199,6 +1199,20 @@ def ktn_rstar():
     return lambda r: np.asarray(r, dtype=float) + rest(r)
 
 
+# Brill's charged Taub-NUT as its diagrams draw it, (m, l, r_q): the black hole in units of m and
+# the wormhole with no mass in units of l.
+BRILL = {"black_hole": (1.0, 0.75, 1.0), "wormhole": (0.0, 1.0, 1.5)}
+
+
+def brill_rstar(case):
+    """Brill's charged Taub-NUT's r_*, dr_*/dr = Sigma/Delta with Sigma = r^2 + l^2 and
+    Delta = r^2 - 2mr - l^2 + r_q^2, and r_* = 0 at r = 0, as the Eddington-Finkelstein charts fix
+    it: v = c t_N + r_* and u = c t_N - r_*. The integrand is 1 + (2mr + 2l^2 - r_q^2)/Delta."""
+    m, l, q = BRILL[case]
+    rest = primitive([2 * m, 2 * l * l - q * q], [1.0, -2 * m, q * q - l * l])
+    return lambda r: np.asarray(r, dtype=float) + rest(r)
+
+
 def kds_schild(sign):
     """c(tau - t) of Kerr-de Sitter's Kerr-Schild chart, d/dr of it r_s r/((1 - Lambda r^2/3) Delta_r),
     zero at r = 0."""
@@ -1463,6 +1477,19 @@ def _eds(chart):
     return [Mark(m, [np.column_stack([-0.5 * np.log1p(x * x), x])])]
 
 
+def _scu_steady(m):
+    """A moment c tau = tau_k of Gott and Li's Kantowski-Sachs chart on the plane y = z = 0 of the steady
+    state chart, r_0 = 1: the sphere has radius cosh(tau_k) = x exp(tau), so x = cosh(tau_k) exp(-tau), on
+    the side phi = 0 that the embedding draws."""
+    tau = np.linspace(-12.0, 30.0, 4 * N + 1)
+    return [np.column_stack([tau, math.cosh(m.time) * np.exp(-tau)])]
+
+
+def _scu_conformal(m):
+    """The same moment in the conformal time eta = -exp(-tau): the straight line rho = -eta cosh(tau_k)."""
+    return [[(-BIG, BIG * math.cosh(m.time)), (0.0, 0.0)]]
+
+
 def _es_areal(m):
     """The Einstein static universe's moment in its areal chart, R = 1: r = sin chi over the
     near hemisphere the embedding reaches, chi from 0 to pi/2."""
@@ -1520,6 +1547,25 @@ def _ads_poincare():
     hi = m.reach("static_global", "r")[1]
     x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
     return [Mark(m, across(0.0, 0.0, x))]
+
+
+def _btz_multi(system):
+    """The moment of time symmetry of many black holes and wormholes, the hyperbolic plane t = 0 of the
+    sausage chart out to the embedding's reach in rho, at l = 1. On the planes through the axis it
+    is rho itself in the sausage and free fall charts, whose T = 0 is the same moment with the same
+    rho. In the stereographic chart it is the hyperbola c tau = -2(1 + rho^2)/(1 - rho^2) over
+    x = 4 rho/(1 - rho^2), since U = 0 there and (V, X) = (-c tau, x)/2. In the exterior chart it
+    is t = 0 from the horizon r_+ = 2 arccosh(2)/pi out to the edge of the sheet on phi = 0, where
+    V = r/sqrt(M)."""
+    m, = moments("btz_multi_holes_wormholes")
+    lo, hi = m.reach("sausage", "\\rho")
+    if system in ("sausage", "free_fall"):
+        return [Mark(m, along(0.0, lo, hi))]
+    if system == "stereographic":
+        rho = np.linspace(lo, hi, N)
+        return [Mark(m, [np.column_stack([-2 * (1 + rho ** 2) / (1 - rho ** 2), 4 * rho / (1 - rho ** 2)])])]
+    horizon = 2 * math.acosh(2) / math.pi
+    return [Mark(m, along(0.0, horizon, horizon * (1 + hi ** 2) / (1 - hi ** 2)))]
 
 
 def btz_rstar(r):
@@ -1591,6 +1637,27 @@ def _sads(sign=0):
     r = near(lo, hi)
     return [Mark(m, [np.column_stack([sign * sads_rstar(r), r])])]
 
+
+
+def qbtz_rstar(r):
+    """The quantum BTZ hole's tortoise coordinate at l_3 = 1, M = F = 1/4 and l = 15/16, as the
+    Eddington-Finkelstein charts fix it, vanishing at r = 0: 1/H = r/(r^3 - r/4 - 15/64), whose cubic
+    has the root 3/4 and a complex pair, so r_* = Re sum_i A_i ln(1 - r/r_i) with A_i = r_i/(3r_i^2 - 1/4)."""
+    r = np.asarray(r, dtype=float).astype(complex)
+    roots = np.roots([1, 0, -0.25, -15 / 64])
+    return sum(ri / (3 * ri * ri - 0.25) * np.log(1 - r / ri) for ri in roots).real
+
+
+def _qbtz(sign=0):
+    """The moment t = 0 of the quantum BTZ hole, from the throat r_+ = 3/4 out: along r in its
+    static chart (sign 0), and in its ingoing (1) or outgoing (-1) chart as v = r_* or u = -r_*,
+    crowding toward the horizon, where the curve runs off."""
+    m, = moments("quantum_btz")
+    lo, hi = m.reach("static", "r")
+    if not sign:
+        return [Mark(m, along(0.0, lo, hi))]
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([sign * qbtz_rstar(r), r])])]
 
 RNDS_ROOTS = (2.0, 2 / 3, (2 * math.sqrt(7) - 4) / 3, -(2 * math.sqrt(7) + 4) / 3)
 RNDS_H = 3 / 8                  # H r_s/c of the lukewarm hole every diagram draws
@@ -1838,6 +1905,26 @@ def _bardeen_both(sign=0):
     return _bardeen("outside", sign) + _bardeen("inside", sign)
 
 
+def _qos(view, chart):
+    """The moment t = 0 of the quantum Oppenheimer-Snyder black hole, outside r_+ or inside r_-,
+    from r_b: along r in its static chart, in its ingoing or outgoing chart as v = r_* or u = -r_*,
+    and in its Painleve-Gullstrand chart as T = r_* - lead(r), each running off toward the horizon
+    the view ends on, as Bardeen's do."""
+    import quantum_os as qos
+    m, = moments("quantum_oppenheimer_snyder", view)
+    lo, hi = m.reach("static", "r")
+    if chart == "static":
+        return [Mark(m, along(0.0, lo, hi))]
+    r = near(lo, hi) if view == "outside" else np.concatenate([[lo], (hi - (hi - lo) * np.geomspace(1.0, 1e-9, N))[1:]])
+    time = {"ingoing": qos.tortoise(r), "outgoing": -qos.tortoise(r),
+            "painleve_gullstrand": qos.tortoise(r) - qos.lead(r)}[chart]
+    return [Mark(m, [np.column_stack([time, r])])]
+
+
+def _qos_both(chart):
+    return _qos("outside", chart) + _qos("inside", chart)
+
+
 # Born and Infeld's point charge as every diagram draws it, in units of r_0: (r_s, r_q) of
 # Hoffmann's particle, whose mass is the energy of its field, and of the black hole, null_rays.BI_PARTICLE
 # and BI_HOLE, with the black hole's one horizon.
@@ -2083,6 +2170,69 @@ def _schrodinger():
     return [Mark(m, points=[(0.0, 0.0)])]
 
 
+def topological_star_smooth(r, rS, rB):
+    """The part of Bah and Heidmann's tortoise coordinate that is smooth across r_S:
+    sqrt(r (r - r_B)) + (r_B + 2 r_S) arsinh(sqrt(r/r_B - 1))."""
+    r = np.asarray(r, dtype=float)
+    u = np.sqrt(np.maximum(r - rB, 0.0))
+    return np.sqrt(r) * u + (rB + 2 * rS) * np.arcsinh(u / math.sqrt(rB))
+
+
+def topological_string_ratio(r, rS, rB):
+    """(a - b)/(a + b) with a = sqrt(r_S (r - r_B)) and b = sqrt((r_S - r_B) r), for the black
+    string r_S > r_B: positive outside the horizon r_S, negative inside it, -1 on the bubble, and
+    exp(2 kappa r_*) = exp(2 kappa smooth) |ratio| with kappa = sqrt(r_S - r_B)/(2 r_S^(3/2))."""
+    r = np.asarray(r, dtype=float)
+    a, b = np.sqrt(rS * np.maximum(r - rB, 0.0)), np.sqrt((rS - rB) * r)
+    return (a - b) / (a + b)
+
+
+def topological_star_rstar(r, rS, rB):
+    """Bah and Heidmann's tortoise coordinate from the bubble: the integral of
+    dr/((1 - r_S/r) sqrt(1 - r_B/r)) from r_B, which with u = sqrt(r - r_B) is the integral of
+    2 (u^2 + r_B)^(3/2) du/(u^2 + r_B - r_S),
+
+        sqrt(r (r - r_B)) + (r_B + 2 r_S) arsinh(sqrt(r/r_B - 1)) + 2 r_S^(3/2) A/sqrt|r_B - r_S|,
+
+    with A = arctan(sqrt(r_S (r - r_B)/((r_B - r_S) r))) for the star, r_B > r_S, where it is finite
+    on the bubble and grows as r + (r_S + r_B/2) ln r far away, and
+    A = ln|(sqrt(r_S (r - r_B)) - sqrt((r_S - r_B) r))/(sqrt(r_S (r - r_B)) + sqrt((r_S - r_B) r))|/2
+    for the black string, r_S > r_B, which diverges on the horizon r_S as ln|r - r_S|/(2 kappa)
+    with kappa = sqrt(r_S - r_B)/(2 r_S^(3/2)) and vanishes on the bubble behind it."""
+    r = np.asarray(r, dtype=float)
+    smooth = topological_star_smooth(r, rS, rB)
+    if rB > rS:
+        return smooth + 2 * rS ** 1.5 / math.sqrt(rB - rS) * np.arctan(
+            math.sqrt(rS) * np.sqrt(np.maximum(r - rB, 0.0)) / (math.sqrt(rB - rS) * np.sqrt(r)))
+    with np.errstate(divide="ignore"):
+        return smooth + rS ** 1.5 / math.sqrt(rS - rB) * np.log(np.abs(topological_string_ratio(r, rS, rB)))
+
+
+def extremal_string_rstar(rho, m=1.0):
+    """The tortoise coordinate of the extremal string in its isotropic radius, the primitive of
+    (1 + m/rho)^(3/2): sqrt(rho (rho + m)) + 3 m arsinh(sqrt(rho/m)) - 2 m sqrt(1 + m/rho), which
+    runs to minus infinity on the degenerate horizon rho = 0."""
+    rho = np.asarray(rho, dtype=float)
+    return np.sqrt(rho * (rho + m)) + 3 * m * np.arcsinh(np.sqrt(rho / m)) - 2 * m * np.sqrt(1 + m / rho)
+
+
+def _topological_star(chart):
+    """The star's moment t = 0 as its two embedding views read it, at r_B = 1 and r_S = 3/4: the
+    cigar in the chart about the bubble, along rho from the bubble, and the equator in Bah and
+    Heidmann's chart, along r from r_B, with r = r_B + (r_B - r_S) rho^2/4 = 1 + rho^2/16 between
+    them. On the line through the bubble both run on to its other side, psi + pi."""
+    marks = []
+    for m in moments("topological_star"):
+        if m.view["id"] == "cigar":
+            lo, hi = m.reach("bubble", "\\rho")
+            ends = (lo, hi) if chart == "bubble" else (1 + lo ** 2 / 16, 1 + hi ** 2 / 16)
+        else:
+            lo, hi = m.reach("bah_heidmann", "r")
+            ends = (4 * math.sqrt(lo - 1), 4 * math.sqrt(hi - 1)) if chart == "bubble" else (lo, hi)
+        marks.append(Mark(m, across(0.0, *ends) if chart == "bubble" else along(0.0, *ends)))
+    return marks
+
+
 def _c_metric(y):
     """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
     axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
@@ -2156,6 +2306,20 @@ def _morgan_morgan_centre():
     centre of the disc: z = 0 in Weyl's chart and xi = 0 in the oblate spheroidal one."""
     m = moments("morgan_morgan", "plane", label="$t = 0$, the centre of the disc")[0]
     return [Mark(m, points=[(0.0, 0.0)])]
+
+
+def _bach_weyl_centre(at):
+    """The disc inside Bach and Weyl's ring, at t = 0, meets the axis at one event, the centre of
+    the ring: z = 0 in Weyl's chart, sigma = pi in the toroidal one and xi = 0 in the oblate
+    spheroidal one."""
+    m = moments("bach_weyl_ring", "inside", label="$t = 0$, the centre of the ring")[0]
+    return [Mark(m, points=[(0.0, at)])]
+
+
+def _bach_weyl_plane(view_id, of_rho):
+    """One side of the plane of Bach and Weyl's ring at t = 0, from Weyl's rho to the drawn coordinate."""
+    return one("bach_weyl_ring", lambda m: along(0.0, *sorted(of_rho(r) for r in m.reach("weyl", "\\rho"))),
+               view_id=view_id)
 
 
 def _bonnor_dipole_strut():
@@ -2294,6 +2458,9 @@ FLAT = {
     **{("kerr_de_sitter", "kerr_schild", "axis" + suffix): (lambda sign=sign: _kds(sign, kds_schild))
        for sign, suffix in (("de_sitter", ""), ("anti_de_sitter", "_ads"))},
     ("kerr_taub_nut", "boyer_lindquist", "principal"): lambda: one("kerr_taub_nut", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
+    **{("brill_charged_taub_nut", "spherical", view): (lambda v=v: one("brill_charged_taub_nut",
+                                                                         lambda m: along(0.0, *m.reach("spherical", "r")), view_id=v))
+       for view, v in (("black_hole", "equator"), ("wormhole", "wormhole"))},
     ("kerr_taub_nut", "boyer_lindquist", "above"): lambda: kerr_above("kerr_taub_nut"),
     # Ernst and Wild's hole: the moment t = 0 is one surface in both charts, whose azimuths differ
     # by a function of t alone, and it meets each plane of t and r along t = 0 outside r_+.
@@ -2307,6 +2474,10 @@ FLAT = {
     ("btz", "stationary", "static"): lambda: _btz(),
     ("draining_bathtub", "laboratory", "drain"): lambda: _bathtub("laboratory"),
     ("draining_bathtub", "kerr_like", "exterior"): lambda: _bathtub("kerr_like"),
+    ("btz_multi_holes_wormholes", "sausage", "fold"): lambda: _btz_multi("sausage"),
+    ("btz_multi_holes_wormholes", "stereographic", "fold"): lambda: _btz_multi("stereographic"),
+    ("btz_multi_holes_wormholes", "free_fall", "fold"): lambda: _btz_multi("free_fall"),
+    ("btz_multi_holes_wormholes", "exterior", "radial"): lambda: _btz_multi("exterior"),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
     ("btz", "eddington_finkelstein_outgoing", "static"): lambda: _btz(-1),
     ("reissner_nordstrom_de_sitter", "static", "radial"): lambda: _rnds("static"),
@@ -2321,6 +2492,14 @@ FLAT = {
     ("bardeen", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _bardeen_both(-1),
     ("bardeen", "eddington_finkelstein_outgoing", "chart"): lambda: _bardeen_both(-1),
     ("hayward", "static", "radial"): lambda: _hayward(),
+    ("quantum_oppenheimer_snyder", "static", "radial"): lambda: _qos_both("static"),
+    ("quantum_oppenheimer_snyder", "painleve_gullstrand", "collapse"): lambda: _qos_both("painleve_gullstrand"),
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _qos_both("ingoing"),
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_ingoing", "chart"): lambda: _qos_both("ingoing"),
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _qos_both("outgoing"),
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_outgoing", "chart"): lambda: _qos_both("outgoing"),
+    # The dust holds no part of the moments of constant t, which are moments of the vacuum outside it.
+    ("quantum_oppenheimer_snyder", "interior_comoving", "through"): lambda: [],
     ("hayward", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _hayward(1),
     ("hayward", "eddington_finkelstein_ingoing", "chart"): lambda: _hayward(1),
     ("hayward", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _hayward(-1),
@@ -2345,10 +2524,17 @@ FLAT = {
     ("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _rnads(-1),
     ("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "chart"): lambda: _rnads(-1),
     ("schwarzschild_ads", "static", "radial"): lambda: _sads(),
+    ("quantum_btz", "static", "radial"): lambda: _qbtz(),
+    ("quantum_btz", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _qbtz(1),
+    ("quantum_btz", "eddington_finkelstein_ingoing", "chart"): lambda: _qbtz(1),
+    ("quantum_btz", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _qbtz(-1),
+    ("quantum_btz", "eddington_finkelstein_outgoing", "chart"): lambda: _qbtz(-1),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _sads(-1),
     ("schwarzschild_ads", "eddington_finkelstein_outgoing", "chart"): lambda: _sads(-1),
+    ("topological_star", "bah_heidmann", "radial"): lambda: _topological_star("bah_heidmann"),
+    ("topological_star", "bubble", "through"): lambda: _topological_star("bubble"),
     ("ads_soliton", "horowitz_myers", "radial"): lambda: _soliton("horowitz_myers"),
     ("ads_soliton", "poincare", "tz"): lambda: _soliton("poincare"),
     ("ads_soliton", "polar", "radial"): lambda: _soliton("polar"),
@@ -2386,6 +2572,17 @@ FLAT = {
     # Damour and Solodukhin's wormhole at r_s = 1 and lambda = 1/5: one side in its own chart and in the
     # rescaled time, from the throat r = r_s out, and both sides through the throat, where
     # cosh rho = 52 r - 51, the isotropic radius runs from r_s^2/16r to r, and u = +-sqrt(r - r_s).
+    # The Einstein-Dirac-Maxwell wormhole at r_0 = 1 and Q_e = 1/2: one side in the areal radius from the
+    # throat r = r_0 out, and both sides through the throat, where u = +-sqrt(r - r_0) and
+    # x = +-sqrt(1 - r_0/r).
+    ("einstein_dirac_maxwell_wormhole", "areal", "radial"): lambda: one(
+        "einstein_dirac_maxwell_wormhole", lambda m: along(0.0, *m.reach("areal", "r"))),
+    ("einstein_dirac_maxwell_wormhole", "bronnikov_kim", "radial"): lambda: one(
+        "einstein_dirac_maxwell_wormhole", lambda m: along(0.0, -math.sqrt(m.reach("areal", "r")[1] - 1),
+                                                           math.sqrt(m.reach("areal", "r")[1] - 1))),
+    ("einstein_dirac_maxwell_wormhole", "compact", "radial"): lambda: one(
+        "einstein_dirac_maxwell_wormhole", lambda m: along(0.0, -math.sqrt(1 - 1 / m.reach("areal", "r")[1]),
+                                                           math.sqrt(1 - 1 / m.reach("areal", "r")[1]))),
     ("damour_solodukhin", "spherical", "radial"): lambda: one(
         "damour_solodukhin", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("damour_solodukhin", "rescaled", "radial"): lambda: one(
@@ -2732,6 +2929,23 @@ FLAT = {
     ("near_horizon_extreme_kerr", "global", "equator"): lambda: _nhek("global"),
     ("bertotti_robinson", "static", "radial"): lambda: _br("static"),
     ("bertotti_robinson", "poincare", "tx"): lambda: _br("poincare"),
+    # The three-brane's moment t = 0 over the embedding's reach in the isotropic radius, at L = 1: the
+    # areal radius is (rho^4 + 1)^(1/4) and Gibbons, Horowitz and Townsend's w is rho/(rho^4 + 1)^(1/4).
+    # The throat alone is another spacetime, the limit, with its own cylinder: its moment over the reach
+    # in the proper distance sigma, where r = e^sigma.
+    ("three_brane_throat", "isotropic", "radial"): lambda: one(
+        "three_brane_throat", lambda m: along(0.0, *m.reach("isotropic", "\\rho")), view_id="brane"),
+    ("three_brane_throat", "areal", "radial"): lambda: one(
+        "three_brane_throat", lambda m: along(0.0, *((x ** 4 + 1) ** 0.25 for x in m.reach("isotropic", "\\rho"))),
+        view_id="brane"),
+    ("three_brane_throat", "horizon", "radial"): lambda: one(
+        "three_brane_throat", lambda m: along(0.0, *(x / (x ** 4 + 1) ** 0.25 for x in m.reach("isotropic", "\\rho"))),
+        view_id="brane"),
+    ("three_brane_throat", "throat", "radial"): lambda: one(
+        "three_brane_throat", lambda m: along(0.0, *(math.exp(x) for x in m.reach("throat_proper", "\\sigma"))),
+        view_id="throat"),
+    ("three_brane_throat", "throat_proper", "radial"): lambda: one(
+        "three_brane_throat", lambda m: along(0.0, *m.reach("throat_proper", "\\sigma")), view_id="throat"),
     ("cremmer_scherk", "cartesian", "tx"): lambda: _cremmer_scherk("tx"),
     ("cremmer_scherk", "cartesian", "circle"): lambda: _cremmer_scherk("circle"),
     ("plebanski_hacyan", "sphere", "tz"): lambda: _plebanski_hacyan("sphere"),
@@ -2756,6 +2970,10 @@ FLAT = {
     ("kerr_newman", "boyer_lindquist", "radial"): lambda: one("kerr_newman", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_newman", "boyer_lindquist", "principal"): lambda: one("kerr_newman", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_newman", "boyer_lindquist", "above"): lambda: kerr_above("kerr_newman"),
+    # Podolsky and Ovcharenko's spinning hole: the moment t = 0 meets each plane of t and r of the
+    # Boyer-Lindquist chart along t = 0 outside r_+.
+    **{("kerr_bertotti_robinson", "boyer_lindquist", view): lambda: one(
+        "kerr_bertotti_robinson", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))) for view in ("radial", "equator")},
     # Homogeneous planes: every moment runs across the whole drawing.
     # A moment of the areal time t is the line tau = -ln t of the logarithmic chart.
     ("gowdy", "areal", "plane"): lambda: one("gowdy", lambda m: along(m.time, *m.reach("areal", "\\theta"))),
@@ -2821,6 +3039,13 @@ FLAT = {
     # coordinates T = -c^2t_k^2/4, every psi; checks() carries the one chart onto the other.
     ("misner", "misner", "plane"): lambda: one("misner", lambda m: across(-m.time * m.time / 4, 0.0, BIG)),
     ("misner", "milne", "plane"): lambda: one("misner", lambda m: across(m.time, 0.0, BIG)),
+    # Gott and Li's moments are the Kantowski-Sachs time tau = tau_k, every l. On the plane y = z = 0 of the
+    # steady state chart, theta = pi/2 and phi = 0, the same moment is x = cosh(tau_k) exp(-tau), and in its
+    # conformal time the straight line rho = -eta cosh(tau_k); checks() carries the one chart onto the other.
+    ("self_creating_universe", "kantowski_sachs", "plane"):
+        lambda: one("self_creating_universe", lambda m: across(m.time, 0.0, BIG)),
+    ("self_creating_universe", "steady_state", "tx"): lambda: one("self_creating_universe", _scu_steady),
+    ("self_creating_universe", "conformal", "through"): lambda: one("self_creating_universe", _scu_conformal),
     # Gott's moments are Grant's Milne time tau = tau_k, every chi.
     ("gott_time_machine", "grant_milne", "plane"): lambda: one("gott_time_machine", lambda m: across(m.time, 0.0, BIG)),
     # Ori's moments are his t = t_k on the slice y = 0, every z. The central circle has T = t, and
@@ -2952,6 +3177,16 @@ FLAT = {
     ("neugebauer_meinel", "spheroidal", "axis"): lambda: _nm_centre("$t = 0$, $\\xi = 0$"),
     # The plane z = 0 of the first Morgan-Morgan disc at t = 0: Weyl's rho from the axis out, the
     # oblate spheroidal chart's eta across the disc and its xi = sqrt(rho^2/a^2 - 1) outside the rim.
+    # Bach and Weyl's plane z = 0 at t = 0, outside the ring and on the disc inside it.
+    ("bach_weyl_ring", "weyl", "outside"): lambda: _bach_weyl_plane("outside", lambda r: r),
+    ("bach_weyl_ring", "weyl", "inside"): lambda: _bach_weyl_plane("inside", lambda r: r),
+    ("bach_weyl_ring", "weyl", "axis"): lambda: _bach_weyl_centre(0.0),
+    ("bach_weyl_ring", "toroidal", "axis"): lambda: _bach_weyl_centre(math.pi),
+    ("bach_weyl_ring", "toroidal", "outer"): lambda: _bach_weyl_plane("outside", lambda r: 2 * math.atanh(1 / r)),
+    ("bach_weyl_ring", "toroidal", "inner"): lambda: _bach_weyl_plane("inside", lambda r: 2 * math.atanh(r)),
+    ("bach_weyl_ring", "oblate_spheroidal", "axis"): lambda: _bach_weyl_centre(0.0),
+    ("bach_weyl_ring", "oblate_spheroidal", "plane"): lambda: _bach_weyl_plane("outside", lambda r: math.sqrt(r * r - 1)),
+    ("bach_weyl_ring", "oblate_spheroidal", "disc"): lambda: _bach_weyl_plane("inside", lambda r: math.sqrt(1 - r * r)),
     ("morgan_morgan", "weyl", "plane"): lambda: one("morgan_morgan", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("morgan_morgan", "weyl", "axis"): _morgan_morgan_centre,
     ("morgan_morgan", "oblate_spheroidal", "axis"): _morgan_morgan_centre,
@@ -3142,6 +3377,7 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("kerr_bertotti_robinson", "static", "radial"): "the hole with no spin, a = 0, another member of the family than the spinning hole whose equator is embedded",
     ("tilted_universes", "flat_model", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
     ("tilted_universes", "inertial", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
     ("kasner_magnetic", "rosen", "etax"): "the axisymmetric universe, exponents (0, 0, 1), another spacetime than the one embedded",
@@ -3205,9 +3441,19 @@ HIDDEN = {
     ("draining_bathtub", "laboratory", "spring"): "the spring, A > 0, another spacetime than the drain whose moments are embedded",
     ("draining_bathtub", "vortex_filament", "drain"): "the vortex filament of four dimensions, another spacetime than the drain in the plane whose moments are embedded",
     ("btz", "stationary", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
+    ("quantum_btz", "brane", "dressed"): "a conical singularity dressed with a horizon, kappa = +1, another spacetime than the hole of positive mass whose moment is embedded",
+    ("quantum_btz", "rotating", "rotating"): "the rotating hole, horizons l_3 and l_3/2, another spacetime than the hole without rotation whose moment is embedded",
+    ("quantum_btz", "dressed"): "a conical singularity dressed with a horizon, kappa = +1, another spacetime than the hole of positive mass whose moment is embedded",
+    ("quantum_btz", "rotating"): "the rotating hole, horizons l_3 and l_3/2, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_outgoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
+    ("topological_star", "eddington_finkelstein_ingoing", "finkelstein"): "the black string, r_S > r_B, another spacetime than the star whose moment is embedded",
+    ("topological_star", "extremal", "radial"): "the extremal string, r_S = r_B, another spacetime than the star whose moment is embedded",
+    ("topological_star", "einstein", "radial"): "the Einstein metric of four dimensions, another spacetime than the star of five whose moment is embedded",
+    ("topological_star", "black_string"): "the black string, r_S > r_B, another spacetime than the star whose moment is embedded",
+    ("topological_star", "einstein"): "the Einstein metric of four dimensions, another spacetime than the star of five whose moment is embedded",
+    ("topological_star", "extremal"): "the extremal string, r_S = r_B, another spacetime than the star whose moment is embedded",
     ("ads_soliton", "five_dimensional", "radial"): "the soliton of five dimensions, another spacetime than the soliton of four whose moment is embedded",
     ("ads_soliton", "three_dimensional", "radial"): "the soliton of three dimensions, which is anti-de Sitter space, another spacetime than the soliton of four whose moment is embedded",
     **{("topological_black_hole", system, "negative"): "the hyperbolic hole of negative mass, another spacetime than the flat hole and the hyperbolic hole without mass whose moments are embedded"
@@ -3222,6 +3468,13 @@ HIDDEN = {
     ("coleman_de_luccia", "into_flat"): "a bubble with another vacuum inside than the anti-de Sitter space whose moments are embedded",
     **{("coleman_de_luccia", system, "out_of_flat"): "the region outside the light cone of the bubble's centre, which no moment of the open universe inside meets"
        for system in ("wall", "static_outside")},
+    **{("brill_charged_taub_nut", system, view): "the regular half of the axis, which the embedded equatorial plane does not meet"
+       for system, view in (("one_string", "black_hole"), ("one_string", "wormhole"),
+                            ("eddington_finkelstein_ingoing", "black_hole"), ("eddington_finkelstein_ingoing", "wormhole"),
+                            ("eddington_finkelstein_outgoing", "black_hole"))},
+    ("brill_charged_taub_nut", "taub", "universe"): "the region between the horizons, where a surface of constant t is not a moment of space",
+    **{("brill_charged_taub_nut", view): "the regular half of the axis, which the embedded equatorial plane does not meet"
+       for view in ("axis", "ingoing", "outgoing", "universe", "wormhole")},
     **{("kerr_taub_nut", system, "axis"): "the regular half of the axis, which the embedded equatorial plane does not meet"
        for system in ("one_string", "kerr_ingoing", "kerr_outgoing")},
     **{("kerr_taub_nut", view): "the regular half of the axis, which the embedded equatorial plane does not meet"
@@ -3296,6 +3549,8 @@ HIDDEN = {
        for half in ("behind", "ahead")},
     ("frw", "flat"): "the flat universe's conformal diagram; the moments embedded are the closed universe's",
     ("misner", "rindler", "plane"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",
+    ("self_creating_universe", "static", "through"): "the region of closed timelike curves before the Cauchy horizon, which no moment of the inflating region meets",
+    ("self_creating_universe", "static"): "the region of closed timelike curves before the Cauchy horizon, which no moment of the inflating region meets",
     ("misner", "rindler"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",
     ("gott_time_machine", "grant_rindler", "plane"): "the region of closed timelike curves beyond the chronology horizon, which no moment of Grant's Milne time meets",
     ("gott_time_machine", "grant_rindler"): "the region of closed timelike curves beyond the chronology horizon, which no moment of Grant's Milne time meets",
@@ -3738,6 +3993,28 @@ def checks():
     miss = max(abs(float((pulled - g_n[:2, :2]).subs({tn: a, cn: b})[i, j]))
                for a, b in zip(rng.uniform(-3, -0.1, 20), rng.uniform(-3, 3, 20)) for i in range(2) for j in range(2))
     report("Misner: T = -t^2/4, psi = 2 chi - ln(t^2/4) pulls Misner's plane back onto the Milne plane", miss, 1e-12)
+
+    # Gott and Li: tau_s = l + ln sinh(tau) and x = cosh(tau) exp(-tau_s) carry the Kantowski-Sachs plane of
+    # tau and l onto the steady state plane of tau_s and x, both being W + V = sinh(tau) e^l = exp(tau_s)
+    # and the sphere's radius cosh(tau) = x exp(tau_s), so the moment tau = tau_k is x = cosh(tau_k) exp(-tau_s);
+    # and eta = -exp(-tau_s), rho = x carry the steady state plane onto the conformal one.
+    scu = {"r_0": 1, "beta": "2*pi"}
+    g_k, (tk, lk, *_) = metric("self_creating_universe", "kantowski_sachs", scu)
+    g_s, (ts_, xs_, *_) = metric("self_creating_universe", "steady_state", scu)
+    g_e, (ee, re_, *_) = metric("self_creating_universe", "conformal", scu)
+    new = [lk + sp.log(sp.sinh(tk)), sp.cosh(tk) * sp.exp(-lk) / sp.sinh(tk)]
+    J = sp.Matrix([[sp.diff(f, v) for v in (tk, lk)] for f in new])
+    pulled = J.T * g_s[:2, :2].subs({ts_: new[0], xs_: new[1]}, simultaneous=True) * J
+    miss = max(abs(float((pulled - g_k[:2, :2]).subs({tk: a, lk: b})[i, j]))
+               for a, b in zip(rng.uniform(0.1, 3, 20), rng.uniform(-3, 3, 20)) for i in range(2) for j in range(2))
+    report("Gott-Li: tau_s = l + ln sinh(tau), x = cosh(tau) exp(-tau_s) pulls the steady state plane back onto "
+           "the Kantowski-Sachs plane", miss, 1e-10)
+    new = [-sp.exp(-ts_), xs_]
+    J = sp.Matrix([[sp.diff(f, v) for v in (ts_, xs_)] for f in new])
+    pulled = J.T * g_e[:2, :2].subs({ee: new[0], re_: new[1]}, simultaneous=True) * J
+    miss = max(abs(float((pulled - g_s[:2, :2]).subs({ts_: a, xs_: b})[i, j]))
+               for a, b in zip(rng.uniform(-2, 2, 20), rng.uniform(0, 3, 20)) for i in range(2) for j in range(2))
+    report("Gott-Li: eta = -exp(-tau_s), rho = x pulls the conformal plane back onto the steady state plane", miss, 1e-10)
 
     # Ori: T = t + a(x^2 - y^2)/2 - e(x^2 + y^2) carries the foliation onto the vacuum core at
     # f = a(x^2 - y^2)/2, so the moment t = t_k is T = t_k on the central circle and T = t_k - 3/2 at
