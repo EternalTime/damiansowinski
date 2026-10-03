@@ -1051,6 +1051,15 @@ RT_INPUT = ("The first front $f(0, \\theta)^2 = f_0^2\\left(1 - \\epsilon^2\\cos
             "every front has the area $4\\pi r^2$, and after it the solution of the Robinson-Trautman equation, "
             "with the vacuum $2H = K - 2r\\,\\partial_u\\ln f - 2m/r$.")
 
+# Compere and Long's vacuum as every one of its diagrams draws it, in units of ell: the field
+# C = ell (3 cos^2 theta - 1)/2 on the static chart and its shear sigma = (C' cot theta - C'')/2
+# = -3 ell sin^2(theta)/2 on the Bondi charts. On the equator the supertranslation horizon is
+# rho = C + C'' = 5 ell/2, which is r = 0 of the Bondi charts, where W = sqrt(r^2 + sigma^2) = 3 ell/2.
+STH_FIELD = "(3*cos(theta)**2 - 1)/2"
+STH_SHEAR = "-3*sin(theta)**2/2"
+STH_INPUT = ("The field $C = \\tfrac{1}{2}\\ell\\left(3\\cos^2\\theta - 1\\right)$, with $\\ell$ any length, "
+             "whose shear is $\\sigma = -\\tfrac{3}{2}\\ell\\sin^2\\theta$.")
+
 POLYTROPE_STATED = {"M": (1.40, 2), "R_km": (14.2, 1)}
 KM = 1.4766250614                       # GM_sun/c^2 in km
 
@@ -3325,6 +3334,18 @@ DIAGRAMS = [
     Diagram("minkowski", "rindler", "tx", "$T$ and $X$", ("T", "X"), (0, 3, -1.5, 1.5),
             "$X\\;[c^2/a]$", "$cT\\;[c^2/a]$", {"a": 1}, {"Y": "0", "Z": "0"}, tau="T",
             families=SIDEWAYS),
+    # Compere and Long's vacuum on its equator, where every chart's plane holds its rays. The static
+    # chart ends on the left at the supertranslation horizon rho = 5 ell/2, hatched beyond; each
+    # Bondi chart is drawn against its own null time, with t = u + W + ell or v - W - ell as the time.
+    Diagram("supertranslation_hair", "static", "equator", "the equator", ("t", "\\rho"), (2, 6.5, -2.25, 2.25),
+            "$\\rho/\\ell$", "$ct/\\ell$", {}, EQUATOR, functions={"C": STH_FIELD}, input=STH_INPUT,
+            where="rho - Rational(5, 2)"),
+    Diagram("supertranslation_hair", "bondi_retarded", "equator", "the equator, against $u$", ("u", "r"),
+            (0, 6, -6.5, -0.5), "$r/\\ell$", "$cu/\\ell$", {}, EQUATOR, tau="u + sqrt(r**2 + Rational(9, 4))",
+            functions={"sigma": STH_SHEAR}, input=STH_INPUT),
+    Diagram("supertranslation_hair", "bondi_advanced", "equator", "the equator, against $v$", ("v", "r"),
+            (0, 6, 0.5, 6.5), "$r/\\ell$", "$cv/\\ell$", {}, EQUATOR, tau="v - sqrt(r**2 + Rational(9, 4))",
+            functions={"sigma": STH_SHEAR}, input=STH_INPUT),
     # Misner space at Li and Gott's psi_0 = 4 pi, a boost of rapidity 2 pi, where the Milne chart's
     # chi and the Rindler chart's eta each run once round 2 pi. Misner's own plane is drawn against
     # psi/2, that rapidity, so that it stands as wide as the Milne chart's.
@@ -8049,6 +8070,28 @@ CAPTIONS = {
         "The light rays run as $\\xi = \\xi_0e^{\\pm\\lambda}$ for any number $\\xi_0$, so a ray sent outward "
         "is back at the same $\\lambda$ at a radius $e^{2\\pi}$ times larger. The cones close toward $\\xi = 0$, "
         "the horizon of Rindler's chart.",
+    ],
+    ("supertranslation_hair", "static", "equator"): [
+        "The plane of $t$ and $\\rho$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the "
+        "quadrupole field $C$. Each line of constant angle is a straight line of flat space and $\\rho$ is the "
+        "distance along it, so the rays, $c\\,dt = \\pm d\\rho$, run at 45° as in Minkowski space.",
+        "The chart ends on the left at $\\rho = 5\\ell/2$, where $g_{\\theta\\theta} = \\left(\\rho - C - C''\\right)^2$ "
+        "vanishes: the supertranslation horizon, on the equator a ring of radius $3\\ell$. An ingoing ray reaches it "
+        "at a finite affine parameter and carries on, straight, into flat space the chart does not cover.",
+    ],
+    ("supertranslation_hair", "bondi_retarded", "equator"): [
+        "The plane of $u$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the "
+        "quadrupole field, where the shear is $\\sigma = -3\\ell/2$. The outgoing rays are $u = $ const, and the "
+        "ingoing rays keep $cu + 2W$, with $W = \\sqrt{r^2 + \\sigma^2}$, so they run level onto the left edge.",
+        "The left edge $r = 0$ is the supertranslation horizon, $\\rho = 5\\ell/2$ of the static chart, where the "
+        "surfaces of constant $u$ and $r$ have zero area. The time of the static chart is $ct = cu + W + \\ell$ here.",
+    ],
+    ("supertranslation_hair", "bondi_advanced", "equator"): [
+        "The plane of $v$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the "
+        "quadrupole field, where the shear is $\\sigma = -3\\ell/2$. The ingoing rays are $v = $ const, and the "
+        "outgoing rays keep $cv - 2W$, with $W = \\sqrt{r^2 + \\sigma^2}$, so they leave the left edge level.",
+        "The left edge $r = 0$ is the supertranslation horizon, $\\rho = 5\\ell/2$ of the static chart, where the "
+        "surfaces of constant $v$ and $r$ have zero area. The time of the static chart is $ct = cv - W - \\ell$ here.",
     ],
     ("minkowski", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in flat spacetime. "
@@ -15616,6 +15659,11 @@ CLOSED_FORMS = {
     ("nordstrom_scalar", "uniform", "tz"): (lambda t, z: t + z, lambda t, z: t - z, lambda t, z: z > 0.0005),
     ("nordstrom_scalar", "dust", "radial"): (lambda t, r: t + r, lambda t, r: t - r, lambda t, r: np.abs(t) < 0.9995),
     ("minkowski", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("supertranslation_hair", "static", "equator"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("supertranslation_hair", "bondi_retarded", "equator"):
+        (lambda u, r: u + 2 * np.sqrt(r ** 2 + 2.25), lambda u, r: u, None),
+    ("supertranslation_hair", "bondi_advanced", "equator"):
+        (lambda v, r: v, lambda v, r: v - 2 * np.sqrt(r ** 2 + 2.25), None),
     ("minkowski", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("minkowski", "rindler", "tx"):
         (lambda T, X: T + np.log(X), lambda T, X: T - np.log(X), lambda T, X: X > 1e-3),

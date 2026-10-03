@@ -18,7 +18,8 @@ moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, disto
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, brill_charged_taub_nut,
-bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star and quantum_oppenheimer_snyder, and Godel's cylindrical chart.
+bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder
+and supertranslation_hair, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -41,7 +42,7 @@ witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, ma
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
-kerr_melvin.md and einstein_dirac_maxwell_wormhole.md beside this file.
+kerr_melvin.md, einstein_dirac_maxwell_wormhole.md and supertranslation_hair.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 """
 import argparse
@@ -29497,6 +29498,158 @@ def einstein_dirac_maxwell_wormhole_check(chart, system):
 
 
 CHARTS["einstein_dirac_maxwell_wormhole"] = [lambda s=s: einstein_dirac_maxwell_wormhole(s) for s in EDM_CHARTS]
+
+
+# -- Flat space with supertranslation hair -----------------------------------------------
+
+STH_CHARTS = ["static", "bondi_retarded", "bondi_advanced"]
+STH_STATIC = "ds^2 = -{c2}dt^2 + d\\rho^2 + \\left(\\rho - C - C''\\right)^2d\\theta^2 + B^2d\\phi^2"
+STH_B = "B = \\left(\\rho - C\\right)\\sin\\theta - C'\\cos\\theta"
+STH_SHIFT = "2\\left(\\partial_\\theta\\sigma\\left(1 - \\dfrac{\\sigma}{W}\\right) + 2\\sigma\\cot\\theta\\right)"
+STH_SPHERES = " + \\left(W + \\sigma\\right)^2d\\theta^2 + \\left(W - \\sigma\\right)^2\\sin^2\\theta\\,d\\phi^2"
+
+
+def supertranslation_hair(system_id):
+    """Compere and Long's vacua of the gravitational field, Minkowski space carried by a finite
+    supertranslation (J. High Energy Phys. 2016(07), 137, arXiv:1601.04958), with the field C
+    axisymmetric, a function of theta alone. The static chart is their static form (section 2.2),
+    -dt^2 + drho^2 + g_AB dz^A dz^B with g_AB = (rho - C)^2 gamma_AB - 2(rho - C) D_A D_B C
+    + D_A D_E C D_B D^E C, which for C(theta) is diagonal, g_thth = (rho - C - C'')^2 and
+    g_phph = ((rho - C) sin theta - C' cos theta)^2. The retarded chart is their BMS gauge (section 2.1),
+    u = t - rho and rho = sqrt(r^2 + U) + (D^2 + 2)C/2, which for C(theta) has U = sigma^2 with
+    sigma = (C' cot theta - C'')/2, the shear, and depends on C through sigma alone; the advanced
+    chart is their advanced form (section 2.2), v = t + rho. supertranslation_hair_check holds the static chart to
+    their second paper's Cartesian coordinates (Class. Quantum Grav. 33, 195001, arXiv:1602.05197,
+    section 3.1), each Bondi chart to the static chart pulled back, the retarded chart to Bondi's
+    axisymmetric metric as published, and every chart to a vanishing Riemann tensor.
+    supertranslation_hair.md records each chart's source."""
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    if system_id == "static":
+        coords, parameters, name = ["t", "\\rho", "\\theta", "\\phi"], ["C = C(\\theta)", STH_B], "Static (Compère-Long)"
+        domains = ["t \\in (-\\infty, \\infty)",
+                   "\\rho > C + \\max\\left(C'', C'\\cot\\theta\\right) \\;\\text{(outside the supertranslation horizon)}"] + angles
+        line = STH_STATIC
+        probe = vm.Reader(coords, parameters, (), rates=vm.RATES[("supertranslation_hair", system_id)])
+        rho, th = probe.symbol["\\rho"], probe.symbol["\\theta"]
+        printer = {"lead": [rho, probe.parameters["C"], probe.parameters["B"], sp.cos(th), sp.sin(th)],
+                   "primed": ["C"], "flip": False}
+        extra = {"reduce": lambda value: vm.norm(probe.by_rates(value))}
+    else:
+        retarded = system_id == "bondi_retarded"
+        x, name = ("u", "Bondi Gauge, Retarded") if retarded else ("v", "Bondi Gauge, Advanced")
+        coords, parameters = [x, "r", "\\theta", "\\phi"], ["\\sigma = \\sigma(\\theta)", "W = \\sqrt{r^2 + \\sigma^2}"]
+        domains = [x + " \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles + [
+            "r = 0 \\;\\text{(the supertranslation horizon)}"]
+        cross = (" - \\dfrac{2r}{W}{c1}d" + x + "\\,dr + " if retarded else " + \\dfrac{2r}{W}{c1}d" + x + "\\,dr - ")
+        line = "ds^2 = -{c2}d" + x + "^2" + cross + STH_SHIFT + "{c1}d" + x + "\\,d\\theta" + STH_SPHERES
+        probe = vm.Reader(coords, parameters, (), rates=vm.RATES[("supertranslation_hair", system_id)])
+        r, th = probe.symbol["r"], probe.symbol["\\theta"]
+        printer = {"lead": [r, probe.parameters["W"], probe.parameters["sigma"], sp.cos(th), sp.sin(th)],
+                   "flip": False}
+        extra = {"reduce": lambda value: vm.norm(probe.by_rates(value))}
+    return {
+        "metric_id": "supertranslation_hair",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line.replace("{c2}", "c^2").replace("{c1}", "c\\,")},
+        "chart_line_element": line.replace("{c2}", "").replace("{c1}", ""),
+        "printer": printer,
+        "check": lambda chart, s=system_id: supertranslation_hair_check(chart, s),
+        **extra,
+    }
+
+
+def sth_static_metric(theta, C):
+    """The static chart's metric of space, diagonal in rho, theta and phi, for a field C(theta)."""
+    rho = sp.Symbol("rho", real=True)
+    dC = sp.diff(C, theta)
+    return rho, sp.diag(1, (rho - C - sp.diff(C, theta, 2)) ** 2, ((rho - C) * sp.sin(theta) - dC * sp.cos(theta)) ** 2)
+
+
+def supertranslation_hair_check(chart, system_id):
+    """Every chart is flat. The static chart is the flat metric of Cartesian coordinates carried by
+    Compere and Long's map X = (rho - C) n - C' e_theta, n the unit vector of the angles and
+    e_theta its derivative along theta (their 1602.05197, section 3.1, with C axisymmetric). Each Bondi
+    chart is the static chart pulled back through t = u + rho or t = v - rho, with
+    rho = W + C + (C'' + C' cot theta)/2 and sigma = (C' cot theta - C'')/2, so that W - sigma and
+    W + sigma are the radii rho - C - C'' and rho - C - C' cot theta of a shell. The retarded chart is
+    Bondi's axisymmetric metric as published, at e^(2 beta) = r/W, r e^gamma = W + sigma,
+    U = -g_u theta/(W + sigma)^2 and V = W(1 + (W + sigma)^2 U^2)."""
+    name = f"supertranslation_hair {system_id}"
+    riemann = chart.geo.riemann_llll()
+    reduce = chart.reduce or vm.norm
+    if any(reduce(sp.sympify(vm._at(riemann, index))) != 0 for index in vm._indices(4, 4)):
+        raise AssertionError(f"{name}: the Riemann tensor does not vanish")
+    t, x, theta, phi = chart.symbols
+    C = sp.Function("C", real=True)(theta)
+    if system_id == "static":
+        C = chart.reader.parameters["C"]
+        n = sp.Matrix([sp.sin(theta) * sp.cos(phi), sp.sin(theta) * sp.sin(phi), sp.cos(theta)])
+        e = sp.diff(n, theta)
+        X = (x - C) * n - sp.diff(C, theta) * e
+        J = sp.Matrix(3, 3, lambda i, j: sp.diff(X[i], (x, theta, phi)[j]))
+        flat = (J.T * J).applyfunc(sp.simplify)
+        own = chart.geo.g.subs(chart.reader.held).doit()
+        if any(vm.norm(flat[i, j] - own[i + 1, j + 1]) != 0 for i in range(3) for j in range(3)):
+            raise AssertionError(f"{name}: not Compere and Long's Cartesian coordinates carried along their map")
+        return
+    # Each Bondi chart is the static chart pulled back, with sigma written by C.
+    sigma = chart.reader.parameters["sigma"]
+    r = x
+    shear = (sp.diff(C, theta) * sp.cot(theta) - sp.diff(C, theta, 2)) / 2
+    W = sp.sqrt(r ** 2 + shear ** 2)
+    rho_of = W + C + (sp.diff(C, theta, 2) + sp.diff(C, theta) * sp.cot(theta)) / 2
+    sign = 1 if system_id == "bondi_retarded" else -1
+    image = [t + sign * rho_of, rho_of, theta, phi]
+    rho, space = sth_static_metric(theta, C)
+    static = sp.diag(-1, 1, 1, 1)
+    static[1:, 1:] = space
+    static = static.subs(rho, rho_of)
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = J.T * static * J
+    own = chart.geo.g.subs(chart.reader.held).doit().subs(sigma.func, sp.Lambda(theta, shear)).doit()
+    rng = random.Random(2016)
+    profiles = [sp.Rational(3, 2) * sp.cos(theta) ** 2 - sp.Rational(1, 2),
+                sp.cos(theta) ** 3 / 3 + sp.sin(theta) ** 4 / 5 + sp.cos(theta) / 7]
+    for profile in profiles:
+        for _ in range(3):
+            at = {r: sp.Rational(rng.randint(20, 60), 7), theta: sp.Rational(rng.randint(2, 28), 10), t: 1, phi: 1}
+            for i in range(4):
+                for j in range(i, 4):
+                    gap = (pulled[i, j] - own[i, j]).subs(C.func, sp.Lambda(theta, profile)).doit().subs(at)
+                    if abs(sp.N(gap, 40)) > sp.Float("1e-30"):
+                        raise AssertionError(f"{name}: not the static chart pulled back in slot {i}{j}")
+    if system_id != "bondi_retarded":
+        return
+    # Bondi's axisymmetric metric as published, at this chart's four functions.
+    entry = next(c for c in json.loads((METRICS / "bondi_sachs.json").read_text(encoding="utf-8"))["coordinates"]
+                 if c["id"] == "bondi")
+    reader = vm.Reader(entry["coords"], [q["symbol"] for q in entry["parameters"]], ())
+    there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+    names = dict(zip([reader.symbol[n] for n in entry["coords"]], chart.symbols))
+    bondi = sp.Matrix(4, 4, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+    bondi = bondi.subs(names, simultaneous=True)
+    S = sp.Function("S", real=True)(theta)
+    w = sp.sqrt(r ** 2 + S ** 2)
+    shift = sp.diff(S, theta) * (1 - S / w) + 2 * S * sp.cot(theta)
+    U = -shift / (w + S) ** 2
+    functions = {"V": w * (1 + (w + S) ** 2 * U ** 2), "beta": sp.log(r / w) / 2, "U": U, "gamma": sp.log((w + S) / r)}
+    member = bondi
+    for key, value in functions.items():
+        f = reader.parameters[key]
+        member = member.subs(f.func, sp.Lambda(tuple(names[a] for a in f.args), value))
+    member = member.doit()
+    own = chart.geo.g.subs(chart.reader.held).doit().subs(sigma.func, S.func)
+    for profile in profiles:
+        for _ in range(3):
+            at = {r: sp.Rational(rng.randint(20, 60), 7), theta: sp.Rational(rng.randint(2, 28), 10), t: 1, phi: 1}
+            for i in range(4):
+                for j in range(i, 4):
+                    gap = (member[i, j] - own[i, j]).subs(S.func, sp.Lambda(theta, profile)).doit().subs(at)
+                    if abs(sp.N(gap, 40)) > sp.Float("1e-30"):
+                        raise AssertionError(f"{name}: not Bondi's axisymmetric metric as published, slot {i}{j}")
+
+
+CHARTS["supertranslation_hair"] = [lambda s=s: supertranslation_hair(s) for s in STH_CHARTS]
 
 
 def write(spec):
