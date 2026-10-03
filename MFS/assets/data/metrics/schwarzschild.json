@@ -468,6 +468,11 @@
       "id": "quantum_oppenheimer_snyder",
       "kind": "generalisation",
       "text": "Schwarzschild's metric with one more term, $f = 1 - 2m/r + \\alpha m^2/r^4$ with $r_s = 2m$, the vacuum outside a ball of dust that bounces as loop quantum cosmology has it [lewandowski2023]."
+    },
+    {
+      "id": "supertranslation_hair",
+      "kind": "family",
+      "text": "Flat space with a supertranslation field on the sphere of directions. Compère and Long put the same field on this black hole as the final state of a collapse that was not spherical [compere2016final]."
     }
   ],
   "references": [
@@ -594,7 +599,8 @@
     "basovnik2016",
     "podolsky2025",
     "bah2021",
-    "lewandowski2023"
+    "lewandowski2023",
+    "compere2016final"
   ],
   "coordinates": [
     {

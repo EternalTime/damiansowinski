@@ -2052,6 +2052,18 @@ A black hole in the Einstein-de Sitter universe, Schwarzschild's metric multipli
 - chart Schwarzschild Time: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{\eta^4}{\eta_0^4}\left(-\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = \dfrac{\left(v - r\right)^4}{\eta_0^4}\left(-\left(1 - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Flat Space with Supertranslation Hair
+
+Minkowski space in the coordinates of a supertranslation, written in closed form by Geoffrey Compère and Jiang Long in 2016. Every component of the Riemann tensor vanishes, and each function on the sphere of directions gives a different vacuum, between which a burst of gravitational waves carries space.
+
+- id: `supertranslation_hair`
+- tags: vacuum, flat, conformally flat, static, stationary, axisymmetric, asymptotically flat, retarded time, supertranslation, gravitational memory, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/supertranslation_hair.json
+- chart Static (Compère-Long): coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -c^2dt^2 + d\rho^2 + \left(\rho - C - C''\right)^2d\theta^2 + B^2d\phi^2$$
+- chart Bondi Gauge, Retarded: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -c^2du^2 - \dfrac{2r}{W}c\,du\,dr + 2\left(\partial_\theta\sigma\left(1 - \dfrac{\sigma}{W}\right) + 2\sigma\cot\theta\right)c\,du\,d\theta + \left(W + \sigma\right)^2d\theta^2 + \left(W - \sigma\right)^2\sin^2\theta\,d\phi^2$$
+- chart Bondi Gauge, Advanced: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -c^2dv^2 + \dfrac{2r}{W}c\,dv\,dr - 2\left(\partial_\theta\sigma\left(1 - \dfrac{\sigma}{W}\right) + 2\sigma\cot\theta\right)c\,dv\,d\theta + \left(W + \sigma\right)^2d\theta^2 + \left(W - \sigma\right)^2\sin^2\theta\,d\phi^2$$
+
 ### Szekeres Inhomogeneous Dust Cosmologies
 
 The dust cosmologies Peter Szekeres found in 1975, which in general have no Killing vector. Their shells of matter are spheres, planes, or pseudospheres that are not concentric, each evolving as a shell of the Tolman-Bondi model does, so the density carries a dipole that changes from shell to shell.

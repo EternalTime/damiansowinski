@@ -478,7 +478,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f66f3c1541b9a8c5",
+    "version": "80e570f1bdcb5dc0",
     "diagrams": "254f7746e52372ea",
     "conformal": "ff606c016a700422",
     "embedding": "3aa6e616aa7f5d53"
@@ -937,7 +937,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "30acffcd80d67b00",
+    "version": "ce40e8737b9db3d9",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
@@ -3250,7 +3250,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "42fe0c8f21c43d85",
+    "version": "a88f5cd45901ff53",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -4345,7 +4345,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c15aae7a798139cd",
+    "version": "35fda8936e3c18bd",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -4727,6 +4727,31 @@
     "diagrams": "7276a636d705765d",
     "conformal": "e0a22ba6cfc54754",
     "embedding": "8003002e86c3bf6e"
+  },
+  {
+    "id": "supertranslation_hair",
+    "name": "Supertranslation Hair",
+    "tags": [
+      "vacuum",
+      "flat",
+      "conformally flat",
+      "static",
+      "stationary",
+      "axisymmetric",
+      "asymptotically flat",
+      "retarded time",
+      "supertranslation",
+      "gravitational memory",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "7d550f90ff8b74e1",
+    "diagrams": "d120d76fc965997d",
+    "conformal": "b40fdbdc039b6c75",
+    "embedding": "5b15cfdf325c286f"
   },
   {
     "id": "szekeres",
@@ -5140,7 +5165,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "c38cddd037a38010",
+    "version": "ea56edda506f39ce",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"

@@ -687,6 +687,65 @@ S_ALL = spread(-np.inf, np.inf, 500, 9)
 S_POS = spread(0, np.inf, 500, 12)
 
 
+# ---------------------------------------------------------------- Flat space with supertranslation hair
+
+def supertranslation_hair(ck, src):
+    """Compere and Long's vacuum with the field C = ell (3 cos^2 theta - 1)/2, drawn at ell = 1 on
+    the equator, the plane every chart's rays keep to, one view for each chart.
+
+    On the equator the static chart's plane of t and rho is -dt^2 + drho^2 for rho > 5/2, the half
+    plane of two dimensional Minkowski space whose edge is the supertranslation horizon, so it is
+    Minkowski's triangle by p, q = arctan(t -+ (rho - 5/2)), with that edge where Minkowski's
+    centre is. The Bondi charts reach the same events through t = u + W + 1 and t = v - W - 1,
+    rho = W + 1, W = sqrt(r^2 + 9/4), so r = 0 is the same edge and their lines of constant u and v
+    are the light rays of the triangle. The shells of the embedding diagram are the events t = 0,
+    rho = rho_k, one point of each view."""
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    edge = 2.5
+
+    def W(r):
+        return np.sqrt(np.asarray(r, dtype=float) ** 2 + 2.25)
+    maps = {"static": lambda t, rho: mink_pq(t, np.asarray(rho, dtype=float) - edge),
+            "bondi_retarded": lambda u, r: mink_pq(np.asarray(u, dtype=float) + W(r) + 1, W(r) - 1.5),
+            "bondi_advanced": lambda v, r: mink_pq(np.asarray(v, dtype=float) - W(r) - 1, W(r) - 1.5)}
+    names = {"static": ("Static (Compère-Long)", ("t", "\\rho"), "$\\rho = 5\\ell/2$"),
+             "bondi_retarded": ("Bondi Gauge, Retarded", ("u", "r"), "$r = 0$"),
+             "bondi_advanced": ("Bondi Gauge, Advanced", ("v", "r"), "$r = 0$")}
+    shells = slices.moments("supertranslation_hair", "shells")
+    views = []
+    for system, fmap in maps.items():
+        label, plane_of, centre = names[system]
+        fixed = {"theta": "pi/2", "phi": "0"}
+        functions = {"C": "(3*cos(theta)**2 - 1)/2"} if system == "static" else {"sigma": "-3*sin(theta)**2/2"}
+        plane = Plane(src, "supertranslation_hair", system, plane_of, fixed, functions=functions)
+        lo = edge + 0.01 if system == "static" else 0.01
+        ck.chart(f"supertranslation hair {system}", plane, fmap, ck.uniform(-20, 20), lo + ck.uniform(0, 20),
+                 lambda a, b: (1, 0))
+        ck.finite(f"supertranslation hair {system}: the curvature vanishes at the edge",
+                  plane.kretschmann(ck.uniform(-5, 5, 50), np.full(50, lo)))
+        v = View(system, label, box, system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        if system == "static":
+            grid(v, "r", lambda rho, t: fmap(t, rho), (3, 3.5, 4.5, 6.5), S_ALL)
+            grid(v, "t", fmap, (-4, -2, -1, 0, 1, 2, 4), edge + S_POS)
+            v.legend("r", "$\\rho$ constant, at $3$, $3.5$, $4.5$ and $6.5\\,\\ell$")
+            v.legend("t", "$ct$ constant")
+        else:
+            x = "u" if system == "bondi_retarded" else "v"
+            grid(v, "r", lambda r, a: fmap(a, r), (0.5, 1, 2, 4), S_ALL)
+            grid(v, "null", fmap, (-4, -2, -1, 0, 1, 2, 4), S_POS)
+            v.legend("r", "$r$ constant, at $0.5$, $1$, $2$ and $4\\,\\ell$")
+            v.legend("null", f"${x}$ constant, every one a light ray")
+        triangle_edges(v, centre=centre, centre_class="chartedge")
+        v.legend("cover", "the region outside the supertranslation horizon, which the chart covers")
+        v.legend("chartedge", "the supertranslation horizon, where the coordinates end")
+        for m in shells:
+            v.slice(m, points=[mink_pq(0.0, m.time - edge)])
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Minkowski
 
 def minkowski(ck, src):
@@ -23838,7 +23897,7 @@ DRAWN = {
     "ads_soliton": ads_soliton,
     "topological_star": topological_star,
     "coleman_de_luccia": coleman_de_luccia,
-    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
+    "minkowski": minkowski, "supertranslation_hair": supertranslation_hair, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "de_sitter": de_sitter,
@@ -24525,6 +24584,29 @@ CAPTIONS = {
         "diagram a 2-sphere of radius $R$. The chart is Minkowski's spherical chart inside $R < cT$, drawn with "
         "Minkowski's own maps, and its lines of constant $R$ enter the Milne universe across the light cone $cT = R$ "
         "and run on to $i^+$.",
+    ],
+    ("supertranslation_hair", "static"): [
+        "The vacuum with the quadrupole field $C = \\tfrac{1}{2}\\ell\\left(3\\cos^2\\theta - 1\\right)$, with $\\ell$ any length, on "
+        "its equator ($\\theta = \\pi/2$, $\\phi = 0$), where the plane of "
+        "$t$ and $\\rho$ is flat and ends at $\\rho = 5\\ell/2$, the supertranslation horizon. With "
+        "$p, q = \\arctan\\left((ct \\mp (\\rho - 5\\ell/2))/\\ell\\right)$ it is Minkowski's triangle, drawn with "
+        "$T = p + q$ up and $X = q - p$ across, the horizon standing where Minkowski's centre stands.",
+        "Light runs at 45° and null infinity is Minkowski's, but a ray that reaches the left edge carries on into "
+        "flat space the chart does not cover. The dots are the shells of the embedding diagram at $t = 0$.",
+    ],
+    ("supertranslation_hair", "bondi_retarded"): [
+        "The retarded chart on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the field "
+        "$C = \\tfrac{1}{2}\\ell\\left(3\\cos^2\\theta - 1\\right)$, with $\\ell$ any length, drawn by the static chart's "
+        "triangle through $ct = cu + W + \\ell$ and $\\rho = W + \\ell$, with $W = \\sqrt{r^2 + \\sigma^2}$ and "
+        "$\\sigma = -3\\ell/2$ there. The lines of constant $u$ are the outgoing light rays, each from the left edge "
+        "$r = 0$, the supertranslation horizon, to $\\mathscr{I}^+$.",
+    ],
+    ("supertranslation_hair", "bondi_advanced"): [
+        "The advanced chart on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the field "
+        "$C = \\tfrac{1}{2}\\ell\\left(3\\cos^2\\theta - 1\\right)$, with $\\ell$ any length, drawn by the static chart's "
+        "triangle through $ct = cv - W - \\ell$ and $\\rho = W + \\ell$, with $W = \\sqrt{r^2 + \\sigma^2}$ and "
+        "$\\sigma = -3\\ell/2$ there. The lines of constant $v$ are the ingoing light rays, each from "
+        "$\\mathscr{I}^-$ to the left edge $r = 0$, the supertranslation horizon.",
     ],
     ("minkowski", "spherical"): [
         "Minkowski spacetime, each point in the diagram a 2-sphere of radius $r$. With $u = ct - r$ and $v = ct + r$ the metric on the plane of $t$ "
