@@ -386,6 +386,38 @@
     "embedding": "7fea7a854b8ceca4"
   },
   {
+    "id": "big_rip",
+    "name": "Big Rip",
+    "tags": [
+      "cosmology",
+      "expanding universe",
+      "homogeneous",
+      "isotropic",
+      "FLRW",
+      "phantom field",
+      "perfect fluid",
+      "equation of state",
+      "energy condition violation",
+      "exotic matter",
+      "curvature singularity",
+      "spacelike singularity",
+      "event horizon",
+      "causal structure",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "four-dimensional",
+      "conformally flat",
+      "spherically symmetric"
+    ],
+    "version": "8dd4fe0280493be0",
+    "diagrams": "dfcdcf371744ecf1",
+    "conformal": "0da90523cd63ff08",
+    "embedding": "4bc4eb0f51470939"
+  },
+  {
     "id": "black_saturn",
     "name": "Black Saturn",
     "tags": [
@@ -1195,7 +1227,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "b5bafac5b9ce65ac",
+    "version": "69d7a373306e4c54",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -1637,7 +1669,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f3230cf63192cb96",
+    "version": "6df10ea7fd7f43f1",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a"
@@ -1763,7 +1795,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "3fa59a3e5cf8649a",
+    "version": "b66aaaba43f48e9e",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -4593,7 +4625,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f6354fcb890c5b8a",
+    "version": "0827099b1fec82e9",
     "diagrams": "b272a6aeea9e0b62",
     "conformal": "09d52a3611b8d1c6",
     "embedding": "044c6a18e30bb001"

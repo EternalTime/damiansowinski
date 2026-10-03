@@ -330,6 +330,10 @@ CS_EQUATOR = {"x": "0", "y": "0", "z": "0", "theta": "pi/2"}
 # of the sphere fixed.
 TB_PLANE = {"x": "0", "y": "0", "z": "0", "alpha": "pi/2", "beta": "pi/2", "psi": "pi/2", "theta": "pi/2",
             "phi": "0"}
+# The Big Rip as its diagrams draw it: w = -3/2 in units of t_0, or of eta_0 = 3 c t_0/7 in the conformal chart.
+BIG_RIP = {"w": "-3/2", "t_0": 1}
+BIG_RIP_CONFORMAL = {"w": "-3/2", "eta_0": 1}
+BIG_RIP_HORIZON = "the event horizon of the observer at the centre"
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -3766,6 +3770,19 @@ DIAGRAMS = [
     Diagram("quantum_btz", "rotating", "rotating", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
             "$r/\\ell_3$", "$ct/\\ell_3$", QBTZ_ROTATING, orient="ingoing", quotient="phi",
             mark_gtt="the ergosurface", cone=BTZ_CONE),
+    # The Big Rip at w = -3/2, Caldwell, Kamionkowski and Weinberg's example, in units of t_0, the time
+    # left at a = 1, with the rip at t = 0: a = (-t/t_0)^(-4/3), so light covers the comoving distance
+    # eta_0 (-t/t_0)^(7/3) before the rip, eta_0 = 3 c t_0/7, and the event horizon of the observer at
+    # the centre is the ray through r = eta_0 at t = -t_0. The conformal chart is drawn in units of eta_0.
+    Diagram("big_rip", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-1.5, 1.5, -2, 0), "$x/ct_0$", "$t/t_0$",
+            BIG_RIP, {"y": "0", "z": "0"}, families=SIDEWAYS,
+            marked=(("event", {"x0": "-1", "r": "3/7"}, 0, BIG_RIP_HORIZON),
+                    ("event", {"x0": "-1", "r": "-3/7"}, 1, BIG_RIP_HORIZON))),
+    Diagram("big_rip", "comoving", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -2, 0), "$r/ct_0$", "$t/t_0$",
+            BIG_RIP, EQUATOR, areal=True, marked=(("event", {"x0": "-1", "r": "3/7"}, 0, BIG_RIP_HORIZON),)),
+    Diagram("big_rip", "conformal", "radial", "$\\eta$ and $r$", ("\\eta", "r"), (0, 3, -3, 0), "$r/\\eta_0$",
+            "$\\eta/\\eta_0$", BIG_RIP_CONFORMAL, EQUATOR, tau="eta", areal=True,
+            marked=(("event", {"x0": "-1", "r": "1"}, 0, BIG_RIP_HORIZON),)),
     Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
     Diagram("bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
@@ -8956,6 +8973,29 @@ CAPTIONS = {
         "inside $r_-$ the lines of constant $r$ are timelike again, down to the ring singularity at $r = 0$. "
         "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = 1.15\\,\\ell_3$, and between it and $r_+$ "
         "no observer keeps $\\phi$ fixed.",
+    ],
+    ("big_rip", "cartesian", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$) for $w = -3/2$, with $a = (-t/t_0)^{-4/3}$ and the Big Rip at "
+        "$t = 0$, where the Kretschmann scalar diverges. The edges of the cones are $dx/d(ct) = \\pm 1/a$, so "
+        "the cones open out toward the past and close up toward the rip.",
+        "Light covers the comoving distance $3ct_0(-t/t_0)^{7/3}/7$ before the rip, so the observer at $x = 0$ "
+        "receives signals only from between the two marked rays, its event horizon, which closes in on it as "
+        "$t \\to 0$.",
+    ],
+    ("big_rip", "comoving", "radial"): [
+        "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for $w = -3/2$, the same at every "
+        "other angle by spherical symmetry, with the Big Rip at $t = 0$. The marked ray is the event horizon "
+        "of the observer at $r = 0$, $r = 3ct_0(-t/t_0)^{7/3}/7$.",
+        "The dotted curve, where $|\\nabla R|^2 = 0$ for the areal radius $R = ar$, is the Hubble sphere "
+        "$R = c/H = 3c(-t)/4$, the apparent horizon of the same observer, and it shrinks to the centre at the rip "
+        "with the event horizon inside it.",
+    ],
+    ("big_rip", "conformal", "radial"): [
+        "The plane of the conformal time $\\eta$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for $w = -3/2$. The "
+        "metric on it is $a^2(-d\\eta^2 + dr^2)$, so the rays are straight 45° lines, and the Big Rip is the "
+        "line $\\eta = 0$, where $a = (-\\eta/\\eta_0)^{-4/7}$ diverges.",
+        "The event horizon of the observer at $r = 0$ is the ray $r = -\\eta$, and the Hubble sphere, dotted, "
+        "lies at $r = -7\\eta/4$.",
     ],
     ("taub_nut", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $l = "

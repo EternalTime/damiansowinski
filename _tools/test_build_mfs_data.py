@@ -3302,7 +3302,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
         flat = {"minkowski", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
-                "chandrasekhar_xanthopoulos", "belinski_zakharov"}
+                "chandrasekhar_xanthopoulos", "belinski_zakharov", "big_rip"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
         # Hayward's hole forms from flat space and leaves flat space behind: the first and the last
@@ -3436,7 +3436,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                          {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave",
                           "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
-                          "belinski_zakharov", "moving_mirror"})
+                          "belinski_zakharov", "moving_mirror", "big_rip"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -3653,7 +3653,8 @@ class StacksAndMovies(unittest.TestCase):
     September 2026, from the numbers written and nothing else."""
 
     STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "kasner_magnetic": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
-              "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0}   # the height of a unit of time
+              "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0,
+              "big_rip": 1.0}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
@@ -3688,7 +3689,7 @@ class StacksAndMovies(unittest.TestCase):
               ("kasner", "ring"): "$t$", ("kasner_scalar", "ring"): "$t$", ("kasner_magnetic", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
-              ("belinski_zakharov", "ring"): "$\\tau$",
+              ("belinski_zakharov", "ring"): "$\\tau$", ("big_rip", "ring"): "$t$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$",
@@ -3758,7 +3759,8 @@ class StacksAndMovies(unittest.TestCase):
             named = [L for L in labels if "curve" in L]
             self.assertEqual([L["curve"]["curve"] for L in named], list(range(len(named))), metric_id)
             self.assertEqual([L["text"] for L in named], [c["label"] for c in view["surfaces"][0]["curves"]], metric_id)
-            self.assertEqual([L["curve"]["side"] for L in named], [1, -1] * (len(named) // 2), metric_id)
+            # Right and left in turn from the first up, for any number of moments.
+            self.assertEqual([L["curve"]["side"] for L in named], [1 if i % 2 == 0 else -1 for i in range(len(named))], metric_id)
             axis, = [L for L in labels if "axis" in L]
             self.assertEqual(axis["axis"], {"surface": 0}, metric_id)
             self.assertIn(("line", "axis"), [(k, c) for k, c, _ in view["figure"]["legend"]], metric_id)
@@ -6097,7 +6099,10 @@ class Slices(unittest.TestCase):
             # The same moment in the time of five dimensions, t = T^k/k with k = 1 + s_5/2.
             k = 1 + 10 / (13 * math.sqrt(6) - 10)
             return (lambda X: (k * t) ** (1 / k)), None
-        if key.startswith(("kasner", "bianchi", "malament_hogarth")):
+        if key == "big_rip/conformal/radial":
+            # A moment of t at w = -3/2 is the line eta = -eta_0 (-t/t_0)^(7/3), in units of eta_0.
+            return (lambda X: -(-t) ** (7 / 3)), None
+        if key.startswith(("kasner", "bianchi", "malament_hogarth", "big_rip")):
             if key.startswith("malament_hogarth"):
                 lo, hi = self.reach(surface)
                 return (lambda X: t), [-hi, -lo, lo, hi]
@@ -6676,6 +6681,14 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((tp + tq) / 2 - t), 2e-4 * scale, where)
                             self.assertLessEqual(lo - 2e-4 * scale, (tq - tp) / 2, where)
                             self.assertLessEqual((tq - tp) / 2, hi + 2e-4 * scale, where)
+                    elif metric_id == "big_rip":
+                        # The moment t at w = -3/2 is eta = -(-t)^(7/3) in units of eta_0, carried by
+                        # p, q = arctan(eta -+ r).
+                        eta = -(-t) ** (7 / 3)
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            scale = 1 + tp * tp + tq * tq
+                            self.assertLess(abs((tp + tq) / 2 - eta), 2e-4 * scale, f"{where} at {(X, T)}")
                     elif metric_id == "bondi_sachs":
                         # The sphere cu = 10 m_0, r = 10 m_0 is one event of the axis: on the cone
                         # p = arctan(10/40) and on the world tube the view draws.
