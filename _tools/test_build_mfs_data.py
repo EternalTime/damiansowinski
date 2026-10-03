@@ -4926,7 +4926,10 @@ class Slices(unittest.TestCase):
     # The drawings on which no moment of the spacetime's embedding lies: other universes,
     # another cloud, the time reversed shell, and cylinders where no surface of constant t is
     # a moment of space.
-    HIDDEN = {# The ball of dust of the quantum Oppenheimer-Snyder black hole, which holds no part of the
+    HIDDEN = {# The black ring and the black half plane of bubbling anti-de Sitter space, other members of the
+              # family than the black disc whose plane of droplets is embedded.
+              "bubbling_ads/rings/ring_axis", "bubbling_ads/plane_wave/axis", "conformal bubbling_ads/rings",
+              # The ball of dust of the quantum Oppenheimer-Snyder black hole, which holds no part of the
               # moments of constant t embedded, moments of the vacuum outside it.
               "quantum_oppenheimer_snyder/interior_comoving/through",
               # The collapse keeps one exterior below the bounce and one above it, and the dust stands where the

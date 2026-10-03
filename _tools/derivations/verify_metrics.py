@@ -978,6 +978,21 @@ DIMENSIONS = {
                                           ("throat_proper", "\\sigma", "L", {}))},
     # Freund and Rubin's anti-de Sitter space times a seven-sphere: L is the radius of anti-de Sitter
     # space, the conformal chart's chi and every angle are pure numbers, and the global chart's rho too.
+    # Lin, Lunin and Maldacena's bubbling anti-de Sitter space: the time t is a pure number in every
+    # chart and nothing is multiplied by c; the plane of the droplets and y carry an area, G is a
+    # pure number and so is the twist V; the plane wave's radii r_1 and r_2 are lengths.
+    ("bubbling_ads", "rings"): {
+        "t": "1", "r": "L**2", "\\phi": "1", "y": "L**2", "\\alpha": "1", "\\beta": "1", "\\gamma": "1",
+        "\\kappa": "1", "\\xi": "1", "\\omega": "1", "G": "1", "V": "1",
+    },
+    ("bubbling_ads", "global"): {
+        "t": "1", "\\rho": "1", "\\alpha": "1", "\\beta": "1", "\\gamma": "1", "\\theta": "1", "\\psi": "1",
+        "\\kappa": "1", "\\xi": "1", "\\omega": "1", "L": "L",
+    },
+    ("bubbling_ads", "plane_wave"): {
+        "t": "1", "x": "L**2", "r_1": "L", "r_2": "L", "\\alpha": "1", "\\beta": "1", "\\gamma": "1",
+        "\\kappa": "1", "\\xi": "1", "\\omega": "1",
+    },
     **{("freund_rubin", chart): {
         "t": "T", **{c: "L" for c in large}, radial: unit, **({} if large else {"\\theta": "1", "\\phi": "1"}), "\\alpha": "1",
         "\\beta": "1", "\\gamma": "1", "\\kappa": "1", "\\xi": "1", "\\omega": "1", "\\psi": "1", "L": "L"}
