@@ -909,6 +909,12 @@ DIMENSIONS = {
     ("senovilla", "cylindrical"): {
         "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "a": "1/L",
     },
+    # The bounce of loop quantum cosmology keeps c. Its bounce time t_b is a time, its scale factor
+    # a, named for (1 + t^2/t_b^2)^(1/6) or cosh^(1/3)(tau/t_b), a pure number, and x, y and z
+    # comoving lengths.
+    ("lqc_bounce", "cosmic"): {"t": "T", "x": "L", "y": "L", "z": "L", "t_b": "T", "a": "1"},
+    ("lqc_bounce", "comoving_spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "t_b": "T", "a": "1"},
+    ("lqc_bounce", "harmonic"): {"\\tau": "T", "x": "L", "y": "L", "z": "L", "t_b": "T", "a": "1"},
     # The travelling wave on a string: u = ct - z and v = ct + z are lengths, so no coordinate is a
     # time and the profile F is a pure number, as is b = 1 - 4G mu/c^2. The string's displacements
     # A(u) and B(u) are lengths, as are the isotropic x and y, their distance rho from the string
@@ -1012,12 +1018,35 @@ DIMENSIONS = {
                                           ("throat_proper", "\\sigma", "L", {}))},
     # Freund and Rubin's anti-de Sitter space times a seven-sphere: L is the radius of anti-de Sitter
     # space, the conformal chart's chi and every angle are pure numbers, and the global chart's rho too.
+    # Lin, Lunin and Maldacena's bubbling anti-de Sitter space: the time t is a pure number in every
+    # chart and nothing is multiplied by c; the plane of the droplets and y carry an area, G is a
+    # pure number and so is the twist V; the plane wave's radii r_1 and r_2 are lengths.
+    ("bubbling_ads", "rings"): {
+        "t": "1", "r": "L**2", "\\phi": "1", "y": "L**2", "\\alpha": "1", "\\beta": "1", "\\gamma": "1",
+        "\\kappa": "1", "\\xi": "1", "\\omega": "1", "G": "1", "V": "1",
+    },
+    ("bubbling_ads", "global"): {
+        "t": "1", "\\rho": "1", "\\alpha": "1", "\\beta": "1", "\\gamma": "1", "\\theta": "1", "\\psi": "1",
+        "\\kappa": "1", "\\xi": "1", "\\omega": "1", "L": "L",
+    },
+    ("bubbling_ads", "plane_wave"): {
+        "t": "1", "x": "L**2", "r_1": "L", "r_2": "L", "\\alpha": "1", "\\beta": "1", "\\gamma": "1",
+        "\\kappa": "1", "\\xi": "1", "\\omega": "1",
+    },
     **{("freund_rubin", chart): {
         "t": "T", **{c: "L" for c in large}, radial: unit, **({} if large else {"\\theta": "1", "\\phi": "1"}), "\\alpha": "1",
         "\\beta": "1", "\\gamma": "1", "\\kappa": "1", "\\xi": "1", "\\omega": "1", "\\psi": "1", "L": "L"}
        for chart, radial, unit, large in (("global", "\\rho", "1", ()), ("conformal", "\\chi", "1", ()),
                                           ("static", "r", "L", ()), ("poincare", "r", "L", ("x", "y")),
                                           ("proper", "\\sigma", "L", ("x", "y")))},
+    # The maximally supersymmetric plane wave: mu is an inverse length; the light cone time u and
+    # the conformally flat chart's U are times, every other coordinate a length.
+    ("maximally_supersymmetric_plane_wave", "brinkmann"): {
+        "u": "T", "v": "L", **{f"x_{i}": "L" for i in range(1, 9)}, "\\mu": "1/L"},
+    ("maximally_supersymmetric_plane_wave", "rosen"): {
+        "u": "T", "v": "L", **{f"y_{i}": "L" for i in range(1, 9)}, "\\mu": "1/L"},
+    ("maximally_supersymmetric_plane_wave", "conformally_flat"): {
+        "U": "T", "V": "L", **{f"X_{i}": "L" for i in range(1, 9)}, "\\mu": "1/L"},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
@@ -1968,6 +1997,16 @@ DIMENSIONS = {
     },
     ("boson_star", "isotropic"): {
         "t": "T", "R": "L", "\\theta": "1", "\\phi": "1", "\\alpha": "1", "\\psi": "1",
+    },
+    # Herdeiro and Radu's black holes with scalar hair: F_0, F_1 and F_2 are pure numbers, and W is
+    # the rate of dragging per unit of ct, an inverse length, since the line element writes W c dt.
+    # In the Kerr member both constants r_H and b = -c_t are lengths.
+    ("kerr_scalar_hair", "herdeiro_radu"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\varphi": "1", "r_H": "L", "F_0": "1", "F_1": "1", "F_2": "1",
+        "W": "1/L",
+    },
+    ("kerr_scalar_hair", "kerr_member"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\varphi": "1", "r_H": "L", "b": "L",
     },
     # Bartnik and McKinnon's soliton: the mass function is a length, as TOV's is, the amplitude w
     # of the Yang-Mills field and the lapse's sigma are numbers, and ell is the one length of the

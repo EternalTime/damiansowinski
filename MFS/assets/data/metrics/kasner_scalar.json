@@ -62,6 +62,11 @@
       "id": "kasner_magnetic",
       "kind": "family",
       "text": "Kasner's universe with a magnetic field in place of the scalar field. Kenneth Jacobs put the two contents together in 1969, a stiff fluid and a field along one axis [jacobs1969]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "The isotropic member, $q^2 = 2/3$, as loop quantum cosmology has it, with a bounce in place of the big bang. Ashtekar and Wilson-Ewing carried the same quantum geometry to the anisotropic universes [ashtekar2009bianchi]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "fournodavlos2023",
     "frenkel2020",
     "janis1968",
-    "jacobs1969"
+    "jacobs1969",
+    "ashtekar2009bianchi"
   ],
   "coordinates": [
     {

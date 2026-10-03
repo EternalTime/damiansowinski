@@ -20,7 +20,8 @@ tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, freund_rubin, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
-poincare_dodecahedral, black_to_white_hole and big_rip, and Godel's cylindrical chart.
+poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce and
+maximally_supersymmetric_plane_wave, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -44,7 +45,7 @@ kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_sta
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
 kerr_melvin.md, einstein_dirac_maxwell_wormhole.md, jackiw_teitelboim_black_hole.md, interstellar_wormhole.md,
-supertranslation_hair.md and big_rip.md beside this file.
+supertranslation_hair.md, big_rip.md and kerr_scalar_hair.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 btz_shock_wave.md beside this file records the charts of the shock wave in the BTZ black hole.
 black_to_white_hole.md beside this file records the charts of the black hole fireworks and their junction.
@@ -30686,6 +30687,180 @@ def write_free_chart(system):
 CHARTS["vuorio_warped_ads"] = [lambda s=s: vuorio_warped_ads(s) for s in VUORIO_CHARTS]
 
 
+# -- The maximally supersymmetric plane wave of ten dimensions ------------------------------
+
+MSW_CHARTS = ["brinkmann", "rosen", "conformally_flat"]
+
+
+def msw_sum(letter, power=""):
+    """x_1^2 + ... + x_8^2, or with power="d", dx_1^2 + ... + dx_8^2."""
+    return " + ".join(f"{power}{letter}_{i}^2" for i in range(1, 9))
+
+
+def maximally_supersymmetric_plane_wave(system):
+    """The plane wave of type IIB supergravity that keeps all thirty-two supersymmetries, in three
+    charts, each in units where mu is an inverse length and the time coordinate carries c:
+
+    brinkmann         Blau, Figueroa-O'Farrill, Hull and Papadopoulos's solution of hep-th/0110242 with
+                      lambda = mu/2, which is Metsaev's line element and Marolf and Ross's, with
+                      x^+ = cu and x^- = v;
+    rosen             the same authors' Penrose limit of anti-de Sitter space times a 5-sphere in
+                      Rosen coordinates, hep-th/0201081 at rho = 1, rescaled by mu;
+                      x_i = y_i sin(mu c u), v = v' + (mu/2) y^2 sin(mu c u) cos(mu c u);
+    conformally_flat  Berenstein and Nastase's map onto Minkowski space in hep-th/0205048,
+                      mu c U = tan(mu c u), x_i = X_i cos(mu c u).
+
+    Their chain of maps carries the wave on to the Einstein static universe R x S^9; written as a chart its
+    curvature printed to 17 MB, so it is drawn as the conformal diagram (conformal.py) and its map
+    is checked in _tools/test_maximally_supersymmetric_plane_wave.py.
+
+    msw_check holds the Brinkmann chart to type IIB supergravity with Metsaev's five-form and every
+    other chart to being the Brinkmann chart pulled back. maximally_supersymmetric_plane_wave.md is
+    the derivation."""
+    reals = "(-\\infty, \\infty)"
+    if system == "brinkmann":
+        coords = ["u", "v"] + [f"x_{i}" for i in range(1, 9)]
+        domains = [f"{c} \\in {reals}" for c in coords]
+        name = "Brinkmann"
+        line = ("ds^2 = -\\mu^2\\left(" + msw_sum("x") + "\\right){c2}du^2 - 2{c}\\,du\\,dv + " + msw_sum("x", "d"))
+    elif system == "rosen":
+        coords = ["u", "v"] + [f"y_{i}" for i in range(1, 9)]
+        domains = ["u \\in (0, \\pi/\\mu c)"] + [f"{c} \\in {reals}" for c in coords[1:]]
+        name = "Rosen"
+        line = ("ds^2 = -2{c}\\,du\\,dv + \\sin^2\\left(\\mu {c}u\\right)\\left(" + msw_sum("y", "d") + "\\right)")
+    else:
+        coords = ["U", "V"] + [f"X_{i}" for i in range(1, 9)]
+        domains = [f"{c} \\in {reals}" for c in coords]
+        name = "Conformally Flat"
+        line = ("ds^2 = \\dfrac{-2{c}\\,dU\\,dV + " + msw_sum("X", "d") + "}{1 + \\mu^2{c2}U^2}")
+    probe = vm.Reader(coords, ["\\mu"], ())
+    published = line.replace("{c2}", "c^2").replace("{c}", "c")
+    chart_line = line.replace("{c2}", "").replace("{c}", "")
+    return {"metric_id": "maximally_supersymmetric_plane_wave",
+            "check": lambda chart, s=system: msw_check(chart, s),
+            "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                       "parameters": ["\\mu"], "line_element": published},
+            "chart_line_element": chart_line,
+            "printer": {"lead": [probe.parameters["mu"], *probe.symbol.values()], "flip": False},
+            # The Rosen and conformally flat components hold their time, which they print as c times it.
+            **({"time": coords[0]} if system != "brinkmann" else {})}
+
+
+def msw_brinkmann():
+    spec = maximally_supersymmetric_plane_wave("brinkmann")
+    return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+
+def msw_five_form(n=10):
+    """Metsaev's five-form in the Brinkmann chart, F_u1234 = F_u5678 = 2 mu, as a dict from sorted
+    index tuples to components, with u the index 0, v 1 and x_i the index i + 1."""
+    mu = sp.Symbol("mu", positive=True)
+    F = {}
+    for block in ((2, 3, 4, 5), (6, 7, 8, 9)):
+        F[(0,) + block] = 2 * mu
+    return F, mu
+
+
+def msw_check(chart, system):
+    """The Brinkmann chart against type IIB supergravity with only the metric and the five-form:
+    F = 2 mu du ^ (dx_1 ^ dx_2 ^ dx_3 ^ dx_4 + dx_5 ^ dx_6 ^ dx_7 ^ dx_8), Metsaev's, in his
+    normalization R_MN = F_MPQRS F_N^PQRS / 24, which holds slot by slot; F is closed, being
+    constant, and equal to its Hodge dual or to minus it, as the orientation is chosen; the Weyl
+    tensor vanishes, Blau, Figueroa-O'Farrill, Hull and Papadopoulos's conformal flatness of a
+    scalar A_ij. Every other chart is the Brinkmann chart pulled back: the Rosen and conformally
+    flat charts exactly, J^T g J slot by slot."""
+    from sympy.combinatorics import Permutation
+
+    n = 10
+    name = f"maximally_supersymmetric_plane_wave/{system}"
+    g = sp.Matrix(chart.geo.g)
+    x = chart.symbols
+    mu = chart.reader.parameters["mu"]
+    if system == "brinkmann":
+        F, mu_ = msw_five_form()
+        F = {k: v.subs(mu_, mu) for k, v in F.items()}
+        ginv = sp.Matrix(chart.geo.ginv)
+
+        def comp(idx):
+            # The component of F at any ordered index tuple, with its sign.
+            if len(set(idx)) < 5:
+                return 0
+            order = sorted(range(5), key=lambda i: idx[i])
+            key = tuple(idx[i] for i in order)
+            if key not in F:
+                return 0
+            return F[key] * Permutation(order).signature()
+
+        def upper(idx):
+            # F with every index raised; only the u index of F has a raised partner off the diagonal.
+            total = 0
+            for low in itertools.product(*[[b for b in range(n) if ginv[a, b] != 0] for a in idx]):
+                c = comp(low)
+                if c:
+                    total += c * sp.Mul(*[ginv[a, b] for a, b in zip(idx, low)])
+            return sp.expand(total)
+
+        ricci = chart.geo.ricci_ll()
+        for a in range(n):
+            for b in range(a, n):
+                # F_a PQRS F_b^PQRS: lower b again through g.
+                lowered = 0
+                for rest in itertools.combinations(range(n), 4):
+                    for perm in itertools.permutations(rest):
+                        fa = comp((a,) + perm)
+                        if not fa:
+                            continue
+                        for c in range(n):
+                            if g[b, c] != 0:
+                                lowered += fa * g[b, c] * upper((c,) + perm)
+                if vm.norm(sp.sympify(vm._at(ricci, (a, b))) - sp.expand(lowered) / 24) != 0:
+                    raise AssertionError(f"{name}: R_MN = F F/24 fails in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+        # Hodge duality, sqrt|g| = 1: (*F)_S = eps_{S S'} F^{S'} for each sorted 5-tuple S and its
+        # complement S', the one ordering of the five summed indices that is not zero up to sign.
+        signs = set()
+        for S in itertools.combinations(range(n), 5):
+            rest = tuple(i for i in range(n) if i not in S)
+            dual = Permutation(list(S) + list(rest)).signature() * upper(rest)
+            low = F.get(S, 0)
+            if dual == 0 and low == 0:
+                continue
+            if dual == 0 or low == 0:
+                raise AssertionError(f"{name}: F and its dual differ in their components")
+            signs.add(sp.simplify(dual / low))
+        if signs not in ({1}, {-1}):
+            raise AssertionError(f"{name}: F is not self-dual nor anti-self-dual, ratios {signs}")
+        weyl = chart.geo.weyl_llll()
+        for idx in vm._indices(n, 4):
+            if vm.norm(sp.sympify(vm._at(weyl, idx))) != 0:
+                raise AssertionError(f"{name}: the Weyl tensor does not vanish")
+        return
+
+    brink = msw_brinkmann()
+    gB = sp.Matrix(brink.geo.g).subs(brink.reader.parameters["mu"], mu)
+    u_, v_ = x[0], x[1]
+    if system == "rosen":
+        ys = x[2:]
+        s, k = sp.sin(mu * u_), sp.cos(mu * u_)
+        image = [u_, v_ + mu * sum(y ** 2 for y in ys) * s * k / 2] + [y * s for y in ys]
+    else:
+        Xs = x[2:]
+        root = sp.sqrt(1 + mu ** 2 * u_ ** 2)
+        image = [sp.atan(mu * u_) / mu, v_ - mu ** 2 * u_ * sum(X ** 2 for X in Xs) / (2 * (1 + mu ** 2 * u_ ** 2))] \
+            + [X / root for X in Xs]
+    at = dict(zip(brink.symbols, image))
+    J = sp.Matrix(n, n, lambda i, j: sp.diff(image[i], x[j]))
+    pulled = J.T * gB.subs(at, simultaneous=True) * J
+    for i in range(n):
+        for j in range(i, n):
+            if sp.simplify(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"{name}: not the Brinkmann chart pulled back, slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["maximally_supersymmetric_plane_wave"] = [lambda s=s: maximally_supersymmetric_plane_wave(s)
+                                                 for s in MSW_CHARTS]
+
+
 # -- Interstellar's wormhole ----------------------------------------------------------------
 
 IW_CHARTS = ["proper_distance", "cylinder", "flare"]
@@ -31380,6 +31555,586 @@ def big_rip_check(chart, system):
 
 
 CHARTS["big_rip"] = [lambda s=s: big_rip(s) for s in BIG_RIP_CHARTS]
+
+
+# -- Kerr black holes with scalar hair --------------------------------------------------
+
+KSH_CHARTS = ("herdeiro_radu", "kerr_member")
+KSH_REALS, KSH_TURN = " \\in (-\\infty, \\infty)", " \\in [0, 2\\pi)"
+
+
+def kerr_scalar_hair(system):
+    """Herdeiro and Radu's rotating black holes with a cloud of complex scalar field, in two charts.
+
+    herdeiro_radu: the line element of their letter of 2014, (3), and of their paper of 2015, (2.5),
+        ds^2 = e^(2F_1) (dr^2/N + r^2 dtheta^2) + e^(2F_2) r^2 sin^2(theta) (dvarphi - W c dt)^2 - e^(2F_0) N c^2 dt^2,
+    N = 1 - r_H/r, with F_0, F_1, F_2 and W free functions of r and theta, so that no component assumes
+    a field equation; the solutions are known only numerically, and kerr_scalar_hair.py reads the
+    one every drawing uses from the authors' published data.
+    kerr_member: the member with no field, Kerr's metric in the same coordinates, the paper's (A.1)
+    with its two constants r_H and c_t, written in b = -c_t > 0, the Boyer-Lindquist radius of the inner
+    horizon, so that every radicand is a product of positive factors; it is Boyer and Lindquist's chart
+    with R = r + b.
+
+    kerr_scalar_hair_check holds the free chart to the Klein-Gordon equation, the paper's (2.10), the
+    equations for F_1, F_2, F_0 and W it draws from the combinations (2.11), and its two constraints (2.12) and
+    (2.13), each against the chart's own Einstein tensor and wave operator; the Kerr chart to a
+    vanishing Ricci tensor, to Kerr's published Boyer-Lindquist chart pulled back, and to the free
+    chart with the paper's (A.1) put in. kerr_scalar_hair.md beside this file is the derivation."""
+    coords = ["t", "r", "\\theta", "\\varphi"]
+    D = sp.Derivative
+    if system == "herdeiro_radu":
+        parameters = ["r_H", "F_0 = F_0(r,\\theta)", "F_1 = F_1(r,\\theta)", "F_2 = F_2(r,\\theta)", "W = W(r,\\theta)"]
+        domains = ["t" + KSH_REALS, "r \\in [r_H, \\infty)", "\\theta \\in [0, \\pi]", "\\varphi" + KSH_TURN,
+                   "r = r_H \\;\\text{(the event horizon)}",
+                   "F_1 = F_2 \\;\\text{at}\\; \\theta = 0, \\pi \\;\\text{(a regular axis)}"]
+
+        def line(c2, c):
+            return ("ds^2 = -e^{2F_0}\\left(1 - \\dfrac{r_H}{r}\\right)" + c2 + "dt^2"
+                    " + e^{2F_1}\\left(\\dfrac{dr^2}{1 - \\dfrac{r_H}{r}} + r^2d\\theta^2\\right)"
+                    " + e^{2F_2}r^2\\sin^2\\theta\\left(d\\varphi - W\\," + c + "dt\\right)^2")
+        probe = vm.Reader(coords, parameters, ())
+        r, th = probe.symbol["r"], probe.symbol["\\theta"]
+        funcs = [probe.parameters[n] for n in ("F_0", "F_1", "F_2", "W")]
+        lead = list(funcs)
+        for g in funcs:
+            lead += [D(g, r), D(g, th)]
+        for g in funcs:
+            lead += [D(g, (r, 2)), D(g, r, th), D(g, (th, 2))]
+        lead += [r, probe.parameters["r_H"]]
+        return {
+            "metric_id": "kerr_scalar_hair",
+            "system": {"id": system, "name": "Herdeiro-Radu", "coords": coords, "domains": domains,
+                       "parameters": parameters, "line_element": line("c^2", "c\\,")},
+            "chart_line_element": line("", ""),
+            "printer": {"lead": lead, "factors": lead},
+            "pretty": lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp"),
+            "kretschmann_text": kerr_scalar_hair_kretschmann,
+            "check": lambda chart: kerr_scalar_hair_check(chart, system),
+        }
+    parameters = ["r_H", "b"]
+    S = "\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\cos^2\\theta"
+    A = ("\\left(\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\right)^2"
+         " - b\\left(b + r_H\\right)r\\left(r - r_H\\right)\\sin^2\\theta")
+
+    def line(c2, c):
+        return ("ds^2 = -\\dfrac{r\\left(r - r_H\\right)\\left(" + S + "\\right)}{" + A + "}" + c2 + "dt^2"
+                " + \\left(" + S + "\\right)\\left(\\dfrac{dr^2}{r\\left(r - r_H\\right)} + d\\theta^2\\right)"
+                " + \\dfrac{\\left(" + A + "\\right)\\sin^2\\theta}{" + S + "}\\left(d\\varphi"
+                " - \\dfrac{\\sqrt{b\\left(b + r_H\\right)}\\left(r_H + 2b\\right)\\left(r + b\\right)}{" + A + "}" + c + "dt\\right)^2")
+    probe = vm.Reader(coords, parameters, ())
+    r, th = probe.symbol["r"], probe.symbol["\\theta"]
+    rH, b = probe.parameters["r_H"], probe.parameters["b"]
+
+    def pretty(value):
+        # Each value factored with the even powers of the sine in the cosine, or as it stands if shorter.
+        value = sp.factor(sp.sympify(value))
+        cosine = sp.factor(value.replace(
+            lambda p: p.is_Pow and p.base == sp.sin(th) and p.exp.is_Integer and p.exp > 1,
+            lambda p: sp.sin(th) ** (int(p.exp) % 2) * (1 - sp.cos(th) ** 2) ** (int(p.exp) // 2)))
+        return min([value, cosine], key=lambda e: len(str(e)))
+    return {
+        "metric_id": "kerr_scalar_hair",
+        "system": {"id": system, "name": "Without Hair", "coords": coords,
+                   "domains": ["t" + KSH_REALS, "r \\in [r_H, \\infty)", "\\theta \\in [0, \\pi]", "\\varphi" + KSH_TURN,
+                               "r = r_H \\;\\text{(the event horizon)}"],
+                   "parameters": parameters, "line_element": line("c^2", "c\\,")},
+        "chart_line_element": line("", ""),
+        "printer": {"lead": [r, rH, b], "factors": [r, rH, b]},
+        "pretty": pretty,
+        # Kerr's 48 M^2 (R^6 - 15 R^4 a^2 cos^2 + 15 R^2 a^4 cos^4 - a^6 cos^6)/Sigma^6 with R = r + b,
+        # 2GM/c^2 = r_H + 2b and a^2 = b (b + r_H).
+        "kretschmann": ("\\dfrac{12\\left(r_H + 2b\\right)^2\\left(\\left(r + b\\right)^6"
+                        " - 15b\\left(b + r_H\\right)\\left(r + b\\right)^4\\cos^2\\theta"
+                        " + 15b^2\\left(b + r_H\\right)^2\\left(r + b\\right)^2\\cos^4\\theta"
+                        " - b^3\\left(b + r_H\\right)^3\\cos^6\\theta\\right)}{\\left(" + S + "\\right)^6}"),
+        "check": lambda chart: kerr_scalar_hair_check(chart, system),
+    }
+
+
+def kerr_scalar_hair_kretschmann(chart):
+    """The Kretschmann scalar of the free chart over the Riemann tensor in the orthonormal frame of the
+    observer who turns at the rate W, e^0 = e^(F_0) sqrt(N) dx^0, e^1 = e^(F_1) dr/sqrt(N),
+    e^2 = e^(F_1) r dtheta and e^3 = e^(F_2) r sin(theta) (dvarphi - W dx^0): with the six pairs P of frame
+    indices, s_P = -1 for a pair holding 0 and +1 otherwise, K = 4 sum_P R_PP^2 + 8 sum_(P<Q) s_P s_Q R_PQ^2.
+    Thirteen of the twenty one R_PQ are not zero. Expanded and factored whole the scalar runs to about
+    95,000 characters and sympy's factor did not finish on it in half an hour; the frame form is 8,600,
+    and write() checks it against the computed scalar."""
+    t, r, th, ph = chart.symbols
+    P = chart.reader.parameters
+    F0, F1, F2, W, rH = P["F_0"], P["F_1"], P["F_2"], P["W"], P["r_H"]
+    N = 1 - rH / r
+    E = sp.zeros(4, 4)
+    E[0, 0], E[0, 3] = sp.exp(-F0) / sp.sqrt(N), W * sp.exp(-F0) / sp.sqrt(N)
+    E[1, 1], E[2, 2], E[3, 3] = sp.sqrt(N) * sp.exp(-F1), sp.exp(-F1) / r, sp.exp(-F2) / (r * sp.sin(th))
+    R = chart.geo.riemann_llll()
+    pairs = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)]
+
+    def frame(p, q):
+        total = 0
+        for m, n, o, u in itertools.product(range(4), repeat=4):
+            factor = E[p[0], m] * E[p[1], n] * E[q[0], o] * E[q[1], u]
+            if factor != 0 and R[m][n][o][u] != 0:
+                total += factor * R[m][n][o][u]
+        return vm.norm(sp.together(total))
+    squares = {"diagonal": [], "plus": [], "minus": []}
+    for i, p in enumerate(pairs):
+        for q in pairs[i:]:
+            value = frame(p, q)
+            if value == 0:
+                continue
+            text = "\\left(" + chart.printer(sp.powsimp(sp.factor(value), combine="exp")) + "\\right)^2"
+            sign = (-1 if 0 in p else 1) * (-1 if 0 in q else 1)
+            squares["diagonal" if p == q else ("plus" if sign > 0 else "minus")].append(text)
+    return ("4\\left(" + " + ".join(squares["diagonal"]) + "\\right) + 8\\left(" + " + ".join(squares["plus"])
+            + "\\right) - 8\\left(" + " + ".join(squares["minus"]) + "\\right)")
+
+
+def kerr_scalar_hair_paper(chart, sigma, w, m, mu):
+    """Herdeiro and Radu's (2.10) to (2.13) as their paper of 2015 prints them, in the chart's own
+    functions, with N = 1 - r_H/r, their w the frequency over c, mu the field's inverse length, and
+    their 8 pi G phi^2 written 2 sigma^2 for the dimensionless amplitude sigma = sqrt(4 pi G) phi/c^2:
+    the Klein-Gordon equation, the equations for F_1, F_2, F_0 and W, and the two constraints."""
+    t, r, th, ph = chart.symbols
+    P = chart.reader.parameters
+    rH = P["r_H"]
+    F0, F1, F2, W = P["F_0"], P["F_1"], P["F_2"], P["W"]
+    N = 1 - rH / r
+    Np = sp.diff(N, r)
+    d = sp.diff
+    s, c, ct = sp.sin(th), sp.cos(th), sp.cot(th)
+    k2 = 2 * sigma ** 2                 # their 8 pi G phi^2
+    kin = (d(sigma, r) ** 2 + d(sigma, th) ** 2 / (r ** 2 * N))
+    twist = sp.exp(-2 * F0 + 2 * F2) * r ** 2 * s ** 2 / N
+    grad = lambda f, h: d(f, r) * d(h, r) + d(f, th) * d(h, th) / (r ** 2 * N)
+    lap = lambda f: d(f, r, 2) + d(f, th, 2) / (r ** 2 * N)
+    kg = (lap(sigma) + grad(sigma, F0 + F2) + (1 + r * Np / (2 * N)) * 2 / r * d(sigma, r) + ct / (r ** 2 * N) * d(sigma, th)
+          - (sp.exp(-2 * F2) * m ** 2 / (r ** 2 * s ** 2) - sp.exp(-2 * F0) * (w - m * W) ** 2 / N + mu ** 2) * sp.exp(2 * F1) / N * sigma)
+    eF1 = (lap(F1) - grad(F0, F2) - twist / 4 * grad(W, W) - d(F0, r) / r - Np * d(F2, r) / (2 * N)
+           + (1 + r * Np / (2 * N)) * d(F1, r) / r - ct * d(F0, th) / (r ** 2 * N)
+           + 2 * (kin + sp.exp(2 * F1) / N ** 2 * (sp.exp(-2 * F0) * (w - m * W) ** 2
+                                                    - sp.exp(-2 * F2) * m ** 2 * N / (r ** 2 * s ** 2)) * sigma ** 2))
+    eF2 = (lap(F2) + grad(F2, F2) + grad(F0, F2) + twist / 2 * grad(W, W) + (d(F0, r) + ct * d(F0, th) / (r * N)) / r
+           + (1 + r * Np / (3 * N)) * 3 * d(F2, r) / r + 2 * ct * d(F2, th) / (r ** 2 * N)
+           + k2 * sp.exp(2 * F1) / N * (mu ** 2 + 2 * sp.exp(-2 * F2) * m ** 2 / (r ** 2 * s ** 2)))
+    eF0 = (lap(F0) + grad(F0, F0) + grad(F0, F2) - twist / 2 * grad(W, W) + (1 + 3 * r * Np / (4 * N)) * 2 * d(F0, r) / r
+           + ct * d(F0, th) / (r ** 2 * N) + Np * d(F2, r) / (2 * N)
+           - k2 * sp.exp(2 * F1) / N * (2 * sp.exp(-2 * F0) * (w - m * W) ** 2 / N - mu ** 2))
+    eW = (lap(W) + grad(3 * F2 - F0, W) + 4 / r * (d(W, r) + 3 * ct * d(W, th) / (4 * r * N))
+          + 4 * k2 * sp.exp(2 * F1 - 2 * F2) * m * (w - m * W) / (r ** 2 * s ** 2 * N))
+    minus = lambda f, h: d(f, r) * d(h, r) - d(f, th) * d(h, th) / (r ** 2 * N)
+    c1 = (d(F0, r, 2) - d(F0, th, 2) / (r ** 2 * N) + d(F2, r, 2) - d(F2, th, 2) / (r ** 2 * N) + minus(F0, F0)
+          - 2 * minus(F0, F1) - 2 * minus(F1, F2) - twist / 2 * minus(W, W) + minus(F2, F2)
+          + (3 * r * Np / (2 * N) - 1) * d(F0, r) / r + (1 + r * Np / (2 * N)) * (d(F2, r) - 2 * d(F1, r)) / r
+          + 2 * ct / (r ** 2 * N) * (d(F1, th) - d(F2, th)) + 2 * k2 / sigma ** 2 * minus(sigma, sigma))
+    c2 = (d(F0, r, th) + d(F2, r, th) + d(F0, r) * d(F0, th) + d(F2, r) * d(F2, th)
+          - (d(F0, r) * d(F1, th) + d(F1, r) * d(F0, th)) - (d(F1, r) * d(F2, th) + d(F2, r) * d(F1, th))
+          + (r * Np / (2 * N) - 1) * d(F0, th) / r - (1 + r * Np / (2 * N)) * d(F1, th) / r
+          - ct * (d(F1, r) - d(F2, r)) - twist / 2 * d(W, r) * d(W, th) + 2 * k2 / sigma ** 2 * d(sigma, r) * d(sigma, th))
+    return kg, (eF1, eF2, eF0, eW), (c1, c2)
+
+
+def kerr_scalar_hair_check(chart, system):
+    """herdeiro_radu: for the field sigma(r, theta) e^(i(m varphi - w x^0)), the chart's own wave operator
+    gives the paper's (2.10), the combinations E^r_r + E^theta_theta - E^varphi_varphi - E^t_t,
+    E^r_r + E^theta_theta - E^varphi_varphi + E^t_t + 2W E^t_varphi, E^r_r + E^theta_theta + E^varphi_varphi
+    - E^t_t - 2W E^t_varphi and E^t_varphi of E^a_b = G^a_b - 2 S^a_b, with S the field's stress in
+    sigma, the combinations of its (2.11), give its equations for F_1, F_2, F_0 and W, each times one factor, and E^r_r - E^theta_theta and E^r_theta its
+    constraints (2.12) and (2.13). kerr_member: a vacuum, Kerr's published Boyer-Lindquist chart with
+    R = r + b, GM/c^2 = r_H/2 + b and a^2 = b(b + r_H), and the free chart with the paper's (A.1) at c_t = -b."""
+    name = f"kerr_scalar_hair/{system}"
+    t, r, th, ph = chart.symbols
+    P = chart.reader.parameters
+    geo = chart.geo
+    g, ginv = geo.g, geo.ginv
+    if system == "herdeiro_radu":
+        sigma = sp.Function("KSHsigma")(r, th)
+        w, m, mu = sp.symbols("KSHw KSHm KSHmu", positive=True)
+        phase = sp.exp(sp.I * (m * ph - w * t))
+        Psi = sigma * phase
+        dPsi = [sp.diff(Psi, x) for x in chart.symbols]
+        # The derivatives of the conjugate field, sigma being real.
+        dbar = [sp.diff(sigma * sp.exp(-sp.I * (m * ph - w * t)), x) for x in chart.symbols]
+        kin = sp.expand(sum(ginv[a, b] * dbar[a] * dPsi[b] for a in range(4) for b in range(4)))
+        S = sp.Matrix(4, 4, lambda a, b: sp.expand(dbar[a] * dPsi[b] + dbar[b] * dPsi[a] - g[a, b] * (kin + mu ** 2 * sigma ** 2)))
+        Smix = sp.expand(ginv * S)
+        Gmix = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+        E = sp.Matrix(4, 4, lambda a, b: vm._at(Gmix, (a, b)) - 2 * Smix[a, b])
+        root = sp.exp(P["F_0"] + 2 * P["F_1"] + P["F_2"]) * r ** 2 * sp.sin(th)
+        if sp.simplify(g.det() + root ** 2) != 0:
+            raise AssertionError(f"{name}: the determinant is not -e^(2F_0 + 4F_1 + 2F_2) r^4 sin^2 theta")
+        box = sum(sp.diff(root * sum(ginv[a, b] * dPsi[b] for b in range(4)), chart.symbols[a]) for a in range(4)) / root
+        wave = sp.expand((box - mu ** 2 * Psi) / phase)
+        kg, einstein, constraints = kerr_scalar_hair_paper(chart, sigma, w, m, mu)
+        W = P["W"]
+
+        def same(mine, theirs, what):
+            # The factor is read off one second derivative and the remainder has to vanish.
+            lead = next(e for e in sp.preorder_traversal(theirs) if isinstance(e, sp.Derivative) and e.derivative_count == 2)
+            factor = sp.simplify(sp.diff(sp.expand(mine), lead) / sp.diff(sp.expand(theirs), lead))
+            if factor.has(sp.Derivative) or not gowdy_vanishes(sp.expand(mine - factor * theirs)):
+                raise AssertionError(f"{name}: {what} is not the paper's equation times one factor")
+            return factor
+        same(wave, kg, "the Klein-Gordon equation")
+        # The paper's E_varphi^t has its t up: E^t_varphi.
+        combos = [E[1, 1] + E[2, 2] - E[3, 3] - E[0, 0],
+                  E[1, 1] + E[2, 2] - E[3, 3] + E[0, 0] + 2 * W * E[0, 3],
+                  E[1, 1] + E[2, 2] + E[3, 3] - E[0, 0] - 2 * W * E[0, 3],
+                  E[0, 3]]
+        for combo, theirs, what in zip(combos, einstein, ("the equation for F_1", "the equation for F_2",
+                                                            "the equation for F_0", "the equation for W")):
+            same(combo, theirs, what)
+        same(E[1, 1] - E[2, 2], constraints[0], "the constraint E^r_r - E^theta_theta")
+        same(E[1, 2], constraints[1], "the constraint E^r_theta")
+        return
+    rH, b = P["r_H"], P["b"]
+    ct = -b                     # the paper's c_t
+    ricci = geo.ricci_ll()
+    if any(not gowdy_vanishes(ricci[i][j]) for i in range(4) for j in range(i, 4)):
+        raise AssertionError(f"{name}: the Ricci tensor does not vanish")
+    reader, there, kerr = kaluza_klein_published("kerr", "boyer_lindquist")
+    M, spin, G = (reader.parameters[n] for n in ("M", "a", "G"))
+    c = next(s for s in kerr.free_symbols if s.name == "c")
+    kerr = kerr.subs({M: (rH / 2 - ct) * c ** 2 / G, spin: sp.sqrt(b * (b + rH))})
+    kerr = kerr.subs(dict(zip(there, [t, r - ct, th, ph])), simultaneous=True)
+    for i in range(4):
+        for j in range(i, 4):
+            if not gowdy_vanishes(sp.factor(kerr[i, j] - g[i, j])):
+                raise AssertionError(f"{name}: the chart is not Kerr's with R = r + b, slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    # The free chart with the paper's (A.1).
+    source = kerr_scalar_hair("herdeiro_radu")
+    free = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    Q = free.reader.parameters
+    e2F1 = (1 - ct / r) ** 2 + ct * (ct - rH) * sp.cos(th) ** 2 / r ** 2
+    e2F2 = ((((1 - ct / r) ** 2 + ct * (ct - rH) / r ** 2)) ** 2 + ct * (rH - ct) * (1 - rH / r) * sp.sin(th) ** 2 / r ** 2) / e2F1
+    Wk = sp.sqrt(b * (b + rH)) * (rH - 2 * ct) * (1 - ct / r) / (r ** 3 * e2F1 * e2F2)
+    names = dict(zip(free.symbols, chart.symbols))
+    put = {Q["F_1"]: sp.log(e2F1) / 2, Q["F_2"]: sp.log(e2F2) / 2, Q["F_0"]: -sp.log(e2F2) / 2, Q["W"]: Wk, Q["r_H"]: rH}
+    mine = free.geo.g.subs(names, simultaneous=True)
+    put = {k.subs(names, simultaneous=True) if k != Q["r_H"] else k: v for k, v in put.items()}
+    mine = mine.subs(put, simultaneous=True).doit()
+    for i in range(4):
+        for j in range(i, 4):
+            if not gowdy_vanishes(sp.factor(mine[i, j] - g[i, j])):
+                raise AssertionError(f"{name}: the chart is not the free chart with the paper's (A.1), slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["kerr_scalar_hair"] = [lambda s=s: kerr_scalar_hair(s) for s in KSH_CHARTS]
+
+
+# -- Lin, Lunin and Maldacena's bubbling anti-de Sitter space -----------------------------
+
+BUBBLING_CHARTS = ["rings", "global", "plane_wave"]
+BUBBLING_S3 = "\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\,d\\gamma^2\\right)\\right)"
+BUBBLING_S3T = "\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\,d\\omega^2\\right)\\right)"
+BUBBLING_SPHERES = [("\\alpha", "\\beta", "\\gamma"), ("\\kappa", "\\xi", "\\omega")]
+
+
+def bubbling_ads(system):
+    """Lin, Lunin and Maldacena's half supersymmetric geometries of type IIB supergravity with the
+    symmetry of two 3-spheres, hep-th/0409174: their metric (2.4) with h^-2 = 2y cosh G on the polar
+    coordinates r and phi of the plane of the droplets, which they use for every concentric pattern,
+    their (2.13) to (2.17), with G and their V_phi, written V, free; the black disc in the global
+    chart of anti-de Sitter space times a 5-sphere, their (2.16) with r_0 = L^2, their t kept and
+    their tilde phi written psi; and the black half plane in their (2.11), the maximally
+    supersymmetric plane wave of Blau, Figueroa-O'Farrill, Hull and Papadopoulos (hep-th/0110242,
+    their (1) at 4 lambda^2 = 1). The time is their pure number t in every chart, so nothing is
+    multiplied by c. Their Cartesian form, with G, V_1 and V_2 free functions of three coordinates,
+    prints to 6.3 MB, the Weyl tensor 3.7 MB of it, and is kept out of the published charts;
+    bubbling_ads_check holds it, through bubbling_ads.py, to the half plane and to the field
+    equation, and bubbling_ads.md records each chart's source."""
+    angles = [a for sphere in BUBBLING_SPHERES for a in sphere]
+    sphere_domains = lambda s: [s[0] + " \\in [0, \\pi]", s[1] + " \\in [0, \\pi]", s[2] + " \\in [0, 2\\pi)"]
+    if system == "rings":
+        name = "Concentric droplets"
+        coords = ["t", "r", "\\phi", "y"] + angles
+        domains = [PH_LINE.format("t"), "r \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", "y \\in [0, \\infty)"]
+        domains += sphere_domains(BUBBLING_SPHERES[0]) + sphere_domains(BUBBLING_SPHERES[1])
+        parameters = ["G = G(r,y)", "V = V(r,y)"]
+        line = ("ds^2 = -2y\\cosh G\\left(dt + V\\,d\\phi\\right)^2"
+                " + \\dfrac{dr^2 + r^2d\\phi^2 + dy^2}{2y\\cosh G} + y\\,e^{G}" + BUBBLING_S3 + " + y\\,e^{-G}" + BUBBLING_S3T)
+        printer = {}
+    elif system == "global":
+        name = "Global (the disc)"
+        coords = ["t", "\\rho"] + list(BUBBLING_SPHERES[0]) + ["\\theta", "\\psi"] + list(BUBBLING_SPHERES[1])
+        domains = [PH_LINE.format("t"), "\\rho \\in [0, \\infty)"] + sphere_domains(BUBBLING_SPHERES[0])
+        domains += ["\\theta \\in [0, \\pi/2]", "\\psi \\in [0, 2\\pi)"] + sphere_domains(BUBBLING_SPHERES[1])
+        parameters = ["L"]
+        line = ("ds^2 = L^2\\left(-\\cosh^2\\rho\\,dt^2 + d\\rho^2 + \\sinh^2\\rho" + BUBBLING_S3
+                + " + d\\theta^2 + \\cos^2\\theta\\,d\\psi^2 + \\sin^2\\theta" + BUBBLING_S3T + "\\right)")
+        probe = vm.Reader(coords, ["L"], ())
+        printer = {"lead": [probe.symbol["\\rho"], probe.parameters["L"]], "flip": False}
+    else:
+        name = "Plane Wave (the half plane)"
+        coords = ["t", "x", "r_1"] + list(BUBBLING_SPHERES[0]) + ["r_2"] + list(BUBBLING_SPHERES[1])
+        domains = [PH_LINE.format("t"), PH_LINE.format("x"), "r_1 \\in [0, \\infty)"]
+        domains += sphere_domains(BUBBLING_SPHERES[0]) + ["r_2 \\in [0, \\infty)"] + sphere_domains(BUBBLING_SPHERES[1])
+        parameters = []
+        line = ("ds^2 = -2\\,dt\\,dx - \\left(r_1^2 + r_2^2\\right)dt^2 + dr_1^2 + r_1^2" + BUBBLING_S3
+                + " + dr_2^2 + r_2^2" + BUBBLING_S3T)
+        printer = {}
+    spec = {"metric_id": "bubbling_ads", "check": lambda chart, s=system: bubbling_ads_check(chart, s),
+            "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line, "printer": printer}
+    if system == "rings":
+        spec["kretschmann_text"] = bondi_sachs_scalar
+    return spec
+
+
+def bubbling_ads_check(chart, system):
+    """The global chart has the Riemann tensor of anti-de Sitter space of radius L on its first five
+    coordinates and of a sphere of radius L on the other five, nothing across the two, and so a
+    mixed Ricci tensor of -4/L^2 and +4/L^2. The plane wave's one Ricci component is R_tt = 8, the
+    Laplacian of r_1^2 + r_2^2 over the eight transverse directions halved, and Lin, Lunin and
+    Maldacena's Cartesian metric at the half plane w < 0 is the plane wave carried along y = r_1 r_2,
+    w = (r_1^2 - r_2^2)/2. The chart of concentric droplets is their polar metric, bubbling_ads.metric,
+    and at the disc of radius L^2 it is the global chart carried along y = L^2 sinh(rho) sin(theta),
+    r = L^2 cosh(rho) cos(theta), phi = psi - t; each pullback is held at three points in thirty
+    digits. The disc and a black ring in the polar metric, and the half plane and the same ring in
+    the Cartesian one, solve R_MN = F_MPQRS F_N^PQRS/96 with Lin, Lunin and Maldacena's 5-form, at
+    two points each, to a part in 1e9, by bubbling_ads.field_equation_residual."""
+    import bubbling_ads as ba
+    name = f"bubbling_ads/{system}"
+    n = 10
+    g = sp.Matrix(chart.geo.g)
+    rng = random.Random(10)
+
+    def zero(e):
+        e = sp.sympify(e)
+        if e == 0 or sp.simplify(e) == 0:
+            return True
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 140), 100) for s in sorted(e.free_symbols, key=str)}
+            if abs(sp.N(e.subs(at), 40)) > sp.Float(10) ** -30:
+                return False
+        return True
+
+    def residual(kind, funcs_of, points, label):
+        base = ba.generic(kind)[0]
+        worst = ba.field_equation_residual(kind, funcs_of(*base[1:]), points)
+        if worst > 1e-9:
+            raise AssertionError(f"{name}: {label} misses R_MN = F_MPQRS F_N^PQRS/96 by {worst}")
+
+    ricci = chart.geo.ricci_ll()
+    if system == "global":
+        L = chart.reader.parameters["L"]
+        riemann = chart.geo.riemann_llll()
+        for a, b, c, d in vm._indices(n, 4):
+            if a >= b or c >= d or (a, b) > (c, d):
+                continue
+            blocks = {i < 5 for i in (a, b, c, d)}
+            want = 0
+            if len(blocks) == 1:
+                want = (-1 if a < 5 else 1) / L ** 2 * (g[a, c] * g[b, d] - g[a, d] * g[b, c])
+            if not zero(riemann[a][b][c][d] - want):
+                raise AssertionError(f"{name}: not anti-de Sitter space times a sphere in slot {a}{b}{c}{d}")
+        for i in range(n):
+            if not zero(sp.sympify(ricci[i][i]) / g[i, i] - (-4 if i < 5 else 4) / L ** 2):
+                raise AssertionError(f"{name}: R^M_N is not -4/L^2 and +4/L^2")
+        return
+    if system == "plane_wave":
+        for i in range(n):
+            for j in range(n):
+                if not zero(sp.sympify(ricci[i][j]) - (8 if i == j == 0 else 0)):
+                    raise AssertionError(f"{name}: the Ricci tensor is not R_tt = 8 alone")
+        T, X, r1 = chart.symbols[:3]
+        r2 = chart.symbols[6]
+        x, w, y = sp.symbols("x w y", real=True)
+        G, V1, V2 = ba.half_plane(x, w, y)
+        here = ba.metric("cartesian", (sp.Symbol("t"), x, w, y), G, (V1, V2))
+        images = {sp.Symbol("t"): T, x: X, w: (r1 ** 2 - r2 ** 2) / 2, y: r1 * r2}
+        _bubbling_pulled(name, "the half plane", here, g, images, (T, X, r1, r2), (sp.Symbol("t"), x, w, y),
+                         [0, 1, 2, 6], chart.symbols, rng)
+        residual("cartesian", ba.half_plane, [(0.4, 0.9, 0.7), (-1.3, -0.2, 0.35)], "the half plane")
+        residual("cartesian", lambda x, w, y: ba.concentric(x, w, y, ba.RING), [(0.4, 0.9, 0.7)], "the ring")
+        return
+    t, r, phi, y = chart.symbols[:4]
+    G, V = (chart.reader.parameters[k] for k in ("G", "V"))
+    mine = ba.metric("polar", (t, r, phi, y), G, V).subs(dict(zip(ba.ANGLES, chart.symbols[4:])))
+    plain = {G: sp.Symbol("_G", real=True), V: sp.Symbol("_V", real=True)}
+    if any(not zero((mine[i, j] - g[i, j]).subs(plain)) for i in range(n) for j in range(n)):
+        raise AssertionError(f"{name}: not Lin, Lunin and Maldacena's metric on the polar coordinates")
+    L = sp.Rational(13, 10)
+    spec = bubbling_ads("global")
+    there = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    T, rho = there.symbols[:2]
+    theta, psi = there.symbols[5:7]
+    images = {t: T, r: L ** 2 * sp.cosh(rho) * sp.cos(theta), phi: psi - T, y: L ** 2 * sp.sinh(rho) * sp.sin(theta)}
+    disc = g.subs(dict(zip((G, V), ba.concentric_polar(r, y, [L ** 2]))), simultaneous=True)
+    _bubbling_pulled(name, "the disc", disc, there.geo.g.subs(there.reader.parameters["L"], L), images,
+                     (T, rho, theta, psi), (t, r, phi, y), [0, 1, 5, 6], there.symbols, rng, chart.symbols)
+    residual("polar", lambda r, p, y: ba.concentric_polar(r, y, [sp.Rational(3, 2)]), [(0.4, 0.3, 0.7), (1.3, 2.0, 0.35)],
+             "the disc")
+    residual("polar", lambda r, p, y: ba.concentric_polar(r, y, ba.RING), [(0.4, 0.3, 0.7), (1.3, 2.0, 0.35)], "the ring")
+
+
+def _bubbling_pulled(name, label, here, there_g, images, plane, base, slots, there_symbols, rng, here_symbols=None):
+    """The metric `here`, on `base` and two 3-spheres, carried to the other chart along `images` of
+    its base in the other chart's coordinates `plane` (sitting in its slots `slots`), equals
+    `there_g` at three points in thirty digits; each 3-sphere goes to the other chart's in order."""
+    import bubbling_ads as ba
+    spheres = [s for s in range(10) if s not in slots]
+    angles = list(here_symbols[4:]) if here_symbols is not None else list(ba.ANGLES)
+    to_there = dict(images)
+    to_there.update({angles[k]: there_symbols[spheres[k]] for k in range(6)})
+    full = list(slots) + spheres
+    J = sp.zeros(10, 10)
+    for i in range(4):
+        for a in range(4):
+            J[i, a] = sp.diff(images[base[i]], plane[a])
+    for k in range(6):
+        J[4 + k, 4 + k] = 1
+    for _ in range(3):
+        at = {s: sp.Rational(rng.randint(20, 140), 100) for s in there_symbols}
+        pulled = J.subs(at).evalf(40).T * sp.Matrix(here).subs(to_there, simultaneous=True).subs(at).evalf(40) * J.subs(at).evalf(40)
+        want = sp.Matrix(there_g).subs(at).evalf(40)
+        for i in range(10):
+            for j in range(10):
+                if abs(pulled[i, j] - want[full[i], full[j]]) > 1e-30:
+                    raise AssertionError(f"{name}: {label} is not the other chart pulled back, slot {i}{j}")
+
+
+CHARTS["bubbling_ads"] = [lambda s=s: bubbling_ads(s) for s in BUBBLING_CHARTS]
+
+
+# -- The bounce of loop quantum cosmology ---------------------------------------------------
+
+LQC_CHARTS = ("cosmic", "comoving_spherical", "harmonic")
+LQC_SPACE = "\\left(dx^2 + dy^2 + dz^2\\right)"
+
+
+def lqc_bounce(system):
+    """The flat universe of a massless scalar field in the effective dynamics of loop quantum
+    cosmology, whose Friedmann equation is H^2 = (8 pi G/3) rho (1 - rho/rho_c) (Ashtekar,
+    Pawlowski and Singh, Phys. Rev. D 74, 084003 (2006), Appendix B), with rho = rho_c/a^6 for the
+    scalar field. The cosmic chart is Cai and Wilson-Ewing's closed form, JCAP 03 (2014) 026,
+    a = (1 + 24 pi G rho_c t^2)^(1/6) = (1 + t^2/t_b^2)^(1/6), and the comoving spherical chart the
+    same in spherical comoving coordinates; the harmonic chart is Ashtekar and Singh's
+    -a^6 dtau^2 + a^2 dx^2, Class. Quantum Grav. 28, 213001 (2011), in which the volume runs as
+    cosh(tau/t_b) (Ashtekar, Corichi and Singh, Phys. Rev. D 77, 024046 (2008)). Each line element names the scale factor a, and the
+    chart's own line element writes it out in x^0, since a name defined in the time is read in the
+    time the file prints. lqc_bounce_check holds both charts to the modified Friedmann equation and
+    the harmonic chart to the cosmic one pulled back; lqc_bounce.md beside this file records each
+    chart's source."""
+    coords = {"cosmic": ["t", "x", "y", "z"], "comoving_spherical": ["t", "r", "\\theta", "\\phi"],
+              "harmonic": ["\\tau", "x", "y", "z"]}[system]
+    if system == "comoving_spherical":
+        sphere = "\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)"
+        parameters = ["t_b", "a = \\left(1 + t^2/t_b^2\\right)^{1/6}"]
+        line = "ds^2 = -c^2dt^2 + a^2" + sphere
+        chart_line = "ds^2 = -dt^2 + \\left(1 + \\dfrac{t^2}{c^2t_b^2}\\right)^{1/3}" + sphere
+        name = "Comoving Spherical"
+    elif system == "cosmic":
+        parameters = ["t_b", "a = \\left(1 + t^2/t_b^2\\right)^{1/6}"]
+        line = "ds^2 = -c^2dt^2 + a^2" + LQC_SPACE
+        chart_line = "ds^2 = -dt^2 + \\left(1 + \\dfrac{t^2}{c^2t_b^2}\\right)^{1/3}" + LQC_SPACE
+        name = "Cosmic Time"
+    else:
+        parameters = ["t_b", "a = \\cosh^{1/3}(\\tau/t_b)"]
+        line = "ds^2 = -a^6c^2d\\tau^2 + a^2" + LQC_SPACE
+        chart_line = ("ds^2 = -\\cosh^2\\left(\\dfrac{\\tau}{ct_b}\\right)d\\tau^2"
+                      " + \\cosh^{2/3}\\left(\\dfrac{\\tau}{ct_b}\\right)" + LQC_SPACE)
+        name = "Harmonic Time"
+    probe = vm.Reader(coords, parameters, ())
+    time, tb = probe.symbol[coords[0]], probe.parameters["t_b"]
+    a = sp.Symbol("a", positive=True)
+    reals = "(-\\infty, \\infty)"
+    return {
+        "metric_id": "lqc_bounce",
+        "system": {"id": system, "name": name, "coords": coords,
+                   "domains": [f"{x} \\in {reals}" for x in coords] if system != "comoving_spherical" else
+                   ["t \\in " + reals, "r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"],
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "time": coords[0],
+        "printer": {"lead": [tb, time, a], "arguments": {time / tb: coords[0] + "/t_b"}},
+        "pretty": lqc_scale_factor(time, tb, a, system),
+        "check": lambda chart: lqc_bounce_check(chart, system),
+    }
+
+
+def lqc_scale_factor(time, tb, a, system):
+    """A `pretty` for the bounce that writes each value as a power of the scale factor a times a
+    function that holds no fractional power. In the cosmic chart a^6 = 1 + t^2/t_b^2 and the rest is
+    rational in t; in the harmonic chart a^3 = cosh(tau/t_b) and the rest is rational in a and
+    sinh(tau/t_b). Of the powers of a that leave no fractional power, the one is kept whose rest is
+    shortest and leaves no bare power of t_b below the line, so that t_b^2 + t^2 stays whole."""
+    if system != "harmonic":
+        root, step = 1 + time ** 2 / tb ** 2, 2
+    else:
+        u = time / tb
+        root, step = sp.cosh(u), 1
+
+    def fractional(e):
+        return any(not p.exp.is_Integer for p in e.atoms(sp.Pow) if p.exp.is_Rational)
+
+    hyperbolic = rooted_hyperbolic([(time / tb, 3)], sp.cosh(time / tb)) if system == "harmonic" else None
+
+    def rest(value, j):
+        # value / a^(step j), with a^(step j) = root^(j/3).
+        q = value * root ** sp.Rational(-j, 3)
+        if system != "harmonic":
+            q = sp.factor(sp.cancel(vm.norm(q)))
+            return None if fractional(q) else q
+        # rooted_hyperbolic leaves the cube root on cosh, cosh^(k/3) = a^k.
+        q = sp.factor(hyperbolic(q).subs(sp.cosh(time / tb), a ** 3))
+        return None if q.has(sp.cosh) or fractional(q) else q
+
+    def pretty(value):
+        value = sp.sympify(value)
+        best = None
+        # The harmonic chart's printer finds the power of cosh^(1/3) itself, so only j = 0 is tried.
+        for j in range(-12, 13) if system != "harmonic" else (0,):
+            q = rest(value, j)
+            if q is None:
+                continue
+            den = sp.fraction(q)[1]
+            bare = sum(e for b, e in den.as_powers_dict().items() if b == tb)
+            score = (10 * bare + sp.count_ops(q) + abs(j), abs(j))
+            if best is None or score < best[0]:
+                best = (score, q * a ** (step * j))
+        if best is None:
+            raise ValueError(f"lqc_bounce: {value} is no power of the scale factor times a function without roots")
+        return best[1]
+    return pretty
+
+
+def lqc_bounce_check(chart, system):
+    """The scale factor solves the modified Friedmann equation, (da/dt / a)^2 = (1/9t_b^2) a^-6
+    (1 - a^-6), which is H^2 = (8 pi G/3) rho (1 - rho/rho_c) with rho = rho_c/a^6 and
+    24 pi G rho_c t_b^2 = 1, and its rate of change is the same equation's root; the time tau of the
+    harmonic chart satisfies box tau = 0, so the scalar field, linear in it, solves the wave
+    equation; and the harmonic chart is the cosmic one pulled back through t = t_b sinh(tau/t_b)."""
+    x0 = chart.symbols[0]
+    tb = chart.reader.parameters["t_b"]
+    t = sp.Symbol("t", real=True)
+    a_cosmic = (1 + t ** 2 / tb ** 2) ** sp.Rational(1, 6)
+    H = sp.diff(a_cosmic, t) / a_cosmic
+    friedmann = H ** 2 - a_cosmic ** -6 * (1 - a_cosmic ** -6) / (9 * tb ** 2)
+    if vm.norm(friedmann) != 0:
+        raise AssertionError("lqc_bounce: the scale factor does not solve the modified Friedmann equation")
+    g = chart.geo.g
+    if system != "harmonic":
+        # x^0 = ct: g_11 is a^2 at t = x^0/c.
+        if vm.norm(g[1, 1] - a_cosmic.subs(t, x0 / chart.reader.c) ** 2) != 0:
+            raise AssertionError("lqc_bounce: the cosmic chart's g_xx is not a^2")
+        return
+    c = chart.reader.c
+    tau = x0 / c
+    # box tau = (1/sqrt(-g)) d_mu (sqrt(-g) g^mu nu d_nu tau), with tau = x^0/c.
+    sqrt_g = sp.sqrt(-g.det())
+    box = sp.diff(sqrt_g * chart.geo.ginv[0, 0] * sp.diff(tau, x0), x0) / sqrt_g
+    if vm.norm(box) != 0:
+        raise AssertionError("lqc_bounce: the harmonic time does not solve the wave equation")
+    # Pullback: c dt = cosh(tau/t_b) c dtau, a^2(t) = cosh^(2/3)(tau/t_b).
+    t_of = tb * sp.sinh(tau / tb)
+    lapse = sp.diff(c * t_of, x0)
+    if vm.norm(g[0, 0] + lapse ** 2) != 0 or vm.norm(g[1, 1] - a_cosmic.subs(t, t_of) ** 2) != 0:
+        raise AssertionError("lqc_bounce: the harmonic chart is not the cosmic one pulled back")
+
+
+CHARTS["lqc_bounce"] = [lambda s=s: lqc_bounce(s) for s in LQC_CHARTS]
 
 
 def write(spec):

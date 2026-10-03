@@ -3324,7 +3324,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
         flat = {"minkowski", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
-                "chandrasekhar_xanthopoulos", "belinski_zakharov", "big_rip"}
+                "chandrasekhar_xanthopoulos", "belinski_zakharov", "big_rip", "maximally_supersymmetric_plane_wave"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
         # Hayward's hole forms from flat space and leaves flat space behind: the first and the last
@@ -3338,6 +3338,9 @@ class EmbeddingDiagrams(unittest.TestCase):
         flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5),
                         ("hiscock", "history", 5), *(("nordstrom_scalar", "dust", k) for k in range(5)),
                         *(("kopczynski_trautman", "universe", k) for k in range(5)),
+                        # The bounce of loop quantum cosmology is a flat Friedmann universe as well, so each of
+                        # its moments is a flat plane, on which its comoving observers close in and draw apart.
+                        *(("lqc_bounce", "universe", k) for k in range(5)),
                         # Space is flat in Einstein's static field of 1912, so the equator outside a body is a
                         # plane, drawn under Flamm's paraboloid of the same mass.
                         ("einstein_1912_static", "equator", 0),
@@ -3461,7 +3464,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                          {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave",
                           "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
-                          "belinski_zakharov", "moving_mirror", "big_rip"})
+                          "belinski_zakharov", "moving_mirror", "big_rip", "maximally_supersymmetric_plane_wave"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -3679,12 +3682,14 @@ class StacksAndMovies(unittest.TestCase):
 
     STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "kasner_magnetic": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0,
-              "big_rip": 1.0}   # the height of a unit of time
+              "big_rip": 1.0,
+              "maximally_supersymmetric_plane_wave": 0.8}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
               ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
+              ("lqc_bounce", "universe"): "$t$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
@@ -3717,6 +3722,7 @@ class StacksAndMovies(unittest.TestCase):
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
               ("belinski_zakharov", "ring"): "$\\tau$", ("big_rip", "ring"): "$t$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
+              ("maximally_supersymmetric_plane_wave", "ring"): "$\\mu cu$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$",
               **{("roberts", case): "$ct$" for case in ("disperses", "threshold", "collapses")},
@@ -4361,7 +4367,8 @@ class TurningLightConeFigures(unittest.TestCase):
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
         # Ernst and Wild's ergoregion is its meridional plane seen from the side, t and phi left out.
         self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
-                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap", "kerr_melvin/tube"})
+                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap", "kerr_melvin/tube",
+                                 "maximally_supersymmetric_plane_wave/focus"})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -4879,6 +4886,14 @@ BARTNIK_MCKINNON_REACH = {"isotropic": 7.147807396, "tortoise": 24.219163201, "f
 ROBERTS_P = {"disperses": 0.9, "threshold": 1.0, "collapses": 2.0}
 
 
+def lqc_bounce_eta(t, n=2000):
+    """The conformal time of the bounce of loop quantum cosmology at the proper time t, in units of t_b:
+    the integral of dt/(1 + t^2)^(1/6) from the bounce, by Simpson's rule."""
+    h = t / n
+    f = [(1 + (k * h) ** 2) ** (-1 / 6) for k in range(n + 1)]
+    return h / 3 * (f[0] + f[-1] + 4 * sum(f[1:-1:2]) + 2 * sum(f[2:-1:2]))
+
+
 def kopczynski_trautman_eta(t, n=2000):
     """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l:
     the integral of dt/(1 + t^2)^(1/3) from the turn, by Simpson's rule."""
@@ -4926,7 +4941,10 @@ class Slices(unittest.TestCase):
     # The drawings on which no moment of the spacetime's embedding lies: other universes,
     # another cloud, the time reversed shell, and cylinders where no surface of constant t is
     # a moment of space.
-    HIDDEN = {# The ball of dust of the quantum Oppenheimer-Snyder black hole, which holds no part of the
+    HIDDEN = {# The black ring and the black half plane of bubbling anti-de Sitter space, other members of the
+              # family than the black disc whose plane of droplets is embedded.
+              "bubbling_ads/rings/ring_axis", "bubbling_ads/plane_wave/axis", "conformal bubbling_ads/rings",
+              # The ball of dust of the quantum Oppenheimer-Snyder black hole, which holds no part of the
               # moments of constant t embedded, moments of the vacuum outside it.
               "quantum_oppenheimer_snyder/interior_comoving/through",
               # The collapse keeps one exterior below the bounce and one above it, and the dust stands where the
@@ -5085,6 +5103,12 @@ class Slices(unittest.TestCase):
               # embedded is the disc's at mu = 3.
               "neugebauer_meinel/black_hole_limit/axis", "neugebauer_meinel/black_hole_limit/equator",
               "conformal neugebauer_meinel/limit_axis",
+              # Herdeiro and Radu's black hole with scalar hair: its axis, which the embedded equatorial plane
+              # meets nowhere outside the horizon, and the Kerr member of the same mass and angular momentum,
+              # another member of the family than configuration IV, whose equator is embedded.
+              "kerr_scalar_hair/herdeiro_radu/axis", "conformal kerr_scalar_hair/hair_axis",
+              "kerr_scalar_hair/kerr_member/axis", "kerr_scalar_hair/kerr_member/equator",
+              "conformal kerr_scalar_hair/kerr_axis",
               # The axis of Zipoy and Voorhees's metric, which the embedded equatorial plane does not meet.
               # Kerr-Taub-NUT's regular half axis, which the embedded equatorial plane does not meet, and the
               # equator in Plebanski and Demianski's chart, where the moment's tau changes with the sigma left out.
@@ -5535,6 +5559,20 @@ class Slices(unittest.TestCase):
     # The charged shell is inside r_- only from v - r = -0.25 r_s on, so the first two moments have no
     # part in the static chart inside r_- nor in the outgoing chart, which shares only that region with
     # the ingoing one.
+    # Single moments a drawing does not hold, as (view, surface, ring) of every() with ring None for a
+    # surface of its own. The maximally supersymmetric plane wave's ring is drawn at mu c u = 0, 0.5, 1,
+    # 1.5, 2.5 and 3, in the ring's view and on the tube alike: the Rosen chart ends at u = 0, so neither
+    # its figure nor its band of the conformal diagram holds the first; the conformally flat chart ends
+    # at mu c u = pi/2, so its band holds none after 1.5, and its figure, whose window runs to cU = 3/mu,
+    # none after 1, since mu c U = tan(1.5) is 14.1.
+    HIDDEN_MOMENTS = {
+        **{where: {("ring", 0, None), ("tube", 0, 0)}
+           for where in ("maximally_supersymmetric_plane_wave/rosen/focus", "conformal maximally_supersymmetric_plane_wave/rosen")},
+        "maximally_supersymmetric_plane_wave/conformally_flat/focus": {("ring", k, None) for k in (3, 4, 5)}
+        | {("tube", 0, k) for k in (3, 4, 5)},
+        "conformal maximally_supersymmetric_plane_wave/conformally_flat": {("ring", k, None) for k in (4, 5)}
+        | {("tube", 0, k) for k in (4, 5)},
+    }
     HIDDEN_SURFACES = {"lindquist_wheeler_lattice/schwarzschild_cell/radial": {("lattice", 2), ("lattice", 3)},
                        "lindquist_wheeler_lattice/cosmological_time/radial": {("lattice", k) for k in range(4)},
                        "conformal lindquist_wheeler_lattice/expanding": {("lattice", k) for k in range(4)},
@@ -5561,7 +5599,8 @@ class Slices(unittest.TestCase):
                 self.assertEqual(marks, [], where)
                 continue
             every = [m for m in self.every(metric_id) if m[0] not in self.HIDDEN_VIEWS.get(where, set())
-                     and m[:2] not in self.HIDDEN_SURFACES.get(where, set())]
+                     and m[:2] not in self.HIDDEN_SURFACES.get(where, set())
+                     and m not in self.HIDDEN_MOMENTS.get(where, set())]
             self.assertEqual(marks, every, where)
             drawn += len(marks)
         self.assertGreater(drawn, 100)
@@ -5675,6 +5714,14 @@ class Slices(unittest.TestCase):
             system = key.split("/")[1]
             height = kopczynski_trautman_eta(t) if system == "conformal" else t
             return (lambda X: height), ([-hi, hi] if system == "comoving_cartesian" else [lo, hi])
+        if key.startswith("lqc_bounce/"):
+            # A moment of the comoving observers' time, out to the observer at r = c t_b: the line of that time
+            # on the comoving charts, through the centre on the Cartesian ones, and of tau = asinh(t) on the
+            # harmonic chart.
+            lo, hi = self.reach(surface)
+            system = key.split("/")[1]
+            height = math.asinh(t) if system == "harmonic" else t
+            return (lambda X: height), ([lo, hi] if system == "comoving_spherical" else [-hi, hi])
         if key == "ppn_metric/cartesian/axis":
             # The line through the body's centre: the equator at t = 0 on both sides of the body.
             lo, hi = self.reach(surface)
@@ -6932,6 +6979,11 @@ class Slices(unittest.TestCase):
                         v = math.tan((T + X) / 2 - math.pi / 4) - (0.5 if u > 1e-9 else 0.0)
                         want = hotta_tanaka_moment(t)
                         self.assertLess(abs(u - want[0]) + abs(v - want[1]), 5e-4, where)
+                    elif metric_id == "maximally_supersymmetric_plane_wave":
+                        # The wave front at mu c u = t meets the axis at the event v = 0, which
+                        # p = arctan(2 mu v) - pi/2 and q = mu c u + pi/2 put at T = t, X = t + pi.
+                        (X, T), = points
+                        self.assertLess(abs(T - t) + abs(X - t - math.pi), 2e-4, where)
                     elif metric_id == "vaidya":
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2
@@ -7195,6 +7247,11 @@ class Slices(unittest.TestCase):
                         self.assertTrue(all(abs(T - 0.3888) < 2e-4 for _, T in points), where)
                         self.assertEqual(sorted(X for X, _ in points), [round(-math.pi / 10, 4), round(math.pi / 10, 4)],
                                          where)
+                    elif metric_id == "lqc_bounce":
+                        # p, q = arctan((eta -+ r)/c t_b), so tan p + tan q = 2 eta(t) on a moment of the observers' time.
+                        for X, T in points:
+                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2)
+                                                - 2 * lqc_bounce_eta(t)), 2e-3, f"{where} at {(X, T)}")
                     elif metric_id == "kopczynski_trautman":
                         # p, q = arctan((eta -+ r)/l), so tan p + tan q = 2 eta(t)/l on a moment of the dust's time.
                         for X, T in points:

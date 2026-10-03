@@ -1,5 +1,5 @@
 {
-  "version": "f6d671947df200cc",
+  "version": "c248c10e1ca52226",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -29601,6 +29601,158 @@
         "url": "https://doi.org/10.1103/PhysRevLett.118.131102"
       }
     },
+    "herdeiro2014": {
+      "type": "article",
+      "fields": {
+        "title": "{Kerr} Black Holes with Scalar Hair",
+        "author": "Herdeiro, Carlos A. R. and Radu, Eugen",
+        "journal": "Physical Review Letters",
+        "volume": "112",
+        "number": "22",
+        "pages": "221101",
+        "year": "2014",
+        "doi": "10.1103/PhysRevLett.112.221101",
+        "eprint": "1403.2757",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.112.221101"
+      }
+    },
+    "herdeiro2015construction": {
+      "type": "article",
+      "fields": {
+        "title": "Construction and physical properties of {Kerr} black holes with scalar hair",
+        "author": "Herdeiro, Carlos and Radu, Eugen",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "32",
+        "number": "14",
+        "pages": "144001",
+        "year": "2015",
+        "doi": "10.1088/0264-9381/32/14/144001",
+        "eprint": "1501.04319",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/32/14/144001"
+      }
+    },
+    "herdeiro2015data": {
+      "type": "misc",
+      "fields": {
+        "title": "Data for {Kerr} black holes with scalar hair",
+        "author": "Herdeiro, Carlos and Radu, Eugen",
+        "howpublished": "Gravitation at Aveiro University",
+        "year": "2015",
+        "url": "https://gravitation.web.ua.pt/node/416"
+      }
+    },
+    "herdeiro2015review": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotically flat black holes with scalar hair: A review",
+        "author": "Herdeiro, Carlos A. R. and Radu, Eugen",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "24",
+        "number": "09",
+        "pages": "1542014",
+        "year": "2015",
+        "doi": "10.1142/S0218271815420146",
+        "eprint": "1504.08209",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271815420146"
+      }
+    },
+    "mayo1996": {
+      "type": "article",
+      "fields": {
+        "title": "No hair for spherical black holes: Charged and nonminimally coupled scalar field with self-interaction",
+        "author": "Mayo, Avraham E. and Bekenstein, Jacob D.",
+        "journal": "Physical Review D",
+        "volume": "54",
+        "number": "8",
+        "pages": "5059--5069",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.54.5059",
+        "eprint": "gr-qc/9602057",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.54.5059"
+      }
+    },
+    "press1972": {
+      "type": "article",
+      "fields": {
+        "title": "Floating Orbits, Superradiant Scattering and the Black-hole Bomb",
+        "author": "Press, William H. and Teukolsky, Saul A.",
+        "journal": "Nature",
+        "volume": "238",
+        "number": "5361",
+        "pages": "211--212",
+        "year": "1972",
+        "doi": "10.1038/238211a0",
+        "url": "https://doi.org/10.1038/238211a0"
+      }
+    },
+    "hod2012": {
+      "type": "article",
+      "fields": {
+        "title": "Stationary scalar clouds around rotating black holes",
+        "author": "Hod, Shahar",
+        "journal": "Physical Review D",
+        "volume": "86",
+        "number": "10",
+        "pages": "104026",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.86.104026",
+        "eprint": "1211.3202",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.86.104026"
+      }
+    },
+    "cunha2015": {
+      "type": "article",
+      "fields": {
+        "title": "Shadows of {Kerr} Black Holes with Scalar Hair",
+        "author": "Cunha, Pedro V. P. and Herdeiro, Carlos A. R. and Radu, Eugen and Rúnarsson, Helgi F.",
+        "journal": "Physical Review Letters",
+        "volume": "115",
+        "number": "21",
+        "pages": "211102",
+        "year": "2015",
+        "doi": "10.1103/PhysRevLett.115.211102",
+        "eprint": "1509.00021",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.115.211102"
+      }
+    },
+    "herdeiro2016proca": {
+      "type": "article",
+      "fields": {
+        "title": "{Kerr} black holes with {Proca} hair",
+        "author": "Herdeiro, Carlos and Radu, Eugen and Rúnarsson, Helgi",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "33",
+        "number": "15",
+        "pages": "154001",
+        "year": "2016",
+        "doi": "10.1088/0264-9381/33/15/154001",
+        "eprint": "1603.02687",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/33/15/154001"
+      }
+    },
+    "east2017": {
+      "type": "article",
+      "fields": {
+        "title": "Superradiant Instability and Backreaction of Massive Vector Fields around {Kerr} Black Holes",
+        "author": "East, William E. and Pretorius, Frans",
+        "journal": "Physical Review Letters",
+        "volume": "119",
+        "number": "4",
+        "pages": "041101",
+        "year": "2017",
+        "doi": "10.1103/PhysRevLett.119.041101",
+        "eprint": "1704.04791",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.119.041101"
+      }
+    },
     "deser1982": {
       "type": "article",
       "fields": {
@@ -30357,6 +30509,364 @@
         "eprint": "gr-qc/0410124",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.70.121503"
+      }
+    },
+    "lin2004": {
+      "type": "article",
+      "fields": {
+        "title": "Bubbling AdS space and 1/2 BPS geometries",
+        "author": "Lin, Hai and Lunin, Oleg and Maldacena, Juan",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2004",
+        "number": "10",
+        "pages": "025",
+        "year": "2004",
+        "doi": "10.1088/1126-6708/2004/10/025",
+        "eprint": "hep-th/0409174",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2004/10/025"
+      }
+    },
+    "berenstein2004": {
+      "type": "article",
+      "fields": {
+        "title": "A toy model for the AdS/CFT correspondence",
+        "author": "Berenstein, David",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2004",
+        "number": "07",
+        "pages": "018",
+        "year": "2004",
+        "doi": "10.1088/1126-6708/2004/07/018",
+        "eprint": "hep-th/0403110",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2004/07/018"
+      }
+    },
+    "corley2002": {
+      "type": "article",
+      "fields": {
+        "title": "Exact correlators of giant gravitons from dual $N = 4$ SYM theory",
+        "author": "Corley, Steve and Jevicki, Antal and Ramgoolam, Sanjaye",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "5",
+        "number": "4",
+        "pages": "809--839",
+        "year": "2001",
+        "doi": "10.4310/ATMP.2001.v5.n4.a6",
+        "eprint": "hep-th/0111222",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.4310/ATMP.2001.v5.n4.a6"
+      }
+    },
+    "myers2001": {
+      "type": "article",
+      "fields": {
+        "title": "Superstars and giant gravitons",
+        "author": "Myers, Robert C. and Tafjord, Øyvind",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2001",
+        "number": "11",
+        "pages": "009",
+        "year": "2001",
+        "doi": "10.1088/1126-6708/2001/11/009",
+        "eprint": "hep-th/0109127",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2001/11/009"
+      }
+    },
+    "mcgreevy2000": {
+      "type": "article",
+      "fields": {
+        "title": "Invasion of the giant gravitons from anti-de Sitter space",
+        "author": "McGreevy, John and Susskind, Leonard and Toumbas, Nicolaos",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "06",
+        "pages": "008",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/06/008",
+        "eprint": "hep-th/0003075",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/06/008"
+      }
+    },
+    "blau2002": {
+      "type": "article",
+      "fields": {
+        "title": "A new maximally supersymmetric background of IIB superstring theory",
+        "author": "Blau, Matthias and Figueroa-O'Farrill, José and Hull, Christopher and Papadopoulos, George",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2002",
+        "number": "01",
+        "pages": "047",
+        "year": "2002",
+        "doi": "10.1088/1126-6708/2002/01/047",
+        "eprint": "hep-th/0110242",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2002/01/047"
+      }
+    },
+    "bojowald2001": {
+      "type": "article",
+      "fields": {
+        "title": "Absence of a Singularity in Loop Quantum Cosmology",
+        "author": "Bojowald, Martin",
+        "journal": "Physical Review Letters",
+        "volume": "86",
+        "number": "23",
+        "pages": "5227--5230",
+        "year": "2001",
+        "doi": "10.1103/PhysRevLett.86.5227",
+        "eprint": "gr-qc/0102069",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.86.5227"
+      }
+    },
+    "brunnemann2006": {
+      "type": "article",
+      "fields": {
+        "title": "On (cosmological) singularity avoidance in loop quantum gravity",
+        "author": "Brunnemann, Johannes and Thiemann, Thomas",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "5",
+        "pages": "1395--1427",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/5/001",
+        "eprint": "gr-qc/0505032",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/23/5/001"
+      }
+    },
+    "singh2006": {
+      "type": "article",
+      "fields": {
+        "title": "Loop cosmological dynamics and dualities with Randall-Sundrum braneworlds",
+        "author": "Singh, Parampreet",
+        "journal": "Physical Review D",
+        "volume": "73",
+        "number": "6",
+        "pages": "063508",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.73.063508",
+        "eprint": "gr-qc/0603043",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.73.063508"
+      }
+    },
+    "ashtekar2006improved": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum nature of the big bang: Improved dynamics",
+        "author": "Ashtekar, Abhay and Pawlowski, Tomasz and Singh, Parampreet",
+        "journal": "Physical Review D",
+        "volume": "74",
+        "number": "8",
+        "pages": "084003",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.74.084003",
+        "eprint": "gr-qc/0607039",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.74.084003"
+      }
+    },
+    "ashtekar2008robust": {
+      "type": "article",
+      "fields": {
+        "title": "Robustness of key features of loop quantum cosmology",
+        "author": "Ashtekar, Abhay and Corichi, Alejandro and Singh, Parampreet",
+        "journal": "Physical Review D",
+        "volume": "77",
+        "number": "2",
+        "pages": "024046",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.77.024046",
+        "eprint": "0710.3565",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.77.024046"
+      }
+    },
+    "ashtekar2009bianchi": {
+      "type": "article",
+      "fields": {
+        "title": "Loop quantum cosmology of Bianchi type I models",
+        "author": "Ashtekar, Abhay and Wilson-Ewing, Edward",
+        "journal": "Physical Review D",
+        "volume": "79",
+        "number": "8",
+        "pages": "083535",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.79.083535",
+        "eprint": "0903.3397",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.79.083535"
+      }
+    },
+    "ashtekar2011status": {
+      "type": "article",
+      "fields": {
+        "title": "Loop quantum cosmology: a status report",
+        "author": "Ashtekar, Abhay and Singh, Parampreet",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "28",
+        "number": "21",
+        "pages": "213001",
+        "year": "2011",
+        "doi": "10.1088/0264-9381/28/21/213001",
+        "eprint": "1108.0893",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/28/21/213001"
+      }
+    },
+    "cai2014": {
+      "type": "article",
+      "fields": {
+        "title": "Non-singular bounce scenarios in loop quantum cosmology and the effective field description",
+        "author": "Cai, Yi-Fu and Wilson-Ewing, Edward",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2014",
+        "number": "03",
+        "pages": "026",
+        "year": "2014",
+        "doi": "10.1088/1475-7516/2014/03/026",
+        "eprint": "1402.3009",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2014/03/026"
+      }
+    },
+    "cahen1970": {
+      "type": "article",
+      "fields": {
+        "title": "Lorentzian symmetric spaces",
+        "author": "Cahen, M. and Wallach, N.",
+        "journal": "Bulletin of the American Mathematical Society",
+        "volume": "76",
+        "number": "3",
+        "pages": "585--591",
+        "year": "1970",
+        "doi": "10.1090/S0002-9904-1970-12448-X",
+        "url": "https://doi.org/10.1090/S0002-9904-1970-12448-X"
+      }
+    },
+    "kowalski1984": {
+      "type": "article",
+      "fields": {
+        "title": "Vacuum states in supersymmetric Kaluza-Klein theory",
+        "author": "Kowalski-Glikman, Jerzy",
+        "journal": "Physics Letters B",
+        "volume": "134",
+        "number": "3--4",
+        "pages": "194--196",
+        "year": "1984",
+        "doi": "10.1016/0370-2693(84)90669-5",
+        "url": "https://doi.org/10.1016/0370-2693(84)90669-5"
+      }
+    },
+    "metsaev2002": {
+      "type": "article",
+      "fields": {
+        "title": "Type IIB Green-Schwarz superstring in plane wave Ramond-Ramond background",
+        "author": "Metsaev, R. R.",
+        "journal": "Nuclear Physics B",
+        "volume": "625",
+        "number": "1--2",
+        "pages": "70--96",
+        "year": "2002",
+        "doi": "10.1016/S0550-3213(02)00003-2",
+        "eprint": "hep-th/0112044",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0550-3213(02)00003-2"
+      }
+    },
+    "blau2002penrose": {
+      "type": "article",
+      "fields": {
+        "title": "Penrose limits and maximal supersymmetry",
+        "author": "Blau, Matthias and Figueroa-O'Farrill, José and Hull, Christopher and Papadopoulos, George",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "19",
+        "number": "10",
+        "pages": "L87--L95",
+        "year": "2002",
+        "doi": "10.1088/0264-9381/19/10/101",
+        "eprint": "hep-th/0201081",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/19/10/101"
+      }
+    },
+    "penrose1976": {
+      "type": "incollection",
+      "fields": {
+        "title": "Any space-time has a plane wave as a limit",
+        "author": "Penrose, Roger",
+        "booktitle": "Differential Geometry and Relativity: A Volume in Honour of Andr\\'e Lichnerowicz on His 60th Birthday",
+        "editor": "Cahen, M. and Flato, M.",
+        "publisher": "Reidel",
+        "address": "Dordrecht",
+        "pages": "271--275",
+        "year": "1976",
+        "doi": "10.1007/978-94-010-1508-0_23",
+        "url": "https://doi.org/10.1007/978-94-010-1508-0_23"
+      }
+    },
+    "berenstein2002": {
+      "type": "article",
+      "fields": {
+        "title": "Strings in flat space and pp waves from $\\mathcal{N} = 4$ Super Yang Mills",
+        "author": "Berenstein, David and Maldacena, Juan and Nastase, Horatiu",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2002",
+        "number": "04",
+        "pages": "013",
+        "year": "2002",
+        "doi": "10.1088/1126-6708/2002/04/013",
+        "eprint": "hep-th/0202021",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2002/04/013"
+      }
+    },
+    "berenstein2002holography": {
+      "type": "misc",
+      "fields": {
+        "title": "On lightcone string field theory from Super Yang-Mills and holography",
+        "author": "Berenstein, David and Nastase, Horatiu",
+        "year": "2002",
+        "eprint": "hep-th/0205048",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0205048"
+      }
+    },
+    "marolf2002": {
+      "type": "article",
+      "fields": {
+        "title": "Plane waves: to infinity and beyond!",
+        "author": "Marolf, Donald and Ross, Simon F.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "19",
+        "number": "24",
+        "pages": "6289--6302",
+        "year": "2002",
+        "doi": "10.1088/0264-9381/19/24/302",
+        "eprint": "hep-th/0208197",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/19/24/302"
+      }
+    },
+    "hubeny2002": {
+      "type": "article",
+      "fields": {
+        "title": "No horizons in pp-waves",
+        "author": "Hubeny, Veronika E. and Rangamani, Mukund",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2002",
+        "number": "11",
+        "pages": "021",
+        "year": "2002",
+        "doi": "10.1088/1126-6708/2002/11/021",
+        "eprint": "hep-th/0210234",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2002/11/021"
       }
     }
   }

@@ -65,6 +65,11 @@
       "id": "roberts",
       "kind": "family",
       "text": "Collapse at the threshold, with a scalar field. Roberts's solution looks the same at every scale, as the critical solution does on one of the two thresholds Choptuik, Chmaj, and Bizoń found for a Yang-Mills field; on the other the critical solution is the first soliton [choptuik1996]."
+    },
+    {
+      "id": "kerr_scalar_hair",
+      "kind": "family",
+      "text": "Black holes with hair again, this time of a massive complex scalar field, which stays outside the horizon because it turns with it, $\\omega = m\\Omega_H$ [herdeiro2014]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "lavrelashvili1995",
     "choptuik1996",
     "gleiser1989",
-    "lee1989"
+    "lee1989",
+    "herdeiro2014"
   ],
   "coordinates": [
     {

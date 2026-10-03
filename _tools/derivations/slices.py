@@ -1174,6 +1174,13 @@ SMALL_NOW = 1.2 - 0.22 * math.log(11)      # the moment the small universes' hor
 PD_NOW = 0.38882                            # the conformal time today in Luminet's universe, as null_rays.PD_NOW
 
 
+def _lqc_eta(t):
+    """The conformal time of the bounce of loop quantum cosmology at the proper time t, in units of t_b:
+    eta = t 2F1(1/6, 1/2; 3/2; -t^2)."""
+    from scipy.special import hyp2f1
+    return float(t * hyp2f1(1 / 6, 0.5, 1.5, -t * t))
+
+
 def _kt_eta(t):
     """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l:
     eta = t 2F1(1/3, 1/2; 3/2; -t^2)."""
@@ -3061,6 +3068,13 @@ FLAT = {
     # which is chi = arctan(sinh rho) and r = sinh rho on the conformal and static charts, and the
     # cylinder over its reach in the proper distance sigma, which is r = e^sigma on the Poincare chart.
     # On the plane of t and psi at sigma = 0 the cylinder is its ring sigma = 0, the whole line t = 0.
+    # Bubbling anti-de Sitter space at L = 1: the plane of the droplets of the black disc at t = 0 is the
+    # cylinder theta = 0 over its reach in rho, the whole line t = 0 of the global chart's radial plane,
+    # and its edge rho = theta = 0 is the whole circle of psi at t = 0.
+    ("bubbling_ads", "global", "radial"): lambda: one(
+        "bubbling_ads", lambda m: along(0.0, *m.reach("global", "\\rho")), view_id="plane"),
+    ("bubbling_ads", "global", "edge"): lambda: one(
+        "bubbling_ads", lambda m: along(0.0, 0.0, 2 * math.pi), view_id="plane"),
     ("freund_rubin", "global", "radial"): lambda: one(
         "freund_rubin", lambda m: along(0.0, *m.reach("global", "\\rho")), view_id="anti_de_sitter"),
     ("freund_rubin", "conformal", "radial"): lambda: one(
@@ -3319,6 +3333,8 @@ FLAT = {
     ("neugebauer_meinel", "spheroidal", "plane"): lambda: one(
         "neugebauer_meinel", lambda m: along(0.0, 0.0, math.sqrt(m.reach("bardeen_wagoner", "\\rho")[1] ** 2 - 1))),
     ("neugebauer_meinel", "weyl", "axis"): lambda: _nm_centre("$t = 0$, $z = 0$"),
+    ("kerr_scalar_hair", "herdeiro_radu", "equator"): lambda: one(
+        "kerr_scalar_hair", lambda m: along(0.0, *m.reach("herdeiro_radu", "r"))),
     ("neugebauer_meinel", "spheroidal", "axis"): lambda: _nm_centre("$t = 0$, $\\xi = 0$"),
     # The plane z = 0 of the first Morgan-Morgan disc at t = 0: Weyl's rho from the axis out, the
     # oblate spheroidal chart's eta across the disc and its xi = sqrt(rho^2/a^2 - 1) outside the rim.
@@ -3425,6 +3441,14 @@ FLAT = {
     # Einstein's static field of 1912: the equator outside a body by the equation of March at t = 0.
     ("einstein_1912_static", "march", "radial"): lambda: one(
         "einstein_1912_static", lambda m: along(0.0, *m.reach("march", "r"))),
+    # The bounce of loop quantum cosmology at each moment of its movie, out to the observer at r = c t_b, on
+    # each chart: the line of that t across x in the cosmic chart, and of tau = t_b asinh(t/t_b) in the harmonic.
+    ("lqc_bounce", "comoving_spherical", "radial"): lambda: one(
+        "lqc_bounce", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
+    ("lqc_bounce", "cosmic", "tx"): lambda: one(
+        "lqc_bounce", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
+    ("lqc_bounce", "harmonic", "taux"): lambda: one(
+        "lqc_bounce", lambda m: across(math.asinh(m.time), *m.reach("comoving_spherical", "r"))),
     # Kopczynski and Trautman's universe at each moment of its movie, out to the dust at r = l on each chart.
     ("kopczynski_trautman", "comoving_spherical", "radial"): lambda: one(
         "kopczynski_trautman", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
@@ -3532,6 +3556,9 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("bubbling_ads", "rings"): "the black ring, another member of the family than the black disc whose plane of droplets is embedded",
+    ("bubbling_ads", "rings", "ring_axis"): "the black ring, another member of the family than the black disc whose plane of droplets is embedded",
+    ("bubbling_ads", "plane_wave", "axis"): "the black half plane, another member of the family than the black disc whose plane of droplets is embedded",
     ("kerr_bertotti_robinson", "static", "radial"): "the hole with no spin, a = 0, another member of the family than the spinning hole whose equator is embedded",
     ("tilted_universes", "flat_model", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
     ("tilted_universes", "inertial", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
@@ -3693,6 +3720,12 @@ HIDDEN = {
     **{("neugebauer_meinel", "black_hole_limit", view): "the limit mu -> mu_0, the extreme Kerr metric; the moment embedded is the disc's at mu = 3"
        for view in ("axis", "equator")},
     ("neugebauer_meinel", "limit_axis"): "the limit mu -> mu_0, the extreme Kerr metric; the moment embedded is the disc's at mu = 3",
+    ("kerr_scalar_hair", "herdeiro_radu", "axis"): "the axis, which the embedded equatorial plane meets nowhere outside the horizon",
+    ("kerr_scalar_hair", "hair_axis"): "the axis, which the embedded equatorial plane meets nowhere outside the horizon",
+    **{("kerr_scalar_hair", "kerr_member", view): "Kerr's black hole of the same mass and angular momentum, another member of the "
+       "family than configuration IV, whose equator is embedded" for view in ("axis", "equator")},
+    ("kerr_scalar_hair", "kerr_axis"): "Kerr's black hole of the same mass and angular momentum, another member of the family "
+       "than configuration IV, whose equator is embedded",
     **{("zipoy_voorhees", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     **{("zipoy_voorhees", f"{system}_axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
@@ -4501,6 +4534,16 @@ def checks():
     miss = max(abs(complex((pulled - g_un).subs({ru: a, thu: 1.1})[i, j])) for a in rng.uniform(1.05, 5, 20)
                for i in range(4) for j in range(4))
     report("Unruh's acoustic hole: t = tau + ln((r - 1)/(r + 1))/4 + arctan(r)/2 pulls the laboratory chart back", miss, 1e-10)
+    # The bounce of loop quantum cosmology: t = t_b sinh(tau/t_b) pulls the cosmic chart back onto the harmonic
+    # one in every slot, so the moment t of the embedding is the line tau = t_b asinh(t/t_b).
+    g_cos, (tc, xc, yc, zc) = metric("lqc_bounce", "cosmic", {"t_b": 1})
+    g_har, (th, xh, yh, zh) = metric("lqc_bounce", "harmonic", {"t_b": 1})
+    image = [sp.sinh(th), xh, yh, zh]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (th, xh, yh, zh)[j]))
+    pulled = J.T * g_cos.subs(dict(zip((tc, xc, yc, zc), image)), simultaneous=True) * J
+    miss = max(abs(complex((pulled - g_har).subs(th, u)[i, j])) for u in rng.uniform(-3, 3, 20)
+               for i in range(4) for j in range(4))
+    report("LQC bounce: t = t_b sinh(tau/t_b) pulls the cosmic chart back onto the harmonic one", miss, 1e-10)
     return failures
 
 

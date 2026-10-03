@@ -76,6 +76,16 @@
       "id": "nariai",
       "kind": "family",
       "text": "Another product of a spacetime of two dimensions and a sphere: de Sitter space times a sphere of the same radius, held by a positive cosmological constant [nariai1950]."
+    },
+    {
+      "id": "bubbling_ads",
+      "kind": "family",
+      "text": "The same picture one dimension down. Lin, Lunin, and Maldacena found every half supersymmetric excitation of anti-de Sitter space of five dimensions times a 5-sphere as a pattern of black and white droplets on a plane, and those of this geometry as the solutions of the Toda equation [lin2004]."
+    },
+    {
+      "id": "maximally_supersymmetric_plane_wave",
+      "kind": "family",
+      "text": "The counterpart one dimension down. The Penrose limit of anti-de Sitter space of five dimensions times a 5-sphere along a light ray circling the sphere is a plane wave that keeps all 32 supersymmetries of type IIB supergravity [blau2002penrose]."
     }
   ],
   "references": [
@@ -96,7 +106,9 @@
     "grossperry1983",
     "chamblin1999",
     "randall1999b",
-    "nariai1950"
+    "nariai1950",
+    "lin2004",
+    "blau2002penrose"
   ],
   "coordinates": [
     {

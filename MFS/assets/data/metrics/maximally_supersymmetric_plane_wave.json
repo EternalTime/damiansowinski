@@ -1,0 +1,3947 @@
+{
+  "id": "maximally_supersymmetric_plane_wave",
+  "name": "Maximally Supersymmetric Plane Wave",
+  "short_name": "Maximally Supersymmetric Plane Wave",
+  "description": "A plane wave of ten dimensions, held up by the 5-form field of type IIB supergravity, that keeps all 32 of the theory's supersymmetries. It pulls every free particle toward its axis with one period in all eight directions across it. Matthias Blau, José Figueroa-O'Farrill, Christopher Hull, and George Papadopoulos found it in 2001, and it is the geometry near a light ray circling the sphere of anti-de Sitter space times a 5-sphere.",
+  "tags": [
+    "stationary",
+    "conformally flat",
+    "ten-dimensional",
+    "plane wave",
+    "pp-wave",
+    "higher dimensions",
+    "supergravity",
+    "string theory",
+    "supersymmetric",
+    "homogeneous",
+    "Penrose limit",
+    "AdS/CFT",
+    "holography",
+    "geodesically complete",
+    "no horizon",
+    "null Killing vector",
+    "exact solution",
+    "Lorentzian",
+    "idealized model"
+  ],
+  "signature": "(-,+,\\ldots,+)",
+  "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+  "history": "Michel Cahen and Nolan Wallach came to this geometry through Huygens' principle, which holds in a spacetime where a flash of light travels on a sharp front with nothing trailing behind it [cahen1970]. In a short note of 1970 they sorted every Lorentzian symmetric space, a spacetime whose curvature is carried unchanged along every geodesic, and found that those which are not products of smaller ones come in two kinds [cahen1970]. One kind is de Sitter and anti-de Sitter space [cahen1970, blau2002]. The other is a single family of plane waves, each fixed by a symmetric matrix that says how hard the wave pulls toward its axis, or pushes away from it, in each direction across it, and in four dimensions these waves keep Huygens' principle [cahen1970, blau2002].¶Supergravity in ten or eleven dimensions has 32 supersymmetries, and a solution of it may keep all of them, some, or none [blau2002]. In eleven dimensions four kinds of solution keep all 32: flat space, anti-de Sitter space of four dimensions times a 7-sphere, anti-de Sitter space of seven dimensions times a 4-sphere, and a plane wave of Cahen and Wallach's family that Jerzy Kowalski-Glikman found in 1984 [blau2002, kowalski1984]. Type IIB supergravity in ten dimensions had only two, flat space and anti-de Sitter space of five dimensions times a 5-sphere [metsaev2002]. In October 2001 Matthias Blau, José Figueroa-O'Farrill, Christopher Hull, and George Papadopoulos put a plane wave of the same family into ten dimensions, held up by the theory's 5-form field, and found exactly one choice of its matrix that keeps all 32: a multiple of the identity, so that the wave pulls toward its axis equally in all eight directions across it [blau2002]. They called the physical significance of such waves \"puzzling\", since no brane was known to have one as a limit, the way anti-de Sitter space times a sphere is the throat of a stack of branes [blau2002, blau2002penrose].¶Where could such a wave come from? Back in 1976 Roger Penrose had shown that any spacetime has a plane wave as a limit: the neighbourhood of a single light ray, blown up without end, becomes a plane wave [penrose1976, blau2002penrose]. Eleven weeks after their first paper, Blau and his three coauthors took that limit of anti-de Sitter space times a sphere, along a light ray circling the sphere, and found the maximally supersymmetric waves, Kowalski-Glikman's from both solutions of eleven dimensions and their own from anti-de Sitter space of five dimensions times a 5-sphere [blau2002penrose]. Three weeks later David Berenstein, Juan Maldacena, and Horatiu Nastase posted the same limit as the geometry seen by \"a particle that is moving very fast along the $S^5$\", thanking Gary T. Horowitz for the idea and noting that the other paper had appeared while theirs was being written [berenstein2002]. Blau and his coauthors also showed how the limit squeezes the thirty symmetries of anti-de Sitter space times a 5-sphere into the wave's own thirty, a match they had called a coincidence in their first paper [blau2002, blau2002penrose].¶A free particle in the wave sits in a harmonic well, and light that leaves the axis comes back to it after a time $\\pi/\\mu c$, whatever direction it leaves in [berenstein2002, marolf2002]. A string sits in the same well, and in December 2001 Ruslan R. Metsaev wrote its action there and found it quadratic in every field in light cone gauge, so that \"this model can be explicitly quantized\", which the string in anti-de Sitter space times a sphere had resisted [metsaev2002]. Each of the eight directions across the wave becomes a massive field on the string, and so does each fermion [metsaev2002, berenstein2002]. Berenstein, Maldacena, and Nastase found the same spectrum in the gauge theory of four dimensions that Maldacena's correspondence pairs with anti-de Sitter space times a sphere, in long chains of one field with a few others set into them [berenstein2002, maldacena1998]. They summed a subset of its planar Feynman diagrams to get it, and called the result a \"derivation\" of the string spectrum from the gauge theory [berenstein2002].¶Where, then, is infinity in a spacetime that pulls everything back toward its axis? Berenstein and Nastase mapped the wave onto the Einstein static universe, a cylinder of time over a 9-sphere, and found that it covers the whole cylinder but one line [berenstein2002holography]. That line, the conformal boundary of the wave, is a single light ray winding round a great circle of the sphere for ever, and they took its one dimension as a sign that the holographic partner of the wave is a quantum mechanics, a matrix model with a single time [berenstein2002holography, marolf2002]. Donald Marolf and Simon F. Ross reached the same line from the causal structure alone, and found it to be the past boundary of the wave and its future boundary at once, so that a signal can go out to infinity and come back [marolf2002]. No plane wave is globally hyperbolic, a fact Penrose proved in 1965, and this one is no exception: no single moment of space holds the data for all of it [penrose1965plane, hubeny2002]. Veronika E. Hubeny and Mukund Rangamani argued that no pp-wave can have an event horizon, so that no Penrose limit of another spacetime can hold a black hole [hubeny2002].",
+  "related": [
+    {
+      "id": "three_brane_throat",
+      "kind": "limit_source",
+      "text": "Anti-de Sitter space of five dimensions times a 5-sphere, the throat of a stack of three-branes. Its Penrose limit along a light ray circling the sphere is this wave [blau2002penrose, berenstein2002]."
+    },
+    {
+      "id": "bubbling_ads",
+      "kind": "generalisation",
+      "text": "Lin, Lunin, and Maldacena's droplets. A black half plane on their plane of droplets is this wave, and zooming in on the border of any droplet gives it back [lin2004]."
+    },
+    {
+      "id": "freund_rubin",
+      "kind": "family",
+      "text": "Anti-de Sitter space of four dimensions times a 7-sphere, which keeps all the supersymmetry of eleven dimensions. The same limit along a light ray circling its sphere gives the plane wave of eleven dimensions that Kowalski-Glikman found, the counterpart of this one [blau2002penrose, kowalski1984]."
+    },
+    {
+      "id": "pp_wave",
+      "kind": "family",
+      "text": "The plane-fronted waves of four dimensions. This one is their homogeneous kin in ten, with $H = -\\mu^2\\left(x_1^2 + \\dots + x_8^2\\right)$ the same in every direction across it and a 5-form field to hold it up [blau2002]."
+    },
+    {
+      "id": "light_beam",
+      "kind": "family",
+      "text": "Bonnor's beam of light, whose profile inside the beam is quadratic and the same in both directions across it, as this wave's is in all eight. Light sent against the beam swings through its axis as light swings through this wave's [bonnor1969light, marolf2002]."
+    },
+    {
+      "id": "anti_de_sitter",
+      "kind": "family",
+      "text": "Anti-de Sitter space alone. A light ray of anti-de Sitter space times a sphere that does not move on the sphere has flat space for its Penrose limit, and only a ray circling the sphere gives this wave [blau2002penrose]."
+    }
+  ],
+  "references": [
+    "cahen1970",
+    "blau2002",
+    "kowalski1984",
+    "metsaev2002",
+    "blau2002penrose",
+    "penrose1976",
+    "berenstein2002",
+    "marolf2002",
+    "maldacena1998",
+    "berenstein2002holography",
+    "penrose1965plane",
+    "hubeny2002",
+    "lin2004",
+    "bonnor1969light"
+  ],
+  "coordinates": [
+    {
+      "id": "brinkmann",
+      "name": "Brinkmann",
+      "coords": [
+        "u",
+        "v",
+        "x_1",
+        "x_2",
+        "x_3",
+        "x_4",
+        "x_5",
+        "x_6",
+        "x_7",
+        "x_8"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "x_1 \\in (-\\infty, \\infty)",
+        "x_2 \\in (-\\infty, \\infty)",
+        "x_3 \\in (-\\infty, \\infty)",
+        "x_4 \\in (-\\infty, \\infty)",
+        "x_5 \\in (-\\infty, \\infty)",
+        "x_6 \\in (-\\infty, \\infty)",
+        "x_7 \\in (-\\infty, \\infty)",
+        "x_8 \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\mu",
+          "description": "The mass of the wave, an inverse length. In the Brinkmann chart the five-form is $F = 2\\mu c\\,du\\wedge\\left(dx_1\\wedge dx_2\\wedge dx_3\\wedge dx_4 + dx_5\\wedge dx_6\\wedge dx_7\\wedge dx_8\\right)$, normalised as Metsaev normalises it, so that its square carries the one component $R_{uu} = 8\\mu^2$ of the Ricci tensor; the dilaton is constant and every other field vanishes"
+        }
+      ],
+      "convention": "We use coordinates $(u, v, x_1, \\dots, x_8)$, with $u$ the time that labels the wave fronts, carrying dimensions of time, $v$ a length along the rays, and $x_1$ to $x_8$ the eight lengths across them. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+      "line_element": "ds^2 = -\\mu^2\\left(x_1^2 + x_2^2 + x_3^2 + x_4^2 + x_5^2 + x_6^2 + x_7^2 + x_8^2\\right)c^2du^2 - 2c\\,du\\,dv + dx_1^2 + dx_2^2 + dx_3^2 + dx_4^2 + dx_5^2 + dx_6^2 + dx_7^2 + dx_8^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\mu^2\\left(x_1^2 + x_2^2 + x_3^2 + x_4^2 + x_5^2 + x_6^2 + x_7^2 + x_8^2\\right)"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_4",
+            "x_4"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_5",
+            "x_5"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_6",
+            "x_6"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_7",
+            "x_7"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_8",
+            "x_8"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_4",
+            "x_4"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_5",
+            "x_5"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_6",
+            "x_6"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_7",
+            "x_7"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x_8",
+            "x_8"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\mu^2\\left(x_1^2 + x_2^2 + x_3^2 + x_4^2 + x_5^2 + x_6^2 + x_7^2 + x_8^2\\right)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x_1"
+                ],
+                "value": "\\mu^2\\,x_1"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_1",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_1"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_1"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x_2"
+                ],
+                "value": "\\mu^2\\,x_2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_2",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_2"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x_3"
+                ],
+                "value": "\\mu^2\\,x_3"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_3",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_3"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_3"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x_4"
+                ],
+                "value": "\\mu^2\\,x_4"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_4",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_4"
+              },
+              {
+                "indices": [
+                  "x_4",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_4"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x_5"
+                ],
+                "value": "\\mu^2\\,x_5"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_5",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_5"
+              },
+              {
+                "indices": [
+                  "x_5",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_5"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x_6"
+                ],
+                "value": "\\mu^2\\,x_6"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_6",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_6"
+              },
+              {
+                "indices": [
+                  "x_6",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_6"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x_7"
+                ],
+                "value": "\\mu^2\\,x_7"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_7",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_7"
+              },
+              {
+                "indices": [
+                  "x_7",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_7"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x_8"
+                ],
+                "value": "\\mu^2\\,x_8"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_8",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_8"
+              },
+              {
+                "indices": [
+                  "x_8",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_8"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x_1"
+                ],
+                "value": "-\\mu^2\\,x_1"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_1",
+                  "u"
+                ],
+                "value": "-\\mu^2\\,x_1"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_1"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x_2"
+                ],
+                "value": "-\\mu^2\\,x_2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_2",
+                  "u"
+                ],
+                "value": "-\\mu^2\\,x_2"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x_3"
+                ],
+                "value": "-\\mu^2\\,x_3"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_3",
+                  "u"
+                ],
+                "value": "-\\mu^2\\,x_3"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_3"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x_4"
+                ],
+                "value": "-\\mu^2\\,x_4"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_4",
+                  "u"
+                ],
+                "value": "-\\mu^2\\,x_4"
+              },
+              {
+                "indices": [
+                  "x_4",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_4"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x_5"
+                ],
+                "value": "-\\mu^2\\,x_5"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_5",
+                  "u"
+                ],
+                "value": "-\\mu^2\\,x_5"
+              },
+              {
+                "indices": [
+                  "x_5",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_5"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x_6"
+                ],
+                "value": "-\\mu^2\\,x_6"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_6",
+                  "u"
+                ],
+                "value": "-\\mu^2\\,x_6"
+              },
+              {
+                "indices": [
+                  "x_6",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_6"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x_7"
+                ],
+                "value": "-\\mu^2\\,x_7"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_7",
+                  "u"
+                ],
+                "value": "-\\mu^2\\,x_7"
+              },
+              {
+                "indices": [
+                  "x_7",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_7"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x_8"
+                ],
+                "value": "-\\mu^2\\,x_8"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_8",
+                  "u"
+                ],
+                "value": "-\\mu^2\\,x_8"
+              },
+              {
+                "indices": [
+                  "x_8",
+                  "u",
+                  "u"
+                ],
+                "value": "\\mu^2\\,x_8"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x_1",
+                  "u",
+                  "x_1"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_1",
+                  "x_1",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_2",
+                  "u",
+                  "x_2"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_2",
+                  "x_2",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_3",
+                  "u",
+                  "x_3"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_3",
+                  "x_3",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_4",
+                  "u",
+                  "x_4"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_4",
+                  "x_4",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_5",
+                  "u",
+                  "x_5"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_5",
+                  "x_5",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_6",
+                  "u",
+                  "x_6"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_6",
+                  "x_6",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_7",
+                  "u",
+                  "x_7"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_7",
+                  "x_7",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_8",
+                  "u",
+                  "x_8"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_8",
+                  "x_8",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "u",
+                  "x_1"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "x_1",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "u",
+                  "x_2"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "x_2",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "u",
+                  "x_3"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "x_3",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_4",
+                  "u",
+                  "u",
+                  "x_4"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_4",
+                  "u",
+                  "x_4",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_5",
+                  "u",
+                  "u",
+                  "x_5"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_5",
+                  "u",
+                  "x_5",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_6",
+                  "u",
+                  "u",
+                  "x_6"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_6",
+                  "u",
+                  "x_6",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_7",
+                  "u",
+                  "u",
+                  "x_7"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_7",
+                  "u",
+                  "x_7",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_8",
+                  "u",
+                  "u",
+                  "x_8"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_8",
+                  "u",
+                  "x_8",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x_1",
+                  "u",
+                  "x_1"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_1",
+                  "x_1",
+                  "u"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_2",
+                  "u",
+                  "x_2"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_2",
+                  "x_2",
+                  "u"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_3",
+                  "u",
+                  "x_3"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_3",
+                  "x_3",
+                  "u"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_4",
+                  "u",
+                  "x_4"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_4",
+                  "x_4",
+                  "u"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_5",
+                  "u",
+                  "x_5"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_5",
+                  "x_5",
+                  "u"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_6",
+                  "u",
+                  "x_6"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_6",
+                  "x_6",
+                  "u"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_7",
+                  "u",
+                  "x_7"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_7",
+                  "x_7",
+                  "u"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_8",
+                  "u",
+                  "x_8"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_8",
+                  "x_8",
+                  "u"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "u",
+                  "x_1"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "x_1",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "u",
+                  "x_2"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "x_2",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "u",
+                  "x_3"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "x_3",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_4",
+                  "u",
+                  "u",
+                  "x_4"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_4",
+                  "u",
+                  "x_4",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_5",
+                  "u",
+                  "u",
+                  "x_5"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_5",
+                  "u",
+                  "x_5",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_6",
+                  "u",
+                  "u",
+                  "x_6"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_6",
+                  "u",
+                  "x_6",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_7",
+                  "u",
+                  "u",
+                  "x_7"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_7",
+                  "u",
+                  "x_7",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_8",
+                  "u",
+                  "u",
+                  "x_8"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "x_8",
+                  "u",
+                  "x_8",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "8\\mu^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-8\\mu^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "8\\mu^2"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "8\\mu^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-8\\mu^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "8\\mu^2"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} + 2\\mu^2\\,x_1\\dot{u}\\dot{x_1} + 2\\mu^2\\,x_2\\dot{u}\\dot{x_2} + 2\\mu^2\\,x_3\\dot{u}\\dot{x_3} + 2\\mu^2\\,x_4\\dot{u}\\dot{x_4} + 2\\mu^2\\,x_5\\dot{u}\\dot{x_5} + 2\\mu^2\\,x_6\\dot{u}\\dot{x_6} + 2\\mu^2\\,x_7\\dot{u}\\dot{x_7} + 2\\mu^2\\,x_8\\dot{u}\\dot{x_8} = 0",
+        "\\ddot{x_1} + \\mu^2\\,x_1\\dot{u}^2 = 0",
+        "\\ddot{x_2} + \\mu^2\\,x_2\\dot{u}^2 = 0",
+        "\\ddot{x_3} + \\mu^2\\,x_3\\dot{u}^2 = 0",
+        "\\ddot{x_4} + \\mu^2\\,x_4\\dot{u}^2 = 0",
+        "\\ddot{x_5} + \\mu^2\\,x_5\\dot{u}^2 = 0",
+        "\\ddot{x_6} + \\mu^2\\,x_6\\dot{u}^2 = 0",
+        "\\ddot{x_7} + \\mu^2\\,x_7\\dot{u}^2 = 0",
+        "\\ddot{x_8} + \\mu^2\\,x_8\\dot{u}^2 = 0"
+      ]
+    },
+    {
+      "id": "rosen",
+      "name": "Rosen",
+      "coords": [
+        "u",
+        "v",
+        "y_1",
+        "y_2",
+        "y_3",
+        "y_4",
+        "y_5",
+        "y_6",
+        "y_7",
+        "y_8"
+      ],
+      "domains": [
+        "u \\in (0, \\pi/\\mu c)",
+        "v \\in (-\\infty, \\infty)",
+        "y_1 \\in (-\\infty, \\infty)",
+        "y_2 \\in (-\\infty, \\infty)",
+        "y_3 \\in (-\\infty, \\infty)",
+        "y_4 \\in (-\\infty, \\infty)",
+        "y_5 \\in (-\\infty, \\infty)",
+        "y_6 \\in (-\\infty, \\infty)",
+        "y_7 \\in (-\\infty, \\infty)",
+        "y_8 \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\mu",
+          "description": "The mass of the wave, an inverse length. In the Brinkmann chart the five-form is $F = 2\\mu c\\,du\\wedge\\left(dx_1\\wedge dx_2\\wedge dx_3\\wedge dx_4 + dx_5\\wedge dx_6\\wedge dx_7\\wedge dx_8\\right)$, normalised as Metsaev normalises it, so that its square carries the one component $R_{uu} = 8\\mu^2$ of the Ricci tensor; the dilaton is constant and every other field vanishes"
+        }
+      ],
+      "convention": "We use coordinates $(u, v, y_1, \\dots, y_8)$, with $u$ a time and $v$ a length, and $y_1$ to $y_8$ lengths that label the light rays leaving the axis at $u = 0$, $x_i = y_i\\sin(\\mu cu)$ in the Brinkmann chart. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+      "line_element": "ds^2 = -2c\\,du\\,dv + \\sin^2\\left(\\mu cu\\right)\\left(dy_1^2 + dy_2^2 + dy_3^2 + dy_4^2 + dy_5^2 + dy_6^2 + dy_7^2 + dy_8^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "y_1",
+            "y_1"
+          ],
+          "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_2",
+            "y_2"
+          ],
+          "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_3",
+            "y_3"
+          ],
+          "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_4",
+            "y_4"
+          ],
+          "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_5",
+            "y_5"
+          ],
+          "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_6",
+            "y_6"
+          ],
+          "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_7",
+            "y_7"
+          ],
+          "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_8",
+            "y_8"
+          ],
+          "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "y_1",
+            "y_1"
+          ],
+          "value": "\\csc^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_2",
+            "y_2"
+          ],
+          "value": "\\csc^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_3",
+            "y_3"
+          ],
+          "value": "\\csc^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_4",
+            "y_4"
+          ],
+          "value": "\\csc^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_5",
+            "y_5"
+          ],
+          "value": "\\csc^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_6",
+            "y_6"
+          ],
+          "value": "\\csc^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_7",
+            "y_7"
+          ],
+          "value": "\\csc^2\\left(\\mu\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "y_8",
+            "y_8"
+          ],
+          "value": "\\csc^2\\left(\\mu\\,u\\,c\\right)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "y_1",
+                  "y_1"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_2",
+                  "y_2"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_3",
+                  "y_3"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_4",
+                  "y_4"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_5",
+                  "y_5"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_6",
+                  "y_6"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_7",
+                  "y_7"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_8",
+                  "y_8"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_1",
+                  "u",
+                  "y_1"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_1",
+                  "y_1",
+                  "u"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_2",
+                  "u",
+                  "y_2"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_2",
+                  "y_2",
+                  "u"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_3",
+                  "u",
+                  "y_3"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_3",
+                  "y_3",
+                  "u"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_4",
+                  "u",
+                  "y_4"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_4",
+                  "y_4",
+                  "u"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_5",
+                  "u",
+                  "y_5"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_5",
+                  "y_5",
+                  "u"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_6",
+                  "u",
+                  "y_6"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_6",
+                  "y_6",
+                  "u"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_7",
+                  "u",
+                  "y_7"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_7",
+                  "y_7",
+                  "u"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_8",
+                  "u",
+                  "y_8"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_8",
+                  "y_8",
+                  "u"
+                ],
+                "value": "\\mu\\cot\\left(\\mu\\,u\\,c\\right)"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "y_1",
+                  "y_1"
+                ],
+                "value": "-\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_2",
+                  "y_2"
+                ],
+                "value": "-\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_3",
+                  "y_3"
+                ],
+                "value": "-\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_4",
+                  "y_4"
+                ],
+                "value": "-\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_5",
+                  "y_5"
+                ],
+                "value": "-\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_6",
+                  "y_6"
+                ],
+                "value": "-\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_7",
+                  "y_7"
+                ],
+                "value": "-\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_8",
+                  "y_8"
+                ],
+                "value": "-\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_1",
+                  "u",
+                  "y_1"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_1",
+                  "y_1",
+                  "u"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_2",
+                  "u",
+                  "y_2"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_2",
+                  "y_2",
+                  "u"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_3",
+                  "u",
+                  "y_3"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_3",
+                  "y_3",
+                  "u"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_4",
+                  "u",
+                  "y_4"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_4",
+                  "y_4",
+                  "u"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_5",
+                  "u",
+                  "y_5"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_5",
+                  "y_5",
+                  "u"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_6",
+                  "u",
+                  "y_6"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_6",
+                  "y_6",
+                  "u"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_7",
+                  "u",
+                  "y_7"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_7",
+                  "y_7",
+                  "u"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_8",
+                  "u",
+                  "y_8"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_8",
+                  "y_8",
+                  "u"
+                ],
+                "value": "\\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "y_1",
+                  "u",
+                  "y_1"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_1",
+                  "y_1",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_2",
+                  "u",
+                  "y_2"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_2",
+                  "y_2",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_3",
+                  "u",
+                  "y_3"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_3",
+                  "y_3",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_4",
+                  "u",
+                  "y_4"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_4",
+                  "y_4",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_5",
+                  "u",
+                  "y_5"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_5",
+                  "y_5",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_6",
+                  "u",
+                  "y_6"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_6",
+                  "y_6",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_7",
+                  "u",
+                  "y_7"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_7",
+                  "y_7",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_8",
+                  "u",
+                  "y_8"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y_8",
+                  "y_8",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_1",
+                  "u",
+                  "u",
+                  "y_1"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_1",
+                  "u",
+                  "y_1",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_2",
+                  "u",
+                  "u",
+                  "y_2"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_2",
+                  "u",
+                  "y_2",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_3",
+                  "u",
+                  "u",
+                  "y_3"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_3",
+                  "u",
+                  "y_3",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_4",
+                  "u",
+                  "u",
+                  "y_4"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_4",
+                  "u",
+                  "y_4",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_5",
+                  "u",
+                  "u",
+                  "y_5"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_5",
+                  "u",
+                  "y_5",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_6",
+                  "u",
+                  "u",
+                  "y_6"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_6",
+                  "u",
+                  "y_6",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_7",
+                  "u",
+                  "u",
+                  "y_7"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_7",
+                  "u",
+                  "y_7",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_8",
+                  "u",
+                  "u",
+                  "y_8"
+                ],
+                "value": "-\\mu^2"
+              },
+              {
+                "indices": [
+                  "y_8",
+                  "u",
+                  "y_8",
+                  "u"
+                ],
+                "value": "\\mu^2"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "y_1",
+                  "u",
+                  "y_1"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_1",
+                  "y_1",
+                  "u"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_2",
+                  "u",
+                  "y_2"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_2",
+                  "y_2",
+                  "u"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_3",
+                  "u",
+                  "y_3"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_3",
+                  "y_3",
+                  "u"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_4",
+                  "u",
+                  "y_4"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_4",
+                  "y_4",
+                  "u"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_5",
+                  "u",
+                  "y_5"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_5",
+                  "y_5",
+                  "u"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_6",
+                  "u",
+                  "y_6"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_6",
+                  "y_6",
+                  "u"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_7",
+                  "u",
+                  "y_7"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_7",
+                  "y_7",
+                  "u"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_8",
+                  "u",
+                  "y_8"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y_8",
+                  "y_8",
+                  "u"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_1",
+                  "u",
+                  "u",
+                  "y_1"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_1",
+                  "u",
+                  "y_1",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_2",
+                  "u",
+                  "u",
+                  "y_2"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_2",
+                  "u",
+                  "y_2",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_3",
+                  "u",
+                  "u",
+                  "y_3"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_3",
+                  "u",
+                  "y_3",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_4",
+                  "u",
+                  "u",
+                  "y_4"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_4",
+                  "u",
+                  "y_4",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_5",
+                  "u",
+                  "u",
+                  "y_5"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_5",
+                  "u",
+                  "y_5",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_6",
+                  "u",
+                  "u",
+                  "y_6"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_6",
+                  "u",
+                  "y_6",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_7",
+                  "u",
+                  "u",
+                  "y_7"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_7",
+                  "u",
+                  "y_7",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_8",
+                  "u",
+                  "u",
+                  "y_8"
+                ],
+                "value": "-\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "y_8",
+                  "u",
+                  "y_8",
+                  "u"
+                ],
+                "value": "\\mu^2\\sin^2\\left(\\mu\\,u\\,c\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "8\\mu^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-8\\mu^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "8\\mu^2"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "8\\mu^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-8\\mu^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "8\\mu^2"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} + \\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)\\dot{y_1}^2 + \\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)\\dot{y_2}^2 + \\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)\\dot{y_3}^2 + \\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)\\dot{y_4}^2 + \\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)\\dot{y_5}^2 + \\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)\\dot{y_6}^2 + \\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)\\dot{y_7}^2 + \\mu\\sin\\left(\\mu\\,u\\,c\\right)\\cos\\left(\\mu\\,u\\,c\\right)\\dot{y_8}^2 = 0",
+        "\\ddot{y_1} + 2\\mu\\cot\\left(\\mu\\,u\\,c\\right)\\dot{u}\\dot{y_1} = 0",
+        "\\ddot{y_2} + 2\\mu\\cot\\left(\\mu\\,u\\,c\\right)\\dot{u}\\dot{y_2} = 0",
+        "\\ddot{y_3} + 2\\mu\\cot\\left(\\mu\\,u\\,c\\right)\\dot{u}\\dot{y_3} = 0",
+        "\\ddot{y_4} + 2\\mu\\cot\\left(\\mu\\,u\\,c\\right)\\dot{u}\\dot{y_4} = 0",
+        "\\ddot{y_5} + 2\\mu\\cot\\left(\\mu\\,u\\,c\\right)\\dot{u}\\dot{y_5} = 0",
+        "\\ddot{y_6} + 2\\mu\\cot\\left(\\mu\\,u\\,c\\right)\\dot{u}\\dot{y_6} = 0",
+        "\\ddot{y_7} + 2\\mu\\cot\\left(\\mu\\,u\\,c\\right)\\dot{u}\\dot{y_7} = 0",
+        "\\ddot{y_8} + 2\\mu\\cot\\left(\\mu\\,u\\,c\\right)\\dot{u}\\dot{y_8} = 0"
+      ]
+    },
+    {
+      "id": "conformally_flat",
+      "name": "Conformally Flat",
+      "coords": [
+        "U",
+        "V",
+        "X_1",
+        "X_2",
+        "X_3",
+        "X_4",
+        "X_5",
+        "X_6",
+        "X_7",
+        "X_8"
+      ],
+      "domains": [
+        "U \\in (-\\infty, \\infty)",
+        "V \\in (-\\infty, \\infty)",
+        "X_1 \\in (-\\infty, \\infty)",
+        "X_2 \\in (-\\infty, \\infty)",
+        "X_3 \\in (-\\infty, \\infty)",
+        "X_4 \\in (-\\infty, \\infty)",
+        "X_5 \\in (-\\infty, \\infty)",
+        "X_6 \\in (-\\infty, \\infty)",
+        "X_7 \\in (-\\infty, \\infty)",
+        "X_8 \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\mu",
+          "description": "The mass of the wave, an inverse length. In the Brinkmann chart the five-form is $F = 2\\mu c\\,du\\wedge\\left(dx_1\\wedge dx_2\\wedge dx_3\\wedge dx_4 + dx_5\\wedge dx_6\\wedge dx_7\\wedge dx_8\\right)$, normalised as Metsaev normalises it, so that its square carries the one component $R_{uu} = 8\\mu^2$ of the Ricci tensor; the dilaton is constant and every other field vanishes"
+        }
+      ],
+      "convention": "We use coordinates $(U, V, X_1, \\dots, X_8)$, with $U$ a time, $\\mu cU = \\tan(\\mu cu)$ for the $u$ of the Brinkmann chart, and $V$ and $X_1$ to $X_8$ lengths, $x_i = X_i\\cos(\\mu cu)$, so that the chart covers $|\\mu cu| < \\pi/2$. We take components in the chart $x^0 = cU$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{U}$ means $d(cU)/d\\lambda$.",
+      "line_element": "ds^2 = \\dfrac{-2c\\,dU\\,dV + dX_1^2 + dX_2^2 + dX_3^2 + dX_4^2 + dX_5^2 + dX_6^2 + dX_7^2 + dX_8^2}{1 + \\mu^2c^2U^2}",
+      "metric_components": [
+        {
+          "indices": [
+            "U",
+            "V"
+          ],
+          "value": "-\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+        },
+        {
+          "indices": [
+            "V",
+            "U"
+          ],
+          "value": "-\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+        },
+        {
+          "indices": [
+            "X_1",
+            "X_1"
+          ],
+          "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+        },
+        {
+          "indices": [
+            "X_2",
+            "X_2"
+          ],
+          "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+        },
+        {
+          "indices": [
+            "X_3",
+            "X_3"
+          ],
+          "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+        },
+        {
+          "indices": [
+            "X_4",
+            "X_4"
+          ],
+          "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+        },
+        {
+          "indices": [
+            "X_5",
+            "X_5"
+          ],
+          "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+        },
+        {
+          "indices": [
+            "X_6",
+            "X_6"
+          ],
+          "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+        },
+        {
+          "indices": [
+            "X_7",
+            "X_7"
+          ],
+          "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+        },
+        {
+          "indices": [
+            "X_8",
+            "X_8"
+          ],
+          "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "U",
+            "V"
+          ],
+          "value": "-\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)"
+        },
+        {
+          "indices": [
+            "V",
+            "U"
+          ],
+          "value": "-\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)"
+        },
+        {
+          "indices": [
+            "X_1",
+            "X_1"
+          ],
+          "value": "\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)"
+        },
+        {
+          "indices": [
+            "X_2",
+            "X_2"
+          ],
+          "value": "\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)"
+        },
+        {
+          "indices": [
+            "X_3",
+            "X_3"
+          ],
+          "value": "\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)"
+        },
+        {
+          "indices": [
+            "X_4",
+            "X_4"
+          ],
+          "value": "\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)"
+        },
+        {
+          "indices": [
+            "X_5",
+            "X_5"
+          ],
+          "value": "\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)"
+        },
+        {
+          "indices": [
+            "X_6",
+            "X_6"
+          ],
+          "value": "\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)"
+        },
+        {
+          "indices": [
+            "X_7",
+            "X_7"
+          ],
+          "value": "\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)"
+        },
+        {
+          "indices": [
+            "X_8",
+            "X_8"
+          ],
+          "value": "\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "U"
+                ],
+                "value": "-\\dfrac{2\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_1",
+                  "X_1"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_2",
+                  "X_2"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_3",
+                  "X_3"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_4",
+                  "X_4"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_5",
+                  "X_5"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_6",
+                  "X_6"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_7",
+                  "X_7"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_8",
+                  "X_8"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_1",
+                  "U",
+                  "X_1"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_1",
+                  "X_1",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_2",
+                  "U",
+                  "X_2"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_2",
+                  "X_2",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_3",
+                  "U",
+                  "X_3"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_3",
+                  "X_3",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_4",
+                  "U",
+                  "X_4"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_4",
+                  "X_4",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_5",
+                  "U",
+                  "X_5"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_5",
+                  "X_5",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_6",
+                  "U",
+                  "X_6"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_6",
+                  "X_6",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_7",
+                  "U",
+                  "X_7"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_7",
+                  "X_7",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_8",
+                  "U",
+                  "X_8"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              },
+              {
+                "indices": [
+                  "X_8",
+                  "X_8",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "X_1",
+                  "X_1"
+                ],
+                "value": "\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_2",
+                  "X_2"
+                ],
+                "value": "\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_3",
+                  "X_3"
+                ],
+                "value": "\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_4",
+                  "X_4"
+                ],
+                "value": "\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_5",
+                  "X_5"
+                ],
+                "value": "\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_6",
+                  "X_6"
+                ],
+                "value": "\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_7",
+                  "X_7"
+                ],
+                "value": "\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_8",
+                  "X_8"
+                ],
+                "value": "\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_1",
+                  "U",
+                  "X_1"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_1",
+                  "X_1",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_2",
+                  "U",
+                  "X_2"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_2",
+                  "X_2",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_3",
+                  "U",
+                  "X_3"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_3",
+                  "X_3",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_4",
+                  "U",
+                  "X_4"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_4",
+                  "X_4",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_5",
+                  "U",
+                  "X_5"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_5",
+                  "X_5",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_6",
+                  "U",
+                  "X_6"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_6",
+                  "X_6",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_7",
+                  "U",
+                  "X_7"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_7",
+                  "X_7",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_8",
+                  "U",
+                  "X_8"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_8",
+                  "X_8",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "U"
+                ],
+                "value": "\\dfrac{2\\mu^2\\,U\\,c}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "X_1",
+                  "U",
+                  "X_1"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_1",
+                  "X_1",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_2",
+                  "U",
+                  "X_2"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_2",
+                  "X_2",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_3",
+                  "U",
+                  "X_3"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_3",
+                  "X_3",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_4",
+                  "U",
+                  "X_4"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_4",
+                  "X_4",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_5",
+                  "U",
+                  "X_5"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_5",
+                  "X_5",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_6",
+                  "U",
+                  "X_6"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_6",
+                  "X_6",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_7",
+                  "U",
+                  "X_7"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_7",
+                  "X_7",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_8",
+                  "U",
+                  "X_8"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "X_8",
+                  "X_8",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_1",
+                  "U",
+                  "U",
+                  "X_1"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_1",
+                  "U",
+                  "X_1",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_2",
+                  "U",
+                  "U",
+                  "X_2"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_2",
+                  "U",
+                  "X_2",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_3",
+                  "U",
+                  "U",
+                  "X_3"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_3",
+                  "U",
+                  "X_3",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_4",
+                  "U",
+                  "U",
+                  "X_4"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_4",
+                  "U",
+                  "X_4",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_5",
+                  "U",
+                  "U",
+                  "X_5"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_5",
+                  "U",
+                  "X_5",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_6",
+                  "U",
+                  "U",
+                  "X_6"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_6",
+                  "U",
+                  "X_6",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_7",
+                  "U",
+                  "U",
+                  "X_7"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_7",
+                  "U",
+                  "X_7",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_8",
+                  "U",
+                  "U",
+                  "X_8"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "X_8",
+                  "U",
+                  "X_8",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "X_1",
+                  "U",
+                  "X_1"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_1",
+                  "X_1",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_2",
+                  "U",
+                  "X_2"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_2",
+                  "X_2",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_3",
+                  "U",
+                  "X_3"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_3",
+                  "X_3",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_4",
+                  "U",
+                  "X_4"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_4",
+                  "X_4",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_5",
+                  "U",
+                  "X_5"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_5",
+                  "X_5",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_6",
+                  "U",
+                  "X_6"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_6",
+                  "X_6",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_7",
+                  "U",
+                  "X_7"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_7",
+                  "X_7",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_8",
+                  "U",
+                  "X_8"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "X_8",
+                  "X_8",
+                  "U"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_1",
+                  "U",
+                  "U",
+                  "X_1"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_1",
+                  "U",
+                  "X_1",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_2",
+                  "U",
+                  "U",
+                  "X_2"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_2",
+                  "U",
+                  "X_2",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_3",
+                  "U",
+                  "U",
+                  "X_3"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_3",
+                  "U",
+                  "X_3",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_4",
+                  "U",
+                  "U",
+                  "X_4"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_4",
+                  "U",
+                  "X_4",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_5",
+                  "U",
+                  "U",
+                  "X_5"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_5",
+                  "U",
+                  "X_5",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_6",
+                  "U",
+                  "U",
+                  "X_6"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_6",
+                  "U",
+                  "X_6",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_7",
+                  "U",
+                  "U",
+                  "X_7"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_7",
+                  "U",
+                  "X_7",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_8",
+                  "U",
+                  "U",
+                  "X_8"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "X_8",
+                  "U",
+                  "X_8",
+                  "U"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U"
+                ],
+                "value": "\\dfrac{8\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{8\\mu^2}{\\mu^2\\,U^2\\,c^2 + 1}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "8\\mu^2"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U"
+                ],
+                "value": "\\dfrac{8\\mu^2}{\\left(\\mu^2\\,U^2\\,c^2 + 1\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{8\\mu^2}{\\mu^2\\,U^2\\,c^2 + 1}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "8\\mu^2"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{U} - \\dfrac{2\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{U}^2 = 0",
+        "\\ddot{V} - \\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{X_1}^2 - \\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{X_2}^2 - \\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{X_3}^2 - \\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{X_4}^2 - \\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{X_5}^2 - \\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{X_6}^2 - \\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{X_7}^2 - \\dfrac{\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{X_8}^2 = 0",
+        "\\ddot{X_1} - \\dfrac{2\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{U}\\dot{X_1} = 0",
+        "\\ddot{X_2} - \\dfrac{2\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{U}\\dot{X_2} = 0",
+        "\\ddot{X_3} - \\dfrac{2\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{U}\\dot{X_3} = 0",
+        "\\ddot{X_4} - \\dfrac{2\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{U}\\dot{X_4} = 0",
+        "\\ddot{X_5} - \\dfrac{2\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{U}\\dot{X_5} = 0",
+        "\\ddot{X_6} - \\dfrac{2\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{U}\\dot{X_6} = 0",
+        "\\ddot{X_7} - \\dfrac{2\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{U}\\dot{X_7} = 0",
+        "\\ddot{X_8} - \\dfrac{2\\mu^2\\,U\\,c}{\\mu^2\\,U^2\\,c^2 + 1}\\dot{U}\\dot{X_8} = 0"
+      ]
+    }
+  ]
+}

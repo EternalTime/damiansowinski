@@ -70,6 +70,11 @@
       "id": "universe_from_nothing",
       "kind": "family",
       "text": "The geometry of the no-boundary proposal on the round minisuperspace, half a 4-sphere joined to de Sitter's waist [hartle1983]. Laflamme and Shellard carried the proposal over to the Kantowski-Sachs minisuperspace [laflamme1987]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "programme",
+      "text": "The flat universe of loop quantum cosmology, whose big bang becomes a bounce. Ashtekar and Bojowald carried its quantum geometry to these slices inside Schwarzschild's horizon [ashtekar2006bounce, ashtekar2006]."
     }
   ],
   "references": [
@@ -93,7 +98,8 @@
     "novikov1965",
     "ruban1968",
     "gott1998",
-    "hartle1983"
+    "hartle1983",
+    "ashtekar2006bounce"
   ],
   "coordinates": [
     {
