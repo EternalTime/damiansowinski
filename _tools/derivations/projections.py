@@ -2435,8 +2435,8 @@ def trap_rays(spec, depths=(1.0, 0.8, 0.6, 0.45, 0.35, 0.3), span=math.pi):
     for R0 in depths:
         back, on = trace(R0, -1), trace(R0, 1)
         fig.line("below" if R0 == 1.0 else "above", flat(np.vstack([back[::-1], on[1:]])))
-    fig.label(np.array([-math.pi / 2, top, 0.0]), "$\\omega T = -\\pi/2$", "bc", cls="small", dy=-4)
-    fig.label(np.array([math.pi / 2, top, 0.0]), "$\\omega T = \\pi/2$", "bc", cls="small", dy=-4)
+    fig.label(np.array([-math.pi / 2, top, 0.0]), "$\\omega T = -\\pi/2$", "b", cls="small", dy=-4)
+    fig.label(np.array([math.pi / 2, top, 0.0]), "$\\omega T = \\pi/2$", "b", cls="small", dy=-4)
     fig.label(np.array([span, 0.0, 0.0]), "$R = 0$", "br", cls="small", dy=-4)
     fig.legend("line", "above", "light launched at $T = 0$ from $R_0 = 0.8$, $0.6$, $0.45$, $0.35$ and $0.3\\,\\beta$")
     fig.legend("line", "below", "light launched from $R_0 = \\beta$, the bottom of the trap, which keeps its depth")

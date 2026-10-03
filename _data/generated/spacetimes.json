@@ -23478,7 +23478,7 @@
               "description": "The nut parameter, a length: the mass is $n$ too, and the nut is the point $r = n$"
             }
           ],
-          "convention": "We use coordinates $(r, \\theta, \\phi, \\tau)$, with $r$ a length and $\\tau$ a length of period $8\\pi n$, so that $\\tau/2n$, $\\theta$, and $\\phi$ are Euler angles on the 3-spheres of constant $r$. The nut parameter $n$ is a length.",
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\tau)$, with $r$ a length and $\\tau$ a length of period $8\\pi n$, so that $\\tau/2n$, $\\theta$, and $\\phi$ are Euler angles on the 3-spheres of constant $r$. The nut parameter $n$ is a length, and the mass is $n$ too.",
           "line_element": "ds^2 = \\dfrac{r + n}{r - n}dr^2 + \\left(r^2 - n^2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{r - n}{r + n}\\left(d\\tau + 2n\\cos\\theta\\,d\\phi\\right)^2",
           "metric_components": [
             {
@@ -23549,7 +23549,7 @@
               "description": "The nut parameter, a length: the mass is $5n/4$, and the bolt $r = 2n$ is a 2-sphere of radius $\\sqrt{3}\\,n$"
             }
           ],
-          "convention": "We use coordinates $(r, \\theta, \\phi, \\tau)$, with $r$ a length and $\\tau$ a length of period $8\\pi n$, so that $\\tau/2n$, $\\theta$, and $\\phi$ are Euler angles on the 3-spheres of constant $r$. The nut parameter $n$ is a length.",
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\tau)$, with $r$ a length and $\\tau$ a length of period $8\\pi n$, so that $\\tau/2n$, $\\theta$, and $\\phi$ are Euler angles on the 3-spheres of constant $r$. The nut parameter $n$ is a length, and the mass is $5n/4$.",
           "line_element": "ds^2 = \\dfrac{2\\left(r^2 - n^2\\right)}{\\left(r - 2n\\right)\\left(2r - n\\right)}dr^2 + \\left(r^2 - n^2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{\\left(r - 2n\\right)\\left(2r - n\\right)}{2\\left(r^2 - n^2\\right)}\\left(d\\tau + 2n\\cos\\theta\\,d\\phi\\right)^2",
           "metric_components": [
             {
