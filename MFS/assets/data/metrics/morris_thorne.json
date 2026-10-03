@@ -92,6 +92,11 @@
       "id": "einstein_dirac_maxwell_wormhole",
       "kind": "special_case",
       "text": "The wormhole held open by an electric field and two massless Dirac fields, with $e^{\\Phi} = 1 - M/r$ and $b = r_0 + Q_e^2/r_0 - Q_e^2/r$ [blazquez2021]."
+    },
+    {
+      "id": "interstellar_wormhole",
+      "kind": "special_case",
+      "text": "The wormhole of the film Interstellar: $\\Phi = 0$, and an areal radius that holds at $\\rho$ along a cylinder of length $2a$ and flares out at each end into flat space. Kip Thorne built it with the effects team of Double Negative in 2014, a quarter century after this paper [james2015]."
     }
   ],
   "references": [
@@ -118,7 +123,8 @@
     "boonserm2018",
     "agnese1995",
     "clement2016",
-    "blazquez2021"
+    "blazquez2021",
+    "james2015"
   ],
   "coordinates": [
     {

@@ -151,7 +151,7 @@ class Rules(unittest.TestCase):
         self.assertEqual([tag for tag in mt.DIMENSION.values() if owned[tag]],
                          ["five-dimensional", "six-dimensional"])
         with self.assertRaises(ValueError):
-            self.owned({"a": chart(dimension=11)})
+            self.owned({"a": chart(dimension=12)})
 
     def test_an_einstein_space_implies_its_cosmological_constant_and_its_sign(self):
         negative = chart(einstein={"k": "-3/L**2", "sign": -1}, conformally_flat=True)

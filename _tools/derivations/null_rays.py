@@ -230,6 +230,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import boson_star as bs  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
+import black_to_white_hole as bwh  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
 import charged_shell as cshell  # noqa: E402
@@ -331,6 +332,18 @@ CS_EQUATOR = {"x": "0", "y": "0", "z": "0", "theta": "pi/2"}
 # of the sphere fixed.
 TB_PLANE = {"x": "0", "y": "0", "z": "0", "alpha": "pi/2", "beta": "pi/2", "psi": "pi/2", "theta": "pi/2",
             "phi": "0"}
+# Freund and Rubin's planes hold a point of the 7-sphere fixed, and on the charts with spheres of
+# anti-de Sitter space a point of those; the plane of the time and psi holds a point of anti-de Sitter
+# space, sigma = 0 of the chart of the proper distance, where g_tt = -1.
+FR_SEVEN = {"alpha": "pi/2", "beta": "pi/2", "gamma": "pi/2", "kappa": "pi/2", "xi": "pi/2", "omega": "pi/2"}
+FR_ROUND = {**EQUATOR, **FR_SEVEN, "psi": "0"}
+FR_FLAT = {"x": "0", "y": "0", **FR_SEVEN, "psi": "0"}
+FR_CIRCLE = {"x": "0", "y": "0", "sigma": "0", **FR_SEVEN}
+
+# The Big Rip as its diagrams draw it: w = -3/2 in units of t_0, or of eta_0 = 3 c t_0/7 in the conformal chart.
+BIG_RIP = {"w": "-3/2", "t_0": 1}
+BIG_RIP_CONFORMAL = {"w": "-3/2", "eta_0": 1}
+BIG_RIP_HORIZON = "the event horizon of the observer at the centre"
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -933,6 +946,52 @@ def _small_images(lo, hi):
             *(("world", "r", f"{n} + 3/10", SMALL_GALAXY) for n in range(lo, hi)))
 
 
+# The Poincare dodecahedral universe. Along the great circle through an observer and the centre of a face,
+# which a Clifford translation through pi/5 carries onto itself, the cell's faces stand at chi = pi/10 and
+# every pi/5 on, and the observer's images at every pi/5. The comoving and toroidal charts are drawn with
+# closed dust at rest at its largest radius a_m, the unit, a = a_m (1 - cos psi)/2 and
+# ct = a_m (psi - sin psi)/2, psi the conformal time, from its bang at t = 0 to its crunch at ct = pi a_m.
+# The conformal chart is drawn with Luminet and coauthors' universe, Omega_m = 0.28 and
+# Omega_Lambda = Omega_0 - Omega_m with Omega_0 = 1.013, in units of the radius of curvature a_0 today,
+# where H_0 a_0/c = 1/sqrt(Omega_0 - 1) and Lambda = 3 Omega_Lambda H_0^2/c^2; radiation is left out.
+PD_CLOSED = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0]}
+PD_CLOSED_TORUS = {"funcs": ["a"], "eqs": [["\\alpha", "\\alpha"]], "rates": [0.0], "start": [1.0]}
+PD_OMEGA_M, PD_OMEGA_0 = 0.28, 1.013
+PD_RATE = 1 / math.sqrt(PD_OMEGA_0 - 1)
+PD_LAMBDA = 3 * (PD_OMEGA_0 - PD_OMEGA_M) * PD_RATE ** 2
+PD_LCDM = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [PD_RATE], "sources": [repr(-PD_LAMBDA)]}
+PD_NOW, PD_LSS = "0.38882", "0.012988"      # the conformal times of today and of a = a_0/1101, checked below
+PD_CLOSED_INPUT = ("Closed dust at rest at its largest radius $a_m$, the unit: $a(t)$ solved from this spacetime's "
+                   "own $G^{X}{}_{X} = 0$ with $a = a_m$ and $a' = 0$ at $ct = \\pi a_m/2$, so that "
+                   "$a = a_m(1 - \\cos\\psi)/2$ and $ct = a_m(\\psi - \\sin\\psi)/2$ in the conformal time $\\psi$.")
+PD_LCDM_INPUT = ("The universe of Luminet and coauthors, $\\Omega_m = 0.28$ and $\\Omega_\\Lambda = 0.733$, so that "
+                 "$\\Omega_0 = 1.013$, with the radius $a_0$ of curvature today the unit and radiation left out: "
+                 "$a(\\eta)$ solved from this spacetime's own $G^\\chi{}_\\chi = -\\Lambda$ with "
+                 "$\\Lambda = 3\\Omega_\\Lambda H_0^2/c^2 = 169.15/a_0^2$ for the Hubble rate $H_0$ today, starting "
+                 "today from $a = a_0$ and $a' = H_0a_0^2/c = 8.771\\,a_0$, when the conformal time since the bang "
+                 "is $0.3888$.")
+PD_FACES = "where the circle crosses a face of a cell, $\\chi = \\pi/10$ and every $\\pi/5$ on"
+PD_IMAGES = "our own world line at $\\chi = 0$ and its images, every $\\pi/5$ round the circle"
+
+
+def _pd_images(lo, hi, faces=PD_FACES, images=PD_IMAGES):
+    """The faces and our images along the circle between n = lo and hi, in units of pi/10."""
+    return (*(("surface", "r", f"{n}*pi/10", faces) for n in range(lo, hi + 1) if n % 2),
+            *(("world", "r", f"{n}*pi/10", images) for n in range(lo, hi + 1) if n % 2 == 0))
+
+
+def _pd_psi(t):
+    """The conformal time of the closed dust at its comoving time t since the bang, in units of a_m: the
+    root of (psi - sin psi)/2 = t on (0, 2 pi), by bisection."""
+    t = np.atleast_1d(np.asarray(t, dtype=float))
+    lo, hi = np.zeros_like(t), np.full_like(t, 2 * np.pi)
+    for _ in range(80):
+        mid = (lo + hi) / 2
+        low = (mid - np.sin(mid)) / 2 < t
+        lo, hi = np.where(low, mid, lo), np.where(low, hi, mid)
+    return (lo + hi) / 2
+
+
 KT_SPIN = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [0.0], "start": [1.0], "origin": "rest",
            "sources": ["-4/(3*a**6)"]}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
@@ -1052,6 +1111,15 @@ RT_INPUT = ("The first front $f(0, \\theta)^2 = f_0^2\\left(1 - \\epsilon^2\\cos
             "every front has the area $4\\pi r^2$, and after it the solution of the Robinson-Trautman equation, "
             "with the vacuum $2H = K - 2r\\,\\partial_u\\ln f - 2m/r$.")
 
+# Compere and Long's vacuum as every one of its diagrams draws it, in units of ell: the field
+# C = ell (3 cos^2 theta - 1)/2 on the static chart and its shear sigma = (C' cot theta - C'')/2
+# = -3 ell sin^2(theta)/2 on the Bondi charts. On the equator the supertranslation horizon is
+# rho = C + C'' = 5 ell/2, which is r = 0 of the Bondi charts, where W = sqrt(r^2 + sigma^2) = 3 ell/2.
+STH_FIELD = "(3*cos(theta)**2 - 1)/2"
+STH_SHEAR = "-3*sin(theta)**2/2"
+STH_INPUT = ("The field $C = \\tfrac{1}{2}\\ell\\left(3\\cos^2\\theta - 1\\right)$, with $\\ell$ any length, "
+             "whose shear is $\\sigma = -\\tfrac{3}{2}\\ell\\sin^2\\theta$.")
+
 POLYTROPE_STATED = {"M": (1.40, 2), "R_km": (14.2, 1)}
 KM = 1.4766250614                       # GM_sun/c^2 in km
 
@@ -1065,6 +1133,8 @@ KS_INPUT = ("Dust: $a(t)$ and $b(t)$ solved from this spacetime's own $G^r{}_r =
 # Godel's radius r_c = ln(1 + sqrt 2), where sinh r = 1 and the circles of constant t, r and z
 # turn from spacelike to timelike; the views read it off the published g_phiphi as well.
 GODEL_RC = math.asinh(1.0)
+# Vuorio's null circle, sinh^2(Omega r/2) = 1/3, in units of 1/Omega.
+VUORIO_RC = math.log(3.0)
 
 # Kottler's black hole at Lambda r_s^2 = 1/5, so that r_h = 1.085 r_s and r_c = 3.215 r_s, and the
 # radius (3r_s/2Lambda)^(1/3) of its static observer in free fall, where f is greatest.
@@ -1570,6 +1640,9 @@ ROBERTS_CASES = {"disperses": ("$p = 9/10$", "9/10"), "threshold": ("$p = 1$", "
 # Witten's black hole in two dimensions in units of 1/lambda, at m = 1, where the horizon is x = 0
 # in the charts of x and w = 1 in the dilaton chart.
 WITTEN = {"lambda": 1, "m": 1}
+# The black hole of Jackiw and Teitelboim's gravity, drawn in units of its curvature radius with the
+# horizon at r_h = L.
+JT = {"L": 1, "r_h": 1}
 
 # Simpson and Visser's three geometries at r_s = 1: the black bounce, a = r_s/2, whose horizons are
 # r = +-sqrt(3)/2, the one way wormhole, a = r_s, and the traversable wormhole, a = 2 r_s.
@@ -1709,6 +1782,67 @@ def teo_inverse(x):
         if np.max(np.abs(step), initial=0.0) < 1e-15:
             break
     return np.cosh(w) ** 2, np.tanh(w)
+
+
+# Interstellar's wormhole as its diagrams draw it, in units of its radius rho: the cylinder of length
+# 2a = 2 rho and the flare of M = rho/2, the wormhole of James, von Tunzelmann, Franklin and Thorne's
+# figure 3, whose lensing width is W = 0.715 rho.
+IW = {"rho": 1, "a": 1, "M": "1/2"}
+IW_A, IW_M = 1.0, 0.5
+IW_INPUT = ("$a = \\rho$ and $M = \\rho/2$, the wormhole whose embedding diagram James, von Tunzelmann, Franklin, "
+            "and Thorne draw, with $r = \\rho$ on the cylinder and the flare beyond it.")
+
+
+def iw_radius(ell, order=0, a=IW_A, M=IW_M):
+    """The areal radius r(l) of Interstellar's wormhole in units of rho, or its derivative of the given
+    order up to the third: rho on the cylinder |l| <= a, and beyond it rho + M (x arctan x - ln(1 + x^2)/2)
+    with x = 2(|l| - a)/(pi M), whose derivatives along l are (2/pi) arctan x, 4/(pi^2 M (1 + x^2)) and
+    -16 x/(pi^3 M^2 (1 + x^2)^2), each odd one carrying the sign of l. r and r' are continuous at the
+    mouths, r'' jumps there from 0 to 4/(pi^2 M)."""
+    ell = np.asarray(ell, dtype=float)
+    x = 2 * np.maximum(np.abs(ell) - a, 0) / (np.pi * M)
+    side = np.sign(ell)
+    flare = np.abs(ell) > a
+    value = (1 + M * (x * np.arctan(x) - 0.5 * np.log1p(x * x)),
+             2 / np.pi * np.arctan(x) * side,
+             4 / (np.pi ** 2 * M * (1 + x * x)),
+             -16 * x * side / (np.pi ** 3 * M ** 2 * (1 + x * x) ** 2))[order]
+    return np.where(flare, value, 1.0 if order == 0 else 0.0)
+
+
+class iw_r(sp.Function):
+    """r/rho of Interstellar's wormhole as a function of l/rho, a declared function a row may name:
+    sympy differentiates it by iw_dr, iw_ddr and iw_dddr, and lambdify evaluates each with iw_radius."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda x: iw_radius(x, 0))
+
+    def fdiff(self, argindex=1):
+        return iw_dr(self.args[0])
+
+
+class iw_dr(sp.Function):
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda x: iw_radius(x, 1))
+
+    def fdiff(self, argindex=1):
+        return iw_ddr(self.args[0])
+
+
+class iw_ddr(sp.Function):
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda x: iw_radius(x, 2))
+
+    def fdiff(self, argindex=1):
+        return iw_dddr(self.args[0])
+
+
+class iw_dddr(sp.Function):
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda x: iw_radius(x, 3))
 
 
 class teo_rho(sp.Function):
@@ -1960,6 +2094,54 @@ class qos_r_ret(sp.Function):
     nargs = 1
     is_real = True
     _imp_ = staticmethod(qos.radius_at_retarded)
+
+
+# Haggard and Rovelli's black hole fireworks as every one of its diagrams draws it, in units of r_s,
+# with the shell along V = 3/5 and the quantum region bounded by the geodesic from Delta, at
+# r = 7r_s/6 on the surface of time symmetry, to the point E of the shell at r = r_s/2;
+# black_to_white_hole.py holds the construction. Each chart declares the part of it that is region
+# II, the flat interior's v < 0 or u > 0 aside, as a function of its own coordinates, and the
+# shell's radius as a function of its own time.
+BWH = {"r_s": 1}
+BWH_INPUT = ("A shell of light of Schwarzschild radius $r_s$ along $V = V_0 = 3/5$, the quantum region bounded "
+             "by the spacelike geodesic from the point $E$ of the shell at $r = r_s/2$ to the point $\\Delta$ "
+             "of the surface of time symmetry at $r = 7r_s/6$, Haggard and Rovelli's choices with "
+             "$V_0$ and $E$ set where they can be seen.")
+
+
+class bwh_sigma(sp.Function):
+    """V on the future edge of region II above Kruskal's outgoing ray U, black_to_white_hole.sigma_V."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(bwh.sigma_V)
+
+
+class bwh_inside_sch(sp.Function):
+    """Positive where Schwarzschild's t and r lie in region II, outside r_s."""
+    nargs = 2
+    is_real = True
+    _imp_ = staticmethod(lambda t, r: np.where(np.asarray(r) > 1, bwh.region_two(*bwh.schwarzschild_UV(t, r)), -1.0))
+
+
+class bwh_inside_pg(sp.Function):
+    """Positive where the ingoing Painleve-Gullstrand t and r lie in region II."""
+    nargs = 2
+    is_real = True
+    _imp_ = staticmethod(lambda t, r: bwh.region_two(*bwh.painleve_UV(t, r)))
+
+
+class bwh_shell_sch(sp.Function):
+    """The radius of the shell at Schwarzschild's time t, black_to_white_hole.shell_radius_schwarzschild."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(bwh.shell_radius_schwarzschild)
+
+
+class bwh_shell_pg(sp.Function):
+    """The radius of the shell at the Painleve-Gullstrand time t, black_to_white_hole.shell_radius_painleve."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(bwh.shell_radius_painleve)
 
 
 # The charged shell of dust as its diagrams draw it, in units of r_s: the shell with r_q = 12/25 and
@@ -2289,7 +2471,10 @@ DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__:
                       "charged_r_inside": charged_r_inside, "charged_r_adv": charged_r_adv,
                       "charged_r_ret": charged_r_ret,
                       "lw_r": lw_r, "qos_r_pg": qos_r_pg, "qos_r_adv": qos_r_adv,
-                      "qos_r_ret": qos_r_ret}
+                      "qos_r_ret": qos_r_ret, "iw_r": iw_r, "iw_dr": iw_dr, "iw_ddr": iw_ddr,
+                      "iw_dddr": iw_dddr,
+                      "bwh_sigma": bwh_sigma, "bwh_inside_sch": bwh_inside_sch,
+                      "bwh_inside_pg": bwh_inside_pg, "bwh_shell_sch": bwh_shell_sch, "bwh_shell_pg": bwh_shell_pg}
 
 
 # Neugebauer and Meinel's disc as every one of its diagrams draws it: mu = 3, the disc whose Ernst
@@ -2597,6 +2782,9 @@ RP3_EDGE = "the edge $X = 0$, glued to itself by the antipodal map of the sphere
 
 
 
+# The universe from nothing is drawn at l = 1.
+UFN = {"ell": 1}
+
 # Gott and Li's self-creating universe is drawn at the de Sitter radius 1 and their beta = 2 pi r_0.
 SCU = {"r_0": 1, "beta": "2*pi"}
 SCU_HORIZON_X = "the Cauchy horizon, $x = \\pm r_0e^{-c\\tau/r_0}$"
@@ -2613,6 +2801,15 @@ BTZ_MULTI_INPUT = ("Anti-de Sitter space between the four totally geodesic surfa
                    "surface's distance from the axis at the moment of time symmetry in units of $\\ell$. Opposite surfaces glued make the wormhole with one "
                    "exterior and a torus inside, of mass $M = (2\\,\\mathrm{arccosh}\\,2/\\pi)^2 \\approx 0.703$, "
                    "and adjacent surfaces glued make three black holes.")
+
+# The shock wave in the BTZ black hole as its diagrams draw it, at l = R = 1 and alpha = 1.
+BTZ_SHOCK = {"ell": 1, "R": 1, "alpha": 1}
+BTZ_SHOCK_WHERE = "(1 - u*(v + (1 + sign(u))/2))*(1 + u*(v + (1 + sign(u))/2))"
+BTZ_SHOCK_FAMILY = 0
+BTZ_SHOCK_RIGHT = "the past horizon of the right outside, $v = 0$"
+BTZ_SHOCK_LEFT = "the future horizon of the left outside, $v = -\\alpha$"
+BTZ_SHOCK_INPUT = ("$\\delta(U)$ drawn as the pulse $e^{-U^2/w^2}/(w\\sqrt{\\pi})$ with $w = 0.05$, a shell of "
+                   "null particles of that thickness in $U$ carrying the same shift $\\alpha$.")
 
 DIAGRAMS = [
     *[Diagram("hotta_tanaka", "conformally_flat", view, f"$\\theta = {tex}$", ("\\eta", "\\rho"), (0, 4, -4.3, -0.3),
@@ -3276,6 +3473,25 @@ DIAGRAMS = [
     Diagram("witten_black_hole", "eddington_finkelstein_outgoing", "finkelstein", "against $u + x$",
             ("u", "x"), (-1.5, 2.5, -2, 2), "$\\lambda x$", "$\\lambda(u + x)$", WITTEN,
             to_display=FINKELSTEIN_OUT, tau="u + x"),
+    # The black hole of Jackiw and Teitelboim's gravity at L = r_h = 1, in each of its five charts:
+    # the static chart through the horizon to r = 0, where the dilaton vanishes; the outside in the
+    # proper distance; the Kruskal plane between the boundaries UV = -1 and the lines UV = 1 where the
+    # dilaton vanishes; the global square between the two boundaries and tau = +-pi/2; and the
+    # Poincare patch, hatched beyond the hyperbola where the dilaton vanishes.
+    Diagram("jackiw_teitelboim_black_hole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/L$", "$ct/L$", JT, orient="ingoing"),
+    Diagram("jackiw_teitelboim_black_hole", "proper_distance", "radial", "$t$ and $\\rho$", ("t", "\\rho"),
+            (0, 3, -1.5, 1.5), "$\\rho/L$", "$ct/L$", JT),
+    Diagram("jackiw_teitelboim_black_hole", "kruskal", "plane", "$U$ and $V$", ("U", "V"), (-2, 2, -2, 2),
+            "$(V - U)/2$", "$(U + V)/2$", JT, to_display=NULL_TO_TR, tau="U + V", families=SIDEWAYS,
+            where="(1 - U*V)*(1 + U*V)",
+            marked=(("shell", {"x0": "0", "r": "0"}, "both", "the horizons, $UV = 0$"),)),
+    Diagram("jackiw_teitelboim_black_hole", "global", "strip", "$\\tau$ and $\\sigma$", ("\\tau", "\\sigma"),
+            (0, math.pi, -math.pi / 2, math.pi / 2), "$\\sigma$", "$\\tau$", JT, tau="tau", where_is_infinity=True,
+            marked=(("shell", {"x0": "0", "r": "pi/2"}, "both", "the horizons, $|\\tau| = |\\sigma - \\pi/2|$"),)),
+    Diagram("jackiw_teitelboim_black_hole", "poincare", "tz", "$T$ and $z$", ("T", "z"), (0, 6, -3, 3),
+            "$z/L$", "$cT/L$", JT, tau="T", where="4 - T**2 + z**2",
+            marked=(("shell", {"x0": "0", "r": "2"}, "both", "the horizons"),)),
     # The moving mirror of Fulling and Davies at kappa = 1: see _mirror_rows.
     *_mirror_rows(),
     # Roberts's collapsing scalar field, one view for each of its three outcomes in each chart. The
@@ -3333,6 +3549,16 @@ DIAGRAMS = [
             areal_contours=(1.5, 2.0, 3.0)),
     Diagram("einstein_dirac_maxwell_wormhole", "compact", "radial", "$t$ and $x$", ("t", "x"), (-1, 1, -1, 1),
             "$x$", "$ct/r_0$", EDM, EQUATOR, families=SIDEWAYS, areal=True, areal_contours=(1.5, 2.0, 3.0)),
+    # Interstellar's wormhole at a = rho and M = rho/2 on its plane of t and l, which is flat in every
+    # chart: the whole wormhole in the proper distance with r(l) declared, the cylinder, and one flare.
+    Diagram("interstellar_wormhole", "proper_distance", "radial", "$t$ and $\\ell$", ("t", "\\ell"),
+            (-4.5, 4.5, -4.5, 4.5), "$\\ell/\\rho$", "$ct/\\rho$", IW, EQUATOR, families=SIDEWAYS, areal=True,
+            areal_contours=(1.5, 2.0, 3.0), functions={"r": "iw_r(ell)"}, input=IW_INPUT, no_throat=True,
+            lines=(("shell", "r", "1", "the mouths $\\ell = \\pm a$"), ("shell", "r", "-1", None))),
+    Diagram("interstellar_wormhole", "cylinder", "radial", "$t$ and $\\ell$", ("t", "\\ell"), (-1, 1, -1, 1),
+            "$\\ell/\\rho$", "$ct/\\rho$", {"rho": 1, "a": 1}, EQUATOR, families=SIDEWAYS, cones=(5, 5)),
+    Diagram("interstellar_wormhole", "flare", "radial", "$t$ and $\\ell$", ("t", "\\ell"), (1, 4.5, -1.75, 1.75),
+            "$\\ell/\\rho$", "$ct/\\rho$", IW, EQUATOR, areal=True, areal_contours=(1.5, 2.0, 3.0), no_throat=True),
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -3363,6 +3589,18 @@ DIAGRAMS = [
     Diagram("minkowski", "rindler", "tx", "$T$ and $X$", ("T", "X"), (0, 3, -1.5, 1.5),
             "$X\\;[c^2/a]$", "$cT\\;[c^2/a]$", {"a": 1}, {"Y": "0", "Z": "0"}, tau="T",
             families=SIDEWAYS),
+    # Compere and Long's vacuum on its equator, where every chart's plane holds its rays. The static
+    # chart ends on the left at the supertranslation horizon rho = 5 ell/2, hatched beyond; each
+    # Bondi chart is drawn against its own null time, with t = u + W + ell or v - W - ell as the time.
+    Diagram("supertranslation_hair", "static", "equator", "the equator", ("t", "\\rho"), (2, 6.5, -2.25, 2.25),
+            "$\\rho/\\ell$", "$ct/\\ell$", {}, EQUATOR, functions={"C": STH_FIELD}, input=STH_INPUT,
+            where="rho - Rational(5, 2)"),
+    Diagram("supertranslation_hair", "bondi_retarded", "equator", "the equator, against $u$", ("u", "r"),
+            (0, 6, -6.5, -0.5), "$r/\\ell$", "$cu/\\ell$", {}, EQUATOR, tau="u + sqrt(r**2 + Rational(9, 4))",
+            functions={"sigma": STH_SHEAR}, input=STH_INPUT),
+    Diagram("supertranslation_hair", "bondi_advanced", "equator", "the equator, against $v$", ("v", "r"),
+            (0, 6, 0.5, 6.5), "$r/\\ell$", "$cv/\\ell$", {}, EQUATOR, tau="v - sqrt(r**2 + Rational(9, 4))",
+            functions={"sigma": STH_SHEAR}, input=STH_INPUT),
     # Misner space at Li and Gott's psi_0 = 4 pi, a boost of rapidity 2 pi, where the Milne chart's
     # chi and the Rindler chart's eta each run once round 2 pi. Misner's own plane is drawn against
     # psi/2, that rapidity, so that it stands as wide as the Milne chart's.
@@ -3566,6 +3804,16 @@ DIAGRAMS = [
             (0, 1, -1, 0), "$x/r_0$", "$\\eta/r_0$", SCU, EQUATOR, mirror=True, tau="eta", families=SIDEWAYS,
             cones=(4, 6), where_is_infinity=True,
             marked=(("event", {"x0": "-1/2", "r": "1/2"}, 0, "the Cauchy horizon, $\\rho = -\\eta$"),)),
+    # The universe from nothing at l = 1: the plane of the time and chi of each Lorentzian chart, from the
+    # waist where the 4-sphere is joined on, upward; the scale factor chart above its join a = l.
+    Diagram("universe_from_nothing", "closed", "radial", "$t$ and $\\chi$", ("t", "\\chi"), (0, math.pi, 0, 3),
+            "$\\chi$", "$ct/\\ell$", UFN, EQUATOR, families=SIDEWAYS),
+    Diagram("universe_from_nothing", "scale_factor", "radial", "$a$ and $\\chi$", ("a", "\\chi"),
+            (0, math.pi, 1, 4), "$\\chi$", "$a/\\ell$", UFN, EQUATOR, tau="a", families=SIDEWAYS),
+    Diagram("universe_from_nothing", "conformal", "radial", "$\\eta$ and $\\chi$", ("\\eta", "\\chi"),
+            (0, math.pi, 0, math.pi / 2), "$\\chi$", "$\\eta$", UFN, EQUATOR, tau="eta", families=SIDEWAYS),
+    Diagram("universe_from_nothing", "lapse", "radial", "$t$ and $\\chi$", ("t", "\\chi"), (0, math.pi, 0, 3),
+            "$\\chi$", "$ct/\\ell$", UFN, EQUATOR, families=SIDEWAYS),
     # The RP3 geon at r_s = 1: Kruskal's plane on the half X >= 0, whose edge X = 0 is glued to itself by the
     # antipodal map of the sphere, hatched beyond the singularities T^2 - X^2 = 1, with both horizons marked;
     # Schwarzschild's chart of the one exterior; and the isotropic chart on its one sheet rho > r_s/4.
@@ -3804,6 +4052,43 @@ DIAGRAMS = [
     Diagram("quantum_btz", "rotating", "rotating", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
             "$r/\\ell_3$", "$ct/\\ell_3$", QBTZ_ROTATING, orient="ingoing", quotient="phi",
             mark_gtt="the ergosurface", cone=BTZ_CONE),
+    # Unruh's acoustic black hole, the fluid of constant density falling in at c r_0^2/r^2, in units of the
+    # horizon radius r_0. The laboratory's t = 0 climbs in Unruh's time as -ln(r - r_0)/4 toward the horizon,
+    # so his view runs from -2.5 to 1.5, where that curve leaves the box a measurable 0.001 r_0 off the edge.
+    Diagram("unruh_acoustic_hole", "laboratory", "infall", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/r_0$", "$ct/r_0$", {"r_0": 1}, EQUATOR),
+    Diagram("unruh_acoustic_hole", "unruh", "exterior", "$\\tau$ and $r$", ("\\tau", "r"), (1, 5, -2.5, 1.5),
+            "$r/r_0$", "$c\\tau/r_0$", {"r_0": 1}, EQUATOR, tau="tau"),
+    # Shenker and Stanford's shock wave in the BTZ black hole at l = R = 1 and alpha = 1: the plane of
+    # u and v of the Kruskal chart, where no ray is moved by the shock and the region behind it is
+    # the black hole's moved by -alpha along v; the plane of U and V, where the region behind it is
+    # the black hole's own and each ray moving left jumps by alpha in V, the delta drawn as a pulse;
+    # and the plane of t and r of either outside.
+    Diagram("btz_shock_wave", "kruskal", "plane", "$u$ and $v$", ("u", "v"), (-2.25, 1.75, -2, 2),
+            "$(v - u)/2$", "$(u + v)/2$", BTZ_SHOCK, {"phi": "0"}, to_display=NULL_TO_TR, tau="u + v",
+            families=SIDEWAYS, where=BTZ_SHOCK_WHERE,
+            lines=(("shell", "x0", "0", "the shock, $u = 0$"),),
+            marked=(("event", {"x0": "0", "r": "0"}, BTZ_SHOCK_FAMILY, BTZ_SHOCK_RIGHT, "past"),
+                    ("event", {"x0": "0", "r": "-1"}, BTZ_SHOCK_FAMILY, BTZ_SHOCK_LEFT, "future"))),
+    Diagram("btz_shock_wave", "discontinuous", "plane", "$U$ and $V$", ("U", "V"), (-1.6, 1.6, -1.6, 1.6),
+            "$(V - U)/2$", "$(U + V)/2$", BTZ_SHOCK, {"phi": "0"}, to_display=NULL_TO_TR, tau="U + V",
+            families=SIDEWAYS, delta=AS_PULSE, step=0.0005, where="(1 - U*V)*(1 + U*V)",
+            lines=(("shell", "x0", "0", "the shock, $U = 0$"),), input=BTZ_SHOCK_INPUT),
+    Diagram("btz_shock_wave", "exterior", "radial", "$t$ and $r$", ("t", "r"), (0.5, 3.5, -1.5, 1.5),
+            "$r/\\ell$", "$ct/\\ell$", {"ell": 1, "R": 1}, {"phi": "0"}, where="r - 1", edge_horizon=True),
+    # The Big Rip at w = -3/2, Caldwell, Kamionkowski and Weinberg's example, in units of t_0, the time
+    # left at a = 1, with the rip at t = 0: a = (-t/t_0)^(-4/3), so light covers the comoving distance
+    # eta_0 (-t/t_0)^(7/3) before the rip, eta_0 = 3 c t_0/7, and the event horizon of the observer at
+    # the centre is the ray through r = eta_0 at t = -t_0. The conformal chart is drawn in units of eta_0.
+    Diagram("big_rip", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-1.5, 1.5, -2, 0), "$x/ct_0$", "$t/t_0$",
+            BIG_RIP, {"y": "0", "z": "0"}, families=SIDEWAYS,
+            marked=(("event", {"x0": "-1", "r": "3/7"}, 0, BIG_RIP_HORIZON),
+                    ("event", {"x0": "-1", "r": "-3/7"}, 1, BIG_RIP_HORIZON))),
+    Diagram("big_rip", "comoving", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -2, 0), "$r/ct_0$", "$t/t_0$",
+            BIG_RIP, EQUATOR, areal=True, marked=(("event", {"x0": "-1", "r": "3/7"}, 0, BIG_RIP_HORIZON),)),
+    Diagram("big_rip", "conformal", "radial", "$\\eta$ and $r$", ("\\eta", "r"), (0, 3, -3, 0), "$r/\\eta_0$",
+            "$\\eta/\\eta_0$", BIG_RIP_CONFORMAL, EQUATOR, tau="eta", areal=True,
+            marked=(("event", {"x0": "-1", "r": "1"}, 0, BIG_RIP_HORIZON),)),
     Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
     Diagram("bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
@@ -3899,6 +4184,22 @@ DIAGRAMS = [
             "$r/L$", "$ct/L$", {"L": 1}, TB_PLANE),
     Diagram("three_brane_throat", "throat_proper", "radial", "$t$ and $\\sigma$", ("t", "\\sigma"),
             (-2, 2, -2, 2), "$\\sigma/L$", "$ct/L$", {"L": 1}, TB_PLANE),
+    # Freund and Rubin's anti-de Sitter space times a 7-sphere at L = 1, on the plane of the time and
+    # the radial coordinate of each chart, and a great circle of the 7-sphere against the time at one
+    # point of anti-de Sitter space, its angle drawn as the arc 2 L psi in units of L.
+    Diagram("freund_rubin", "global", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 3, -1.5, 1.5),
+            "$\\rho$", "$ct/L$", {"L": 1}, FR_ROUND),
+    Diagram("freund_rubin", "conformal", "radial", "$t$ and $\\chi$", ("t", "\\chi"),
+            (0, math.pi / 2, -math.pi / 4, math.pi / 4), "$\\chi$", "$ct/L$", {"L": 1}, FR_ROUND),
+    Diagram("freund_rubin", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/L$", "$ct/L$", {"L": 1}, FR_ROUND),
+    Diagram("freund_rubin", "poincare", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/L$", "$ct/L$", {"L": 1}, FR_FLAT),
+    Diagram("freund_rubin", "proper", "radial", "$t$ and $\\sigma$", ("t", "\\sigma"), (-2, 2, -2, 2),
+            "$\\sigma/L$", "$ct/L$", {"L": 1}, FR_FLAT),
+    Diagram("freund_rubin", "proper", "circle", "$t$ and $\\psi$", ("t", "\\psi"),
+            (0, 4 * math.pi, -2 * math.pi, 2 * math.pi), "$2\\psi$", "$ct/L$", {"L": 1}, FR_CIRCLE,
+            to_display=((0, 2), (1, 0)), families=SIDEWAYS, periodic=("\\psi",)),
     Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
             (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
@@ -4256,6 +4557,26 @@ DIAGRAMS = [
             families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
     Diagram("som_raychaudhuri", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x/r_c$", "$ct/r_c$",
             {"Omega": 1}, {"y": "0", "z": "0"}, orient="vector", families=SIDEWAYS),
+    # Vuorio's universe, m = Omega = 1, in units of 1/Omega: the cylinders of t and phi about one
+    # integral curve of d_t at half and one and a half times r_c = ln 3, drawn as Godel's are, phi
+    # scaled by r; the plane of t and R through the centre of Poincare's disc; the plane of t and
+    # sigma through the geodesic sigma = 0 of the fibred chart; and the plane of t and x of the
+    # horospherical chart, Godel's own plane.
+    Diagram("vuorio_warped_ads", "cylindrical", "inside", "$t$ and $\\phi$ at $r = r_c/2$", ("t", "\\phi"),
+            tuple(s * math.pi * VUORIO_RC / 2 for s in (-1, 1, -1, 1)), "$\\Omega r\\phi$", "$\\Omega ct$",
+            {"Omega": 1, "m": 1}, {"r": "log(3)/2"}, to_display=((0, VUORIO_RC / 2), (1, 0)), orient="vector",
+            families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    Diagram("vuorio_warped_ads", "cylindrical", "beyond", "$t$ and $\\phi$ at $r = 3r_c/2$", ("t", "\\phi"),
+            tuple(s * math.pi * 3 * VUORIO_RC / 2 for s in (-1, 1, -1, 1)), "$\\Omega r\\phi$", "$\\Omega ct$",
+            {"Omega": 1, "m": 1}, {"r": "3*log(3)/2"}, to_display=((0, 3 * VUORIO_RC / 2), (1, 0)), orient="vector",
+            families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    Diagram("vuorio_warped_ads", "disc", "plane", "$t$ and $R$ through the centre", ("t", "R"), (0, 1, -1, 1),
+            "$R$", "$\\Omega ct$", {"Omega": 1, "m": 1}, {"phi": "0"}, mirror=True, orient="vector",
+            families=SIDEWAYS, cones=(4, 7)),
+    Diagram("vuorio_warped_ads", "fibred", "plane", "$t$ and $\\sigma$", ("t", "\\sigma"), (-2, 2, -2, 2),
+            "$\\sigma$", "$\\Omega ct$", {"Omega": 1, "m": 1}, {"u": "0"}, orient="vector", families=SIDEWAYS),
+    Diagram("vuorio_warped_ads", "horospherical", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2),
+            "$\\Omega x$", "$\\Omega ct$", {"Omega": 1, "m": 1}, {"y": "0"}, orient="vector", families=SIDEWAYS),
     # Maitra's dust in units of its length a: the plane z = 0 in t and r with phi divided out, where
     # the curves are the null geodesics of no angular momentum, and its circles at a and 5a
     # through time, unrolled as van Stockum's cylinders are, phi scaled by r.
@@ -4429,6 +4750,38 @@ DIAGRAMS = [
                     "the circle of $y$"),),
             marked=(("past", {"x0": SMALL_NOW, "r": "3/2"}, "both", "the past light cone of the event marked", "past"),),
             points=(("mark", (SMALL_NOW, "3/2"), "an event at $x = 3/2$ on the dashed line"),)),
+    # The Poincare dodecahedral universe along the great circle through us and the centre of a face: closed
+    # dust from its bang to its crunch in the comoving and toroidal charts, all ten cells round the circle,
+    # and Luminet's universe in the conformal chart, from the bang to future infinity, near our own cell.
+    Diagram("poincare_dodecahedral", "comoving", "through", "round the circle", ("t", "\\chi"),
+            (0, math.pi, 0, math.pi), "$\\chi$", "$ct/a_m$", {}, EQUATOR, mirror=True,
+            families=SIDEWAYS, cones=(4, 8), dust=PD_CLOSED, reference="$a = a_m$",
+            input=PD_CLOSED_INPUT.replace("{X}", "\\chi"),
+            lines=_pd_images(-9, 9),
+            marked=(("past", {"x0": "pi/2", "r": "0"}, "both", "our past light cone at the moment of greatest expansion",
+                     "past"),),
+            points=(("mark", ("pi/2", "0"), "here, at the moment of greatest expansion"),)),
+    Diagram("poincare_dodecahedral", "toroidal", "circle", "round the circle", ("t", "\\alpha"),
+            (0, 2 * math.pi, 0, math.pi), "$\\alpha$", "$ct/a_m$", {}, {"v": "0", "gamma": "0"},
+            families=SIDEWAYS, periodic=("\\alpha",), cones=(4, 8), dust=PD_CLOSED_TORUS, reference="$a = a_m$",
+            input=PD_CLOSED_INPUT.replace("{X}", "\\alpha"),
+            lines=(*(("surface", "r", f"{n}*pi/10", "the faces of the cells, $\\alpha = \\pi/10$ and every $\\pi/5$ on")
+                     for n in range(1, 20, 2)),
+                   *(("world", "r", f"{n}*pi/5", "our own world line at $\\alpha = 0$ and its images, every $\\pi/5$")
+                     for n in range(0, 11))),
+            marked=(("past", {"x0": "pi/2", "r": "pi"}, "both", "the past light cone of the event marked", "past"),),
+            points=(("mark", ("pi/2", "pi"), "the image at $\\alpha = \\pi$, at the moment of greatest expansion"),)),
+    Diagram("poincare_dodecahedral", "conformal", "near", "near our cell", ("\\eta", "\\chi"), (0, 0.8, 0, 0.52),
+            "$\\chi$", "$\\eta$", {}, EQUATOR, tau="eta", families=SIDEWAYS, dust=PD_LCDM, reference="$a = a_0$",
+            input=PD_LCDM_INPUT,
+            lines=(("surface", "r", "pi/10", "the face of our cell, $\\chi = \\pi/10$"),
+                   ("world", "r", "pi/5", "our nearest image, $\\chi = \\pi/5$"),
+                   ("surface", "r", "3*pi/10", "the far face of its cell, $\\chi = 3\\pi/10$"),
+                   ("shell", "x0", PD_LSS, "the last scattering of the microwaves, $a = a_0/1101$")),
+            marked=(("past", {"x0": PD_NOW, "r": "0"}, "both", "our past light cone today", "past"),
+                    ("past", {"x0": PD_NOW, "r": "pi/5"}, "both", "the past light cone of our nearest image today",
+                     "past")),
+            points=(("mark", (PD_NOW, "0"), "here and now"),)),
     # Tilted universes: Farnsworth's dust on the plane of its time and r, in the parameter eta and in the
     # time u of the surfaces of homogeneity, and the flat model in its own chart and in inertial coordinates,
     # where it is Ellis and King's picture of the whimper.
@@ -4887,6 +5240,48 @@ DIAGRAMS = [
             input="Uniform dust inside the shell $r_1 = r_s$, a vacuum out to the shell $r_2 = 4r_s$, and uniform "
                   "dust beyond it: $F = r_s(r/r_1)^3$, $r_s$, and $r_s(r/r_2)^3$, with the delay $b = r_2 - r_1$, "
                   "$r_2 - r$, and $0$, as Novikov takes it."),
+    # Haggard and Rovelli's black hole fireworks: the flat space inside the shell, which is the inside
+    # of the light cone of the bounce, past and future; region II in Kruskal's chart and its time
+    # reverse; and region II in Schwarzschild's chart, in the two Painleve-Gullstrand charts, before
+    # the bounce and after it, and in Lemaitre's chart, drawn against rho - c tau.
+    Diagram("black_to_white_hole", "interior", "bounce", "through the bounce", ("u", "v"), (0, 3.5, -2.25, 1.25),
+            "$(v - u)/2r_s$", "$(u + v)/2r_s$", {}, EQUATOR, to_display=NULL_TO_TR, tau="u + v", areal=True,
+            where="Max(-v, u)", input=BWH_INPUT,
+            points=(("mark", ("-1", "0"), "the point $E$, where the shell enters the quantum region, at $u = -r_s$"),)),
+    Diagram("black_to_white_hole", "kruskal", "falling", "the black hole flap", ("U", "V"), (-1, 3, -2.5, 1.5),
+            "$(V - U)/2$", "$(U + V)/2$", BWH, EQUATOR, to_display=NULL_TO_TR, families=SIDEWAYS, tau="U + V",
+            where="Min(V - Rational(3, 5), bwh_sigma(U) - V)", input=BWH_INPUT,
+            marked=(("event", {"x0": "0", "r": "601/1000"}, 1, "the apparent horizon $r = r_s$, the outgoing ray $U = 0$"),),
+            points=(("mark", (repr(bwh.U_E), "3/5"), "the point $E$, where the shell enters the quantum region"),
+                    ("mark", (repr(-bwh.V_DELTA), repr(bwh.V_DELTA)), "the point $\\Delta$, where the quantum region reaches furthest out"))),
+    Diagram("black_to_white_hole", "kruskal", "rising", "the white hole flap", ("U", "V"), (-1, 3, -1.5, 2.5),
+            "$(V - U)/2$", "$(U + V)/2$", BWH, EQUATOR, to_display=NULL_TO_TR, families=SIDEWAYS, tau="U + V",
+            where="Min(-U - Rational(3, 5), bwh_sigma(-V) + U)", input=BWH_INPUT,
+            marked=(("event", {"x0": "-601/1000", "r": "0"}, 0, "the apparent horizon $r = r_s$, the ingoing ray $V = 0$", "past"),),
+            points=(("mark", ("-3/5", repr(-bwh.U_E)), "the mirror image of the point $E$, where the shell enters the quantum region"),
+                    ("mark", (repr(-bwh.V_DELTA), repr(bwh.V_DELTA)), "the point $\\Delta$, where the quantum region reaches furthest out"))),
+    Diagram("black_to_white_hole", "schwarzschild", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -3, 1),
+            "$r/r_s$", "$ct/r_s$", BWH, EQUATOR, orient="ingoing", areal=True, where="bwh_inside_sch(t, r)",
+            input=BWH_INPUT, curves=(("shell", "bwh_shell_sch(t)", "the shell falling in, $r = R(t)$"),),
+            points=(("mark", ("0", "7/6"), "the point $\\Delta$, where the quantum region reaches furthest out"),)),
+    Diagram("black_to_white_hole", "painleve_gullstrand_ingoing", "falling", "before the bounce", ("t", "r"),
+            (0, 3, -2, 1), "$r/r_s$", "$ct/r_s$", BWH, EQUATOR, areal=True, where="bwh_inside_pg(t, r)",
+            input=BWH_INPUT, curves=(("shell", "bwh_shell_pg(t)", "the shell falling in, $r = R(t)$"),),
+            points=(("mark", (repr(float(bwh.shell_painleve_time(bwh.EPS))), "1/2"), "the point $E$, where the shell enters the quantum region"),
+                    ("mark", (repr(float(bwh.edge_painleve_time(bwh.R_DELTA))), "7/6"), "the point $\\Delta$, where the quantum region reaches furthest out"))),
+    Diagram("black_to_white_hole", "painleve_gullstrand_outgoing", "rising", "after the bounce", ("t", "r"),
+            (0, 3, -1, 2), "$r/r_s$", "$ct/r_s$", BWH, EQUATOR, areal=True, where="bwh_inside_pg(-t, r)",
+            input=BWH_INPUT, curves=(("shell", "bwh_shell_pg(-t)", "the shell going out, $r = R(t)$"),),
+            points=(("mark", (repr(-float(bwh.shell_painleve_time(bwh.EPS))), "1/2"), "the mirror image of the point $E$, where the shell enters the quantum region"),
+                    ("mark", (repr(-float(bwh.edge_painleve_time(bwh.R_DELTA))), "7/6"), "the point $\\Delta$, where the quantum region reaches furthest out"))),
+    Diagram("black_to_white_hole", "lemaitre", "falling", "against $\\rho - c\\tau$", ("\\tau", "\\rho"),
+            (0, 3.5, -2.5, 1), "$(\\rho - c\\tau)/r_s$", "$c\\tau/r_s$", BWH, EQUATOR, to_display=((-1, 1), (1, 0)),
+            tau="tau", areal=True, where="bwh_inside_pg(tau, (3*(rho - tau)/2)**Rational(2, 3))", input=BWH_INPUT,
+            curves=(("shell", "tau + 2*bwh_shell_pg(tau)**Rational(3, 2)/3", "the shell falling in, $r = R$"),),
+            points=(("mark", (repr(float(bwh.shell_painleve_time(bwh.EPS))),
+                              repr(float(bwh.shell_painleve_time(bwh.EPS)) + 2 * bwh.EPS ** 1.5 / 3)), "the point $E$, where the shell enters the quantum region"),
+                    ("mark", (repr(float(bwh.edge_painleve_time(bwh.R_DELTA))),
+                              repr(float(bwh.edge_painleve_time(bwh.R_DELTA)) + 2 * bwh.R_DELTA ** 1.5 / 3)), "the point $\\Delta$, where the quantum region reaches furthest out"))),
     # The T-models of Datt and Ruban, in units of r_s: one tube of dust, mu = (2 + tanh(r))/(2 pi) and
     # epsilon = 1, in the proper time of the dust, in the cycloid's parameter and in the radius of its
     # spheres; Ruban's T-model on de Sitter space with the same mu, in units of l, which begins on the
@@ -7734,6 +8129,51 @@ CAPTIONS = {
         "The chart is the time reverse of the ingoing one: its $g_{ux}$ is $-1$ where the ingoing chart's "
         "$g_{vx}$ is $+1$.",
     ],
+    ("jackiw_teitelboim_black_hole", "static", "radial"): [
+        "The plane of $t$ and $r$, drawn for $r_h = L$, each point in the diagram a single event. The edges of "
+        "the cones are $dr/d(ct) = \\pm(r^2 - r_h^2)/L^2$, so $ct \\mp r_*$ is constant along a ray, with "
+        "$r_* = (L^2/2r_h)\\ln|(r - r_h)/(r + r_h)|$.",
+        "Outside the horizon $r = r_h$ the cones close on it as $t \\to \\pm\\infty$ and open without limit "
+        "toward large $r$, where a ray reaches the boundary at a finite $t$. Inside the horizon $r$ is the time, "
+        "and we take the future from the cones that point to smaller $r$, the black hole, down to $r = 0$, where "
+        "the dilaton $\\phi = \\phi_rr/L^2$ vanishes. The Ricci scalar is $-2/L^2$ everywhere.",
+    ],
+    ("jackiw_teitelboim_black_hole", "proper_distance", "radial"): [
+        "The plane of $t$ and $\\rho$, drawn for $r_h = L$, each point in the diagram a single event. The edges "
+        "of the cones are $d\\rho/d(ct) = \\pm(r_h/L^2)\\sinh(\\rho/L)$, so "
+        "$ct \\mp (L^2/r_h)\\ln\\tanh(\\rho/2L)$ is constant along a ray.",
+        "The chart covers the outside of the horizon, the line $\\rho = 0$, a finite proper distance from every "
+        "event. Near it the metric is $-(r_h\\rho/L^2)^2c^2dt^2 + d\\rho^2$, Rindler's, and far from it the "
+        "cones open without limit as $\\rho$ grows.",
+    ],
+    ("jackiw_teitelboim_black_hole", "kruskal", "plane"): [
+        "The plane of $U$ and $V$, drawn with $(U + V)/2$ up and $(V - U)/2$ across, each point in the "
+        "diagram a single event. Only $g_{UV}$ is nonzero, so the light rays are the lines $U = $ const and "
+        "$V = $ const at 45°.",
+        "The horizons are the lines $UV = 0$. The hyperbolas $UV = -1$ on the left and right are the two "
+        "boundaries, each at an infinite proper distance, and the hyperbolas $UV = 1$ above and below are where "
+        "the dilaton $\\phi = \\phi_rr_h(1 - UV)/L^2(1 + UV)$ vanishes, with the metric regular across them. The "
+        "quadrant $U < 0 < V$ is the outside of the black hole, with $UV = -(r - r_h)/(r + r_h)$ in the static "
+        "chart, and the opposite quadrant is a second copy of it.",
+    ],
+    ("jackiw_teitelboim_black_hole", "global", "strip"): [
+        "The plane of $\\tau$ and $\\sigma$, each point in the diagram a single event. The metric is "
+        "$L^2/\\sin^2\\sigma$ times Minkowski's, so the light rays are the lines of constant "
+        "$\\tau \\pm \\sigma$, at 45°.",
+        "The edges $\\sigma = 0$ and $\\pi$ are the two boundaries of anti-de Sitter space, and the horizons of "
+        "the black hole are the diagonals $|\\tau| = |\\sigma - \\pi/2|$. The dilaton "
+        "$\\phi = \\phi_rr_h\\cos\\tau/L^2\\sin\\sigma$ vanishes on the top and bottom edges, "
+        "$\\tau = \\pm\\pi/2$, so the square holds both outsides, the black hole above and the white hole below.",
+    ],
+    ("jackiw_teitelboim_black_hole", "poincare", "tz"): [
+        "The plane of $T$ and $z$, drawn for $r_h = L$, each point in the diagram a single event. The metric is "
+        "$L^2/z^2$ times Minkowski's, so the light rays are the lines of constant $cT \\pm z$, at 45°.",
+        "The boundary is $z = 0$, and the horizons of the black hole are the rays $cT + z = 2L^2/r_h$ and "
+        "$cT - z = -2L^2/r_h$, which cross at $T = 0$, $z = 2L^2/r_h$. The dilaton "
+        "$\\phi = \\phi_r\\left(1 - r_h^2(c^2T^2 - z^2)/4L^4\\right)/z$ vanishes on the hyperbola "
+        "$c^2T^2 - z^2 = 4L^4/r_h^2$, and the chart reaches past the horizons into both interiors and a part of "
+        "the second outside.",
+    ],
     **ROBERTS_CAPTIONS,
     ("einstein_rosen_bridge", "bridge", "radial"): [
         "The plane of $t$ and $u$ ($\\theta = \\pi/2$, $\\phi = 0$), with $r = r_s + u^2$, $u < 0$ on one sheet and "
@@ -7785,6 +8225,31 @@ CAPTIONS = {
         "$t \\to \\infty$: the bridge is a horizon, as the neutral one is. The faint vertical lines are the spheres "
         "of areal radius $1.5\\,r_q$, $2\\,r_q$, and $3\\,r_q$, one of each on either sheet, and the Kretschmann "
         "scalar $56r_q^4/(u^2 + r_q^2)^4$ is $56/r_q^4$ on the bridge.",
+    ],
+    ("interstellar_wormhole", "proper_distance", "radial"): [
+        "The plane of $t$ and $\\ell$ ($\\theta = \\pi/2$, $\\phi = 0$) through the whole wormhole, drawn for "
+        "$a = \\rho$ and $M = \\rho/2$, with $\\ell < -a$ on one side, the cylinder $|\\ell| \\le a$ in the middle, "
+        "and $\\ell > a$ on the other side. The metric on this plane is $-c^2dt^2 + d\\ell^2$ at every $\\ell$, so "
+        "every ray is a straight line at 45° and $ct \\mp \\ell$ is constant along it.",
+        "All the geometry lies off the plane, in $g_{\\theta\\theta} = r(\\ell)^2$. The areal radius holds at its "
+        "least value $\\rho$ between the mouths $\\ell = \\pm a$ and grows beyond them, and the faint vertical lines "
+        "are the spheres of radius $1.5\\rho$, $2\\rho$, and $3\\rho$, at $|\\ell| = 2.27$, $2.97$, and $4.21\\rho$. "
+        "A ray crosses from one mouth to the other in the time $2a/c$.",
+    ],
+    ("interstellar_wormhole", "cylinder", "radial"): [
+        "The plane of $t$ and $\\ell$ ($\\theta = \\pi/2$, $\\phi = 0$) along the cylinder, from the mouth "
+        "$\\ell = -a$ to the mouth $\\ell = a$, drawn for $a = \\rho$. The metric on this plane is "
+        "$-c^2dt^2 + d\\ell^2$, so every ray is a straight line at 45°.",
+        "Every point of the plane is a sphere of radius $\\rho$, and the Kretschmann scalar is $4/\\rho^4$ "
+        "throughout.",
+    ],
+    ("interstellar_wormhole", "flare", "radial"): [
+        "The plane of $t$ and $\\ell$ ($\\theta = \\pi/2$, $\\phi = 0$) beyond the mouth $\\ell = a$, drawn for "
+        "$a = \\rho$ and $M = \\rho/2$, the same beyond $\\ell = -a$. The metric on this plane is "
+        "$-c^2dt^2 + d\\ell^2$, so every ray is a straight line at 45°.",
+        "The faint vertical lines are the spheres of radius $1.5\\rho$, $2\\rho$, and $3\\rho$, at "
+        "$\\ell = 2.27$, $2.97$, and $4.21\\rho$, crowded near the mouth, where $dr/d\\ell = \\tfrac{2}{\\pi}\\arctan x$ "
+        "starts from zero, and spaced as in flat space far out.",
     ],
     ("einstein_dirac_maxwell_wormhole", "areal", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on one side of the throat, drawn for "
@@ -8103,6 +8568,28 @@ CAPTIONS = {
         "is back at the same $\\lambda$ at a radius $e^{2\\pi}$ times larger. The cones close toward $\\xi = 0$, "
         "the horizon of Rindler's chart.",
     ],
+    ("supertranslation_hair", "static", "equator"): [
+        "The plane of $t$ and $\\rho$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the "
+        "quadrupole field $C$. Each line of constant angle is a straight line of flat space and $\\rho$ is the "
+        "distance along it, so the rays, $c\\,dt = \\pm d\\rho$, run at 45° as in Minkowski space.",
+        "The chart ends on the left at $\\rho = 5\\ell/2$, where $g_{\\theta\\theta} = \\left(\\rho - C - C''\\right)^2$ "
+        "vanishes: the supertranslation horizon, on the equator a ring of radius $3\\ell$. An ingoing ray reaches it "
+        "at a finite affine parameter and carries on, straight, into flat space the chart does not cover.",
+    ],
+    ("supertranslation_hair", "bondi_retarded", "equator"): [
+        "The plane of $u$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the "
+        "quadrupole field, where the shear is $\\sigma = -3\\ell/2$. The outgoing rays are $u = $ const, and the "
+        "ingoing rays keep $cu + 2W$, with $W = \\sqrt{r^2 + \\sigma^2}$, so they run level onto the left edge.",
+        "The left edge $r = 0$ is the supertranslation horizon, $\\rho = 5\\ell/2$ of the static chart, where the "
+        "surfaces of constant $u$ and $r$ have zero area. The time of the static chart is $ct = cu + W + \\ell$ here.",
+    ],
+    ("supertranslation_hair", "bondi_advanced", "equator"): [
+        "The plane of $v$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the "
+        "quadrupole field, where the shear is $\\sigma = -3\\ell/2$. The ingoing rays are $v = $ const, and the "
+        "outgoing rays keep $cv - 2W$, with $W = \\sqrt{r^2 + \\sigma^2}$, so they leave the left edge level.",
+        "The left edge $r = 0$ is the supertranslation horizon, $\\rho = 5\\ell/2$ of the static chart, where the "
+        "surfaces of constant $v$ and $r$ have zero area. The time of the static chart is $ct = cv - W - \\ell$ here.",
+    ],
     ("minkowski", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in flat spacetime. "
         "The metric on it is $-c^2dt^2 + dr^2$, and every ray is at 45°. Each ingoing ray meets "
@@ -8229,6 +8716,35 @@ CAPTIONS = {
         "closes on itself after $\\eta$ shrinks by $e^{-\\beta/r_0}$. Inside the marked rays "
         "$\\rho = -\\eta$, the Cauchy horizon, those lines are closed timelike curves, and outside they are "
         "the spacelike circles of $l$.",
+    ],
+    ("universe_from_nothing", "closed", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) above the waist $t = 0$, where the "
+        "4-sphere is joined on. On it $ds^2 = -c^2dt^2 + \\ell^2\\cosh^2(ct/\\ell)\\,d\\chi^2$, so the cones "
+        "close up as the 3-sphere inflates.",
+        "A ray covers $\\Delta\\chi = \\arctan\\sinh(ct/\\ell)$ in the time $t$ after the waist and no more "
+        "than $\\pi/2$ ever, so light sent from the pole $\\chi = 0$ at $t = 0$ reaches the equator "
+        "$\\chi = \\pi/2$ of the 3-sphere only at future infinity.",
+    ],
+    ("universe_from_nothing", "scale_factor", "radial"): [
+        "The plane of $a$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) above the join $a = \\ell$, where "
+        "$g_{aa} = 1/(1 - a^2/\\ell^2)$ is negative and the radius $a$ of the 3-sphere is the time. Below the "
+        "join the same line element is Riemannian, the 4-sphere.",
+        "On the join $g_{aa}$ diverges and the cones lie flat along it, since the 3-sphere grows at no rate there. "
+        "The rays keep $\\mathrm{arcsec}(a/\\ell) \\pm \\chi$.",
+    ],
+    ("universe_from_nothing", "conformal", "radial"): [
+        "The plane of $\\eta$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) from the waist $\\eta = 0$ to "
+        "future infinity $\\eta = \\pi/2$. On it $ds^2 = (\\ell^2/\\cos^2\\eta)(-d\\eta^2 + d\\chi^2)$, so "
+        "light runs at 45°.",
+        "A ray from the pole $\\chi = 0$ at the waist reaches $\\chi = \\pi/2$ on future infinity, so an "
+        "observer at the pole ever receives light from only the hemisphere about it on the waist.",
+    ],
+    ("universe_from_nothing", "lapse", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) in Feldbrugge, Lehners and Turok's "
+        "gauge, above the waist $t = 0$. On it $ds^2 = -\\ell^2c^2dt^2/(\\ell^2 + c^2t^2) + "
+        "(\\ell^2 + c^2t^2)\\,d\\chi^2$, with the squared radius of the 3-sphere a quadratic in $t$.",
+        "The rays keep $\\arctan(ct/\\ell) \\pm \\chi$, so the drawing is the closed slicing's with its "
+        "time stretched.",
     ],
     ("rp3_geon", "kruskal", "plane"): [
         "The plane of $T$ and $X$ ($\\theta = \\pi/2$, $\\phi = 0$) on the half $X \\ge 0$. On it "
@@ -8858,6 +9374,33 @@ CAPTIONS = {
         "Out here the spacetime is the exterior of a Bañados-Teitelboim-Zanelli hole of the same mass. The "
         "static symmetry along $t$ holds in this region alone.",
     ],
+    ("btz_shock_wave", "kruskal", "plane"): [
+        "The plane of $u$ and $v$ ($\\phi = 0$) at $R = \\ell$ and $\\alpha = 1$, the same at every $\\phi$, drawn "
+        "with $(v - u)/2$ across and $(u + v)/2$ up. Only $g_{uv}$ is nonzero on it, so the light rays are the lines "
+        "$u = $ const and $v = $ const, at 45°, and the shock is the line $u = 0$. Ahead of the shock, where "
+        "$u < 0$, infinity is the hyperbola $uv = -1$ and the singularity $r = 0$ is $uv = 1$, and behind it both "
+        "are the same hyperbolas with $v$ moved by $-\\alpha$.",
+        "The past horizon of the right outside, $v = 0$, and the future horizon of the left outside, "
+        "$v = -\\alpha$, miss each other by $\\alpha$ [shenker2014]. No Christoffel symbol turns a ray out of the "
+        "plane, so every curve drawn is a null geodesic.",
+    ],
+    ("btz_shock_wave", "discontinuous", "plane"): [
+        "The plane of $U$ and $V$ ($\\phi = 0$) at $R = \\ell$ and $\\alpha = 1$, the same at every $\\phi$, "
+        "drawn with $(V - U)/2$ across and $(U + V)/2$ up. Off the shock $U = 0$ the metric on this plane is the "
+        "black hole's, $-4\\ell^2\\,dU\\,dV/(1 + UV)^2$, with infinity on $UV = -1$ and the singularity $r = 0$ "
+        "on $UV = 1$, and light runs at 45°. The rays moving right keep their $U$ and run beside the shock. Each "
+        "ray moving left crosses it and comes out with $V$ larger by $\\alpha$, the jump of $V = v + "
+        "\\alpha\\Theta(u)$ [shenker2014].",
+        "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",
+    ],
+    ("btz_shock_wave", "exterior", "radial"): [
+        "The plane of $t$ and $r$ ($\\phi = 0$) of either outside at $R = \\ell$, the same at every $\\phi$. The "
+        "cones close at the horizon $r = R$, where $g^{rr} = (r^2 - R^2)/\\ell^2$ vanishes, and a ray reaches "
+        "$r \\to \\infty$ in a finite time, as in anti-de Sitter space.",
+        "Each outside is the BTZ black hole's, and the shock lies on its edge, on the future horizon of the right "
+        "outside and the past horizon of the left [shenker2014]. Quanta let go from the left boundary a time $t_w$ "
+        "before $t = 0$ make the shift $\\alpha = (E/4mc^2)e^{cRt_w/\\ell^2}$ [shenker2014].",
+    ],
     ("btz", "stationary", "static"): [
         "The plane of $t$ and $r$ ($\\phi = 0$) of the hole without rotation ($M = 1$, $J = 0$), the "
         "same at every $\\phi$ by circular symmetry. The cones close at the horizon $r_+ = \\sqrt{M}\\,\\ell$, "
@@ -8943,6 +9486,21 @@ CAPTIONS = {
         "The cones close at the horizon $r = |A|/c$, which is the edge of the chart: $T$ runs to infinity "
         "there along every ray. The dotted line is the ergosurface, $g_{TT} = 0$ at $r = 2|A|/c$.",
     ],
+    ("unruh_acoustic_hole", "laboratory", "infall"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of a fluid falling into $r = 0$ at "
+        "$c\\,r_0^2/r^2$. Its null curves are the radial sound rays, $dr/dt = -c\\,r_0^2/r^2 \\pm c$: sound "
+        "moving at $c$ through a fluid that carries it inward.",
+        "The outgoing rays stand still at the horizon $r = r_0$, where the fluid falls as fast as sound runs "
+        "out, and inside it both edges of every future cone point to $r = 0$. Each moment of constant $t$ is "
+        "flat space, and the Kretschmann scalar $468\\,r_0^8/r^{12}$ diverges at $r = 0$.",
+    ],
+    ("unruh_acoustic_hole", "unruh", "exterior"): [
+        "The plane of $\\tau$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the horizon, in Unruh's time. "
+        "Its null curves are the radial sound rays, $c\\,d\\tau/dr = \\pm 1/(1 - r_0^4/r^4)$, symmetric in "
+        "$\\tau$ as Schwarzschild's are in his own time.",
+        "The cones close at the horizon $r = r_0$, the edge of the chart: $\\tau$ runs to infinity there along "
+        "every ray, while the laboratory's $t$ goes through.",
+    ],
     ("draining_bathtub", "vortex_filament", "drain"): [
         "The plane of $t$ and $r$ ($z = 0$) of a vortex filament with a line sink ($A < 0$, $B = "
         "\\sqrt{3}\\,|A|$) with $\\theta$ divided out, the same at every $z$. Its null curves are the shadows on "
@@ -9009,6 +9567,29 @@ CAPTIONS = {
         "inside $r_-$ the lines of constant $r$ are timelike again, down to the ring singularity at $r = 0$. "
         "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = 1.15\\,\\ell_3$, and between it and $r_+$ "
         "no observer keeps $\\phi$ fixed.",
+    ],
+    ("big_rip", "cartesian", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$) for $w = -3/2$, with $a = (-t/t_0)^{-4/3}$ and the Big Rip at "
+        "$t = 0$, where the Kretschmann scalar diverges. The edges of the cones are $dx/d(ct) = \\pm 1/a$, so "
+        "the cones open out toward the past and close up toward the rip.",
+        "Light covers the comoving distance $3ct_0(-t/t_0)^{7/3}/7$ before the rip, so the observer at $x = 0$ "
+        "receives signals only from between the two marked rays, its event horizon, which closes in on it as "
+        "$t \\to 0$.",
+    ],
+    ("big_rip", "comoving", "radial"): [
+        "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for $w = -3/2$, the same at every "
+        "other angle by spherical symmetry, with the Big Rip at $t = 0$. The marked ray is the event horizon "
+        "of the observer at $r = 0$, $r = 3ct_0(-t/t_0)^{7/3}/7$.",
+        "The dotted curve, where $|\\nabla R|^2 = 0$ for the areal radius $R = ar$, is the Hubble sphere "
+        "$R = c/H = 3c(-t)/4$, the apparent horizon of the same observer, and it shrinks to the centre at the rip "
+        "with the event horizon inside it.",
+    ],
+    ("big_rip", "conformal", "radial"): [
+        "The plane of the conformal time $\\eta$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for $w = -3/2$. The "
+        "metric on it is $a^2(-d\\eta^2 + dr^2)$, so the rays are straight 45° lines, and the Big Rip is the "
+        "line $\\eta = 0$, where $a = (-\\eta/\\eta_0)^{-4/7}$ diverges.",
+        "The event horizon of the observer at $r = 0$ is the ray $r = -\\eta$, and the Hubble sphere, dotted, "
+        "lies at $r = -7\\eta/4$.",
     ],
     ("taub_nut", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $l = "
@@ -9210,6 +9791,50 @@ CAPTIONS = {
         "it travels down the throat.",
         "The horizon lies at $\\sigma \\to -\\infty$, an infinite proper distance away at every moment of "
         "$t$.",
+    ],
+    ("freund_rubin", "global", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, $\\psi = 0$) in the global "
+        "chart, each point in the plane a 2-sphere of anti-de Sitter space times a 7-sphere of radius $2L$. The "
+        "rays have $d\\rho/d(ct) = \\pm\\cosh\\rho/L$, so they flatten as $\\rho$ grows, and a ray from the "
+        "centre reaches $\\rho \\to \\infty$, the boundary of anti-de Sitter space, in the finite time "
+        "$\\pi L/2c$.",
+        "The Kretschmann scalar is $117/4L^4$ at every event, $24/L^4$ from anti-de Sitter space and $21/4L^4$ "
+        "from the 7-sphere, whose radius is $2L$ everywhere.",
+    ],
+    ("freund_rubin", "conformal", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, $\\psi = 0$) in the conformal "
+        "chart, where the metric on the plane is $(-c^2dt^2 + L^2d\\chi^2)/\\cos^2\\chi$, conformal to flat, so "
+        "the rays are lines at 45°.",
+        "The boundary of anti-de Sitter space is the edge $\\chi = \\pi/2$, a finite angle away, which a ray from "
+        "the centre reaches after the time $\\pi L/2c$. The 7-sphere has the radius $2L$ at every event of the "
+        "plane.",
+    ],
+    ("freund_rubin", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, $\\psi = 0$) in the static chart, "
+        "with $r$ the areal radius of the spheres of anti-de Sitter space. The cones stay open everywhere, since "
+        "$g^{rr} = 1 + r^2/L^2$ never vanishes.",
+        "The rays have $dr/d(ct) = \\pm(1 + r^2/L^2)$, so they flatten as $r$ grows and reach $r \\to \\infty$, the "
+        "boundary of anti-de Sitter space, in the finite time $\\pi L/2c$ from the centre.",
+    ],
+    ("freund_rubin", "poincare", "radial"): [
+        "The plane of $t$ and $r$ ($x = y = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, $\\psi = 0$) in the Poincaré chart, the throat of a stack "
+        "of membranes. The rays have $dr/d(ct) = \\pm r^2/L^2$ and take infinite $t$ to reach $r = 0$, the "
+        "Poincaré horizon.",
+        "At large $r$ the cones open without limit, and a ray reaches $r \\to \\infty$, the boundary of "
+        "anti-de Sitter space, in finite $t$.",
+    ],
+    ("freund_rubin", "proper", "radial"): [
+        "The plane of $t$ and $\\sigma$ ($x = y = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, $\\psi = 0$), with $\\sigma$ the proper distance "
+        "across the surfaces of constant $\\sigma$. The rays have $d\\sigma/d(ct) = \\pm e^{\\sigma/L}$, so a ray "
+        "slows by a factor of $e$ for each length $L$ it travels toward the Poincaré horizon.",
+        "The horizon lies at $\\sigma \\to -\\infty$, an infinite proper distance away at every moment of $t$.",
+    ],
+    ("freund_rubin", "proper", "circle"): [
+        "The plane of $t$ and $\\psi$ ($x = y = 0$, $\\sigma = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$), a great circle of the 7-sphere "
+        "against time at one point of anti-de Sitter space, drawn as the arc $2L\\psi$ in units of $L$ over one "
+        "turn, its two edges one line. On it the metric is $-c^2dt^2 + 4L^2d\\psi^2$, so the rays are lines at 45°.",
+        "A ray takes the time $4\\pi L/c$ to go once round the sphere, four times as long as a ray takes to cross "
+        "anti-de Sitter space from its boundary to the centre and back out.",
     ],
     ("interior_schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the "
@@ -10024,6 +10649,63 @@ CAPTIONS = {
         "The conformal factor is $\\psi = 1.17$ at the centre and falls toward $1$ far away, so the sphere "
         "that holds 99% of the mass sits at a smaller $R$ than its areal radius.",
     ],
+    ("vuorio_warped_ads", "cylindrical", "inside"): [
+        "The cylinder of $t$ and $\\phi$ ($r = r_c/2$, $r_c = \\ln 3/\\Omega$, $m = \\Omega$) about the axis "
+        "$r = 0$, one integral curve of $\\partial_t$ in Vuorio's universe. It is opened along the line "
+        "$\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. "
+        "The metric on it is the same at every point, so its null curves are straight: "
+        "$\\Omega c\\,dt = (2 - \\sqrt{3})\\,d\\phi$ moving to $+\\phi$ and "
+        "$\\Omega c\\,dt = -(5/\\sqrt{3} - 2)\\,d\\phi$ moving to $-\\phi$. The cross term tilts every cone toward "
+        "$+\\phi$, and a curve moving that way covers about $3.3$ times the $\\phi$ in a given $t$ that one moving "
+        "the other way does.",
+        "At this radius the curve moving to $+\\phi$ is a null geodesic: $\\Gamma^r{}_{t\\phi}$ and "
+        "$\\Gamma^r{}_{\\phi\\phi}$ cancel along it, and light sent that way circles the axis at $r = r_c/2$. "
+        "The curve moving to $-\\phi$ is not a geodesic, and light launched along it is turned away from the "
+        "axis. The horizontal lines, circles of constant $t$, lie outside every cone and are spacelike.",
+    ],
+    ("vuorio_warped_ads", "cylindrical", "beyond"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 3r_c/2$, $r_c = \\ln 3/\\Omega$, $m = \\Omega$), opened along "
+        "$\\phi = \\pm\\pi$ in the same way. Beyond $r_c$ the coefficient $g_{\\phi\\phi}$ is negative, and the "
+        "cones have tipped over past the horizontal: the null curve moving to $+\\phi$, "
+        "$\\Omega c\\,dt = -(5/\\sqrt{3} - 2)\\,d\\phi$, goes down in $t$, while the one moving to $-\\phi$, "
+        "$\\Omega c\\,dt = -(41/3\\sqrt{3} - 2)\\,d\\phi$, climbs steeply. Every horizontal line, run toward "
+        "$+\\phi$, points into the future cones, so the circle of constant $t$ and $r$ is a closed timelike curve.",
+        "The curve moving to $+\\phi$ comes round to its own $\\phi$ at a $t$ earlier by "
+        "$2\\pi(5/\\sqrt{3} - 2)/\\Omega c$ after each turn. None of the curves drawn here is a null geodesic: "
+        "light launched along one moving to $+\\phi$ is turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and "
+        "$\\Gamma^r{}_{\\phi\\phi}$, and light launched along one moving to $-\\phi$ is turned away from it.",
+    ],
+    ("vuorio_warped_ads", "disc", "plane"): [
+        "The plane of $t$ and $R$ through the centre of Poincaré's disc ($\\phi = 0$ to the right and "
+        "$\\phi = \\pi$ to the left, $m = \\Omega$, Vuorio's universe). The metric on it is "
+        "$-c^2dt^2 + 4\\,dR^2/\\Omega^2(1 - R^2)^2$, so the null curves are $\\Omega ct = \\pm 2\\,\\mathrm{artanh}\\,R$ "
+        "plus a constant, and the edge $R = 1$ lies at an infinite distance, which they approach only as $t$ grows "
+        "without bound.",
+        "The surfaces $t = $ const are spacelike only inside $R = 1/2$, where $g^{tt} = 4R^2 - 1$ is negative, so the "
+        "cones are oriented by $\\partial_t$, which is timelike everywhere. At $R = 1/2$ the circle of constant $t$ "
+        "and $R$ is null, and beyond it the circles are closed timelike curves, which cross this plane. The curves "
+        "drawn are not null geodesics: since $\\Gamma^\\phi{}_{tR} = -\\Omega/R$ is not zero, light launched along "
+        "one is turned out of the plane into $\\phi$.",
+    ],
+    ("vuorio_warped_ads", "fibred", "plane"): [
+        "The plane of $t$ and $\\sigma$ ($u = 0$, $m = \\Omega$, Vuorio's universe), through the geodesic "
+        "$\\sigma = 0$ of the hyperbolic plane. The metric on it is $-c^2dt^2 + d\\sigma^2/\\Omega^2$, so the curves "
+        "drawn are null and run at 45°.",
+        "The surfaces $t = $ const are spacelike only where $\\sinh^2\\sigma < 1/3$, where "
+        "$g^{tt} = (3\\sinh^2\\sigma - 1)/\\cosh^2\\sigma$ is negative, so the cones are oriented by $\\partial_t$, "
+        "which is timelike everywhere. The curves are not null geodesics: since "
+        "$\\Gamma^u{}_{t\\sigma} = -\\Omega/\\cosh\\sigma$ is not zero, light launched along one is turned out of "
+        "the plane into $u$.",
+    ],
+    ("vuorio_warped_ads", "horospherical", "tx"): [
+        "The plane of $t$ and $x$ ($y = 0$, $m = \\Omega$, Vuorio's universe), the plane Gödel drew his own "
+        "universe on. The metric on it is $-c^2dt^2 + dx^2$, so the curves drawn are null and run at 45°.",
+        "The surfaces $t = $ const are nowhere spacelike, since $g^{tt} = 3$ is positive, so the cones are oriented "
+        "by $\\partial_t$, which is timelike everywhere. The curves are not null geodesics: since "
+        "$\\Gamma^y{}_{tx} = -\\Omega e^{-\\Omega x}$ is not zero, light launched along one is turned out of the "
+        "plane into $y$. The closed timelike curves circle each integral curve of $\\partial_t$ beyond "
+        "$r_c = \\ln 3/\\Omega$, through $y$ as well as $x$, so they cross this plane.",
+    ],
     ("tov", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through a star of fluid with a polytrope "
         "for its equation of state, the same at every other angle by spherical symmetry. Its mass and redshift "
@@ -10526,6 +11208,35 @@ CAPTIONS = {
         "both ends, so the universe is conformal to the whole of Minkowski space. The dotted curve is the Hubble "
         "sphere, where $|\\nabla R|^2 = 0$ for the areal radius $R = ar$.",
     ],
+    ("poincare_dodecahedral", "comoving", "through"): [
+        "A closed universe of dust along a great circle through us and the centre of a face of our cell, in the "
+        "plane $\\theta = \\pi/2$, with $x = \\chi$ on the right at $\\phi = 0$ and $x = -\\chi$ on the left at "
+        "$\\phi = \\pi$. A Clifford translation through $\\pi/5$ carries the circle onto itself, so it passes "
+        "through ten copies of the cell, and the edges $x = \\pm\\pi$ are one line, the world line of our image at "
+        "the antipode.",
+        "The cones are $d\\chi/d(ct) = \\pm 1/a$, wide open near the bang and the crunch, where the Kretschmann "
+        "scalar diverges. Our past light cone at the moment of greatest expansion crosses the world line of an "
+        "image of us at every $\\pi/5$, five in each direction, the last of them at the bang.",
+    ],
+    ("poincare_dodecahedral", "toroidal", "circle"): [
+        "The same closed universe of dust on the great circle $v = 0$ of the toroidal coordinates, along which "
+        "$\\alpha$ alone moves, its two edges $\\alpha = 0$ and $\\alpha = 2\\pi$ one line. The "
+        "identification $(\\alpha, \\gamma) \\to (\\alpha + \\pi/5, \\gamma + \\pi/5)$ moves every point of this "
+        "circle a tenth of the way round it, so the vertical lines are one world line drawn ten times.",
+        "Light from the bang crosses five cells by the moment of greatest expansion and ten by the crunch: the "
+        "conformal time $\\psi$ runs from $0$ to $2\\pi$, and along the circle a ray keeps $\\psi \\pm \\alpha$ "
+        "fixed.",
+    ],
+    ("poincare_dodecahedral", "conformal", "near"): [
+        "Luminet's universe in the conformal time, along the line from us to the centre of a face of our cell. "
+        "The metric on the plane is $a^2(-d\\eta^2 + d\\chi^2)$, so the rays are straight lines at 45°, and the "
+        "drawing runs from the bang at $\\eta = 0$ to $\\eta = 0.5168$, where $a$ diverges and the universe "
+        "reaches its future infinity.",
+        "Our past light cone today meets the last scattering at $\\chi = 0.3758$, beyond the face of our cell at "
+        "$\\pi/10 = 0.3142$, and so does the past light cone of our nearest image on the other side of the "
+        "face. The two spheres of last scattering cross, and from $\\tan(\\pi/10) = \\tan(0.3758)\\cos\\alpha$ "
+        "each pair of matched circles has the angular radius $\\alpha = 34.6°$.",
+    ],
     ("small_universes", "torus", "cell"): [
         "The plane of $t$ and $x$ ($y = z = 0$) of a torus of dust, a cylinder drawn unrolled, its edges $x = 0$ "
         "and $x = L$ one line. The edges of the cones are $dx/d(ct) = \\pm 1/a$, wide open near the big bang "
@@ -10938,6 +11649,71 @@ CAPTIONS = {
         "Between the singularity, the past horizon, and the surface lies what is left of the white hole, and to the "
         "right of the past horizon the world outside $r_s$. The ingoing rays that set out earliest, $V$ just above "
         "zero, run beside the past horizon, and the surface crosses every one of them on its way out.",
+    ],
+    ("black_to_white_hole", "interior", "bounce"): [
+        "The plane of $u$ and $v$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the shell, drawn with $(v - u)/2 = r$ "
+        "across and $(u + v)/2 = ct$ up, so that every light ray runs at 45°. Space here is flat. The shell falls "
+        "in along $v = 0$, reaches the centre at the bounce, $u = v = 0$, and goes out along $u = 0$, so the flat "
+        "region is the inside of the past and future light cones of the bounce.",
+        "Outside those cones lie the quantum region and the two flaps of Kruskal's spacetime, where these "
+        "coordinates do not reach. The shell enters the quantum region at $E$, at $u = -r_s$ and $r = r_s/2$, "
+        "and its stretch from $E$ to the bounce borders the quantum region on the inside.",
+    ],
+    ("black_to_white_hole", "kruskal", "falling"): [
+        "The plane of $U$ and $V$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell before the bounce, drawn "
+        "with $(V - U)/2$ across and $(U + V)/2$ up, so that every light ray runs at 45°. The shell falls in along "
+        "$V = 3/5$, the lower left edge. The upper edge is the surface of time symmetry $U + V = 0$ out from $\\Delta$, "
+        "at $r = 7r_s/6$, and the spacelike geodesic from $\\Delta$ to $E$, where the shell has reached "
+        "$r = r_s/2$.",
+        "The quantum region lies above that edge. The outgoing ray $U = 0$ is the apparent horizon $r = r_s$, "
+        "and between it, the shell, and the geodesic every sphere is trapped: both families of light move to "
+        "smaller $r$.",
+    ],
+    ("black_to_white_hole", "kruskal", "rising"): [
+        "The plane of $U$ and $V$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell after the bounce, the mirror "
+        "image of the black hole flap in $(U, V) \\to (-V, -U)$, drawn in the same coordinates of Kruskal's "
+        "spacetime. The shell goes out along $U = -3/5$, the upper left edge, and the lower edge is the mirror image of the first "
+        "flap's upper edge, with the quantum region below it.",
+        "The two flaps overlap in Kruskal's spacetime, in a sliver about $U + V = 0$ between $r = 1.12\\,r_s$, "
+        "where the shell crosses it, and $\\Delta$: the bounce covers that part of Kruskal's spacetime twice. "
+        "The ingoing ray $V = 0$ is the apparent horizon of the white hole, and between it, the shell, and the "
+        "edge every sphere is past trapped: both families of light move to larger $r$.",
+    ],
+    ("black_to_white_hole", "schwarzschild", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell and outside $r_s$ before "
+        "the bounce, with $t = 0$ on the surface of time symmetry. The shell comes in from far away and slows as "
+        "it nears $r_s$, which it reaches only as $t \\to \\infty$, and at $t = 0$ it is at $r = 1.12\\,r_s$.",
+        "Beyond $\\Delta$, at $r = 7r_s/6$, the flap ends on $t = 0$, and its mirror image above it is the flap "
+        "after the bounce. Between $\\Delta$ and $r_s$ its edge is the geodesic to $E$, which climbs to "
+        "$t \\to \\infty$ along $r_s$; beyond that edge lies the quantum region.",
+    ],
+    ("black_to_white_hole", "painleve_gullstrand_ingoing", "falling"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell before the bounce, in the "
+        "Painlevé-Gullstrand time, which runs on through $r_s$. The shell crosses $r_s$ at $ct = -1.41\\,r_s$ and "
+        "reaches $E$, at $r = r_s/2$, at $ct = -1.18\\,r_s$.",
+        "The upper edge is the geodesic from $E$ out to $\\Delta$, at $r = 7r_s/6$ and $ct = -1.10\\,r_s$, and "
+        "beyond $\\Delta$ the surface of time symmetry, where Schwarzschild's $t$ is zero; above it lies the "
+        "quantum region, and further out the flap after the bounce. Inside $r_s$ both edges of every cone point "
+        "to smaller $r$.",
+    ],
+    ("black_to_white_hole", "painleve_gullstrand_outgoing", "rising"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell after the bounce, in the "
+        "Painlevé-Gullstrand time of observers flying out, the time reverse of the chart before the bounce. The "
+        "shell leaves the mirror image of $E$, at $r = r_s/2$, at $ct = 1.18\\,r_s$ and crosses $r_s$ at "
+        "$ct = 1.41\\,r_s$.",
+        "The lower edge is the mirror image of the geodesic, from $\\Delta$ at $ct = 1.10\\,r_s$ in to the image "
+        "of $E$, and beyond $\\Delta$ the surface of time symmetry; below it lie the quantum region and the flap "
+        "before the bounce. Inside $r_s$ both edges of every cone point to larger $r$.",
+    ],
+    ("black_to_white_hole", "lemaitre", "falling"): [
+        "The plane of $\\tau$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell before the bounce, "
+        "drawn with $\\rho - c\\tau = 2r^{3/2}/3\\sqrt{r_s}$ across, so that every sphere of fixed $r$ is a "
+        "vertical line and $r_s$ is at $2r_s/3$. Each observer of the chart falls from rest at infinity along a "
+        "line of fixed $\\rho$, which runs down to the right at 45°, and its proper time is $\\tau$, the "
+        "Painlevé-Gullstrand time.",
+        "The shell reaches $E$, at $r = r_s/2$, at $c\\tau = -1.18\\,r_s$. The upper edge is the geodesic from "
+        "$E$ out to $\\Delta$, at $r = 7r_s/6$, and beyond it the surface of time symmetry, with the quantum "
+        "region above it.",
     ],
     ("white_hole", "novikov_comoving", "vacuole"): [
         "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through Novikov's vacuole, "
@@ -15101,6 +15877,13 @@ CLOSED_FORMS = {
         (lambda t, r: t + _sads_rstar(r), lambda t, r: t - _sads_rstar(r), _away(1.0)),
     ("quantum_btz", "rotating", "rotating"):
         (lambda t, r: t + _qbtz_rotating_rstar(r), lambda t, r: t - _qbtz_rotating_rstar(r), _away(1.0, 0.5)),
+    # Unruh's acoustic black hole at r_0 = c = 1: dr/dt = -1/r^2 -+ 1 in the laboratory, and
+    # c dtau/dr = -+ r^4/(r^4 - 1) in Unruh's time, r_* = r + ln|(r - 1)/(r + 1)|/4 - arctan(r)/2.
+    ("unruh_acoustic_hole", "laboratory", "infall"):
+        (lambda t, r: t + r - np.arctan(r), lambda t, r: t - r - np.log(np.abs((r - 1) / (r + 1))) / 2, _away(1.0)),
+    ("unruh_acoustic_hole", "unruh", "exterior"):
+        (lambda T, r: T + r + np.log((r - 1) / (r + 1)) / 4 - np.arctan(r) / 2,
+         lambda T, r: T - r - np.log((r - 1) / (r + 1)) / 4 + np.arctan(r) / 2, _away(1.0)),
     ("schwarzschild", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"):
@@ -15320,6 +16103,15 @@ CLOSED_FORMS = {
     ("self_creating_universe", "steady_state", "tx"):
         (lambda tau, x: x - np.exp(-tau), lambda tau, x: x + np.exp(-tau), None),
     ("self_creating_universe", "conformal", "through"): (lambda e, r: e + r, lambda e, r: e - r, lambda e, r: e < -0.02),
+    # The universe from nothing at l = 1: chi +- the conformal time, arctan(sinh t) in the closed slicing,
+    # arcsec(a) above the join, eta itself and arctan(t) in the quadratic gauge.
+    ("universe_from_nothing", "closed", "radial"):
+        (lambda t, c: np.arctan(np.sinh(t)) + c, lambda t, c: np.arctan(np.sinh(t)) - c, None),
+    ("universe_from_nothing", "scale_factor", "radial"):
+        (lambda a, c: np.arccos(1 / a) + c, lambda a, c: np.arccos(1 / a) - c, lambda a, c: a > 1.02),
+    ("universe_from_nothing", "conformal", "radial"): (lambda e, c: e + c, lambda e, c: e - c, None),
+    ("universe_from_nothing", "lapse", "radial"):
+        (lambda t, c: np.arctan(t) + c, lambda t, c: np.arctan(t) - c, None),
     # The RP3 geon at r_s = 1: T -+ X in Kruskal's plane, Schwarzschild's r_* in the exterior, and the same
     # r_* of the areal radius rho (1 + 1/4 rho)^2 in the isotropic chart.
     ("rp3_geon", "kruskal", "plane"): (lambda T, X: T + X, lambda T, X: T - X, None),
@@ -15536,6 +16328,17 @@ CLOSED_FORMS = {
         (lambda v, x: v, lambda v, x: v - 2 * _witten_xstar(x), lambda v, x: np.abs(x) > 0.02),
     ("witten_black_hole", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, x: u + 2 * _witten_xstar(x), lambda u, x: u, lambda u, x: np.abs(x) > 0.02),
+    # The black hole of Jackiw and Teitelboim at L = r_h = 1: the tortoise coordinate is
+    # ln|(r - 1)/(r + 1)|/2 in the static chart and ln tanh(rho/2) in the proper distance, and the
+    # Kruskal, global and Poincare charts are conformally flat in their own coordinates.
+    ("jackiw_teitelboim_black_hole", "static", "radial"):
+        (lambda t, r: t + np.log(np.abs((r - 1) / (r + 1))) / 2, lambda t, r: t - np.log(np.abs((r - 1) / (r + 1))) / 2,
+         lambda t, r: np.abs(r - 1) > 0.02),
+    ("jackiw_teitelboim_black_hole", "proper_distance", "radial"):
+        (lambda t, p: t + np.log(np.tanh(p / 2)), lambda t, p: t - np.log(np.tanh(p / 2)), lambda t, p: p > 0.02),
+    ("jackiw_teitelboim_black_hole", "kruskal", "plane"): (lambda U, V: V, lambda U, V: U, None),
+    ("jackiw_teitelboim_black_hole", "global", "strip"): (lambda t, s: t + s, lambda t, s: t - s, None),
+    ("jackiw_teitelboim_black_hole", "poincare", "tz"): (lambda T, z: T + z, lambda T, z: T - z, None),
     # Roberts's collapse: the advanced and the retarded null coordinate v and u, in each chart's own coordinates.
     **{("roberts", "double_null", case): (lambda u, v: v, lambda u, v: u, None) for case in ROBERTS_CASES},
     # Hiscock's evaporating hole: an ingoing ray keeps v and an outgoing one u, whatever the mass
@@ -15585,6 +16388,10 @@ CLOSED_FORMS = {
          lambda t, u: t - np.sign(u) * _rstar(np.sqrt(1 + u ** 2), [1, -1]), lambda t, u: np.abs(u) > 0.2),
     # With r_0 = 1 and Q_e = 1/2, and through the throat r = 1 + u^2 and r = 1/(1 - x^2), where r_* changes
     # sign with the coordinate.
+    # Interstellar's wormhole: every plane of t and l is flat, and the rays keep ct -+ l.
+    ("interstellar_wormhole", "proper_distance", "radial"): (lambda t, l: t + l, lambda t, l: t - l, None),
+    ("interstellar_wormhole", "cylinder", "radial"): (lambda t, l: t + l, lambda t, l: t - l, None),
+    ("interstellar_wormhole", "flare", "radial"): (lambda t, l: t + l, lambda t, l: t - l, None),
     ("einstein_dirac_maxwell_wormhole", "areal", "radial"):
         (lambda t, r: t + _edm_rstar(r), lambda t, r: t - _edm_rstar(r), lambda t, r: r > 1.0005),
     ("einstein_dirac_maxwell_wormhole", "bronnikov_kim", "radial"):
@@ -15670,6 +16477,12 @@ CLOSED_FORMS = {
         (lambda t, r: _kt_eta(t) + r, lambda t, r: _kt_eta(t) - r, None),
     ("kopczynski_trautman", "conformal", "radial"): (lambda e, r: e + r, lambda e, r: e - r, None),
     # The small universes' open dust: the conformal time of the parametric solution, found by Newton's method.
+    # The Poincare dodecahedral universe: psi(t) of the closed dust, and the conformal chart's own eta.
+    ("poincare_dodecahedral", "comoving", "through"): (lambda t, c: _pd_psi(t) + c, lambda t, c: _pd_psi(t) - c,
+                                                      lambda t, c: np.abs(t - np.pi / 2) < 1.55),
+    ("poincare_dodecahedral", "toroidal", "circle"): (lambda t, c: _pd_psi(t) + c, lambda t, c: _pd_psi(t) - c,
+                                                     lambda t, c: np.abs(t - np.pi / 2) < 1.55),
+    ("poincare_dodecahedral", "conformal", "near"): (lambda e, c: e + c, lambda e, c: e - c, None),
     ("small_universes", "hyperbolic", "radial"): (lambda t, c: _small_eta(t) + c, lambda t, c: _small_eta(t) - c,
                                                   lambda t, c: t > 0.02),
     ("small_universes", "horn", "along"): (lambda t, x: _small_eta(t) + x, lambda t, x: _small_eta(t) - x,
@@ -15702,6 +16515,11 @@ CLOSED_FORMS = {
     ("nordstrom_scalar", "uniform", "tz"): (lambda t, z: t + z, lambda t, z: t - z, lambda t, z: z > 0.0005),
     ("nordstrom_scalar", "dust", "radial"): (lambda t, r: t + r, lambda t, r: t - r, lambda t, r: np.abs(t) < 0.9995),
     ("minkowski", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("supertranslation_hair", "static", "equator"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("supertranslation_hair", "bondi_retarded", "equator"):
+        (lambda u, r: u + 2 * np.sqrt(r ** 2 + 2.25), lambda u, r: u, None),
+    ("supertranslation_hair", "bondi_advanced", "equator"):
+        (lambda v, r: v, lambda v, r: v - 2 * np.sqrt(r ** 2 + 2.25), None),
     ("minkowski", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("minkowski", "rindler", "tx"):
         (lambda T, X: T + np.log(X), lambda T, X: T - np.log(X), lambda T, X: X > 1e-3),
@@ -15742,6 +16560,15 @@ CLOSED_FORMS = {
     ("three_brane_throat", "throat", "radial"): (lambda t, r: t - 1 / r, lambda t, r: t + 1 / r, lambda t, r: r > 0.05),
     ("three_brane_throat", "throat_proper", "radial"):
         (lambda t, s: t - np.exp(-s), lambda t, s: t + np.exp(-s), None),
+    # Freund and Rubin's anti-de Sitter space times a 7-sphere at L = 1: ct -+ r_* with r_* = arctan(sinh rho),
+    # chi, arctan(r), -1/r and -e^(-sigma) on the five charts, and ct -+ 2 psi round the 7-sphere.
+    ("freund_rubin", "global", "radial"):
+        (lambda t, r: t + np.arctan(np.sinh(r)), lambda t, r: t - np.arctan(np.sinh(r)), None),
+    ("freund_rubin", "conformal", "radial"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("freund_rubin", "static", "radial"): (lambda t, r: t + np.arctan(r), lambda t, r: t - np.arctan(r), None),
+    ("freund_rubin", "poincare", "radial"): (lambda t, r: t - 1 / r, lambda t, r: t + 1 / r, lambda t, r: r > 0.05),
+    ("freund_rubin", "proper", "radial"): (lambda t, s: t - np.exp(-s), lambda t, s: t + np.exp(-s), None),
+    ("freund_rubin", "proper", "circle"): (lambda t, p: t + 2 * p, lambda t, p: t - 2 * p, None),
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     # The throat of extreme Kerr at r_0 = 1: each plane is conformal to a chart of AdS2, whose rays
@@ -15754,6 +16581,11 @@ CLOSED_FORMS = {
         (lambda t, r: t + np.log(1 - 1 / r), lambda t, r: t - np.log(1 - 1 / r), lambda t, r: r > 1.02),
     ("godel", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("som_raychaudhuri", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("vuorio_warped_ads", "horospherical", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("vuorio_warped_ads", "fibred", "plane"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    # On Poincare's disc c dt = +-2 dR/(1 - R^2) at m = 1.
+    ("vuorio_warped_ads", "disc", "plane"): (lambda t, R: t + 2 * np.arctanh(R), lambda t, R: t - 2 * np.arctanh(R),
+                                              lambda t, R: np.abs(R) < 0.95),
     # Inside Schwarzschild's horizon dr/dT = +-T/(1 - T), so r +- (T + ln(1 - T)) is constant.
     ("kantowski_sachs", "schwarzschild_interior", "Tr"):
         (lambda T, r: r - T - np.log(1 - T), lambda T, r: r + T + np.log(1 - T), lambda T, r: T < 0.95),
@@ -15852,6 +16684,11 @@ CYLINDERS = {
     # Som and Raychaudhuri's block of t and phi is van Stockum's, with R = c/Omega.
     ("som_raychaudhuri", "cylindrical", "inside"): (-0.75, 0.25),
     ("som_raychaudhuri", "cylindrical", "beyond"): (-3.75, -0.75),
+    # Vuorio's universe, Omega = m = 1: k = -H - D moving left and D - H moving right, with
+    # H = 4 sinh^2(r/2) and D = sinh r, which at r = ln 3/2 are 1/sqrt 3 and 4/sqrt 3 - 2, and at
+    # 3 ln 3/2 are 13/3 sqrt 3 and 28/3 sqrt 3 - 2.
+    ("vuorio_warped_ads", "cylindrical", "inside"): (2 - 5 / math.sqrt(3), 2 - math.sqrt(3)),
+    ("vuorio_warped_ads", "cylindrical", "beyond"): (2 - 41 / (3 * math.sqrt(3)), 2 - 5 / math.sqrt(3)),
     # Bonnor's dust cloud in its plane z = 0: k = a^2/rho - rho moving left and a^2/rho + rho moving
     # right, at rho = a/2, inside the null circle, and at 3a/2.
     ("bonnor_rotating_dust", "cylindrical", "inside"): (1.5, 2.5),
@@ -16038,6 +16875,8 @@ TURNING = {
     ("godel", "cylindrical", "beyond"): ("away", "toward"),
     ("som_raychaudhuri", "cylindrical", "inside"): ("away", "geodesic"),
     ("som_raychaudhuri", "cylindrical", "beyond"): ("away", "toward"),
+    ("vuorio_warped_ads", "cylindrical", "inside"): ("away", "geodesic"),
+    ("vuorio_warped_ads", "cylindrical", "beyond"): ("away", "toward"),
     ("bonnor_rotating_dust", "cylindrical", "inside"): ("away", "toward"),
     ("bonnor_rotating_dust", "cylindrical", "outside"): ("away", "away"),
     ("maitra_dust", "cylindrical", "near"): ("away", "away"),
@@ -16210,6 +17049,39 @@ CLOSED_FORMS.update({
 })
 
 
+# Haggard and Rovelli's fireworks at r_s = 1: v and u in the flat interior, V and U in Kruskal's chart,
+# ct -+ r_* in Schwarzschild's, and in the Painleve-Gullstrand charts the same written in their time,
+# v = t - 2 sqrt(r) + r + 2 ln(sqrt(r) + 1) and u = t - 2 sqrt(r) - r - 2 ln|sqrt(r) - 1| before the
+# bounce, and the time reverse after it; Lemaitre's chart is the first with t = tau and
+# r = (3 (rho - tau)/2)^(2/3).
+def _bwh_pg(t, r, sign=1):
+    s = np.sqrt(r)
+    t = sign * t
+    v, u = t - 2 * s + r + 2 * np.log(s + 1), t - 2 * s - r - 2 * np.log(np.abs(s - 1))
+    return (v, u) if sign == 1 else (-u, -v)
+
+
+def _bwh_lemaitre_r(tau, rho):
+    return np.cbrt(1.5 * (rho - tau)) ** 2
+
+
+CLOSED_FORMS.update({
+    ("black_to_white_hole", "interior", "bounce"): (lambda u, v: v, lambda u, v: u, None),
+    ("black_to_white_hole", "kruskal", "falling"): (lambda U, V: V, lambda U, V: U, None),
+    ("black_to_white_hole", "kruskal", "rising"): (lambda U, V: V, lambda U, V: U, None),
+    ("black_to_white_hole", "schwarzschild", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), _away(1)),
+    ("black_to_white_hole", "painleve_gullstrand_ingoing", "falling"):
+        (lambda t, r: _bwh_pg(t, r)[0], lambda t, r: _bwh_pg(t, r)[1], _away(1)),
+    ("black_to_white_hole", "painleve_gullstrand_outgoing", "rising"):
+        (lambda t, r: _bwh_pg(t, r, -1)[0], lambda t, r: _bwh_pg(t, r, -1)[1], _away(1)),
+    ("black_to_white_hole", "lemaitre", "falling"):
+        (lambda tau, rho: _bwh_pg(tau, _bwh_lemaitre_r(tau, rho))[0],
+         lambda tau, rho: _bwh_pg(tau, _bwh_lemaitre_r(tau, rho))[1],
+         lambda tau, rho: np.abs(_bwh_lemaitre_r(tau, rho) - 1) > 0.05),
+})
+
+
 def _lw_forms():
     """Closed forms of the null rays of Lindquist and Wheeler's lattice, r_s = c = 1. In a cell they
     keep Schwarzschild's t + r_* and t - r_*. In Clifton and Ferreira's chart sqrt(E) t = tau + F(r)
@@ -16365,6 +17237,33 @@ def _bcd_forms():
 
 
 CLOSED_FORMS.update(_bcd_forms())
+def _btz_shock_before(U, V):
+    """The value of V a ray moving left had before the pulse the discontinuous chart's delta is
+    drawn as, at alpha = l = 1: on such a ray 4 p dU^2 - 4 dU dV/(1 + UV)^2 = 0, so
+    dV/dU = p(U)(1 + UV)^2, carried back from the point to U = -0.4, where the pulse
+    p = 20 e^{-400U^2}/sqrt(pi) is below 10^-26. It is constant along the ray, and a jump of
+    exactly 1 in the limit of a narrow pulse."""
+    U, V = np.broadcast_arrays(np.asarray(U, dtype=float), np.asarray(V, dtype=float))
+    out = np.array(V, dtype=float)
+    pulse = lambda u: 20 * np.exp(-400 * u * u) / np.sqrt(np.pi)
+    for i in zip(*np.nonzero(U > -0.4)):
+        start = min(float(U[i]), 0.4)
+        solved = solve_ivp(lambda u, v: pulse(u) * (1 + u * v) ** 2, (start, -0.4), [float(V[i])],
+                           rtol=1e-12, atol=1e-13, max_step=0.005)
+        out[i] = solved.y[0, -1]
+    return out
+
+
+# The shock wave in the BTZ black hole: in the Kruskal chart a ray keeps u or v; in the discontinuous
+# chart a ray moving right keeps U, and one moving left keeps the V it had before the pulse; outside,
+# t -+ r_*.
+CLOSED_FORMS.update({
+    ("btz_shock_wave", "kruskal", "plane"): (lambda u, v: v, lambda u, v: u, None),
+    ("btz_shock_wave", "discontinuous", "plane"):
+        (_btz_shock_before, lambda U, V: U, None),
+    ("btz_shock_wave", "exterior", "radial"):
+        (lambda t, r: t + _btz_rstar(r, BTZ_STATIC), lambda t, r: t - _btz_rstar(r, BTZ_STATIC), _away(1.0)),
+})
 
 
 def verify(metrics=()):

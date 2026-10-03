@@ -468,6 +468,26 @@
       "id": "quantum_oppenheimer_snyder",
       "kind": "generalisation",
       "text": "Schwarzschild's metric with one more term, $f = 1 - 2m/r + \\alpha m^2/r^4$ with $r_s = 2m$, the vacuum outside a ball of dust that bounces as loop quantum cosmology has it [lewandowski2023]."
+    },
+    {
+      "id": "unruh_acoustic_hole",
+      "kind": "family",
+      "text": "A black hole for sound, a fluid falling into a point faster than sound inside $r_0$. Near its horizon its metric takes the form of Schwarzschild's near his, so it should glow as a black hole does [unruh1981]."
+    },
+    {
+      "id": "interstellar_wormhole",
+      "kind": "family",
+      "text": "The wormhole of the film Interstellar flares out of each mouth roughly as space opens out from Schwarzschild's horizon, a shape its builders chose for the flare with the mass and the mouth's radius set free of one another [james2015]."
+    },
+    {
+      "id": "supertranslation_hair",
+      "kind": "family",
+      "text": "Flat space with a supertranslation field on the sphere of directions. Compère and Long put the same field on this black hole as the final state of a collapse that was not spherical [compere2016final]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "composite",
+      "text": "A shell of light falls into a black hole and comes back out of a white hole. Haggard and Rovelli cut both flaps from Schwarzschild's spacetime and put a quantum region between them [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -594,7 +614,11 @@
     "basovnik2016",
     "podolsky2025",
     "bah2021",
-    "lewandowski2023"
+    "lewandowski2023",
+    "unruh1981",
+    "james2015",
+    "compere2016final",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {

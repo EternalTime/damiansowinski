@@ -17,6 +17,7 @@ import math
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import unicodedata
 import unittest
@@ -114,9 +115,22 @@ CAPTION_VOICE = (
     ("a sentence opening \"This is\" in place of a noun phrase", r"^This is\b"),
 )
 # A hyphen joins two names, a name and a word, or a designation; beyond those it is part of a
-# spelling only in these terms, and an ordinary compound is rewritten without it.
+# spelling only in these terms, and an ordinary compound is rewritten without it. A term goes on the
+# list only where its standard spelling carries the hyphen, as the no-boundary proposal and e-foldings
+# do; a sphere or a geometry of n dimensions is written with its numeral, 3-sphere, 4-sphere, 3-geometry,
+# as a designation, and needs no entry. The rule is for compounds such as "future-directed",
+# "non-singular" and "time-like", which plain English writes as one word or two.
 HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "pp-wave", "pp-waves", "scalar-tensor",
-                    "three-brane", "three-branes"}
+                    "three-brane", "three-branes", "no-boundary", "e-folding", "e-foldings"}
+
+
+def refused_hyphens(text):
+    """Every hyphenated word of a text, mathematics, quotations and citations taken out, that joins
+    no name or designation and is no established term, a term's possessive read as the term."""
+    text = re.sub(r"\[[^\]]*\]", " ", without_mathematics_or_quotations(text))
+    return [word for word in re.findall(r"[\w'’]+(?:-[\w'’]+)+", text)
+            if not any(part[0].isupper() or part[0].isdigit() for part in word.split("-"))
+            and re.sub(r"['’]s$", "", word.lower()) not in HYPHENATED_TERMS]
 
 # The templates and pages whose words reach a reader, beside the generated files, and the
 # data the site hands to agents.
@@ -830,12 +844,20 @@ class Voice(unittest.TestCase):
 
     def test_every_hyphen_joins_names_or_an_established_term(self):
         for where, value in voiced_prose():
-            text = without_mathematics_or_quotations(value)
-            for word in re.findall(r"[\w'’]+(?:-[\w'’]+)+", re.sub(r"\[[^\]]*\]", " ", text)):
-                parts = word.split("-")
-                named = any(part[0].isupper() or part[0].isdigit() for part in parts)
-                self.assertTrue(named or word.lower() in HYPHENATED_TERMS,
-                                f"{where} spells {word!r} with a hyphen; rewrite the compound without it")
+            for word in refused_hyphens(value):
+                self.fail(f"{where} spells {word!r} with a hyphen; rewrite the compound without it")
+
+    def test_the_hyphen_rule_keeps_the_names_of_physics_and_refuses_english_compounds(self):
+        for text in ("the no-boundary proposal of Hartle and Hawking", "half a 4-sphere", "for a 3-geometry",
+                     "sixty e-foldings of inflation", "one e-folding", "the no-boundary proposal's sign",
+                     "the 4-sphere's action", "Reissner-Nordström", "anti-de Sitter space",
+                     "a pp-wave", "Taub-NUT", "a 3-sphere", "the Kerr-Schild chart [kerr1965, kerr-schild]",
+                     "\"a future-directed\" quotation", "$x - y$"):
+            self.assertEqual(refused_hyphens(text), [], text)
+        for text, word in (("a future-directed curve", "future-directed"), ("a non-singular core", "non-singular"),
+                           ("a time-like line", "time-like"), ("a well-known result", "well-known"),
+                           ("half a four-sphere", "four-sphere"), ("a three-geometry", "three-geometry")):
+            self.assertEqual(refused_hyphens(text), [word], text)
 
     def test_the_rules_catch_what_he_flagged_and_leave_plain_physics_alone(self):
         def caught(text):
@@ -3302,7 +3324,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
         flat = {"minkowski", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
-                "chandrasekhar_xanthopoulos", "belinski_zakharov"}
+                "chandrasekhar_xanthopoulos", "belinski_zakharov", "big_rip"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
         # Hayward's hole forms from flat space and leaves flat space behind: the first and the last
@@ -3322,7 +3344,10 @@ class EmbeddingDiagrams(unittest.TestCase):
                         # The laboratory's moment of the draining bathtub is the plane the water moves in; the
                         # curvature sound feels is in how the moments are stacked, and the catenoid beside it is
                         # the Kerr-like chart's moment.
-                        ("draining_bathtub", "plane", 0)}
+                        ("draining_bathtub", "plane", 0),
+                        # The laboratory's moment of Unruh's acoustic black hole is the flat space the fluid falls
+                        # through, whose equator is a plane; the funnel beside it is the moment of Unruh's time.
+                        ("unruh_acoustic_hole", "space", 0)}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -3436,7 +3461,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                          {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave",
                           "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
-                          "belinski_zakharov", "moving_mirror"})
+                          "belinski_zakharov", "moving_mirror", "big_rip"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -3653,7 +3678,8 @@ class StacksAndMovies(unittest.TestCase):
     September 2026, from the numbers written and nothing else."""
 
     STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "kasner_magnetic": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
-              "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0}   # the height of a unit of time
+              "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0,
+              "big_rip": 1.0}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
@@ -3664,7 +3690,7 @@ class StacksAndMovies(unittest.TestCase):
               ("vaidya", "shell"): "$v - r$",
               ("semiclosed_world", "bag"): "$c\\tau$", ("datt_ruban_t_models", "tsphere"): "$c\\tau$",
               ("lindquist_wheeler_lattice", "lattice"): "$c\\tau$",
-              ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$",
+              ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$", ("black_to_white_hole", "collapse"): "$ct$",
               ("charged_shell", "bounce"): "$v - r$",
               ("penrose_impulsive_wave", "snap"): "$ct$",
               ("ab_metrics", "neck"): "$\\tau$",
@@ -3674,6 +3700,7 @@ class StacksAndMovies(unittest.TestCase):
               ("einstein_rosen_waves", "pulse"): "$ct$", ("nariai", "universe"): "$ct$",
               ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
               ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
+              ("supertranslation_hair", "shells"): "$\\rho$",
               ("sultana_dyer", "paraboloid"): "$\\eta$",
               ("kastor_traschen", "two_holes"): "$c\\tau$",
               ("misner_brill_lindquist", "through"): "$a$", ("misner_brill_lindquist", "between"): "$a$",
@@ -3688,7 +3715,7 @@ class StacksAndMovies(unittest.TestCase):
               ("kasner", "ring"): "$t$", ("kasner_scalar", "ring"): "$t$", ("kasner_magnetic", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
-              ("belinski_zakharov", "ring"): "$\\tau$",
+              ("belinski_zakharov", "ring"): "$\\tau$", ("big_rip", "ring"): "$t$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$",
@@ -3758,7 +3785,8 @@ class StacksAndMovies(unittest.TestCase):
             named = [L for L in labels if "curve" in L]
             self.assertEqual([L["curve"]["curve"] for L in named], list(range(len(named))), metric_id)
             self.assertEqual([L["text"] for L in named], [c["label"] for c in view["surfaces"][0]["curves"]], metric_id)
-            self.assertEqual([L["curve"]["side"] for L in named], [1, -1] * (len(named) // 2), metric_id)
+            # Right and left in turn from the first up, for any number of moments.
+            self.assertEqual([L["curve"]["side"] for L in named], [1 if i % 2 == 0 else -1 for i in range(len(named))], metric_id)
             axis, = [L for L in labels if "axis" in L]
             self.assertEqual(axis["axis"], {"surface": 0}, metric_id)
             self.assertIn(("line", "axis"), [(k, c) for k, c, _ in view["figure"]["legend"]], metric_id)
@@ -4259,7 +4287,8 @@ class TurningLightConeFigures(unittest.TestCase):
                                    "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
                                    "bonnor_rotating_dust/tipping", "maitra_dust/tipping", "tippett_tsang/ring",
-                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning", "draining_bathtub/swirl"})
+                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning", "draining_bathtub/swirl",
+                                   "vuorio_warped_ads/tipping"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -4919,6 +4948,10 @@ class Slices(unittest.TestCase):
               *(f"conformal moving_mirror/{view}" for view in (
                   "inertial_thermal", "inertial_collapse", "inertial_uniform", "null", "mirror_rest", "thermal",
                   "collapse", "rindler")),
+              # The bowl and skirt of the universe from nothing is a slice that holds the time, the four
+              # sphere and de Sitter space together, which is no moment of space, so no drawing marks one.
+              *(f"universe_from_nothing/{system}/radial" for system in ("closed", "scale_factor", "conformal", "lapse")),
+              *(f"conformal universe_from_nothing/{system}" for system in ("closed", "scale_factor", "conformal", "lapse")),
               # A plane wave and the uniform field of Nordstrom's theory, other spacetimes than the point
               # mass and the dust universe whose moments are embedded.
               "nordstrom_scalar/conformal/tx", "nordstrom_scalar/uniform/tz",
@@ -4936,6 +4969,9 @@ class Slices(unittest.TestCase):
               "kundt_waves/simplest_wave/front", "kundt_waves/simplest_wave/depth", "kundt_waves/kerr_schild/fronts",
               # A closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's.
               "small_universes/hyperbolic/radial",
+              # Closed dust from its bang to its crunch, another member of the family than Luminet's
+              # universe, whose moment today is embedded.
+              "poincare_dodecahedral/comoving/through", "poincare_dodecahedral/toroidal/circle",
               # Rosen's chart draws the axisymmetric universe, exponents (0, 0, 1); the ring embedded is
               # of the universe that starts at (-2/7, 3/7, 6/7).
               "kasner_magnetic/rosen/etax", "kasner_magnetic/rosen/etaz",
@@ -4977,6 +5013,7 @@ class Slices(unittest.TestCase):
               "conformal ab_metrics/a2_inertial", "conformal ab_metrics/a2_kruskal",
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
+              "black_to_white_hole/kruskal/rising", "black_to_white_hole/painleve_gullstrand_outgoing/rising",
               # Novikov's vacuole holds the marginally bound core, whose moments are planes, and Kruskal's
               # view of the white hole is drawn about the surface's way out, a dozen widths of the drawing
               # from the later moments embedded.
@@ -4991,7 +5028,7 @@ class Slices(unittest.TestCase):
               # The Kaluza-Klein black hole of equal charges, another member of the family than the holes of
               # one charge embedded.
               "kaluza_klein_black_hole/dyonic/radial", "conformal kaluza_klein_black_hole/equal",
-              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond",
+              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond", "vuorio_warped_ads/cylindrical/beyond",
               "conformal frw/flat", "conformal frw/open",
               "misner/rindler/plane", "conformal misner/rindler",
               # Gott and Li's region of closed timelike curves, which no moment of the inflating region meets.
@@ -5190,6 +5227,15 @@ class Slices(unittest.TestCase):
                     # Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the
                     # time and phi.
                     "cremmer_scherk/cartesian/circle": {"sphere"},
+                    # Freund and Rubin's moment t = 0 is three surfaces: the hyperbolic plane lies on the planes of
+                    # the time and the radius of the global, conformal and static charts, the cylinder on those of
+                    # the Poincare and proper distance charts and on the plane of t and psi, and the great 2-sphere
+                    # stands at one event, on none of the planes.
+                    **{f"{place}freund_rubin/{chart}{view}": hidden
+                       for hidden, charts in (({"circle", "sphere"}, ("global", "conformal", "static")),
+                                              ({"anti_de_sitter", "sphere"}, ("poincare", "proper")))
+                       for chart in charts for place, view in (("", "/radial"), ("conformal ", ""))},
+                    "freund_rubin/proper/circle": {"anti_de_sitter", "sphere"},
                     # The three-brane and its throat alone are two spacetimes, the second the limit of the
                     # first, and each chart's drawings mark the surface of its own.
                     **{f"{place}three_brane_throat/{chart}{view}": {other}
@@ -5488,6 +5534,8 @@ class Slices(unittest.TestCase):
     # horizon, and the whole moment with it, beyond Schwarzschild's chart.
     # Clifton and Ferreira's chart covers the cell while it expands, and every moment embedded is of
     # the cell at rest or contracting.
+    # The first moment of Haggard and Rovelli's shell meets it at Kruskal's U = -12, three widths of the
+    # drawing to the right of the flap before the bounce.
     # The flat interior of Israel's shell ends where the shell reaches the centre, at v - r = 0.52 r_s, so
     # the last moment, v - r = r_s, has no part in it.
     # The charged shell is inside r_- only from v - r = -0.25 r_s on, so the first two moments have no
@@ -5500,6 +5548,7 @@ class Slices(unittest.TestCase):
                        "charged_shell/exterior/inside": {("bounce", 0), ("bounce", 1)},
                        "charged_shell/exterior_outgoing/shell": {("bounce", 0), ("bounce", 1)},
                        "israel_shell/interior/radial": {("shell", 3)},
+                       "black_to_white_hole/kruskal/falling": {("collapse", 0)},
                        "israel_shell/interior/through": {("shell", 3)},
                        "hiscock/ingoing/history": {("history", 5)},
                        "hiscock/outgoing/history": {("history", 0), ("history", 1)},
@@ -5542,6 +5591,21 @@ class Slices(unittest.TestCase):
             own = (mark["view"] == "plane") == (key.split("/")[1] == "laboratory")
             sign = 1 if mark["view"] == "funnel" else -1
             return (lambda X: 0.0 if own else sign * 0.5 * math.log(X * X - 1)), list(self.reach(surface))
+        if key.startswith("unruh_acoustic_hole/"):
+            # The laboratory's t = 0 and Unruh's tau = 0, with t - tau = ln|(r - 1)/(r + 1)|/4 + arctan(r)/2
+            # at r_0 = c = 1: each a level line in its own chart and a curve in the other's.
+            own = (mark["view"] == "space") == (key.split("/")[1] == "laboratory")
+            sign = 1 if mark["view"] == "funnel" else -1
+            # Unruh's tau = 0 lies outside the horizon alone, running off to minus infinity in t toward it, so
+            # inside it the curve is taken at minus infinity and on it at a finite stand-in, which leaves a
+            # slope taken across the curve's end as steep as the curve is there.
+            def Y_of(X):
+                if own:
+                    return 0.0
+                if X < 1:
+                    return sign * -math.inf
+                return sign * (math.log(max((X - 1) / (X + 1), 1e-300)) / 4 + math.atan(X) / 2)
+            return Y_of, list(self.reach(surface))
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]
@@ -5562,6 +5626,17 @@ class Slices(unittest.TestCase):
             X0, X1 = view["box"][:2]
             self.assertAlmostEqual(X0 + mark["points"][0][0] * (X1 - X0), 10.0, delta=2e-3, msg=key)
             return (lambda X: 10.0 if key.endswith("compactified/equator") else 20.0), [10.0]
+        if key.startswith("supertranslation_hair/"):
+            # Compere and Long's shell t = 0, rho = rho_k at ell = 1 is one event of each equator:
+            # (rho_k, 0) on the static plane, and r = sqrt((rho_k - 1)^2 - 9/4) with cu = -rho_k or
+            # cv = rho_k on the Bondi planes, since t = u + W + 1 = v - W - 1 and rho = W + 1 there.
+            self.assertEqual((mark["lines"], len(mark["points"])), ([], 1), key)
+            rho = surface["time"]
+            X_at, Y_at = {"static": (rho, 0.0), "bondi_retarded": (math.sqrt((rho - 1) ** 2 - 2.25), -rho),
+                          "bondi_advanced": (math.sqrt((rho - 1) ** 2 - 2.25), rho)}[key.split("/")[1]]
+            X0, X1 = view["box"][:2]
+            self.assertAlmostEqual(X0 + mark["points"][0][0] * (X1 - X0), X_at, delta=2e-3, msg=key)
+            return (lambda X: Y_at), [X_at]
         if key.startswith("hotta_tanaka/"):
             # The event where the sphere through the ring meets the view's plane, 15 degrees from a
             # particle or on the equator, rho = a/4 or 2a in the null cylindrical chart.
@@ -5593,6 +5668,9 @@ class Slices(unittest.TestCase):
             # Farnsworth's dust is embedded on its surface eta = 3, which is u = (sinh 3 - 3)/2 W, from its rim up.
             height = 3.0 if key.split("/")[1] == "farnsworth" else (math.sinh(3.0) - 3.0) / 2
             return (lambda X: height), list(self.reach(surface))
+        if key == "poincare_dodecahedral/conformal/near":
+            # Today in Luminet's universe, eta = 0.38882 of the conformal chart, along the line from us.
+            return (lambda X: 0.38882), list(self.reach(surface))
         if key == "small_universes/horn/along":
             # The horn is embedded at the moment a = a_0, ct = (6/5 - (11/50) ln 11) a_0, from its rim up.
             return (lambda X: 1.2 - 0.22 * math.log(11)), list(self.reach(surface))
@@ -6078,6 +6156,34 @@ class Slices(unittest.TestCase):
             rho = {"unit": 1.0, "near": 0.5}[key.rsplit("/", 1)[1]]
             at = rho * rho * t / (2 * math.sqrt(2))
             return (lambda X: (2 - rho * rho) * t / (2 * math.sqrt(2)) + (X - at)), [at]
+        if key.startswith("black_to_white_hole/"):
+            # Haggard and Rovelli's shell: Schwarzschild's slice ct = t outside the shell, from the shell
+            # out, and inside it the flat moment ct = -R at which that slice meets the shell. Drawn
+            # against r and ct, Kruskal's (V - U)/2 and (U + V)/2, the Painleve-Gullstrand time
+            # t + 2 sqrt(r) + ln((sqrt(r) - 1)/(sqrt(r) + 1)), and Lemaitre's rho - c tau = 2 r^(3/2)/3.
+            if key == "black_to_white_hole/interior/bounce":
+                lo, hi = self.reach(surface, "interior")
+                return (lambda X: lo), [0.0, hi - lo]
+            lo, hi = self.reach(surface, "schwarzschild")
+
+            def pg(r):
+                return t + 2 * math.sqrt(r) + math.log((math.sqrt(r) - 1) / (math.sqrt(r) + 1))
+            if key == "black_to_white_hole/schwarzschild/radial":
+                return (lambda X: t), [lo, hi]
+            if key == "black_to_white_hole/painleve_gullstrand_ingoing/falling":
+                return pg, [lo, hi]
+            if key == "black_to_white_hole/lemaitre/falling":
+                return (lambda X: pg((1.5 * X) ** (2 / 3))), [2 * lo ** 1.5 / 3, 2 * hi ** 1.5 / 3]
+
+            def uv(r):
+                a = math.sqrt(r - 1) * math.exp(r / 2)
+                return -a * math.exp(-t / 2), a * math.exp(t / 2)
+            across = lambda r: (uv(r)[1] - uv(r)[0]) / 2  # noqa: E731
+
+            def up(X):
+                r = bisect(lambda x: across(x) - X, lo, hi) if across(lo) < X < across(hi) else (lo if X <= across(lo) else hi)
+                return sum(uv(r)) / 2
+            return up, [across(lo), across(hi)]
         if key.startswith("israel_shell/"):
             # Israel's shell: the slice v - r = t outside the shell, level against v - r, and in
             # Schwarzschild's chart the curve ct = t - ln(r - 1), which leaves the drawing toward r_s;
@@ -6103,7 +6209,10 @@ class Slices(unittest.TestCase):
             # The same moment in the time of five dimensions, t = T^k/k with k = 1 + s_5/2.
             k = 1 + 10 / (13 * math.sqrt(6) - 10)
             return (lambda X: (k * t) ** (1 / k)), None
-        if key.startswith(("kasner", "bianchi", "malament_hogarth")):
+        if key == "big_rip/conformal/radial":
+            # A moment of t at w = -3/2 is the line eta = -eta_0 (-t/t_0)^(7/3), in units of eta_0.
+            return (lambda X: -(-t) ** (7 / 3)), None
+        if key.startswith(("kasner", "bianchi", "malament_hogarth", "big_rip")):
             if key.startswith("malament_hogarth"):
                 lo, hi = self.reach(surface)
                 return (lambda X: t), [-hi, -lo, lo, hi]
@@ -6161,6 +6270,7 @@ class Slices(unittest.TestCase):
                 return (lambda X: -math.sqrt(X * X - 2 * t)), None
             return (lambda X: t - 1.5 if key.endswith("/vacuum_core/off_centre") else t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "som_raychaudhuri/cylindrical",
+                           "vuorio_warped_ads/cylindrical",
                            "maitra_dust/cylindrical",
                            "bonnor_rotating_dust/cylindrical/outside",
                            "minkowski/rindler")):
@@ -6331,6 +6441,18 @@ class Slices(unittest.TestCase):
             of_r = {"spherical": lambda r: r, "jnw": lambda r: r - 0.75,
                     "isotropic": lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2}[key.split("/")[1]]
             return (lambda X: 0.0), [of_r(1 / (1 - math.exp(-u))) for u in (hi, lo)]
+        if key.startswith("jackiw_teitelboim_black_hole/"):
+            # The Euclidean disc is read in the proper distance rho at L = r_h = 1, and its meridians are the
+            # moment t = 0: level in every chart, from the horizon r = cosh(rho) = 1 out in the static chart,
+            # across the bifurcation point to V - U = +-2 tanh(rho/2) on the Kruskal plane, drawn against
+            # (V - U)/2, to sigma = pi/2 +- arctan(sinh(rho)) in the global chart, and to z = 2 e^(-+rho) on
+            # the Poincare plane.
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), {
+                "static": [math.cosh(lo), math.cosh(hi)], "proper_distance": [lo, hi],
+                "kruskal": [-math.tanh(hi / 2), math.tanh(hi / 2)],
+                "global": [math.pi / 2 - math.atan(math.sinh(hi)), math.pi / 2 + math.atan(math.sinh(hi))],
+                "poincare": [2 * math.exp(-hi), 2 * math.exp(hi)]}[key.split("/")[1]]
         if key.startswith("witten_black_hole/"):
             # The cigar is read in Witten's proper distance r at lambda = m = 1, and its meridian theta = 0 is
             # the moment t = 0 from the horizon out, where e^(2x) = w = cosh^2 r and e^sigma = sinh r: level in
@@ -6475,6 +6597,16 @@ class Slices(unittest.TestCase):
             if "/areal/" in key:
                 return (lambda X: 0.0), areal
             return (lambda X: 0.0), [x / r for x, r in zip(self.reach(surface, "isotropic"), areal)]
+        if key in ("freund_rubin/conformal/radial", "freund_rubin/static/radial"):
+            # The embedding reads the global rho at L = 1: the static chart's r is sinh(rho) and the
+            # conformal chart's chi is arctan(sinh(rho)).
+            areal = [math.sinh(x) for x in self.reach(surface, "global")]
+            if "/static/" in key:
+                return (lambda X: 0.0), areal
+            return (lambda X: 0.0), [math.atan(r) for r in areal]
+        if key == "freund_rubin/poincare/radial":
+            # The cylinder is read in the proper distance sigma, and r = L e^(sigma/L).
+            return (lambda X: 0.0), [math.exp(x) for x in self.reach(surface, "proper")]
         if key == "three_brane_throat/throat/radial":
             # The throat's cylinder is read in the proper distance sigma, and r = L e^(sigma/L).
             return (lambda X: 0.0), [math.exp(x) for x in self.reach(surface, "throat_proper")]
@@ -6483,6 +6615,20 @@ class Slices(unittest.TestCase):
             # x = +-sqrt(1 - 1/r), one on each side of the throat.
             x = math.sqrt(1 - 1 / self.reach(surface)[1])
             return (lambda X: 0.0), [-x, x]
+        if key == "btz_shock_wave/kruskal/plane":
+            # The moment u + v = -1/2 at alpha = 1, drawn against (v - u)/2 and (u + v)/2: level at -1/4,
+            # over the embedding's reach in u, where (v - u)/2 = -1/4 - u.
+            lo, hi = self.reach(surface)
+            return (lambda X: -0.25), [-0.25 - hi, -0.25 - lo]
+        if key == "btz_shock_wave/exterior/radial":
+            # Outside the right horizon the moment has u < -1/2 and v = -1/2 - u, so uv = (1 - r)/(1 + r) at
+            # l = R = 1 gives u, and ct = ln(v/(-u))/2; it reaches r = 3 at u = -1 and runs off down the horizon.
+            def t_of(r):
+                k = (r - 1) / (r + 1)
+                u = (-0.5 - math.sqrt(0.25 + 4 * k)) / 2
+                return 0.5 * math.log((-0.5 - u) / -u)
+            lo = self.reach(surface)[0]
+            return t_of, [(1 + lo * (lo + 0.5)) / (1 - lo * (lo + 0.5))]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
@@ -6490,12 +6636,37 @@ class Slices(unittest.TestCase):
         if key == "godel/cartesian/tx":
             hi = self.reach(surface)[1]
             return (lambda X: 0.0), [-2 * hi, 2 * hi]
+        if key == "vuorio_warped_ads/disc/plane":
+            # Poincare's disc reads the cylindrical chart's proper distance r as R = tanh(r/2).
+            hi = math.tanh(self.reach(surface)[1] / 2)
+            return (lambda X: 0.0), [-hi, hi]
+        if key == "vuorio_warped_ads/fibred/plane":
+            hi = self.reach(surface)[1]
+            return (lambda X: 0.0), [-hi, hi]
         if surface["pieces"][0].get("grid"):
             u = surface["pieces"][0]["grid"]["u"][-1]
             return (lambda X: 0.0), [-u, u]
         lo, hi = self.reach(surface)
         through = key.endswith("/tx") and not view["mirror"]
         return (lambda X: 0.0), ([-hi, -lo, lo, hi] if through else [lo, hi])
+
+    def check_shock_moment(self, key, view, surface, mark):
+        """The moment u + v = -alpha/2 of the BTZ shock in the discontinuous chart, V = v + alpha Theta(u), at
+        alpha = 1: U + V = -1/2 ahead of the shock and 1/2 behind it, the two halves overlapping in (V - U)/2,
+        so each line is held to its own half, from the shock U = 0 to the embedding's reach in u."""
+        X0, X1, Y0, Y1 = view["box"]
+        lo, hi = self.reach(surface)
+        checked = 0
+        self.assertEqual(len(mark["lines"]), 2, key)
+        for line in mark["lines"]:
+            points = [(X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)) for u in line]
+            U = [Y - X for X, Y in points]
+            behind = sum(U) > 0
+            for (X, Y), u in zip(points, U):
+                self.assertAlmostEqual(u + (X + Y) - behind, -0.5, delta=1e-3, msg=f"{key} at {X, Y}")
+                checked += 1
+            self.assertEqual(sorted(round(e, 3) for e in (U[0], U[-1])), sorted([0.0, round(hi if behind else lo, 3)]))
+        return checked
 
     def test_every_slice_on_a_spacetime_diagram_lies_on_its_moment_and_ends_where_the_embedding_does(self):
         """Each point of a line or a point of a slice, carried back through the view's box and
@@ -6513,6 +6684,9 @@ class Slices(unittest.TestCase):
                             continue
                         if key.startswith("simpson_visser/") and mark["view"] == "inside":
                             checked += self.check_bounce_moment(key, view, surface, mark)
+                            continue
+                        if key == "btz_shock_wave/discontinuous/plane":
+                            checked += self.check_shock_moment(key, view, surface, mark)
                             continue
                         if key == "tippett_tsang/polar/strip":
                             checked += self.check_polar_moment(key, view, surface, mark)
@@ -6635,7 +6809,7 @@ class Slices(unittest.TestCase):
                         continue
                     for ring in rings + rims:
                         self.assertLess(max(ring) - min(ring), 2e-3 * max(ring), where)
-                    if metric_id in ("godel", "som_raychaudhuri"):
+                    if metric_id in ("godel", "som_raychaudhuri", "vuorio_warped_ads"):
                         self.assertAlmostEqual(rims[0][0], self.reach(surface)[1], delta=1e-3, msg=where)
                     if metric_id in ("kerr", "kerr_newman"):
                         self.assertAlmostEqual(min(r[0] for r in rings), self.reach(surface)[0], delta=1e-3, msg=where)
@@ -6673,6 +6847,21 @@ class Slices(unittest.TestCase):
                             f = lambda r: (1 - r) * math.exp(2 * r) / (1 + r) - tp * tq
                             r = bisect(f, 0, 20)
                             self.assertLess(abs(math.log(tq) - r + math.log(1 + r)), 5e-3, f"{where} at {(X, T)}")
+                    elif metric_id == "unruh_acoustic_hole":
+                        # Kruskal's U = tan p and V = tan q with UV = (1 - r) e^(4r - 2 arctan r)/(1 + r) and
+                        # V = e^(2v), v = t + r - arctan r: Unruh's tau = 0 is the level line, and the
+                        # laboratory's t = 0 is carried back through r.
+                        for X, T in points:
+                            if mark["view"] == "funnel":
+                                self.assertLess(abs(T), 2e-4, where)
+                                continue
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            # Beside the sink UV = 1 - 4r^5/5, so four decimals of a point no longer fix r.
+                            if not (1e-3 < tq < 1e3 and abs(tp) < 1e3 and tp * tq < 0.9):
+                                continue
+                            f = lambda r: (1 - r) * math.exp(4 * r - 2 * math.atan(r)) / (1 + r) - tp * tq
+                            r = bisect(f, 0, 20)
+                            self.assertLess(abs(math.log(tq) / 2 - r + math.atan(r)), 5e-3, f"{where} at {(X, T)}")
                     elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "gowdy", "senovilla"):
                         lo, hi = self.reach(surface)
                         for X, T in points:
@@ -6682,6 +6871,14 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((tp + tq) / 2 - t), 2e-4 * scale, where)
                             self.assertLessEqual(lo - 2e-4 * scale, (tq - tp) / 2, where)
                             self.assertLessEqual((tq - tp) / 2, hi + 2e-4 * scale, where)
+                    elif metric_id == "big_rip":
+                        # The moment t at w = -3/2 is eta = -(-t)^(7/3) in units of eta_0, carried by
+                        # p, q = arctan(eta -+ r).
+                        eta = -(-t) ** (7 / 3)
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            scale = 1 + tp * tp + tq * tq
+                            self.assertLess(abs((tp + tq) / 2 - eta), 2e-4 * scale, f"{where} at {(X, T)}")
                     elif metric_id == "bondi_sachs":
                         # The sphere cu = 10 m_0, r = 10 m_0 is one event of the axis: on the cone
                         # p = arctan(10/40) and on the world tube the view draws.
@@ -6757,6 +6954,26 @@ class Slices(unittest.TestCase):
                             else:
                                 continue
                             self.assertLess(abs(v - r - t), 2e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
+                    elif metric_id == "black_to_white_hole":
+                        # Inside the shell p, q = arctan(u, v), and the moment is the flat time
+                        # (u + v)/2 = -R at which Schwarzschild's slice ct = t meets the shell. Outside it
+                        # each point is carried back to Kruskal's U through the interior ray tan p and to
+                        # V through the drawing's q, and lies on t = ln(-V/U).
+                        sys.path.insert(0, str(build.ROOT / "_tools" / "derivations"))
+                        import black_to_white_hole as bwh
+                        level = -float(bwh.shell_radius_schwarzschild(t))
+                        inside, outside = mark["lines"]
+                        for X, T in inside:
+                            a, b = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs((a + b) / 2 - level), 2e-3 * (1 + a * a + b * b), f"{where} at {(X, T)}")
+                        self.assertLess(math.dist(inside[-1], outside[0]), 2e-4, where)
+                        for X, T in outside:
+                            p, q = (T - X) / 2, (T + X) / 2
+                            if not (-1.4 < p < -0.2 and 0.05 < q < 1.4):
+                                continue        # beside the infinities four decimals no longer fix the event
+                            U = float(bwh.shell_U(math.tan(p)))
+                            V = bisect(lambda x: float(bwh.q_of_V(x)) - q, bwh.V0, 60)
+                            self.assertLess(abs(math.log(-V / U) - t), 2e-2, f"{where} at {(X, T)}")
                     elif metric_id == "charged_shell" and view["id"] == "exterior_isotropic":
                         # The balanced shell at rest: t = 0 is the level line T = 0 on both sides.
                         for line in mark["lines"]:
@@ -6978,6 +7195,12 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * eta), 2e-3,
                                             f"{where} at {(X, T)}")
+                    elif metric_id == "poincare_dodecahedral":
+                        # X = chi and T = eta: today in Luminet's universe, eta = 0.38882, across one cell along
+                        # the line to the centre of a face, from chi = -pi/10 to pi/10.
+                        self.assertTrue(all(abs(T - 0.3888) < 2e-4 for _, T in points), where)
+                        self.assertEqual(sorted(X for X, _ in points), [round(-math.pi / 10, 4), round(math.pi / 10, 4)],
+                                         where)
                     elif metric_id == "kopczynski_trautman":
                         # p, q = arctan((eta -+ r)/l), so tan p + tan q = 2 eta(t)/l on a moment of the dust's time.
                         for X, T in points:

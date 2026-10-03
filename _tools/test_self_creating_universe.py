@@ -215,7 +215,8 @@ class Relations(unittest.TestCase):
         related = {r["id"]: r["kind"] for r in load("metrics")["related"]}
         self.assertEqual(related, {"de_sitter": "locally_same", "misner": "conformal", "elliptic_de_sitter": "family",
                                    "gott_time_machine": "programme", "kantowski_sachs": "generalisation",
-                                   "coleman_de_luccia": "family", "malament_hogarth": "generalisation"})
+                                   "coleman_de_luccia": "family", "malament_hogarth": "generalisation",
+                                   "universe_from_nothing": "family"})
         answers = {"locally_same": "locally_same", "conformal": "conformal", "family": "family",
                    "programme": "programme", "generalisation": "special_case"}
         for other, kind in related.items():

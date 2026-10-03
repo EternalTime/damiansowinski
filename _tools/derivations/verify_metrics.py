@@ -225,6 +225,18 @@ DIMENSIONS = {
     # Emparan, Frassino and Way's F, kappa and mu numbers, so that l F/r and mu l/r are numbers
     # beside r^2/l_3^2. The rotation a is a length, which makes a^2/r^2 a number and a/r^2 times
     # c dt an angle. The advanced and retarded times are lengths.
+    # The Big Rip: w is a number below -1, t_0 the time left at a = 1 and the scale factor a a
+    # number, so the comoving coordinates x, y, z and r are lengths, the proper lengths at
+    # t = -t_0. The conformal time eta and its scale eta_0 are lengths, d(eta) = c dt/a.
+    ("big_rip", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "w": "1", "t_0": "T", "a": "1",
+    },
+    ("big_rip", "comoving"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "w": "1", "t_0": "T", "a": "1",
+    },
+    ("big_rip", "conformal"): {
+        "\\eta": "L", "r": "L", "\\theta": "1", "\\phi": "1", "w": "1", "\\eta_0": "L", "a": "1",
+    },
     ("quantum_btz", "static"): {
         "t": "T", "r": "L", "\\phi": "1", "\\ell_3": "L", "M": "1", "\\ell": "L", "F": "1",
     },
@@ -250,6 +262,13 @@ DIMENSIONS = {
     ("witten_black_hole", "kruskal"): {"U": "1", "V": "1", "\\lambda": "1/L", "m": "1"},
     ("witten_black_hole", "eddington_finkelstein_ingoing"): {"v": "L", "x": "L", "\\lambda": "1/L", "m": "1"},
     ("witten_black_hole", "eddington_finkelstein_outgoing"): {"u": "L", "x": "L", "\\lambda": "1/L", "m": "1"},
+    # The black hole of Jackiw and Teitelboim's gravity: the curvature radius L and the horizon r_h are
+    # lengths in every chart; the Kruskal and global coordinates are numbers, and the Poincare z a length.
+    ("jackiw_teitelboim_black_hole", "static"): {"t": "T", "r": "L", "L": "L", "r_h": "L"},
+    ("jackiw_teitelboim_black_hole", "proper_distance"): {"t": "T", "\\rho": "L", "L": "L", "r_h": "L"},
+    ("jackiw_teitelboim_black_hole", "kruskal"): {"U": "1", "V": "1", "L": "L", "r_h": "L"},
+    ("jackiw_teitelboim_black_hole", "global"): {"\\tau": "1", "\\sigma": "1", "L": "L", "r_h": "L"},
+    ("jackiw_teitelboim_black_hole", "poincare"): {"T": "T", "z": "L", "L": "L", "r_h": "L"},
     # The wave amplitude psi and gamma sit in exponentials and are dimensionless; the null chart's
     # u = ct - rho and v = ct + rho are lengths, as the Eddington-Finkelstein times of BTZ are.
     ("einstein_rosen_waves", "cylindrical"): {
@@ -627,6 +646,13 @@ DIMENSIONS = {
     ("btz_multi_holes_wormholes", "stereographic"): {"\\tau": "T", "x": "L", "y": "L", "\\ell": "L"},
     ("btz_multi_holes_wormholes", "free_fall"): {"T": "T", "\\rho": "L", "\\phi": "1", "\\ell": "L"},
     ("btz_multi_holes_wormholes", "exterior"): {"t": "T", "r": "L", "\\phi": "1", "\\ell": "L", "M": "1"},
+    # The shock wave in the BTZ black hole: Shenker and Stanford's Kruskal u and v and their
+    # discontinuous U and V are pure numbers, the anti-de Sitter radius l and the radius R of the
+    # horizon are lengths, and the shift alpha is a pure number, as is the step Theta.
+    ("btz_shock_wave", "kruskal"): {"u": "1", "v": "1", "\\phi": "1", "\\ell": "L", "R": "L", "\\alpha": "1",
+                                    "\\Theta": "1"},
+    ("btz_shock_wave", "discontinuous"): {"U": "1", "V": "1", "\\phi": "1", "\\ell": "L", "R": "L", "\\alpha": "1"},
+    ("btz_shock_wave", "exterior"): {"t": "T", "r": "L", "\\phi": "1", "\\ell": "L", "R": "L"},
     # The other entry that keeps G and a mass explicit rather than folding them into a
     # length. The spin per unit mass a = J/(Mc) is a length, which is what makes
     # r^2 + a^2cos^2(theta) and r^2 - 2GMr/c^2 + a^2 areas.
@@ -950,6 +976,14 @@ DIMENSIONS = {
        for chart, radial, unit, extra in (("isotropic", "\\rho", "L", {"H": "1"}), ("areal", "r", "L", {}),
                                           ("horizon", "w", "1", {"r": "L"}), ("throat", "r", "L", {}),
                                           ("throat_proper", "\\sigma", "L", {}))},
+    # Freund and Rubin's anti-de Sitter space times a seven-sphere: L is the radius of anti-de Sitter
+    # space, the conformal chart's chi and every angle are pure numbers, and the global chart's rho too.
+    **{("freund_rubin", chart): {
+        "t": "T", **{c: "L" for c in large}, radial: unit, **({} if large else {"\\theta": "1", "\\phi": "1"}), "\\alpha": "1",
+        "\\beta": "1", "\\gamma": "1", "\\kappa": "1", "\\xi": "1", "\\omega": "1", "\\psi": "1", "L": "L"}
+       for chart, radial, unit, large in (("global", "\\rho", "1", ()), ("conformal", "\\chi", "1", ()),
+                                          ("static", "r", "L", ()), ("poincare", "r", "L", ("x", "y")),
+                                          ("proper", "\\sigma", "L", ("x", "y")))},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
@@ -977,6 +1011,13 @@ DIMENSIONS = {
         "\\tau": "T", "x": "L", "y": "L", "z": "L", "r_0": "L", "\\beta": "L"},
     ("self_creating_universe", "conformal"): {
         "\\eta": "L", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\beta": "L"},
+    # The universe from nothing: l is the radius of the 4-sphere and of de Sitter's waist. The
+    # 4-sphere's tau and the scale factor a are lengths, with no c, and the conformal eta is a pure number.
+    ("universe_from_nothing", "closed"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("universe_from_nothing", "four_sphere"): {"\\tau": "L", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("universe_from_nothing", "scale_factor"): {"a": "L", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("universe_from_nothing", "conformal"): {"\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("universe_from_nothing", "lapse"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
     # The collapse is two charts. Inside, the comoving polar angle chi is dimensionless
     # and the scale factor carries the length, so an areal radius is a sin(chi) and a dot
     # on a is dimensionless; chi_0 marks the surface and a_m is the scale factor at
@@ -1108,6 +1149,10 @@ DIMENSIONS = {
     ("draining_bathtub", "vortex_filament"): {
         "t": "T", "r": "L", "\\theta": "1", "z": "L", "A": "L**2/T", "B": "L**2/T",
     },
+    # Unruh's acoustic black hole, the spherical flow at constant density, with c the speed of sound and the
+    # chart x^0 = ct with that c. The horizon radius r_0 is a length.
+    ("unruh_acoustic_hole", "laboratory"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L"},
+    ("unruh_acoustic_hole", "unruh"): {"\\tau": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L"},
     # Bonnor's stars of charged dust. The potential U is a pure number, as Majumdar and Papapetrou's
     # is; the mass parameter m = GM/c^2, the radius r_0, the focal radius a and Lemos and Weinberg's
     # core length b are lengths, and the spheroidal u and its surface u_0 are pure numbers.
@@ -1588,6 +1633,12 @@ DIMENSIONS = {
     # so that Omega r^2/c is a length beside c dt.
     ("som_raychaudhuri", "cylindrical"): {"t": "T", "r": "L", "\\phi": "1", "z": "L", "\\Omega": "1/T"},
     ("som_raychaudhuri", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1/T"},
+    # Vuorio's universe and warped anti-de Sitter space keep c, with the twist Omega of d_t and the
+    # curvature scale m of the plane it turns about both inverse lengths.
+    ("vuorio_warped_ads", "cylindrical"): {"t": "T", "r": "L", "\\phi": "1", "\\Omega": "1/L", "m": "1/L"},
+    ("vuorio_warped_ads", "disc"): {"t": "T", "R": "1", "\\phi": "1", "\\Omega": "1/L", "m": "1/L"},
+    ("vuorio_warped_ads", "fibred"): {"t": "T", "\\sigma": "1", "u": "1", "\\Omega": "1/L", "m": "1/L"},
+    ("vuorio_warped_ads", "horospherical"): {"t": "T", "x": "L", "y": "L", "\\Omega": "1/L", "m": "1/L"},
     # Maitra's dust keeps c. Its a is the one length of the solution, 8 pi G rho/c^2 = 1/a^2 on the
     # axis; s and gamma are numbers and k is a length, so that k dphi stands beside c dt.
     ("maitra_dust", "cylindrical"): {
@@ -1796,6 +1847,17 @@ DIMENSIONS = {
     ("einstein_dirac_maxwell_wormhole", "compact"): {
         "t": "T", "x": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "Q_e": "L", "M": "L",
     },
+    # James, von Tunzelmann, Franklin and Thorne's Dneg wormhole: rho, a and M are lengths, and so
+    # is the proper distance l; the flare's x = 2(l - a)/(pi M) is a pure number.
+    ("interstellar_wormhole", "proper_distance"): {
+        "t": "T", "\\ell": "L", "\\theta": "1", "\\phi": "1", "r": "L", "\\rho": "L", "a": "L", "M": "L",
+    },
+    ("interstellar_wormhole", "cylinder"): {
+        "t": "T", "\\ell": "L", "\\theta": "1", "\\phi": "1", "\\rho": "L", "a": "L",
+    },
+    ("interstellar_wormhole", "flare"): {
+        "t": "T", "\\ell": "L", "\\theta": "1", "\\phi": "1", "\\rho": "L", "a": "L", "M": "L", "x": "1", "r": "L",
+    },
     # Einstein and Rosen's u has u^2 = r - r_s on the neutral bridge, the square root of a length, and
     # u^2 = r^2 - r_q^2 on the charged one, a length; r_q is the charge radius, their epsilon/sqrt(2).
     ("einstein_rosen_bridge", "bridge"): {
@@ -1958,6 +2020,18 @@ DIMENSIONS = {
     ("quantum_oppenheimer_snyder", "interior_comoving"): {
         "\\tau": "T", "\\chi": "L", "\\theta": "1", "\\phi": "1", "a": "1", "\\chi_0": "L",
     },
+    # Flat space with supertranslation hair: Compere and Long's supertranslation field C and the
+    # shear sigma it makes are lengths, and so are rho, the distance along each straight line of
+    # constant angle, the luminosity distance r and the shorthand W = sqrt(r^2 + sigma^2).
+    ("supertranslation_hair", "static"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "C": "L", "B": "L",
+    },
+    ("supertranslation_hair", "bondi_retarded"): {
+        "u": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\sigma": "L", "W": "L",
+    },
+    ("supertranslation_hair", "bondi_advanced"): {
+        "v": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\sigma": "L", "W": "L",
+    },
     ("hayward", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
     },
@@ -2041,6 +2115,12 @@ DIMENSIONS = {
     # The horn's x, y and z are pure numbers, y and z flat coordinates on the horospheres of hyperbolic
     # space with pure numbers for periods, and the scale factor is again the radius of curvature.
     ("small_universes", "horn"): {"t": "T", "x": "1", "y": "1", "z": "1", "a": "L", "b_2": "1", "b_3": "1"},
+    # The Poincare dodecahedral universe: the coordinates of the unit 3-sphere are pure numbers and the
+    # scale factor is the radius of curvature of space, a length, as Aurich, Lustig and Steiner's R(t)
+    # is; their conformal time, a d eta = c dt, is then a pure number too.
+    ("poincare_dodecahedral", "comoving"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
+    ("poincare_dodecahedral", "conformal"): {"\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
+    ("poincare_dodecahedral", "toroidal"): {"t": "T", "v": "1", "\\alpha": "1", "\\gamma": "1", "a": "L"},
     # The tilted universes of Bianchi's type V: r, y and z are pure numbers, as the horn's are, the
     # time u = ct + Cr of the surfaces of homogeneity is a length, and so are the tilt C, the two
     # scale factors X and Y, and W, which sets the density of Farnsworth's dust; his parameter eta
@@ -2156,6 +2236,24 @@ DIMENSIONS = {
     },
     ("schrodinger_spacetime", "poincare_6d"): {
         "t": "T", "\\xi": "L", "x_1": "L", "x_2": "L", "x_3": "L", "r": "L", "L": "L", "\\beta": "L",
+    },
+    # Haggard and Rovelli's bounce of a shell of light: the null coordinates of the flat interior,
+    # u = ct - r and v = ct + r, are lengths; Kruskal's U and V are numbers, with the factor
+    # 4 r_s^3 e^(-r/r_s)/r carrying the area; Schwarzschild's and Painleve and Gullstrand's t is a
+    # time; Lemaitre's tau is a time and rho a length.
+    ("black_to_white_hole", "interior"): {"u": "L", "v": "L", "\\theta": "1", "\\phi": "1"},
+    ("black_to_white_hole", "kruskal"): {
+        "U": "1", "V": "1", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
+    },
+    ("black_to_white_hole", "schwarzschild"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L"},
+    ("black_to_white_hole", "painleve_gullstrand_ingoing"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("black_to_white_hole", "painleve_gullstrand_outgoing"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("black_to_white_hole", "lemaitre"): {
+        "\\tau": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
     },
 }
 
@@ -2333,6 +2431,11 @@ HELD = {
     # holds the conformal factor Omega, f and P, as its line element writes them.
     ("kerr_bertotti_robinson", "boyer_lindquist"): ("Q", "P", "omega", "N", "F", "W"),
     ("kerr_bertotti_robinson", "static"): ("Omega", "f", "P"),
+    # The areal radius of Haggard and Rovelli's Kruskal chart, as white_hole's, and of Lemaitre's
+    # chart, a power 2/3 of rho - c tau: its values are rational in r and rho - c tau, each square
+    # of rho - c tau written 4r^3/(9 r_s), and compare once r is written out.
+    ("black_to_white_hole", "kruskal"): ("r",),
+    ("black_to_white_hole", "lemaitre"): ("r",),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2343,6 +2446,15 @@ HELD = {
 # Belan's x = sqrt(X^2 + Z^2 - c^2T^2) is: written out, each of the chart's four hundred values
 # is a polynomial of the sixth degree in that root, and the chart did not finish in ten minutes.
 RATES = {
+    # Compere and Long's vacua: B, the radius of a circle about the axis in the static chart, and
+    # W = sqrt(r^2 + sigma^2) in the two Bondi charts. Each is fixed by its rates up to a constant,
+    # and the metric is flat for every value of that constant, so no value holds a relation of the
+    # name that the rates leave out.
+    ("supertranslation_hair", "static"): {
+        "B": {"\\rho": "\\sin\\theta", "\\theta": "\\left(\\rho - C - C''\\right)\\cos\\theta"},
+    },
+    **{("supertranslation_hair", chart): {"W": {"r": "\\dfrac{r}{W}", "\\theta": "\\dfrac{\\sigma\\,\\partial_\\theta\\sigma}{W}"}}
+       for chart in ("bondi_retarded", "bondi_advanced")},
     # 2x du is the null covector of the Kerr-Schild form, (1 + u^2) c dT - 2u dX - (1 - u^2) dZ.
     ("kundt_waves", "kerr_schild"): {
         "x": {"T": "-c\\left(v + u\\left(1 + uv\\right)\\right)", "X": "1 + 2uv",
@@ -2467,7 +2579,7 @@ RATES = {
 # where two values are compared. See on_the_shock.
 IMPULSES = {
     ("hotta_tanaka", "conformally_flat"), ("hotta_tanaka", "global"), ("hotta_tanaka", "kruskal"),
-    ("hotta_tanaka", "null_cylindrical"),
+    ("hotta_tanaka", "null_cylindrical"), ("btz_shock_wave", "discontinuous"),
 }
 
 
@@ -2786,6 +2898,11 @@ def _canonical(expression):
     # fractions and the logarithm of each spelling would otherwise be a generator of its own.
     if expression.has(sp.log):
         expression = expression.replace(lambda x: isinstance(x, sp.log), lambda x: sp.log(sp.factor(x.args[0])))
+    # So is an arctangent's, and sympy then takes out its sign, arctan(-u) = -arctan(u), so that the
+    # flare of Interstellar's wormhole reads arctan(2(l - a)/(pi M)) and arctan(2a/(pi M) - 2l/(pi M)) as
+    # one generator and its negative.
+    if expression.has(sp.atan):
+        expression = expression.replace(lambda x: isinstance(x, sp.atan), lambda x: sp.atan(sp.factor(x.args[0])))
     # The reader writes a mixed partial in the order the coordinates are listed and diff
     # writes it in its own; doit puts both in diff's, so they become one generator.
     if expression.has(sp.Derivative):
@@ -3565,10 +3682,13 @@ class Reader:
         """The expression with every derivative of a held name written by the declared first
         derivatives, to any order, so that it holds the names and no derivative of them. The
         names are functions of the coordinates with no relation among them, as the coordinates
-        of another chart are, so two values that agree agree as rational functions of them."""
+        of another chart are, so two values that agree agree as rational functions of them. A
+        declared function that is not a held name, as the supertranslation field C beside the held
+        B of Compere and Long's vacua, keeps its derivatives as they stand."""
         expression = sp.sympify(expression)
+        declared = {function for function, _ in self.functions.values()} - set(self.held)
         for _ in range(8):
-            derivatives = expression.atoms(sp.Derivative)
+            derivatives = {d for d in expression.atoms(sp.Derivative) if d.expr not in declared}
             if not derivatives:
                 return expression
             written = {}

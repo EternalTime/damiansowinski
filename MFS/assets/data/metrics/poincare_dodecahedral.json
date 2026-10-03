@@ -1,0 +1,3244 @@
+{
+  "id": "poincare_dodecahedral",
+  "name": "Poincaré Dodecahedral Universe",
+  "short_name": "Poincaré Dodecahedral",
+  "description": "A closed Friedmann universe whose space is a dodecahedron with each face glued to the face opposite it after a tenth of a turn, the 3-sphere divided by the binary icosahedral group. Every local measurement agrees with Friedmann's, and space is 120 times smaller than the 3-sphere of the same curvature. Jean-Pierre Luminet, Jeffrey R. Weeks, Alain Riazuelo, Roland Lehoucq, and Jean-Philippe Uzan proposed it in 2003 for the weak correlations of the microwave background at wide angles.",
+  "tags": [
+    "cosmology",
+    "topology",
+    "multiply connected",
+    "compact",
+    "closed universe",
+    "three sphere",
+    "dodecahedron",
+    "expanding universe",
+    "FLRW",
+    "homogeneous",
+    "locally isotropic",
+    "ghost images",
+    "cosmic microwave background",
+    "time-dependent",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model",
+    "four-dimensional",
+    "conformally flat"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the scale factor $a$ is the radius of curvature of space, a length. Space is the 3-sphere with the points $p$ and $hp$ identified for every map $h$ in $I^*$, and $I^*$ is the binary icosahedral group, 120 rotations of the 3-sphere that move every point but the identity. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "The microwave sky mapped by the WMAP satellite in its first year was too quiet at wide angles [luminet2003]. Its quadrupole, the largest pattern that can be measured, came in at about a seventh of the strength expected in an infinite flat universe, and the correlations of temperature between two directions faded to nothing once the directions were more than 60° apart [luminet2003]. Jean-Pierre Luminet, Jeffrey R. Weeks, Alain Riazuelo, Roland Lehoucq, and Jean-Philippe Uzan took the quiet to mean that space is too small to hold the longest waves: \"Just as the vibrations of a bell cannot be larger than the bell itself, the density fluctuations in space cannot be larger than space itself\" [luminet2003]. Their proposal, in October 2003, was a block of space shaped like a dodecahedron with each face glued to the face opposite it, so that whatever leaves through one face comes back in through the other [luminet2003]. From inside, looking out through a face, \"we have the illusion of looking into an adjacent copy of the dodecahedron\" [luminet2003].¶Twelve pentagons drawn on a globe cover it snugly when every corner angle is exactly 120° [luminet2003]. Gluing the faces of a dodecahedron brings its 30 edges together in ten groups of three, so the angle between two faces along an edge has to be exactly 120°, and in a Euclidean dodecahedron it is about 117° [luminet2003]. A dodecahedron drawn on the 3-sphere, the space of positive curvature, has edge angles of exactly 120°, and 120 such dodecahedra tile the 3-sphere as the twelve pentagons tile the globe [luminet2003]. Space is then positively curved and finite, with a volume 120 times smaller than that of the whole 3-sphere of the same radius of curvature [luminet2003]. Each face meets its partner after a turn of a tenth of a circle, and the 120 motions of the 3-sphere that carry one dodecahedron onto each of the others form the binary icosahedral group, none of them but the identity leaving any point where it was [lachiezerey1995, aurich2005]. Topologists know the result as the Poincaré dodecahedral space, and its nickname is the soccer ball universe [aurich2005, key2007].¶The same 120 cells had turned up in cosmology in 1980, in J. Richard Gott III's survey of the closed universes whose space is a 3-sphere with points identified [gott1980]. He was after \"cells that are small in all dimensions relative to the radius of curvature of the sphere\", so that light could cross a cell early on [gott1980]. In the dodecahedral space the nearest image of an observer stands a tenth of the way round a great circle, at $\\chi = \\pi/5$ in units of the radius of curvature, and each cell fits inside a sphere of radius $0.388$ [gott1980]. No other way of identifying points of the 3-sphere makes the largest radius of a cell smaller [gott1980]. A closed universe can therefore be only so small, and Gott concluded that its radius \"cannot be much smaller than its radius of curvature\" [gott1980].¶That smallest cell is about the size of the visible universe [luminet2003]. With the density of the universe 1.3% above the density that makes space flat, $\\Omega_0 \\simeq 1.013$, the largest sphere inside a cell and the smallest sphere around it have radii of 0.31 and 0.39 of the radius of curvature, and the sphere of last scattering, the farthest surface in view, has a radius of 0.38 [luminet2003]. The octopole, the next pattern after the quadrupole, matched for $1.010 < \\Omega_0 < 1.014$, and the quadrupole as well for $1.012 < \\Omega_0 < 1.014$ [luminet2003]. Nothing else could be adjusted, since the gluing allows only a regular dodecahedron, and the space \"offers no free parameters in its construction\" [luminet2003]. It is globally homogeneous too, so its power spectrum is the same for every observer in it [luminet2003]. The 3-sphere vibrates at every whole wave number $\\beta$, and the dodecahedral space at $\\beta = 1$, the constant, and then only at 13, 21, 25, 31, and some odd numbers after, every odd one from 61 on and never an even one [aurich2005].¶Would the sky show the gluing directly? A space this small makes the sphere of last scattering cross its own images, in six pairs of circles of angular radius about 35°, laid out like the faces of a dodecahedron [luminet2003]. Neil J. Cornish, David N. Spergel, Glenn D. Starkman, and Eiichiro Komatsu searched the first year of WMAP's maps for pairs of circles back to back, found none of radius larger than 25°, and noted that the search excludes the dodecahedron with its circles of 35° [cornish2004]. Luminet's group had used only the vibrations of wave numbers 13, 21, and 25, 59 of them in all, and at the University of Ulm, Ralf Aurich, Sven Lustig, and Frank Steiner computed 10521, up to $\\beta = 155$ [aurich2005]. With all of them the weak correlations at wide angles came out for $\\Omega_{\\rm tot}$ between 1.016 and 1.020, and the circles with radii of 40° to 50° [aurich2005]. The Doppler effect and the integrated Sachs-Wolfe effect blur the circles, so that \"the signal of the six pairs of matched circles could be missed\" [aurich2005].¶In Toruń and Warsaw, Boudewijn F. Roukema, Bartosz Lew, Magdalena Cechowska, Andrzej Marecki, and Stanislaw Bajtlik noticed how fast the circles shrink as the density falls: at $\\Omega_{\\rm tot} = 1.009$ their radius is nearly zero [roukema2004]. Searching the sky for small circles in the dodecahedral pattern, they found the strongest match at $11 \\pm 1°$ with the faces turned 36° one way, and none with the faces turned the other way [roukema2004]. Three years later Joey Shapiro Key, Cornish, Spergel, and Starkman found the same peak at 11°, and saw it disappear once the mean temperature of each circle was taken out of the comparison [key2007]. With the maps filtered and the six pairs searched together, circles down to about 5° were within reach, and none turned up [key2007]. That, in their words, \"effectively rules out the Poincaré Dodecahedral model as an interesting shape for the Universe\" [key2007].",
+  "related": [
+    {
+      "id": "frw",
+      "kind": "locally_same",
+      "text": "Friedmann's closed universe, $k = +1$, before any points are identified. Every local measurement agrees with Friedmann's, and the dodecahedral universe holds a hundred and twentieth of its volume [luminet2003]."
+    },
+    {
+      "id": "einstein_static",
+      "kind": "family",
+      "text": "Einstein's closed universe of 1917, whose space is the whole 3-sphere held at one radius. The dodecahedral universe cuts the same 3-sphere into 120 dodecahedra and keeps one of them [luminet2003]."
+    },
+    {
+      "id": "small_universes",
+      "kind": "family",
+      "text": "Friedmann universes made finite by identifying points of flat or hyperbolic space. Space here is closed already, and identifying its points makes it 120 times smaller [luminet2003]."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "family",
+      "text": "The closed universe with nothing in it but a positive cosmological constant, $a = \\ell\\cosh(ct/\\ell)$, is de Sitter space. With points of its space identified under the same group it is a dodecahedral universe that never stops expanding."
+    },
+    {
+      "id": "elliptic_de_sitter",
+      "kind": "family",
+      "text": "De Sitter space with each event identified with its antipode, an older universe made by identifying points. There the identification reverses time, and here it moves points of space within one moment."
+    }
+  ],
+  "references": [
+    "luminet2003",
+    "lachiezerey1995",
+    "aurich2005",
+    "key2007",
+    "gott1980",
+    "cornish2004",
+    "roukema2004"
+  ],
+  "coordinates": [
+    {
+      "id": "comoving",
+      "name": "Comoving",
+      "coords": [
+        "t",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "(t, p) \\sim (t, h p) \\;\\text{for every } h \\in I^*"
+      ],
+      "parameters": [
+        {
+          "symbol": "a = a(t)",
+          "description": "Scale factor ($a > 0$), a length, the radius of curvature of space at the time $t$; the volume of space is $\\pi^2a^3/60$"
+        }
+      ],
+      "convention": "We use cosmic time $t$ and the angles $(\\chi, \\theta, \\phi)$ of the unit 3-sphere about one observer, with $a\\chi$ the distance from that observer. We take components in the chart $x^0 = ct$, a prime is $a' = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "a^2\\sin^2\\chi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi}{a^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi\\csc^2\\theta}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "a\\,a'\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "a\\,a'\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-a\\,a'"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a\\,a'\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "a\\,a'\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "a\\,a'\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a\\,a'\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "a\\,a'\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "a\\,a'\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "a\\,a''\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-a\\,a''\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "a\\,a''\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-a\\,a''\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\left(\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\left(\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\left(\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\left(\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\left(\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\left(\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\left(\\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\left(\\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\left(\\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\left(\\left(a'\\right)^2 + 1\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-a\\,a''\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "a\\,a''\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "a\\,a''\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-a\\,a''\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-a\\,a''\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "a\\,a''\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "a\\,a''\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-a\\,a''\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\left(\\left(a'\\right)^2 + 1\\right)\\sin^4\\chi\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "a\\,a'' + 2\\left(a'\\right)^2 + 2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\left(a\\,a'' + 2\\left(a'\\right)^2 + 2\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\left(a\\,a'' + 2\\left(a'\\right)^2 + 2\\right)\\sin^2\\chi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2 + 2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2 + 2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2 + 2}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2 + 2}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a\\,a'' + 2\\left(a'\\right)^2 + 2\\right)\\csc^2\\chi}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a\\,a'' + 2\\left(a'\\right)^2 + 2\\right)\\csc^2\\chi\\csc^2\\theta}{a^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)",
+      "kretschmann": "K = 12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)^2\\right)",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\left(\\left(a'\\right)^2 + 1\\right)}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\left(2a\\,a'' + \\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(2a\\,a'' + \\left(a'\\right)^2 + 1\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(2a\\,a'' + \\left(a'\\right)^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\left(\\left(a'\\right)^2 + 1\\right)}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2 + 1}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2 + 1}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2 + 1}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\left(\\left(a'\\right)^2 + 1\\right)}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2 + 1}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2a\\,a'' + \\left(a'\\right)^2 + 1\\right)\\csc^2\\chi}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2a\\,a'' + \\left(a'\\right)^2 + 1\\right)\\csc^2\\chi\\csc^2\\theta}{a^4}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + a\\,a'\\,\\dot{\\chi}^2 + a\\,a'\\,\\sin^2\\chi\\,\\dot{\\theta}^2 + a\\,a'\\,\\sin^2\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2a'}{a}\\dot{t}\\dot{\\chi} - \\sin\\chi\\cos\\chi\\,\\dot{\\theta}^2 - \\sin\\chi\\cos\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2a'}{a}\\dot{t}\\dot{\\theta} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2a'}{a}\\dot{t}\\dot{\\phi} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "conformal",
+      "name": "Conformal Time",
+      "coords": [
+        "\\eta",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\eta \\in (-\\infty, \\infty)",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "(\\eta, p) \\sim (\\eta, h p) \\;\\text{for every } h \\in I^*"
+      ],
+      "parameters": [
+        {
+          "symbol": "a = a(\\eta)",
+          "description": "Scale factor ($a > 0$), a length, the radius of curvature of space at the conformal time $\\eta$"
+        }
+      ],
+      "convention": "We use the conformal time $\\eta$, a pure number with $a\\,d\\eta = c\\,dt$, and the angles $(\\chi, \\theta, \\phi)$ of the unit 3-sphere about one observer. A prime is $a' = da/d\\eta$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = a^2\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-a^2"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "a^2\\sin^2\\chi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi}{a^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi\\csc^2\\theta}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a'\\,\\sin^2\\chi}{a}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a'\\,\\sin^2\\chi\\sin^2\\theta}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-a\\,a'"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-a\\,a'"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a\\,a'\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "a\\,a'\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "a\\,a'\\,\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a\\,a'\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "a\\,a'\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "a\\,a'\\,\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a^2 + \\left(a'\\right)^2\\right)\\sin^2\\chi}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(a^2 + \\left(a'\\right)^2\\right)\\sin^2\\chi}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(a^2 + \\left(a'\\right)^2\\right)\\sin^2\\chi}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a^2 + \\left(a'\\right)^2\\right)\\sin^2\\chi}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a^2 + \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(a^2 + \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a^2 + \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(a^2 + \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2 + \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a^2 + \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2 + \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a^2 + \\left(a'\\right)^2}{a^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "-\\left(a\\,a'' - \\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "\\left(a\\,a'' - \\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "\\left(a\\,a'' - \\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "-\\left(a\\,a'' - \\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "-\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "-\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "-\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "-\\left(a\\,a'' - \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\left(-a^2\\sin^2\\chi - \\left(a'\\right)^2\\,\\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\left(-a^2\\sin^2\\chi - \\left(a'\\right)^2\\,\\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\left(-a^2\\sin^2\\chi - \\left(a'\\right)^2\\,\\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\left(-a^2\\sin^2\\chi - \\left(a'\\right)^2\\,\\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\left(-a^2\\sin^2\\chi\\sin^2\\theta - \\left(a'\\right)^2\\,\\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\left(-a^2\\sin^2\\chi\\sin^2\\theta - \\left(a'\\right)^2\\,\\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\left(-a^2\\sin^2\\chi\\sin^2\\theta - \\left(a'\\right)^2\\,\\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\left(-a^2\\sin^2\\chi\\sin^2\\theta - \\left(a'\\right)^2\\,\\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(-a^2\\sin^4\\chi\\sin^2\\theta - \\left(a'\\right)^2\\,\\sin^4\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(-a^2\\sin^4\\chi\\sin^2\\theta - \\left(a'\\right)^2\\,\\sin^4\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\left(-a^2\\sin^4\\chi\\sin^2\\theta - \\left(a'\\right)^2\\,\\sin^4\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\left(-a^2\\sin^4\\chi\\sin^2\\theta - \\left(a'\\right)^2\\,\\sin^4\\chi\\sin^2\\theta\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3\\left(a'\\right)^2 - 3a\\,a''}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2a^2 + a\\,a'' + \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2a^2 + a\\,a'' + \\left(a'\\right)^2\\right)\\sin^2\\chi}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2a^2 + a\\,a'' + \\left(a'\\right)^2\\right)\\sin^2\\chi\\sin^2\\theta}{a^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3a\\,a'' - 3\\left(a'\\right)^2}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2a^2 + a\\,a'' + \\left(a'\\right)^2}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2a^2 + a\\,a'' + \\left(a'\\right)^2}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2a^2 + a\\,a'' + \\left(a'\\right)^2}{a^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3\\left(a'\\right)^2 - 3a\\,a''}{a^6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2a^2 + a\\,a'' + \\left(a'\\right)^2}{a^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2a^2 + a\\,a'' + \\left(a'\\right)^2\\right)\\csc^2\\chi}{a^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2a^2 + a\\,a'' + \\left(a'\\right)^2\\right)\\csc^2\\chi\\csc^2\\theta}{a^6}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a^3} + \\dfrac{1}{a^2}\\right)",
+      "kretschmann": "K = 12\\left(\\left(\\dfrac{a\\,a'' - \\left(a'\\right)^2}{a^4}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 + a^2}{a^4}\\right)^2\\right)",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3a^2 + 3\\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\left(a'\\right)^2 - 2a\\,a'' - a^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(\\left(a'\\right)^2 - 2a\\,a'' - a^2\\right)\\sin^2\\chi}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\left(a'\\right)^2 - 2a\\,a'' - a^2\\right)\\sin^2\\chi\\sin^2\\theta}{a^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{3a^2 + 3\\left(a'\\right)^2}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\left(a'\\right)^2 - 2a\\,a'' - a^2}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a'\\right)^2 - 2a\\,a'' - a^2}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a'\\right)^2 - 2a\\,a'' - a^2}{a^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3a^2 + 3\\left(a'\\right)^2}{a^6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\left(a'\\right)^2 - 2a\\,a'' - a^2}{a^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(\\left(a'\\right)^2 - 2a\\,a'' - a^2\\right)\\csc^2\\chi}{a^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\left(a'\\right)^2 - 2a\\,a'' - a^2\\right)\\csc^2\\chi\\csc^2\\theta}{a^6}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\eta} + \\dfrac{a'}{a}\\dot{\\eta}^2 + \\dfrac{a'}{a}\\dot{\\chi}^2 + \\dfrac{a'\\,\\sin^2\\chi}{a}\\dot{\\theta}^2 + \\dfrac{a'\\,\\sin^2\\chi\\sin^2\\theta}{a}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2a'}{a}\\dot{\\eta}\\dot{\\chi} - \\sin\\chi\\cos\\chi\\,\\dot{\\theta}^2 - \\sin\\chi\\cos\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2a'}{a}\\dot{\\eta}\\dot{\\theta} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2a'}{a}\\dot{\\eta}\\dot{\\phi} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "toroidal",
+      "name": "Toroidal",
+      "coords": [
+        "t",
+        "v",
+        "\\alpha",
+        "\\gamma"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "v \\in [0, 1/2]",
+        "\\alpha \\in [0, 2\\pi)",
+        "\\gamma \\in [0, 2\\pi)",
+        "(t, v, \\alpha, \\gamma) \\sim (t, v, \\alpha + \\pi/5, \\gamma + \\pi/5) \\;\\text{and the other images under } I^*"
+      ],
+      "parameters": [
+        {
+          "symbol": "a = a(t)",
+          "description": "Scale factor ($a > 0$), a length, the radius of curvature of space at the time $t$"
+        }
+      ],
+      "convention": "We use cosmic time $t$ and the coordinates $(v, \\alpha, \\gamma)$ of the unit 3-sphere at the point $(\\sqrt{1 - 2v}\\cos\\alpha, \\sqrt{2v}\\cos\\gamma, \\sqrt{2v}\\sin\\gamma, \\sqrt{1 - 2v}\\sin\\alpha)$ of $\\mathbb{R}^4$, in which a shift of $\\alpha$ and $\\gamma$ together is a Clifford translation. We take components in the chart $x^0 = ct$, a prime is $a' = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -c^2dt^2 + a^2\\left(\\dfrac{dv^2}{2v\\left(1 - 2v\\right)} + \\left(1 - 2v\\right)d\\alpha^2 + 2v\\,d\\gamma^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\dfrac{a^2}{2v\\left(1 - 2v\\right)}"
+        },
+        {
+          "indices": [
+            "\\alpha",
+            "\\alpha"
+          ],
+          "value": "a^2\\left(1 - 2v\\right)"
+        },
+        {
+          "indices": [
+            "\\gamma",
+            "\\gamma"
+          ],
+          "value": "2a^2\\,v"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\dfrac{2v\\left(1 - 2v\\right)}{a^2}"
+        },
+        {
+          "indices": [
+            "\\alpha",
+            "\\alpha"
+          ],
+          "value": "\\dfrac{1}{a^2\\left(1 - 2v\\right)}"
+        },
+        {
+          "indices": [
+            "\\gamma",
+            "\\gamma"
+          ],
+          "value": "\\dfrac{1}{2a^2\\,v}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{a\\,a'}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\alpha",
+                  "\\alpha"
+                ],
+                "value": "a\\,a'\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\gamma",
+                  "\\gamma"
+                ],
+                "value": "2v\\,a\\,a'"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "v"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "t"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "t",
+                  "\\alpha"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\alpha",
+                  "t"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "t",
+                  "\\gamma"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\gamma",
+                  "t"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{4v - 1}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\alpha",
+                  "\\alpha"
+                ],
+                "value": "2v\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\gamma",
+                  "\\gamma"
+                ],
+                "value": "-2v\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "v",
+                  "\\alpha"
+                ],
+                "value": "-\\dfrac{1}{1 - 2v}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\alpha",
+                  "v"
+                ],
+                "value": "-\\dfrac{1}{1 - 2v}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "v",
+                  "\\gamma"
+                ],
+                "value": "\\dfrac{1}{2v}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\gamma",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{2v}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{a\\,a'}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "v"
+                ],
+                "value": "\\dfrac{a\\,a'}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,a'}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\alpha",
+                  "\\alpha"
+                ],
+                "value": "-a\\,a'\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "t",
+                  "\\alpha"
+                ],
+                "value": "a\\,a'\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\alpha",
+                  "t"
+                ],
+                "value": "a\\,a'\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\gamma",
+                  "\\gamma"
+                ],
+                "value": "-2v\\,a\\,a'"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "t",
+                  "\\gamma"
+                ],
+                "value": "2v\\,a\\,a'"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\gamma",
+                  "t"
+                ],
+                "value": "2v\\,a\\,a'"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{a^2\\left(4v - 1\\right)}{4v^2\\left(1 - 2v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\alpha",
+                  "\\alpha"
+                ],
+                "value": "a^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\gamma",
+                  "\\gamma"
+                ],
+                "value": "-a^2"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "v",
+                  "\\alpha"
+                ],
+                "value": "-a^2"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\alpha",
+                  "v"
+                ],
+                "value": "-a^2"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "v",
+                  "\\gamma"
+                ],
+                "value": "a^2"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\gamma",
+                  "v"
+                ],
+                "value": "a^2"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "t",
+                  "v"
+                ],
+                "value": "\\dfrac{a\\,a''}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "v",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\,a''}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\alpha",
+                  "t",
+                  "\\alpha"
+                ],
+                "value": "a\\,a''\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\alpha",
+                  "\\alpha",
+                  "t"
+                ],
+                "value": "-a\\,a''\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\gamma",
+                  "t",
+                  "\\gamma"
+                ],
+                "value": "2v\\,a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\gamma",
+                  "\\gamma",
+                  "t"
+                ],
+                "value": "-2v\\,a\\,a''"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "t",
+                  "v"
+                ],
+                "value": "\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "v",
+                  "t"
+                ],
+                "value": "-\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "t",
+                  "t",
+                  "\\alpha"
+                ],
+                "value": "\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "t",
+                  "\\alpha",
+                  "t"
+                ],
+                "value": "-\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "t",
+                  "t",
+                  "\\gamma"
+                ],
+                "value": "\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "t",
+                  "\\gamma",
+                  "t"
+                ],
+                "value": "-\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\alpha",
+                  "v",
+                  "\\alpha"
+                ],
+                "value": "-\\left(2v\\left(\\left(a'\\right)^2 + 1\\right) - \\left(\\left(a'\\right)^2 + 1\\right)\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\alpha",
+                  "\\alpha",
+                  "v"
+                ],
+                "value": "\\left(2v\\left(\\left(a'\\right)^2 + 1\\right) - \\left(\\left(a'\\right)^2 + 1\\right)\\right)"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\alpha",
+                  "\\alpha",
+                  "\\gamma"
+                ],
+                "value": "\\left(2v\\left(\\left(a'\\right)^2 + 1\\right) - \\left(\\left(a'\\right)^2 + 1\\right)\\right)"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\alpha",
+                  "\\gamma",
+                  "\\alpha"
+                ],
+                "value": "-\\left(2v\\left(\\left(a'\\right)^2 + 1\\right) - \\left(\\left(a'\\right)^2 + 1\\right)\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\gamma",
+                  "v",
+                  "\\gamma"
+                ],
+                "value": "2v\\left(\\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\gamma",
+                  "\\gamma",
+                  "v"
+                ],
+                "value": "-2v\\left(\\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\gamma",
+                  "\\alpha",
+                  "\\gamma"
+                ],
+                "value": "2v\\left(\\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\gamma",
+                  "\\gamma",
+                  "\\alpha"
+                ],
+                "value": "-2v\\left(\\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "v",
+                  "v",
+                  "\\alpha"
+                ],
+                "value": "-\\dfrac{\\left(\\left(a'\\right)^2 + 1\\right)}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "v",
+                  "\\alpha",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(\\left(a'\\right)^2 + 1\\right)}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "v",
+                  "v",
+                  "\\gamma"
+                ],
+                "value": "-\\dfrac{\\left(\\left(a'\\right)^2 + 1\\right)}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "v",
+                  "\\gamma",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(\\left(a'\\right)^2 + 1\\right)}{2v\\left(1 - 2v\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "t",
+                  "v"
+                ],
+                "value": "-\\dfrac{a\\,a''}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "v",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,a''}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "t",
+                  "v"
+                ],
+                "value": "\\dfrac{a\\,a''}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "v",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\,a''}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\alpha",
+                  "t",
+                  "\\alpha"
+                ],
+                "value": "-a\\,a''\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\alpha",
+                  "\\alpha",
+                  "t"
+                ],
+                "value": "a\\,a''\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "t",
+                  "t",
+                  "\\alpha"
+                ],
+                "value": "a\\,a''\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "t",
+                  "\\alpha",
+                  "t"
+                ],
+                "value": "-a\\,a''\\left(1 - 2v\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\gamma",
+                  "t",
+                  "\\gamma"
+                ],
+                "value": "-2v\\,a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\gamma",
+                  "\\gamma",
+                  "t"
+                ],
+                "value": "2v\\,a\\,a''"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "t",
+                  "t",
+                  "\\gamma"
+                ],
+                "value": "2v\\,a\\,a''"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "t",
+                  "\\gamma",
+                  "t"
+                ],
+                "value": "-2v\\,a\\,a''"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\alpha",
+                  "v",
+                  "\\alpha"
+                ],
+                "value": "\\dfrac{a^2\\left(\\left(a'\\right)^2 + 1\\right)}{2v}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\alpha",
+                  "\\alpha",
+                  "v"
+                ],
+                "value": "-\\dfrac{a^2\\left(\\left(a'\\right)^2 + 1\\right)}{2v}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "v",
+                  "v",
+                  "\\alpha"
+                ],
+                "value": "-\\dfrac{a^2\\left(\\left(a'\\right)^2 + 1\\right)}{2v}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "v",
+                  "\\alpha",
+                  "v"
+                ],
+                "value": "\\dfrac{a^2\\left(\\left(a'\\right)^2 + 1\\right)}{2v}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\gamma",
+                  "v",
+                  "\\gamma"
+                ],
+                "value": "\\dfrac{a^2\\left(\\left(a'\\right)^2 + 1\\right)}{1 - 2v}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\gamma",
+                  "\\gamma",
+                  "v"
+                ],
+                "value": "-\\dfrac{a^2\\left(\\left(a'\\right)^2 + 1\\right)}{1 - 2v}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "v",
+                  "v",
+                  "\\gamma"
+                ],
+                "value": "-\\dfrac{a^2\\left(\\left(a'\\right)^2 + 1\\right)}{1 - 2v}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "v",
+                  "\\gamma",
+                  "v"
+                ],
+                "value": "\\dfrac{a^2\\left(\\left(a'\\right)^2 + 1\\right)}{1 - 2v}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\gamma",
+                  "\\alpha",
+                  "\\gamma"
+                ],
+                "value": "2a^2\\,v\\left(1 - 2v\\right)\\left(\\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\gamma",
+                  "\\gamma",
+                  "\\alpha"
+                ],
+                "value": "-2a^2\\,v\\left(1 - 2v\\right)\\left(\\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\alpha",
+                  "\\alpha",
+                  "\\gamma"
+                ],
+                "value": "-2a^2\\,v\\left(1 - 2v\\right)\\left(\\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\alpha",
+                  "\\gamma",
+                  "\\alpha"
+                ],
+                "value": "2a^2\\,v\\left(1 - 2v\\right)\\left(\\left(a'\\right)^2 + 1\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3a''}{a}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2 + 2}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\alpha"
+                ],
+                "value": "\\left(1 - 2v\\right)\\left(a\\,a'' + 2\\left(a'\\right)^2 + 2\\right)"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\gamma"
+                ],
+                "value": "2v\\left(a\\,a'' + 2\\left(a'\\right)^2 + 2\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3a''}{a}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2 + 2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\alpha"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2 + 2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\gamma"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2 + 2}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3a''}{a}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2v\\left(1 - 2v\\right)\\left(a\\,a'' + 2\\left(a'\\right)^2 + 2\\right)}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\alpha"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2 + 2}{a^4\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\gamma"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2 + 2}{2a^4\\,v}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)",
+      "kretschmann": "K = 12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)^2\\right)",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\left(\\left(a'\\right)^2 + 1\\right)}{a^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2 + 1}{2v\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\alpha"
+                ],
+                "value": "-\\left(1 - 2v\\right)\\left(2a\\,a'' + \\left(a'\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\gamma"
+                ],
+                "value": "-2v\\left(2a\\,a'' + \\left(a'\\right)^2 + 1\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\left(\\left(a'\\right)^2 + 1\\right)}{a^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2 + 1}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\alpha"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2 + 1}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\gamma"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2 + 1}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\left(\\left(a'\\right)^2 + 1\\right)}{a^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{2v\\left(1 - 2v\\right)\\left(2a\\,a'' + \\left(a'\\right)^2 + 1\\right)}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\alpha",
+                  "\\alpha"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2 + 1}{a^4\\left(1 - 2v\\right)}"
+              },
+              {
+                "indices": [
+                  "\\gamma",
+                  "\\gamma"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2 + 1}{2a^4\\,v}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{a\\,a'}{2v\\left(1 - 2v\\right)}\\dot{v}^2 + a\\,a'\\left(1 - 2v\\right)\\,\\dot{\\alpha}^2 + 2v\\,a\\,a'\\,\\dot{\\gamma}^2 = 0",
+        "\\ddot{v} + \\dfrac{2a'}{a}\\dot{t}\\dot{v} + \\dfrac{4v - 1}{2v\\left(1 - 2v\\right)}\\dot{v}^2 + 2v\\left(1 - 2v\\right)\\dot{\\alpha}^2 - 2v\\left(1 - 2v\\right)\\dot{\\gamma}^2 = 0",
+        "\\ddot{\\alpha} + \\dfrac{2a'}{a}\\dot{t}\\dot{\\alpha} - \\dfrac{2}{1 - 2v}\\dot{v}\\dot{\\alpha} = 0",
+        "\\ddot{\\gamma} + \\dfrac{2a'}{a}\\dot{t}\\dot{\\gamma} + \\dfrac{1}{v}\\dot{v}\\dot{\\gamma} = 0"
+      ]
+    }
+  ]
+}

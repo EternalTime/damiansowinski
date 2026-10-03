@@ -66,6 +66,11 @@
       "id": "self_creating_universe",
       "kind": "family",
       "text": "De Sitter space with events identified under a boost. The boost keeps the direction of time and makes closed timelike curves, in a region of finite spacetime volume behind a Cauchy horizon [gott1998]."
+    },
+    {
+      "id": "poincare_dodecahedral",
+      "kind": "family",
+      "text": "A closed Friedmann universe with points of space identified under a group of 120 rotations of the 3-sphere, so that space is a dodecahedron with each face glued to the face opposite it. The identification moves points within one moment and keeps the direction of time [luminet2003]."
     }
   ],
   "references": [
@@ -81,7 +86,8 @@
     "misner1967",
     "louko1998",
     "lachiezerey1995",
-    "gott1998"
+    "gott1998",
+    "luminet2003"
   ],
   "coordinates": [
     {
