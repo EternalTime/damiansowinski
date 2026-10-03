@@ -12110,6 +12110,66 @@ def btz_multi_holes_wormholes(ck, src):
                           "measured with $dX^2 + dY^2 - dZ^2$.",
                  stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, and no surface "
                         "of revolution in flat space carries the moment; Minkowski space carries it."])]
+def unruh_acoustic_hole(ck, src):
+    """Two moments of Unruh's acoustic black hole on its equator, at r_0 = c = 1, so that the
+    horizon r_0 is the unit of length, as the spacetime diagrams draw it.
+
+    The laboratory's t = 0 is the space the fluid falls through: g_rr = 1 and g_phiphi = r^2 on
+    the equator, so rho = r and dz/dr = 0, a flat plane drawn out to r = 4 with the horizon marked.
+    Unruh's tau = 0 is another surface, t = ln|(r - 1)/(r + 1)|/4 + arctan(r)/2: there g_rr =
+    r^4/(r^4 - 1), so dz/dr = 1/sqrt(r^4 - 1) and z = F(arccos(1/r) | 1/2)/sqrt 2, an incomplete
+    elliptic integral of the first kind, from its waist on the horizon, where the chart ends, out to
+    r = 5. It levels off at z = K(1/2)/sqrt 2, about 1.311, as r runs to infinity."""
+    from scipy.special import ellipk, ellipkinc
+    params = {"r_0": 1}
+    flat = Slice(src, "unruh_acoustic_hole", "laboratory", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    ck.plane("Unruh's acoustic hole, the laboratory's moment", flat, np.linspace(1e-3, 20, 400))
+    top = 4.0
+    size = 2 * top
+    space = Piece("space", "sheet", flat, 0.0, top, 0.0, 1,
+                  (("axis", "the sink $r = 0$"), ("edge", "the plane runs on to $r \\to \\infty$")),
+                  [(1.0, "horizon", "$r = r_0$"), (2.0, "r", None), (3.0, "r", None), (top, "r", None)], size)
+    ck.isometry("Unruh's acoustic hole, the plane", space)
+    ck.radius("Unruh's acoustic hole, the plane rho = r", space, lambda r: r, size)
+    ck.form("Unruh's acoustic hole, the plane z = 0", space, np.zeros_like, size)
+    surface = Surface([space])
+    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
+    ring_label(fig, [0, 0, 0], *space.at(1.0), "$r_0$", side=-1)
+    ring_label(fig, [0, 0, 0], *space.at(2.0), "$2\\,r_0$")
+    ring_label(fig, [0, 0, 0], *space.at(top), "$4\\,r_0$")
+    fig.legend("fill", "cover", "the equator of the space the fluid falls through, which $t$ and $r$ cover down to the sink")
+    fig.legend("line", "horizon", "the horizon $r = r_0$, where the fluid falls at the speed of sound")
+    fig.legend("line", "r", "$r$ constant, at $2\\,r_0$, $3\\,r_0$ and $4\\,r_0$, each of circumference $2\\pi r$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = "$r_0 = 1$ and $c = 1$, so that the horizon radius $r_0$ is the unit of every length."
+    views = [view("space", "The laboratory's moment", "$r_0$", [surface], fig.done(), settings=settings)]
+
+    sl = Slice(src, "unruh_acoustic_hole", "unruh", "r", "\\phi", {"tau": 0, **EQUATOR}, params)
+    rh = sl.horizons()[0]
+    ck.add("Unruh's acoustic hole: the horizon is at r = r_0", abs(rh - 1.0), 1e-12)
+    far = 5.0
+    wide = 2 * far
+    funnel = Piece("funnel", "sheet", sl, rh, far, 0.0, 1,
+                   (("throat", "the waist $r = r_0$, the horizon, where the chart of $\\tau$ and $r$ ends"),
+                    ("edge", "the surface runs on, levelling off, to $r \\to \\infty$")),
+                   [(rh, "horizon", "$r = r_0$")] + [(r, "r", None) for r in (2.0, 3.0, 4.0, far)], wide)
+    ck.isometry("Unruh's acoustic hole, the funnel", funnel)
+    ck.radius("Unruh's acoustic hole, the funnel rho = r", funnel, lambda r: r, wide)
+    ck.form("Unruh's acoustic hole, z = F(arccos(r_0/r) | 1/2) r_0/sqrt 2", funnel,
+            lambda r: ellipkinc(np.arccos(1 / np.maximum(r, 1.0)), 0.5) / np.sqrt(2), wide)
+    ck.add("Unruh's acoustic hole: the funnel levels off at K(1/2)/sqrt 2",
+           abs(quad(lambda x: 1 / np.sqrt(x ** 4 - 1), 1, np.inf)[0] - ellipk(0.5) / np.sqrt(2)), 1e-8)
+    cat = Surface([funnel])
+    fig = figure_of([cat], {"sheet": "cover"}, wide)
+    ring_label(fig, [0, 0, 0], *funnel.at(rh), "$r_0$", dx=14)
+    ring_label(fig, [0, 0, 0], *funnel.at(2.0), "$2\\,r_0$")
+    ring_label(fig, [0, 0, 0], *funnel.at(far), "$5\\,r_0$")
+    fig.legend("fill", "cover", "the outside of the horizon on the equator, which $\\tau$ and $r$ cover")
+    fig.legend("line", "horizon", "the waist $r = r_0$, the horizon")
+    fig.legend("line", "r", "$r$ constant, at $2\\,r_0$, $3\\,r_0$, $4\\,r_0$ and $5\\,r_0$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("funnel", "The moment $\\tau = 0$", "$r_0$", [cat], fig.done(), settings=settings))
+    return views
 
 
 def spinning_string(ck, src):
@@ -16169,6 +16229,7 @@ DRAWN = {
     "btz": btz,
     "draining_bathtub": draining_bathtub,
     "btz_multi_holes_wormholes": btz_multi_holes_wormholes,
+    "unruh_acoustic_hole": unruh_acoustic_hole,
     "c_metric": c_metric,
     "einstein_rosen_waves": einstein_rosen_waves,
     "gowdy": gowdy,
@@ -16401,6 +16462,24 @@ CAPTIONS = {
         "Its waist is the horizon $r = |A|/c$, where the surface stands vertical and the chart ends. The time "
         "$T$ differs from the laboratory's $t$ by a function of $r$ that grows without bound toward the "
         "horizon, so this surface and the flat plane are two cuts through one spacetime.",
+    ],
+    ("unruh_acoustic_hole", "space"): [
+        "The equator ($\\theta = \\pi/2$) at the moment $t = 0$ of the laboratory's clock, a flat plane, every "
+        "distance along it the metric distance. On the slice the metric is $dr^2 + r^2d\\phi^2$: the space sound "
+        "moves through is the space the fluid falls through, and a circle of radius $r$ has circumference $2\\pi r$ "
+        "all the way down to the sink.",
+        "The curvature of this spacetime lies in how its moments are stacked. From one to the next the fluid "
+        "carries each point inward at $c\\,r_0^2/r^2$, faster than sound inside the horizon $r = r_0$.",
+    ],
+    ("unruh_acoustic_hole", "funnel"): [
+        "The equator ($\\theta = \\pi/2$) at the moment $\\tau = 0$ of Unruh's time, outside the horizon, drawn as "
+        "a surface in flat space with every distance along it the metric distance. On the slice the metric is "
+        "$dr^2/(1 - r_0^4/r^4) + r^2d\\phi^2$, so the surface climbs at $dz/dr = r_0^2/\\sqrt{r^4 - r_0^4}$, and "
+        "its height is $z = (r_0/\\sqrt{2})\\,\\mathrm{F}\\left(\\arccos(r_0/r) \\mid 1/2\\right)$, an incomplete "
+        "elliptic integral of the first kind.",
+        "Its waist is the horizon $r = r_0$, where the surface stands vertical and the chart ends. Far out it "
+        "levels off at $z = (r_0/\\sqrt{2})\\,\\mathrm{K}(1/2)$, about $1.311\\,r_0$, and Unruh's time differs "
+        "from the laboratory's by a function of $r$ that grows without bound toward the horizon.",
     ],
     ("c_metric", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the C-metric at one moment of $t$ ($\\alpha m = 1/6$, "

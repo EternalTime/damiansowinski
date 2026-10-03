@@ -19,6 +19,7 @@ cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_b
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder and jackiw_teitelboim_black_hole, and Godel's cylindrical chart.
+string_bh_three_four_charges and unruh_acoustic_hole, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -28003,6 +28004,93 @@ def draining_bathtub_check(chart, system):
 
 
 CHARTS["draining_bathtub"] = [lambda s=s: draining_bathtub(s) for s in DB_CHARTS]
+
+
+# -- Unruh's acoustic black hole ---------------------------------------------------------
+
+UAH_CHARTS = ["laboratory", "unruh"]
+
+
+def unruh_acoustic_hole(system):
+    """Unruh's (1981) acoustic metric of a spherically symmetric, stationary, convergent flow,
+    (rho_0/c)[(c^2 - v^2)dt^2 + 2 dt v.dx - dx.dx] in his signature, with the speed of sound c
+    constant, for the flow Visser (1998) calls the canonical acoustic black hole: constant density,
+    so that continuity gives the radial velocity v = -c r_0^2/r^2, and the constant factor rho_0/c
+    dropped. Two charts:
+
+    laboratory  -c^2dt^2 + (dr + c r_0^2 dt/r^2)^2 + r^2 dOmega^2, Visser's (55) with the lower sign
+                of the flow falling inward, t the time of the laboratory;
+    unruh       Unruh's time tau = t + int v dr/(c^2 - v^2), Visser's (56) and (57), which leaves
+                -(1 - r_0^4/r^4)c^2dtau^2 + dr^2/(1 - r_0^4/r^4) + r^2 dOmega^2 outside the horizon.
+
+    unruh_acoustic_hole_check holds the laboratory chart to sound moving at c past the fluid in every
+    direction and to the flat space of each moment, and the second chart to the first pulled back."""
+    reals = "(-\\infty, \\infty)"
+    sphere = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    omega = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    if system == "laboratory":
+        name, coords = "Laboratory", ["t", "r", "\\theta", "\\phi"]
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)"] + sphere + ["r = r_0 \;\\text{(the sonic horizon)}"]
+        line = "ds^2 = -c^2dt^2 + \\left(dr + \\dfrac{c\\,r_0^2}{r^2}dt\\right)^2" + omega
+        chart_line = "ds^2 = -dt^2 + \\left(dr + \\dfrac{r_0^2}{r^2}dt\\right)^2" + omega
+        lead = "-\\left(1 - \\dfrac{r_0^4}{r^4}\\right)"
+    else:
+        name, coords = "Unruh's Time", ["\\tau", "r", "\\theta", "\\phi"]
+        domains = ["\\tau \\in " + reals, "r \\in (r_0, \\infty)"] + sphere
+        f = "\\left(1 - \\dfrac{r_0^4}{r^4}\\right)"
+        line = f"ds^2 = -{f}c^2d\\tau^2 + \\dfrac{{dr^2}}{{1 - \\dfrac{{r_0^4}}{{r^4}}}}" + omega
+        chart_line = f"ds^2 = -{f}d\\tau^2 + \\dfrac{{dr^2}}{{1 - \\dfrac{{r_0^4}}{{r^4}}}}" + omega
+        lead = "-" + f
+    r = sp.Symbol("r", positive=True)
+    r0, c = sp.Symbol("r_0", positive=True), sp.Symbol("c", positive=True)
+    return {
+        "metric_id": "unruh_acoustic_hole",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": ["r_0"],
+                   "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": [c, r, r0], "factors": [r0, c, r]},
+        "components": {"metric_components": {(coords[0], coords[0]): lead}},
+        "check": lambda chart: unruh_acoustic_hole_check(chart, system),
+    }
+
+
+def unruh_acoustic_hole_check(chart, system):
+    X, g = chart.symbols, chart.geo.g
+    r, th = X[1], X[2]
+    r0 = chart.reader.parameters["r_0"]
+
+    def zero(value, what):
+        if sp.simplify(value) != 0:
+            raise AssertionError(f"unruh_acoustic_hole: {what} fails in the {system} chart")
+    # The laboratory chart expanded, with the time the chart's x^0 = ct and v = -c r_0^2/r^2.
+    lab = sp.diag(-(1 - r0 ** 4 / r ** 4), 1, r ** 2, r ** 2 * sp.sin(th) ** 2)
+    lab[0, 1] = lab[1, 0] = r0 ** 2 / r ** 2
+    if system == "unruh":
+        # Unruh's c dtau = c dt + v c dr/(c^2 - v^2) = c dt - r_0^2 r^2 dr/(r^4 - r_0^4).
+        J = sp.eye(4)
+        J[0, 1] = r0 ** 2 * r ** 2 / (r ** 4 - r0 ** 4)
+        pulled = J.T * lab * J
+        for i in range(4):
+            for j in range(i, 4):
+                zero(pulled[i, j] - g[i, j], f"the laboratory chart pulled back, slot {i}{j}")
+        zero(1 / g[1, 1] - (1 - r0 ** 4 / r ** 4), "g_rr = 1/(1 - r_0^4/r^4)")
+    else:
+        for i in range(4):
+            for j in range(i, 4):
+                zero(lab[i, j] - g[i, j], f"Visser's (55) expanded, slot {i}{j}")
+        # Sound moves at c past the fluid: a ray with dx/dt = v + c n is null for every unit n.
+        a, b = sp.symbols("alpha beta", real=True)
+        ray = sp.Matrix([1, -r0 ** 2 / r ** 2 + sp.cos(a), sp.sin(a) * sp.cos(b) / r,
+                         sp.sin(a) * sp.sin(b) / (r * sp.sin(th))])
+        zero((ray.T * g * ray)[0, 0], "sound moving at c past the fluid")
+        # Each moment of the laboratory is flat space, and the horizon is where the flow reaches c.
+        zero(g[1, 1] - 1, "the flat space of constant t")
+        zero(chart.geo.ginv[1, 1] - (1 - r0 ** 4 / r ** 4), "g^rr = 1 - r_0^4/r^4")
+    zero(chart.geo.ricci_scalar() - 6 * r0 ** 4 / r ** 6, "the Ricci scalar 6 r_0^4/r^6")
+    zero(chart.geo.kretschmann() - 468 * r0 ** 8 / r ** 12, "the Kretschmann scalar 468 r_0^8/r^12")
+
+
+CHARTS["unruh_acoustic_hole"] = [lambda s=s: unruh_acoustic_hole(s) for s in UAH_CHARTS]
 
 
 # -- Tilted universes and the whimper ------------------------------------------------------

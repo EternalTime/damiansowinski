@@ -1,5 +1,5 @@
 {
-  "version": "3e41cd323d323d4b",
+  "version": "d49c94e1ffd7d446",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -27487,6 +27487,81 @@
         "eprint": "1612.06180",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1038/nphys4151"
+      }
+    },
+    "moncrief1980": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of stationary, spherical accretion onto a {Schwarzschild} black hole",
+        "author": "Moncrief, V.",
+        "journal": "The Astrophysical Journal",
+        "volume": "235",
+        "pages": "1038--1046",
+        "year": "1980",
+        "doi": "10.1086/157707",
+        "url": "https://doi.org/10.1086/157707"
+      }
+    },
+    "barcelo2011": {
+      "type": "article",
+      "fields": {
+        "title": "Analogue Gravity",
+        "author": "Barcel\\'o, Carlos and Liberati, Stefano and Visser, Matt",
+        "journal": "Living Reviews in Relativity",
+        "volume": "14",
+        "number": "1",
+        "pages": "3",
+        "year": "2011",
+        "doi": "10.12942/lrr-2011-3",
+        "eprint": "gr-qc/0505065",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.12942/lrr-2011-3"
+      }
+    },
+    "jacobson1991": {
+      "type": "article",
+      "fields": {
+        "title": "Black-hole evaporation and ultrashort distances",
+        "author": "Jacobson, Theodore",
+        "journal": "Physical Review D",
+        "volume": "44",
+        "number": "6",
+        "pages": "1731--1739",
+        "year": "1991",
+        "doi": "10.1103/PhysRevD.44.1731",
+        "url": "https://doi.org/10.1103/PhysRevD.44.1731"
+      }
+    },
+    "steinhauer2016": {
+      "type": "article",
+      "fields": {
+        "title": "Observation of quantum {Hawking} radiation and its entanglement in an analogue black hole",
+        "author": "Steinhauer, Jeff",
+        "journal": "Nature Physics",
+        "volume": "12",
+        "number": "10",
+        "pages": "959--965",
+        "year": "2016",
+        "doi": "10.1038/nphys3863",
+        "eprint": "1510.00621",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1038/nphys3863"
+      }
+    },
+    "munozdenova2019": {
+      "type": "article",
+      "fields": {
+        "title": "Observation of thermal {Hawking} radiation and its temperature in an analogue black hole",
+        "author": "Mu\\~noz de Nova, Juan Ram\\'on and Golubkov, Katrine and Kolobov, Victor I. and Steinhauer, Jeff",
+        "journal": "Nature",
+        "volume": "569",
+        "number": "7758",
+        "pages": "688--691",
+        "year": "2019",
+        "doi": "10.1038/s41586-019-1241-0",
+        "eprint": "1809.00913",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1038/s41586-019-1241-0"
       }
     },
     "maitra1966": {

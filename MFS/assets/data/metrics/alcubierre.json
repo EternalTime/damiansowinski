@@ -58,6 +58,11 @@
       "id": "tippett_tsang",
       "kind": "family",
       "text": "A bubble built on Alcubierre's recipe whose path closes on itself in spacetime. Benjamin Tippett and David Tsang sent it round a circle in the plane of $t$ and $x$ in 2017, and a rider who keeps accelerating inside it meets her own past [tippett2017]."
+    },
+    {
+      "id": "unruh_acoustic_hole",
+      "kind": "family",
+      "text": "Flat space with a flow through it, as a warp drive is, with a fluid falling into a point for the flow and the speed of sound for $c$. Where the fall passes the speed of sound, sound meets a horizon [unruh1981, visser1998]."
     }
   ],
   "references": [
@@ -75,7 +80,9 @@
     "krasnikov1998",
     "everett1997",
     "everett1996",
-    "tippett2017"
+    "tippett2017",
+    "unruh1981",
+    "visser1998"
   ],
   "coordinates": [
     {
