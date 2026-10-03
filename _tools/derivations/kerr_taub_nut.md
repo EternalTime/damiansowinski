@@ -26,7 +26,7 @@ Two derivatives of $g_{\phi\phi}$ are written by hand, since no grouping finds t
 $$\Gamma^r{}_{\phi\phi} = -\frac{\Delta\left(rw\left(\Sigma - a\chi\right)\sin^2\theta - (r - m)\Sigma\chi^2 + r\Delta\chi^2\right)}{\Sigma^3},\qquad \Gamma^\theta{}_{\phi\phi} = -\frac{\left(\Sigma\left(w^2\cos\theta - 2\Delta\chi p\right) + ap\left(w^2\sin^2\theta - \Delta\chi^2\right)\right)\sin\theta}{\Sigma^3}.$$
 
 The factoring names its generators in one order, $r$, $\cos\theta$, $\sin\theta$, $a$, $l$, $m$.
-Left to choose, sympy orders them by the run's hashes, and under some orders one mixed Riemann component of a Kerr chart did not factor in forty minutes, where under the fixed order every chart prints in about six.
+One mixed Riemann component of a Kerr chart once did not factor in forty minutes, which was put down to the order sympy chose; sympy's own order does not depend on the hash seed, and the cause was the random points sympy's factoring lifts at, which `verify_metrics.py` now draws from a fixed seed, `WANG_SEED`.
 `by_twist` reduces every power of the cosine above the first by $a\cos^2\theta = a - 2l\cos\theta - \chi$ and never divides polynomials, for the same reason.
 `KerrTaubNutForms.by_hand` recognises each of them, and its lowered form, by its value at one rational point, and the chart reads the text back and compares it with the computed value exactly, as it does every printed value.
 

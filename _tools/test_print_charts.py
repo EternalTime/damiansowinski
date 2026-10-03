@@ -56,6 +56,54 @@ class Reprint(unittest.TestCase):
         self.assertEqual(self.reprinted("einstein_static")[1], first)
 
 
+@unittest.skipUnless(HAS_SYMPY, "print_charts.py needs sympy")
+class InTheSameTime(unittest.TestCase):
+    """sympy factors a polynomial in several variables by lifting its factors at random points, and
+    drew them from a generator seeded from the operating system, so a chart that printed in seconds
+    could take many minutes in another run: one tensor of Brill's charged Taub-NUT took 2 seconds in
+    one run and over 800 in another. verify_metrics.py draws them from WANG_SEED. Brill's universe is
+    printed here in a process of its own under each pair of a hash seed and a state of sympy's
+    generator, and no step may take long; with the generator seeded 5 its Christoffel symbols took
+    28 seconds before WANG_SEED, under every hash seed, where they take under one."""
+
+    RUNS = ((0, 5), (26, 5), (4, 0))     # (PYTHONHASHSEED, the seed of sympy's generator)
+    STEP_SECONDS = 15
+    RUN_SECONDS = 180
+
+    CHILD = """
+import sys, tempfile
+from pathlib import Path
+import sympy.core.random
+sys.path.insert(0, sys.argv[1])
+import print_charts as pc
+sympy.core.random.seed(int(sys.argv[2]))
+published = pc.METRICS / "brill_charged_taub_nut.json"
+with tempfile.TemporaryDirectory() as folder:
+    copy = Path(folder) / published.name
+    copy.write_bytes(published.read_bytes())
+    pc.METRICS = Path(folder)
+    pc.write(pc.brill_charged_taub_nut("taub"))
+    print("same" if copy.read_bytes() == published.read_bytes() else "changed")
+"""
+
+    def test_brills_universe_prints_fast_whatever_the_seeds(self):
+        import os
+        import re
+        import subprocess
+        for hash_seed, sympy_seed in self.RUNS:
+            with self.subTest(hash_seed=hash_seed, sympy_seed=sympy_seed):
+                run = subprocess.run([sys.executable, "-c", self.CHILD, str(DERIVATIONS), str(sympy_seed)],
+                                     env=dict(os.environ, PYTHONHASHSEED=str(hash_seed)), capture_output=True,
+                                     text=True, timeout=self.RUN_SECONDS)
+                self.assertEqual(run.returncode, 0, run.stderr[-2000:])
+                self.assertEqual(run.stdout.splitlines()[-1], "same")
+                steps = {name: float(seconds) for name, seconds in re.findall(r"^  (\w[\w ]*): ([\d.]+)s$",
+                                                                             run.stdout, re.MULTILINE)}
+                self.assertIn("christoffel ull", steps)
+                slow = {name: seconds for name, seconds in steps.items() if seconds > self.STEP_SECONDS}
+                self.assertEqual(slow, {})
+
+
 @unittest.skipUnless(HAS_SYMPY, "verify_metrics.py needs sympy")
 class Orders(unittest.TestCase):
     """A system kept to an order, as Hartle and Thorne's exterior is to the second order of its spin:
