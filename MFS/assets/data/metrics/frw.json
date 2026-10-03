@@ -121,6 +121,11 @@
       "id": "tilted_universes",
       "kind": "generalisation",
       "text": "The open universe of dust with its matter set drifting along one direction. With the tilt $C = 0$ Farnsworth's solution is Friedmann's [anton2023]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "composite",
+      "text": "A ball cut from the flat universe of dust and run through the bounce of loop quantum cosmology, with the vacuum the junction conditions fix outside it [lewandowski2023]."
     }
   ],
   "references": [
@@ -184,7 +189,8 @@
     "trautman2006",
     "ellis1971",
     "lachiezerey1995",
-    "anton2023"
+    "anton2023",
+    "lewandowski2023"
   ],
   "coordinates": [
     {

@@ -70,6 +70,11 @@
       "id": "boson_star",
       "kind": "programme",
       "text": "Wheeler's geon was a ball of waves held together by its own gravity, mass without matter [wheeler1955]. Brill and James Hartle built the geon of gravitational waves in 1964 [brillhartle1964]."
+    },
+    {
+      "id": "brill_charged_taub_nut",
+      "kind": "programme",
+      "text": "Dieter Brill's closed universe of 1964, a whole spacetime \"filled with gravitational and electromagnetic radiation\" and nothing else [brill1964]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "brill1963",
     "weber1957",
     "wheeler1955",
-    "brillhartle1964"
+    "brillhartle1964",
+    "brill1964"
   ],
   "coordinates": [
     {

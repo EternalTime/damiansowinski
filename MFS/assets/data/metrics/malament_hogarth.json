@@ -50,6 +50,11 @@
       "id": "nordstrom_scalar",
       "kind": "family",
       "text": "The same line element with a field equation for the factor. In Nordström's theory of gravity $\\Omega$ is the gravitational potential, fixed by the matter [einstein1914fokker]."
+    },
+    {
+      "id": "self_creating_universe",
+      "kind": "special_case",
+      "text": "De Sitter space identified under a boost has closed timelike curves in its earliest region, and so the property, by Manchak's observation [gott1998, manchak2010]."
     }
   ],
   "references": [
@@ -60,7 +65,8 @@
     "shagrir2003",
     "welch2008",
     "manchak2010",
-    "einstein1914fokker"
+    "einstein1914fokker",
+    "gott1998"
   ],
   "coordinates": [
     {

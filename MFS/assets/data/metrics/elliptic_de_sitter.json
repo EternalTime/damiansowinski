@@ -61,6 +61,11 @@
       "id": "small_universes",
       "kind": "family",
       "text": "Friedmann universes with points of space identified under translations, as events of de Sitter space are identified here under the antipodal map. Space becomes a torus, and each galaxy is seen many times over [lachiezerey1995]."
+    },
+    {
+      "id": "self_creating_universe",
+      "kind": "family",
+      "text": "De Sitter space with events identified under a boost. The boost keeps the direction of time and makes closed timelike curves, in a region of finite spacetime volume behind a Cauchy horizon [gott1998]."
     }
   ],
   "references": [
@@ -75,7 +80,8 @@
     "aguirre2003",
     "misner1967",
     "louko1998",
-    "lachiezerey1995"
+    "lachiezerey1995",
+    "gott1998"
   ],
   "coordinates": [
     {

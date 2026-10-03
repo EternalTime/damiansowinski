@@ -98,7 +98,7 @@ def write_facts(facts):
 # ---------------------------------------------------------------------------------------
 
 DIMENSION = {2: "two-dimensional", 3: "three-dimensional", 4: "four-dimensional",
-             5: "five-dimensional", 6: "six-dimensional"}
+             5: "five-dimensional", 6: "six-dimensional", 10: "ten-dimensional"}
 
 # The tags the facts decide. A spacetime carries each of them exactly when its charts say
 # so, which the tests hold every metric file to, so none of them is written by hand.
@@ -137,11 +137,21 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "btz_multi_holes_wormholes": {
+        "regions": [["sausage", "stereographic", "free_fall"]],
+        "why": "exterior covers the outside of one horizon alone, where the hole is static; the Killing "
+               "vector of that chart extends to no symmetry of the whole spacetime (Brill 1996, section 4; "
+               "Aminneborg, Bengtsson, Brill, Holst and Peldan 1998, section V)",
+    },
     "moving_mirror": {
         "regions": [["inertial", "null", "mirror_rest"]],
         "why": "thermal, collapse and rindler are three mirrors, Carlitz and Willey's, the one that imitates a "
                "collapse, and the uniformly accelerating one, which alone is at rest in a static chart; a mirror "
                "on a general world line leaves the spacetime to its right no symmetry",
+    },
+    "kerr_bertotti_robinson": {
+        "regions": [["boyer_lindquist"]],
+        "why": "static is the hole with no spin, a = 0, a special case of the family, which alone is static",
     },
     "neugebauer_meinel": {
         "regions": [["weyl", "corotating", "bardeen_wagoner", "spheroidal"]],
@@ -198,6 +208,11 @@ REGIONS = {
                "holes reduce to, which carries a Maxwell field and a scalar field; the entry's "
                "spacetime is the vacuum of five dimensions",
     },
+    "topological_star": {
+        "regions": [["bah_heidmann", "bubble", "eddington_finkelstein_ingoing", "extremal"]],
+        "why": "einstein prints the metric of four dimensions the star reduces to, which carries a Maxwell "
+               "field and a scalar field; the entry's spacetime is the solution of five dimensions",
+    },
     "kasner_scalar": {
         "regions": [["synchronous", "logarithmic"]],
         "why": "kaluza_klein prints Kasner's vacuum of five dimensions, whose reduction along its "
@@ -241,6 +256,11 @@ REGIONS = {
     "oppenheimer_snyder": {
         "regions": [["interior_comoving"], ["exterior_schwarzschild"]],
         "why": "the dust ball and the vacuum outside it are two regions of one spacetime",
+    },
+    "quantum_oppenheimer_snyder": {
+        "regions": [["interior_comoving"],
+                    ["static", "painleve_gullstrand", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"]],
+        "why": "the bouncing dust ball and the vacuum outside it are two regions of one spacetime",
     },
     "semiclosed_world": {
         "regions": [["comoving", "conformal"], ["schwarzschild", "isotropic"]],
@@ -367,6 +387,10 @@ OVERRULED = {
     ("double_kerr", "vacuum"): (
         True, "f, omega and gamma are left free; the two Kerr black holes are a solution of "
               "the vacuum equations, Ernst's equation for f and omega and a quadrature for gamma"),
+    ("bach_weyl_ring", "vacuum"): (
+        True, "psi and gamma are held as functions while each chart's tensors are built; they are the "
+              "solution of the vacuum equations, Laplace's equation and Weyl's quadrature, that each "
+              "chart's parameters write out, which print_charts.py holds to a vanishing Ricci tensor"),
     ("morgan_morgan", "vacuum"): (
         True, "psi and gamma are left free in Weyl's chart; off the disc the field is the solution "
               "of the vacuum equations, Laplace's equation and a quadrature, that the oblate "

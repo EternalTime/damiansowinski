@@ -58,6 +58,11 @@
       "id": "domain_wall",
       "kind": "family",
       "text": "A thin wall with the same flat vacuum on both sides. Its world volume is a hyperboloid as well, de Sitter space of three dimensions [caldwell1996]."
+    },
+    {
+      "id": "self_creating_universe",
+      "kind": "family",
+      "text": "A de Sitter space whose earliest region is a loop in time. Gott and Li have bubbles like these forming in its inflating region, and in their fuller scenario a baby universe born in one of them is the de Sitter space the bubbles formed in [gott1998]."
     }
   ],
   "references": [
@@ -79,7 +84,8 @@
     "farhi1987",
     "feeney2011",
     "degrassi2012",
-    "caldwell1996"
+    "caldwell1996",
+    "gott1998"
   ],
   "coordinates": [
     {

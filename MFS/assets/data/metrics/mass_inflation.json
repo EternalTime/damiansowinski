@@ -87,6 +87,11 @@
       "id": "charged_shell",
       "kind": "programme",
       "text": "Israel's first trip through the inner horizon. With V. de la Cruz in 1967 he sent a shell of charged dust through it, round a turn inside, and out into another exterior [delacruz1967]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "family",
+      "text": "A quantum relative with an inner horizon too. In the quantum collapse of dust of Husain, Kelly, Santacruz, and Wilson-Ewing there is no mass inflation at the inner horizons [husain2022]."
     }
   ],
   "references": [
@@ -111,7 +116,8 @@
     "carballorubio2021",
     "chan1996",
     "yurtsever1993",
-    "delacruz1967"
+    "delacruz1967",
+    "husain2022"
   ],
   "coordinates": [
     {

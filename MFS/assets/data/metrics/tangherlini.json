@@ -71,6 +71,11 @@
       "id": "string_bh_three_four_charges",
       "kind": "generalisation",
       "text": "Tangherlini's hole of five dimensions given three charges. Each charge rescales its time and its space by a power of a harmonic function of its own [horowitz1996]."
+    },
+    {
+      "id": "topological_star",
+      "kind": "family",
+      "text": "A star with no horizon built from Tangherlini's black hole: give it a circle, exchange the circle with time, and hold the resulting bubble open with flux. With four large dimensions it is the topological star of five [bah2021]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "grossperry1983",
     "boulware1985",
     "elvang2007",
-    "horowitz1996"
+    "horowitz1996",
+    "bah2021"
   ],
   "coordinates": [
     {

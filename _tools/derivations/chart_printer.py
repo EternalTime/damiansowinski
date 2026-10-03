@@ -25,7 +25,7 @@ from sympy.core.function import AppliedUndef
 import verify_metrics as vm
 
 GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Psi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell", "alpha",
-         "Lambda", "gamma", "sigma", "Sigma", "Delta", "kappa", "xi", "delta", "epsilon", "Xi", "beta"}
+         "Lambda", "gamma", "sigma", "Sigma", "Delta", "kappa", "xi", "delta", "epsilon", "Xi", "beta", "zeta"}
 # A name the reader spells from an accented command, as it reads \tilde\phi as tildephi.
 ACCENTED = {"tildephi": "\\tilde\\phi"}
 TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh, sp.tanh)
