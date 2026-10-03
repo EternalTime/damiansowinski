@@ -5111,6 +5111,15 @@ class Slices(unittest.TestCase):
                     # Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the
                     # time and phi.
                     "cremmer_scherk/cartesian/circle": {"sphere"},
+                    # Freund and Rubin's moment t = 0 is three surfaces: the hyperbolic plane lies on the planes of
+                    # the time and the radius of the global, conformal and static charts, the cylinder on those of
+                    # the Poincare and proper distance charts and on the plane of t and psi, and the great 2-sphere
+                    # stands at one event, on none of the planes.
+                    **{f"{place}freund_rubin/{chart}{view}": hidden
+                       for hidden, charts in (({"circle", "sphere"}, ("global", "conformal", "static")),
+                                              ({"anti_de_sitter", "sphere"}, ("poincare", "proper")))
+                       for chart in charts for place, view in (("", "/radial"), ("conformal ", ""))},
+                    "freund_rubin/proper/circle": {"anti_de_sitter", "sphere"},
                     # The three-brane and its throat alone are two spacetimes, the second the limit of the
                     # first, and each chart's drawings mark the surface of its own.
                     **{f"{place}three_brane_throat/{chart}{view}": {other}
@@ -6355,6 +6364,16 @@ class Slices(unittest.TestCase):
             if "/areal/" in key:
                 return (lambda X: 0.0), areal
             return (lambda X: 0.0), [x / r for x, r in zip(self.reach(surface, "isotropic"), areal)]
+        if key in ("freund_rubin/conformal/radial", "freund_rubin/static/radial"):
+            # The embedding reads the global rho at L = 1: the static chart's r is sinh(rho) and the
+            # conformal chart's chi is arctan(sinh(rho)).
+            areal = [math.sinh(x) for x in self.reach(surface, "global")]
+            if "/static/" in key:
+                return (lambda X: 0.0), areal
+            return (lambda X: 0.0), [math.atan(r) for r in areal]
+        if key == "freund_rubin/poincare/radial":
+            # The cylinder is read in the proper distance sigma, and r = L e^(sigma/L).
+            return (lambda X: 0.0), [math.exp(x) for x in self.reach(surface, "proper")]
         if key == "three_brane_throat/throat/radial":
             # The throat's cylinder is read in the proper distance sigma, and r = L e^(sigma/L).
             return (lambda X: 0.0), [math.exp(x) for x in self.reach(surface, "throat_proper")]

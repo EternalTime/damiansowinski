@@ -8747,6 +8747,99 @@ def three_brane_throat(ck, src):
     return views
 
 
+def freund_rubin(ck, src):
+    """Freund and Rubin's anti-de Sitter space times a 7-sphere of radius 2L, at L = 1. The sphere has
+    one radius at every event, so the causal structure is that of anti-de Sitter space of four
+    dimensions, each point of the diagram a 2-sphere of it times the 7-sphere. On the global chart
+    the areal radius is r = sinh(rho), on the conformal chart r = tan(chi), and each of the three
+    is drawn in anti-de Sitter's strip by ads_global_pq. The Poincare and proper distance charts cover
+    the Poincare wedge of the strip of AdS2, poincare_pq(t, 1/r), with r = e^sigma."""
+    name = "freund_rubin"
+    views = []
+    hyperbolic = slices.moments(name, "anti_de_sitter")[0]
+    lo, hi = hyperbolic.reach("global", "\\rho")
+    T0, T1 = -0.3 * PI, 1.3 * PI
+    for system, label, symbol, r_of, values, sample in (
+            ("global", "Global", "\\rho", lambda x: np.sinh(np.asarray(x, dtype=float)), (0.25, 0.5, 1, 2, 3),
+             ck.uniform(0.001, 5)),
+            ("conformal", "Conformal", "\\chi", lambda x: np.tan(np.asarray(x, dtype=float)),
+             (PI / 10, PI / 5, 3 * PI / 10, 2 * PI / 5), ck.uniform(0.001, 1.55)),
+            ("static", "Static", "r", lambda x: np.asarray(x, dtype=float), (0.25, 0.5, 1, 2, 4),
+             ck.uniform(0.001, 50))):
+        pl = Plane(src, name, system, ("t", symbol), nr.FR_ROUND, {"L": 1})
+        ck.chart(f"Freund-Rubin, {system}", pl, lambda t, x, r_of=r_of: ads_global_pq(t, r_of(x)),
+                 ck.uniform(-10, 10), sample, lambda t, x: (1, 0))
+        ck.limit(f"Freund-Rubin, {system}: the Kretschmann scalar is 117/4L^4 everywhere",
+                 pl.kretschmann(np.array([0.0, 1.0, -2.0]), np.array([0.3, 0.7, 1.1])), [117 / 4] * 3, 1e-9)
+        v = View(system, label, [-0.95, HALF + 0.55, T0, T1], system)
+        strip(v, False, T0, T1)
+        v.fill("cover", [[0, T0], [HALF, T0], [HALF, T1], [0, T1]])
+        for c in values:
+            X = float(np.arctan(r_of(c)))
+            v.line("r", [[[X, T0], [X, T1]]])
+        for k in range(-1, 6):
+            v.line("t", [[[0, k * Q4], [HALF, k * Q4]]])
+        v.segment("null", (0, 0), (0, HALF))
+        v.segment("null", (0, HALF), (HALF, HALF))
+        v.label_xt([0, 0], "$t = 0$", "r", "coord", dx=-6)
+        v.label_xt([0, HALF], "$\\pi L/2c$", "r", "coord", dx=-6)
+        v.label_xt([0, PI], "$\\pi L/c$", "r", "coord", dx=-6)
+        v.set(fade={"top": 0.7, "bottom": 0.7})
+        tex = {"global": "\\rho", "conformal": "\\chi", "static": "r"}[system]
+        v.legend("cover", f"the whole universal cover, which $t$ and ${tex}$ cover")
+        v.legend("r", {"global": "$\\rho$ constant, at $0.25$, $0.5$, $1$, $2$ and $3$",
+                       "conformal": "$\\chi$ constant, every $\\pi/10$ from $\\pi/10$ to $2\\pi/5$",
+                       "static": "$r$ constant, at $L/4$, $L/2$, $L$, $2L$ and $4L$"}[system])
+        v.legend("t", "$ct$ constant, every $\\pi L/4$")
+        v.legend("boundary", "the conformal boundary, timelike")
+        v.legend("centre", f"${tex} = 0$, a regular centre")
+        v.legend("null", "a radial light ray from the centre")
+        r = np.sinh(np.linspace(lo, hi, 2))
+        v.slice(hyperbolic, [ads_global_pq(0 * r, r)])
+        v.set(settings="$L = 1$, the unit of every length.")
+        views.append(v)
+
+    circle = slices.moments(name, "circle")[0]
+    T0, T1 = -1.1 * PI, 1.1 * PI
+    box = [-HALF - 0.55, HALF + 0.55, T0, T1]
+    for system, label, symbol, z_of, values in (
+            ("poincare", "Poincaré", "r", lambda r: 1.0 / np.asarray(r, dtype=float), (0.25, 0.5, 1, 2, 4)),
+            ("proper", "Proper Distance", "\\sigma", lambda x: np.exp(-np.asarray(x, dtype=float)),
+             (-1.5, -0.75, 0, 0.75, 1.5))):
+        pl = Plane(src, name, system, ("t", symbol), nr.FR_FLAT, {"L": 1})
+        sample = ck.uniform(0.01, 20) if system == "poincare" else ck.uniform(-4, 3)
+        ck.chart(f"Freund-Rubin, {system}", pl, lambda t, x, z_of=z_of: poincare_pq(t, z_of(x)), ck.uniform(-10, 10),
+                 sample, lambda t, x: (1, 0))
+        ck.limit(f"Freund-Rubin, {system}: the Kretschmann scalar is 117/4L^4 everywhere",
+                 pl.kretschmann(np.array([0.0, 1.0, -2.0]), np.array([0.3, 1.0, 1.7])), [117 / 4] * 3, 1e-9)
+        v = View(system, label, box, system)
+        strip(v, True, T0, T1)
+        v.fill("cover", [[-HALF, 0], [HALF, -PI], [HALF, PI]])
+        for c in values:
+            v.curve("r", *poincare_pq(S_ALL, np.full_like(S_ALL, float(z_of(c)))))
+        grid(v, "t", poincare_pq, (-4, -2, -1, 0, 1, 2, 4), S_POS)
+        v.line("chartedge", [[[-HALF, 0], [HALF, PI]], [[-HALF, 0], [HALF, -PI]]])
+        if system == "poincare":
+            label_on(v, poincare_pq(0, 1.0), "$r = L$")
+            v.legend("cover", "the wedge that $t$ and $r$ cover")
+            v.legend("r", "$r$ constant, from $L/4$ to $4L$")
+            v.legend("chartedge", "$r = 0$, the Poincaré horizon, where $t$ and $r$ end")
+        else:
+            label_on(v, poincare_pq(0, 1.0), "$\\sigma = 0$")
+            v.legend("cover", "the wedge that $t$ and $\\sigma$ cover, the same as that of $t$ and $r$")
+            v.legend("r", "$\\sigma$ constant, every $3L/4$ from $-3L/2$ to $3L/2$")
+            v.legend("chartedge", "$\\sigma \\to -\\infty$, the Poincaré horizon, where $t$ and $\\sigma$ end")
+        v.legend("t", "$ct$ constant")
+        v.legend("boundary", "the conformal boundary, timelike")
+        v.set(fade={"top": 0.7, "bottom": 0.7})
+        a, b = circle.reach("proper", "\\sigma")
+        c = np.exp(-np.linspace(a, b, 2))
+        v.slice(circle, [poincare_pq(0 * c, c)])
+        v.set(settings="$L = 1$, the unit of every length.")
+        views.append(v)
+    return views
+
+
 def ellis_bronnikov(ck, src):
     """The metric on the plane of t and r is -c^2dt^2 + dr^2 with r over the whole line:
     the full diamond, p, q = arctan((ct -+ r)/l), drawn at l = 1."""
@@ -22533,7 +22626,7 @@ DRAWN = {
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "string_bh_three_four_charges": string_bh_three_four_charges, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
-    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "three_brane_throat": three_brane_throat, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
+    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "three_brane_throat": three_brane_throat, "freund_rubin": freund_rubin, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
@@ -24486,6 +24579,36 @@ CAPTIONS = {
         "The same tower with Gibbons, Horowitz, and Townsend's $w$ on it, which runs from $1$ at infinity to "
         "$0$ at the horizon. Behind the horizon $w$ is negative, and the mirror region is this exterior under "
         "$w \\to -w$, with its infinity at $w = -1$.",
+    ],
+    ("freund_rubin", "global"): [
+        "Anti-de Sitter space of four dimensions times a 7-sphere of radius $2L$, its universal cover, each point "
+        "in the diagram a 2-sphere of anti-de Sitter space times the 7-sphere. With $\\tan\\chi = \\sinh\\rho$ the "
+        "metric on the plane of $t$ and $\\rho$ is $\\frac{1}{\\cos^2\\chi}(-c^2dt^2 + L^2d\\chi^2)$, conformal to the "
+        "strip $0 \\le \\chi < \\pi/2$, which is unbounded in $t$.",
+        "The 7-sphere has the one radius $2L$ at every event, so the strip is the conformal diagram of anti-de Sitter "
+        "space alone. A radial light ray from the centre reaches the timelike boundary at $ct = \\pi L/2$ and is back "
+        "at $ct = \\pi L$.",
+    ],
+    ("freund_rubin", "conformal"): [
+        "The same strip in the conformal chart, where the metric on the plane of $t$ and $\\chi$ is "
+        "$\\frac{1}{\\cos^2\\chi}(-c^2dt^2 + L^2d\\chi^2)$ as it stands. The lines of constant $\\chi$ are evenly "
+        "spaced across the strip, and its edge $\\chi = \\pi/2$ is the boundary.",
+    ],
+    ("freund_rubin", "static"): [
+        "The same strip in the static chart, with $r = L\\sinh\\rho$ the areal radius of the spheres of anti-de "
+        "Sitter space. The lines of constant $r$ crowd toward the boundary, which $r \\to \\infty$ reaches at a "
+        "finite angle.",
+    ],
+    ("freund_rubin", "poincare"): [
+        "The Poincaré chart on its plane of $t$ and $r$, each point in the diagram a flat plane of $x$ and $y$ times "
+        "the 7-sphere. The metric on the plane is $-\\frac{r^2}{L^2}c^2dt^2 + \\frac{L^2}{r^2}dr^2$, an anti-de Sitter "
+        "space of two dimensions and radius $L$, whose conformal diagram is a strip.",
+        "The coordinates $t$ and $r$ cover a Poincaré wedge of the strip, the throat of a stack of membranes. The "
+        "boundary is at $r \\to \\infty$, and $r = 0$ is the Poincaré horizon, across which the strip continues.",
+    ],
+    ("freund_rubin", "proper"): [
+        "The same wedge with the proper distance $\\sigma = L\\ln(r/L)$ on it. The lines of constant $\\sigma$ are "
+        "those of constant $r$, and the horizon lies at $\\sigma \\to -\\infty$.",
     ],
     ("three_brane_throat", "throat"): [
         "The throat alone on its plane of $t$ and $r$, each point in the diagram a flat sheet of $x$, $y$, and "

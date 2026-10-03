@@ -142,6 +142,11 @@
       "id": "three_brane_throat",
       "kind": "family",
       "text": "A sheet of three dimensions in string theory whose throat is anti-de Sitter space of five dimensions times a sphere of five. Maldacena read his correspondence off that throat [maldacena1998]."
+    },
+    {
+      "id": "freund_rubin",
+      "kind": "family",
+      "text": "Anti-de Sitter space of four dimensions times a 7-sphere of twice its radius, a solution of supergravity in eleven dimensions [freund1980, maldacena1998]."
     }
   ],
   "references": [
@@ -189,7 +194,8 @@
     "griffiths2004",
     "ortaggio2002direct",
     "brill1996",
-    "aminneborg1998"
+    "aminneborg1998",
+    "freund1980"
   ],
   "coordinates": [
     {

@@ -321,6 +321,13 @@ CS_EQUATOR = {"x": "0", "y": "0", "z": "0", "theta": "pi/2"}
 # of the sphere fixed.
 TB_PLANE = {"x": "0", "y": "0", "z": "0", "alpha": "pi/2", "beta": "pi/2", "psi": "pi/2", "theta": "pi/2",
             "phi": "0"}
+# Freund and Rubin's planes hold a point of the 7-sphere fixed, and on the charts with spheres of
+# anti-de Sitter space a point of those; the plane of the time and psi holds a point of anti-de Sitter
+# space, sigma = 0 of the chart of the proper distance, where g_tt = -1.
+FR_SEVEN = {"alpha": "pi/2", "beta": "pi/2", "gamma": "pi/2", "kappa": "pi/2", "xi": "pi/2", "omega": "pi/2"}
+FR_ROUND = {**EQUATOR, **FR_SEVEN, "psi": "0"}
+FR_FLAT = {"x": "0", "y": "0", **FR_SEVEN, "psi": "0"}
+FR_CIRCLE = {"x": "0", "y": "0", "sigma": "0", **FR_SEVEN}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -3686,6 +3693,22 @@ DIAGRAMS = [
             "$r/L$", "$ct/L$", {"L": 1}, TB_PLANE),
     Diagram("three_brane_throat", "throat_proper", "radial", "$t$ and $\\sigma$", ("t", "\\sigma"),
             (-2, 2, -2, 2), "$\\sigma/L$", "$ct/L$", {"L": 1}, TB_PLANE),
+    # Freund and Rubin's anti-de Sitter space times a 7-sphere at L = 1, on the plane of the time and
+    # the radial coordinate of each chart, and a great circle of the 7-sphere against the time at one
+    # point of anti-de Sitter space, its angle drawn as the arc 2 L psi in units of L.
+    Diagram("freund_rubin", "global", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 3, -1.5, 1.5),
+            "$\\rho$", "$ct/L$", {"L": 1}, FR_ROUND),
+    Diagram("freund_rubin", "conformal", "radial", "$t$ and $\\chi$", ("t", "\\chi"),
+            (0, math.pi / 2, -math.pi / 4, math.pi / 4), "$\\chi$", "$ct/L$", {"L": 1}, FR_ROUND),
+    Diagram("freund_rubin", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/L$", "$ct/L$", {"L": 1}, FR_ROUND),
+    Diagram("freund_rubin", "poincare", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/L$", "$ct/L$", {"L": 1}, FR_FLAT),
+    Diagram("freund_rubin", "proper", "radial", "$t$ and $\\sigma$", ("t", "\\sigma"), (-2, 2, -2, 2),
+            "$\\sigma/L$", "$ct/L$", {"L": 1}, FR_FLAT),
+    Diagram("freund_rubin", "proper", "circle", "$t$ and $\\psi$", ("t", "\\psi"),
+            (0, 4 * math.pi, -2 * math.pi, 2 * math.pi), "$2\\psi$", "$ct/L$", {"L": 1}, FR_CIRCLE,
+            to_display=((0, 2), (1, 0)), families=SIDEWAYS, periodic=("\\psi",)),
     Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
             (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
@@ -8732,6 +8755,50 @@ CAPTIONS = {
         "it travels down the throat.",
         "The horizon lies at $\\sigma \\to -\\infty$, an infinite proper distance away at every moment of "
         "$t$.",
+    ],
+    ("freund_rubin", "global", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, $\\psi = 0$) in the global "
+        "chart, each point in the plane a 2-sphere of anti-de Sitter space times a 7-sphere of radius $2L$. The "
+        "rays have $d\\rho/d(ct) = \\pm\\cosh\\rho/L$, so they flatten as $\\rho$ grows, and a ray from the "
+        "centre reaches $\\rho \\to \\infty$, the boundary of anti-de Sitter space, in the finite time "
+        "$\\pi L/2c$.",
+        "The Kretschmann scalar is $117/4L^4$ at every event, $24/L^4$ from anti-de Sitter space and $21/4L^4$ "
+        "from the 7-sphere, whose radius is $2L$ everywhere.",
+    ],
+    ("freund_rubin", "conformal", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, $\\psi = 0$) in the conformal "
+        "chart, where the metric on the plane is $(-c^2dt^2 + L^2d\\chi^2)/\\cos^2\\chi$, conformal to flat, so "
+        "the rays are lines at 45°.",
+        "The boundary of anti-de Sitter space is the edge $\\chi = \\pi/2$, a finite angle away, which a ray from "
+        "the centre reaches after the time $\\pi L/2c$. The 7-sphere has the radius $2L$ at every event of the "
+        "plane.",
+    ],
+    ("freund_rubin", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, $\\psi = 0$) in the static chart, "
+        "with $r$ the areal radius of the spheres of anti-de Sitter space. The cones stay open everywhere, since "
+        "$g^{rr} = 1 + r^2/L^2$ never vanishes.",
+        "The rays have $dr/d(ct) = \\pm(1 + r^2/L^2)$, so they flatten as $r$ grows and reach $r \\to \\infty$, the "
+        "boundary of anti-de Sitter space, in the finite time $\\pi L/2c$ from the centre.",
+    ],
+    ("freund_rubin", "poincare", "radial"): [
+        "The plane of $t$ and $r$ ($x = y = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, $\\psi = 0$) in the Poincaré chart, the throat of a stack "
+        "of membranes. The rays have $dr/d(ct) = \\pm r^2/L^2$ and take infinite $t$ to reach $r = 0$, the "
+        "Poincaré horizon.",
+        "At large $r$ the cones open without limit, and a ray reaches $r \\to \\infty$, the boundary of "
+        "anti-de Sitter space, in finite $t$.",
+    ],
+    ("freund_rubin", "proper", "radial"): [
+        "The plane of $t$ and $\\sigma$ ($x = y = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$, $\\psi = 0$), with $\\sigma$ the proper distance "
+        "across the surfaces of constant $\\sigma$. The rays have $d\\sigma/d(ct) = \\pm e^{\\sigma/L}$, so a ray "
+        "slows by a factor of $e$ for each length $L$ it travels toward the Poincaré horizon.",
+        "The horizon lies at $\\sigma \\to -\\infty$, an infinite proper distance away at every moment of $t$.",
+    ],
+    ("freund_rubin", "proper", "circle"): [
+        "The plane of $t$ and $\\psi$ ($x = y = 0$, $\\sigma = 0$, $\\alpha = \\beta = \\gamma = \\kappa = \\xi = \\omega = \\pi/2$), a great circle of the 7-sphere "
+        "against time at one point of anti-de Sitter space, drawn as the arc $2L\\psi$ in units of $L$ over one "
+        "turn, its two edges one line. On it the metric is $-c^2dt^2 + 4L^2d\\psi^2$, so the rays are lines at 45°.",
+        "A ray takes the time $4\\pi L/c$ to go once round the sphere, four times as long as a ray takes to cross "
+        "anti-de Sitter space from its boundary to the centre and back out.",
     ],
     ("interior_schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the "
@@ -14938,6 +15005,15 @@ CLOSED_FORMS = {
     ("three_brane_throat", "throat", "radial"): (lambda t, r: t - 1 / r, lambda t, r: t + 1 / r, lambda t, r: r > 0.05),
     ("three_brane_throat", "throat_proper", "radial"):
         (lambda t, s: t - np.exp(-s), lambda t, s: t + np.exp(-s), None),
+    # Freund and Rubin's anti-de Sitter space times a 7-sphere at L = 1: ct -+ r_* with r_* = arctan(sinh rho),
+    # chi, arctan(r), -1/r and -e^(-sigma) on the five charts, and ct -+ 2 psi round the 7-sphere.
+    ("freund_rubin", "global", "radial"):
+        (lambda t, r: t + np.arctan(np.sinh(r)), lambda t, r: t - np.arctan(np.sinh(r)), None),
+    ("freund_rubin", "conformal", "radial"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("freund_rubin", "static", "radial"): (lambda t, r: t + np.arctan(r), lambda t, r: t - np.arctan(r), None),
+    ("freund_rubin", "poincare", "radial"): (lambda t, r: t - 1 / r, lambda t, r: t + 1 / r, lambda t, r: r > 0.05),
+    ("freund_rubin", "proper", "radial"): (lambda t, s: t - np.exp(-s), lambda t, s: t + np.exp(-s), None),
+    ("freund_rubin", "proper", "circle"): (lambda t, p: t + 2 * p, lambda t, p: t - 2 * p, None),
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     # The throat of extreme Kerr at r_0 = 1: each plane is conformal to a chart of AdS2, whose rays

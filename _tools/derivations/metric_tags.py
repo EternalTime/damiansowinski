@@ -98,7 +98,7 @@ def write_facts(facts):
 # ---------------------------------------------------------------------------------------
 
 DIMENSION = {2: "two-dimensional", 3: "three-dimensional", 4: "four-dimensional",
-             5: "five-dimensional", 6: "six-dimensional", 10: "ten-dimensional"}
+             5: "five-dimensional", 6: "six-dimensional", 10: "ten-dimensional", 11: "eleven-dimensional"}
 
 # The tags the facts decide. A spacetime carries each of them exactly when its charts say
 # so, which the tests hold every metric file to, so none of them is written by hand.

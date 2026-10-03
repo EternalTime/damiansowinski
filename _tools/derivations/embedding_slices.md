@@ -116,6 +116,14 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `throat/radial` and `throat_proper/radial`: the line $ct = 0$ from $\sigma = -L$ to $L$, which is $r = L/e$ to $eL$. The three-brane's surface is not marked.
 - The conformal views of the three-brane: the line $T = 0$ of the exterior, $X = 2\arctan(\rho_*/L)$. The conformal views of the throat: the line $T = 0$ of the wedge.
 
+### Freund-Rubin
+
+- The embedding has three views at the moment $t = 0$: the hyperbolic plane of $\rho$ and $\phi$ in the global chart, $\rho$ from $0$ to $2$; the cylinder of $\sigma$ and $\psi$ in the chart of the proper distance, $\sigma$ from $-L$ to $L$; and a great 2-sphere of $\omega$ and $\psi$ at one event.
+- `global/radial`, `conformal/radial` and `static/radial`: the line $ct = 0$ over the hyperbolic plane's stretch, which is $\chi = \arctan\sinh\rho$ and $r = L\sinh\rho$. The cylinder and the sphere are not marked.
+- `poincare/radial` and `proper/radial`: the line $ct = 0$ from $\sigma = -L$ to $L$, which is $r = L/e$ to $eL$. The hyperbolic plane and the sphere are not marked.
+- `proper/circle`, the plane of $t$ and $\psi$ at $\sigma = 0$: the cylinder meets it in its ring $\sigma = 0$, the whole line $ct = 0$ round $\psi$.
+- The conformal views of the global, conformal and static charts: the line $T = 0$ over the hyperbolic plane's stretch. The conformal views of the Poincaré and proper distance charts: the line $T = 0$ of the wedge over the cylinder's stretch.
+
 ### Near-horizon extreme Kerr
 
 - The embedding has two views at the moment $\tau = 0$ of the global chart: the equator, $y$ from $-2.25$ to $2.25$ with $\phi$, and the sphere of $\theta$ and $\phi$ at one event, drawn at $y = 0$.
@@ -824,6 +832,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Plebański-Hacyan | line and point, twice; point, twice; none on the three views of the product with a flat plane | none | line and point, twice; point, twice; none on the three views of the product with a flat plane |
 | Cremmer-Scherk | line and point; line on the plane of the time and $\phi$ | none | line and point |
 | three-brane | line, five times | none | line, five times |
+| Freund-Rubin | line, six times | none | line, five times |
 | Bianchi I | four lines | none | none drawn |
 | cosmic string | none | whole drawing | line, line |
 | de Sitter | line, line, curve | none | line, line |

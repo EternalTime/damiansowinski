@@ -837,6 +837,20 @@ The static, spherically symmetric spacetime of a mass that also carries a massle
 - chart Isotropic: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -h^{2\gamma}c^2dt^2 + \left(1 + \dfrac{b}{4\rho}\right)^4h^{2(1-\gamma)}\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Harmonic: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -e^{-2mu}c^2dt^2 + \dfrac{k^2e^{2mu}}{\sinh^2(ku)}\left(\dfrac{k^2du^2}{\sinh^2(ku)} + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Freund-Rubin Compactification
+
+Anti-de Sitter space of four dimensions times a 7-sphere of twice its radius, a solution of supergravity in eleven dimensions. A field with four indices fills the four large dimensions evenly, and Peter Freund and Mark Rubin found in 1980 that it splits the eleven into four and seven of its own accord. In 1997 Juan Maldacena found it again as the throat of a stack of membranes.
+
+- id: `freund_rubin`
+- tags: static, stationary, eleven-dimensional, higher dimensions, supergravity, Kaluza-Klein, compact dimension, spontaneous compactification, product spacetime, homogeneous, anti-de Sitter, AdS/CFT, holography, M-theory, membrane, throat, near-horizon limit, supersymmetric, no horizon, regular, exact solution, Lorentzian, idealized model
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/freund_rubin.json
+- chart Global: coordinates $(t, \rho, \theta, \phi, \alpha, \beta, \gamma, \kappa, \xi, \omega, \psi)$, $$ds^2 = -\cosh^2\rho\,c^2dt^2 + L^2\left(d\rho^2 + \sinh^2\rho\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right) + 4L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\gamma^2 + \sin^2\gamma\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\left(d\omega^2 + \sin^2\omega\,d\psi^2\right)\right)\right)\right)\right)\right)$$
+- chart Conformal: coordinates $(t, \chi, \theta, \phi, \alpha, \beta, \gamma, \kappa, \xi, \omega, \psi)$, $$ds^2 = \dfrac{1}{\cos^2\chi}\left(-c^2dt^2 + L^2d\chi^2 + L^2\sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right) + 4L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\gamma^2 + \sin^2\gamma\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\left(d\omega^2 + \sin^2\omega\,d\psi^2\right)\right)\right)\right)\right)\right)$$
+- chart Static: coordinates $(t, r, \theta, \phi, \alpha, \beta, \gamma, \kappa, \xi, \omega, \psi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + 4L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\gamma^2 + \sin^2\gamma\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\left(d\omega^2 + \sin^2\omega\,d\psi^2\right)\right)\right)\right)\right)\right)$$
+- chart Poincaré: coordinates $(t, x, y, r, \alpha, \beta, \gamma, \kappa, \xi, \omega, \psi)$, $$ds^2 = \dfrac{r^2}{L^2}\left(-c^2dt^2 + dx^2 + dy^2\right) + \dfrac{L^2}{r^2}dr^2 + 4L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\gamma^2 + \sin^2\gamma\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\left(d\omega^2 + \sin^2\omega\,d\psi^2\right)\right)\right)\right)\right)\right)$$
+- chart Proper Distance: coordinates $(t, x, y, \sigma, \alpha, \beta, \gamma, \kappa, \xi, \omega, \psi)$, $$ds^2 = e^{2\sigma/L}\left(-c^2dt^2 + dx^2 + dy^2\right) + d\sigma^2 + 4L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\gamma^2 + \sin^2\gamma\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\left(d\omega^2 + \sin^2\omega\,d\psi^2\right)\right)\right)\right)\right)\right)$$
+
 ### Friedmann-Lemaître-Robertson-Walker Expanding Universe
 
 The Friedmann-Lemaître-Robertson-Walker metric describing a homogeneous, isotropic expanding universe.

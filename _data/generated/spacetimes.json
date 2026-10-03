@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 163,
+  "count": 164,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1522,6 +1522,11 @@
           "id": "three_brane_throat",
           "kind": "family",
           "text": "A sheet of three dimensions in string theory whose throat is anti-de Sitter space of five dimensions times a sphere of five. Maldacena read his correspondence off that throat [maldacena1998]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "Anti-de Sitter space of four dimensions times a 7-sphere of twice its radius, a solution of supergravity in eleven dimensions [freund1980, maldacena1998]."
         }
       ],
       "references": [
@@ -1569,7 +1574,8 @@
         "griffiths2004",
         "ortaggio2002direct",
         "brill1996",
-        "aminneborg1998"
+        "aminneborg1998",
+        "freund1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -4039,6 +4045,11 @@
           "id": "three_brane_throat",
           "kind": "family",
           "text": "The three-brane of string theory has the same throat six dimensions up, anti-de Sitter space of five dimensions times a sphere of five [gibbons1993]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "Freund and Rubin's spontaneous compactification of eleven dimensions. Their first example, Maxwell's field pointing across two dimensions of four, is this universe [freund1980]."
         }
       ],
       "references": [
@@ -4069,7 +4080,8 @@
         "ortaggio2002direct",
         "horvath1977",
         "podolsky2025",
-        "strominger1996"
+        "strominger1996",
+        "freund1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -10642,6 +10654,11 @@
           "id": "minkowski",
           "kind": "family",
           "text": "The four large dimensions are Minkowski space, and every surface of constant $\\theta$ and $\\phi$ is a copy of it [horvath1977]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "Freund and Rubin's answer to the added fields: supergravity in eleven dimensions curls up seven of them with a field it already has, into anti-de Sitter space times a 7-sphere [freund1980]."
         }
       ],
       "references": [
@@ -17113,6 +17130,705 @@
       ]
     },
     {
+      "id": "freund_rubin",
+      "name": "Freund-Rubin Compactification",
+      "short_name": "Freund-Rubin",
+      "description": "Anti-de Sitter space of four dimensions times a 7-sphere of twice its radius, a solution of supergravity in eleven dimensions. A field with four indices fills the four large dimensions evenly, and Peter Freund and Mark Rubin found in 1980 that it splits the eleven into four and seven of its own accord. In 1997 Juan Maldacena found it again as the throat of a stack of membranes.",
+      "tags": [
+        "static",
+        "stationary",
+        "eleven-dimensional",
+        "higher dimensions",
+        "supergravity",
+        "Kaluza-Klein",
+        "compact dimension",
+        "spontaneous compactification",
+        "product spacetime",
+        "homogeneous",
+        "anti-de Sitter",
+        "AdS/CFT",
+        "holography",
+        "M-theory",
+        "membrane",
+        "throat",
+        "near-horizon limit",
+        "supersymmetric",
+        "no horizon",
+        "regular",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "related": [
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "The four large dimensions. Every point of anti-de Sitter space carries a 7-sphere of twice its radius [freund1980, maldacena1998]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "The sister in ten dimensions. Its throat is anti-de Sitter space of five dimensions times a 5-sphere, and there the two radii are equal [schwarz1983, maldacena1998]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "Freund and Rubin's own first case, Maxwell's field pointing across two dimensions of four, comes out as this universe: anti-de Sitter space of two dimensions times a sphere of the same radius [freund1980, bertotti1959]."
+        },
+        {
+          "id": "cremmer_scherk",
+          "kind": "family",
+          "text": "Extra dimensions curled up by a monopole put in for the purpose. Freund and Rubin used a field that supergravity carries already, and called such additions \"contrary to the spirit of unification\" [cremmer1976, freund1980]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Kaluza and Klein's circle twisted over a sphere, which at each radius makes a 3-sphere [grossperry1983, nilsson1984]. Nilsson and Pope described the round 7-sphere the same way, as circles twisted over the complex projective space $\\mathbb{CP}^3$ [nilsson1984]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "A black hole in anti-de Sitter space. In Maldacena's correspondence a black hole in the throat of the membranes is their field theory at a finite temperature [maldacena1998]."
+        },
+        {
+          "id": "reissner_nordstrom_ads",
+          "kind": "family",
+          "text": "A charged black hole in anti-de Sitter space. Andrew Chamblin, Roberto Emparan, Clifford V. Johnson, and Robert C. Myers found such holes in gauged supergravity, which in four dimensions comes from the round 7-sphere, with the charge coming from a rotation in the directions of the sphere [chamblin1999, awada1983]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "Lisa Randall and Raman Sundrum's \"alternative to compactification\": a fifth dimension of infinite size, curved so that gravity on a three-brane looks like gravity in four dimensions [randall1999b]."
+        },
+        {
+          "id": "nariai",
+          "kind": "family",
+          "text": "Another product of a spacetime of two dimensions and a sphere: de Sitter space times a sphere of the same radius, held by a positive cosmological constant [nariai1950]."
+        }
+      ],
+      "references": [
+        "freund1980",
+        "kaluza1921",
+        "cremmer1976",
+        "bertotti1959",
+        "robinson1959",
+        "aharony2000",
+        "maldacena1998",
+        "gibbons1993",
+        "awada1983",
+        "nilsson1984",
+        "pilch1984",
+        "schwarz1983",
+        "gunaydin1985",
+        "kim1985",
+        "grossperry1983",
+        "chamblin1999",
+        "randall1999b",
+        "nariai1950"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/freund_rubin.json",
+      "charts": [
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi",
+            "\\alpha",
+            "\\beta",
+            "\\gamma",
+            "\\kappa",
+            "\\xi",
+            "\\omega",
+            "\\psi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\gamma \\in [0, \\pi]",
+            "\\kappa \\in [0, \\pi]",
+            "\\xi \\in [0, \\pi]",
+            "\\omega \\in [0, \\pi]",
+            "\\psi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length; the 7-sphere has the radius $2L$, and the field strength with four indices is $f\\,\\epsilon$, with $\\epsilon$ the volume form of the anti-de Sitter factor and $8\\pi Gf^2 = 3/4L^2$, where $G$ is the gravitational constant of eleven dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\theta, \\phi, \\alpha, \\beta, \\gamma, \\kappa, \\xi, \\omega, \\psi)$, with $t$ a time and $\\rho$ a pure number that measures the distance from the centre of anti-de Sitter space in units of $L$. The angles $\\theta$ and $\\phi$ are those of its spheres, and $\\alpha$, $\\beta$, $\\gamma$, $\\kappa$, $\\xi$, $\\omega$, and $\\psi$ those of the 7-sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\cosh^2\\rho\\,c^2dt^2 + L^2\\left(d\\rho^2 + \\sinh^2\\rho\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + 4L^2\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\gamma^2 + \\sin^2\\gamma\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\left(d\\omega^2 + \\sin^2\\omega\\,d\\psi^2\\right)\\right)\\right)\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(e^{2\\rho} + 1\\right)^2e^{-2\\rho}}{4}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "L^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{L^2\\left(e^{\\rho} + 1\\right)^2\\left(e^{\\rho} - 1\\right)^2e^{-2\\rho}}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{L^2\\left(e^{\\rho} + 1\\right)^2\\left(e^{\\rho} - 1\\right)^2e^{-2\\rho}\\sin^2\\theta}{4}"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "4L^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "4L^2\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\gamma",
+                "\\gamma"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\kappa",
+                "\\kappa"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa"
+            },
+            {
+              "indices": [
+                "\\omega",
+                "\\omega"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa\\sin^2\\xi"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa\\sin^2\\omega\\sin^2\\xi"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{3}{2L^2}",
+          "kretschmann": "K = \\dfrac{117}{4L^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi",
+            "\\alpha",
+            "\\beta",
+            "\\gamma",
+            "\\kappa",
+            "\\xi",
+            "\\omega",
+            "\\psi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi/2)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\gamma \\in [0, \\pi]",
+            "\\kappa \\in [0, \\pi]",
+            "\\xi \\in [0, \\pi]",
+            "\\omega \\in [0, \\pi]",
+            "\\psi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length; the 7-sphere has the radius $2L$, and the field strength with four indices is $f\\,\\epsilon$, with $\\epsilon$ the volume form of the anti-de Sitter factor and $8\\pi Gf^2 = 3/4L^2$, where $G$ is the gravitational constant of eleven dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\chi, \\theta, \\phi, \\alpha, \\beta, \\gamma, \\kappa, \\xi, \\omega, \\psi)$, with $t$ a time and $\\chi$ the angle with $\\tan\\chi = \\sinh\\rho$ of the global chart, so that the boundary of anti-de Sitter space is at $\\chi = \\pi/2$. The angles $\\theta$ and $\\phi$ are those of its spheres, and $\\alpha$, $\\beta$, $\\gamma$, $\\kappa$, $\\xi$, $\\omega$, and $\\psi$ those of the 7-sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{1}{\\cos^2\\chi}\\left(-c^2dt^2 + L^2d\\chi^2 + L^2\\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + 4L^2\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\gamma^2 + \\sin^2\\gamma\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\left(d\\omega^2 + \\sin^2\\omega\\,d\\psi^2\\right)\\right)\\right)\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{\\cos^2\\chi}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{L^2}{\\cos^2\\chi}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "-\\dfrac{L^2\\sin^2\\chi}{\\left(\\sin\\chi + 1\\right)\\left(\\sin\\chi - 1\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{L^2\\sin^2\\chi\\sin^2\\theta}{\\left(\\sin\\chi + 1\\right)\\left(\\sin\\chi - 1\\right)}"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "4L^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "4L^2\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\gamma",
+                "\\gamma"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\kappa",
+                "\\kappa"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa"
+            },
+            {
+              "indices": [
+                "\\omega",
+                "\\omega"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa\\sin^2\\xi"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa\\sin^2\\omega\\sin^2\\xi"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{3}{2L^2}",
+          "kretschmann": "K = \\dfrac{117}{4L^4}"
+        },
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\alpha",
+            "\\beta",
+            "\\gamma",
+            "\\kappa",
+            "\\xi",
+            "\\omega",
+            "\\psi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\gamma \\in [0, \\pi]",
+            "\\kappa \\in [0, \\pi]",
+            "\\xi \\in [0, \\pi]",
+            "\\omega \\in [0, \\pi]",
+            "\\psi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length; the 7-sphere has the radius $2L$, and the field strength with four indices is $f\\,\\epsilon$, with $\\epsilon$ the volume form of the anti-de Sitter factor and $8\\pi Gf^2 = 3/4L^2$, where $G$ is the gravitational constant of eleven dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi, \\alpha, \\beta, \\gamma, \\kappa, \\xi, \\omega, \\psi)$, with $t$ a time and $r = L\\sinh\\rho$ the areal radius of the spheres of anti-de Sitter space. The angles $\\theta$ and $\\phi$ are those of its spheres, and $\\alpha$, $\\beta$, $\\gamma$, $\\kappa$, $\\xi$, $\\omega$, and $\\psi$ those of the 7-sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 + \\dfrac{r^2}{L^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 + \\dfrac{r^2}{L^2}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + 4L^2\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\gamma^2 + \\sin^2\\gamma\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\left(d\\omega^2 + \\sin^2\\omega\\,d\\psi^2\\right)\\right)\\right)\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2 + L^2}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2 + L^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "4L^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "4L^2\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\gamma",
+                "\\gamma"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\kappa",
+                "\\kappa"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa"
+            },
+            {
+              "indices": [
+                "\\omega",
+                "\\omega"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa\\sin^2\\xi"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa\\sin^2\\omega\\sin^2\\xi"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{3}{2L^2}",
+          "kretschmann": "K = \\dfrac{117}{4L^4}"
+        },
+        {
+          "id": "poincare",
+          "name": "Poincaré",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "r",
+            "\\alpha",
+            "\\beta",
+            "\\gamma",
+            "\\kappa",
+            "\\xi",
+            "\\omega",
+            "\\psi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\gamma \\in [0, \\pi]",
+            "\\kappa \\in [0, \\pi]",
+            "\\xi \\in [0, \\pi]",
+            "\\omega \\in [0, \\pi]",
+            "\\psi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length; the 7-sphere has the radius $2L$, and the field strength with four indices is $f\\,\\epsilon$, with $\\epsilon$ the volume form of the anti-de Sitter factor and $8\\pi Gf^2 = 3/4L^2$, where $G$ is the gravitational constant of eleven dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, r, \\alpha, \\beta, \\gamma, \\kappa, \\xi, \\omega, \\psi)$, with $t$ a time, $x$ and $y$ lengths along the boundary of anti-de Sitter space, and $r$ a length that falls to zero at the Poincaré horizon. The angles $\\alpha$, $\\beta$, $\\gamma$, $\\kappa$, $\\xi$, $\\omega$, and $\\psi$ are those of the 7-sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{r^2}{L^2}\\left(-c^2dt^2 + dx^2 + dy^2\\right) + \\dfrac{L^2}{r^2}dr^2 + 4L^2\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\gamma^2 + \\sin^2\\gamma\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\left(d\\omega^2 + \\sin^2\\omega\\,d\\psi^2\\right)\\right)\\right)\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "4L^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "4L^2\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\gamma",
+                "\\gamma"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\kappa",
+                "\\kappa"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa"
+            },
+            {
+              "indices": [
+                "\\omega",
+                "\\omega"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa\\sin^2\\xi"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa\\sin^2\\omega\\sin^2\\xi"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{3}{2L^2}",
+          "kretschmann": "K = \\dfrac{117}{4L^4}"
+        },
+        {
+          "id": "proper",
+          "name": "Proper Distance",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "\\sigma",
+            "\\alpha",
+            "\\beta",
+            "\\gamma",
+            "\\kappa",
+            "\\xi",
+            "\\omega",
+            "\\psi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\sigma \\in (-\\infty, \\infty)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\gamma \\in [0, \\pi]",
+            "\\kappa \\in [0, \\pi]",
+            "\\xi \\in [0, \\pi]",
+            "\\omega \\in [0, \\pi]",
+            "\\psi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length; the 7-sphere has the radius $2L$, and the field strength with four indices is $f\\,\\epsilon$, with $\\epsilon$ the volume form of the anti-de Sitter factor and $8\\pi Gf^2 = 3/4L^2$, where $G$ is the gravitational constant of eleven dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, \\sigma, \\alpha, \\beta, \\gamma, \\kappa, \\xi, \\omega, \\psi)$, with $t$ a time, $x$ and $y$ lengths along the boundary of anti-de Sitter space, and $\\sigma$ the proper distance across the surfaces of constant $\\sigma$, with $r = Le^{\\sigma/L}$ of the Poincaré chart. The angles $\\alpha$, $\\beta$, $\\gamma$, $\\kappa$, $\\xi$, $\\omega$, and $\\psi$ are those of the 7-sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = e^{2\\sigma/L}\\left(-c^2dt^2 + dx^2 + dy^2\\right) + d\\sigma^2 + 4L^2\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\gamma^2 + \\sin^2\\gamma\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\left(d\\omega^2 + \\sin^2\\omega\\,d\\psi^2\\right)\\right)\\right)\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\sigma/L}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "e^{2\\sigma/L}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{2\\sigma/L}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "4L^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "4L^2\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\gamma",
+                "\\gamma"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\kappa",
+                "\\kappa"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa"
+            },
+            {
+              "indices": [
+                "\\omega",
+                "\\omega"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa\\sin^2\\xi"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "4L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\gamma\\sin^2\\kappa\\sin^2\\omega\\sin^2\\xi"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{3}{2L^2}",
+          "kretschmann": "K = \\dfrac{117}{4L^4}"
+        }
+      ]
+    },
+    {
       "id": "frw",
       "name": "Friedmann-Lemaître-Robertson-Walker Expanding Universe",
       "short_name": "Friedmann-Lemaître-Robertson-Walker",
@@ -23448,6 +24164,11 @@
           "id": "cremmer_scherk",
           "kind": "family",
           "text": "Two extra dimensions rolled into a sphere that a monopole's gauge field holds at one radius, where the Kaluza-Klein monopole has one extra dimension, a circle, and no matter [horvath1977]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "Supergravity of eleven dimensions curled up on a 7-sphere, which Nilsson and Pope described as circles twisted over the complex projective space $\\mathbb{CP}^3$, as this monopole twists its circle over a sphere [nilsson1984]."
         }
       ],
       "references": [
@@ -23473,7 +24194,8 @@
         "gibbonshawking1979",
         "eguchihanson1979",
         "emparan2000",
-        "horvath1977"
+        "horvath1977",
+        "nilsson1984"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -36413,6 +37135,11 @@
           "id": "datt_ruban_t_models",
           "kind": "family",
           "text": "Dust whose spheres all share one radius at each moment, the solution Ruban set beside Nariai's in 1969: both are left out when the radius of the spheres is taken to change from shell to shell [ruban1969, krasinski2001ruban]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "Anti-de Sitter space of four dimensions times a 7-sphere, another product of a spacetime and a sphere, held by a field with four indices in eleven dimensions [freund1980]."
         }
       ],
       "references": [
@@ -36434,7 +37161,8 @@
         "podolskybelan2004",
         "ortaggio2002direct",
         "ruban1969",
-        "krasinski2001ruban"
+        "krasinski2001ruban",
+        "freund1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nariai.json",
@@ -41229,6 +41957,11 @@
           "id": "cremmer_scherk",
           "kind": "family",
           "text": "Compactification as Randall and Sundrum's title means it: extra dimensions rolled into a small sphere, in a solution of gravity with gauge fields in six dimensions [cremmer1976, horvath1977]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "Compactification in its form of 1980: seven of the eleven dimensions curled into a sphere, and the four large ones curved into anti-de Sitter space [freund1980]."
         }
       ],
       "references": [
@@ -41250,7 +41983,8 @@
         "atlas2021",
         "koroteev2008",
         "cremmer1976",
-        "horvath1977"
+        "horvath1977",
+        "freund1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json",
@@ -41892,6 +42626,11 @@
           "id": "topological_black_hole",
           "kind": "family",
           "text": "Black holes of anti-de Sitter space with flat and hyperbolic horizons. The hyperbolic hole of negative mass has an inner horizon and a conformal diagram like this one's [mann1997negative, brill1997]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "Anti-de Sitter space of four dimensions times a 7-sphere. Charged black holes of anti-de Sitter space solve the gauged supergravity of that compactification, their charge coming from a rotation in the directions of the sphere [chamblin1999, awada1983]."
         }
       ],
       "references": [
@@ -41909,7 +42648,8 @@
         "brecher2005",
         "kehle2020",
         "mann1997negative",
-        "brill1997"
+        "brill1997",
+        "awada1983"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_ads.json",
@@ -44998,6 +45738,11 @@
           "id": "ads_soliton",
           "kind": "family",
           "text": "The ground state of the flat black holes of anti-de Sitter space, as anti-de Sitter space is of this one. The flat hole and the soliton trade places in a phase transition like Hawking and Page's [surya2001]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "Anti-de Sitter space of four dimensions times a 7-sphere, the throat of a stack of membranes. A black hole in that throat is the field theory of the membranes at a finite temperature [maldacena1998]."
         }
       ],
       "references": [
@@ -50153,6 +50898,11 @@
           "id": "topological_black_hole",
           "kind": "family",
           "text": "The black hole of anti-de Sitter space with a flat horizon. The throat of a three-brane heated a little above its least mass is that black hole in five dimensions times a sphere [maldacena1998]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "The sister in eleven dimensions: anti-de Sitter space of four dimensions times a 7-sphere, the throat of a stack of membranes, with the sphere twice the radius [gibbons1993, maldacena1998]."
         }
       ],
       "references": [
