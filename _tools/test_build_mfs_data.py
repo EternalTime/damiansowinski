@@ -1384,6 +1384,37 @@ class ReadableDrawings(unittest.TestCase):
         self.assertIn("0.7 * math.replace(/ /g, '').length + 0.5 * (math.match(CD_WIDE) || []).length", self.page)
 
 
+class Anchors(unittest.TestCase):
+    """Every label of every drawing stands by an anchor the page knows, CD_ANCHOR in
+    _layouts/mfs.html and ANCHOR in MFS/assets/turn.js, which name the same nine. Until
+    3 October 2026 two labels of Schrödinger's spacetime stood by "bc", which neither knows, and
+    its global chart raised an error and was never drawn."""
+
+    def test_every_label_stands_by_an_anchor_the_page_knows(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        turn = (build.ROOT / "MFS" / "assets" / "turn.js").read_text(encoding="utf-8")
+        known = set(re.findall(r"(\w+): \[", re.search(r"var CD_ANCHOR = \{(.*?)\};", page, re.S).group(1)))
+        self.assertEqual(known, {"c", "l", "r", "t", "b", "tl", "tr", "bl", "br"})
+        self.assertEqual(set(re.findall(r"(\w+): \[", re.search(r"var ANCHOR = \{(.*?)\};", turn, re.S).group(1))), known)
+
+        def anchors(value, where):
+            if isinstance(value, dict):
+                if "anchor" in value:
+                    yield where, value["anchor"]
+                for key, item in value.items():
+                    yield from anchors(item, f"{where}/{key}")
+            elif isinstance(value, list):
+                for i, item in enumerate(value):
+                    yield from anchors(item, f"{where}[{i}]")
+
+        data = build.ROOT / "MFS" / "assets" / "data"
+        for folder in ("diagrams", "conformal", "embedding"):
+            for path in sorted((data / folder).glob("*.json")):
+                for where, anchor in anchors(json.loads(path.read_text(encoding="utf-8")), ""):
+                    with self.subTest(f"{folder}/{path.name}{where}"):
+                        self.assertIn(anchor, known)
+
+
 class NoGlow(unittest.TestCase):
     """Nothing on the spacetimes page glows, and a button chosen or pressed turns pink, as the
     captain asked on 29 September 2026: "Get rid of the glow on the pressed button in MFS.
