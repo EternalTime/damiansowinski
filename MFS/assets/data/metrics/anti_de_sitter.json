@@ -157,6 +157,11 @@
       "id": "jackiw_teitelboim_black_hole",
       "kind": "family",
       "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Its metric is everywhere anti-de Sitter space of two dimensions, and a dilaton marks its horizon [mertens2023]."
+    },
+    {
+      "id": "vuorio_warped_ads",
+      "kind": "family",
+      "text": "Anti-de Sitter space of three dimensions with its light cones squashed or stretched along one direction, the vacua of gravity with a mass for the graviton. Stretched, as in Vuorio's universe, they hold closed timelike curves through every event [rooman1998]."
     }
   ],
   "references": [

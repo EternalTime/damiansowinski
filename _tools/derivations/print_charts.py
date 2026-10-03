@@ -19,7 +19,7 @@ cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_b
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, freund_rubin, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
-jackiw_teitelboim_black_hole and unruh_acoustic_hole, and Godel's cylindrical chart.
+jackiw_teitelboim_black_hole, unruh_acoustic_hole and vuorio_warped_ads, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -4192,7 +4192,8 @@ def bonnor_magnetic_dipole_check(chart, system):
             if vm.norm(einstein[i][j] - stress) != 0:
                 raise AssertionError(f"bonnor_magnetic_dipole: the {system} chart misses the Einstein-Maxwell "
                                      f"equations in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
-    root = sp.sqrt(-geo.g.det())
+    # Every factor of -det g is a square on the chart's domain, so its root is taken factor by factor.
+    root = sp.powdenest(sp.sqrt(sp.factor(-geo.g.det())), force=True).replace(sp.Abs, lambda a: a)
     for j in range(4):
         if vm.norm(sum(sp.diff(root * up[i, j], X[i]) for i in range(4))) != 0:
             raise AssertionError(f"bonnor_magnetic_dipole: the {system} chart misses Maxwell's equations")
@@ -29977,6 +29978,209 @@ def einstein_dirac_maxwell_wormhole_check(chart, system):
 
 
 CHARTS["einstein_dirac_maxwell_wormhole"] = [lambda s=s: einstein_dirac_maxwell_wormhole(s) for s in EDM_CHARTS]
+
+
+# -- Vuorio's universe and warped anti-de Sitter space --------------------------------------
+
+VUORIO_CHARTS = ("cylindrical", "disc", "fibred", "horospherical")
+
+
+def vuorio_warped_ads(system):
+    """The homogeneous vacua of topologically massive gravity with a timelike Killing vector of
+    constant twist: a timelike line fibred over a hyperbolic plane of curvature -m^2, the fibre
+    turning with the twist Omega, -(c dt + A)^2 + h with dA = 2 Omega times the area of h. They
+    are Rebouças and Tiomno's homogeneous metrics of Godel's type with m^2 > 0, in four charts:
+
+    cylindrical    Rebouças and Tiomno's H = (4 Omega/m^2) sinh^2(mr/2), D = sinh(mr)/m, as Rebouças
+                   and Santos write them, about one integral curve of d_t, with r the proper
+                   distance from it; Vuorio's (2.21), as Chow, Pope and Sezgin quote it, is the
+                   member m = Omega, which vuorio_against_vuorio checks;
+    disc           Bengtsson and Sandin's chart on Poincare's disc, R = tanh(mr/2);
+    fibred         Anninos, Li, Padi, Song and Strominger's timelike warped anti-de Sitter space,
+                   their (3.4), the plane in coordinates about one of its geodesics;
+    horospherical  Rooman and Spindel's (4), the generalisation of Godel's own coordinates, the
+                   plane in horospherical coordinates.
+
+    vuorio_check holds each chart to the field equations of topologically massive gravity,
+    G_mu_nu + Lambda g_mu_nu + C_mu_nu/mu = 0, with mu = 3 Omega and Lambda = (Omega^2 - m^2)/3,
+    the Cotton tensor C_mu_nu = eps_mu^ab nabla_a (R_bnu - R g_bnu/4) and eps^{012} = +1/sqrt(-g)
+    in the chart's own order of coordinates, and each chart after the first to the cylindrical
+    one: the plane pulled back, and the difference of the twisting forms closed, so that a shift of
+    t carries one chart onto the other. vuorio_warped_ads.md records each chart's source."""
+    reals = "(-\\infty, \\infty)"
+    charts = {
+        "cylindrical": {
+            "name": "Cylindrical", "coords": ["t", "r", "\\phi"],
+            "domains": ["t \\in " + reals, "r \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                        "\\tanh\\left(\\dfrac{mr}{2}\\right) = \\dfrac{m}{2\\Omega} \\;\\text{(for } m < 2\\Omega\\text{, "
+                        "the circle of constant } t, r \\text{ is null)}",
+                        "\\tanh\\left(\\dfrac{mr}{2}\\right) > \\dfrac{m}{2\\Omega} \\;\\text{(the circles of constant } "
+                        "t, r \\text{ are closed timelike curves)}"],
+            "twist": "\\dfrac{4\\Omega}{m^2}\\sinh^2\\left(\\dfrac{mr}{2}\\right)d\\phi",
+            "plane": "dr^2 + \\dfrac{\\sinh^2(mr)}{m^2}\\,d\\phi^2"},
+        "disc": {
+            "name": "Poincaré disc", "coords": ["t", "R", "\\phi"],
+            "domains": ["t \\in " + reals, "R \\in [0, 1)", "\\phi \\in [0, 2\\pi)",
+                        "R = \\dfrac{m}{2\\Omega} \\;\\text{(for } m < 2\\Omega\\text{, the circle of constant } "
+                        "t, R \\text{ is null)}",
+                        "R > \\dfrac{m}{2\\Omega} \\;\\text{(the circles of constant } t, R \\text{ are closed timelike curves)}"],
+            "twist": "\\dfrac{4\\Omega R^2}{m^2\\left(1 - R^2\\right)}\\,d\\phi",
+            "plane": "\\dfrac{4\\left(dR^2 + R^2d\\phi^2\\right)}{m^2\\left(1 - R^2\\right)^2}"},
+        "fibred": {
+            "name": "Fibred", "coords": ["t", "\\sigma", "u"],
+            "domains": ["t \\in " + reals, "\\sigma \\in " + reals, "u \\in " + reals],
+            "twist": "\\dfrac{2\\Omega}{m^2}\\sinh\\sigma\\,du",
+            "plane": "\\dfrac{1}{m^2}\\left(d\\sigma^2 + \\cosh^2\\sigma\\,du^2\\right)"},
+        "horospherical": {
+            "name": "Horospherical", "coords": ["t", "x", "y"],
+            "domains": ["t \\in " + reals, "x \\in " + reals, "y \\in " + reals],
+            "twist": "\\dfrac{2\\Omega}{m}e^{mx}\\,dy",
+            "plane": "dx^2 + e^{2mx}\\,dy^2"},
+    }
+    chart = charts[system]
+    parameters = ["\\Omega", "m"]
+    line = f"ds^2 = -\\left(c\\,dt + {chart['twist']}\\right)^2 + {chart['plane']}"
+    probe = vm.Reader(chart["coords"], parameters, ())
+    spec = {
+        "metric_id": "vuorio_warped_ads",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": parameters, "line_element": line},
+        # The chart coordinate is x^0 = ct, so c dt is the chart's dt.
+        "chart_line_element": line.replace("c\\,dt", "dt"),
+        "printer": {"lead": [probe.parameters["Omega"]]},
+        "check": lambda c, s=system: vuorio_check(c, s),
+    }
+    if system == "cylindrical":
+        spec["pretty"] = cp.hyperbolic(probe.parameters["m"] * probe.symbol["r"] / 2)
+    elif system == "fibred":
+        spec["pretty"] = cp.hyperbolic(probe.symbol["\\sigma"])
+    return spec
+
+
+def vuorio_twist(chart):
+    """The twisting form A and the plane h of -(dt + A)^2 + h, read off the chart's metric:
+    g_tt = -1, g_ti = -A_i and h_ij = g_ij + A_i A_j."""
+    g = chart.geo.g
+    if vm.norm(g[0, 0] + 1) != 0:
+        raise AssertionError(f"vuorio_warped_ads: g_tt is not -1 in the chart {chart.coords_tex}")
+    A = [-g[0, i] for i in (1, 2)]
+    h = sp.Matrix(2, 2, lambda i, j: g[i + 1, j + 1] + A[i] * A[j])
+    return A, h
+
+
+def vuorio_cotton_ll(chart):
+    """C_mu_nu = eps_mu^ab nabla_a S_b_nu with S = Ricci - R g/4 and eps^{012} = +1/sqrt(-g), the
+    convention of Anninos, Li, Padi, Song and Strominger, in the chart's own order."""
+    geo, X, n = chart.geo, chart.symbols, 3
+    gam = geo.christoffel_ull()
+    ric = geo.ricci_ll()
+    R = geo.ricci_scalar()
+    S = sp.Matrix(n, n, lambda a, b: vm._at(ric, (a, b)) - R * geo.g[a, b] / 4)
+    # Every factor of -det g is a square on the chart's domain, so its root is taken factor by factor.
+    root = sp.powdenest(sp.sqrt(sp.factor(-geo.g.det())), force=True).replace(sp.Abs, lambda a: a)
+
+    def nabla(a, b, c):
+        return sp.diff(S[b, c], X[a]) - sum(vm._at(gam, (e, a, b)) * S[e, c] + vm._at(gam, (e, a, c)) * S[b, e]
+                                            for e in range(n))
+    up = sp.Matrix(n, n, lambda m_, c: sum(sp.LeviCivita(m_, a, b) / root * nabla(a, b, c)
+                                           for a in range(n) for b in range(n)))
+    return geo.g * up
+
+
+def vuorio_check(chart, system):
+    """The chart against the field equations and, after the first, against the cylindrical chart."""
+    Om, m = chart.reader.parameters["Omega"], chart.reader.parameters["m"]
+    mu, Lam = 3 * Om, (Om ** 2 - m ** 2) / 3
+    einstein = chart.geo.einstein_ll()
+    cotton = vuorio_cotton_ll(chart)
+    for a in range(3):
+        for b in range(3):
+            left = vm._at(einstein, (a, b)) + Lam * chart.geo.g[a, b] + cotton[a, b] / mu
+            if sp.simplify(vm.norm(left).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"vuorio_warped_ads: G + Lambda g + C/mu does not vanish in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]} of the {system} chart")
+    if vm.norm(chart.geo.ricci_scalar() - 2 * (Om ** 2 - m ** 2)) != 0:
+        raise AssertionError(f"vuorio_warped_ads: the Ricci scalar of the {system} chart is not 2(Omega^2 - m^2)")
+    if system == "cylindrical":
+        vuorio_against_vuorio(chart)
+        return
+    source = write_free_chart("cylindrical")
+    A, h = vuorio_twist(chart)
+    A0, h0 = vuorio_twist(source)
+    p, q = chart.symbols[1], chart.symbols[2]
+    r, phi = source.symbols[1], source.symbols[2]
+    image = vuorio_map(system, p, q, m)
+    at = dict(zip((r, phi), image))
+    at[source.reader.parameters["Omega"]] = Om
+    at[source.reader.parameters["m"]] = m
+    J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], (p, q)[j]))
+    pulled = J.T * h0.subs(at, simultaneous=True) * J
+    form = [sum(A0[k].subs(at, simultaneous=True) * J[k, j] for k in range(2)) - A[j] for j in range(2)]
+    curl = sp.diff(form[1], p) - sp.diff(form[0], q)
+    # The maps hold square roots and inverse functions, so both are compared at random points of
+    # the chart in forty digits, each against the size of what it is the difference of.
+    rng = random.Random(1985)
+    for _ in range(6):
+        point = {p: sp.Rational(rng.randint(5, 95), 100) * (1 if system == "disc" else 2) - (0 if system == "disc" else 1),
+                 q: sp.Rational(rng.randint(-95, 95), 100), Om: sp.Rational(rng.randint(50, 150), 100),
+                 m: sp.Rational(rng.randint(50, 150), 100)}
+        for i in range(2):
+            for j in range(2):
+                off = sp.N((pulled[i, j] - h[i, j]).subs(point), 40)
+                if abs(off) > sp.Float("1e-30"):
+                    raise AssertionError(f"vuorio_warped_ads: the cylindrical plane pulled back misses the {system} "
+                                         f"chart's in slot {chart.coords_tex[i + 1]}{chart.coords_tex[j + 1]} by {off}")
+        off = sp.N(curl.subs(point), 40)
+        if abs(off) > sp.Float("1e-30"):
+            raise AssertionError(f"vuorio_warped_ads: the twisting forms of the {system} and cylindrical charts "
+                                 f"differ by a form that is not closed, by {off}")
+
+
+def vuorio_map(system, p, q, m):
+    """(r, phi) of the cylindrical chart as functions of the chart's own pair: on the hyperboloid
+    X0^2 - X1^2 - X2^2 = 1 of the unit plane, X0 = cosh(mr), X1 + i X2 = sinh(mr) e^(i phi)."""
+    if system == "disc":
+        return [2 * sp.atanh(p) / m, q]
+    if system == "fibred":
+        # sigma along X1 and u along X2 near the axis, so the map keeps the orientation.
+        X0, X1, X2 = sp.cosh(p) * sp.cosh(q), sp.sinh(p), sp.cosh(p) * sp.sinh(q)
+    else:
+        # The upper half plane w = y m + i e^(-mx) onto the hyperboloid, with the point x = y = 0
+        # on the axis.
+        s = sp.exp(-m * p)
+        X0 = (1 + s ** 2 + (m * q) ** 2) / (2 * s)
+        X1 = (1 - s ** 2 - (m * q) ** 2) / (2 * s)
+        X2 = m * q / s
+    return [sp.acosh(X0) / m, sp.atan2(X2, X1)]
+
+
+def vuorio_against_vuorio(chart):
+    """The member m = Omega against Vuorio's (2.21) as Chow, Pope and Sezgin quote it,
+    (9/mu^2)[-(dt_V + 2 dtheta - 2 cosh(sigma) dtheta)^2 + dsigma^2 + sinh^2(sigma) dtheta^2],
+    at mu = 3 Omega, through sigma = Omega r, theta = -phi and t_V = Omega t: exact, slot by slot."""
+    Om, m = chart.reader.parameters["Omega"], chart.reader.parameters["m"]
+    t, r, phi = chart.symbols
+    sigma, theta, tV = Om * r, -phi, Om * t
+    mu = 3 * Om
+    d = [sp.Matrix([sp.diff(f, v) for v in chart.symbols]).T for f in (tV, sigma, theta)]
+    fibre = d[0] + 2 * d[2] - 2 * sp.cosh(sigma) * d[2]
+    g = 9 / mu ** 2 * (-(fibre.T * fibre) + d[1].T * d[1] + sp.sinh(sigma) ** 2 * (d[2].T * d[2]))
+    ours = chart.geo.g.subs(m, Om)
+    for a in range(3):
+        for b in range(a, 3):
+            if sp.simplify((g[a, b] - ours[a, b]).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"vuorio_warped_ads: the member m = Omega misses Vuorio's (2.21) in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+
+
+def write_free_chart(system):
+    """The chart of `system` built as print_charts builds it, with no check run."""
+    spec = vuorio_warped_ads(system)
+    return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                    spec["printer"], spec.get("pretty"))
+
+
+CHARTS["vuorio_warped_ads"] = [lambda s=s: vuorio_warped_ads(s) for s in VUORIO_CHARTS]
 
 
 def write(spec):

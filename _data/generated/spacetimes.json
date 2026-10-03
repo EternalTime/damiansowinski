@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 173,
+  "count": 174,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1544,6 +1544,11 @@
           "id": "jackiw_teitelboim_black_hole",
           "kind": "family",
           "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Its metric is everywhere anti-de Sitter space of two dimensions, and a dilaton marks its horizon [mertens2023]."
+        },
+        {
+          "id": "vuorio_warped_ads",
+          "kind": "family",
+          "text": "Anti-de Sitter space of three dimensions with its light cones squashed or stretched along one direction, the vacua of gravity with a mass for the graviton. Stretched, as in Vuorio's universe, they hold closed timelike curves through every event [rooman1998]."
         }
       ],
       "references": [
@@ -2878,6 +2883,11 @@
           "id": "jackiw_teitelboim_black_hole",
           "kind": "family",
           "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Without rotation, this hole is that one times a circle whose radius is its dilaton [achucarro1993]."
+        },
+        {
+          "id": "vuorio_warped_ads",
+          "kind": "family",
+          "text": "Anti-de Sitter space of three dimensions warped along a line, a vacuum of gravity with a mass for the graviton. Its spacelike stretched version holds black holes that are quotients of it, just as this hole is of anti-de Sitter space [anninos2009]."
         }
       ],
       "references": [
@@ -2912,7 +2922,8 @@
         "aminneborg1998",
         "emparan2002holograms",
         "emparan2020qbtz",
-        "achucarro1993"
+        "achucarro1993",
+        "anninos2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -20153,6 +20164,11 @@
           "id": "maitra_dust",
           "kind": "family",
           "text": "A stationary universe of rotating dust with no cosmological constant and no closed timelike curves, which Samaresh C. Maitra found in 1966. Its dust shears and thins out away from an axis, where Gödel's turns rigidly and is the same everywhere [maitra1966, chan2024]."
+        },
+        {
+          "id": "vuorio_warped_ads",
+          "kind": "family",
+          "text": "Empty space of gravity in three dimensions with a mass for the graviton, whose light cones tip over as these do. Gödel's universe less its flat direction is one of its members, $m^2 = 2\\Omega^2$, a vacuum of that theory [reboucas2009, gurses2010]."
         }
       ],
       "references": [
@@ -20182,7 +20198,9 @@
         "bonnor1979petrov",
         "gibbons2008petrov",
         "maitra1966",
-        "chan2024"
+        "chan2024",
+        "reboucas2009",
+        "gurses2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/godel.json",
@@ -39620,6 +39638,11 @@
           "id": "jackiw_teitelboim_black_hole",
           "kind": "family",
           "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Its static chart carries the factor of the near-NHEK chart, $r(r - 2k)$, after a shift of $r$ by $k$."
+        },
+        {
+          "id": "vuorio_warped_ads",
+          "kind": "family",
+          "text": "Anti-de Sitter space of three dimensions with its fibres squashed or stretched. Each slice of this throat at constant latitude is such a space, warped along a spacelike circle [bengtsson2006]."
         }
       ],
       "references": [
@@ -39635,7 +39658,8 @@
         "bredberg2010",
         "compere2017",
         "gralla2018",
-        "meinel2002"
+        "meinel2002",
+        "bengtsson2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/near_horizon_extreme_kerr.json",
@@ -43192,6 +43216,11 @@
           "id": "quantum_btz",
           "kind": "family",
           "text": "With a negative cosmological constant and quantum fields around it, the cone of a particle is dressed with a horizon, which hides its singularity [emparan2002holograms, emparan2020qbtz]."
+        },
+        {
+          "id": "vuorio_warped_ads",
+          "kind": "family",
+          "text": "With a mass for the graviton, empty space in three dimensions need not be flat. Vuorio's universe is such a vacuum, whose light cones tip over as Gödel's do [vuorio1985]."
         }
       ],
       "references": [
@@ -43215,7 +43244,8 @@
         "steif1996",
         "brill1996",
         "emparan2002holograms",
-        "emparan2020qbtz"
+        "emparan2020qbtz",
+        "vuorio1985"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/point_particle_2plus1.json",
@@ -51539,6 +51569,11 @@
           "id": "maitra_dust",
           "kind": "family",
           "text": "Uncharged dust that turns faster near its axis than far from it, with no magnetic field to help. Its circles about the axis stay spacelike at every radius [maitra1966, chan2024]."
+        },
+        {
+          "id": "vuorio_warped_ads",
+          "kind": "family",
+          "text": "Empty spaces of gravity in three dimensions with a mass for the graviton, a timelike line twisted over a hyperbolic plane of curvature $-m^2$. This universe's plane of $t$, $r$, and $\\phi$ is the same line element at $m = 0$ [reboucas2009]."
         }
       ],
       "references": [
@@ -51559,7 +51594,8 @@
         "drukker2003",
         "soleng1994",
         "maitra1966",
-        "chan2024"
+        "chan2024",
+        "reboucas2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/som_raychaudhuri.json",
@@ -51829,6 +51865,11 @@
           "id": "draining_bathtub",
           "kind": "family",
           "text": "A vortex of water as sound sees it, which Matt Visser set beside the spinning string. Far from the core the string approximates it, and near the core the vortex has a horizon where the string has closed timelike curves [visser1998]."
+        },
+        {
+          "id": "vuorio_warped_ads",
+          "kind": "family",
+          "text": "A vacuum of gravity in three dimensions with a mass for the graviton, with closed timelike curves and no source. They lie beyond a fixed distance from every point [reboucas2009]."
         }
       ],
       "references": [
@@ -51860,7 +51901,8 @@
         "som1968",
         "kopczynski1973",
         "trautman2006",
-        "visser1998"
+        "visser1998",
+        "reboucas2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/spinning_string.json",
@@ -58255,6 +58297,354 @@
           ],
           "ricci_scalar": "R = -\\dfrac{2\\left(4a - 3r_s\\right)\\delta(\\ell)}{a^2}",
           "kretschmann": "K = \\dfrac{12r_s^2}{\\left(a + |\\ell|\\right)^6} \\;\\text{for}\\; \\ell \\neq 0"
+        }
+      ]
+    },
+    {
+      "id": "vuorio_warped_ads",
+      "name": "Vuorio's Universe and Warped Anti-de Sitter Space",
+      "short_name": "Vuorio",
+      "description": "An empty space of gravity in three dimensions with a mass for the graviton, whose time twists about every point. It is anti-de Sitter space with its light cones stretched or squashed along one direction, and stretched, as in Vuorio's universe, it holds closed timelike curves through every event.",
+      "tags": [
+        "topologically massive gravity",
+        "alternative theories of gravity",
+        "2+1 dimensional gravity",
+        "lower-dimensional gravity",
+        "closed timelike curves",
+        "rotating",
+        "homogeneous",
+        "anti-de Sitter",
+        "warped anti-de Sitter",
+        "cosmological constant",
+        "exact solution",
+        "Lorentzian",
+        "idealized model",
+        "stationary",
+        "three-dimensional"
+      ],
+      "signature": "(-,+,+)",
+      "convention": "We keep factors of $c$ explicit, take components in the chart $x^0 = ct$, and write a dot in the geodesic equations for a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "godel",
+          "kind": "family",
+          "text": "Kurt Gödel's rotating universe of dust. Less its flat direction it is the member $m^2 = 2\\Omega^2$ of this family, a vacuum of topologically massive gravity [reboucas2009, gurses2010]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Anti-de Sitter space of three dimensions is the member $m = 2\\Omega$, where the cones are neither squashed nor stretched and the closed timelike curves are gone [rooman1998, boyda2003]."
+        },
+        {
+          "id": "som_raychaudhuri",
+          "kind": "family",
+          "text": "Charged dust in rigid rotation. Its plane of $t$, $r$, and $\\phi$ twists a flat plane where this family twists a hyperbolic one, Rebouças and Tiomno's line element at $m = 0$ [reboucas2009]."
+        },
+        {
+          "id": "near_horizon_extreme_kerr",
+          "kind": "family",
+          "text": "The throat of the extreme Kerr black hole. Each of its slices of constant latitude is anti-de Sitter space of three dimensions warped along a spacelike circle, squashed near the axis and stretched near the equator [bengtsson2006]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of anti-de Sitter space in three dimensions, a quotient of it. The black holes of spacelike warped anti-de Sitter space are quotients of that space in the same way [anninos2009]."
+        },
+        {
+          "id": "point_particle_2plus1",
+          "kind": "family",
+          "text": "Gravity in three dimensions without a mass for the graviton, where a particle makes a cone and empty space stays flat [deser1982annals]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "The spinning particle of gravity in three dimensions, drawn out along a line into a string. Its closed timelike curves wind close about the source, and this universe's lie beyond a fixed distance from every point [reboucas2009]."
+        }
+      ],
+      "references": [
+        "vuorio1985",
+        "rooman1998",
+        "deser1982",
+        "deser1982annals",
+        "percacci1987",
+        "gurses2010",
+        "moussa2003",
+        "reboucas2009",
+        "nutku1993",
+        "gurses1994",
+        "reboucas1983",
+        "anninos2009",
+        "chow2010",
+        "bengtsson2006",
+        "bardeen1999",
+        "boyda2003"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vuorio_warped_ads.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tanh\\left(\\dfrac{mr}{2}\\right) = \\dfrac{m}{2\\Omega} \\;\\text{(for } m < 2\\Omega\\text{, the circle of constant } t, r \\text{ is null)}",
+            "\\tanh\\left(\\dfrac{mr}{2}\\right) > \\dfrac{m}{2\\Omega} \\;\\text{(the circles of constant } t, r \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Omega",
+              "description": "Twist of the Killing vector $\\partial_t$, an inverse length; the graviton's topological mass is $\\mu = 3\\Omega$"
+            },
+            {
+              "symbol": "m",
+              "description": "Curvature scale of the plane that $\\partial_t$ turns about, an inverse length, so that its Gaussian curvature is $-m^2$; the cosmological constant is $\\Lambda = (\\Omega^2 - m^2)/3$, and Vuorio's universe is $m = \\Omega$"
+            }
+          ],
+          "convention": "We use Rebouças and Tiomno's cylindrical coordinates $(t, r, \\phi)$ about one integral curve of $\\partial_t$, with $t$ carrying dimensions of time, $r$ the proper distance from that curve, and $\\phi$ periodic in $2\\pi$.",
+          "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{4\\Omega}{m^2}\\sinh^2\\left(\\dfrac{mr}{2}\\right)d\\phi\\right)^2 + dr^2 + \\dfrac{\\sinh^2(mr)}{m^2}\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{4\\Omega\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{4\\Omega\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4\\left(m^2 + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 4\\Omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+            }
+          ],
+          "ricci_scalar": "R = 2\\left(\\Omega + m\\right)\\left(\\Omega - m\\right)",
+          "kretschmann": "K = 44\\Omega^4 - 24\\Omega^2\\,m^2 + 4m^4"
+        },
+        {
+          "id": "disc",
+          "name": "Poincaré disc",
+          "coordinates": [
+            "t",
+            "R",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "R \\in [0, 1)",
+            "\\phi \\in [0, 2\\pi)",
+            "R = \\dfrac{m}{2\\Omega} \\;\\text{(for } m < 2\\Omega\\text{, the circle of constant } t, R \\text{ is null)}",
+            "R > \\dfrac{m}{2\\Omega} \\;\\text{(the circles of constant } t, R \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Omega",
+              "description": "Twist of the Killing vector $\\partial_t$, an inverse length; the graviton's topological mass is $\\mu = 3\\Omega$"
+            },
+            {
+              "symbol": "m",
+              "description": "Curvature scale of the plane that $\\partial_t$ turns about, an inverse length, so that its Gaussian curvature is $-m^2$; the cosmological constant is $\\Lambda = (\\Omega^2 - m^2)/3$, and Vuorio's universe is $m = \\Omega$"
+            }
+          ],
+          "convention": "We use Bengtsson and Sandin's coordinates $(t, R, \\phi)$ on Poincaré's disc, with $t$ carrying dimensions of time, $R = \\tanh(mr/2)$ dimensionless, and $\\phi$ periodic in $2\\pi$.",
+          "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{4\\Omega R^2}{m^2\\left(1 - R^2\\right)}\\,d\\phi\\right)^2 + \\dfrac{4\\left(dR^2 + R^2d\\phi^2\\right)}{m^2\\left(1 - R^2\\right)^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{4\\Omega\\,R^2}{m^2\\left(1 + R\\right)\\left(1 - R\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{4\\Omega\\,R^2}{m^2\\left(1 + R\\right)\\left(1 - R\\right)}"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\dfrac{4}{m^2\\left(1 + R\\right)^2\\left(1 - R\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{4R^2\\left(2\\Omega\\,R - m\\right)\\left(2\\Omega\\,R + m\\right)}{m^4\\left(1 + R\\right)^2\\left(1 - R\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 2\\left(\\Omega + m\\right)\\left(\\Omega - m\\right)",
+          "kretschmann": "K = 44\\Omega^4 - 24\\Omega^2\\,m^2 + 4m^4"
+        },
+        {
+          "id": "fibred",
+          "name": "Fibred",
+          "coordinates": [
+            "t",
+            "\\sigma",
+            "u"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\sigma \\in (-\\infty, \\infty)",
+            "u \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Omega",
+              "description": "Twist of the Killing vector $\\partial_t$, an inverse length; the graviton's topological mass is $\\mu = 3\\Omega$"
+            },
+            {
+              "symbol": "m",
+              "description": "Curvature scale of the plane that $\\partial_t$ turns about, an inverse length, so that its Gaussian curvature is $-m^2$; the cosmological constant is $\\Lambda = (\\Omega^2 - m^2)/3$, and Vuorio's universe is $m = \\Omega$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, \\sigma, u)$ of Anninos, Li, Padi, Song, and Strominger, with $t$ carrying dimensions of time and $\\sigma$ and $u$ dimensionless, which write the plane about its geodesic $\\sigma = 0$.",
+          "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{2\\Omega}{m^2}\\sinh\\sigma\\,du\\right)^2 + \\dfrac{1}{m^2}\\left(d\\sigma^2 + \\cosh^2\\sigma\\,du^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "t",
+                "u"
+              ],
+              "value": "-\\dfrac{2\\Omega\\sinh\\sigma}{m^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "t"
+              ],
+              "value": "-\\dfrac{2\\Omega\\sinh\\sigma}{m^2}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "\\dfrac{1}{m^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{m^2 + m^2\\sinh^2\\sigma - 4\\Omega^2\\sinh^2\\sigma}{m^4}"
+            }
+          ],
+          "ricci_scalar": "R = 2\\left(\\Omega + m\\right)\\left(\\Omega - m\\right)",
+          "kretschmann": "K = 44\\Omega^4 - 24\\Omega^2\\,m^2 + 4m^4"
+        },
+        {
+          "id": "horospherical",
+          "name": "Horospherical",
+          "coordinates": [
+            "t",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Omega",
+              "description": "Twist of the Killing vector $\\partial_t$, an inverse length; the graviton's topological mass is $\\mu = 3\\Omega$"
+            },
+            {
+              "symbol": "m",
+              "description": "Curvature scale of the plane that $\\partial_t$ turns about, an inverse length, so that its Gaussian curvature is $-m^2$; the cosmological constant is $\\Lambda = (\\Omega^2 - m^2)/3$, and Vuorio's universe is $m = \\Omega$"
+            }
+          ],
+          "convention": "We use Rooman and Spindel's coordinates $(t, x, y)$, which carry Gödel's own over to every member, with $t$ carrying dimensions of time, $x$ and $y$ lengths, and the lines of constant $x$ horocycles of the plane.",
+          "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{2\\Omega}{m}e^{mx}\\,dy\\right)^2 + dx^2 + e^{2mx}\\,dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "y"
+              ],
+              "value": "-\\dfrac{2\\Omega\\,e^{m\\,x}}{m}"
+            },
+            {
+              "indices": [
+                "y",
+                "t"
+              ],
+              "value": "-\\dfrac{2\\Omega\\,e^{m\\,x}}{m}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "-\\dfrac{\\left(2\\Omega - m\\right)\\left(2\\Omega + m\\right)e^{2m\\,x}}{m^2}"
+            }
+          ],
+          "ricci_scalar": "R = 2\\left(\\Omega + m\\right)\\left(\\Omega - m\\right)",
+          "kretschmann": "K = 44\\Omega^4 - 24\\Omega^2\\,m^2 + 4m^4"
         }
       ]
     },
