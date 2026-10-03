@@ -1170,6 +1170,17 @@ The exact vacuum solution for a rotating, uncharged black hole, characterized by
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr.json
 - chart Kerr (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2GMr}{c^2\left(r^2 + a^2\cos^2\theta\right)}\right)c^2 dt^2 - \dfrac{4GMar\sin^2\theta}{c^2\left(r^2 + a^2\cos^2\theta\right)}c\,dt\,d\phi + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \dfrac{2GMr}{c^2}}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2 + \dfrac{2GMa^2r\sin^2\theta}{c^2\left(r^2 + a^2\cos^2\theta\right)}\right)\sin^2\theta\,d\phi^2$$
 
+### Kerr Black Holes with Scalar Hair
+
+A rotating black hole wrapped in a cloud of massive complex scalar field that neither falls in nor escapes, found by Carlos Herdeiro and Eugen Radu in 2014. The field turns at $m$ times the horizon's angular velocity, $\omega = m\Omega_H$, so the metric stays stationary and axisymmetric while the field changes in time and in angle. The family runs from Kerr's black holes to spinning boson stars, and its metric is known only numerically.
+
+- id: `kerr_scalar_hair`
+- tags: rotating black hole, black hole, black hole hair, scalar hair, scalar field, complex scalar field, minimally coupled scalar field, Einstein-Klein-Gordon, numerical solution, superradiance, boson star, no-hair theorem, black hole uniqueness, ergosphere, frame dragging, horizon, event horizon, rotating, axisymmetric, angular momentum, mass, asymptotically flat, stationary, Lorentzian, Einstein equations, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr_scalar_hair.json
+- chart Herdeiro-Radu: coordinates $(t, r, \theta, \varphi)$, $$ds^2 = -e^{2F_0}\left(1 - \dfrac{r_H}{r}\right)c^2dt^2 + e^{2F_1}\left(\dfrac{dr^2}{1 - \dfrac{r_H}{r}} + r^2d\theta^2\right) + e^{2F_2}r^2\sin^2\theta\left(d\varphi - W\,c\,dt\right)^2$$
+- chart Without Hair: coordinates $(t, r, \theta, \varphi)$, $$ds^2 = -\dfrac{r\left(r - r_H\right)\left(\left(r + b\right)^2 + b\left(b + r_H\right)\cos^2\theta\right)}{\left(\left(r + b\right)^2 + b\left(b + r_H\right)\right)^2 - b\left(b + r_H\right)r\left(r - r_H\right)\sin^2\theta}c^2dt^2 + \left(\left(r + b\right)^2 + b\left(b + r_H\right)\cos^2\theta\right)\left(\dfrac{dr^2}{r\left(r - r_H\right)} + d\theta^2\right) + \dfrac{\left(\left(\left(r + b\right)^2 + b\left(b + r_H\right)\right)^2 - b\left(b + r_H\right)r\left(r - r_H\right)\sin^2\theta\right)\sin^2\theta}{\left(r + b\right)^2 + b\left(b + r_H\right)\cos^2\theta}\left(d\varphi - \dfrac{\sqrt{b\left(b + r_H\right)}\left(r_H + 2b\right)\left(r + b\right)}{\left(\left(r + b\right)^2 + b\left(b + r_H\right)\right)^2 - b\left(b + r_H\right)r\left(r - r_H\right)\sin^2\theta}c\,dt\right)^2$$
+
 ### Kerr-Bertotti-Robinson Black Hole
 
 Kerr's rotating black hole in a magnetic field that points along its axis of rotation and is uniform far away, the exact solution of the Einstein-Maxwell equations that Jiří Podolský and Hryhorii Ovcharenko found in 2025. It is of Petrov type D, it is Kerr's metric with the field switched off and Bertotti and Robinson's universe with the mass taken away, and the spinning hole carries an electric charge.

@@ -3147,6 +3147,8 @@ FLAT = {
     ("neugebauer_meinel", "spheroidal", "plane"): lambda: one(
         "neugebauer_meinel", lambda m: along(0.0, 0.0, math.sqrt(m.reach("bardeen_wagoner", "\\rho")[1] ** 2 - 1))),
     ("neugebauer_meinel", "weyl", "axis"): lambda: _nm_centre("$t = 0$, $z = 0$"),
+    ("kerr_scalar_hair", "herdeiro_radu", "equator"): lambda: one(
+        "kerr_scalar_hair", lambda m: along(0.0, *m.reach("herdeiro_radu", "r"))),
     ("neugebauer_meinel", "spheroidal", "axis"): lambda: _nm_centre("$t = 0$, $\\xi = 0$"),
     # The plane z = 0 of the first Morgan-Morgan disc at t = 0: Weyl's rho from the axis out, the
     # oblate spheroidal chart's eta across the disc and its xi = sqrt(rho^2/a^2 - 1) outside the rim.
@@ -3506,6 +3508,12 @@ HIDDEN = {
     **{("neugebauer_meinel", "black_hole_limit", view): "the limit mu -> mu_0, the extreme Kerr metric; the moment embedded is the disc's at mu = 3"
        for view in ("axis", "equator")},
     ("neugebauer_meinel", "limit_axis"): "the limit mu -> mu_0, the extreme Kerr metric; the moment embedded is the disc's at mu = 3",
+    ("kerr_scalar_hair", "herdeiro_radu", "axis"): "the axis, which the embedded equatorial plane meets nowhere outside the horizon",
+    ("kerr_scalar_hair", "hair_axis"): "the axis, which the embedded equatorial plane meets nowhere outside the horizon",
+    **{("kerr_scalar_hair", "kerr_member", view): "Kerr's black hole of the same mass and angular momentum, another member of the "
+       "family than configuration IV, whose equator is embedded" for view in ("axis", "equator")},
+    ("kerr_scalar_hair", "kerr_axis"): "Kerr's black hole of the same mass and angular momentum, another member of the family "
+       "than configuration IV, whose equator is embedded",
     **{("zipoy_voorhees", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     **{("zipoy_voorhees", f"{system}_axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"

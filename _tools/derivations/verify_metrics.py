@@ -1873,6 +1873,16 @@ DIMENSIONS = {
     ("boson_star", "isotropic"): {
         "t": "T", "R": "L", "\\theta": "1", "\\phi": "1", "\\alpha": "1", "\\psi": "1",
     },
+    # Herdeiro and Radu's black holes with scalar hair: F_0, F_1 and F_2 are pure numbers, and W is
+    # the rate of dragging per unit of ct, an inverse length, since the line element writes W c dt.
+    # In the Kerr member both constants r_H and b = -c_t are lengths.
+    ("kerr_scalar_hair", "herdeiro_radu"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\varphi": "1", "r_H": "L", "F_0": "1", "F_1": "1", "F_2": "1",
+        "W": "1/L",
+    },
+    ("kerr_scalar_hair", "kerr_member"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\varphi": "1", "r_H": "L", "b": "L",
+    },
     # Bartnik and McKinnon's soliton: the mass function is a length, as TOV's is, the amplitude w
     # of the Yang-Mills field and the lapse's sigma are numbers, and ell is the one length of the
     # theory, which stands in the field equations and in no component. The isotropic chart's f

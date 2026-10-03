@@ -158,6 +158,11 @@ REGIONS = {
         "why": "black_hole_limit is the limit mu -> mu_0 outside the disc, the extreme Kerr metric, "
                "and no disc of the family",
     },
+    "kerr_scalar_hair": {
+        "regions": [["herdeiro_radu"]],
+        "why": "kerr_member is the member with no field, Kerr's metric in the same coordinates (Herdeiro and "
+               "Radu 2015, appendix A), a special case that is a vacuum where the family carries the field",
+    },
     "chandrasekhar_xanthopoulos": {
         "regions": [["prolate", "angular", "boyer_lindquist"]],
         "why": "kerr_ingoing runs on through the horizon into one of the extensions, where Kerr's "

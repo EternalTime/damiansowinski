@@ -18,7 +18,8 @@ moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, disto
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, brill_charged_taub_nut,
-bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star and quantum_oppenheimer_snyder, and Godel's cylindrical chart.
+bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder
+and kerr_scalar_hair, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -41,7 +42,7 @@ witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, ma
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
-kerr_melvin.md and einstein_dirac_maxwell_wormhole.md beside this file.
+kerr_melvin.md, einstein_dirac_maxwell_wormhole.md and kerr_scalar_hair.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 """
 import argparse
@@ -29497,6 +29498,271 @@ def einstein_dirac_maxwell_wormhole_check(chart, system):
 
 
 CHARTS["einstein_dirac_maxwell_wormhole"] = [lambda s=s: einstein_dirac_maxwell_wormhole(s) for s in EDM_CHARTS]
+
+
+# -- Kerr black holes with scalar hair --------------------------------------------------
+
+KSH_CHARTS = ("herdeiro_radu", "kerr_member")
+KSH_REALS, KSH_TURN = " \\in (-\\infty, \\infty)", " \\in [0, 2\\pi)"
+
+
+def kerr_scalar_hair(system):
+    """Herdeiro and Radu's rotating black holes with a cloud of complex scalar field, in two charts.
+
+    herdeiro_radu: the line element of their letter of 2014, (3), and of their paper of 2015, (2.5),
+        ds^2 = e^(2F_1) (dr^2/N + r^2 dtheta^2) + e^(2F_2) r^2 sin^2(theta) (dvarphi - W c dt)^2 - e^(2F_0) N c^2 dt^2,
+    N = 1 - r_H/r, with F_0, F_1, F_2 and W free functions of r and theta, so that no component assumes
+    a field equation; the solutions are known only numerically, and kerr_scalar_hair.py reads the
+    one every drawing uses from the authors' published data.
+    kerr_member: the member with no field, Kerr's metric in the same coordinates, the paper's (A.1)
+    with its two constants r_H and c_t, written in b = -c_t > 0, the Boyer-Lindquist radius of the inner
+    horizon, so that every radicand is a product of positive factors; it is Boyer and Lindquist's chart
+    with R = r + b.
+
+    kerr_scalar_hair_check holds the free chart to the Klein-Gordon equation, the paper's (2.10), the
+    equations for F_1, F_2, F_0 and W it draws from the combinations (2.11), and its two constraints (2.12) and
+    (2.13), each against the chart's own Einstein tensor and wave operator; the Kerr chart to a
+    vanishing Ricci tensor, to Kerr's published Boyer-Lindquist chart pulled back, and to the free
+    chart with the paper's (A.1) put in. kerr_scalar_hair.md beside this file is the derivation."""
+    coords = ["t", "r", "\\theta", "\\varphi"]
+    D = sp.Derivative
+    if system == "herdeiro_radu":
+        parameters = ["r_H", "F_0 = F_0(r,\\theta)", "F_1 = F_1(r,\\theta)", "F_2 = F_2(r,\\theta)", "W = W(r,\\theta)"]
+        domains = ["t" + KSH_REALS, "r \\in [r_H, \\infty)", "\\theta \\in [0, \\pi]", "\\varphi" + KSH_TURN,
+                   "r = r_H \\;\\text{(the event horizon)}",
+                   "F_1 = F_2 \\;\\text{at}\\; \\theta = 0, \\pi \\;\\text{(a regular axis)}"]
+
+        def line(c2, c):
+            return ("ds^2 = -e^{2F_0}\\left(1 - \\dfrac{r_H}{r}\\right)" + c2 + "dt^2"
+                    " + e^{2F_1}\\left(\\dfrac{dr^2}{1 - \\dfrac{r_H}{r}} + r^2d\\theta^2\\right)"
+                    " + e^{2F_2}r^2\\sin^2\\theta\\left(d\\varphi - W\\," + c + "dt\\right)^2")
+        probe = vm.Reader(coords, parameters, ())
+        r, th = probe.symbol["r"], probe.symbol["\\theta"]
+        funcs = [probe.parameters[n] for n in ("F_0", "F_1", "F_2", "W")]
+        lead = list(funcs)
+        for g in funcs:
+            lead += [D(g, r), D(g, th)]
+        for g in funcs:
+            lead += [D(g, (r, 2)), D(g, r, th), D(g, (th, 2))]
+        lead += [r, probe.parameters["r_H"]]
+        return {
+            "metric_id": "kerr_scalar_hair",
+            "system": {"id": system, "name": "Herdeiro-Radu", "coords": coords, "domains": domains,
+                       "parameters": parameters, "line_element": line("c^2", "c\\,")},
+            "chart_line_element": line("", ""),
+            "printer": {"lead": lead, "factors": lead},
+            "pretty": lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp"),
+            "kretschmann_text": kerr_scalar_hair_kretschmann,
+            "check": lambda chart: kerr_scalar_hair_check(chart, system),
+        }
+    parameters = ["r_H", "b"]
+    S = "\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\cos^2\\theta"
+    A = ("\\left(\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\right)^2"
+         " - b\\left(b + r_H\\right)r\\left(r - r_H\\right)\\sin^2\\theta")
+
+    def line(c2, c):
+        return ("ds^2 = -\\dfrac{r\\left(r - r_H\\right)\\left(" + S + "\\right)}{" + A + "}" + c2 + "dt^2"
+                " + \\left(" + S + "\\right)\\left(\\dfrac{dr^2}{r\\left(r - r_H\\right)} + d\\theta^2\\right)"
+                " + \\dfrac{\\left(" + A + "\\right)\\sin^2\\theta}{" + S + "}\\left(d\\varphi"
+                " - \\dfrac{\\sqrt{b\\left(b + r_H\\right)}\\left(r_H + 2b\\right)\\left(r + b\\right)}{" + A + "}" + c + "dt\\right)^2")
+    probe = vm.Reader(coords, parameters, ())
+    r, th = probe.symbol["r"], probe.symbol["\\theta"]
+    rH, b = probe.parameters["r_H"], probe.parameters["b"]
+
+    def pretty(value):
+        # Each value factored with the even powers of the sine in the cosine, or as it stands if shorter.
+        value = sp.factor(sp.sympify(value))
+        cosine = sp.factor(value.replace(
+            lambda p: p.is_Pow and p.base == sp.sin(th) and p.exp.is_Integer and p.exp > 1,
+            lambda p: sp.sin(th) ** (int(p.exp) % 2) * (1 - sp.cos(th) ** 2) ** (int(p.exp) // 2)))
+        return min([value, cosine], key=lambda e: len(str(e)))
+    return {
+        "metric_id": "kerr_scalar_hair",
+        "system": {"id": system, "name": "Without Hair", "coords": coords,
+                   "domains": ["t" + KSH_REALS, "r \\in [r_H, \\infty)", "\\theta \\in [0, \\pi]", "\\varphi" + KSH_TURN,
+                               "r = r_H \\;\\text{(the event horizon)}"],
+                   "parameters": parameters, "line_element": line("c^2", "c\\,")},
+        "chart_line_element": line("", ""),
+        "printer": {"lead": [r, rH, b], "factors": [r, rH, b]},
+        "pretty": pretty,
+        # Kerr's 48 M^2 (R^6 - 15 R^4 a^2 cos^2 + 15 R^2 a^4 cos^4 - a^6 cos^6)/Sigma^6 with R = r + b,
+        # 2GM/c^2 = r_H + 2b and a^2 = b (b + r_H).
+        "kretschmann": ("\\dfrac{12\\left(r_H + 2b\\right)^2\\left(\\left(r + b\\right)^6"
+                        " - 15b\\left(b + r_H\\right)\\left(r + b\\right)^4\\cos^2\\theta"
+                        " + 15b^2\\left(b + r_H\\right)^2\\left(r + b\\right)^2\\cos^4\\theta"
+                        " - b^3\\left(b + r_H\\right)^3\\cos^6\\theta\\right)}{\\left(" + S + "\\right)^6}"),
+        "check": lambda chart: kerr_scalar_hair_check(chart, system),
+    }
+
+
+def kerr_scalar_hair_kretschmann(chart):
+    """The Kretschmann scalar of the free chart over the Riemann tensor in the orthonormal frame of the
+    observer who turns at the rate W, e^0 = e^(F_0) sqrt(N) dx^0, e^1 = e^(F_1) dr/sqrt(N),
+    e^2 = e^(F_1) r dtheta and e^3 = e^(F_2) r sin(theta) (dvarphi - W dx^0): with the six pairs P of frame
+    indices, s_P = -1 for a pair holding 0 and +1 otherwise, K = 4 sum_P R_PP^2 + 8 sum_(P<Q) s_P s_Q R_PQ^2.
+    Thirteen of the twenty one R_PQ are not zero. Expanded and factored whole the scalar runs to about
+    95,000 characters and sympy's factor did not finish on it in half an hour; the frame form is 8,600,
+    and write() checks it against the computed scalar."""
+    t, r, th, ph = chart.symbols
+    P = chart.reader.parameters
+    F0, F1, F2, W, rH = P["F_0"], P["F_1"], P["F_2"], P["W"], P["r_H"]
+    N = 1 - rH / r
+    E = sp.zeros(4, 4)
+    E[0, 0], E[0, 3] = sp.exp(-F0) / sp.sqrt(N), W * sp.exp(-F0) / sp.sqrt(N)
+    E[1, 1], E[2, 2], E[3, 3] = sp.sqrt(N) * sp.exp(-F1), sp.exp(-F1) / r, sp.exp(-F2) / (r * sp.sin(th))
+    R = chart.geo.riemann_llll()
+    pairs = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)]
+
+    def frame(p, q):
+        total = 0
+        for m, n, o, u in itertools.product(range(4), repeat=4):
+            factor = E[p[0], m] * E[p[1], n] * E[q[0], o] * E[q[1], u]
+            if factor != 0 and R[m][n][o][u] != 0:
+                total += factor * R[m][n][o][u]
+        return vm.norm(sp.together(total))
+    squares = {"diagonal": [], "plus": [], "minus": []}
+    for i, p in enumerate(pairs):
+        for q in pairs[i:]:
+            value = frame(p, q)
+            if value == 0:
+                continue
+            text = "\\left(" + chart.printer(sp.powsimp(sp.factor(value), combine="exp")) + "\\right)^2"
+            sign = (-1 if 0 in p else 1) * (-1 if 0 in q else 1)
+            squares["diagonal" if p == q else ("plus" if sign > 0 else "minus")].append(text)
+    return ("4\\left(" + " + ".join(squares["diagonal"]) + "\\right) + 8\\left(" + " + ".join(squares["plus"])
+            + "\\right) - 8\\left(" + " + ".join(squares["minus"]) + "\\right)")
+
+
+def kerr_scalar_hair_paper(chart, sigma, w, m, mu):
+    """Herdeiro and Radu's (2.10) to (2.13) as their paper of 2015 prints them, in the chart's own
+    functions, with N = 1 - r_H/r, their w the frequency over c, mu the field's inverse length, and
+    their 8 pi G phi^2 written 2 sigma^2 for the dimensionless amplitude sigma = sqrt(4 pi G) phi/c^2:
+    the Klein-Gordon equation, the equations for F_1, F_2, F_0 and W, and the two constraints."""
+    t, r, th, ph = chart.symbols
+    P = chart.reader.parameters
+    rH = P["r_H"]
+    F0, F1, F2, W = P["F_0"], P["F_1"], P["F_2"], P["W"]
+    N = 1 - rH / r
+    Np = sp.diff(N, r)
+    d = sp.diff
+    s, c, ct = sp.sin(th), sp.cos(th), sp.cot(th)
+    k2 = 2 * sigma ** 2                 # their 8 pi G phi^2
+    kin = (d(sigma, r) ** 2 + d(sigma, th) ** 2 / (r ** 2 * N))
+    twist = sp.exp(-2 * F0 + 2 * F2) * r ** 2 * s ** 2 / N
+    grad = lambda f, h: d(f, r) * d(h, r) + d(f, th) * d(h, th) / (r ** 2 * N)
+    lap = lambda f: d(f, r, 2) + d(f, th, 2) / (r ** 2 * N)
+    kg = (lap(sigma) + grad(sigma, F0 + F2) + (1 + r * Np / (2 * N)) * 2 / r * d(sigma, r) + ct / (r ** 2 * N) * d(sigma, th)
+          - (sp.exp(-2 * F2) * m ** 2 / (r ** 2 * s ** 2) - sp.exp(-2 * F0) * (w - m * W) ** 2 / N + mu ** 2) * sp.exp(2 * F1) / N * sigma)
+    eF1 = (lap(F1) - grad(F0, F2) - twist / 4 * grad(W, W) - d(F0, r) / r - Np * d(F2, r) / (2 * N)
+           + (1 + r * Np / (2 * N)) * d(F1, r) / r - ct * d(F0, th) / (r ** 2 * N)
+           + 2 * (kin + sp.exp(2 * F1) / N ** 2 * (sp.exp(-2 * F0) * (w - m * W) ** 2
+                                                    - sp.exp(-2 * F2) * m ** 2 * N / (r ** 2 * s ** 2)) * sigma ** 2))
+    eF2 = (lap(F2) + grad(F2, F2) + grad(F0, F2) + twist / 2 * grad(W, W) + (d(F0, r) + ct * d(F0, th) / (r * N)) / r
+           + (1 + r * Np / (3 * N)) * 3 * d(F2, r) / r + 2 * ct * d(F2, th) / (r ** 2 * N)
+           + k2 * sp.exp(2 * F1) / N * (mu ** 2 + 2 * sp.exp(-2 * F2) * m ** 2 / (r ** 2 * s ** 2)))
+    eF0 = (lap(F0) + grad(F0, F0) + grad(F0, F2) - twist / 2 * grad(W, W) + (1 + 3 * r * Np / (4 * N)) * 2 * d(F0, r) / r
+           + ct * d(F0, th) / (r ** 2 * N) + Np * d(F2, r) / (2 * N)
+           - k2 * sp.exp(2 * F1) / N * (2 * sp.exp(-2 * F0) * (w - m * W) ** 2 / N - mu ** 2))
+    eW = (lap(W) + grad(3 * F2 - F0, W) + 4 / r * (d(W, r) + 3 * ct * d(W, th) / (4 * r * N))
+          + 4 * k2 * sp.exp(2 * F1 - 2 * F2) * m * (w - m * W) / (r ** 2 * s ** 2 * N))
+    minus = lambda f, h: d(f, r) * d(h, r) - d(f, th) * d(h, th) / (r ** 2 * N)
+    c1 = (d(F0, r, 2) - d(F0, th, 2) / (r ** 2 * N) + d(F2, r, 2) - d(F2, th, 2) / (r ** 2 * N) + minus(F0, F0)
+          - 2 * minus(F0, F1) - 2 * minus(F1, F2) - twist / 2 * minus(W, W) + minus(F2, F2)
+          + (3 * r * Np / (2 * N) - 1) * d(F0, r) / r + (1 + r * Np / (2 * N)) * (d(F2, r) - 2 * d(F1, r)) / r
+          + 2 * ct / (r ** 2 * N) * (d(F1, th) - d(F2, th)) + 2 * k2 / sigma ** 2 * minus(sigma, sigma))
+    c2 = (d(F0, r, th) + d(F2, r, th) + d(F0, r) * d(F0, th) + d(F2, r) * d(F2, th)
+          - (d(F0, r) * d(F1, th) + d(F1, r) * d(F0, th)) - (d(F1, r) * d(F2, th) + d(F2, r) * d(F1, th))
+          + (r * Np / (2 * N) - 1) * d(F0, th) / r - (1 + r * Np / (2 * N)) * d(F1, th) / r
+          - ct * (d(F1, r) - d(F2, r)) - twist / 2 * d(W, r) * d(W, th) + 2 * k2 / sigma ** 2 * d(sigma, r) * d(sigma, th))
+    return kg, (eF1, eF2, eF0, eW), (c1, c2)
+
+
+def kerr_scalar_hair_check(chart, system):
+    """herdeiro_radu: for the field sigma(r, theta) e^(i(m varphi - w x^0)), the chart's own wave operator
+    gives the paper's (2.10), the combinations E^r_r + E^theta_theta - E^varphi_varphi - E^t_t,
+    E^r_r + E^theta_theta - E^varphi_varphi + E^t_t + 2W E^t_varphi, E^r_r + E^theta_theta + E^varphi_varphi
+    - E^t_t - 2W E^t_varphi and E^t_varphi of E^a_b = G^a_b - 2 S^a_b, with S the field's stress in
+    sigma, the combinations of its (2.11), give its equations for F_1, F_2, F_0 and W, each times one factor, and E^r_r - E^theta_theta and E^r_theta its
+    constraints (2.12) and (2.13). kerr_member: a vacuum, Kerr's published Boyer-Lindquist chart with
+    R = r + b, GM/c^2 = r_H/2 + b and a^2 = b(b + r_H), and the free chart with the paper's (A.1) at c_t = -b."""
+    name = f"kerr_scalar_hair/{system}"
+    t, r, th, ph = chart.symbols
+    P = chart.reader.parameters
+    geo = chart.geo
+    g, ginv = geo.g, geo.ginv
+    if system == "herdeiro_radu":
+        sigma = sp.Function("KSHsigma")(r, th)
+        w, m, mu = sp.symbols("KSHw KSHm KSHmu", positive=True)
+        phase = sp.exp(sp.I * (m * ph - w * t))
+        Psi = sigma * phase
+        dPsi = [sp.diff(Psi, x) for x in chart.symbols]
+        # The derivatives of the conjugate field, sigma being real.
+        dbar = [sp.diff(sigma * sp.exp(-sp.I * (m * ph - w * t)), x) for x in chart.symbols]
+        kin = sp.expand(sum(ginv[a, b] * dbar[a] * dPsi[b] for a in range(4) for b in range(4)))
+        S = sp.Matrix(4, 4, lambda a, b: sp.expand(dbar[a] * dPsi[b] + dbar[b] * dPsi[a] - g[a, b] * (kin + mu ** 2 * sigma ** 2)))
+        Smix = sp.expand(ginv * S)
+        Gmix = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+        E = sp.Matrix(4, 4, lambda a, b: vm._at(Gmix, (a, b)) - 2 * Smix[a, b])
+        root = sp.exp(P["F_0"] + 2 * P["F_1"] + P["F_2"]) * r ** 2 * sp.sin(th)
+        if sp.simplify(g.det() + root ** 2) != 0:
+            raise AssertionError(f"{name}: the determinant is not -e^(2F_0 + 4F_1 + 2F_2) r^4 sin^2 theta")
+        box = sum(sp.diff(root * sum(ginv[a, b] * dPsi[b] for b in range(4)), chart.symbols[a]) for a in range(4)) / root
+        wave = sp.expand((box - mu ** 2 * Psi) / phase)
+        kg, einstein, constraints = kerr_scalar_hair_paper(chart, sigma, w, m, mu)
+        W = P["W"]
+
+        def same(mine, theirs, what):
+            # The factor is read off one second derivative and the remainder has to vanish.
+            lead = next(e for e in sp.preorder_traversal(theirs) if isinstance(e, sp.Derivative) and e.derivative_count == 2)
+            factor = sp.simplify(sp.diff(sp.expand(mine), lead) / sp.diff(sp.expand(theirs), lead))
+            if factor.has(sp.Derivative) or not gowdy_vanishes(sp.expand(mine - factor * theirs)):
+                raise AssertionError(f"{name}: {what} is not the paper's equation times one factor")
+            return factor
+        same(wave, kg, "the Klein-Gordon equation")
+        # The paper's E_varphi^t has its t up: E^t_varphi.
+        combos = [E[1, 1] + E[2, 2] - E[3, 3] - E[0, 0],
+                  E[1, 1] + E[2, 2] - E[3, 3] + E[0, 0] + 2 * W * E[0, 3],
+                  E[1, 1] + E[2, 2] + E[3, 3] - E[0, 0] - 2 * W * E[0, 3],
+                  E[0, 3]]
+        for combo, theirs, what in zip(combos, einstein, ("the equation for F_1", "the equation for F_2",
+                                                            "the equation for F_0", "the equation for W")):
+            same(combo, theirs, what)
+        same(E[1, 1] - E[2, 2], constraints[0], "the constraint E^r_r - E^theta_theta")
+        same(E[1, 2], constraints[1], "the constraint E^r_theta")
+        return
+    rH, b = P["r_H"], P["b"]
+    ct = -b                     # the paper's c_t
+    ricci = geo.ricci_ll()
+    if any(not gowdy_vanishes(ricci[i][j]) for i in range(4) for j in range(i, 4)):
+        raise AssertionError(f"{name}: the Ricci tensor does not vanish")
+    reader, there, kerr = kaluza_klein_published("kerr", "boyer_lindquist")
+    M, spin, G = (reader.parameters[n] for n in ("M", "a", "G"))
+    c = next(s for s in kerr.free_symbols if s.name == "c")
+    kerr = kerr.subs({M: (rH / 2 - ct) * c ** 2 / G, spin: sp.sqrt(b * (b + rH))})
+    kerr = kerr.subs(dict(zip(there, [t, r - ct, th, ph])), simultaneous=True)
+    for i in range(4):
+        for j in range(i, 4):
+            if not gowdy_vanishes(sp.factor(kerr[i, j] - g[i, j])):
+                raise AssertionError(f"{name}: the chart is not Kerr's with R = r + b, slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    # The free chart with the paper's (A.1).
+    source = kerr_scalar_hair("herdeiro_radu")
+    free = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    Q = free.reader.parameters
+    e2F1 = (1 - ct / r) ** 2 + ct * (ct - rH) * sp.cos(th) ** 2 / r ** 2
+    e2F2 = ((((1 - ct / r) ** 2 + ct * (ct - rH) / r ** 2)) ** 2 + ct * (rH - ct) * (1 - rH / r) * sp.sin(th) ** 2 / r ** 2) / e2F1
+    Wk = sp.sqrt(b * (b + rH)) * (rH - 2 * ct) * (1 - ct / r) / (r ** 3 * e2F1 * e2F2)
+    names = dict(zip(free.symbols, chart.symbols))
+    put = {Q["F_1"]: sp.log(e2F1) / 2, Q["F_2"]: sp.log(e2F2) / 2, Q["F_0"]: -sp.log(e2F2) / 2, Q["W"]: Wk, Q["r_H"]: rH}
+    mine = free.geo.g.subs(names, simultaneous=True)
+    put = {k.subs(names, simultaneous=True) if k != Q["r_H"] else k: v for k, v in put.items()}
+    mine = mine.subs(put, simultaneous=True).doit()
+    for i in range(4):
+        for j in range(i, 4):
+            if not gowdy_vanishes(sp.factor(mine[i, j] - g[i, j])):
+                raise AssertionError(f"{name}: the chart is not the free chart with the paper's (A.1), slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["kerr_scalar_hair"] = [lambda s=s: kerr_scalar_hair(s) for s in KSH_CHARTS]
 
 
 def write(spec):

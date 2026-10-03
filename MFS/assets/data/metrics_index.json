@@ -305,7 +305,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2b9529707f1e520f",
+    "version": "85aca96764b0f79f",
     "diagrams": "04a29fa582f0c7a2",
     "conformal": "acaf9c7da5b177a4",
     "embedding": "b0d9da588a8a0e63"
@@ -451,7 +451,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "aed41c5373aee985",
+    "version": "d221320c6897341c",
     "diagrams": "54fe7a1cf641db39",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "6f1faae1e35e650b"
@@ -721,7 +721,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f9d3de44eef15b45",
+    "version": "d525ac0280a08222",
     "diagrams": "d8f5e35c3b0e6fe2",
     "conformal": "7b86209f53558e97",
     "embedding": "c3dc5db3068ad454"
@@ -2493,10 +2493,46 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a00f81a7eb099e5c",
+    "version": "bb71704f0d58cf2d",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
+  },
+  {
+    "id": "kerr_scalar_hair",
+    "name": "Kerr with Scalar Hair",
+    "tags": [
+      "rotating black hole",
+      "black hole",
+      "black hole hair",
+      "scalar hair",
+      "scalar field",
+      "complex scalar field",
+      "minimally coupled scalar field",
+      "Einstein-Klein-Gordon",
+      "numerical solution",
+      "superradiance",
+      "boson star",
+      "no-hair theorem",
+      "black hole uniqueness",
+      "ergosphere",
+      "frame dragging",
+      "horizon",
+      "event horizon",
+      "rotating",
+      "axisymmetric",
+      "angular momentum",
+      "mass",
+      "asymptotically flat",
+      "stationary",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional"
+    ],
+    "version": "e4e773a961cd25a1",
+    "diagrams": "64c05059b2977164",
+    "conformal": "d43447090445284f",
+    "embedding": "7ede09463628958d"
   },
   {
     "id": "kerr_bertotti_robinson",

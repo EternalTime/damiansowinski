@@ -404,6 +404,13 @@ class Slice:
         sign = -1 if self.lorentz else 1
         if self.numeric:
             g = float(self.gxx_at(x))
+            if math.isinf(g):
+                # A throat met in numbers, as the horizon of Herdeiro and Radu's black hole: g_xx
+                # diverges and drho/dx stays finite, so the unit tangent is vertical, as above.
+                d = float(self._at(self._drho, x))
+                if not math.isfinite(d):
+                    raise AssertionError(f"{self.metric_id}: drho/dx is {d} where g_xx diverges, at {x}")
+                return np.array([0.0, 1.0])
             return np.array([float(self._at(self._drho, x)) / math.sqrt(g),
                              math.sqrt(max(sign * float(self.defect_at(x)), 0.0) / g)])
         # A join at an irrational value, as the spinning string's level circle, is named exactly
@@ -16008,6 +16015,79 @@ def moving_mirror(ck, src):
                         "right of the mirror."])]
 
 
+def kerr_scalar_hair(ck, src):
+    """Herdeiro and Radu's configuration IV, the black hole every one of its diagrams draws, on the
+    equatorial slice of constant t, where g_tvarphi drops out: rho = e^(F_2) r, the circumference
+    radius, and g_rr = e^(2F_1)/(1 - r_H/r), with F_1 and F_2 read from the authors' data by
+    kerr_scalar_hair.Hair. The functions are even in x = sqrt(r^2 - r_H^2), so the slice crosses
+    the bifurcation sphere at r = r_H, a throat of circumference radius 0.687/mu, into a second
+    exterior that is the mirror of the first. Kerr's black hole of the same mass and angular
+    momentum, the Kerr member at r_H = 0.98173 and b = 0.44217, is drawn beside it down to its
+    own throat, of circumference radius 2GM/c^2 = 1.866/mu, as the boson star's vacuum is; the two
+    surfaces are set level where their circles are 6/mu round, far out where only the mass and the
+    spin are felt."""
+    name = "Kerr with scalar hair"
+    hair = nr._ksh_hair()
+    rH = hair.rH
+
+    def on_equator(key):
+        f = nr._ksh_on(key, math.pi / 2)
+        return (lambda x: f(x, 0), lambda x: f(x, 1))
+    sl = Slice(src, "kerr_scalar_hair", "herdeiro_radu", "r", "\\varphi", {"t": 0, **EQUATOR}, nr.KSH,
+               numeric={k: on_equator(k) for k in ("F_0", "F_1", "F_2", "W")})
+    kerr = Slice(src, "kerr_scalar_hair", "kerr_member", "r", "\\varphi", {"t": 0, **EQUATOR}, nr.KSH_KERR)
+    rk = float(sp.sympify(nr.KSH_KERR["r_H"]))
+    lo, top = rH, 5.0
+    ck.add(f"{name}: the throat's circumference radius is 0.687/mu", abs(float(sl.rho_at(lo)) - 0.68715), 1e-4)
+    ck.add(f"{name}: the slice reads e^(F_2) r from the data", abs(float(sl.rho_at(2.0)) - float(hair.circumference_radius(np.array(2.0)))), 1e-9)
+    ergo = hair.ergosurface()
+    ck.add(f"{name}: g_tt vanishes on the equator at r = 0.365/mu", abs(ergo - 0.36495), 1e-4)
+    peak = 0.957
+    radii = (0.2, 0.5, 2.0, 3.0)
+    size = 13.0
+    near = Piece("exterior", "sheet", sl, lo, top, 0.0, 1,
+                 (("throat", "the throat $r = r_H$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", "the surface runs on, flattening, to $r \\to \\infty$")),
+                 [(lo, "horizon", "$r = r_H$"), (ergo, "ergo", None), (peak, "surface", None)]
+                 + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, lo, top, 0.0, -1,
+                (("throat", "the throat $r = r_H$"), ("edge", "the surface runs on, flattening, to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    ck.join(f"{name}, the two sheets at the throat", near, lo, far, lo)
+    for p in (near, far):
+        ck.isometry(f"{name}, {p.id}", p)
+    # Kerr's surface down to its throat, its circles taken out to the radius of the hairy surface's edge.
+    rho_top = float(near.at(top)[0])
+    top_k = brentq(lambda r: float(kerr.rho_at(r)) - rho_top, rk * 1.01, 40.0)
+    vacuum = Piece("kerr", "reference", kerr, rk * (1 + 1e-6), top_k, 0.0, 1,
+                   (("throat", "the throat of Kerr's black hole of the same mass and angular momentum"), ("join", None)),
+                   [(rk * (1 + 1e-6), "reference", None)], size, reference=True)
+    ck.add(f"{name}: Kerr's throat has the circumference radius 2GM/c^2 = 1.866/mu",
+           abs(float(vacuum.at(rk * (1 + 1e-6))[0]) - 1.86607), 1e-3)
+    lift = near.z[-1] - vacuum.z[-1]
+    vacuum.z = vacuum.z + lift
+    ck.add(f"{name}: far out the hairy surface climbs as Kerr's does",
+           abs(float(np.gradient(near.z, near.rho)[-1]) - float(np.gradient(vacuum.z, vacuum.rho)[-1])), 5e-3)
+    surface = Surface([near, far, vacuum])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(lo), "$r = r_H$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(top), "$r = 5/\\mu$", dx=10)
+    ring_label(fig, [0, 0, 0], *vacuum.at(rk * (1 + 1e-6)), "Kerr", side=-1, dx=8)
+    fig.legend("fill", "cover", "the exterior $r > r_H$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $0.2$, $0.5$, $2$, $3$ and $5/\\mu$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_H$, where the slice crosses the horizon, $0.687/\\mu$ in circumference radius")
+    fig.legend("line", "ergo", f"the edge of the ergoregion, $r = {ergo:.3f}/\\mu$ on the equator")
+    fig.legend("line", "surface", "the radius at which the field is largest, $r = 0.96/\\mu$")
+    fig.legend("line", "reference", "Kerr's black hole of the same mass and angular momentum, down to its throat, "
+                                    "$1.866/\\mu$ in circumference radius")
+    fig.legend("line", "meridian", "$\\varphi$ constant, every $15°$")
+    return [view("equator", "The equator", "$1/\\mu$", [surface], fig.done(),
+                 settings="$\\mu = 1$, the unit of every length, $r_H = 0.1/\\mu$, and for Kerr's black hole of the "
+                          "same mass and angular momentum $r_H = 0.982/\\mu$ and $b = 0.442/\\mu$.",
+                 input=nr.KSH_INPUT)]
+
+
 DRAWN = {
     "moving_mirror": moving_mirror,
     "aichelburg_sexl": aichelburg_sexl,
@@ -16153,6 +16233,7 @@ DRAWN = {
     "bach_weyl_ring": bach_weyl_ring,
     "double_kerr": double_kerr,
     "neugebauer_meinel": neugebauer_meinel,
+    "kerr_scalar_hair": kerr_scalar_hair,
     "morgan_morgan": morgan_morgan,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
@@ -16840,6 +16921,17 @@ CAPTIONS = {
         "Outward the circles widen toward the radius $3.84\\,m$ as the surface turns upright, and the whole of "
         "$r > r_+$ lies within $7.56\\,m$ of the throat: in the field the radius $r$ runs to infinity at a finite "
         "distance from the hole.",
+    ],
+    ("kerr_scalar_hair", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Herdeiro and Radu's configuration IV at one moment of $t$, drawn "
+        "as a surface in flat space with every distance along it the metric distance. The cross term $g_{t\\varphi}$ drops "
+        "out at constant $t$, and the drawing's distance from the axis is the circumference radius $e^{F_2}r$. The functions "
+        "are even in $\\sqrt{r^2 - r_H^2}$, so the slice passes through the bifurcation sphere at $r_H$, its throat, into a "
+        "second exterior, the mirror of the first.",
+        "The throat has the radius $0.687/\\mu$. Beside it stands Kerr's black hole of the same mass and angular "
+        "momentum, whose throat has the radius $2GM/c^2 = 1.866/\\mu$: three quarters of the hairy hole's mass is in "
+        "the field outside its horizon, and its horizon has a ninth of the area of Kerr's. The two surfaces climb alike "
+        "far out, where only the mass and the angular momentum are felt.",
     ],
     ("kerr_newman", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a charged rotating black hole at one moment of "

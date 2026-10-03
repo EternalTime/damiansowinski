@@ -1,5 +1,5 @@
 {
-  "version": "21c88b9450e1a810",
+  "version": "71e015af9e5f0806",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -29228,6 +29228,158 @@
         "eprint": "1608.05366",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevLett.118.131102"
+      }
+    },
+    "herdeiro2014": {
+      "type": "article",
+      "fields": {
+        "title": "{Kerr} Black Holes with Scalar Hair",
+        "author": "Herdeiro, Carlos A. R. and Radu, Eugen",
+        "journal": "Physical Review Letters",
+        "volume": "112",
+        "number": "22",
+        "pages": "221101",
+        "year": "2014",
+        "doi": "10.1103/PhysRevLett.112.221101",
+        "eprint": "1403.2757",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.112.221101"
+      }
+    },
+    "herdeiro2015construction": {
+      "type": "article",
+      "fields": {
+        "title": "Construction and physical properties of {Kerr} black holes with scalar hair",
+        "author": "Herdeiro, Carlos and Radu, Eugen",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "32",
+        "number": "14",
+        "pages": "144001",
+        "year": "2015",
+        "doi": "10.1088/0264-9381/32/14/144001",
+        "eprint": "1501.04319",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/32/14/144001"
+      }
+    },
+    "herdeiro2015data": {
+      "type": "misc",
+      "fields": {
+        "title": "Data for {Kerr} black holes with scalar hair",
+        "author": "Herdeiro, Carlos and Radu, Eugen",
+        "howpublished": "Gravitation at Aveiro University",
+        "year": "2015",
+        "url": "https://gravitation.web.ua.pt/node/416"
+      }
+    },
+    "herdeiro2015review": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotically flat black holes with scalar hair: A review",
+        "author": "Herdeiro, Carlos A. R. and Radu, Eugen",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "24",
+        "number": "09",
+        "pages": "1542014",
+        "year": "2015",
+        "doi": "10.1142/S0218271815420146",
+        "eprint": "1504.08209",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271815420146"
+      }
+    },
+    "mayo1996": {
+      "type": "article",
+      "fields": {
+        "title": "No hair for spherical black holes: Charged and nonminimally coupled scalar field with self-interaction",
+        "author": "Mayo, Avraham E. and Bekenstein, Jacob D.",
+        "journal": "Physical Review D",
+        "volume": "54",
+        "number": "8",
+        "pages": "5059--5069",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.54.5059",
+        "eprint": "gr-qc/9602057",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.54.5059"
+      }
+    },
+    "press1972": {
+      "type": "article",
+      "fields": {
+        "title": "Floating Orbits, Superradiant Scattering and the Black-hole Bomb",
+        "author": "Press, William H. and Teukolsky, Saul A.",
+        "journal": "Nature",
+        "volume": "238",
+        "number": "5361",
+        "pages": "211--212",
+        "year": "1972",
+        "doi": "10.1038/238211a0",
+        "url": "https://doi.org/10.1038/238211a0"
+      }
+    },
+    "hod2012": {
+      "type": "article",
+      "fields": {
+        "title": "Stationary scalar clouds around rotating black holes",
+        "author": "Hod, Shahar",
+        "journal": "Physical Review D",
+        "volume": "86",
+        "number": "10",
+        "pages": "104026",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.86.104026",
+        "eprint": "1211.3202",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.86.104026"
+      }
+    },
+    "cunha2015": {
+      "type": "article",
+      "fields": {
+        "title": "Shadows of {Kerr} Black Holes with Scalar Hair",
+        "author": "Cunha, Pedro V. P. and Herdeiro, Carlos A. R. and Radu, Eugen and Rúnarsson, Helgi F.",
+        "journal": "Physical Review Letters",
+        "volume": "115",
+        "number": "21",
+        "pages": "211102",
+        "year": "2015",
+        "doi": "10.1103/PhysRevLett.115.211102",
+        "eprint": "1509.00021",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.115.211102"
+      }
+    },
+    "herdeiro2016proca": {
+      "type": "article",
+      "fields": {
+        "title": "{Kerr} black holes with {Proca} hair",
+        "author": "Herdeiro, Carlos and Radu, Eugen and Rúnarsson, Helgi",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "33",
+        "number": "15",
+        "pages": "154001",
+        "year": "2016",
+        "doi": "10.1088/0264-9381/33/15/154001",
+        "eprint": "1603.02687",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/33/15/154001"
+      }
+    },
+    "east2017": {
+      "type": "article",
+      "fields": {
+        "title": "Superradiant Instability and Backreaction of Massive Vector Fields around {Kerr} Black Holes",
+        "author": "East, William E. and Pretorius, Frans",
+        "journal": "Physical Review Letters",
+        "volume": "119",
+        "number": "4",
+        "pages": "041101",
+        "year": "2017",
+        "doi": "10.1103/PhysRevLett.119.041101",
+        "eprint": "1704.04791",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.119.041101"
       }
     }
   }
