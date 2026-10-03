@@ -98,7 +98,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "003188c9b2608558",
+    "version": "f9c8ac2b6ad5cfa1",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -234,7 +234,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "249de17b815927ba",
+    "version": "b2f32be56d65e562",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -1879,7 +1879,7 @@
       "idealized model",
       "negative cosmological constant"
     ],
-    "version": "014dc5089c11acc6",
+    "version": "d4439a080a23fa68",
     "diagrams": "7bf82d9d4b9ce74d",
     "embedding": "05f185c5abaada89"
   },
@@ -3688,7 +3688,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f418b5b2648f2d6f",
+    "version": "3fe891fc386c4349",
     "diagrams": "762c153757fcd27b",
     "conformal": "ad18bb59a6c85dec",
     "embedding": "d2cedaf6a4fa93cb"
@@ -3984,7 +3984,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "6cd708226f16c563",
+    "version": "d8a2068d5c89829f",
     "diagrams": "31e9dff1390f00d4",
     "conformal": "354a17ef203ec712",
     "embedding": "925f9f623e566c24"
@@ -4721,7 +4721,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8e345104af520247",
+    "version": "daabf90b5d342787",
     "diagrams": "24d791c0188bc8ef",
     "embedding": "96ddbe0d3bf719ac"
   },
@@ -4754,7 +4754,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "4dad1a2e992a376d",
+    "version": "b253edad21426937",
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"
@@ -5347,6 +5347,30 @@
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"
+  },
+  {
+    "id": "vuorio_warped_ads",
+    "name": "Vuorio",
+    "tags": [
+      "topologically massive gravity",
+      "alternative theories of gravity",
+      "2+1 dimensional gravity",
+      "lower-dimensional gravity",
+      "closed timelike curves",
+      "rotating",
+      "homogeneous",
+      "anti-de Sitter",
+      "warped anti-de Sitter",
+      "cosmological constant",
+      "exact solution",
+      "Lorentzian",
+      "idealized model",
+      "stationary",
+      "three-dimensional"
+    ],
+    "version": "746b9980f6e1dd02",
+    "diagrams": "2cd37e3bf1d0121e",
+    "embedding": "59d9dfc3fa5e54bd"
   },
   {
     "id": "wahlquist",

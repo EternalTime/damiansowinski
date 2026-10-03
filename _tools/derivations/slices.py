@@ -3058,6 +3058,17 @@ FLAT = {
     ("som_raychaudhuri", "cartesian", "tx"): lambda: one(
         "som_raychaudhuri", lambda m: across(0.0, 0.0, m.reach("cylindrical", "r")[1])),
     ("som_raychaudhuri", "cylindrical", "inside"): lambda: one("som_raychaudhuri", _godel_cylinder(0.5)),
+    # Vuorio's moment t = 0 of the cylindrical chart, m = Omega = 1: the cylinder at r_c/2 inside its
+    # reach; the plane through the centre of Poincare's disc at R = tanh(r/2), with the same t; and
+    # the planes u = 0 and y = 0, where phi = 0 or pi, the twisting forms differ by nothing along the
+    # drawn line, so t is the cylindrical chart's, and sigma = x = +-r.
+    ("vuorio_warped_ads", "cylindrical", "inside"): lambda: one("vuorio_warped_ads", _godel_cylinder(math.log(3) / 2)),
+    ("vuorio_warped_ads", "disc", "plane"): lambda: one(
+        "vuorio_warped_ads", lambda m: across(0.0, 0.0, math.tanh(m.reach("cylindrical", "r")[1] / 2))),
+    ("vuorio_warped_ads", "fibred", "plane"): lambda: one(
+        "vuorio_warped_ads", lambda m: across(0.0, 0.0, m.reach("cylindrical", "r")[1])),
+    ("vuorio_warped_ads", "horospherical", "tx"): lambda: one(
+        "vuorio_warped_ads", lambda m: across(0.0, 0.0, m.reach("cylindrical", "r")[1])),
     # The spinning string's moment t = 0 outside the null circle: the whole line t = 0 of each
     # cylinder outside it, and in the helical chart c tau = a phi~/b, one turn of the helix.
     **{("spinning_string", system, "outside"): lambda R=R: one("spinning_string", _spinning_cylinder(R))
@@ -3533,6 +3544,7 @@ HIDDEN = {
     ("godel", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves and no surface of constant t is a moment of space; the embedding stops at sinh^2 r = 1/sqrt 2",
     ("stockum_dust", "cylindrical", "beyond"): "beyond r = R the circles are closed timelike curves; the embedding stops at r = 0.83 R",
     ("som_raychaudhuri", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves; the embedding stops at r = sqrt(3) r_c/2",
+    ("vuorio_warped_ads", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves; the embedding stops at sinh^2(r/2) = (sqrt 3 - 1)/3",
     # Petrov's plane of r and z, t = 0 and phi = 0, meets each plane of t and phi, each cylinder
     # outside the dust and the slice z = 0 of the figure where no line or region of the moment lies.
     **{("petrov_homogeneous", "petrov", view): "the embedded plane of r and z meets this plane of t and phi in the one event t = 0, phi = 0"
@@ -4005,6 +4017,35 @@ def checks():
     miss = max(abs(float(Tx.subs({ty: 0, ry: b, py: c}))) + abs(float(X.subs({ry: b, py: c}) - (2 * b if c == 0 else -2 * b)))
                for b in (0.1, 0.4, 0.76) for c in (0, sp.pi - 1e-12))
     report("Godel: t = 0 on the plane y = 0 is t_x = 0 at x = +-2r", miss, 1e-9)
+
+    # Vuorio's universe, m = Omega = 1: Rooman and Spindel's transformation, e^x = cosh r + cos(phi)
+    # sinh r, y e^x = sinh r sin(phi) and t_h = t + 2(2 arctan(e^(-r) tan(phi/2)) - phi), carries the
+    # horospherical metric onto the cylindrical one, and R = tanh(r/2) the disc's; on the plane
+    # y = 0, phi = 0 or pi, t_h = t and x = +-r. On the plane u = 0 the fibred chart's metric is the
+    # cylindrical one's on phi = 0 or pi with sigma = +-r, -dt^2 + dsigma^2.
+    g_y, (ty, ry, py) = metric("vuorio_warped_ads", "cylindrical", {"Omega": 1, "m": 1})
+    g_h, (th, xh, yh) = metric("vuorio_warped_ads", "horospherical", {"Omega": 1, "m": 1})
+    g_d, (td, Rd, pd) = metric("vuorio_warped_ads", "disc", {"Omega": 1, "m": 1})
+    g_f, (tf, sf, uf) = metric("vuorio_warped_ads", "fibred", {"Omega": 1, "m": 1})
+    X = sp.log(sp.cosh(ry) + sp.cos(py) * sp.sinh(ry))
+    Y = sp.sinh(ry) * sp.sin(py) * sp.exp(-X)
+    Th = ty + 2 * (2 * sp.atan(sp.exp(-ry) * sp.tan(py / 2)) - py)
+    for name, g_o, coords, new in (("horospherical", g_h, (th, xh, yh), [Th, X, Y]),
+                                   ("disc", g_d, (td, Rd, pd), [ty, sp.tanh(ry / 2), py])):
+        J = sp.Matrix([[sp.diff(f, v) for v in (ty, ry, py)] for f in new])
+        pulled = J.T * g_o.subs(dict(zip(coords, new)), simultaneous=True) * J
+        miss = 0.0
+        for a, b, c in zip(rng.uniform(-1, 1, 12), rng.uniform(0.05, 1.5, 12), rng.uniform(-2.5, 2.5, 12)):
+            diff = (pulled - g_y).subs({ty: a, ry: b, py: c})
+            miss = max(miss, max(abs(float(diff[i, j])) for i in range(3) for j in range(3)))
+        report(f"Vuorio: the {name} metric pulls back onto the cylindrical", miss, 1e-10)
+    miss = max(abs(float(Th.subs({ty: 0, ry: b, py: c}))) + abs(float(X.subs({ry: b, py: c}) - (b if c == 0 else -b)))
+               for b in (0.1, 0.5, 0.95) for c in (0, sp.pi - 1e-12))
+    report("Vuorio: t = 0 on the plane y = 0 is t_h = 0 at x = +-r", miss, 1e-9)
+    on_plane = (g_f[:2, :2].subs(uf, 0) - sp.diag(-1, 1)).applyfunc(sp.simplify)
+    plane = g_y[:2, :2].subs(py, 0)
+    report("Vuorio: the fibred plane u = 0 is the cylindrical plane phi = 0, -dt^2 + dsigma^2",
+           float(max(abs(sp.N(v)) for v in list(on_plane) + list(plane - sp.diag(-1, 1)))), 1e-12)
 
     # Anti-de Sitter: the Poincare plane y = 0, z = L at t = 0 has static radius
     # r^2 = x^2 + x^4/4L^2, read from the embedding space.

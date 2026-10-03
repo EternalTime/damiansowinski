@@ -9458,6 +9458,52 @@ def maitra_dust(ck, src):
                  settings="$a = 1$, the unit of every length.")]
 
 
+def vuorio_warped_ads(ck, src):
+    """The plane about one integral curve of d_t in Vuorio's universe, m = Omega = 1, at one moment
+    of the cylindrical chart's t, in units of 1/Omega: g_rr = 1 and, with s = sinh(r/2),
+    g_phiphi = sinh^2 r - 16 s^4 = 4 s^2 (1 - 3 s^2), so the circle at the proper distance r has
+    the radius rho = 2 s sqrt(1 - 3 s^2), widest at s^2 = 1/6, where rho = 1/sqrt(3), and
+    g_rr - (drho/dr)^2 = 1 - (1 - 6 s^2)^2 (1 + s^2)/(1 - 3 s^2) = 4 s^2 (2 - 6 s^2 - 9 s^4)/(1 - 3 s^2)
+    vanishes at s^2 = (sqrt(3) - 1)/3: the construction stops there, exactly,
+    which is checked, before the circles turn null at s^2 = 1/3, r_c = ln 3, and timelike beyond,
+    both checked."""
+    sl = Slice(src, "vuorio_warped_ads", "cylindrical", "r", "\\phi", {"t": 0}, {"Omega": 1, "m": 1})
+    stop = 2 * math.asinh(math.sqrt((math.sqrt(3) - 1) / 3))
+    rc = math.log(3)
+    ck.add("Vuorio: the null circle is at r_c = ln 3, where sinh^2(r/2) = 1/3",
+           abs(math.sinh(rc / 2) ** 2 - 1 / 3), 1e-15)
+    ck.add("Vuorio: the surface stops at sinh^2(r/2) = (sqrt(3) - 1)/3, where g_rr = (drho/dr)^2",
+           abs(float(sl.defect_at(stop))), 1e-12)
+    ck.stops("Vuorio, between the last surface and r_c", sl, np.linspace(stop, rc, 202)[1:-1])
+    beyond = sl.gpp_at(np.linspace(rc, 3, 201)[1:])
+    ck.add("Vuorio: beyond r_c the circles are timelike, g_phiphi < 0", float(max(0.0, np.max(beyond))), 0.0)
+    size = 2 * 0.6
+    widest = 2 * math.asinh(1 / math.sqrt(6))
+    axis = Piece("axis", "star", sl, 0.0, stop, 0.0, 1,
+                 (("axis", "the integral curve $r = 0$ of $\\partial_t$"),
+                  ("stops", "the circles shrink faster than the distance out to them, and nothing in flat space carries the slice on")),
+                 [(rc / 4, "r", None), (rc / 2, "r", None), (widest, "r", None), (stop, "chartedge", None)], size)
+    ck.isometry("Vuorio, about one axis", axis)
+    ck.radius("Vuorio, rho = 2 sinh(r/2) sqrt(1 - 3 sinh^2(r/2))", axis,
+              lambda r: 2 * np.sinh(r / 2) * np.sqrt(1 - 3 * np.sinh(r / 2) ** 2), size)
+    ck.add("Vuorio: the widest circle has the radius 1/sqrt(3)", abs(float(np.max(axis.rho)) - 1 / math.sqrt(3)), 1e-6)
+    surface = Surface([axis])
+    fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *axis.at(widest), "$\\sinh^2(\\Omega r/2) = 1/6$")
+    fig.legend("fill", "star", "the plane about one integral curve of $\\partial_t$, which $t$, $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $r_c/4$ and $r_c/2$, and the widest circle, $\\sinh^2(\\Omega r/2) = 1/6$")
+    fig.legend("line", "chartedge", "$\\sinh^2(\\Omega r/2) = (\\sqrt{3} - 1)/3$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("axis", "About one axis", "$1/\\Omega$", [surface], fig.done(),
+                 settings="$m = \\Omega = 1$, Vuorio's universe, so that $1/\\Omega$ is the unit of every length.",
+                 stops=["From $\\sinh^2(\\Omega r/2) = (\\sqrt{3} - 1)/3$ the circles shrink faster than the distance "
+                        "out to them, $g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in "
+                        "flat space carries the slice on.",
+                        "At $r_c = \\ln 3/\\Omega$ the circles about the axis are null, and beyond it they are closed "
+                        "timelike curves, so a surface of constant $t$ is not a moment of space there. Every integral "
+                        "curve of $\\partial_t$ is an axis like this one."])]
+
+
 def ellis_bronnikov(ck, src):
     """In its own chart r is the proper distance from the throat, g_rr = 1 and g_phiphi = r^2 +
     l^2, so dz/dr = l/sqrt(r^2 + l^2) and z = l arcsinh(r/l): the catenoid rho = l cosh(z/l),
@@ -16274,6 +16320,7 @@ DRAWN = {
     "israel_wilson_perjes": israel_wilson_perjes,
     "godel": godel,
     "som_raychaudhuri": som_raychaudhuri,
+    "vuorio_warped_ads": vuorio_warped_ads,
     "maitra_dust": maitra_dust,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
@@ -18130,6 +18177,18 @@ CAPTIONS = {
         "the circle at $r = a$ has radius $0.93\\,a$, and the one at $r = 6a$, where the drawing ends, $3.87\\,a$. "
         "The bowl goes on past the drawing with its circles still growing, so a surface of constant $t$ is a "
         "moment of space at every radius.",
+    ],
+    ("vuorio_warped_ads", "axis"): [
+        "The plane about one integral curve of $\\partial_t$ in Vuorio's universe, $m = \\Omega$, at one moment of "
+        "the cylindrical chart's $t$, drawn as a surface in flat space with every distance along it the metric "
+        "distance. Its $r$ is the proper distance from the axis, and the circle at $r$ has circumference "
+        "$4\\pi\\sinh(\\Omega r/2)\\sqrt{1 - 3\\sinh^2(\\Omega r/2)}/\\Omega$, which grows out to "
+        "$\\sinh^2(\\Omega r/2) = 1/6$ and then shrinks, so the surface curls back toward the axis, and at "
+        "$\\sinh^2(\\Omega r/2) = (\\sqrt{3} - 1)/3$ the circles shrink faster than the distance out to them and "
+        "the drawing stops.",
+        "At $r_c = \\ln 3/\\Omega$ the circles are null, and beyond it they are closed timelike curves. The "
+        "spacetime is homogeneous, so every integral curve of $\\partial_t$ is an axis like this one, and this "
+        "surface is a moment of space only within $r_c$ of its axis.",
     ],
     ("ellis_bronnikov", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Ellis-Bronnikov wormhole at one moment of $t$, drawn "

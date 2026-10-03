@@ -4262,7 +4262,8 @@ class TurningLightConeFigures(unittest.TestCase):
                                    "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
                                    "bonnor_rotating_dust/tipping", "maitra_dust/tipping", "tippett_tsang/ring",
-                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning", "draining_bathtub/swirl"})
+                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning", "draining_bathtub/swirl",
+                                   "vuorio_warped_ads/tipping"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -4994,7 +4995,7 @@ class Slices(unittest.TestCase):
               # The Kaluza-Klein black hole of equal charges, another member of the family than the holes of
               # one charge embedded.
               "kaluza_klein_black_hole/dyonic/radial", "conformal kaluza_klein_black_hole/equal",
-              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond",
+              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond", "vuorio_warped_ads/cylindrical/beyond",
               "conformal frw/flat", "conformal frw/open",
               "misner/rindler/plane", "conformal misner/rindler",
               # Gott and Li's region of closed timelike curves, which no moment of the inflating region meets.
@@ -6182,6 +6183,7 @@ class Slices(unittest.TestCase):
                 return (lambda X: -math.sqrt(X * X - 2 * t)), None
             return (lambda X: t - 1.5 if key.endswith("/vacuum_core/off_centre") else t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "som_raychaudhuri/cylindrical",
+                           "vuorio_warped_ads/cylindrical",
                            "maitra_dust/cylindrical",
                            "bonnor_rotating_dust/cylindrical/outside",
                            "minkowski/rindler")):
@@ -6533,6 +6535,13 @@ class Slices(unittest.TestCase):
         if key == "godel/cartesian/tx":
             hi = self.reach(surface)[1]
             return (lambda X: 0.0), [-2 * hi, 2 * hi]
+        if key == "vuorio_warped_ads/disc/plane":
+            # Poincare's disc reads the cylindrical chart's proper distance r as R = tanh(r/2).
+            hi = math.tanh(self.reach(surface)[1] / 2)
+            return (lambda X: 0.0), [-hi, hi]
+        if key == "vuorio_warped_ads/fibred/plane":
+            hi = self.reach(surface)[1]
+            return (lambda X: 0.0), [-hi, hi]
         if surface["pieces"][0].get("grid"):
             u = surface["pieces"][0]["grid"]["u"][-1]
             return (lambda X: 0.0), [-u, u]
@@ -6678,7 +6687,7 @@ class Slices(unittest.TestCase):
                         continue
                     for ring in rings + rims:
                         self.assertLess(max(ring) - min(ring), 2e-3 * max(ring), where)
-                    if metric_id in ("godel", "som_raychaudhuri"):
+                    if metric_id in ("godel", "som_raychaudhuri", "vuorio_warped_ads"):
                         self.assertAlmostEqual(rims[0][0], self.reach(surface)[1], delta=1e-3, msg=where)
                     if metric_id in ("kerr", "kerr_newman"):
                         self.assertAlmostEqual(min(r[0] for r in rings), self.reach(surface)[0], delta=1e-3, msg=where)
