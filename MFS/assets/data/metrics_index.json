@@ -976,7 +976,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "3a7d309fe9b1e749",
+    "version": "28c447ae789338b4",
     "diagrams": "df6268c48408964f",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
@@ -1130,7 +1130,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "4587c06c9febe513",
+    "version": "38fcc322532defc0",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -1668,7 +1668,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "7adc1109a17f3a46",
+    "version": "53c60096553bebaa",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1814,7 +1814,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "8a069b9844f05654",
+    "version": "1808775e254ea9b5",
     "diagrams": "191b6b9173acf816",
     "conformal": "35a311cdf85fc005",
     "embedding": "68a424a34e86e2ad"
@@ -1914,7 +1914,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "065404ff04bb3838",
+    "version": "4e447186e6c134e0",
     "embedding": "a33ae90f2b057aee"
   },
   {
@@ -2240,7 +2240,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8b82e7198ed48287",
+    "version": "b0be4d046d53b363",
     "diagrams": "af83133484b3c126",
     "conformal": "5aa345afee4654d8",
     "embedding": "46d9d6d9484b8e00"
@@ -3432,7 +3432,7 @@
       "Einstein space",
       "stationary"
     ],
-    "version": "ab91e5961817f7e5",
+    "version": "76c604f22d594e8c",
     "diagrams": "37b04b7cf3bacecd",
     "conformal": "4fac9b552eb536ea",
     "embedding": "1199648bcf6666d8"
@@ -4873,10 +4873,10 @@
       "Lorentzian",
       "quantum cosmology",
       "wave function of the universe",
-      "no boundary proposal",
+      "no-boundary proposal",
       "tunnelling",
       "signature change",
-      "four sphere",
+      "4-sphere",
       "three sphere",
       "closed universe",
       "inflation",
@@ -4895,10 +4895,10 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "94dd38d8100ce12f",
-    "diagrams": "ebb7911b687bef0b",
-    "conformal": "2d4149dd58754cf5",
-    "embedding": "4f89ce81bd6727af"
+    "version": "8fd69ce5205d7b58",
+    "diagrams": "ecd549f04fdf7ba8",
+    "conformal": "eba618d692af4a23",
+    "embedding": "5c081e057e4b8c91"
   },
   {
     "id": "vaidya",

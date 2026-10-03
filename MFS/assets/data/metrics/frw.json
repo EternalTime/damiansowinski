@@ -125,7 +125,7 @@
     {
       "id": "universe_from_nothing",
       "kind": "family",
-      "text": "A closed universe filled only with the energy density of a vacuum, whose scale factor $\\ell\\cosh(ct/\\ell)$ bounces at $\\ell$, joined at that bounce to half a four sphere [vilenkin1982]."
+      "text": "A closed universe filled only with the energy density of a vacuum, whose scale factor $\\ell\\cosh(ct/\\ell)$ bounces at $\\ell$, joined at that bounce to half a 4-sphere [vilenkin1982]."
     }
   ],
   "references": [

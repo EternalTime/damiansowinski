@@ -114,9 +114,22 @@ CAPTION_VOICE = (
     ("a sentence opening \"This is\" in place of a noun phrase", r"^This is\b"),
 )
 # A hyphen joins two names, a name and a word, or a designation; beyond those it is part of a
-# spelling only in these terms, and an ordinary compound is rewritten without it.
+# spelling only in these terms, and an ordinary compound is rewritten without it. A term goes on the
+# list only where its standard spelling carries the hyphen, as the no-boundary proposal and e-foldings
+# do; a sphere or a geometry of n dimensions is written with its numeral, 3-sphere, 4-sphere, 3-geometry,
+# as a designation, and needs no entry. The rule is for compounds such as "future-directed",
+# "non-singular" and "time-like", which plain English writes as one word or two.
 HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "pp-wave", "pp-waves", "scalar-tensor",
-                    "three-brane", "three-branes"}
+                    "three-brane", "three-branes", "no-boundary", "e-folding", "e-foldings"}
+
+
+def refused_hyphens(text):
+    """Every hyphenated word of a text, mathematics, quotations and citations taken out, that joins
+    no name or designation and is no established term, a term's possessive read as the term."""
+    text = re.sub(r"\[[^\]]*\]", " ", without_mathematics_or_quotations(text))
+    return [word for word in re.findall(r"[\w'’]+(?:-[\w'’]+)+", text)
+            if not any(part[0].isupper() or part[0].isdigit() for part in word.split("-"))
+            and re.sub(r"['’]s$", "", word.lower()) not in HYPHENATED_TERMS]
 
 # The templates and pages whose words reach a reader, beside the generated files, and the
 # data the site hands to agents.
@@ -787,12 +800,20 @@ class Voice(unittest.TestCase):
 
     def test_every_hyphen_joins_names_or_an_established_term(self):
         for where, value in voiced_prose():
-            text = without_mathematics_or_quotations(value)
-            for word in re.findall(r"[\w'’]+(?:-[\w'’]+)+", re.sub(r"\[[^\]]*\]", " ", text)):
-                parts = word.split("-")
-                named = any(part[0].isupper() or part[0].isdigit() for part in parts)
-                self.assertTrue(named or word.lower() in HYPHENATED_TERMS,
-                                f"{where} spells {word!r} with a hyphen; rewrite the compound without it")
+            for word in refused_hyphens(value):
+                self.fail(f"{where} spells {word!r} with a hyphen; rewrite the compound without it")
+
+    def test_the_hyphen_rule_keeps_the_names_of_physics_and_refuses_english_compounds(self):
+        for text in ("the no-boundary proposal of Hartle and Hawking", "half a 4-sphere", "for a 3-geometry",
+                     "sixty e-foldings of inflation", "one e-folding", "the no-boundary proposal's sign",
+                     "the 4-sphere's action", "Reissner-Nordström", "anti-de Sitter space",
+                     "a pp-wave", "Taub-NUT", "a 3-sphere", "the Kerr-Schild chart [kerr1965, kerr-schild]",
+                     "\"a future-directed\" quotation", "$x - y$"):
+            self.assertEqual(refused_hyphens(text), [], text)
+        for text, word in (("a future-directed curve", "future-directed"), ("a non-singular core", "non-singular"),
+                           ("a time-like line", "time-like"), ("a well-known result", "well-known"),
+                           ("half a four-sphere", "four-sphere"), ("a three-geometry", "three-geometry")):
+            self.assertEqual(refused_hyphens(text), [word], text)
 
     def test_the_rules_catch_what_he_flagged_and_leave_plain_physics_alone(self):
         def caught(text):

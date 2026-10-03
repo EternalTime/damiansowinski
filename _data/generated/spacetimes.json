@@ -10265,7 +10265,7 @@
         {
           "id": "universe_from_nothing",
           "kind": "family",
-          "text": "Coleman's bounce carried from a false vacuum to the whole universe: half a four sphere joined at its equator to the waist of a closed de Sitter universe, which Vilenkin had created from nothing [vilenkin1982]."
+          "text": "Coleman's bounce carried from a false vacuum to the whole universe: half a 4-sphere joined at its equator to the waist of a closed de Sitter universe, which Vilenkin had created from nothing [vilenkin1982]."
         }
       ],
       "references": [
@@ -11940,7 +11940,7 @@
         {
           "id": "universe_from_nothing",
           "kind": "composite",
-          "text": "Half of de Sitter's closed universe, from its waist on, joined to half of its Euclidean four sphere. It is Vilenkin's universe created from nothing and the saddle of Hartle and Hawking's no boundary proposal [vilenkin1982, feldbrugge2017]."
+          "text": "Half of de Sitter's closed universe, from its waist on, joined to half of its Euclidean 4-sphere. It is Vilenkin's universe created from nothing and the saddle of Hartle and Hawking's no-boundary proposal [vilenkin1982, feldbrugge2017]."
         }
       ],
       "references": [
@@ -17256,7 +17256,7 @@
         {
           "id": "universe_from_nothing",
           "kind": "family",
-          "text": "A closed universe filled only with the energy density of a vacuum, whose scale factor $\\ell\\cosh(ct/\\ell)$ bounces at $\\ell$, joined at that bounce to half a four sphere [vilenkin1982]."
+          "text": "A closed universe filled only with the energy density of a vacuum, whose scale factor $\\ell\\cosh(ct/\\ell)$ bounces at $\\ell$, joined at that bounce to half a 4-sphere [vilenkin1982]."
         }
       ],
       "references": [
@@ -18820,7 +18820,7 @@
         {
           "id": "universe_from_nothing",
           "kind": "family",
-          "text": "The beginning Gott and Li set out to replace: half a four sphere joined to de Sitter's waist, whose south pole they called the earliest point in Euclidean time [gott1998, vilenkin1982]."
+          "text": "The beginning Gott and Li set out to replace: half a 4-sphere joined to de Sitter's waist, whose south pole they called the earliest point in Euclidean time [gott1998, vilenkin1982]."
         }
       ],
       "references": [
@@ -19826,7 +19826,7 @@
         {
           "id": "universe_from_nothing",
           "kind": "family",
-          "text": "Half of the four sphere, the instanton of de Sitter space, joined at its equator to the waist of de Sitter's closed universe as Vilenkin's universe created from nothing [vilenkin1982]."
+          "text": "Half of the 4-sphere, the instanton of de Sitter space, joined at its equator to the waist of de Sitter's closed universe as Vilenkin's universe created from nothing [vilenkin1982]."
         }
       ],
       "references": [
@@ -23826,7 +23826,7 @@
         {
           "id": "universe_from_nothing",
           "kind": "family",
-          "text": "The geometry of the no boundary proposal on the round minisuperspace, half a four sphere joined to de Sitter's waist [hartle1983]. Laflamme and Shellard carried the proposal over to the Kantowski-Sachs minisuperspace [laflamme1987]."
+          "text": "The geometry of the no-boundary proposal on the round minisuperspace, half a 4-sphere joined to de Sitter's waist [hartle1983]. Laflamme and Shellard carried the proposal over to the Kantowski-Sachs minisuperspace [laflamme1987]."
         }
       ],
       "references": [
@@ -36458,7 +36458,7 @@
         {
           "id": "universe_from_nothing",
           "kind": "family",
-          "text": "The nucleation of a de Sitter universe without black holes, half a four sphere joined to de Sitter's waist. Bousso and Hawking gave the rate of pair creation relative to it [bousso1996]."
+          "text": "The nucleation of a de Sitter universe without black holes, half a 4-sphere joined to de Sitter's waist. Bousso and Hawking gave the rate of pair creation relative to it [bousso1996]."
         }
       ],
       "references": [
@@ -52618,7 +52618,7 @@
       "id": "universe_from_nothing",
       "name": "The Universe from Nothing",
       "short_name": "Universe from nothing",
-      "description": "Half of a four sphere joined at its equator to the waist of de Sitter's closed universe: the geometry of Alexander Vilenkin's universe created by tunnelling from nothing (1982) and of the no boundary proposal of James Hartle and Stephen Hawking (1983). The south pole of the sphere is a point like any other on it, so the universe has no first moment and no edge, and above the equator it inflates.",
+      "description": "Half of a 4-sphere joined at its equator to the waist of de Sitter's closed universe: the geometry of Alexander Vilenkin's universe created by tunnelling from nothing (1982) and of the no-boundary proposal of James Hartle and Stephen Hawking (1983). The south pole of the sphere is a point like any other on it, so the universe has no first moment and no edge, and above the equator it inflates.",
       "tags": [
         "de Sitter",
         "instanton",
@@ -52628,10 +52628,10 @@
         "Lorentzian",
         "quantum cosmology",
         "wave function of the universe",
-        "no boundary proposal",
+        "no-boundary proposal",
         "tunnelling",
         "signature change",
-        "four sphere",
+        "4-sphere",
         "three sphere",
         "closed universe",
         "inflation",
@@ -52651,17 +52651,17 @@
         "spherically symmetric"
       ],
       "signature": "(-,+,+,+)",
-      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The four sphere's chart is Riemannian, of signature $(+,+,+,+)$, and the scale factor chart is Riemannian where $a < \\ell$ and Lorentzian where $a > \\ell$.",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The 4-sphere's chart is Riemannian, of signature $(+,+,+,+)$, and the scale factor chart is Riemannian where $a < \\ell$ and Lorentzian where $a > \\ell$.",
       "related": [
         {
           "id": "de_sitter",
           "kind": "piece",
-          "text": "The Lorentzian half: de Sitter's closed universe from its waist on, joined there to half a four sphere [vilenkin1982]."
+          "text": "The Lorentzian half: de Sitter's closed universe from its waist on, joined there to half a 4-sphere [vilenkin1982]."
         },
         {
           "id": "gravitational_instantons",
           "kind": "family",
-          "text": "Riemannian solutions of Einstein's equations of the same kind as the four sphere, which Vilenkin called \"the well-known de Sitter instanton\" [vilenkin1982]."
+          "text": "Riemannian solutions of Einstein's equations of the same kind as the 4-sphere, which Vilenkin called \"the well-known de Sitter instanton\" [vilenkin1982]."
         },
         {
           "id": "coleman_de_luccia",
@@ -52676,12 +52676,12 @@
         {
           "id": "nariai",
           "kind": "family",
-          "text": "Its Euclidean section is the instanton for the pair creation of black holes during inflation. Raphael Bousso and Stephen Hawking calculated that rate from the no boundary proposal and found that the tunnelling proposal makes unphysical predictions [bousso1996]."
+          "text": "Its Euclidean section is the instanton for the pair creation of black holes during inflation. Raphael Bousso and Stephen Hawking calculated that rate from the no-boundary proposal and found that the tunnelling proposal makes unphysical predictions [bousso1996]."
         },
         {
           "id": "kantowski_sachs",
           "kind": "family",
-          "text": "Raymond Laflamme and Paul Shellard studied the wave function of the universe of the no boundary proposal on the Kantowski-Sachs minisuperspace [laflamme1987]."
+          "text": "Raymond Laflamme and Paul Shellard studied the wave function of the universe of the no-boundary proposal on the Kantowski-Sachs minisuperspace [laflamme1987]."
         },
         {
           "id": "frw",
@@ -52725,12 +52725,12 @@
             "\\chi \\in [0, \\pi]",
             "\\theta \\in [0, \\pi]",
             "\\phi \\in [0, 2\\pi)",
-            "t = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"
+            "t = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"
           ],
           "parameters": [
             {
               "symbol": "\\ell",
-              "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+              "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
             }
           ],
           "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ the proper time of the comoving observers since the waist $t = 0$ and $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere of radius $a = \\ell\\cosh(ct/\\ell)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
@@ -52770,7 +52770,7 @@
         },
         {
           "id": "four_sphere",
-          "name": "Four Sphere",
+          "name": "4-Sphere",
           "coordinates": [
             "\\tau",
             "\\chi",
@@ -52788,10 +52788,10 @@
           "parameters": [
             {
               "symbol": "\\ell",
-              "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+              "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
             }
           ],
-          "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$ on the southern half of a four sphere of radius $\\ell$, with $\\tau = ict$ the Euclidean time of the closed slicing, a length, and $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere of latitude $\\tau$, of radius $a = \\ell\\cos(\\tau/\\ell)$. The chart is Riemannian, and a dot in the geodesic equations is a derivative with respect to arc length.",
+          "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$ on the southern half of a 4-sphere of radius $\\ell$, with $\\tau = ict$ the Euclidean time of the closed slicing, a length, and $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere of latitude $\\tau$, of radius $a = \\ell\\cos(\\tau/\\ell)$. The chart is Riemannian, and a dot in the geodesic equations is a derivative with respect to arc length.",
           "line_element": "ds^2 = d\\tau^2 + \\ell^2\\cos^2(\\tau/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
           "metric_components": [
             {
@@ -52846,10 +52846,10 @@
           "parameters": [
             {
               "symbol": "\\ell",
-              "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+              "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
             }
           ],
-          "convention": "We use the radius $a$ of the 3-sphere as the coordinate, a length, with $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere. Below $a = \\ell$ the metric is Riemannian, the four sphere with $a = \\ell\\cos(\\tau/\\ell)$, and above it Lorentzian, with $a$ a time and $a = \\ell\\cosh(ct/\\ell)$ in the closed slicing. A dot in the geodesic equations is a derivative with respect to an affine parameter, or to arc length where $a < \\ell$.",
+          "convention": "We use the radius $a$ of the 3-sphere as the coordinate, a length, with $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere. Below $a = \\ell$ the metric is Riemannian, the 4-sphere with $a = \\ell\\cos(\\tau/\\ell)$, and above it Lorentzian, with $a$ a time and $a = \\ell\\cosh(ct/\\ell)$ in the closed slicing. A dot in the geodesic equations is a derivative with respect to an affine parameter, or to arc length where $a < \\ell$.",
           "line_element": "ds^2 = \\dfrac{da^2}{1 - \\dfrac{a^2}{\\ell^2}} + a^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
           "metric_components": [
             {
@@ -52898,12 +52898,12 @@
             "\\chi \\in [0, \\pi]",
             "\\theta \\in [0, \\pi]",
             "\\phi \\in [0, 2\\pi)",
-            "\\eta = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"
+            "\\eta = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"
           ],
           "parameters": [
             {
               "symbol": "\\ell",
-              "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+              "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
             }
           ],
           "convention": "We use the conformal time $\\eta$, a pure number with $\\tan\\eta = \\sinh(ct/\\ell)$ in the closed slicing, which is itself the chart's $x^0$, and the angles $\\chi$, $\\theta$, and $\\phi$ on the 3-sphere. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
@@ -52955,12 +52955,12 @@
             "\\chi \\in [0, \\pi]",
             "\\theta \\in [0, \\pi]",
             "\\phi \\in [0, 2\\pi)",
-            "t = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"
+            "t = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"
           ],
           "parameters": [
             {
               "symbol": "\\ell",
-              "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+              "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
             }
           ],
           "convention": "We use Feldbrugge, Lehners and Turok's gauge, in which the lapse is $\\ell c/a$ and the squared radius $a^2 = \\ell^2 + c^2t^2$ of the 3-sphere grows as a quadratic in the time $t$, with $ct = \\ell\\sinh(ct_c/\\ell)$ for the proper time $t_c$ of the closed slicing. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",

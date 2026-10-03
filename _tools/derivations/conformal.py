@@ -6222,8 +6222,8 @@ def de_sitter(ck, src):
 def universe_from_nothing(ck, src):
     """The Lorentzian half of the universe from nothing, the upper half 0 <= T < pi/2 of de Sitter's
     global square, X = chi across and T up, drawn at l = 1, one view per Lorentzian chart. Its lower
-    edge T = 0 is the waist, a 3-sphere of radius l, where the southern half of the four sphere is
-    joined on; the four sphere is Riemannian and has no place in a conformal diagram.
+    edge T = 0 is the waist, a 3-sphere of radius l, where the southern half of the 4-sphere is
+    joined on; the 4-sphere is Riemannian and has no place in a conformal diagram.
 
     On the hyperboloid X0 = tan T and a = 1/cos T, so the closed slicing enters as tan T = sinh(t),
     the scale factor chart above its join as cos T = 1/a, the conformal chart as T = eta, and
@@ -6293,7 +6293,7 @@ def universe_from_nothing(ck, src):
         v.legend("scri", "future infinity $\\mathscr{I}^+$, spacelike")
         v.legend("centre", "the pole $\\chi = 0$ of the 3-sphere and its antipode $\\chi = \\pi$")
         v.legend("surface", "the waist, a 3-sphere of radius $\\ell$, where the southern half of the "
-                            "four sphere is joined on")
+                            "4-sphere is joined on")
 
     s_chi = np.linspace(0, PI, 600)
     views = []
@@ -24378,14 +24378,14 @@ CAPTIONS = {
         "The Lorentzian half of the universe from nothing on the upper half of de Sitter's square, from the "
         "waist $T = 0$ to future infinity, each point in the diagram a 2-sphere. The closed slicing enters as "
         "$\\tan T = \\sinh(ct/\\ell)$ and $X = \\chi$, and covers the whole half.",
-        "The southern half of the four sphere is joined on along the lower edge, where every line of "
+        "The southern half of the 4-sphere is joined on along the lower edge, where every line of "
         "constant $t$ is a 3-sphere of radius $\\ell\\cosh(ct/\\ell)$ and the lowest is the waist, of "
         "radius $\\ell$.",
     ],
     ("universe_from_nothing", "scale_factor"): [
         "The scale factor chart above its join, $\\cos T = \\ell/a$ and $X = \\chi$, each point in the "
         "diagram a 2-sphere. The join $a = \\ell$ is the lower edge, where the same line element turns "
-        "Riemannian and carries on as the four sphere.",
+        "Riemannian and carries on as the 4-sphere.",
     ],
     ("universe_from_nothing", "conformal"): [
         "The conformal chart, $T = \\eta$ and $X = \\chi$, each point in the diagram a 2-sphere. Its metric is "

@@ -1,4 +1,4 @@
-"""The universe from nothing, half a four sphere joined at its equator to the waist of de Sitter's
+"""The universe from nothing, half a 4-sphere joined at its equator to the waist of de Sitter's
 closed universe: python3 -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files, with nothing but the files and
@@ -88,7 +88,7 @@ class Charts(unittest.TestCase):
             embed = EMBEDDINGS[name][0]
             self.assertAlmostEqual(embed(0.0)[1], 1.0, places=12, msg=name)
             self.assertAlmostEqual((embed(h)[1] - embed(-h)[1]) / (2 * h), 0.0, places=6, msg=name)
-        # The south pole of the four sphere, tau = -pi l/2, and of the scale factor chart, a = 0.
+        # The south pole of the 4-sphere, tau = -pi l/2, and of the scale factor chart, a = 0.
         self.assertAlmostEqual(EMBEDDINGS["four_sphere"][0](-math.pi / 2)[1], 0.0, places=12)
         self.assertAlmostEqual(EMBEDDINGS["scale_factor_below"][0](0.0)[0], EMBEDDINGS["four_sphere"][0](-math.pi / 2)[0])
 
@@ -165,7 +165,7 @@ class Square(unittest.TestCase):
 
 class Quoted(unittest.TestCase):
     def test_the_four_spheres_action_is_minus_three_over_eight_g_squared_rho(self):
-        """With hbar = c = 1 the Euclidean action of the whole four sphere is -rho_v times its volume
+        """With hbar = c = 1 the Euclidean action of the whole 4-sphere is -rho_v times its volume
         8 pi^2 a_0^4/3, a_0^2 = 3/(8 pi G rho_v), which is -3/(8 G^2 rho_v) for any G and rho_v."""
         for G, rho in ((1.0, 1.0), (0.3, 2.7), (5.0, 0.01)):
             a0 = math.sqrt(3 / (8 * math.pi * G * rho))

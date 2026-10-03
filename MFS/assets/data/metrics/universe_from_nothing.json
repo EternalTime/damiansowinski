@@ -2,7 +2,7 @@
   "id": "universe_from_nothing",
   "name": "The Universe from Nothing",
   "short_name": "Universe from nothing",
-  "description": "Half of a four sphere joined at its equator to the waist of de Sitter's closed universe: the geometry of Alexander Vilenkin's universe created by tunnelling from nothing (1982) and of the no boundary proposal of James Hartle and Stephen Hawking (1983). The south pole of the sphere is a point like any other on it, so the universe has no first moment and no edge, and above the equator it inflates.",
+  "description": "Half of a 4-sphere joined at its equator to the waist of de Sitter's closed universe: the geometry of Alexander Vilenkin's universe created by tunnelling from nothing (1982) and of the no-boundary proposal of James Hartle and Stephen Hawking (1983). The south pole of the sphere is a point like any other on it, so the universe has no first moment and no edge, and above the equator it inflates.",
   "tags": [
     "de Sitter",
     "instanton",
@@ -12,10 +12,10 @@
     "Lorentzian",
     "quantum cosmology",
     "wave function of the universe",
-    "no boundary proposal",
+    "no-boundary proposal",
     "tunnelling",
     "signature change",
-    "four sphere",
+    "4-sphere",
     "three sphere",
     "closed universe",
     "inflation",
@@ -35,18 +35,18 @@
     "spherically symmetric"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The four sphere's chart is Riemannian, of signature $(+,+,+,+)$, and the scale factor chart is Riemannian where $a < \\ell$ and Lorentzian where $a > \\ell$.",
-  "history": "Two ways for a universe to begin without a big bang took shape in 1982, one at Tufts University in Medford, Massachusetts, and one at the Institute for Theoretical Physics in Santa Barbara [vilenkin1982, hartle2022]. At Tufts, Alexander Vilenkin was bothered by a closed universe born at about the Planck size, which would \"expand and recollapse in about one Planck time\" and never reach the exponential expansion of inflation [vilenkin1982]. His way out started from de Sitter space, a closed universe holding only the energy density $\\rho_v$ of a vacuum, whose radius $a = \\ell\\cosh(ct/\\ell)$ shrinks to its least value $\\ell$ at $t = 0$ and then grows without end, the length $\\ell$ being set by $\\rho_v$ [vilenkin1982]. He read that history as a particle bouncing off a potential barrier, with $a$ playing the particle's position, and in quantum mechanics a particle can tunnel through a barrier [vilenkin1982]. So the universe could arrive at the bounce from under the barrier, starting at $a = 0$, \"created by quantum tunneling from literally nothing into a de Sitter space\" [vilenkin1982]. By nothing he meant \"a state with no classical space and time\" [vilenkin2002].¶\"Sidney Coleman has taught us,\" Vilenkin wrote, that a tunnelling event is described by a bounce, a solution of the field equations \"with $t$ changed to $-it$\" [vilenkin1982]. For de Sitter space that solution is $a = \\ell\\cos(\\tau/\\ell)$, the radius of a 3-sphere of latitude on a sphere of four dimensions, which he called \"the well-known de Sitter instanton\" [vilenkin1982]. Its southern half, from the pole $a = 0$ up to the equator $a = \\ell$, is the trip under the barrier, and on the equator the 3-sphere has the size $\\ell$ and the zero rate of growth of de Sitter's waist, so the two halves join there [vilenkin1982]. He drew the birth as a semicircle hung beneath the start of the expansion, with Euclidean time running below the axis [vilenkin1982].¶\"The concept of the universe being created from nothing is a crazy one,\" he granted, and to help the reader \"make peace with this concept\" he set beside it an electron and a positron created by a constant electric field, whose bounce is a circle in the plane of position and Euclidean time [vilenkin1982]. The circle's action gives the rate of pair creation, while for the universe \"it is silly to evaluate the imaginary part of the energy of nothing\" [vilenkin1982]. The model's one prediction that could be checked, in principle, was that the universe is closed [vilenkin1982].¶Stephen Hawking had already offered a beginning of the same kind at a conference in the Vatican in 1981: a regular geometry with four directions of space, making a quantum transition to the three of space and one of time that we have now [hartle2022]. James Hartle, a professor at the University of Chicago who spent his free quarter in Cambridge, had been defining quantum states in cosmology by path integrals, and the two put the pieces together in Santa Barbara that summer [hartle2022]. Their proposal gives the ground state's amplitude for a geometry of space in three dimensions as \"a path integral over all compact positive-definite four-geometries which have the three-geometry as a boundary\" [hartle1983]. The geometries that dominate such an integral close up with that one boundary and no other, as the half four sphere does at its equator, and with a positive cosmological constant the ground state \"corresponds to de Sitter space in the classical limit\" [hartle2022, feldbrugge2017, hartle1983]. Hawking's reason fit in a sentence: his singularity theorems ruled out a beginning with a Lorentzian geometry, and \"Jim and I thought that therefore it must begin with a Euclidean one\" [hartle2022]. In 1983 they called it only the \"wave function of the Universe\", and the name no boundary quantum state came later, from Hawking, who by Hartle's account called it the \"best thing either of us had done\" [hartle2022].¶Both camps draw the same half sphere and weigh it with opposite signs [vilenkin2002]. The four sphere's Euclidean action is negative, $S_E = -3/(8G^2\\rho_v)$ in units with $\\hbar = c = 1$, and in 1982 Vilenkin guessed that the universes of least action are the most probable, which is the weight $e^{-S_E}$ of Hartle and Hawking [vilenkin1982, vilenkin2002]. That weight is largest for the smallest vacuum energy [vilenkin2002]. By 1984 Vilenkin had changed his mind: in his tunnelling wave function the probability is \"proportional to $\\exp(-3/8G^2\\rho_v)$\", and the tunnelling \"is most probable to the highest maximum\" of the field's potential [vilenkin1984]. Andrei Linde reached the same sign that year by turning time the other way, $t \\to +i\\tau$, and found that the universe so created is, with a large probability, an inflationary one [linde1984, vilenkin2002]. \"I resist the temptation to call this 'the greatest mistake of my life',\" Vilenkin wrote of his first answer, adding that Hawking and his collaborators \"believe that I got it right the first time around and that it is now that I am making a mistake\" [vilenkin2002].¶He counted the sign among the \"minor things\" on which he and Hawking disagreed [vilenkin2002]. At one conference Hawking told Vilenkin \"You do not have a wave function\", meaning that the tunnelling wave function was defined only in a simple model, and Vilenkin spent the night before his own talk working out a general definition [vilenkin2002]. In 2002 he judged, in Hawking's phrase, that \"none of us 'has a wave function'\", since every proposal is well defined only in simple models or in the semiclassical approximation [vilenkin2002]. Working with a scalar field in 2008, Hartle, Hawking and Thomas Hertog found the no boundary weight \"heavily biased towards small amounts of inflation\", and argued that the probability of what we see in our past light cone carries a further factor $\\exp(3N)$ for inflation that stretches the universe by the factor $e^N$ [hartle2008]. The Lorentzian sum came back in 2017, when Job Feldbrugge, Jean-Luc Lehners and Neil Turok made the path integral over Lorentzian geometries converge by bending it into complex ones, and found that with no boundary conditions the dominant saddle \"contributes a semiclassical exponential factor which is precisely the inverse of the famous Hartle-Hawking result\", the sign of Vilenkin's tunnelling wave function for this simple universe [feldbrugge2017].",
+  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The 4-sphere's chart is Riemannian, of signature $(+,+,+,+)$, and the scale factor chart is Riemannian where $a < \\ell$ and Lorentzian where $a > \\ell$.",
+  "history": "Two ways for a universe to begin without a big bang took shape in 1982, one at Tufts University in Medford, Massachusetts, and one at the Institute for Theoretical Physics in Santa Barbara [vilenkin1982, hartle2022]. At Tufts, Alexander Vilenkin was bothered by a closed universe born at about the Planck size, which would \"expand and recollapse in about one Planck time\" and never reach the exponential expansion of inflation [vilenkin1982]. His way out started from de Sitter space, a closed universe holding only the energy density $\\rho_v$ of a vacuum, whose radius $a = \\ell\\cosh(ct/\\ell)$ shrinks to its least value $\\ell$ at $t = 0$ and then grows without end, the length $\\ell$ being set by $\\rho_v$ [vilenkin1982]. He read that history as a particle bouncing off a potential barrier, with $a$ playing the particle's position, and in quantum mechanics a particle can tunnel through a barrier [vilenkin1982]. So the universe could arrive at the bounce from under the barrier, starting at $a = 0$, \"created by quantum tunneling from literally nothing into a de Sitter space\" [vilenkin1982]. By nothing he meant \"a state with no classical space and time\" [vilenkin2002].¶\"Sidney Coleman has taught us,\" Vilenkin wrote, that a tunnelling event is described by a bounce, a solution of the field equations \"with $t$ changed to $-it$\" [vilenkin1982]. For de Sitter space that solution is $a = \\ell\\cos(\\tau/\\ell)$, the radius of a 3-sphere of latitude on a sphere of four dimensions, which he called \"the well-known de Sitter instanton\" [vilenkin1982]. Its southern half, from the pole $a = 0$ up to the equator $a = \\ell$, is the trip under the barrier, and on the equator the 3-sphere has the size $\\ell$ and the zero rate of growth of de Sitter's waist, so the two halves join there [vilenkin1982]. He drew the birth as a semicircle hung beneath the start of the expansion, with Euclidean time running below the axis [vilenkin1982].¶\"The concept of the universe being created from nothing is a crazy one,\" he granted, and to help the reader \"make peace with this concept\" he set beside it an electron and a positron created by a constant electric field, whose bounce is a circle in the plane of position and Euclidean time [vilenkin1982]. The circle's action gives the rate of pair creation, while for the universe \"it is silly to evaluate the imaginary part of the energy of nothing\" [vilenkin1982]. The model's one prediction that could be checked, in principle, was that the universe is closed [vilenkin1982].¶Stephen Hawking had already offered a beginning of the same kind at a conference in the Vatican in 1981: a regular geometry with four directions of space, making a quantum transition to the three of space and one of time that we have now [hartle2022]. James Hartle, a professor at the University of Chicago who spent his free quarter in Cambridge, had been defining quantum states in cosmology by path integrals, and the two put the pieces together in Santa Barbara that summer [hartle2022]. Their proposal gives the ground state's amplitude for a 3-geometry as \"a path integral over all compact positive-definite four-geometries which have the three-geometry as a boundary\" [hartle1983]. The geometries that dominate such an integral close up with that one boundary and no other, as the half 4-sphere does at its equator, and with a positive cosmological constant the ground state \"corresponds to de Sitter space in the classical limit\" [hartle2022, feldbrugge2017, hartle1983]. Hawking's reason fit in a sentence: his singularity theorems ruled out a beginning with a Lorentzian geometry, and \"Jim and I thought that therefore it must begin with a Euclidean one\" [hartle2022]. In 1983 they called it only the \"wave function of the Universe\", and the name no-boundary quantum state came later, from Hawking, who by Hartle's account called it the \"best thing either of us had done\" [hartle2022].¶Both camps draw the same half sphere and weigh it with opposite signs [vilenkin2002]. The 4-sphere's Euclidean action is negative, $S_E = -3/(8G^2\\rho_v)$ in units with $\\hbar = c = 1$, and in 1982 Vilenkin guessed that the universes of least action are the most probable, which is the weight $e^{-S_E}$ of Hartle and Hawking [vilenkin1982, vilenkin2002]. That weight is largest for the smallest vacuum energy [vilenkin2002]. By 1984 Vilenkin had changed his mind: in his tunnelling wave function the probability is \"proportional to $\\exp(-3/8G^2\\rho_v)$\", and the tunnelling \"is most probable to the highest maximum\" of the field's potential [vilenkin1984]. Andrei Linde reached the same sign that year by turning time the other way, $t \\to +i\\tau$, and found that the universe so created is, with a large probability, an inflationary one [linde1984, vilenkin2002]. \"I resist the temptation to call this 'the greatest mistake of my life',\" Vilenkin wrote of his first answer, adding that Hawking and his collaborators \"believe that I got it right the first time around and that it is now that I am making a mistake\" [vilenkin2002].¶He counted the sign among the \"minor things\" on which he and Hawking disagreed [vilenkin2002]. At one conference Hawking told Vilenkin \"You do not have a wave function\", meaning that the tunnelling wave function was defined only in a simple model, and Vilenkin spent the night before his own talk working out a general definition [vilenkin2002]. In 2002 he judged, in Hawking's phrase, that \"none of us 'has a wave function'\", since every proposal is well defined only in simple models or in the semiclassical approximation [vilenkin2002]. Working with a scalar field in 2008, Hartle, Hawking and Thomas Hertog found the no-boundary weight \"heavily biased towards small amounts of inflation\", and argued that the probability of what we see in our past light cone carries a further factor $\\exp(3N)$ for $N$ e-foldings of inflation [hartle2008]. The Lorentzian sum came back in 2017, when Job Feldbrugge, Jean-Luc Lehners and Neil Turok made the path integral over Lorentzian geometries converge by bending it into complex ones, and found that with no-boundary conditions the dominant saddle \"contributes a semiclassical exponential factor which is precisely the inverse of the famous Hartle-Hawking result\", the sign of Vilenkin's tunnelling wave function for this simple universe [feldbrugge2017].",
   "related": [
     {
       "id": "de_sitter",
       "kind": "piece",
-      "text": "The Lorentzian half: de Sitter's closed universe from its waist on, joined there to half a four sphere [vilenkin1982]."
+      "text": "The Lorentzian half: de Sitter's closed universe from its waist on, joined there to half a 4-sphere [vilenkin1982]."
     },
     {
       "id": "gravitational_instantons",
       "kind": "family",
-      "text": "Riemannian solutions of Einstein's equations of the same kind as the four sphere, which Vilenkin called \"the well-known de Sitter instanton\" [vilenkin1982]."
+      "text": "Riemannian solutions of Einstein's equations of the same kind as the 4-sphere, which Vilenkin called \"the well-known de Sitter instanton\" [vilenkin1982]."
     },
     {
       "id": "coleman_de_luccia",
@@ -61,12 +61,12 @@
     {
       "id": "nariai",
       "kind": "family",
-      "text": "Its Euclidean section is the instanton for the pair creation of black holes during inflation. Raphael Bousso and Stephen Hawking calculated that rate from the no boundary proposal and found that the tunnelling proposal makes unphysical predictions [bousso1996]."
+      "text": "Its Euclidean section is the instanton for the pair creation of black holes during inflation. Raphael Bousso and Stephen Hawking calculated that rate from the no-boundary proposal and found that the tunnelling proposal makes unphysical predictions [bousso1996]."
     },
     {
       "id": "kantowski_sachs",
       "kind": "family",
-      "text": "Raymond Laflamme and Paul Shellard studied the wave function of the universe of the no boundary proposal on the Kantowski-Sachs minisuperspace [laflamme1987]."
+      "text": "Raymond Laflamme and Paul Shellard studied the wave function of the universe of the no-boundary proposal on the Kantowski-Sachs minisuperspace [laflamme1987]."
     },
     {
       "id": "frw",
@@ -108,12 +108,12 @@
         "\\chi \\in [0, \\pi]",
         "\\theta \\in [0, \\pi]",
         "\\phi \\in [0, 2\\pi)",
-        "t = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"
+        "t = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"
       ],
       "parameters": [
         {
           "symbol": "\\ell",
-          "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+          "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
         }
       ],
       "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ the proper time of the comoving observers since the waist $t = 0$ and $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere of radius $a = \\ell\\cosh(ct/\\ell)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
@@ -1160,7 +1160,7 @@
     },
     {
       "id": "four_sphere",
-      "name": "Four Sphere",
+      "name": "4-Sphere",
       "coords": [
         "\\tau",
         "\\chi",
@@ -1178,10 +1178,10 @@
       "parameters": [
         {
           "symbol": "\\ell",
-          "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+          "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
         }
       ],
-      "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$ on the southern half of a four sphere of radius $\\ell$, with $\\tau = ict$ the Euclidean time of the closed slicing, a length, and $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere of latitude $\\tau$, of radius $a = \\ell\\cos(\\tau/\\ell)$. The chart is Riemannian, and a dot in the geodesic equations is a derivative with respect to arc length.",
+      "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$ on the southern half of a 4-sphere of radius $\\ell$, with $\\tau = ict$ the Euclidean time of the closed slicing, a length, and $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere of latitude $\\tau$, of radius $a = \\ell\\cos(\\tau/\\ell)$. The chart is Riemannian, and a dot in the geodesic equations is a derivative with respect to arc length.",
       "line_element": "ds^2 = d\\tau^2 + \\ell^2\\cos^2(\\tau/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
@@ -2243,10 +2243,10 @@
       "parameters": [
         {
           "symbol": "\\ell",
-          "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+          "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
         }
       ],
-      "convention": "We use the radius $a$ of the 3-sphere as the coordinate, a length, with $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere. Below $a = \\ell$ the metric is Riemannian, the four sphere with $a = \\ell\\cos(\\tau/\\ell)$, and above it Lorentzian, with $a$ a time and $a = \\ell\\cosh(ct/\\ell)$ in the closed slicing. A dot in the geodesic equations is a derivative with respect to an affine parameter, or to arc length where $a < \\ell$.",
+      "convention": "We use the radius $a$ of the 3-sphere as the coordinate, a length, with $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere. Below $a = \\ell$ the metric is Riemannian, the 4-sphere with $a = \\ell\\cos(\\tau/\\ell)$, and above it Lorentzian, with $a$ a time and $a = \\ell\\cosh(ct/\\ell)$ in the closed slicing. A dot in the geodesic equations is a derivative with respect to an affine parameter, or to arc length where $a < \\ell$.",
       "line_element": "ds^2 = \\dfrac{da^2}{1 - \\dfrac{a^2}{\\ell^2}} + a^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
@@ -3318,12 +3318,12 @@
         "\\chi \\in [0, \\pi]",
         "\\theta \\in [0, \\pi]",
         "\\phi \\in [0, 2\\pi)",
-        "\\eta = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"
+        "\\eta = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"
       ],
       "parameters": [
         {
           "symbol": "\\ell",
-          "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+          "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
         }
       ],
       "convention": "We use the conformal time $\\eta$, a pure number with $\\tan\\eta = \\sinh(ct/\\ell)$ in the closed slicing, which is itself the chart's $x^0$, and the angles $\\chi$, $\\theta$, and $\\phi$ on the 3-sphere. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
@@ -4398,12 +4398,12 @@
         "\\chi \\in [0, \\pi]",
         "\\theta \\in [0, \\pi]",
         "\\phi \\in [0, 2\\pi)",
-        "t = 0 \\;\\text{(the waist, joined to the equator of the four sphere)}"
+        "t = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"
       ],
       "parameters": [
         {
           "symbol": "\\ell",
-          "description": "Radius of the four sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+          "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
         }
       ],
       "convention": "We use Feldbrugge, Lehners and Turok's gauge, in which the lapse is $\\ell c/a$ and the squared radius $a^2 = \\ell^2 + c^2t^2$ of the 3-sphere grows as a quadratic in the time $t$, with $ct = \\ell\\sinh(ct_c/\\ell)$ for the proper time $t_c$ of the closed slicing. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
