@@ -22244,6 +22244,158 @@ def hotta_tanaka(ck, src):
     return [v]
 
 
+def btz_shock_wave(ck, src):
+    """Shenker and Stanford's shock wave on the plane of u and v at one phi, at l = R = 1 and
+    alpha = 1. In the Kruskal chart, which is continuous across the shock, the metric on the plane
+    is -4 du dv/(1 + u(v + alpha Theta(u)))^2, so u and v are null on both sides and
+    p = arctan(u), q = arctan(v + alpha/2) bring the whole plane into a finite drawing with light at
+    45 degrees, every ray moving left drawn as one line across the shock u = 0, the diagonal X = T.
+    Ahead of the shock the plane is the BTZ black hole's in u and v, so infinity is uv = -1 and
+    r = 0 is uv = 1; behind it the same in u and v + alpha. The shift alpha/2 in q makes the drawing
+    symmetric under (X, T) -> (-X, -T), which carries one half onto the other, and puts the moment
+    u + v = -alpha/2 that the embedding diagram draws on T = 0. The horizon v = 0 of the right
+    outside and v = -alpha of the left one stand on either side of the centre and miss each other
+    by alpha. The same map is checked on the discontinuous chart, with v = V - alpha Theta(U), and on
+    the exterior chart through Shenker and Stanford's (10), on both outsides; the jump alpha of V is
+    checked against the published Gamma^V_UU, and the plane is totally geodesic in all three."""
+    params = {"ell": 1, "R": 1, "alpha": 1}
+    alpha = 1.0
+    kruskal = Plane(src, "btz_shock_wave", "kruskal", ("u", "v"), {"phi": "0"}, params)
+    disc = Plane(src, "btz_shock_wave", "discontinuous", ("U", "V"), {"phi": "0"}, params, off_shock=True)
+    ext = Plane(src, "btz_shock_wave", "exterior", ("t", "r"), {"phi": "0"}, {"ell": 1, "R": 1})
+
+    def pq(u, v):
+        u, v = np.asarray(u, dtype=float), np.asarray(v, dtype=float)
+        return np.arctan(u), np.arctan(v + alpha / 2)
+
+    def step(u):
+        return (np.asarray(u, dtype=float) > 0).astype(float)
+
+    def inside(sign, n=4000):
+        """Random events of the plane on one side of the shock, |u(v + alpha Theta(u))| < 1."""
+        u = sign * np.exp(ck.uniform(-3, 3, n))
+        return u, ck.uniform(-0.98, 0.98, n) / u - alpha * (sign > 0)
+
+    for name, sign in (("ahead of the shock", -1), ("behind the shock", 1)):
+        u, v = inside(sign)
+        ck.chart(f"BTZ shock, Kruskal, {name}", kruskal, pq, u, v, lambda u, v: (1, 1))
+        ck.chart(f"BTZ shock, discontinuous, {name}", disc, lambda U, V: pq(U, V - alpha * step(U)), u,
+                 v + alpha * step(u), lambda U, V: (1, 1))
+
+    def outside(t, r, left=False):
+        """Shenker and Stanford's (10) at R = l = 1: the right outside has u < 0 < v with
+        -uv = (r - 1)/(r + 1) and v/(-u) = e^{2ct}, and the left one is the same with u and v + alpha
+        for -v and -u, its Killing time running to the past."""
+        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+        s = np.sqrt((r - 1) / (r + 1))
+        if left:
+            return pq(s * np.exp(-t), -s * np.exp(t) - alpha)
+        return pq(-s * np.exp(-t), s * np.exp(t))
+    ck.chart("BTZ shock, exterior, the right outside", ext, outside, ck.uniform(-6, 6), ck.uniform(1.001, 40),
+             lambda t, r: (1, 0))
+    ck.chart("BTZ shock, exterior, the left outside", ext, lambda t, r: outside(t, r, True), ck.uniform(-6, 6),
+             ck.uniform(1.001, 40), lambda t, r: (-1, 0))
+
+    # The jump from the published geodesic equation: V'' = -A delta'(U) U'^2 + ... with A the
+    # coefficient of delta'(U) in Gamma^V_UU, integrated twice across U = 0, gives Delta V = -A.
+    _, entry, R = nr.load("btz_shock_wave", "discontinuous")
+    src.note("btz_shock_wave", "discontinuous", ["christoffel"])
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    at = {R.parameters["ell"]: 1, R.parameters["R"]: 1, R.parameters["alpha"]: 1}
+    ull = entry["christoffel"]["variants"]["ull"]["nonzero"]
+    gamma = next(c for c in ull if c["indices"] == ["V", "U", "U"])
+    A = sp.expand(R(gamma["value"]).subs(at)).coeff(sp.DiracDelta(names["U"], 1))
+    ck.limit("BTZ shock: -Gamma^V_UU integrated twice across the shock is the jump alpha", [-float(A)], [alpha], 1e-12)
+    for system in ("kruskal", "discontinuous", "exterior"):
+        _, chart, S = nr.load("btz_shock_wave", system)
+        src.note("btz_shock_wave", system, ["christoffel"])
+        off = [c["indices"] for c in chart["christoffel"]["variants"]["ull"]["nonzero"]
+               if c["indices"][0] == "\\phi" and "\\phi" not in c["indices"][1:]]
+        ck.limit(f"BTZ shock, {system}: no published Christoffel symbol turns a ray out of the plane of one phi",
+                 [len(off)], [0], 0.5)
+    w = ck.uniform(-20, 20, 200)
+    ck.limit("BTZ shock: a ray moving left keeps its q across the shock",
+             pq(np.full_like(w, -1e-12), w)[1], pq(np.full_like(w, 1e-12), (w + alpha) - alpha)[1], 1e-9)
+    s = np.linspace(-0.99, 0.99, 50)
+    ck.limit("BTZ shock: the moment u + v = -alpha/2 is the line T = 0", xt(*pq(s, -alpha / 2 - s))[1], 0 * s, 1e-12)
+    ck.limit("BTZ shock: the horizons v = 0 and v = -alpha stand at q = +-arctan(alpha/2), missing each other",
+             [float(pq(0, 0)[1]), float(pq(0, -alpha)[1])], [math.atan(0.5), -math.atan(0.5)], 1e-12)
+    ck.finite("BTZ shock: the Kretschmann scalar is finite at r = 0 and on the horizon",
+              ext.kretschmann(np.zeros(3), np.array([1e-9, 1.0, 5.0])))
+
+    # The edges, each a curve of one side: u(v + alpha Theta(u)) = -1 is infinity and +1 is r = 0.
+    a = spread(0, np.inf, 600, 10)
+    ahead_bound = pq(-a, 1 / a)
+    behind_bound = pq(a, -1 / a - alpha)
+    ahead_sing = pq(-a, -1 / a)
+    behind_sing = pq(a, 1 / a - alpha)
+    corner = point(*pq(-1e12, 0.0))
+    region = ([point(*pq(0, -1e12))] + np.column_stack(xt(*ahead_sing)).tolist() + [corner]
+              + np.column_stack(xt(*ahead_bound)).tolist()[::-1] + [point(*pq(0, 1e12))]
+              + np.column_stack(xt(*behind_sing)).tolist() + [point(*pq(1e12, -alpha))]
+              + np.column_stack(xt(*behind_bound)).tolist()[::-1])
+    X = np.array([pt[0] for pt in region])
+    T = np.array([pt[1] for pt in region])
+    box = [float(X.min()) - 0.35, float(X.max()) + 0.35, float(T.min()) - 0.25, float(T.max()) + 0.25]
+
+    def exterior_fill(sign):
+        b = ahead_bound if sign < 0 else behind_bound
+        top = [point(*pq(0, 1e12))] if sign < 0 else [point(*pq(0, -1e12))]
+        hz = point(*pq(0, 0)) if sign < 0 else point(*pq(0, -alpha))
+        return [hz] + top + np.column_stack(xt(*b)).tolist() + [point(*pq(sign * 1e12, 0 if sign < 0 else -alpha))]
+
+    views = []
+    for vid, system in (("kruskal", "kruskal"), ("discontinuous", "discontinuous"), ("exterior", "exterior")):
+        v = View(vid, "The plane of $u$ and $v$", box, system)
+        v.fill("region", region)
+        if system == "exterior":
+            v.fill("cover", exterior_fill(-1))
+            v.fill("cover", exterior_fill(1))
+        else:
+            v.fill("cover", region)
+        for c in (-2, -1, -0.5, 0.5, 1, 2):
+            # u = c, over the part of the plane it crosses.
+            s = spread(-np.inf, np.inf, 600, 9)
+            shifted = s + alpha * (c > 0)
+            keep = np.abs(c * shifted) < 1
+            v.curve("null", *pq(np.where(keep, c, np.nan), np.where(keep, s, np.nan)))
+            # v + alpha/2 = c, a ray moving left, on through the shock.
+            vv = c - alpha / 2
+            uu = spread(-np.inf, np.inf, 600, 9)
+            keep = np.abs(uu * (vv + alpha * (uu > 0))) < 1
+            v.curve("null", *pq(np.where(keep, uu, np.nan), np.where(keep, vv, np.nan)))
+        v.curve("surface", *pq(np.zeros(600), spread(-np.inf, np.inf, 600, 12)))
+        right = -spread(0, np.inf, 400, 10)
+        left = spread(0, np.inf, 400, 10)
+        v.curve("horizon", *pq(right, np.zeros_like(right)))
+        v.curve("horizon", *pq(left, np.full_like(left, -alpha)))
+        v.curve("boundary", *ahead_bound)
+        v.curve("boundary", *behind_bound)
+        v.curve("singular", *ahead_sing, zig=True)
+        v.curve("singular", *behind_sing, zig=True)
+        # The two halves are each other's image under (X, T) -> (-X, -T), and so are their labels.
+        for sign in (1, -1):
+            v.label_xt([sign * 1.12, sign * 0.4], "exterior", cls="region")
+            v.label_xt([-sign * 0.05, sign * 0.8], "black hole" if sign > 0 else "white hole", cls="region")
+        v.legend("null", "$u$ constant at $\\pm\\ell/2$, $\\pm\\ell$ and $\\pm 2\\ell$ and $v + \\alpha/2$ constant at the "
+                         "same values, light rays, each ray moving left drawn on across the shock")
+        v.legend("surface", "the shock $u = 0$, the future horizon of the right outside and the past horizon of the left")
+        v.legend("horizon", "the past horizon $v = 0$ of the right outside and the future horizon $v = -\\alpha$ of the "
+                            "left, which miss each other by $\\alpha$")
+        v.legend("boundary", "the conformal boundary, timelike")
+        v.legend("singular", "$r = 0$, a singularity in the causal structure, where the curvature is finite")
+        v.set(restriction="The plane of $u$ and $v$ at one $\\phi$, the same at every $\\phi$, each point in the "
+                          "diagram a circle.",
+              settings="$\\ell = R = 1$ and $\\alpha = 1$; $p = \\arctan u$ and $q = \\arctan(v + \\alpha/2)$, with $u$ "
+                       "and $v$ the coordinates of the Kruskal chart, which are continuous across the shock.")
+        m, = slices.moments("btz_shock_wave", label=slices.BTZ_SHOCK_MOMENT)
+        lo, hi = m.reach("kruskal", "u")
+        su = np.linspace(lo, hi, 200)
+        v.slice(m, lines=[pq(su, -alpha / 2 - su)])
+        views.append(v)
+    return views
+
+
 def light_beam(ck, src):
     """Three planes of Bonnor's beams on which nothing turns a light ray, each flat and each
     Minkowski's diamond, in units of the beam's radius R with l = 4R.
@@ -24193,6 +24345,7 @@ DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
     "penrose_impulsive_wave": penrose_impulsive_wave,
     "hotta_tanaka": hotta_tanaka,
+    "btz_shock_wave": btz_shock_wave,
     "kiselev": kiselev,
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "siklos": siklos,
@@ -24417,6 +24570,18 @@ CAPTIONS = {
         "midway between them, on the lines of constant $v + Au$. The lines of constant $u$ are light moving with "
         "the beams.",
     ],
+    **{("btz_shock_wave", vid): [
+        "The plane of $u$ and $v$ at one $\\phi$ ($\\alpha = 1$, $R = \\ell$), brought by $p = \\arctan u$ and "
+        "$q = \\arctan(v + \\alpha/2)$ of the Kruskal chart into a finite drawing, light at 45°. The shock $u = 0$ is the "
+        "diagonal through the centre, and each ray moving left crosses it as one line. Ahead of the shock, below "
+        "the diagonal, lie the right outside and the white hole, and behind it the left outside and the black hole, "
+        "each half the BTZ black hole's own [shenker2014].",
+        "The past horizon of the right outside and the future horizon of the left stand on either side of the centre, "
+        "$\\alpha$ apart in $v$, so no event sits on all four horizons. "
+        + {"kruskal": "The Kruskal chart covers the whole plane.",
+           "discontinuous": "The discontinuous chart covers the whole plane, its $V$ jumping by $\\alpha$ on the shock.",
+           "exterior": "The exterior chart covers either outside, tinted."}[vid],
+    ] for vid in ("kruskal", "discontinuous", "exterior")},
     ("hotta_tanaka", "shock"): [
         "The plane through the equator of the wave front ($\\theta = \\pi/2$), brought by "
         "$p = \\arctan(u/a) - \\pi/4$ and $q = \\arctan((v - \\Delta v\\,\\Theta(u))/a) + \\pi/4$ of the Kruskal "

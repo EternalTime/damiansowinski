@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 172,
+  "count": 173,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -963,6 +963,11 @@
           "id": "ab_metrics",
           "kind": "family",
           "text": "The same mass boosted past the speed of light. The field of that tachyon is two of Ehlers and Kundt's metrics, A II inside a cone of shock and B I outside it [hruska2019]."
+        },
+        {
+          "id": "btz_shock_wave",
+          "kind": "family",
+          "text": "A shock of the same kind lying on the horizon of the BTZ black hole, the field of a shell of null particles spread round the horizon [shenker2014, dray1985]."
         }
       ],
       "references": [
@@ -993,7 +998,8 @@
         "podolsky1998impulsive",
         "horowitz2012",
         "podolsky1999nonexpanding",
-        "hruska2019"
+        "hruska2019",
+        "shenker2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/aichelburg_sexl.json",
@@ -1539,6 +1545,11 @@
           "id": "jackiw_teitelboim_black_hole",
           "kind": "family",
           "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Its metric is everywhere anti-de Sitter space of two dimensions, and a dilaton marks its horizon [mertens2023]."
+        },
+        {
+          "id": "btz_shock_wave",
+          "kind": "family",
+          "text": "Off its shock, the shock wave in the BTZ black hole is anti-de Sitter space of three dimensions with its points identified [banados1993]."
         }
       ],
       "references": [
@@ -2872,6 +2883,11 @@
           "id": "jackiw_teitelboim_black_hole",
           "kind": "family",
           "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Without rotation, this hole is that one times a circle whose radius is its dilaton [achucarro1993]."
+        },
+        {
+          "id": "btz_shock_wave",
+          "kind": "composite",
+          "text": "The black hole without rotation with a shell of null particles on its horizon, the field of a few quanta thrown in from one side long ago. Its two halves are joined along the horizon with a shift [shenker2014]."
         }
       ],
       "references": [
@@ -2906,7 +2922,8 @@
         "aminneborg1998",
         "emparan2002holograms",
         "emparan2020qbtz",
-        "achucarro1993"
+        "achucarro1993",
+        "shenker2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -16385,6 +16402,11 @@
           "id": "einstein_dirac_maxwell_wormhole",
           "kind": "family",
           "text": "A static wormhole whose two sheets, written in $u$ with $r = r_0 + u^2$, join at a throat that is no horizon. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's [bronnikovkim2003, blazquez2021]."
+        },
+        {
+          "id": "btz_shock_wave",
+          "kind": "family",
+          "text": "The bridge of the BTZ black hole with a shock wave on its horizon, which makes the bridge longer [shenker2014]."
         }
       ],
       "references": [
@@ -16415,7 +16437,8 @@
         "brill1996",
         "steif1996",
         "bronnikovkim2003",
-        "blazquez2021"
+        "blazquez2021",
+        "shenker2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -23001,6 +23024,11 @@
           "id": "penrose_impulsive_wave",
           "kind": "family",
           "text": "An impulsive wave on a sphere that expands at the speed of light through flat spacetime, built by the same cut and paste along a light cone [podolsky1999expanding]."
+        },
+        {
+          "id": "btz_shock_wave",
+          "kind": "family",
+          "text": "A shock lying on the horizon of the BTZ black hole in anti-de Sitter space of three dimensions, the field of a shell of null particles [shenker2014, sfetsos1995]."
         }
       ],
       "references": [
@@ -23021,7 +23049,8 @@
         "leblond2002",
         "aalsma2020",
         "aalsma2021",
-        "podolsky1999expanding"
+        "podolsky1999expanding",
+        "shenker2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hotta_tanaka.json",
@@ -33533,6 +33562,11 @@
           "id": "gott_time_machine",
           "kind": "family",
           "text": "Sören Holst put Gott's time machine in anti-de Sitter space using the chart in which these spacetimes are drawn, with Poincaré's disc at every moment. With Hans-Jürgen Matschull he showed that the pair of particles there is a rotating BTZ hole [holst1996, holst1999]."
+        },
+        {
+          "id": "btz_shock_wave",
+          "kind": "family",
+          "text": "The BTZ black hole with a shock wave on its horizon, another way of changing the inside of the black hole while each outside stays the BTZ black hole's."
         }
       ],
       "references": [
@@ -43232,6 +43266,11 @@
           "id": "anti_de_sitter",
           "kind": "family",
           "text": "At $M = -1$, where $F = 0$, the static chart is anti-de Sitter space of three dimensions, the lightest state of the brane [emparan2002holograms, emparan2020qbtz]."
+        },
+        {
+          "id": "btz_shock_wave",
+          "kind": "family",
+          "text": "The BTZ black hole with a shell of null particles on its horizon, the field of a few quanta thrown in from one side long ago [shenker2014]."
         }
       ],
       "references": [
@@ -43245,7 +43284,8 @@
         "emparan2020scc",
         "casals2017",
         "emparan2022ds3",
-        "karch2001"
+        "karch2001",
+        "shenker2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/quantum_btz.json",
@@ -47917,6 +47957,11 @@
           "id": "ads_soliton",
           "kind": "family",
           "text": "The ground state of the flat black holes of anti-de Sitter space, as anti-de Sitter space is of this one. The flat hole and the soliton trade places in a phase transition like Hawking and Page's [surya2001]."
+        },
+        {
+          "id": "btz_shock_wave",
+          "kind": "family",
+          "text": "The BTZ black hole with a shock wave on its horizon. Shenker and Stanford put the same shock on this black hole's horizon too, and found the same scrambling time [shenker2014]."
         }
       ],
       "references": [
@@ -47945,7 +47990,8 @@
         "banados1992",
         "hawking1999rotation",
         "chamblin1999",
-        "surya2001"
+        "surya2001",
+        "shenker2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -49323,6 +49369,279 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{24a^4\\left(24\\cosh^4(act)\\cosh^2(3a\\rho) + 33\\cosh^4(act) - 32\\cosh^2(act)\\cosh^2(3a\\rho) + 8\\cosh^4(3a\\rho)\\right)}{\\cosh^{12}(act)\\cosh^8(3a\\rho)}"
+        }
+      ]
+    },
+    {
+      "id": "btz_shock_wave",
+      "name": "Shenker-Stanford Shock Wave in the BTZ Black Hole",
+      "short_name": "Shenker-Stanford Shock Wave",
+      "description": "The eternal black hole of Bañados, Teitelboim, and Zanelli with a shock wave lying on its horizon, the field of a few quanta thrown in from one side long ago. The two halves of the black hole are joined along the horizon with a shift $\\alpha$ that grows exponentially with the time since the quanta were let go, so the wormhole between the two outsides grows longer. It is the geometry of the butterfly effect in holography.",
+      "tags": [
+        "shock wave",
+        "impulsive wave",
+        "null shell",
+        "null source",
+        "black hole",
+        "BTZ black hole",
+        "anti-de Sitter",
+        "negative cosmological constant",
+        "cosmological constant",
+        "wormhole",
+        "Einstein-Rosen bridge",
+        "horizon",
+        "event horizon",
+        "AdS/CFT",
+        "holography",
+        "thermofield double",
+        "butterfly effect",
+        "scrambling",
+        "quantum chaos",
+        "circularly symmetric",
+        "2+1 dimensional gravity",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "conformally flat",
+        "three-dimensional"
+      ],
+      "signature": "(-,+,+)",
+      "convention": "The anti-de Sitter radius $\\ell$ and the radius $R$ of the horizon are lengths, with $\\Lambda = -1/\\ell^2$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "btz",
+          "kind": "piece",
+          "text": "The black hole the shock is laid on, without rotation. Its two halves, cut along the horizon $u = 0$ and joined again with $v$ shifted by $\\alpha$, make the shock wave, and at $\\alpha = 0$ they join as they were [shenker2014]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "The bridge between the two outsides of Schwarzschild's black hole. Here the bridge joins two outsides of anti-de Sitter space, and the shock on the horizon makes it longer [shenker2014]."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "family",
+          "text": "The shock wave of one massless particle in flat spacetime. Dray and 't Hooft recovered it from the same kind of shift across a null surface that puts this shock on a horizon [dray1985]."
+        },
+        {
+          "id": "hotta_tanaka",
+          "kind": "family",
+          "text": "Another shock lying on a horizon, in de Sitter space. Both are shifts across a horizon of the kind Sfetsos's conditions allow with a cosmological constant [sfetsos1995]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "The black hole of anti-de Sitter space in four dimensions. Shenker and Stanford put the same shock on the horizon of such black holes in any number of dimensions and found the same scrambling time, $t_* = (\\beta/2\\pi)\\ln S$ [shenker2014]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Off the shock the spacetime is anti-de Sitter space of three dimensions with its points identified, as the BTZ black hole is [banados1993]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "family",
+          "text": "More black holes of three dimensions made by cutting and gluing anti-de Sitter space. Their outsides are the BTZ black hole's, as both outsides of the shock wave are."
+        },
+        {
+          "id": "quantum_btz",
+          "kind": "family",
+          "text": "The BTZ black hole with the backreaction of strongly coupled quantum fields included exactly [emparan2020qbtz]. The shock wave changes the same black hole classically, with a shell of null particles on its horizon."
+        }
+      ],
+      "references": [
+        "shenker2014",
+        "banados1992",
+        "maldacena2003",
+        "dray1985",
+        "sfetsos1995",
+        "sekino2008",
+        "shenker2014multiple",
+        "stanford2014",
+        "roberts2015",
+        "maldacena2016chaos",
+        "banados1993",
+        "emparan2020qbtz"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz_shock_wave.json",
+      "charts": [
+        {
+          "id": "kruskal",
+          "name": "Kruskal",
+          "coordinates": [
+            "u",
+            "v",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "-1 < u\\left(v + \\alpha\\Theta\\right) < 1",
+            "u = 0 \\;\\text{(the shock)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of anti-de Sitter space, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the horizon, a length, with $R^2 = 8Gm\\ell^2/c^2$ for a black hole of mass $m$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Shift across the shock, a pure number, $\\alpha = (E/4mc^2)e^{cRt_w/\\ell^2}$ with $E$ the energy of the quanta and $t_w$ the time before $t = 0$ at which they were let go"
+            },
+            {
+              "symbol": "\\Theta = \\tfrac{1}{2}\\left(1 + \\mathrm{sgn}(u)\\right)",
+              "description": "Step function of $u$, zero ahead of the shock and one behind it"
+            }
+          ],
+          "convention": "We use Shenker and Stanford's Kruskal coordinates $u$ and $v$, pure numbers both increasing to the future, with the shock on $u = 0$ and the outside on the right at $u < 0 < v$, and $\\phi$ the angle round the horizon, and the Dirac delta $\\delta(u)$ is the derivative of the step $\\Theta$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{-4\\ell^2\\,du\\,dv + R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2d\\phi^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{2\\ell^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{2\\ell^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{R^2\\left(1 - u\\left(v + \\alpha\\Theta\\right)\\right)^2}{\\left(1 + u\\left(v + \\alpha\\Theta\\right)\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        },
+        {
+          "id": "discontinuous",
+          "name": "Discontinuous Kruskal",
+          "coordinates": [
+            "U",
+            "V",
+            "\\phi"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "-1 < UV < 1",
+            "U = 0 \\;\\text{(the shock)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of anti-de Sitter space, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the horizon, a length, with $R^2 = 8Gm\\ell^2/c^2$ for a black hole of mass $m$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Shift across the shock, a pure number, $\\alpha = (E/4mc^2)e^{cRt_w/\\ell^2}$ with $E$ the energy of the quanta and $t_w$ the time before $t = 0$ at which they were let go"
+            }
+          ],
+          "convention": "We use the coordinates $U = u$ and $V = v + \\alpha\\Theta(u)$ of Shenker and Stanford, pure numbers, with $V$ jumping by $\\alpha$ across the shock $U = 0$, and we read the Dirac delta $\\delta$ as the limit of a pulse even about the shock. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{-4\\ell^2\\,dU\\,dV + 4\\ell^2\\alpha\\,\\delta(U)\\,dU^2 + R^2\\left(1 - UV\\right)^2d\\phi^2}{\\left(1 + UV\\right)^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "U"
+              ],
+              "value": "4\\alpha\\,\\ell^2\\,\\delta(U)"
+            },
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{2\\ell^2}{\\left(1 + UV\\right)^2}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{2\\ell^2}{\\left(1 + UV\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{R^2\\left(1 - UV\\right)^2}{\\left(1 + UV\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        },
+        {
+          "id": "exterior",
+          "name": "Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (R, \\infty)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of anti-de Sitter space, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the horizon, a length, with $R^2 = 8Gm\\ell^2/c^2$ for a black hole of mass $m$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\phi)$ on either outside, with $t$ the Killing time, carrying dimensions of time, and $r$ the radius of the circle, and we take components in the chart $x^0 = ct$, so $\\dot{t}$ means $d(ct)/d\\lambda$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{r^2 - R^2}{\\ell^2}c^2dt^2 + \\dfrac{\\ell^2\\,dr^2}{r^2 - R^2} + r^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{R^2 - r^2}{\\ell^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\ell^2}{r^2 - R^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
         }
       ]
     },

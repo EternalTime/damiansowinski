@@ -84,6 +84,11 @@
       "id": "ab_metrics",
       "kind": "family",
       "text": "The same mass boosted past the speed of light. The field of that tachyon is two of Ehlers and Kundt's metrics, A II inside a cone of shock and B I outside it [hruska2019]."
+    },
+    {
+      "id": "btz_shock_wave",
+      "kind": "family",
+      "text": "A shock of the same kind lying on the horizon of the BTZ black hole, the field of a shell of null particles spread round the horizon [shenker2014, dray1985]."
     }
   ],
   "references": [
@@ -114,7 +119,8 @@
     "podolsky1998impulsive",
     "horowitz2012",
     "podolsky1999nonexpanding",
-    "hruska2019"
+    "hruska2019",
+    "shenker2014"
   ],
   "coordinates": [
     {

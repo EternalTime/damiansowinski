@@ -131,6 +131,11 @@
       "id": "jackiw_teitelboim_black_hole",
       "kind": "family",
       "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Without rotation, this hole is that one times a circle whose radius is its dilaton [achucarro1993]."
+    },
+    {
+      "id": "btz_shock_wave",
+      "kind": "composite",
+      "text": "The black hole without rotation with a shell of null particles on its horizon, the field of a few quanta thrown in from one side long ago. Its two halves are joined along the horizon with a shift [shenker2014]."
     }
   ],
   "references": [
@@ -165,7 +170,8 @@
     "aminneborg1998",
     "emparan2002holograms",
     "emparan2020qbtz",
-    "achucarro1993"
+    "achucarro1993",
+    "shenker2014"
   ],
   "coordinates": [
     {

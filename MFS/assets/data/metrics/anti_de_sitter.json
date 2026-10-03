@@ -152,6 +152,11 @@
       "id": "jackiw_teitelboim_black_hole",
       "kind": "family",
       "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Its metric is everywhere anti-de Sitter space of two dimensions, and a dilaton marks its horizon [mertens2023]."
+    },
+    {
+      "id": "btz_shock_wave",
+      "kind": "family",
+      "text": "Off its shock, the shock wave in the BTZ black hole is anti-de Sitter space of three dimensions with its points identified [banados1993]."
     }
   ],
   "references": [
