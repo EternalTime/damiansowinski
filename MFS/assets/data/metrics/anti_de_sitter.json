@@ -134,6 +134,16 @@
       "text": "Products that keep anti-de Sitter space of two dimensions as one factor, times a flat plane with a uniform electromagnetic field or times a hyperbolic plane with none [ortaggio2002direct]."
     },
     {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "locally_same",
+      "text": "In three dimensions, anti-de Sitter space cut along several timelike surfaces and glued back together is a spacetime with many black holes, or one black hole with a wormhole inside [brill1996, aminneborg1998]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "A sheet of three dimensions in string theory whose throat is anti-de Sitter space of five dimensions times a sphere of five. Maldacena read his correspondence off that throat [maldacena1998]."
+    },
+    {
       "id": "quantum_btz",
       "kind": "family",
       "text": "A quantum black hole of three dimensions, held on a brane in anti-de Sitter space of four. Its lightest state is anti-de Sitter space of three dimensions, where the stress tensor of the quantum fields vanishes [emparan2002holograms, emparan2020qbtz]."
@@ -183,6 +193,8 @@
     "bicak1999",
     "griffiths2004",
     "ortaggio2002direct",
+    "brill1996",
+    "aminneborg1998",
     "emparan2002holograms",
     "emparan2020qbtz"
   ],

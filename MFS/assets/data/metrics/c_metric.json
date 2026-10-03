@@ -113,6 +113,11 @@
       "text": "A static black hole bent by matter far away, with nothing on its axis. Its horizon is smooth all the way round, with no string or strut to meet [fairhurst2001]."
     },
     {
+      "id": "kerr_bertotti_robinson",
+      "kind": "family",
+      "text": "A spinning hole in Bertotti and Robinson's magnetic field. Its static member is the one that does not accelerate in a family that also holds the C-metric set in that field [ovcharenko2026]."
+    },
+    {
       "id": "quantum_btz",
       "kind": "family",
       "text": "The C-metric in anti-de Sitter space, cut along its surface $x = 0$ where a brane sits. By holography the metric on the brane is a black hole of three dimensions with quantum fields around it [emparan2000branes2, emparan2020qbtz]."
@@ -147,6 +152,7 @@
     "dias2003",
     "bicak2009",
     "fairhurst2001",
+    "ovcharenko2026",
     "emparan2000branes2",
     "emparan2020qbtz"
   ],

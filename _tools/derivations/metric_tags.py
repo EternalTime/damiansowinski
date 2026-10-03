@@ -98,7 +98,7 @@ def write_facts(facts):
 # ---------------------------------------------------------------------------------------
 
 DIMENSION = {2: "two-dimensional", 3: "three-dimensional", 4: "four-dimensional",
-             5: "five-dimensional", 6: "six-dimensional"}
+             5: "five-dimensional", 6: "six-dimensional", 10: "ten-dimensional"}
 
 # The tags the facts decide. A spacetime carries each of them exactly when its charts say
 # so, which the tests hold every metric file to, so none of them is written by hand.
@@ -137,11 +137,21 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "btz_multi_holes_wormholes": {
+        "regions": [["sausage", "stereographic", "free_fall"]],
+        "why": "exterior covers the outside of one horizon alone, where the hole is static; the Killing "
+               "vector of that chart extends to no symmetry of the whole spacetime (Brill 1996, section 4; "
+               "Aminneborg, Bengtsson, Brill, Holst and Peldan 1998, section V)",
+    },
     "moving_mirror": {
         "regions": [["inertial", "null", "mirror_rest"]],
         "why": "thermal, collapse and rindler are three mirrors, Carlitz and Willey's, the one that imitates a "
                "collapse, and the uniformly accelerating one, which alone is at rest in a static chart; a mirror "
                "on a general world line leaves the spacetime to its right no symmetry",
+    },
+    "kerr_bertotti_robinson": {
+        "regions": [["boyer_lindquist"]],
+        "why": "static is the hole with no spin, a = 0, a special case of the family, which alone is static",
     },
     "neugebauer_meinel": {
         "regions": [["weyl", "corotating", "bardeen_wagoner", "spheroidal"]],
@@ -367,6 +377,10 @@ OVERRULED = {
     ("double_kerr", "vacuum"): (
         True, "f, omega and gamma are left free; the two Kerr black holes are a solution of "
               "the vacuum equations, Ernst's equation for f and omega and a quadrature for gamma"),
+    ("bach_weyl_ring", "vacuum"): (
+        True, "psi and gamma are held as functions while each chart's tensors are built; they are the "
+              "solution of the vacuum equations, Laplace's equation and Weyl's quadrature, that each "
+              "chart's parameters write out, which print_charts.py holds to a vanishing Ricci tensor"),
     ("morgan_morgan", "vacuum"): (
         True, "psi and gamma are left free in Weyl's chart; off the disc the field is the solution "
               "of the vacuum equations, Laplace's equation and a quadrature, that the oblate "
@@ -399,6 +413,40 @@ OVERRULED = {
                "class is static in every patch and only stationary as a whole, and the Lewis "
                "class is static in no patch"),
 }
+
+
+def _witness(reader, symbols):
+    """A function giving the exact value of an expression in a chart's held names at one point
+    of rational coordinates and parameters, with the names and their derivatives written out by
+    their definitions there. The angles get a rational sine and cosine."""
+    import sympy as sp
+    rng = random.Random(0)
+    free = set(symbols) | {s for value in reader.held.values() for s in value.free_symbols}
+    at = {s: sp.Rational(rng.randint(11, 40), rng.randint(7, 10)) for s in sorted(free, key=str)}
+    trig = {}
+    for s in symbols:
+        trig[sp.sin(s)], trig[sp.cos(s)] = sp.Rational(3, 5), sp.Rational(4, 5)
+    held = set(reader.held)
+    known = {}
+
+    def number(e):
+        return sp.cancel(e.subs(trig).subs(at))
+
+    def value(expression):
+        atoms = expression.atoms(sp.Derivative) | (expression.atoms(sp.core.function.AppliedUndef) & held)
+        for atom in atoms - set(known):
+            out = atom
+            for _ in reader.held:
+                out = out.subs(reader.held).doit()
+            known[atom] = number(out)
+        out = expression.xreplace({a: known[a] for a in atoms})
+        # Any symbol the definitions do not hold, as c or the rate of a turning azimuth, gets a
+        # rational value of its own.
+        for s in sorted(out.free_symbols - set(at), key=str):
+            at[s] = sp.Rational(rng.randint(11, 40), rng.randint(7, 10))
+        out = number(out)
+        return out if out.is_number else 0
+    return value
 
 
 def facts_of(metric, facts):
@@ -567,15 +615,31 @@ def compute(metric_id, entry, seconds):
     geometry = vm.geometry_of(g, symbols, seconds, reader)
     n = len(coords)
 
+    witness = _witness(reader, symbols) if vm.held_alone(reader) else None
+    # Such a chart's value is written out name by name, each put in canonical form on its own.
+    written = reader.written if witness is not None else reader.surface
+
     def zero(expression):
-        return vm.norm(reader.surface(sp.sympify(expression))) == 0
+        expression = sp.sympify(expression)
+        # A chart that holds names, as Ernst and Wild's does, has a value written out only once
+        # it vanishes at a point of rational coordinates: one that does not vanish there is not
+        # zero, and its canonical form, written out, can take minutes.
+        if witness is not None and expression != 0 and witness(expression) != 0:
+            return False
+        return vm.norm(written(expression)) == 0
 
     ricci = geometry.ricci_ll()
     ricci_flat = all(zero(ricci[a][b]) for a in range(n) for b in range(a, n))
 
     einstein = None
-    if not ricci_flat:
-        k = vm.norm(reader.surface(geometry.ricci_scalar())) / n
+    # A chart that holds names is no Einstein space if its Ricci tensor is not R/n times the metric
+    # at the one point, and then its Ricci scalar, minutes to write out, is never asked for.
+    apart = False
+    if witness is not None and not ricci_flat:
+        there = witness(geometry.ricci_scalar()) / n
+        apart = any(witness(ricci[a][b] - there * g[a, b]) != 0 for a in range(n) for b in range(a, n))
+    if not ricci_flat and not apart:
+        k = vm.norm(written(geometry.ricci_scalar())) / n
         constant = not (k.free_symbols & set(symbols)) and not k.atoms(sp.core.function.AppliedUndef) \
             and not k.atoms(sp.DiracDelta, sp.sign, sp.Abs)
         if constant and all(zero(ricci[a][b] - k * g[a, b]) for a in range(n) for b in range(a, n)):
