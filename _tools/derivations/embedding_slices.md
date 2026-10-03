@@ -722,6 +722,13 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - Every view of the charts without a cosmological constant, and the figure of the Kerr-Schild chart, marks nothing: those are other spacetimes than the two whose fronts are embedded.
 - There is no conformal diagram.
 
+### Flat space with supertranslation hair
+
+- The embedding has one view, the shells: the surfaces of $\theta$ and $\phi$ of the static chart at $t = 0$ and $\rho = 2.6$, $3$, $3.5$, $4.5$ and $6\,\ell$, a sequence played as a movie in $\rho$; each shell meets the equator's plane of every chart at one event.
+- `static/equator`: the point $t = 0$, $\rho = \rho_k$.
+- `bondi_retarded/equator` and `bondi_advanced/equator`: the same event, where $\rho = W + \ell$ and $ct = cu + W + \ell = cv - W - \ell$ with $W = \sqrt{r^2 + 9\ell^2/4}$, so $r = \sqrt{(\rho_k - \ell)^2 - 9\ell^2/4}$ and $cu = -\rho_k$ or $cv = \rho_k$.
+- The three conformal views mark the same events, $p, q = \mp\arctan((\rho_k - 5\ell/2)/\ell)$.
+
 ### The topological star
 
 - The embedding has two views at $r_B = 1$ and $r_S = 3/4$, both at $t = 0$: the cigar, the surface of $\rho$ and $\psi$ of the chart about the bubble from $\rho = 0$ to $8$, and the equator, the surface of $r$ and $\phi$ of Bah and Heidmann's chart from $r_B$ to $6r_B$ at $y = 0$ and $y = \pi R_y$.

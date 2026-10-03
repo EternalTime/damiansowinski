@@ -3698,6 +3698,7 @@ class StacksAndMovies(unittest.TestCase):
               ("einstein_rosen_waves", "pulse"): "$ct$", ("nariai", "universe"): "$ct$",
               ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
               ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
+              ("supertranslation_hair", "shells"): "$\\rho$",
               ("sultana_dyer", "paraboloid"): "$\\eta$",
               ("kastor_traschen", "two_holes"): "$c\\tau$",
               ("misner_brill_lindquist", "through"): "$a$", ("misner_brill_lindquist", "between"): "$a$",
@@ -5609,6 +5610,17 @@ class Slices(unittest.TestCase):
             X0, X1 = view["box"][:2]
             self.assertAlmostEqual(X0 + mark["points"][0][0] * (X1 - X0), 10.0, delta=2e-3, msg=key)
             return (lambda X: 10.0 if key.endswith("compactified/equator") else 20.0), [10.0]
+        if key.startswith("supertranslation_hair/"):
+            # Compere and Long's shell t = 0, rho = rho_k at ell = 1 is one event of each equator:
+            # (rho_k, 0) on the static plane, and r = sqrt((rho_k - 1)^2 - 9/4) with cu = -rho_k or
+            # cv = rho_k on the Bondi planes, since t = u + W + 1 = v - W - 1 and rho = W + 1 there.
+            self.assertEqual((mark["lines"], len(mark["points"])), ([], 1), key)
+            rho = surface["time"]
+            X_at, Y_at = {"static": (rho, 0.0), "bondi_retarded": (math.sqrt((rho - 1) ** 2 - 2.25), -rho),
+                          "bondi_advanced": (math.sqrt((rho - 1) ** 2 - 2.25), rho)}[key.split("/")[1]]
+            X0, X1 = view["box"][:2]
+            self.assertAlmostEqual(X0 + mark["points"][0][0] * (X1 - X0), X_at, delta=2e-3, msg=key)
+            return (lambda X: Y_at), [X_at]
         if key.startswith("hotta_tanaka/"):
             # The event where the sphere through the ring meets the view's plane, 15 degrees from a
             # particle or on the equator, rho = a/4 or 2a in the null cylindrical chart.
