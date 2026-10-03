@@ -3302,7 +3302,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
         flat = {"minkowski", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
-                "chandrasekhar_xanthopoulos", "belinski_zakharov"}
+                "chandrasekhar_xanthopoulos", "belinski_zakharov", "maximally_supersymmetric_plane_wave"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
         # Hayward's hole forms from flat space and leaves flat space behind: the first and the last
@@ -3439,7 +3439,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                          {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave",
                           "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
-                          "belinski_zakharov", "moving_mirror"})
+                          "belinski_zakharov", "moving_mirror", "maximally_supersymmetric_plane_wave"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -3656,7 +3656,8 @@ class StacksAndMovies(unittest.TestCase):
     September 2026, from the numbers written and nothing else."""
 
     STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "kasner_magnetic": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
-              "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0}   # the height of a unit of time
+              "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0,
+              "maximally_supersymmetric_plane_wave": 0.8}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
@@ -3693,6 +3694,7 @@ class StacksAndMovies(unittest.TestCase):
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
               ("belinski_zakharov", "ring"): "$\\tau$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
+              ("maximally_supersymmetric_plane_wave", "ring"): "$\\mu cu$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$",
               **{("roberts", case): "$ct$" for case in ("disperses", "threshold", "collapses")},
@@ -4336,7 +4338,8 @@ class TurningLightConeFigures(unittest.TestCase):
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
         # Ernst and Wild's ergoregion is its meridional plane seen from the side, t and phi left out.
         self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
-                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap", "kerr_melvin/tube"})
+                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap", "kerr_melvin/tube",
+                                 "maximally_supersymmetric_plane_wave/focus"})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -5500,6 +5503,20 @@ class Slices(unittest.TestCase):
     # The charged shell is inside r_- only from v - r = -0.25 r_s on, so the first two moments have no
     # part in the static chart inside r_- nor in the outgoing chart, which shares only that region with
     # the ingoing one.
+    # Single moments a drawing does not hold, as (view, surface, ring) of every() with ring None for a
+    # surface of its own. The maximally supersymmetric plane wave's ring is drawn at mu c u = 0, 0.5, 1,
+    # 1.5, 2.5 and 3, in the ring's view and on the tube alike: the Rosen chart ends at u = 0, so neither
+    # its figure nor its band of the conformal diagram holds the first; the conformally flat chart ends
+    # at mu c u = pi/2, so its band holds none after 1.5, and its figure, whose window runs to cU = 3/mu,
+    # none after 1, since mu c U = tan(1.5) is 14.1.
+    HIDDEN_MOMENTS = {
+        **{where: {("ring", 0, None), ("tube", 0, 0)}
+           for where in ("maximally_supersymmetric_plane_wave/rosen/focus", "conformal maximally_supersymmetric_plane_wave/rosen")},
+        "maximally_supersymmetric_plane_wave/conformally_flat/focus": {("ring", k, None) for k in (3, 4, 5)}
+        | {("tube", 0, k) for k in (3, 4, 5)},
+        "conformal maximally_supersymmetric_plane_wave/conformally_flat": {("ring", k, None) for k in (4, 5)}
+        | {("tube", 0, k) for k in (4, 5)},
+    }
     HIDDEN_SURFACES = {"lindquist_wheeler_lattice/schwarzschild_cell/radial": {("lattice", 2), ("lattice", 3)},
                        "lindquist_wheeler_lattice/cosmological_time/radial": {("lattice", k) for k in range(4)},
                        "conformal lindquist_wheeler_lattice/expanding": {("lattice", k) for k in range(4)},
@@ -5525,7 +5542,8 @@ class Slices(unittest.TestCase):
                 self.assertEqual(marks, [], where)
                 continue
             every = [m for m in self.every(metric_id) if m[0] not in self.HIDDEN_VIEWS.get(where, set())
-                     and m[:2] not in self.HIDDEN_SURFACES.get(where, set())]
+                     and m[:2] not in self.HIDDEN_SURFACES.get(where, set())
+                     and m not in self.HIDDEN_MOMENTS.get(where, set())]
             self.assertEqual(marks, every, where)
             drawn += len(marks)
         self.assertGreater(drawn, 100)
@@ -6808,6 +6826,11 @@ class Slices(unittest.TestCase):
                         v = math.tan((T + X) / 2 - math.pi / 4) - (0.5 if u > 1e-9 else 0.0)
                         want = hotta_tanaka_moment(t)
                         self.assertLess(abs(u - want[0]) + abs(v - want[1]), 5e-4, where)
+                    elif metric_id == "maximally_supersymmetric_plane_wave":
+                        # The wave front at mu c u = t meets the axis at the event v = 0, which
+                        # p = arctan(2 mu v) - pi/2 and q = mu c u + pi/2 put at T = t, X = t + pi.
+                        (X, T), = points
+                        self.assertLess(abs(T - t) + abs(X - t - math.pi), 2e-4, where)
                     elif metric_id == "vaidya":
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2

@@ -1451,6 +1451,18 @@ The inside of a charged black hole crossed by two streams of radiation, one fall
 - chart Double Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -2e^{2\sigma}du\,dv + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Advanced Time and Areal Radius: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -gh\,dv^2 - 2g\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Maximally Supersymmetric Plane Wave
+
+A plane wave of ten dimensions, held up by the 5-form field of type IIB supergravity, that keeps all 32 of the theory's supersymmetries. It pulls every free particle toward its axis with one period in all eight directions across it. Matthias Blau, José Figueroa-O'Farrill, Christopher Hull, and George Papadopoulos found it in 2001, and it is the geometry near a light ray circling the sphere of anti-de Sitter space times a 5-sphere.
+
+- id: `maximally_supersymmetric_plane_wave`
+- tags: stationary, conformally flat, ten-dimensional, plane wave, pp-wave, higher dimensions, supergravity, string theory, supersymmetric, homogeneous, Penrose limit, AdS/CFT, holography, geodesically complete, no horizon, null Killing vector, exact solution, Lorentzian, idealized model
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/maximally_supersymmetric_plane_wave.json
+- chart Brinkmann: coordinates $(u, v, x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8)$, $$ds^2 = -\mu^2\left(x_1^2 + x_2^2 + x_3^2 + x_4^2 + x_5^2 + x_6^2 + x_7^2 + x_8^2\right)c^2du^2 - 2c\,du\,dv + dx_1^2 + dx_2^2 + dx_3^2 + dx_4^2 + dx_5^2 + dx_6^2 + dx_7^2 + dx_8^2$$
+- chart Rosen: coordinates $(u, v, y_1, y_2, y_3, y_4, y_5, y_6, y_7, y_8)$, $$ds^2 = -2c\,du\,dv + \sin^2\left(\mu cu\right)\left(dy_1^2 + dy_2^2 + dy_3^2 + dy_4^2 + dy_5^2 + dy_6^2 + dy_7^2 + dy_8^2\right)$$
+- chart Conformally Flat: coordinates $(U, V, X_1, X_2, X_3, X_4, X_5, X_6, X_7, X_8)$, $$ds^2 = \dfrac{-2c\,dU\,dV + dX_1^2 + dX_2^2 + dX_3^2 + dX_4^2 + dX_5^2 + dX_6^2 + dX_7^2 + dX_8^2}{1 + \mu^2c^2U^2}$$
+
 ### McVittie Mass in an Expanding Universe
 
 A point mass in a spatially flat expanding universe, the solution George McVittie found in 1933 for a perfect fluid at rest about the mass. Where a positive cosmological constant drives the late expansion, it holds a black hole whose horizon approaches that of Schwarzschild-de Sitter.

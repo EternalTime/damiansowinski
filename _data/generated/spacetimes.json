@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 174,
+  "count": 175,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1549,6 +1549,11 @@
           "id": "vuorio_warped_ads",
           "kind": "family",
           "text": "Anti-de Sitter space of three dimensions with its light cones squashed or stretched along one direction, the vacua of gravity with a mass for the graviton. Stretched, as in Vuorio's universe, they hold closed timelike curves through every event [rooman1998]."
+        },
+        {
+          "id": "maximally_supersymmetric_plane_wave",
+          "kind": "family",
+          "text": "A plane wave of ten dimensions, the Penrose limit of anti-de Sitter space of five dimensions times a 5-sphere along a light ray circling the sphere [blau2002penrose, berenstein2002]."
         }
       ],
       "references": [
@@ -1600,7 +1605,9 @@
         "freund1980",
         "emparan2002holograms",
         "emparan2020qbtz",
-        "mertens2023"
+        "mertens2023",
+        "blau2002penrose",
+        "berenstein2002"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -6071,6 +6078,11 @@
           "id": "vaidya",
           "kind": "family",
           "text": "Light as the source again, here streaming out of a star evenly in all directions. Prahlad Vaidya found the field around the star in 1951 [vaidya1951]."
+        },
+        {
+          "id": "maximally_supersymmetric_plane_wave",
+          "kind": "family",
+          "text": "A plane wave of ten dimensions whose profile is quadratic and the same in all eight directions across it, as the profile inside the beam is in two. Light leaving its axis comes back to it after a time $\\pi/\\mu c$ [blau2002, marolf2002]."
         }
       ],
       "references": [
@@ -6094,7 +6106,9 @@
         "bonnor2009",
         "bonnor1954",
         "bonnor1994",
-        "vaidya1951"
+        "vaidya1951",
+        "blau2002",
+        "marolf2002"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/light_beam.json",
@@ -18488,6 +18502,11 @@
           "id": "nariai",
           "kind": "family",
           "text": "Another product of a spacetime of two dimensions and a sphere: de Sitter space times a sphere of the same radius, held by a positive cosmological constant [nariai1950]."
+        },
+        {
+          "id": "maximally_supersymmetric_plane_wave",
+          "kind": "family",
+          "text": "The counterpart one dimension down. The Penrose limit of anti-de Sitter space of five dimensions times a 5-sphere along a light ray circling the sphere is a plane wave that keeps all 32 supersymmetries of type IIB supergravity [blau2002penrose]."
         }
       ],
       "references": [
@@ -18508,7 +18527,8 @@
         "grossperry1983",
         "chamblin1999",
         "randall1999b",
-        "nariai1950"
+        "nariai1950",
+        "blau2002penrose"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/freund_rubin.json",
@@ -34810,6 +34830,418 @@
       ]
     },
     {
+      "id": "maximally_supersymmetric_plane_wave",
+      "name": "Maximally Supersymmetric Plane Wave",
+      "short_name": "Maximally Supersymmetric Plane Wave",
+      "description": "A plane wave of ten dimensions, held up by the 5-form field of type IIB supergravity, that keeps all 32 of the theory's supersymmetries. It pulls every free particle toward its axis with one period in all eight directions across it. Matthias Blau, José Figueroa-O'Farrill, Christopher Hull, and George Papadopoulos found it in 2001, and it is the geometry near a light ray circling the sphere of anti-de Sitter space times a 5-sphere.",
+      "tags": [
+        "stationary",
+        "conformally flat",
+        "ten-dimensional",
+        "plane wave",
+        "pp-wave",
+        "higher dimensions",
+        "supergravity",
+        "string theory",
+        "supersymmetric",
+        "homogeneous",
+        "Penrose limit",
+        "AdS/CFT",
+        "holography",
+        "geodesically complete",
+        "no horizon",
+        "null Killing vector",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "related": [
+        {
+          "id": "three_brane_throat",
+          "kind": "limit_source",
+          "text": "Anti-de Sitter space of five dimensions times a 5-sphere, the throat of a stack of three-branes. Its Penrose limit along a light ray circling the sphere is this wave [blau2002penrose, berenstein2002]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "Anti-de Sitter space of four dimensions times a 7-sphere, which keeps all the supersymmetry of eleven dimensions. The same limit along a light ray circling its sphere gives the plane wave of eleven dimensions that Kowalski-Glikman found, the counterpart of this one [blau2002penrose, kowalski1984]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "family",
+          "text": "The plane-fronted waves of four dimensions. This one is their homogeneous kin in ten, with $H = -\\mu^2\\left(x_1^2 + \\dots + x_8^2\\right)$ the same in every direction across it and a 5-form field to hold it up [blau2002]."
+        },
+        {
+          "id": "light_beam",
+          "kind": "family",
+          "text": "Bonnor's beam of light, whose profile inside the beam is quadratic and the same in both directions across it, as this wave's is in all eight. Light sent against the beam swings through its axis as light swings through this wave's [bonnor1969light, marolf2002]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Anti-de Sitter space alone. A light ray of anti-de Sitter space times a sphere that does not move on the sphere has flat space for its Penrose limit, and only a ray circling the sphere gives this wave [blau2002penrose]."
+        }
+      ],
+      "references": [
+        "cahen1970",
+        "blau2002",
+        "kowalski1984",
+        "metsaev2002",
+        "blau2002penrose",
+        "penrose1976",
+        "berenstein2002",
+        "marolf2002",
+        "maldacena1998",
+        "berenstein2002holography",
+        "penrose1965plane",
+        "hubeny2002",
+        "bonnor1969light"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/maximally_supersymmetric_plane_wave.json",
+      "charts": [
+        {
+          "id": "brinkmann",
+          "name": "Brinkmann",
+          "coordinates": [
+            "u",
+            "v",
+            "x_1",
+            "x_2",
+            "x_3",
+            "x_4",
+            "x_5",
+            "x_6",
+            "x_7",
+            "x_8"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "x_4 \\in (-\\infty, \\infty)",
+            "x_5 \\in (-\\infty, \\infty)",
+            "x_6 \\in (-\\infty, \\infty)",
+            "x_7 \\in (-\\infty, \\infty)",
+            "x_8 \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "The mass of the wave, an inverse length. In the Brinkmann chart the five-form is $F = 2\\mu c\\,du\\wedge\\left(dx_1\\wedge dx_2\\wedge dx_3\\wedge dx_4 + dx_5\\wedge dx_6\\wedge dx_7\\wedge dx_8\\right)$, normalised as Metsaev normalises it, so that its square carries the one component $R_{uu} = 8\\mu^2$ of the Ricci tensor; the dilaton is constant and every other field vanishes"
+            }
+          ],
+          "convention": "We use coordinates $(u, v, x_1, \\dots, x_8)$, with $u$ the time that labels the wave fronts, carrying dimensions of time, $v$ a length along the rays, and $x_1$ to $x_8$ the eight lengths across them. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -\\mu^2\\left(x_1^2 + x_2^2 + x_3^2 + x_4^2 + x_5^2 + x_6^2 + x_7^2 + x_8^2\\right)c^2du^2 - 2c\\,du\\,dv + dx_1^2 + dx_2^2 + dx_3^2 + dx_4^2 + dx_5^2 + dx_6^2 + dx_7^2 + dx_8^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\mu^2\\left(x_1^2 + x_2^2 + x_3^2 + x_4^2 + x_5^2 + x_6^2 + x_7^2 + x_8^2\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_4",
+                "x_4"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_5",
+                "x_5"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_6",
+                "x_6"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_7",
+                "x_7"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_8",
+                "x_8"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "rosen",
+          "name": "Rosen",
+          "coordinates": [
+            "u",
+            "v",
+            "y_1",
+            "y_2",
+            "y_3",
+            "y_4",
+            "y_5",
+            "y_6",
+            "y_7",
+            "y_8"
+          ],
+          "domains": [
+            "u \\in (0, \\pi/\\mu c)",
+            "v \\in (-\\infty, \\infty)",
+            "y_1 \\in (-\\infty, \\infty)",
+            "y_2 \\in (-\\infty, \\infty)",
+            "y_3 \\in (-\\infty, \\infty)",
+            "y_4 \\in (-\\infty, \\infty)",
+            "y_5 \\in (-\\infty, \\infty)",
+            "y_6 \\in (-\\infty, \\infty)",
+            "y_7 \\in (-\\infty, \\infty)",
+            "y_8 \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "The mass of the wave, an inverse length. In the Brinkmann chart the five-form is $F = 2\\mu c\\,du\\wedge\\left(dx_1\\wedge dx_2\\wedge dx_3\\wedge dx_4 + dx_5\\wedge dx_6\\wedge dx_7\\wedge dx_8\\right)$, normalised as Metsaev normalises it, so that its square carries the one component $R_{uu} = 8\\mu^2$ of the Ricci tensor; the dilaton is constant and every other field vanishes"
+            }
+          ],
+          "convention": "We use coordinates $(u, v, y_1, \\dots, y_8)$, with $u$ a time and $v$ a length, and $y_1$ to $y_8$ lengths that label the light rays leaving the axis at $u = 0$, $x_i = y_i\\sin(\\mu cu)$ in the Brinkmann chart. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -2c\\,du\\,dv + \\sin^2\\left(\\mu cu\\right)\\left(dy_1^2 + dy_2^2 + dy_3^2 + dy_4^2 + dy_5^2 + dy_6^2 + dy_7^2 + dy_8^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "y_1",
+                "y_1"
+              ],
+              "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+            },
+            {
+              "indices": [
+                "y_2",
+                "y_2"
+              ],
+              "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+            },
+            {
+              "indices": [
+                "y_3",
+                "y_3"
+              ],
+              "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+            },
+            {
+              "indices": [
+                "y_4",
+                "y_4"
+              ],
+              "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+            },
+            {
+              "indices": [
+                "y_5",
+                "y_5"
+              ],
+              "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+            },
+            {
+              "indices": [
+                "y_6",
+                "y_6"
+              ],
+              "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+            },
+            {
+              "indices": [
+                "y_7",
+                "y_7"
+              ],
+              "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+            },
+            {
+              "indices": [
+                "y_8",
+                "y_8"
+              ],
+              "value": "\\sin^2\\left(\\mu\\,u\\,c\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "conformally_flat",
+          "name": "Conformally Flat",
+          "coordinates": [
+            "U",
+            "V",
+            "X_1",
+            "X_2",
+            "X_3",
+            "X_4",
+            "X_5",
+            "X_6",
+            "X_7",
+            "X_8"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "X_1 \\in (-\\infty, \\infty)",
+            "X_2 \\in (-\\infty, \\infty)",
+            "X_3 \\in (-\\infty, \\infty)",
+            "X_4 \\in (-\\infty, \\infty)",
+            "X_5 \\in (-\\infty, \\infty)",
+            "X_6 \\in (-\\infty, \\infty)",
+            "X_7 \\in (-\\infty, \\infty)",
+            "X_8 \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "The mass of the wave, an inverse length. In the Brinkmann chart the five-form is $F = 2\\mu c\\,du\\wedge\\left(dx_1\\wedge dx_2\\wedge dx_3\\wedge dx_4 + dx_5\\wedge dx_6\\wedge dx_7\\wedge dx_8\\right)$, normalised as Metsaev normalises it, so that its square carries the one component $R_{uu} = 8\\mu^2$ of the Ricci tensor; the dilaton is constant and every other field vanishes"
+            }
+          ],
+          "convention": "We use coordinates $(U, V, X_1, \\dots, X_8)$, with $U$ a time, $\\mu cU = \\tan(\\mu cu)$ for the $u$ of the Brinkmann chart, and $V$ and $X_1$ to $X_8$ lengths, $x_i = X_i\\cos(\\mu cu)$, so that the chart covers $|\\mu cu| < \\pi/2$. We take components in the chart $x^0 = cU$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{U}$ means $d(cU)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{-2c\\,dU\\,dV + dX_1^2 + dX_2^2 + dX_3^2 + dX_4^2 + dX_5^2 + dX_6^2 + dX_7^2 + dX_8^2}{1 + \\mu^2c^2U^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+            },
+            {
+              "indices": [
+                "X_1",
+                "X_1"
+              ],
+              "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+            },
+            {
+              "indices": [
+                "X_2",
+                "X_2"
+              ],
+              "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+            },
+            {
+              "indices": [
+                "X_3",
+                "X_3"
+              ],
+              "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+            },
+            {
+              "indices": [
+                "X_4",
+                "X_4"
+              ],
+              "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+            },
+            {
+              "indices": [
+                "X_5",
+                "X_5"
+              ],
+              "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+            },
+            {
+              "indices": [
+                "X_6",
+                "X_6"
+              ],
+              "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+            },
+            {
+              "indices": [
+                "X_7",
+                "X_7"
+              ],
+              "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+            },
+            {
+              "indices": [
+                "X_8",
+                "X_8"
+              ],
+              "value": "\\dfrac{1}{\\mu^2\\,U^2\\,c^2 + 1}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "mcvittie",
       "name": "McVittie Mass in an Expanding Universe",
       "short_name": "McVittie",
@@ -43743,6 +44175,11 @@
           "id": "bondi_sachs",
           "kind": "programme",
           "text": "Papers VII and VIII of the series whose paper III gave the exact plane waves. They turn from the wave to its source and show that an isolated body loses mass as it radiates [bondi1962, sachs1962]."
+        },
+        {
+          "id": "maximally_supersymmetric_plane_wave",
+          "kind": "family",
+          "text": "A plane wave of ten dimensions with $H = -\\mu^2\\left(x_1^2 + \\dots + x_8^2\\right)$, the same in every direction across it, held up by a 5-form field of supergravity. It keeps every supersymmetry of the theory [blau2002]."
         }
       ],
       "references": [
@@ -43785,7 +44222,8 @@
         "chandrasekhar1986",
         "podolsky1999expanding",
         "bondi1962",
-        "sachs1962"
+        "sachs1962",
+        "blau2002"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -53876,6 +54314,11 @@
           "id": "freund_rubin",
           "kind": "family",
           "text": "The sister in eleven dimensions: anti-de Sitter space of four dimensions times a 7-sphere, the throat of a stack of membranes, with the sphere twice the radius [gibbons1993, maldacena1998]."
+        },
+        {
+          "id": "maximally_supersymmetric_plane_wave",
+          "kind": "limit",
+          "text": "The Penrose limit of the throat along a light ray circling its 5-sphere, a plane wave of ten dimensions that keeps all 32 supersymmetries of type IIB supergravity [blau2002penrose, berenstein2002]."
         }
       ],
       "references": [
@@ -53893,7 +54336,9 @@
         "gubser1996",
         "klebanov1997",
         "gubser1998",
-        "witten1998"
+        "witten1998",
+        "blau2002penrose",
+        "berenstein2002"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/three_brane_throat.json",

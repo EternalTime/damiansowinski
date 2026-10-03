@@ -19,7 +19,8 @@ cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_b
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, freund_rubin, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
-jackiw_teitelboim_black_hole, unruh_acoustic_hole and vuorio_warped_ads, and Godel's cylindrical chart.
+jackiw_teitelboim_black_hole, unruh_acoustic_hole, vuorio_warped_ads and maximally_supersymmetric_plane_wave,
+and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -28224,7 +28225,7 @@ def unruh_acoustic_hole(system):
     omega = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
     if system == "laboratory":
         name, coords = "Laboratory", ["t", "r", "\\theta", "\\phi"]
-        domains = ["t \\in " + reals, "r \\in (0, \\infty)"] + sphere + ["r = r_0 \;\\text{(the sonic horizon)}"]
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)"] + sphere + ["r = r_0 \\;\\text{(the sonic horizon)}"]
         line = "ds^2 = -c^2dt^2 + \\left(dr + \\dfrac{c\\,r_0^2}{r^2}dt\\right)^2" + omega
         chart_line = "ds^2 = -dt^2 + \\left(dr + \\dfrac{r_0^2}{r^2}dt\\right)^2" + omega
         lead = "-\\left(1 - \\dfrac{r_0^4}{r^4}\\right)"
@@ -30181,6 +30182,180 @@ def write_free_chart(system):
 
 
 CHARTS["vuorio_warped_ads"] = [lambda s=s: vuorio_warped_ads(s) for s in VUORIO_CHARTS]
+
+
+# -- The maximally supersymmetric plane wave of ten dimensions ------------------------------
+
+MSW_CHARTS = ["brinkmann", "rosen", "conformally_flat"]
+
+
+def msw_sum(letter, power=""):
+    """x_1^2 + ... + x_8^2, or with power="d", dx_1^2 + ... + dx_8^2."""
+    return " + ".join(f"{power}{letter}_{i}^2" for i in range(1, 9))
+
+
+def maximally_supersymmetric_plane_wave(system):
+    """The plane wave of type IIB supergravity that keeps all thirty-two supersymmetries, in three
+    charts, each in units where mu is an inverse length and the time coordinate carries c:
+
+    brinkmann         Blau, Figueroa-O'Farrill, Hull and Papadopoulos's solution of hep-th/0110242 with
+                      lambda = mu/2, which is Metsaev's line element and Marolf and Ross's, with
+                      x^+ = cu and x^- = v;
+    rosen             the same authors' Penrose limit of anti-de Sitter space times a 5-sphere in
+                      Rosen coordinates, hep-th/0201081 at rho = 1, rescaled by mu;
+                      x_i = y_i sin(mu c u), v = v' + (mu/2) y^2 sin(mu c u) cos(mu c u);
+    conformally_flat  Berenstein and Nastase's map onto Minkowski space in hep-th/0205048,
+                      mu c U = tan(mu c u), x_i = X_i cos(mu c u).
+
+    Their chain of maps carries the wave on to the Einstein static universe R x S^9; written as a chart its
+    curvature printed to 17 MB, so it is drawn as the conformal diagram (conformal.py) and its map
+    is checked in _tools/test_maximally_supersymmetric_plane_wave.py.
+
+    msw_check holds the Brinkmann chart to type IIB supergravity with Metsaev's five-form and every
+    other chart to being the Brinkmann chart pulled back. maximally_supersymmetric_plane_wave.md is
+    the derivation."""
+    reals = "(-\\infty, \\infty)"
+    if system == "brinkmann":
+        coords = ["u", "v"] + [f"x_{i}" for i in range(1, 9)]
+        domains = [f"{c} \\in {reals}" for c in coords]
+        name = "Brinkmann"
+        line = ("ds^2 = -\\mu^2\\left(" + msw_sum("x") + "\\right){c2}du^2 - 2{c}\\,du\\,dv + " + msw_sum("x", "d"))
+    elif system == "rosen":
+        coords = ["u", "v"] + [f"y_{i}" for i in range(1, 9)]
+        domains = ["u \\in (0, \\pi/\\mu c)"] + [f"{c} \\in {reals}" for c in coords[1:]]
+        name = "Rosen"
+        line = ("ds^2 = -2{c}\\,du\\,dv + \\sin^2\\left(\\mu {c}u\\right)\\left(" + msw_sum("y", "d") + "\\right)")
+    else:
+        coords = ["U", "V"] + [f"X_{i}" for i in range(1, 9)]
+        domains = [f"{c} \\in {reals}" for c in coords]
+        name = "Conformally Flat"
+        line = ("ds^2 = \\dfrac{-2{c}\\,dU\\,dV + " + msw_sum("X", "d") + "}{1 + \\mu^2{c2}U^2}")
+    probe = vm.Reader(coords, ["\\mu"], ())
+    published = line.replace("{c2}", "c^2").replace("{c}", "c")
+    chart_line = line.replace("{c2}", "").replace("{c}", "")
+    return {"metric_id": "maximally_supersymmetric_plane_wave",
+            "check": lambda chart, s=system: msw_check(chart, s),
+            "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                       "parameters": ["\\mu"], "line_element": published},
+            "chart_line_element": chart_line,
+            "printer": {"lead": [probe.parameters["mu"], *probe.symbol.values()], "flip": False},
+            # The Rosen and conformally flat components hold their time, which they print as c times it.
+            **({"time": coords[0]} if system != "brinkmann" else {})}
+
+
+def msw_brinkmann():
+    spec = maximally_supersymmetric_plane_wave("brinkmann")
+    return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+
+def msw_five_form(n=10):
+    """Metsaev's five-form in the Brinkmann chart, F_u1234 = F_u5678 = 2 mu, as a dict from sorted
+    index tuples to components, with u the index 0, v 1 and x_i the index i + 1."""
+    mu = sp.Symbol("mu", positive=True)
+    F = {}
+    for block in ((2, 3, 4, 5), (6, 7, 8, 9)):
+        F[(0,) + block] = 2 * mu
+    return F, mu
+
+
+def msw_check(chart, system):
+    """The Brinkmann chart against type IIB supergravity with only the metric and the five-form:
+    F = 2 mu du ^ (dx_1 ^ dx_2 ^ dx_3 ^ dx_4 + dx_5 ^ dx_6 ^ dx_7 ^ dx_8), Metsaev's, in his
+    normalization R_MN = F_MPQRS F_N^PQRS / 24, which holds slot by slot; F is closed, being
+    constant, and equal to its Hodge dual or to minus it, as the orientation is chosen; the Weyl
+    tensor vanishes, Blau, Figueroa-O'Farrill, Hull and Papadopoulos's conformal flatness of a
+    scalar A_ij. Every other chart is the Brinkmann chart pulled back: the Rosen and conformally
+    flat charts exactly, J^T g J slot by slot."""
+    from sympy.combinatorics import Permutation
+
+    n = 10
+    name = f"maximally_supersymmetric_plane_wave/{system}"
+    g = sp.Matrix(chart.geo.g)
+    x = chart.symbols
+    mu = chart.reader.parameters["mu"]
+    if system == "brinkmann":
+        F, mu_ = msw_five_form()
+        F = {k: v.subs(mu_, mu) for k, v in F.items()}
+        ginv = sp.Matrix(chart.geo.ginv)
+
+        def comp(idx):
+            # The component of F at any ordered index tuple, with its sign.
+            if len(set(idx)) < 5:
+                return 0
+            order = sorted(range(5), key=lambda i: idx[i])
+            key = tuple(idx[i] for i in order)
+            if key not in F:
+                return 0
+            return F[key] * Permutation(order).signature()
+
+        def upper(idx):
+            # F with every index raised; only the u index of F has a raised partner off the diagonal.
+            total = 0
+            for low in itertools.product(*[[b for b in range(n) if ginv[a, b] != 0] for a in idx]):
+                c = comp(low)
+                if c:
+                    total += c * sp.Mul(*[ginv[a, b] for a, b in zip(idx, low)])
+            return sp.expand(total)
+
+        ricci = chart.geo.ricci_ll()
+        for a in range(n):
+            for b in range(a, n):
+                # F_a PQRS F_b^PQRS: lower b again through g.
+                lowered = 0
+                for rest in itertools.combinations(range(n), 4):
+                    for perm in itertools.permutations(rest):
+                        fa = comp((a,) + perm)
+                        if not fa:
+                            continue
+                        for c in range(n):
+                            if g[b, c] != 0:
+                                lowered += fa * g[b, c] * upper((c,) + perm)
+                if vm.norm(sp.sympify(vm._at(ricci, (a, b))) - sp.expand(lowered) / 24) != 0:
+                    raise AssertionError(f"{name}: R_MN = F F/24 fails in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+        # Hodge duality, sqrt|g| = 1: (*F)_S = eps_{S S'} F^{S'} for each sorted 5-tuple S and its
+        # complement S', the one ordering of the five summed indices that is not zero up to sign.
+        signs = set()
+        for S in itertools.combinations(range(n), 5):
+            rest = tuple(i for i in range(n) if i not in S)
+            dual = Permutation(list(S) + list(rest)).signature() * upper(rest)
+            low = F.get(S, 0)
+            if dual == 0 and low == 0:
+                continue
+            if dual == 0 or low == 0:
+                raise AssertionError(f"{name}: F and its dual differ in their components")
+            signs.add(sp.simplify(dual / low))
+        if signs not in ({1}, {-1}):
+            raise AssertionError(f"{name}: F is not self-dual nor anti-self-dual, ratios {signs}")
+        weyl = chart.geo.weyl_llll()
+        for idx in vm._indices(n, 4):
+            if vm.norm(sp.sympify(vm._at(weyl, idx))) != 0:
+                raise AssertionError(f"{name}: the Weyl tensor does not vanish")
+        return
+
+    brink = msw_brinkmann()
+    gB = sp.Matrix(brink.geo.g).subs(brink.reader.parameters["mu"], mu)
+    u_, v_ = x[0], x[1]
+    if system == "rosen":
+        ys = x[2:]
+        s, k = sp.sin(mu * u_), sp.cos(mu * u_)
+        image = [u_, v_ + mu * sum(y ** 2 for y in ys) * s * k / 2] + [y * s for y in ys]
+    else:
+        Xs = x[2:]
+        root = sp.sqrt(1 + mu ** 2 * u_ ** 2)
+        image = [sp.atan(mu * u_) / mu, v_ - mu ** 2 * u_ * sum(X ** 2 for X in Xs) / (2 * (1 + mu ** 2 * u_ ** 2))] \
+            + [X / root for X in Xs]
+    at = dict(zip(brink.symbols, image))
+    J = sp.Matrix(n, n, lambda i, j: sp.diff(image[i], x[j]))
+    pulled = J.T * gB.subs(at, simultaneous=True) * J
+    for i in range(n):
+        for j in range(i, n):
+            if sp.simplify(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"{name}: not the Brinkmann chart pulled back, slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["maximally_supersymmetric_plane_wave"] = [lambda s=s: maximally_supersymmetric_plane_wave(s)
+                                                 for s in MSW_CHARTS]
 
 
 def write(spec):

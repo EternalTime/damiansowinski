@@ -16253,6 +16253,102 @@ def moving_mirror(ck, src):
                         "right of the mirror."])]
 
 
+
+def maximally_supersymmetric_plane_wave(ck, src):
+    """The wave front at six values of u of the Brinkmann chart, mu c u = 0 to 3 in units of 1/mu,
+    the plane of x_1 and x_2 with every other direction across the wave at zero: a surface of
+    constant u has the metric dx_1^2 + dx_2^2 whatever v is on it, flat. The ring is 360 free
+    particles at rest at u = 0 on x_1^2 + x_2^2 = 1/mu^2, each run with the published Christoffel
+    symbols, u being affine on every geodesic since no Gamma^u is published: x_i'' = -Gamma^x_i_uu.
+    The wave pulls every particle toward the axis as x_i'' = -mu^2 x_i, so the ring stays a circle
+    of radius cos(mu c u)/mu, closes on the axis at mu c u = pi/2 and is back at rest on its first
+    circle at mu c u = pi, every particle at the point opposite where it started."""
+    name = "maximally_supersymmetric_plane_wave"
+    gamma, R = published_christoffel(src, name, "brinkmann")
+    ck.exact("maximally supersymmetric plane wave: no published Gamma^u, so u is an affine parameter",
+             not any(ix[0] == "u" for ix in gamma))
+    across = [f"x_{i}" for i in range(1, 9)]
+    ck.exact("maximally supersymmetric plane wave: the only published Gamma^x_i are Gamma^x_i_uu",
+             {ix for ix in gamma if ix[0] in across} == {(c, "u", "u") for c in across})
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    mu = R.parameters["mu"]
+    args = (names["x_1"], names["x_2"])
+    g1 = sp.lambdify(args, gamma[("x_1", "u", "u")].subs(mu, 1), "numpy")
+    g2 = sp.lambdify(args, gamma[("x_2", "u", "u")].subs(mu, 1), "numpy")
+    from scipy.integrate import solve_ivp
+    from scipy.optimize import brentq
+    alpha = np.linspace(0, 2 * math.pi, 361)[:-1]
+    n = len(alpha)
+
+    def rhs(u, w):
+        x, y = w[:n], w[n:2 * n]
+        return np.concatenate([w[2 * n:3 * n], w[3 * n:], -g1(x, y) * np.ones(n), -g2(x, y) * np.ones(n)])
+    start = np.concatenate([np.cos(alpha), np.sin(alpha), np.zeros(2 * n)])
+    run = solve_ivp(rhs, (0, 3.3), start, rtol=1e-12, atol=1e-13, dense_output=True, max_step=0.01)
+
+    def rho(u):
+        return float(run.sol(u)[0])
+    ck.add("maximally supersymmetric plane wave: the ring closes on the axis at mu c u = pi/2",
+           abs(brentq(rho, 1.0, 2.0, xtol=1e-13) - math.pi / 2), 1e-8)
+    us = np.linspace(0, 3.2, 80)
+    ck.add("maximally supersymmetric plane wave: the ring's radius is cos(mu c u)/mu",
+           float(np.max(np.abs([rho(u) - math.cos(u) for u in us]))), 1e-8)
+    ck.add("maximally supersymmetric plane wave: the ring is back at rest on its first circle at mu c u = pi, "
+           "every particle opposite its start",
+           float(np.max(np.abs(run.sol(math.pi)[:2 * n] + start[:2 * n]))) + float(np.max(np.abs(run.sol(math.pi)[2 * n:]))),
+           1e-7)
+    top = 1.5
+    # The movie runs through the wave fronts at a steady u, a frame every 0.1/mu of cu.
+    us, keys = movie_values([0.0, 0.5, 1.0, 1.5, 2.5, 3.0], 0.1)
+    fixed_rest = {c: 0 for c in across[2:]}
+    frames = []
+    for u in [round(u, 9) for u in us]:
+        sl = FlatPlane(src, name, "brinkmann", "x_1", "x_2", {"u": repr(u), "v": 0, **fixed_rest}, params={"mu": 1})
+        where = f"maximally supersymmetric plane wave, mu c u = {u:g}"
+        plane = disc(sl, "plane", top, "the axis of the wave", "the wave front runs on, flat, to infinity", [], 2 * top)
+        ck.isometry(where, plane)
+        # Past the axis every particle is on the far side of it, and the ring is read round from the
+        # particle that now stands on the positive x_1 axis, so a ring's points keep their angles.
+        w = run.sol(u) * (1.0 if run.sol(u)[0] >= 0 else -1.0)
+        cx, cy = np.append(w[:n], w[0]), np.append(w[n:2 * n], w[n])
+        a = float(w[0])
+        ck.add(f"{where}: the ring is the circle of radius {a:.6f} about the axis",
+               float(np.max(np.abs(np.column_stack([cx, cy]) - a * np.column_stack([np.cos(np.append(alpha, 0)),
+                                                                                    np.sin(np.append(alpha, 0))])))), 1e-9)
+        ring, dots = particles(ck, where, sl, plane, cx, cy)
+        frames.append(Surface([plane], label=f"$\\mu cu = {u:g}$", time=u, curves=[ring], dots=dots))
+    surfaces = [frames[i] for i in keys]
+
+    def wave_rows(u):
+        w = run.sol(np.atleast_1d(u))
+        return np.abs(w[0]), np.abs(w[n + 90])
+
+    def wave_ring(u, a, b):
+        # Every particle of the ring, run with the published Christoffel symbols, on the row, each at
+        # its own angle before the axis and at the opposite one after it.
+        w = run.sol(u) * (1.0 if run.sol(u)[0] >= 0 else -1.0)
+        return float(np.max(np.abs(np.column_stack([w[:n], w[n:2 * n]]) - np.column_stack([a * np.cos(alpha),
+                                                                                        b * np.sin(alpha)]))))
+    tube = stack(ck, "maximally supersymmetric plane wave", surfaces, wave_rows, 0.8, wave_ring, 2 * top,
+                 "the world tube of the ring runs on after $\\mu cu = 3$, closing on the axis every $\\pi$ of "
+                 "$\\mu cu$")
+    tube_fig = stack_figure(tube, 2 * top, "$\\mu cu$", [
+        ("fill", "cover", "the ring at every wave front from $u = 0$ to $\\mu cu = 3$, each at the height of its $u$"),
+        ("line", "particles", "the ring at the six wave fronts of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, each crossing the axis at $\\mu cu = \\pi/2$"),
+        ("line", "axis", "the axis of the wave")])
+    fig, played = ring_movie(frames, 2 * top, "$\\mu cu$")
+    fig.legend("fill", "cover", "the wave front at each moment, flat")
+    fig.legend("line", "particles", "a ring of free particles at rest on $x_1^2 + x_2^2 = 1/\\mu^2$ at $u = 0$, with "
+                                    "twelve of them marked")
+    fig.legend("line", "meridian", "straight lines from the axis, every $30°$")
+    settings = ("$\\mu = 1$, the unit of every length being $1/\\mu$; each moment is the wave front of one $u$, "
+                "with $x_3$ to $x_8$ at zero.")
+    return [view("tube", "The ring's world tube", "$1/\\mu$", [tube], tube_fig, settings=settings,
+                 height="$\\mu cu$, a height of $0.8/\\mu$ for each $1/\\mu$ of $cu$"),
+            view("ring", "A ring of particles", "$1/\\mu$", surfaces, fig.done(), movie=played, settings=settings)]
+
+
 DRAWN = {
     "moving_mirror": moving_mirror,
     "aichelburg_sexl": aichelburg_sexl,
@@ -16350,6 +16446,7 @@ DRAWN = {
     "chandrasekhar_xanthopoulos": chandrasekhar_xanthopoulos,
     "belinski_zakharov": belinski_zakharov,
     "light_beam": light_beam,
+    "maximally_supersymmetric_plane_wave": maximally_supersymmetric_plane_wave,
     "krasnikov": krasnikov,
     "tippett_tsang": tippett_tsang,
     "nordstrom_scalar": nordstrom_scalar,
@@ -18840,6 +18937,23 @@ CAPTIONS = {
         "c^4\\rho^2/4GE$, twice $8GE/c^4$ for this ring. A ring of radius $\\rho$ focuses at a $u$ growing as "
         "$\\rho^2$, so the shock focuses like a lens whose focal length grows with the square of the distance from "
         "its axis.",
+    ],
+    ("maximally_supersymmetric_plane_wave", "tube"): [
+        "The world tube of a ring of free particles in the maximally supersymmetric plane wave ($\\mu = 1$), at rest "
+        "on the circle $x_1^2 + x_2^2 = 1/\\mu^2$ at $u = 0$, each wave front from $u = 0$ to $\\mu cu = 3$ a circle "
+        "at the height of its $u$. The tube narrows as $\\cos(\\mu cu)$, closes on the axis at $\\mu cu = \\pi/2$, "
+        "and opens again as every particle carries on through the axis to the far side.",
+    ],
+    ("maximally_supersymmetric_plane_wave", "ring"): [
+        "The wave front of the maximally supersymmetric plane wave as $\\mu cu$ runs from $0$ to $3$, the plane of "
+        "$x_1$ and $x_2$ with $x_3$ to $x_8$ at zero, each front drawn as a surface in flat space with every "
+        "distance along it the metric distance. A surface of constant $u$ has the metric $dx_1^2 + dx_2^2$ "
+        "whatever $v$ is on it, so the drawing is a flat disc, and the wave shows in a ring of free particles at "
+        "rest on the circle $x_1^2 + x_2^2 = 1/\\mu^2$ at $u = 0$.",
+        "Each particle obeys $d^2x_i/d(cu)^2 = -\\mu^2x_i$, the equation of a harmonic oscillator, the same in all "
+        "eight directions across the wave, so the ring stays a circle of radius $\\cos(\\mu cu)/\\mu$. It "
+        "closes on the axis at $\\mu cu = \\pi/2$, every particle at once, and is back at rest on its first circle "
+        "at $\\mu cu = \\pi$, turned through half a circle.",
     ],
     ("light_beam", "tube"): [
         "The world tube of a ring of free particles around a uniform beam of light ($\\pi G\\epsilon R^2/c^4 = 1/32$), "

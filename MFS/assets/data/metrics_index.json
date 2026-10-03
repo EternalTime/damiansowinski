@@ -98,7 +98,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "f9c8ac2b6ad5cfa1",
+    "version": "eb329f072524af25",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -502,7 +502,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3af07eee803d8d50",
+    "version": "e1d9fa107287e0ef",
     "diagrams": "2342c1618b43b6d4",
     "conformal": "4c22fa7d37693c09",
     "embedding": "7035de7d63ab26a4"
@@ -1773,7 +1773,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "81e903872ecb6a31",
+    "version": "7fba9c1f3c9d538a",
     "diagrams": "5e0c638643e61027",
     "conformal": "fdaf25d52bb0d79a",
     "embedding": "c496b535987be512"
@@ -3213,6 +3213,35 @@
     "embedding": "097ceae878d9ed12"
   },
   {
+    "id": "maximally_supersymmetric_plane_wave",
+    "name": "Maximally Supersymmetric Plane Wave",
+    "tags": [
+      "stationary",
+      "conformally flat",
+      "ten-dimensional",
+      "plane wave",
+      "pp-wave",
+      "higher dimensions",
+      "supergravity",
+      "string theory",
+      "supersymmetric",
+      "homogeneous",
+      "Penrose limit",
+      "AdS/CFT",
+      "holography",
+      "geodesically complete",
+      "no horizon",
+      "null Killing vector",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "62ddd57b8b911d36",
+    "diagrams": "bd7d5856e23baa9e",
+    "conformal": "73dd5df297bbb623",
+    "embedding": "581548ed12bf4ece"
+  },
+  {
     "id": "mcvittie",
     "name": "McVittie",
     "tags": [
@@ -4004,7 +4033,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f174753a07eb83b3",
+    "version": "8daa18f1149ca516",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -4963,7 +4992,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "d12f88e92ae5d458",
+    "version": "b7a92b37f266acb2",
     "diagrams": "e574af654990108c",
     "conformal": "631507c8e742808c",
     "embedding": "7006f557a81541c6"

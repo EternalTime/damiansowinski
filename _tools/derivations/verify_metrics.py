@@ -965,6 +965,14 @@ DIMENSIONS = {
        for chart, radial, unit, large in (("global", "\\rho", "1", ()), ("conformal", "\\chi", "1", ()),
                                           ("static", "r", "L", ()), ("poincare", "r", "L", ("x", "y")),
                                           ("proper", "\\sigma", "L", ("x", "y")))},
+    # The maximally supersymmetric plane wave: mu is an inverse length; the light cone time u and
+    # the conformally flat chart's U are times, every other coordinate a length.
+    ("maximally_supersymmetric_plane_wave", "brinkmann"): {
+        "u": "T", "v": "L", **{f"x_{i}": "L" for i in range(1, 9)}, "\\mu": "1/L"},
+    ("maximally_supersymmetric_plane_wave", "rosen"): {
+        "u": "T", "v": "L", **{f"y_{i}": "L" for i in range(1, 9)}, "\\mu": "1/L"},
+    ("maximally_supersymmetric_plane_wave", "conformally_flat"): {
+        "U": "T", "V": "L", **{f"X_{i}": "L" for i in range(1, 9)}, "\\mu": "1/L"},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
