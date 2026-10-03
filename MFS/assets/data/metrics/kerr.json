@@ -205,6 +205,16 @@
       "id": "kerr_melvin",
       "kind": "generalisation",
       "text": "Kerr's black hole set in Melvin's magnetic universe by Ernst and Wild in 1976. At $B = 0$ it is Kerr's metric, and in any other field the hole carries the charge $2amB$ [ernst1976c, gibbons2013]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "A ring singularity with no spin and no horizon, the static field of a hoop of matter. Oldřich Semerák compared the two rings and found Kerr's the simpler [semerak2016]."
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "kind": "generalisation",
+      "text": "Kerr's hole in a magnetic field that points along its axis and is uniform far away, an exact solution of type D. With the field switched off it is Kerr's metric again [podolsky2025]."
     }
   ],
   "references": [
@@ -270,7 +280,9 @@
     "visser1998",
     "torres2017",
     "ernst1976c",
-    "gibbons2013"
+    "gibbons2013",
+    "semerak2016",
+    "podolsky2025"
   ],
   "coordinates": [
     {

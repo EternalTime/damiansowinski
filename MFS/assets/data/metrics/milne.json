@@ -52,6 +52,11 @@
       "id": "tilted_universes",
       "kind": "generalisation",
       "text": "Milne's universe with its particles aimed to miss the origin. Straight world lines that each pass one event at the distance $C$ fill a part of flat spacetime with a Cauchy horizon in it, Ellis and King's picture of the whimper [ellis1974]."
+    },
+    {
+      "id": "topological_star",
+      "kind": "family",
+      "text": "Inside Bah and Heidmann's black string, next to the bubble that ends it, the plane of $r$ and the circle is Milne's universe of two dimensions, a cone of flat spacetime closing on its tip [bah2021]."
     }
   ],
   "references": [
@@ -82,7 +87,8 @@
     "benoitlevy2012",
     "coleman1980",
     "bucher1995",
-    "ellis1974"
+    "ellis1974",
+    "bah2021"
   ],
   "coordinates": [
     {

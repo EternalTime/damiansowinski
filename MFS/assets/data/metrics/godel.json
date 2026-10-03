@@ -66,6 +66,11 @@
       "id": "maitra_dust",
       "kind": "family",
       "text": "A stationary universe of rotating dust with no cosmological constant and no closed timelike curves, which Samaresh C. Maitra found in 1966. Its dust shears and thins out away from an axis, where Gödel's turns rigidly and is the same everywhere [maitra1966, chan2024]."
+    },
+    {
+      "id": "vuorio_warped_ads",
+      "kind": "family",
+      "text": "Empty space of gravity in three dimensions with a mass for the graviton, whose light cones tip over as these do. Gödel's universe less its flat direction is one of its members, $m^2 = 2\\Omega^2$, a vacuum of that theory [reboucas2009, gurses2010]."
     }
   ],
   "references": [
@@ -95,7 +100,9 @@
     "bonnor1979petrov",
     "gibbons2008petrov",
     "maitra1966",
-    "chan2024"
+    "chan2024",
+    "reboucas2009",
+    "gurses2010"
   ],
   "coordinates": [
     {

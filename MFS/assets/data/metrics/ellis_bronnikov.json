@@ -63,6 +63,11 @@
       "id": "exponential_metric",
       "kind": "family",
       "text": "Another wormhole of the same scalar field, this one with a mass. It is the branch $k = 0$ of the anti-Fisher family, in which Ellis's wormhole is the member with no mass, and its far side ends on a singular horizon [bronnikov2011]."
+    },
+    {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "kind": "family",
+      "text": "A wormhole held open by an electric field and two massless Dirac fields, found by Blázquez-Salcedo, Knoll and Radu in 2021 while looking for one that needs no field of the wrong sign [blazquez2021]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "simpson2019",
     "tsukamoto2021",
     "bronnikov2011",
-    "einstein1935"
+    "einstein1935",
+    "blazquez2021"
   ],
   "coordinates": [
     {

@@ -91,6 +91,11 @@
       "id": "tilted_universes",
       "kind": "family",
       "text": "Universes of matter with the anatomy of Taub-NUT: a homogeneous region and a stationary one, joined across a null surface of homogeneity on which light rays come to an end [ellis1974, collins1974]."
+    },
+    {
+      "id": "brill_charged_taub_nut",
+      "kind": "generalisation",
+      "text": "Taub-NUT with a charge. Dieter Brill filled Taub's universe with an electromagnetic wave in 1964, and with charge enough, $r_q^2 > m^2 + l^2$, the horizons go and the spacetime is a wormhole [brill1964, clement2016]."
     }
   ],
   "references": [
@@ -120,7 +125,8 @@
     "podolsky2018",
     "page1978bolt",
     "ellis1974",
-    "collins1974"
+    "collins1974",
+    "clement2016"
   ],
   "coordinates": [
     {

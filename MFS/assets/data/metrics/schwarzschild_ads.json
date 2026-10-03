@@ -73,6 +73,11 @@
       "id": "ads_soliton",
       "kind": "family",
       "text": "The ground state of the flat black holes of anti-de Sitter space, as anti-de Sitter space is of this one. The flat hole and the soliton trade places in a phase transition like Hawking and Page's [surya2001]."
+    },
+    {
+      "id": "freund_rubin",
+      "kind": "family",
+      "text": "Anti-de Sitter space of four dimensions times a 7-sphere, the throat of a stack of membranes. A black hole in that throat is the field theory of the membranes at a finite temperature [maldacena1998]."
     }
   ],
   "references": [

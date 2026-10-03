@@ -353,6 +353,49 @@ def bardeen_horizons():
     return roots
 
 
+QOS_ALPHA = 1.25                  # alpha in units of m^2, as every diagram of the quantum Oppenheimer-Snyder hole takes it
+
+
+def qos_roots():
+    """The zeros of r^4 - 2r^3 + alpha at alpha = 5/4, without numpy: the two real ones by bisection and
+    the complex pair from the quadratic left over, r^2 + br + c with b = r_- + r_+ - 2, c = alpha/(r_- r_+)."""
+    def P(r):
+        return r ** 4 - 2 * r ** 3 + QOS_ALPHA
+    real = []
+    for lo, hi in ((1.0, 1.5), (1.5, 2.0)):
+        for _ in range(200):
+            mid = (lo + hi) / 2
+            lo, hi = (mid, hi) if P(lo) * P(mid) > 0 else (lo, mid)
+        real.append((lo + hi) / 2)
+    b, c = real[0] + real[1] - 2, QOS_ALPHA / (real[0] * real[1])
+    return real, complex(-b / 2, math.sqrt(4 * c - b * b) / 2)
+
+
+def qos_rstar(r):
+    """The tortoise coordinate at m = 1 and alpha = 5/4, dr_*/dr = 1/f, zero at r_b = (alpha/2)^(1/3)."""
+    real, z = qos_roots()
+
+    def raw(x):
+        out = x + sum(w ** 4 / (4 * w ** 3 - 6 * w ** 2) * math.log(abs(x - w)) for w in real)
+        return out + 2 * (z ** 4 / (4 * z ** 3 - 6 * z ** 2) * cmath.log(x - z)).real
+    return raw(r) - raw((QOS_ALPHA / 2) ** (1 / 3))
+
+
+def qos_lead(r, n=2000):
+    """The integral of 1/(1 + N) from r_b to r, N = sqrt(2/r - alpha/r^4), by Simpson's rule in the
+    variable s with r = r_b + s^2, which takes away the square root N has at r_b."""
+    rb = (QOS_ALPHA / 2) ** (1 / 3)
+    top = math.sqrt(max(r - rb, 0.0))
+    if top == 0:
+        return 0.0
+
+    def g(s):
+        x = rb + s * s
+        return 2 * s / (1 + math.sqrt(max(2 / x - QOS_ALPHA / x ** 4, 0.0)))
+    h = top / n
+    return h / 3 * (g(0) + g(top) + sum((4 if k % 2 else 2) * g(k * h) for k in range(1, n)))
+
+
 def bardeen_rstar(r):
     """Bardeen's tortoise coordinate, dr_*/dr = 1/f and r_* = 0 at the centre, without numpy: the
     logarithm of each horizon, ln|1 - r/r_i|/f'(r_i), and the integral from 0 of what is left of
@@ -3300,7 +3343,10 @@ class EmbeddingDiagrams(unittest.TestCase):
                         # The laboratory's moment of the draining bathtub is the plane the water moves in; the
                         # curvature sound feels is in how the moments are stacked, and the catenoid beside it is
                         # the Kerr-like chart's moment.
-                        ("draining_bathtub", "plane", 0)}
+                        ("draining_bathtub", "plane", 0),
+                        # The laboratory's moment of Unruh's acoustic black hole is the flat space the fluid falls
+                        # through, whose equator is a plane; the funnel beside it is the moment of Unruh's time.
+                        ("unruh_acoustic_hole", "space", 0)}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -4237,7 +4283,8 @@ class TurningLightConeFigures(unittest.TestCase):
                                    "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
                                    "bonnor_rotating_dust/tipping", "maitra_dust/tipping", "tippett_tsang/ring",
-                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning", "draining_bathtub/swirl"})
+                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning", "draining_bathtub/swirl",
+                                   "vuorio_warped_ads/tipping"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -4875,7 +4922,13 @@ class Slices(unittest.TestCase):
     # The drawings on which no moment of the spacetime's embedding lies: other universes,
     # another cloud, the time reversed shell, and cylinders where no surface of constant t is
     # a moment of space.
-    HIDDEN = {# A tube of Datt and Ruban's dust that runs on in both directions, and Ruban's tube on de Sitter
+    HIDDEN = {# The ball of dust of the quantum Oppenheimer-Snyder black hole, which holds no part of the
+              # moments of constant t embedded, moments of the vacuum outside it.
+              "quantum_oppenheimer_snyder/interior_comoving/through",
+              # The collapse keeps one exterior below the bounce and one above it, and the dust stands where the
+              # eternal vacuum's moments run through their bifurcation spheres.
+              "conformal quantum_oppenheimer_snyder/collapse",
+              # A tube of Datt and Ruban's dust that runs on in both directions, and Ruban's tube on de Sitter
               # space, other spacetimes than the T-sphere whose moments are embedded.
               "datt_ruban_t_models/comoving/tube", "datt_ruban_t_models/ruban/tube",
               "datt_ruban_t_models/areal/expansion", "datt_ruban_t_models/de_sitter/tube",
@@ -4930,6 +4983,10 @@ class Slices(unittest.TestCase):
               "conformal draining_bathtub/spring",
               "btz/stationary/rotating", "btz/eddington_finkelstein_ingoing/rotating",
               "btz/eddington_finkelstein_outgoing/rotating", "conformal btz/rotating",
+              # The quantum BTZ hole's dressed cone and rotating hole, other spacetimes than the hole of
+              # positive mass without rotation whose moment is embedded.
+              "quantum_btz/brane/dressed", "quantum_btz/rotating/rotating", "conformal quantum_btz/dressed",
+              "conformal quantum_btz/rotating",
               # Myers and Perry's plane of rotation in six dimensions, which the embedded transverse plane
               # theta = 0 meets nowhere outside the horizon.
               "myers_perry/boyer_lindquist_six/rotation",
@@ -4963,7 +5020,7 @@ class Slices(unittest.TestCase):
               # The Kaluza-Klein black hole of equal charges, another member of the family than the holes of
               # one charge embedded.
               "kaluza_klein_black_hole/dyonic/radial", "conformal kaluza_klein_black_hole/equal",
-              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond",
+              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond", "vuorio_warped_ads/cylindrical/beyond",
               "conformal frw/flat", "conformal frw/open",
               "misner/rindler/plane", "conformal misner/rindler",
               # Gott and Li's region of closed timelike curves, which no moment of the inflating region meets.
@@ -5029,6 +5086,17 @@ class Slices(unittest.TestCase):
               # Ernst and Wild's hole in the stronger field of the figure of its ergoregion, another member
               # of the family than the hole whose equator is embedded.
               "kerr_melvin/boyer_lindquist/tube",
+              # Brill's charged Taub-NUT: the regular half axis, which the embedded equatorial plane does not
+              # meet, and Brill's universe between the horizons, where constant t is no moment of space.
+              *[f"brill_charged_taub_nut/{s}/{v}" for s, v in (("one_string", "black_hole"), ("one_string", "wormhole"),
+                                                                ("eddington_finkelstein_ingoing", "black_hole"),
+                                                                ("eddington_finkelstein_ingoing", "wormhole"),
+                                                                ("eddington_finkelstein_outgoing", "black_hole"),
+                                                                ("taub", "universe"))],
+              *[f"conformal brill_charged_taub_nut/{v}" for v in ("axis", "ingoing", "outgoing", "universe", "wormhole")],
+              # Podolsky and Ovcharenko's hole with no spin, another member of the family than the spinning
+              # hole whose equator is embedded.
+              "kerr_bertotti_robinson/static/radial",
               *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
               *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
                 for k in ("oblate", "prolate")],
@@ -5078,7 +5146,12 @@ class Slices(unittest.TestCase):
               "ads_soliton/five_dimensional/radial", "ads_soliton/three_dimensional/radial",
               # The plane 30 degrees from the string of Penrose's wave holds no event of the plane across it.
               "penrose_impulsive_wave/retarded/near",
-              "conformal ads_soliton/five_dimensional", "conformal ads_soliton/three_dimensional"}
+              "conformal ads_soliton/five_dimensional", "conformal ads_soliton/three_dimensional",
+              # The black string, the extremal string and the metric of four dimensions, other
+              # spacetimes than the topological star whose moment is embedded.
+              "topological_star/eddington_finkelstein_ingoing/finkelstein", "topological_star/extremal/radial",
+              "topological_star/einstein/radial", "conformal topological_star/black_string",
+              "conformal topological_star/extremal", "conformal topological_star/einstein"}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()
@@ -5133,9 +5206,22 @@ class Slices(unittest.TestCase):
                         "small_universes/torus_conformal/cell", "small_universes/torus_conformal/images",
                         "conformal small_universes/torus", "conformal small_universes/torus_conformal")},
                     "small_universes/horn/along": {"torus"}, "conformal small_universes/horn": {"torus"},
+                    # Brill's black hole and his wormhole are two spacetimes of one family, each drawing
+                    # marking the moment of its own.
+                    "brill_charged_taub_nut/spherical/black_hole": {"wormhole"},
+                    "brill_charged_taub_nut/spherical/wormhole": {"equator"},
                     # Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the
                     # time and phi.
                     "cremmer_scherk/cartesian/circle": {"sphere"},
+                    # Freund and Rubin's moment t = 0 is three surfaces: the hyperbolic plane lies on the planes of
+                    # the time and the radius of the global, conformal and static charts, the cylinder on those of
+                    # the Poincare and proper distance charts and on the plane of t and psi, and the great 2-sphere
+                    # stands at one event, on none of the planes.
+                    **{f"{place}freund_rubin/{chart}{view}": hidden
+                       for hidden, charts in (({"circle", "sphere"}, ("global", "conformal", "static")),
+                                              ({"anti_de_sitter", "sphere"}, ("poincare", "proper")))
+                       for chart in charts for place, view in (("", "/radial"), ("conformal ", ""))},
+                    "freund_rubin/proper/circle": {"anti_de_sitter", "sphere"},
                     # The three-brane and its throat alone are two spacetimes, the second the limit of the
                     # first, and each chart's drawings mark the surface of its own.
                     **{f"{place}three_brane_throat/{chart}{view}": {other}
@@ -5324,6 +5410,17 @@ class Slices(unittest.TestCase):
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
                     **{f"conformal zipoy_voorhees/{s}_equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
+                    # Bach and Weyl's plane is embedded in two views, outside the ring and on the disc inside
+                    # it, and each drawing lies on one of them: the axis meets the disc alone, at its centre.
+                    **{f"bach_weyl_ring/{s}/{v}": {hidden} for s, v, hidden in (
+                        ("weyl", "axis", "outside"), ("weyl", "outside", "inside"), ("weyl", "inside", "outside"),
+                        ("toroidal", "axis", "outside"), ("toroidal", "outer", "inside"),
+                        ("toroidal", "inner", "outside"), ("oblate_spheroidal", "axis", "outside"),
+                        ("oblate_spheroidal", "plane", "inside"), ("oblate_spheroidal", "disc", "outside"))},
+                    **{f"conformal bach_weyl_ring/{v}": {hidden} for v, hidden in (
+                        ("weyl_axis", "outside"), ("weyl_outside", "inside"), ("weyl_inside", "outside"),
+                        ("toroidal_axis", "outside"), ("toroidal_outer", "inside"), ("toroidal_inner", "outside"),
+                        ("oblate_axis", "outside"), ("oblate_plane", "inside"), ("oblate_disc", "outside"))},
                     # So are Erez and Rosen's prolate and oblate masses.
                     **{f"erez_rosen/{s}/equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
@@ -5477,9 +5574,34 @@ class Slices(unittest.TestCase):
             own = (mark["view"] == "plane") == (key.split("/")[1] == "laboratory")
             sign = 1 if mark["view"] == "funnel" else -1
             return (lambda X: 0.0 if own else sign * 0.5 * math.log(X * X - 1)), list(self.reach(surface))
+        if key.startswith("unruh_acoustic_hole/"):
+            # The laboratory's t = 0 and Unruh's tau = 0, with t - tau = ln|(r - 1)/(r + 1)|/4 + arctan(r)/2
+            # at r_0 = c = 1: each a level line in its own chart and a curve in the other's.
+            own = (mark["view"] == "space") == (key.split("/")[1] == "laboratory")
+            sign = 1 if mark["view"] == "funnel" else -1
+            # Unruh's tau = 0 lies outside the horizon alone, running off to minus infinity in t toward it, so
+            # inside it the curve is taken at minus infinity and on it at a finite stand-in, which leaves a
+            # slope taken across the curve's end as steep as the curve is there.
+            def Y_of(X):
+                if own:
+                    return 0.0
+                if X < 1:
+                    return sign * -math.inf
+                return sign * (math.log(max((X - 1) / (X + 1), 1e-300)) / 4 + math.atan(X) / 2)
+            return Y_of, list(self.reach(surface))
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]
+        if key.startswith("bach_weyl_ring/"):
+            # The plane z = 0 on one side of the ring, embedded between two of Weyl's rho, in each chart's
+            # own coordinate; the axis meets the disc inside the ring at its centre, sigma = pi in the
+            # toroidal chart.
+            lo, hi = self.reach(surface)
+            of_rho = {"toroidal/axis": lambda r: math.pi, "toroidal/outer": lambda r: 2 * math.atanh(1 / r),
+                      "toroidal/inner": lambda r: 2 * math.atanh(r),
+                      "oblate_spheroidal/plane": lambda r: math.sqrt(r * r - 1),
+                      "oblate_spheroidal/disc": lambda r: math.sqrt(1 - r * r)}.get(key.split("/", 1)[1], lambda r: r)
+            return (lambda X: 0.0), sorted(of_rho(r) for r in (lo, hi))
         if key.startswith("bondi_sachs/"):
             # The sphere cu = 10 m_0, r = 10 m_0 is one event of each plane: r = 10 and cu + r = 20 on
             # Bondi's axes, 100 m_0 l = 10 and cu = 10 on the chart of l = 1/r.
@@ -5712,6 +5834,15 @@ class Slices(unittest.TestCase):
                 J = h / 3 * (of(0) + of(r) + sum((4 if k % 2 else 2) * of(k * h) for k in range(1, n)))
                 return r + 97 / 144 * math.log(abs((r - 1) / (r + 1))) - J / 2
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith(("quantum_oppenheimer_snyder/eddington_finkelstein", "quantum_oppenheimer_snyder/painleve")):
+            # At m = 1 and alpha = 5/4 the static t = 0 is v = r_* and u = -r_*, with dr_*/dr = 1/f and
+            # r_* = 0 at r_b, drawn against v - r and u + r or against v and u, and the Painleve-Gullstrand
+            # T = r_* - L(r), with L the integral of 1/(1 + N) from r_b, N = sqrt(2/r - alpha/r^4).
+            sign = -1 if "outgoing" in key else 1
+            finkelstein = key.endswith("finkelstein")
+            if "painleve" in key:
+                return (lambda X: qos_rstar(X) - qos_lead(X)), list(self.reach(surface))
+            return (lambda X: sign * (qos_rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key.startswith("bardeen/eddington_finkelstein"):
             # At r_s = 1 and g = 1/3 the static t = 0 is v = r_* and u = -r_*, with dr_*/dr = 1/f and
             # r_* = 0 at the centre, drawn against v - r and u + r or against v and u. It runs off
@@ -5761,6 +5892,17 @@ class Slices(unittest.TestCase):
             def rstar(r):
                 return (0.25 * math.log(abs(1 - r)) - 0.125 * math.log((r * r + r + 2) / 2)
                         + 5 / (4 * w) * (math.atan((2 * r + 1) / w) - math.atan(1 / w)))
+            return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("quantum_btz/eddington_finkelstein"):
+            # At l_3 = 1, M = F = 1/4 and l = 15/16, 1/H = r/(r^3 - r/4 - 15/64) with the root 3/4 and a
+            # complex pair -3/8 +- i sqrt(11)/8, and r_* = Re sum_i A_i ln(1 - r/r_i), A_i = r_i/(3r_i^2 - 1/4), vanishes at r = 0.
+            # Static t = 0 is v = r_* and u = -r_*, drawn against v - r and u + r or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            roots = [0.75, complex(-0.375, math.sqrt(11) / 8), complex(-0.375, -math.sqrt(11) / 8)]
+
+            def rstar(r):
+                return sum(ri / (3 * ri * ri - 0.25) * cmath.log(1 - r / ri) for ri in roots).real
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key.startswith("reissner_nordstrom_ads/eddington_finkelstein"):
             # At L = 1, r_s = 27/8 and r_q^2 = 11/8, r^2 f = (r - 1)(r - 1/2)(r^2 + 3r/2 + 11/4), and
@@ -6066,6 +6208,7 @@ class Slices(unittest.TestCase):
                 return (lambda X: -math.sqrt(X * X - 2 * t)), None
             return (lambda X: t - 1.5 if key.endswith("/vacuum_core/off_centre") else t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "som_raychaudhuri/cylindrical",
+                           "vuorio_warped_ads/cylindrical",
                            "maitra_dust/cylindrical",
                            "bonnor_rotating_dust/cylindrical/outside",
                            "minkowski/rindler")):
@@ -6236,6 +6379,18 @@ class Slices(unittest.TestCase):
             of_r = {"spherical": lambda r: r, "jnw": lambda r: r - 0.75,
                     "isotropic": lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2}[key.split("/")[1]]
             return (lambda X: 0.0), [of_r(1 / (1 - math.exp(-u))) for u in (hi, lo)]
+        if key.startswith("jackiw_teitelboim_black_hole/"):
+            # The Euclidean disc is read in the proper distance rho at L = r_h = 1, and its meridians are the
+            # moment t = 0: level in every chart, from the horizon r = cosh(rho) = 1 out in the static chart,
+            # across the bifurcation point to V - U = +-2 tanh(rho/2) on the Kruskal plane, drawn against
+            # (V - U)/2, to sigma = pi/2 +- arctan(sinh(rho)) in the global chart, and to z = 2 e^(-+rho) on
+            # the Poincare plane.
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), {
+                "static": [math.cosh(lo), math.cosh(hi)], "proper_distance": [lo, hi],
+                "kruskal": [-math.tanh(hi / 2), math.tanh(hi / 2)],
+                "global": [math.pi / 2 - math.atan(math.sinh(hi)), math.pi / 2 + math.atan(math.sinh(hi))],
+                "poincare": [2 * math.exp(-hi), 2 * math.exp(hi)]}[key.split("/")[1]]
         if key.startswith("witten_black_hole/"):
             # The cigar is read in Witten's proper distance r at lambda = m = 1, and its meridian theta = 0 is
             # the moment t = 0 from the horizon out, where e^(2x) = w = cosh^2 r and e^sigma = sinh r: level in
@@ -6380,9 +6535,24 @@ class Slices(unittest.TestCase):
             if "/areal/" in key:
                 return (lambda X: 0.0), areal
             return (lambda X: 0.0), [x / r for x, r in zip(self.reach(surface, "isotropic"), areal)]
+        if key in ("freund_rubin/conformal/radial", "freund_rubin/static/radial"):
+            # The embedding reads the global rho at L = 1: the static chart's r is sinh(rho) and the
+            # conformal chart's chi is arctan(sinh(rho)).
+            areal = [math.sinh(x) for x in self.reach(surface, "global")]
+            if "/static/" in key:
+                return (lambda X: 0.0), areal
+            return (lambda X: 0.0), [math.atan(r) for r in areal]
+        if key == "freund_rubin/poincare/radial":
+            # The cylinder is read in the proper distance sigma, and r = L e^(sigma/L).
+            return (lambda X: 0.0), [math.exp(x) for x in self.reach(surface, "proper")]
         if key == "three_brane_throat/throat/radial":
             # The throat's cylinder is read in the proper distance sigma, and r = L e^(sigma/L).
             return (lambda X: 0.0), [math.exp(x) for x in self.reach(surface, "throat_proper")]
+        if key == "einstein_dirac_maxwell_wormhole/compact/radial":
+            # The compact x of the circles the embedding reaches in the areal radius r, at r_0 = 1:
+            # x = +-sqrt(1 - 1/r), one on each side of the throat.
+            x = math.sqrt(1 - 1 / self.reach(surface)[1])
+            return (lambda X: 0.0), [-x, x]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
@@ -6390,6 +6560,13 @@ class Slices(unittest.TestCase):
         if key == "godel/cartesian/tx":
             hi = self.reach(surface)[1]
             return (lambda X: 0.0), [-2 * hi, 2 * hi]
+        if key == "vuorio_warped_ads/disc/plane":
+            # Poincare's disc reads the cylindrical chart's proper distance r as R = tanh(r/2).
+            hi = math.tanh(self.reach(surface)[1] / 2)
+            return (lambda X: 0.0), [-hi, hi]
+        if key == "vuorio_warped_ads/fibred/plane":
+            hi = self.reach(surface)[1]
+            return (lambda X: 0.0), [-hi, hi]
         if surface["pieces"][0].get("grid"):
             u = surface["pieces"][0]["grid"]["u"][-1]
             return (lambda X: 0.0), [-u, u]
@@ -6535,7 +6712,7 @@ class Slices(unittest.TestCase):
                         continue
                     for ring in rings + rims:
                         self.assertLess(max(ring) - min(ring), 2e-3 * max(ring), where)
-                    if metric_id in ("godel", "som_raychaudhuri"):
+                    if metric_id in ("godel", "som_raychaudhuri", "vuorio_warped_ads"):
                         self.assertAlmostEqual(rims[0][0], self.reach(surface)[1], delta=1e-3, msg=where)
                     if metric_id in ("kerr", "kerr_newman"):
                         self.assertAlmostEqual(min(r[0] for r in rings), self.reach(surface)[0], delta=1e-3, msg=where)
@@ -6573,6 +6750,21 @@ class Slices(unittest.TestCase):
                             f = lambda r: (1 - r) * math.exp(2 * r) / (1 + r) - tp * tq
                             r = bisect(f, 0, 20)
                             self.assertLess(abs(math.log(tq) - r + math.log(1 + r)), 5e-3, f"{where} at {(X, T)}")
+                    elif metric_id == "unruh_acoustic_hole":
+                        # Kruskal's U = tan p and V = tan q with UV = (1 - r) e^(4r - 2 arctan r)/(1 + r) and
+                        # V = e^(2v), v = t + r - arctan r: Unruh's tau = 0 is the level line, and the
+                        # laboratory's t = 0 is carried back through r.
+                        for X, T in points:
+                            if mark["view"] == "funnel":
+                                self.assertLess(abs(T), 2e-4, where)
+                                continue
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            # Beside the sink UV = 1 - 4r^5/5, so four decimals of a point no longer fix r.
+                            if not (1e-3 < tq < 1e3 and abs(tp) < 1e3 and tp * tq < 0.9):
+                                continue
+                            f = lambda r: (1 - r) * math.exp(4 * r - 2 * math.atan(r)) / (1 + r) - tp * tq
+                            r = bisect(f, 0, 20)
+                            self.assertLess(abs(math.log(tq) / 2 - r + math.atan(r)), 5e-3, f"{where} at {(X, T)}")
                     elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "gowdy", "senovilla"):
                         lo, hi = self.reach(surface)
                         for X, T in points:
@@ -7001,7 +7193,7 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - want), 2e-3 * (1 + tp * tp) * (1 + tq * tq), f"{where} at {(X, T)}")
-                    elif metric_id in ("bardeen", "reissner_nordstrom_ads"):
+                    elif metric_id in ("bardeen", "reissner_nordstrom_ads", "quantum_oppenheimer_snyder"):
                         # Inside r- the moment runs through the inner bifurcation sphere, at T = pi, and
                         # outside r+ through the outer one, at T = 0, or a period up, at T = 2 pi, on the
                         # outgoing chart's view, whose exterior is the one above the white hole.

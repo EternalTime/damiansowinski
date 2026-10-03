@@ -54,6 +54,16 @@
       "id": "neugebauer_meinel",
       "kind": "family",
       "text": "A spinning disc of dust at the end of its family, $\\mu = \\mu_0$. The space around the disc becomes this throat far from it, as Bardeen and Wagoner found numerically in 1971 and Meinel showed from the exact solution [bardeen1971, meinel2002]."
+    },
+    {
+      "id": "jackiw_teitelboim_black_hole",
+      "kind": "family",
+      "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Its static chart carries the factor of the near-NHEK chart, $r(r - 2k)$, after a shift of $r$ by $k$."
+    },
+    {
+      "id": "vuorio_warped_ads",
+      "kind": "family",
+      "text": "Anti-de Sitter space of three dimensions with its fibres squashed or stretched. Each slice of this throat at constant latitude is such a space, warped along a spacelike circle [bengtsson2006]."
     }
   ],
   "references": [
@@ -69,7 +79,8 @@
     "bredberg2010",
     "compere2017",
     "gralla2018",
-    "meinel2002"
+    "meinel2002",
+    "bengtsson2006"
   ],
   "coordinates": [
     {
