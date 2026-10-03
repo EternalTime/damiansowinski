@@ -67,6 +67,11 @@
       "id": "anti_de_sitter",
       "kind": "family",
       "text": "At $M = -1$, where $F = 0$, the static chart is anti-de Sitter space of three dimensions, the lightest state of the brane [emparan2002holograms, emparan2020qbtz]."
+    },
+    {
+      "id": "btz_shock_wave",
+      "kind": "family",
+      "text": "The BTZ black hole with a shell of null particles on its horizon, the field of a few quanta thrown in from one side long ago [shenker2014]."
     }
   ],
   "references": [
@@ -80,7 +85,8 @@
     "emparan2020scc",
     "casals2017",
     "emparan2022ds3",
-    "karch2001"
+    "karch2001",
+    "shenker2014"
   ],
   "coordinates": [
     {

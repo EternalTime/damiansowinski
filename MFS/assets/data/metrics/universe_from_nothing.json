@@ -1,0 +1,5468 @@
+{
+  "id": "universe_from_nothing",
+  "name": "The Universe from Nothing",
+  "short_name": "Universe from nothing",
+  "description": "Half of a 4-sphere joined at its equator to the waist of de Sitter's closed universe: the geometry of Alexander Vilenkin's universe created by tunnelling from nothing (1982) and of the no-boundary proposal of James Hartle and Stephen Hawking (1983). The south pole of the sphere is a point like any other on it, so the universe has no first moment and no edge, and above the equator it inflates.",
+  "tags": [
+    "de Sitter",
+    "instanton",
+    "Euclidean quantum gravity",
+    "Euclidean signature",
+    "Riemannian",
+    "Lorentzian",
+    "quantum cosmology",
+    "wave function of the universe",
+    "no-boundary proposal",
+    "tunnelling",
+    "signature change",
+    "4-sphere",
+    "three sphere",
+    "closed universe",
+    "inflation",
+    "expanding universe",
+    "vacuum energy",
+    "bounce",
+    "cosmology",
+    "cosmological constant",
+    "positive cosmological constant",
+    "constant curvature",
+    "exact solution",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model",
+    "Einstein space",
+    "conformally flat",
+    "spherically symmetric"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The 4-sphere's chart is Riemannian, of signature $(+,+,+,+)$, and the scale factor chart is Riemannian where $a < \\ell$ and Lorentzian where $a > \\ell$.",
+  "history": "Two ways for a universe to begin without a big bang took shape in 1982, one at Tufts University in Medford, Massachusetts, and one at the Institute for Theoretical Physics in Santa Barbara [vilenkin1982, hartle2022]. At Tufts, Alexander Vilenkin was bothered by a closed universe born at about the Planck size, which would \"expand and recollapse in about one Planck time\" and never reach the exponential expansion of inflation [vilenkin1982]. His way out started from de Sitter space, a closed universe holding only the energy density $\\rho_v$ of a vacuum, whose radius $a = \\ell\\cosh(ct/\\ell)$ shrinks to its least value $\\ell$ at $t = 0$ and then grows without end, the length $\\ell$ being set by $\\rho_v$ [vilenkin1982]. He read that history as a particle bouncing off a potential barrier, with $a$ playing the particle's position, and in quantum mechanics a particle can tunnel through a barrier [vilenkin1982]. So the universe could arrive at the bounce from under the barrier, starting at $a = 0$, \"created by quantum tunneling from literally nothing into a de Sitter space\" [vilenkin1982]. By nothing he meant \"a state with no classical space and time\" [vilenkin2002].¶\"Sidney Coleman has taught us,\" Vilenkin wrote, that a tunnelling event is described by a bounce, a solution of the field equations \"with $t$ changed to $-it$\" [vilenkin1982]. For de Sitter space that solution is $a = \\ell\\cos(\\tau/\\ell)$, the radius of a 3-sphere of latitude on a sphere of four dimensions, which he called \"the well-known de Sitter instanton\" [vilenkin1982]. Its southern half, from the pole $a = 0$ up to the equator $a = \\ell$, is the trip under the barrier, and on the equator the 3-sphere has the size $\\ell$ and the zero rate of growth of de Sitter's waist, so the two halves join there [vilenkin1982]. He drew the birth as a semicircle hung beneath the start of the expansion, with Euclidean time running below the axis [vilenkin1982].¶\"The concept of the universe being created from nothing is a crazy one,\" he granted, and to help the reader \"make peace with this concept\" he set beside it an electron and a positron created by a constant electric field, whose bounce is a circle in the plane of position and Euclidean time [vilenkin1982]. The circle's action gives the rate of pair creation, while for the universe \"it is silly to evaluate the imaginary part of the energy of nothing\" [vilenkin1982]. The model's one prediction that could be checked, in principle, was that the universe is closed [vilenkin1982].¶Stephen Hawking had already offered a beginning of the same kind at a conference in the Vatican in 1981: a regular geometry with four directions of space, making a quantum transition to the three of space and one of time that we have now [hartle2022]. James Hartle, a professor at the University of Chicago who spent his free quarter in Cambridge, had been defining quantum states in cosmology by path integrals, and the two put the pieces together in Santa Barbara that summer [hartle2022]. Their proposal gives the ground state's amplitude for a 3-geometry as \"a path integral over all compact positive-definite four-geometries which have the three-geometry as a boundary\" [hartle1983]. The geometries that dominate such an integral close up with that one boundary and no other, as the half 4-sphere does at its equator, and with a positive cosmological constant the ground state \"corresponds to de Sitter space in the classical limit\" [hartle2022, feldbrugge2017, hartle1983]. Hawking's reason fit in a sentence: his singularity theorems ruled out a beginning with a Lorentzian geometry, and \"Jim and I thought that therefore it must begin with a Euclidean one\" [hartle2022]. In 1983 they called it only the \"wave function of the Universe\", and the name no-boundary quantum state came later, from Hawking, who by Hartle's account called it the \"best thing either of us had done\" [hartle2022].¶Both camps draw the same half sphere and weigh it with opposite signs [vilenkin2002]. The 4-sphere's Euclidean action is negative, $S_E = -3/(8G^2\\rho_v)$ in units with $\\hbar = c = 1$, and in 1982 Vilenkin guessed that the universes of least action are the most probable, which is the weight $e^{-S_E}$ of Hartle and Hawking [vilenkin1982, vilenkin2002]. That weight is largest for the smallest vacuum energy [vilenkin2002]. By 1984 Vilenkin had changed his mind: in his tunnelling wave function the probability is \"proportional to $\\exp(-3/8G^2\\rho_v)$\", and the tunnelling \"is most probable to the highest maximum\" of the field's potential [vilenkin1984]. Andrei Linde reached the same sign that year by turning time the other way, $t \\to +i\\tau$, and found that the universe so created is, with a large probability, an inflationary one [linde1984, vilenkin2002]. \"I resist the temptation to call this 'the greatest mistake of my life',\" Vilenkin wrote of his first answer, adding that Hawking and his collaborators \"believe that I got it right the first time around and that it is now that I am making a mistake\" [vilenkin2002].¶He counted the sign among the \"minor things\" on which he and Hawking disagreed [vilenkin2002]. At one conference Hawking told Vilenkin \"You do not have a wave function\", meaning that the tunnelling wave function was defined only in a simple model, and Vilenkin spent the night before his own talk working out a general definition [vilenkin2002]. In 2002 he judged, in Hawking's phrase, that \"none of us 'has a wave function'\", since every proposal is well defined only in simple models or in the semiclassical approximation [vilenkin2002]. Working with a scalar field in 2008, Hartle, Hawking and Thomas Hertog found the no-boundary weight \"heavily biased towards small amounts of inflation\", and argued that the probability of what we see in our past light cone carries a further factor $\\exp(3N)$ for $N$ e-foldings of inflation [hartle2008]. The Lorentzian sum came back in 2017, when Job Feldbrugge, Jean-Luc Lehners and Neil Turok made the path integral over Lorentzian geometries converge by bending it into complex ones, and found that with no-boundary conditions the dominant saddle \"contributes a semiclassical exponential factor which is precisely the inverse of the famous Hartle-Hawking result\", the sign of Vilenkin's tunnelling wave function for this simple universe [feldbrugge2017].",
+  "related": [
+    {
+      "id": "de_sitter",
+      "kind": "piece",
+      "text": "The Lorentzian half: de Sitter's closed universe from its waist on, joined there to half a 4-sphere [vilenkin1982]."
+    },
+    {
+      "id": "gravitational_instantons",
+      "kind": "family",
+      "text": "Riemannian solutions of Einstein's equations of the same kind as the 4-sphere, which Vilenkin called \"the well-known de Sitter instanton\" [vilenkin1982]."
+    },
+    {
+      "id": "coleman_de_luccia",
+      "kind": "family",
+      "text": "Vilenkin took the bounce, Coleman's Euclidean description of tunnelling, from a false vacuum to the whole universe [vilenkin1982]. Coleman and De Luccia's bubble is a round bounce whose continuation is an open universe inside a wall [coleman1980]."
+    },
+    {
+      "id": "self_creating_universe",
+      "kind": "family",
+      "text": "Gott and Li took the start of this universe to be like the south pole of the Earth, the earliest point in Euclidean time, and built a de Sitter universe that begins in a region of closed timelike curves [gott1998]."
+    },
+    {
+      "id": "nariai",
+      "kind": "family",
+      "text": "Its Euclidean section is the instanton for the pair creation of black holes during inflation. Raphael Bousso and Stephen Hawking calculated that rate from the no-boundary proposal and found that the tunnelling proposal makes unphysical predictions [bousso1996]."
+    },
+    {
+      "id": "kantowski_sachs",
+      "kind": "family",
+      "text": "Raymond Laflamme and Paul Shellard studied the wave function of the universe of the no-boundary proposal on the Kantowski-Sachs minisuperspace [laflamme1987]."
+    },
+    {
+      "id": "frw",
+      "kind": "family",
+      "text": "Vilenkin began from a closed Friedmann universe filled with the energy density of a vacuum, whose scale factor is $\\ell\\cosh(ct/\\ell)$ [vilenkin1982]."
+    },
+    {
+      "id": "einstein_static",
+      "kind": "conformal",
+      "text": "The conformal chart is the Einstein static universe's metric times $\\ell^2/\\cos^2\\eta$, so the half above the waist is conformal to the slab $0 \\le \\eta < \\pi/2$ of it, with its radius equal to $\\ell$."
+    }
+  ],
+  "references": [
+    "vilenkin1982",
+    "hartle2022",
+    "vilenkin2002",
+    "hartle1983",
+    "feldbrugge2017",
+    "vilenkin1984",
+    "linde1984",
+    "hartle2008",
+    "coleman1980",
+    "gott1998",
+    "bousso1996",
+    "laflamme1987"
+  ],
+  "coordinates": [
+    {
+      "id": "closed",
+      "name": "Closed Slicing",
+      "coords": [
+        "t",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in [0, \\infty)",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "t = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+        }
+      ],
+      "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ the proper time of the comoving observers since the waist $t = 0$ and $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere of radius $a = \\ell\\cosh(ct/\\ell)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + \\ell^2\\cosh^2(ct/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\ell^2\\cosh^2(ct/\\ell)"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{\\ell^2\\cosh^2(ct/\\ell)}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi}{\\ell^2\\cosh^2(ct/\\ell)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi\\csc^2\\theta}{\\ell^2\\cosh^2(ct/\\ell)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\tanh(ct/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\tanh(ct/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\tanh(ct/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\tanh(ct/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\tanh(ct/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\tanh(ct/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\ell^2\\cosh^2(ct/\\ell)\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\cosh^2(ct/\\ell)\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\cosh^4(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\ell^2\\cosh^4(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\ell^2\\cosh^4(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\ell^2\\cosh^4(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\cosh^4(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\ell^2\\cosh^4(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\cosh^4(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\ell^2\\cosh^4(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\cosh^4(ct/\\ell)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\ell^2\\cosh^4(ct/\\ell)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\cosh^4(ct/\\ell)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\cosh^4(ct/\\ell)\\sin^4\\chi\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "3\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "3\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "3\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3}{\\ell^4\\cosh^2(ct/\\ell)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3\\csc^2\\chi}{\\ell^4\\cosh^2(ct/\\ell)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\csc^2\\chi\\csc^2\\theta}{\\ell^4\\cosh^2(ct/\\ell)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+      "kretschmann": "K = \\dfrac{24}{\\ell^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-3\\cosh^2(ct/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-3\\cosh^2(ct/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-3\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^4\\cosh^2(ct/\\ell)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3\\csc^2\\chi}{\\ell^4\\cosh^2(ct/\\ell)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\csc^2\\chi\\csc^2\\theta}{\\ell^4\\cosh^2(ct/\\ell)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\dot{\\chi}^2 + \\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\sin^2\\chi\\,\\dot{\\theta}^2 + \\ell\\sinh(ct/\\ell)\\cosh(ct/\\ell)\\sin^2\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2\\tanh(ct/\\ell)}{\\ell}\\dot{t}\\dot{\\chi} - \\sin\\chi\\cos\\chi\\,\\dot{\\theta}^2 - \\sin\\chi\\cos\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2\\tanh(ct/\\ell)}{\\ell}\\dot{t}\\dot{\\theta} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\tanh(ct/\\ell)}{\\ell}\\dot{t}\\dot{\\phi} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "four_sphere",
+      "name": "4-Sphere",
+      "coords": [
+        "\\tau",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\tau \\in [-\\pi\\ell/2, 0]",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\tau = -\\pi\\ell/2 \\;\\text{(the south pole)}",
+        "\\tau = 0 \\;\\text{(the equator, joined to the waist of the closed slicing)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+        }
+      ],
+      "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$ on the southern half of a 4-sphere of radius $\\ell$, with $\\tau = ict$ the Euclidean time of the closed slicing, a length, and $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere of latitude $\\tau$, of radius $a = \\ell\\cos(\\tau/\\ell)$. The chart is Riemannian, and a dot in the geodesic equations is a derivative with respect to arc length.",
+      "line_element": "ds^2 = d\\tau^2 + \\ell^2\\cos^2(\\tau/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\ell^2\\cos^2(\\tau/\\ell)"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\ell^2\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\ell^2\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{\\ell^2\\cos^2(\\tau/\\ell)}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi}{\\ell^2\\cos^2(\\tau/\\ell)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi\\csc^2\\theta}{\\ell^2\\cos^2(\\tau/\\ell)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\tan(\\tau/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\tan(\\tau/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\tan(\\tau/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\tan(\\tau/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\tan(\\tau/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\tan(\\tau/\\ell)}{\\ell}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "-\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "-\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\ell^2\\cos^2(\\tau/\\ell)\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\cos^2(\\tau/\\ell)\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\ell^2\\cos^2(\\tau/\\ell)\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\cos^2(\\tau/\\ell)\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\cos^2(\\tau/\\ell)\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\ell^2\\cos^2(\\tau/\\ell)\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\cos^4(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\ell^2\\cos^4(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\ell^2\\cos^4(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\ell^2\\cos^4(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\cos^4(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\ell^2\\cos^4(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\cos^4(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\ell^2\\cos^4(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\cos^4(\\tau/\\ell)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\ell^2\\cos^4(\\tau/\\ell)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\cos^4(\\tau/\\ell)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\cos^4(\\tau/\\ell)\\sin^4\\chi\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "3\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "3\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "3\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3}{\\ell^4\\cos^2(\\tau/\\ell)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3\\csc^2\\chi}{\\ell^4\\cos^2(\\tau/\\ell)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\csc^2\\chi\\csc^2\\theta}{\\ell^4\\cos^2(\\tau/\\ell)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+      "kretschmann": "K = \\dfrac{24}{\\ell^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-3\\cos^2(\\tau/\\ell)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-3\\cos^2(\\tau/\\ell)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-3\\cos^2(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^4\\cos^2(\\tau/\\ell)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3\\csc^2\\chi}{\\ell^4\\cos^2(\\tau/\\ell)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\csc^2\\chi\\csc^2\\theta}{\\ell^4\\cos^2(\\tau/\\ell)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} + \\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\dot{\\chi}^2 + \\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\sin^2\\chi\\,\\dot{\\theta}^2 + \\ell\\sin(\\tau/\\ell)\\cos(\\tau/\\ell)\\sin^2\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} - \\dfrac{2\\tan(\\tau/\\ell)}{\\ell}\\dot{\\tau}\\dot{\\chi} - \\sin\\chi\\cos\\chi\\,\\dot{\\theta}^2 - \\sin\\chi\\cos\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} - \\dfrac{2\\tan(\\tau/\\ell)}{\\ell}\\dot{\\tau}\\dot{\\theta} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{2\\tan(\\tau/\\ell)}{\\ell}\\dot{\\tau}\\dot{\\phi} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "scale_factor",
+      "name": "Scale Factor",
+      "coords": [
+        "a",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "a \\in [0, \\infty)",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "a = 0 \\;\\text{(the south pole)}",
+        "a = \\ell \\;\\text{(the join, Riemannian below and Lorentzian above)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+        }
+      ],
+      "convention": "We use the radius $a$ of the 3-sphere as the coordinate, a length, with $\\chi$, $\\theta$, and $\\phi$ angles on the 3-sphere. Below $a = \\ell$ the metric is Riemannian, the 4-sphere with $a = \\ell\\cos(\\tau/\\ell)$, and above it Lorentzian, with $a$ a time and $a = \\ell\\cosh(ct/\\ell)$ in the closed slicing. A dot in the geodesic equations is a derivative with respect to an affine parameter, or to arc length where $a < \\ell$.",
+      "line_element": "ds^2 = \\dfrac{da^2}{1 - \\dfrac{a^2}{\\ell^2}} + a^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "a",
+            "a"
+          ],
+          "value": "\\dfrac{\\ell^2}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "a^2\\sin^2\\chi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "a",
+            "a"
+          ],
+          "value": "\\dfrac{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi}{a^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi\\csc^2\\theta}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{a}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{a\\left(\\ell + a\\right)\\left(\\ell - a\\right)}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a\\left(\\ell + a\\right)\\left(\\ell - a\\right)\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a\\left(\\ell + a\\right)\\left(\\ell - a\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "a",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{\\ell^2\\,a}{\\left(\\ell + a\\right)^2\\left(\\ell - a\\right)^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-a"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "a",
+                  "\\chi"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "a"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "a\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "a\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "a\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "a\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "\\chi",
+                  "a",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\chi",
+                  "\\chi",
+                  "a"
+                ],
+                "value": "-\\dfrac{a^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "-\\dfrac{a^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{a^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "-\\dfrac{a^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{a^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "a",
+                  "a",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{1}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "a",
+                  "\\chi",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{1}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "\\chi",
+                  "a",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a^2}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\chi",
+                  "\\chi",
+                  "a"
+                ],
+                "value": "-\\dfrac{a^2}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "a",
+                  "a",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{a^2}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "a",
+                  "\\chi",
+                  "a"
+                ],
+                "value": "\\dfrac{a^2}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\sin^2\\chi}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "-\\dfrac{a^2\\sin^2\\chi}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\sin^2\\chi}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "\\dfrac{a^2\\sin^2\\chi}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\sin^2\\chi\\sin^2\\theta}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "-\\dfrac{a^2\\sin^2\\chi\\sin^2\\theta}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\sin^2\\chi\\sin^2\\theta}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "\\dfrac{a^2\\sin^2\\chi\\sin^2\\theta}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^4\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{a^4\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^4\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a^4\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^4\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{a^4\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^4\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a^4\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^4\\sin^4\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^4\\sin^4\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^4\\sin^4\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^4\\sin^4\\chi\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{3}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3a^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3a^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3a^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{3\\left(\\ell + a\\right)\\left(\\ell - a\\right)}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2\\,a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3\\csc^2\\chi}{\\ell^2\\,a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\csc^2\\chi\\csc^2\\theta}{\\ell^2\\,a^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+      "kretschmann": "K = \\dfrac{24}{\\ell^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{3}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3a^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3a^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3a^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{3\\left(\\ell + a\\right)\\left(\\ell - a\\right)}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2\\,a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3\\csc^2\\chi}{\\ell^2\\,a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\csc^2\\chi\\csc^2\\theta}{\\ell^2\\,a^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{a} + \\dfrac{a}{\\left(\\ell + a\\right)\\left(\\ell - a\\right)}\\dot{a}^2 - \\dfrac{a\\left(\\ell + a\\right)\\left(\\ell - a\\right)}{\\ell^2}\\dot{\\chi}^2 - \\dfrac{a\\left(\\ell + a\\right)\\left(\\ell - a\\right)\\sin^2\\chi}{\\ell^2}\\dot{\\theta}^2 - \\dfrac{a\\left(\\ell + a\\right)\\left(\\ell - a\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2}{a}\\dot{a}\\dot{\\chi} - \\sin\\chi\\cos\\chi\\,\\dot{\\theta}^2 - \\sin\\chi\\cos\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{a}\\dot{a}\\dot{\\theta} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{a}\\dot{a}\\dot{\\phi} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "conformal",
+      "name": "Conformal",
+      "coords": [
+        "\\eta",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\eta \\in [0, \\pi/2)",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\eta = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+        }
+      ],
+      "convention": "We use the conformal time $\\eta$, a pure number with $\\tan\\eta = \\sinh(ct/\\ell)$ in the closed slicing, which is itself the chart's $x^0$, and the angles $\\chi$, $\\theta$, and $\\phi$ on the 3-sphere. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = \\dfrac{\\ell^2}{\\cos^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\dfrac{\\ell^2}{\\cos^2\\eta}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{\\ell^2}{\\cos^2\\eta}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^2\\eta}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\dfrac{\\cos^2\\eta}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{\\cos^2\\eta}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi\\cos^2\\eta}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi\\cos^2\\eta\\csc^2\\theta}{\\ell^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\tan\\eta"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\tan\\eta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "\\tan\\eta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "\\tan\\eta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\tan\\eta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "\\tan\\eta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\tan\\eta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "\\tan\\eta"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\sin^2\\chi\\,\\tan\\eta"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\chi\\,\\tan\\eta\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin\\eta}{\\cos^3\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin\\eta}{\\cos^3\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin\\eta}{\\cos^3\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin\\eta}{\\cos^3\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi\\sin\\eta}{\\cos^3\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin\\eta}{\\cos^3\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin\\eta}{\\cos^3\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi\\sin\\eta\\sin^2\\theta}{\\cos^3\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin\\eta\\sin^2\\theta}{\\cos^3\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin\\eta\\sin^2\\theta}{\\cos^3\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin\\left(2\\chi\\right)}{\\cos\\left(2\\eta\\right) + 1}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin\\left(2\\chi\\right)}{\\cos\\left(2\\eta\\right) + 1}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin\\left(2\\chi\\right)}{\\cos\\left(2\\eta\\right) + 1}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin\\chi\\cos\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin\\chi\\cos\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin\\chi\\cos\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi\\sin\\theta\\cos\\theta}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin\\theta\\cos\\theta}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin\\theta\\cos\\theta}{\\cos^2\\eta}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\sin^2\\chi}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\sin^2\\chi}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\sin^2\\chi}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\sin^2\\chi}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\sin^2\\chi}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\sin^2\\chi}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\ell^2}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\chi",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\ell^2}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\eta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\eta",
+                  "\\chi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\ell^2}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\theta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\eta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\eta",
+                  "\\theta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\phi",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\eta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\eta",
+                  "\\phi",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^4\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^4\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\sin^4\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\sin^4\\chi\\sin^2\\theta}{\\cos^4\\eta}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{3}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3\\sin^2\\chi}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{3\\cos^2\\eta}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3\\cos^2\\eta}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3\\csc^2\\chi\\cos^2\\eta}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\csc^2\\chi\\cos^2\\eta\\csc^2\\theta}{\\ell^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+      "kretschmann": "K = \\dfrac{24}{\\ell^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\chi}{\\cos^2\\eta}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3\\cos^2\\eta}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3\\cos^2\\eta}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3\\csc^2\\chi\\cos^2\\eta}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\csc^2\\chi\\cos^2\\eta\\csc^2\\theta}{\\ell^4}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\eta} + \\tan\\eta\\,\\dot{\\eta}^2 + \\tan\\eta\\,\\dot{\\chi}^2 + \\sin^2\\chi\\,\\tan\\eta\\,\\dot{\\theta}^2 + \\sin^2\\chi\\,\\tan\\eta\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + 2\\tan\\eta\\,\\dot{\\eta}\\dot{\\chi} - \\sin\\chi\\cos\\chi\\,\\dot{\\theta}^2 - \\sin\\chi\\cos\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + 2\\tan\\eta\\,\\dot{\\eta}\\dot{\\theta} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + 2\\tan\\eta\\,\\dot{\\eta}\\dot{\\phi} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "lapse",
+      "name": "Quadratic Gauge",
+      "coords": [
+        "t",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in [0, \\infty)",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "t = 0 \\;\\text{(the waist, joined to the equator of the 4-sphere)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Radius of the 4-sphere and of the waist of the de Sitter universe, a length, $\\ell = c/H = \\sqrt{3/\\Lambda}$ with $H$ the Hubble rate of the vacuum and $\\Lambda$ the cosmological constant"
+        }
+      ],
+      "convention": "We use Feldbrugge, Lehners and Turok's gauge, in which the lapse is $\\ell c/a$ and the squared radius $a^2 = \\ell^2 + c^2t^2$ of the 3-sphere grows as a quadratic in the time $t$, with $ct = \\ell\\sinh(ct_c/\\ell)$ for the proper time $t_c$ of the closed slicing. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -\\dfrac{\\ell^2c^2dt^2}{\\ell^2 + c^2t^2} + \\left(\\ell^2 + c^2t^2\\right)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{\\ell^2}{\\ell^2 + c^2\\,t^2}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\ell^2 + c^2\\,t^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{\\ell^2 + c^2\\,t^2}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{\\ell^2 + c^2\\,t^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi}{\\ell^2 + c^2\\,t^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi\\csc^2\\theta}{\\ell^2 + c^2\\,t^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{c\\,t}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{c\\,t}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{c\\,t}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{c\\,t}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{c\\,t}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{c\\,t}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{c\\,t}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{c\\,t\\left(\\ell^2 + c^2\\,t^2\\right)}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{c\\,t\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{c\\,t\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\,c\\,t}{\\left(\\ell^2 + c^2\\,t^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-c\\,t"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "c\\,t"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "c\\,t"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-c\\,t\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "c\\,t\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "c\\,t\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-c\\,t\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "c\\,t\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "c\\,t\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(\\ell^2 + c^2\\,t^2\\right)\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\left(\\ell^2 + c^2\\,t^2\\right)\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\left(\\ell^2 + c^2\\,t^2\\right)\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(\\ell^2 + c^2\\,t^2\\right)\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\left(\\ell^2 + c^2\\,t^2\\right)\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\left(\\ell^2 + c^2\\,t^2\\right)\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2 + c^2\\,t^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2 + c^2\\,t^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2 + c^2\\,t^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2 + c^2\\,t^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2 + c^2\\,t^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2 + c^2\\,t^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2 + c^2\\,t^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^4\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^4\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^4\\chi\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(\\ell^2 + c^2\\,t^2\\right)^2\\sin^4\\chi\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3\\ell^2 + 3c^2\\,t^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\ell^2 + 3c^2\\,t^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{3}{\\ell^2\\left(\\ell^2 + c^2\\,t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3\\csc^2\\chi}{\\ell^2\\left(\\ell^2 + c^2\\,t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\csc^2\\chi\\csc^2\\theta}{\\ell^2\\left(\\ell^2 + c^2\\,t^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+      "kretschmann": "K = \\dfrac{24}{\\ell^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{\\ell^2 + c^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3\\ell^2 + 3c^2\\,t^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\ell^2 + 3c^2\\,t^2}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{3}{\\ell^2\\left(\\ell^2 + c^2\\,t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3\\csc^2\\chi}{\\ell^2\\left(\\ell^2 + c^2\\,t^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\csc^2\\chi\\csc^2\\theta}{\\ell^2\\left(\\ell^2 + c^2\\,t^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{c\\,t}{\\ell^2 + c^2\\,t^2}\\dot{t}^2 + \\dfrac{c\\,t\\left(\\ell^2 + c^2\\,t^2\\right)}{\\ell^2}\\dot{\\chi}^2 + \\dfrac{c\\,t\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi}{\\ell^2}\\dot{\\theta}^2 + \\dfrac{c\\,t\\left(\\ell^2 + c^2\\,t^2\\right)\\sin^2\\chi\\sin^2\\theta}{\\ell^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2c\\,t}{\\ell^2 + c^2\\,t^2}\\dot{t}\\dot{\\chi} - \\sin\\chi\\cos\\chi\\,\\dot{\\theta}^2 - \\sin\\chi\\cos\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2c\\,t}{\\ell^2 + c^2\\,t^2}\\dot{t}\\dot{\\theta} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2c\\,t}{\\ell^2 + c^2\\,t^2}\\dot{t}\\dot{\\phi} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

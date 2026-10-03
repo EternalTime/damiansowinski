@@ -58,6 +58,11 @@
       "id": "minkowski",
       "kind": "family",
       "text": "The four large dimensions are Minkowski space, and every surface of constant $\\theta$ and $\\phi$ is a copy of it [horvath1977]."
+    },
+    {
+      "id": "freund_rubin",
+      "kind": "family",
+      "text": "Freund and Rubin's answer to the added fields: supergravity in eleven dimensions curls up seven of them with a field it already has, into anti-de Sitter space times a 7-sphere [freund1980]."
     }
   ],
   "references": [

@@ -98,7 +98,7 @@ def write_facts(facts):
 # ---------------------------------------------------------------------------------------
 
 DIMENSION = {2: "two-dimensional", 3: "three-dimensional", 4: "four-dimensional",
-             5: "five-dimensional", 6: "six-dimensional", 10: "ten-dimensional"}
+             5: "five-dimensional", 6: "six-dimensional", 10: "ten-dimensional", 11: "eleven-dimensional"}
 
 # The tags the facts decide. A spacetime carries each of them exactly when its charts say
 # so, which the tests hold every metric file to, so none of them is written by hand.
@@ -142,6 +142,13 @@ REGIONS = {
         "why": "exterior covers the outside of one horizon alone, where the hole is static; the Killing "
                "vector of that chart extends to no symmetry of the whole spacetime (Brill 1996, section 4; "
                "Aminneborg, Bengtsson, Brill, Holst and Peldan 1998, section V)",
+    },
+    "btz_shock_wave": {
+        "regions": [["kruskal", "discontinuous"]],
+        "why": "exterior covers one outside alone, where the black hole is static; a shift of its Killing "
+               "time t is a boost of the Kruskal u and v that rescales the shift alpha, so it carries the "
+               "shock to another one and is no symmetry of the whole spacetime (Shenker and Stanford 2014, "
+               "sections 3.1 and 3.2)",
     },
     "moving_mirror": {
         "regions": [["inertial", "null", "mirror_rest"]],

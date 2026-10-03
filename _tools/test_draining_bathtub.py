@@ -247,7 +247,8 @@ class Relations(unittest.TestCase):
         answers = {"family": "family", "special_case": "generalisation"}
         own = load("metrics")["related"]
         self.assertEqual([r["id"] for r in own],
-                         ["kerr", "btz", "schwarzschild", "natario", "spinning_string", "minkowski"])
+                         ["kerr", "btz", "schwarzschild", "natario", "spinning_string", "minkowski",
+                          "unruh_acoustic_hole"])
         for relation in own:
             other = load("metrics", relation["id"])
             (back,) = [r for r in other["related"] if r["id"] == "draining_bathtub"]

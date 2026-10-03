@@ -77,6 +77,11 @@
       "id": "topological_black_hole",
       "kind": "family",
       "text": "The black hole of anti-de Sitter space with a flat horizon. The throat of a three-brane heated a little above its least mass is that black hole in five dimensions times a sphere [maldacena1998]."
+    },
+    {
+      "id": "freund_rubin",
+      "kind": "family",
+      "text": "The sister in eleven dimensions: anti-de Sitter space of four dimensions times a 7-sphere, the throat of a stack of membranes, with the sphere twice the radius [gibbons1993, maldacena1998]."
     }
   ],
   "references": [
