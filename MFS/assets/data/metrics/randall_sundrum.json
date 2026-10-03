@@ -79,6 +79,11 @@
       "id": "freund_rubin",
       "kind": "family",
       "text": "Compactification in its form of 1980: seven of the eleven dimensions curled into a sphere, and the four large ones curved into anti-de Sitter space [freund1980]."
+    },
+    {
+      "id": "quantum_btz",
+      "kind": "family",
+      "text": "A brane with two dimensions of space in anti-de Sitter space of four, curved like anti-de Sitter space itself, with a black hole on it. By holography it is a black hole of three dimensions with the backreaction of quantum fields included exactly [emparan2002holograms, emparan2020qbtz]."
     }
   ],
   "references": [
@@ -101,7 +106,8 @@
     "koroteev2008",
     "cremmer1976",
     "horvath1977",
-    "freund1980"
+    "freund1980",
+    "emparan2020qbtz"
   ],
   "coordinates": [
     {

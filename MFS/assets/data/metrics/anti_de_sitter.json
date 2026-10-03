@@ -147,6 +147,16 @@
       "id": "freund_rubin",
       "kind": "family",
       "text": "Anti-de Sitter space of four dimensions times a 7-sphere of twice its radius, a solution of supergravity in eleven dimensions [freund1980, maldacena1998]."
+    },
+    {
+      "id": "quantum_btz",
+      "kind": "family",
+      "text": "A quantum black hole of three dimensions, held on a brane in anti-de Sitter space of four. Its lightest state is anti-de Sitter space of three dimensions, where the stress tensor of the quantum fields vanishes [emparan2002holograms, emparan2020qbtz]."
+    },
+    {
+      "id": "jackiw_teitelboim_black_hole",
+      "kind": "family",
+      "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Its metric is everywhere anti-de Sitter space of two dimensions, and a dilaton marks its horizon [mertens2023]."
     }
   ],
   "references": [
@@ -195,7 +205,10 @@
     "ortaggio2002direct",
     "brill1996",
     "aminneborg1998",
-    "freund1980"
+    "freund1980",
+    "emparan2002holograms",
+    "emparan2020qbtz",
+    "mertens2023"
   ],
   "coordinates": [
     {

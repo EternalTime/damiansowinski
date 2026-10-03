@@ -82,6 +82,16 @@
       "id": "brans_dicke_sphere",
       "kind": "family",
       "text": "A wormhole with no matter but the scalar field of Brans and Dicke's theory. Their static sphere has a throat when the post-Newtonian parameter $\\gamma$ exceeds $1$ [agnese1995]."
+    },
+    {
+      "id": "brill_charged_taub_nut",
+      "kind": "family",
+      "text": "A wormhole with no exotic matter. At $r_q^2 > m^2 + l^2$ Brill's charged Taub-NUT has no horizon, and an electromagnetic field holds its throat open, with a Misner string along the axis [clement2016]."
+    },
+    {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "kind": "special_case",
+      "text": "The wormhole held open by an electric field and two massless Dirac fields, with $e^{\\Phi} = 1 - M/r$ and $b = r_0 + Q_e^2/r_0 - Q_e^2/r$ [blazquez2021]."
     }
   ],
   "references": [
@@ -106,7 +116,9 @@
     "alcubierre1994",
     "papapetrou1954",
     "boonserm2018",
-    "agnese1995"
+    "agnese1995",
+    "clement2016",
+    "blazquez2021"
   ],
   "coordinates": [
     {

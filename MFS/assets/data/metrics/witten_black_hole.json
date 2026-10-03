@@ -56,6 +56,11 @@
       "id": "moving_mirror",
       "kind": "family",
       "text": "Hawking's radiation in two dimensions with the gravity taken out: flat spacetime ending at a mirror whose world line closes on a light ray. Its radiation, like this hole's, has a temperature set by one constant of the model [davies1977, good2016]."
+    },
+    {
+      "id": "jackiw_teitelboim_black_hole",
+      "kind": "family",
+      "text": "The black hole of Jackiw and Teitelboim's gravity, another gravity with a dilaton in two dimensions. Its curvature is the same negative constant everywhere, and its temperature grows with the size of its horizon."
     }
   ],
   "references": [

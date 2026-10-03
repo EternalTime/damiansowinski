@@ -149,6 +149,10 @@ REGIONS = {
                "collapse, and the uniformly accelerating one, which alone is at rest in a static chart; a mirror "
                "on a general world line leaves the spacetime to its right no symmetry",
     },
+    "kerr_bertotti_robinson": {
+        "regions": [["boyer_lindquist"]],
+        "why": "static is the hole with no spin, a = 0, a special case of the family, which alone is static",
+    },
     "neugebauer_meinel": {
         "regions": [["weyl", "corotating", "bardeen_wagoner", "spheroidal"]],
         "why": "black_hole_limit is the limit mu -> mu_0 outside the disc, the extreme Kerr metric, "
@@ -204,6 +208,11 @@ REGIONS = {
                "holes reduce to, which carries a Maxwell field and a scalar field; the entry's "
                "spacetime is the vacuum of five dimensions",
     },
+    "topological_star": {
+        "regions": [["bah_heidmann", "bubble", "eddington_finkelstein_ingoing", "extremal"]],
+        "why": "einstein prints the metric of four dimensions the star reduces to, which carries a Maxwell "
+               "field and a scalar field; the entry's spacetime is the solution of five dimensions",
+    },
     "kasner_scalar": {
         "regions": [["synchronous", "logarithmic"]],
         "why": "kaluza_klein prints Kasner's vacuum of five dimensions, whose reduction along its "
@@ -247,6 +256,11 @@ REGIONS = {
     "oppenheimer_snyder": {
         "regions": [["interior_comoving"], ["exterior_schwarzschild"]],
         "why": "the dust ball and the vacuum outside it are two regions of one spacetime",
+    },
+    "quantum_oppenheimer_snyder": {
+        "regions": [["interior_comoving"],
+                    ["static", "painleve_gullstrand", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"]],
+        "why": "the bouncing dust ball and the vacuum outside it are two regions of one spacetime",
     },
     "semiclosed_world": {
         "regions": [["comoving", "conformal"], ["schwarzschild", "isotropic"]],
@@ -373,6 +387,10 @@ OVERRULED = {
     ("double_kerr", "vacuum"): (
         True, "f, omega and gamma are left free; the two Kerr black holes are a solution of "
               "the vacuum equations, Ernst's equation for f and omega and a quadrature for gamma"),
+    ("bach_weyl_ring", "vacuum"): (
+        True, "psi and gamma are held as functions while each chart's tensors are built; they are the "
+              "solution of the vacuum equations, Laplace's equation and Weyl's quadrature, that each "
+              "chart's parameters write out, which print_charts.py holds to a vanishing Ricci tensor"),
     ("morgan_morgan", "vacuum"): (
         True, "psi and gamma are left free in Weyl's chart; off the disc the field is the solution "
               "of the vacuum equations, Laplace's equation and a quadrature, that the oblate "
