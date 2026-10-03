@@ -92,6 +92,11 @@
       "id": "draining_bathtub",
       "kind": "family",
       "text": "A vortex of water as sound sees it, which Matt Visser set beside the spinning string. Far from the core the string approximates it, and near the core the vortex has a horizon where the string has closed timelike curves [visser1998]."
+    },
+    {
+      "id": "vuorio_warped_ads",
+      "kind": "family",
+      "text": "A vacuum of gravity in three dimensions with a mass for the graviton, with closed timelike curves and no source. They lie beyond a fixed distance from every point [reboucas2009]."
     }
   ],
   "references": [
@@ -123,7 +128,8 @@
     "som1968",
     "kopczynski1973",
     "trautman2006",
-    "visser1998"
+    "visser1998",
+    "reboucas2009"
   ],
   "coordinates": [
     {

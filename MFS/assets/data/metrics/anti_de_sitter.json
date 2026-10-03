@@ -142,6 +142,11 @@
       "id": "three_brane_throat",
       "kind": "family",
       "text": "A sheet of three dimensions in string theory whose throat is anti-de Sitter space of five dimensions times a sphere of five. Maldacena read his correspondence off that throat [maldacena1998]."
+    },
+    {
+      "id": "vuorio_warped_ads",
+      "kind": "family",
+      "text": "Anti-de Sitter space of three dimensions with its light cones squashed or stretched along one direction, the vacua of gravity with a mass for the graviton. Stretched, as in Vuorio's universe, they hold closed timelike curves through every event [rooman1998]."
     }
   ],
   "references": [

@@ -57,6 +57,11 @@
       "id": "btz_multi_holes_wormholes",
       "kind": "family",
       "text": "With a negative cosmological constant the same cutting and gluing makes black holes, any number of them joined behind their horizons. Alan Steif put particles and holes on one hyperbolic plane in 1995 [steif1996, brill1996]."
+    },
+    {
+      "id": "vuorio_warped_ads",
+      "kind": "family",
+      "text": "With a mass for the graviton, empty space in three dimensions need not be flat. Vuorio's universe is such a vacuum, whose light cones tip over as Gödel's do [vuorio1985]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "banados1992",
     "matschull1999",
     "steif1996",
-    "brill1996"
+    "brill1996",
+    "vuorio1985"
   ],
   "coordinates": [
     {

@@ -1512,6 +1512,12 @@ DIMENSIONS = {
     # so that Omega r^2/c is a length beside c dt.
     ("som_raychaudhuri", "cylindrical"): {"t": "T", "r": "L", "\\phi": "1", "z": "L", "\\Omega": "1/T"},
     ("som_raychaudhuri", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1/T"},
+    # Vuorio's universe and warped anti-de Sitter space keep c, with the twist Omega of d_t and the
+    # curvature scale m of the plane it turns about both inverse lengths.
+    ("vuorio_warped_ads", "cylindrical"): {"t": "T", "r": "L", "\\phi": "1", "\\Omega": "1/L", "m": "1/L"},
+    ("vuorio_warped_ads", "disc"): {"t": "T", "R": "1", "\\phi": "1", "\\Omega": "1/L", "m": "1/L"},
+    ("vuorio_warped_ads", "fibred"): {"t": "T", "\\sigma": "1", "u": "1", "\\Omega": "1/L", "m": "1/L"},
+    ("vuorio_warped_ads", "horospherical"): {"t": "T", "x": "L", "y": "L", "\\Omega": "1/L", "m": "1/L"},
     # Maitra's dust keeps c. Its a is the one length of the solution, 8 pi G rho/c^2 = 1/a^2 on the
     # axis; s and gamma are numbers and k is a length, so that k dphi stands beside c dt.
     ("maitra_dust", "cylindrical"): {
