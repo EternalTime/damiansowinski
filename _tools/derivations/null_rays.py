@@ -229,6 +229,7 @@ from scipy.special import expi as scipy_expi
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import boson_star as bs  # noqa: E402
+import bubbling_ads  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
 import black_to_white_hole as bwh  # noqa: E402
 import build_mfs_data as build  # noqa: E402
@@ -344,6 +345,15 @@ FR_CIRCLE = {"x": "0", "y": "0", "sigma": "0", **FR_SEVEN}
 BIG_RIP = {"w": "-3/2", "t_0": 1}
 BIG_RIP_CONFORMAL = {"w": "-3/2", "eta_0": 1}
 BIG_RIP_HORIZON = "the event horizon of the observer at the centre"
+
+# Lin, Lunin and Maldacena's bubbling anti-de Sitter space holds a point of each 3-sphere fixed. The
+# global chart's planes lie in the plane of the droplets, y = 0, at theta = 0; the chart of concentric
+# droplets is drawn at a black ring on its axis, which the rotations of the plane and both spheres fix.
+BA_SPHERES = {"alpha": "pi/2", "beta": "pi/2", "gamma": "0", "kappa": "pi/2", "xi": "pi/2", "omega": "0"}
+BA_RING = bubbling_ads.functions_text()
+# The inverse metric is printed over r^2, 0/0 on the axis, so the axis is drawn at BA_AXIS from it,
+# where the twist V, which falls as r^2, moves the metric of the plane by less than 10^-8.
+BA_AXIS = "1/10**4"
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -4200,6 +4210,26 @@ DIAGRAMS = [
     Diagram("freund_rubin", "proper", "circle", "$t$ and $\\psi$", ("t", "\\psi"),
             (0, 4 * math.pi, -2 * math.pi, 2 * math.pi), "$2\\psi$", "$ct/L$", {"L": 1}, FR_CIRCLE,
             to_display=((0, 2), (1, 0)), families=SIDEWAYS, periodic=("\\psi",)),
+    # Lin, Lunin and Maldacena's bubbling anti-de Sitter space at L = 1: the global chart on the plane of
+    # the time and rho and on the great circle of psi at the centre, the edge of the black disc; the
+    # chart of concentric droplets at the black ring of bubbling_ads.RING on its axis; the plane wave on its axis.
+    Diagram("bubbling_ads", "global", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 3, -1.5, 1.5),
+            "$\\rho$", "$t$", {"L": 1}, {**BA_SPHERES, "theta": "0", "psi": "0"}),
+    Diagram("bubbling_ads", "global", "edge", "$t$ and $\\psi$ on the edge of the disc", ("t", "\\psi"),
+            (0, 2 * math.pi, -math.pi, math.pi), "$\\psi$", "$t$", {"L": 1}, {**BA_SPHERES, "rho": "0", "theta": "0"},
+            families=SIDEWAYS, periodic=("\\psi",)),
+    Diagram("bubbling_ads", "rings", "ring_axis", "$t$ and $y$ on the axis of a black ring", ("t", "y"),
+            (0, 3, -1.5, 1.5), "$y/L^2$", "$t$", {}, {**BA_SPHERES, "r": BA_AXIS, "phi": "0"}, functions=BA_RING,
+            kretschmann=False,
+            input="The black ring between the circles $r = \\sqrt{2}\\,L^2$ and $r = L^2$ of the plane of the "
+                  "droplets, white inside and out, with every area in units of $L^2$ for the radius $L$ of the "
+                  "anti-de Sitter space it nears far away. Its black area $\\pi L^4$ is that of the disc of radius "
+                  "$L^2$."),
+    Diagram("bubbling_ads", "plane_wave", "axis", "$t$ and $x$ on the axis", ("t", "x"), (-2, 2, -2, 2),
+            "$Z$", "$T$", {}, {**BA_SPHERES, "r_1": "0", "r_2": "0"}, to_display=UV_TO_TZ, tau="t + 2*x",
+            families=SIDEWAYS,
+            input="On the axis the metric is $-2\\,dt\\,dx$ whatever unit $\\ell^2$ the area $x$ is measured in, "
+                  "so the drawing is the same for every $\\ell$."),
     Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
             (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
@@ -9835,6 +9865,41 @@ CAPTIONS = {
         "turn, its two edges one line. On it the metric is $-c^2dt^2 + 4L^2d\\psi^2$, so the rays are lines at 45°.",
         "A ray takes the time $4\\pi L/c$ to go once round the sphere, four times as long as a ray takes to cross "
         "anti-de Sitter space from its boundary to the centre and back out.",
+    ],
+    ("bubbling_ads", "global", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = \\psi = 0$, $\\alpha = \\beta = \\pi/2$, $\\gamma = 0$, "
+        "$\\kappa = \\xi = \\pi/2$, $\\omega = 0$) in the global chart, each point in the plane a 3-sphere of "
+        "anti-de Sitter space of radius $L\\sinh\\rho$. At $\\theta = 0$ the 3-sphere of the 5-sphere has shrunk to "
+        "a point, so the plane lies in the plane of the droplets, $y = 0$, in the white outside the black disc, "
+        "at $r = L^2\\cosh\\rho$ and $\\phi = -t$.",
+        "The rays have $d\\rho/dt = \\pm\\cosh\\rho$, so a ray from the centre reaches $\\rho \\to \\infty$, "
+        "the boundary of anti-de Sitter space, at $t = \\pi/2$.",
+    ],
+    ("bubbling_ads", "global", "edge"): [
+        "The plane of $t$ and $\\psi$ ($\\rho = \\theta = 0$, $\\alpha = \\beta = \\pi/2$, $\\gamma = 0$, "
+        "$\\kappa = \\xi = \\pi/2$, $\\omega = 0$), a great circle of the 5-sphere at the centre of anti-de Sitter "
+        "space over one turn, its two edges one line. On it the metric is $L^2\\left(-dt^2 + d\\psi^2\\right)$, so "
+        "the rays are null geodesics at 45°.",
+        "The circle is the edge of the black disc, $r = L^2$ at $\\phi = \\psi - t$, so the ray $\\psi = t$ stays at "
+        "one point of the edge while $t$ runs, and each point of the border between black and white is a light ray "
+        "going round the 5-sphere.",
+    ],
+    ("bubbling_ads", "rings", "ring_axis"): [
+        "The plane of $t$ and $y$ on the axis of a black ring ($r = \\phi = 0$, $\\alpha = \\beta = \\pi/2$, "
+        "$\\gamma = 0$, $\\kappa = \\xi = \\pi/2$, $\\omega = 0$), through the centre of its white hole. On the "
+        "axis the twist vanishes and the metric on the plane is $-2y\\cosh G\\,dt^2 + dy^2/(2y\\cosh G)$, and the "
+        "rotations of the plane and of both 3-spheres hold the axis fixed, so the rays are null geodesics.",
+        "At $y = 0$ the 3-sphere of $\\kappa$, $\\xi$, and $\\omega$ shrinks to a point and a ray passes "
+        "through it. A ray from $y = 0$ reaches $y \\to \\infty$, the boundary of the anti-de Sitter space far "
+        "away, at $t = 1.253$; from the centre of the black disc of the same area it takes $t = \\pi/2$.",
+    ],
+    ("bubbling_ads", "plane_wave", "axis"): [
+        "The plane of $t$ and $x$ on the axis of the plane wave ($r_1 = r_2 = 0$, $\\alpha = \\beta = \\pi/2$, "
+        "$\\gamma = 0$, $\\kappa = \\xi = \\pi/2$, $\\omega = 0$), drawn with $T = x/\\ell^2 + t/2$ and "
+        "$Z = x/\\ell^2 - t/2$ for $\\ell$ any length, since the chart's own $t$ and $x$ are both null. On the "
+        "axis the metric is $-2\\,dt\\,dx$, flat, and the rays are null geodesics at 45°.",
+        "Off the axis a ray is pulled back toward it, $\\ddot r_1 = -r_1\\dot t^2$ and $\\ddot r_2 = -r_2\\dot t^2$ "
+        "with $\\dot t$ constant, so every ray that leaves the axis returns to it after $\\Delta t = \\pi$.",
     ],
     ("interior_schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the "
@@ -16569,6 +16634,16 @@ CLOSED_FORMS = {
     ("freund_rubin", "poincare", "radial"): (lambda t, r: t - 1 / r, lambda t, r: t + 1 / r, lambda t, r: r > 0.05),
     ("freund_rubin", "proper", "radial"): (lambda t, s: t - np.exp(-s), lambda t, s: t + np.exp(-s), None),
     ("freund_rubin", "proper", "circle"): (lambda t, p: t + 2 * p, lambda t, p: t - 2 * p, None),
+    # Bubbling anti-de Sitter space at L = 1: t -+ arctan(sinh rho) on the global chart, t -+ phi round the edge
+    # of the disc, t -+ y_* on the ring's axis with y_* the quadrature bubbling_ads.axis_tortoise, and the
+    # plane wave's null t and x on its axis.
+    ("bubbling_ads", "global", "radial"):
+        (lambda t, r: t + np.arctan(np.sinh(r)), lambda t, r: t - np.arctan(np.sinh(r)), None),
+    ("bubbling_ads", "global", "edge"): (lambda t, p: t + p, lambda t, p: t - p, None),
+    ("bubbling_ads", "rings", "ring_axis"):
+        (lambda t, y: t + np.vectorize(bubbling_ads.axis_tortoise)(y), lambda t, y: t - np.vectorize(bubbling_ads.axis_tortoise)(y),
+         None),
+    ("bubbling_ads", "plane_wave", "axis"): (lambda u, v: v, lambda u, v: u, None),
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     # The throat of extreme Kerr at r_0 = 1: each plane is conformal to a chart of AdS2, whose rays

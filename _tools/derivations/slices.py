@@ -3061,6 +3061,13 @@ FLAT = {
     # which is chi = arctan(sinh rho) and r = sinh rho on the conformal and static charts, and the
     # cylinder over its reach in the proper distance sigma, which is r = e^sigma on the Poincare chart.
     # On the plane of t and psi at sigma = 0 the cylinder is its ring sigma = 0, the whole line t = 0.
+    # Bubbling anti-de Sitter space at L = 1: the plane of the droplets of the black disc at t = 0 is the
+    # cylinder theta = 0 over its reach in rho, the whole line t = 0 of the global chart's radial plane,
+    # and its edge rho = theta = 0 is the whole circle of psi at t = 0.
+    ("bubbling_ads", "global", "radial"): lambda: one(
+        "bubbling_ads", lambda m: along(0.0, *m.reach("global", "\\rho")), view_id="plane"),
+    ("bubbling_ads", "global", "edge"): lambda: one(
+        "bubbling_ads", lambda m: along(0.0, 0.0, 2 * math.pi), view_id="plane"),
     ("freund_rubin", "global", "radial"): lambda: one(
         "freund_rubin", lambda m: along(0.0, *m.reach("global", "\\rho")), view_id="anti_de_sitter"),
     ("freund_rubin", "conformal", "radial"): lambda: one(
@@ -3534,6 +3541,9 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("bubbling_ads", "rings"): "the black ring, another member of the family than the black disc whose plane of droplets is embedded",
+    ("bubbling_ads", "rings", "ring_axis"): "the black ring, another member of the family than the black disc whose plane of droplets is embedded",
+    ("bubbling_ads", "plane_wave", "axis"): "the black half plane, another member of the family than the black disc whose plane of droplets is embedded",
     ("kerr_bertotti_robinson", "static", "radial"): "the hole with no spin, a = 0, another member of the family than the spinning hole whose equator is embedded",
     ("tilted_universes", "flat_model", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
     ("tilted_universes", "inertial", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",

@@ -108,6 +108,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 import black_to_white_hole as bwh  # noqa: E402
 import boson_star as bs  # noqa: E402
+import bubbling_ads as ba  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
 import null_rays as nr  # noqa: E402
@@ -9571,6 +9572,91 @@ def three_brane_throat(ck, src):
         v.slice(alone, [poincare_pq(0 * c, c)])
         v.set(settings="$L = 1$, the unit of every length.")
         views.append(v)
+    return views
+
+
+def bubbling_ads(ck, src):
+    """Lin, Lunin and Maldacena's bubbling anti-de Sitter space at L = 1. The black disc is anti-de
+    Sitter space of five dimensions times a 5-sphere, drawn in anti-de Sitter's strip from its global
+    chart by ads_global_pq with r = sinh(rho), the 5-sphere one radius at every event. The black ring
+    of bubbling_ads.RING is drawn on its axis, where the metric on the plane of t and y is
+    2y cosh G (-dt^2 + dy_*^2) with dy_*/dy = 1/(2y cosh G): conformal to the strip 0 <= y_* < Y_*
+    as it stands, p, q = (t -+ y_*)/2, with Y_* = 1.2526 the integral to y -> infinity, which
+    bubbling_ads.axis_tortoise takes by quadrature. The axis y = 0 is a regular centre, where the
+    3-sphere of kappa, xi and omega shrinks."""
+    name = "bubbling_ads"
+    views = []
+    plane = slices.moments(name, "plane")[0]
+    lo, hi = plane.reach("global", "\\rho")
+    T0, T1 = -0.3 * PI, 1.3 * PI
+    pl = Plane(src, name, "global", ("t", "\\rho"), {**nr.BA_SPHERES, "theta": "0", "psi": "0"}, {"L": 1})
+    ck.chart("bubbling anti-de Sitter, the disc", pl, lambda t, x: ads_global_pq(t, np.sinh(np.asarray(x, dtype=float))),
+             ck.uniform(-10, 10), ck.uniform(0.001, 5), lambda t, x: (1, 0))
+    ck.limit("bubbling anti-de Sitter, the disc: the Kretschmann scalar is 80/L^4 everywhere",
+             pl.kretschmann(np.array([0.0, 1.0, -2.0]), np.array([0.3, 0.7, 1.1])), [80] * 3, 1e-9)
+    v = View("global", "Global (the disc)", [-0.95, HALF + 0.55, T0, T1], "global")
+    strip(v, False, T0, T1)
+    v.fill("cover", [[0, T0], [HALF, T0], [HALF, T1], [0, T1]])
+    for c in (0.25, 0.5, 1, 2, 3):
+        X = float(np.arctan(np.sinh(c)))
+        v.line("r", [[[X, T0], [X, T1]]])
+    for k in range(-1, 6):
+        v.line("t", [[[0, k * Q4], [HALF, k * Q4]]])
+    v.segment("null", (0, 0), (0, HALF))
+    v.segment("null", (0, HALF), (HALF, HALF))
+    v.label_xt([0, 0], "$t = 0$", "r", "coord", dx=-6)
+    v.label_xt([0, HALF], "$\\pi/2$", "r", "coord", dx=-6)
+    v.label_xt([0, PI], "$\\pi$", "r", "coord", dx=-6)
+    v.set(fade={"top": 0.7, "bottom": 0.7})
+    v.legend("cover", "the whole universal cover, which $t$ and $\\rho$ cover")
+    v.legend("r", "$\\rho$ constant, at $0.25$, $0.5$, $1$, $2$ and $3$")
+    v.legend("t", "$t$ constant, every $\\pi/4$")
+    v.legend("boundary", "the conformal boundary, timelike")
+    v.legend("centre", "$\\rho = 0$, the black disc, a regular centre")
+    v.legend("null", "a radial light ray from the centre")
+    r = np.sinh(np.linspace(lo, hi, 2))
+    v.slice(plane, [ads_global_pq(0 * r, r)])
+    v.set(settings="$L = 1$, the unit of every length.")
+    views.append(v)
+
+    edge = ba.axis_tortoise(math.inf)
+    tortoise = np.vectorize(ba.axis_tortoise)
+
+    def ring_pq(t, y):
+        t, ys = np.asarray(t, dtype=float), tortoise(np.asarray(y, dtype=float))
+        return (t - ys) / 2, (t + ys) / 2
+    pl = Plane(src, name, "rings", ("t", "y"), {**nr.BA_SPHERES, "r": nr.BA_AXIS, "phi": "0"}, {},
+               functions=nr.BA_RING)
+    ck.chart("bubbling anti-de Sitter, the ring on its axis", pl, ring_pq, ck.uniform(-10, 10, 200),
+             ck.uniform(0.001, 20, 200), lambda t, y: (1, 0))
+    ck.limit("bubbling anti-de Sitter, the ring: y_* reaches the boundary at t = 1.2526", edge, 1.2526226756651, 1e-10)
+    ck.limit("bubbling anti-de Sitter, the disc of the same area: y_* = arctan(y)",
+             [ba.axis_tortoise(0.5, (1,)), ba.axis_tortoise(2.0, (1,))], np.arctan([0.5, 2.0]), 1e-10)
+    v = View("rings", "Concentric droplets (a black ring)", [-0.95, edge + 0.55, T0, T1], "rings")
+    v.fill("region", [[0, T0], [edge, T0], [edge, T1], [0, T1]])
+    v.fill("cover", [[0, T0], [edge, T0], [edge, T1], [0, T1]])
+    v.line("boundary", [[[edge, T0], [edge, T1]]])
+    v.line("centre", [[[0, T0], [0, T1]]])
+    v.label_xt([edge, (T0 + T1) / 2 + 0.6], "$\\mathscr{I}$", "l", dx=6)
+    for c in (0.25, 0.5, 1, 2, 4):
+        X = float(ba.axis_tortoise(c))
+        v.line("r", [[[X, T0], [X, T1]]])
+    for k in range(-1, 6):
+        v.line("t", [[[0, k * Q4], [edge, k * Q4]]])
+    v.segment("null", (0, 0), (0, edge))
+    v.segment("null", (0, edge), (edge, edge))
+    v.label_xt([0, 0], "$t = 0$", "r", "coord", dx=-6)
+    v.label_xt([0, edge], "$1.253$", "r", "coord", dx=-6)
+    v.label_xt([0, 2 * edge], "$2.505$", "r", "coord", dx=-6)
+    v.set(fade={"top": 0.7, "bottom": 0.7})
+    v.legend("cover", "the axis of the ring, which $t$ and $y$ cover")
+    v.legend("r", "$y$ constant, at $0.25$, $0.5$, $1$, $2$ and $4\\,L^2$")
+    v.legend("t", "$t$ constant, every $\\pi/4$")
+    v.legend("boundary", "the conformal boundary far away, timelike")
+    v.legend("centre", "$y = 0$, the centre of the white hole, a regular centre")
+    v.legend("null", "a light ray along the axis from $y = 0$")
+    v.set(settings="$L = 1$, the unit of every length.")
+    views.append(v)
     return views
 
 
@@ -25165,7 +25251,7 @@ DRAWN = {
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "string_bh_three_four_charges": string_bh_three_four_charges, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
-    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "three_brane_throat": three_brane_throat, "freund_rubin": freund_rubin, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
+    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "three_brane_throat": three_brane_throat, "freund_rubin": freund_rubin, "bubbling_ads": bubbling_ads, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
@@ -27375,6 +27461,23 @@ CAPTIONS = {
         "The same tower with Gibbons, Horowitz, and Townsend's $w$ on it, which runs from $1$ at infinity to "
         "$0$ at the horizon. Behind the horizon $w$ is negative, and the mirror region is this exterior under "
         "$w \\to -w$, with its infinity at $w = -1$.",
+    ],
+    ("bubbling_ads", "global"): [
+        "The black disc, anti-de Sitter space of five dimensions times a 5-sphere of the same radius $L$, its "
+        "universal cover, each point in the diagram a 3-sphere of anti-de Sitter space times the 5-sphere. With "
+        "$\\tan\\chi = \\sinh\\rho$ the metric on the plane of $t$ and $\\rho$ is "
+        "$\\frac{L^2}{\\cos^2\\chi}(-dt^2 + d\\chi^2)$, conformal to the strip $0 \\le \\chi < \\pi/2$.",
+        "The 5-sphere has the one radius $L$ at every event, so the strip is the conformal diagram of anti-de Sitter "
+        "space alone. A radial light ray from the centre reaches the timelike boundary at $t = \\pi/2$ and is back at "
+        "$t = \\pi$.",
+    ],
+    ("bubbling_ads", "rings"): [
+        "The black ring between $r = \\sqrt{2}\\,L^2$ and $r = L^2$ on its axis, through the centre of its white hole, "
+        "each point in the diagram the two 3-spheres. The metric on the plane of $t$ and $y$ is "
+        "$2y\\cosh G\\left(-dt^2 + dy_*^2\\right)$ with $dy_*/dy = 1/(2y\\cosh G)$, conformal to the strip "
+        "$0 \\le y_* < 1.253$ as it stands.",
+        "A light ray along the axis from $y = 0$ reaches the timelike boundary at $t = 1.253$ and is back at "
+        "$t = 2.505$; across the disc of the same black area, $\\pi L^4$, the strip is $\\pi/2$ wide.",
     ],
     ("freund_rubin", "global"): [
         "Anti-de Sitter space of four dimensions times a 7-sphere of radius $2L$, its universal cover, each point "

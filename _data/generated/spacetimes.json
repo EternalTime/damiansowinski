@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 182,
+  "count": 183,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1560,6 +1560,11 @@
           "id": "btz_shock_wave",
           "kind": "family",
           "text": "Off its shock, the shock wave in the BTZ black hole is anti-de Sitter space of three dimensions with its points identified [banados1993]."
+        },
+        {
+          "id": "bubbling_ads",
+          "kind": "family",
+          "text": "Anti-de Sitter space of five dimensions times a 5-sphere is a black disc on Lin, Lunin, and Maldacena's plane of droplets, and every other pattern of black and white is a smooth spacetime of its own with no horizon [lin2004]."
         }
       ],
       "references": [
@@ -1611,7 +1616,8 @@
         "freund1980",
         "emparan2002holograms",
         "emparan2020qbtz",
-        "mertens2023"
+        "mertens2023",
+        "lin2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -10728,6 +10734,422 @@
       ]
     },
     {
+      "id": "bubbling_ads",
+      "name": "Bubbling Anti-de Sitter Space",
+      "short_name": "Bubbling Anti-de Sitter",
+      "description": "Every smooth solution of type IIB supergravity in ten dimensions that keeps half of its supersymmetry and the symmetry of two 3-spheres, each one fixed by colouring a plane black and white. A black disc is anti-de Sitter space of five dimensions times a 5-sphere, a black half plane is the maximally supersymmetric plane wave, and any other pattern of droplets is a new geometry with no horizon. Hai Lin, Oleg Lunin, and Juan Maldacena found them in 2004, with the plane the phase space of free fermions in the dual gauge theory.",
+      "tags": [
+        "stationary",
+        "ten-dimensional",
+        "higher dimensions",
+        "string theory",
+        "supergravity",
+        "supersymmetric",
+        "anti-de Sitter",
+        "AdS/CFT",
+        "holography",
+        "D3-brane",
+        "brane",
+        "plane wave",
+        "pp-wave",
+        "superposition",
+        "topology",
+        "no horizon",
+        "no singularity",
+        "regular",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "The time $t$ is a pure number in every chart, so no factor of $c$ appears. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "related": [
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "The five large dimensions of the black disc. Every point of anti-de Sitter space of five dimensions carries a 5-sphere of the same radius, and the disc itself is the centre of anti-de Sitter space, where its 3-spheres shrink to a point [lin2004]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "The throat of a stack of three-branes, anti-de Sitter space of five dimensions times a 5-sphere, is the black disc. Small droplets spread far apart on the plane become stacks of three-branes pulled apart, each with its own term in the harmonic function [lin2004, maldacena1998]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "family",
+          "text": "The black half plane is a plane wave of ten dimensions, $H = -\\left(r_1^2 + r_2^2\\right)$ across eight flat directions, which with its 5-form keeps all the supersymmetry of type IIB supergravity [blau2002, lin2004]. Zooming in on the border of any droplet gives it back [lin2004]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "family",
+          "text": "The same picture one dimension up. Lin, Lunin, and Maldacena found the half supersymmetric geometries of anti-de Sitter space of four dimensions times a 7-sphere as well, with a 2-sphere and a 5-sphere taking turns shrinking on a plane and a function obeying the Toda equation [lin2004]."
+        }
+      ],
+      "references": [
+        "berenstein2004",
+        "maldacena1998",
+        "lin2004",
+        "mcgreevy2000",
+        "corley2002",
+        "blau2002",
+        "myers2001"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bubbling_ads.json",
+      "charts": [
+        {
+          "id": "rings",
+          "name": "Concentric droplets",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "y",
+            "\\alpha",
+            "\\beta",
+            "\\gamma",
+            "\\kappa",
+            "\\xi",
+            "\\omega"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "y \\in [0, \\infty)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\gamma \\in [0, 2\\pi)",
+            "\\kappa \\in [0, \\pi]",
+            "\\xi \\in [0, \\pi]",
+            "\\omega \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "G = G(r,y)",
+              "description": "Dimensionless function of $r$ and $y$; Lin, Lunin, and Maldacena's $z = \\frac{1}{2}\\tanh G$ obeys $\\partial_r^2z + \\frac{1}{r}\\partial_rz + y\\,\\partial_y\\left(\\partial_yz/y\\right) = 0$ and is $-1/2$ on the black rings and $+1/2$ on the white of the plane $y = 0$, which no component assumes"
+            },
+            {
+              "symbol": "V = V(r,y)",
+              "description": "Dimensionless function of $r$ and $y$, the twist of the time about the axis $r = 0$, Lin, Lunin, and Maldacena's $V_\\phi$; $y\\,\\partial_yV = r\\,\\partial_rz$ and $y\\,\\partial_rV = -r\\,\\partial_yz$, which no component assumes"
+            }
+          ],
+          "convention": "We use Lin, Lunin, and Maldacena's coordinates $(t, r, \\phi, y, \\alpha, \\beta, \\gamma, \\kappa, \\xi, \\omega)$, with $r$ and $\\phi$ polar coordinates on the plane of the droplets, $r$ and $y$ carrying the dimensions of an area, and $y$ the product of the radii of the two 3-spheres. The angles $\\alpha$, $\\beta$, and $\\gamma$ are those of the 3-sphere of radius $\\sqrt{y}\\,e^{G/2}$, and $\\kappa$, $\\xi$, and $\\omega$ those of the 3-sphere of radius $\\sqrt{y}\\,e^{-G/2}$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -2y\\cosh G\\left(dt + V\\,d\\phi\\right)^2 + \\dfrac{dr^2 + r^2d\\phi^2 + dy^2}{2y\\cosh G} + y\\,e^{G}\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\,d\\gamma^2\\right)\\right) + y\\,e^{-G}\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\,d\\omega^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-y\\left(e^{2G} + 1\\right)e^{-G}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-V\\,y\\left(e^{2G} + 1\\right)e^{-G}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-V\\,y\\left(e^{2G} + 1\\right)e^{-G}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{e^{G}}{y\\left(e^{2G} + 1\\right)}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{e^{G}}{y\\left(e^{2G} + 1\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\left(V\\,y\\,e^{2G} + r\\,e^{G} + V\\,y\\right)\\left(V\\,y\\,e^{2G} - r\\,e^{G} + V\\,y\\right)e^{-G}}{y\\left(e^{2G} + 1\\right)}"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "y\\,e^{G}"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "y\\,e^{G}\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\gamma",
+                "\\gamma"
+              ],
+              "value": "y\\,e^{G}\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\kappa",
+                "\\kappa"
+              ],
+              "value": "y\\,e^{-G}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "y\\,e^{-G}\\sin^2\\kappa"
+            },
+            {
+              "indices": [
+                "\\omega",
+                "\\omega"
+              ],
+              "value": "y\\,e^{-G}\\sin^2\\kappa\\sin^2\\xi"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(y^3\\left(\\partial_y V\\right)^2 + y^3\\left(\\partial_r V\\right)^2 - 2r^2e^{6G}\\partial_y G + 2r^2e^{2G}\\partial_y G + 2r\\,y\\,e^{6G}\\partial_r G - 2r\\,y\\,e^{2G}\\partial_r G + y^3e^{8G}\\left(\\partial_y V\\right)^2 + y^3e^{8G}\\left(\\partial_r V\\right)^2 + 4y^3e^{6G}\\left(\\partial_y V\\right)^2 + 4y^3e^{6G}\\left(\\partial_r V\\right)^2 + 6y^3e^{4G}\\left(\\partial_y V\\right)^2 + 6y^3e^{4G}\\left(\\partial_r V\\right)^2 + 4y^3e^{2G}\\left(\\partial_y V\\right)^2 + 4y^3e^{2G}\\left(\\partial_r V\\right)^2 + 2r^2\\,y\\,e^{6G}\\partial_y^2 G + 2r^2\\,y\\,e^{6G}\\partial_r^2 G - 2r^2\\,y\\,e^{2G}\\partial_y^2 G - 2r^2\\,y\\,e^{2G}\\partial_r^2 G - 4r^2\\,y\\,e^{6G}\\left(\\partial_y G\\right)^2 - 4r^2\\,y\\,e^{6G}\\left(\\partial_r G\\right)^2 + 4r^2\\,y\\,e^{4G}\\left(\\partial_y G\\right)^2 + 4r^2\\,y\\,e^{4G}\\left(\\partial_r G\\right)^2 - 4r^2\\,y\\,e^{2G}\\left(\\partial_y G\\right)^2 - 4r^2\\,y\\,e^{2G}\\left(\\partial_r G\\right)^2\\right)e^{-3G}}{2r^2\\left(e^{2G} + 1\\right)}",
+          "kretschmann": "K = \\dfrac{\\left(136r^2\\,y^6e^{10G}\\partial_r G\\,\\partial_r V\\,\\partial_y G\\,\\partial_y V + 16r^2\\,y^6e^{12G}\\partial_r G\\,\\partial_r V\\,\\partial_y G\\,\\partial_y V - 8r^2\\,y^6e^{14G}\\partial_r G\\,\\partial_r V\\,\\partial_y G\\,\\partial_y V - 8r^2\\,y^6e^{2G}\\partial_r G\\,\\partial_r V\\,\\partial_y G\\,\\partial_y V + 16r^2\\,y^6e^{4G}\\partial_r G\\,\\partial_r V\\,\\partial_y G\\,\\partial_y V + 136r^2\\,y^6e^{6G}\\partial_r G\\,\\partial_r V\\,\\partial_y G\\,\\partial_y V + 224r^2\\,y^6e^{8G}\\partial_r G\\,\\partial_r V\\,\\partial_y G\\,\\partial_y V + 80r^2\\,y^5e^{10G}\\partial_r G\\,\\partial_r V\\,\\partial_y V + 64r^2\\,y^5e^{12G}\\partial_r G\\,\\partial_r V\\,\\partial_y V + 16r^2\\,y^5e^{14G}\\partial_r G\\,\\partial_r V\\,\\partial_y V - 16r^2\\,y^5e^{2G}\\partial_r G\\,\\partial_r V\\,\\partial_y V - 64r^2\\,y^5e^{4G}\\partial_r G\\,\\partial_r V\\,\\partial_y V - 80r^2\\,y^5e^{6G}\\partial_r G\\,\\partial_r V\\,\\partial_y V - 200r^2\\,y^6e^{10G}\\partial_r G\\,\\partial_r V\\,\\partial_r^2 V + 40r^2\\,y^6e^{10G}\\partial_r G\\,\\partial_r V\\,\\partial_y^2 V - 240r^2\\,y^6e^{10G}\\partial_r G\\,\\partial_r\\partial_y V\\,\\partial_y V + 160r^2\\,y^6e^{10G}\\partial_r V\\,\\partial_r\\partial_y G\\,\\partial_y V - 240r^2\\,y^6e^{10G}\\partial_r V\\,\\partial_r\\partial_y V\\,\\partial_y G + 40r^2\\,y^6e^{10G}\\partial_r^2 V\\,\\partial_y G\\,\\partial_y V - 200r^2\\,y^6e^{10G}\\partial_y G\\,\\partial_y V\\,\\partial_y^2 V - 160r^2\\,y^6e^{12G}\\partial_r G\\,\\partial_r V\\,\\partial_r^2 V + 32r^2\\,y^6e^{12G}\\partial_r G\\,\\partial_r V\\,\\partial_y^2 V - 192r^2\\,y^6e^{12G}\\partial_r G\\,\\partial_r\\partial_y V\\,\\partial_y V + 128r^2\\,y^6e^{12G}\\partial_r V\\,\\partial_r\\partial_y G\\,\\partial_y V - 192r^2\\,y^6e^{12G}\\partial_r V\\,\\partial_r\\partial_y V\\,\\partial_y G + 32r^2\\,y^6e^{12G}\\partial_r^2 V\\,\\partial_y G\\,\\partial_y V - 160r^2\\,y^6e^{12G}\\partial_y G\\,\\partial_y V\\,\\partial_y^2 V - 40r^2\\,y^6e^{14G}\\partial_r G\\,\\partial_r V\\,\\partial_r^2 V + 8r^2\\,y^6e^{14G}\\partial_r G\\,\\partial_r V\\,\\partial_y^2 V - 48r^2\\,y^6e^{14G}\\partial_r G\\,\\partial_r\\partial_y V\\,\\partial_y V + 32r^2\\,y^6e^{14G}\\partial_r V\\,\\partial_r\\partial_y G\\,\\partial_y V - 48r^2\\,y^6e^{14G}\\partial_r V\\,\\partial_r\\partial_y V\\,\\partial_y G + 8r^2\\,y^6e^{14G}\\partial_r^2 V\\,\\partial_y G\\,\\partial_y V - 40r^2\\,y^6e^{14G}\\partial_y G\\,\\partial_y V\\,\\partial_y^2 V + 40r^2\\,y^6e^{2G}\\partial_r G\\,\\partial_r V\\,\\partial_r^2 V - 8r^2\\,y^6e^{2G}\\partial_r G\\,\\partial_r V\\,\\partial_y^2 V + 48r^2\\,y^6e^{2G}\\partial_r G\\,\\partial_r\\partial_y V\\,\\partial_y V - 32r^2\\,y^6e^{2G}\\partial_r V\\,\\partial_r\\partial_y G\\,\\partial_y V + 48r^2\\,y^6e^{2G}\\partial_r V\\,\\partial_r\\partial_y V\\,\\partial_y G - 8r^2\\,y^6e^{2G}\\partial_r^2 V\\,\\partial_y G\\,\\partial_y V + 40r^2\\,y^6e^{2G}\\partial_y G\\,\\partial_y V\\,\\partial_y^2 V + 160r^2\\,y^6e^{4G}\\partial_r G\\,\\partial_r V\\,\\partial_r^2 V - 32r^2\\,y^6e^{4G}\\partial_r G\\,\\partial_r V\\,\\partial_y^2 V + 192r^2\\,y^6e^{4G}\\partial_r G\\,\\partial_r\\partial_y V\\,\\partial_y V - 128r^2\\,y^6e^{4G}\\partial_r V\\,\\partial_r\\partial_y G\\,\\partial_y V + 192r^2\\,y^6e^{4G}\\partial_r V\\,\\partial_r\\partial_y V\\,\\partial_y G - 32r^2\\,y^6e^{4G}\\partial_r^2 V\\,\\partial_y G\\,\\partial_y V + 160r^2\\,y^6e^{4G}\\partial_y G\\,\\partial_y V\\,\\partial_y^2 V + 200r^2\\,y^6e^{6G}\\partial_r G\\,\\partial_r V\\,\\partial_r^2 V - 40r^2\\,y^6e^{6G}\\partial_r G\\,\\partial_r V\\,\\partial_y^2 V + 240r^2\\,y^6e^{6G}\\partial_r G\\,\\partial_r\\partial_y V\\,\\partial_y V - 160r^2\\,y^6e^{6G}\\partial_r V\\,\\partial_r\\partial_y G\\,\\partial_y V + 240r^2\\,y^6e^{6G}\\partial_r V\\,\\partial_r\\partial_y V\\,\\partial_y G - 40r^2\\,y^6e^{6G}\\partial_r^2 V\\,\\partial_y G\\,\\partial_y V + 200r^2\\,y^6e^{6G}\\partial_y G\\,\\partial_y V\\,\\partial_y^2 V + 256r^4\\,y^4e^{10G}\\partial_r G\\,\\partial_r\\partial_y G\\,\\partial_y G + 128r^4\\,y^4e^{12G}\\partial_r G\\,\\partial_r\\partial_y G\\,\\partial_y G - 128r^4\\,y^4e^{4G}\\partial_r G\\,\\partial_r\\partial_y G\\,\\partial_y G - 256r^4\\,y^4e^{6G}\\partial_r G\\,\\partial_r\\partial_y G\\,\\partial_y G - 40r\\,y^6e^{10G}\\partial_r V\\,\\partial_y G\\,\\partial_y V - 32r\\,y^6e^{12G}\\partial_r V\\,\\partial_y G\\,\\partial_y V - 8r\\,y^6e^{14G}\\partial_r V\\,\\partial_y G\\,\\partial_y V + 8r\\,y^6e^{2G}\\partial_r V\\,\\partial_y G\\,\\partial_y V + 32r\\,y^6e^{4G}\\partial_r V\\,\\partial_y G\\,\\partial_y V + 40r\\,y^6e^{6G}\\partial_r V\\,\\partial_y G\\,\\partial_y V + 126r^2\\,y^6e^{10G}\\left(\\partial_r G\\right)^2\\left(\\partial_r V\\right)^2 + 58r^2\\,y^6e^{10G}\\left(\\partial_r G\\right)^2\\left(\\partial_y V\\right)^2 + 58r^2\\,y^6e^{10G}\\left(\\partial_r V\\right)^2\\left(\\partial_y G\\right)^2 + 126r^2\\,y^6e^{10G}\\left(\\partial_y G\\right)^2\\left(\\partial_y V\\right)^2 - 108r^2\\,y^6e^{12G}\\left(\\partial_r G\\right)^2\\left(\\partial_r V\\right)^2 - 116r^2\\,y^6e^{12G}\\left(\\partial_r G\\right)^2\\left(\\partial_y V\\right)^2 - 116r^2\\,y^6e^{12G}\\left(\\partial_r V\\right)^2\\left(\\partial_y G\\right)^2 - 108r^2\\,y^6e^{12G}\\left(\\partial_y G\\right)^2\\left(\\partial_y V\\right)^2 - 62r^2\\,y^6e^{14G}\\left(\\partial_r G\\right)^2\\left(\\partial_r V\\right)^2 - 58r^2\\,y^6e^{14G}\\left(\\partial_r G\\right)^2\\left(\\partial_y V\\right)^2 - 58r^2\\,y^6e^{14G}\\left(\\partial_r V\\right)^2\\left(\\partial_y G\\right)^2 - 62r^2\\,y^6e^{14G}\\left(\\partial_y G\\right)^2\\left(\\partial_y V\\right)^2 - 62r^2\\,y^6e^{2G}\\left(\\partial_r G\\right)^2\\left(\\partial_r V\\right)^2 - 58r^2\\,y^6e^{2G}\\left(\\partial_r G\\right)^2\\left(\\partial_y V\\right)^2 - 58r^2\\,y^6e^{2G}\\left(\\partial_r V\\right)^2\\left(\\partial_y G\\right)^2 - 62r^2\\,y^6e^{2G}\\left(\\partial_y G\\right)^2\\left(\\partial_y V\\right)^2 - 108r^2\\,y^6e^{4G}\\left(\\partial_r G\\right)^2\\left(\\partial_r V\\right)^2 - 116r^2\\,y^6e^{4G}\\left(\\partial_r G\\right)^2\\left(\\partial_y V\\right)^2 - 116r^2\\,y^6e^{4G}\\left(\\partial_r V\\right)^2\\left(\\partial_y G\\right)^2 - 108r^2\\,y^6e^{4G}\\left(\\partial_y G\\right)^2\\left(\\partial_y V\\right)^2 + 126r^2\\,y^6e^{6G}\\left(\\partial_r G\\right)^2\\left(\\partial_r V\\right)^2 + 58r^2\\,y^6e^{6G}\\left(\\partial_r G\\right)^2\\left(\\partial_y V\\right)^2 + 58r^2\\,y^6e^{6G}\\left(\\partial_r V\\right)^2\\left(\\partial_y G\\right)^2 + 126r^2\\,y^6e^{6G}\\left(\\partial_y G\\right)^2\\left(\\partial_y V\\right)^2 + 344r^2\\,y^6e^{8G}\\left(\\partial_r G\\right)^2\\left(\\partial_r V\\right)^2 + 232r^2\\,y^6e^{8G}\\left(\\partial_r G\\right)^2\\left(\\partial_y V\\right)^2 + 232r^2\\,y^6e^{8G}\\left(\\partial_r V\\right)^2\\left(\\partial_y G\\right)^2 + 344r^2\\,y^6e^{8G}\\left(\\partial_y G\\right)^2\\left(\\partial_y V\\right)^2 + 176r^4\\,y^4e^{10G}\\left(\\partial_r G\\right)^2\\left(\\partial_y G\\right)^2 + 104r^4\\,y^4e^{12G}\\left(\\partial_r G\\right)^2\\left(\\partial_y G\\right)^2 + 104r^4\\,y^4e^{4G}\\left(\\partial_r G\\right)^2\\left(\\partial_y G\\right)^2 + 176r^4\\,y^4e^{6G}\\left(\\partial_r G\\right)^2\\left(\\partial_y G\\right)^2 + 496r^4\\,y^4e^{8G}\\left(\\partial_r G\\right)^2\\left(\\partial_y G\\right)^2 - 580r^2\\,y^5e^{10G}\\left(\\partial_r V\\right)^2\\,\\partial_y G - 500r^2\\,y^5e^{10G}\\partial_y G\\left(\\partial_y V\\right)^2 - 464r^2\\,y^5e^{12G}\\left(\\partial_r V\\right)^2\\,\\partial_y G - 400r^2\\,y^5e^{12G}\\partial_y G\\left(\\partial_y V\\right)^2 - 116r^2\\,y^5e^{14G}\\left(\\partial_r V\\right)^2\\,\\partial_y G - 100r^2\\,y^5e^{14G}\\partial_y G\\left(\\partial_y V\\right)^2 + 116r^2\\,y^5e^{2G}\\left(\\partial_r V\\right)^2\\,\\partial_y G + 100r^2\\,y^5e^{2G}\\partial_y G\\left(\\partial_y V\\right)^2 + 464r^2\\,y^5e^{4G}\\left(\\partial_r V\\right)^2\\,\\partial_y G + 400r^2\\,y^5e^{4G}\\partial_y G\\left(\\partial_y V\\right)^2 + 580r^2\\,y^5e^{6G}\\left(\\partial_r V\\right)^2\\,\\partial_y G + 500r^2\\,y^5e^{6G}\\partial_y G\\left(\\partial_y V\\right)^2 + 80r^2\\,y^6e^{10G}\\left(\\partial_r V\\right)^2\\,\\partial_r^2 G + 80r^2\\,y^6e^{10G}\\left(\\partial_y V\\right)^2\\,\\partial_y^2 G + 64r^2\\,y^6e^{12G}\\left(\\partial_r V\\right)^2\\,\\partial_r^2 G + 64r^2\\,y^6e^{12G}\\left(\\partial_y V\\right)^2\\,\\partial_y^2 G + 16r^2\\,y^6e^{14G}\\left(\\partial_r V\\right)^2\\,\\partial_r^2 G + 16r^2\\,y^6e^{14G}\\left(\\partial_y V\\right)^2\\,\\partial_y^2 G - 16r^2\\,y^6e^{2G}\\left(\\partial_r V\\right)^2\\,\\partial_r^2 G - 16r^2\\,y^6e^{2G}\\left(\\partial_y V\\right)^2\\,\\partial_y^2 G - 64r^2\\,y^6e^{4G}\\left(\\partial_r V\\right)^2\\,\\partial_r^2 G - 64r^2\\,y^6e^{4G}\\left(\\partial_y V\\right)^2\\,\\partial_y^2 G - 80r^2\\,y^6e^{6G}\\left(\\partial_r V\\right)^2\\,\\partial_r^2 G - 80r^2\\,y^6e^{6G}\\left(\\partial_y V\\right)^2\\,\\partial_y^2 G - 32r^3\\,y^4e^{12G}\\partial_r G\\left(\\partial_y G\\right)^2 + 32r^3\\,y^4e^{4G}\\partial_r G\\left(\\partial_y G\\right)^2 + 176r^4\\,y^3e^{10G}\\left(\\partial_r G\\right)^2\\,\\partial_y G + 112r^4\\,y^3e^{12G}\\left(\\partial_r G\\right)^2\\,\\partial_y G - 112r^4\\,y^3e^{4G}\\left(\\partial_r G\\right)^2\\,\\partial_y G - 176r^4\\,y^3e^{6G}\\left(\\partial_r G\\right)^2\\,\\partial_y G + 128r^4\\,y^4e^{10G}\\left(\\partial_r G\\right)^2\\,\\partial_r^2 G + 128r^4\\,y^4e^{10G}\\left(\\partial_y G\\right)^2\\,\\partial_y^2 G + 32r^4\\,y^4e^{12G}\\left(\\partial_r G\\right)^2\\,\\partial_r^2 G - 32r^4\\,y^4e^{12G}\\left(\\partial_r G\\right)^2\\,\\partial_y^2 G + 32r^4\\,y^4e^{12G}\\left(\\partial_y G\\right)^2\\,\\partial_y^2 G - 32r^4\\,y^4e^{12G}\\partial_r^2 G\\left(\\partial_y G\\right)^2 - 32r^4\\,y^4e^{4G}\\left(\\partial_r G\\right)^2\\,\\partial_r^2 G + 32r^4\\,y^4e^{4G}\\left(\\partial_r G\\right)^2\\,\\partial_y^2 G - 32r^4\\,y^4e^{4G}\\left(\\partial_y G\\right)^2\\,\\partial_y^2 G + 32r^4\\,y^4e^{4G}\\partial_r^2 G\\left(\\partial_y G\\right)^2 - 128r^4\\,y^4e^{6G}\\left(\\partial_r G\\right)^2\\,\\partial_r^2 G - 128r^4\\,y^4e^{6G}\\left(\\partial_y G\\right)^2\\,\\partial_y^2 G + 280r\\,y^6e^{10G}\\partial_r G\\left(\\partial_r V\\right)^2 + 320r\\,y^6e^{10G}\\partial_r G\\left(\\partial_y V\\right)^2 + 224r\\,y^6e^{12G}\\partial_r G\\left(\\partial_r V\\right)^2 + 256r\\,y^6e^{12G}\\partial_r G\\left(\\partial_y V\\right)^2 + 56r\\,y^6e^{14G}\\partial_r G\\left(\\partial_r V\\right)^2 + 64r\\,y^6e^{14G}\\partial_r G\\left(\\partial_y V\\right)^2 - 56r\\,y^6e^{2G}\\partial_r G\\left(\\partial_r V\\right)^2 - 64r\\,y^6e^{2G}\\partial_r G\\left(\\partial_y V\\right)^2 - 224r\\,y^6e^{4G}\\partial_r G\\left(\\partial_r V\\right)^2 - 256r\\,y^6e^{4G}\\partial_r G\\left(\\partial_y V\\right)^2 - 280r\\,y^6e^{6G}\\partial_r G\\left(\\partial_r V\\right)^2 - 320r\\,y^6e^{6G}\\partial_r G\\left(\\partial_y V\\right)^2 - 720r^2\\,y^5e^{10G}\\partial_r V\\,\\partial_r\\partial_y V + 120r^2\\,y^5e^{10G}\\partial_r^2 V\\,\\partial_y V - 600r^2\\,y^5e^{10G}\\partial_y V\\,\\partial_y^2 V - 288r^2\\,y^5e^{12G}\\partial_r V\\,\\partial_r\\partial_y V + 48r^2\\,y^5e^{12G}\\partial_r^2 V\\,\\partial_y V - 240r^2\\,y^5e^{12G}\\partial_y V\\,\\partial_y^2 V - 48r^2\\,y^5e^{14G}\\partial_r V\\,\\partial_r\\partial_y V + 8r^2\\,y^5e^{14G}\\partial_r^2 V\\,\\partial_y V - 40r^2\\,y^5e^{14G}\\partial_y V\\,\\partial_y^2 V - 48r^2\\,y^5e^{2G}\\partial_r V\\,\\partial_r\\partial_y V + 8r^2\\,y^5e^{2G}\\partial_r^2 V\\,\\partial_y V - 40r^2\\,y^5e^{2G}\\partial_y V\\,\\partial_y^2 V - 288r^2\\,y^5e^{4G}\\partial_r V\\,\\partial_r\\partial_y V + 48r^2\\,y^5e^{4G}\\partial_r^2 V\\,\\partial_y V - 240r^2\\,y^5e^{4G}\\partial_y V\\,\\partial_y^2 V - 720r^2\\,y^5e^{6G}\\partial_r V\\,\\partial_r\\partial_y V + 120r^2\\,y^5e^{6G}\\partial_r^2 V\\,\\partial_y V - 600r^2\\,y^5e^{6G}\\partial_y V\\,\\partial_y^2 V - 960r^2\\,y^5e^{8G}\\partial_r V\\,\\partial_r\\partial_y V + 160r^2\\,y^5e^{8G}\\partial_r^2 V\\,\\partial_y V - 800r^2\\,y^5e^{8G}\\partial_y V\\,\\partial_y^2 V - 96r^3\\,y^3e^{10G}\\partial_r G\\,\\partial_y G - 40r^3\\,y^3e^{12G}\\partial_r G\\,\\partial_y G - 40r^3\\,y^3e^{4G}\\partial_r G\\,\\partial_y G - 96r^3\\,y^3e^{6G}\\partial_r G\\,\\partial_y G - 112r^3\\,y^3e^{8G}\\partial_r G\\,\\partial_y G + 8r^3\\,y^4e^{12G}\\partial_r G\\,\\partial_r^2 G + 8r^3\\,y^4e^{12G}\\partial_r G\\,\\partial_y^2 G + 8r^3\\,y^4e^{4G}\\partial_r G\\,\\partial_r^2 G + 8r^3\\,y^4e^{4G}\\partial_r G\\,\\partial_y^2 G - 16r^3\\,y^4e^{8G}\\partial_r G\\,\\partial_r^2 G - 16r^3\\,y^4e^{8G}\\partial_r G\\,\\partial_y^2 G + 384r^4\\,y^3e^{10G}\\partial_r G\\,\\partial_r\\partial_y G - 96r^4\\,y^3e^{10G}\\partial_r^2 G\\,\\partial_y G + 288r^4\\,y^3e^{10G}\\partial_y G\\,\\partial_y^2 G + 128r^4\\,y^3e^{12G}\\partial_r G\\,\\partial_r\\partial_y G - 40r^4\\,y^3e^{12G}\\partial_r^2 G\\,\\partial_y G + 88r^4\\,y^3e^{12G}\\partial_y G\\,\\partial_y^2 G + 128r^4\\,y^3e^{4G}\\partial_r G\\,\\partial_r\\partial_y G - 40r^4\\,y^3e^{4G}\\partial_r^2 G\\,\\partial_y G + 88r^4\\,y^3e^{4G}\\partial_y G\\,\\partial_y^2 G + 384r^4\\,y^3e^{6G}\\partial_r G\\,\\partial_r\\partial_y G - 96r^4\\,y^3e^{6G}\\partial_r^2 G\\,\\partial_y G + 288r^4\\,y^3e^{6G}\\partial_y G\\,\\partial_y^2 G + 512r^4\\,y^3e^{8G}\\partial_r G\\,\\partial_r\\partial_y G - 112r^4\\,y^3e^{8G}\\partial_r^2 G\\,\\partial_y G + 400r^4\\,y^3e^{8G}\\partial_y G\\,\\partial_y^2 G + 8r^4\\,y^4e^{12G}\\partial_r^2 G\\,\\partial_y^2 G + 8r^4\\,y^4e^{4G}\\partial_r^2 G\\,\\partial_y^2 G - 16r^4\\,y^4e^{8G}\\partial_r^2 G\\,\\partial_y^2 G + 1232y^8e^{10G}\\left(\\partial_r V\\right)^2\\left(\\partial_y V\\right)^2 + 616y^8e^{12G}\\left(\\partial_r V\\right)^2\\left(\\partial_y V\\right)^2 + 176y^8e^{14G}\\left(\\partial_r V\\right)^2\\left(\\partial_y V\\right)^2 + 22y^8e^{16G}\\left(\\partial_r V\\right)^2\\left(\\partial_y V\\right)^2 + 176y^8e^{2G}\\left(\\partial_r V\\right)^2\\left(\\partial_y V\\right)^2 + 616y^8e^{4G}\\left(\\partial_r V\\right)^2\\left(\\partial_y V\\right)^2 + 1232y^8e^{6G}\\left(\\partial_r V\\right)^2\\left(\\partial_y V\\right)^2 + 1540y^8e^{8G}\\left(\\partial_r V\\right)^2\\left(\\partial_y V\\right)^2 - 120r\\,y^5e^{10G}\\partial_r V\\,\\partial_y V - 48r\\,y^5e^{12G}\\partial_r V\\,\\partial_y V - 8r\\,y^5e^{14G}\\partial_r V\\,\\partial_y V - 8r\\,y^5e^{2G}\\partial_r V\\,\\partial_y V - 48r\\,y^5e^{4G}\\partial_r V\\,\\partial_y V - 120r\\,y^5e^{6G}\\partial_r V\\,\\partial_y V - 160r\\,y^5e^{8G}\\partial_r V\\,\\partial_y V + 240r\\,y^6e^{10G}\\partial_r V\\,\\partial_r^2 V + 240r\\,y^6e^{10G}\\partial_r\\partial_y V\\,\\partial_y V + 96r\\,y^6e^{12G}\\partial_r V\\,\\partial_r^2 V + 96r\\,y^6e^{12G}\\partial_r\\partial_y V\\,\\partial_y V + 16r\\,y^6e^{14G}\\partial_r V\\,\\partial_r^2 V + 16r\\,y^6e^{14G}\\partial_r\\partial_y V\\,\\partial_y V + 16r\\,y^6e^{2G}\\partial_r V\\,\\partial_r^2 V + 16r\\,y^6e^{2G}\\partial_r\\partial_y V\\,\\partial_y V + 96r\\,y^6e^{4G}\\partial_r V\\,\\partial_r^2 V + 96r\\,y^6e^{4G}\\partial_r\\partial_y V\\,\\partial_y V + 240r\\,y^6e^{6G}\\partial_r V\\,\\partial_r^2 V + 240r\\,y^6e^{6G}\\partial_r\\partial_y V\\,\\partial_y V + 320r\\,y^6e^{8G}\\partial_r V\\,\\partial_r^2 V + 320r\\,y^6e^{8G}\\partial_r\\partial_y V\\,\\partial_y V + 96r^2\\,y^4e^{10G}\\left(\\partial_r G\\right)^2 - 870r^2\\,y^4e^{10G}\\left(\\partial_r V\\right)^2 - 1170r^2\\,y^4e^{10G}\\left(\\partial_y V\\right)^2 + 36r^2\\,y^4e^{12G}\\left(\\partial_r G\\right)^2 - 348r^2\\,y^4e^{12G}\\left(\\partial_r V\\right)^2 - 468r^2\\,y^4e^{12G}\\left(\\partial_y V\\right)^2 - 58r^2\\,y^4e^{14G}\\left(\\partial_r V\\right)^2 - 78r^2\\,y^4e^{14G}\\left(\\partial_y V\\right)^2 - 58r^2\\,y^4e^{2G}\\left(\\partial_r V\\right)^2 - 78r^2\\,y^4e^{2G}\\left(\\partial_y V\\right)^2 + 36r^2\\,y^4e^{4G}\\left(\\partial_r G\\right)^2 - 348r^2\\,y^4e^{4G}\\left(\\partial_r V\\right)^2 - 468r^2\\,y^4e^{4G}\\left(\\partial_y V\\right)^2 + 96r^2\\,y^4e^{6G}\\left(\\partial_r G\\right)^2 - 870r^2\\,y^4e^{6G}\\left(\\partial_r V\\right)^2 - 1170r^2\\,y^4e^{6G}\\left(\\partial_y V\\right)^2 + 120r^2\\,y^4e^{8G}\\left(\\partial_r G\\right)^2 - 1160r^2\\,y^4e^{8G}\\left(\\partial_r V\\right)^2 - 1560r^2\\,y^4e^{8G}\\left(\\partial_y V\\right)^2 - 240r^2\\,y^6e^{10G}\\left(\\partial_r\\partial_y V\\right)^2 - 120r^2\\,y^6e^{10G}\\left(\\partial_r^2 V\\right)^2 - 120r^2\\,y^6e^{10G}\\left(\\partial_y^2 V\\right)^2 - 96r^2\\,y^6e^{12G}\\left(\\partial_r\\partial_y V\\right)^2 - 48r^2\\,y^6e^{12G}\\left(\\partial_r^2 V\\right)^2 - 48r^2\\,y^6e^{12G}\\left(\\partial_y^2 V\\right)^2 - 16r^2\\,y^6e^{14G}\\left(\\partial_r\\partial_y V\\right)^2 - 8r^2\\,y^6e^{14G}\\left(\\partial_r^2 V\\right)^2 - 8r^2\\,y^6e^{14G}\\left(\\partial_y^2 V\\right)^2 - 16r^2\\,y^6e^{2G}\\left(\\partial_r\\partial_y V\\right)^2 - 8r^2\\,y^6e^{2G}\\left(\\partial_r^2 V\\right)^2 - 8r^2\\,y^6e^{2G}\\left(\\partial_y^2 V\\right)^2 - 96r^2\\,y^6e^{4G}\\left(\\partial_r\\partial_y V\\right)^2 - 48r^2\\,y^6e^{4G}\\left(\\partial_r^2 V\\right)^2 - 48r^2\\,y^6e^{4G}\\left(\\partial_y^2 V\\right)^2 - 240r^2\\,y^6e^{6G}\\left(\\partial_r\\partial_y V\\right)^2 - 120r^2\\,y^6e^{6G}\\left(\\partial_r^2 V\\right)^2 - 120r^2\\,y^6e^{6G}\\left(\\partial_y^2 V\\right)^2 - 320r^2\\,y^6e^{8G}\\left(\\partial_r\\partial_y V\\right)^2 - 160r^2\\,y^6e^{8G}\\left(\\partial_r^2 V\\right)^2 - 160r^2\\,y^6e^{8G}\\left(\\partial_y^2 V\\right)^2 - 32r^3\\,y^4e^{12G}\\left(\\partial_r G\\right)^3 + 32r^3\\,y^4e^{4G}\\left(\\partial_r G\\right)^3 - 40r^4\\,y^2e^{10G}\\left(\\partial_r G\\right)^2 + 200r^4\\,y^2e^{10G}\\left(\\partial_y G\\right)^2 + 40r^4\\,y^2e^{12G}\\left(\\partial_r G\\right)^2 + 124r^4\\,y^2e^{12G}\\left(\\partial_y G\\right)^2 + 40r^4\\,y^2e^{4G}\\left(\\partial_r G\\right)^2 + 124r^4\\,y^2e^{4G}\\left(\\partial_y G\\right)^2 - 40r^4\\,y^2e^{6G}\\left(\\partial_r G\\right)^2 + 200r^4\\,y^2e^{6G}\\left(\\partial_y G\\right)^2 - 160r^4\\,y^2e^{8G}\\left(\\partial_r G\\right)^2 + 152r^4\\,y^2e^{8G}\\left(\\partial_y G\\right)^2 + 176r^4\\,y^3e^{10G}\\left(\\partial_y G\\right)^3 + 112r^4\\,y^3e^{12G}\\left(\\partial_y G\\right)^3 - 112r^4\\,y^3e^{4G}\\left(\\partial_y G\\right)^3 - 176r^4\\,y^3e^{6G}\\left(\\partial_y G\\right)^3 + 88r^4\\,y^4e^{10G}\\left(\\partial_r G\\right)^4 + 192r^4\\,y^4e^{10G}\\left(\\partial_r\\partial_y G\\right)^2 + 96r^4\\,y^4e^{10G}\\left(\\partial_r^2 G\\right)^2 + 88r^4\\,y^4e^{10G}\\left(\\partial_y G\\right)^4 + 96r^4\\,y^4e^{10G}\\left(\\partial_y^2 G\\right)^2 + 52r^4\\,y^4e^{12G}\\left(\\partial_r G\\right)^4 + 64r^4\\,y^4e^{12G}\\left(\\partial_r\\partial_y G\\right)^2 + 36r^4\\,y^4e^{12G}\\left(\\partial_r^2 G\\right)^2 + 52r^4\\,y^4e^{12G}\\left(\\partial_y G\\right)^4 + 36r^4\\,y^4e^{12G}\\left(\\partial_y^2 G\\right)^2 + 52r^4\\,y^4e^{4G}\\left(\\partial_r G\\right)^4 + 64r^4\\,y^4e^{4G}\\left(\\partial_r\\partial_y G\\right)^2 + 36r^4\\,y^4e^{4G}\\left(\\partial_r^2 G\\right)^2 + 52r^4\\,y^4e^{4G}\\left(\\partial_y G\\right)^4 + 36r^4\\,y^4e^{4G}\\left(\\partial_y^2 G\\right)^2 + 88r^4\\,y^4e^{6G}\\left(\\partial_r G\\right)^4 + 192r^4\\,y^4e^{6G}\\left(\\partial_r\\partial_y G\\right)^2 + 96r^4\\,y^4e^{6G}\\left(\\partial_r^2 G\\right)^2 + 88r^4\\,y^4e^{6G}\\left(\\partial_y G\\right)^4 + 96r^4\\,y^4e^{6G}\\left(\\partial_y^2 G\\right)^2 + 248r^4\\,y^4e^{8G}\\left(\\partial_r G\\right)^4 + 256r^4\\,y^4e^{8G}\\left(\\partial_r\\partial_y G\\right)^2 + 120r^4\\,y^4e^{8G}\\left(\\partial_r^2 G\\right)^2 + 248r^4\\,y^4e^{8G}\\left(\\partial_y G\\right)^4 + 120r^4\\,y^4e^{8G}\\left(\\partial_y^2 G\\right)^2 - 32r^3\\,y^2e^{10G}\\partial_r G - 16r^3\\,y^2e^{12G}\\partial_r G + 16r^3\\,y^2e^{4G}\\partial_r G + 32r^3\\,y^2e^{6G}\\partial_r G - 32r^4\\,y^2e^{10G}\\partial_r^2 G - 32r^4\\,y^2e^{10G}\\partial_y^2 G - 16r^4\\,y^2e^{12G}\\partial_r^2 G - 16r^4\\,y^2e^{12G}\\partial_y^2 G + 16r^4\\,y^2e^{4G}\\partial_r^2 G + 16r^4\\,y^2e^{4G}\\partial_y^2 G + 32r^4\\,y^2e^{6G}\\partial_r^2 G + 32r^4\\,y^2e^{6G}\\partial_y^2 G + 192r^4\\,y\\,e^{10G}\\partial_y G + 96r^4\\,y\\,e^{12G}\\partial_y G - 96r^4\\,y\\,e^{4G}\\partial_y G - 192r^4\\,y\\,e^{6G}\\partial_y G - 120y^6e^{10G}\\left(\\partial_r V\\right)^2 - 240y^6e^{10G}\\left(\\partial_y V\\right)^2 - 48y^6e^{12G}\\left(\\partial_r V\\right)^2 - 96y^6e^{12G}\\left(\\partial_y V\\right)^2 - 8y^6e^{14G}\\left(\\partial_r V\\right)^2 - 16y^6e^{14G}\\left(\\partial_y V\\right)^2 - 8y^6e^{2G}\\left(\\partial_r V\\right)^2 - 16y^6e^{2G}\\left(\\partial_y V\\right)^2 - 48y^6e^{4G}\\left(\\partial_r V\\right)^2 - 96y^6e^{4G}\\left(\\partial_y V\\right)^2 - 120y^6e^{6G}\\left(\\partial_r V\\right)^2 - 240y^6e^{6G}\\left(\\partial_y V\\right)^2 - 160y^6e^{8G}\\left(\\partial_r V\\right)^2 - 320y^6e^{8G}\\left(\\partial_y V\\right)^2 + 22y^8\\left(\\partial_r V\\right)^2\\left(\\partial_y V\\right)^2 + 616y^8e^{10G}\\left(\\partial_r V\\right)^4 + 616y^8e^{10G}\\left(\\partial_y V\\right)^4 + 308y^8e^{12G}\\left(\\partial_r V\\right)^4 + 308y^8e^{12G}\\left(\\partial_y V\\right)^4 + 88y^8e^{14G}\\left(\\partial_r V\\right)^4 + 88y^8e^{14G}\\left(\\partial_y V\\right)^4 + 11y^8e^{16G}\\left(\\partial_r V\\right)^4 + 11y^8e^{16G}\\left(\\partial_y V\\right)^4 + 88y^8e^{2G}\\left(\\partial_r V\\right)^4 + 88y^8e^{2G}\\left(\\partial_y V\\right)^4 + 308y^8e^{4G}\\left(\\partial_r V\\right)^4 + 308y^8e^{4G}\\left(\\partial_y V\\right)^4 + 616y^8e^{6G}\\left(\\partial_r V\\right)^4 + 616y^8e^{6G}\\left(\\partial_y V\\right)^4 + 770y^8e^{8G}\\left(\\partial_r V\\right)^4 + 770y^8e^{8G}\\left(\\partial_y V\\right)^4 + 176r^4e^{10G} + 68r^4e^{12G} + 68r^4e^{4G} + 176r^4e^{6G} + 216r^4e^{8G} + 11y^8\\left(\\partial_r V\\right)^4 + 11y^8\\left(\\partial_y V\\right)^4\\right)e^{-6G}}{4r^4\\,y^2\\left(e^{2G} + 1\\right)^2}"
+        },
+        {
+          "id": "global",
+          "name": "Global (the disc)",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\alpha",
+            "\\beta",
+            "\\gamma",
+            "\\theta",
+            "\\psi",
+            "\\kappa",
+            "\\xi",
+            "\\omega"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\gamma \\in [0, 2\\pi)",
+            "\\theta \\in [0, \\pi/2]",
+            "\\psi \\in [0, 2\\pi)",
+            "\\kappa \\in [0, \\pi]",
+            "\\xi \\in [0, \\pi]",
+            "\\omega \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space and of the 5-sphere, a length; the black disc on the plane $y = 0$ has the radius $L^2$, and a clock at rest at the centre reads the proper time $Lt/c$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\alpha, \\beta, \\gamma, \\theta, \\psi, \\kappa, \\xi, \\omega)$, with $\\rho$ the distance from the centre of anti-de Sitter space in units of $L$, $\\alpha$, $\\beta$, and $\\gamma$ the angles of its 3-spheres, and $\\theta$, $\\psi$, $\\kappa$, $\\xi$, and $\\omega$ those of the 5-sphere. Lin, Lunin, and Maldacena's coordinates are $y = L^2\\sinh\\rho\\sin\\theta$, $r = L^2\\cosh\\rho\\cos\\theta$, and $\\phi = \\psi - t$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = L^2\\left(-\\cosh^2\\rho\\,dt^2 + d\\rho^2 + \\sinh^2\\rho\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\,d\\gamma^2\\right)\\right) + d\\theta^2 + \\cos^2\\theta\\,d\\psi^2 + \\sin^2\\theta\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\,d\\omega^2\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2\\left(e^{2\\rho} + 1\\right)^2e^{-2\\rho}}{4}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "L^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "\\dfrac{L^2\\left(e^{\\rho} + 1\\right)^2\\left(e^{\\rho} - 1\\right)^2e^{-2\\rho}}{4}"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "\\dfrac{L^2\\left(e^{\\rho} + 1\\right)^2\\left(e^{\\rho} - 1\\right)^2e^{-2\\rho}\\sin^2\\alpha}{4}"
+            },
+            {
+              "indices": [
+                "\\gamma",
+                "\\gamma"
+              ],
+              "value": "\\dfrac{L^2\\left(e^{\\rho} + 1\\right)^2\\left(e^{\\rho} - 1\\right)^2e^{-2\\rho}\\sin^2\\alpha\\sin^2\\beta}{4}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "L^2\\cos^2\\theta"
+            },
+            {
+              "indices": [
+                "\\kappa",
+                "\\kappa"
+              ],
+              "value": "L^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "L^2\\sin^2\\kappa\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\omega",
+                "\\omega"
+              ],
+              "value": "L^2\\sin^2\\kappa\\sin^2\\theta\\sin^2\\xi"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{80}{L^4}"
+        },
+        {
+          "id": "plane_wave",
+          "name": "Plane Wave (the half plane)",
+          "coordinates": [
+            "t",
+            "x",
+            "r_1",
+            "\\alpha",
+            "\\beta",
+            "\\gamma",
+            "r_2",
+            "\\kappa",
+            "\\xi",
+            "\\omega"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "r_1 \\in [0, \\infty)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\gamma \\in [0, 2\\pi)",
+            "r_2 \\in [0, \\infty)",
+            "\\kappa \\in [0, \\pi]",
+            "\\xi \\in [0, \\pi]",
+            "\\omega \\in [0, 2\\pi)"
+          ],
+          "parameters": [],
+          "convention": "We use coordinates $(t, x, r_1, \\alpha, \\beta, \\gamma, r_2, \\kappa, \\xi, \\omega)$, with $x$ an area and $r_1$ and $r_2$ lengths, the radii of the two 3-spheres, whose angles are $\\alpha$, $\\beta$, and $\\gamma$ and $\\kappa$, $\\xi$, and $\\omega$. Lin, Lunin, and Maldacena's coordinates are $y = r_1r_2$ and $w = \\left(r_1^2 - r_2^2\\right)/2$, with $x$ the same. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -2\\,dt\\,dx - \\left(r_1^2 + r_2^2\\right)dt^2 + dr_1^2 + r_1^2\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\,d\\gamma^2\\right)\\right) + dr_2^2 + r_2^2\\left(d\\kappa^2 + \\sin^2\\kappa\\left(d\\xi^2 + \\sin^2\\xi\\,d\\omega^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(r_1^2 + r_2^2\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "x"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r_1",
+                "r_1"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r_2",
+                "r_2"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "r_1^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "r_1^2\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\gamma",
+                "\\gamma"
+              ],
+              "value": "r_1^2\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\kappa",
+                "\\kappa"
+              ],
+              "value": "r_2^2"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "r_2^2\\sin^2\\kappa"
+            },
+            {
+              "indices": [
+                "\\omega",
+                "\\omega"
+              ],
+              "value": "r_2^2\\sin^2\\kappa\\sin^2\\xi"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "c_metric",
       "name": "C-Metric Accelerating Black Holes",
       "short_name": "C-Metric",
@@ -19331,6 +19753,11 @@
           "id": "nariai",
           "kind": "family",
           "text": "Another product of a spacetime of two dimensions and a sphere: de Sitter space times a sphere of the same radius, held by a positive cosmological constant [nariai1950]."
+        },
+        {
+          "id": "bubbling_ads",
+          "kind": "family",
+          "text": "The same picture one dimension down. Lin, Lunin, and Maldacena found every half supersymmetric excitation of anti-de Sitter space of five dimensions times a 5-sphere as a pattern of black and white droplets on a plane, and those of this geometry as the solutions of the Toda equation [lin2004]."
         }
       ],
       "references": [
@@ -19351,7 +19778,8 @@
         "grossperry1983",
         "chamblin1999",
         "randall1999b",
-        "nariai1950"
+        "nariai1950",
+        "lin2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/freund_rubin.json",
@@ -45443,6 +45871,11 @@
           "id": "bondi_sachs",
           "kind": "programme",
           "text": "Papers VII and VIII of the series whose paper III gave the exact plane waves. They turn from the wave to its source and show that an isolated body loses mass as it radiates [bondi1962, sachs1962]."
+        },
+        {
+          "id": "bubbling_ads",
+          "kind": "family",
+          "text": "In ten dimensions the plane wave with $H = -\\left(r_1^2 + r_2^2\\right)$ and a 5-form keeps all the supersymmetry of type IIB supergravity [blau2002]. On Lin, Lunin, and Maldacena's plane of droplets it is a black half plane [lin2004]."
         }
       ],
       "references": [
@@ -45485,7 +45918,9 @@
         "chandrasekhar1986",
         "podolsky1999expanding",
         "bondi1962",
-        "sachs1962"
+        "sachs1962",
+        "blau2002",
+        "lin2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -56186,6 +56621,11 @@
           "id": "freund_rubin",
           "kind": "family",
           "text": "The sister in eleven dimensions: anti-de Sitter space of four dimensions times a 7-sphere, the throat of a stack of membranes, with the sphere twice the radius [gibbons1993, maldacena1998]."
+        },
+        {
+          "id": "bubbling_ads",
+          "kind": "family",
+          "text": "Lin, Lunin, and Maldacena's droplets. The throat is a black disc on their plane, and small droplets spread far apart are stacks of three-branes pulled apart from each other [lin2004]."
         }
       ],
       "references": [
@@ -56203,7 +56643,8 @@
         "gubser1996",
         "klebanov1997",
         "gubser1998",
-        "witten1998"
+        "witten1998",
+        "lin2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/three_brane_throat.json",
