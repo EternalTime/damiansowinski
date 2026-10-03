@@ -3322,7 +3322,10 @@ class EmbeddingDiagrams(unittest.TestCase):
                         # The laboratory's moment of the draining bathtub is the plane the water moves in; the
                         # curvature sound feels is in how the moments are stacked, and the catenoid beside it is
                         # the Kerr-like chart's moment.
-                        ("draining_bathtub", "plane", 0)}
+                        ("draining_bathtub", "plane", 0),
+                        # The laboratory's moment of Unruh's acoustic black hole is the flat space the fluid falls
+                        # through, whose equator is a plane; the funnel beside it is the moment of Unruh's time.
+                        ("unruh_acoustic_hole", "space", 0)}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -5536,6 +5539,21 @@ class Slices(unittest.TestCase):
             own = (mark["view"] == "plane") == (key.split("/")[1] == "laboratory")
             sign = 1 if mark["view"] == "funnel" else -1
             return (lambda X: 0.0 if own else sign * 0.5 * math.log(X * X - 1)), list(self.reach(surface))
+        if key.startswith("unruh_acoustic_hole/"):
+            # The laboratory's t = 0 and Unruh's tau = 0, with t - tau = ln|(r - 1)/(r + 1)|/4 + arctan(r)/2
+            # at r_0 = c = 1: each a level line in its own chart and a curve in the other's.
+            own = (mark["view"] == "space") == (key.split("/")[1] == "laboratory")
+            sign = 1 if mark["view"] == "funnel" else -1
+            # Unruh's tau = 0 lies outside the horizon alone, running off to minus infinity in t toward it, so
+            # inside it the curve is taken at minus infinity and on it at a finite stand-in, which leaves a
+            # slope taken across the curve's end as steep as the curve is there.
+            def Y_of(X):
+                if own:
+                    return 0.0
+                if X < 1:
+                    return sign * -math.inf
+                return sign * (math.log(max((X - 1) / (X + 1), 1e-300)) / 4 + math.atan(X) / 2)
+            return Y_of, list(self.reach(surface))
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]
@@ -6679,6 +6697,21 @@ class Slices(unittest.TestCase):
                             f = lambda r: (1 - r) * math.exp(2 * r) / (1 + r) - tp * tq
                             r = bisect(f, 0, 20)
                             self.assertLess(abs(math.log(tq) - r + math.log(1 + r)), 5e-3, f"{where} at {(X, T)}")
+                    elif metric_id == "unruh_acoustic_hole":
+                        # Kruskal's U = tan p and V = tan q with UV = (1 - r) e^(4r - 2 arctan r)/(1 + r) and
+                        # V = e^(2v), v = t + r - arctan r: Unruh's tau = 0 is the level line, and the
+                        # laboratory's t = 0 is carried back through r.
+                        for X, T in points:
+                            if mark["view"] == "funnel":
+                                self.assertLess(abs(T), 2e-4, where)
+                                continue
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            # Beside the sink UV = 1 - 4r^5/5, so four decimals of a point no longer fix r.
+                            if not (1e-3 < tq < 1e3 and abs(tp) < 1e3 and tp * tq < 0.9):
+                                continue
+                            f = lambda r: (1 - r) * math.exp(4 * r - 2 * math.atan(r)) / (1 + r) - tp * tq
+                            r = bisect(f, 0, 20)
+                            self.assertLess(abs(math.log(tq) / 2 - r + math.atan(r)), 5e-3, f"{where} at {(X, T)}")
                     elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "gowdy", "senovilla"):
                         lo, hi = self.reach(surface)
                         for X, T in points:

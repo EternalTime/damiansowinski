@@ -66,6 +66,11 @@
       "id": "minkowski",
       "kind": "special_case",
       "text": "The bathtub with the water at rest, $A = B = 0$: flat spacetime with the speed of sound for its $c$. The water itself moves in flat space throughout, and the curvature is for sound alone [visser1998]."
+    },
+    {
+      "id": "unruh_acoustic_hole",
+      "kind": "family",
+      "text": "Unruh's own sonic black hole: a fluid falling straight into a point from every side, in three dimensions of space. With no swirl its ergosurface lies on its horizon [unruh1981, visser1998]."
     }
   ],
   "references": [

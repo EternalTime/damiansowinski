@@ -35,6 +35,11 @@
       "id": "draining_bathtub",
       "kind": "family",
       "text": "Natário's line element with water for the flow and the speed of sound for $c$. The shift is a vortex that drains, with speed $A/r$ inward and $B/r$ around, and sound in the water meets a horizon and an ergoregion [visser1998]."
+    },
+    {
+      "id": "unruh_acoustic_hole",
+      "kind": "family",
+      "text": "Natário's form with a fluid for the flow and the speed of sound for $c$. The fluid falls into a point at $c\\,r_0^2/r^2$, and sound in it meets a horizon at $r_0$ [visser1998]."
     }
   ],
   "references": [
