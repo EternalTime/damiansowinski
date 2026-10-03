@@ -18799,6 +18799,109 @@ def neugebauer_meinel(ck, src):
     return views
 
 
+def kerr_scalar_hair(ck, src):
+    """Herdeiro and Radu's configuration IV on its axis, in units of the field's inverse length mu,
+    and the axis of Kerr's black hole of the same mass and angular momentum in the same chart.
+
+    On the axis the dragging drops out and the metric is -e^(2F_0) N c^2dt^2 + e^(2F_1) dr^2/N with
+    N = 1 - r_H/r. The tortoise coordinate r_*, with dr_*/dr = e^(F_1 - F_0)/N, is kerr_scalar_hair's:
+    near the horizon it falls to minus infinity as 2 r_H e^(F_1 - F_0) ln x, x = sqrt(r^2 - r_H^2), with
+    e^(F_1 - F_0) = 31.23 there, the horizon of a surface gravity c^2 e^(F_0 - F_1)/(2 r_H), and far away it
+    grows as r. So p, q = arctan((ct -+ r_*)/l) bring the half axis into a diamond with the future and
+    past horizons on its left and null infinity on its right; the functions enter from the authors'
+    data through the declared functions of the null rays. Kerr's axis in the same chart has
+    r_* = R + (2MR_+/r_H) ln((r - r_H)/r_H) - (2MR_-/r_H) ln(r/r_H) with R = r + b, R_+ = r_H + b,
+    R_- = b and GM/c^2 = r_H/2 + b, the Boyer-Lindquist tortoise coordinate of Kerr's axis."""
+    hair = nr._ksh_hair()
+    ell = 4.0
+    rH = hair.rH
+
+    def axis_pq(t, r):
+        rs = hair.tortoise_fast(r)
+        t = np.asarray(t, dtype=float)
+        return np.arctan((t - rs) / ell), np.arctan((t + rs) / ell)
+    axis = Plane(src, "kerr_scalar_hair", "herdeiro_radu", ("t", "r"), {"theta": "0", "varphi": "0"}, nr.KSH,
+                 functions=nr.KSH_AXIS)
+    ck.chart("Kerr with scalar hair, the axis", axis, axis_pq, ck.uniform(-30, 30, 400), ck.uniform(0.1005, 30, 400),
+             lambda t, r: (1, 0))
+    ck.limit("Kerr with scalar hair: e^(F_1 - F_0) = 31.23 on the horizon at the axis", hair.axis_gap, 31.2278, 1e-3)
+    ck.limit("Kerr with scalar hair: a ray climbs the axis from 0.2/mu to 4/mu in 11.62/mu of ct",
+             float(hair.tortoise_fast(4.0) - hair.tortoise_fast(0.2)), 11.6227, 1e-3)
+    ck.limit("Kerr with scalar hair: r_* runs to -infinity at the horizon",
+             float(hair.tortoise_fast(rH * (1 + 1e-12))), -100.0, 200.0)
+
+    views = []
+    v = View("hair_axis", "The axis", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "herdeiro_radu")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda r, t: axis_pq(t, r), (0.2, 0.5, 1, 2, 4), S_ALL)
+    grid(v, "t", axis_pq, (-16, -8, -4, 0, 4, 8, 16), spread(rH, np.inf, 500, 9))
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    v.line("horizon", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+    for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([-HALF, HALF], "$r = r_H$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$r = r_H$", "tr", dx=-5, dy=3)
+    label_on(v, axis_pq(0, 1), "$r = 1/\\mu$")
+    v.legend("cover", "the axis outside the horizon, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $0.2$, $0.5$, $1$, $2$, and $4/\\mu$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 4$, $\\pm 8$, and $\\pm 16/\\mu$")
+    v.legend("horizon", "$r = r_H$, the event horizon")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(restriction="The half axis $\\theta = 0$ outside the horizon only, totally geodesic, each point in the diagram a "
+                      "single event.",
+          settings=f"Herdeiro and Radu's configuration IV, $\\mu = 1$, the unit of every length, $r_H = 0.1/\\mu$, and "
+                   f"$\\ell = {ell:g}/\\mu$.")
+    views.append(v)
+
+    # Kerr's black hole of the same mass and angular momentum, in the same chart.
+    rk = float(sp.sympify(nr.KSH_KERR["r_H"]))
+    ct = -float(sp.sympify(nr.KSH_KERR["b"]))     # the paper's c_t
+    M, Rp, Rm = rk / 2 - ct, rk - ct, -ct
+
+    def kerr_star(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(all="ignore"):
+            return (r - ct) + 2 * M * Rp / rk * np.log((r - rk) / rk) - 2 * M * Rm / rk * np.log(r / rk)
+
+    def kerr_pq(t, r):
+        rs = kerr_star(r)
+        t = np.asarray(t, dtype=float)
+        return np.arctan((t - rs) / ell), np.arctan((t + rs) / ell)
+    member = Plane(src, "kerr_scalar_hair", "kerr_member", ("t", "r"), {"theta": "0", "varphi": "0"}, nr.KSH_KERR)
+    ck.chart("Kerr with scalar hair, the axis of the Kerr member", member, kerr_pq, ck.uniform(-30, 30, 400),
+             ck.uniform(rk * 1.0005, 30, 400), lambda t, r: (1, 0))
+    v = View("kerr_axis", "The axis of Kerr's black hole", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "kerr_member")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda r, t: kerr_pq(t, r), (1.5, 2, 3, 4), S_ALL)
+    grid(v, "t", kerr_pq, (-16, -8, -4, 0, 4, 8, 16), spread(rk, np.inf, 500, 9))
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    v.line("horizon", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+    for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([-HALF, HALF], "$r = r_H$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$r = r_H$", "tr", dx=-5, dy=3)
+    label_on(v, kerr_pq(0, 2), "$r = 2/\\mu$")
+    v.legend("cover", "the axis outside the horizon, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $1.5$, $2$, $3$, and $4/\\mu$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 4$, $\\pm 8$, and $\\pm 16/\\mu$")
+    v.legend("horizon", "$r = r_H$, the event horizon")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(restriction="The half axis $\\theta = 0$ outside the horizon only, totally geodesic, each point in the diagram a "
+                      "single event.",
+          settings=f"Kerr's black hole of the mass and angular momentum of configuration IV, $\\mu = 1$, the unit of every "
+                   f"length, $r_H = 0.982/\\mu$, $b = 0.442/\\mu$, and $\\ell = {ell:g}/\\mu$.")
+    views.append(v)
+    return views
+
+
 BONNOR_DIPOLE_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of m
 
 
@@ -23897,6 +24000,7 @@ DRAWN = {
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
     "neugebauer_meinel": neugebauer_meinel,
+    "kerr_scalar_hair": kerr_scalar_hair,
     "morgan_morgan": morgan_morgan,
     "bach_weyl_ring": bach_weyl_ring,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
@@ -24093,6 +24197,22 @@ CAPTIONS = {
         "with $T = p + q$ up and $X = q - p$ across.",
         "At $r = 0$ the tortoise coordinate falls to $-\\infty$, so that edge of the disc's diamond, where the "
         "centre line stood, is now the two null edges on the left, a horizon. The disc lies beyond them.",
+    ],
+    ("kerr_scalar_hair", "hair_axis"): [
+        "The half axis $\\theta = 0$ outside the horizon of Herdeiro and Radu's configuration IV, each point in the "
+        "diagram a single event. On the axis the metric is $-e^{2F_0}(1 - r_H/r)c^2dt^2 + e^{2F_1}dr^2/(1 - r_H/r)$, and "
+        "with $r_* = \\int e^{F_1 - F_0}dr/(1 - r_H/r)$ the maps $p = \\arctan((ct - r_*)/\\ell)$ and "
+        "$q = \\arctan((ct + r_*)/\\ell)$ bring it into the whole diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "At the horizon $e^{F_1 - F_0} = 31.2$, and $r_*$ falls to $-\\infty$ as $3.12\\ln(\\mu(r - r_H))/\\mu$, the "
+        "logarithm of a horizon of surface gravity $0.160\\,\\mu c^2$. The two null edges on the left are the future and "
+        "past horizons.",
+    ],
+    ("kerr_scalar_hair", "kerr_axis"): [
+        "The half axis $\\theta = 0$ outside the horizon of Kerr's black hole of the same mass and angular momentum, in "
+        "the same coordinates, each point in the diagram a single event. Its tortoise coordinate $r_*$ is Boyer and "
+        "Lindquist's on Kerr's axis in $R = r + b$, and the same maps bring it into the whole diamond.",
+        "The two null edges on the left are the horizon $r = r_H$, where $r_*$ falls as $2.71\\ln(\\mu(r - r_H))/\\mu$, "
+        "for the surface gravity $0.185\\,\\mu c^2$.",
     ],
     ("double_kerr", "weyl_axis_outside"): [
         "The axis $\\rho = 0$ above the upper hole of Herdeiro and Rebelo's pair ($J = GM^2/c$, $\\zeta = 4m$), each "

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 170,
+  "count": 171,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -3495,6 +3495,11 @@
           "id": "roberts",
           "kind": "family",
           "text": "Collapse at the threshold, with a scalar field. Roberts's solution looks the same at every scale, as the critical solution does on one of the two thresholds Choptuik, Chmaj, and Bizoń found for a Yang-Mills field; on the other the critical solution is the first soliton [choptuik1996]."
+        },
+        {
+          "id": "kerr_scalar_hair",
+          "kind": "family",
+          "text": "Black holes with hair again, this time of a massive complex scalar field, which stays outside the horizon because it turns with it, $\\omega = m\\Omega_H$ [herdeiro2014]."
         }
       ],
       "references": [
@@ -3517,7 +3522,8 @@
         "lavrelashvili1995",
         "choptuik1996",
         "gleiser1989",
-        "lee1989"
+        "lee1989",
+        "herdeiro2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bartnik_mckinnon.json",
@@ -5366,6 +5372,11 @@
           "id": "topological_star",
           "kind": "generalisation",
           "text": "The black string with a magnetic field through its spheres and a second radius $r_B$, where the circle shrinks to a point. Put $r_B$ outside the horizon and the horizon is gone: the string has become a star whose space ends on a bubble [bah2021]."
+        },
+        {
+          "id": "kerr_scalar_hair",
+          "kind": "family",
+          "text": "Another family that branches off where an instability sets in: spinning black holes with a cloud of scalar field branch off Kerr's at the threshold of superradiance, and Herdeiro and Radu set them beside the rippled strings of the Gregory-Laflamme instability [herdeiro2014]."
         }
       ],
       "references": [
@@ -5392,7 +5403,8 @@
         "elvang2006",
         "elvang2007",
         "gibbons1995",
-        "bah2021"
+        "bah2021",
+        "herdeiro2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
@@ -8051,6 +8063,11 @@
           "id": "brill_waves",
           "kind": "programme",
           "text": "Dieter Brill weighed a bundle of gravitational waves at one moment in 1959 and proved its mass positive [brill1959]. With James Hartle he built the gravitational geon five years later [brillhartle1964]."
+        },
+        {
+          "id": "kerr_scalar_hair",
+          "kind": "family",
+          "text": "A spinning boson star can hold a small black hole at its centre, as long as the field turns with the horizon. Herdeiro and Radu's black holes run from Kerr's to spinning boson stars as the horizon shrinks to nothing [herdeiro2014]."
         }
       ],
       "references": [
@@ -8081,7 +8098,8 @@
         "volkov1999",
         "misner1957",
         "misner1960",
-        "brill1959"
+        "brill1959",
+        "herdeiro2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/boson_star.json",
@@ -26530,6 +26548,11 @@
           "id": "kerr_bertotti_robinson",
           "kind": "generalisation",
           "text": "Kerr's hole in a magnetic field that points along its axis and is uniform far away, an exact solution of type D. With the field switched off it is Kerr's metric again [podolsky2025]."
+        },
+        {
+          "id": "kerr_scalar_hair",
+          "kind": "generalisation",
+          "text": "Kerr's black hole with a cloud of massive complex scalar field that turns with the horizon, $\\omega = m\\Omega_H$, and neither falls in nor escapes. The family branches off Kerr's along the line of black holes that can hold such a cloud [herdeiro2014]."
         }
       ],
       "references": [
@@ -26597,7 +26620,8 @@
         "ernst1976c",
         "gibbons2013",
         "semerak2016",
-        "podolsky2025"
+        "podolsky2025",
+        "herdeiro2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -26679,6 +26703,245 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{48G^2M^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\left(r^2 + a^2\\cos^2\\theta\\right)^2 - 16r^2a^2\\cos^2\\theta\\right)}{c^4\\left(r^2 + a^2\\cos^2\\theta\\right)^6}"
+        }
+      ]
+    },
+    {
+      "id": "kerr_scalar_hair",
+      "name": "Kerr Black Holes with Scalar Hair",
+      "short_name": "Kerr with Scalar Hair",
+      "description": "A rotating black hole wrapped in a cloud of massive complex scalar field that neither falls in nor escapes, found by Carlos Herdeiro and Eugen Radu in 2014. The field turns at $m$ times the horizon's angular velocity, $\\omega = m\\Omega_H$, so the metric stays stationary and axisymmetric while the field changes in time and in angle. The family runs from Kerr's black holes to spinning boson stars, and its metric is known only numerically.",
+      "tags": [
+        "rotating black hole",
+        "black hole",
+        "black hole hair",
+        "scalar hair",
+        "scalar field",
+        "complex scalar field",
+        "minimally coupled scalar field",
+        "Einstein-Klein-Gordon",
+        "numerical solution",
+        "superradiance",
+        "boson star",
+        "no-hair theorem",
+        "black hole uniqueness",
+        "ergosphere",
+        "frame dragging",
+        "horizon",
+        "event horizon",
+        "rotating",
+        "axisymmetric",
+        "angular momentum",
+        "mass",
+        "asymptotically flat",
+        "stationary",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "special_case",
+          "text": "The member of the family with no field. The black holes branch off Kerr's at the threshold of superradiance, along the line of Kerr black holes that can hold a cloud of the field [herdeiro2014]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "family",
+          "text": "As the horizon shrinks to nothing these black holes become spinning boson stars, the turning cousins of the static stars there [herdeiro2014]. A small black hole can sit at the centre of a boson star only if the whole thing spins [herdeiro2014]."
+        },
+        {
+          "id": "black_string",
+          "kind": "family",
+          "text": "Herdeiro and Radu set their branching beside the black string's: at the onset of the Gregory-Laflamme instability a family of strings with rippled horizons branches off, as their black holes branch off Kerr's at the onset of superradiance [herdeiro2014]."
+        },
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "family",
+          "text": "Hair of another field: the black holes found beside Bartnik and McKinnon's ball of Yang-Mills field carry that field outside their horizons, against the conjecture that a black hole has no hair [volkov1999]."
+        }
+      ],
+      "references": [
+        "herdeiro2015review",
+        "mayo1996",
+        "press1972",
+        "hod2012",
+        "herdeiro2014",
+        "herdeiro2015construction",
+        "herdeiro2015data",
+        "cunha2015",
+        "brito2016",
+        "herdeiro2016proca",
+        "east2017",
+        "volkov1999"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_scalar_hair.json",
+      "charts": [
+        {
+          "id": "herdeiro_radu",
+          "name": "Herdeiro-Radu",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_H, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\varphi \\in [0, 2\\pi)",
+            "r = r_H \\;\\text{(the event horizon)}",
+            "F_1 = F_2 \\;\\text{at}\\; \\theta = 0, \\pi \\;\\text{(a regular axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_H",
+              "description": "Radius of the event horizon in this chart, a length: the horizon is the sphere $r = r_H$. At $r_H = 0$ the chart is the one in which spinning boson stars are computed, with a regular centre at $r = 0$."
+            },
+            {
+              "symbol": "F_0 = F_0(r,\\theta)",
+              "description": "Dimensionless function of $r$ and $\\theta$: an observer who turns at the angular velocity $cW$ has the lapse $e^{F_0}\\sqrt{1 - r_H/r}$. For the black holes it is known only numerically, as a solution of the Einstein-Klein-Gordon equations that vanishes far away."
+            },
+            {
+              "symbol": "F_1 = F_1(r,\\theta)",
+              "description": "Dimensionless function of $r$ and $\\theta$, the conformal factor of the plane of $r$ and $\\theta$. It equals $F_2$ on the axis, which keeps the axis free of a conical singularity, and for the black holes it is known only numerically and vanishes far away."
+            },
+            {
+              "symbol": "F_2 = F_2(r,\\theta)",
+              "description": "Dimensionless function of $r$ and $\\theta$: the circle of constant $t$, $r$, and $\\theta$ has circumference $2\\pi e^{F_2}r\\sin\\theta$. For the black holes it is known only numerically and vanishes far away."
+            },
+            {
+              "symbol": "W = W(r,\\theta)",
+              "description": "Function of $r$ and $\\theta$, an inverse length: $cW$ is the angular velocity at which frames are dragged round the axis. On the horizon it is constant, $cW = \\Omega_H$, the angular velocity of the horizon, and the field, of frequency $\\omega$ and winding number $m$ about the axis, turns with the horizon, $\\omega = m\\Omega_H$; far away $W$ falls as $2GJ/(c^3r^3)$ for the angular momentum $J$."
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\theta, \\varphi)$ of Carlos Herdeiro and Eugen Radu, with $t$ carrying dimensions of time and $r$ a length. The four functions $F_0$, $F_1$, $F_2$, and $W$ of $r$ and $\\theta$ are left free. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2F_0}\\left(1 - \\dfrac{r_H}{r}\\right)c^2dt^2 + e^{2F_1}\\left(\\dfrac{dr^2}{1 - \\dfrac{r_H}{r}} + r^2d\\theta^2\\right) + e^{2F_2}r^2\\sin^2\\theta\\left(d\\varphi - W\\,c\\,dt\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{W^2\\,r^3e^{2F_2}\\sin^2\\theta - r\\,e^{2F_0} + r_H\\,e^{2F_0}}{r}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\varphi"
+              ],
+              "value": "-W\\,r^2e^{2F_2}\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "t"
+              ],
+              "value": "-W\\,r^2e^{2F_2}\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r\\,e^{2F_1}}{r - r_H}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2e^{2F_1}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "r^2e^{2F_2}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(4r_H\\,e^{2F_0}\\partial_\\theta^2 F_2\\,\\sin\\theta - 4r\\,e^{2F_0}\\partial_\\theta^2 F_2\\,\\sin\\theta - 4r\\,r_H^2e^{2F_0}\\partial_r^2 F_2\\,\\sin\\theta + 8r^2\\,r_H\\,e^{2F_0}\\partial_r^2 F_2\\,\\sin\\theta - 4r^3e^{2F_0}\\partial_r^2 F_2\\,\\sin\\theta + 4r_H\\,e^{2F_0}\\partial_\\theta^2 F_1\\,\\sin\\theta - 4r\\,e^{2F_0}\\partial_\\theta^2 F_1\\,\\sin\\theta - 4r\\,r_H^2e^{2F_0}\\partial_r^2 F_1\\,\\sin\\theta + 8r^2\\,r_H\\,e^{2F_0}\\partial_r^2 F_1\\,\\sin\\theta - 4r^3e^{2F_0}\\partial_r^2 F_1\\,\\sin\\theta + 4r_H\\,e^{2F_0}\\partial_\\theta^2 F_0\\,\\sin\\theta - 4r\\,e^{2F_0}\\partial_\\theta^2 F_0\\,\\sin\\theta - 4r\\,r_H^2e^{2F_0}\\partial_r^2 F_0\\,\\sin\\theta + 8r^2\\,r_H\\,e^{2F_0}\\partial_r^2 F_0\\,\\sin\\theta - 4r^3e^{2F_0}\\partial_r^2 F_0\\,\\sin\\theta + r^3e^{2F_2}\\left(\\partial_\\theta W\\right)^2\\,\\sin^3\\theta - r^4\\,r_H\\,e^{2F_2}\\left(\\partial_r W\\right)^2\\,\\sin^3\\theta + r^5e^{2F_2}\\left(\\partial_r W\\right)^2\\,\\sin^3\\theta + 8r_H\\,e^{2F_0}\\partial_\\theta F_2\\,\\cos\\theta - 8r\\,e^{2F_0}\\partial_\\theta F_2\\,\\cos\\theta + 4r_H\\,e^{2F_0}\\left(\\partial_\\theta F_2\\right)^2\\,\\sin\\theta - 4r\\,e^{2F_0}\\left(\\partial_\\theta F_2\\right)^2\\,\\sin\\theta - 8r_H^2e^{2F_0}\\partial_r F_2\\,\\sin\\theta + 20r\\,r_H\\,e^{2F_0}\\partial_r F_2\\,\\sin\\theta - 12r^2e^{2F_0}\\partial_r F_2\\,\\sin\\theta - 4r\\,r_H^2e^{2F_0}\\left(\\partial_r F_2\\right)^2\\,\\sin\\theta + 8r^2\\,r_H\\,e^{2F_0}\\left(\\partial_r F_2\\right)^2\\,\\sin\\theta - 4r^3e^{2F_0}\\left(\\partial_r F_2\\right)^2\\,\\sin\\theta - 2r_H^2e^{2F_0}\\partial_r F_1\\,\\sin\\theta + 6r\\,r_H\\,e^{2F_0}\\partial_r F_1\\,\\sin\\theta - 4r^2e^{2F_0}\\partial_r F_1\\,\\sin\\theta + 4r_H\\,e^{2F_0}\\partial_\\theta F_0\\,\\cos\\theta - 4r\\,e^{2F_0}\\partial_\\theta F_0\\,\\cos\\theta + 4r_H\\,e^{2F_0}\\partial_\\theta F_0\\,\\partial_\\theta F_2\\,\\sin\\theta - 4r\\,e^{2F_0}\\partial_\\theta F_0\\,\\partial_\\theta F_2\\,\\sin\\theta + 4r_H\\,e^{2F_0}\\left(\\partial_\\theta F_0\\right)^2\\,\\sin\\theta - 4r\\,e^{2F_0}\\left(\\partial_\\theta F_0\\right)^2\\,\\sin\\theta - 2r_H^2e^{2F_0}\\partial_r F_0\\,\\sin\\theta + 10r\\,r_H\\,e^{2F_0}\\partial_r F_0\\,\\sin\\theta - 8r^2e^{2F_0}\\partial_r F_0\\,\\sin\\theta - 4r\\,r_H^2e^{2F_0}\\partial_r F_0\\,\\partial_r F_2\\,\\sin\\theta + 8r^2\\,r_H\\,e^{2F_0}\\partial_r F_0\\,\\partial_r F_2\\,\\sin\\theta - 4r^3e^{2F_0}\\partial_r F_0\\,\\partial_r F_2\\,\\sin\\theta - 4r\\,r_H^2e^{2F_0}\\left(\\partial_r F_0\\right)^2\\,\\sin\\theta + 8r^2\\,r_H\\,e^{2F_0}\\left(\\partial_r F_0\\right)^2\\,\\sin\\theta - 4r^3e^{2F_0}\\left(\\partial_r F_0\\right)^2\\,\\sin\\theta\\right)e^{-2F_0 - 2F_1}\\csc\\theta}{2r^2\\left(r - r_H\\right)}",
+          "kretschmann": "K = 4\\left(\\left(\\dfrac{\\left(4r^3e^{2F_0}\\left(\\partial_r F_0\\right)^2 - 4r^2\\,r_H\\,e^{2F_0}\\left(\\partial_r F_0\\right)^2 - 4r^3e^{2F_0}\\partial_r F_0\\,\\partial_r F_1 + 4r^2\\,r_H\\,e^{2F_0}\\partial_r F_0\\,\\partial_r F_1 + 6r\\,r_H\\,e^{2F_0}\\partial_r F_0 + 4r\\,e^{2F_0}\\partial_\\theta F_0\\,\\partial_\\theta F_1 - 2r\\,r_H\\,e^{2F_0}\\partial_r F_1 - 3r^5e^{2F_2}\\left(\\partial_r W\\right)^2\\,\\sin^2\\theta + 4r^3e^{2F_0}\\partial_r^2 F_0 - 4r^2\\,r_H\\,e^{2F_0}\\partial_r^2 F_0 - 4r_H\\,e^{2F_0}\\right)e^{-2F_0 - 2F_1}}{4r^3}\\right)^2 + \\left(\\dfrac{\\left(4r^4e^{2F_0}\\partial_r F_0\\,\\partial_r F_1 - 8r^3\\,r_H\\,e^{2F_0}\\partial_r F_0\\,\\partial_r F_1 + 4r^2\\,r_H^2e^{2F_0}\\partial_r F_0\\,\\partial_r F_1 + 4r^3e^{2F_0}\\partial_r F_0 - 8r^2\\,r_H\\,e^{2F_0}\\partial_r F_0 + 4r\\,r_H^2e^{2F_0}\\partial_r F_0 + 4r^2e^{2F_0}\\left(\\partial_\\theta F_0\\right)^2 - 4r\\,r_H\\,e^{2F_0}\\left(\\partial_\\theta F_0\\right)^2 - 4r^2e^{2F_0}\\partial_\\theta F_0\\,\\partial_\\theta F_1 + 4r\\,r_H\\,e^{2F_0}\\partial_\\theta F_0\\,\\partial_\\theta F_1 + 2r^2\\,r_H\\,e^{2F_0}\\partial_r F_1 - 2r\\,r_H^2e^{2F_0}\\partial_r F_1 - 3r^4e^{2F_2}\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta + 4r^2e^{2F_0}\\partial_\\theta^2 F_0 - 4r\\,r_H\\,e^{2F_0}\\partial_\\theta^2 F_0 + 2r\\,r_H\\,e^{2F_0} - 2r_H^2e^{2F_0}\\right)e^{-2F_0 - 2F_1}}{4r^3\\left(r - r_H\\right)}\\right)^2 + \\left(\\dfrac{\\left(4r^4e^{2F_0}\\partial_r F_0\\,\\partial_r F_2\\,\\sin\\theta - 8r^3\\,r_H\\,e^{2F_0}\\partial_r F_0\\,\\partial_r F_2\\,\\sin\\theta + 4r^2\\,r_H^2e^{2F_0}\\partial_r F_0\\,\\partial_r F_2\\,\\sin\\theta + 4r^3e^{2F_0}\\partial_r F_0\\,\\sin\\theta - 8r^2\\,r_H\\,e^{2F_0}\\partial_r F_0\\,\\sin\\theta + 4r\\,r_H^2e^{2F_0}\\partial_r F_0\\,\\sin\\theta + 4r^2e^{2F_0}\\partial_\\theta F_0\\,\\partial_\\theta F_2\\,\\sin\\theta - 4r\\,r_H\\,e^{2F_0}\\partial_\\theta F_0\\,\\partial_\\theta F_2\\,\\sin\\theta + 4r^2e^{2F_0}\\partial_\\theta F_0\\,\\cos\\theta - 4r\\,r_H\\,e^{2F_0}\\partial_\\theta F_0\\,\\cos\\theta + 2r^2\\,r_H\\,e^{2F_0}\\partial_r F_2\\,\\sin\\theta - 2r\\,r_H^2e^{2F_0}\\partial_r F_2\\,\\sin\\theta + r^6e^{2F_2}\\left(\\partial_r W\\right)^2\\,\\sin^3\\theta - r^5\\,r_H\\,e^{2F_2}\\left(\\partial_r W\\right)^2\\,\\sin^3\\theta + r^4e^{2F_2}\\left(\\partial_\\theta W\\right)^2\\,\\sin^3\\theta + 2r\\,r_H\\,e^{2F_0}\\sin\\theta - 2r_H^2e^{2F_0}\\sin\\theta\\right)e^{-2F_0 - 2F_1}\\csc\\theta}{4r^3\\left(r - r_H\\right)}\\right)^2 + \\left(-\\dfrac{\\left(2r^2\\,\\partial_r F_1 - r\\,r_H\\,\\partial_r F_1 + 2r^3\\,\\partial_r^2 F_1 - 2r^2\\,r_H\\,\\partial_r^2 F_1 + 2r\\,\\partial_\\theta^2 F_1 + r_H\\right)e^{-2F_1}}{2r^3}\\right)^2 + \\left(\\dfrac{\\left(4r^3e^{2F_0}\\partial_r F_1\\,\\partial_r F_2\\,\\sin\\theta - 4r^2\\,r_H\\,e^{2F_0}\\partial_r F_1\\,\\partial_r F_2\\,\\sin\\theta + 4r^2e^{2F_0}\\partial_r F_1\\,\\sin\\theta - 4r\\,r_H\\,e^{2F_0}\\partial_r F_1\\,\\sin\\theta - 4r\\,e^{2F_0}\\partial_\\theta F_1\\,\\partial_\\theta F_2\\,\\sin\\theta - 4r\\,e^{2F_0}\\partial_\\theta F_1\\,\\cos\\theta - 4r^3e^{2F_0}\\left(\\partial_r F_2\\right)^2\\,\\sin\\theta + 4r^2\\,r_H\\,e^{2F_0}\\left(\\partial_r F_2\\right)^2\\,\\sin\\theta - 8r^2e^{2F_0}\\partial_r F_2\\,\\sin\\theta + 6r\\,r_H\\,e^{2F_0}\\partial_r F_2\\,\\sin\\theta - r^5e^{2F_2}\\left(\\partial_r W\\right)^2\\,\\sin^3\\theta - 4r^3e^{2F_0}\\partial_r^2 F_2\\,\\sin\\theta + 4r^2\\,r_H\\,e^{2F_0}\\partial_r^2 F_2\\,\\sin\\theta - 2r_H\\,e^{2F_0}\\sin\\theta\\right)e^{-2F_0 - 2F_1}\\csc\\theta}{4r^3}\\right)^2 + \\left(-\\dfrac{\\left(4r^4e^{2F_0}\\partial_r F_1\\,\\partial_r F_2\\,\\sin\\theta - 8r^3\\,r_H\\,e^{2F_0}\\partial_r F_1\\,\\partial_r F_2\\,\\sin\\theta + 4r^2\\,r_H^2e^{2F_0}\\partial_r F_1\\,\\partial_r F_2\\,\\sin\\theta + 4r^3e^{2F_0}\\partial_r F_1\\,\\sin\\theta - 8r^2\\,r_H\\,e^{2F_0}\\partial_r F_1\\,\\sin\\theta + 4r\\,r_H^2e^{2F_0}\\partial_r F_1\\,\\sin\\theta - 4r^2e^{2F_0}\\partial_\\theta F_1\\,\\partial_\\theta F_2\\,\\sin\\theta + 4r\\,r_H\\,e^{2F_0}\\partial_\\theta F_1\\,\\partial_\\theta F_2\\,\\sin\\theta - 4r^2e^{2F_0}\\partial_\\theta F_1\\,\\cos\\theta + 4r\\,r_H\\,e^{2F_0}\\partial_\\theta F_1\\,\\cos\\theta + 4r^3e^{2F_0}\\partial_r F_2\\,\\sin\\theta - 8r^2\\,r_H\\,e^{2F_0}\\partial_r F_2\\,\\sin\\theta + 4r\\,r_H^2e^{2F_0}\\partial_r F_2\\,\\sin\\theta + 4r^2e^{2F_0}\\left(\\partial_\\theta F_2\\right)^2\\,\\sin\\theta - 4r\\,r_H\\,e^{2F_0}\\left(\\partial_\\theta F_2\\right)^2\\,\\sin\\theta + 8r^2e^{2F_0}\\partial_\\theta F_2\\,\\cos\\theta - 8r\\,r_H\\,e^{2F_0}\\partial_\\theta F_2\\,\\cos\\theta + r^4e^{2F_2}\\left(\\partial_\\theta W\\right)^2\\,\\sin^3\\theta + 4r^2e^{2F_0}\\partial_\\theta^2 F_2\\,\\sin\\theta - 4r\\,r_H\\,e^{2F_0}\\partial_\\theta^2 F_2\\,\\sin\\theta - 4r\\,r_H\\,e^{2F_0}\\sin\\theta + 4r_H^2e^{2F_0}\\sin\\theta\\right)e^{-2F_0 - 2F_1}\\csc\\theta}{4r^3\\left(r - r_H\\right)}\\right)^2\\right) + 8\\left(\\left(\\dfrac{\\left(4r^2e^{2F_0}\\partial_r F_0\\,\\partial_\\theta F_0 - 4r\\,r_H\\,e^{2F_0}\\partial_r F_0\\,\\partial_\\theta F_0 - 4r^2e^{2F_0}\\partial_r F_0\\,\\partial_\\theta F_1 + 4r\\,r_H\\,e^{2F_0}\\partial_r F_0\\,\\partial_\\theta F_1 - 4r^2e^{2F_0}\\partial_\\theta F_0\\,\\partial_r F_1 + 4r\\,r_H\\,e^{2F_0}\\partial_\\theta F_0\\,\\partial_r F_1 - 4r\\,e^{2F_0}\\partial_\\theta F_0 + 6r_H\\,e^{2F_0}\\partial_\\theta F_0 - 2r_H\\,e^{2F_0}\\partial_\\theta F_1 - 3r^4e^{2F_2}\\partial_r W\\,\\partial_\\theta W\\,\\sin^2\\theta + 4r^2e^{2F_0}\\partial_r\\partial_\\theta F_0 - 4r\\,r_H\\,e^{2F_0}\\partial_r\\partial_\\theta F_0\\right)e^{-2F_0 - 2F_1}}{4r^{5/2}\\sqrt{r - r_H}}\\right)^2 + \\left(\\dfrac{\\left(4r^2e^{2F_0}\\partial_r F_1\\,\\partial_\\theta F_2\\,\\sin\\theta - 4r\\,r_H\\,e^{2F_0}\\partial_r F_1\\,\\partial_\\theta F_2\\,\\sin\\theta + 4r^2e^{2F_0}\\partial_r F_1\\,\\cos\\theta - 4r\\,r_H\\,e^{2F_0}\\partial_r F_1\\,\\cos\\theta + 4r^2e^{2F_0}\\partial_\\theta F_1\\,\\partial_r F_2\\,\\sin\\theta - 4r\\,r_H\\,e^{2F_0}\\partial_\\theta F_1\\,\\partial_r F_2\\,\\sin\\theta + 4r\\,e^{2F_0}\\partial_\\theta F_1\\,\\sin\\theta - 4r_H\\,e^{2F_0}\\partial_\\theta F_1\\,\\sin\\theta - 4r^2e^{2F_0}\\partial_r F_2\\,\\partial_\\theta F_2\\,\\sin\\theta + 4r\\,r_H\\,e^{2F_0}\\partial_r F_2\\,\\partial_\\theta F_2\\,\\sin\\theta - 4r^2e^{2F_0}\\partial_r F_2\\,\\cos\\theta + 4r\\,r_H\\,e^{2F_0}\\partial_r F_2\\,\\cos\\theta - r^4e^{2F_2}\\partial_r W\\,\\partial_\\theta W\\,\\sin^3\\theta - 4r^2e^{2F_0}\\partial_r\\partial_\\theta F_2\\,\\sin\\theta + 4r\\,r_H\\,e^{2F_0}\\partial_r\\partial_\\theta F_2\\,\\sin\\theta\\right)e^{-2F_0 - 2F_1}\\csc\\theta}{4r^{5/2}\\sqrt{r - r_H}}\\right)^2\\right) - 8\\left(\\left(\\dfrac{\\left(r^2\\,\\partial_r F_0\\,\\partial_r W - r\\,r_H\\,\\partial_r F_0\\,\\partial_r W + r^2\\,\\partial_r F_1\\,\\partial_r W - r\\,r_H\\,\\partial_r F_1\\,\\partial_r W - \\partial_\\theta F_1\\,\\partial_\\theta W - 3r^2\\,\\partial_r F_2\\,\\partial_r W + 3r\\,r_H\\,\\partial_r F_2\\,\\partial_r W - 3r\\,\\partial_r W + 3r_H\\,\\partial_r W - r^2\\,\\partial_r^2 W + r\\,r_H\\,\\partial_r^2 W\\right)e^{-F_0 - 2F_1 + F_2}\\sin\\theta}{2\\sqrt{r}\\sqrt{r - r_H}}\\right)^2 + \\left(\\dfrac{\\left(\\partial_\\theta F_0\\,\\partial_r W\\,\\sin\\theta + \\partial_r F_1\\,\\partial_\\theta W\\,\\sin\\theta + \\partial_\\theta F_1\\,\\partial_r W\\,\\sin\\theta - \\partial_r F_2\\,\\partial_\\theta W\\,\\sin\\theta - 2\\partial_\\theta F_2\\,\\partial_r W\\,\\sin\\theta - 2\\partial_r W\\,\\cos\\theta - \\partial_r\\partial_\\theta W\\,\\sin\\theta\\right)e^{-F_0 - 2F_1 + F_2}}{2}\\right)^2 + \\left(\\dfrac{\\left(2r^2\\,\\partial_r F_0\\,\\partial_\\theta W\\,\\sin\\theta - 2r\\,r_H\\,\\partial_r F_0\\,\\partial_\\theta W\\,\\sin\\theta + 2r^2\\,\\partial_r F_1\\,\\partial_\\theta W\\,\\sin\\theta - 2r\\,r_H\\,\\partial_r F_1\\,\\partial_\\theta W\\,\\sin\\theta + 2r^2\\,\\partial_\\theta F_1\\,\\partial_r W\\,\\sin\\theta - 2r\\,r_H\\,\\partial_\\theta F_1\\,\\partial_r W\\,\\sin\\theta - 4r^2\\,\\partial_r F_2\\,\\partial_\\theta W\\,\\sin\\theta + 4r\\,r_H\\,\\partial_r F_2\\,\\partial_\\theta W\\,\\sin\\theta - 2r^2\\,\\partial_\\theta F_2\\,\\partial_r W\\,\\sin\\theta + 2r\\,r_H\\,\\partial_\\theta F_2\\,\\partial_r W\\,\\sin\\theta - 2r^2\\,\\partial_r W\\,\\cos\\theta + 2r\\,r_H\\,\\partial_r W\\,\\cos\\theta - 2r\\,\\partial_\\theta W\\,\\sin\\theta + 3r_H\\,\\partial_\\theta W\\,\\sin\\theta - 2r^2\\,\\partial_r\\partial_\\theta W\\,\\sin\\theta + 2r\\,r_H\\,\\partial_r\\partial_\\theta W\\,\\sin\\theta\\right)e^{-F_0 - 2F_1 + F_2}}{4r\\left(r - r_H\\right)}\\right)^2 + \\left(\\dfrac{\\left(\\partial_\\theta F_0\\,\\partial_\\theta W\\,\\sin\\theta - r^2\\,\\partial_r F_1\\,\\partial_r W\\,\\sin\\theta + r\\,r_H\\,\\partial_r F_1\\,\\partial_r W\\,\\sin\\theta + \\partial_\\theta F_1\\,\\partial_\\theta W\\,\\sin\\theta - 3\\partial_\\theta F_2\\,\\partial_\\theta W\\,\\sin\\theta - r\\,\\partial_r W\\,\\sin\\theta + r_H\\,\\partial_r W\\,\\sin\\theta - 3\\partial_\\theta W\\,\\cos\\theta - \\partial_\\theta^2 W\\,\\sin\\theta\\right)e^{-F_0 - 2F_1 + F_2}}{2\\sqrt{r}\\sqrt{r - r_H}}\\right)^2 + \\left(\\dfrac{\\left(2r^2\\,\\partial_r F_0\\,\\partial_\\theta W\\,\\sin\\theta - 2r\\,r_H\\,\\partial_r F_0\\,\\partial_\\theta W\\,\\sin\\theta - 2r^2\\,\\partial_\\theta F_0\\,\\partial_r W\\,\\sin\\theta + 2r\\,r_H\\,\\partial_\\theta F_0\\,\\partial_r W\\,\\sin\\theta - 2r^2\\,\\partial_r F_2\\,\\partial_\\theta W\\,\\sin\\theta + 2r\\,r_H\\,\\partial_r F_2\\,\\partial_\\theta W\\,\\sin\\theta + 2r^2\\,\\partial_\\theta F_2\\,\\partial_r W\\,\\sin\\theta - 2r\\,r_H\\,\\partial_\\theta F_2\\,\\partial_r W\\,\\sin\\theta + 2r^2\\,\\partial_r W\\,\\cos\\theta - 2r\\,r_H\\,\\partial_r W\\,\\cos\\theta - 2r\\,\\partial_\\theta W\\,\\sin\\theta + 3r_H\\,\\partial_\\theta W\\,\\sin\\theta\\right)e^{-F_0 - 2F_1 + F_2}}{4r\\left(r - r_H\\right)}\\right)^2\\right)"
+        },
+        {
+          "id": "kerr_member",
+          "name": "Without Hair",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_H, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\varphi \\in [0, 2\\pi)",
+            "r = r_H \\;\\text{(the event horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_H",
+              "description": "Radius of the event horizon in this chart, a length: the horizon is the sphere $r = r_H$."
+            },
+            {
+              "symbol": "b",
+              "description": "A positive length, the Boyer-Lindquist radius of the inner horizon, $b = -c_t$ for Herdeiro and Radu's negative constant $c_t$: the mass is $M = c^2\\left(r_H + 2b\\right)/2G$, the spin per unit mass is $a = \\sqrt{b\\left(b + r_H\\right)}$, and $r = R - b$ for the Boyer-Lindquist radius $R$."
+            }
+          ],
+          "convention": "We use Herdeiro and Radu's coordinates $(t, r, \\theta, \\varphi)$, in which the member of the family with no field is Kerr's black hole, with $t$ carrying dimensions of time and $r$ a length. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{r\\left(r - r_H\\right)\\left(\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\cos^2\\theta\\right)}{\\left(\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\right)^2 - b\\left(b + r_H\\right)r\\left(r - r_H\\right)\\sin^2\\theta}c^2dt^2 + \\left(\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\cos^2\\theta\\right)\\left(\\dfrac{dr^2}{r\\left(r - r_H\\right)} + d\\theta^2\\right) + \\dfrac{\\left(\\left(\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\right)^2 - b\\left(b + r_H\\right)r\\left(r - r_H\\right)\\sin^2\\theta\\right)\\sin^2\\theta}{\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\cos^2\\theta}\\left(d\\varphi - \\dfrac{\\sqrt{b\\left(b + r_H\\right)}\\left(r_H + 2b\\right)\\left(r + b\\right)}{\\left(\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\right)^2 - b\\left(b + r_H\\right)r\\left(r - r_H\\right)\\sin^2\\theta}c\\,dt\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{b^2\\sin^2\\theta + r_H\\,b\\sin^2\\theta + r\\,r_H - r^2}{r^2 + 2r\\,b - r_H\\,b\\sin^2\\theta + r_H\\,b - b^2\\sin^2\\theta + 2b^2}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\varphi"
+              ],
+              "value": "-\\dfrac{\\sqrt{b}\\sqrt{r_H + b}\\left(r + b\\right)\\left(r_H + 2b\\right)\\sin^2\\theta}{r^2 + 2r\\,b - r_H\\,b\\sin^2\\theta + r_H\\,b - b^2\\sin^2\\theta + 2b^2}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "t"
+              ],
+              "value": "-\\dfrac{\\sqrt{b}\\sqrt{r_H + b}\\left(r + b\\right)\\left(r_H + 2b\\right)\\sin^2\\theta}{r^2 + 2r\\,b - r_H\\,b\\sin^2\\theta + r_H\\,b - b^2\\sin^2\\theta + 2b^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^2 + 2r\\,b + r_H\\,b\\cos^2\\theta + b^2\\cos^2\\theta + b^2}{r\\left(r - r_H\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2 + 2r\\,b + r_H\\,b\\cos^2\\theta + b^2\\cos^2\\theta + b^2"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{\\left(r^4 + 4r^3\\,b - r^2\\,r_H\\,b\\sin^2\\theta + 2r^2\\,r_H\\,b - r^2\\,b^2\\sin^2\\theta + 8r^2\\,b^2 + r\\,r_H^2\\,b\\sin^2\\theta + r\\,r_H\\,b^2\\sin^2\\theta + 4r\\,r_H\\,b^2 + 8r\\,b^3 + r_H^2\\,b^2 + 4r_H\\,b^3 + 4b^4\\right)\\sin^2\\theta}{r^2 + 2r\\,b - r_H\\,b\\sin^2\\theta + r_H\\,b - b^2\\sin^2\\theta + 2b^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12\\left(r_H + 2b\\right)^2\\left(\\left(r + b\\right)^6 - 15b\\left(b + r_H\\right)\\left(r + b\\right)^4\\cos^2\\theta + 15b^2\\left(b + r_H\\right)^2\\left(r + b\\right)^2\\cos^4\\theta - b^3\\left(b + r_H\\right)^3\\cos^6\\theta\\right)}{\\left(\\left(r + b\\right)^2 + b\\left(b + r_H\\right)\\cos^2\\theta\\right)^6}"
         }
       ]
     },

@@ -234,6 +234,7 @@ import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
 import charged_shell as cshell  # noqa: E402
 import israel_shell as ishell  # noqa: E402
+import kerr_scalar_hair as ksh  # noqa: E402
 import ori_shell  # noqa: E402
 import quantum_os as qos  # noqa: E402
 import slices  # noqa: E402
@@ -2326,6 +2327,43 @@ DECLARED_FUNCTIONS.update(_nm_declare({
                               else np.zeros_like(np.asarray(z, dtype=float))),
 }))
 NM_OMEGA = repr(nm_disc.omega_disc(NM_MU))
+
+
+# Herdeiro and Radu's black hole with scalar hair as every one of its diagrams draws it: their
+# configuration IV, in units of the field's inverse length mu, r_H = 0.1, w = 0.82 and m = 1, read
+# from their published data by kerr_scalar_hair.Hair. The functions below are its F_0, F_1, F_2 and W
+# on the axis, ksh_*a, and on the equator, ksh_*e, each with two derivatives along r; across either
+# surface every function is even, so the rows hold the plane's metric and its first derivatives.
+@lru_cache(maxsize=1)
+def _ksh_hair():
+    return ksh.Hair()
+
+
+def _ksh_on(name, theta):
+    return lambda r, order: _ksh_hair()(name, np.asarray(r, dtype=float), theta, dr=order)
+
+
+DECLARED_FUNCTIONS.update(_nm_declare({
+    f"ksh_{short}{where}": _ksh_on(name, theta)
+    for short, name in (("f0", "F_0"), ("f1", "F_1"), ("f2", "F_2"), ("w", "W"))
+    for where, theta in (("a", 0.0), ("e", math.pi / 2))
+}))
+KSH_AXIS = {"F_0": "ksh_f0a(r)", "F_1": "ksh_f1a(r)", "F_2": "ksh_f2a(r)", "W": "ksh_wa(r)"}
+KSH_EQUATOR = {"F_0": "ksh_f0e(r)", "F_1": "ksh_f1e(r)", "F_2": "ksh_f2e(r)", "W": "ksh_we(r)"}
+KSH = {"r_H": "1/10"}
+KSH_INPUT = ("Herdeiro and Radu's configuration IV, in units of the field's inverse length $\\mu$: $r_H = 0.1/\\mu$, "
+             "the field turns at $\\omega = 0.82\\,\\mu c$ with $m = 1$, and $GM/c^2 = 0.933/\\mu$ and "
+             "$GJ/c^3 = 0.740/\\mu^2$, with $M$ the mass and $J$ the angular momentum. The four functions are those of the "
+             "authors' numerical solution, interpolated between its grid points.")
+# Kerr's black hole of the same mass and angular momentum, in the same chart: r_H = 2 sqrt(M^2 - a^2)
+# and b = -c_t = M - sqrt(M^2 - a^2) with a = J/M, kerr_scalar_hair.kerr_for(0.9330, 0.7403).
+KSH_KERR = {"r_H": "0.98173", "b": "0.44217"}
+KSH_KERR_INPUT = ("Kerr's black hole of the mass and angular momentum of Herdeiro and Radu's configuration IV, "
+                  "$GM/c^2 = 0.933/\\mu$ and $GJ/c^3 = 0.740/\\mu^2$ with $M$ the mass and $J$ the angular momentum, "
+                  "in units of the field's inverse length $\\mu$: "
+                  "$r_H = 0.982/\\mu$ and $b = 0.442/\\mu$.")
+KSH_CONE = "future cone of no angular momentum"
+KSH_PEAK = (("surface", "r", "0.957", "the radius at which the field is largest, $r = 0.96/\\mu$"),)
 
 
 # Einstein's static field of 1912 is drawn through a star of uniform density by his equation of
@@ -4548,6 +4586,21 @@ DIAGRAMS = [
     Diagram("neugebauer_meinel", "black_hole_limit", "equator", "$t$ and $r$ on the equator", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1}, {"theta": "pi/2"}, quotient="phi", mark_gtt="the ergosurface", cone=NM_CONE,
             input=NM_LIMIT_INPUT),
+    # Herdeiro and Radu's configuration IV on its two totally geodesic planes, the axis, where the
+    # dragging drops out, and the equator with varphi divided out, and Kerr's black hole of the same
+    # mass and angular momentum on the same two planes of the same chart. The rows declare the
+    # functions of one plane, so none reads the Kretschmann scalar.
+    Diagram("kerr_scalar_hair", "herdeiro_radu", "axis", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$\\mu r$", "$\\mu ct$", KSH, {"theta": "0", "varphi": "0"}, orient="ingoing", kretschmann=False,
+            functions=KSH_AXIS, input=KSH_INPUT),
+    Diagram("kerr_scalar_hair", "herdeiro_radu", "equator", "$t$ and $r$ on the equator", ("t", "r"), (0, 4, -2, 2),
+            "$\\mu r$", "$\\mu ct$", KSH, {"theta": "pi/2"}, orient="ingoing", kretschmann=False, quotient="varphi",
+            mark_gtt="the ergosurface", cone=KSH_CONE, functions=KSH_EQUATOR, input=KSH_INPUT, lines=KSH_PEAK),
+    Diagram("kerr_scalar_hair", "kerr_member", "axis", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$\\mu r$", "$\\mu ct$", KSH_KERR, {"theta": "0", "varphi": "0"}, orient="ingoing", input=KSH_KERR_INPUT),
+    Diagram("kerr_scalar_hair", "kerr_member", "equator", "$t$ and $r$ on the equator", ("t", "r"), (0, 4, -2, 2),
+            "$\\mu r$", "$\\mu ct$", KSH_KERR, {"theta": "pi/2"}, orient="ingoing", quotient="varphi",
+            mark_gtt="the ergosurface", cone=KSH_CONE, input=KSH_KERR_INPUT),
     # The first Morgan-Morgan disc on its two totally geodesic planes. Weyl's chart draws the
     # axis through the centre of the disc and the plane z = 0, disc and vacuum together; the oblate
     # spheroidal chart draws the axis above the disc, the plane outside the rim, and the disc itself.
@@ -10279,6 +10332,39 @@ CAPTIONS = {
         "The dotted line is the ergosurface, $r = m$, which is $2m$ in the radius of Boyer and Lindquist. At the "
         "left edge the circles have the circumference $4\\pi m$ of the throat, and $\\omega$ has risen to $1/2m$, "
         "the angular velocity of the horizon and of the disc.",
+    ],
+    ("kerr_scalar_hair", "herdeiro_radu", "axis"): [
+        "The plane of $t$ and $r$ on the axis ($\\theta = 0$, $\\varphi = 0$) of Herdeiro and Radu's configuration IV. On "
+        "the axis the dragging drops out of the metric, which is $-e^{2F_0}(1 - r_H/r)c^2dt^2 + e^{2F_1}dr^2/(1 - r_H/r)$, "
+        "and a ray has $c\\,dt/dr = \\pm e^{F_1 - F_0}/(1 - r_H/r)$; every rotation about the axis fixes the plane, so "
+        "the rays are null geodesics.",
+        "The field vanishes on the axis. The cones close toward the horizon $r = r_H$, which a ray reaches only as "
+        "$t \\to \\pm\\infty$, and where $e^{F_1 - F_0} = 31.2$. A ray climbs from $r = 0.2/\\mu$ to $4/\\mu$ in "
+        "$11.6/\\mu$ of the time $ct$, and a clock at rest at $r = 0.2/\\mu$ runs at $0.197$ of the rate of one far away.",
+    ],
+    ("kerr_scalar_hair", "herdeiro_radu", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of configuration IV drawn in $t$ and $r$ with $\\varphi$ divided out, "
+        "each point in the diagram a circle about the axis. Its null curves are the shadows on $t$ and $r$ of the null "
+        "geodesics with no angular momentum, which turn about the axis at $d\\varphi/d(ct) = W$.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = 0.365/\\mu$, inside which no observer keeps "
+        "$\\varphi$ fixed. The field is largest at $r = 0.96/\\mu$, where frames are dragged at $cW = 0.12\\,\\mu c$, "
+        "and at the horizon they turn with it at $\\Omega_H = 0.82\\,\\mu c$.",
+    ],
+    ("kerr_scalar_hair", "kerr_member", "axis"): [
+        "The plane of $t$ and $r$ on the axis ($\\theta = 0$, $\\varphi = 0$) of Kerr's black hole with the mass and "
+        "angular momentum of configuration IV, in Herdeiro and Radu's coordinates. Every rotation about the axis fixes "
+        "the plane, so the rays are null geodesics, those of Kerr's axis in the Boyer-Lindquist radius $R = r + b$.",
+        "The cones close toward the horizon $r = r_H = 0.982/\\mu$. Its equatorial circumference is "
+        "$2\\pi \\times 1.87/\\mu$ and its area $33.4/\\mu^2$, nine times the area $3.65/\\mu^2$ of the horizon of the "
+        "hairy black hole with the same mass and angular momentum.",
+    ],
+    ("kerr_scalar_hair", "kerr_member", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the same Kerr black hole drawn in $t$ and $r$ with $\\varphi$ divided "
+        "out, each point in the diagram a circle about the axis. The null curves are the shadows of the null geodesics "
+        "with no angular momentum.",
+        "The dotted line is the ergosurface, at $r = 1.424/\\mu$, which is the Boyer-Lindquist radius $R = 2GM/c^2$. "
+        "The horizon turns at $\\Omega_H = 0.299\\,\\mu c$, a little over a third of the angular velocity of the hairy "
+        "black hole's horizon.",
     ],
     ("bach_weyl_ring", "weyl", "axis"): [
         "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of the Bach-Weyl ring ($m = a/2$), the axis that threads "
