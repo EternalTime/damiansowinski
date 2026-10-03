@@ -278,6 +278,11 @@
       "id": "supertranslation_hair",
       "kind": "locally_same",
       "text": "The same flat geometry in the coordinates of a supertranslation, which Compère and Long found to be a different vacuum, with a field on the sphere of directions [compere2016vacua]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "composite",
+      "text": "Inside Haggard and Rovelli's bouncing shell of light space is flat, before the bounce and after it [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -360,7 +365,8 @@
     "ellis1974",
     "visser1998",
     "unruh1981",
-    "compere2016vacua"
+    "compere2016vacua",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {

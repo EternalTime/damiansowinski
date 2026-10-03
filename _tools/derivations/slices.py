@@ -1077,6 +1077,38 @@ def _israel_shell(view):
     return [Mark(m, found) for m in moments("israel_shell") for found in [lines(m)] if found]
 
 
+def _black_to_white_hole(view):
+    """Haggard and Rovelli's shell of light falling in: each moment is Schwarzschild's slice ct = T over
+    the piece read in that chart, from the shell out, and the moment of the flat time ct = -R at
+    which it meets the shell, over the piece read along v in the interior, from the centre to the
+    shell. In the interior's plane the moment runs from (u, v) = (-R, -R) to (-2R, 0); in Kruskal's
+    U = -sqrt(r - 1) e^((r - T)/2) and V = sqrt(r - 1) e^((r + T)/2); in the ingoing
+    Painleve-Gullstrand chart t = T + 2 sqrt(r) + ln((sqrt(r) - 1)/(sqrt(r) + 1)); and in Lemaitre's
+    the same t as tau, with rho = tau + 2 r^(3/2)/3, all at r_s = 1."""
+    import black_to_white_hole as bwh
+
+    def lines(m):
+        T = m.time
+        if view == "bounce":
+            lo, hi = m.reach("interior", "v")
+            return [[(2 * lo - v, v) for v in (lo, hi)]]
+        lo, hi = m.reach("schwarzschild", "r")
+        if view == "radial":
+            return along(T, lo, hi)
+        r = lo + (hi - lo) * np.linspace(0, 1, N) ** 2
+        if view == "kruskal":
+            # The moment ct = -3 r_s meets the shell at U = -12, three widths of the drawing to the right.
+            if T < -2.5:
+                return []
+            U, V = bwh.schwarzschild_UV(np.full(N, T), r)
+            return [list(zip(U, V))]
+        t = T + 2 * np.sqrt(r) + np.log((np.sqrt(r) - 1) / (np.sqrt(r) + 1))
+        if view == "painleve":
+            return [list(zip(t, r))]
+        return [list(zip(t, t + 2 * r ** 1.5 / 3))]
+    return [Mark(m, found) for m in moments("black_to_white_hole") for found in [lines(m)] if found]
+
+
 def _charged_shell(view):
     """The charged shell of dust: each moment of the falling shell is the slice v - r = w of the
     ingoing chart over the piece read in it, outside the shell, and the moment of the flat time T at
@@ -3453,6 +3485,13 @@ FLAT = {
     ("penrose_impulsive_wave", "retarded", "near"): lambda: [],
     ("penrose_impulsive_wave", "null", "unit"): lambda: _penrose_wave("unit"),
     ("penrose_impulsive_wave", "null", "near"): lambda: _penrose_wave("near"),
+    # Haggard and Rovelli's shell of light falling in: Schwarzschild's slice outside the shell and the
+    # flat moment inside it, in every chart that holds the flap before the bounce.
+    ("black_to_white_hole", "interior", "bounce"): lambda: _black_to_white_hole("bounce"),
+    ("black_to_white_hole", "kruskal", "falling"): lambda: _black_to_white_hole("kruskal"),
+    ("black_to_white_hole", "schwarzschild", "radial"): lambda: _black_to_white_hole("radial"),
+    ("black_to_white_hole", "painleve_gullstrand_ingoing", "falling"): lambda: _black_to_white_hole("painleve"),
+    ("black_to_white_hole", "lemaitre", "falling"): lambda: _black_to_white_hole("lemaitre"),
     ("israel_shell", "interior", "radial"): lambda: _israel_shell("radial"),
     ("israel_shell", "interior", "through"): lambda: _israel_shell("through"),
     ("israel_shell", "exterior", "radial"): lambda: _israel_shell("schwarzschild"),
@@ -3623,6 +3662,8 @@ HIDDEN = {
     ("tolman_bondi", "comoving_synchronous", "collapse"): "the marginally bound cloud, E = 0, whose moments are planes; the cloud embedded is released from rest",
     ("white_hole", "novikov_comoving", "vacuole"): "Novikov's marginally bound core in its vacuole, whose moments are planes; the core embedded is the bound one, which comes to rest",
     ("white_hole", "exterior_kruskal", "kruskal"): "the surface's way out through the past horizon, drawn about U = -1, V = 0; the moments embedded run on to the rest at V = sqrt(2) e^(2 + pi/2), a dozen widths of the drawing away, where Kruskal's coordinates crowd the white hole out of sight",
+    ("black_to_white_hole", "kruskal", "rising"): "the flap after the bounce, the time reverse of the flap whose moments are embedded",
+    ("black_to_white_hole", "painleve_gullstrand_outgoing", "rising"): "the flap after the bounce, the time reverse of the flap whose moments are embedded",
     ("vaidya", "eddington_finkelstein_outgoing", "shell"): "the exploding shell, the time reverse of the imploding shell embedded",
     ("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell"): "the leaving shell, the time reverse of the falling shell embedded",
     ("bonnor_vaidya", "leaving"): "the leaving shell, the time reverse of the falling shell embedded",

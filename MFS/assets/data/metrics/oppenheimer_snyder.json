@@ -107,6 +107,11 @@
       "id": "quantum_oppenheimer_snyder",
       "kind": "family",
       "text": "The same ball of dust with the bounce of loop quantum cosmology inside it. The dust stops at a critical density and comes back out through a white hole into another universe [lewandowski2023]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "family",
+      "text": "Barceló, Carballo-Rubio, and Garay let this ball of dust bounce at the Planck density and climb back out through a white hole [barcelo2014mutiny]."
     }
   ],
   "references": [
@@ -131,7 +136,8 @@
     "neeman1965",
     "lindquist1957",
     "ruban1968",
-    "lewandowski2023"
+    "lewandowski2023",
+    "barcelo2014mutiny"
   ],
   "coordinates": [
     {

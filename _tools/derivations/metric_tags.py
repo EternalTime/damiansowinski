@@ -205,6 +205,11 @@ REGIONS = {
         "regions": [["interior"], ["exterior", "exterior_ingoing"]],
         "why": "the flat space inside the shell and the vacuum outside it are two regions of one spacetime",
     },
+    "black_to_white_hole": {
+        "regions": [["interior"], ["kruskal", "schwarzschild", "painleve_gullstrand_ingoing",
+                                   "painleve_gullstrand_outgoing", "lemaitre"]],
+        "why": "the flat space inside the shell and the vacuum outside it are two regions of one spacetime",
+    },
     "charged_shell": {
         "regions": [["interior"], ["exterior", "exterior_ingoing", "exterior_outgoing", "exterior_isotropic"]],
         "why": "the flat space inside the shell and the charge's field outside it are two regions of one spacetime",

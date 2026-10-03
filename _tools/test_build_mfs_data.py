@@ -17,6 +17,7 @@ import math
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import unicodedata
 import unittest
@@ -3688,7 +3689,7 @@ class StacksAndMovies(unittest.TestCase):
               ("vaidya", "shell"): "$v - r$",
               ("semiclosed_world", "bag"): "$c\\tau$", ("datt_ruban_t_models", "tsphere"): "$c\\tau$",
               ("lindquist_wheeler_lattice", "lattice"): "$c\\tau$",
-              ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$",
+              ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$", ("black_to_white_hole", "collapse"): "$ct$",
               ("charged_shell", "bounce"): "$v - r$",
               ("penrose_impulsive_wave", "snap"): "$ct$",
               ("ab_metrics", "neck"): "$\\tau$",
@@ -5010,6 +5011,7 @@ class Slices(unittest.TestCase):
               "conformal ab_metrics/a2_inertial", "conformal ab_metrics/a2_kruskal",
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
+              "black_to_white_hole/kruskal/rising", "black_to_white_hole/painleve_gullstrand_outgoing/rising",
               # Novikov's vacuole holds the marginally bound core, whose moments are planes, and Kruskal's
               # view of the white hole is drawn about the surface's way out, a dozen widths of the drawing
               # from the later moments embedded.
@@ -5524,6 +5526,8 @@ class Slices(unittest.TestCase):
     # horizon, and the whole moment with it, beyond Schwarzschild's chart.
     # Clifton and Ferreira's chart covers the cell while it expands, and every moment embedded is of
     # the cell at rest or contracting.
+    # The first moment of Haggard and Rovelli's shell meets it at Kruskal's U = -12, three widths of the
+    # drawing to the right of the flap before the bounce.
     # The flat interior of Israel's shell ends where the shell reaches the centre, at v - r = 0.52 r_s, so
     # the last moment, v - r = r_s, has no part in it.
     # The charged shell is inside r_- only from v - r = -0.25 r_s on, so the first two moments have no
@@ -5536,6 +5540,7 @@ class Slices(unittest.TestCase):
                        "charged_shell/exterior/inside": {("bounce", 0), ("bounce", 1)},
                        "charged_shell/exterior_outgoing/shell": {("bounce", 0), ("bounce", 1)},
                        "israel_shell/interior/radial": {("shell", 3)},
+                       "black_to_white_hole/kruskal/falling": {("collapse", 0)},
                        "israel_shell/interior/through": {("shell", 3)},
                        "hiscock/ingoing/history": {("history", 5)},
                        "hiscock/outgoing/history": {("history", 0), ("history", 1)},
@@ -6143,6 +6148,34 @@ class Slices(unittest.TestCase):
             rho = {"unit": 1.0, "near": 0.5}[key.rsplit("/", 1)[1]]
             at = rho * rho * t / (2 * math.sqrt(2))
             return (lambda X: (2 - rho * rho) * t / (2 * math.sqrt(2)) + (X - at)), [at]
+        if key.startswith("black_to_white_hole/"):
+            # Haggard and Rovelli's shell: Schwarzschild's slice ct = t outside the shell, from the shell
+            # out, and inside it the flat moment ct = -R at which that slice meets the shell. Drawn
+            # against r and ct, Kruskal's (V - U)/2 and (U + V)/2, the Painleve-Gullstrand time
+            # t + 2 sqrt(r) + ln((sqrt(r) - 1)/(sqrt(r) + 1)), and Lemaitre's rho - c tau = 2 r^(3/2)/3.
+            if key == "black_to_white_hole/interior/bounce":
+                lo, hi = self.reach(surface, "interior")
+                return (lambda X: lo), [0.0, hi - lo]
+            lo, hi = self.reach(surface, "schwarzschild")
+
+            def pg(r):
+                return t + 2 * math.sqrt(r) + math.log((math.sqrt(r) - 1) / (math.sqrt(r) + 1))
+            if key == "black_to_white_hole/schwarzschild/radial":
+                return (lambda X: t), [lo, hi]
+            if key == "black_to_white_hole/painleve_gullstrand_ingoing/falling":
+                return pg, [lo, hi]
+            if key == "black_to_white_hole/lemaitre/falling":
+                return (lambda X: pg((1.5 * X) ** (2 / 3))), [2 * lo ** 1.5 / 3, 2 * hi ** 1.5 / 3]
+
+            def uv(r):
+                a = math.sqrt(r - 1) * math.exp(r / 2)
+                return -a * math.exp(-t / 2), a * math.exp(t / 2)
+            across = lambda r: (uv(r)[1] - uv(r)[0]) / 2  # noqa: E731
+
+            def up(X):
+                r = bisect(lambda x: across(x) - X, lo, hi) if across(lo) < X < across(hi) else (lo if X <= across(lo) else hi)
+                return sum(uv(r)) / 2
+            return up, [across(lo), across(hi)]
         if key.startswith("israel_shell/"):
             # Israel's shell: the slice v - r = t outside the shell, level against v - r, and in
             # Schwarzschild's chart the curve ct = t - ln(r - 1), which leaves the drawing toward r_s;
@@ -6902,6 +6935,26 @@ class Slices(unittest.TestCase):
                             else:
                                 continue
                             self.assertLess(abs(v - r - t), 2e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
+                    elif metric_id == "black_to_white_hole":
+                        # Inside the shell p, q = arctan(u, v), and the moment is the flat time
+                        # (u + v)/2 = -R at which Schwarzschild's slice ct = t meets the shell. Outside it
+                        # each point is carried back to Kruskal's U through the interior ray tan p and to
+                        # V through the drawing's q, and lies on t = ln(-V/U).
+                        sys.path.insert(0, str(build.ROOT / "_tools" / "derivations"))
+                        import black_to_white_hole as bwh
+                        level = -float(bwh.shell_radius_schwarzschild(t))
+                        inside, outside = mark["lines"]
+                        for X, T in inside:
+                            a, b = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs((a + b) / 2 - level), 2e-3 * (1 + a * a + b * b), f"{where} at {(X, T)}")
+                        self.assertLess(math.dist(inside[-1], outside[0]), 2e-4, where)
+                        for X, T in outside:
+                            p, q = (T - X) / 2, (T + X) / 2
+                            if not (-1.4 < p < -0.2 and 0.05 < q < 1.4):
+                                continue        # beside the infinities four decimals no longer fix the event
+                            U = float(bwh.shell_U(math.tan(p)))
+                            V = bisect(lambda x: float(bwh.q_of_V(x)) - q, bwh.V0, 60)
+                            self.assertLess(abs(math.log(-V / U) - t), 2e-2, f"{where} at {(X, T)}")
                     elif metric_id == "charged_shell" and view["id"] == "exterior_isotropic":
                         # The balanced shell at rest: t = 0 is the level line T = 0 on both sides.
                         for line in mark["lines"]:

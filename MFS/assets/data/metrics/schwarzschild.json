@@ -483,6 +483,11 @@
       "id": "supertranslation_hair",
       "kind": "family",
       "text": "Flat space with a supertranslation field on the sphere of directions. Compère and Long put the same field on this black hole as the final state of a collapse that was not spherical [compere2016final]."
+    },
+    {
+      "id": "black_to_white_hole",
+      "kind": "composite",
+      "text": "A shell of light falls into a black hole and comes back out of a white hole. Haggard and Rovelli cut both flaps from Schwarzschild's spacetime and put a quantum region between them [haggard2015fireworks]."
     }
   ],
   "references": [
@@ -612,7 +617,8 @@
     "lewandowski2023",
     "unruh1981",
     "james2015",
-    "compere2016final"
+    "compere2016final",
+    "haggard2015fireworks"
   ],
   "coordinates": [
     {
