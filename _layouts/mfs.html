@@ -2422,25 +2422,40 @@
       var CD_LAB = 21;
       var CD_RELATION = /=|<|>|\\to(?![a-zA-Z])|\\leq?(?![a-zA-Z])|\\geq?(?![a-zA-Z])|\\approx|\\neq?(?![a-zA-Z])|\\sim(?![a-zA-Z])|\\equiv|\\in(?![a-zA-Z])|\\rightarrow|\\mapsto/g;
       var CD_FUNCTION = /\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z])/g;
-      // The letters MathJax sets about an em wide, where every other is near half of one.
-      var CD_WIDE = /[mMW]/g;
+      // The characters MathJax sets wider than 0.7 em, at their widths in ems of the label, the
+      // size it sets a subscript or a superscript at, and the marks over a letter, which make a
+      // label taller, as slices.py's WIDE, SCRIPT and ACCENT give them.
+      var CD_WIDE = { A: 0.9, B: 0.9, C: 0.9, D: 0.95, E: 0.9, F: 0.9, G: 0.9, H: 1.05, J: 0.75, K: 1.05,
+                      L: 0.8, M: 1.2, N: 1.05, O: 0.9, P: 0.9, Q: 0.95, R: 0.9, S: 0.75, T: 0.85, U: 0.9,
+                      V: 0.9, W: 1.2, X: 1.0, Y: 0.9, Z: 0.85, m: 1.05, w: 0.85, '-': 0.9, '+': 0.9 };
+      var CD_SCRIPT = 0.71;
+      var CD_ACCENT = /\\(bar|hat|tilde|vec|dot)(?![a-zA-Z])/;
       function cdLabelSize(text) {
-        var width = 0.6, tall = false;
+        var width = 0.6, tall = 1.5;
         text.split(/(\$[^$]*\$)/).forEach(function(part) {
           if (part.charAt(0) !== '$') { width += 0.6 * part.length; return; }
           var math = part.slice(1, -1).replace(/\\[,;:!]/g, ' ');
-          tall = tall || math.indexOf('^') >= 0 || math.indexOf('\\sqrt') >= 0;
+          if (math.indexOf('\\sqrt') >= 0) tall = 1.85;
+          else if (math.indexOf('^') >= 0) tall = Math.max(tall, 1.75);
+          else if (math.indexOf('/') >= 0 || CD_ACCENT.test(math)) tall = Math.max(tall, 1.6);
           width += 0.5 * (math.match(CD_FUNCTION) || []).reduce(function(n, f) { return n + f.length - 1; }, 0);
           math = math.replace(CD_FUNCTION, '');
           width += 1.1 * (math.match(CD_RELATION) || []).length;
           math = math.replace(CD_RELATION, '')
             .replace(/\\(bar|hat|tilde|vec|dot|mathrm|text|left|right|mathscr|mathcal|mathfrak|operatorname)(?![a-zA-Z])/g, '');
           width += 1.0 * (math.match(/\\[a-zA-Z]+/g) || []).length;
-          math = math.replace(/\\[a-zA-Z]+/g, '').replace(/[{}^_]/g, '');
-          width += 0.7 * math.replace(/ /g, '').length + 0.5 * (math.match(CD_WIDE) || []).length + 0.3 * (math.split(' ').length - 1);
+          var scripts = '';
+          math = math.replace(/\\[a-zA-Z]+/g, '')
+            .replace(/[\^_](\{[^{}]*\}|.)/g, function(_, script) { scripts += script; return ''; }).replace(/[{}^_]/g, '');
+          width += Array.from(math.replace(/ /g, '')).reduce(function(n, c) { return n + (CD_WIDE[c] || 0.7); }, 0) +
+            0.3 * (math.split(' ').length - 1);
+          width += Array.from(scripts.replace(/[{} ]/g, '')).reduce(function(n, c) {
+            return n + Math.max(0.7, CD_SCRIPT * (CD_WIDE[c] || 0.7));
+          }, 0);
         });
-        return [width, tall ? 1.75 : 1.5];
+        return [width, tall];
       }
+      window._mfsLabelSize = cdLabelSize;  // which _tools/label_sizes.mjs holds to MathJax's own boxes
       function cdFrame(view) {
         var b = view.box, s = CD_W / (b[1] - b[0]), H = s * (b[3] - b[2]);
         var m = { l: CD_M, t: CD_M, r: CD_M, b: CD_M }, reach = 1.5 * CD_LAB;
@@ -2898,6 +2913,7 @@
       function sliceLabel(mark, x, y, vw, vh, cls, style, far) {
         var place = mark.place;
         return '<span class="' + sliceClass(mark.view) + ' mfs-slice-label ' + cls + '" aria-hidden="true" data-slice-view="' + nrEsc(mark.view) +
+          '" data-slice-name="' + nrEsc(mark.label) +
           '" data-x="' + x.toFixed(5) + '" data-y="' + y.toFixed(5) + '" data-vw="' + vw +
           (mark.lines.length ? '' : '" data-point="1') +
           (far ? '" data-far="' + far[0].toFixed(5) + ' ' + far[1].toFixed(5) : '') + '" data-anchor="' + place.anchor +
@@ -2923,14 +2939,19 @@
           var unnamed = group.filter(function(m) { return !m.place; }).map(function(m) { return m.label; });
           var text = (group.length > 1 ? 'the slices' : 'the slice') + ' of the embedding diagram' +
             (unnamed.length ? ', ' + unnamed.join(', ') : '');
-          return { view: view, kind: kind, text: text };
+          // A label the drawing carries is named here too, shown only while fitSliceLabels()
+          // finds it no place on the plot.
+          var named = group.filter(function(m) { return m.place; }).map(function(m) { return m.label; });
+          return { view: view, kind: kind, text: text, named: named, key: text + '\u0000' + named.join('\u0000') };
         });
         return items.map(function(item, i) {
-          var same = items.filter(function(other) { return other.kind === item.kind && other.text === item.text; });
+          var same = items.filter(function(other) { return other.kind === item.kind && other.key === item.key; });
           if (same[0] !== item) return '';
           var attrs = same.length > 1 ? '' : ' ' + sliceClass(item.view) + '" data-slice-view="' + nrEsc(item.view);
           return '<span class="mfs-nr-item' + attrs + '">' + swatch(item.kind) +
-            '<span class="mfs-nr-itext">' + nrProse(nrEsc(item.text)) + '</span></span>';
+            '<span class="mfs-nr-itext">' + nrProse(nrEsc(item.text)) + item.named.map(function(label) {
+              return '<span class="mfs-slice-named" data-slice-name="' + nrEsc(label) + '" hidden>' + nrProse(nrEsc(', ' + label)) + '</span>';
+            }).join('') + '</span></span>';
         }).join('');
       }
 
@@ -2953,14 +2974,21 @@
          beside its point slides along to stay in the plot. Where no choice keeps them clear,
          as at three times the usual text on a phone, where Malament and Hogarth's four moments
          lie within a sixth of a plot 265 pixels tall, the plot is drawn larger, a tenth at a
-         time, up to four times, until one does, and fitPlots() holds it there: Milne's four
-         moments in its inertial chart need 3.8 times there, since a label is
-         never set smaller than the caption beside the drawing, the size the captain set for
-         every word of a drawing on 30 September 2026. A plot holds four labels at most, which makes
+         time, up to four times and at four times itself, until one does, and fitPlots() holds
+         it there: Milne's four moments in its inertial chart need 3.8 times there and Bondi's
+         sphere, a label 18 em long, 3.84, since a label is never set smaller than the caption
+         beside the drawing, the size the captain set for every word of a drawing on 30
+         September 2026. Until 3 October 2026 the tenths stopped at 3.8 and four times was never
+         tried. Where no choice keeps them clear even at four times, as for the small universes'
+         three moments, which lie within a tenth of their plot's height there and would need it
+         seven times as wide, the labels left past the plot or over another, each kept in turn
+         while it is clear, are named in the legend instead, as slices.py names a label it finds
+         no side for, and come back on the plot at a size where they fit. A plot holds four labels at most, which makes
          trying every choice of sides cheap. A label stands on the edge of what it names, the
          edge of its line's stroke or of its dot, and labels may touch; nothing is added between
          them. Every label is measured before any is moved, as the lines are. */
       var SLICE_EDGE = 1.3, SLICE_DOT = 5.1;  // the stroke's half width and the dot's, in the drawing's units
+      var SLICE_GROW = 4;                     // the most a plot is drawn larger for its slices' labels
       var SLICE_SIDES = [['br', 0, -1], ['tr', 0, 1], ['bl', 1, -1], ['tl', 1, 1],
                          ['bl', 0, -1], ['tl', 0, 1], ['br', -1, -1], ['tr', -1, 1]];
       var SLICE_FAR_SIDES = [['bl', 0, -1], ['tl', 0, 1], ['br', -1, -1], ['tr', -1, 1]];
@@ -3031,13 +3059,20 @@
         var grown = [];
         plots.forEach(function(p) {
           var best = null, grow = 1;
-          for (var g = 1; g <= 4 + 1e-9; g *= 1.1) {
+          for (var g = 1; ; g = Math.min(g * 1.1, SLICE_GROW)) {
             var tried = arrange(p, p.base * g);
             if (!best || tried.total < best.total) { best = tried; grow = g; }
-            if (tried.total < 100) break;
+            if (tried.total < 100 || g === SLICE_GROW) break;
           }
           arrange(p, p.base * grow);
-          p.labels.forEach(function(L, i) { L.chosen = best.pick[i]; });
+          // A label that even then stands past the plot or over another is named in the legend
+          // instead, as one slices.py finds no side for is, each kept in turn while it is clear.
+          var kept = [];
+          p.labels.forEach(function(L, i) {
+            L.chosen = best.pick[i];
+            L.named = L.chosen.cost >= 100 || kept.some(function(other) { return overlaps(L.chosen.rect, other); });
+            if (!L.named) kept.push(L.chosen.rect);
+          });
           var need = grow > 1 ? String(Math.ceil(p.base * grow)) : '';
           if ((p.fig.dataset.slicePlot || '') !== need) {
             if (need) p.fig.dataset.slicePlot = need; else delete p.fig.dataset.slicePlot;
@@ -3049,7 +3084,14 @@
           fitTicks(grown);
         }
         plots.forEach(function(p) {
+          var legend = p.fig.closest('.mfs-nr-view');
           p.labels.forEach(function(L) {
+            if (L.el.classList.contains('mfs-slice-elsewhere') !== L.named) {
+              L.el.classList.toggle('mfs-slice-elsewhere', L.named);
+              [].forEach.call(legend ? legend.querySelectorAll('.mfs-slice-named') : [], function(span) {
+                if (span.dataset.sliceName === L.el.dataset.sliceName) span.hidden = !L.named;
+              });
+            }
             var c = L.chosen, key = c.at.join(' ') + ' ' + c.side.join(' ') + ' ' + c.slide.toFixed(1);
             if (L.el.dataset.side === key) return;
             L.el.dataset.side = key;
@@ -4491,6 +4533,9 @@
     .nr-slice-fill, .pj-slice-fill { fill: rgba(77,184,74,0.12); stroke: none; }
     .nr-slice-swatch { fill: rgba(77,184,74,0.12); stroke: var(--green-light); stroke-width: 1.6; }
     .mfs-slice-off { display: none !important; }
+    /* A label named in the legend instead keeps its box, so fitSliceLabels() measures it again
+       at the next size, and is not seen. */
+    .mfs-slice-elsewhere { visibility: hidden; }
     .mfs-slice-label {
       position: absolute; white-space: nowrap; line-height: 1; pointer-events: none;
       color: var(--text-bright); background: rgba(0,6,9,0.72); padding: 0.12em 0.3em; border-radius: 3px;
