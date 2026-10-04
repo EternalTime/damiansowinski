@@ -187,7 +187,7 @@ The layouts are worked out in a worker running `graph.js`, a pause in typing of 
 A drag turns the figure, two clicks bring back the view it opened at, and a press on a spacetime opens it as its name in the list does.
 
 The list and the graph read as one thing, one written and the other drawn, as the captain asked on 3 October 2026: "The two interfaces need to feel like they're doing the same thing, one textually the other visually."
-The pointer or the keyboard on a name in the list lights its spacetime in the graph, its point and its relations in the page's pink and its name written, as the timeline lights a chosen spacetime, and the pointer on a spacetime in the graph lights it the same way and lights its name in the list as the pointer over the name does, scrolling the list to it, smoothly unless the reader asked for reduced motion.
+The pointer or the keyboard on a name in the list lights its spacetime in the graph, its point and its relations in the page's pink and its name written, as the timeline lights a chosen spacetime, and the pointer on a spacetime in the graph lights it the same way and turns its name in the list the page's pink, `--pink-light`, with no background, as the captain asked on 3 October 2026, scrolling the list to it, smoothly unless the reader asked for reduced motion.
 Leaving either lets both go, and the graph's own pointer goes before the list's.
 Only a spacetime the list shows can be lit or pressed, so while a search has gathered a subgroup what it left out is passed over by the pointer, the keyboard and a press alike.
 The names in the list are buttons, so Tab reaches each in turn.

@@ -11,8 +11,8 @@
    ones carrying it, with the rest behind; clearing the search brings the whole graph back.
    The list and the graph read as one thing: the pointer or the keyboard on a name in the list
    lights its spacetime in the graph, that one alone and with its name written, and the pointer
-   on a spacetime in the graph lights its name in the list as the pointer over a name does and
-   scrolls the list to it, and both hold under a search, where a spacetime the search left out
+   on a spacetime in the graph turns its name in the list the page's pink, with no background,
+   and scrolls the list to it, and both hold under a search, where a spacetime the search left out
    is never lit and never opened. A press on a spacetime in the graph opens it, and the graph
    stays where it is under the spacetime's panel, which covers it, standing still. With --phone the page is laid out as an iPhone held upright, the graph is not
    drawn and its relations are never fetched. Every console error and page error is an error.
@@ -91,8 +91,8 @@ const drawn = "!window._mfsGraph.shows().drawing";
 
 /* The pointer and then the keyboard on a name in the list light its spacetime in the graph, that
    one alone, with its name written, and nothing is lit once they leave; the pointer on a
-   spacetime in the graph lights its name in the list as the pointer over a name does and brings
-   it into sight, and nothing is lit once it leaves. `ids` are the spacetimes the list shows. */
+   spacetime in the graph turns its name in the list the page's pink, with nothing else about it
+   changed, and brings it into sight, and nothing is lit once it leaves. `ids` are the spacetimes the list shows. */
 async function asOneThing(ids, what) {
   await away();
   await evaluate("document.getElementById('mfs-search-results').scrollTop = 0");
@@ -105,7 +105,6 @@ async function asOneThing(ids, what) {
   let state = await shows();
   check(state.litNamed, `${what}: ${first} lit from the list has its name written`);
   check(JSON.stringify(await pinkPoints()) === JSON.stringify([first]), `${what}: ${first} alone is drawn lit (${await pinkPoints()})`);
-  const hovered = await nameIn(first);
   await away();
   await until(`window._mfsGraph.shows().lit === null && ${drawn}`, `${what}: leaving ${first} in the list lets it go in the graph`);
   check((await pinkPoints()).length === 0, `${what}: no point is lit once the pointer leaves the list`);
@@ -129,17 +128,20 @@ async function asOneThing(ids, what) {
   let target = null;
   for (const s of named) if (!(await nameIn(s.id)).inSight) { target = s; break; }
   target = target || named[named.length - 1];
+  const bare = await nameIn(target.id);
   await point(target.x, target.y);
   await until(`window._mfsGraph.shows().lit === ${JSON.stringify(target.id)} && ${drawn}`, `${what}: the pointer on ${target.id} in the graph lights it`);
   await until(`(function () { var b = document.querySelector('#mfs-search-results .mfs-result[data-id="${target.id}"]'), l = document.getElementById('mfs-search-results');
     var r = b.getBoundingClientRect(), m = l.getBoundingClientRect(); return r.top >= m.top - 0.5 && r.bottom <= m.bottom + 0.5; })()`,
     `${what}: the list scrolls ${target.id} into sight`);
   check(JSON.stringify(await litNames()) === JSON.stringify([target.id]), `${what}: ${target.id} alone is lit in the list (${await litNames()})`);
-  await until(`getComputedStyle(document.querySelector('#mfs-search-results .mfs-result[data-id="${target.id}"]')).backgroundColor === ${JSON.stringify(hovered.background)}`,
-    `${what}: ${target.id} is lit in the list as the pointer lights a name`, 2);
+  const pink = await evaluate(`(function () {
+    var hex = getComputedStyle(document.documentElement).getPropertyValue('--pink-light').trim();
+    return 'rgb(' + [1, 3, 5].map(function (i) { return parseInt(hex.slice(i, i + 2), 16); }).join(', ') + ')';
+  })()`);
   const lit = await nameIn(target.id);
-  check(lit.background === hovered.background && lit.color === hovered.color,
-        `${what}: lit from the graph, ${target.id} is drawn as a name under the pointer (${lit.background} ${lit.color})`);
+  check(lit.color === pink, `${what}: lit from the graph, ${target.id}'s name turns the page's pink (${lit.color}, pink ${pink})`);
+  check(lit.background === bare.background, `${what}: lit from the graph, ${target.id}'s button keeps its background (${lit.background}, ${bare.background} unlit)`);
   check(JSON.stringify(await pinkPoints()) === JSON.stringify([target.id]), `${what}: ${target.id} alone is drawn lit in the graph`);
   await away();
   await until(`window._mfsGraph.shows().lit === null && ${drawn}`, `${what}: leaving ${target.id} in the graph lets it go`);
