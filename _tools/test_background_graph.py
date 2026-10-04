@@ -255,9 +255,9 @@ class OneThing(unittest.TestCase):
     """The list and the graph read as one thing, written and drawn, as the captain asked on
     3 October 2026: "The two interfaces need to feel like they're doing the same thing, one
     textually the other visually." A name in the list under the pointer or the keyboard lights
-    its spacetime in the graph, a spacetime in the graph under the pointer lights its name in the
-    list as the pointer over the name does and scrolls the list to it, a press on either opens it,
-    and only a spacetime the list shows is ever lit. `node _tools/background_graph.mjs` holds the
+    its spacetime in the graph, a spacetime in the graph under the pointer turns its name in the
+    list pink and scrolls the list to it, a press on either opens it, and only a spacetime the
+    list shows is ever lit. `node _tools/background_graph.mjs` holds the
     page as drawn to the same."""
 
     @classmethod
@@ -324,13 +324,15 @@ class OneThing(unittest.TestCase):
         self.assertIn("named = id;", light)
         self.assertIn("draw();", light)
 
-    def test_the_graph_lights_the_list_as_the_list_s_own_hover_does_and_scrolls_to_it(self):
+    def test_the_graph_turns_the_name_in_the_list_pink_and_nothing_else_and_scrolls_to_it(self):
+        # The captain on 3 October 2026: its name turns the page's pink and its button gets no
+        # background.
         self.assertIn("window._mfsListLight(i >= 0 ? graph.spacetimes[i].id : null);", page_function(self.source, "hover"))
-        rule = re.search(r"\n    \.mfs-result:hover, \.mfs-result\.mfs-result-lit \{(.*?)\}", self.source, re.S)
-        self.assertIsNotNone(rule, "the list's hover and the graph's light are one rule")
-        self.assertEqual(len(re.findall(r"\.mfs-result:hover", self.source)), 1)
-        # Before the open spacetime's pink, so the open name stays pink while it is lit.
-        self.assertLess(rule.start(), self.source.index(".mfs-result.mfs-result-active, .mfs-result:active {"))
+        lit = [body for selectors, body in re.findall(r"\n    ([^{}\n]*mfs-result-lit[^{}\n]*)\{(.*?)\}", self.source, re.S)]
+        self.assertEqual(lit, [" color: var(--pink-light); "])
+        self.assertIn("\n    .mfs-result.mfs-result-lit { color: var(--pink-light); }\n", self.source)
+        # The list's own hover keeps its background to itself.
+        self.assertIn("\n    .mfs-result:hover {\n", self.source)
         listing = self.source[self.source.index("window._mfsListLight = function(id) {"):][:900]
         self.assertIn("r.classList.toggle('mfs-result-lit', on);", listing)
         self.assertIn("results.scrollBy({ top: by, behavior: reducedMotion() ? 'auto' : 'smooth' });", listing)

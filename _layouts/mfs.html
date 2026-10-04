@@ -720,12 +720,14 @@
       letter-spacing: 0.04em;
       flex-shrink: 0;
     }
-    /* A name is lit as the pointer over it lights it while the pointer is on its spacetime in
-       the graph behind the list, so the two read as one thing. */
-    .mfs-result:hover, .mfs-result.mfs-result-lit {
+    .mfs-result:hover {
       background: rgba(0,229,255,0.1);
       color: var(--cyan);
     }
+    /* While the pointer is on its spacetime in the graph behind the list, a name turns the
+       page's pink and nothing else about it changes, as the captain asked on 3 October 2026,
+       so the two read as one thing. */
+    .mfs-result.mfs-result-lit { color: var(--pink-light); }
     .mfs-result:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
     /* The spacetime shown, and a name being pressed, turn pink, and nothing on the page
        glows, which the captain asked for on 29 September 2026: "No glow anywhere". */
@@ -1055,12 +1057,12 @@
 
       /* The list and the graph behind it are one thing, written and drawn: the pointer or the
          keyboard on a name in the list lights its spacetime in the graph, and the pointer on a
-         spacetime in the graph lights its name in the list as the pointer over the name does,
-         and scrolls the list to it. Only a name the list shows can be lit either way, so a
-         search's subgroup holds both. The pointer goes before the keyboard, as the graph's
-         own pointer goes before the list. _pointed and _focused are the ids of the names under
-         the pointer and holding the keyboard, _at where the pointer was last on the list, and
-         _lit the name the graph lights. */
+         spacetime in the graph turns its name in the list pink and scrolls the list to it. Only
+         a name the list shows can be lit either way, so a search's subgroup holds both. The
+         pointer goes before the keyboard, as the graph's own pointer goes before the list.
+         _pointed and _focused are the ids of the names under the pointer and holding the
+         keyboard, _at where the pointer was last on the list, and _lit the name the graph
+         lights. */
       var _pointed = null, _focused = null, _at = null, _lit = null;
       function nameAt(at) {
         var under = at && document.elementFromPoint(at[0], at[1]);
