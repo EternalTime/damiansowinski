@@ -8,9 +8,13 @@
    On a desktop the graph is drawn in the room to the right of the list and covers no panel,
    every spacetime is in it, and no more than forty names are written. Typing a keyword into
    the search, a key at a time, gathers exactly the spacetimes the list then shows, which are the
-   ones carrying it, with the rest behind; clearing the search brings the whole graph back; a
-   press on a spacetime in the graph opens it and the graph steps aside, and "‹ All spacetimes"
-   brings it back. With --phone the page is laid out as an iPhone held upright, the graph is not
+   ones carrying it, with the rest behind; clearing the search brings the whole graph back.
+   The list and the graph read as one thing: the pointer or the keyboard on a name in the list
+   lights its spacetime in the graph, that one alone and with its name written, and the pointer
+   on a spacetime in the graph lights its name in the list as the pointer over a name does and
+   scrolls the list to it, and both hold under a search, where a spacetime the search left out
+   is never lit and never opened. A press on a spacetime in the graph opens it, and the graph
+   stays where it is under the spacetime's panel, which covers it, standing still. With --phone the page is laid out as an iPhone held upright, the graph is not
    drawn and its relations are never fetched. Every console error and page error is an error.
    It exits non-zero on any of them. _tools/chrome.mjs starts Chrome. */
 import { launch, sleep } from './chrome.mjs';
@@ -53,6 +57,96 @@ async function clear() {
   await send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Backspace', code: 'Backspace', windowsVirtualKeyCode: 8 });
   await send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Backspace', code: 'Backspace', windowsVirtualKeyCode: 8 });
 }
+async function point(x, y) {
+  await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y, button: 'none' });
+}
+async function key(name, code, keyCode) {
+  await send('Input.dispatchKeyEvent', { type: 'keyDown', key: name, code, windowsVirtualKeyCode: keyCode });
+  await send('Input.dispatchKeyEvent', { type: 'keyUp', key: name, code, windowsVirtualKeyCode: keyCode });
+}
+// Somewhere on the page that is neither the list nor the graph: the grid above the panels.
+const away = () => point(700, 8);
+// Where a name in the list is, whether all of it is in sight in the list, and how it is drawn.
+const nameIn = id => evaluate(`(function () {
+  var b = document.querySelector('#mfs-search-results .mfs-result[data-id="${id}"]'), list = document.getElementById('mfs-search-results');
+  if (!b) return null;
+  var r = b.getBoundingClientRect(), l = list.getBoundingClientRect(), cs = getComputedStyle(b);
+  return { x: r.left + r.width / 2, y: r.top + r.height / 2, inSight: r.top >= l.top - 0.5 && r.bottom <= l.bottom + 0.5,
+           background: cs.backgroundColor, color: cs.color };
+})()`);
+const litNames = () => evaluate("[].map.call(document.querySelectorAll('#mfs-search-results .mfs-result-lit'), function (r) { return r.dataset.id; })");
+// The spacetimes whose points are drawn in the page's pink, read from the canvas at the middle
+// of each point in front.
+const pinkPoints = () => evaluate(`(function () {
+  var c = document.getElementById('mfs-graph'), box = c.getBoundingClientRect(), k = c.width / box.width, pen = c.getContext('2d');
+  var hex = getComputedStyle(document.documentElement).getPropertyValue('--pink-dark').trim();
+  var pink = [1, 3, 5].map(function (i) { return parseInt(hex.slice(i, i + 2), 16); });
+  return window._mfsGraph.shows().front.filter(function (s) {
+    var d = pen.getImageData(Math.floor((s.x - box.left) * k), Math.floor((s.y - box.top) * k), 1, 1).data;
+    return Math.abs(d[0] - pink[0]) + Math.abs(d[1] - pink[1]) + Math.abs(d[2] - pink[2]) <= 9 && d[3] === 255;
+  }).map(function (s) { return s.id; });
+})()`);
+// The graph has drawn what was last asked of it.
+const drawn = "!window._mfsGraph.shows().drawing";
+
+/* The pointer and then the keyboard on a name in the list light its spacetime in the graph, that
+   one alone, with its name written, and nothing is lit once they leave; the pointer on a
+   spacetime in the graph lights its name in the list as the pointer over a name does and brings
+   it into sight, and nothing is lit once it leaves. `ids` are the spacetimes the list shows. */
+async function asOneThing(ids, what) {
+  await away();
+  await evaluate("document.getElementById('mfs-search-results').scrollTop = 0");
+  await until(`window._mfsGraph.shows().lit === null && ${drawn}`, `${what}: nothing is lit at first`);
+  check((await pinkPoints()).length === 0 && (await litNames()).length === 0, `${what}: no point and no name is lit at first`);
+
+  const first = ids[0], at = await nameIn(first);
+  await point(at.x, at.y);
+  await until(`window._mfsGraph.shows().lit === ${JSON.stringify(first)} && ${drawn}`, `${what}: the pointer on ${first} in the list lights it in the graph`);
+  let state = await shows();
+  check(state.litNamed, `${what}: ${first} lit from the list has its name written`);
+  check(JSON.stringify(await pinkPoints()) === JSON.stringify([first]), `${what}: ${first} alone is drawn lit (${await pinkPoints()})`);
+  const hovered = await nameIn(first);
+  await away();
+  await until(`window._mfsGraph.shows().lit === null && ${drawn}`, `${what}: leaving ${first} in the list lets it go in the graph`);
+  check((await pinkPoints()).length === 0, `${what}: no point is lit once the pointer leaves the list`);
+
+  // The keyboard: Tab from the search field reaches the names in their order.
+  await evaluate("document.getElementById('mfs-search-input').focus()");
+  for (let k = 0; k < Math.min(2, ids.length); k++) {
+    await key('Tab', 'Tab', 9);
+    const focused = await evaluate("document.activeElement.dataset ? document.activeElement.dataset.id || null : null");
+    check(focused === ids[k], `${what}: Tab ${k + 1} reaches ${ids[k]} in the list (${focused})`);
+    await until(`window._mfsGraph.shows().lit === ${JSON.stringify(ids[k])} && ${drawn}`, `${what}: the keyboard on ${ids[k]} lights it in the graph`);
+    check(JSON.stringify(await pinkPoints()) === JSON.stringify([ids[k]]), `${what}: the keyboard lights ${ids[k]} alone`);
+  }
+  await evaluate('document.activeElement.blur()');
+  await until(`window._mfsGraph.shows().lit === null && ${drawn}`, `${what}: the keyboard leaving the list lets go in the graph`);
+
+  // The graph: a named spacetime in front whose name in the list is out of sight where it can be.
+  await evaluate("document.getElementById('mfs-search-results').scrollTop = 0");
+  state = await shows();
+  const named = state.front.filter(s => s.named && ids.includes(s.id));
+  let target = null;
+  for (const s of named) if (!(await nameIn(s.id)).inSight) { target = s; break; }
+  target = target || named[named.length - 1];
+  await point(target.x, target.y);
+  await until(`window._mfsGraph.shows().lit === ${JSON.stringify(target.id)} && ${drawn}`, `${what}: the pointer on ${target.id} in the graph lights it`);
+  await until(`(function () { var b = document.querySelector('#mfs-search-results .mfs-result[data-id="${target.id}"]'), l = document.getElementById('mfs-search-results');
+    var r = b.getBoundingClientRect(), m = l.getBoundingClientRect(); return r.top >= m.top - 0.5 && r.bottom <= m.bottom + 0.5; })()`,
+    `${what}: the list scrolls ${target.id} into sight`);
+  check(JSON.stringify(await litNames()) === JSON.stringify([target.id]), `${what}: ${target.id} alone is lit in the list (${await litNames()})`);
+  await until(`getComputedStyle(document.querySelector('#mfs-search-results .mfs-result[data-id="${target.id}"]')).backgroundColor === ${JSON.stringify(hovered.background)}`,
+    `${what}: ${target.id} is lit in the list as the pointer lights a name`, 2);
+  const lit = await nameIn(target.id);
+  check(lit.background === hovered.background && lit.color === hovered.color,
+        `${what}: lit from the graph, ${target.id} is drawn as a name under the pointer (${lit.background} ${lit.color})`);
+  check(JSON.stringify(await pinkPoints()) === JSON.stringify([target.id]), `${what}: ${target.id} alone is drawn lit in the graph`);
+  await away();
+  await until(`window._mfsGraph.shows().lit === null && ${drawn}`, `${what}: leaving ${target.id} in the graph lets it go`);
+  check((await litNames()).length === 0, `${what}: no name is lit in the list once the pointer leaves the graph`);
+  return target;
+}
+
 async function press(x, y) {
   for (const type of ['mouseMoved', 'mousePressed', 'mouseReleased']) {
     await send('Input.dispatchMouseEvent', { type, x, y, button: type === 'mouseMoved' ? 'none' : 'left', clickCount: 1 });
@@ -86,21 +180,39 @@ if (phone) {
   })()`);
   check(hits.length === 0, 'no tap on a phone lands on the graph');
 } else {
-  await until('window._mfsGraph.shows().on && window._mfsGraph.shows().settled', 'the graph is drawn');
+  await until(`window._mfsGraph.shows().on && window._mfsGraph.shows().settled && ${drawn}`, 'the graph is drawn');
   let state = await shows();
   check(state.whole && state.front.length === all.length, `the whole graph holds all ${all.length} spacetimes`);
   const named = state.front.filter(s => s.named).length;
   check(named > 0 && named <= 40, `forty names at most are written (${named})`);
 
   const room = await evaluate(`(function () {
-    var g = document.getElementById('mfs-graph').getBoundingClientRect();
+    var g = document.getElementById('mfs-graph-room').getBoundingClientRect();
     var panels = ['mfs-search-panel', 'mfs-coffee-panel'].map(function (id) { return document.getElementById(id).getBoundingClientRect(); });
     return { left: g.left, right: g.right, top: g.top, bottom: g.bottom, panelRight: Math.max(panels[0].right, panels[1].right) };
   })()`);
-  check(room.left >= room.panelRight, 'the graph lies to the right of the list');
+  check(room.left >= room.panelRight, 'the graph is gathered to the right of the list');
+
+  // The canvas reaches every edge of the window at every desktop size, so nothing of the graph
+  // is cut off short of it, and it is drawn at the screen's own pixels.
+  // Each size is a resize, since headless Chrome changes the pixel ratio without telling the page.
+  for (const [width, height] of [[1280, 720], [1920, 1080], [1024, 768], [1440, 900]]) {
+    await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 2, mobile: false });
+    await until(`window.innerWidth === ${width} && window.innerHeight === ${height}`, `the window is ${width} by ${height}`);
+    await until(`window._mfsGraph.shows().settled && ${drawn}`, `the graph is drawn at ${width} by ${height}`);
+    const c = (await shows()).canvas, view = await evaluate('[window.innerWidth, window.innerHeight]');
+    check(c.left === 0 && c.top === 0 && c.right === view[0] && c.bottom === view[1],
+          `at ${width} by ${height} the graph's canvas spans the whole window (${c.left},${c.top} to ${c.right},${c.bottom})`);
+    await until(`window._mfsGraph.shows().canvas.width === ${width * 2} && window._mfsGraph.shows().canvas.height === ${height * 2}`,
+                `at ${width} by ${height} the graph is drawn at the screen's pixels`, 5);
+  }
+  await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false });
+  await until('window.innerWidth === 1440 && window.innerHeight === 900', 'the window is 1440 by 900 again');
+  await until(`window._mfsGraph.shows().settled && ${drawn}`, 'the graph is drawn again at 1440 by 900');
+  state = await shows();
   const covered = await evaluate(`(function () {
     var found = [];
-    ['mfs-search-panel', 'mfs-coffee-panel', 'mfs-title', 'mfs-exit'].forEach(function (id) {
+    ['mfs-search-panel', 'mfs-coffee-panel', 'mfs-exit'].forEach(function (id) {
       var r = document.getElementById(id).getBoundingClientRect();
       for (var y = r.top + 3; y < r.bottom - 3; y += 15) for (var x = r.left + 3; x < r.right - 3; x += 15) {
         var e = document.elementFromPoint(x, y);
@@ -110,8 +222,13 @@ if (phone) {
     return found;
   })()`);
   check(covered.length === 0, 'the graph covers no panel');
+  // The title takes no press, so a press on it reaches the graph, which is drawn under it.
+  check(await evaluate("+getComputedStyle(document.getElementById('mfs-title')).zIndex > +getComputedStyle(document.getElementById('mfs-graph')).zIndex"),
+        'the title is drawn over the graph');
   check(state.front.every(s => s.x >= room.left && s.x <= room.right && s.y >= room.top && s.y <= room.bottom),
-        'every spacetime is drawn in the graph\'s room');
+        'every spacetime is gathered in the graph\'s room');
+
+  await asOneThing(all, 'the whole graph');
 
   for (const keyword of keywords) {
     await type(keyword);
@@ -124,20 +241,60 @@ if (phone) {
     check(JSON.stringify(front) === JSON.stringify(list), `"${keyword}": the graph gathers what the list shows (${front.length})`);
     check(JSON.stringify(front) === JSON.stringify(carriers), `"${keyword}": those are the spacetimes carrying it`);
     check(state.front.filter(s => s.named).length <= 40, `"${keyword}": forty names at most`);
+    if (keyword === keywords[0]) {
+      await asOneThing(list, `"${keyword}"`);
+      // A spacetime the search left out is never lit, from the list or the graph, nor opened.
+      const out = all.find(id => !list.includes(id));
+      await evaluate(`window._mfsGraph.light(${JSON.stringify(out)})`);
+      await sleep(100);
+      check((await shows()).lit === null && (await pinkPoints()).length === 0, `"${keyword}": ${out}, left out, is never lit`);
+      await evaluate('window._mfsGraph.light(null)');
+      const back = await evaluate(`window._mfsGraph.shows().back`);
+      // One the pointer reaches on the graph, standing clear of every point in front and every name written.
+      const open = await evaluate(`window._mfsGraph.shows().back.map(function (b) { var e = document.elementFromPoint(b.x, b.y); return !!e && e.id === 'mfs-graph'; })`);
+      const lone = back.find((b, k) => open[k] && state.front.every(f => Math.hypot(f.x - b.x, f.y - b.y) > 30 &&
+        !(f.name && b.x > f.name[0] - 15 && b.x < f.name[0] + f.name[2] + 15 && b.y > f.name[1] - 15 && b.y < f.name[1] + f.name[3] + 15)));
+      if (lone) {
+        await point(lone.x, lone.y);
+        await sleep(150);
+        check((await shows()).lit === null && (await litNames()).length === 0, `"${keyword}": the pointer on ${lone.id}, left out, lights nothing`);
+        await press(lone.x, lone.y);
+        await sleep(300);
+        check(!new URLSearchParams(await evaluate('location.search')).get('spacetime'), `"${keyword}": a press on ${lone.id}, left out, opens nothing`);
+        await away();
+      } else check(false, `"${keyword}": a spacetime left out stands clear of those in front`);
+    }
     await clear();
     await until('window._mfsGraph.shows().settled && window._mfsGraph.shows().whole', `clearing "${keyword}" brings back the whole graph`);
     state = await shows();
     check(state.front.length === all.length, `cleared "${keyword}": every spacetime is back in front`);
   }
 
-  // A press on a named spacetime opens it, and the graph steps aside until the list is back.
+  // A press on a named spacetime opens it as its name in the list does, and the graph stays
+  // where it is under the spacetime's panel, covered by it and standing still.
   const target = state.front.find(s => s.named);
   await press(target.x, target.y);
   await until(`new URLSearchParams(location.search).get('spacetime') === ${JSON.stringify(target.id)}`, `a press opens ${target.id}`);
-  await until('!window._mfsGraph.shows().on', 'the graph steps aside while a spacetime is open');
   await until("document.getElementById('mfs-content-panel').style.pointerEvents === 'all'", 'the spacetime slides in', 30);
+  check(await evaluate(`document.querySelector('#mfs-search-results .mfs-result-active').dataset.id === ${JSON.stringify(target.id)}`),
+        `${target.id} is marked open in the list, as pressing its name marks it`);
+  await sleep(500);
+  state = await shows();
+  check(state.on && state.settled && !state.drawing, 'the graph stays drawn and still under the open spacetime');
+  check(JSON.stringify(state.front.map(s => [s.id, s.x, s.y])) === JSON.stringify((await shows()).front.map(s => [s.id, s.x, s.y])),
+        'the graph stands where it was under the open spacetime');
+  const under = await evaluate(`(function () {
+    var g = document.getElementById('mfs-graph-room').getBoundingClientRect(), found = [];
+    for (var y = g.top + 3; y < g.bottom - 3; y += 25) for (var x = g.left + 3; x < g.right - 3; x += 25) {
+      var e = document.elementFromPoint(x, y);
+      if (!e || !e.closest('#mfs-content-panel')) found.push([x, y]);
+    }
+    return found;
+  })()`);
+  check(under.length === 0, `the spacetime's panel covers the graph's room (${under.length} points not covered)`);
   await evaluate("document.getElementById('mfs-toc-back').click()");
-  await until('window._mfsGraph.shows().on', 'the graph comes back with the list');
+  await until("document.getElementById('mfs-content-panel').style.pointerEvents !== 'all' && !document.getElementById('mfs-list-pane').inert", 'the list comes back');
+  check((await shows()).on, 'the graph is there with the list');
 }
 
 const pageErrors = await evaluate('window.__mfsErrors');

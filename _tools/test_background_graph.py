@@ -251,14 +251,107 @@ class Layout(unittest.TestCase):
         self.assertGreater(moved[3], 0.9)
 
 
+class OneThing(unittest.TestCase):
+    """The list and the graph read as one thing, written and drawn, as the captain asked on
+    3 October 2026: "The two interfaces need to feel like they're doing the same thing, one
+    textually the other visually." A name in the list under the pointer or the keyboard lights
+    its spacetime in the graph, a spacetime in the graph under the pointer lights its name in the
+    list as the pointer over the name does and scrolls the list to it, a press on either opens it,
+    and only a spacetime the list shows is ever lit. `node _tools/background_graph.mjs` holds the
+    page as drawn to the same."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.source = PAGE.read_text(encoding="utf-8")
+        cls.index = read(build.INDEX_FILE)
+
+    def lit_by(self, cases):
+        """The spacetime the graph draws lit, by the page's own inList and lit, for each case of
+        the list's answer, the graph's pointer and the name the list lights."""
+        script = page_function(self.source, "inList") + page_function(self.source, "lit") + """
+        const [index, cases] = input;
+        let graph = G.model(index, { edges: [] }), listed, hovered, named;
+        const out = cases.map(([found, pointed, fromList]) => {
+          listed = null;
+          if (found) { listed = {}; found.forEach(id => { listed[id] = true; }); }
+          hovered = pointed === null ? -1 : G.placesOf(graph, [pointed])[0];
+          named = fromList;
+          const i = lit();
+          return i < 0 ? null : graph.spacetimes[i].id;
+        });
+        process.stdout.write(JSON.stringify(out));
+        """
+        return node(script, [self.index, cases])
+
+    def test_a_name_in_the_list_lights_its_spacetime_and_only_it(self):
+        ids = [m["id"] for m in self.index]
+        cases = [[None, None, i] for i in ids] + [[None, None, None]]
+        self.assertEqual(self.lit_by(cases), ids + [None])
+
+    def test_the_graph_s_own_pointer_goes_before_the_list(self):
+        a, b = self.index[0]["id"], self.index[1]["id"]
+        self.assertEqual(self.lit_by([[None, a, b], [None, None, b], [None, a, None]]), [a, b, a])
+
+    def test_only_a_spacetime_the_search_shows_is_lit(self):
+        found = [m["id"] for m in self.index if any(word_matches(t, "wormhole") for t in m["tags"])]
+        out = next(m["id"] for m in self.index if m["id"] not in found)
+        lit = self.lit_by([[found, None, found[0]], [found, None, out], [found, out, None], [found, out, found[1]]])
+        self.assertEqual(lit, [found[0], None, None, found[1]])
+
+    def test_a_press_or_the_pointer_never_lands_on_a_spacetime_sent_behind(self):
+        script = """
+        const items = [{ x: 50, y: 50, r: 5, w: 40, h: 16, behind: true }, { x: 200, y: 50, r: 5, w: 40, h: 16, behind: false }];
+        const sides = [0, 0];
+        process.stdout.write(JSON.stringify([G.hit(items, sides, 50, 50), G.hit(items, sides, 75, 50), G.hit(items, sides, 54, 50),
+                                             G.hit(items, sides, 200, 50), G.hit(items, sides, 225, 50)]));
+        """
+        self.assertEqual(node(script, []), [-1, -1, -1, 1, 1])
+
+    def test_the_names_in_the_list_are_buttons_the_keyboard_reaches(self):
+        render = page_function(self.source, "renderResults")
+        self.assertIn("'<button type=\"button\" class=\"mfs-result'", render)
+        self.assertIn("'</button>'", render)
+        self.assertNotIn("<div class=\"mfs-result", self.source)
+        self.assertIn(".mfs-result:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }", self.source)
+
+    def test_the_pointer_and_the_keyboard_on_the_list_light_the_graph(self):
+        for event in ("pointerover", "pointerleave", "focusin", "focusout"):
+            with self.subTest(event):
+                at = self.source.index(f"results.addEventListener('{event}'")
+                self.assertIn("lightGraph();", self.source[at:at + 300])
+        self.assertIn("window._mfsGraph.light(_pointed || _focused);", self.source)
+        light = self.source[self.source.index("        light: function(id) {"):][:200]
+        self.assertIn("named = id;", light)
+        self.assertIn("draw();", light)
+
+    def test_the_graph_lights_the_list_as_the_list_s_own_hover_does_and_scrolls_to_it(self):
+        self.assertIn("window._mfsListLight(i >= 0 ? graph.spacetimes[i].id : null);", page_function(self.source, "hover"))
+        rule = re.search(r"\n    \.mfs-result:hover, \.mfs-result\.mfs-result-lit \{(.*?)\}", self.source, re.S)
+        self.assertIsNotNone(rule, "the list's hover and the graph's light are one rule")
+        self.assertEqual(len(re.findall(r"\.mfs-result:hover", self.source)), 1)
+        # Before the open spacetime's pink, so the open name stays pink while it is lit.
+        self.assertLess(rule.start(), self.source.index(".mfs-result.mfs-result-active, .mfs-result:active {"))
+        listing = self.source[self.source.index("window._mfsListLight = function(id) {"):][:900]
+        self.assertIn("r.classList.toggle('mfs-result-lit', on);", listing)
+        self.assertIn("results.scrollBy({ top: by, behavior: reducedMotion() ? 'auto' : 'smooth' });", listing)
+
+    def test_a_press_on_a_spacetime_in_the_graph_opens_it_as_its_name_in_the_list_does(self):
+        self.assertIn("if (i >= 0 && window._mfsOpen) window._mfsOpen(graph.spacetimes[i].id);", page_function(self.source, "letGo"))
+        self.assertIn("var i = pointedAt(p);", page_function(self.source, "letGo"))
+        self.assertIn("return inList(i) ? i : -1;", page_function(self.source, "pointedAt"))
+        self.assertIn("el.addEventListener('click', function() { window._mfsOpen(this.dataset.id); });",
+                      page_function(self.source, "renderResults"))
+
+
 class OnThePage(unittest.TestCase):
-    """The graph lies behind every panel and is not drawn on a phone."""
+    """The graph lies behind every panel, across the whole window, stays where it is under an
+    open spacetime, and is not drawn on a phone."""
 
     @classmethod
     def setUpClass(cls):
         cls.source = PAGE.read_text(encoding="utf-8")
 
-    def test_the_graph_lies_under_every_panel(self):
+    def test_the_graph_lies_under_every_panel_across_the_whole_window(self):
         canvas = self.source.index('<canvas id="mfs-graph"')
         self.assertLess(self.source.index('<canvas id="wavy-grid"'), canvas)
         self.assertLess(canvas, self.source.index('<div id="mfs-search-panel"'))
@@ -266,15 +359,34 @@ class OnThePage(unittest.TestCase):
         self.assertIn("z-index: 1;", rule)
         for panel in ("mfs-search-panel", "mfs-coffee-panel", "mfs-content-panel"):
             self.assertRegex(self.source, r'<div id="' + panel + r'" style="position:fixed;z-index:15;')
-        # It takes the place the spacetime's panel rests in, to the right of the list.
-        self.assertIn("top: var(--mfs-top); right: 0;", rule)
-        self.assertIn("width: calc(100vw - var(--mfs-left-w) - 20px); height: calc(var(--mfs-bottom) - var(--mfs-top));", rule)
+        # It is drawn to every edge of the window, as the captain asked on 3 October 2026, so
+        # nothing of it is cut off short of the window's edge.
+        self.assertIn("position: fixed; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%;", rule)
+        # It is gathered in the place the spacetime's panel rests in, to the right of the list.
+        room = re.search(r"#mfs-graph-room \{(.*?)\}", self.source, re.S).group(1)
+        self.assertIn("top: var(--mfs-top); right: 0;", room)
+        self.assertIn("width: calc(100vw - var(--mfs-left-w) - 20px); height: calc(var(--mfs-bottom) - var(--mfs-top));", room)
+        self.assertIn("visibility: hidden; pointer-events: none;", room)
+
+    def test_names_run_on_to_the_window_s_edge(self):
+        self.assertIn("sides = G.labels(items, W, H, [-at[0], -at[1], CW - at[0], CH - at[1]]);", page_function(self.source, "render"))
+        script = """
+        const item = { x: 395, y: 100, r: 4, w: 60, h: 16, weight: 1, near: 1, rank: 2, must: false, side: -1 };
+        process.stdout.write(JSON.stringify([G.labels([item], 400, 300), G.labels([item], 400, 300, [-500, -150, 600, 300])]));
+        """
+        inside, beyond = node(script, [])
+        self.assertEqual(inside, [1])
+        self.assertEqual(beyond, [0])
 
     def test_a_phone_draws_no_graph(self):
         phone = self.source[self.source.index("@media screen and (max-width: 37.5em)"):]
-        self.assertIn("#mfs-graph { display: none !important; }", phone[:phone.index("</style>")])
+        self.assertIn("#mfs-graph, #mfs-graph-room { display: none !important; }", phone[:phone.index("</style>")])
 
-    def test_the_graph_steps_aside_while_a_spacetime_is_open(self):
+    def test_the_graph_stays_under_an_open_spacetime(self):
+        # The captain on 3 October 2026: "The graph should not disappear when a spacetime is
+        # pressed, it should just get covered by the panel."
+        self.assertNotIn("opened", page_function(self.source, "shown"))
+        self.assertIn("open: function(on) { opened = on; if (on) hover(-1); },", self.source)
         for hook, on in (("window._mfsShowMetric = function", "true"), ("window._mfsPageBack = function", "true"),
                          ("window._mfsPageAway = function", "false")):
             with self.subTest(hook):

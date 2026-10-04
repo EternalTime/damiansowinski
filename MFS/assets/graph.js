@@ -1,8 +1,8 @@
 /* The graph of the relations between the spacetimes, drawn behind the page.
 
    _layouts/mfs.html draws every spacetime as a point, every two spacetimes that list each other
-   under "Related Spacetimes" as a line between their points, in the room to the right of the list
-   while no spacetime is open, and gathers the spacetimes a search finds into a view of their own,
+   under "Related Spacetimes" as a line between their points, gathered in the room to the right of
+   the list where the spacetime's panel rests and drawn across the whole window, and gathers the spacetimes a search finds into a view of their own,
    the rest standing back behind them. This file is its geometry and touches no page: where each
    point stands, how large it is, which names have the room to be written, what a press lands on
    and how a gathering moves. The page runs it, a worker runs it so that a layout is worked out
@@ -141,8 +141,8 @@
     return a[0] < b[0] + b[2] + CLEAR && b[0] < a[0] + a[2] + CLEAR &&
            a[1] < b[1] + b[3] + CLEAR && b[1] < a[1] + a[3] + CLEAR;
   }
-  function within(b, W, H) {
-    return b[0] >= 0 && b[1] >= 0 && b[0] + b[2] <= W && b[1] + b[3] <= H;
+  function within(b, edge) {
+    return b[0] >= edge[0] && b[1] >= edge[1] && b[0] + b[2] <= edge[2] && b[1] + b[3] <= edge[3];
   }
 
   // A long name is set on two lines, broken at the hyphen or space nearest its middle.
@@ -167,17 +167,19 @@
   }
 
   // The side each name is written on, or -1 for a name with no room. A name is written whole
-  // inside the room, clear of every point and of every name given room before it, and keeps the
+  // inside the room W by H, or inside `edge`, [left, top, right, bottom] in the room's own
+  // pixels, where the drawing reaches past the room, clear of every point and of every name given room before it, and keeps the
   // side it had (item.side) while that side is still free; no more than MOST are written. The
   // name that `must` be written, the one under the pointer, gives up the room's edge and the
   // points before it gives up being written, and still never lies on another name. A point
   // standing `behind`, sent back while a search gathers others, has no name unless it must and
   // stands in the way of none.
-  function labels(items, W, H) {
+  function labels(items, W, H, edge) {
     var dots = items.map(dot), placed = [], sides = items.map(function() { return -1; }), written = 0;
+    edge = edge || [0, 0, W, H];
     inOrder(items).forEach(function(i) {
       var item = items[i];
-      if (item.x < 0 || item.y < 0 || item.x > W || item.y > H) return;
+      if (item.x < edge[0] || item.y < edge[1] || item.x > edge[2] || item.y > edge[3]) return;
       if (item.behind && !item.must) return;
       if (written >= MOST && !item.must) return;
       var tries = item.side >= 0 ? [item.side] : [];
@@ -186,7 +188,7 @@
         for (var t = 0; t < tries.length; t++) {
           var b = box(item, tries[t]), ok = true, k;
           if (strict) {
-            ok = within(b, W, H);
+            ok = within(b, edge);
             for (k = 0; ok && k < dots.length; k++) if (k !== i && !items[k].behind && meet(b, dots[k])) ok = false;
           }
           for (k = 0; ok && k < placed.length; k++) if (meet(b, placed[k])) ok = false;
@@ -203,20 +205,19 @@
 
   // The point a press at (px, py) lands on: the point it is on, and where it is on two the one
   // whose middle is nearer, failing that the name it lies in, and failing that the nearest point
-  // within reach. -1 where it lands on none. A point in front is pressed before one standing
-  // behind it.
+  // within reach. -1 where it lands on none. Only a spacetime the list shows can be pointed at or
+  // pressed, so a point a search sent behind is passed over, as if it were not there.
   function hit(items, sides, px, py) {
     var nearest = -1, least = Infinity, on = -1, onLeast = Infinity;
     items.forEach(function(item, i) {
+      if (item.behind) return;
       var d = Math.sqrt((item.x - px) * (item.x - px) + (item.y - py) * (item.y - py));
-      if (d < least && !item.behind) { nearest = i; least = d; }
-      if (d >= item.r + CLEAR) return;
-      var deeper = on >= 0 && !!items[on].behind && !item.behind, shallower = on >= 0 && !items[on].behind && !!item.behind;
-      if (deeper || (!shallower && d < onLeast)) { on = i; onLeast = d; }
+      if (d < least) { nearest = i; least = d; }
+      if (d < item.r + CLEAR && d < onLeast) { on = i; onLeast = d; }
     });
     if (on >= 0) return on;
     for (var i = 0; i < items.length; i++) {
-      if (sides[i] < 0) continue;
+      if (sides[i] < 0 || items[i].behind) continue;
       var b = box(items[i], sides[i]);
       if (px >= b[0] && px <= b[0] + b[2] && py >= b[1] && py <= b[1] + b[3]) return i;
     }
