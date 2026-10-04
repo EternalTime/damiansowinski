@@ -88,6 +88,9 @@ RIBS = 8                    # of them drawn from the apex to the rim
 NULL = 1e-12                # how far a drawn generator may miss null, against |g| |k|^2
 INVERSE = 1e-12             # how far g^-1 g may miss the identity on the slice
 SOLID = 6                   # decimals of the (X, Y, T) a figure that turns publishes
+# The page draws a figure as it draws a conformal diagram, its box CD_W of its units wide with
+# every label at CD_LAB of them, conformal.py's CD_W and CD_LABEL_SIZE.
+CD_W, CD_LAB = 560, 21
 
 
 class Camera:
@@ -392,6 +395,8 @@ class Figure:
         self._label(P, text, anchor, cls, dx, dy, {"circle": solid([rho, t]), "angle": angle})
 
     def _label(self, P, text, anchor, cls, dx, dy, place):
+        if anchor not in slices.ANCHOR_SHIFT:
+            raise AssertionError(f"figure {self.id}: the label {text} has the anchor {anchor}, which the page does not place")
         self.labels.append({"at": rounded(self.camera.screen(P)), "text": text, "anchor": anchor,
                             "class": cls, "dx": dx, "dy": dy})
         if self.turn is not None:
@@ -412,6 +417,12 @@ class Figure:
             if cls not in drawn:
                 raise AssertionError(f"figure {self.id}: the legend names {cls}, which is not drawn")
         box = [round(float(v), 4) for v in (lo[0] - m, hi[0] + m, lo[1] - m, hi[1] + m)]
+        # No label overlaps another at the size the page sets them at, by the conformal
+        # diagrams' rule, at the figure's own camera.
+        s = CD_W / (box[1] - box[0])
+        slices.clear_labels(self.labels, lambda L, anchor, dx, dy: slices.label_box(
+            (L["at"][0] - box[0]) * s + dx, (box[3] - L["at"][1]) * s + dy, L["text"], anchor, CD_LAB),
+            f"figure {self.id}")
         for mark in self.slices:
             for P in mark["lines"] + [ring for rings in mark["fills"] for ring in rings]:
                 P = np.asarray(P)
@@ -2118,7 +2129,11 @@ def wormhole_trip(spec, loop=60.0, camera=Camera(-72, 20)):
         fig.cone(apex_, rim_)
     for m in marks[::2]:
         fig.label(draw(event(trip.left, m)), f"${m:g}$", "r", "small", dx=-6)
-    fig.label(draw(event(trip.left, marks[0])) + np.array([0, 0, -2.5]), "$c\\tau/r_0$", "r", "small", dx=-6)
+    # The name of the proper times stands under the first of them, its top a third of a
+    # number's height below that number's box, the room a spacetime diagram keeps between its
+    # numbers, on the page from every side the figure is turned to.
+    under = slices.label_size("$0$")[1] * CD_LAB / 2 + CD_LAB / 3
+    fig.label(draw(event(trip.left, marks[0])), "$c\\tau/r_0$", "tr", "small", dx=-6, dy=round(under, 2))
     fig.label((draw(L_c) + draw(R_c)) / 2, "$\\mathcal{C}$", "tl", dx=4, dy=6)
     fig.label(np.array([0.0, 0.0, top]), "$T$", "b", dy=-4)
     fig.label(np.array([far + 4.0, 0.0, 0.0]), "$Z$", "l", dx=4)

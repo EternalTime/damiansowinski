@@ -180,14 +180,12 @@ def rounded(points):
     return np.round(np.asarray(points, dtype=float), 4).tolist()
 
 
-# The page's drawing, as _layouts/mfs.html draws it: CD_W wide in a margin CD_M, a label's
+# The page's drawing, as _layouts/mfs.html draws it: CD_W wide in a margin CD_M, and a label's
 # size in units of that 628, the most the page sets it at, since the page sets every label at
-# the caption's size and never draws the drawing so narrow that that is more, and where its
-# anchor pins it, as a fraction of its box.
+# the caption's size and never draws the drawing so narrow that that is more; slices.py's
+# ANCHOR_SHIFT says where its anchor pins it.
 CD_W, CD_M = 560, 34
 CD_LABEL_SIZE = {"lab": 21, "small": 21, "region": 21, "coord": 21}
-CD_ANCHOR_SHIFT = {"c": (-0.5, -0.5), "l": (0, -0.5), "r": (-1, -0.5), "t": (-0.5, 0), "b": (-0.5, -1),
-                   "tl": (0, 0), "tr": (-1, 0), "bl": (0, -1), "br": (-1, -1)}
 
 
 # The order a legend lists its classes in, the same in every view: what is tinted, the
@@ -278,7 +276,7 @@ class View:
                     continue
                 P = mark["place"]
                 box = self.label_box(P["at"], mark["label"], P["anchor"], P["dx"], P["dy"])
-                if any(overlap(box, other) for other in placed):
+                if any(slices.overlap(box, other) for other in placed):
                     del mark["place"]
                 else:
                     placed.append(box)
@@ -290,38 +288,13 @@ class View:
         label_size() gives it, which is never smaller than MathJax sets it."""
         X0, X1, T0, T1 = self.d["box"]
         s = CD_W / (X1 - X0)
-        w, h = (v * CD_LABEL_SIZE["lab"] for v in slices.label_size(text))
-        ax, ay = CD_ANCHOR_SHIFT[anchor]
-        x, y = (at[0] - X0) * s + dx, (T1 - at[1]) * s + dy
-        return x + ax * w, y + ay * h, x + (ax + 1) * w, y + (ay + 1) * h
+        return slices.label_box((at[0] - X0) * s + dx, (T1 - at[1]) * s + dy, text, anchor, CD_LABEL_SIZE["lab"])
 
     def clear_labels(self):
-        """No label overlaps another at the size the page sets them at. A label that would
-        overlap one before it stands on the other side of its point, above for below or left
-        for right, its offset turned with it; one that overlaps from every side, or a label
-        centred on its point, which has no other side, stops the script, naming both."""
-        placed = []
-        for L in self.labels:
-            anchor = L["anchor"]
-            flips = [(anchor, 1, 1)]
-            if anchor != "c":
-                vertical = {"t": "b", "b": "t"}
-                horizontal = {"l": "r", "r": "l"}
-                v_flip = "".join(vertical.get(c, c) for c in anchor)
-                h_flip = "".join(horizontal.get(c, c) for c in anchor)
-                both = "".join(horizontal.get(c, vertical.get(c, c)) for c in anchor)
-                flips += [(a, sx, sy) for a, sx, sy in ((v_flip, 1, -1), (h_flip, -1, 1), (both, -1, -1)) if a != anchor]
-            for a, sx, sy in flips:
-                box = self.label_box(L["at"], L["text"], a, sx * L["dx"], sy * L["dy"])
-                clash = [text for other, text in placed if overlap(box, other)]
-                if not clash:
-                    break
-            else:
-                box = self.label_box(L["at"], L["text"], anchor, L["dx"], L["dy"])
-                clash = [text for other, text in placed if overlap(box, other)]
-                raise AssertionError(f"view {self.d['id']}: the label {L['text']} overlaps {clash[0]}")
-            L["anchor"], L["dx"], L["dy"] = a, sx * L["dx"], sy * L["dy"]
-            placed.append((box, L["text"]))
+        """No label overlaps another at the size the page sets them at, by slices.py's
+        clear_labels(), the rule the figures in three dimensions keep too."""
+        slices.clear_labels(self.labels, lambda L, anchor, dx, dy: self.label_box(L["at"], L["text"], anchor, dx, dy),
+                            f"view {self.d['id']}")
 
     def place_slice_labels(self):
         """Each slice's label, placed by slices.place on the drawing as the page draws it,
@@ -334,11 +307,8 @@ class View:
             return np.array([CD_M + (at[0] - X0) * s, CD_M + (T1 - at[1]) * s])
         others = []
         for L in self.labels:
-            size = CD_LABEL_SIZE.get(L["class"], 14)
-            w, h = (v * size for v in slices.label_size(L["text"]))
-            ax, ay = CD_ANCHOR_SHIFT[L["anchor"]]
             x, y = px(L["at"]) + [L["dx"], L["dy"]]
-            others.append((x + ax * w, y + ay * h, x + (ax + 1) * w, y + (ay + 1) * h))
+            others.append(slices.label_box(x, y, L["text"], L["anchor"], CD_LABEL_SIZE.get(L["class"], 14)))
         marks = [slices.Mark(None, mark["lines"], mark["points"], mark["fills"], mark["label"]) for mark in self.slices]
         box = (CD_W + 2 * CD_M, (T1 - T0) * s + 2 * CD_M)
         for mark, where in zip(self.slices, slices.place(marks, px, box, CD_LABEL_SIZE["small"], others)):
@@ -674,11 +644,6 @@ def grid(v, cls, fmap, constants, s, first=True):
     for c in constants:
         cs = np.full_like(s, c)
         v.curve(cls, *(fmap(cs, s) if first else fmap(s, cs)))
-
-
-def overlap(a, b):
-    """Whether two boxes x0, y0, x1, y1 overlap; boxes that touch do not."""
-    return a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]
 
 
 def label_on(v, pq, text, anchor="b", cls="coord", dx=0, dy=-3):

@@ -207,7 +207,11 @@ The names of a spacetime diagram's axes are a little larger, and its tick marks 
 Every drawing but a spacetime diagram is composed with its labels at 21 of its 628 units, `CD_LAB` in `_layouts/mfs.html`, `CD_LABEL_SIZE` in `conformal.py`, `LAB` in `embedding.py` and in `MFS/assets/turn.js`, which `ReadableDrawings` in `_tools/test_build_mfs_data.py` holds to one number, and the page never draws it narrower than keeps a label at that size, `--cd-min` ems of the caption.
 That is about the width a desktop drew them at already; on a phone such a drawing is wider than the screen and scrolls sideways, since labels of 15px on a drawing 326px wide would cover one another and the lines they name.
 Each side of the drawing's frame is 34 units, or wider where a label needs it to stand 1.5 of its ems from the edge, as a spacetime diagram's words stand; `cdFrame` works it out from each label's box as `slices.label_size` gives it.
-That box is never narrower than MathJax sets the label, so it counts an m, an M and a W, which are about an em wide, at 1.2 em where any other letter is 0.7; until 1 October 2026 it did not, and "$4m$" and "$6\,m$" stood 1.35 to 1.47 em from the edge of Majumdar-Papapetrou's and Zipoy-Voorhees's embedding diagrams.
+That box is never narrower than MathJax sets the label, so it counts each letter MathJax sets wider than 0.7 em, the italic capitals, m and w, and a minus or a plus sign, at its own width in MathJax's fonts, `WIDE` in `slices.py`.
+MathJax sets a label's mathematics at 109.9% of its em in Source Code Pro, matching that font's x, and at 113.1% in a view the page sets before it is shown, where it cannot measure the font and takes an x of half an em, so the widths are taken at 113.1%.
+Until 1 October 2026 the box counted every letter at 0.7 em, and "$4m$" and "$6\,m$" stood 1.35 to 1.47 em from the edge of Majumdar-Papapetrou's and Zipoy-Voorhees's embedding diagrams; until 3 October 2026 it counted every letter but m, M and W so, and "$X = X_s$" stood 1.45 em from the edge of Whittaker's sphere.
+`node _tools/label_sizes.mjs` sets every label of every drawing as the page does, in sight and unseen, at the caption's size on a phone and a desktop and at three times each, and fails on any label MathJax sets larger than its box, so run it after changing `label_size` or adding a label with a symbol it has not met.
+`test_the_page_and_the_generators_give_every_label_one_box` holds `cdLabelSize` in `_layouts/mfs.html` to `label_size` on every label on disk.
 `node _tools/page_timing.mjs` counts as an error every word smaller than its caption, not white, over another label or within 1.5 em of its drawing's edge, and every tick mark too short or thin.
 No word is broken inside itself at any size: the name, the headings, the choices, the page's title, the names in the list and the search hint are held to the size at which their widest word fits their line, which `fitWords` and `mfsWidestWord` measure.
 A word of the prose wider than its whole line is hyphenated by `hyphenateWords` with TeX's English patterns, since the browser's own hyphenation never divides a capitalised name such as Schwarzschild.
@@ -727,6 +731,9 @@ A cone is the convex hull of its apex and its rim, every generator one Euclidean
 Beyond $r_c$ the cones are so wide that from most directions the camera looks into their opening, and a cone projects to an oval with its apex inside; eight of its generators are therefore drawn faintly from the apex to the rim, which is what shows where the apex is and which way the cone opens.
 A cone whose axis points along the camera's own direction is the worst case, so the cones on $r_c$ are turned by 45° from those on the other circles and none is placed where its neighbour's rim would cover it.
 
+No two labels of a figure overlap at its own camera, by the conformal diagrams' rule, `slices.clear_labels`, which `projections.py` keeps before it writes and the tests hold every figure on disk to.
+A label stands at a point of the figure and is moved off it only by its offset, which is in the page's units and so holds from every side the figure is turned to: the name of the wormhole time machine's proper times, $c\tau/r_0$, stands under the number $0$ at its point, its top a third of a number's height below that number's box, the room a spacetime diagram keeps between its numbers, where until 3 October 2026 it stood $2.5\,r_0$ lower in $T$, which the camera drew over the $0$.
+
 Every class a figure paints needs a style in `_layouts/mfs.html`, as `.pj-<class>` on the screen and under `.mfs-print-body` in print, and a fill as `.pj-<class>-fill`.
 A path the stylesheet does not know is painted as nothing at all, so a test holds every class of every figure to having both.
 
@@ -933,6 +940,7 @@ Kerr and Kerr-Newman are drawn on the symmetry axis and the cosmic string on the
 
 Every text in a view is TeX in `$...$`: the labels on the drawing, the buttons, the legend, the caption, the restriction and the parameter values.
 No two labels of a view overlap at the 21 units the page sets them at, in the box `slices.label_size` gives each, which the script checks before it writes: a label that would overlap one before it stands on the other side of its point, and one that overlaps from every side, or a region's name centred on its point, stops the script naming both.
+`slices.clear_labels` holds that rule, and a figure in three dimensions is held to it as well, at its own camera.
 A slice's label that finds no side clear of every other label is named in the legend instead, as the C-metric's horizon on the inner axis is.
 A caption opens with a compact noun phrase naming what is drawn, its values in parentheses, in the captain's model: "A spherically symmetric distribution of dust collapsing from rest ($R_0 = 2\,r_s$), each point in the diagram a 2-sphere."
 Its prose is for the reader of "Whom the prose is for" above; the tests hold every text in these files to that rule's words and to the dash rule.

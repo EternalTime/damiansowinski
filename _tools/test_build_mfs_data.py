@@ -1361,27 +1361,54 @@ class ReadableDrawings(unittest.TestCase):
         derivations = build.ROOT / "_tools" / "derivations"
         conformal = (derivations / "conformal.py").read_text(encoding="utf-8")
         embedding = (derivations / "embedding.py").read_text(encoding="utf-8")
+        projections = (derivations / "projections.py").read_text(encoding="utf-8")
         turn = (build.ROOT / "MFS" / "assets" / "turn.js").read_text(encoding="utf-8")
         found = {
             "conformal.py": re.search(r"^CD_LABEL_SIZE = \{([^}]*)\}", conformal, re.M).group(1),
             "embedding.py": re.search(r"^LAB = \{([^}]*)\}", embedding, re.M).group(1),
+            "projections.py": "lab: " + re.search(r"^CD_W, CD_LAB = 560, (\d+)$", projections, re.M).group(1),
             "turn.js": re.search(r"var LAB = \{([^}]*)\}", turn).group(1),
         }
         for name, sizes in found.items():
             with self.subTest(name):
                 self.assertEqual({int(v) for v in re.findall(r":\s*(\d+)", sizes)}, {page})
 
-    def test_a_wide_letter_takes_its_width_in_a_label_s_box(self):
-        # The margin of 1.5 em is kept from the box cdLabelSize() gives a label, and slices.py
-        # places labels by the same box, so both give an m, an M and a W, which MathJax sets
-        # about an em wide, 0.5 em over the 0.7 em of a letter: "$4m$" stood 1.4 em from the
-        # edge of Majumdar-Papapetrou's embedding diagram while they did not.
-        slices = (build.ROOT / "_tools" / "derivations" / "slices.py").read_text(encoding="utf-8")
-        self.assertEqual(re.search(r'^WIDE = "(\w+)"$', slices, re.M).group(1),
-                         re.search(r"var CD_WIDE = /\[(\w+)\]/g;", self.page).group(1))
-        self.assertEqual(re.search(r'^WIDE = "(\w+)"$', slices, re.M).group(1), "mMW")
-        self.assertIn("0.7 * len(math.replace(\" \", \"\")) + 0.5 * sum(math.count(c) for c in WIDE)", slices)
-        self.assertIn("0.7 * math.replace(/ /g, '').length + 0.5 * (math.match(CD_WIDE) || []).length", self.page)
+    def test_the_page_and_the_generators_give_every_label_one_box(self):
+        # The margin of 1.5 em is kept from the box cdLabelSize() gives a label, and slices.py's
+        # label_size() places and spaces labels by the same box, each character MathJax sets
+        # wider than 0.7 em at its own width: "$4m$" stood 1.4 em from the edge of
+        # Majumdar-Papapetrou's embedding diagram while an m was counted 0.7, and "$X = X_s$"
+        # 1.45 em from the edge of Whittaker's sphere while an X was. Both are run on every label
+        # of every drawing, the page's in Node. `node _tools/label_sizes.mjs` holds the box to
+        # the one MathJax sets.
+        if shutil.which("node") is None:
+            self.skipTest("node is not installed")
+        sys.path.insert(0, str(build.ROOT / "_tools" / "derivations"))
+        import slices
+        start = self.page.index("      var CD_RELATION = ")
+        end = self.page.index("      window._mfsLabelSize = cdLabelSize;")
+        data = build.ROOT / "MFS" / "assets" / "data"
+        texts = set()
+        for folder in ("conformal", "embedding", "diagrams"):
+            for path in sorted((data / folder).glob("*.json")):
+                def walk(node):
+                    if isinstance(node, dict):
+                        for key, value in node.items():
+                            if key in ("text", "label") and isinstance(value, str):
+                                texts.add(value)
+                            walk(value)
+                    elif isinstance(node, list):
+                        for value in node:
+                            walk(value)
+                walk(json.loads(path.read_text(encoding="utf-8")))
+        texts = sorted(texts)
+        self.assertGreater(len(texts), 1000)
+        script = (self.page[start:end] + "const texts = JSON.parse(require('fs').readFileSync(0, 'utf8'));"
+                  "console.log(JSON.stringify(texts.map(cdLabelSize)));")
+        run = subprocess.run(["node", "-e", script], input=json.dumps(texts), capture_output=True, text=True, check=True)
+        for text, page in zip(texts, json.loads(run.stdout)):
+            with self.subTest(text):
+                self.assertEqual([round(v, 9) for v in page], [round(v, 9) for v in slices.label_size(text)])
 
 
 class Anchors(unittest.TestCase):
@@ -1815,6 +1842,25 @@ class Figures(unittest.TestCase):
             for kind, cls, _ in figure["legend"]:
                 self.assertIn(kind, {"fill", "line", "point", "cone"}, where)
                 self.assertIn(cls, drawn, f"{where} legend {cls}")
+
+    def test_no_label_of_a_figure_or_a_conformal_diagram_stands_over_another(self):
+        # The generators keep every label clear of the others by slices.py's clear_labels() at
+        # the size the page sets them at, which a label they have placed leaves where it is:
+        # until 3 October 2026 the figures were not held to it, and the name $c\tau/r_0$ of the
+        # wormhole time machine's proper times stood over the number 0 above it.
+        sys.path.insert(0, str(build.ROOT / "_tools" / "derivations"))
+        import slices
+        drawings = [(f"{name}/{system}/{figure['id']}", figure) for name, system, figure in self.figures]
+        drawings += [(f"conformal {name}/{view['id']}", view) for name, data in conformal_files().items()
+                     for view in data["views"]]
+        for where, drawing in drawings:
+            x0, x1, y0, y1 = drawing["box"]
+            scale = 560 / (x1 - x0)
+            labels = copy.deepcopy(drawing["labels"])
+            with self.subTest(where):
+                slices.clear_labels(labels, lambda L, anchor, dx, dy: slices.label_box(
+                    (L["at"][0] - x0) * scale + dx, (y1 - L["at"][1]) * scale + dy, L["text"], anchor, 21), where)
+                self.assertEqual(labels, drawing["labels"])
 
     def test_every_class_a_figure_paints_is_styled_on_the_page_and_in_print(self):
         # A class the stylesheet does not know is painted as a black line on the dark page.

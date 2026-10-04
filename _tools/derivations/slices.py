@@ -3857,27 +3857,48 @@ EDGE, DOT = 1.3, 5.1
 # the room it leaves on either side, and a function's name, set upright letter by letter.
 RELATION = r"=|<|>|\\to(?![a-zA-Z])|\\leq?(?![a-zA-Z])|\\geq?(?![a-zA-Z])|\\approx|\\neq?(?![a-zA-Z])|\\sim(?![a-zA-Z])|\\equiv|\\in(?![a-zA-Z])|\\rightarrow|\\mapsto"
 FUNCTION = r"\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z])"
-# The letters MathJax sets about an em wide, where every other is near half of one.
-WIDE = "mMW"
+# The characters of a label's mathematics MathJax sets wider than the 0.7 em a character is
+# given, each at its own width in ems of the label: the letter's width in MathJax's TeX math
+# italic with its italic correction, and a sign's in its upright font, at the 113.1% of the
+# label's em MathJax sets mathematics at where it cannot measure the label's own font, a
+# hundredth more, rounded up to a twentieth. "$X = X_s$" stood 1.45 em from the edge of
+# Whittaker's sphere until 3 October 2026, its two X's 0.97 em wide and counted 0.7.
+WIDE = {"A": 0.9, "B": 0.9, "C": 0.9, "D": 0.95, "E": 0.9, "F": 0.9, "G": 0.9, "H": 1.05, "J": 0.75, "K": 1.05,
+        "L": 0.8, "M": 1.2, "N": 1.05, "O": 0.9, "P": 0.9, "Q": 0.95, "R": 0.9, "S": 0.75, "T": 0.85, "U": 0.9,
+        "V": 0.9, "W": 1.2, "X": 1.0, "Y": 0.9, "Z": 0.85, "m": 1.05, "w": 0.85, "-": 0.9, "+": 0.9}
+# The size MathJax sets a subscript or a superscript at, as a fraction of the label's.
+SCRIPT = 0.71
+# The marks that stand above a letter, which make a label as tall as a slash or a subscript under
+# a slash does.
+ACCENT = r"\\(bar|hat|tilde|vec|dot)(?![a-zA-Z])"
 
 
 def label_size(text):
     """A label's box as the page sets it, in ems of its own size, no smaller than MathJax sets
-    it: in mathematics 0.7 em a letter, 1.2 an m, M or W, 1.1 a relation with its room, 1.0 any
-    other command, 0.5 a letter of a function's name and 0.3 a space in the source; prose at the 0.6 em of
-    Source Code Pro; the padding of its ground, 0.3 em either side; and 1.5 em tall, or 1.75
-    with a root or a superscript. Measured in Chrome on 30 September 2026 against every label
-    of every drawing, 632 of them set at the page's caption size, it is never smaller, and on
-    average 1.5 em wider: "$r \\to \\infty$" 3.9 em wide, estimated 4.0, and "$R/\\sqrt{2}$"
-    1.66 em tall, estimated 1.75. An m is 0.96 em wide there, an M 1.07 and a W 1.04, where a
-    digit is 0.55 and an r 0.5, so a label that is little but an m was wider than 0.7 em a letter
-    made it until 1 October 2026: "$4m$" 2.11 em wide, estimated 2.0, and now 2.5.
+    it: in mathematics 0.7 em a character and WIDE's width for the wider ones, a character of a
+    subscript or a superscript no less than 0.7 or SCRIPT of that width, 1.1 a relation with
+    its room, 1.0 any other command, 0.5 a letter of a function's name and 0.3 a space in the
+    source; prose at the 0.6 em of Source Code Pro; the padding of its ground, 0.3 em either
+    side; and 1.5 em tall, 1.6 with a slash or a mark over a letter, 1.75 with a superscript
+    and 1.85 with a root.
+    MathJax sets mathematics at 109.9% of the label's em in Source Code Pro, matching its x,
+    and at 113.1% in a view the page sets before it is shown, where it cannot measure the font
+    and takes an x of half an em; the box holds at the larger.
+    `node _tools/label_sizes.mjs` sets every label of every drawing both ways at every size the
+    page gives them and holds each to its box: on 3 October 2026 none of 3451 was larger, and
+    "$X = X_s$" was 4.48 em wide, estimated 5.0, and "$\\sqrt{6/\\Lambda}$" 1.81 em tall,
+    estimated 1.85.
     _layouts/mfs.html carries the same function as cdLabelSize()."""
-    width, tall = 0.6, False
+    width, tall = 0.6, 1.5
     for part in re.split(r"(\$[^$]*\$)", text):
         if part.startswith("$"):
             math = re.sub(r"\\[,;:!]", " ", part[1:-1])
-            tall = tall or "^" in math or "\\sqrt" in math
+            if "\\sqrt" in math:
+                tall = 1.85
+            elif "^" in math:
+                tall = max(tall, 1.75)
+            elif "/" in math or re.search(ACCENT, math):
+                tall = max(tall, 1.6)
             width += 0.5 * sum(len(f) for f in re.findall(FUNCTION, math))
             math = re.sub(FUNCTION, "", math)
             width += 1.1 * len(re.findall(RELATION, math))
@@ -3885,11 +3906,68 @@ def label_size(text):
             math = re.sub(r"\\(bar|hat|tilde|vec|dot|mathrm|text|left|right|mathscr|mathcal|mathfrak|operatorname)(?![a-zA-Z])",
                           "", math)
             width += 1.0 * len(re.findall(r"\\[a-zA-Z]+", math))
-            math = re.sub(r"[{}^_]", "", re.sub(r"\\[a-zA-Z]+", "", math))
-            width += 0.7 * len(math.replace(" ", "")) + 0.5 * sum(math.count(c) for c in WIDE) + 0.3 * math.count(" ")
+            math = re.sub(r"\\[a-zA-Z]+", "", math)
+            scripts = "".join(re.findall(r"[\^_](\{[^{}]*\}|.)", math))
+            math = re.sub(r"[{}^_]", "", re.sub(r"[\^_](\{[^{}]*\}|.)", "", math))
+            width += sum(WIDE.get(c, 0.7) for c in math.replace(" ", "")) + 0.3 * math.count(" ")
+            width += sum(max(0.7, SCRIPT * WIDE.get(c, 0.7)) for c in re.sub(r"[{} ]", "", scripts))
         else:
             width += 0.6 * len(part)
-    return width, 1.75 if tall else 1.5
+    return width, tall
+
+
+# Where a label's box stands from the point its anchor pins, in its own width and height, y
+# down, as CD_ANCHOR in _layouts/mfs.html places it.
+ANCHOR_SHIFT = {"c": (-0.5, -0.5), "l": (0, -0.5), "r": (-1, -0.5), "t": (-0.5, 0), "b": (-0.5, -1),
+                "tl": (0, 0), "tr": (-1, 0), "bl": (0, -1), "br": (-1, -1)}
+
+
+def label_box(x, y, text, anchor, size):
+    """The box x0, y0, x1, y1 a label takes on the page, y down, its anchor pinned at (x, y)
+    and its em `size` units, as label_size() gives it."""
+    w, h = (v * size for v in label_size(text))
+    ax, ay = ANCHOR_SHIFT[anchor]
+    return x + ax * w, y + ay * h, x + (ax + 1) * w, y + (ay + 1) * h
+
+
+def overlap(a, b):
+    """Whether two boxes x0, y0, x1, y1 overlap; boxes that touch do not."""
+    return a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]
+
+
+def clear_labels(labels, box, name):
+    """No label of a drawing overlaps another at the size the page sets them at, the rule of
+    the conformal diagrams and the figures in three dimensions alike. A label that would overlap
+    one before it stands on the other side of its point, above for below or left for right, its
+    offset turned with it; one that overlaps from every side, or a label centred on its point,
+    which has no other side, stops the script, naming the drawing and both labels.
+
+    labels  the drawing's labels, each with `at`, `text`, `anchor`, `dx` and `dy`, which a
+            label that moves has set to where it stands;
+    box     the box a label takes with a given anchor and offset, box(L, anchor, dx, dy);
+    name    the drawing, as the error names it."""
+    placed = []
+    for L in labels:
+        anchor = L["anchor"]
+        flips = [(anchor, 1, 1)]
+        if anchor != "c":
+            vertical = {"t": "b", "b": "t"}
+            horizontal = {"l": "r", "r": "l"}
+            v_flip = "".join(vertical.get(c, c) for c in anchor)
+            h_flip = "".join(horizontal.get(c, c) for c in anchor)
+            both = "".join(horizontal.get(c, vertical.get(c, c)) for c in anchor)
+            flips += [(a, sx, sy) for a, sx, sy in ((v_flip, 1, -1), (h_flip, -1, 1), (both, -1, -1)) if a != anchor]
+        for a, sx, sy in flips:
+            at = box(L, a, sx * L["dx"], sy * L["dy"])
+            clash = [text for other, text in placed if overlap(at, other)]
+            if not clash:
+                break
+        else:
+            at = box(L, anchor, L["dx"], L["dy"])
+            clash = [text for other, text in placed if overlap(at, other)]
+            raise AssertionError(f"{name}: the label {L['text']} overlaps {clash[0]}")
+        L["anchor"], L["dx"], L["dy"] = a, sx * L["dx"], sy * L["dy"]
+        placed.append((at, L["text"]))
 
 
 def place(marks, px, box, size, others=()):
