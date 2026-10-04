@@ -175,7 +175,7 @@ A spacetime has an address of its own, `/MFS/?spacetime=<id>`, which the address
 
 ## The graph behind the list
 
-While no spacetime is open, the graph of the relations between the spacetimes stands in the room to the right of the list, where the spacetime's panel rests, as the captain asked on 3 October 2026.
+The graph of the relations between the spacetimes stands in the room to the right of the list, where the spacetime's panel rests, as the captain asked on 3 October 2026.
 A spacetime is a point, two spacetimes that list each other under "Related Spacetimes" are a line, and a point is wider the more spacetimes it is related to, linearly, so the most related is three times the least related across.
 It is the graph of the application's timeline, `Scripts/timeline-page.html` and `Scripts/build-timeline.py` in that repository, brought here with its numbers: stress majorization in three dimensions, the spring a gathering moves on, at most forty names and the rule for where each is written.
 `MFS/assets/graph.js` is its geometry, the script beside its canvas in `_layouts/mfs.html` draws it, and `_tools/build_mfs_data.py` writes the relations it draws, `MFS/assets/data/relations.json`, from each spacetime's `related`, so a new spacetime is in the graph once that command has run.
@@ -184,20 +184,29 @@ The graph shows what the list shows.
 `mfsSearch` in `_layouts/mfs.html` is the search's one answer, and the list draws it and hands it to the graph: while nothing is typed the whole collection is gathered in the room, a search gathers the spacetimes it finds into a view of their own filling the room and sends the rest back behind them, faded and without names, and clearing the search brings the whole collection back.
 Each change moves on a spring and stands still once it has arrived, and a reader who asked for reduced motion is put straight there.
 The layouts are worked out in a worker running `graph.js`, a pause in typing of 120ms after the last key, so the list never waits on them, and the canvas is drawn only while something on it moves.
-A drag turns the figure, two clicks bring back the view it opened at, the pointer on a spacetime writes its name and lights its relations in pink, and a press on one opens it as its name in the list does.
+A drag turns the figure, two clicks bring back the view it opened at, and a press on a spacetime opens it as its name in the list does.
 
-It lies under every panel, on a layer of its own just above the grid, so a panel takes every press made on it and nothing of it covers a panel.
-It fades out while a spacetime is open or loading and when the page is left, and comes back with the list.
+The list and the graph read as one thing, one written and the other drawn, as the captain asked on 3 October 2026: "The two interfaces need to feel like they're doing the same thing, one textually the other visually."
+The pointer or the keyboard on a name in the list lights its spacetime in the graph, its point and its relations in the page's pink and its name written, as the timeline lights a chosen spacetime, and the pointer on a spacetime in the graph lights it the same way and lights its name in the list as the pointer over the name does, scrolling the list to it, smoothly unless the reader asked for reduced motion.
+Leaving either lets both go, and the graph's own pointer goes before the list's.
+Only a spacetime the list shows can be lit or pressed, so while a search has gathered a subgroup what it left out is passed over by the pointer, the keyboard and a press alike.
+The names in the list are buttons, so Tab reaches each in turn.
+
+It is gathered in the room the spacetime's panel rests in, `#mfs-graph-room` in `_layouts/mfs.html`, and drawn on a canvas across the whole window, so a point, a name or a line that leaves the room, as a turned figure's do, runs on to the window's edge and nothing of it is cut off, as the captain asked on 3 October 2026.
+That canvas lies under every panel, on a layer of its own just above the grid, so a panel takes every press made on it and nothing of it covers a panel; the title, which takes no press, is drawn over it.
+A spacetime's panel covers it while the spacetime is open, as the captain asked on 3 October 2026: "The graph should not disappear when a spacetime is pressed, it should just get covered by the panel."
+It stays where it stands under the panel, standing still, and fades out only when the page is left.
+The words "Spacetime data loading..." are written on the ground's own colour, since the graph shows behind them.
 On a phone, where the panels fill the screen in one column, it is not drawn and its relations are never fetched.
 Nothing on it glows: its names are written over the lines behind them on the ground's own colour, as the timeline writes them.
 
-`_tools/test_background_graph.py` runs the geometry and the page's search in Node: every keyword typed gathers exactly the spacetimes carrying it, which are the ones the list shows, clearing the search brings every spacetime back to its place, the same data gives the same layout, and a search's layout depends on its spacetimes and the relations between them alone.
+`_tools/test_background_graph.py` runs the geometry and the page's search in Node: every keyword typed gathers exactly the spacetimes carrying it, which are the ones the list shows, clearing the search brings every spacetime back to its place, the same data gives the same layout, a search's layout depends on its spacetimes and the relations between them alone, and the page's own choice of what is lit lights the spacetime asked for, that one alone and only while the list shows it.
 The page as drawn is held to the same with
 
     node _tools/background_graph.mjs http://127.0.0.1:4000
     node _tools/background_graph.mjs http://127.0.0.1:4000 --phone
 
-which types keywords a key at a time, checks what the graph gathers against the list and the index, presses a spacetime in the graph, and on a phone checks that no tap can land on it.
+which types keywords a key at a time, checks what the graph gathers against the list and the index, checks that the canvas spans the whole window at four desktop sizes, lights spacetimes from the list by the pointer and by Tab and from the graph by the pointer and reads which point is drawn pink and which name is lit, with and without a search, presses a spacetime in the graph and checks the graph stays still under its panel, and on a phone checks that no tap can land on it.
 
 ## The page on a phone
 
