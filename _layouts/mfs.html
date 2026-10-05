@@ -643,10 +643,20 @@
        the head of the contents slides the list back; the search script below says how. -->
   <div id="mfs-panes">
   <div id="mfs-list-pane" class="mfs-pane">
+  <!-- The search field and, under it while something is typed, the keywords it can be finished
+       with. The browser offers nothing of its own in the field: not its history of what was typed
+       there, which it showed in a white list under the field and filled the field from in its
+       own colours as the captain typed on 5 October 2026, nor a correction or a mark under a
+       keyword it does not know. The search script says how the keywords are offered. -->
+  <div id="mfs-search-field">
   <input id="mfs-search-input" type="text" placeholder="Search spacetimes…"
+    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+    role="combobox" aria-autocomplete="list" aria-controls="mfs-keywords" aria-expanded="false"
     style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--cyan);border-radius:4px;
     color:var(--text-bright);padding:0.4em 0.5em;font-family:'Source Code Pro',monospace;font-size:0.85em;
     outline:none;box-sizing:border-box; flex-shrink:0;">
+  <div id="mfs-keywords" role="listbox" aria-label="Keywords" hidden></div>
+  </div>
   <div id="mfs-search-results" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;"></div>
   </div>
   <nav id="mfs-toc-pane" class="mfs-pane mfs-pane-off" aria-label="Contents of this spacetime" inert>
@@ -704,10 +714,24 @@
     #mfs-banner { display: contents; }
     /* The list and the search field are held to sizes at which their words fit, which the
        search script measures as a width of these containers over ems. */
-    #mfs-search-panel, #mfs-search-results { container-type: inline-size; }
+    #mfs-search-panel, #mfs-search-results, #mfs-keywords { container-type: inline-size; }
     #mfs-search-input::placeholder { font-size: min(1em, var(--mfs-fit, 1em)); }
-    /* A name in the list is a button, and keeps its size whatever the reader's text size. */
-    .mfs-result {
+    /* The keywords the search can be finished with lie over the top of the list, under the
+       field and as wide as it, in its border on the ground's own colour, and scroll where there
+       are more than a few. Each is set as a name in the list is, and the one the pointer or the
+       arrow keys are on is set as a name under the pointer is: nothing about them is new. */
+    #mfs-search-field { position: relative; flex-shrink: 0; }
+    #mfs-keywords {
+      position: absolute; z-index: 1; top: calc(100% + 2px); left: 0; right: 0;
+      max-height: 15em; overflow-y: auto; box-sizing: border-box;
+      display: flex; flex-direction: column; align-items: stretch; gap: 2px;
+      background: var(--bg-black); border: 1px solid var(--cyan); border-radius: 4px;
+    }
+    #mfs-keywords[hidden] { display: none; }
+    /* A name in the list is a button, and keeps its size whatever the reader's text size. A
+       keyword is set as one and is not a button: the field keeps the keyboard while the arrow
+       keys go through the keywords. */
+    .mfs-result, .mfs-keyword {
       appearance: none; -webkit-appearance: none; display: block; margin: 0;
       background: transparent; border: 0; text-align: left;
       line-height: inherit; font-weight: inherit; font-style: inherit;
@@ -720,10 +744,11 @@
       letter-spacing: 0.04em;
       flex-shrink: 0;
     }
-    .mfs-result:hover {
+    .mfs-result:hover, .mfs-keyword.mfs-keyword-on {
       background: rgba(0,229,255,0.1);
       color: var(--cyan);
     }
+    .mfs-keyword { overflow-wrap: anywhere; user-select: none; -webkit-user-select: none; }
     /* While the pointer is on its spacetime in the graph behind the list, a name turns the
        page's pink and nothing else about it changes, as the captain asked on 3 October 2026,
        so the two read as one thing. */
@@ -863,7 +888,7 @@
         _rest = false;
         _after = after || null;
         // The list leaves, and nothing in it lights the graph until it is back.
-        if (on) { put(listPane, false); _pointed = _focused = _at = null; lightGraph(); }
+        if (on) { put(listPane, false); putAway(); _pointed = _focused = _at = null; lightGraph(); }
         if (!on || fresh) put(tocPane, false);
         Promise.all([slid(listPane), slid(tocPane), slid(document.getElementById('mfs-content-panel'))]).then(function() {
           if (mine !== _turn) return;
@@ -1034,8 +1059,39 @@
         });
       }
 
-      function renderResults(METRIC_INDEX, query) {
-        var found = mfsSearch(METRIC_INDEX, query);
+      /* The keywords the text typed can be finished with, from its first letter on: the tags of
+         the index, each once, that mfsTagMatches finds for it, as the search finds them, the
+         captain asked on 5 October 2026. Those the text starts come first and then those with a
+         later word it starts, each in the order of the alphabet whatever the capitals, so "w"
+         offers "warp drive" before "plane wave"; none while nothing is typed. */
+      function mfsKeywords(index, query) {
+        var q = query.trim().toLowerCase(), seen = {}, first = [], later = [];
+        if (q === '') return [];
+        index.forEach(function(m) {
+          m.tags.forEach(function(t) {
+            if (seen[t] || !mfsTagMatches(t, q)) return;
+            seen[t] = true;
+            (t.toLowerCase().indexOf(q) === 0 ? first : later).push(t);
+          });
+        });
+        function alphabetical(a, b) {
+          var x = a.toLowerCase(), y = b.toLowerCase();
+          return x < y ? -1 : x > y ? 1 : a < b ? -1 : a > b ? 1 : 0;
+        }
+        return first.sort(alphabetical).concat(later.sort(alphabetical));
+      }
+
+      /* The spacetimes a keyword chosen from those offered selects: exactly the ones carrying
+         it, in the index's order. Typed out, "de Sitter" also finds every name holding it and
+         every tag with a word it starts, such as "anti-de Sitter"; chosen, it is the category. */
+      function mfsCarrying(index, keyword) {
+        return index.filter(function(m) { return m.tags.indexOf(keyword) !== -1; });
+      }
+
+      /* The list for what is typed, or for the keyword chosen when one was, which the field then
+         holds; the graph is handed the same answer. */
+      function renderResults(METRIC_INDEX, query, keyword) {
+        var found = keyword ? mfsCarrying(METRIC_INDEX, keyword) : mfsSearch(METRIC_INDEX, query);
         var matches = found || METRIC_INDEX;
         window._mfsGraph.show(METRIC_INDEX, found && found.map(function(m) { return m.id; }));
 
@@ -1099,6 +1155,102 @@
         });
       };
 
+      /* The keywords offered under the field (mfsKeywords) as the reader types, from the first
+         letter on, as the captain asked on 5 October 2026. The pointer or the arrow keys go
+         through them, the field keeping the keyboard as a combobox does; a press or Enter
+         chooses one, which the field then holds and which the list and the graph show as a
+         search does, with exactly the spacetimes carrying it; Escape, leaving the field, a
+         spacetime opening or nothing left to offer puts them away, and the next letter typed
+         offers them again. _offered are the keywords offered, _on the place of the one the
+         pointer or the keys are on, or -1. */
+      var keywords = document.getElementById('mfs-keywords'), _offered = [], _on = -1;
+      function offer(list) {
+        _offered = list;
+        _on = -1;
+        keywords.textContent = '';
+        list.forEach(function(keyword, i) {
+          var option = keywords.appendChild(document.createElement('div'));
+          option.className = 'mfs-keyword';
+          option.id = 'mfs-keyword-' + i;
+          option.setAttribute('role', 'option');
+          option.setAttribute('aria-selected', 'false');
+          option.textContent = keyword;
+        });
+        keywords.hidden = !list.length;
+        keywords.scrollTop = 0;
+        // They end inside the panel, which cuts off what passes its edge, at a large text size too.
+        if (list.length) {
+          var room = listPane.getBoundingClientRect().bottom - keywords.getBoundingClientRect().top;
+          keywords.style.maxHeight = 'min(15em, ' + Math.max(0, Math.floor(room)) + 'px)';
+        }
+        input.setAttribute('aria-expanded', list.length ? 'true' : 'false');
+        input.removeAttribute('aria-activedescendant');
+      }
+      function putAway() {
+        if (_offered.length) offer([]);
+      }
+      // The keyword at place i is the one gone to, and is brought into sight where they scroll.
+      function goTo(i, scroll) {
+        _on = i;
+        [].forEach.call(keywords.children, function(option, k) {
+          option.classList.toggle('mfs-keyword-on', k === i);
+          option.setAttribute('aria-selected', k === i ? 'true' : 'false');
+        });
+        if (i < 0) { input.removeAttribute('aria-activedescendant'); return; }
+        input.setAttribute('aria-activedescendant', 'mfs-keyword-' + i);
+        if (!scroll) return;
+        var option = keywords.children[i].getBoundingClientRect(), box = keywords.getBoundingClientRect();
+        var edge = keywords.clientTop;
+        if (option.top < box.top + edge) keywords.scrollTop -= box.top + edge - option.top;
+        else if (option.bottom > box.bottom - edge) keywords.scrollTop += option.bottom - (box.bottom - edge);
+      }
+      function wireKeywords(index) {
+        function choose(i) {
+          var keyword = _offered[i];
+          putAway();
+          input.value = keyword;
+          input.setSelectionRange(keyword.length, keyword.length);
+          renderResults(index, keyword, keyword);
+        }
+        input.addEventListener('input', function() {
+          renderResults(index, this.value);
+          offer(mfsKeywords(index, this.value));
+        });
+        input.addEventListener('keydown', function(e) {
+          if (e.isComposing) return;
+          var n = _offered.length;
+          if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            if (!n) {
+              if (e.key !== 'ArrowDown' || !input.value.trim()) return;
+              offer(mfsKeywords(index, input.value));
+              n = _offered.length;
+              if (!n) return;
+            }
+            e.preventDefault();
+            var down = e.key === 'ArrowDown';
+            goTo(_on < 0 ? (down ? 0 : n - 1) : (_on + (down ? 1 : n - 1)) % n, true);
+          } else if (e.key === 'Enter' && n && _on >= 0) {
+            e.preventDefault();
+            choose(_on);
+          } else if (e.key === 'Escape' && n) {
+            e.preventDefault();
+            putAway();
+          }
+        });
+        input.addEventListener('blur', putAway);
+        // A press on the keywords leaves the keyboard in the field.
+        keywords.addEventListener('mousedown', function(e) { e.preventDefault(); });
+        keywords.addEventListener('pointermove', function(e) {
+          var option = e.target.closest('.mfs-keyword');
+          if (option) goTo([].indexOf.call(keywords.children, option), false);
+        });
+        keywords.addEventListener('pointerleave', function() { goTo(-1, false); });
+        keywords.addEventListener('click', function(e) {
+          var option = e.target.closest('.mfs-keyword');
+          if (option) choose([].indexOf.call(keywords.children, option));
+        });
+      }
+
       /* Opens a spacetime, marks its name in the list and shows its contents, whichever
          asked for it: its name in the list, a link under "Related Spacetimes" on another
          spacetime's page, or the page's address. The list keeps the mark as it is searched,
@@ -1142,6 +1294,13 @@
         }
         var hint = mfsWidestWord(input, [input.placeholder.replace(/\s+/g, '\u00A0')]);
         input.style.setProperty('--mfs-fit', 'calc((100cqw - 1em - 2px) / ' + hint.toFixed(3) + ')');
+        // The keywords offered are set as the names are, at most the size their widest word fits.
+        var probe = keywords.appendChild(document.createElement('div'));
+        probe.className = 'mfs-keyword';
+        probe.style.fontSize = '18px';
+        var words = mfsWidestWord(probe, index.reduce(function(all, m) { return all.concat(m.tags); }, []));
+        probe.remove();
+        keywords.style.setProperty('--mfs-fit', 'calc((100cqw - 16px) / ' + words.toFixed(3) + ')');
       }
 
       /* Every file the page reads is fetched at an address of its own build, since GitHub
@@ -1161,7 +1320,7 @@
           else if (asked) { showContents(false); address(null); }
           document.fonts.ready.then(function() { fitList(index); });
           document.fonts.addEventListener('loadingdone', function() { fitList(index); });
-          input.addEventListener('input', function() { renderResults(index, this.value); });
+          wireKeywords(index);
         });
     })();
   </script>

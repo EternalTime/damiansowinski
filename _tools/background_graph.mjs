@@ -14,8 +14,16 @@
    on a spacetime in the graph turns its name in the list the page's pink, with no background,
    and scrolls the list to it, and both hold under a search, where a spacetime the search left out
    is never lit and never opened. A press on a spacetime in the graph opens it, and the graph
-   stays where it is under the spacetime's panel, which covers it, standing still. With --phone the page is laid out as an iPhone held upright, the graph is not
-   drawn and its relations are never fetched. Every console error and page error is an error.
+   stays where it is under the spacetime's panel, which covers it, standing still.
+   The search field keeps its own colours in every state, empty, focused, typed in, with names
+   found and with none, with keywords offered and one gone to, chosen and cleared, and the browser
+   offers nothing of its own in it. From the first letter typed the keywords the search can be
+   finished with are offered under it, one letter and two offering every keyword with a word they
+   start, set as the names in the list are; the arrow keys and Enter choose one, and so does the
+   pointer, and the list and the graph then show exactly the spacetimes carrying it. With --phone
+   the page is laid out as an iPhone held upright, the graph is not drawn and its relations are
+   never fetched, and the field and its keywords are held to the same. Every console error and
+   page error is an error.
    It exits non-zero on any of them. _tools/chrome.mjs starts Chrome. */
 import { launch, sleep } from './chrome.mjs';
 
@@ -48,9 +56,11 @@ async function until(expression, what, seconds = 20) {
 const shows = () => evaluate('window._mfsGraph.shows()');
 const listed = () => evaluate("[].map.call(document.querySelectorAll('#mfs-search-results .mfs-result'), function (r) { return r.dataset.id; })");
 const index = () => evaluate('window._mfsIndex');
+// Types a key at a time and then puts away the keywords offered, which lie over the top of the list.
 async function type(text) {
   await evaluate("document.getElementById('mfs-search-input').focus()");
   for (const key of text) await send('Input.insertText', { text: key });
+  await key('Escape', 'Escape', 27);
 }
 async function clear() {
   await evaluate("document.getElementById('mfs-search-input').select()");
@@ -149,6 +159,154 @@ async function asOneThing(ids, what) {
   return target;
 }
 
+/* The search field's colours, every one it is drawn in, which are the same in every state as at
+   rest; and the keywords, which the page offers for what is typed. */
+const look = () => evaluate(`(function () {
+  var cs = getComputedStyle(document.getElementById('mfs-search-input')), out = {};
+  ['backgroundColor', 'backgroundImage', 'color', 'webkitTextFillColor', 'caretColor', 'borderTopColor', 'borderRightColor',
+   'borderBottomColor', 'borderLeftColor', 'borderTopWidth', 'borderBottomWidth', 'borderTopStyle', 'outlineStyle',
+   'outlineColor', 'outlineWidth', 'boxShadow', 'opacity', 'filter'].forEach(function (k) { out[k] = cs[k]; });
+  return out;
+})()`);
+const offered = () => evaluate(`(function () {
+  var k = document.getElementById('mfs-keywords');
+  return k.hidden ? null : [].map.call(k.children, function (o) { return o.textContent; });
+})()`);
+const goneTo = () => evaluate("[].map.call(document.querySelectorAll('#mfs-keywords .mfs-keyword-on'), function (o) { return o.textContent; })");
+function keywordsFor(idx, typed) {
+  const q = typed.trim().toLowerCase(), tags = [...new Set(idx.flatMap(m => m.tags))].filter(t => wordMatches(t, q));
+  const order = (a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : a.toLowerCase() > b.toLowerCase() ? 1 : a < b ? -1 : a > b ? 1 : 0;
+  return q ? [...tags.filter(t => t.toLowerCase().startsWith(q)).sort(order), ...tags.filter(t => !t.toLowerCase().startsWith(q)).sort(order)] : [];
+}
+async function clearField() {
+  await evaluate("document.getElementById('mfs-search-input').select()");
+  await key('Backspace', 'Backspace', 8);
+}
+
+/* The search field keeps its own look in every state, and the keywords are offered from the first
+   letter, chosen by the keyboard and by the pointer, and select exactly the spacetimes carrying
+   them, in the list and, where it is drawn, in the graph. */
+async function searchField() {
+  const idx = await index(), field = "document.getElementById('mfs-search-input')";
+  const attributes = await evaluate(`['autocomplete', 'autocorrect', 'autocapitalize', 'spellcheck', 'role', 'aria-expanded'].map(function (a) { return ${field}.getAttribute(a); })`);
+  check(JSON.stringify(attributes) === JSON.stringify(['off', 'off', 'off', 'false', 'combobox', 'false']),
+        `the browser offers nothing of its own in the search field (${attributes})`);
+  await evaluate(`${field}.blur()`);
+  const rest = await look();
+  const own = await evaluate(`(function () {
+    var root = getComputedStyle(document.documentElement);
+    function rgb(name) { var hex = root.getPropertyValue(name).trim(); return 'rgb(' + [1, 3, 5].map(function (i) { return parseInt(hex.slice(i, i + 2), 16); }).join(', ') + ')'; }
+    return { cyan: rgb('--cyan'), text: rgb('--text-bright') };
+  })()`);
+  check(rest.backgroundColor === 'rgba(255, 255, 255, 0.05)' && rest.color === own.text && rest.borderTopColor === own.cyan &&
+        rest.borderBottomColor === own.cyan && rest.outlineStyle === 'none' && rest.boxShadow === 'none',
+        `at rest the search field has the site's own look (${JSON.stringify(rest)})`);
+  const states = [];
+  async function state(name) { states.push([name, await look()]); }
+
+  await evaluate(`${field}.focus()`);
+  await state('focused');
+  await send('Input.insertText', { text: 'w' });
+  await state('one letter typed');
+  check(JSON.stringify(await offered()) === JSON.stringify(keywordsFor(idx, 'w')),
+        `one letter, "w", offers every keyword with a word it starts (${(await offered() || []).length})`);
+  await send('Input.insertText', { text: 'o' });
+  await state('two letters typed');
+  check(JSON.stringify(await offered()) === JSON.stringify(keywordsFor(idx, 'wo')), `two letters, "wo", offer ${keywordsFor(idx, 'wo')}`);
+  await clearField();
+  await send('Input.insertText', { text: 'c' });
+  check(JSON.stringify(await offered()) === JSON.stringify(keywordsFor(idx, 'c')), `one letter, "c", offers its ${keywordsFor(idx, 'c').length} keywords`);
+  await send('Input.insertText', { text: 'o' });
+  const co = keywordsFor(idx, 'co');
+  check(JSON.stringify(await offered()) === JSON.stringify(co), `two letters, "co", offer its ${co.length} keywords`);
+
+  // The keywords lie under the field, inside the panel, set as the names in the list are.
+  const box = await evaluate(`(function () {
+    var k = document.getElementById('mfs-keywords').getBoundingClientRect(), f = ${field}.getBoundingClientRect();
+    var pane = document.getElementById('mfs-list-pane').getBoundingClientRect();
+    var o = getComputedStyle(document.querySelector('#mfs-keywords .mfs-keyword')), n = getComputedStyle(document.querySelector('#mfs-search-results .mfs-result:not(.mfs-result-active):not(.mfs-result-lit)'));
+    var b = getComputedStyle(document.getElementById('mfs-keywords'));
+    return { under: k.top >= f.bottom && k.left === f.left && k.right === f.right, inside: k.bottom <= pane.bottom + 0.5,
+             same: ['fontFamily', 'fontSize', 'color', 'backgroundColor', 'letterSpacing', 'paddingLeft'].every(function (p) { return o[p] === n[p]; }),
+             plain: b.boxShadow === 'none' && o.boxShadow === 'none' && o.textShadow === 'none' && b.filter === 'none' };
+  })()`);
+  check(box.under, 'the keywords lie under the search field, as wide as it');
+  check(box.inside, 'the keywords end inside the panel');
+  check(box.same, 'a keyword is set as a name in the list is');
+  check(box.plain, 'nothing about the keywords glows');
+
+  // The keyboard goes through them, the field keeping it, and Enter chooses one.
+  await key('ArrowDown', 'ArrowDown', 40);
+  await key('ArrowDown', 'ArrowDown', 40);
+  check(JSON.stringify(await goneTo()) === JSON.stringify([co[1]]), `the arrow keys go to "${co[1]}" (${await goneTo()})`);
+  check(await evaluate(`document.activeElement === ${field} && ${field}.getAttribute('aria-activedescendant') === 'mfs-keyword-1'`),
+        'the field keeps the keyboard while the arrow keys go through the keywords');
+  const lit = await evaluate(`(function () { var o = getComputedStyle(document.querySelector('#mfs-keywords .mfs-keyword-on')); return [o.backgroundColor, o.color]; })()`);
+  check(JSON.stringify(lit) === JSON.stringify(['rgba(0, 229, 255, 0.1)', own.cyan]), `the keyword gone to is set as a name under the pointer is (${lit})`);
+  await state('a keyword gone to');
+  await key('ArrowUp', 'ArrowUp', 38);
+  check(JSON.stringify(await goneTo()) === JSON.stringify([co[0]]), `ArrowUp goes back to "${co[0]}"`);
+  await key('ArrowDown', 'ArrowDown', 40);
+  await key('Enter', 'Enter', 13);
+  await chosen(co[1], 'by the keyboard');
+  await state(`"${co[1]}" chosen`);
+
+  // Escape and leaving the field put them away.
+  await clearField();
+  await send('Input.insertText', { text: 'de' });
+  check((await offered() || []).includes('de Sitter'), 'two letters, "de", offer "de Sitter"');
+  await key('Escape', 'Escape', 27);
+  check((await offered()) === null && await evaluate(`${field}.value === 'de' && ${field}.getAttribute('aria-expanded') === 'false'`),
+        'Escape puts the keywords away and leaves what was typed');
+  await key('ArrowDown', 'ArrowDown', 40);
+  check(JSON.stringify(await offered()) === JSON.stringify(keywordsFor(idx, 'de')), 'ArrowDown offers them again');
+  // The pointer: a press on one chooses it.
+  const at = await evaluate(`(function () {
+    var o = [].find.call(document.querySelectorAll('#mfs-keywords .mfs-keyword'), function (o) { return o.textContent === 'de Sitter'; });
+    var r = o.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2];
+  })()`);
+  await point(at[0], at[1]);
+  check(JSON.stringify(await goneTo()) === JSON.stringify(['de Sitter']), 'the pointer on "de Sitter" goes to it');
+  await press(at[0], at[1]);
+  await chosen('de Sitter', 'by the pointer');
+  check(await evaluate(`document.activeElement === ${field}`), 'the field keeps the keyboard after a press on a keyword');
+  await state('"de Sitter" chosen');
+
+  await clearField();
+  await state('cleared');
+  await send('Input.insertText', { text: 'zzqq' });
+  check((await listed()).length === 0 && (await offered()) === null, '"zzqq" finds nothing and offers nothing');
+  await state('nothing found');
+  await clearField();
+  check((await listed()).length === idx.length, 'clearing the field lists every spacetime');
+  await send('Input.insertText', { text: 'vacuum' });
+  await state('names found');
+  await evaluate(`${field}.blur()`);
+  check((await offered()) === null, 'leaving the field puts the keywords away');
+  await state('left with names found');
+  await evaluate(`${field}.focus()`);
+  await clearField();
+  await evaluate(`${field}.blur()`);
+  await state('cleared and left');
+  for (const [name, seen] of states) {
+    const changed = Object.keys(rest).filter(k => seen[k] !== rest[k]);
+    check(changed.length === 0, `the search field keeps its colours ${name}` +
+          (changed.length ? ` (${changed.map(k => `${k} ${seen[k]} for ${rest[k]}`).join(', ')})` : ''));
+  }
+  if (!phone) await until('window._mfsGraph.shows().settled && window._mfsGraph.shows().whole', 'the whole graph is back after the search field\'s checks');
+}
+// A keyword chosen is what the field holds, and the list and the graph show exactly its carriers.
+async function chosen(keyword, how) {
+  const carriers = (await index()).filter(m => m.tags.includes(keyword)).map(m => m.id);
+  check(await evaluate(`document.getElementById('mfs-search-input').value === ${JSON.stringify(keyword)}`) && (await offered()) === null,
+        `"${keyword}" chosen ${how} is put in the field and the keywords are put away`);
+  check(JSON.stringify(await listed()) === JSON.stringify(carriers), `"${keyword}" chosen ${how}: the list shows exactly the ${carriers.length} spacetimes carrying it`);
+  if (phone) return;
+  await until(`window._mfsGraph.shows().settled && !window._mfsGraph.shows().whole && ${drawn}`, `"${keyword}" chosen ${how} is gathered`);
+  const front = (await shows()).front.map(s => s.id);
+  check(JSON.stringify(front) === JSON.stringify(carriers), `"${keyword}" chosen ${how}: the graph gathers exactly the spacetimes carrying it`);
+}
+
 async function press(x, y) {
   for (const type of ['mouseMoved', 'mousePressed', 'mouseReleased']) {
     await send('Input.dispatchMouseEvent', { type, x, y, button: type === 'mouseMoved' ? 'none' : 'left', clickCount: 1 });
@@ -181,6 +339,7 @@ if (phone) {
     return found;
   })()`);
   check(hits.length === 0, 'no tap on a phone lands on the graph');
+  await searchField();
 } else {
   await until(`window._mfsGraph.shows().on && window._mfsGraph.shows().settled && ${drawn}`, 'the graph is drawn');
   let state = await shows();
@@ -231,6 +390,7 @@ if (phone) {
         'every spacetime is gathered in the graph\'s room');
 
   await asOneThing(all, 'the whole graph');
+  await searchField();
 
   for (const keyword of keywords) {
     await type(keyword);

@@ -155,11 +155,149 @@ class SearchToGraph(unittest.TestCase):
 
     def test_the_list_hands_the_graph_the_search_s_answer(self):
         render = page_function(self.source, "renderResults")
-        self.assertIn("var found = mfsSearch(METRIC_INDEX, query);", render)
+        self.assertIn("var found = keyword ? mfsCarrying(METRIC_INDEX, keyword) : mfsSearch(METRIC_INDEX, query);", render)
         self.assertIn("window._mfsGraph.show(METRIC_INDEX, found && found.map(function(m) { return m.id; }));", render)
         self.assertIn("var matches = found || METRIC_INDEX;", render)
         self.assertEqual(self.source.count("window._mfsGraph.show("), 1)
         self.assertEqual(self.source.count("mfsSearch("), 2)
+
+
+class Keywords(unittest.TestCase):
+    """The keywords offered under the search field as the reader types, from the first letter on,
+    as the captain asked on 5 October 2026: the index's tags that the search finds for what is
+    typed, those it starts first, and a keyword chosen selects exactly the spacetimes carrying it,
+    in the list and in the graph. `node _tools/background_graph.mjs` holds the page as drawn to
+    the same, by the pointer and by the keyboard."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.source = PAGE.read_text(encoding="utf-8")
+        cls.index = read(build.INDEX_FILE)
+        cls.relations = read(build.RELATIONS_FILE)
+        cls.keywords = sorted({t for m in cls.index for t in m["tags"]})
+        starts = {t.lower()[i:i + 2] for t in cls.keywords for i in range(len(t))
+                  if (i == 0 or t[i - 1] in " -/") and " " not in t[i:i + 2]}
+        letters = sorted({q[0] for q in starts} | set("abcdefghijklmnopqrstuvwxyz"))
+        cls.typed = letters + sorted(q for q in starts if len(q) == 2) + ["zq", "W", "De", " v ", "", "  "]
+        functions = "".join(page_function(cls.source, name) for name in ("mfsTagMatches", "mfsSearch", "mfsKeywords", "mfsCarrying"))
+        script = functions + """
+        const [index, relations, typed, keywords, W, H] = input;
+        const graph = G.model(index, relations), all = graph.spacetimes.map((s, i) => i);
+        const home = G.gathered(graph, all, W, H).places.map(p => ({ x: p[0], y: p[1], z: p[2] }));
+        const offered = {}, chosen = {};
+        for (const q of typed) offered[q] = mfsKeywords(index, q);
+        for (const k of keywords) {
+          const ids = mfsCarrying(index, k).map(m => m.id), members = G.placesOf(graph, ids);
+          const goal = G.goal(home, members, G.gathered(graph, members, W, H).places);
+          chosen[k] = { listed: ids, front: graph.spacetimes.filter((s, i) => !goal.behind[i]).map(s => s.id) };
+        }
+        process.stdout.write(JSON.stringify({ offered, chosen }));
+        """
+        cls.results = node(script, [cls.index, cls.relations, cls.typed, cls.keywords, *ROOMS[0]])
+
+    def expected(self, typed):
+        """The keywords offered for `typed`, worked out apart from the page."""
+        q = typed.strip().lower()
+        if not q:
+            return []
+        found = [t for t in self.keywords if word_matches(t, q)]
+        order = lambda t: (t.lower(), t)
+        return (sorted((t for t in found if t.lower().startswith(q)), key=order) +
+                sorted((t for t in found if not t.lower().startswith(q)), key=order))
+
+    def test_one_letter_offers_every_keyword_with_a_word_it_starts(self):
+        for typed in self.typed:
+            if len(typed) != 1:
+                continue
+            with self.subTest(typed):
+                self.assertEqual(self.results["offered"][typed], self.expected(typed))
+        self.assertEqual(self.results["offered"]["v"],
+                         ["vacuum", "vacuum energy", "Vaidya", "vanishing scalar invariants", "void",
+                          "energy condition violation", "null Killing vector"])
+        self.assertEqual(self.results["offered"]["W"], self.results["offered"]["w"])
+
+    def test_two_letters_offer_every_keyword_with_a_word_they_start(self):
+        two = [t for t in self.typed if len(t.strip()) == 2]
+        self.assertGreater(len(two), 100)
+        for typed in two:
+            with self.subTest(typed):
+                self.assertEqual(self.results["offered"][typed], self.expected(typed))
+                if typed != "zq":
+                    self.assertTrue(self.results["offered"][typed])
+        self.assertEqual(self.results["offered"]["zq"], [])
+        self.assertEqual(self.results["offered"]["De"][:2], ["de Sitter", "de Sitter core"])
+        self.assertIn("anti-de Sitter", self.results["offered"]["De"])
+
+    def test_nothing_is_offered_while_nothing_is_typed(self):
+        self.assertEqual(self.results["offered"][""], [])
+        self.assertEqual(self.results["offered"]["  "], [])
+        self.assertEqual(self.results["offered"][" v "], self.results["offered"]["v"])
+
+    def test_every_keyword_is_offered_by_its_first_two_letters(self):
+        for keyword in self.keywords:
+            with self.subTest(keyword):
+                self.assertIn(keyword, self.results["offered"][keyword[:2].lower()])
+
+    def test_a_keyword_chosen_selects_exactly_the_spacetimes_carrying_it(self):
+        for keyword in self.keywords:
+            with self.subTest(keyword):
+                carrying = [m["id"] for m in self.index if keyword in m["tags"]]
+                self.assertEqual(self.results["chosen"][keyword]["listed"], carrying)
+                self.assertEqual(self.results["chosen"][keyword]["front"], carrying)
+        # Typed out, "de Sitter" finds every spacetime with a tag or a name it starts a word of.
+        self.assertLess(len(self.results["chosen"]["de Sitter"]["listed"]),
+                        len([m for m in self.index if "de sitter" in m["name"].lower() or any(word_matches(t, "de sitter") for t in m["tags"])]))
+
+    def test_choosing_a_keyword_runs_the_search_with_it(self):
+        choose = self.source[self.source.index("        function choose(i) {"):][:300]
+        self.assertIn("input.value = keyword;", choose)
+        self.assertIn("renderResults(index, keyword, keyword);", choose)
+        self.assertEqual(self.source.count("renderResults("), 4)
+        typing = self.source[self.source.index("        input.addEventListener('input', function() {"):][:200]
+        self.assertIn("renderResults(index, this.value);", typing)
+        self.assertIn("offer(mfsKeywords(index, this.value));", typing)
+
+
+class SearchBar(unittest.TestCase):
+    """The search field keeps the site's own look whatever is typed in it. On 5 October 2026 the
+    captain saw it change colour and turn white while typing, which nothing of the page's own
+    does, the field's colours read the same in every state: what does is the browser offering
+    what was typed in the field before, under it and in its own colours, and filling the field
+    in them. The browser now offers nothing of its own there, and no rule of the page sets the
+    field apart in any state. `node _tools/background_graph.mjs` reads its colours in every state."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.source = PAGE.read_text(encoding="utf-8")
+        cls.field = re.search(r'<input id="mfs-search-input".*?>', cls.source, re.S).group(0)
+
+    def test_the_browser_offers_nothing_of_its_own_in_the_field(self):
+        for attribute in ('autocomplete="off"', 'autocorrect="off"', 'autocapitalize="off"', 'spellcheck="false"'):
+            with self.subTest(attribute):
+                self.assertIn(attribute, self.field)
+        self.assertIn('type="text"', self.field)
+
+    def test_the_field_is_a_combobox_of_the_keywords(self):
+        for attribute in ('role="combobox"', 'aria-autocomplete="list"', 'aria-controls="mfs-keywords"', 'aria-expanded="false"'):
+            with self.subTest(attribute):
+                self.assertIn(attribute, self.field)
+        self.assertIn('<div id="mfs-keywords" role="listbox" aria-label="Keywords" hidden></div>', self.source)
+
+    def test_no_rule_sets_the_field_apart_in_any_state(self):
+        sheets = [self.source] + [(build.ROOT / "assets" / "css" / name).read_text(encoding="utf-8") for name in ("mfs.css", "palette.css")]
+        for sheet in sheets:
+            self.assertEqual(re.findall(r"#mfs-search-input:(?!:placeholder)[^{]*\{", sheet), [])
+            self.assertEqual(re.findall(r"(?<![\w-])input(?:\[[^\]]*\])?:[\w-]+[^{]*\{", sheet), [])
+
+    def test_the_keywords_are_set_as_the_list_is_with_nothing_new(self):
+        self.assertIn("\n    .mfs-result, .mfs-keyword {\n", self.source)
+        self.assertIn("\n    .mfs-result:hover, .mfs-keyword.mfs-keyword-on {\n", self.source)
+        rules = re.findall(r"\n    ([^{}\n]*mfs-keyword[^{}\n]*)\{(.*?)\}", self.source, re.S)
+        self.assertTrue(rules)
+        for selectors, body in rules:
+            with self.subTest(selectors):
+                for glow in ("shadow", "filter", "glow"):
+                    self.assertNotIn(glow, body)
 
 
 class Layout(unittest.TestCase):
@@ -332,7 +470,7 @@ class OneThing(unittest.TestCase):
         self.assertEqual(lit, [" color: var(--pink-light); "])
         self.assertIn("\n    .mfs-result.mfs-result-lit { color: var(--pink-light); }\n", self.source)
         # The list's own hover keeps its background to itself.
-        self.assertIn("\n    .mfs-result:hover {\n", self.source)
+        self.assertIn("\n    .mfs-result:hover, .mfs-keyword.mfs-keyword-on {\n", self.source)
         listing = self.source[self.source.index("window._mfsListLight = function(id) {"):][:900]
         self.assertIn("r.classList.toggle('mfs-result-lit', on);", listing)
         self.assertIn("results.scrollBy({ top: by, behavior: reducedMotion() ? 'auto' : 'smooth' });", listing)
