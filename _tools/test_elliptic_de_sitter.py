@@ -1,4 +1,4 @@
-"""Elliptic de Sitter space: python3 -m unittest discover -s _tools
+"""Elliptic de Sitter space: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the hyperboloid -X_0^2 + X_1^2 + ... + X_4^2 = l^2 and on the published
 files. An event and its antipode -X are spacelike separated and share no light ray, so the

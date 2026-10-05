@@ -37,7 +37,7 @@ the isotropic radius rho, with d(ln rho)/dr = 1/(r sqrt N) and rho/r -> 1 at inf
 ds^2 = -sigma^2 N dt^2 + (r/rho)^2 (drho^2 + rho^2 dOmega^2); and the tortoise coordinate x, with
 dx/dr = 1/(sigma N) and x = 0 at the centre, so that the plane of t and x is conformally flat.
 
-    /tmp/mfs-venv/bin/python _tools/derivations/bartnik_mckinnon.py
+    .venv.noindex/bin/python _tools/derivations/bartnik_mckinnon.py
 """
 import math
 

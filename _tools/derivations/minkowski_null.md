@@ -773,8 +773,8 @@ It exits non-zero and names what disagreed.
 
 It needs sympy, in a virtual environment outside the repository:
 
-    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py
+    _tools/setup-env.sh
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py
 
 Both null systems pass it.
 Pass `--system minkowski/spherical_null` to check just one.

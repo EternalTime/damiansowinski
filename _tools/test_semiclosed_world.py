@@ -1,5 +1,5 @@
 """The semiclosed world, more than half of a closed universe of dust behind Schwarzschild's throat:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and its drawings state, held on the published files. The embedding diagram's
 moments are held to the closed forms of the geometry: the dust a sphere of the radius its cycloid

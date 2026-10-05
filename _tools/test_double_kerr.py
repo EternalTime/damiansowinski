@@ -1,5 +1,5 @@
 """The double Kerr solution, Kramer and Neugebauer's two Kerr black holes on one axis:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files and on the pair every drawing
 draws, Herdeiro and Rebelo's two holes of equal mass M and opposite angular momenta +-J at

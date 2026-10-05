@@ -1,5 +1,5 @@
 """The maximally supersymmetric plane wave of type IIB supergravity:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: every chart has ten dimensions; the Brinkmann
 chart's one Ricci component is R_uu = 8 mu^2, which Metsaev's five-form F_u1234 = F_u5678 = 2 mu

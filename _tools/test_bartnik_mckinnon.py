@@ -1,5 +1,5 @@
 """Bartnik and McKinnon's solitons, held on the numbers bartnik_mckinnon.py solves and on the
-published file with the checker's own reader: python3 -m unittest discover -s _tools
+published file with the checker's own reader: .venv.noindex/bin/python -m unittest discover -s _tools
 
 No soliton is known in closed form, so the page's charts leave their functions free and every
 drawing rests on a numerical solution. The solution is held here to what the literature tabulates

@@ -65,7 +65,7 @@ no derivative across the disc. The theta functions are never told so; disc_condi
 metric of the disc out from the two conditions, and the theta functions' own values agree. main() prints every check; the tests in _tools/test_neugebauer_meinel.py
 hold the same numbers.
 
-    /tmp/mfs-venv/bin/python _tools/derivations/nm_disc.py
+    .venv.noindex/bin/python _tools/derivations/nm_disc.py
 """
 import math
 from functools import lru_cache

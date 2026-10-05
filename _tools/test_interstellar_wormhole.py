@@ -1,5 +1,5 @@
 """Interstellar's wormhole, the Dneg wormhole of James, von Tunzelmann, Franklin and Thorne:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing but
 the files: the embedding is a vertical tube of radius rho between the mouths and flares out beyond

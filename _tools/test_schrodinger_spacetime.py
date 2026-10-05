@@ -1,5 +1,5 @@
 """Schrodinger spacetime, anti-de Sitter space with one term in dt^2 added along a null direction:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files: the light cones of every plane of the time and the null coordinate, one edge along
@@ -136,7 +136,7 @@ class Drawings(unittest.TestCase):
         self.assertEqual(sorted(depths), [0.5, 1.0, 2.0])
 
 
-@unittest.skipUnless(HAS_SYMPY, "needs sympy: run with /tmp/mfs-venv/bin/python")
+@unittest.skipUnless(HAS_SYMPY, "needs sympy: run with .venv.noindex/bin/python")
 class FieldEquations(unittest.TestCase):
     """The published tensors against the matter and the causal facts the History states."""
 

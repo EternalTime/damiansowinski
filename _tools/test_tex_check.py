@@ -4,9 +4,10 @@ _tools/derivations/tex_check.cjs does the typesetting; this runs it with the tes
 whose mathematics would print as an error box cannot land. It needs node and mathjax-full, and
 fails rather than skips without them, since a check that is skipped holds nothing:
 
-    npm install --prefix /tmp/mfs-node mathjax-full
+    _tools/setup-env.sh
 
-MFS_NODE names another folder to look for mathjax-full in.
+which installs it in .node.noindex; MFS_NODE names another folder to look for it in.
+test_environment.py stops the suite before this runs when either is missing.
 """
 import os
 import shutil
@@ -15,8 +16,8 @@ import unittest
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent
-PREFIX = Path(os.environ.get("MFS_NODE", "/tmp/mfs-node"))
-INSTALL = f"npm install --prefix {PREFIX} mathjax-full"
+PREFIX = Path(os.environ.get("MFS_NODE", TOOLS.parent / ".node.noindex"))
+INSTALL = "_tools/setup-env.sh"
 
 
 class TexCheck(unittest.TestCase):

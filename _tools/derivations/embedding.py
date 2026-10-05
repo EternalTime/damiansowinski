@@ -33,8 +33,8 @@ with the lines of its flow on it, and the Krasnikov tube 1 - k, how far it tips 
 cone. The height is sampled on a grid and drawn as flat triangles, each within GRID_SAG of the
 drawing's size of it in space.
 
-    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy numpy scipy contourpy
-    /tmp/mfs-venv/bin/python _tools/derivations/embedding.py
+    _tools/setup-env.sh
+    .venv.noindex/bin/python _tools/derivations/embedding.py
     python3 _tools/build_mfs_data.py
 
 writes MFS/assets/data/embedding/<metric_id>.json, one file per spacetime that has a

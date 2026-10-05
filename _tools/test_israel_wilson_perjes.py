@@ -1,5 +1,5 @@
 """Israel, Wilson and Perjes's stationary fields, Majumdar and Papapetrou's charges set spinning:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files and on the two sources its drawings declare.
 The published spheroidal chart has no horizon and a g_tt that vanishes only on the ring r = 0 of

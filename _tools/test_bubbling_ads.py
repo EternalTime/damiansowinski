@@ -1,5 +1,5 @@
 """Lin, Lunin and Maldacena's bubbling anti-de Sitter space:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: the chart of concentric droplets is their
 metric (2.4) on the polar coordinates of the plane, and at the disc of radius L^2 it is the global

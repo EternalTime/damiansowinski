@@ -1,5 +1,5 @@
 """The Kaluza-Klein black holes, the charged holes that vacuum gravity in five dimensions shows
-in four: python3 -m unittest discover -s _tools
+in four: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts state about them, held on the published files. The drawings are held to the
 horizon, the ergosurface and the closed forms of the embedded surfaces from the numbers written.

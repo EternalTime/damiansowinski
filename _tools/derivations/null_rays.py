@@ -7,8 +7,8 @@ verify_metrics.py beside this file, in the x^0 = cT chart the collection writes,
 c = 1. Nothing is drawn by eye: the rays are integrated, the cones are the null
 directions at a point, and every marker is the zero set of a published quantity.
 
-    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy numpy scipy contourpy
-    /tmp/mfs-venv/bin/python _tools/derivations/null_rays.py
+    _tools/setup-env.sh
+    .venv.noindex/bin/python _tools/derivations/null_rays.py
     python3 _tools/build_mfs_data.py
 
 writes MFS/assets/data/diagrams/<metric_id>.json, one file per spacetime that has a

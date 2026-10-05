@@ -1,5 +1,5 @@
 """The gravastar, a ball of de Sitter space under a thin shell with Schwarzschild's vacuum outside:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state about the shell, held on the published files. The shell is in no chart, since
 g_rr jumps across it, so its surface density and tension are taken here from the jump of the

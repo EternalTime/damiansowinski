@@ -1,5 +1,5 @@
 """Schwarzschild's black hole in a quadrupole tidal field, the simplest of Geroch and Hartle's
-distorted black holes: python3 -m unittest discover -s _tools
+distorted black holes: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files and on the two shapes every drawing
 draws, the oblate q = 1/12 and the prolate q = -1/12 at m = 1. The first class needs nothing but

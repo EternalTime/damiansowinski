@@ -1,5 +1,5 @@
 """Einstein's static field of 1912, flat space with a speed of light c N(x, y, z):
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts and drawings of `einstein_1912_static` state, held on the published files. Every
 chart is held to flat space and one lapse, the free chart to R = -2 Laplacian(N)/N with no tt

@@ -1,5 +1,5 @@
 """Haggard and Rovelli's black hole fireworks, a shell of light that falls into a black hole and comes
-back out of a white hole: python3 -m unittest discover -s _tools
+back out of a white hole: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the construction black_to_white_hole.py draws and on the published
 files. The shell of light is in no chart's mathematics, so the junction is taken here from its

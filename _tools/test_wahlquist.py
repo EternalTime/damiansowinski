@@ -1,4 +1,4 @@
-"""Wahlquist's rotating perfect fluid: python3 -m unittest discover -s _tools
+"""Wahlquist's rotating perfect fluid: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: in every chart the published Einstein tensor
 is a perfect fluid's at rest in the chart, with rho + 3p the stated constant; Mars's chart at

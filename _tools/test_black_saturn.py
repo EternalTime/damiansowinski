@@ -1,5 +1,5 @@
 """Black Saturn, a black ring in balance around a black hole in five dimensions:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 Its charts leave four functions free, and its drawings declare Elvang and Figueras's on the plane
 of the ring, where they are rational in z. These tests hold what the drawings and their captions

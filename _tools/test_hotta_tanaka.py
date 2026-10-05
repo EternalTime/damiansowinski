@@ -1,5 +1,5 @@
 """Hotta and Tanaka's shock wave in de Sitter space, a delta on a curved background:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 The reading of the delta its charts rest on, verify_metrics.on_the_shock, held to the rules of
 distributions; what the published charts state, held to Einstein's equations with Lambda = 3/a^2,

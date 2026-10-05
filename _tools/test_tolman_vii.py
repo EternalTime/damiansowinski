@@ -1,5 +1,5 @@
 """Tolman's solution VII, held on the published file with the checker's own reader:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 The reader reads an arctangent and holds a listed name as a function. The star's chart is a
 perfect fluid whose density is 15 beta (1 - r^2/R^2)/R^2, it meets Schwarzschild's exterior at

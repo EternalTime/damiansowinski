@@ -1,5 +1,5 @@
 """The three-brane and its throat, the extreme three-brane of type IIB supergravity in ten dimensions:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: the Ricci scalar vanishes and the mixed Ricci
 tensor is -4 L^8/(rho^4 + L^4)^(5/2) on the brane's four dimensions and the radial one and the

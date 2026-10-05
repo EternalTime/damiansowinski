@@ -21,7 +21,7 @@ far away, in H/Omega and H_-, which leaves Omega^2 alone in the equations, and r
 Wronskian of the two where they meet; growth_rate(k) is its zero. Gregory and Laflamme's
 threshold is k r_s = 0.876, and nothing grows at shorter wavelengths.
 
-    /tmp/mfs-venv/bin/python _tools/derivations/gregory_laflamme.py
+    .venv.noindex/bin/python _tools/derivations/gregory_laflamme.py
 """
 import numpy as np
 from scipy.integrate import solve_ivp

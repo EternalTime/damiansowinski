@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Tests for the agent layer generator.
 
-    python3 -m unittest discover -s _tools
+    .venv.noindex/bin/python -m unittest discover -s _tools
 """
 
 import contextlib

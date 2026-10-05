@@ -1,4 +1,4 @@
-"""The Poincare dodecahedral universe: python3 -m unittest discover -s _tools
+"""The Poincare dodecahedral universe: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the binary icosahedral group built from Aurich, Lustig and Steiner's
 two generators, gamma_1 = j and gamma_2 = sigma/2 + i/(2 sigma) + j/2 with sigma the golden ratio,

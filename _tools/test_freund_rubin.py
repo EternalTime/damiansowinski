@@ -1,5 +1,5 @@
 """Freund and Rubin's anti-de Sitter space of four dimensions times a 7-sphere of radius 2L:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: every chart has eleven dimensions, the mixed
 Ricci tensor is -3/L^2 on the four large dimensions and 3/(2L^2) on the sphere, the ratio -2 of

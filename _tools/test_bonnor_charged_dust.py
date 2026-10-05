@@ -1,5 +1,5 @@
 """Bonnor's stars of charged dust, held on the published files:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 Every chart is -U^{-2}c^2dt^2 + U^2 times flat space. The published potentials have the densities
 their sources state, 4 pi G rho/c^2 = -(flat Laplacian of U)/U^3: Bonnor's (3.11) of 1965, Bonnor

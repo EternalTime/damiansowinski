@@ -1,5 +1,5 @@
 """Many black holes and wormholes in three dimensions, anti-de Sitter space cut along totally
-geodesic timelike surfaces and glued back together: python3 -m unittest discover -s _tools
+geodesic timelike surfaces and glued back together: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files and on the geometry of the
 hyperbolic plane. The tent the drawings declare is the region between the four surfaces

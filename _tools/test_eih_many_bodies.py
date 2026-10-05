@@ -1,5 +1,5 @@
 """Einstein, Infeld and Hoffmann's field of many bodies to post-Newtonian order:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: the potentials of point masses on any paths
 solve the field equations the parameters state; for two bodies the harmonic chart is Blanchet, Faye

@@ -1,4 +1,4 @@
-"""Shenker and Stanford's shock wave in the BTZ black hole: python3 -m unittest discover -s _tools
+"""Shenker and Stanford's shock wave in the BTZ black hole: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files and on the geometry of the black
 hole's Kruskal plane. Every drawing is at l = R = 1 and alpha = 1. The first class holds the

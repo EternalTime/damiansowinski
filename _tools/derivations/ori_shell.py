@@ -42,7 +42,7 @@ runs from negative values up to zero, and m_2 grows as (-v_2)^(-1) ln(-1/v_2)^(-
 is m_2 ~ v_1^(-p) exp(kappa v_1), Ori's law. Its integral over v_2 converges, so an outgoing ray
 behind the shell reaches the Cauchy horizon at a radius above zero.
 
-    /tmp/mfs-venv/bin/python _tools/derivations/ori_shell.py
+    .venv.noindex/bin/python _tools/derivations/ori_shell.py
 """
 import math
 

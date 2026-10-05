@@ -1,5 +1,5 @@
 """Witten's black hole in two dimensions, the first spacetime of two dimensions in the collection:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its dimension alone fixes, held on the checker's own Geometry: the Weyl and Einstein tensors
 vanish and the Kretschmann scalar is the square of the Ricci scalar. And what its texts state, held

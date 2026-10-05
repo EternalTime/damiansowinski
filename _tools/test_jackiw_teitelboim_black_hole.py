@@ -1,5 +1,5 @@
 """The black hole of Jackiw and Teitelboim's gravity in two dimensions:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files. On the checker's own Geometry: every chart has
 R = -2/L^2, the field equation of the dilaton, and no Einstein or Weyl tensor; the dilaton each

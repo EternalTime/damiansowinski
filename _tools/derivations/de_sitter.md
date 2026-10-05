@@ -629,6 +629,6 @@ Neither system needs a line in `PARAMETER_RELATIONS`, because neither parameter 
 
 Running
 
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system de_sitter/static_spherical --system de_sitter/flat_slicing
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system de_sitter/static_spherical --system de_sitter/flat_slicing
 
 reports no disagreements and no dimensional failures.

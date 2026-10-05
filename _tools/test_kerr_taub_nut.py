@@ -1,4 +1,4 @@
-"""Tests for Kerr-Taub-NUT's part of _tools/derivations: python3 -m unittest discover -s _tools
+"""Tests for Kerr-Taub-NUT's part of _tools/derivations: .venv.noindex/bin/python -m unittest discover -s _tools
 
 The way print_charts.py writes its values, held to changing no value; its chart of Plebanski and
 Demianski printed again byte for byte; and the tortoise coordinate its diagrams use on the regular

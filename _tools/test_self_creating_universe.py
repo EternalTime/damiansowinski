@@ -1,5 +1,5 @@
 """Gott and Li's self-creating universe, de Sitter space with each event identified with its images
-under a boost: python3 -m unittest discover -s _tools
+under a boost: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files, with nothing but the files and
 arithmetic: the horizons the drawings mark, the windows and periods they are drawn over, the

@@ -1,7 +1,7 @@
 """The Gregory-Laflamme instability of the black string, as _tools/derivations/gregory_laflamme.py
 computes it: Gregory's perturbation equations against the linearised vacuum equations, and the
 growth rates against Gregory and Laflamme's threshold. It needs sympy and scipy, so it runs under
-/tmp/mfs-venv/bin/python and is skipped under a Python without them."""
+.venv.noindex/bin/python and is skipped under a Python without them."""
 import math
 import sys
 import unittest

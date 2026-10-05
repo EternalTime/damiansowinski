@@ -1,6 +1,6 @@
 """Bondi and Sachs's radiating metric, -(V/r) e^(2 beta) du^2 - 2 e^(2 beta) du dr
 + r^2 e^(2 gamma) (dtheta - U du)^2 + r^2 e^(-2 gamma) sin^2 theta dphi^2:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files: the cones of the spacetime diagrams, the edge that is future null infinity, the

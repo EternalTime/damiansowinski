@@ -1,5 +1,5 @@
 """Lifshitz spacetime, anti-de Sitter space with time scaling as a power of space:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: the anisotropic scaling is an isometry of
 every chart's published metric, the published Einstein tensor is the stress of Taylor's massive

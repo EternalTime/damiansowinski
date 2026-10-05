@@ -1,5 +1,5 @@
 """Neugebauer and Meinel's rigidly rotating disc of dust:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files and on the solution itself. The
 first class needs nothing but the files. The second needs numpy and scipy and is skipped where they

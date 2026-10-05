@@ -1,5 +1,5 @@
 """Cremmer and Scherk's spontaneous compactification, Minkowski space times a sphere in six dimensions:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: the Einstein tensor is -1/a^2 on the four flat
 dimensions and nothing on the sphere, which with the cosmological constant 1/2a^2 the parameter

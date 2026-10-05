@@ -1,5 +1,5 @@
 """The black holes of string theory with three and four charges, held on the published files:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 The published line elements, with f and the harmonic functions written out, are held to what their
 sources state: the area of the horizon, 2 pi^2 prod sqrt(r_0^2 + r_i^2) in five dimensions and

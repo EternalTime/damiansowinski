@@ -1,5 +1,5 @@
 """The parametrised post-Newtonian metric, the weak field of a body with Eddington's numbers beta
-and gamma in front of its terms: python3 -m unittest discover -s _tools
+and gamma in front of its terms: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: the bending of light by (1 + gamma)/2 times
 Einstein's, the advance of the perihelion by (2 + 2 gamma - beta)/3 times his, Shapiro's logarithm,

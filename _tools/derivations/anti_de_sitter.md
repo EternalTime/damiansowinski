@@ -540,7 +540,7 @@ No relation in `PARAMETER_RELATIONS` is needed, since $L$ is free and every comp
 
 Both systems check fast, the metrics being diagonal and their components short:
 
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py \
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py \
         --system anti_de_sitter/static_global --system anti_de_sitter/poincare
 
 runs in about three seconds and reports no disagreements, no dimensional failures and nothing unchecked.

@@ -1,5 +1,5 @@
 """Kerr's black hole in Melvin's magnetic universe, Ernst and Wild's solution:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files. The second needs numpy, scipy and sympy and is skipped where they are absent: it

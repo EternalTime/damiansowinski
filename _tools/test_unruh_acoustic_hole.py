@@ -1,5 +1,5 @@
 """Unruh's acoustic black hole, a fluid of constant density falling into a point at c r_0^2/r^2:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files: the horizon where every spacetime diagram marks it, the rays of each chart against

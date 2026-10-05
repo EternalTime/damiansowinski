@@ -8,8 +8,8 @@ coordinate system's published metric_components through the Reader of verify_met
 beside this file, in the x^0 = cT chart the collection writes, with c = 1, by the same
 load and published_matrix the null ray diagrams use.
 
-    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy numpy scipy contourpy
-    /tmp/mfs-venv/bin/python _tools/derivations/conformal.py
+    _tools/setup-env.sh
+    .venv.noindex/bin/python _tools/derivations/conformal.py
     python3 _tools/build_mfs_data.py
 
 writes MFS/assets/data/conformal/<metric_id>.json, one file per spacetime that has a

@@ -12,10 +12,11 @@
      conformal    every label, legend, caption, restriction, setting and input of the
                   conformal diagrams.
 
-   It needs mathjax-full, which does not belong in the repository:
+   It needs mathjax-full, which does not belong in the repository and which _tools/setup-env.sh
+   installs in .node.noindex, the folder it reads by default:
 
-     npm install --prefix /tmp/mfs-node mathjax-full
-     node _tools/derivations/tex_check.cjs /tmp/mfs-node
+     _tools/setup-env.sh
+     node _tools/derivations/tex_check.cjs
 
    and exits non-zero, naming the file, the place and the string, if anything fails. */
 'use strict';
@@ -23,7 +24,7 @@ const fs = require('fs');
 const path = require('path');
 const {createRequire} = require('module');
 
-const prefix = process.argv[2] || '/tmp/mfs-node';
+const prefix = process.argv[2] || path.join(__dirname, '..', '..', '.node.noindex');
 const need = createRequire(path.join(path.resolve(prefix), 'node_modules', 'mathjax-full', 'package.json'));
 const {mathjax} = need('mathjax-full/js/mathjax.js');
 const {TeX} = need('mathjax-full/js/input/tex.js');

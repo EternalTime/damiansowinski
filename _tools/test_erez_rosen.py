@@ -1,5 +1,5 @@
 """Erez and Rosen's quadrupole, Schwarzschild's mass with a quadrupole moment in Weyl's class:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files and on the two deformations every
 drawing draws, the prolate q = 1 and the oblate q = -1/2 at m = 1. The first class needs nothing

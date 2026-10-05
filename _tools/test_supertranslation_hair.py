@@ -1,5 +1,5 @@
 """Compère and Long's flat space with supertranslation hair:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The drawings take the field
 C = ell (3 cos^2 theta - 1)/2 at ell = 1. The shells of constant rho are held to Compère and Long's

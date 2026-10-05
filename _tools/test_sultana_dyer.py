@@ -1,5 +1,5 @@
 """Sultana and Dyer's black hole, Schwarzschild's metric times the scale factor of a universe of dust:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files: the event horizon and the two trapping horizons where every spacetime diagram

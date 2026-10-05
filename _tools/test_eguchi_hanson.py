@@ -1,5 +1,5 @@
 """The Eguchi-Hanson space, a Riemannian space of four dimensions with no time in it:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The embedding diagram's three
 surfaces are held to their closed forms from the numbers written and nothing else: the fibre over

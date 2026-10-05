@@ -1,5 +1,5 @@
 """Podolsky and Ovcharenko's Kerr black hole in Bertotti and Robinson's uniform magnetic field:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing but
 the files. The second needs sympy and mpmath and is skipped where they are absent: it reads each

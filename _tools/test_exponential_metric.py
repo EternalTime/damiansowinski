@@ -1,5 +1,5 @@
 """The exponential metric of Papapetrou and Yilmaz, g_tt = -1/g_rr = -e^(-2m/r):
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files: the throat where every spacetime diagram marks it, the circles and the level

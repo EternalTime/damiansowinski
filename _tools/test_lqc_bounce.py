@@ -1,5 +1,5 @@
 """The bounce of loop quantum cosmology, the flat universe of a massless scalar field in its
-effective dynamics: python3 -m unittest discover -s _tools
+effective dynamics: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: the scale factor a = (1 + t^2/t_b^2)^(1/6)
 solves the modified Friedmann equation H^2 = (8 pi G/3) rho (1 - rho/rho_c) with rho = rho_c/a^6 and

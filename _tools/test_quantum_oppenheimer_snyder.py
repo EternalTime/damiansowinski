@@ -1,4 +1,4 @@
-"""The quantum Oppenheimer-Snyder black hole: python3 -m unittest discover -s _tools
+"""The quantum Oppenheimer-Snyder black hole: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files. Outside the dust, the static chart is
 Lewandowski, Ma, Yang and Zhang's f = 1 - 2m/r + alpha m^2/r^4, whose mixed Einstein tensor is the

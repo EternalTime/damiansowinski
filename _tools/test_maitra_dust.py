@@ -1,5 +1,5 @@
 """Maitra's rotating dust, stationary and cylindrically symmetric, with shear and no closed
-timelike curve: python3 -m unittest discover -s _tools
+timelike curve: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files, in units of its length a: the twist k is less
 than r at every radius, so every circle about the axis is spacelike and g^tt is negative; the
