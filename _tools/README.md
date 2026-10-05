@@ -200,13 +200,33 @@ The words "Spacetime data loading..." are written on the ground's own colour, si
 On a phone, where the panels fill the screen in one column, it is not drawn and its relations are never fetched.
 Nothing on it glows: its names are written over the lines behind them on the ground's own colour, as the timeline writes them.
 
+### The search field and its keywords
+
+From the first letter typed, the keywords the search can be finished with are offered under the field, as the captain asked on 5 October 2026.
+They are the index's tags that `mfsTagMatches` finds for what is typed, as the search finds them, those the text starts first and then those with a later word it starts, each in the order of the alphabet: `mfsKeywords` in `_layouts/mfs.html`.
+The field is a combobox: the arrow keys go through the keywords while the field keeps the keyboard, the pointer goes to one by resting on it, and Enter or a press chooses it.
+A keyword chosen is put in the field and selects exactly the spacetimes carrying it, `mfsCarrying`, in the list and in the graph, which springs to them as it does for a search.
+That is narrower than typing it out, since "de Sitter" typed also finds every name holding it and every tag with a word it starts, such as "anti-de Sitter".
+Escape, leaving the field, a spacetime opening or nothing left to offer puts the keywords away, and the next letter or ArrowDown offers them again.
+They lie over the top of the list in the field's border on the ground's own colour, each set as a name in the list is and the one gone to as a name under the pointer is, and they end inside the panel.
+
+The field keeps the site's own look in every state, empty, focused, typed in, with names found or none, and with keywords offered.
+On 5 October 2026 the captain saw it change colour and turn white while typing.
+Nothing of the page's own does that: no rule sets the field apart in any state, and its colours read the same in every state in Chrome.
+What does is the browser, which offers what was typed in a field before in a white list of its own under it and fills the field in its own colours when one is taken.
+It keeps that history for a field outside any form once it judges the field sent, as when the page changes its address and the field is hidden, which opening a spacetime does.
+Chrome driven by a script never shows that list, so the checks read what the page decides: the field's colours in every state, and that it asks the browser for nothing.
+So the field carries `autocomplete="off"`, and `autocorrect`, `autocapitalize` and `spellcheck` off with it, so the browser offers nothing of its own there.
+
 `_tools/test_background_graph.py` runs the geometry and the page's search in Node: every keyword typed gathers exactly the spacetimes carrying it, which are the ones the list shows, clearing the search brings every spacetime back to its place, the same data gives the same layout, a search's layout depends on its spacetimes and the relations between them alone, and the page's own choice of what is lit lights the spacetime asked for, that one alone and only while the list shows it.
+It runs the keywords the same way: every one letter and every two letters that start a word of a keyword offer every keyword with a word they start and no other, in their order, and each keyword chosen selects exactly the spacetimes carrying it in the list and the graph; and it holds the field to offering the browser nothing and to no rule of its own for any state.
 The page as drawn is held to the same with
 
     node _tools/background_graph.mjs http://127.0.0.1:4000
     node _tools/background_graph.mjs http://127.0.0.1:4000 --phone
 
 which types keywords a key at a time, checks what the graph gathers against the list and the index, checks that the canvas spans the whole window at four desktop sizes, lights spacetimes from the list by the pointer and by Tab and from the graph by the pointer and reads which point is drawn pink and which name is lit, with and without a search, presses a spacetime in the graph and checks the graph stays still under its panel, and on a phone checks that no tap can land on it.
+At both sizes it reads the search field's colours at rest and in every state, focused, one letter and two typed, a keyword gone to and chosen, nothing found, names found, cleared and left, and holds each to the colours at rest, and it types one letter and two and checks the keywords offered, goes through them with the arrow keys, chooses one by Enter and one by the pointer and checks that the list, and on a desktop the graph, then shows exactly the spacetimes carrying it.
 
 ## The page on a phone
 
