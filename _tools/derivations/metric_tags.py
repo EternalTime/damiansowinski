@@ -37,10 +37,10 @@ every spacetime's tags to the facts under it; a chart that is new or whose line 
 changed fails there until this script has been run again. A chart whose stamp still matches
 is not computed again, so a run after one new spacetime takes seconds.
 
-    /tmp/mfs-venv/bin/python _tools/derivations/metric_tags.py
-    /tmp/mfs-venv/bin/python _tools/derivations/metric_tags.py --system kerr/boyer_lindquist
-    /tmp/mfs-venv/bin/python _tools/derivations/metric_tags.py --all     # every chart again
-    /tmp/mfs-venv/bin/python _tools/derivations/metric_tags.py --check   # write nothing
+    .venv.noindex/bin/python _tools/derivations/metric_tags.py
+    .venv.noindex/bin/python _tools/derivations/metric_tags.py --system kerr/boyer_lindquist
+    .venv.noindex/bin/python _tools/derivations/metric_tags.py --all     # every chart again
+    .venv.noindex/bin/python _tools/derivations/metric_tags.py --check   # write nothing
 """
 import argparse
 import hashlib

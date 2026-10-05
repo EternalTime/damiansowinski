@@ -1,5 +1,5 @@
 """The static sphere of Brans and Dicke's theory, Brans's class I:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first two classes need
 nothing but the files: the constants the three charts name for one solution and the coupling
@@ -205,7 +205,7 @@ class Drawings(unittest.TestCase):
         self.assertAlmostEqual(X, 2 * math.atan(tortoise(2.001) / 16), places=2)
 
 
-@unittest.skipUnless(HAS_SYMPY, "the Reader needs sympy: /tmp/mfs-venv/bin/python -m unittest discover -s _tools")
+@unittest.skipUnless(HAS_SYMPY, "the Reader needs sympy: .venv.noindex/bin/python -m unittest discover -s _tools")
 class Geometry(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

@@ -1,5 +1,5 @@
 """Kasner's universe with a magnetic field, ds^2 = f^2(-c^2dt^2 + t^(2 p_1)dx^2 + t^(2 p_2)dy^2)
-+ t^(2 p_3)dz^2/f^2 with f = 1 + b^2 t^(2 p_3): python3 -m unittest discover -s _tools
++ t^(2 p_3)dz^2/f^2 with f = 1 + b^2 t^(2 p_3): .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files: the exponents the drawings declare and the ones they end at, their square
@@ -87,7 +87,7 @@ class Drawings(unittest.TestCase):
             self.assertEqual([r["kind"] for r in back], [kind], other)
 
 
-@unittest.skipUnless(HAS_SYMPY, "needs sympy: run under /tmp/mfs-venv/bin/python")
+@unittest.skipUnless(HAS_SYMPY, "needs sympy: run under .venv.noindex/bin/python")
 class Physics(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

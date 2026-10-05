@@ -1,5 +1,5 @@
 """Bowers and Liang's anisotropic star, held on the published file with the checker's own reader:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 The density is uniform, the pressure along the radius is their (3.4) and the pressure across it
 exceeds that by their (3.1) with (3.2). The surface is Schwarzschild's, Q = 1/2 is Schwarzschild's

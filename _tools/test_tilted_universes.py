@@ -1,4 +1,4 @@
-"""Tilted universes and the whimper: python3 -m unittest discover -s _tools
+"""Tilted universes and the whimper: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts and drawings of `tilted_universes` state, held on the published files: Farnsworth's
 chart is dust of the density its convention gives, its singularity and its Cauchy horizon stand

@@ -1,5 +1,5 @@
 """Bah and Heidmann's topological star:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The numbers its captions quote,
 the times light takes, the clocks on the bubble, the curvature there, the periods of the swinging

@@ -15,8 +15,8 @@ Nothing passes silently. A system whose values cannot be parsed, or whose declar
 is missing, or a tensor sympy cannot finish inside the time budget, is reported as
 UNCHECKED with the reason. The script exits non-zero if anything disagreed.
 
-    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py
+    _tools/setup-env.sh
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py
 
 Pass --system <metric_id>/<system_id> to check one system, repeatable.
 Pass --budget <seconds> to change the per tensor time budget, which defaults to 120.

@@ -1,6 +1,6 @@
 """Vuorio's universe and warped anti-de Sitter space, the homogeneous vacua of topologically
 massive gravity with a timelike Killing vector of constant twist:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: every chart is -(c dt + A)^2 + h with dA twice
 the twist Omega times the area of h; the Ricci scalar is 2(Omega^2 - m^2) and the Kretschmann

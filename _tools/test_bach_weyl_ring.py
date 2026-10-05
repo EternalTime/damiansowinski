@@ -1,5 +1,5 @@
 """Bach and Weyl's ring, the static vacuum field of a thin circular ring of matter in Weyl's class:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files and on the ring every drawing
 draws, m = a/2 in units of the ring's radius a. The first class needs nothing but the files. The

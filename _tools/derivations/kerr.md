@@ -592,7 +592,7 @@ The Christoffel symbols come out in about forty seconds, but the Riemann tensor 
 Raising `--budget` does not fix that inside any sitting worth having:
 
 ```
-/tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py \
+.venv.noindex/bin/python _tools/derivations/verify_metrics.py \
     --system kerr/boyer_lindquist --budget 14400
 ```
 

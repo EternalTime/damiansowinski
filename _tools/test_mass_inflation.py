@@ -1,5 +1,5 @@
 """Mass inflation, the inside of a charged black hole crossed by two streams of radiation:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files and on the numbers its diagrams are drawn
 from. The published Einstein tensors are read back through the checker's Reader and held to the

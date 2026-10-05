@@ -1,4 +1,4 @@
-"""Kopczynski and Trautman's universe with torsion: python3 -m unittest discover -s _tools
+"""Kopczynski and Trautman's universe with torsion: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts and drawings of `kopczynski_trautman` state, held on the published files. The
 comoving charts are held to the modified Friedmann equation of Trautman's article, to the

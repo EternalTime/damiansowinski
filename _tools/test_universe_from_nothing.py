@@ -1,5 +1,5 @@
 """The universe from nothing, half a 4-sphere joined at its equator to the waist of de Sitter's
-closed universe: python3 -m unittest discover -s _tools
+closed universe: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files, with nothing but the files and
 arithmetic: the charts and the signature each states, the join at rest on a 3-sphere of radius l,

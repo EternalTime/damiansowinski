@@ -1,5 +1,5 @@
 """Hiscock's evaporating black hole, ingoing and outgoing Vaidya metrics joined on a timelike surface:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state about the surface of pair creation, held on the published files. The surface
 r = R is in neither chart's mathematics, so what it carries is taken here from the jump of the

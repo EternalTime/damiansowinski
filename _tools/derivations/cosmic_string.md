@@ -748,6 +748,6 @@ Every component of each system holds for all values of its own parameters, which
 
 Running
 
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system cosmic_string/conical --system cosmic_string/interior_cap
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system cosmic_string/conical --system cosmic_string/interior_cap
 
 reports no disagreements and no dimensional failures.

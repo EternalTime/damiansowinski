@@ -1,5 +1,5 @@
 """The A- and B-metrics of Ehlers and Kundt, the static vacuum fields of type D beside Schwarzschild's:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts of the spacetime state, held on the published files: that BI is Schwarzschild's
 metric with the time and the angle exchanged, that AII and AIII are the hyperbolic and the flat

@@ -1,5 +1,5 @@
 """The gravitational instantons of 1977 and 1978, Riemannian spaces of four dimensions with no time:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts and drawings state, held on the published files. The embedding diagram's surfaces
 are held to their closed forms from the numbers written and nothing else: the cigar of the Euclidean

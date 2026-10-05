@@ -1,5 +1,5 @@
 """Kundt's waves, plane-fronted gravitational waves whose rays turn from front to front:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files: the light cones of every plane drawn, one edge along the rays and the other
@@ -188,7 +188,7 @@ class WaveFronts(unittest.TestCase):
         self.assertEqual(sections, [("horizon", 0.0), ("flow", 0.5), ("flow", 1.0), ("flow", 2.0)])
 
 
-@unittest.skipUnless(HAS_SYMPY, "needs sympy: /tmp/mfs-venv/bin/python -m unittest discover -s _tools")
+@unittest.skipUnless(HAS_SYMPY, "needs sympy: .venv.noindex/bin/python -m unittest discover -s _tools")
 class Physics(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -271,7 +271,7 @@ class Physics(unittest.TestCase):
         self.assertEqual(vm.norm(second - (1 - reader.by_rates(sp.diff(x, X)) ** 2) / x), 0)
 
 
-@unittest.skipUnless(HAS_SYMPY, "needs sympy: /tmp/mfs-venv/bin/python -m unittest discover -s _tools")
+@unittest.skipUnless(HAS_SYMPY, "needs sympy: .venv.noindex/bin/python -m unittest discover -s _tools")
 class Rates(unittest.TestCase):
     """The checker's declared derivatives of a held name, on a name small enough to read."""
 

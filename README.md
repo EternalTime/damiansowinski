@@ -19,7 +19,7 @@ The publications page reads its order from `_data/publication_keys.json` and the
 
     python3 _tools/build_agent_data.py
 
-`python3 -m unittest discover -s _tools` fails while either is out of date, as `python3 _tools/build_agent_data.py --check` does.
+`.venv.noindex/bin/python -m unittest discover -s _tools`, in the environment `_tools/setup-env.sh` builds, fails while either is out of date, as `python3 _tools/build_agent_data.py --check` does.
 To check a build the way an agent reads it, including that every address in `llms.txt` answers and that the JSON-LD uses only what schema.org defines:
 
     bundle exec jekyll build

@@ -1,5 +1,5 @@
 """Plebański and Hacyan's products and the anti-Nariai universe:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: every chart of a product has the Einstein
 tensor of two surfaces of constant curvature K1 and K2, with the cosmological constant

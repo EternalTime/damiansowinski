@@ -23,8 +23,8 @@ jackiw_teitelboim_black_hole, unruh_acoustic_hole, vuorio_warped_ads, interstell
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce and
 maximally_supersymmetric_plane_wave, and Godel's cylindrical chart.
 
-    /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
+    .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]...
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
 
 Each chart below names its coordinates, its parameters, the line element it publishes, the
 same line element in the chart x^0 = ct that the components are printed in, and how its values

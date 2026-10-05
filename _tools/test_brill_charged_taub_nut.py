@@ -1,5 +1,5 @@
 """Brill's charged Taub-NUT, held on the published files:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 Every chart writes Sigma = r^2 + l^2 and Delta = r^2 - 2mr - l^2 + r_q^2. The published first
 chart is the published Taub-NUT metric at r_q = 0 and Reissner and Nordstrom's at l = 0, its

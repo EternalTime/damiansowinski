@@ -1,5 +1,5 @@
 """Nordstrom's scalar theory of gravity as Einstein and Fokker wrote it, a conformal factor on
-Minkowski's metric: python3 -m unittest discover -s _tools
+Minkowski's metric: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts and drawings of `nordstrom_scalar` state, held on the published files. The free
 chart is held to R = -6 box Phi/Phi^3 and to no Weyl tensor, and each other chart to being that

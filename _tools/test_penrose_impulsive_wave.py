@@ -1,5 +1,5 @@
 """Penrose's spherical impulsive wave for a cosmic string that snaps:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The continuous charts are held to
 a curvature that is a delta on the wave front and nothing else, and, where sympy and numpy are

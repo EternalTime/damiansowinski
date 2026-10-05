@@ -1,5 +1,5 @@
 """The T-models of Datt and Ruban, dust on a tube of spheres that all share one radius:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and its drawings state, held on the published files. The scale factor of
 Ruban's chart is held to the numbers the History and the captions print: positive from the

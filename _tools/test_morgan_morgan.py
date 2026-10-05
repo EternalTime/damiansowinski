@@ -1,5 +1,5 @@
 """The Morgan-Morgan discs, static discs of counterrotating dust in Weyl's class:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files and on the disc every drawing
 draws, the first of the family at m = a/5 in units of the disc's radius a. The first class needs

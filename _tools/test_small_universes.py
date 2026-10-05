@@ -1,4 +1,4 @@
-"""Ellis's small universes: python3 -m unittest discover -s _tools
+"""Ellis's small universes: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts and drawings of `small_universes` state, held on the published files. The torus
 charts are held to dust at the scale factors their drawings declare and to the laps of light, the

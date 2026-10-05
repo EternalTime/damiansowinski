@@ -3,7 +3,7 @@ field equation its construction does not use, Kaup's limit, the first law dM = o
 Newtonian limit, the regular centre, and the same star in the isotropic chart. Then the files
 its drawings wrote, from their numbers alone: every ray drawn is a null curve of the star's
 metric, and the embedded surface climbs at sqrt(a^2 - 1). It needs sympy and scipy, so it runs
-under /tmp/mfs-venv/bin/python and is skipped under a Python without them."""
+under .venv.noindex/bin/python and is skipped under a Python without them."""
 import json
 import sys
 import unittest

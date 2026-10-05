@@ -1,5 +1,5 @@
 """Tippett and Tsang's time machine, a bubble whose riders go round a closed timelike curve:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts and drawings of `tippett_tsang` state, held on the published files. The bubble the
 diagrams declare is held to Tippett and Tsang's own numbers. The published components are held to

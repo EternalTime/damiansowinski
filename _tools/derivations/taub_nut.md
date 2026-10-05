@@ -478,7 +478,7 @@ None of the tensors from Riemann down reliably finishes inside the default per t
 The budget is wall clock, so how many of the tensors come back `UNCHECKED` at the default depends on what else the machine is doing.
 Verify it at a larger budget instead:
 
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py \
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py \
         --system taub_nut/spherical --budget 2400
 
 which reports no disagreements and no dimensional failures, and takes from nine minutes to about half an hour depending on the load.

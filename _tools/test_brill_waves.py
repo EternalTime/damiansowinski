@@ -1,5 +1,5 @@
 """Brill's time-symmetric gravitational waves, one moment of a spacetime:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 The physics its texts and drawings state, held on the solver the drawings use and on the published
 files. The conformal factor of Holz, Miller, Wakano and Wheeler's wave solves Brill's equation; its

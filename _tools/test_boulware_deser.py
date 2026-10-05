@@ -1,5 +1,5 @@
 """Boulware and Deser's black hole of Einstein-Gauss-Bonnet gravity in five dimensions:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The embedding diagram's two
 surfaces are held to the quadrature of their slopes, from the numbers written and nothing else,

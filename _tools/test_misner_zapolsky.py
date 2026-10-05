@@ -1,5 +1,5 @@
 """The star of infinite central density, held on the published file with the checker's own reader:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 The sphere of radiation is a perfect fluid with p = rho c^2/3, 8 pi G rho/c^2 = 3/(7 r^2) and the
 mass 3r/14 inside r, Oppenheimer and Volkoff's (22), and it is the same sphere at every scale.

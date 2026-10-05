@@ -575,8 +575,8 @@ The distance down it is the coordinate $r$, the constant circumference is the $4
 
 Run
 
-    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system bertotti_robinson/static --system bertotti_robinson/poincare
+    _tools/setup-env.sh
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system bertotti_robinson/static --system bertotti_robinson/poincare
 
 and it reports both systems checked with no disagreement and no dimensional failure, in about three seconds.
 

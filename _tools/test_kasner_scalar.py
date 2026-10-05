@@ -1,5 +1,5 @@
 """Kasner's universe with a scalar field, ds^2 = -c^2dt^2 + sum t^(2 p_i) dx_i^2 with sum p_i = 1
-and sum p_i^2 = 1 - q^2: python3 -m unittest discover -s _tools
+and sum p_i^2 = 1 - q^2: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files: the exponents the drawings declare, their square windows, the ring of the
@@ -101,7 +101,7 @@ class Drawings(unittest.TestCase):
             self.assertEqual([r["kind"] for r in back], [kind], other)
 
 
-@unittest.skipUnless(HAS_SYMPY, "needs sympy: run under /tmp/mfs-venv/bin/python")
+@unittest.skipUnless(HAS_SYMPY, "needs sympy: run under .venv.noindex/bin/python")
 class Physics(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

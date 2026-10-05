@@ -1,5 +1,5 @@
 """The markers of every view whose row carries a `where`, held to what the generator draws today:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 A row's `where` is positive on the spacetime, and nothing is marked outside it. Since the website's
 `fa93957` of 2 October 2026 `Plot.zero_set` blanks the whole grid there, so a curve lying on the very

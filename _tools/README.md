@@ -26,7 +26,7 @@ Eight tags are now decided by the metric and never written by hand: `vacuum` (Ri
 An Einstein space also carries `cosmological constant`, and `positive` or `negative cosmological constant` where its parameters fix the sign, which other spacetimes may carry by hand.
 After writing or editing a chart, compute its facts, which needs sympy and takes seconds for one spacetime:
 
-    /tmp/mfs-venv/bin/python _tools/derivations/metric_tags.py
+    .venv.noindex/bin/python _tools/derivations/metric_tags.py
 
 It computes only the charts that are new or whose coordinates, domains, line element or parameters changed, and writes `_tools/derivations/metric_tags.json`, which is committed.
 `_tools/test_metric_tags.py` then says which of the eight tags the spacetime lacks and which it carries wrongly, and fails until the file's `tags` agree; it needs no sympy and runs in the normal suite.
@@ -485,10 +485,29 @@ An index entry's `diagrams`, `conformal` and `embedding` are the same kind of ha
 
 reports whether the published files are still what the folder says they should be, and changes nothing.
 
-    python3 -m unittest discover -s _tools
+    .venv.noindex/bin/python -m unittest discover -s _tools
 
-runs the tests, which include that check and the TeX check under "Conformal diagrams" below, for which they need mathjax-full in `/tmp/mfs-node`.
+runs the tests, which include that check and the TeX check under "Conformal diagrams" below.
+They run in the environment of the next section and nowhere else.
 The check covers the symbols as well: "Every symbol is defined" above says what it refuses.
+
+## The test environment
+
+The tests and the derivations run on sympy, numpy, scipy and contourpy, and the TeX check on mathjax-full, none of which belong in the repository.
+One command builds them inside the checkout, from scratch each time it is run, in about fifteen seconds:
+
+    _tools/setup-env.sh
+
+It makes a Python venv in `.venv.noindex` with the packages pinned in `_tools/requirements.txt`, and installs mathjax-full in `.node.noindex` at the version pinned in `_tools/node-requirements.txt`.
+Both folders are gitignored, so every worktree builds its own, and their names end in `.noindex` so Spotlight leaves their thousands of files alone.
+`PYTHON` names another interpreter than `python3.14` to build the venv from.
+A new pin goes in the requirements file and takes effect on the next run of the script.
+
+The environment used to live in `/tmp/mfs-venv` and `/tmp/mfs-node`, shared by every checkout.
+On 5 October 2026 macOS's cleaner of `/tmp` deleted the venv's `pyvenv.cfg` and package files, its Python ran as bare Python, and the suite reported import errors and skipped every test that needs sympy instead of failing.
+So the suite now checks its environment before any test runs: `_tools/test_environment.py` stops it, naming each problem and the setup command, unless it runs under this checkout's `.venv.noindex/bin/python` with every pinned package at its pinned version and importable, node on the PATH and mathjax-full at its pin.
+`_tools/environment.py` holds that check and, run by itself, says whether the environment is whole.
+The guards in single test files that skip a test where sympy or numpy is absent matter only when that file runs alone; the suite never reaches them.
 
 ## Spacetime diagrams
 
@@ -506,8 +525,8 @@ A domain that is an inequality between the plane's two coordinates, as the $UV <
 
 It needs more than sympy, and takes about nine minutes for the whole collection, the longest single view being FRW drawn through its observer at about a minute and a half:
 
-    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy numpy scipy contourpy
-    /tmp/mfs-venv/bin/python _tools/derivations/null_rays.py
+    _tools/setup-env.sh
+    .venv.noindex/bin/python _tools/derivations/null_rays.py
     python3 _tools/build_mfs_data.py
 
 `--metric <metric_id>` redraws one spacetime and is repeatable, which is what to use after editing one entry.
@@ -700,7 +719,7 @@ Wahlquist's fluid is drawn in its own rest frame at $k = 3/10$ and $b = 4/5$, in
 
 ### Checking the rays
 
-    /tmp/mfs-venv/bin/python _tools/derivations/null_rays.py --verify
+    .venv.noindex/bin/python _tools/derivations/null_rays.py --verify
 
 traces rays as the page's files are traced and measures, for every view with a closed form, how far the quantity each family should conserve drifts along a ray, together with the dust solutions and the equality of Natario's and Alcubierre's metrics on the plane of their axis.
 For the principal null rays it adds the checks the next section describes, and the closed forms $ct \mp r_*$ and $\phi \mp r_\sharp$ of Kerr and Kerr-Newman, which the drawing never uses.
@@ -848,7 +867,7 @@ The application reads the same files.
 `_tools/derivations/conformal.py` draws them, one function per spacetime, each carrying its derivation in its docstring, reading the published metric through the checker's `Reader` with the `load` and `published_matrix` the null rays use.
 It needs the same environment as `null_rays.py` and takes a few seconds for the whole collection:
 
-    /tmp/mfs-venv/bin/python _tools/derivations/conformal.py
+    .venv.noindex/bin/python _tools/derivations/conformal.py
     python3 _tools/build_mfs_data.py
 
 `--metric <metric_id>` redraws one spacetime, and `--verify` prints every check and writes nothing.
@@ -1005,11 +1024,11 @@ No caption says "This is the whole of" or "stands for".
 `_tools/derivations/tex_check.cjs` typesets every TeX string the page sets, in the metrics, the diagram files and the conformal files, a published value together with its negation, through the TeX input MathJax loads on the page, and exits non-zero naming each one it cannot set.
 sympy never reads the typesetting, so this is the check that catches a value that is right and prints as an error box:
 
-    npm install --prefix /tmp/mfs-node mathjax-full
-    node _tools/derivations/tex_check.cjs /tmp/mfs-node
+    _tools/setup-env.sh
+    node _tools/derivations/tex_check.cjs
 
 `_tools/test_tex_check.py` runs it with the tests, and fails rather than skips where node or mathjax-full is missing, so a page whose mathematics would print as an error box cannot land.
-`MFS_NODE` names another folder than `/tmp/mfs-node` for it to find mathjax-full in.
+The script reads mathjax-full from `.node.noindex` unless given another folder, and `MFS_NODE` names another folder for the test.
 It does not load the `boldsymbol` package, so a vector is written `\mathbf{x}` when its letter is Latin and `\vec{\omega}` when it is Greek, which `\mathbf` leaves light.
 On 2 October 2026 it set all 157522 strings, each distinct one once.
 It does not read the embedding files yet, so a caption, setting or label of an embedding diagram that MathJax cannot set shows only on the page.
@@ -1028,7 +1047,7 @@ The file is the definition in "The file, which the application reads" below, and
 `_tools/derivations/embedding.py` draws them, one function per spacetime with its derivation in its docstring, reading the published metric through the checker's `Reader` with the `load` and `published_matrix` the null rays use.
 It needs the same environment as `null_rays.py` and took 409 seconds for the whole collection on 30 September 2026, most of it in the frames of the movies, above all Mixmaster's, whose every frame rewrites its metric in half angles in sympy, and the Malament-Hogarth plane's, whose conformal factor is a piecewise function evaluated whole at every point of every quadrature; the nine views that became movies on 1 October 2026 took 306 seconds between them when they were redrawn alone:
 
-    /tmp/mfs-venv/bin/python _tools/derivations/embedding.py
+    .venv.noindex/bin/python _tools/derivations/embedding.py
     python3 _tools/build_mfs_data.py
 
 `--metric <metric_id>` redraws one spacetime, and `--verify` prints every check and writes nothing.
@@ -1468,7 +1487,7 @@ The spacetime diagram and the conformal diagram each draw the slice the embeddin
 Every embedding diagram draws part of one moment of its spacetime, or of several moments in turn, and `_tools/derivations/embedding_slices.md` works out how each moment meets every other diagram of its spacetime.
 `_tools/derivations/slices.py` is that table in code.
 It reads each moment and how far the embedding reaches along it from the embedding file itself, and says what the moment is in the chart of each spacetime diagram's view: a line of constant time, the Eddington-Finkelstein curves of Schwarzschild's $t = 0$, de Sitter's static $t = 0$ in the flat slicing, the fronts $u = u_k$ of the pp-wave and of the Aichelburg-Sexl shock, Novikov's slice outside Oppenheimer and Snyder's dust, and the whole equator seen from above on Kerr's and Kerr-Newman's views of the principal rays.
-`/tmp/mfs-venv/bin/python _tools/derivations/slices.py` checks every chart transformation a moment is carried through by pulling one published metric back onto the other, and Novikov's shells against the published exterior, twenty-five checks in about a second.
+`.venv.noindex/bin/python _tools/derivations/slices.py` checks every chart transformation a moment is carried through by pulling one published metric back onto the other, and Novikov's shells against the published exterior, twenty-five checks in about a second.
 `HIDDEN` in it names the drawings on which a moment of the spacetime lies and is not drawn, each with the reason: FRW's flat and open universes and Tolman-Bondi's marginally bound cloud are other spacetimes than the ones embedded, Vaidya's and Bonnor and Vaidya's outgoing charts draw the time reverse of the shell embedded, the Kaluza-Klein black hole of equal charges is another member of its family than the holes of one charge embedded, and beyond $r_c$ Gödel's, van Stockum's and Som and Raychaudhuri's circles are closed timelike curves, as the spinning string's and those of Bonnor's dust cloud are inside it.
 
 Each drawing draws its slices with the map it draws everything else with: `null_rays.py` writes them into each flat view, `projections.py` into each figure and `conformal.py` into each conformal view.
@@ -1544,10 +1563,10 @@ It names each disagreement by file, system and symbol, and exits non-zero if any
 It also checks that every term of every published expression carries the dimensions of its left hand side, which needs no algebra at all.
 That pass names the file, the system, the field and the term it could not balance, and it is what catches a component printed in the bare chart rather than in $x^0 = cT$.
 
-sympy is not installed system wide, and the virtual environment does not belong in the repository:
+sympy is not installed system wide, so it runs in the environment of "The test environment" above:
 
-    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py
+    _tools/setup-env.sh
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py
 
 The whole collection took 160 seconds on 29 September 2026, and `--system <metric_id>/<system_id>` checks one system in seconds, which is what to use while editing a single entry.
 The slowest systems are the three charts of `gowdy`, each with three free functions of two coordinates, which took three and a half minutes together on 1 October 2026, then the general flow chart of `natario` and the potential flow of `lentz`, each under a minute, then `mixmaster` at about forty seconds; Kerr takes about seven seconds and the interior Schwarzschild solution about two.
@@ -1584,7 +1603,7 @@ Nothing is ever passed in silence. A value that cannot be parsed, a system with 
 
 `tov`, `malament_hogarth`, `mixmaster`, `lentz`, `einstein_static`, `schwarzschild_de_sitter`, `schwarzschild_ads`, `milne`, `aichelburg_sexl`, `domain_wall` and `kantowski_sachs`, the cylindrical chart of `godel`, both charts of `c_metric`, of `melvin`, of `thin_shell_wormhole`, of `levi_civita`, of `curzon_chazy`, of `zipoy_voorhees` and of `mcvittie`, the three charts of `nariai`, the four charts of `global_monopole`, the four charts of `tangherlini`, the three charts of `majumdar_papapetrou`, and the two charts of `robinson_trautman`, the four charts of `string_black_hole`, and the five charts of `dilaton_black_hole`, the four charts of `gott_time_machine`, the two charts of `szekeres`, the five charts of `spinning_string`, the three charts of `gowdy`, the two charts of `photon_rocket`, the four charts of `light_beam`, the three charts of `wormhole_time_machine`, the three charts of `ori_time_machine`, and the four charts of `reissner_nordstrom_de_sitter`, the three charts of `string_wave`, the three charts of `bardeen`, and the four charts of `hayward`, the four charts of `fisher_jnw`, and the five charts of `kerr_de_sitter`, the three charts of `hartle_thorne`, the seven charts of `witten_black_hole`, and the two charts of `som_raychaudhuri`, and the five charts of `coleman_de_luccia`, and the chart of `senovilla`, the five charts of `roberts`, the three charts of `gravastar`, and the five charts of `einstein_rosen_bridge`, and the three charts of `reissner_nordstrom_ads`, the three charts of `bonnor_vaidya`, the six charts of `kiselev`, the three charts of `mass_inflation`, the four charts of `boulware_deser`, and the six charts of `kaluza_klein_black_hole`, the three charts of `israel_wilson_perjes`, the three charts of `sultana_dyer`, the five charts of `ads_soliton`, the three charts of `eguchi_hanson`, and the four charts of `bartnik_mckinnon`, the five charts of `misner_brill_lindquist`, the three charts of `israel_shell`, the two charts of `belinski_zakharov`, the five charts of `charged_shell`, the three charts of `brill_waves`, the twelve charts of `ab_metrics`, the eight charts of `bonnor_charged_dust`, the three charts of `bach_weyl_ring`, the five charts of `quantum_btz`, the five charts of `topological_star`, the five charts of `jackiw_teitelboim_black_hole`, the five charts of `freund_rubin`, the four charts of `vuorio_warped_ads`, the five charts of `universe_from_nothing`, the three charts of `interstellar_wormhole`, the three charts of `supertranslation_hair`, the three charts of `big_rip`, the two charts of `kerr_scalar_hair`, the three charts of `lqc_bounce`, and the three charts of `maximally_supersymmetric_plane_wave` have their mathematics written by `_tools/derivations/print_charts.py`, which defines each of those charts, computes every tensor with the checker's own `Geometry`, and prints each value through `chart_printer.py` beside it:
 
-    /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py --metric tov
+    .venv.noindex/bin/python _tools/derivations/print_charts.py --metric tov
 
 `--system <id>` after it prints one chart of that spacetime alone, so that each chart can run in a process of its own, as the two charts of `belinski_zakharov` are run.
 
@@ -1616,7 +1635,7 @@ The five charts of `string_bh_three_four_charges` are written by it too: the cha
 A reprint reproduces every published file byte for byte, as running the script with no `--metric` on 1 October 2026 showed for all of them, in thirteen minutes.
 sympy factors a polynomial in several variables by Wang's algorithm, which lifts the factors at random points drawn from a generator sympy seeds from the operating system, so on 2 October 2026 one tensor of Brill's charged Taub-NUT took 2 seconds in one run and over 800 in another, whatever `PYTHONHASHSEED` was.
 `verify_metrics.py` draws those points from `WANG_SEED`, so each polynomial is lifted at the same points in every run and a chart prints in the same time each time.
-`_tools/test_print_charts.py` holds `tov` to that and one chart to printing the same twice, and reprints Brill's universe under several hash seeds and states of sympy's generator within a time bound; it needs sympy, so it runs under `/tmp/mfs-venv/bin/python -m unittest discover -s _tools` and is skipped under a Python without it.
+`_tools/test_print_charts.py` holds `tov` to that and one chart to printing the same twice, and reprints Brill's universe under several hash seeds and states of sympy's generator within a time bound; it needs sympy, which the suite's environment has.
 A symbol a chart names in `overrides` and in `factors` is written in a product where a symbol would be, and one it leaves out of `factors` closes the product as a bracketed sum does, which is why TOV passes `factors` without its collected bracket.
 A chart the script writes replaces the chart of its id, or joins the spacetime's other charts after them, so Gödel's Cartesian chart stays as it was written.
 A parameter keeps the description it has in that chart, or in another chart of the same spacetime.

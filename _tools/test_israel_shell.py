@@ -1,5 +1,5 @@
 """Israel's collapsing shell of dust, flat space inside and Schwarzschild's vacuum outside:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state about the shell, held on the published files. The shell is in no chart, since
 the time of one side is not the time of the other and g_rr jumps across it, so its motion is taken

@@ -1,5 +1,5 @@
 """The Big Rip, the flat Friedmann universe of phantom energy alone:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files: the fluid's pressure is w times its
 density and violates the null energy condition, the density grows with the scale factor, the time

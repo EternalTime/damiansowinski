@@ -4,7 +4,7 @@ physics: the field equations the paper prints, which print_charts.py holds to th
 tensor, the boundary conditions, the mass and angular momentum the authors state, the split of both
 between the horizon and the field, and Smarr's relation; Kerr's metric in the same chart, the
 paper's appendix A; and then the files its drawings wrote, from their numbers alone. It needs numpy
-and scipy, so it runs under /tmp/mfs-venv/bin/python and is skipped under a Python without them."""
+and scipy, so it runs under .venv.noindex/bin/python and is skipped under a Python without them."""
 import gzip
 import hashlib
 import json

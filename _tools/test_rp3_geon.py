@@ -1,4 +1,4 @@
-"""The RP3 geon: python3 -m unittest discover -s _tools
+"""The RP3 geon: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on Kruskal's plane and on the published files. The fold
 (T, X, theta, phi) -> (T, -X, pi - theta, phi + pi) undoes itself, moves every point, keeps the areal

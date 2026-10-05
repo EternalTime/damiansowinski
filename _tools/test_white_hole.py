@@ -1,5 +1,5 @@
 """The white hole, Oppenheimer and Snyder's ball of dust with the time reversed:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files. The surface of the core is in no chart's
 mathematics, so the junction is taken here from the published metrics and Christoffel symbols of

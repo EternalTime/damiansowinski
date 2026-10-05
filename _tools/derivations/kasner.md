@@ -574,7 +574,7 @@ Repeating it with $\dot t$ read as $dt/d\lambda$ fails on exactly three of them,
 
 To check every component:
 
-    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system kasner/cartesian
+    _tools/setup-env.sh
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system kasner/cartesian
 
 which takes about five seconds and reports no disagreement.

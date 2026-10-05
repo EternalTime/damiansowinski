@@ -1,5 +1,5 @@
 """The lattice universe of Lindquist and Wheeler:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: the angular radius of a cell of equal volume
 for each of the six regular tilings, and the lattice's largest radius against Friedmann's, 1.43

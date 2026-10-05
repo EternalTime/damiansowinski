@@ -1,4 +1,4 @@
-"""Tests for the tags of My Favorite Spacetimes: python3 -m unittest discover -s _tools
+"""Tests for the tags of My Favorite Spacetimes: .venv.noindex/bin/python -m unittest discover -s _tools
 
 Every tag the metric decides is held to what _tools/derivations/metric_tags.py computed from
 the published charts: vacuum, Einstein space, conformally flat, flat, stationary, static,
@@ -27,7 +27,7 @@ sys.path.insert(0, str(DERIVATIONS))
 import metric_tags as mt  # noqa: E402
 sys.path.remove(str(DERIVATIONS))
 
-RUN = "run /tmp/mfs-venv/bin/python _tools/derivations/metric_tags.py"
+RUN = "run .venv.noindex/bin/python _tools/derivations/metric_tags.py"
 
 
 def published_metrics():
@@ -333,7 +333,7 @@ class PageFilter(unittest.TestCase):
 class Computed(unittest.TestCase):
     """A few quick charts computed again and held to the file, so that the script and the
     answers it once wrote cannot drift apart. The whole collection takes five minutes:
-    /tmp/mfs-venv/bin/python _tools/derivations/metric_tags.py --check
+    .venv.noindex/bin/python _tools/derivations/metric_tags.py --check
     """
 
     CHARTS = (

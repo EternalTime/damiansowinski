@@ -1,5 +1,5 @@
 """Petrov's homogeneous vacuum, the one vacuum field whose four symmetries reach every event once:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts and drawings of `petrov_homogeneous` state, held on the published files. The
 published components of Petrov's chart are held to the determinant -1, to light cones on the

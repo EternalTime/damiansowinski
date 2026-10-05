@@ -1,5 +1,5 @@
 """Chandrasekhar and Xanthopoulos's colliding waves, whose region of interaction is Kerr's metric
-between its horizons: python3 -m unittest discover -s _tools
+between its horizons: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files. The published chart of eta and mu is carried
 onto the published Boyer-Lindquist chart by r = m(1 - p eta), cos(theta) = mu, t = x - 2qy/p and

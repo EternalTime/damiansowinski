@@ -1,5 +1,5 @@
 """The wormhole of Einstein-Dirac-Maxwell theory, Blazquez-Salcedo, Knoll and Radu's exact solution:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing but
 the files: the embedding's two sheets meet at the throat r = r_0 and their height agrees with the

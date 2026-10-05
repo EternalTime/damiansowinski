@@ -549,10 +549,10 @@ In particular the connection and curvature of each are byte for byte what they w
 
 To check:
 
-    python3 -m venv /tmp/mfs-venv && /tmp/mfs-venv/bin/pip install sympy
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system godel/cartesian
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system rn_metric/spherical
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system interior_schwarzschild/spherical
+    _tools/setup-env.sh
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system godel/cartesian
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system rn_metric/spherical
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system interior_schwarzschild/spherical
 
 The first two take a few seconds each and the third takes about twelve minutes, almost all of it in the curvature comparison rather than in the geodesics.
 The geodesic comparison itself is well under a second for all three, and it reports no disagreement for any of them.

@@ -1,5 +1,5 @@
 """Lewis's stationary cylinders, the vacuum fields with cylindrical symmetry:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What the texts and drawings of `lewis` state, held on the published files. The parameters the
 Lewis chart and the canonical chart are drawn at are held to being one spacetime by Costa,

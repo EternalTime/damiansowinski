@@ -1,6 +1,6 @@
 """Belinski and Zakharov's gravitational solitons, the wave of two solitons on the Kasner universe
 that expands alike in two directions:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files at the values every drawing takes,
 w = 1 and cosh(beta) = 5/4. The first class needs nothing but the files. The second needs sympy

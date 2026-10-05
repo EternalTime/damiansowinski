@@ -1,5 +1,5 @@
 """Kiselev's black hole, Schwarzschild's with a power of the radius added for matter around it:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files: the horizons of the example w = -2/3 at r_q = 8 r_s where every drawing puts them,

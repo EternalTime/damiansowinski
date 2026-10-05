@@ -1,5 +1,5 @@
 """Misner's and Brill and Lindquist's initial data for two black holes, one moment of a spacetime:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 The physics its texts and drawings state, held on the published files and on the finder of
 minimal surfaces the drawings use. Brill and Lindquist's psi is harmonic and reads Newton's

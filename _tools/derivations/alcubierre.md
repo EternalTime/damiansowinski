@@ -601,6 +601,6 @@ The checker compares against a free $f$ of four coordinates and a free $v_s$ of 
 
 Running
 
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system alcubierre/cartesian
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system alcubierre/cartesian
 
 reports no disagreements and no dimensional failures.

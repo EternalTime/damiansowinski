@@ -1,5 +1,5 @@
 """Bonnor's rotating dust cloud, the dipole of van Stockum's class of rigidly rotating dust:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts state, held on the published files: in both charts the Einstein tensor is that of
 dust at rest, with the density the Ricci scalar; the spherical chart is the cylindrical one

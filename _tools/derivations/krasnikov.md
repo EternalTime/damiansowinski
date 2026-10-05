@@ -481,7 +481,7 @@ On the other reading, with $\dot{t} = dt/d\lambda$, the first term would carry $
 
 Running the dimensional pass alone,
 
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system krasnikov/cylindrical --dimensions-only
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system krasnikov/cylindrical --dimensions-only
 
 reports nothing, over all three hundred and eighty four expressions.
 
@@ -536,6 +536,6 @@ So no component uses it, and the checker compares against a free $k$ of three co
 
 Running
 
-    /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system krasnikov/cylindrical
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system krasnikov/cylindrical
 
 reports no disagreements, no dimensional failures and nothing unchecked, in a little under two minutes.

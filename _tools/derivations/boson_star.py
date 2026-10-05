@@ -36,7 +36,7 @@ Isotropic carries the same star into the isotropic radius rho of
 ds^2 = -alpha^2 dt^2 + psi^4 (d rho^2 + rho^2 dOmega^2), with r = psi^2 rho and
 d ln(rho)/d ln(r) = a, fixed by Schwarzschild's rho = (r - M + sqrt(r^2 - 2 M r))/2 at the edge.
 
-    /tmp/mfs-venv/bin/python _tools/derivations/boson_star.py
+    .venv.noindex/bin/python _tools/derivations/boson_star.py
 
 prints the declared star and the heaviest one. null_rays.py, conformal.py and embedding.py draw
 with these classes, and _tools/test_boson_star.py holds them to the physics.

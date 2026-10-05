@@ -776,7 +776,7 @@ The relation $r_s = a_m\sin^3\chi_0$ ties a parameter of one system to a paramet
 
 Running
 
-    /tmp/mfs-venv-oppenheimer/bin/python _tools/derivations/verify_metrics.py \
+    .venv.noindex/bin/python _tools/derivations/verify_metrics.py \
         --system oppenheimer_snyder/interior_comoving \
         --system oppenheimer_snyder/exterior_schwarzschild
 

@@ -1,5 +1,5 @@
 """The point charge of Born and Infeld's electrodynamics with its own gravity, Hoffmann's
-solution of 1935: python3 -m unittest discover -s _tools
+solution of 1935: .venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The mass function, which the
 charts write with an incomplete elliptic integral of the first kind, is computed again here as

@@ -1,5 +1,5 @@
 """The draining bathtub, Visser's acoustic metric of a fluid that swirls down a drain:
-python3 -m unittest discover -s _tools
+.venv.noindex/bin/python -m unittest discover -s _tools
 
 What its texts and drawings state, held on the published files. The first class needs nothing
 but the files: the horizon and the ergosurface where every spacetime diagram marks them, the

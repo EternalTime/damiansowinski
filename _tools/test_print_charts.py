@@ -1,4 +1,4 @@
-"""Tests for _tools/derivations/print_charts.py: python3 -m unittest discover -s _tools
+"""Tests for _tools/derivations/print_charts.py: .venv.noindex/bin/python -m unittest discover -s _tools
 
 A chart the script wrote is printed again and held to the published file byte for byte, so a
 change to the printer that reorders a published value is caught here and not by a reader. The
