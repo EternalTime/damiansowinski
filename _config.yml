@@ -50,13 +50,8 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-# The sitemap lists what the site links to. The AISTEM workshop pages are reached by
-# their own address rather than from the site, and the only post is Jekyll's sample.
+# The sitemap lists what the site links to, and the only post is Jekyll's sample.
 defaults:
-  - scope:
-      path: "AISTEM"
-    values:
-      sitemap: false
   - scope:
       type: "posts"
     values:
