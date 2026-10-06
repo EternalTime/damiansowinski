@@ -1186,8 +1186,10 @@
         input.setAttribute('aria-expanded', list.length ? 'true' : 'false');
         input.removeAttribute('aria-activedescendant');
       }
+      // A page opened at a spacetime's address puts the list away before the keywords are
+      // set up further down this script, and nothing has been offered then.
       function putAway() {
-        if (_offered.length) offer([]);
+        if (_offered && _offered.length) offer([]);
       }
       // The keyword at place i is the one gone to, and is brought into sight where they scroll.
       function goTo(i, scroll) {
