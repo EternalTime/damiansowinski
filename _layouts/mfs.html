@@ -626,10 +626,24 @@
   <!-- The title comes before the panels so that on a phone, where it is in the flow of the
        page rather than fixed over it, it heads the column they stack in. The title and the
        exit sign are one row there, which the phone stylesheet lays out; elsewhere the row
-       has no box of its own and each is fixed in its corner. -->
+       has no box of its own and each is fixed in its corner.
+       "More Apps" stands before the exit sign and is set as it is, as the application stands
+       it before About at the top of its list: it opens the page "More from Owl's Nest
+       Creations" in the spacetime's panel, the studio's other applications from the studio
+       site's own list and the captain's two lines under them. Its place beside
+       the sign is placeMore() in the flicker script below. The two signs are one column on a
+       phone, which the phone stylesheet lays out; elsewhere it has no box of its own.
+       On the desktop the two signs reach 10.05 of their ems, 17.1 of the page's, in from the
+       window's right edge, and the title starts 0.8 of its 2.2 in from the left, so a title
+       held to the window's width less 12 of its ems ends 3.4 of them, about 120px at the
+       usual text size, short of "More Apps", which is the room it kept from the exit sign
+       alone at 7. -->
   <div id="mfs-banner">
-  <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;max-width:calc(100% - 7em);"></div>
+  <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;max-width:calc(100% - 12em);"></div>
+  <div id="mfs-signs">
+  <button type="button" id="mfs-more" style="position:fixed;top:0.9em;right:4.2em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--mfs-cyan-light);letter-spacing:0.05em;line-height:1.2;appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;cursor:pointer;">More Apps</button>
   <a id="mfs-exit" href="{{ '/' | relative_url }}" style="position:fixed;top:0.9em;right:0.8em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--mfs-cyan-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
+  </div>
   </div>
 
 <div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
@@ -711,7 +725,7 @@
        keeps --mfs-list-h at the least, which is its whole height on a phone. */
     :root { --mfs-left-w: clamp(280px, 17.5rem, 25vw); --mfs-top: 150px; --mfs-bottom: calc(100vh - 20px);
             --mfs-list-h: 320px; --mfs-coffee-h: 0px; }
-    #mfs-banner { display: contents; }
+    #mfs-banner, #mfs-signs { display: contents; }
     /* The list and the search field are held to sizes at which their words fit, which the
        search script measures as a width of these containers over ems. */
     #mfs-search-panel, #mfs-search-results, #mfs-keywords { container-type: inline-size; }
@@ -1279,6 +1293,19 @@
         });
       };
 
+      /* "More Apps" puts the page of the studio's other applications in the spacetime's panel,
+         as a press on a spacetime's name puts that spacetime there: the list comes back where
+         its contents were showing, no spacetime is marked open in it, and the address names
+         none, so the spacetime that was open is drawn again when it is asked for. */
+      window._mfsOpenStudio = function() {
+        _open = null; _built = null; _fill = null;
+        address(null);
+        showContents(false);
+        results.querySelectorAll('.mfs-result-active').forEach(function(r) { r.classList.remove('mfs-result-active'); });
+        if (window._mfsShowStudio) window._mfsShowStudio();
+      };
+      document.getElementById('mfs-more').addEventListener('click', function() { window._mfsOpenStudio(); });
+
       /* Every name in the list is set at one size, at most the size at which the widest word
          of any of them fits the list's line, less an entry's 8px of room at either side,
          so that the size does not change as the list is searched; and the hint in the
@@ -1740,6 +1767,19 @@
 
       var titleText = 'My Favorite Spacetimes';
       var exitText  = 'Exit';
+      var moreText  = 'More Apps';
+      /* "More Apps" stands as far left of the exit sign as the sign stands from the window's
+         edge, measured off the sign itself, so it follows the sign's width in whatever font
+         the sign is drawn. On a phone both are in the banner's row and the phone stylesheet
+         places them, overriding this. */
+      function placeMore() {
+        var more = document.getElementById('mfs-more'), sign = document.getElementById('mfs-exit').getBoundingClientRect();
+        var width = document.documentElement.clientWidth;
+        more.style.right = (2 * width - sign.left - sign.right) + 'px';
+      }
+      placeMore();
+      window.addEventListener('resize', placeMore);
+      if (window.ResizeObserver) new ResizeObserver(placeMore).observe(document.getElementById('mfs-exit'));
       /* On a phone the title is at most the size at which its widest word fits the screen
          with the 0.6em of room it has on its left on either side of it, which at three times
          the usual text "Spacetimes" alone is not; a width of the banner's row over ems, as
@@ -1754,6 +1794,8 @@
         fitTitle();
         flickerIn(document.getElementById('mfs-title'), titleText, 0, 0, [0, 3, 12]);
         flickerIn(document.getElementById('mfs-exit'),  exitText,  270, 1);
+        flickerIn(document.getElementById('mfs-more'),  moreText,  270, 1);
+        placeMore();
         // Re-anchor panels now that spans are built and elements have size
         if (window._mfsResize) window._mfsResize();
       });
@@ -4780,6 +4822,96 @@
         }
       };
 
+      /* The page "More from Owl's Nest Creations", the captain's of 6 October 2026: the studio's
+         other applications, each its icon, its name and the studio site's own line for it,
+         opening its page on the App Store, and under them his two lines out to the studio site
+         and this one, and nothing else. The applications are the studio site's own list of its
+         games, read as the page opens, so a release reaches this page with no change here; the
+         application reads the same file. studioApps() shows the games it marks released with
+         an App Store address carrying an identifier, in its order, and never My Favorite
+         Spacetimes itself; the address is built from the identifier with no storefront in it,
+         so the store opens it in the reader's own country. Where the studio site cannot be
+         reached the page holds the two lines alone. _tools/test_studio_apps.py holds both. */
+      var STUDIO_LIST = 'https://owlsnestcreations.com/data/games.json';
+      var OWN_STORE_ID = '6810529195';
+      var STUDIO_LINKS = [
+        { words: "See what's hatching in the nest...", address: 'https://owlsnestcreations.com' },
+        { words: "Check out Damian's research page...", address: 'https://damiansowinski.com' }
+      ];
+      var _studio = null;
+      function storeIdIn(address) {
+        var found = /^https:\/\/(apps|itunes)\.apple\.com\/.*\/id([0-9]+)$/.exec(address || '');
+        return found ? found[2] : null;
+      }
+      function studioApps(catalogue) {
+        return ((catalogue && catalogue.games) || []).map(function(game) {
+          var id = storeIdIn(game.appStoreUrl), name = (game.name || '').trim(), line = (game.tagline || '').trim();
+          if (game.released !== true || !id || id === OWN_STORE_ID || !name || !line) return null;
+          return { store_id: id, name: name, line: line, icon: /^https:\/\//.test(game.image || '') ? game.image : null };
+        }).filter(Boolean);
+      }
+      function storeAddress(app) { return 'https://apps.apple.com/app/id' + app.store_id; }
+      function fetchStudio(cb) {
+        if (_studio) { cb(_studio); return; }
+        fetch(STUDIO_LIST)
+          .then(function(r) { return r.json(); })
+          .then(function(catalogue) { _studio = studioApps(catalogue); cb(_studio); })
+          .catch(function(e) { console.warn('The studio\'s list of its games did not load', e); cb([]); });
+      }
+      function renderStudio(apps) {
+        if (window.MathJax && MathJax.typesetClear) MathJax.typesetClear([contentPanel]);
+        contentPanel.innerHTML = [
+          '<div class="mfs-header">',
+            '<div class="mfs-title">More from Owl&#39;s Nest Creations</div>',
+          '</div>',
+          '<div class="mfs-studio">',
+          apps.map(function(app) {
+            return '<a class="mfs-studio-app" href="' + nrEsc(storeAddress(app)) + '" target="_blank" rel="noopener noreferrer">' +
+              (app.icon ? '<img class="mfs-studio-icon" src="' + nrEsc(app.icon) + '" alt="" width="60" height="60">'
+                        : '<span class="mfs-studio-icon"></span>') +
+              '<span class="mfs-studio-words">' +
+                '<span class="mfs-studio-name">' + nrEsc(app.name) + '</span>' +
+                '<span class="mfs-studio-line">' + nrEsc(app.line) + '</span>' +
+              '</span></a>';
+          }).join(''),
+          STUDIO_LINKS.map(function(link) {
+            return '<a class="mfs-studio-app mfs-studio-link" href="' + nrEsc(link.address) + '" target="_blank" rel="noopener noreferrer">' +
+              '<span class="mfs-studio-name">' + nrEsc(link.words) + '</span></a>';
+          }).join(''),
+          '</div>'
+        ].join('');
+        wireHeader(contentPanel.querySelector('.mfs-header'));
+        wireWords(contentPanel);
+        fitLines(contentPanel, [].slice.call(contentPanel.querySelectorAll('.mfs-header')));
+      }
+      window._mfsShowStudio = function() {
+        var el = contentPanel;
+        var seq = ++_shown;
+        _away = false;
+        window._mfsGraph.open(true);
+        var isVisible = el.style.transform === 'translateX(0px)' || el.style.transform === 'translateX(0)';
+        function load() {
+          fetchStudio(function(apps) {
+            if (seq !== _shown) return;
+            renderStudio(apps);
+            _drawn = seq;
+            el.scrollTop = 0;
+            if (_away) return;
+            hideNote();
+            slideIn();
+            bringIntoView(el);
+          });
+        }
+        if (isVisible) {
+          _slides++;
+          window._mfsSlideOutRight(SLIDE_DUR);
+          el.style.pointerEvents = 'none';
+          setTimeout(load, SLIDE_DUR);
+        } else {
+          setTimeout(load, Math.max(0, _gone - performance.now()));
+        }
+      };
+
     })();
   </script>
 
@@ -5055,6 +5187,7 @@
     #mfs-content-panel .mfs-reference,
     #mfs-content-panel .mfs-zero,
     #mfs-content-panel .mfs-placeholder,
+    #mfs-content-panel .mfs-studio-line,
     #mfs-loading,
     #mfs-coffee-text {
       font-family: 'Source Code Pro', monospace !important;
@@ -5070,6 +5203,7 @@
     #mfs-content-panel .mfs-reference,
     #mfs-content-panel .mfs-zero,
     #mfs-content-panel .mfs-placeholder,
+    #mfs-content-panel .mfs-studio-line,
     #mfs-loading { font-size: var(--mfs-prose); }
     #mfs-content-panel .mfs-history p:last-child {
       margin-bottom: 0 !important;
@@ -5089,6 +5223,27 @@
     #mfs-content-panel a.mfs-related-link:hover,
     #mfs-content-panel a.mfs-related-link:focus-visible { text-decoration-color: var(--cyan); }
     #mfs-content-panel .mfs-zero { color: rgba(0,229,255,0.35); }
+    /* ── More from Owl's Nest Creations ──
+       Each of the studio's applications is a link to its App Store page: its icon, cut to the
+       iPhone's icon shape at the size of an icon on an iPhone's home screen, beside its name,
+       set as a spacetime's name in the list is and lit as one is under the pointer and while
+       pressed, over its line, which is a written area. Nothing glows. */
+    #mfs-content-panel .mfs-studio { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.75rem; }
+    #mfs-content-panel a.mfs-studio-app {
+      display: flex; align-items: flex-start; gap: 0.875rem;
+      padding: 0.5rem; border-radius: 4px; text-decoration: none;
+    }
+    #mfs-content-panel a.mfs-studio-app:hover { background: rgba(0,229,255,0.1); }
+    #mfs-content-panel a.mfs-studio-app:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+    #mfs-content-panel .mfs-studio-icon { flex: none; width: 60px; height: 60px; border-radius: 22.37%; }
+    #mfs-content-panel .mfs-studio-words { display: flex; flex-direction: column; gap: 0.25em; min-width: 0; }
+    #mfs-content-panel .mfs-studio-name {
+      font-family: 'Source Code Pro', monospace; font-size: 18px; letter-spacing: 0.04em;
+      color: var(--mfs-cyan-light);
+    }
+    #mfs-content-panel a.mfs-studio-app:hover .mfs-studio-name { color: var(--cyan); }
+    #mfs-content-panel a.mfs-studio-app:active .mfs-studio-name { color: var(--pink-light); }
+    #mfs-content-panel .mfs-studio-line { color: var(--mfs-cyan-light); line-height: 1.7; }
     /* ── Spacetime diagrams ── */
     #mfs-content-panel .mfs-nr-view {
       display: flex; flex-wrap: wrap; align-items: flex-start;
@@ -5510,6 +5665,14 @@
         position: relative !important; top: auto !important; right: auto !important;
         flex: none; margin: 0.8em 0.7em 0 auto; font-size: 1.25em !important;
       }
+      /* "More Apps" stands under the sign at the sign's size, the two a column at the end of
+         the title's row, so the title keeps the room beside the sign it had before and its two
+         lines, and the column wraps below the title where the sign alone would. */
+      #mfs-signs { display: flex; flex-direction: column; align-items: flex-end; flex: none; margin-left: auto; }
+      #mfs-more {
+        order: 1; position: relative !important; top: auto !important; right: auto !important;
+        margin: 0.4em 0.7em 0 0 !important; font-size: 1.25em !important;
+      }
 
       #mfs-search-panel, #mfs-coffee-panel {
         position: relative !important; top: auto !important;
@@ -5647,6 +5810,7 @@
 
         flickerOutEl(titleEl);
         flickerOutEl(exitEl);
+        flickerOutEl(document.getElementById('mfs-more'));
         if (window._mfsTrackEl) {
           window._mfsTrackEl(titleEl, 0);
           window._mfsTrackEl(exitEl,  1);

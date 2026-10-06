@@ -228,6 +228,24 @@ The page as drawn is held to the same with
 which types keywords a key at a time, checks what the graph gathers against the list and the index, checks that the canvas spans the whole window at four desktop sizes, lights spacetimes from the list by the pointer and by Tab and from the graph by the pointer and reads which point is drawn pink and which name is lit, with and without a search, presses a spacetime in the graph and checks the graph stays still under its panel, and on a phone checks that no tap can land on it.
 At both sizes it reads the search field's colours at rest and in every state, focused, one letter and two typed, a keyword gone to and chosen, nothing found, names found, cleared and left, and holds each to the colours at rest, and it types one letter and two and checks the keywords offered, goes through them with the arrow keys, chooses one by Enter and one by the pointer and checks that the list, and on a desktop the graph, then shows exactly the spacetimes carrying it.
 
+## More from Owl's Nest Creations
+
+"More Apps" opens one page, "More from Owl's Nest Creations", as the captain asked on 6 October 2026: the studio's other applications and under them his two lines, "See what's hatching in the nest..." to https://owlsnestcreations.com and "Check out Damian's research page..." to this site, word for word with their ellipses, and nothing else, no news, no word about the studio and never My Favorite Spacetimes itself.
+It stands before the exit sign in the sign's face and size, as the application stands it before About at the top of its list, the two being one product; on a phone it stands under the sign, so the title keeps its two lines beside them.
+The page opens in the spacetime's panel, as a spacetime does, and the list comes back with no spacetime marked open in it.
+
+The applications are the studio site's own list of its games, https://owlsnestcreations.com/data/games.json, which that site builds from its pages of games and serves to any site, read as the page opens, so a release reaches this page with no change here.
+`studioApps` in `_layouts/mfs.html` shows the games it marks `released` with an `appStoreUrl` carrying an identifier, in its order, never this application's identifier, each with its `tagline` as its line and its `image` as its icon, and passes over every other field.
+Each links to `https://apps.apple.com/app/id<identifier>`, with no storefront in it, so the store opens it in the reader's own country.
+Where the studio site cannot be reached the page holds the two lines alone.
+The application reads the same file, and ships a copy of it as its fallback.
+`_tools/test_studio_apps.py` runs the page's reading of the list in Node over a list of its shape and holds the two lines to his words, and
+
+    node _tools/studio_page.mjs http://127.0.0.1:4000
+    node _tools/studio_page.mjs http://127.0.0.1:4000 --phone
+
+presses "More Apps" with the list showing and with a spacetime open, as a reader does, and holds where it stands, the page it opens against the studio's list as it stands, every link, name, line and drawn icon, the two lines under them, and the spacetime that was open opening again after it.
+
 ## The page on a phone
 
 A screen narrower than 600px, or a touch screen under 500px tall, gets the same panels in one column that the page scrolls through: the title, the list with the coffee panel, then the spacetime.
