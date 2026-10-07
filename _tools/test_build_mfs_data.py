@@ -1111,7 +1111,7 @@ class WrittenAreas(unittest.TestCase):
         "#mfs-content-panel .mfs-reference",
         "#mfs-content-panel .mfs-zero",
         "#mfs-content-panel .mfs-placeholder",
-        "#mfs-content-panel .mfs-studio-line",
+        "#mfs-content-panel .mfs-studio-text",
         "#mfs-loading",
         "#mfs-coffee-text",
     )
