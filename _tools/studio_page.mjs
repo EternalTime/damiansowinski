@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Open the spacetimes page in headless Chrome as a reader does and hold "More Apps" and the page
+/* Open the spacetimes page in headless Chrome as a reader does and hold "Studio" and the page
    it opens, "More from Owl's Nest Creations", to what _tools/README.md under "More from Owl's
    Nest Creations" says they do:
 
@@ -7,7 +7,7 @@
      node _tools/studio_page.mjs http://127.0.0.1:4000
      node _tools/studio_page.mjs http://127.0.0.1:4000 --phone
 
-   "More Apps" stands before the exit sign in the sign's own face and size, as far from it as the
+   "Studio" stands before the exit sign in the sign's own face and size, as far from it as the
    sign stands from the window's edge, on its line, over nothing else and under nothing else; on
    a phone it stands under the sign at the sign's end, and the title keeps its two lines. A
    press on it, with the list showing and with a spacetime open, puts the page in the spacetime's
@@ -99,39 +99,39 @@ const LINKS = [["See what's hatching in the nest...", 'https://owlsnestcreations
 await send('Page.navigate', { url: `${base}/MFS/` });
 await until("document.readyState === 'complete' && document.querySelectorAll('#mfs-search-results .mfs-result').length > 0", 'the list is drawn');
 // The banner's words flicker in and the list's panels slide in.
-await until(`document.getElementById('mfs-more').textContent === 'More Apps' && getComputedStyle(document.getElementById('mfs-search-panel')).pointerEvents === 'all'`,
-            'More Apps and the list have come in');
+await until(`document.getElementById('mfs-studio-sign').textContent === 'Studio' && getComputedStyle(document.getElementById('mfs-search-panel')).pointerEvents === 'all'`,
+            'Studio and the list have come in');
 await sleep(1500);
 
-// Where More Apps stands.
-const more = await box('mfs-more'), exit = await box('mfs-exit'), title = await box('mfs-title');
+// Where Studio stands.
+const more = await box('mfs-studio-sign'), exit = await box('mfs-exit'), title = await box('mfs-title');
 const face = await evaluate(`(function () {
-  var m = getComputedStyle(document.getElementById('mfs-more')), e = getComputedStyle(document.getElementById('mfs-exit'));
-  var letters = [].map.call(document.querySelectorAll('#mfs-more span:not(.mfs-word)'), function (s) { return getComputedStyle(s).color; });
+  var m = getComputedStyle(document.getElementById('mfs-studio-sign')), e = getComputedStyle(document.getElementById('mfs-exit'));
+  var letters = [].map.call(document.querySelectorAll('#mfs-studio-sign span:not(.mfs-word)'), function (s) { return getComputedStyle(s).color; });
   return { same: m.fontFamily === e.fontFamily && m.fontSize === e.fontSize && m.letterSpacing === e.letterSpacing && m.color === e.color,
            more: [m.fontFamily, m.fontSize, m.color].join(' '), exit: [e.fontFamily, e.fontSize, e.color].join(' '),
            settled: letters.every(function (c) { return c === m.color; }) };
 })()`);
-check(face.same, `More Apps is set as the exit sign is (${face.more} against ${face.exit})`);
-check(face.settled, 'every letter of More Apps has come to rest in the sign\'s colour');
+check(face.same, `Studio is set as the exit sign is (${face.more} against ${face.exit})`);
+check(face.settled, 'every letter of Studio has come to rest in the sign\'s colour');
 // The phone's column is the layout in force on a phone and on a desktop at a text size too large
 // for panels side by side, which the page says in --mfs-phone.
 const column = await evaluate("getComputedStyle(document.documentElement).getPropertyValue('--mfs-phone').trim() === '1'");
 if (column) {
   check(more.top >= exit.bottom && Math.abs(more.right - exit.right) <= 1,
-        `More Apps stands under the sign, at its end (${more.top.toFixed(1)} under ${exit.bottom.toFixed(1)}, ending at ${more.right.toFixed(1)} against ${exit.right.toFixed(1)})`);
+        `Studio stands under the sign, at its end (${more.top.toFixed(1)} under ${exit.bottom.toFixed(1)}, ending at ${more.right.toFixed(1)} against ${exit.right.toFixed(1)})`);
   const lines = await evaluate(`(function () { var t = document.getElementById('mfs-title');
     return t.getBoundingClientRect().height / parseFloat(getComputedStyle(t).lineHeight); })()`);
   if (!side && text === 16) check(Math.round(lines) === 2, `the title keeps its two lines beside the signs (${lines.toFixed(2)})`);
 } else {
   check(Math.abs(more.top - exit.top) <= 1 && Math.abs(more.bottom - exit.bottom) <= 1,
-        `More Apps stands on the sign's line (${more.top.toFixed(1)} to ${more.bottom.toFixed(1)} against ${exit.top.toFixed(1)} to ${exit.bottom.toFixed(1)})`);
-  check(more.right < exit.left, `More Apps stands before the sign (${more.right.toFixed(1)} before ${exit.left.toFixed(1)})`);
+        `Studio stands on the sign's line (${more.top.toFixed(1)} to ${more.bottom.toFixed(1)} against ${exit.top.toFixed(1)} to ${exit.bottom.toFixed(1)})`);
+  check(more.right < exit.left, `Studio stands before the sign (${more.right.toFixed(1)} before ${exit.left.toFixed(1)})`);
   const edge = (await evaluate('document.documentElement.clientWidth')) - exit.right;
   check(Math.abs(exit.left - more.right - edge) <= 1,
-        `More Apps stands as far from the sign as the sign from the window's edge (${(exit.left - more.right).toFixed(1)} against ${edge.toFixed(1)})`);
+        `Studio stands as far from the sign as the sign from the window's edge (${(exit.left - more.right).toFixed(1)} against ${edge.toFixed(1)})`);
 }
-check(more.left >= title.right || more.top >= title.bottom, 'More Apps lies over no part of the title');
+check(more.left >= title.right || more.top >= title.bottom, 'Studio lies over no part of the title');
 
 async function holdsTheStudioPage(when) {
   await until(studioShown, `${when}: the page of the studio's other applications shows`);
@@ -178,7 +178,7 @@ async function holdsTheStudioPage(when) {
   check(page.listShows, `${when}: the list shows beside it`);
 }
 
-await press('#mfs-more', 'More Apps');
+await press('#mfs-studio-sign', 'Studio');
 await holdsTheStudioPage('from the list');
 
 // From an open spacetime: the page takes the spacetime's place, and the spacetime comes back.
@@ -187,7 +187,7 @@ const firstName = (await (await fetch(`${base}/MFS/assets/data/metrics/${first}.
 await press(`#mfs-search-results .mfs-result[data-id="${first}"]`, `${first}'s name in the list`);
 await until(`(${panelIn} || getComputedStyle(document.documentElement).getPropertyValue('--mfs-phone').trim() === '1') && !document.querySelector('#mfs-content-panel .mfs-studio') && !!document.querySelector('#mfs-content-panel .mfs-header .mfs-title')`, `${first} opens`, 60);
 await sleep(800);
-await press('#mfs-more', 'More Apps over an open spacetime');
+await press('#mfs-studio-sign', 'Studio over an open spacetime');
 await holdsTheStudioPage(`over ${first}`);
 await press(`#mfs-search-results .mfs-result[data-id="${first}"]`, `${first}'s name in the list again`);
 await until(`!document.querySelector('#mfs-content-panel .mfs-studio') && !!document.querySelector('#mfs-content-panel .mfs-header .mfs-title')`, `${first} opens again`, 60);

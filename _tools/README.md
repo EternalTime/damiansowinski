@@ -230,7 +230,7 @@ At both sizes it reads the search field's colours at rest and in every state, fo
 
 ## More from Owl's Nest Creations
 
-"More Apps" opens one page, "More from Owl's Nest Creations", as the captain asked on 6 October 2026: the studio's other applications and under them his two lines, "See what's hatching in the nest..." to https://owlsnestcreations.com and "Check out Damian's research page..." to this site, word for word with their ellipses, and nothing else, no news, no word about the studio and never My Favorite Spacetimes itself.
+"Studio" opens one page, "More from Owl's Nest Creations", as the captain asked on 6 October 2026: the studio's other applications and under them his two lines, "See what's hatching in the nest..." to https://owlsnestcreations.com and "Check out Damian's research page..." to this site, word for word with their ellipses, and nothing else, no news, no word about the studio and never My Favorite Spacetimes itself.
 It stands before the exit sign in the sign's face and size, as the application stands it before About at the top of its list, the two being one product; on a phone it stands under the sign, so the title keeps its two lines beside them.
 The page opens in the spacetime's panel, as a spacetime does, and the list comes back with no spacetime marked open in it.
 
@@ -244,7 +244,7 @@ The application reads the same file, and ships a copy of it as its fallback.
     node _tools/studio_page.mjs http://127.0.0.1:4000
     node _tools/studio_page.mjs http://127.0.0.1:4000 --phone
 
-presses "More Apps" with the list showing and with a spacetime open, as a reader does, and holds where it stands, the page it opens against the studio's list as it stands, every link, name, line and drawn icon, the two lines under them, and the spacetime that was open opening again after it.
+presses "Studio" with the list showing and with a spacetime open, as a reader does, and holds where it stands, the page it opens against the studio's list as it stands, every link, name, line and drawn icon, the two lines under them, and the spacetime that was open opening again after it.
 
 ## The page on a phone
 

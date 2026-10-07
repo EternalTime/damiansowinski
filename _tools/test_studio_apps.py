@@ -1,7 +1,7 @@
 """The page "More from Owl's Nest Creations": .venv.noindex/bin/python -m unittest discover -s _tools
 
 The captain's order of 6 October 2026 is one page of the studio's other applications with his
-two lines under them, opened by "More Apps" beside the exit sign on the spacetimes page and
+two lines under them, opened by "Studio" beside the exit sign on the spacetimes page and
 beside About at the top of the application's list. The applications are the studio site's own
 list of its games, https://owlsnestcreations.com/data/games.json, read as the page opens, so a
 release reaches the page with no change here; the application reads the same file. These run
@@ -75,8 +75,8 @@ class ThePage(unittest.TestCase):
         self.assertEqual(run.returncode, 0, run.stderr)
         return json.loads(run.stdout)
 
-    def test_more_apps_stands_before_the_exit_sign(self):
-        self.assertRegex(self.source, r'<button type="button" id="mfs-more"[^>]*>More Apps</button>\s*<a id="mfs-exit"')
+    def test_studio_stands_before_the_exit_sign(self):
+        self.assertRegex(self.source, r'<button type="button" id="mfs-studio-sign"[^>]*>Studio</button>\s*<a id="mfs-exit"')
 
     def test_the_list_is_the_studio_sites_own(self):
         self.assertIn("var STUDIO_LIST = 'https://owlsnestcreations.com/data/games.json';", self.source)

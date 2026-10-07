@@ -627,21 +627,21 @@
        page rather than fixed over it, it heads the column they stack in. The title and the
        exit sign are one row there, which the phone stylesheet lays out; elsewhere the row
        has no box of its own and each is fixed in its corner.
-       "More Apps" stands before the exit sign and is set as it is, as the application stands
+       "Studio" stands before the exit sign and is set as it is, as the application stands
        it before About at the top of its list: it opens the page "More from Owl's Nest
        Creations" in the spacetime's panel, the studio's other applications from the studio
        site's own list and the captain's two lines under them. Its place beside
-       the sign is placeMore() in the flicker script below. The two signs are one column on a
+       the sign is placeStudio() in the flicker script below. The two signs are one column on a
        phone, which the phone stylesheet lays out; elsewhere it has no box of its own.
-       On the desktop the two signs reach 10.05 of their ems, 17.1 of the page's, in from the
+       On the desktop the two signs reach 8.1 of their ems, 13.8 of the page's, in from the
        window's right edge, and the title starts 0.8 of its 2.2 in from the left, so a title
-       held to the window's width less 12 of its ems ends 3.4 of them, about 120px at the
-       usual text size, short of "More Apps", which is the room it kept from the exit sign
-       alone at 7. -->
+       held to the window's width less 12 of its ems ends 4.9 of them, about 174px at the
+       usual text size, short of "Studio"; the 12 was set for "More Apps", the button's
+       first name, 3.4 of them short of it, and the shorter name leaves the title more room. -->
   <div id="mfs-banner">
   <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;max-width:calc(100% - 12em);"></div>
   <div id="mfs-signs">
-  <button type="button" id="mfs-more" style="position:fixed;top:0.9em;right:4.2em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--mfs-cyan-light);letter-spacing:0.05em;line-height:1.2;appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;cursor:pointer;">More Apps</button>
+  <button type="button" id="mfs-studio-sign" style="position:fixed;top:0.9em;right:4.2em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--mfs-cyan-light);letter-spacing:0.05em;line-height:1.2;appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;cursor:pointer;">Studio</button>
   <a id="mfs-exit" href="{{ '/' | relative_url }}" style="position:fixed;top:0.9em;right:0.8em;z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--mfs-cyan-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
   </div>
   </div>
@@ -1293,7 +1293,7 @@
         });
       };
 
-      /* "More Apps" puts the page of the studio's other applications in the spacetime's panel,
+      /* "Studio" puts the page of the studio's other applications in the spacetime's panel,
          as a press on a spacetime's name puts that spacetime there: the list comes back where
          its contents were showing, no spacetime is marked open in it, and the address names
          none, so the spacetime that was open is drawn again when it is asked for. */
@@ -1304,7 +1304,7 @@
         results.querySelectorAll('.mfs-result-active').forEach(function(r) { r.classList.remove('mfs-result-active'); });
         if (window._mfsShowStudio) window._mfsShowStudio();
       };
-      document.getElementById('mfs-more').addEventListener('click', function() { window._mfsOpenStudio(); });
+      document.getElementById('mfs-studio-sign').addEventListener('click', function() { window._mfsOpenStudio(); });
 
       /* Every name in the list is set at one size, at most the size at which the widest word
          of any of them fits the list's line, less an entry's 8px of room at either side,
@@ -1767,19 +1767,19 @@
 
       var titleText = 'My Favorite Spacetimes';
       var exitText  = 'Exit';
-      var moreText  = 'More Apps';
-      /* "More Apps" stands as far left of the exit sign as the sign stands from the window's
+      var studioText = 'Studio';
+      /* "Studio" stands as far left of the exit sign as the sign stands from the window's
          edge, measured off the sign itself, so it follows the sign's width in whatever font
          the sign is drawn. On a phone both are in the banner's row and the phone stylesheet
          places them, overriding this. */
-      function placeMore() {
-        var more = document.getElementById('mfs-more'), sign = document.getElementById('mfs-exit').getBoundingClientRect();
+      function placeStudio() {
+        var more = document.getElementById('mfs-studio-sign'), sign = document.getElementById('mfs-exit').getBoundingClientRect();
         var width = document.documentElement.clientWidth;
         more.style.right = (2 * width - sign.left - sign.right) + 'px';
       }
-      placeMore();
-      window.addEventListener('resize', placeMore);
-      if (window.ResizeObserver) new ResizeObserver(placeMore).observe(document.getElementById('mfs-exit'));
+      placeStudio();
+      window.addEventListener('resize', placeStudio);
+      if (window.ResizeObserver) new ResizeObserver(placeStudio).observe(document.getElementById('mfs-exit'));
       /* On a phone the title is at most the size at which its widest word fits the screen
          with the 0.6em of room it has on its left on either side of it, which at three times
          the usual text "Spacetimes" alone is not; a width of the banner's row over ems, as
@@ -1794,8 +1794,8 @@
         fitTitle();
         flickerIn(document.getElementById('mfs-title'), titleText, 0, 0, [0, 3, 12]);
         flickerIn(document.getElementById('mfs-exit'),  exitText,  270, 1);
-        flickerIn(document.getElementById('mfs-more'),  moreText,  270, 1);
-        placeMore();
+        flickerIn(document.getElementById('mfs-studio-sign'), studioText, 270, 1);
+        placeStudio();
         // Re-anchor panels now that spans are built and elements have size
         if (window._mfsResize) window._mfsResize();
       });
@@ -5665,11 +5665,11 @@
         position: relative !important; top: auto !important; right: auto !important;
         flex: none; margin: 0.8em 0.7em 0 auto; font-size: 1.25em !important;
       }
-      /* "More Apps" stands under the sign at the sign's size, the two a column at the end of
+      /* "Studio" stands under the sign at the sign's size, the two a column at the end of
          the title's row, so the title keeps the room beside the sign it had before and its two
          lines, and the column wraps below the title where the sign alone would. */
       #mfs-signs { display: flex; flex-direction: column; align-items: flex-end; flex: none; margin-left: auto; }
-      #mfs-more {
+      #mfs-studio-sign {
         order: 1; position: relative !important; top: auto !important; right: auto !important;
         margin: 0.4em 0.7em 0 0 !important; font-size: 1.25em !important;
       }
@@ -5810,7 +5810,7 @@
 
         flickerOutEl(titleEl);
         flickerOutEl(exitEl);
-        flickerOutEl(document.getElementById('mfs-more'));
+        flickerOutEl(document.getElementById('mfs-studio-sign'));
         if (window._mfsTrackEl) {
           window._mfsTrackEl(titleEl, 0);
           window._mfsTrackEl(exitEl,  1);

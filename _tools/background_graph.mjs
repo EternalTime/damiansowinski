@@ -373,7 +373,7 @@ if (phone) {
   state = await shows();
   const covered = await evaluate(`(function () {
     var found = [];
-    ['mfs-search-panel', 'mfs-coffee-panel', 'mfs-exit', 'mfs-more'].forEach(function (id) {
+    ['mfs-search-panel', 'mfs-coffee-panel', 'mfs-exit', 'mfs-studio-sign'].forEach(function (id) {
       var r = document.getElementById(id).getBoundingClientRect();
       for (var y = r.top + 3; y < r.bottom - 3; y += 15) for (var x = r.left + 3; x < r.right - 3; x += 15) {
         var e = document.elementFromPoint(x, y);
