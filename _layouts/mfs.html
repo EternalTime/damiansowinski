@@ -4866,17 +4866,19 @@
           '</div>',
           '<div class="mfs-studio">',
           apps.map(function(app) {
-            return '<a class="mfs-studio-app" href="' + nrEsc(storeAddress(app)) + '" target="_blank" rel="noopener noreferrer">' +
-              (app.icon ? '<img class="mfs-studio-icon" src="' + nrEsc(app.icon) + '" alt="" width="60" height="60">'
-                        : '<span class="mfs-studio-icon"></span>') +
-              '<span class="mfs-studio-words">' +
+            return '<div class="mfs-studio-app">' +
+              '<p class="mfs-studio-text">' +
                 '<span class="mfs-studio-name">' + nrEsc(app.name) + '</span>' +
                 '<span class="mfs-studio-line">' + nrEsc(app.line) + '</span>' +
-              '</span></a>';
+              '</p>' +
+              '<a class="mfs-studio-store" href="' + nrEsc(storeAddress(app)) + '" target="_blank" rel="noopener noreferrer">' +
+                (app.icon ? '<img src="' + nrEsc(app.icon) + '" alt="' + nrEsc(app.name) + ' on the App Store" width="60" height="60">'
+                          : nrEsc(app.name) + ' on the App Store') +
+              '</a></div>';
           }).join(''),
           STUDIO_LINKS.map(function(link) {
-            return '<a class="mfs-studio-app mfs-studio-link" href="' + nrEsc(link.address) + '" target="_blank" rel="noopener noreferrer">' +
-              '<span class="mfs-studio-name">' + nrEsc(link.words) + '</span></a>';
+            return '<a class="mfs-studio-text mfs-studio-link" href="' + nrEsc(link.address) + '" target="_blank" rel="noopener noreferrer">' +
+              nrEsc(link.words) + '</a>';
           }).join(''),
           '</div>'
         ].join('');
@@ -5187,7 +5189,7 @@
     #mfs-content-panel .mfs-reference,
     #mfs-content-panel .mfs-zero,
     #mfs-content-panel .mfs-placeholder,
-    #mfs-content-panel .mfs-studio-line,
+    #mfs-content-panel .mfs-studio-text,
     #mfs-loading,
     #mfs-coffee-text {
       font-family: 'Source Code Pro', monospace !important;
@@ -5203,7 +5205,7 @@
     #mfs-content-panel .mfs-reference,
     #mfs-content-panel .mfs-zero,
     #mfs-content-panel .mfs-placeholder,
-    #mfs-content-panel .mfs-studio-line,
+    #mfs-content-panel .mfs-studio-text,
     #mfs-loading { font-size: var(--mfs-prose); }
     #mfs-content-panel .mfs-history p:last-child {
       margin-bottom: 0 !important;
@@ -5224,26 +5226,28 @@
     #mfs-content-panel a.mfs-related-link:focus-visible { text-decoration-color: var(--cyan); }
     #mfs-content-panel .mfs-zero { color: rgba(0,229,255,0.35); }
     /* ── More from Owl's Nest Creations ──
-       Each of the studio's applications is a link to its App Store page: its icon, cut to the
-       iPhone's icon shape at the size of an icon on an iPhone's home screen, beside its name,
-       set as a spacetime's name in the list is and lit as one is under the pointer and while
-       pressed, over its line, which is a written area. Nothing glows. */
-    #mfs-content-panel .mfs-studio { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.75rem; }
-    #mfs-content-panel a.mfs-studio-app {
-      display: flex; align-items: flex-start; gap: 0.875rem;
-      padding: 0.5rem; border-radius: 4px; text-decoration: none;
+       The page is set as the coffee panel, the page's about panel, is set: its words are the
+       panel's paragraph, in its face, weight, colour, spacing and leading, at the size of the
+       written areas of the panel it stands in, and each application's way to its App Store
+       page is a picture that is a link, as the coffee's button is, its icon at the size of an
+       icon on an iPhone's home screen, cut to the iPhone's icon shape, standing in the middle
+       under its words as the coffee's button stands under the panel's paragraph. Everything
+       stands 0.7em from the next, the panel's own gap. The captain's two lines are its
+       paragraph too, and links. Nothing glows and nothing changes under the pointer, as
+       nothing on the coffee panel does. */
+    #mfs-content-panel .mfs-studio { display: flex; flex-direction: column; gap: 0.7em; margin-top: 0.75rem; }
+    #mfs-content-panel .mfs-studio-app { display: flex; flex-direction: column; align-items: center; gap: 0.7em; }
+    #mfs-content-panel .mfs-studio-text {
+      display: block; align-self: stretch; margin: 0; line-height: 1.5;
+      color: var(--mfs-cyan-light); letter-spacing: 0.02em; text-align: left; text-decoration: none;
     }
-    #mfs-content-panel a.mfs-studio-app:hover { background: rgba(0,229,255,0.1); }
-    #mfs-content-panel a.mfs-studio-app:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
-    #mfs-content-panel .mfs-studio-icon { flex: none; width: 60px; height: 60px; border-radius: 22.37%; }
-    #mfs-content-panel .mfs-studio-words { display: flex; flex-direction: column; gap: 0.25em; min-width: 0; }
-    #mfs-content-panel .mfs-studio-name {
-      font-family: 'Source Code Pro', monospace; font-size: 18px; letter-spacing: 0.04em;
-      color: var(--mfs-cyan-light);
+    #mfs-content-panel .mfs-studio-name,
+    #mfs-content-panel .mfs-studio-line { display: block; }
+    #mfs-content-panel a.mfs-studio-store {
+      display: block; width: 60px; max-width: 100%; flex-shrink: 0;
+      font-family: 'Source Code Pro', monospace; color: var(--mfs-cyan-light); text-decoration: none;
     }
-    #mfs-content-panel a.mfs-studio-app:hover .mfs-studio-name { color: var(--cyan); }
-    #mfs-content-panel a.mfs-studio-app:active .mfs-studio-name { color: var(--pink-light); }
-    #mfs-content-panel .mfs-studio-line { color: var(--mfs-cyan-light); line-height: 1.7; }
+    #mfs-content-panel a.mfs-studio-store img { display: block; width: 100%; height: auto; border-radius: 22.37%; }
     /* ── Spacetime diagrams ── */
     #mfs-content-panel .mfs-nr-view {
       display: flex; flex-wrap: wrap; align-items: flex-start;

@@ -11,9 +11,10 @@
    sign stands from the window's edge, on its line, over nothing else and under nothing else; on
    a phone it stands under the sign at the sign's end, and the title keeps its two lines. A
    press on it, with the list showing and with a spacetime open, puts the page in the spacetime's
-   panel: the heading, a link for each application the studio site's list of its games shows,
-   each its icon, drawn, its name and its line, going to its App Store page in a tab of its own,
-   and under them the captain's two lines to the studio site and this one, and nothing else. The
+   panel: the heading, each application the studio site's list of its games shows, its name and
+   its line over its icon, drawn, a link to its App Store page in a tab of its own, and under them
+   the captain's two lines to the studio site and this one, and nothing else, every word set as
+   the coffee panel's paragraph is. The
    list is back, with no spacetime marked open, and the spacetime that was open opens again from
    its name. With --phone the page is laid out as an iPhone held upright, with --side as one on
    its side, --width sets a desktop window's width and --text the browser's text size in pixels; on a phone the press brings the page into view below the list. Every console error and
@@ -135,6 +136,10 @@ check(more.left >= title.right || more.top >= title.bottom, 'Studio lies over no
 
 async function holdsTheStudioPage(when) {
   await until(studioShown, `${when}: the page of the studio's other applications shows`);
+  // An icon is the studio site's picture, fetched as the page is drawn, so its arrival is
+  // waited for rather than raced.
+  await until(`[].every.call(document.querySelectorAll('#mfs-content-panel .mfs-studio img'), function (i) { return i.complete; })`,
+              `${when}: every icon has arrived or failed`);
   await sleep(500);
   const page = await evaluate(`(function () {
     var panel = document.getElementById('mfs-content-panel');
@@ -145,15 +150,31 @@ async function holdsTheStudioPage(when) {
         return [a.textContent, a.getAttribute('href'), a.target];
       }),
       order: [].map.call(panel.querySelectorAll('.mfs-studio > *'), function (a) { return a.classList.contains('mfs-studio-link') ? 'line' : 'app'; }).join(' '),
-      apps: [].map.call(panel.querySelectorAll('.mfs-studio > :not(.mfs-studio-link)'), function (a) {
-        var img = a.querySelector('img');
-        return { tag: a.tagName, href: a.getAttribute('href'), target: a.target, rel: a.rel,
-                 name: a.querySelector('.mfs-studio-name').textContent, line: a.querySelector('.mfs-studio-line').textContent,
-                 drawn: !!img && img.complete && img.naturalWidth > 0, side: img ? img.getBoundingClientRect().width : 0 };
+      apps: [].map.call(panel.querySelectorAll('.mfs-studio > :not(.mfs-studio-link)'), function (app) {
+        var a = app.querySelector('a.mfs-studio-store'), img = a && a.querySelector('img'), words = app.querySelector('.mfs-studio-text');
+        var w = words.getBoundingClientRect(), i = (img || a).getBoundingClientRect();
+        return { tag: a ? a.tagName : null, href: a && a.getAttribute('href'), target: a && a.target, rel: a && a.rel,
+                 name: app.querySelector('.mfs-studio-name').textContent, line: app.querySelector('.mfs-studio-line').textContent,
+                 drawn: !!img && img.complete && img.naturalWidth > 0, side: img ? img.getBoundingClientRect().width : 0,
+                 under: i.top >= w.bottom, middle: Math.abs((i.left + i.right) / 2 - (w.left + w.right) / 2) <= 1 };
       }),
-      lineFace: (function () { var l = panel.querySelector('.mfs-studio-line'), h = document.createElement('p');
-        var history = getComputedStyle(l); return history.fontFamily + ' ' + history.fontSize; })(),
-      prose: getComputedStyle(document.documentElement).getPropertyValue('--mfs-prose').trim(),
+      // Every word of the page against the coffee panel's paragraph, the page's about panel:
+      // its face, weight, colour, spacing and leading, at the size of the panel's written areas.
+      faces: (function () {
+        var about = getComputedStyle(document.getElementById('mfs-coffee-text'));
+        var prose = parseFloat(getComputedStyle(panel.querySelector('.mfs-studio')).getPropertyValue('--mfs-prose')) *
+                    parseFloat(getComputedStyle(document.documentElement).fontSize);
+        return [].map.call(panel.querySelectorAll('.mfs-studio-text'), function (t) {
+          var c = getComputedStyle(t), lead = function (s) { return parseFloat(s.lineHeight) / parseFloat(s.fontSize); };
+          var same = c.fontFamily === about.fontFamily && c.fontWeight === about.fontWeight && c.fontStyle === about.fontStyle &&
+                     c.color === about.color && Math.abs(lead(c) - lead(about)) < 0.01 &&
+                     Math.abs(parseFloat(c.letterSpacing) / parseFloat(c.fontSize) - parseFloat(about.letterSpacing) / parseFloat(about.fontSize)) < 0.001 &&
+                     Math.abs(parseFloat(c.fontSize) - prose) < 0.01 && c.textDecorationLine === 'none' &&
+                     c.textShadow === 'none' && c.backgroundImage === 'none';
+          return same ? null : t.textContent + ': ' + [c.fontFamily, c.fontWeight, c.color, c.lineHeight, c.letterSpacing, c.fontSize].join(' ') +
+            ' against ' + [about.fontFamily, about.fontWeight, about.color, about.lineHeight, about.letterSpacing, prose + 'px'].join(' ');
+        }).filter(Boolean);
+      })(),
       active: document.querySelectorAll('#mfs-search-results .mfs-result-active').length,
       address: location.search,
       listShows: !document.getElementById('mfs-list-pane').classList.contains('mfs-pane-off')
@@ -169,7 +190,9 @@ async function holdsTheStudioPage(when) {
     check(shown.target === '_blank' && /noopener/.test(shown.rel), `${when}: ${shown.name} opens in a tab of its own`);
     check(shown.name === app.name && shown.line === app.line, `${when}: ${shown.name} says its name and its line, "${shown.line}"`);
     check(shown.drawn && Math.abs(shown.side - 60) < 0.5, `${when}: ${shown.name}'s icon is drawn, ${shown.side} px across`);
+    check(shown.under && shown.middle, `${when}: ${shown.name}'s icon stands in the middle under its words, as the coffee's button does`);
   });
+  check(page.faces.length === 0, `${when}: every word of the page is set as the coffee panel's paragraph is${page.faces.length ? ' (' + page.faces.join('; ') + ')' : ''}`);
   check(JSON.stringify(page.links) === JSON.stringify(LINKS.map(([w, a]) => [w, a, '_blank'])),
         `${when}: the captain's two lines stand in his words, each opening its site in a tab of its own (${JSON.stringify(page.links)})`);
   check(page.order === apps.map(() => 'app').concat(['line', 'line']).join(' '), `${when}: the two lines stand under the applications (${page.order})`);
