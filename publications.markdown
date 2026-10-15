@@ -19,31 +19,7 @@ permalink: /publications/
   // /data/publications.json and llms.txt for agents.
   var KEYS = {{ site.data.publication_keys | jsonify }};
 
-  function unlatex(str) {
-    return str
-      .replace(/\\"([aeiouAEIOUy])/g, function(_, c) {
-        return { a:'ä',e:'ë',i:'ï',o:'ö',u:'ü',A:'Ä',E:'Ë',I:'Ï',O:'Ö',U:'Ü',y:'ÿ' }[c] || c;
-      })
-      .replace(/\\'([aeiouAEIOUy])/g, function(_, c) {
-        return { a:'á',e:'é',i:'í',o:'ó',u:'ú',A:'Á',E:'É',I:'Í',O:'Ó',U:'Ú',y:'ý' }[c] || c;
-      })
-      .replace(/\\`([aeiouAEIOU])/g, function(_, c) {
-        return { a:'à',e:'è',i:'ì',o:'ò',u:'ù',A:'À',E:'È',I:'Ì',O:'Ò',U:'Ù' }[c] || c;
-      })
-      .replace(/\\\^([aeiouAEIOU])/g, function(_, c) {
-        return { a:'â',e:'ê',i:'î',o:'ô',u:'û',A:'Â',E:'Ê',I:'Î',O:'Ô',U:'Û' }[c] || c;
-      })
-      .replace(/\\~([nNaAoO])/g, function(_, c) {
-        return { n:'ñ',N:'Ñ',a:'ã',A:'Ã',o:'õ',O:'Õ' }[c] || c;
-      })
-      .replace(/\\c\{?([cCsS])\}?/g, function(_, c) {
-        return { c:'ç',C:'Ç',s:'ş',S:'Ş' }[c] || c;
-      })
-      .replace(/\\ss\b/g, 'ß')
-      .replace(/\\&/g, '&')
-      .replace(/\{([^}]*)\}/g, '$1')
-      .trim();
-  }
+  {% include unlatex.js %}
 
   function parseBibtex(entry) {
     var typeKey = entry.match(/^@(\w+)\s*\{\s*([\w:]+)\s*,/);

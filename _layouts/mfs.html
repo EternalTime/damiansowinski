@@ -1031,15 +1031,26 @@
       // Before the page is first drawn, so the list is never seen and only the contents slide in.
       if (asked) showContents(true);
 
+      /* What a search compares, a name, a tag or the text typed, with its capitals and its
+         accents taken off, so "natario" finds Natário, "godel" Gödel and "lemaitre" Lemaître, and
+         the accented spelling still finds them, the captain asked on 15 October 2026. It folds as
+         the application's alphabeticalKey does (Packages/Spacetimes, Shown.swift), case and
+         diacritics: a letter is taken apart into its letter and its marks and the marks dropped,
+         and lowering, raising and lowering the case again folds ß to ss and ﬁ to fi, as
+         Foundation's folding of case does. */
+      function mfsFold(text) {
+        return text.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().toUpperCase().toLowerCase();
+      }
+
       /* A search finds a tag whatever its capitals, and only from the start of one of its
          words, a word starting after a space, a hyphen or a slash: "vacuum" finds the
          vacuum spacetimes and not the ones tagged "electrovacuum", "wave" finds "pp-wave"
          and "cft" finds "AdS/CFT". Until 2 October 2026 the text typed was lowercased and
          the tag was not, so no search that reached a tag's capital letter found it, and
          any part of a tag matched, so "vacuum" listed 69 of 75 spacetimes. A name is still
-         found by any part of it. `q` is the text typed, trimmed and lowercased. */
+         found by any part of it. `q` is the text typed, trimmed and folded by mfsFold. */
       function mfsTagMatches(tag, q) {
-        var t = tag.toLowerCase();
+        var t = mfsFold(tag);
         for (var i = t.indexOf(q); i !== -1; i = t.indexOf(q, i + 1)) {
           if (i === 0 || ' -/'.indexOf(t.charAt(i - 1)) !== -1) return true;
         }
@@ -1051,10 +1062,10 @@
          lists them all. The list shows them and the graph behind it gathers them, so the two
          never disagree. */
       function mfsSearch(index, query) {
-        var q = query.trim().toLowerCase();
+        var q = mfsFold(query.trim());
         if (q === '') return null;
         return index.filter(function(m) {
-          return m.name.toLowerCase().indexOf(q) !== -1 ||
+          return mfsFold(m.name).indexOf(q) !== -1 ||
                  m.tags.some(function(t) { return mfsTagMatches(t, q); });
         });
       }
@@ -1062,20 +1073,20 @@
       /* The keywords the text typed can be finished with, from its first letter on: the tags of
          the index, each once, that mfsTagMatches finds for it, as the search finds them, the
          captain asked on 5 October 2026. Those the text starts come first and then those with a
-         later word it starts, each in the order of the alphabet whatever the capitals, so "w"
-         offers "warp drive" before "plane wave"; none while nothing is typed. */
+         later word it starts, each in the order of the alphabet whatever the capitals and the
+         accents, so "w" offers "warp drive" before "plane wave"; none while nothing is typed. */
       function mfsKeywords(index, query) {
-        var q = query.trim().toLowerCase(), seen = {}, first = [], later = [];
+        var q = mfsFold(query.trim()), seen = {}, first = [], later = [];
         if (q === '') return [];
         index.forEach(function(m) {
           m.tags.forEach(function(t) {
             if (seen[t] || !mfsTagMatches(t, q)) return;
             seen[t] = true;
-            (t.toLowerCase().indexOf(q) === 0 ? first : later).push(t);
+            (mfsFold(t).indexOf(q) === 0 ? first : later).push(t);
           });
         });
         function alphabetical(a, b) {
-          var x = a.toLowerCase(), y = b.toLowerCase();
+          var x = mfsFold(a), y = mfsFold(b);
           return x < y ? -1 : x > y ? 1 : a < b ? -1 : a > b ? 1 : 0;
         }
         return first.sort(alphabetical).concat(later.sort(alphabetical));
@@ -1951,31 +1962,7 @@
         return '\\(' + str + '\\)';
       }
 
-      function unlatex(str) {
-        return str
-          .replace(/\\"([aeiouAEIOUy])/g, function(_, c) {
-            return { a:'ä',e:'ë',i:'ï',o:'ö',u:'ü',A:'Ä',E:'Ë',I:'Ï',O:'Ö',U:'Ü',y:'ÿ' }[c] || c;
-          })
-          .replace(/\\'([aeiouAEIOUy])/g, function(_, c) {
-            return { a:'á',e:'é',i:'í',o:'ó',u:'ú',A:'Á',E:'É',I:'Í',O:'Ó',U:'Ú',y:'ý' }[c] || c;
-          })
-          .replace(/\\`([aeiouAEIOU])/g, function(_, c) {
-            return { a:'à',e:'è',i:'ì',o:'ò',u:'ù',A:'À',E:'È',I:'Ì',O:'Ò',U:'Ù' }[c] || c;
-          })
-          .replace(/\\\^([aeiouAEIOU])/g, function(_, c) {
-            return { a:'â',e:'ê',i:'î',o:'ô',u:'û',A:'Â',E:'Ê',I:'Î',O:'Ô',U:'Û' }[c] || c;
-          })
-          .replace(/\\~([nNaAoO])/g, function(_, c) {
-            return { n:'ñ',N:'Ñ',a:'ã',A:'Ã',o:'õ',O:'Õ' }[c] || c;
-          })
-          .replace(/\\c\{?([cCsS])\}?/g, function(_, c) {
-            return { c:'ç',C:'Ç',s:'ş',S:'Ş' }[c] || c;
-          })
-          .replace(/\\ss\b/g, 'ß')
-          .replace(/\\&/g, '&')
-          .replace(/\{([^}]*)\}/g, '$1')  // strip remaining braces
-          .trim();
-      }
+      {% include unlatex.js %}
 
       function parseBibtex(entry) {
         // Extract type and key: @article{key, ...}

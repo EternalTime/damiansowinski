@@ -101,9 +101,10 @@ A claim that is not elementary carries a citation, `[key]` as in a history, and 
 The build refuses a spacetime with no `related`, an entry with a missing or stray field, an `id` with no metric file, a spacetime listing itself or another twice, a kind outside the table, a text of more than three sentences, a citation its `references` does not hold, a limit whose text does not say so, a relation the other file does not answer, and an answer of the wrong kind, naming each.
 `relation_problems` in `build_mfs_data.py` holds those rules and the class `Relations` in the tests holds them to the files on disk.
 
-`_layouts/mfs.html` and `publications.markdown` do not read `references.json`; each parses `references.bib` in the browser with its own small reader.
-That reader takes a value nested one brace deep, as in `{Einstein}'s` or `Rebou\c{c}as`, and turns the accent commands `\"`, `\'`, `` \` ``, `\^`, `\~`, `\c` and `\ss` and the escape `\&` into characters, and nothing else.
-A value outside that set prints wrongly on the page without any error, so check a new entry's rendered line and not only the build.
+`_layouts/mfs.html` and `publications.markdown` do not read `references.json`; each parses `references.bib` in the browser and reads its values with the one small reader both include, `_includes/unlatex.js`, which `unlatex` in `build_agent_data.py` follows for the agent layer.
+That reader takes a value nested one brace deep, as in `{Einstein}'s` or `Rebou\c{c}as`, puts every accent command, `\'`, `\"`, `` \` ``, `\^`, `\~`, `\=`, `\.`, `\u`, `\v`, `\H`, `\c`, `\k` and `\r`, on whatever letter it stands over, `\i` and `\j` among them, turns `\ss` and the escape `\&` into characters, and does nothing else.
+Until 15 October 2026 each accent had its own table of vowels, so Stojkovi\'c, Bizo\'n, Chru\'sciel and voja\^go printed as typed.
+`_tools/test_accents.py` holds the reader to every value in the bibliography and, in headless Chrome through `_tools/accents.mjs`, every reference a spacetime lists and every publication to each accented word as its letter, so a new entry the reader cannot read fails it.
 
 Then run one command from the top of the repository:
 
@@ -204,6 +205,7 @@ Nothing on it glows: its names are written over the lines behind them on the gro
 
 From the first letter typed, the keywords the search can be finished with are offered under the field, as the captain asked on 5 October 2026.
 They are the index's tags that `mfsTagMatches` finds for what is typed, as the search finds them, those the text starts first and then those with a later word it starts, each in the order of the alphabet: `mfsKeywords` in `_layouts/mfs.html`.
+The search, the keywords and their order compare every name, tag and text typed with its capitals and accents taken off, `mfsFold`, as the application's `alphabeticalKey` folds them, so "natario" finds Natário, "godel" Gödel and "kahler" offers Kähler, the captain's order of 15 October 2026; `_tools/test_accents.py` types them in headless Chrome.
 The field is a combobox: the arrow keys go through the keywords while the field keeps the keyboard, the pointer goes to one by resting on it, and Enter or a press chooses it.
 A keyword chosen is put in the field and selects exactly the spacetimes carrying it, `mfsCarrying`, in the list and in the graph, which springs to them as it does for a search.
 That is narrower than typing it out, since "de Sitter" typed also finds every name holding it and every tag with a word it starts, such as "anti-de Sitter".

@@ -23,6 +23,7 @@ import html
 import json
 import re
 import sys
+import unicodedata
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -134,23 +135,22 @@ def build_spacetimes(metrics):
 # ---------------------------------------------------------------------------------------
 # Publications
 
-# The same accents the publications page's own reader turns into characters.
-ACCENTS = {
-    '"': dict(zip("aeiouAEIOUy", "äëïöüÄËÏÖÜÿ")),
-    "'": dict(zip("aeiouAEIOUy", "áéíóúÁÉÍÓÚý")),
-    "`": dict(zip("aeiouAEIOU", "àèìòùÀÈÌÒÙ")),
-    "^": dict(zip("aeiouAEIOU", "âêîôûÂÊÎÔÛ")),
-    "~": dict(zip("nNaAoO", "ñÑãÃõÕ")),
-    "c": dict(zip("cCsS", "çÇşŞ")),
+# The reader both pages include, _includes/unlatex.js: a TeX accent is put on whatever letter it
+# stands over as Unicode's combining mark, and the two are composed into one character.
+MARKS = {
+    "'": "\u0301", '"': "\u0308", "`": "\u0300", "^": "\u0302", "~": "\u0303", "=": "\u0304", ".": "\u0307",
+    "u": "\u0306", "v": "\u030C", "H": "\u030B", "c": "\u0327", "k": "\u0328", "r": "\u030A",
 }
-ACCENT = re.compile(r"""\\(["'`^~])\{?([A-Za-z])\}?|\\c\{?([cCsS])\}?""")
+ACCENT = re.compile(r"""\\(?:(['"`^~=.])|([uvHckr])(?=\s*\{|\s+[A-Za-z\\]))\s*"""
+                    r"""(?:\{\s*(\\[ij](?![A-Za-z])|[A-Za-z])\s*\}|(\\[ij](?![A-Za-z])|[A-Za-z]))""")
 ARXIV = re.compile(r"arXiv[:\s.]*(\d{4}\.\d{4,5})", re.IGNORECASE)
 
 
 def unlatex(text):
     def accent(match):
-        mark, letter = (match.group(1), match.group(2)) if match.group(1) else ("c", match.group(3))
-        return ACCENTS[mark].get(letter, letter)
+        sign, word, braced, bare = match.groups()
+        letter = (braced or bare).lstrip("\\")
+        return unicodedata.normalize("NFC", letter + MARKS[sign or word])
 
     text = ACCENT.sub(accent, text)
     text = re.sub(r"\\ss\b", "ß", text).replace("\\&", "&")

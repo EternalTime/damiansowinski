@@ -14,6 +14,7 @@ import json
 import re
 import shutil
 import subprocess
+import unicodedata
 import unittest
 
 import build_mfs_data as build
@@ -49,9 +50,15 @@ def node(script, payload):
     return json.loads(run.stdout)
 
 
+def fold(text):
+    """Text with its capitals and accents taken off, written apart from the page's mfsFold, as the
+    application's alphabeticalKey folds case and diacritics."""
+    return "".join(c for c in unicodedata.normalize("NFD", text) if not unicodedata.category(c).startswith("M")).casefold()
+
+
 def word_matches(tag, q):
     """A tag matched from the start of one of its words, written apart from the page's mfsTagMatches."""
-    t = tag.lower()
+    t, q = fold(tag), fold(q)
     return any(t.startswith(q, i) and (i == 0 or t[i - 1] in " -/") for i in range(len(t)))
 
 
@@ -94,7 +101,7 @@ class SearchToGraph(unittest.TestCase):
         cls.index = read(build.INDEX_FILE)
         cls.relations = read(build.RELATIONS_FILE)
         cls.keywords = sorted({t for m in cls.index for t in m["tags"]})
-        search = page_function(cls.source, "mfsTagMatches") + page_function(cls.source, "mfsSearch")
+        search = "".join(page_function(cls.source, name) for name in ("mfsFold", "mfsTagMatches", "mfsSearch"))
         # Each keyword typed as the reader types it, and what the page's search and the graph make of it.
         script = search + """
         const [index, relations, queries, W, H] = input;
@@ -114,7 +121,7 @@ class SearchToGraph(unittest.TestCase):
         cls.results = node(script, [cls.index, cls.relations, typed, *ROOMS[0]])
 
     def carrying(self, q):
-        return [m["id"] for m in self.index if q in m["name"].lower() or any(word_matches(t, q) for t in m["tags"])]
+        return [m["id"] for m in self.index if fold(q) in fold(m["name"]) or any(word_matches(t, q) for t in m["tags"])]
 
     def test_typing_a_keyword_gathers_the_spacetimes_carrying_it(self):
         for keyword in self.keywords:
@@ -179,7 +186,8 @@ class Keywords(unittest.TestCase):
                   if (i == 0 or t[i - 1] in " -/") and " " not in t[i:i + 2]}
         letters = sorted({q[0] for q in starts} | set("abcdefghijklmnopqrstuvwxyz"))
         cls.typed = letters + sorted(q for q in starts if len(q) == 2) + ["zq", "W", "De", " v ", "", "  "]
-        functions = "".join(page_function(cls.source, name) for name in ("mfsTagMatches", "mfsSearch", "mfsKeywords", "mfsCarrying"))
+        functions = "".join(page_function(cls.source, name)
+                            for name in ("mfsFold", "mfsTagMatches", "mfsSearch", "mfsKeywords", "mfsCarrying"))
         script = functions + """
         const [index, relations, typed, keywords, W, H] = input;
         const graph = G.model(index, relations), all = graph.spacetimes.map((s, i) => i);
@@ -197,13 +205,13 @@ class Keywords(unittest.TestCase):
 
     def expected(self, typed):
         """The keywords offered for `typed`, worked out apart from the page."""
-        q = typed.strip().lower()
+        q = fold(typed.strip())
         if not q:
             return []
         found = [t for t in self.keywords if word_matches(t, q)]
-        order = lambda t: (t.lower(), t)
-        return (sorted((t for t in found if t.lower().startswith(q)), key=order) +
-                sorted((t for t in found if not t.lower().startswith(q)), key=order))
+        order = lambda t: (fold(t), t)
+        return (sorted((t for t in found if fold(t).startswith(q)), key=order) +
+                sorted((t for t in found if not fold(t).startswith(q)), key=order))
 
     def test_one_letter_offers_every_keyword_with_a_word_it_starts(self):
         for typed in self.typed:

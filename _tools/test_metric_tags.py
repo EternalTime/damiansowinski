@@ -291,11 +291,16 @@ class PageFilter(unittest.TestCase):
         self.assertIsNotNone(function, "the page no longer defines mfsTagMatches")
         self.assertIn("mfsTagMatches(t, q)", source.replace(function.group(0), ""),
                       "the page's search no longer asks mfsTagMatches")
+        # The text typed is folded as the page's search folds it, with mfsFold.
+        fold = re.search(r"function mfsFold\(text\) \{.*?\n      \}\n", source, re.S)
+        self.assertIsNotNone(fold, "the page no longer defines mfsFold")
+        self.assertIn("var q = mfsFold(query.trim());", source, "the page's search no longer folds what is typed")
         index = [{"id": m["id"], "tags": m["tags"]} for m in published_metrics()]
-        script = (function.group(0) + "const [index, q] = JSON.parse(process.argv[1]);"
+        script = (fold.group(0) + function.group(0) + "const [index, typed] = JSON.parse(process.argv[1]);"
+                  "const q = mfsFold(typed.trim());"
                   "console.log(JSON.stringify(index.filter(m => m.tags.some(t => mfsTagMatches(t, q)))"
                   ".map(m => m.id)));")
-        run = subprocess.run(["node", "-e", script, json.dumps([index, text.strip().lower()])],
+        run = subprocess.run(["node", "-e", script, json.dumps([index, text])],
                              capture_output=True, text=True, check=True)
         return set(json.loads(run.stdout))
 
