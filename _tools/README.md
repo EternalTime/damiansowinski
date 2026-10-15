@@ -243,6 +243,14 @@ A spacetime diagram is drawn whole, as wide as the panel and never taller than t
 An embedding diagram turns under a finger that sets off across it, while a finger that sets off up or down scrolls the page, which `touch-action: pan-y` on the drawing leaves to the browser.
 Nothing that starts on that drawing scrolls it sideways, so two fingers moving across it scroll it where it is wider than its frame, as at a large text size, and two taps bring back the published figure.
 
+## The App Store badge
+
+Apple's "Download on the App Store" badge links to the application's page, `https://apps.apple.com/us/app/my-favorite-spacetimes/id6810529195`, the captain's order of 15 October 2026.
+It is Apple's white artwork as the studio's site uses it, `assets/images/app_store_button_white.svg`, unaltered, 2.5rem tall, which is Apple's least height on a screen of 40 pixels at the usual text size, with no shadow and no glow.
+On a desktop it stands before the exit sign in `#mfs-corner`, centred on the sign's line, and the title wraps 8.75rem sooner to leave it room; on a phone it takes a row of its own under the title and the sign, starting where the title's words do.
+It comes in as the panels do and goes as the title and the sign flicker out.
+`_tools/test_app_store_badge.py` holds it in headless Chrome, through `_tools/app_store_badge.mjs`, on two desktops and two phones.
+
 ## The reader's text size
 
 The prose of the spacetimes page and its headings are sized in rem, so a reader who enlarges text in the browser, by Chrome's font size, a larger default font, or Safari's and Firefox's zoom of text only, enlarges every word of it: the headings, the domains, the prose, the mathematics and every word on both kinds of diagram.
