@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=a9c784c8" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=30357879" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -80,7 +82,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">The Observables</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/guide_observables.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/guide_observables.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -88,78 +90,81 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="the-observables">
+<div class="launch-buttons">
+  <a class="launch-button" href="https://mybinder.org/v2/gh/EternalTime/pyCoop/main?labpath=docs/guide_observables.ipynb">Launch in Binder</a>
+  <a class="launch-button" href="https://colab.research.google.com/github/EternalTime/pyCoop/blob/main/docs/guide_observables.ipynb">Open in Colab</a>
+</div>
+
+  <section class="tex2jax_ignore mathjax_ignore" id="the-observables">
 <h1>The Observables<a class="headerlink" href="#the-observables" title="Link to this heading"></a></h1>
-<p>A trajectory is just data until you ask it questions. Here are the ones
-pyCoop knows how to ask.</p>
+<p>A trajectory is just data until you ask it questions.
+Here are the ones pyCoop knows how to ask.</p>
 <section id="agreement">
 <h2>Agreement<a class="headerlink" href="#agreement" title="Link to this heading"></a></h2>
-<p>For player <span class="math notranslate nohighlight">\(i\)</span>, agreement is the absolute value of the local mean
-action,</p>
+<p>For player <span class="math notranslate nohighlight">\(i\)</span>, agreement is the absolute value of the local mean action,</p>
 <div class="math notranslate nohighlight">
-\[a_i = |\bar\sigma_i| \in [0, 1],\]</div>
-<p>computed by <a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.agreement" title="pycoop.observables.agreement"><code class="xref py py-func docutils literal notranslate"><span class="pre">agreement()</span></code></a>. Note what the absolute
-value hides: a crowd torn between extremes and a crowd of fence-sitters
-score alike. The alignment asymmetry below repairs that.</p>
+\[
+a_i = |\bar\sigma_i| \in [0, 1],
+\]</div>
+<p>computed by <a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.agreement" title="pycoop.observables.agreement"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">agreement()</span></code></span></a>.
+Note what the absolute value hides: a crowd torn between extremes and a crowd of fence-sitters score alike.
+The alignment asymmetry below repairs that.</p>
 </section>
 <section id="friends-enemies-and-fraughtness">
 <h2>Friends, enemies, and fraughtness<a class="headerlink" href="#friends-enemies-and-fraughtness" title="Link to this heading"></a></h2>
-<p>Fix a state with no player exactly at zero, and split player <span class="math notranslate nohighlight">\(i\)</span>’s
-neighbors by the sign of their <em>action</em>: opinions play no role here.
-Friends share <span class="math notranslate nohighlight">\(i\)</span>’s sign, enemies oppose it, and each camp gets a
-weight,</p>
+<p>Fix a state with no player exactly at zero, and split player <span class="math notranslate nohighlight">\(i\)</span>’s neighbors by the sign of their <em>action</em>: opinions play no role here.
+Friends share <span class="math notranslate nohighlight">\(i\)</span>’s sign, enemies oppose it, and each camp gets a weight,</p>
 <div class="math notranslate nohighlight">
-\[F_i = \Big|\sum_{j \in \mathrm{friends}(i)} \sigma_j\Big|,
+\[
+F_i = \Big|\sum_{j \in \mathrm{friends}(i)} \sigma_j\Big|,
 \qquad
-E_i = \Big|\sum_{j \in \mathrm{enemies}(i)} \sigma_j\Big|,\]</div>
-<p>whose difference <span class="math notranslate nohighlight">\(y_i = F_i - E_i\)</span> is the <em>alignment asymmetry</em>
-(<a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.alignment_asymmetry" title="pycoop.observables.alignment_asymmetry"><code class="xref py py-func docutils literal notranslate"><span class="pre">alignment_asymmetry()</span></code></a>). A positive <span class="math notranslate nohighlight">\(y_i\)</span>
-says player <span class="math notranslate nohighlight">\(i\)</span>’s friends outweigh their enemies, leaving no local
-incentive to defect.</p>
-<p>A state is <em>fraught</em> when three things hold at once: no player sits at
-zero, the crowd is split, and every <span class="math notranslate nohighlight">\(y_i \geq 0\)</span>. That is a
-standoff, everyone locally content while the group has failed to
-coordinate, and exactly a non-Pareto-optimal Nash equilibrium (Tabor,
-Smith, and Dankowicz, 2024; Conrad and Tabor, 2024). Such states are tense
-but stable: fraught, not frustrated. Fraughtness needs at least four
-players. On the paw it occupies a sliver of volume <span class="math notranslate nohighlight">\(1/384\)</span> of the
-hypercube, on the four-path a healthier <span class="math notranslate nohighlight">\(1/32\)</span>, both reproduced by
-Monte Carlo with <a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.is_fraught" title="pycoop.observables.is_fraught"><code class="xref py py-func docutils literal notranslate"><span class="pre">is_fraught()</span></code></a>.</p>
+E_i = \Big|\sum_{j \in \mathrm{enemies}(i)} \sigma_j\Big|,
+\]</div>
+<p>whose difference <span class="math notranslate nohighlight">\(y_i = F_i - E_i\)</span> is the <em>alignment asymmetry</em> (<a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.alignment_asymmetry" title="pycoop.observables.alignment_asymmetry"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">alignment_asymmetry()</span></code></span></a>).
+A positive <span class="math notranslate nohighlight">\(y_i\)</span> says player <span class="math notranslate nohighlight">\(i\)</span>’s friends outweigh their enemies, leaving no local incentive to defect.</p>
+<p>A state is <em>fraught</em> when three things hold at once: no player sits at zero, the crowd is split, and every <span class="math notranslate nohighlight">\(y_i \geq 0\)</span>.
+That is a standoff, everyone locally content while the group has failed to coordinate, and exactly a non-Pareto-optimal Nash equilibrium (Tabor, Smith, and Dankowicz, 2024; Conrad and Tabor, 2024).
+Such states are tense but stable: fraught, not frustrated.
+Fraughtness needs at least four players.
+On the paw it occupies a sliver of volume <span class="math notranslate nohighlight">\(1/384\)</span> of the hypercube, on the four-path a healthier <span class="math notranslate nohighlight">\(1/32\)</span>, both reproduced by Monte Carlo with <a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.is_fraught" title="pycoop.observables.is_fraught"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">is_fraught()</span></code></span></a>.</p>
 </section>
 <section id="obdurateness">
 <h2>Obdurateness<a class="headerlink" href="#obdurateness" title="Link to this heading"></a></h2>
-<p>The other way to fail. A state is <em>obdurate</em> when the crowd is split, no
-player is at zero, and some player has <span class="math notranslate nohighlight">\(y_i &lt; 0\)</span>. That player could
-improve their agreement by switching sides, but the dynamics won’t let
-them, their agreement already above threshold and their window shut. The
-jam is the work of holdouts, each enjoying high agreement bought by their
-neighbors’ coordination while contributing nothing to it.
-<a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.is_obdurate" title="pycoop.observables.is_obdurate"><code class="xref py py-func docutils literal notranslate"><span class="pre">is_obdurate()</span></code></a> tests the condition, and
-<a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.classify" title="pycoop.observables.classify"><code class="xref py py-func docutils literal notranslate"><span class="pre">classify()</span></code></a> sorts any state into <code class="docutils literal notranslate"><span class="pre">consensus</span></code>,
-<code class="docutils literal notranslate"><span class="pre">fraught</span></code>, <code class="docutils literal notranslate"><span class="pre">obdurate</span></code>, or <code class="docutils literal notranslate"><span class="pre">indeterminate</span></code>.</p>
+<p>The other way to fail.
+A state is <em>obdurate</em> when the crowd is split, no player is at zero, and some player has <span class="math notranslate nohighlight">\(y_i &lt; 0\)</span>.
+That player could improve their agreement by switching sides, but the dynamics won’t let them, their agreement already above threshold and their window shut.
+The jam is the work of holdouts, each enjoying high agreement bought by their neighbors’ coordination while contributing nothing to it.
+<a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.is_obdurate" title="pycoop.observables.is_obdurate"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">is_obdurate()</span></code></span></a> tests the condition, and <a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.classify" title="pycoop.observables.classify"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">classify()</span></code></span></a> sorts any state into <code class="docutils literal notranslate"><span class="pre">consensus</span></code>, <code class="docutils literal notranslate"><span class="pre">fraught</span></code>, <code class="docutils literal notranslate"><span class="pre">obdurate</span></code>, or <code class="docutils literal notranslate"><span class="pre">indeterminate</span></code>.</p>
 </section>
 <section id="over-a-whole-run">
 <h2>Over a whole run<a class="headerlink" href="#over-a-whole-run" title="Link to this heading"></a></h2>
-<p><a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.classify_trajectory" title="pycoop.observables.classify_trajectory"><code class="xref py py-func docutils literal notranslate"><span class="pre">classify_trajectory()</span></code></a> labels every event state,
-and <a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.state_fractions" title="pycoop.observables.state_fractions"><code class="xref py py-func docutils literal notranslate"><span class="pre">state_fractions()</span></code></a> weights those labels by
-the time spent in them:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pc</span>
+<p><a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.classify_trajectory" title="pycoop.observables.classify_trajectory"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">classify_trajectory()</span></code></span></a> labels every event state, and <a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.state_fractions" title="pycoop.observables.state_fractions"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">state_fractions()</span></code></span></a> weights those labels by the time spent in them:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pc</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="kn">import</span> <span class="n">observables</span> <span class="k">as</span> <span class="n">obs</span>
 
-<span class="n">game</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">Game</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">erg_connected</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">u</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">game</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">Game</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">erg_connected</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">u</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="n">traj</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">rng</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">state_fractions</span><span class="p">(</span><span class="n">traj</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>On the complete graph one more number is worth extracting. While the
-window is open, flips only ever depolarize the crowd, and the mean opinion
-decays at a rate set by the fraction of players past the position
-threshold,</p>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;consensus&#39;: 0.05580205977077546, &#39;obdurate&#39;: 0.9441979402292245}
+</pre></div>
+</div>
+</div>
+</div>
+<p>On the complete graph one more number is worth extracting.
+While the window is open, flips only ever depolarize the crowd, and the mean opinion decays at a rate set by the fraction of players past the position threshold,</p>
 <div class="math notranslate nohighlight">
-\[\alpha = 1 - \frac{2l}{T + 2},\]</div>
+\[
+\alpha = 1 - \frac{2l}{T + 2},
+\]</div>
 <p>a geometric occupancy fraction, which is why it holds still.
-<a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.alpha_estimate" title="pycoop.observables.alpha_estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">alpha_estimate()</span></code></a> measures it from a trajectory;
-on <span class="math notranslate nohighlight">\(K_{64}\)</span> the estimate matches the formula to four digits. Voila!</p>
+<a class="reference internal" href="api/pycoop.observables.html#pycoop.observables.alpha_estimate" title="pycoop.observables.alpha_estimate"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">alpha_estimate()</span></code></span></a> measures it from a trajectory; on <span class="math notranslate nohighlight">\(K_{64}\)</span> the estimate matches the formula to four digits.
+Voila!</p>
 </section>
 </section>
 

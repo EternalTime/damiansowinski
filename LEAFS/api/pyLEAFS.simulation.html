@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ff3d00d2" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5b8a0f43" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -102,28 +104,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <section id="module-pyLEAFS.simulation">
 <span id="pyleafs-simulation-module"></span><h1>pyLEAFS.simulation module<a class="headerlink" href="#module-pyLEAFS.simulation" title="Link to this heading"></a></h1>
 <p>The simulation: a grid, a list of fields, a list of populations, a clock.</p>
-<p><a class="reference internal" href="#pyLEAFS.simulation.Simulation" title="pyLEAFS.simulation.Simulation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code></a> owns the shared <code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code>, a <em>list</em> of fields, and a
-<em>list</em> of populations, and advances them together. Both are lists from the
-start so that adding a pheromone field or a predator population later is an
-append, not a rewrite. v1 has one resource field and one greedy forager
-population; the <code class="xref py py-meth docutils literal notranslate"><span class="pre">forager()</span></code> factory builds that world from the LEAFS applet
-parameters.</p>
+<p><a class="reference internal" href="#pyLEAFS.simulation.Simulation" title="pyLEAFS.simulation.Simulation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code></a> owns the shared <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>, a <em>list</em> of
+fields, and a <em>list</em> of populations, and advances them together. Both are lists
+from the start so that adding a pheromone field or a predator population later
+is an append, not a rewrite. v1 has one resource field and one greedy forager
+population; the <a class="reference internal" href="#pyLEAFS.simulation.Simulation.forager" title="pyLEAFS.simulation.Simulation.forager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">forager()</span></code></a> factory builds
+that world from the LEAFS applet parameters.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyLEAFS.simulation.Simulation">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyLEAFS.simulation.</span></span><span class="sig-name descname"><span class="pre">Simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">populations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/simulation.html#Simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.simulation.Simulation" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A clocked collection of fields and populations on a shared grid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>grid</strong> (<a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><em>Grid</em></a>) – Shared spatial grid.</p></li>
-<li><p><strong>fields</strong> (<em>list</em>) – Fields to step each timestep (e.g. a <code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code>).</p></li>
-<li><p><strong>populations</strong> (<em>list</em><em> of </em><a class="reference internal" href="pyLEAFS.population.html#pyLEAFS.population.Population" title="pyLEAFS.population.Population"><em>Population</em></a>) – Populations to step each timestep.</p></li>
-<li><p><strong>dt</strong> (<em>float</em>) – Timestep.</p></li>
-<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) – Random source; defaults to a fresh unseeded generator.</p></li>
+<li><p><strong>fields</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – Fields to step each timestep (e.g. a
+<a class="reference internal" href="pyLEAFS.fields.html#pyLEAFS.fields.ResourceField" title="pyLEAFS.fields.ResourceField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code></a>).</p></li>
+<li><p><strong>populations</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a><em> of </em><a class="reference internal" href="pyLEAFS.population.html#pyLEAFS.population.Population" title="pyLEAFS.population.Population"><em>Population</em></a>) – Populations to step each timestep.</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Timestep.</p></li>
+<li><p><strong>rng</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.5)"><em>numpy.random.Generator</em></a><em>, </em><em>optional</em>) – Random source; defaults to a fresh unseeded generator.</p></li>
 </ul>
 </dd>
 </dl>
@@ -133,7 +137,7 @@ parameters.</p>
 <dd><p>Number of timesteps advanced.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -144,7 +148,7 @@ parameters.</p>
 <dd><p>Physical time elapsed (<code class="docutils literal notranslate"><span class="pre">step_count</span> <span class="pre">*</span> <span class="pre">dt</span></code>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -163,19 +167,21 @@ parameters.</p>
 <p>The environment homogeneity <code class="docutils literal notranslate"><span class="pre">Xi</span></code> is the primary control: the energy
 per resource is derived from it as in the applet,</p>
 <div class="math notranslate nohighlight">
-\[\epsilon = \Gamma / \big((\Xi / r_\mathrm{col})^2\,\gamma\big),\]</div>
-<p>so that the equilibrium resource density rises as <code class="docutils literal notranslate"><span class="pre">Xi</span></code> falls (a more
-homogeneous field). Remaining parameters match the applet: <code class="docutils literal notranslate"><span class="pre">mu0=0.1</span></code>,
-<code class="docutils literal notranslate"><span class="pre">dt=0.02</span></code>, <code class="docutils literal notranslate"><span class="pre">v=20</span></code>, <code class="docutils literal notranslate"><span class="pre">R_sense=6</span></code>, <code class="docutils literal notranslate"><span class="pre">r_collect=1</span></code>, <code class="docutils literal notranslate"><span class="pre">s_max=1</span></code>,
-reproduction at <code class="docutils literal notranslate"><span class="pre">0.8</span></code> with the daughter budded <code class="docutils literal notranslate"><span class="pre">r_collect</span></code> away.</p>
+\[\epsilon = \Gamma / \big((\Xi / r_\mathrm{col})^{D}\,\gamma\big),\]</div>
+<p>with <code class="docutils literal notranslate"><span class="pre">D</span></code> the grid dimension, so that the equilibrium resource density
+is <code class="docutils literal notranslate"><span class="pre">(Xi</span> <span class="pre">/</span> <span class="pre">r_collect)</span> <span class="pre">**</span> <span class="pre">D</span></code> and the mean resource spacing is
+<code class="docutils literal notranslate"><span class="pre">r_collect</span> <span class="pre">/</span> <span class="pre">Xi</span></code> in both 2d and 3d. Remaining parameters match
+the applet: <code class="docutils literal notranslate"><span class="pre">mu0=0.1</span></code>, <code class="docutils literal notranslate"><span class="pre">dt=0.02</span></code>, <code class="docutils literal notranslate"><span class="pre">v=20</span></code>, <code class="docutils literal notranslate"><span class="pre">R_sense=6</span></code>,
+<code class="docutils literal notranslate"><span class="pre">r_collect=1</span></code>, <code class="docutils literal notranslate"><span class="pre">s_max=1</span></code>, reproduction at <code class="docutils literal notranslate"><span class="pre">0.8</span></code> with the daughter
+budded <code class="docutils literal notranslate"><span class="pre">r_collect</span></code> away.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – RNG seed for reproducibility.</p></li>
-<li><p><strong>shape</strong> (<em>tuple</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Regions per axis; length 2 or 3 selects the dimension
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a><em>, </em><em>optional</em>) – RNG seed for reproducibility.</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a><em>, </em><em>optional</em>) – Regions per axis; length 2 or 3 selects the dimension
 (default <code class="docutils literal notranslate"><span class="pre">(10,</span> <span class="pre">10)</span></code>, the applet’s 100x100 domain at L=10).</p></li>
-<li><p><strong>n_agents</strong> (<em>int</em><em>, </em><em>optional</em>) – Initial number of foragers (default 5).</p></li>
-<li><p><strong>Xi</strong> (<em>float</em><em>, </em><em>optional</em>) – Environment homogeneity parameter (default 0.5).</p></li>
+<li><p><strong>n_agents</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a><em>, </em><em>optional</em>) – Initial number of foragers (default 5).</p></li>
+<li><p><strong>Xi</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em>, </em><em>optional</em>) – Environment homogeneity parameter (default 0.5).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -195,15 +201,15 @@ population, both populated near their initial conditions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_steps</strong> (<em>int</em>) – Number of steps to advance.</p></li>
-<li><p><strong>stop_on_extinction</strong> (<em>bool</em><em>, </em><em>optional</em>) – Stop early if every population is empty (default True).</p></li>
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Number of steps to advance.</p></li>
+<li><p><strong>stop_on_extinction</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a><em>, </em><em>optional</em>) – Stop early if every population is empty (default True).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Number of steps actually taken.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)">int</a></p>
 </dd>
 </dl>
 </dd></dl>

@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=bbe758d8" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4404f74" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -84,7 +86,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Guide: the model</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/guide_model.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/guide_model.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -92,28 +94,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="guide-the-model">
+<div class="launch-buttons">
+  <a class="launch-button" href="https://mybinder.org/v2/gh/EternalTime/pyEDW/main?labpath=docs/guide_model.ipynb">Launch in Binder</a>
+  <a class="launch-button" href="https://colab.research.google.com/github/EternalTime/pyEDW/blob/main/docs/guide_model.ipynb">Open in Colab</a>
+</div>
+
+  <section class="tex2jax_ignore mathjax_ignore" id="guide-the-model">
 <h1>Guide: the model<a class="headerlink" href="#guide-the-model" title="Link to this heading"></a></h1>
-<p><a class="reference internal" href="api/pyEDW.html#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameters</span></code></a> holds the physical constants of Table 1 and
-builds the dimensionless <code class="docutils literal notranslate"><span class="pre">theta</span></code> vector the integrator consumes.
-<a class="reference internal" href="api/pyEDW.html#pyEDW.model.ExoDaisyWorld" title="pyEDW.model.ExoDaisyWorld"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExoDaisyWorld</span></code></a> wraps the compiled SRK1
-step<a class="footnote-reference brackets" href="#footcite-roberts2012" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> in a small stateful interface that keeps the
-MATLAB usage.</p>
+<p><a class="reference internal" href="api/pyEDW.html#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><span class="xref myst py py-class"><code class="docutils literal notranslate"><span class="pre">Parameters</span></code></span></a> holds the physical constants of Table 1 and builds the dimensionless <code class="docutils literal notranslate"><span class="pre">theta</span></code> vector the integrator consumes.
+<a class="reference internal" href="api/pyEDW.html#pyEDW.model.ExoDaisyWorld" title="pyEDW.model.ExoDaisyWorld"><span class="xref myst py py-class"><code class="docutils literal notranslate"><span class="pre">ExoDaisyWorld</span></code></span></a> wraps the compiled SRK1 step<a class="footnote-reference brackets" href="#footcite-roberts2012" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> in a small stateful interface that keeps the MATLAB usage.</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyEDW</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameters</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyEDW</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameters</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">()</span>             <span class="c1"># paper defaults (Table 1)</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="n">dT</span><span class="o">=</span><span class="mf">15.0</span><span class="p">)</span>      <span class="c1"># narrower growth-rate bandwidth</span>
 <span class="n">theta</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">to_theta</span><span class="p">()</span>         <span class="c1"># 11-vector in the documented layout</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">with_bandwidth</span></code> and <code class="docutils literal notranslate"><span class="pre">with_lambda</span></code> return modified copies for sweeping
-<span class="math notranslate nohighlight">\(\Delta T\)</span> or <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">with_bandwidth</span></code> and <code class="docutils literal notranslate"><span class="pre">with_lambda</span></code> return modified copies for sweeping <span class="math notranslate nohighlight">\(\Delta T\)</span> or <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
 </section>
 <section id="stepping-and-running">
 <h2>Stepping and running<a class="headerlink" href="#stepping-and-running" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyEDW</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExoDaisyWorld</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">ExoDaisyWorld</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
@@ -122,40 +131,42 @@ MATLAB usage.</p>
 <span class="n">path</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># full (2001, 4) trajectory</span>
 </pre></div>
 </div>
-<p>The state is <code class="docutils literal notranslate"><span class="pre">[f_B,</span> <span class="pre">f_W,</span> <span class="pre">T,</span> <span class="pre">L]</span></code>, and daisy fractions are clamped non-negative
-after every step, as in the MATLAB.</p>
+</div>
+</div>
+<p>The state is <code class="docutils literal notranslate"><span class="pre">[f_B,</span> <span class="pre">f_W,</span> <span class="pre">T,</span> <span class="pre">L]</span></code>, and daisy fractions are clamped non-negative after every step, as in the MATLAB.</p>
 </section>
 <section id="ensembles">
 <h2>Ensembles<a class="headerlink" href="#ensembles" title="Link to this heading"></a></h2>
-<p><a class="reference internal" href="api/pyEDW.html#pyEDW.model.ExoDaisyWorld.ensemble" title="pyEDW.model.ExoDaisyWorld.ensemble"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ensemble()</span></code></a> is a parallel (Numba <code class="docutils literal notranslate"><span class="pre">prange</span></code>)
-sweep over a luminosity axis. Each column sets <span class="math notranslate nohighlight">\(\lambda = L - 1\)</span> so the
-Ornstein–Uhlenbeck mean tracks the axis, samples <code class="docutils literal notranslate"><span class="pre">N</span></code> initial conditions as
-<code class="docutils literal notranslate"><span class="pre">eDW_BHsim.m</span></code> does, integrates <code class="docutils literal notranslate"><span class="pre">nsteps</span></code> steps, and records the endpoints:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Ls</span>  <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<p><a class="reference internal" href="api/pyEDW.html#pyEDW.model.ExoDaisyWorld.ensemble" title="pyEDW.model.ExoDaisyWorld.ensemble"><span class="xref myst py py-meth"><code class="docutils literal notranslate"><span class="pre">ensemble()</span></code></span></a> is a parallel (Numba <code class="docutils literal notranslate"><span class="pre">prange</span></code>) sweep over a luminosity axis.
+Each column sets <span class="math notranslate nohighlight">\(\lambda = L - 1\)</span> so the Ornstein–Uhlenbeck mean tracks the axis, samples <code class="docutils literal notranslate"><span class="pre">N</span></code> initial conditions as <code class="docutils literal notranslate"><span class="pre">eDW_BHsim.m</span></code> does, integrates <code class="docutils literal notranslate"><span class="pre">nsteps</span></code> steps, and records the endpoints:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Ls</span>  <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
 <span class="n">bio</span> <span class="o">=</span> <span class="n">ExoDaisyWorld</span><span class="o">.</span><span class="n">ensemble</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Ls</span><span class="o">=</span><span class="n">Ls</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>An integer <code class="docutils literal notranslate"><span class="pre">seed</span></code> makes the result reproducible however the parallel loop is
-scheduled: each column seeds its own RNG stream with <code class="docutils literal notranslate"><span class="pre">seed</span> <span class="pre">+</span> <span class="pre">column_index</span></code>.</p>
+</div>
+</div>
+<p>An integer <code class="docutils literal notranslate"><span class="pre">seed</span></code> makes the result reproducible however the parallel loop is scheduled: each column seeds its own RNG stream with <code class="docutils literal notranslate"><span class="pre">seed</span> <span class="pre">+</span> <span class="pre">column_index</span></code>.</p>
 </section>
 <section id="reproducing-the-original-runs">
 <h2>Reproducing the original runs<a class="headerlink" href="#reproducing-the-original-runs" title="Link to this heading"></a></h2>
-<p>The MATLAB drivers and figure scripts ship under <code class="docutils literal notranslate"><span class="pre">pyEDW/matlab/</span></code>;
-<code class="docutils literal notranslate"><span class="pre">validate_against_matlab.py</span></code> checks a Python ensemble against a saved
-<code class="docutils literal notranslate"><span class="pre">data_*.mat</span></code>.</p>
+<p>The MATLAB drivers and figure scripts ship under <code class="docutils literal notranslate"><span class="pre">pyEDW/matlab/</span></code>, but the <code class="docutils literal notranslate"><span class="pre">data_*.mat</span></code> ensembles they write do not.
+<code class="docutils literal notranslate"><span class="pre">validate_against_matlab.py</span></code> checks a Python ensemble against one of those files, so it needs a <code class="docutils literal notranslate"><span class="pre">data_XXX.mat</span></code> you produce yourself by running <code class="docutils literal notranslate"><span class="pre">eDW_BHsim.m</span></code>; the <a class="reference external" href="https://github.com/EternalTime/pyEDW/blob/main/README.md#validation">README’s Validation section</a> has the steps.</p>
 <section id="references">
 <h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
 <div class="docutils container" id="id2">
+</div>
+</section>
+</section>
+</section>
+<hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="footcite-roberts2012" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>Anthony J Roberts. <a class="reference external" href="https://arxiv.org/abs/1210.0933">Modify the improved Euler scheme to integrate stochastic differential equations</a>. <em>arXiv preprint arXiv:1210.0933</em>, 2012.</p>
 </aside>
 </aside>
-</div>
-</section>
-</section>
-</section>
 
 
            </div>

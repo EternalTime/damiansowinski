@@ -9,7 +9,8 @@
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ff3d00d2" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5b8a0f43" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -18,7 +19,7 @@
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/copybutton.js?v=e5238352"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -77,6 +78,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <h1>Source code for pyLEAFS.grid</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Shared spatial grid.</span>
 
@@ -118,9 +120,9 @@
 <span class="sd">        Region side length.</span>
 <span class="sd">    n_regions : int</span>
 <span class="sd">        Total number of regions, ``prod(shape)``.</span>
-<span class="sd">    extent : ndarray of float, shape (D,)</span>
+<span class="sd">    extent : ~numpy.ndarray of float, shape (D,)</span>
 <span class="sd">        Physical size of the domain along each axis (``shape * L``).</span>
-<span class="sd">    offsets : ndarray of int, shape (3**D, D)</span>
+<span class="sd">    offsets : ~numpy.ndarray of int, shape (3**D, D)</span>
 <span class="sd">        Moore-neighbourhood offsets, the centre cell ``(0, ..., 0)`` first.</span>
 
 <span class="sd">    Examples</span>
@@ -156,12 +158,12 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        pos : ndarray, shape (n, D)</span>
+<span class="sd">        pos : ~numpy.ndarray, shape (n, D)</span>
 <span class="sd">            Physical positions.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ndarray, shape (n, D)</span>
+<span class="sd">        ~numpy.ndarray, shape (n, D)</span>
 <span class="sd">            Positions wrapped into ``[0, extent)`` along each axis.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">extent</span><span class="p">)</span></div>
@@ -174,12 +176,12 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        pos : ndarray, shape (n, D)</span>
+<span class="sd">        pos : ~numpy.ndarray, shape (n, D)</span>
 <span class="sd">            Physical positions (wrapped internally).</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ndarray of int, shape (n, D)</span>
+<span class="sd">        ~numpy.ndarray of int, shape (n, D)</span>
 <span class="sd">            Per-axis region indices in ``[0, shape[axis])``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
@@ -207,12 +209,12 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        a, b : ndarray, shape (n, D)</span>
+<span class="sd">        a, b : ~numpy.ndarray, shape (n, D)</span>
 <span class="sd">            Physical positions.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ndarray, shape (n, D)</span>
+<span class="sd">        ~numpy.ndarray, shape (n, D)</span>
 <span class="sd">            The shortest displacement from ``a`` to ``b`` on the torus, each</span>
 <span class="sd">            component in ``[-extent/2, extent/2)``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -227,12 +229,12 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        region_idx : ndarray of int, shape (n, D)</span>
+<span class="sd">        region_idx : ~numpy.ndarray of int, shape (n, D)</span>
 <span class="sd">            Per-axis region indices.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ndarray of int, shape (n, 3**D)</span>
+<span class="sd">        ~numpy.ndarray of int, shape (n, 3**D)</span>
 <span class="sd">            Linear region ids of each region&#39;s Moore neighbourhood, the region</span>
 <span class="sd">            itself in column 0, wrapped toroidally.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

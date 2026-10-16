@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ff3d00d2" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5b8a0f43" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,7 @@
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/copybutton.js?v=e5238352"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -107,6 +108,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <section id="module-pyLEAFS.grid">
 <span id="pyleafs-grid-module"></span><h1>pyLEAFS.grid module<a class="headerlink" href="#module-pyLEAFS.grid" title="Link to this heading"></a></h1>
 <p>Shared spatial grid.</p>
@@ -120,14 +122,14 @@ units; region indices are <code class="docutils literal notranslate"><span class
 <dl class="py class">
 <dt class="sig sig-object py" id="pyLEAFS.grid.Grid">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyLEAFS.grid.</span></span><span class="sig-name descname"><span class="pre">Grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/grid.html#Grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.grid.Grid" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A toroidal box partitioned into cubical regions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>shape</strong> (<em>tuple</em><em> of </em><em>int</em>) – Number of regions along each axis, e.g. <code class="docutils literal notranslate"><span class="pre">(5,</span> <span class="pre">5)</span></code> for a 2d grid or
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – Number of regions along each axis, e.g. <code class="docutils literal notranslate"><span class="pre">(5,</span> <span class="pre">5)</span></code> for a 2d grid or
 <code class="docutils literal notranslate"><span class="pre">(5,</span> <span class="pre">5,</span> <span class="pre">5)</span></code> for 3d. Its length sets the dimension <code class="docutils literal notranslate"><span class="pre">D</span></code>.</p></li>
-<li><p><strong>L</strong> (<em>float</em><em>, </em><em>optional</em>) – Side length of one region in physical units (default 1.0).</p></li>
+<li><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em>, </em><em>optional</em>) – Side length of one region in physical units (default 1.0).</p></li>
 </ul>
 </dd>
 </dl>
@@ -137,7 +139,7 @@ units; region indices are <code class="docutils literal notranslate"><span class
 <dd><p>Regions per axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of int</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)">tuple</a> of <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -148,7 +150,7 @@ units; region indices are <code class="docutils literal notranslate"><span class
 <dd><p>Spatial dimension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -159,7 +161,7 @@ units; region indices are <code class="docutils literal notranslate"><span class
 <dd><p>Region side length.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -170,7 +172,7 @@ units; region indices are <code class="docutils literal notranslate"><span class
 <dd><p>Total number of regions, <code class="docutils literal notranslate"><span class="pre">prod(shape)</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -181,7 +183,7 @@ units; region indices are <code class="docutils literal notranslate"><span class
 <dd><p>Physical size of the domain along each axis (<code class="docutils literal notranslate"><span class="pre">shape</span> <span class="pre">*</span> <span class="pre">L</span></code>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray of float, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>,)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a> of <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)">float</a>, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -192,7 +194,7 @@ units; region indices are <code class="docutils literal notranslate"><span class
 <dd><p>Moore-neighbourhood offsets, the centre cell <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">...,</span> <span class="pre">0)</span></code> first.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray of int, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (3**D, <a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a> of <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)">int</a>, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (3**D, <a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -212,8 +214,8 @@ units; region indices are <code class="docutils literal notranslate"><span class
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical positions.</p></li>
-<li><p><strong>b</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical positions.</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical positions.</p></li>
+<li><p><strong>b</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical positions.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -221,7 +223,7 @@ units; region indices are <code class="docutils literal notranslate"><span class
 component in <code class="docutils literal notranslate"><span class="pre">[-extent/2,</span> <span class="pre">extent/2)</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n, <a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n, <a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -232,14 +234,14 @@ component in <code class="docutils literal notranslate"><span class="pre">[-exte
 <dd><p>Linear ids of the Moore neighbourhood of each region.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>region_idx</strong> (<em>ndarray</em><em> of </em><em>int</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Per-axis region indices.</p>
+<dd class="field-odd"><p><strong>region_idx</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Per-axis region indices.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Linear region ids of each region’s Moore neighbourhood, the region
 itself in column 0, wrapped toroidally.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray of int, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n, 3**D)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a> of <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)">int</a>, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n, 3**D)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -257,13 +259,13 @@ itself in column 0, wrapped toroidally.</p>
 <dd><p>Return the region index <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">D)</span></code> containing each position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pos</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical positions (wrapped internally).</p>
+<dd class="field-odd"><p><strong>pos</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical positions (wrapped internally).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Per-axis region indices in <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">shape[axis])</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray of int, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n, <a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a> of <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)">int</a>, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n, <a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -274,13 +276,13 @@ itself in column 0, wrapped toroidally.</p>
 <dd><p>Wrap physical positions into the domain by the toroidal boundary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pos</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical positions.</p>
+<dd class="field-odd"><p><strong>pos</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical positions.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Positions wrapped into <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">extent)</span></code> along each axis.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n, <a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>, <a class="reference internal" href="#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n, <a class="reference internal" href="#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
 </dd>
 </dl>
 </dd></dl>

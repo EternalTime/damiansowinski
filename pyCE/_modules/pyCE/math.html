@@ -5,11 +5,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCE.math &mdash; pyCE  documentation</title>
+  <title>pyCE.math - pyCE documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ab018f0f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ab68666c" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -18,7 +19,7 @@
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/copybutton.js?v=e5238352"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -163,6 +164,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <h1>Source code for pyCE.math</h1><div class="highlight"><pre>
 <span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Radial Fourier analysis in d spatial dimensions.</span>
 
@@ -184,6 +186,10 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+
+<span class="c1">#Rows of k per block in radialFT: bounds each temporary kernel to</span>
+<span class="c1">#_FT_BLOCK x len(r) values instead of the full 5*len(r) x len(r)</span>
+<span class="n">_FT_BLOCK</span> <span class="o">=</span> <span class="mi">1024</span>
 
 <div class="viewcode-block" id="radialFT">
 <a class="viewcode-back" href="../../api/pyCE.math.html#pyCE.math.radialFT">[docs]</a>
@@ -216,6 +222,8 @@
 <span class="sd">    singular at k = 0, so ft[0] is instead obtained by extrapolating ft[1:8]</span>
 <span class="sd">    with a seventh-order one-sided finite-difference (interpolation) stencil.</span>
 <span class="sd">    For d = 1 the transform reduces to a plain cosine transform.</span>
+<span class="sd">    Either kernel is evaluated in blocks of k, so the temporaries hold a</span>
+<span class="sd">    block of rows at a time rather than the full ``len(k) x len(r)`` matrix.</span>
 
 <span class="sd">    The result is rescaled by a constant so that Plancherel&#39;s theorem,</span>
 <span class="sd">    :math:`\|f\|^2 = \|\mathrm{ft}\|^2` (with the d-dimensional radial</span>
@@ -225,11 +233,19 @@
     <span class="k">if</span> <span class="n">d</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
         <span class="n">a</span>      <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
         <span class="n">ft</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
-        <span class="n">ft</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0</span><span class="o">**</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">))</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">f</span><span class="o">*</span><span class="n">sp</span><span class="o">.</span><span class="n">jv</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span><span class="n">r</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="n">a</span><span class="p">),</span><span class="n">r</span><span class="p">)</span>
+        <span class="c1">#Bessel kernel evaluated in blocks of k so peak memory stays O(block*len(r))</span>
+        <span class="n">g</span>      <span class="o">=</span> <span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">_FT_BLOCK</span><span class="p">):</span>
+            <span class="n">kb</span> <span class="o">=</span> <span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">_FT_BLOCK</span><span class="p">]</span>
+            <span class="n">ft</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">kb</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">g</span><span class="o">*</span><span class="n">sp</span><span class="o">.</span><span class="n">jv</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">kb</span><span class="p">,</span><span class="n">r</span><span class="p">)),</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">ft</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0</span><span class="o">**</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">))</span>
         <span class="c1">#This uses finite differences to get the value at k=0</span>
         <span class="n">ft</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">287</span><span class="o">/</span><span class="mf">48.0</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="mi">61</span><span class="o">/</span><span class="mf">4.0</span><span class="p">),</span> <span class="mi">1033</span><span class="o">/</span><span class="mf">48.0</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="mi">109</span><span class="o">/</span><span class="mf">6.0</span><span class="p">),</span> <span class="mi">147</span><span class="o">/</span><span class="mf">16.0</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="mi">31</span><span class="o">/</span><span class="mf">12.0</span><span class="p">),</span> <span class="mi">5</span><span class="o">/</span><span class="mf">16.0</span><span class="p">])</span><span class="o">*</span><span class="n">ft</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">8</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">ft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">r</span><span class="p">))</span><span class="o">*</span><span class="n">f</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">ft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">result_type</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="nb">float</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">_FT_BLOCK</span><span class="p">):</span>
+            <span class="n">kb</span> <span class="o">=</span> <span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">_FT_BLOCK</span><span class="p">]</span>
+            <span class="n">ft</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">kb</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">kb</span><span class="p">,</span><span class="n">r</span><span class="p">))</span><span class="o">*</span><span class="n">f</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
     <span class="c1">#normalizes to ensure Plancheral&#39;s theorem holds</span>
     <span class="n">ft</span> <span class="o">=</span> <span class="n">ft</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">radial_integrate</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="n">radial_integrate</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ft</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">d</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">ft</span><span class="p">,</span><span class="n">k</span></div>

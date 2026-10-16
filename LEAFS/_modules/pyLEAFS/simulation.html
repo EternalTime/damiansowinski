@@ -9,7 +9,8 @@
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ff3d00d2" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5b8a0f43" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -18,7 +19,7 @@
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/copybutton.js?v=e5238352"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -77,15 +78,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <h1>Source code for pyLEAFS.simulation</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;The simulation: a grid, a list of fields, a list of populations, a clock.</span>
 
-<span class="sd">:class:`Simulation` owns the shared :class:`Grid`, a *list* of fields, and a</span>
-<span class="sd">*list* of populations, and advances them together. Both are lists from the</span>
-<span class="sd">start so that adding a pheromone field or a predator population later is an</span>
-<span class="sd">append, not a rewrite. v1 has one resource field and one greedy forager</span>
-<span class="sd">population; the :meth:`forager` factory builds that world from the LEAFS applet</span>
-<span class="sd">parameters.</span>
+<span class="sd">:class:`Simulation` owns the shared :class:`~pyLEAFS.grid.Grid`, a *list* of</span>
+<span class="sd">fields, and a *list* of populations, and advances them together. Both are lists</span>
+<span class="sd">from the start so that adding a pheromone field or a predator population later</span>
+<span class="sd">is an append, not a rewrite. v1 has one resource field and one greedy forager</span>
+<span class="sd">population; the :meth:`~pyLEAFS.simulation.Simulation.forager` factory builds</span>
+<span class="sd">that world from the LEAFS applet parameters.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -105,7 +107,8 @@
 <span class="sd">    grid : Grid</span>
 <span class="sd">        Shared spatial grid.</span>
 <span class="sd">    fields : list</span>
-<span class="sd">        Fields to step each timestep (e.g. a :class:`ResourceField`).</span>
+<span class="sd">        Fields to step each timestep (e.g. a</span>
+<span class="sd">        :class:`~pyLEAFS.fields.ResourceField`).</span>
 <span class="sd">    populations : list of Population</span>
 <span class="sd">        Populations to step each timestep.</span>
 <span class="sd">    dt : float</span>
@@ -187,12 +190,14 @@
 
 <span class="sd">        .. math::</span>
 
-<span class="sd">            \\epsilon = \\Gamma / \\big((\\Xi / r_\\mathrm{col})^2\\,\\gamma\\big),</span>
+<span class="sd">            \\epsilon = \\Gamma / \\big((\\Xi / r_\\mathrm{col})^{D}\\,\\gamma\\big),</span>
 
-<span class="sd">        so that the equilibrium resource density rises as ``Xi`` falls (a more</span>
-<span class="sd">        homogeneous field). Remaining parameters match the applet: ``mu0=0.1``,</span>
-<span class="sd">        ``dt=0.02``, ``v=20``, ``R_sense=6``, ``r_collect=1``, ``s_max=1``,</span>
-<span class="sd">        reproduction at ``0.8`` with the daughter budded ``r_collect`` away.</span>
+<span class="sd">        with ``D`` the grid dimension, so that the equilibrium resource density</span>
+<span class="sd">        is ``(Xi / r_collect) ** D`` and the mean resource spacing is</span>
+<span class="sd">        ``r_collect / Xi`` in both 2d and 3d. Remaining parameters match</span>
+<span class="sd">        the applet: ``mu0=0.1``, ``dt=0.02``, ``v=20``, ``R_sense=6``,</span>
+<span class="sd">        ``r_collect=1``, ``s_max=1``, reproduction at ``0.8`` with the daughter</span>
+<span class="sd">        budded ``r_collect`` away.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -215,8 +220,8 @@
         <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">L</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">0.02</span>
         <span class="n">Gamma</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">r_collect</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span>
-        <span class="n">epsilon</span> <span class="o">=</span> <span class="n">Gamma</span> <span class="o">/</span> <span class="p">((</span><span class="n">Xi</span> <span class="o">/</span> <span class="n">r_collect</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">)</span>
         <span class="n">grid</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">)</span>
+        <span class="n">epsilon</span> <span class="o">=</span> <span class="n">Gamma</span> <span class="o">/</span> <span class="p">((</span><span class="n">Xi</span> <span class="o">/</span> <span class="n">r_collect</span><span class="p">)</span> <span class="o">**</span> <span class="n">grid</span><span class="o">.</span><span class="n">D</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">)</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="n">ResourceField</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">Gamma</span><span class="o">=</span><span class="n">Gamma</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
         <span class="n">resource</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
         <span class="n">pop</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span>

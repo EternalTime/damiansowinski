@@ -9,7 +9,8 @@
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ff3d00d2" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5b8a0f43" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -18,7 +19,7 @@
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/copybutton.js?v=e5238352"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -77,6 +78,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <h1>Source code for pyLEAFS.fields</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Fields living on the shared grid.</span>
 
@@ -104,10 +106,10 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">Field</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Structural protocol for a steppable, samplable field.</span>
 
-<span class="sd">    A field references a :class:`Grid` and implements the three verbs the</span>
-<span class="sd">    simulation and agents use. ``deposit`` is optional in spirit (the resource</span>
-<span class="sd">    field does not accept deposits), but the signature is reserved so that</span>
-<span class="sd">    pheromone-style fields slot in without changing call sites.</span>
+<span class="sd">    A field references a :class:`~pyLEAFS.grid.Grid` and implements the three</span>
+<span class="sd">    verbs the simulation and agents use. ``deposit`` is optional in spirit (the</span>
+<span class="sd">    resource field does not accept deposits), but the signature is reserved so</span>
+<span class="sd">    that pheromone-style fields slot in without changing call sites.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">grid</span><span class="p">:</span> <span class="n">Grid</span>
@@ -174,9 +176,9 @@
 <span class="sd">    ----------</span>
 <span class="sd">    N_eq : float</span>
 <span class="sd">        Agent-free equilibrium count per region.</span>
-<span class="sd">    count : ndarray of int, shape (n_regions,)</span>
+<span class="sd">    count : ~numpy.ndarray of int, shape (n_regions,)</span>
 <span class="sd">        Current number of active resources in each region.</span>
-<span class="sd">    positions : ndarray, shape (n_active, D)</span>
+<span class="sd">    positions : ~numpy.ndarray, shape (n_active, D)</span>
 <span class="sd">        Physical positions of all active resources (rebuilt on demand by</span>
 <span class="sd">        :meth:`all_positions`).</span>
 
@@ -326,7 +328,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        pos : ndarray, shape (D,)</span>
+<span class="sd">        pos : ~numpy.ndarray, shape (D,)</span>
 <span class="sd">            Physical query position.</span>
 
 <span class="sd">        Returns</span>
@@ -390,7 +392,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        pos : ndarray, shape (n, D)</span>
+<span class="sd">        pos : ~numpy.ndarray, shape (n, D)</span>
 <span class="sd">            Physical query positions.</span>
 
 <span class="sd">        Returns</span>

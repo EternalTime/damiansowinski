@@ -9,7 +9,8 @@
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ff3d00d2" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5b8a0f43" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -18,7 +19,7 @@
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/copybutton.js?v=e5238352"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -77,14 +78,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <h1>Source code for pyLEAFS.population</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Forager populations.</span>
 
 <span class="sd">A :class:`Population` is a struct-of-arrays bag of agent bodies sharing a</span>
-<span class="sd">:class:`Grid`. Each agent has a position, a unit heading, a fuel reserve, and</span>
-<span class="sd">some bookkeeping. The v1 controller is *greedy* and lives in the agent body:</span>
-<span class="sd">steer toward the nearest resource within sensing range, otherwise move</span>
-<span class="sd">ballistically with rotational diffusion.</span>
+<span class="sd">:class:`~pyLEAFS.grid.Grid`. Each agent has a position, a unit heading, a fuel</span>
+<span class="sd">reserve, and some bookkeeping. The v1 controller is *greedy* and lives in the</span>
+<span class="sd">agent body: steer toward the nearest resource within sensing range, otherwise</span>
+<span class="sd">move ballistically with rotational diffusion.</span>
 
 <span class="sd">The struct-of-arrays layout (parallel arrays rather than per-agent objects)</span>
 <span class="sd">keeps the step vectorizable and dimension-agnostic, and is the natural target</span>
@@ -131,19 +133,19 @@
 <span class="sd">    ----------</span>
 <span class="sd">    count : int</span>
 <span class="sd">        Number of live agents.</span>
-<span class="sd">    pos : ndarray, shape (count, D)</span>
+<span class="sd">    pos : ~numpy.ndarray, shape (count, D)</span>
 <span class="sd">        Agent positions (a live view; copy if you need to retain it).</span>
-<span class="sd">    heading : ndarray, shape (count, D)</span>
+<span class="sd">    heading : ~numpy.ndarray, shape (count, D)</span>
 <span class="sd">        Unit heading vectors.</span>
-<span class="sd">    fuel : ndarray, shape (count,)</span>
+<span class="sd">    fuel : ~numpy.ndarray, shape (count,)</span>
 <span class="sd">        Fuel reserves.</span>
-<span class="sd">    age : ndarray, shape (count,)</span>
+<span class="sd">    age : ~numpy.ndarray, shape (count,)</span>
 <span class="sd">        Age in timesteps.</span>
-<span class="sd">    ids : ndarray, shape (count,)</span>
+<span class="sd">    ids : ~numpy.ndarray, shape (count,)</span>
 <span class="sd">        Stable unique id per agent (survives compaction).</span>
-<span class="sd">    harvested : ndarray, shape (count,)</span>
+<span class="sd">    harvested : ~numpy.ndarray, shape (count,)</span>
 <span class="sd">        Lifetime resources collected per agent.</span>
-<span class="sd">    offspring : ndarray, shape (count,)</span>
+<span class="sd">    offspring : ~numpy.ndarray, shape (count,)</span>
 <span class="sd">        Number of daughters budded per agent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -291,8 +293,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance every agent one timestep against the field list.</span>
 
 <span class="sd">        Greedy steering, motion, harvesting against the first</span>
-<span class="sd">        :class:`ResourceField` in ``fields``, metabolism, budding, and death.</span>
-<span class="sd">        Returns nothing; mutates the population in place.</span>
+<span class="sd">        :class:`~pyLEAFS.fields.ResourceField` in ``fields``, metabolism,</span>
+<span class="sd">        budding, and death. Returns nothing; mutates the population in place.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>

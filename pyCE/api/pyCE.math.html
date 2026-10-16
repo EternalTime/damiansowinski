@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab68666c" />
 
   
@@ -225,7 +225,9 @@ one-dimensional Bessel integral quoted in the module docstring, which is
 evaluated with the trapezoidal rule. The kernel <span class="math notranslate nohighlight">\(k^{1-d/2}\)</span> is
 singular at k = 0, so ft[0] is instead obtained by extrapolating ft[1:8]
 with a seventh-order one-sided finite-difference (interpolation) stencil.
-For d = 1 the transform reduces to a plain cosine transform.</p>
+For d = 1 the transform reduces to a plain cosine transform.
+Either kernel is evaluated in blocks of k, so the temporaries hold a
+block of rows at a time rather than the full <code class="docutils literal notranslate"><span class="pre">len(k)</span> <span class="pre">x</span> <span class="pre">len(r)</span></code> matrix.</p>
 <p>The result is rescaled by a constant so that Plancherel’s theorem,
 <span class="math notranslate nohighlight">\(\|f\|^2 = \|\mathrm{ft}\|^2\)</span> (with the d-dimensional radial
 measure), holds exactly on the discrete grids.</p>

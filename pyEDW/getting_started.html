@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=bbe758d8" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4404f74" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -83,7 +85,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Getting started</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/getting_started.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -91,7 +93,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="getting-started">
+<div class="launch-buttons">
+  <a class="launch-button" href="https://mybinder.org/v2/gh/EternalTime/pyEDW/main?labpath=docs/getting_started.ipynb">Launch in Binder</a>
+  <a class="launch-button" href="https://colab.research.google.com/github/EternalTime/pyEDW/blob/main/docs/getting_started.ipynb">Open in Colab</a>
+</div>
+
+  <section class="tex2jax_ignore mathjax_ignore" id="getting-started">
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
@@ -103,14 +110,15 @@ python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </sp
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
-<p>Requires Python 3.8+; <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, <code class="docutils literal notranslate"><span class="pre">numba</span></code>, and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> come
-along with it. Numba JIT-compiles the integrator hot loop, so the first <code class="docutils literal notranslate"><span class="pre">run</span></code>
-or <code class="docutils literal notranslate"><span class="pre">ensemble</span></code> in a session pays a one-time cost.</p>
+<p>Requires Python 3.8+; <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, <code class="docutils literal notranslate"><span class="pre">numba</span></code>, and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> come along with it.
+Numba JIT-compiles the integrator hot loop, so the first <code class="docutils literal notranslate"><span class="pre">run</span></code> or <code class="docutils literal notranslate"><span class="pre">ensemble</span></code> in a session pays a one-time cost.</p>
 </section>
 <section id="a-single-planet">
 <h2>A single planet<a class="headerlink" href="#a-single-planet" title="Link to this heading"></a></h2>
 <p>Seed a planet and integrate it forward:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyEDW</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameters</span><span class="p">,</span> <span class="n">ExoDaisyWorld</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="n">dT</span><span class="o">=</span><span class="mf">30.0</span><span class="p">)</span>                    <span class="c1"># growth-rate bandwidth ΔT</span>
@@ -118,27 +126,37 @@ or <code class="docutils literal notranslate"><span class="pre">ensemble</span><
 <span class="n">fB</span><span class="p">,</span> <span class="n">fW</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">L</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>               <span class="c1"># endpoint [f_B, f_W, T, L]</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>Pass <code class="docutils literal notranslate"><span class="pre">record=True</span></code> to keep the whole trajectory:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>          <span class="c1"># shape (2001, 4)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>          <span class="c1"># shape (2001, 4)</span>
 </pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="an-ensemble-over-luminosity">
 <h2>An ensemble over luminosity<a class="headerlink" href="#an-ensemble-over-luminosity" title="Link to this heading"></a></h2>
-<p>The paper sweeps the mean stellar luminosity with many independent instances at
-each. <a class="reference internal" href="api/pyEDW.html#pyEDW.model.ExoDaisyWorld.ensemble" title="pyEDW.model.ExoDaisyWorld.ensemble"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ensemble()</span></code></a> does this in parallel:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Ls</span>  <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<p>The paper sweeps the mean stellar luminosity with many independent instances at each.
+<a class="reference internal" href="api/pyEDW.html#pyEDW.model.ExoDaisyWorld.ensemble" title="pyEDW.model.ExoDaisyWorld.ensemble"><span class="xref myst py py-meth"><code class="docutils literal notranslate"><span class="pre">ensemble()</span></code></span></a> does this in parallel:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Ls</span>  <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
 <span class="n">bio</span> <span class="o">=</span> <span class="n">ExoDaisyWorld</span><span class="o">.</span><span class="n">ensemble</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Ls</span><span class="o">=</span><span class="n">Ls</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="c1"># bio.shape == (400, 500, 4)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">agent_free=True</span></code> seeds both daisy fractions at zero and integrates the bare
-planet, the reference for the agent-induced correlation change
-<span class="math notranslate nohighlight">\(\Delta I\)</span>.</p>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">agent_free=True</span></code> seeds both daisy fractions at zero and integrates the bare planet, the reference for the agent-induced correlation change <span class="math notranslate nohighlight">\(\Delta I\)</span>.</p>
 </section>
 <section id="reading-the-information-architecture">
 <h2>Reading the information architecture<a class="headerlink" href="#reading-the-information-architecture" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyEDW</span><span class="w"> </span><span class="kn">import</span> <span class="n">metrics</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyEDW</span><span class="w"> </span><span class="kn">import</span> <span class="n">metrics</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">ExoDaisyWorld</span><span class="o">.</span><span class="n">ensemble</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Ls</span><span class="o">=</span><span class="n">Ls</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
                              <span class="n">agent_free</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -151,8 +169,9 @@ planet, the reference for the agent-induced correlation change
 <span class="n">C</span>   <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">cooperation</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>See <a class="reference internal" href="guide_metrics.html"><span class="doc">Guide: metrics</span></a> for what each measure means, and <a class="reference internal" href="theory.html"><span class="doc">Theory</span></a> for the
-equations.</p>
+</div>
+</div>
+<p>See <a class="reference internal" href="guide_metrics.html"><span class="std std-doc">Guide: metrics</span></a> for what each measure means, and <a class="reference internal" href="theory.html"><span class="std std-doc">Theory</span></a> for the equations.</p>
 </section>
 <section id="running-the-tests">
 <h2>Running the tests<a class="headerlink" href="#running-the-tests" title="Link to this heading"></a></h2>
@@ -172,7 +191,9 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 make<span class="w"> </span>html
 </pre></div>
 </div>
-<p>The HTML lands in <code class="docutils literal notranslate"><span class="pre">docs/_build/html</span></code>.</p>
+<p>The HTML lands in <code class="docutils literal notranslate"><span class="pre">docs/_build/html</span></code>.
+Any Sphinx warning fails the build, locally and in CI.
+To get a lenient build while drafting, run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span> <span class="pre">SPHINXOPTS=</span></code>.</p>
 </section>
 </section>
 

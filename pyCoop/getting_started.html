@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=a9c784c8" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=30357879" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -78,7 +80,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Getting Started</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/getting_started.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -86,52 +88,58 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="getting-started">
+<div class="launch-buttons">
+  <a class="launch-button" href="https://mybinder.org/v2/gh/EternalTime/pyCoop/main?labpath=docs/getting_started.ipynb">Launch in Binder</a>
+  <a class="launch-button" href="https://colab.research.google.com/github/EternalTime/pyCoop/blob/main/docs/getting_started.ipynb">Open in Colab</a>
+</div>
+
+  <section class="tex2jax_ignore mathjax_ignore" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
 <p>Here you will install pyCoop and run your first cooperation game.</p>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <p>pyCoop requires Python 3.9 or newer, and is tested on 3.9 through 3.14.
-Install it into a virtual environment: distribution-managed Pythons refuse
-system-wide installs (<span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0668/"><strong>PEP 668</strong></a>), and <code class="docutils literal notranslate"><span class="pre">pip</span></code> is often available only as
-<code class="docutils literal notranslate"><span class="pre">pip3</span></code> outside one:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">.</span><span class="n">venv</span>
-<span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
-<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">EternalTime</span><span class="o">/</span><span class="n">pyCoop</span>
+Install it into a virtual environment: distribution-managed Pythons refuse system-wide installs (<a class="reference external" href="https://peps.python.org/pep-0668/"><strong>PEP 668</strong></a>), and <code class="docutils literal notranslate"><span class="pre">pip</span></code> is often available only as <code class="docutils literal notranslate"><span class="pre">pip3</span></code> outside one:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/EternalTime/pyCoop
 </pre></div>
 </div>
 <p>or clone and install in editable mode if you plan to poke at the source:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">EternalTime</span><span class="o">/</span><span class="n">pyCoop</span><span class="o">.</span><span class="n">git</span>
-<span class="n">cd</span> <span class="n">pyCoop</span>
-<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">.</span><span class="n">venv</span>
-<span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
-<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/EternalTime/pyCoop.git
+<span class="nb">cd</span><span class="w"> </span>pyCoop
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
-<p>The in-notebook trajectory scrubber needs
-<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">'pyCoop[interactive]'</span></code>. Check the install:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pycoop</span>
+<p>The in-notebook trajectory scrubber needs the <code class="docutils literal notranslate"><span class="pre">interactive</span></code> extra: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">'pyCoop[interactive]</span> <span class="pre">&#64;</span> <span class="pre">git+https://github.com/EternalTime/pyCoop'</span></code>, or <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">'.[interactive]'</span></code> from a clone.
+Check the install:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pycoop</span>
 </pre></div>
 </div>
-<p>The tests and these docs each have their own extra, installed from a
-clone with the environment active:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;.[test]&#39;</span>
-<span class="n">pytest</span>
+</div>
+</div>
+<p>The tests and these docs each have their own extra, installed from a clone with the environment active:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;.[test]&#39;</span>
+pytest
 
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;.[docs]&#39;</span>
-<span class="n">sphinx</span><span class="o">-</span><span class="n">build</span> <span class="o">-</span><span class="n">b</span> <span class="n">html</span> <span class="n">docs</span> <span class="n">docs</span><span class="o">/</span><span class="n">_build</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;.[docs]&#39;</span>
+sphinx-build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>docs<span class="w"> </span>docs/_build
 </pre></div>
 </div>
 </section>
 <section id="first-game">
 <h2>First game<a class="headerlink" href="#first-game" title="Link to this heading"></a></h2>
-<p>The paw - a triangle with a pendant tail - is the smallest graph that can
-trap a group in a fraught state, so build it, set the thresholds, and
-run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pc</span>
+<p>The paw - a triangle with a pendant tail - is the smallest graph that can trap a group in a fraught state, so build it, set the thresholds, and run:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pc</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="kn">import</span> <span class="n">observables</span> <span class="k">as</span> <span class="n">obs</span>
 
 <span class="n">game</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">Game</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">paw</span><span class="p">(),</span> <span class="n">u</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
@@ -142,32 +150,46 @@ run:</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;absorbed at t = </span><span class="si">{</span><span class="n">traj</span><span class="o">.</span><span class="n">t_end</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> after </span><span class="si">{</span><span class="n">traj</span><span class="o">.</span><span class="n">steps</span><span class="si">}</span><span class="s2"> events&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Three parameters govern everything. The agreement threshold <code class="docutils literal notranslate"><span class="pre">u</span></code> lets a
-player reconsider only while their local mean action lies inside
-<span class="math notranslate nohighlight">\((-u, u)\)</span>, and the position threshold <code class="docutils literal notranslate"><span class="pre">l</span></code> lets them do it only
-once committed, <span class="math notranslate nohighlight">\(|\sigma_j| &gt; l\)</span>, which keeps fence-sitters from
-flipping. The third, <code class="docutils literal notranslate"><span class="pre">T</span></code>, sets the tempo: the mean wait between decision
-events across the network is <span class="math notranslate nohighlight">\(T/N\)</span>. See <a class="reference internal" href="guide_dynamics.html"><span class="doc">The Dynamics</span></a> for
-the rules in full.</p>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>consensus
+absorbed at t = 9.3 after 41 events
+</pre></div>
+</div>
+</div>
+</div>
+<p>Three parameters govern everything.
+The agreement threshold <code class="docutils literal notranslate"><span class="pre">u</span></code> lets a player reconsider only while their local mean action lies inside <span class="math notranslate nohighlight">\((-u, u)\)</span>, and the position threshold <code class="docutils literal notranslate"><span class="pre">l</span></code> lets them do it only once committed, <span class="math notranslate nohighlight">\(|\sigma_j| &gt; l\)</span>, which keeps fence-sitters from flipping.
+The third, <code class="docutils literal notranslate"><span class="pre">T</span></code>, sets the tempo: the mean wait between decision events across the network is <span class="math notranslate nohighlight">\(T/N\)</span>.
+See <a class="reference internal" href="guide_dynamics.html"><span class="std std-doc">The Dynamics</span></a> for the rules in full.</p>
 <p>Now look at what happened:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="kn">import</span> <span class="n">viz</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="kn">import</span> <span class="n">viz</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">viz</span><span class="o">.</span><span class="n">traces</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Each curve is one player’s action drifting toward its opinion, the shaded
-bands are the change-of-heart regions <span class="math notranslate nohighlight">\(l &lt; |\sigma| &lt; u\)</span>, and the
-crosses mark flips. Or watch the run as a movie on the graph:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span> <span class="o">=</span> <span class="n">viz</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e8b22c9b8f4952b9705bb85404d2c532c94b40839f35fae494859d246c75d9b7.png" src="_images/e8b22c9b8f4952b9705bb85404d2c532c94b40839f35fae494859d246c75d9b7.png" />
+</div>
+</div>
+<p>Each curve is one player’s action drifting toward its opinion, the shaded bands are the change-of-heart regions <span class="math notranslate nohighlight">\(l &lt; |\sigma| &lt; u\)</span>, and the crosses mark flips.
+Or watch the run as a movie on the graph:</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span> <span class="o">=</span> <span class="n">viz</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;paw.gif&quot;</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;pillow&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Run it again with other seeds. Sometimes the paw finds consensus quickly,
-sometimes it lands in the fraught trap where the pendant single-handedly
-holds the hub against the two free vertices. How often each happens, and
-why, is the subject of the next two guides.</p>
+</div>
+</div>
+<p>Run it again with other seeds.
+Sometimes the paw finds consensus quickly, sometimes it lands in the fraught trap where the pendant single-handedly holds the hub against the two free vertices.
+How often each happens, and why, is the subject of the next two guides.</p>
 </section>
 </section>
 

@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ff3d00d2" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5b8a0f43" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -89,6 +91,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <section id="the-model">
 <h1>The model<a class="headerlink" href="#the-model" title="Link to this heading"></a></h1>
 <p>pyLEAFS v1 implements a replenishing resource field and a single greedy forager
@@ -113,7 +116,7 @@ descendant of the MATLAB <code class="docutils literal notranslate"><span class=
 <p>With no agents present the field relaxes to an equilibrium count per region</p>
 <div class="math notranslate nohighlight">
 \[N_\mathrm{eq} = \frac{\Gamma\,L^{D}}{\epsilon\,\gamma},\]</div>
-<p>which <code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code> exposes as <code class="docutils literal notranslate"><span class="pre">N_eq</span></code>.</p>
+<p>which <a class="reference internal" href="api/pyLEAFS.fields.html#pyLEAFS.fields.ResourceField" title="pyLEAFS.fields.ResourceField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code></a> exposes as <code class="docutils literal notranslate"><span class="pre">N_eq</span></code>.</p>
 </section>
 <section id="homogeneity">
 <h2>Homogeneity<a class="headerlink" href="#homogeneity" title="Link to this heading"></a></h2>
@@ -128,7 +131,7 @@ dimensionless <strong>homogeneity</strong> <span class="math notranslate nohighl
 \tau_E = 1/\gamma .\]</div>
 <p>Taking the agent length scale to be the collection radius
 (<span class="math notranslate nohighlight">\(\ell_A = r_\mathrm{col}\)</span> in the 2d applet) and inverting for the energy
-per resource gives the relation <code class="xref py py-meth docutils literal notranslate"><span class="pre">forager()</span></code> uses:</p>
+per resource gives the relation <a class="reference internal" href="api/pyLEAFS.simulation.html#pyLEAFS.simulation.Simulation.forager" title="pyLEAFS.simulation.Simulation.forager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">forager()</span></code></a> uses:</p>
 <div class="math notranslate nohighlight">
 \[\epsilon = \frac{\Gamma}{\,(\Xi / r_\mathrm{col})^{D}\,\gamma\,}.\]</div>
 <p>Small <span class="math notranslate nohighlight">\(\Xi\)</span> is a <em>heterogeneous</em> world: few energy-rich resources, widely

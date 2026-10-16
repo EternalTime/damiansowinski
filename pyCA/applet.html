@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=021128a6" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5bea863b" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -87,6 +89,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <section id="applet">
 <h1>Applet<a class="headerlink" href="#applet" title="Link to this heading"></a></h1>
 <link rel="stylesheet" href="_static/ca_applet.css">
@@ -101,11 +104,11 @@ ones pyCA applies in Python - the lookup-table step of
 document. Nothing is precomputed: the spacetime diagram scrolling past is
 the history of an automaton being run as you watch.</p>
 <p>The applet is yours to take apart. It ships with the library as
-<a class="reference external" href="https://github.com/EternalTime/CellularAutomata/blob/main/docs/_static/ca_applet.js">docs/_static/ca_applet.js</a>:
+<a class="reference external" href="https://github.com/EternalTime/CellularAutomata/blob/master/docs/_static/ca_applet.js">docs/_static/ca_applet.js</a>:
 plain JavaScript with no build step and no dependencies, of which the first
 half is the library itself - the rules and the measures, function for
 function - and the rest is scenery.</p>
-<p>The square panel plots the normalized Lempel–Ziv
+<p>The square panel plots the normalized Lempel-Ziv
 complexity<a class="footnote-reference brackets" href="#footcite-lempel1976" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> of
 <a class="reference internal" href="api/pyCA.measures.html#pyCA.measures.lz_complexity" title="pyCA.measures.lz_complexity"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyCA.measures.lz_complexity()</span></code></a> against
 <a class="reference internal" href="api/pyCA.measures.html#pyCA.measures.entropy_rate" title="pyCA.measures.entropy_rate"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyCA.measures.entropy_rate()</span></code></a> with <span class="math notranslate nohighlight">\(k = 2\)</span>, computed on the

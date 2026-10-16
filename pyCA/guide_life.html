@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=021128a6" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5bea863b" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,7 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -81,7 +82,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Two-Dimensional Automata</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/guide_life.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/guide_life.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -89,42 +90,53 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="two-dimensional-automata">
+<div class="launch-buttons">
+  <a class="launch-button" href="https://mybinder.org/v2/gh/EternalTime/CellularAutomata/master?labpath=docs/guide_life.ipynb">Launch in Binder</a>
+  <a class="launch-button" href="https://colab.research.google.com/github/EternalTime/CellularAutomata/blob/master/docs/guide_life.ipynb">Open in Colab</a>
+</div>
+
+  <section class="tex2jax_ignore mathjax_ignore" id="two-dimensional-automata">
 <h1>Two-Dimensional Automata<a class="headerlink" href="#two-dimensional-automata" title="Link to this heading"></a></h1>
-<p>No column Martin Gardner ever wrote drew more mail — by his own account —
-than the one he devoted in 1970<a class="footnote-reference brackets" href="#footcite-gardner1970" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> to a game John
-Conway had been playing on a Go board.
-The Game of Life needs one sentence: a dead cell with exactly three live
-neighbors is born, a live cell with two or three survives, and everything
-else dies. From that sentence come gliders, oscillators, guns, and — as
-Conway conjectured<a class="footnote-reference brackets" href="#footcite-gardner1971" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> and others
-proved<a class="footnote-reference brackets" href="#footcite-berlekamp2004" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> — universal computation.</p>
+<p>No column Martin Gardner ever wrote drew more mail - by his own account - than the one he devoted in 1970<a class="footnote-reference brackets" href="#footcite-gardner1970" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> to a game John Conway had been playing on a Go board.
+The Game of Life needs one sentence: a dead cell with exactly three live neighbors is born, a live cell with two or three survives, and everything else dies.
+From that sentence come gliders, oscillators, guns, and - as Conway conjectured<a class="footnote-reference brackets" href="#footcite-gardner1971" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> and others proved<a class="footnote-reference brackets" href="#footcite-berlekamp2004" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> - universal computation.</p>
 <section id="b-s-notation">
 <h2>B/S notation<a class="headerlink" href="#b-s-notation" title="Link to this heading"></a></h2>
-<p>Life is one member of the outer-totalistic family: rules that update a cell
-from its own value and the <em>sum</em> of its eight Moore neighbors, nothing more.
-The family is named in B/S notation — B lists the neighbor counts at which a
-dead cell is born, S the counts at which a live cell survives — making Life
-B3/S23. The <a class="reference internal" href="api/pyCA.ca2d.html#pyCA.ca2d.CA2D" title="pyCA.ca2d.CA2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.ca2d.CA2D</span></code></a> class takes the two lists directly, and
-Life gets a named constructor:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">CA2D</span>
+<p>Life is one member of the outer-totalistic family: rules that update a cell from its own value and the <em>sum</em> of its eight Moore neighbors, nothing more.
+The family is named in B/S notation - B lists the neighbor counts at which a dead cell is born, S the counts at which a live cell survives - making Life B3/S23.
+The <a class="reference internal" href="api/pyCA.ca2d.html#pyCA.ca2d.CA2D" title="pyCA.ca2d.CA2D"><span class="xref myst py py-class"><code class="docutils literal notranslate"><span class="pre">pyCA.ca2d.CA2D</span></code></span></a> class takes the two lists directly, and Life gets a named constructor:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">CA2D</span>
 
 <span class="n">life</span> <span class="o">=</span> <span class="n">CA2D</span><span class="o">.</span><span class="n">life</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>      <span class="c1"># random soup at density 0.5</span>
 <span class="n">life</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">life</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
-
-<span class="n">life</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>                       <span class="c1"># watch it live; close to stop</span>
 </pre></div>
 </div>
-<p>The lattice is periodic in both directions, so gliders that leave one edge
-arrive at the other.</p>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1043
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">life</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>                       <span class="c1"># watch it live; close to stop</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The lattice is periodic in both directions, so gliders that leave one edge arrive at the other.</p>
 </section>
 <section id="building-from-a-known-pattern">
 <h2>Building from a known pattern<a class="headerlink" href="#building-from-a-known-pattern" title="Link to this heading"></a></h2>
-<p>Pass an explicit state to study a specific object. The glider, the smallest
-spaceship, translates one cell diagonally every four steps — the repository’s
-test suite holds the implementation to exactly that:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<p>Pass an explicit state to study a specific object.
+The glider, the smallest spaceship, translates one cell diagonally every four steps - the repository’s test suite holds the implementation to exactly that:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">CA2D</span>
 
 <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -135,27 +147,35 @@ test suite holds the implementation to exactly that:</p>
 <span class="n">life</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>        <span class="c1"># the glider has moved by (1, 1)</span>
 </pre></div>
 </div>
+</div>
+</div>
 </section>
 <section id="beyond-life">
 <h2>Beyond Life<a class="headerlink" href="#beyond-life" title="Link to this heading"></a></h2>
-<p>Change the two lists and the physics changes with them. HighLife (B36/S23)
-adds a single birth condition to Life and gains a replicator. Seeds (B2/S)
-is pure birth — nothing survives, yet the explosions are intricate. Day &amp;
-Night (B3678/S34678) is symmetric under exchanging live and dead cells, so
-every pattern has a photographic negative with identical dynamics.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">highlife</span> <span class="o">=</span> <span class="n">CA2D</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
+<p>Change the two lists and the physics changes with them.
+HighLife (B36/S23) adds a single birth condition to Life and gains a replicator.
+Seeds (B2/S) is pure birth - nothing survives, yet the explosions are intricate.
+Day &amp; Night (B3678/S34678) is symmetric under exchanging live and dead cells, so every pattern has a photographic negative with identical dynamics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">highlife</span> <span class="o">=</span> <span class="n">CA2D</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
 <span class="n">seeds</span>    <span class="o">=</span> <span class="n">CA2D</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="p">[],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
 <span class="n">daynight</span> <span class="o">=</span> <span class="n">CA2D</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Run a random soup under each and compare the late-time populations. Which
-rules die, which saturate, and which hover? The measures in
-<a class="reference internal" href="guide_measures.html"><span class="doc">Information Measures</span></a> apply to 2d histories row by row — quantify what your
-eyes report.</p>
+</div>
+</div>
+<p>Run a random soup under each and compare the late-time populations.
+Which rules die, which saturate, and which hover?
+The measures in <a class="reference internal" href="guide_measures.html"><span class="std std-doc">Information Measures</span></a> apply to 2d histories row by row - quantify what your eyes report.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
 <div class="docutils container" id="id4">
+</div>
+</section>
+</section>
+<hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="footcite-gardner1970" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
@@ -170,9 +190,6 @@ eyes report.</p>
 <p>Elwyn R. Berlekamp, John H. Conway, and Richard K. Guy. <a class="reference external" href="https://doi.org/10.1201/9780429487309"><em>Winning Ways for Your Mathematical Plays, Volume 4</em></a>. A K Peters, 2nd edition, 2004.</p>
 </aside>
 </aside>
-</div>
-</section>
-</section>
 
 
            </div>

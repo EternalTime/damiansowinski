@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ff3d00d2" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5b8a0f43" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -90,6 +92,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <section id="architecture">
 <h1>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h1>
 <p>pyLEAFS v1 is one resource field and one greedy-forager population, wired so
@@ -98,9 +101,16 @@ extending it.</p>
 <section id="conventions">
 <h2>Conventions<a class="headerlink" href="#conventions" title="Link to this heading"></a></h2>
 <p><strong>Dimension lives in the grid.</strong> Dimension is a property of the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code>, set by the length of its <code class="docutils literal notranslate"><span class="pre">shape</span></code>, and positions are
+<a class="reference internal" href="api/pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>, set by the length of its <code class="docutils literal notranslate"><span class="pre">shape</span></code>, and positions are
 always <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">D)</span></code> arrays. There is no separate 2d and 3d codebase; code that
-avoids hard-coding <code class="docutils literal notranslate"><span class="pre">D</span></code> works in both.</p>
+avoids hard-coding <code class="docutils literal notranslate"><span class="pre">D</span></code> works in both - the energy per resource, for one, is
+derived from the homogeneity with <code class="docutils literal notranslate"><span class="pre">D</span></code> as the exponent (see <a class="reference internal" href="theory.html"><span class="doc">The model</span></a>).
+Two places do dispatch on <code class="docutils literal notranslate"><span class="pre">D</span></code>, because the geometry there genuinely differs:
+<a class="reference internal" href="api/pyLEAFS.viewer.html#pyLEAFS.viewer.Viewer" title="pyLEAFS.viewer.Viewer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Viewer</span></code></a>, since a flat box and a rotatable one are
+different matplotlib axes, and heading diffusion in
+<a class="reference internal" href="api/pyLEAFS.population.html#pyLEAFS.population.Population" title="pyLEAFS.population.Population"><code class="xref py py-class docutils literal notranslate"><span class="pre">Population</span></code></a>, since a 2d heading rotates by an angle where a 3d
+one takes a renormalized tangential kick. Both branch behind a single class
+rather than splitting into two.</p>
 <p><strong>Arrays, not objects.</strong> Resources and agents are stored as parallel NumPy
 arrays - a population’s positions are one <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">D)</span></code> array, its fuel one
 <code class="docutils literal notranslate"><span class="pre">(n,)</span></code> array - which keeps the per-step work vectorizable and
@@ -111,7 +121,7 @@ waits until the physics is pinned.</p>
 </section>
 <section id="the-grid">
 <h2>The grid<a class="headerlink" href="#the-grid" title="Link to this heading"></a></h2>
-<p>Every field and every population references one <code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code>, which
+<p>Every field and every population references one <a class="reference internal" href="api/pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a>, which
 owns the geometry: the region partition, the toroidal wrap, the minimum-image
 displacement, and the Moore-neighbour lookup (<span class="math notranslate nohighlight">\(3^{D}\)</span> neighbours per
 region). Defining it once is what lets fields and populations interoperate
@@ -120,9 +130,9 @@ without each re-deriving coordinate conventions.</p>
 <section id="the-field-list">
 <h2>The field list<a class="headerlink" href="#the-field-list" title="Link to this heading"></a></h2>
 <p>A <em>field</em> is anything spatially distributed that the simulation steps and agents
-sample. <code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code> is the structural protocol - <code class="docutils literal notranslate"><span class="pre">step</span></code>,
-<code class="docutils literal notranslate"><span class="pre">sample</span></code>, <code class="docutils literal notranslate"><span class="pre">deposit</span></code> - and <code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code> is its only
-implementation in v1. <code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code> holds a <em>list</em> of fields and
+sample. <a class="reference internal" href="api/pyLEAFS.fields.html#pyLEAFS.fields.Field" title="pyLEAFS.fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> is the structural protocol - <code class="docutils literal notranslate"><span class="pre">step</span></code>,
+<code class="docutils literal notranslate"><span class="pre">sample</span></code>, <code class="docutils literal notranslate"><span class="pre">deposit</span></code> - and <a class="reference internal" href="api/pyLEAFS.fields.html#pyLEAFS.fields.ResourceField" title="pyLEAFS.fields.ResourceField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code></a> is its only
+implementation in v1. <a class="reference internal" href="api/pyLEAFS.simulation.html#pyLEAFS.simulation.Simulation" title="pyLEAFS.simulation.Simulation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Simulation</span></code></a> holds a <em>list</em> of fields and
 steps each one:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
     <span class="n">f</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">)</span>
@@ -135,7 +145,7 @@ a call site.</p>
 </section>
 <section id="the-spatial-hash">
 <h2>The spatial hash<a class="headerlink" href="#the-spatial-hash" title="Link to this heading"></a></h2>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialHash</span></code> buckets an arbitrary <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">D)</span></code> point set into grid
+<p><a class="reference internal" href="api/pyLEAFS.spatialhash.html#pyLEAFS.spatialhash.SpatialHash" title="pyLEAFS.spatialhash.SpatialHash"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialHash</span></code></a> buckets an arbitrary <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">D)</span></code> point set into grid
 regions and answers neighbourhood queries, agnostic about what the points are.
 The resource field keeps its own buffer, but predators sensing prey, agents
 sensing each other, and any future point-set interaction can share this one index.</p>
@@ -166,11 +176,11 @@ self-contained makes that extraction a refactor of one method, not a redesign.</
 </section>
 <section id="adding-a-layer">
 <h2>Adding a layer<a class="headerlink" href="#adding-a-layer" title="Link to this heading"></a></h2>
-<p>Write a new <code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code> (a pheromone field, say) or a new
-<code class="docutils literal notranslate"><span class="pre">Population</span></code> (predators), reusing the shared <code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code> and, where
-useful, <code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialHash</span></code>; append it to the simulation’s <code class="docutils literal notranslate"><span class="pre">fields</span></code>
+<p>Write a new <a class="reference internal" href="api/pyLEAFS.fields.html#pyLEAFS.fields.Field" title="pyLEAFS.fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> (a pheromone field, say) or a new
+<code class="docutils literal notranslate"><span class="pre">Population</span></code> (predators), reusing the shared <a class="reference internal" href="api/pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> and, where
+useful, <a class="reference internal" href="api/pyLEAFS.spatialhash.html#pyLEAFS.spatialhash.SpatialHash" title="pyLEAFS.spatialhash.SpatialHash"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialHash</span></code></a>; append it to the simulation’s <code class="docutils literal notranslate"><span class="pre">fields</span></code>
 or <code class="docutils literal notranslate"><span class="pre">populations</span></code> list; then add a factory, or extend
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">forager()</span></code>, to assemble the new world and pin its
+<a class="reference internal" href="api/pyLEAFS.simulation.html#pyLEAFS.simulation.Simulation.forager" title="pyLEAFS.simulation.Simulation.forager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">forager()</span></code></a>, to assemble the new world and pin its
 behavior with a test. The loops already iterate lists and the geometry already
 lives in the grid, so the existing layers do not change.</p>
 </section>

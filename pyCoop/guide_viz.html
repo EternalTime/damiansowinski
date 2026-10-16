@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=a9c784c8" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=30357879" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -80,7 +82,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Visualization</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/guide_viz.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/guide_viz.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -88,72 +90,81 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="visualization">
+<div class="launch-buttons">
+  <a class="launch-button" href="https://mybinder.org/v2/gh/EternalTime/pyCoop/main?labpath=docs/guide_viz.ipynb">Launch in Binder</a>
+  <a class="launch-button" href="https://colab.research.google.com/github/EternalTime/pyCoop/blob/main/docs/guide_viz.ipynb">Open in Colab</a>
+</div>
+
+  <section class="tex2jax_ignore mathjax_ignore" id="visualization">
 <h1>Visualization<a class="headerlink" href="#visualization" title="Link to this heading"></a></h1>
-<p>A cooperation game is a story - players drifting, wavering inside the
-change-of-heart bands, flipping, and finally locking in - and stories are
-easier to follow when you can see them. pyCoop draws states, traces, and
-films, all from the trajectory object.</p>
+<p>A cooperation game is a story - players drifting, wavering inside the change-of-heart bands, flipping, and finally locking in - and stories are easier to follow when you can see them.
+pyCoop draws states, traces, and films, all from the trajectory object.</p>
 <section id="snapshots">
 <h2>Snapshots<a class="headerlink" href="#snapshots" title="Link to this heading"></a></h2>
-<p><a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.snapshot" title="pycoop.viz.snapshot"><code class="xref py py-func docutils literal notranslate"><span class="pre">snapshot()</span></code></a> draws a single state on the graph. Actions
-color the nodes over a diverging map from <span class="math notranslate nohighlight">\(-1\)</span> to <span class="math notranslate nohighlight">\(+1\)</span>, and
-opinions set the border, dark for <span class="math notranslate nohighlight">\(+1\)</span> and light for <span class="math notranslate nohighlight">\(-1\)</span>, so
-a node whose fill and border disagree is a player acting against their
-belief:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pc</span>
+<p><a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.snapshot" title="pycoop.viz.snapshot"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">snapshot()</span></code></span></a> draws a single state on the graph.
+Actions color the nodes over a diverging map from <span class="math notranslate nohighlight">\(-1\)</span> to <span class="math notranslate nohighlight">\(+1\)</span>, and opinions set the border, dark for <span class="math notranslate nohighlight">\(+1\)</span> and light for <span class="math notranslate nohighlight">\(-1\)</span>, so a node whose fill and border disagree is a player acting against their belief:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pc</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pycoop</span><span class="w"> </span><span class="kn">import</span> <span class="n">viz</span>
 
 <span class="n">game</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">Game</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">paw</span><span class="p">(),</span> <span class="n">u</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="n">traj</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">rng</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
 
-<span class="n">viz</span><span class="o">.</span><span class="n">snapshot</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">paw</span><span class="p">(),</span> <span class="o">*</span><span class="n">traj</span><span class="o">.</span><span class="n">final_state</span><span class="p">(),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">snapshot</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">paw</span><span class="p">(),</span> <span class="o">*</span><span class="n">traj</span><span class="o">.</span><span class="n">final_state</span><span class="p">(),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The layout is a seeded spring layout. Pass <code class="docutils literal notranslate"><span class="pre">pos</span></code> to pin your own
-coordinates, and reuse the returned <code class="docutils literal notranslate"><span class="pre">pos</span></code> across frames so the graph
-doesn’t wander between figures.</p>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/880ab8a567f2b4ffc88a2eb1132096ab444211e57c806b9376c52184832208aa.png" src="_images/880ab8a567f2b4ffc88a2eb1132096ab444211e57c806b9376c52184832208aa.png" />
+</div>
+</div>
+<p>The layout is a seeded spring layout.
+Pass <code class="docutils literal notranslate"><span class="pre">pos</span></code> to pin your own coordinates, and reuse the returned <code class="docutils literal notranslate"><span class="pre">pos</span></code> across frames so the graph doesn’t wander between figures.</p>
 </section>
 <section id="traces">
 <h2>Traces<a class="headerlink" href="#traces" title="Link to this heading"></a></h2>
-<p><a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.traces" title="pycoop.viz.traces"><code class="xref py py-func docutils literal notranslate"><span class="pre">traces()</span></code></a> plots every player’s action against time. The
-shaded bands are the change-of-heart regions <span class="math notranslate nohighlight">\(l &lt; |\sigma| &lt; u\)</span>, the
-only territory where opinions can flip, and each flip is marked with a
-cross at the moment it fired:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">viz</span><span class="o">.</span><span class="n">traces</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+<p><a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.traces" title="pycoop.viz.traces"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">traces()</span></code></span></a> plots every player’s action against time.
+The shaded bands are the change-of-heart regions <span class="math notranslate nohighlight">\(l &lt; |\sigma| &lt; u\)</span>, the only territory where opinions can flip, and each flip is marked with a cross at the moment it fired:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">viz</span><span class="o">.</span><span class="n">traces</span><span class="p">(</span><span class="n">traj</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Positions are exact at event times, and between events each action moves
-linearly toward its opinion, so what you see is the piecewise-ballistic
-flow of the model rather than an interpolation artifact.</p>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e8b22c9b8f4952b9705bb85404d2c532c94b40839f35fae494859d246c75d9b7.png" src="_images/e8b22c9b8f4952b9705bb85404d2c532c94b40839f35fae494859d246c75d9b7.png" />
+</div>
+</div>
+<p>Positions are exact at event times, and between events each action moves linearly toward its opinion, so what you see is the piecewise-ballistic flow of the model rather than an interpolation artifact.</p>
 </section>
 <section id="animation">
 <h2>Animation<a class="headerlink" href="#animation" title="Link to this heading"></a></h2>
-<p><a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.animate" title="pycoop.viz.animate"><code class="xref py py-func docutils literal notranslate"><span class="pre">animate()</span></code></a> turns a trajectory into a
-<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation" title="(in Matplotlib v3.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FuncAnimation</span></code></a>, the graph with its node
-colors evolving event by event:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span> <span class="o">=</span> <span class="n">viz</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<p><a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.animate" title="pycoop.viz.animate"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">animate()</span></code></span></a> turns a trajectory into a <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation" title="Matplotlib 3.11.2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">FuncAnimation</span></code></span></a>, the graph with its node colors evolving event by event:</p>
+<div class="cell tag_skip-execution docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span> <span class="o">=</span> <span class="n">viz</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
 <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;run.mp4&quot;</span><span class="p">)</span>                    <span class="c1"># needs ffmpeg</span>
 <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;run.gif&quot;</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;pillow&quot;</span><span class="p">)</span>   <span class="c1"># no ffmpeg required</span>
 </pre></div>
 </div>
-<p>Use <code class="docutils literal notranslate"><span class="pre">stride</span></code> to thin long runs; a 100,000-event trajectory does not need
-100,000 frames to tell its story. Keep a reference to the animation alive
-until it is saved or shown, since matplotlib garbage-collects abandoned
-ones mid-render.</p>
+</div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">stride</span></code> to thin long runs; a 100,000-event trajectory does not need 100,000 frames to tell its story.
+Keep a reference to the animation alive until it is saved or shown, since matplotlib garbage-collects abandoned ones mid-render.</p>
 </section>
 <section id="scrubbing">
 <h2>Scrubbing<a class="headerlink" href="#scrubbing" title="Link to this heading"></a></h2>
-<p>In a notebook, <a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.scrub" title="pycoop.viz.scrub"><code class="xref py py-func docutils literal notranslate"><span class="pre">scrub()</span></code></a> gives you a slider over events,
-with the graph snapshot on the left, the traces on the right, and a dashed
-line marking where in the run you’re standing:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">viz</span><span class="o">.</span><span class="n">scrub</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+<p>In a notebook, <a class="reference internal" href="api/pycoop.viz.html#pycoop.viz.scrub" title="pycoop.viz.scrub"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">scrub()</span></code></span></a> gives you a slider over events, with the graph snapshot on the left, the traces on the right, and a dashed line marking where in the run you’re standing:</p>
+<div class="cell tag_skip-execution docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">viz</span><span class="o">.</span><span class="n">scrub</span><span class="p">(</span><span class="n">traj</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This requires the <code class="docutils literal notranslate"><span class="pre">interactive</span></code> extra (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span>
-<span class="pre">'pyCoop[interactive]'</span></code>; see <a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a>). It is the fastest
-way to find the moment a run commits: drag until the flips stop, and
-you’re looking at the instant the last window shut.</p>
+</div>
+</div>
+<p>This requires the <code class="docutils literal notranslate"><span class="pre">interactive</span></code> extra: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">'pyCoop[interactive]</span> <span class="pre">&#64;</span> <span class="pre">git+https://github.com/EternalTime/pyCoop'</span></code>, or <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">'.[interactive]'</span></code> from a clone (see <a class="reference internal" href="getting_started.html"><span class="std std-doc">Getting Started</span></a>).
+It is the fastest way to find the moment a run commits: drag until the flips stop, and you’re looking at the instant the last window shut.</p>
 </section>
 </section>
 

@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ff3d00d2" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5b8a0f43" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -114,6 +116,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <section id="module-pyLEAFS.fields">
 <span id="pyleafs-fields-module"></span><h1>pyLEAFS.fields module<a class="headerlink" href="#module-pyLEAFS.fields" title="Link to this heading"></a></h1>
 <p>Fields living on the shared grid.</p>
@@ -128,15 +131,15 @@ buffer instead of per-region objects.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyLEAFS.fields.Field">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyLEAFS.fields.</span></span><span class="sig-name descname"><span class="pre">Field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#Field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.Field" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
 <p>Structural protocol for a steppable, samplable field.</p>
-<p>A field references a <code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code> and implements the three verbs the
-simulation and agents use. <code class="docutils literal notranslate"><span class="pre">deposit</span></code> is optional in spirit (the resource
-field does not accept deposits), but the signature is reserved so that
-pheromone-style fields slot in without changing call sites.</p>
+<p>A field references a <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Grid</span></code></a> and implements the three
+verbs the simulation and agents use. <code class="docutils literal notranslate"><span class="pre">deposit</span></code> is optional in spirit (the
+resource field does not accept deposits), but the signature is reserved so
+that pheromone-style fields slot in without changing call sites.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyLEAFS.fields.Field.deposit">
-<span class="sig-name descname"><span class="pre">deposit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#Field.deposit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.Field.deposit" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">deposit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#Field.deposit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.Field.deposit" title="Link to this definition"></a></dt>
 <dd><p>Add <code class="docutils literal notranslate"><span class="pre">amount</span></code> to the field at positions <code class="docutils literal notranslate"><span class="pre">pos</span></code> (if supported).</p>
 </dd></dl>
 
@@ -148,7 +151,7 @@ pheromone-style fields slot in without changing call sites.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyLEAFS.fields.Field.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#Field.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.Field.step" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#Field.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.Field.step" title="Link to this definition"></a></dt>
 <dd><p>Advance the field one timestep using random source <code class="docutils literal notranslate"><span class="pre">rng</span></code>.</p>
 </dd></dl>
 
@@ -157,7 +160,7 @@ pheromone-style fields slot in without changing call sites.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyLEAFS.fields.ResourceField">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyLEAFS.fields.</span></span><span class="sig-name descname"><span class="pre">ResourceField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyLEAFS/fields.html#ResourceField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyLEAFS.fields.ResourceField" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A replenishing Poisson resource field on the shared grid.</p>
 <p>Resources are points scattered through the domain. Each timestep, within
 every region, new resources are born and existing ones die:</p>
@@ -173,11 +176,11 @@ the struct-of-arrays equivalent of the MATLAB active-prefix <code class="docutil
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>grid</strong> (<a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><em>Grid</em></a>) – Shared spatial grid.</p></li>
-<li><p><strong>Gamma</strong> (<em>float</em>) – Resource birth rate per unit volume, <span class="math notranslate nohighlight">\(\Gamma\)</span>.</p></li>
-<li><p><strong>gamma</strong> (<em>float</em>) – Resource decay rate, <span class="math notranslate nohighlight">\(\gamma\)</span>.</p></li>
-<li><p><strong>epsilon</strong> (<em>float</em>) – Energy yield per resource, <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p></li>
-<li><p><strong>dt</strong> (<em>float</em>) – Timestep.</p></li>
-<li><p><strong>capacity_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Per-region buffer is <code class="docutils literal notranslate"><span class="pre">max(20,</span> <span class="pre">ceil(capacity_factor</span> <span class="pre">*</span> <span class="pre">N_eq))</span></code> slots
+<li><p><strong>Gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Resource birth rate per unit volume, <span class="math notranslate nohighlight">\(\Gamma\)</span>.</p></li>
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Resource decay rate, <span class="math notranslate nohighlight">\(\gamma\)</span>.</p></li>
+<li><p><strong>epsilon</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Energy yield per resource, <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Timestep.</p></li>
+<li><p><strong>capacity_factor</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em>, </em><em>optional</em>) – Per-region buffer is <code class="docutils literal notranslate"><span class="pre">max(20,</span> <span class="pre">ceil(capacity_factor</span> <span class="pre">*</span> <span class="pre">N_eq))</span></code> slots
 (default 4.0, matching the MATLAB <code class="docutils literal notranslate"><span class="pre">Region</span></code>).</p></li>
 </ul>
 </dd>
@@ -188,7 +191,7 @@ the struct-of-arrays equivalent of the MATLAB active-prefix <code class="docutil
 <dd><p>Agent-free equilibrium count per region.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -199,7 +202,7 @@ the struct-of-arrays equivalent of the MATLAB active-prefix <code class="docutil
 <dd><p>Current number of active resources in each region.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray of int, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.n_regions" title="pyLEAFS.grid.Grid.n_regions">n_regions</a>,)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a> of <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)">int</a>, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (<a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.n_regions" title="pyLEAFS.grid.Grid.n_regions">n_regions</a>,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -211,7 +214,7 @@ the struct-of-arrays equivalent of the MATLAB active-prefix <code class="docutil
 <a class="reference internal" href="#pyLEAFS.fields.ResourceField.all_positions" title="pyLEAFS.fields.ResourceField.all_positions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">all_positions()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n_active, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape">shape</a> (n_active, <a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D">D</a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -245,7 +248,7 @@ the struct-of-arrays equivalent of the MATLAB active-prefix <code class="docutil
 empty (e.g. another agent harvested it first this step).</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -256,7 +259,7 @@ empty (e.g. another agent harvested it first this step).</p>
 <dd><p>Resources in the Moore neighbourhood of a single query position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pos</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>,</em><em>)</em>) – Physical query position.</p>
+<dd class="field-odd"><p><strong>pos</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>,</em><em>)</em>) – Physical query position.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
@@ -275,7 +278,7 @@ empty (e.g. another agent harvested it first this step).</p>
 <dd><p>Nearest-resource displacement for each query position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pos</strong> (<em>ndarray</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical query positions.</p>
+<dd class="field-odd"><p><strong>pos</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical query positions.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
@@ -298,8 +301,8 @@ for now and is a natural <code class="docutils literal notranslate"><span class=
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rng</strong> (<em>numpy.random.Generator</em>) – Random source.</p></li>
-<li><p><strong>n0</strong> (<em>int</em><em>, </em><em>optional</em>) – Exact initial count per region. If omitted, each region draws
+<li><p><strong>rng</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.5)"><em>numpy.random.Generator</em></a>) – Random source.</p></li>
+<li><p><strong>n0</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a><em>, </em><em>optional</em>) – Exact initial count per region. If omitted, each region draws
 <code class="docutils literal notranslate"><span class="pre">Poisson(N_eq)</span></code>.</p></li>
 </ul>
 </dd>

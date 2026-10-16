@@ -9,7 +9,8 @@
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ff3d00d2" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5b8a0f43" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -18,7 +19,7 @@
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/copybutton.js?v=e5238352"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -77,11 +78,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <h1>Source code for pyLEAFS.spatialhash</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Generic spatial hash over a point set.</span>
 
 <span class="sd">A :class:`SpatialHash` buckets an arbitrary ``(n, D)`` set of points into the</span>
-<span class="sd">regions of a shared :class:`Grid`, then answers Moore-neighbourhood queries.</span>
+<span class="sd">regions of a shared :class:`~pyLEAFS.grid.Grid`, then answers</span>
+<span class="sd">Moore-neighbourhood queries.</span>
 <span class="sd">It is deliberately agnostic about what the points are --- resources, foragers,</span>
 <span class="sd">predators --- so the same structure serves every layer. Unlike the resource</span>
 <span class="sd">field&#39;s internal buffer, this is a lightweight index rebuilt from a positions</span>
@@ -102,7 +105,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    grid : Grid</span>
 <span class="sd">        Shared spatial grid.</span>
-<span class="sd">    positions : ndarray, shape (n, D), optional</span>
+<span class="sd">    positions : ~numpy.ndarray, shape (n, D), optional</span>
 <span class="sd">        Initial point set. May be rebuilt later with :meth:`build`.</span>
 
 <span class="sd">    Examples</span>
@@ -130,7 +133,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        positions : ndarray, shape (n, D)</span>
+<span class="sd">        positions : ~numpy.ndarray, shape (n, D)</span>
 <span class="sd">            Physical positions to index.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
@@ -150,12 +153,12 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        pos : ndarray, shape (D,)</span>
+<span class="sd">        pos : ~numpy.ndarray, shape (D,)</span>
 <span class="sd">            Physical query position.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ndarray of int</span>
+<span class="sd">        ~numpy.ndarray of int</span>
 <span class="sd">            Indices into the indexed positions array of every point whose</span>
 <span class="sd">            region is in the Moore neighbourhood of ``pos``. Not distance</span>
 <span class="sd">            filtered --- the caller refines with actual displacements.</span>

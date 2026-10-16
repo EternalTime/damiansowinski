@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=021128a6" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5bea863b" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -81,7 +83,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Elementary Cellular Automata</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/guide_eca.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/guide_eca.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -89,24 +91,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="elementary-cellular-automata">
+<div class="launch-buttons">
+  <a class="launch-button" href="https://mybinder.org/v2/gh/EternalTime/CellularAutomata/master?labpath=docs/guide_eca.ipynb">Launch in Binder</a>
+  <a class="launch-button" href="https://colab.research.google.com/github/EternalTime/CellularAutomata/blob/master/docs/guide_eca.ipynb">Open in Colab</a>
+</div>
+
+  <section class="tex2jax_ignore mathjax_ignore" id="elementary-cellular-automata">
 <h1>Elementary Cellular Automata<a class="headerlink" href="#elementary-cellular-automata" title="Link to this heading"></a></h1>
-<p>An elementary cellular automaton is a row of cells, each 0 or 1, each
-updating simultaneously from its own value and its two nearest neighbors’.
-Three binary inputs, one binary output: that is the entire specification,
-yet the 256 possible update tables exhaust an astonishing range of behavior.
-Stephen Wolfram’s numbering scheme<a class="footnote-reference brackets" href="#footcite-wolfram1983" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> names each
-table by a single byte: bit <span class="math notranslate nohighlight">\(n\)</span> of the rule number is the output for
-the neighborhood whose (left, center, right) values, read as a binary
-number, equal <span class="math notranslate nohighlight">\(n\)</span>. Rule 90 is 01011010 in binary; work through the
-eight neighborhoods and convince yourself it computes left XOR right.</p>
+<p>An elementary cellular automaton is a row of cells, each 0 or 1, each updating simultaneously from its own value and its two nearest neighbors’.
+Three binary inputs, one binary output: that is the entire specification, yet the 256 possible update tables exhaust an astonishing range of behavior.
+Stephen Wolfram’s numbering scheme<a class="footnote-reference brackets" href="#footcite-wolfram1983" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> names each table by a single byte: bit <span class="math notranslate nohighlight">\(n\)</span> of the rule number is the output for the neighborhood whose (left, center, right) values, read as a binary number, equal <span class="math notranslate nohighlight">\(n\)</span>.
+Rule 90 is 01011010 in binary; work through the eight neighborhoods and convince yourself it computes left XOR right.</p>
 <section id="driving-the-class">
 <h2>Driving the class<a class="headerlink" href="#driving-the-class" title="Link to this heading"></a></h2>
-<p>The <a class="reference internal" href="api/pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a> class keeps the original MATLAB interface: <cite>rule</cite>
-and <cite>state</cite> are validated properties you can reassign mid-flight, <cite>evolve</cite>
-advances one step, and <cite>play</cite> opens a live display. The Python class adds
-<cite>run</cite> and <cite>spacetime</cite>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span>
+<p>The <a class="reference internal" href="api/pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><span class="xref myst py py-class"><code class="docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></span></a> class keeps the original MATLAB interface: <code class="docutils literal notranslate"><span class="pre">rule</span></code> and <code class="docutils literal notranslate"><span class="pre">state</span></code> are validated properties you can reassign mid-flight, <code class="docutils literal notranslate"><span class="pre">evolve</span></code> advances one step, and <code class="docutils literal notranslate"><span class="pre">play</span></code> opens a live display.
+The Python class adds <code class="docutils literal notranslate"><span class="pre">run</span></code> and <code class="docutils literal notranslate"><span class="pre">spacetime</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span>
 
 <span class="n">ca</span> <span class="o">=</span> <span class="n">ECA</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>      <span class="c1"># random initial state on 256 cells</span>
 <span class="n">ca</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
@@ -116,23 +118,21 @@ advances one step, and <cite>play</cite> opens a live display. The Python class 
 <span class="n">ca</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>States live on a periodic lattice - a ring - so no boundary contaminates
-the dynamics, though patterns that outrun the lattice meet themselves
-coming around.</p>
+</div>
+</div>
+<p>States live on a periodic lattice - a ring - so no boundary contaminates the dynamics, though patterns that outrun the lattice meet themselves coming around.</p>
 </section>
 <section id="the-four-classes">
 <h2>The four classes<a class="headerlink" href="#the-four-classes" title="Link to this heading"></a></h2>
-<p>Wolfram’s classification<a class="footnote-reference brackets" href="#footcite-wolfram1984" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> sorts the rules by what
-they do to almost any initial condition. Class I rules freeze into
-uniformity (rule 0, rule 255). Class II rules settle into stripes or simple
-periodic textures, the identity rule 204 being the laziest member. Class III
-rules churn out apparent randomness forever, with rule 30 as the archetype.
-Class IV rules live on the boundary, supporting localized structures that
-move and collide; rule 110 is famously Turing complete, since Matthew Cook
-proved<a class="footnote-reference brackets" href="#footcite-cook2004" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> in the 1990s that those colliding gliders can
-simulate any computation.</p>
+<p>Wolfram’s classification<a class="footnote-reference brackets" href="#footcite-wolfram1984" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> sorts the rules by what they do to almost any initial condition.
+Class I rules freeze into uniformity (rule 0, rule 255).
+Class II rules settle into stripes or simple periodic textures, the identity rule 204 being the laziest member.
+Class III rules churn out apparent randomness forever, with rule 30 as the archetype.
+Class IV rules live on the boundary, supporting localized structures that move and collide; rule 110 is famously Turing complete, since Matthew Cook proved<a class="footnote-reference brackets" href="#footcite-cook2004" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> in the 1990s that those colliding gliders can simulate any computation.</p>
 <p>Survey them yourself:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span>
 
 <span class="n">rules</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">110</span><span class="p">]</span>
@@ -146,13 +146,21 @@ simulate any computation.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Classify a handful of rules by eye before you read their known classes; the
-boundaries are blurrier than the taxonomy suggests. Then come back with
-<a class="reference internal" href="guide_measures.html"><span class="doc">Information Measures</span></a> and classify them by number instead.</p>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f2751fa0e1dca9b87eaf5db00eece45dedac612714543713468445e540f51922.png" src="_images/f2751fa0e1dca9b87eaf5db00eece45dedac612714543713468445e540f51922.png" />
+</div>
+</div>
+<p>Classify a handful of rules by eye before you read their known classes; the boundaries are blurrier than the taxonomy suggests.
+Then come back with <a class="reference internal" href="guide_measures.html"><span class="std std-doc">Information Measures</span></a> and classify them by number instead.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
 <div class="docutils container" id="id4">
+</div>
+</section>
+</section>
+<hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="footcite-wolfram1983" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
@@ -167,9 +175,6 @@ boundaries are blurrier than the taxonomy suggests. Then come back with
 <p>Matthew Cook. <a class="reference external" href="https://doi.org/10.25088/ComplexSystems.15.1.1">Universality in elementary cellular automata</a>. <em>Complex Systems</em>, 15(1):1–40, 2004.</p>
 </aside>
 </aside>
-</div>
-</section>
-</section>
 
 
            </div>

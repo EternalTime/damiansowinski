@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=021128a6" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5bea863b" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,7 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -79,7 +80,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Getting Started</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/getting_started.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -87,33 +88,42 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="getting-started">
+<div class="launch-buttons">
+  <a class="launch-button" href="https://mybinder.org/v2/gh/EternalTime/CellularAutomata/master?labpath=docs/getting_started.ipynb">Launch in Binder</a>
+  <a class="launch-button" href="https://colab.research.google.com/github/EternalTime/CellularAutomata/blob/master/docs/getting_started.ipynb">Open in Colab</a>
+</div>
+
+  <section class="tex2jax_ignore mathjax_ignore" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
-<p>In this guide you will install pyCA and watch your first cellular automaton
-compute.</p>
+<p>In this guide you will install pyCA and watch your first cellular automaton compute.</p>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
-<p>pyCA requires Python 3.8 or newer; pip pulls in numpy and matplotlib. Clone
-the repository and install it into a virtual environment:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">EternalTime</span><span class="o">/</span><span class="n">CellularAutomata</span><span class="o">.</span><span class="n">git</span>
-<span class="n">cd</span> <span class="n">CellularAutomata</span>
-<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">.</span><span class="n">venv</span>
-<span class="n">source</span> <span class="o">.</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
-<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+<p>pyCA requires Python 3.8 or newer; pip pulls in numpy and matplotlib.
+Clone the repository and install it into a virtual environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/EternalTime/CellularAutomata.git
+<span class="nb">cd</span><span class="w"> </span>CellularAutomata
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">-e</span></code> flag installs in editable mode, so changes to the source are
-picked up immediately. Check the install:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pyCA</span>
+<p>The <code class="docutils literal notranslate"><span class="pre">-e</span></code> flag installs in editable mode, so changes to the source are picked up immediately.
+Check the install:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pyCA</span>
 </pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="first-automaton">
 <h2>First automaton<a class="headerlink" href="#first-automaton" title="Link to this heading"></a></h2>
-<p>Rule 30 from a single live cell, the canonical demonstration that a trivial
-rule need not behave trivially:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<p>Rule 30 from a single live cell, the canonical demonstration that a trivial rule need not behave trivially:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span>
 
@@ -128,19 +138,31 @@ rule need not behave trivially:</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>The left edge of the triangle is periodic, the right edge is intricate, and
-the center column is random enough that it once served as a random number
-generator. Call <code class="docutils literal notranslate"><span class="pre">ca.play()</span></code> to watch an automaton evolve live instead;
-close the window to stop.</p>
-<p>Now ask the question the rest of this library is built to answer: <em>how much
-information is in that picture?</em></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">measures</span>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3e0d6f417fbfa18bca4a63d01b93677306bf36d3a7c597204bfbd455ab4a3698.png" src="_images/3e0d6f417fbfa18bca4a63d01b93677306bf36d3a7c597204bfbd455ab4a3698.png" />
+</div>
+</div>
+<p>The left edge of the triangle is periodic, the right edge is intricate, and the center column is random enough that it once served as a random number generator.
+Call <code class="docutils literal notranslate"><span class="pre">ca.play()</span></code> to watch an automaton evolve live instead; close the window to stop.</p>
+<p>Now ask the question the rest of this library is built to answer: <em>how much information is in that picture?</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">measures</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">measures</span><span class="o">.</span><span class="n">block_entropy</span><span class="p">(</span><span class="n">ca</span><span class="o">.</span><span class="n">spacetime</span><span class="p">(),</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">measures</span><span class="o">.</span><span class="n">entropy_rate</span><span class="p">(</span><span class="n">ca</span><span class="o">.</span><span class="n">spacetime</span><span class="p">(),</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Hold those numbers in hand as you read <a class="reference internal" href="guide_measures.html"><span class="doc">Information Measures</span></a>.</p>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.25553093667456
+0.6888212295081515
+</pre></div>
+</div>
+</div>
+</div>
+<p>Hold those numbers in hand as you read <a class="reference internal" href="guide_measures.html"><span class="std std-doc">Information Measures</span></a>.</p>
 </section>
 </section>
 
