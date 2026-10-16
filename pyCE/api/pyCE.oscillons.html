@@ -6,11 +6,12 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCE.oscillons module &mdash; pyCE  documentation</title>
+  <title>pyCE.oscillons module - pyCE documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab018f0f" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab68666c" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -168,6 +170,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <section id="module-pyCE.oscillons">
 <span id="pyce-oscillons-module"></span><h1>pyCE.oscillons module<a class="headerlink" href="#module-pyCE.oscillons" title="Link to this heading"></a></h1>
 <p>Simulation of oscillons in d spatial dimensions.</p>
@@ -188,7 +191,7 @@ dissipation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyCE.oscillons.oscillon">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyCE.oscillons.</span></span><span class="sig-name descname"><span class="pre">oscillon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asymmetry_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_MIB</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">44</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_MIB</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_cap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dissipation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">courant_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/oscillons.html#oscillon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.oscillons.oscillon" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Oscillon environment class</p>
 <p>Creates an environment in which to simulate an oscillon. Sets up the
 lattice with an MIB coordinate system and the potential, using the Kolb
@@ -222,9 +225,9 @@ and Turner parametrization.</p>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>E</strong> (<em>ndarray</em>) – Energy history of the oscillon (set by <cite>simulate_oscillon</cite>).</p></li>
-<li><p><strong>core</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Core value history, phi(r=0,t) (set by <cite>simulate_oscillon</cite>).</p></li>
-<li><p><strong>time</strong> (<em>ndarray</em>) – Time values for the energy/core histories (set by
+<li><p><strong>E</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Energy history of the oscillon (set by <cite>simulate_oscillon</cite>).</p></li>
+<li><p><strong>core</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – Core value history, phi(r=0,t) (set by <cite>simulate_oscillon</cite>).</p></li>
+<li><p><strong>time</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Time values for the energy/core histories (set by
 <cite>simulate_oscillon</cite>).</p></li>
 </ul>
 </dd>
@@ -266,13 +269,10 @@ true-vacuum field value
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Stacked initial data [phi, Phi, Pi]. <span class="math notranslate nohighlight">\(\Pi\)</span> is initialized
+<dd class="field-even"><p><em>ndarray, shape (3, N)</em> – Stacked initial data [phi, Phi, Pi]. <span class="math notranslate nohighlight">\(\Pi\)</span> is initialized
 to <span class="math notranslate nohighlight">\(-f \Phi\)</span>, i.e. the time derivative of <span class="math notranslate nohighlight">\(\phi\)</span> is
 zero in the boosted coordinates. Returns 0 if <cite>field_type</cite> is not
 recognized.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray, shape (3, N)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -316,11 +316,8 @@ instance as <cite>E</cite>, <cite>core</cite>, and <cite>time</cite>.</p>
 <dd class="field-odd"><p><strong>fields</strong> (<em>ndarray, shape (3, N)</em>)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>[rho, j, P]: energy density, radial momentum density (flux),
+<dd class="field-even"><p><em>ndarray, shape (3, N)</em> – [rho, j, P]: energy density, radial momentum density (flux),
 and radial pressure.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray, shape (3, N)</p>
 </dd>
 </dl>
 </dd></dl>

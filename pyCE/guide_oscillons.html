@@ -6,11 +6,12 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Oscillons &mdash; pyCE  documentation</title>
+  <title>Oscillons - pyCE documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ab018f0f" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ab68666c" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -159,7 +161,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Oscillons</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/guide_oscillons.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/guide_oscillons.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -167,34 +169,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="oscillons">
+<div class="launch-buttons">
+  <a class="launch-button" href="https://mybinder.org/v2/gh/EternalTime/pyCE/master?labpath=docs/guide_oscillons.ipynb">Launch in Binder</a>
+  <a class="launch-button" href="https://colab.research.google.com/github/EternalTime/pyCE/blob/master/docs/guide_oscillons.ipynb">Open in Colab</a>
+</div>
+
+  <section class="tex2jax_ignore mathjax_ignore" id="oscillons">
 <h1>Oscillons<a class="headerlink" href="#oscillons" title="Link to this heading"></a></h1>
 <p>Watch a collapsing bubble of scalar field and you expect a quick death.
-Igor Bogolyubsky and Vladimir Makhankov noticed in 1976 that the bubble
-sometimes refuses: it can settle into a localized, pulsating lump that
-persists for thousands of oscillations. Marcelo Gleiser
-rediscovered these objects in 1994 and christened them oscillons. They are
-not protected by any conserved charge; they survive on dynamics alone, which
-is what makes their longevity remarkable and their eventual death worth
-watching closely. The <a class="reference internal" href="api/pyCE.oscillons.html#module-pyCE.oscillons" title="pyCE.oscillons"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCE.oscillons</span></code></a> module lets you watch.</p>
+Igor Bogolyubsky and Vladimir Makhankov noticed in 1976 that the bubble sometimes refuses: it can settle into a localized, pulsating lump that persists for thousands of oscillations.
+Marcelo Gleiser rediscovered these objects in 1994 and christened them oscillons.
+They are not protected by any conserved charge; they survive on dynamics alone, which is what makes their longevity remarkable and their eventual death worth watching closely.
+The <a class="reference internal" href="api/pyCE.oscillons.html#module-pyCE.oscillons" title="pyCE.oscillons"><span class="xref myst py py-mod"><code class="docutils literal notranslate"><span class="pre">pyCE.oscillons</span></code></span></a> module lets you watch.</p>
 <section id="the-setup">
 <h2>The setup<a class="headerlink" href="#the-setup" title="Link to this heading"></a></h2>
-<p>The module evolves a spherically symmetric real scalar field in the same
-asymmetric double-well used by <a class="reference internal" href="api/pyCE.instantons.html#module-pyCE.instantons" title="pyCE.instantons"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCE.instantons</span></code></a> — the Kolb &amp; Turner
-parametrization, with asymmetry factor <span class="math notranslate nohighlight">\(\epsilon\)</span> setting
-<span class="math notranslate nohighlight">\(\alpha = \tfrac{3}{\sqrt{2}}(1+\epsilon)\)</span>. The numerical scheme has
-one trick worth understanding before you run it: the outer region of the
-radial grid is boosted outward — a monotonically increasingly boosted (MIB)
-coordinate system — so that radiation leaving the oscillon is carried off the
-lattice instead of reflecting from the boundary and contaminating the core.
-The grid mimics an infinite domain at the cost of a finite one. Time stepping
-is iterated Crank–Nicolson, with high-order numerical dissipation damping
-grid-scale noise.</p>
+<p>The module evolves a spherically symmetric real scalar field in the same asymmetric double-well used by <a class="reference internal" href="api/pyCE.instantons.html#module-pyCE.instantons" title="pyCE.instantons"><span class="xref myst py py-mod"><code class="docutils literal notranslate"><span class="pre">pyCE.instantons</span></code></span></a>, the Kolb &amp; Turner parametrization, with asymmetry factor <span class="math notranslate nohighlight">\(\epsilon\)</span> setting <span class="math notranslate nohighlight">\(\alpha = \tfrac{3}{\sqrt{2}}(1+\epsilon)\)</span>.
+The numerical scheme has one trick worth understanding before you run it: the outer region of the radial grid is boosted outward - a monotonically increasingly boosted (MIB) coordinate system - so that radiation leaving the oscillon is carried off the lattice instead of reflecting from the boundary and contaminating the core.
+The grid mimics an infinite domain at the cost of a finite one.
+Time stepping is iterated Crank–Nicolson, with high-order numerical dissipation damping grid-scale noise.</p>
 </section>
 <section id="running-a-simulation">
 <h2>Running a simulation<a class="headerlink" href="#running-a-simulation" title="Link to this heading"></a></h2>
 <p>First create the environment, then initialize a field, then evolve it:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyCE.oscillons</span><span class="w"> </span><span class="kn">import</span> <span class="n">oscillon</span>
 
 <span class="n">env</span>    <span class="o">=</span> <span class="n">oscillon</span><span class="p">(</span><span class="n">asymmetry_factor</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">dimension</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
@@ -207,27 +206,20 @@ grid-scale noise.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>A word of warning before you press enter: the simulation runs until 99% of
-the initial energy has radiated through the cap radius, and oscillons are
-famous for refusing to die. A long-lived configuration on the default lattice
-of 1500 points means a long wait. For a first run, pass
-<code class="docutils literal notranslate"><span class="pre">plot_profile</span> <span class="pre">=</span> <span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">plot_energy_density</span> <span class="pre">=</span> <span class="pre">True</span></code> to watch the field
-live — seeing the initial Gaussian shed its excess energy and ring down into
-the oscillon attractor is worth the slowdown once.</p>
-<p>The energy history <code class="docutils literal notranslate"><span class="pre">env.E</span></code>, the core amplitude history <code class="docutils literal notranslate"><span class="pre">env.core</span></code>, and
-the corresponding times <code class="docutils literal notranslate"><span class="pre">env.time</span></code> are stored on the environment when the
-run completes. The stress-energy components are available at any moment
-through <code class="docutils literal notranslate"><span class="pre">env.stress_energy_tensor(fields)</span></code>, and <code class="docutils literal notranslate"><span class="pre">env.radialFT(y)</span></code> gives
-you the radial Fourier transform on the interior grid — the first call builds
-the transform matrix, so it is slow once and fast thereafter.</p>
-<p>Experiment with the initial radius. Not every Gaussian becomes an oscillon —
-too narrow and the field disperses promptly, too wide and the collapse
-overshoots. Map out the basin of attraction for yourself; keeping a record of
-which radii live and which die is exactly the kind of small journal that pays
-off later. And once you have a stable of oscillons, compute the
-configurational entropy of their energy densities (<code class="docutils literal notranslate"><span class="pre">env.radialFT</span></code> is built
-for it): the entropy predicts which configurations live longest — see
-Gleiser, Stephens &amp; Sowinski, <em>Phys. Rev. D</em> <strong>97</strong>, 096007 (2018).</p>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e2ac32cdccd16a4090cf24be3a7c211f0ab25728517447474ef4021f846bd4d1.png" src="_images/e2ac32cdccd16a4090cf24be3a7c211f0ab25728517447474ef4021f846bd4d1.png" />
+</div>
+</div>
+<p>A word of warning before you press enter: the simulation runs until 99% of the initial energy has radiated through the cap radius, and oscillons are famous for refusing to die.
+A long-lived configuration on the default lattice of 1500 points means a long wait.
+For a first run, pass <code class="docutils literal notranslate"><span class="pre">plot_profile</span> <span class="pre">=</span> <span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">plot_energy_density</span> <span class="pre">=</span> <span class="pre">True</span></code> to watch the field live: seeing the initial Gaussian shed its excess energy and ring down into the oscillon attractor is worth the slowdown once.</p>
+<p>The energy history <code class="docutils literal notranslate"><span class="pre">env.E</span></code>, the core amplitude history <code class="docutils literal notranslate"><span class="pre">env.core</span></code>, and the corresponding times <code class="docutils literal notranslate"><span class="pre">env.time</span></code> are stored on the environment when the run completes.
+The stress-energy components are available at any moment through <code class="docutils literal notranslate"><span class="pre">env.stress_energy_tensor(fields)</span></code>, and <code class="docutils literal notranslate"><span class="pre">env.radialFT(y)</span></code> gives you the radial Fourier transform on the interior grid; the first call builds the transform matrix, so it is slow once and fast thereafter.</p>
+<p>Experiment with the initial radius.
+Not every Gaussian becomes an oscillon: too narrow and the field disperses promptly, too wide and the collapse overshoots.
+Map out the basin of attraction for yourself; keeping a record of which radii live and which die is exactly the kind of small journal that pays off later.
+And once you have a stable of oscillons, compute the configurational entropy of their energy densities (<code class="docutils literal notranslate"><span class="pre">env.radialFT</span></code> is built for it): the entropy predicts which configurations live longest; see Gleiser, Stephens &amp; Sowinski, <em>Phys. Rev. D</em> <strong>97</strong>, 096007 (2018).</p>
 </section>
 </section>
 

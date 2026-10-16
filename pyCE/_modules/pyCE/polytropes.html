@@ -5,11 +5,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCE.polytropes &mdash; pyCE  documentation</title>
+  <title>pyCE.polytropes - pyCE documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ab018f0f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ab68666c" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -18,7 +19,7 @@
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/copybutton.js?v=e5238352"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -163,6 +164,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <h1>Source code for pyCE.polytropes</h1><div class="highlight"><pre>
 <span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Polytropic stellar models via the Lane-Emden equation.</span>
 
@@ -200,13 +202,13 @@
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    theta : ndarray</span>
+<span class="sd">    theta : ~numpy.ndarray</span>
 <span class="sd">        Lane-Emden profile.</span>
-<span class="sd">    psi : ndarray</span>
+<span class="sd">    psi : ~numpy.ndarray</span>
 <span class="sd">        Radial derivative of :math:`\theta`.</span>
-<span class="sd">    rho : ndarray</span>
+<span class="sd">    rho : ~numpy.ndarray</span>
 <span class="sd">        Scaled density profile.</span>
-<span class="sd">    r : ndarray</span>
+<span class="sd">    r : ~numpy.ndarray</span>
 <span class="sd">        Radial distance array in scaled lengths.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span><span class="n">dr</span> <span class="o">=</span> <span class="mf">.01</span><span class="p">):</span>

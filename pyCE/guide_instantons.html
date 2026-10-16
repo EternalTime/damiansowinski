@@ -6,11 +6,12 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instantons &mdash; pyCE  documentation</title>
+  <title>Instantons - pyCE documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ab018f0f" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ab68666c" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -159,7 +161,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Instantons</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/guide_instantons.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/guide_instantons.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -167,37 +169,40 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="instantons">
+<div class="launch-buttons">
+  <a class="launch-button" href="https://mybinder.org/v2/gh/EternalTime/pyCE/master?labpath=docs/guide_instantons.ipynb">Launch in Binder</a>
+  <a class="launch-button" href="https://colab.research.google.com/github/EternalTime/pyCE/blob/master/docs/guide_instantons.ipynb">Open in Colab</a>
+</div>
+
+  <section class="tex2jax_ignore mathjax_ignore" id="instantons">
 <h1>Instantons<a class="headerlink" href="#instantons" title="Link to this heading"></a></h1>
-<p>The false vacuum is not forever. In 1977 Sidney Coleman worked out its
-fate: a metastable state decays by nucleating bubbles of true vacuum, and
-the bubble that controls the decay rate — the bounce — is an O(d)-symmetric
-solution of the Euclidean equations of motion. The <a class="reference internal" href="api/pyCE.instantons.html#module-pyCE.instantons" title="pyCE.instantons"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyCE.instantons</span></code></a> module finds these
-bounces and asks an information-theoretic question of them: how is the energy
-of a bounce organized across scales, and how does that organization respond
-as the potential is deformed?</p>
+<p>The false vacuum is not forever.
+In 1977 Sidney Coleman worked out its fate: a metastable state decays by nucleating bubbles of true vacuum, and the bubble that controls the decay rate - the bounce - is an O(d)-symmetric solution of the Euclidean equations of motion.
+The <a class="reference internal" href="api/pyCE.instantons.html#module-pyCE.instantons" title="pyCE.instantons"><span class="xref myst py py-mod"><code class="docutils literal notranslate"><span class="pre">pyCE.instantons</span></code></span></a> module finds these bounces and asks an information-theoretic question of them: how is the energy of a bounce organized across scales, and how does that organization respond as the potential is deformed?</p>
 <section id="the-model">
 <h2>The model<a class="headerlink" href="#the-model" title="Link to this heading"></a></h2>
 <p>The field lives in the asymmetric double-well potential</p>
 <div class="math notranslate nohighlight">
-\[V(B) = \frac{1}{2}B^2 - \frac{\alpha}{3}B^3 + \frac{1}{4}B^4,
-\qquad \alpha = \frac{3}{\sqrt{2}}\,(1+g),\]</div>
-<p>where the asymmetry factor <span class="math notranslate nohighlight">\(g\)</span> controls how far the two vacua are split
-— at <span class="math notranslate nohighlight">\(g=0\)</span> they are degenerate, and the bubble wall becomes thin. The
-bounce satisfies</p>
+\[
+V(B) = \frac{1}{2}B^2 - \frac{\alpha}{3}B^3 + \frac{1}{4}B^4,
+\qquad \alpha = \frac{3}{\sqrt{2}}\,(1+g),
+\]</div>
+<p>where the asymmetry factor <span class="math notranslate nohighlight">\(g\)</span> controls how far the two vacua are split; at <span class="math notranslate nohighlight">\(g=0\)</span> they are degenerate, and the bubble wall becomes thin.
+The bounce satisfies</p>
 <div class="math notranslate nohighlight">
-\[B'' + \frac{d}{r}B' = V'(B),\]</div>
-<p>with <span class="math notranslate nohighlight">\(B'(0)=0\)</span> and <span class="math notranslate nohighlight">\(B\to 0\)</span> as <span class="math notranslate nohighlight">\(r\to\infty\)</span>. This is a
-boundary value problem with an unstable answer: start the field a little too
-high at the origin and it overshoots, a little too low and it rolls back into
-the false vacuum. The module turns this instability into an algorithm — the
-shooting method — bisecting on the core value <span class="math notranslate nohighlight">\(B(0)\)</span> until the profile
-decays cleanly into the false vacuum.</p>
+\[
+B'' + \frac{d}{r}B' = V'(B),
+\]</div>
+<p>with <span class="math notranslate nohighlight">\(B'(0)=0\)</span> and <span class="math notranslate nohighlight">\(B\to 0\)</span> as <span class="math notranslate nohighlight">\(r\to\infty\)</span>.
+This is a boundary value problem with an unstable answer: start the field a little too high at the origin and it overshoots, a little too low and it rolls back into the false vacuum.
+The module turns this instability into an algorithm - the shooting method - bisecting on the core value <span class="math notranslate nohighlight">\(B(0)\)</span> until the profile decays cleanly into the false vacuum.</p>
 </section>
 <section id="solving-a-bounce">
 <h2>Solving a bounce<a class="headerlink" href="#solving-a-bounce" title="Link to this heading"></a></h2>
 <p>Everything happens at instantiation:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="cell tag_remove-stderr docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyCE.instantons</span><span class="w"> </span><span class="kn">import</span> <span class="n">instanton</span>
 
 <span class="n">inst</span> <span class="o">=</span> <span class="n">instanton</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>   <span class="c1"># g = 0.2, d = 3, up to 3000 radial steps</span>
@@ -208,18 +213,18 @@ decays cleanly into the false vacuum.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>The solve takes a few seconds — each bisection step integrates the profile
-out with RK4, and overshooting runs are allowed to diverge before being
-discarded. Don’t be alarmed by overflow warnings during the solve; diverging
-is precisely how a failed shot announces itself.</p>
-<p>Once the object exists, the physics is sitting on its attributes: the profile
-and its derivative (<code class="docutils literal notranslate"><span class="pre">inst.B</span></code>, <code class="docutils literal notranslate"><span class="pre">inst.DB</span></code>), the potential, gradient, and
-total energy densities (<code class="docutils literal notranslate"><span class="pre">inst.PEdens</span></code>, <code class="docutils literal notranslate"><span class="pre">inst.GEdens</span></code>, <code class="docutils literal notranslate"><span class="pre">inst.rho</span></code>), the
-Euclidean action <code class="docutils literal notranslate"><span class="pre">inst.Se</span></code>, and the configurational entropy <code class="docutils literal notranslate"><span class="pre">inst.Sc</span></code>,
-computed from the modal fraction of the energy-density power spectrum
-(<code class="docutils literal notranslate"><span class="pre">inst.mf</span></code> on the grid <code class="docutils literal notranslate"><span class="pre">inst.k</span></code>).</p>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fdb0f9e9b6c5bdf8e187407647ad938e640f111ef7e952a6343da762ab25b0a5.png" src="_images/fdb0f9e9b6c5bdf8e187407647ad938e640f111ef7e952a6343da762ab25b0a5.png" />
+</div>
+</div>
+<p>The solve takes a few seconds: each bisection step integrates the profile out with RK4, and overshooting runs are allowed to diverge before being discarded.
+Don’t be alarmed by overflow warnings during the solve; diverging is precisely how a failed shot announces itself.</p>
+<p>Once the object exists, the physics is sitting on its attributes: the profile and its derivative (<code class="docutils literal notranslate"><span class="pre">inst.B</span></code>, <code class="docutils literal notranslate"><span class="pre">inst.DB</span></code>), the potential, gradient, and total energy densities (<code class="docutils literal notranslate"><span class="pre">inst.PEdens</span></code>, <code class="docutils literal notranslate"><span class="pre">inst.GEdens</span></code>, <code class="docutils literal notranslate"><span class="pre">inst.rho</span></code>), the Euclidean action <code class="docutils literal notranslate"><span class="pre">inst.Se</span></code>, and the configurational entropy <code class="docutils literal notranslate"><span class="pre">inst.Sc</span></code>, computed from the modal fraction of the energy-density power spectrum (<code class="docutils literal notranslate"><span class="pre">inst.mf</span></code> on the grid <code class="docutils literal notranslate"><span class="pre">inst.k</span></code>).</p>
 <p>Try sweeping the asymmetry:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="cell tag_remove-stderr docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">gs</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">Scs</span> <span class="o">=</span> <span class="p">[</span><span class="n">instanton</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span><span class="o">.</span><span class="n">Sc</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">gs</span><span class="p">]</span>
@@ -230,11 +235,13 @@ computed from the modal fraction of the energy-density power spectrum
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Convince yourself of the trend before you plot it: as <span class="math notranslate nohighlight">\(g\)</span> grows the
-bounce localizes, its power spectrum spreads, and the configurational entropy
-responds. For the relationship between <span class="math notranslate nohighlight">\(S_c\)</span> and the Euclidean action —
-and what it suggests about decay rates — see Gleiser &amp; Sowinski, <em>Phys. Rev.
-D</em> <strong>98</strong>, 056026 (2018).</p>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0550ff3bd567c377297213f30812d6794106342481f1fc8fdd5b38aa659001ed.png" src="_images/0550ff3bd567c377297213f30812d6794106342481f1fc8fdd5b38aa659001ed.png" />
+</div>
+</div>
+<p>Convince yourself of the trend before you plot it: as <span class="math notranslate nohighlight">\(g\)</span> grows the bounce localizes, its power spectrum spreads, and the configurational entropy responds.
+For the relationship between <span class="math notranslate nohighlight">\(S_c\)</span> and the Euclidean action - and what it suggests about decay rates - see Gleiser &amp; Sowinski, <em>Phys. Rev. D</em> <strong>98</strong>, 056026 (2018).</p>
 </section>
 </section>
 

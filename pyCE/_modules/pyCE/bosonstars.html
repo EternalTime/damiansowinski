@@ -5,11 +5,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCE.bosonstars &mdash; pyCE  documentation</title>
+  <title>pyCE.bosonstars - pyCE documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ab018f0f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ab68666c" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -18,7 +19,7 @@
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/copybutton.js?v=e5238352"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -163,6 +164,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <h1>Source code for pyCE.bosonstars</h1><div class="highlight"><pre>
 <span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Generation and configurational-entropy analysis of boson stars.</span>
 
@@ -211,7 +213,7 @@
 <span class="sd">    dr : float, optional</span>
 <span class="sd">        Radial step size (default .01). For small :math:`\phi_0` the</span>
 <span class="sd">        gradients are gentle but the star is large; for large</span>
-<span class="sd">        :math:`\phi_0` the reverse — lower `dr` if the shooting method</span>
+<span class="sd">        :math:`\phi_0` the reverse - lower `dr` if the shooting method</span>
 <span class="sd">        stalls.</span>
 <span class="sd">    r_max : float, optional</span>
 <span class="sd">        Maximum integration radius (default 50). Too small and the shot</span>
@@ -225,19 +227,23 @@
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    r : ndarray</span>
+<span class="sd">    r : ~numpy.ndarray</span>
 <span class="sd">        Radial grid.</span>
-<span class="sd">    phi, Phi : ndarray</span>
-<span class="sd">        Scalar field profile and its radial derivative.</span>
-<span class="sd">    a, alpha : ndarray</span>
-<span class="sd">        Radial metric function and lapse, with the lapse rescaled so</span>
-<span class="sd">        :math:`\alpha \to 1` at the outer edge (asymptotic flatness).</span>
+<span class="sd">    phi : ~numpy.ndarray</span>
+<span class="sd">        Scalar field profile.</span>
+<span class="sd">    Phi : ~numpy.ndarray</span>
+<span class="sd">        Radial derivative of the scalar field profile.</span>
+<span class="sd">    a : ~numpy.ndarray</span>
+<span class="sd">        Radial metric function.</span>
+<span class="sd">    alpha : ~numpy.ndarray</span>
+<span class="sd">        Lapse, rescaled so :math:`\alpha \to 1` at the outer edge</span>
+<span class="sd">        (asymptotic flatness).</span>
 <span class="sd">    omega : float</span>
 <span class="sd">        Frequency eigenvalue of the harmonic ansatz; :math:`\omega &lt; 1`</span>
 <span class="sd">        signals a gravitationally bound configuration.</span>
-<span class="sd">    rho : ndarray</span>
+<span class="sd">    rho : ~numpy.ndarray</span>
 <span class="sd">        Energy density.</span>
-<span class="sd">    mass : ndarray</span>
+<span class="sd">    mass : ~numpy.ndarray</span>
 <span class="sd">        Misner-Sharp mass within radius r,</span>
 <span class="sd">        :math:`m(r) = (r/2)(1 - 1/a^2)`.</span>
 <span class="sd">    M : float</span>
@@ -245,9 +251,11 @@
 <span class="sd">    R : float</span>
 <span class="sd">        Effective radius: the first moment of r over the proper energy</span>
 <span class="sd">        distribution.</span>
-<span class="sd">    denFT, k : ndarray</span>
-<span class="sd">        Radial Fourier transform of rho and its k-grid.</span>
-<span class="sd">    mf : ndarray</span>
+<span class="sd">    denFT : ~numpy.ndarray</span>
+<span class="sd">        Radial Fourier transform of rho.</span>
+<span class="sd">    k : ~numpy.ndarray</span>
+<span class="sd">        Wavenumber grid of denFT.</span>
+<span class="sd">    mf : ~numpy.ndarray</span>
 <span class="sd">        Modal fraction ``|denFT|**2 / max|denFT|**2``.</span>
 <span class="sd">    Sc : float</span>
 <span class="sd">        Configurational entropy, :math:`-\int \mathrm{mf} \, \ln(\mathrm{mf})`</span>

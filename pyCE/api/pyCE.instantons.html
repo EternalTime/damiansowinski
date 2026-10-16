@@ -6,11 +6,12 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCE.instantons module &mdash; pyCE  documentation</title>
+  <title>pyCE.instantons module - pyCE documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab018f0f" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab68666c" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -19,7 +20,8 @@
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -168,6 +170,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <section id="module-pyCE.instantons">
 <span id="pyce-instantons-module"></span><h1>pyCE.instantons module<a class="headerlink" href="#module-pyCE.instantons" title="Link to this heading"></a></h1>
 <p>Generation and configurational-entropy analysis of instantons.</p>
@@ -188,7 +191,7 @@ action, and the configurational entropy of the energy-density power spectrum.</p
 <dl class="py class">
 <dt class="sig sig-object py" id="pyCE.instantons.instanton">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyCE.instantons.</span></span><span class="sig-name descname"><span class="pre">instanton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asymmetry_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCE/instantons.html#instanton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCE.instantons.instanton" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>O(d)-symmetric bounce profile and its configurational entropy.</p>
 <p>Instantiation does all the work: it solves for the bounce by shooting,
 builds the energy profiles, and computes the Euclidean action and the
@@ -205,17 +208,24 @@ the degenerate (thin-wall) limit.</p></li>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>r</strong> (<em>ndarray</em>) – Radial grid on which the bounce was accepted.</p></li>
-<li><p><strong>DB</strong> (<em>B</em><em>,</em>) – Bounce profile <span class="math notranslate nohighlight">\(B(r)\)</span> and its radial derivative <span class="math notranslate nohighlight">\(B'(r)\)</span>.</p></li>
-<li><p><strong>B0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Core value <span class="math notranslate nohighlight">\(B(0)\)</span> found by the shooting method.</p></li>
-<li><p><strong>Bmax</strong> (<em>Bmin</em><em>,</em>) – Initial bracket for the shooting method.</p></li>
-<li><p><strong>rho</strong> (<em>PEdens</em><em>, </em><em>GEdens</em><em>,</em>) – Potential, gradient, and total energy densities.</p></li>
-<li><p><strong>E</strong> (<em>PE</em><em>, </em><em>GE</em><em>,</em>) – Radially integrated potential, gradient, and total energies.</p></li>
-<li><p><strong>Se</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Euclidean action: rho integrated in d+1 dimensions (the O(d+1)
+<li><p><strong>r</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Radial grid on which the bounce was accepted.</p></li>
+<li><p><strong>B</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Bounce profile <span class="math notranslate nohighlight">\(B(r)\)</span>.</p></li>
+<li><p><strong>DB</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Radial derivative <span class="math notranslate nohighlight">\(B'(r)\)</span> of the bounce profile.</p></li>
+<li><p><strong>B0</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Core value <span class="math notranslate nohighlight">\(B(0)\)</span> found by the shooting method.</p></li>
+<li><p><strong>Bmin</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Lower end of the initial bracket for the shooting method.</p></li>
+<li><p><strong>Bmax</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Upper end of the initial bracket for the shooting method.</p></li>
+<li><p><strong>PEdens</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Potential energy density.</p></li>
+<li><p><strong>GEdens</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Gradient energy density.</p></li>
+<li><p><strong>rho</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Total energy density.</p></li>
+<li><p><strong>PE</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Radially integrated potential energy.</p></li>
+<li><p><strong>GE</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Radially integrated gradient energy.</p></li>
+<li><p><strong>E</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Radially integrated total energy.</p></li>
+<li><p><strong>Se</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Euclidean action: rho integrated in d+1 dimensions (the O(d+1)
 bounce interpretation of the static d-dimensional profile).</p></li>
-<li><p><strong>k</strong> (<em>denFT</em><em>,</em>) – Radial Fourier transform of rho and its k-grid.</p></li>
-<li><p><strong>mf</strong> (<em>ndarray</em>) – Modal fraction <code class="docutils literal notranslate"><span class="pre">|denFT|**2</span> <span class="pre">/</span> <span class="pre">max|denFT|**2</span></code>.</p></li>
-<li><p><strong>Sc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Configurational entropy, <span class="math notranslate nohighlight">\(-\int \mathrm{mf} \, \ln(\mathrm{mf})\)</span>
+<li><p><strong>denFT</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Radial Fourier transform of rho.</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Wavenumber grid of denFT.</p></li>
+<li><p><strong>mf</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Modal fraction <code class="docutils literal notranslate"><span class="pre">|denFT|**2</span> <span class="pre">/</span> <span class="pre">max|denFT|**2</span></code>.</p></li>
+<li><p><strong>Sc</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Configurational entropy, <span class="math notranslate nohighlight">\(-\int \mathrm{mf} \, \ln(\mathrm{mf})\)</span>
 over k-space with the d-dimensional radial measure.</p></li>
 </ul>
 </dd>
