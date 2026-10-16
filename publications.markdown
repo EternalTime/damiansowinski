@@ -71,7 +71,13 @@ permalink: /publications/
         if (!entry) return '<div class="csl-entry pub-missing">' + key + '</div>';
         return '<div class="csl-entry">' + formatEntry(entry) + '</div>';
       }).join('');
-      document.getElementById('publications-list').innerHTML = output;
+      var list = document.getElementById('publications-list');
+      list.innerHTML = output;
+      // The list arrives after MathJax has set the page, so mathematics in a title is set here;
+      // a MathJax still loading sets the whole page, the list with it, once it starts.
+      if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
+        MathJax.startup.promise.then(function() { return MathJax.typesetPromise([list]); });
+      }
     })
     .catch(function(e) {
       console.error('Failed to load references.bib', e);

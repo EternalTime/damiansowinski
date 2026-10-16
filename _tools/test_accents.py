@@ -5,8 +5,9 @@ alphabeticalKey folds them: "natario" finds Natário, "godel" Gödel, "lemaitre"
 "nordstrom" Nordström. Every word written with a TeX accent in assets/data/references.bib shows
 as that letter with that accent in every reference a spacetime lists and every publication,
 which once read \\'e as an umlaut, so Poincaré came out Poincarë, and until this order printed
-Stojkovi\\'c, Bizo\\'n, Chru\\'sciel and voja\\^go as typed. Both pages read the bibliography
-with _includes/unlatex.js, which build_agent_data.unlatex follows for the agent layer.
+Stojkovi\\'c, Bizo\\'n, Chru\\'sciel and voja\\^go as typed. Both pages, and the applets' notes,
+read the bibliography with _includes/unlatex.js, which build_agent_data.unlatex follows for the
+agent layer.
 
 The site is built with Jekyll into a folder of its own, served on a free port, and read in
 headless Chrome by `_tools/accents.mjs`, which this file tells what to look for.
@@ -28,9 +29,10 @@ import build_agent_data as agent
 import build_mfs_data as build
 
 READER = build.ROOT / "_includes" / "unlatex.js"
-PAGES = (build.ROOT / "_layouts" / "mfs.html", build.ROOT / "publications.markdown")
+PAGES = (build.ROOT / "_layouts" / "mfs.html", build.ROOT / "publications.markdown",
+         build.ROOT / "assets" / "js" / "applet-shell.js")
 
-# The searches the captain named, each spelt without its accents first, and the spacetime each
+# The searches the order named, each spelt without its accents first, and the spacetime each
 # has to list.
 SEARCHES = (
     (("natario", "Natário", "NATÁRIO"), "natario"),
@@ -64,13 +66,17 @@ NAMED = {"Nat\\'ario": "Natário", "Jos\\'e": "José", "Poincar\\'e": "Poincaré
 
 
 def accented(text):
-    """The text with each TeX accent written as the letter carrying it, \\ss as ß and its braces gone."""
+    """The text with each TeX accent written as the letter carrying it, \\ss as ß, TeX's dashes and
+    quotes written out as _tools/test_reference_tex.py holds them, and its braces gone."""
     def letter(match):
         sign, word, braced, bare = match.groups()
         base = (braced or bare).lstrip("\\")
         case = "CAPITAL" if base.isupper() else "SMALL"
         return unicodedata.lookup(f"LATIN {case} LETTER {base.upper()} WITH {ACCENT_NAMES[sign or word]}")
-    return re.sub(r"\\ss\b", "ß", ACCENT.sub(letter, text)).replace("{", "").replace("}", "")
+    text = re.sub(r"\\ss\b", "ß", ACCENT.sub(letter, text))
+    for tex, written in (("---", "\u2013"), ("--", "\u2013"), ("``", '"'), ("''", '"'), ("`", "'")):
+        text = text.replace(tex, written)
+    return text.replace("{", "").replace("}", "")
 
 
 def accented_words(fields):
@@ -95,7 +101,7 @@ def run_reader(values):
 
 
 class TheReader(unittest.TestCase):
-    """The reader both pages include, over every field of the bibliography."""
+    """The reader every page showing the bibliography includes, over every field of it."""
 
     @classmethod
     def setUpClass(cls):
@@ -106,7 +112,7 @@ class TheReader(unittest.TestCase):
         for tex, reads in NAMED.items():
             self.assertEqual(accented(tex), reads)
 
-    def test_both_pages_include_it_and_read_no_accent_of_their_own(self):
+    def test_every_page_includes_it_and_reads_no_accent_of_its_own(self):
         for page in PAGES:
             source = page.read_text(encoding="utf-8")
             with self.subTest(page.name):
@@ -133,14 +139,15 @@ class TheReader(unittest.TestCase):
                 self.assertEqual(agent.unlatex(value), " ".join(shown.split()))
 
 
-class InTheBrowser(unittest.TestCase):
+class BuiltSite:
+    """The site built with Jekyll into a folder of its own and served on a free port at `base`."""
 
     @classmethod
     def setUpClass(cls):
         for tool in ("bundle", "node"):
             if shutil.which(tool) is None:
                 raise AssertionError(f"{tool} is not on the PATH")
-        cls.home = tempfile.TemporaryDirectory(prefix="mfs-accents-")
+        cls.home = tempfile.TemporaryDirectory(prefix="mfs-site-")
         site = Path(cls.home.name) / "site.noindex"
         built = subprocess.run(["bundle", "exec", "jekyll", "build", "-q", "-d", str(site)],
                                cwd=build.ROOT, capture_output=True, text=True, timeout=600)
@@ -148,7 +155,7 @@ class InTheBrowser(unittest.TestCase):
             cls.home.cleanup()
             raise AssertionError(built.stderr[-3000:])
         handler = functools.partial(Quiet, directory=str(site))
-        cls.server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
+        cls.server = Server(("127.0.0.1", 0), handler)
         threading.Thread(target=cls.server.serve_forever, daemon=True).start()
         cls.base = f"http://127.0.0.1:{cls.server.server_address[1]}"
 
@@ -157,6 +164,9 @@ class InTheBrowser(unittest.TestCase):
         cls.server.shutdown()
         cls.server.server_close()
         cls.home.cleanup()
+
+
+class InTheBrowser(BuiltSite, unittest.TestCase):
 
     def spec(self):
         entries = build.parse_bibtex(build.BIB_FILE.read_text(encoding="utf-8"))
@@ -190,6 +200,13 @@ class InTheBrowser(unittest.TestCase):
         run = subprocess.run(["node", str(build.ROOT / "_tools" / "accents.mjs"), self.base, str(path)],
                              capture_output=True, text=True, timeout=600)
         self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+
+
+class Server(http.server.ThreadingHTTPServer):
+    # A page asks for dozens of files at once, and past the default backlog of five connections
+    # macOS resets the rest, which Chrome reports as a console error: 40 clients at once had 380
+    # of 400 requests reset at five and none at 128.
+    request_queue_size = 128
 
 
 class Quiet(http.server.SimpleHTTPRequestHandler):

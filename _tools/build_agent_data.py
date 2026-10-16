@@ -135,14 +135,16 @@ def build_spacetimes(metrics):
 # ---------------------------------------------------------------------------------------
 # Publications
 
-# The reader both pages include, _includes/unlatex.js: a TeX accent is put on whatever letter it
-# stands over as Unicode's combining mark, and the two are composed into one character.
+# The reader the pages include, _includes/unlatex.js: mathematics between dollar signs is left as
+# written, and outside it a TeX accent is put on whatever letter it stands over as Unicode's
+# combining mark, the two composed into one character, and TeX's dashes and quotes are written out.
 MARKS = {
     "'": "\u0301", '"': "\u0308", "`": "\u0300", "^": "\u0302", "~": "\u0303", "=": "\u0304", ".": "\u0307",
     "u": "\u0306", "v": "\u030C", "H": "\u030B", "c": "\u0327", "k": "\u0328", "r": "\u030A",
 }
 ACCENT = re.compile(r"""\\(?:(['"`^~=.])|([uvHckr])(?=\s*\{|\s+[A-Za-z\\]))\s*"""
                     r"""(?:\{\s*(\\[ij](?![A-Za-z])|[A-Za-z])\s*\}|(\\[ij](?![A-Za-z])|[A-Za-z]))""")
+MATH = re.compile(r"(\$[^$]*\$)")
 ARXIV = re.compile(r"arXiv[:\s.]*(\d{4}\.\d{4,5})", re.IGNORECASE)
 
 
@@ -152,10 +154,15 @@ def unlatex(text):
         letter = (braced or bare).lstrip("\\")
         return unicodedata.normalize("NFC", letter + MARKS[sign or word])
 
-    text = ACCENT.sub(accent, text)
-    text = re.sub(r"\\ss\b", "ß", text).replace("\\&", "&")
-    text = re.sub(r"\{([^{}]*)\}", r"\1", text)
-    return " ".join(text.split())
+    def words(part):
+        part = ACCENT.sub(accent, part)
+        part = re.sub(r"\\ss\b", "ß", part).replace("\\&", "&")
+        part = part.replace("---", "\u2013").replace("--", "\u2013")
+        part = part.replace("``", '"').replace("''", '"').replace("`", "'")
+        return re.sub(r"\{([^{}]*)\}", r"\1", part)
+
+    parts = MATH.split(text)
+    return " ".join("".join(p if i % 2 else words(p) for i, p in enumerate(parts)).split())
 
 
 def author_name(author):
