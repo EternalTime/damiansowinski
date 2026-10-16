@@ -83,6 +83,11 @@
       "id": "kerr_scalar_hair",
       "kind": "family",
       "text": "A spinning boson star can hold a small black hole at its centre, as long as the field turns with the horizon. Herdeiro and Radu's black holes run from Kerr's to spinning boson stars as the horizon shrinks to nothing [herdeiro2014]."
+    },
+    {
+      "id": "kodama_kink",
+      "kind": "family",
+      "text": "A ghost scalar field held still across a wormhole throat, its two vacua on the two sides, and also known only as numbers [kodama1978preprint]."
     }
   ],
   "references": [
@@ -114,7 +119,8 @@
     "misner1957",
     "misner1960",
     "brill1959",
-    "herdeiro2014"
+    "herdeiro2014",
+    "kodama1978preprint"
   ],
   "coordinates": [
     {

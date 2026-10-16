@@ -121,6 +121,7 @@ sys.path.insert(0, str(HERE.parent))
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
 import boson_star as bs  # noqa: E402
+import kodama_kink as kk  # noqa: E402
 import two_holes  # noqa: E402
 import brill_wave  # noqa: E402
 import black_to_white_hole as bwh  # noqa: E402
@@ -2650,6 +2651,71 @@ def boson_star(ck, src):
     fig.legend("line", "reference", "Flamm's paraboloid of the same mass, down to its throat at $r_s = 2GM/c^2$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return [view("star", "The star", "$1/\\mu$", [surface], fig.done(), settings=bs.SETTINGS, input=bs.INPUT)]
+
+
+def kodama_kink(ck, src):
+    """The declared kink of Kodama's, f = 1.25 in units of 1/mu, which kodama_kink.Kink solves from
+    this spacetime's own Einstein tensor and the null rays and the conformal diagram draw. In the
+    proper radial chart g_RR = 1 and g_phiphi = r(R)^2, so rho = r and dz/dR = sqrt(1 - r'^2), with
+    the solver's r: one sheet from one side of the throat to the other, odd about it, as
+    Ellis-Bronnikov's catenoid is. The areal chart, with the solver's alpha, is checked to give the
+    same surface on the side R > 0 from just outside the throat, and Flamm's paraboloid of the kink's mass, whose throat at 2m
+    lies inside the kink's at r_0, is drawn beside it for comparison."""
+    k = kk.kink()
+    src.note("kodama_kink", "proper_radial", ["einstein_tensor"])
+    ck.add("Kodama's kink: the declared kink solves the published G^R_R",
+           float(np.max(np.abs(k.radial(np.linspace(0.0, 0.98 * k.edge, 400))))), 1e-9)
+    ck.add("Kodama's kink: it is the kink its input states", float(len(k.stated())), 0.5)
+
+    def area(n):
+        return lambda x: k.values(np.asarray(x, dtype=float).ravel())["r"][n].reshape(np.shape(x))
+    top = 6.0
+    r_top = float(area(0)(np.array([top]))[0])
+    size = 2 * r_top
+    sl = Slice(src, "kodama_kink", "proper_radial", "R", "\\phi", {"t": 0, **EQUATOR}, numeric={"r": (area(0), area(1))})
+    spheres = [float(x) for x in k.areal().R_of(np.array([2.0, 3.0, 4.5]))]
+    z_top = float(k.embedding_height(np.array([top]))[0])
+    whole = Piece("whole", "sheet", sl, -top, top, -z_top, 1,
+                  (("edge", "the side $R < 0$ runs on, flattening, to $R \\to -\\infty$"),
+                   ("edge", "the side $R > 0$ runs on, flattening, to $R \\to \\infty$")),
+                  [(-x, "r", None) for x in reversed(spheres)] + [(0.0, "throat", "$R = 0$")]
+                  + [(x, "r", None) for x in spheres], size)
+    ck.isometry("Kodama's kink, through the throat", whole)
+    ck.form("Kodama's kink, the height the solver integrates", whole,
+            lambda R: k.embedding_height(np.asarray(R, dtype=float)), size)
+    ck.radius("Kodama's kink, the radius is the areal radius r(R)", whole, area(0), size)
+
+    def radial(n):
+        return lambda x: k.areal().values(np.asarray(x, dtype=float).ravel())["alpha"][n].reshape(np.shape(x))
+    other = Slice(src, "kodama_kink", "areal", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_0": repr(k.r0)},
+                  numeric={"alpha": (radial(0), radial(1))})
+    # From just outside the throat, where r(R) still inverts to R with the digits the check asks for.
+    r_lo = k.r0 + 0.01
+    z_lo = float(k.embedding_height(k.areal().R_of(np.array([r_lo])))[0])
+    side = Piece("side", "sheet", other, r_lo, r_top, z_lo, 1, size=size)
+    ck.isometry("Kodama's kink, the areal chart", side)
+    heights = np.array([float(k.embedding_height(np.array([x]))[0]) for x in k.areal().R_of(side.rho)])
+    ck.add("Kodama's kink, the areal chart gives the same surface", float(np.max(np.abs(heights - side.z))) / size, FORM)
+
+    m = k.m
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": repr(2 * m)})
+    vacuum = Piece("vacuum", "reference", outer, 2 * m, r_top, 0.0, 1,
+                   (("throat", "the throat $r = 2GM/c^2$ of the vacuum of the same mass"), ("join", None)),
+                   [(2 * m, "reference", None)], size, reference=True)
+    vacuum.z = vacuum.z + z_top - vacuum.z[-1]
+    surface = Surface([whole, vacuum])
+
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *whole.at(0.0), "$r_0$", dx=14)
+    ring_label(fig, [0, 0, 0], *whole.at(spheres[1]), "$3/\\mu$")
+    ring_label(fig, [0, 0, 0], *whole.at(-spheres[1]), "$3/\\mu$")
+    ring_label(fig, [0, 0, 0], *vacuum.at(2 * m), "$r_s$", side=-1, dx=8)
+    fig.legend("fill", "cover", "the whole slice, which $t$ and $R$ cover from one side to the other")
+    fig.legend("line", "r", "the spheres of areal radius $2/\\mu$, $3/\\mu$ and $4.5/\\mu$ on either side")
+    fig.legend("line", "throat", f"the throat $R = 0$, the smallest circle, of radius $r_0 = {k.r0:.3f}/\\mu$")
+    fig.legend("line", "reference", "Flamm's paraboloid of the same mass, down to its throat at $r_s = 2GM/c^2$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("wormhole", "The wormhole", "$1/\\mu$", [surface], fig.done(), settings=kk.SETTINGS, input=kk.INPUT)]
 
 
 def morris_thorne(ck, src):
@@ -17079,6 +17145,7 @@ DRAWN = {
     "bonnor_charged_dust": bonnor_charged_dust,
     "tov": tov,
     "boson_star": boson_star,
+    "kodama_kink": kodama_kink,
     "einstein_cluster": einstein_cluster,
     "bartnik_mckinnon": bartnik_mckinnon,
     "morris_thorne": morris_thorne,
@@ -17648,6 +17715,15 @@ CAPTIONS = {
         "saddle, as Flamm's paraboloid does everywhere. Karl Schwarzschild's star of uniform density is a cap of "
         "a sphere all the way out, and meets the paraboloid with a jump in curvature that this star does not "
         "have: the density here is zero on both sides of $r = R$.",
+    ],
+    ("kodama_kink", "wormhole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Kodama's kink at $f = 1.25$ at one moment of $t$, drawn as a "
+        "surface in flat space with every distance along it the metric distance. Along the proper distance "
+        "$g_{RR} = 1$ and the circles have radius $r(R)$, so the surface climbs at "
+        "$dz/dR = \\sqrt{1 - (\\partial_R r)^2}$: vertical at the throat, where $\\partial_R r = 0$, and flattening "
+        "on both sides, where the field has settled into its two vacua.",
+        "The throat has the radius $r_0 = 1.475/\\mu$, wider than the throat $r_s = 2GM/c^2 = 0.781/\\mu$ of Flamm's "
+        "paraboloid of the same mass, which is drawn dashed for comparison.",
     ],
     ("boson_star", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the heaviest boson star at one moment of $t$, drawn as a "

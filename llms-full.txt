@@ -1358,6 +1358,17 @@ Schwarzschild's black hole with one more term in its metric, a power of the radi
 - chart Free Matter, Hyperbolic: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = 4r_q^2e^{-2\chi}\left(-d\eta^2 + d\chi^2 + \sinh^2\chi\,\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Free Matter, Conformally Flat: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = \dfrac{4r_q^2}{\left(\tau + \rho\right)^2}\left(-d\tau^2 + d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Kodama's General Relativistic Kink
+
+A static wormhole held open by a ghost scalar field with a quartic potential, found numerically by Takeshi Kodama in 1978. The field sits in one vacuum far out on one side of the throat and in the other vacuum far out on the other side, so the throat carries a kink of the $\lambda\phi^4$ model. Both sides are asymptotically flat, the mass is positive, and there is neither a horizon nor a singularity.
+
+- id: `kodama_kink`
+- tags: wormhole, traversable, throat, no horizon, no singularity, exotic matter, energy condition violation, negative energy, scalar field, phantom field, minimally coupled scalar field, soliton, particle-like solution, topological defect, numerical solution, instability, geometrodynamics, mass, asymptotically flat, static, stationary, spherically symmetric, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kodama_kink.json
+- chart Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{2\eta}c^2dt^2 + e^{2\alpha}dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Proper Radial Distance: coordinates $(t, R, \theta, \phi)$, $$ds^2 = -e^{2h}c^2dt^2 + dR^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Kopczyński-Trautman Universe With Torsion
 
 A flat universe of dust whose particles all spin about one axis, in the Einstein-Cartan theory, where the spin of matter gives spacetime torsion as its energy gives it curvature. The spins repel at high density, so the universe contracts to a least size, turns round, and expands, with no singularity. W. Kopczyński found the first such universes in 1972 and 1973, and Andrzej Trautman argued from them in 1973 that spin and torsion may avert gravitational singularities.

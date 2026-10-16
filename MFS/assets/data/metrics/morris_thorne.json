@@ -97,6 +97,11 @@
       "id": "interstellar_wormhole",
       "kind": "special_case",
       "text": "The wormhole of the film Interstellar: $\\Phi = 0$, and an areal radius that holds at $\\rho$ along a cylinder of length $2a$ and flares out at each end into flat space. Kip Thorne built it with the effects team of Double Negative in 2014, a quarter century after this paper [james2015]."
+    },
+    {
+      "id": "kodama_kink",
+      "kind": "special_case",
+      "text": "Takeshi Kodama's wormhole of 1978, held open by a ghost scalar field with a quartic potential and known only numerically [kodama1978preprint]. Both of its functions are fixed by the field."
     }
   ],
   "references": [
@@ -124,7 +129,8 @@
     "agnese1995",
     "clement2016",
     "blazquez2021",
-    "james2015"
+    "james2015",
+    "kodama1978preprint"
   ],
   "coordinates": [
     {

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 185,
+  "count": 186,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -9148,6 +9148,11 @@
           "id": "kerr_scalar_hair",
           "kind": "family",
           "text": "A spinning boson star can hold a small black hole at its centre, as long as the field turns with the horizon. Herdeiro and Radu's black holes run from Kerr's to spinning boson stars as the horizon shrinks to nothing [herdeiro2014]."
+        },
+        {
+          "id": "kodama_kink",
+          "kind": "family",
+          "text": "A ghost scalar field held still across a wormhole throat, its two vacua on the two sides, and also known only as numbers [kodama1978preprint]."
         }
       ],
       "references": [
@@ -9179,7 +9184,8 @@
         "misner1957",
         "misner1960",
         "brill1959",
-        "herdeiro2014"
+        "herdeiro2014",
+        "kodama1978preprint"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/boson_star.json",
@@ -17882,6 +17888,11 @@
           "id": "btz_shock_wave",
           "kind": "family",
           "text": "The bridge of the BTZ black hole with a shock wave on its horizon, which makes the bridge longer [shenker2014]."
+        },
+        {
+          "id": "kodama_kink",
+          "kind": "family",
+          "text": "Takeshi Kodama's wormhole of 1978, whose throat he set beside this bridge [kodama1978preprint]. It has no horizon, and a light signal can cross it [kodama1979preprint]."
         }
       ],
       "references": [
@@ -17913,7 +17924,9 @@
         "steif1996",
         "bronnikovkim2003",
         "blazquez2021",
-        "shenker2014"
+        "shenker2014",
+        "kodama1978preprint",
+        "kodama1979preprint"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -18889,6 +18902,11 @@
           "id": "big_rip",
           "kind": "family",
           "text": "A universe filled with phantom energy, the same kind of field with its kinetic term of the opposite sign, which pulls the universe apart at a finite time [caldwell2002, caldwell2003]."
+        },
+        {
+          "id": "kodama_kink",
+          "kind": "family",
+          "text": "Takeshi Kodama's wormhole of 1978, held open by a ghost field with a potential whose two vacua sit on the two sides of the throat [kodama1978preprint]. Its mass is positive [kodama1978]."
         }
       ],
       "references": [
@@ -18912,7 +18930,9 @@
         "einstein1935",
         "blazquez2021",
         "caldwell2002",
-        "caldwell2003"
+        "caldwell2003",
+        "kodama1978preprint",
+        "kodama1978"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json",
@@ -32669,6 +32689,212 @@
       ]
     },
     {
+      "id": "kodama_kink",
+      "name": "Kodama's General Relativistic Kink",
+      "short_name": "Kodama's Kink",
+      "description": "A static wormhole held open by a ghost scalar field with a quartic potential, found numerically by Takeshi Kodama in 1978. The field sits in one vacuum far out on one side of the throat and in the other vacuum far out on the other side, so the throat carries a kink of the $\\lambda\\phi^4$ model. Both sides are asymptotically flat, the mass is positive, and there is neither a horizon nor a singularity.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "throat",
+        "no horizon",
+        "no singularity",
+        "exotic matter",
+        "energy condition violation",
+        "negative energy",
+        "scalar field",
+        "phantom field",
+        "minimally coupled scalar field",
+        "soliton",
+        "particle-like solution",
+        "topological defect",
+        "numerical solution",
+        "instability",
+        "geometrodynamics",
+        "mass",
+        "asymptotically flat",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The field $S$ is dimensionless, its kinetic term has the opposite of the usual sign, and its potential is $V = \\tfrac{1}{2}\\left(\\mu/f\\right)^2\\left(1 - f^2S^2\\right)^2$, with $\\mu$ an inverse length and $f$ a pure number. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "related": [
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "The wormhole Homer Ellis and Kirill Bronnikov found in 1973, held open by a ghost field with no mass and no potential [ellis1973, bronnikov1973]. Kodama's ghost field has a potential with two vacua, one on each side of the throat [kodama1978preprint]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "generalisation",
+          "text": "Michael Morris and Kip Thorne's static wormhole, with any redshift function and any shape function [morris1988]. In Kodama's kink both functions are fixed by the ghost field [kodama1978preprint]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "Albert Einstein and Nathan Rosen's bridge between two copies of Schwarzschild's exterior, the geometry Kodama set his throat beside [einstein1935, kodama1978preprint]. His throat has no horizon, and a light signal can cross it [kodama1979preprint]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "family",
+          "text": "Another ball of scalar field held together by its own gravity and known only as numbers [liebling2023]. There the field turns in phase about a regular centre; here a ghost field sits still across a throat [kodama1978preprint]."
+        }
+      ],
+      "references": [
+        "kodama1978preprint",
+        "kodama1979preprint",
+        "kodama1978",
+        "einstein1935",
+        "ellis1973",
+        "kodama1979",
+        "clement1981emh",
+        "clement1981berlin",
+        "dzhunushaliev2013",
+        "bronnikov1973",
+        "morris1988",
+        "liebling2023"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kodama_kink.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\eta = \\eta(r)",
+              "description": "Redshift function, dimensionless: a clock held at radius $r$ runs at $e^{\\eta}$ of the rate $t$ counts, and it approaches $0$ far away. For the kink it is known only numerically, from $\\partial_r\\eta = \\dfrac{1}{2}\\left[\\dfrac{e^{2\\alpha} - 1}{r} + r\\left(e^{2\\alpha}V - \\left(\\partial_r S\\right)^2\\right)\\right]$"
+            },
+            {
+              "symbol": "\\alpha = \\alpha(r)",
+              "description": "Radial function, dimensionless: $e^{\\alpha}dr$ is the proper distance along the radius, and $e^{-2\\alpha}$ vanishes at the throat. For the kink it is known only numerically, from $\\partial_r\\alpha = \\dfrac{1}{2}\\left[\\dfrac{1 - e^{2\\alpha}}{r} - r\\left(\\left(\\partial_r S\\right)^2 + e^{2\\alpha}V\\right)\\right]$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Areal radius of the throat, a length, the least areal radius on either side; it is fixed by $\\mu$ and $f$"
+            }
+          ],
+          "convention": "We use Kodama's coordinates $(t, r, \\theta, \\phi)$ on either side of the throat, with $t$ carrying dimensions of time and $r$ the areal radius, and leave $\\eta$ and $\\alpha$ free. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2\\eta}c^2dt^2 + e^{2\\alpha}dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\eta}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "e^{2\\alpha}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(r^2\\,\\partial_r\\alpha\\,\\partial_r\\eta - r^2\\left(\\partial_r\\eta\\right)^2 - r^2\\,\\partial_r^2\\eta + 2r\\,\\partial_r\\alpha - 2r\\,\\partial_r\\eta + e^{2\\alpha} - 1\\right)e^{-2\\alpha}}{r^2}",
+          "kretschmann": "K = 4e^{-4\\alpha}\\left(\\partial_r^2\\eta + \\left(\\partial_r\\eta\\right)^2 - \\partial_r\\alpha\\,\\partial_r\\eta\\right)^2 + \\dfrac{8e^{-4\\alpha}\\left(\\partial_r\\eta\\right)^2}{r^2} + \\dfrac{8e^{-4\\alpha}\\left(\\partial_r\\alpha\\right)^2}{r^2} + \\dfrac{4\\left(1 - e^{-2\\alpha}\\right)^2}{r^4}"
+        },
+        {
+          "id": "proper_radial",
+          "name": "Proper Radial Distance",
+          "coordinates": [
+            "t",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "R \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "R = 0 \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "h = h(R)",
+              "description": "Redshift function, dimensionless, the $\\eta$ of the areal chart read along the proper distance: a clock held at $R$ runs at $e^{h}$ of the rate $t$ counts. For the kink it is known only numerically, even about the throat and approaching $0$ far away, from $2r\\,\\partial_R r\\,\\partial_R h = 1 - \\left(\\partial_R r\\right)^2 + r^2\\left(V - \\left(\\partial_R S\\right)^2\\right)$"
+            },
+            {
+              "symbol": "r = r(R)",
+              "description": "Areal radius, a length, even about the throat, where it takes its least value $r(0) = r_0$. For the kink it is known only numerically, from $2r\\,\\partial_R^2r = 1 - \\left(\\partial_R r\\right)^2 + r^2\\left(\\left(\\partial_R S\\right)^2 + V\\right)$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Areal radius of the throat, a length, the least value of $r(R)$; it is fixed by $\\mu$ and $f$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, R, \\theta, \\phi)$ of Kodama, de Oliveira and Santos, with $t$ carrying dimensions of time and $R$ the proper radial distance, the throat at $R = 0$, and leave $h$ and the areal radius $r$ free. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2h}c^2dt^2 + dR^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2h}"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2 - 2\\left(\\partial_R r\\right)^2 - 4r\\,\\partial_R^2 r - 4r\\,\\partial_R h\\,\\partial_R r - 2r^2\\,\\partial_R^2 h - 2r^2\\left(\\partial_R h\\right)^2}{r^2}",
+          "kretschmann": "K = 4\\left(\\partial_R^2h + \\left(\\partial_R h\\right)^2\\right)^2 + \\dfrac{8\\left(\\partial_R h\\right)^2\\left(\\partial_R r\\right)^2}{r^2} + \\dfrac{8\\left(\\partial_R^2r\\right)^2}{r^2} + \\dfrac{4\\left(1 - \\left(\\partial_R r\\right)^2\\right)^2}{r^4}"
+        }
+      ]
+    },
+    {
       "id": "kopczynski_trautman",
       "name": "Kopczyński-Trautman Universe With Torsion",
       "short_name": "Kopczyński-Trautman",
@@ -40182,6 +40408,11 @@
           "id": "interstellar_wormhole",
           "kind": "special_case",
           "text": "The wormhole of the film Interstellar: $\\Phi = 0$, and an areal radius that holds at $\\rho$ along a cylinder of length $2a$ and flares out at each end into flat space. Kip Thorne built it with the effects team of Double Negative in 2014, a quarter century after this paper [james2015]."
+        },
+        {
+          "id": "kodama_kink",
+          "kind": "special_case",
+          "text": "Takeshi Kodama's wormhole of 1978, held open by a ghost scalar field with a quartic potential and known only numerically [kodama1978preprint]. Both of its functions are fixed by the field."
         }
       ],
       "references": [
@@ -40209,7 +40440,8 @@
         "agnese1995",
         "clement2016",
         "blazquez2021",
-        "james2015"
+        "james2015",
+        "kodama1978preprint"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",

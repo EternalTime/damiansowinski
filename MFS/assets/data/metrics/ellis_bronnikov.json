@@ -79,6 +79,11 @@
       "id": "big_rip",
       "kind": "family",
       "text": "A universe filled with phantom energy, the same kind of field with its kinetic term of the opposite sign, which pulls the universe apart at a finite time [caldwell2002, caldwell2003]."
+    },
+    {
+      "id": "kodama_kink",
+      "kind": "family",
+      "text": "Takeshi Kodama's wormhole of 1978, held open by a ghost field with a potential whose two vacua sit on the two sides of the throat [kodama1978preprint]. Its mass is positive [kodama1978]."
     }
   ],
   "references": [
@@ -102,7 +107,9 @@
     "einstein1935",
     "blazquez2021",
     "caldwell2002",
-    "caldwell2003"
+    "caldwell2003",
+    "kodama1978preprint",
+    "kodama1978"
   ],
   "coordinates": [
     {

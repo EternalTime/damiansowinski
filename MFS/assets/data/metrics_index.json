@@ -802,7 +802,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f2442d6d0ec9ee79",
+    "version": "429aa2ad5fbef2d5",
     "diagrams": "d8f5e35c3b0e6fe2",
     "conformal": "7b86209f53558e97",
     "embedding": "c3dc5db3068ad454"
@@ -1616,7 +1616,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "78495109ad0b7381",
+    "version": "5d1e352c85ef32b6",
     "diagrams": "8393e9b253125f33",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -1700,7 +1700,7 @@
       "idealized model",
       "scalar-tensor theory"
     ],
-    "version": "3116db4f494cb46d",
+    "version": "252cf4abeeb18462",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a"
@@ -2912,6 +2912,42 @@
     "embedding": "f88f2136771d0f0a"
   },
   {
+    "id": "kodama_kink",
+    "name": "Kodama's Kink",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "throat",
+      "no horizon",
+      "no singularity",
+      "exotic matter",
+      "energy condition violation",
+      "negative energy",
+      "scalar field",
+      "phantom field",
+      "minimally coupled scalar field",
+      "soliton",
+      "particle-like solution",
+      "topological defect",
+      "numerical solution",
+      "instability",
+      "geometrodynamics",
+      "mass",
+      "asymptotically flat",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "d9699813246c4066",
+    "diagrams": "40f73396333f824d",
+    "conformal": "ca263c4f02fd012f",
+    "embedding": "400c5460f3140ed9"
+  },
+  {
     "id": "kopczynski_trautman",
     "name": "Kopczyński-Trautman",
     "tags": [
@@ -3598,7 +3634,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5d4dc40f32a750e2",
+    "version": "b46d83567156e35a",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"

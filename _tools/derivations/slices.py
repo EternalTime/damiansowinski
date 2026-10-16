@@ -1045,6 +1045,15 @@ def _boson_star_isotropic(m):
     import boson_star
     lo, hi = m.reach("areal", "r")
     return along(0.0, *(float(x) for x in boson_star.star().isotropic().rho_of([lo, hi])))
+def _kodama_kink_areal(m):
+    """Kodama's kink's moment t = 0 in his areal radius, on the side R > 0: the embedding's reach
+    along the proper distance R carried to r(R) by the solver that drew it, from the throat out."""
+    import kodama_kink
+    lo, hi = m.reach("proper_radial", "R")
+    k = kodama_kink.kink()
+    return along(0.0, k.r0, float(k.values([hi])["r"][0][0]))
+
+
 def _bm_radial(which, r):
     """The isotropic radius or the tortoise coordinate of the sphere of areal radius r on Bartnik
     and McKinnon's soliton with one zero, in units of ell."""
@@ -3401,6 +3410,9 @@ FLAT = {
     ("tolman_vii", "spherical", "through"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "tolman", "radial"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "tolman", "through"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    ("kodama_kink", "proper_radial", "radial"):
+        lambda: one("kodama_kink", lambda m: along(0.0, *m.reach("proper_radial", "R"))),
+    ("kodama_kink", "areal", "radial"): lambda: one("kodama_kink", _kodama_kink_areal),
     ("boson_star", "areal", "radial"): lambda: one("boson_star", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("boson_star", "areal", "through"): lambda: one("boson_star", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("boson_star", "isotropic", "radial"): lambda: one("boson_star", _boson_star_isotropic),

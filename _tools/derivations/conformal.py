@@ -108,6 +108,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 import black_to_white_hole as bwh  # noqa: E402
 import boson_star as bs  # noqa: E402
+import kodama_kink as kk  # noqa: E402
 import bubbling_ads as ba  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
@@ -15215,6 +15216,110 @@ def boson_star(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Kodama's kink
+
+def kodama_kink(ck, src):
+    """The declared kink of Kodama's, f = 1.25 in units of 1/mu, which kodama_kink.Kink solves from
+    this spacetime's own Einstein tensor and the null rays and the embedding diagram draw, in its
+    two charts.
+
+    r* = int e^{-h} dR, odd about the throat, runs over the whole line: inside the field's edge by
+    the trapezoid rule on the solver's h, and from the edge on by Schwarzschild's
+    r + 2m ln(r/2m - 1), since there the metric is Schwarzschild's of the kink's mass m and
+    dr*/dR = e^{-h} = (1 - 2m/r)^{-1/2} = (dr/dR)/(1 - 2m/r). Then p, q = arctan((t -+ r*)/r_0)
+    give the full diamond, with the throat on its axis. The areal chart covers the side R > 0, the
+    right half, with the same r* as a function of the sphere. Each chart is checked to carry the
+    published metric onto the diamond's null coordinates, the kink to solve the published G^R_R,
+    which its construction did not use, and to be the kink its input states, and the curvature
+    to be finite at the throat on the published Kretschmann scalar.
+    """
+    k = kk.kink()
+    areal = k.areal()
+    src.note("kodama_kink", "proper_radial", ["einstein_tensor"])
+    m, r0, edge = k.m, k.r0, k.edge
+    grid_R = np.linspace(0, edge, 400001)
+    inner = cumulative_trapezoid(np.exp(-k.values(grid_R)["h"][0]), grid_R, initial=0)
+    r_edge = float(k.values([edge])["r"][0][0])
+    outer_c = inner[-1] - (r_edge + 2 * m * np.log(r_edge / (2 * m) - 1))
+
+    def rstar(R):
+        R = np.asarray(R, dtype=float)
+        a = np.abs(R)
+        r = k.values(np.minimum(a, 1e300).ravel())["r"][0].reshape(np.shape(a))
+        with np.errstate(invalid="ignore", divide="ignore"):
+            outside = r + 2 * m * np.log(r / (2 * m) - 1) + outer_c
+        return np.sign(R) * np.where(a <= edge, np.interp(a, grid_R, inner), outside)
+    ck.limit("Kodama's kink: the declared kink solves the published G^R_R",
+             k.radial(np.linspace(0.0, 0.98 * edge, 400)), 0, 1e-9)
+    ck.limit("Kodama's kink: it is the kink its input states", [float(len(k.stated()))], [0], 0.5)
+    ck.limit("Kodama's kink: r and h are continuous at the edge",
+             [k.values([edge * (1 - 1e-12)])[n][0][0] for n in k.funcs],
+             [k.values([edge * (1 + 1e-12)])[n][0][0] for n in k.funcs], 1e-8)
+    moment = slices.moments("kodama_kink")[0]
+    lo, hi = moment.reach("proper_radial", "R")
+    spheres = [float(x) for x in areal.R_of(np.array([2.0, 3.0, 4.5]))]
+    views = []
+    proper = Plane(src, "kodama_kink", "proper_radial", ("t", "R"), EQUATOR, numeric=list(k.funcs))
+
+    def chart(t, R):
+        return mink_pq(t, rstar(R), r0)
+
+    def fvals(t, xs):
+        return k.values(xs)
+    ck.chart("Kodama's kink, proper radial, inside the edge", proper, chart, ck.uniform(-60, 60),
+             ck.uniform(-0.999 * edge, 0.999 * edge), lambda t, xs: (1, 0), fvals)
+    ck.chart("Kodama's kink, proper radial, outside it", proper, chart, ck.uniform(-60, 60),
+             ck.uniform(1.001 * edge, 120), lambda t, xs: (1, 0), fvals)
+    ck.finite("Kodama's kink: the curvature is finite at the throat",
+              proper.kretschmann(np.zeros(5), np.array([-1e-3, -1e-4, 0.0, 1e-4, 1e-3]), fvals))
+    side = Plane(src, "kodama_kink", "areal", ("t", "r"), EQUATOR, {"r_0": repr(r0)}, numeric=list(areal.funcs))
+
+    def achart(t, r):
+        return mink_pq(t, rstar(areal.R_of(np.asarray(r, dtype=float).ravel()).reshape(np.shape(r))), r0)
+
+    def avals(t, xs):
+        return areal.values(xs)
+    ck.chart("Kodama's kink, areal", side, achart, ck.uniform(-60, 60), ck.uniform(1.001 * r0, 60),
+             lambda t, xs: (1, 0), avals)
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    for vid, label in (("proper_radial", "Proper radial distance"), ("areal", "Areal radius")):
+        v = View(vid, label, box, vid)
+        v.fill("region", DIAMOND)
+        if vid == "proper_radial":
+            v.fill("cover", DIAMOND)
+            for R in spheres:
+                v.curve("r", *chart(S_ALL, np.full_like(S_ALL, R)))
+                v.curve("r", *chart(S_ALL, np.full_like(S_ALL, -R)))
+            label_on(v, chart(0, spheres[1]), "$r = 3/\\mu$")
+            v.legend("cover", "the whole spacetime, which $t$ and $R$ cover")
+            v.legend("r", "the spheres of areal radius $2/\\mu$, $3/\\mu$ and $4.5/\\mu$ on either side")
+        else:
+            v.fill("cover", TRIANGLE)
+            for R in spheres:
+                v.curve("r", *chart(S_ALL, np.full_like(S_ALL, R)))
+                v.curve("r2", *chart(S_ALL, np.full_like(S_ALL, -R)))
+            label_on(v, chart(0, spheres[1]), "$r = 3/\\mu$")
+            v.legend("cover", "the side $R > 0$, which $t$ and $r$ cover")
+            v.legend("r", "$r$ constant, at $2/\\mu$, $3/\\mu$ and $4.5/\\mu$")
+            v.legend("r2", "the same radii on the other side, $R < 0$")
+        for tt in (-4, -2, -1, 0, 1, 2, 4):
+            v.curve("t", *mink_pq(np.full_like(S_ALL, tt * r0), S_ALL * r0, r0))
+        v.line("throat", [[[0, -PI], [0, PI]]])
+        diamond_edges(v)
+        v.label_xt([0, 0.3], "throat", "l", "small", dx=6)
+        v.legend("t", "$ct$ constant, at $0$, $\\pm r_0$, $\\pm 2r_0$ and $\\pm 4r_0$")
+        v.legend("throat", "the throat $R = 0$, $r = r_0$, where the spheres are smallest")
+        if vid == "proper_radial":
+            Rs = np.concatenate([np.linspace(lo, hi, 400)])
+        else:
+            Rs = np.linspace(0.0, hi, 200)
+        v.slice(moment, [chart(0 * Rs, Rs)])
+        v.set(settings=kk.SETTINGS, input=kk.INPUT)
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- the Malament-Hogarth toy
 
 def ab_metrics(ck, src):
@@ -25450,7 +25555,7 @@ DRAWN = {
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
     "datt_ruban_t_models": datt_ruban_t_models,
-    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "black_to_white_hole": black_to_white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "bowers_liang": bowers_liang, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
+    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "black_to_white_hole": black_to_white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "bowers_liang": bowers_liang, "boson_star": boson_star, "kodama_kink": kodama_kink, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
     "bonnor_charged_dust": bonnor_charged_dust,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
@@ -28730,6 +28835,21 @@ CAPTIONS = {
         "Marginally trapped spheres appear at the surface then and move inward along "
         "$\\eta = \\pi - 2\\chi$, a timelike curve, and the crunch of the dust and the singularity "
         "outside it are one spacelike line.",
+    ],
+    ("kodama_kink", "proper_radial"): [
+        "Kodama's kink at $f = 1.25$, each point in the diagram a 2-sphere of areal radius $r(R)$. Its metric "
+        "functions $h$ and $r$ come from $G^t{}_t$, $G^\\theta{}_\\theta$, and the wave equation of the field, "
+        "integrated numerically from the throat, and beyond the field's edge they are Schwarzschild's for the "
+        "kink's mass on either side.",
+        "The tortoise coordinate $r_* = \\int e^{-h}\\,dR$ runs over the whole line, and "
+        "$p, q = \\arctan((ct \\mp r_*)/r_0)$ bring the spacetime into the full diamond, with the throat on its "
+        "axis and an $i^0$ and a pair of null infinities on each side. Light crosses the throat both ways, and no "
+        "horizon stands anywhere.",
+    ],
+    ("kodama_kink", "areal"): [
+        "The same kink in Kodama's areal radius $r$, which covers the side $R > 0$ and ends at the throat, where "
+        "$g_{rr} = e^{2\\alpha}$ diverges. Its tortoise coordinate is the same function of the sphere, so the "
+        "lines of constant $t$ and $r$ are those of the proper radial chart, on the right half of the diamond.",
     ],
     ("boson_star", "areal"): [
         "The heaviest boson star, each point in the diagram a 2-sphere of radius $r$. Its metric functions "

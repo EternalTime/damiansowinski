@@ -229,6 +229,7 @@ from scipy.special import expi as scipy_expi
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import boson_star as bs  # noqa: E402
+import kodama_kink as kk  # noqa: E402
 import bubbling_ads  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
 import black_to_white_hole as bwh  # noqa: E402
@@ -500,6 +501,7 @@ class Diagram:
     star: dict = None               # a declared polytrope, {"K": ..., "rho_c": ...}; see StarSolver
     fronts: dict = None             # declared Robinson-Trautman initial data, {"epsilon": ...}; see FrontSolver
     boson: dict = None              # a declared boson star, {"sigma_c": ...}; see boson_star.Star
+    kink: dict = None               # a declared kink of Kodama's, {"f": ...}; see kodama_kink.Kink
     any_factor: str = None          # a declared conformal factor the drawing holds for every value of
     edge_horizon: bool = False      # the edge of `where` is a horizon, where g^rr vanishes, and is marked
                                     # as one; see Plot.zero_set_on_the_edge
@@ -1030,6 +1032,10 @@ LW_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start":
 
 # The boson star every drawing of it declares: the heaviest ground state, Kaup's limit.
 BOSON = {"sigma_c": repr(bs.SIGMA_C)}
+# The kink of Kodama's every drawing of it declares, f = 1.25 as in his figures, and the radius of its
+# throat, which kink_checks holds to the solver's.
+KINK = {"f": repr(kk.F)}
+KINK_R0 = "1.474875"
 # The polytrope the conformal diagram declares, and what it makes of the star.
 POLYTROPE = {"K": 100, "rho_c": "1.28e-3"}
 POLYTROPE_INPUT = ("A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_0$ and energy density "
@@ -4629,6 +4635,14 @@ DIAGRAMS = [
             boson=BOSON, input=bs.INPUT),
     Diagram("boson_star", "isotropic", "radial", "$t$ and $R$", ("t", "R"), (0, 20, -10, 10),
             "$\\mu R$", "$\\mu ct$", {}, EQUATOR, areal=True, boson=BOSON, input=bs.INPUT),
+    # Kodama's kink at f = 1.25, in units of 1/mu: the whole wormhole along the proper radial distance,
+    # and one side of it in Kodama's areal radius, out from the throat at r_0 = 1.475/mu.
+    Diagram("kodama_kink", "proper_radial", "radial", "$t$ and $R$", ("t", "R"), (-6, 6, -6, 6),
+            "$\\mu R$", "$\\mu ct$", {}, EQUATOR, families=SIDEWAYS, areal=True, areal_contours=(2.0, 3.0, 4.5),
+            kink=KINK, input=kk.INPUT),
+    Diagram("kodama_kink", "areal", "radial", "$t$ and $r$", ("t", "r"), (1, 7, -3, 3),
+            "$\\mu r$", "$\\mu ct$", {"r_0": KINK_R0}, EQUATOR, areal=True, kink=KINK, input=kk.INPUT,
+            rounded={"r_0": "1.475"}),
     Diagram("tov", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 16, -8, 8),
             "$r\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, areal=True, star=POLYTROPE,
             input=POLYTROPE_INPUT),
@@ -10702,6 +10716,25 @@ CAPTIONS = {
         "lies, and $t$ rises along every timelike curve, which therefore cannot close. Neither family here is a "
         "null geodesic, and light launched along either is turned away from the axis.",
     ],
+    ("kodama_kink", "proper_radial", "radial"): [
+        "The plane of $t$ and $R$ ($\\theta = \\pi/2$, $\\phi = 0$) through Kodama's kink at $f = 1.25$, with "
+        "$R < 0$ on one side of the throat and $R > 0$ on the other. The functions $h$ and $r$ come from "
+        "$G^t{}_t$, $G^\\theta{}_\\theta$, and the wave equation of the field, integrated numerically, and the rays "
+        "obey $c\\,dt = \\pm e^{-h}\\,dR$.",
+        "The cones are narrowest at the throat, where a clock runs at $e^{h} = 0.703$ of the rate far away, and "
+        "every ray crosses it: light takes $6.0/\\mu c$ to pass between the two spheres of areal radius $3/\\mu$. "
+        "The faint vertical lines are the spheres of areal radius $2/\\mu$, $3/\\mu$, and $4.5/\\mu$, one of each "
+        "on either side, and the Kretschmann scalar is finite everywhere.",
+    ],
+    ("kodama_kink", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on one side of the throat, the same on the "
+        "other, through Kodama's kink at $f = 1.25$. The functions are those of the proper radial chart at the "
+        "same sphere, $\\eta = h$ and $e^{-\\alpha} = \\partial_R r$, and the rays obey "
+        "$c\\,dt = \\pm e^{\\alpha - \\eta}\\,dr$.",
+        "The cones close toward the throat $r = r_0$ because $g_{rr} = e^{2\\alpha}$ diverges there, while "
+        "$g_{tt} = -e^{2\\eta}$ stays at $-0.494$, so the throat is the edge of this chart with no horizon on it. "
+        "A ray moving in from $r = 3/\\mu$ reaches the throat after $3.0/\\mu c$ and goes on into the other side.",
+    ],
     ("boson_star", "areal", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through the heaviest boson star, the same at "
         "every other angle by spherical symmetry. The metric functions $\\alpha$ and $a$ come from $G^t{}_t$, "
@@ -12966,6 +12999,12 @@ def boson_solver(system_id, boson):
     return star.isotropic() if system_id == "isotropic" else star
 
 
+def kink_solver(system_id, kink):
+    """The declared kink of Kodama's in the chart of one of its views, the proper radial or the areal one."""
+    k = kk.kink(float(number(kink["f"])))
+    return k.areal() if system_id == "areal" else k
+
+
 def dust_solver(metric_id, system_id, time_name, dust):
     key = (metric_id, system_id, json.dumps(dust, sort_keys=True))
     if key not in _SOLVERS:
@@ -13027,6 +13066,7 @@ class Chart:
         self.solver = (dust_solver(spec.metric, spec.system, spec.plane[0], spec.dust) if spec.dust
                        else star_solver(spec.metric, spec.system, spec.star) if spec.star
                        else boson_solver(spec.system, spec.boson) if spec.boson
+                       else kink_solver(spec.system, spec.kink) if spec.kink
                        else front_solver(spec.fronts, float(number(spec.fixed["theta"]))) if spec.fronts else None)
 
         def prep(expr):
@@ -14743,6 +14783,27 @@ def boson_checks(spec, chart):
             raise SystemExit(f"{key(spec)}: psi^2 R is not the areal radius of the star's isotropic radius")
 
 
+def kink_checks(spec, chart):
+    """A declared kink solves the one field equation its construction did not use, the published
+    G^R_R against the field's stress along the radius, is the kink its declared input states, and
+    has no horizon: e^h stays above zero. The areal view's r_0 is the solver's, and its functions
+    are the proper chart's read at the same sphere, eta = h and e^-alpha = dr/dR."""
+    k = kk.kink(float(number(spec.kink["f"])))
+    miss = float(np.max(np.abs(k.radial(np.linspace(0.0, 0.98 * k.edge, 400)))))
+    if not miss < 1e-9 or k.stated() or not k.lapse > 0:
+        raise SystemExit(f"{key(spec)}: the kink misses G^R_R by {miss:.1e}, or is not the kink its input "
+                         f"states: {k.stated()}")
+    if spec.system == "areal":
+        if abs(float(number(spec.params["r_0"])) - k.r0) > 1e-6:
+            raise SystemExit(f"{key(spec)}: r_0 = {spec.params['r_0']} is not the throat of the kink, {k.r0:.7f}")
+        R = np.linspace(0.05, 20, 300)
+        v = k.values(R)
+        there = chart.solver.values(v["r"][0])
+        if (float(np.max(np.abs(there["eta"][0] - v["h"][0]))) > 1e-9
+                or float(np.max(np.abs(np.exp(-there["alpha"][0]) - v["r"][1]))) > 1e-9):
+            raise SystemExit(f"{key(spec)}: the areal functions are not the proper chart's at the same sphere")
+
+
 def star_checks(spec, star):
     """A declared star solves the one field equation its construction did not use, the
     published G^theta_theta = 8 pi p, and is the star its declared input says it is."""
@@ -14759,7 +14820,7 @@ def draw(spec):
     chart = Chart(spec)
     plot = Plot(chart)
     families = plot.rays()
-    fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust or spec.star or spec.boson or spec.solves else [])
+    fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust or spec.star or spec.boson or spec.kink or spec.solves else [])
               + (["ricci_tensor"] if spec.fronts else [])
               + (PRINCIPAL_FIELDS if spec.principal else []) + (QUOTIENT_FIELDS if spec.quotient else []))
     if spec.principal:
@@ -14772,6 +14833,8 @@ def draw(spec):
         front_checks(key(spec), spec.fronts)
     if spec.boson:
         boson_checks(spec, chart)
+    if spec.kink:
+        kink_checks(spec, chart)
     if spec.any_factor:
         factor_check(spec, chart)
     if spec.solves:

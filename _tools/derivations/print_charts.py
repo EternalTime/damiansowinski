@@ -20,8 +20,8 @@ tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, freund_rubin, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
-poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce and
-maximally_supersymmetric_plane_wave, and Godel's cylindrical chart.
+poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce,
+maximally_supersymmetric_plane_wave and kodama_kink, and Godel's cylindrical chart.
 
     .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -45,7 +45,7 @@ kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_sta
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
 kerr_melvin.md, einstein_dirac_maxwell_wormhole.md, jackiw_teitelboim_black_hole.md, interstellar_wormhole.md,
-supertranslation_hair.md, big_rip.md and kerr_scalar_hair.md beside this file.
+supertranslation_hair.md, big_rip.md, kerr_scalar_hair.md and kodama_kink.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 btz_shock_wave.md beside this file records the charts of the shock wave in the BTZ black hole.
 black_to_white_hole.md beside this file records the charts of the black hole fireworks and their junction.
@@ -19331,6 +19331,159 @@ def boson_star_pullback(chart):
 
 
 CHARTS["boson_star"] = [lambda s=s: boson_star(s) for s in BOSON_STAR_CHARTS]
+# -- Kodama's kink ----------------------------------------------------------------------
+
+KODAMA_KINK_CHARTS = ("areal", "proper_radial")
+KK_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+KK_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def kodama_kink(system):
+    """A static wormhole held open by a ghost scalar field with a quartic potential, its two
+    metric functions left free in each chart, since the solution is known only numerically. The
+    areal chart is Kodama's (2) of CBPF-NF-003/78 with his eta and alpha, on either side of the
+    throat; the proper radial chart is Kodama, de Oliveira and Santos's (2) of CBPF-NF-036/78,
+    with their h and the areal radius r as functions of the proper distance R. kodama_kink_check
+    holds both to the Einstein equations of the field S with the potential
+    V = (mu/f)^2 (1 - f^2 S^2)^2/2, and the proper chart to being the areal one pulled back.
+    Each Kretschmann scalar is written over the four independent components of the Riemann
+    tensor in a static observer's frame; kodama_kink.md beside this file is the derivation."""
+    if system == "areal":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Areal Radius"
+        parameters = ["\\eta = \\eta(r)", "\\alpha = \\alpha(r)", "r_0"]
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in [r_0, \\infty)"] + KK_ANGLES + ["r = r_0 \\;\\text{(throat)}"]
+
+        def line(c2):
+            return f"ds^2 = -e^{{2\\eta}}{c2}dt^2 + e^{{2\\alpha}}dr^2 + r^2" + KK_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        x, eta, al = probe.symbol["r"], probe.parameters["eta"], probe.parameters["alpha"]
+        printer = {"lead": [eta, al, x], "factors": [eta, al, x]}
+        kretschmann = ("4e^{-4\\alpha}\\left(\\partial_r^2\\eta + \\left(\\partial_r\\eta\\right)^2 - \\partial_r\\alpha\\,\\partial_r\\eta\\right)^2"
+                       " + \\dfrac{8e^{-4\\alpha}\\left(\\partial_r\\eta\\right)^2}{r^2}"
+                       " + \\dfrac{8e^{-4\\alpha}\\left(\\partial_r\\alpha\\right)^2}{r^2}"
+                       " + \\dfrac{4\\left(1 - e^{-2\\alpha}\\right)^2}{r^4}")
+    else:
+        coords, name = ["t", "R", "\\theta", "\\phi"], "Proper Radial Distance"
+        parameters = ["h = h(R)", "r = r(R)", "r_0"]
+        domains = ["t \\in (-\\infty, \\infty)", "R \\in (-\\infty, \\infty)"] + KK_ANGLES + ["R = 0 \\;\\text{(throat)}"]
+
+        def line(c2):
+            return f"ds^2 = -e^{{2h}}{c2}dt^2 + dR^2 + r^2" + KK_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        x, h, r = probe.symbol["R"], probe.parameters["h"], probe.parameters["r"]
+        printer = {"lead": [h, r, x], "factors": [h, r, x]}
+        kretschmann = ("4\\left(\\partial_R^2h + \\left(\\partial_R h\\right)^2\\right)^2"
+                       " + \\dfrac{8\\left(\\partial_R h\\right)^2\\left(\\partial_R r\\right)^2}{r^2}"
+                       " + \\dfrac{8\\left(\\partial_R^2r\\right)^2}{r^2}"
+                       " + \\dfrac{4\\left(1 - \\left(\\partial_R r\\right)^2\\right)^2}{r^4}")
+    return {
+        "metric_id": "kodama_kink",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "kretschmann": kretschmann,
+        "check": lambda chart: kodama_kink_check(chart, system),
+    }
+
+
+def kodama_kink_check(chart, system):
+    """Kodama's field equations, his (3) to (5) with epsilon = -1, in either chart: with G^t_t and
+    the radial G set to the ghost field's stresses, G^t_t = e^{-2 alpha} S'^2 + V and
+    G^r_r = V - e^{-2 alpha} S'^2 (with alpha = 0 along the proper distance), and the wave
+    equation Box S = S dV/d(S^2), the published G^theta_theta is the field's stress across the
+    radius, e^{-2 alpha} S'^2 + V, which is the Bianchi identity. No Einstein component stands
+    off the diagonal. At S = 1/f, a vacuum, the areal chart with e^{2 eta} = e^{-2 alpha} =
+    1 - r_s/r is Schwarzschild's published metric, and the proper chart is the areal one pulled
+    back along r = r(R) with e^{-alpha} = dr/dR and eta = h."""
+    t, x, th, ph = chart.symbols
+    P = chart.reader.parameters
+    geo = chart.geo
+    mixed = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+    for i in range(4):
+        for j in range(4):
+            if i != j and vm.norm(mixed[i][j]) != 0:
+                raise AssertionError(f"kodama_kink/{system}: G^{i}_{j} does not vanish")
+    mu, f = sp.symbols("KKmu KKf", positive=True)
+    S = sp.Function("KKS")(x)
+    S1 = sp.Symbol("KKS1")
+    V = (mu / f) ** 2 * (1 - f ** 2 * S ** 2) ** 2 / 2
+    dV = -mu ** 2 * (1 - f ** 2 * S ** 2)                  # dV/d(S^2)
+    if system == "areal":
+        lapse, radial = P["eta"], P["alpha"]
+        L1, A1 = sp.symbols("KKeta1 KKalpha1")
+        held = {sp.Derivative(lapse, x): L1, sp.Derivative(radial, x): A1}
+        grad = sp.exp(-2 * radial) * S1 ** 2
+        first = sp.solve([sp.together(mixed[0][0]).subs(held) - (grad + V),
+                          sp.together(mixed[1][1]).subs(held) - (V - grad)], [L1, A1], dict=True)[0]
+        wave = -(first[L1] - first[A1] + 2 / x) * S1 + sp.exp(2 * radial) * S * dV
+        # Plain symbols for the functions, so that d/dr sees only the r written.
+        EL, AL, SG = sp.symbols("KKeta KKalpha KKS0")
+        plain = {lapse: EL, radial: AL, S: SG}
+        de, da, d2S = (e.subs(plain) for e in (first[L1], first[A1], wave))
+
+        def along(e):
+            return (sp.diff(e, x) + sp.diff(e, EL) * de + sp.diff(e, AL) * da
+                    + sp.diff(e, SG) * S1 + sp.diff(e, S1) * d2S)
+        second = {sp.Derivative(lapse, (x, 2)): along(de), sp.Derivative(radial, (x, 2)): along(da)}
+        firsts = {sp.Derivative(lapse, x): de, sp.Derivative(radial, x): da}
+    else:
+        lapse, area = P["h"], P["r"]
+        H1, Q2 = sp.symbols("KKh1 KKr2")
+        R1 = sp.Symbol("KKr1")
+        held = {sp.Derivative(area, (x, 2)): Q2}
+        held1 = {sp.Derivative(lapse, x): H1, sp.Derivative(area, x): R1}
+        grad = S1 ** 2
+        first = sp.solve([sp.together(mixed[0][0]).subs(held).subs(held1) - (grad + V),
+                          sp.together(mixed[1][1]).subs(held).subs(held1) - (V - grad)], [H1, Q2], dict=True)[0]
+        wave = -(first[H1] + 2 * R1 / area) * S1 + S * dV
+        RA, SG = sp.symbols("KKr0 KKS0")
+        plain = {area: RA, S: SG}
+        dh, d2r, d2S = (e.subs(plain) for e in (first[H1], first[Q2], wave))
+
+        def along(e):
+            return (sp.diff(e, x) + sp.diff(e, RA) * R1 + sp.diff(e, R1) * d2r
+                    + sp.diff(e, SG) * S1 + sp.diff(e, S1) * d2S)
+        second = {sp.Derivative(lapse, (x, 2)): along(dh), sp.Derivative(area, (x, 2)): d2r}
+        firsts = {sp.Derivative(lapse, x): dh, sp.Derivative(area, x): R1}
+    for i in (2, 3):
+        miss = (sp.together(mixed[i][i]).subs(second).subs(firsts) - (grad + V)).subs(plain)
+        if sp.simplify(miss) != 0:
+            raise AssertionError(f"kodama_kink/{system}: G^{i}_{i} is not the field's stress across the radius")
+    if system == "areal":
+        # In a vacuum, e^{2 eta} = e^{-2 alpha} = 1 - r_s/r is Schwarzschild's published metric.
+        entry = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "spherical")
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): reader(e["value"]) for e in entry["metric_components"]}
+        rs = reader.parameters["r_s"]
+        names = dict(zip([reader.symbol[c] for c in entry["coords"]], chart.symbols))
+        log = sp.log(1 - rs / x) / 2
+        for i, c in enumerate(entry["coords"]):
+            mine = geo.g[i, i].subs({lapse: log, radial: -log})
+            if sp.simplify(mine - there[(c, c)].subs(names)) != 0:
+                raise AssertionError(f"kodama_kink/{system}: in a vacuum the chart is not Schwarzschild's in slot {c}{c}")
+        vac = {S: 1 / f, S1: 0}
+        for name, value, want in ((L1, first[L1], sp.diff(log, x)), (A1, first[A1], -sp.diff(log, x))):
+            got = value.subs(vac).subs({lapse: log, radial: -log})
+            if sp.simplify(got - want) != 0:
+                raise AssertionError(f"kodama_kink/{system}: in a vacuum {name} is not Schwarzschild's")
+    else:
+        source = kodama_kink("areal")
+        own = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+        names = dict(zip((own.symbols[0], own.symbols[2], own.symbols[3]), (t, th, ph)))
+        there = own.geo.g.subs({own.reader.parameters["eta"]: lapse,
+                                own.reader.parameters["alpha"]: -sp.log(sp.diff(area, x))}, simultaneous=True)
+        there = there.subs(names, simultaneous=True).subs(own.symbols[1], area)
+        J = sp.diag(1, sp.diff(area, x), 1, 1)
+        pulled = J.T * there * J
+        for i in range(4):
+            for j in range(4):
+                if sp.simplify(pulled[i, j] - geo.g[i, j]) != 0:
+                    raise AssertionError(f"kodama_kink/proper_radial: slot {i}{j} is not the areal chart pulled back")
+
+
+CHARTS["kodama_kink"] = [lambda s=s: kodama_kink(s) for s in KODAMA_KINK_CHARTS]
 # -- Bartnik and McKinnon's soliton ------------------------------------------------------
 
 BARTNIK_MCKINNON_CHARTS = ("areal", "isotropic", "tortoise", "flow")
