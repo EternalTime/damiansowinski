@@ -68,6 +68,8 @@ The link `myfavoritespacetimes://<id>/<section>?chart=<chart>` opens a spacetime
 
 ## Python libraries
 
+In each library's documentation, the pages with runnable examples are Jupyter notebooks, and every notebook page has buttons that run it in Binder or Google Colab.
+
 - [{{ code.title }}]({{ code.url | absolute_url }}): The open-source libraries behind the physics.
 {%- for lib in site.data.libraries %}
 - [{{ lib.name }}: {{ lib.label }}]({{ lib.docs | absolute_url }}): Documentation; source at https://github.com/{{ site.github_username }}/{{ lib.gh | default: lib.repo }}
