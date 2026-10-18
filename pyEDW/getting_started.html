@@ -55,7 +55,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#an-ensemble-over-luminosity">An ensemble over luminosity</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reading-the-information-architecture">Reading the information architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-the-tests">Running the tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
@@ -180,19 +179,6 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 pytest
 </pre></div>
 </div>
-</section>
-<section id="building-the-documentation">
-<h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Link to this heading"></a></h2>
-<p>Sphinx builds this site from <code class="docutils literal notranslate"><span class="pre">docs/</span></code>, using the <code class="docutils literal notranslate"><span class="pre">docs</span></code> extra:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[docs]&quot;</span>
-<span class="nb">cd</span><span class="w"> </span>docs
-make<span class="w"> </span>html
-</pre></div>
-</div>
-<p>The HTML lands in <code class="docutils literal notranslate"><span class="pre">docs/_build/html</span></code>.
-Any Sphinx warning fails the build, locally and in CI.
-To get a lenient build while drafting, run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span> <span class="pre">SPHINXOPTS=</span></code>.</p>
 </section>
 </section>
 

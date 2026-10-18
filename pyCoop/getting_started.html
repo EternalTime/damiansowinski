@@ -124,13 +124,10 @@ Check the install:</p>
 </div>
 </div>
 </div>
-<p>The tests and these docs each have their own extra, installed from a clone with the environment active:</p>
+<p>The tests have their own extra, installed from a clone with the environment active:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;.[test]&#39;</span>
 pytest
-
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;.[docs]&#39;</span>
-sphinx-build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>docs<span class="w"> </span>docs/_build
 </pre></div>
 </div>
 </section>
