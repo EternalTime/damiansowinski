@@ -6,12 +6,12 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCA.ica module &mdash; pyCA 0.1.0 documentation</title>
+  <title>pyCA.ica module - pyCA 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5bea863b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2d4c1ff1" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -108,7 +108,7 @@
 <p>Ising cellular automata: deterministic rules with thermal noise.</p>
 <p>An Ising cellular automaton (ICA) couples two dynamics on the same periodic
 lattice. A fraction of the cells, drawn fresh at random each step, evolve
-stochastically as Ising spins in contact with a heat bath — a cell flips
+stochastically as Ising spins in contact with a heat bath - a cell flips
 with the heat-bath probability determined by its local Ising energy and the
 temperature. The remaining cells evolve deterministically by an elementary
 cellular automaton rule. With stochfrac = 0 the ICA reduces exactly to the
@@ -122,14 +122,14 @@ chain; in between, determinism and thermal noise compete.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rule</strong> (<em>int</em>) – Wolfram rule number, 0-255, governing the deterministic cells.</p></li>
-<li><p><strong>state</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em><em>, </em><em>optional</em>) – Initial state. If omitted, a random state of length <cite>N</cite> is drawn.</p></li>
-<li><p><strong>temperature</strong> (<em>float</em><em>, </em><em>optional</em>) – Heat-bath temperature for the stochastic cells (default 1).</p></li>
-<li><p><strong>stochfrac</strong> (<em>float</em><em>, </em><em>optional</em>) – Probability for each cell, each step, to evolve stochastically
+<li><p><strong>rule</strong> (<em>int</em>) - Wolfram rule number, 0-255, governing the deterministic cells.</p></li>
+<li><p><strong>state</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em><em>, </em><em>optional</em>) - Initial state. If omitted, a random state of length <cite>N</cite> is drawn.</p></li>
+<li><p><strong>temperature</strong> (<em>float</em><em>, </em><em>optional</em>) - Heat-bath temperature for the stochastic cells (default 1).</p></li>
+<li><p><strong>stochfrac</strong> (<em>float</em><em>, </em><em>optional</em>) - Probability for each cell, each step, to evolve stochastically
 instead of deterministically (default 0.5).</p></li>
-<li><p><strong>N</strong> – As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
-<li><p><strong>memory</strong> – As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
-<li><p><strong>rng</strong> – As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
+<li><p><strong>N</strong> - As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
+<li><p><strong>memory</strong> - As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
+<li><p><strong>rng</strong> - As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>

@@ -5,8 +5,7 @@
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyLEAFS.fields module &mdash; pyLEAFS 0.1.0 documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>pyLEAFS.fields module - pyLEAFS 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -170,17 +169,17 @@ k_\mathrm{decay} &amp;\sim \mathrm{Binomial}(N,\, 1 - e^{-\gamma\,dt})\end{split
 <p>giving an agent-free equilibrium of <span class="math notranslate nohighlight">\(N_\mathrm{eq} = \Gamma L^D /
 (\epsilon\gamma)\)</span> resources per region. Positions are stored in one flat
 <code class="docutils literal notranslate"><span class="pre">(capacity,</span> <span class="pre">D)</span></code> buffer; each region owns a contiguous slot range and an
-active count, so births append, deaths swap-delete, and harvest is O(1) —
+active count, so births append, deaths swap-delete, and harvest is O(1):
 the struct-of-arrays equivalent of the MATLAB active-prefix <code class="docutils literal notranslate"><span class="pre">Region</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>grid</strong> (<a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><em>Grid</em></a>) – Shared spatial grid.</p></li>
-<li><p><strong>Gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Resource birth rate per unit volume, <span class="math notranslate nohighlight">\(\Gamma\)</span>.</p></li>
-<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Resource decay rate, <span class="math notranslate nohighlight">\(\gamma\)</span>.</p></li>
-<li><p><strong>epsilon</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Energy yield per resource, <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p></li>
-<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Timestep.</p></li>
-<li><p><strong>capacity_factor</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em>, </em><em>optional</em>) – Per-region buffer is <code class="docutils literal notranslate"><span class="pre">max(20,</span> <span class="pre">ceil(capacity_factor</span> <span class="pre">*</span> <span class="pre">N_eq))</span></code> slots
+<li><p><strong>grid</strong> (<a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid" title="pyLEAFS.grid.Grid"><em>Grid</em></a>) - Shared spatial grid.</p></li>
+<li><p><strong>Gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Resource birth rate per unit volume, <span class="math notranslate nohighlight">\(\Gamma\)</span>.</p></li>
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Resource decay rate, <span class="math notranslate nohighlight">\(\gamma\)</span>.</p></li>
+<li><p><strong>epsilon</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Energy yield per resource, <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Timestep.</p></li>
+<li><p><strong>capacity_factor</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em>, </em><em>optional</em>) - Per-region buffer is <code class="docutils literal notranslate"><span class="pre">max(20,</span> <span class="pre">ceil(capacity_factor</span> <span class="pre">*</span> <span class="pre">N_eq))</span></code> slots
 (default 4.0, matching the MATLAB <code class="docutils literal notranslate"><span class="pre">Region</span></code>).</p></li>
 </ul>
 </dd>
@@ -259,13 +258,13 @@ empty (e.g. another agent harvested it first this step).</p>
 <dd><p>Resources in the Moore neighbourhood of a single query position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pos</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>,</em><em>)</em>) – Physical query position.</p>
+<dd class="field-odd"><p><strong>pos</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>,</em><em>)</em>) - Physical query position.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>disp</strong> (<em>ndarray, shape (m, D)</em>) – Minimum-image displacement from <code class="docutils literal notranslate"><span class="pre">pos</span></code> to each nearby resource.</p></li>
-<li><p><strong>region_ids</strong> (<em>ndarray of int, shape (m,)</em>) – Owning region id for each resource (for <a class="reference internal" href="#pyLEAFS.fields.ResourceField.harvest" title="pyLEAFS.fields.ResourceField.harvest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">harvest()</span></code></a>).</p></li>
-<li><p><strong>slots</strong> (<em>ndarray of int, shape (m,)</em>) – Within-region active index for each resource (for <a class="reference internal" href="#pyLEAFS.fields.ResourceField.harvest" title="pyLEAFS.fields.ResourceField.harvest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">harvest()</span></code></a>).</p></li>
+<li><p><strong>disp</strong> (<em>ndarray, shape (m, D)</em>) - Minimum-image displacement from <code class="docutils literal notranslate"><span class="pre">pos</span></code> to each nearby resource.</p></li>
+<li><p><strong>region_ids</strong> (<em>ndarray of int, shape (m,)</em>) - Owning region id for each resource (for <a class="reference internal" href="#pyLEAFS.fields.ResourceField.harvest" title="pyLEAFS.fields.ResourceField.harvest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">harvest()</span></code></a>).</p></li>
+<li><p><strong>slots</strong> (<em>ndarray of int, shape (m,)</em>) - Within-region active index for each resource (for <a class="reference internal" href="#pyLEAFS.fields.ResourceField.harvest" title="pyLEAFS.fields.ResourceField.harvest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">harvest()</span></code></a>).</p></li>
 </ul>
 </p>
 </dd>
@@ -278,12 +277,12 @@ empty (e.g. another agent harvested it first this step).</p>
 <dd><p>Nearest-resource displacement for each query position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pos</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) – Physical query positions.</p>
+<dd class="field-odd"><p><strong>pos</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.shape" title="pyLEAFS.grid.Grid.shape"><em>shape</em></a><em> (</em><em>n</em><em>, </em><a class="reference internal" href="pyLEAFS.grid.html#pyLEAFS.grid.Grid.D" title="pyLEAFS.grid.Grid.D"><em>D</em></a><em>)</em>) - Physical query positions.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>disp</strong> (<em>ndarray, shape (n, D)</em>) – Displacement to the nearest resource (NaN row if none in range).</p></li>
-<li><p><strong>dist2</strong> (<em>ndarray, shape (n,)</em>) – Squared distance to that resource (inf if none).</p></li>
+<li><p><strong>disp</strong> (<em>ndarray, shape (n, D)</em>) - Displacement to the nearest resource (NaN row if none in range).</p></li>
+<li><p><strong>dist2</strong> (<em>ndarray, shape (n,)</em>) - Squared distance to that resource (inf if none).</p></li>
 </ul>
 </p>
 </dd>
@@ -301,8 +300,8 @@ for now and is a natural <code class="docutils literal notranslate"><span class=
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rng</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.5)"><em>numpy.random.Generator</em></a>) – Random source.</p></li>
-<li><p><strong>n0</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a><em>, </em><em>optional</em>) – Exact initial count per region. If omitted, each region draws
+<li><p><strong>rng</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.5)"><em>numpy.random.Generator</em></a>) - Random source.</p></li>
+<li><p><strong>n0</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a><em>, </em><em>optional</em>) - Exact initial count per region. If omitted, each region draws
 <code class="docutils literal notranslate"><span class="pre">Poisson(N_eq)</span></code>.</p></li>
 </ul>
 </dd>

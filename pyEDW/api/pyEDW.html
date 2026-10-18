@@ -5,8 +5,7 @@
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API reference &mdash; pyEDW 0.1.0 documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>API reference - pyEDW 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -212,22 +211,22 @@ fields below are the dimensional constants of Table 1, from which
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<em>float</em>) – Habitable land fraction.</p></li>
-<li><p><strong>A_G</strong> (<em>float</em>) – Ground, black-daisy, and white-daisy albedos (<code class="docutils literal notranslate"><span class="pre">A_B</span> <span class="pre">&lt;</span> <span class="pre">A_G</span> <span class="pre">&lt;</span> <span class="pre">A_W</span></code>).</p></li>
-<li><p><strong>A_B</strong> (<em>float</em>) – Ground, black-daisy, and white-daisy albedos (<code class="docutils literal notranslate"><span class="pre">A_B</span> <span class="pre">&lt;</span> <span class="pre">A_G</span> <span class="pre">&lt;</span> <span class="pre">A_W</span></code>).</p></li>
-<li><p><strong>A_W</strong> (<em>float</em>) – Ground, black-daisy, and white-daisy albedos (<code class="docutils literal notranslate"><span class="pre">A_B</span> <span class="pre">&lt;</span> <span class="pre">A_G</span> <span class="pre">&lt;</span> <span class="pre">A_W</span></code>).</p></li>
-<li><p><strong>T_opt</strong> (<em>float</em>) – Optimal growth temperature (sets the temperature scale).</p></li>
-<li><p><strong>Q</strong> (<em>float</em>) – Temperature-shift heat constant coupling daisy albedo to local
+<li><p><strong>f</strong> (<em>float</em>) - Habitable land fraction.</p></li>
+<li><p><strong>A_G</strong> (<em>float</em>) - Ground, black-daisy, and white-daisy albedos (<code class="docutils literal notranslate"><span class="pre">A_B</span> <span class="pre">&lt;</span> <span class="pre">A_G</span> <span class="pre">&lt;</span> <span class="pre">A_W</span></code>).</p></li>
+<li><p><strong>A_B</strong> (<em>float</em>) - Ground, black-daisy, and white-daisy albedos (<code class="docutils literal notranslate"><span class="pre">A_B</span> <span class="pre">&lt;</span> <span class="pre">A_G</span> <span class="pre">&lt;</span> <span class="pre">A_W</span></code>).</p></li>
+<li><p><strong>A_W</strong> (<em>float</em>) - Ground, black-daisy, and white-daisy albedos (<code class="docutils literal notranslate"><span class="pre">A_B</span> <span class="pre">&lt;</span> <span class="pre">A_G</span> <span class="pre">&lt;</span> <span class="pre">A_W</span></code>).</p></li>
+<li><p><strong>T_opt</strong> (<em>float</em>) - Optimal growth temperature (sets the temperature scale).</p></li>
+<li><p><strong>Q</strong> (<em>float</em>) - Temperature-shift heat constant coupling daisy albedo to local
 temperature.</p></li>
-<li><p><strong>gamma_G</strong> (<em>float</em>) – Maximal growth rate and daisy decay rate.</p></li>
-<li><p><strong>gamma_D</strong> (<em>float</em>) – Maximal growth rate and daisy decay rate.</p></li>
-<li><p><strong>tau_S</strong> (<em>float</em>) – Stellar-fluctuation and environmental (thermal) timescales, in units
+<li><p><strong>gamma_G</strong> (<em>float</em>) - Maximal growth rate and daisy decay rate.</p></li>
+<li><p><strong>gamma_D</strong> (<em>float</em>) - Maximal growth rate and daisy decay rate.</p></li>
+<li><p><strong>tau_S</strong> (<em>float</em>) - Stellar-fluctuation and environmental (thermal) timescales, in units
 of <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">/</span> <span class="pre">gamma_G</span></code>.</p></li>
-<li><p><strong>tau_E</strong> (<em>float</em>) – Stellar-fluctuation and environmental (thermal) timescales, in units
+<li><p><strong>tau_E</strong> (<em>float</em>) - Stellar-fluctuation and environmental (thermal) timescales, in units
 of <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">/</span> <span class="pre">gamma_G</span></code>.</p></li>
-<li><p><strong>dT</strong> (<em>float</em>) – Growth-rate bandwidth <code class="docutils literal notranslate"><span class="pre">Delta</span> <span class="pre">T</span></code> (range of bearable temperatures).</p></li>
-<li><p><strong>delta</strong> (<em>float</em>) – Relative amplitude of the stellar-luminosity fluctuations.</p></li>
-<li><p><strong>lam</strong> (<em>float</em>) – Luminosity offset <code class="docutils literal notranslate"><span class="pre">lambda</span></code>; the mean luminosity is
+<li><p><strong>dT</strong> (<em>float</em>) - Growth-rate bandwidth <code class="docutils literal notranslate"><span class="pre">Delta</span> <span class="pre">T</span></code> (range of bearable temperatures).</p></li>
+<li><p><strong>delta</strong> (<em>float</em>) - Relative amplitude of the stellar-luminosity fluctuations.</p></li>
+<li><p><strong>lam</strong> (<em>float</em>) - Luminosity offset <code class="docutils literal notranslate"><span class="pre">lambda</span></code>; the mean luminosity is
 <code class="docutils literal notranslate"><span class="pre">&lt;L&gt;</span> <span class="pre">=</span> <span class="pre">(1</span> <span class="pre">+</span> <span class="pre">lambda)</span> <span class="pre">L_opt</span></code>.</p></li>
 </ul>
 </dd>
@@ -338,11 +337,11 @@ the MATLAB usage: build with <a class="reference internal" href="#pyEDW.model.Pa
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>params</strong> (<a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><em>Parameters</em></a>) – Physical parameters.</p></li>
-<li><p><strong>x0</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Initial <code class="docutils literal notranslate"><span class="pre">[f_B,</span> <span class="pre">f_W,</span> <span class="pre">T,</span> <span class="pre">L]</span></code>. Defaults to a small equal daisy seed at
+<li><p><strong>params</strong> (<a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><em>Parameters</em></a>) - Physical parameters.</p></li>
+<li><p><strong>x0</strong> (<em>array_like</em><em>, </em><em>optional</em>) - Initial <code class="docutils literal notranslate"><span class="pre">[f_B,</span> <span class="pre">f_W,</span> <span class="pre">T,</span> <span class="pre">L]</span></code>. Defaults to a small equal daisy seed at
 the equilibrium temperature <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">=</span> <span class="pre">L**0.25</span></code> for <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">lambda</span></code>.</p></li>
-<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) – Integration time step (default <code class="docutils literal notranslate"><span class="pre">0.1</span></code>, as in the MATLAB).</p></li>
-<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) – Used only to seed NumPy’s global state for the compiled loops (Numba’s
+<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) - Integration time step (default <code class="docutils literal notranslate"><span class="pre">0.1</span></code>, as in the MATLAB).</p></li>
+<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) - Used only to seed NumPy’s global state for the compiled loops (Numba’s
 random stream). Pass an integer-seeded generator for repeatability.</p></li>
 </ul>
 </dd>
@@ -360,8 +359,8 @@ random stream). Pass an integer-seeded generator for repeatability.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nsteps</strong> (<em>int</em>) – Number of SRK1 steps.</p></li>
-<li><p><strong>record</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, return the full <code class="docutils literal notranslate"><span class="pre">(nsteps</span> <span class="pre">+</span> <span class="pre">1,</span> <span class="pre">4)</span></code> trajectory including
+<li><p><strong>nsteps</strong> (<em>int</em>) - Number of SRK1 steps.</p></li>
+<li><p><strong>record</strong> (<em>bool</em><em>, </em><em>optional</em>) - If True, return the full <code class="docutils literal notranslate"><span class="pre">(nsteps</span> <span class="pre">+</span> <span class="pre">1,</span> <span class="pre">4)</span></code> trajectory including
 the current state; otherwise advance in place and return the
 <code class="docutils literal notranslate"><span class="pre">(4,)</span></code> endpoint.</p></li>
 </ul>
@@ -386,14 +385,14 @@ conditions and their endpoints recorded.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>params</strong> (<a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><em>Parameters</em></a>) – Physical parameters; <code class="docutils literal notranslate"><span class="pre">params.lam</span></code> is overridden per luminosity so
+<li><p><strong>params</strong> (<a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><em>Parameters</em></a>) - Physical parameters; <code class="docutils literal notranslate"><span class="pre">params.lam</span></code> is overridden per luminosity so
 that <code class="docutils literal notranslate"><span class="pre">&lt;L&gt;</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">lambda</span></code> tracks the axis.</p></li>
-<li><p><strong>Ls</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Mean luminosities. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">linspace(-0.7,</span> <span class="pre">1.4,</span> <span class="pre">400)</span></code>.</p></li>
-<li><p><strong>nsteps</strong> (<em>int</em><em>, </em><em>optional</em>) – Steps per instance (default 2000; the agent-free run used 200).</p></li>
-<li><p><strong>N</strong> (<em>int</em><em>, </em><em>optional</em>) – Instances per luminosity (default 500).</p></li>
-<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) – Time step (default 0.1).</p></li>
-<li><p><strong>agent_free</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, seed both daisy fractions at zero (environment only).</p></li>
-<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seeds NumPy’s global RNG before the parallel loop.</p></li>
+<li><p><strong>Ls</strong> (<em>array_like</em><em>, </em><em>optional</em>) - Mean luminosities. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">linspace(-0.7,</span> <span class="pre">1.4,</span> <span class="pre">400)</span></code>.</p></li>
+<li><p><strong>nsteps</strong> (<em>int</em><em>, </em><em>optional</em>) - Steps per instance (default 2000; the agent-free run used 200).</p></li>
+<li><p><strong>N</strong> (<em>int</em><em>, </em><em>optional</em>) - Instances per luminosity (default 500).</p></li>
+<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) - Time step (default 0.1).</p></li>
+<li><p><strong>agent_free</strong> (<em>bool</em><em>, </em><em>optional</em>) - If True, seed both daisy fractions at zero (environment only).</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) - Seeds NumPy’s global RNG before the parallel loop.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -413,14 +412,14 @@ that <code class="docutils literal notranslate"><span class="pre">&lt;L&gt;</spa
 <p>Viability and the information architecture of Exo-Daisy World.</p>
 <p>This module ports the entropy pipeline of <code class="docutils literal notranslate"><span class="pre">Daisy_World_Paper_Figures.m</span></code>
 (lines 307-392) and the measure assembly of <code class="docutils literal notranslate"><span class="pre">makeFIG4.m</span></code> / <code class="docutils literal notranslate"><span class="pre">makeFig5.m</span></code>.
-Given an endpoint ensemble <code class="docutils literal notranslate"><span class="pre">data</span></code> of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code> – the output
-of <a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.ensemble" title="pyEDW.model.ExoDaisyWorld.ensemble"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyEDW.model.ExoDaisyWorld.ensemble()</span></code></a> – it estimates, at each
+Given an endpoint ensemble <code class="docutils literal notranslate"><span class="pre">data</span></code> of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code> - the output
+of <a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.ensemble" title="pyEDW.model.ExoDaisyWorld.ensemble"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyEDW.model.ExoDaisyWorld.ensemble()</span></code></a> - it estimates, at each
 luminosity, the joint distribution <code class="docutils literal notranslate"><span class="pre">p_AE(f_B,</span> <span class="pre">f_W,</span> <span class="pre">T,</span> <span class="pre">L)</span></code> by histogramming
 and reads off the Shannon information measures of Section 4.</p>
 <p>Binning follows the paper’s square-root rule: with <code class="docutils literal notranslate"><span class="pre">n</span></code> living instances the
 number of bins is <code class="docutils literal notranslate"><span class="pre">N_bins</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">ceil(sqrt(n))</span></code> and each variable is split by
 <code class="docutils literal notranslate"><span class="pre">N_bins</span> <span class="pre">-</span> <span class="pre">1</span></code> equally spaced interior edges spanning its observed range, so a
-value lands in bin <code class="docutils literal notranslate"><span class="pre">sum(v</span> <span class="pre">&gt;</span> <span class="pre">edges)</span></code> (0-indexed) – exactly the MATLAB
+value lands in bin <code class="docutils literal notranslate"><span class="pre">sum(v</span> <span class="pre">&gt;</span> <span class="pre">edges)</span></code> (0-indexed), exactly the MATLAB
 <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">sum(v</span> <span class="pre">&gt;</span> <span class="pre">x)</span></code> up to the index base.</p>
 <section id="entropy-table">
 <h3>Entropy table<a class="headerlink" href="#entropy-table" title="Link to this heading"></a></h3>
@@ -495,7 +494,7 @@ Section 4 and Appendix B.3.</p>
 <dd><p>Per-luminosity entropy table for a biotic endpoint ensemble.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>numpy.ndarray</em>) – Ensemble endpoints of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code> with the last axis
+<dd class="field-odd"><p><strong>data</strong> (<em>numpy.ndarray</em>) - Ensemble endpoints of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code> with the last axis
 <code class="docutils literal notranslate"><span class="pre">[f_B,</span> <span class="pre">f_W,</span> <span class="pre">T,</span> <span class="pre">L]</span></code> (from
 <a class="reference internal" href="#pyEDW.model.ExoDaisyWorld.ensemble" title="pyEDW.model.ExoDaisyWorld.ensemble"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pyEDW.model.ExoDaisyWorld.ensemble()</span></code></a>).</p>
 </dd>
@@ -519,7 +518,7 @@ vary. The bin count is fixed by the full instance count <code class="docutils li
 subset), matching <code class="docutils literal notranslate"><span class="pre">Nbins</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">ceil(sqrt(N))</span></code> in the MATLAB.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data_env</strong> (<em>numpy.ndarray</em>) – Agent-free endpoints of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code>.</p>
+<dd class="field-odd"><p><strong>data_env</strong> (<em>numpy.ndarray</em>) - Agent-free endpoints of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code>.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Array of shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">4)</span></code> with columns <code class="docutils literal notranslate"><span class="pre">[H[e1],</span> <span class="pre">H[e2],</span> <span class="pre">H[e1</span> <span class="pre">e2],</span>
@@ -538,8 +537,8 @@ subset), matching <code class="docutils literal notranslate"><span class="pre">N
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>numpy.ndarray</em>) – Ensemble endpoints <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code>.</p></li>
-<li><p><strong>f</strong> (<em>float</em>) – Habitable land fraction.</p></li>
+<li><p><strong>data</strong> (<em>numpy.ndarray</em>) - Ensemble endpoints <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code>.</p></li>
+<li><p><strong>f</strong> (<em>float</em>) - Habitable land fraction.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -583,8 +582,8 @@ means the biome strengthens the temperature-luminosity correlation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>H</strong> (<em>numpy.ndarray</em>) – Biotic entropy table, shape <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">16)</span></code> from <a class="reference internal" href="#pyEDW.metrics.entropy_table" title="pyEDW.metrics.entropy_table"><code class="xref py py-func docutils literal notranslate"><span class="pre">entropy_table()</span></code></a>.</p></li>
-<li><p><strong>H_env</strong> (<em>numpy.ndarray</em>) – Agent-free table, shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">4)</span></code> from <a class="reference internal" href="#pyEDW.metrics.entropy_table_env" title="pyEDW.metrics.entropy_table_env"><code class="xref py py-func docutils literal notranslate"><span class="pre">entropy_table_env()</span></code></a>,
+<li><p><strong>H</strong> (<em>numpy.ndarray</em>) - Biotic entropy table, shape <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">16)</span></code> from <a class="reference internal" href="#pyEDW.metrics.entropy_table" title="pyEDW.metrics.entropy_table"><code class="xref py py-func docutils literal notranslate"><span class="pre">entropy_table()</span></code></a>.</p></li>
+<li><p><strong>H_env</strong> (<em>numpy.ndarray</em>) - Agent-free table, shape <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">4)</span></code> from <a class="reference internal" href="#pyEDW.metrics.entropy_table_env" title="pyEDW.metrics.entropy_table_env"><code class="xref py py-func docutils literal notranslate"><span class="pre">entropy_table_env()</span></code></a>,
 broadcast against <code class="docutils literal notranslate"><span class="pre">H</span></code> along the luminosity axis.</p></li>
 </ul>
 </dd>
@@ -619,13 +618,13 @@ table) and returns a Matplotlib <code class="docutils literal notranslate"><span
 saving and styling. Colors follow the paper: white daisies in pink, black
 daisies in blue, temperature in green.</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#pyEDW.figures.ensemble_scatter" title="pyEDW.figures.ensemble_scatter"><code class="xref py py-func docutils literal notranslate"><span class="pre">ensemble_scatter()</span></code></a>   – Fig. 1: daisy fractions, albedo, and
+<li><p><a class="reference internal" href="#pyEDW.figures.ensemble_scatter" title="pyEDW.figures.ensemble_scatter"><code class="xref py py-func docutils literal notranslate"><span class="pre">ensemble_scatter()</span></code></a>   - Fig. 1: daisy fractions, albedo, and
 temperature scattered over luminosity for one growth-rate bandwidth.</p></li>
-<li><p><a class="reference internal" href="#pyEDW.figures.corner" title="pyEDW.figures.corner"><code class="xref py py-func docutils literal notranslate"><span class="pre">corner()</span></code></a>             – Fig. 2: pairwise joint distribution of the four
+<li><p><a class="reference internal" href="#pyEDW.figures.corner" title="pyEDW.figures.corner"><code class="xref py py-func docutils literal notranslate"><span class="pre">corner()</span></code></a>             - Fig. 2: pairwise joint distribution of the four
 dof at a single luminosity.</p></li>
-<li><p><a class="reference internal" href="#pyEDW.figures.cooperation_vs_deltaI" title="pyEDW.figures.cooperation_vs_deltaI"><code class="xref py py-func docutils literal notranslate"><span class="pre">cooperation_vs_deltaI()</span></code></a> – Fig. 4: cooperation against the
+<li><p><a class="reference internal" href="#pyEDW.figures.cooperation_vs_deltaI" title="pyEDW.figures.cooperation_vs_deltaI"><code class="xref py py-func docutils literal notranslate"><span class="pre">cooperation_vs_deltaI()</span></code></a> - Fig. 4: cooperation against the
 agent-induced correlation change, split by viability.</p></li>
-<li><p><a class="reference internal" href="#pyEDW.figures.information_vs_viability" title="pyEDW.figures.information_vs_viability"><code class="xref py py-func docutils literal notranslate"><span class="pre">information_vs_viability()</span></code></a> – Fig. 5: I(A:E) against viability.</p></li>
+<li><p><a class="reference internal" href="#pyEDW.figures.information_vs_viability" title="pyEDW.figures.information_vs_viability"><code class="xref py py-func docutils literal notranslate"><span class="pre">information_vs_viability()</span></code></a> - Fig. 5: I(A:E) against viability.</p></li>
 </ul>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyEDW.figures.albedo">
@@ -636,15 +635,15 @@ agent-induced correlation change, split by viability.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyEDW.figures.ensemble_scatter">
 <span class="sig-prename descclassname"><span class="pre">pyEDW.figures.</span></span><span class="sig-name descname"><span class="pre">ensemble_scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDW/figures.html#ensemble_scatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDW.figures.ensemble_scatter" title="Link to this definition"></a></dt>
-<dd><p>Fig. 1: one bandwidth column – fractions, albedo, temperature vs L.</p>
+<dd><p>Fig. 1 (one bandwidth column): fractions, albedo, temperature vs L.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>numpy.ndarray</em>) – Endpoint ensemble <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code>.</p></li>
-<li><p><strong>params</strong> (<a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><em>pyEDW.model.Parameters</em></a>) – Parameters used to generate <code class="docutils literal notranslate"><span class="pre">data</span></code> (for albedo and <code class="docutils literal notranslate"><span class="pre">T_opt</span></code> lines).</p></li>
-<li><p><strong>Ls</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Luminosity axis; defaults to <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">linspace(-0.7,</span> <span class="pre">1.4,</span> <span class="pre">n_lum)</span></code>.</p></li>
-<li><p><strong>s</strong> (<em>float</em>) – Scatter marker size and opacity.</p></li>
-<li><p><strong>alpha</strong> (<em>float</em>) – Scatter marker size and opacity.</p></li>
+<li><p><strong>data</strong> (<em>numpy.ndarray</em>) - Endpoint ensemble <code class="docutils literal notranslate"><span class="pre">(n_lum,</span> <span class="pre">N,</span> <span class="pre">4)</span></code>.</p></li>
+<li><p><strong>params</strong> (<a class="reference internal" href="#pyEDW.model.Parameters" title="pyEDW.model.Parameters"><em>pyEDW.model.Parameters</em></a>) - Parameters used to generate <code class="docutils literal notranslate"><span class="pre">data</span></code> (for albedo and <code class="docutils literal notranslate"><span class="pre">T_opt</span></code> lines).</p></li>
+<li><p><strong>Ls</strong> (<em>array_like</em><em>, </em><em>optional</em>) - Luminosity axis; defaults to <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">linspace(-0.7,</span> <span class="pre">1.4,</span> <span class="pre">n_lum)</span></code>.</p></li>
+<li><p><strong>s</strong> (<em>float</em>) - Scatter marker size and opacity.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) - Scatter marker size and opacity.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -682,10 +681,10 @@ high- and low-viability clouds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>H</strong> (<em>numpy.ndarray</em>) – Entropy table of shape <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">16)</span></code> from <a class="reference internal" href="#module-pyEDW.metrics" title="pyEDW.metrics"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyEDW.metrics()</span></code></a>.</p></li>
-<li><p><strong>viability</strong> (<em>numpy.ndarray</em>) – Viability broadcastable to <code class="docutils literal notranslate"><span class="pre">H[...,</span> <span class="pre">0]</span></code>.</p></li>
-<li><p><strong>v_hi</strong> (<em>float</em>) – Viability thresholds for the two clouds.</p></li>
-<li><p><strong>v_lo</strong> (<em>float</em>) – Viability thresholds for the two clouds.</p></li>
+<li><p><strong>H</strong> (<em>numpy.ndarray</em>) - Entropy table of shape <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">16)</span></code> from <a class="reference internal" href="#module-pyEDW.metrics" title="pyEDW.metrics"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyEDW.metrics()</span></code></a>.</p></li>
+<li><p><strong>viability</strong> (<em>numpy.ndarray</em>) - Viability broadcastable to <code class="docutils literal notranslate"><span class="pre">H[...,</span> <span class="pre">0]</span></code>.</p></li>
+<li><p><strong>v_hi</strong> (<em>float</em>) - Viability thresholds for the two clouds.</p></li>
+<li><p><strong>v_lo</strong> (<em>float</em>) - Viability thresholds for the two clouds.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

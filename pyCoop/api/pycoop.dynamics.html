@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pycoop.dynamics &mdash; pyCoop 0.1.0 documentation</title>
+  <title>pycoop.dynamics - pyCoop 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -132,7 +132,7 @@ the agreement (flexibility) and position thresholds (a_theta and
 s_theta of Conrad &amp; Tabor 2024).</p>
 <p>The inter-event law is pluggable: “exp” recovers the paper (exact
 embedded chain); a float h gives the fixed-step variant (a <em>different</em>
-model – the robustness knob for the criticality program); a callable
+model - the robustness knob for the criticality program); a callable
 rng -&gt; tau gives anything else.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycoop.dynamics.Game">
@@ -145,7 +145,7 @@ rng -&gt; tau gives anything else.</p>
 <li><p><strong>u</strong> (<em>agreement threshold</em><em> (</em><em>flip requires abs</em><em>(</em><em>sigma_bar_j</em><em>) </em><em>&lt; u</em><em>)</em>)</p></li>
 <li><p><strong>l</strong> (<em>position threshold</em><em> (</em><em>flip requires abs</em><em>(</em><em>sigma_j</em><em>) </em><em>&gt; l</em><em>)</em>)</p></li>
 <li><p><strong>T</strong> (<em>timescale; inter-event tau ~ Exp with mean T/N by default</em>)</p></li>
-<li><p><strong>step_law</strong> (<em>&quot;exp&quot;</em><em> (</em><em>default</em><em>)</em><em>, </em><em>a positive float h for fixed steps</em><em>,</em>) – or a callable rng -&gt; tau.</p></li>
+<li><p><strong>step_law</strong> (<em>&quot;exp&quot;</em><em> (</em><em>default</em><em>)</em><em>, </em><em>a fixed step h &gt; 0</em><em>, or </em><em>a callable rng -&gt; tau</em>)</p></li>
 </ul>
 </dd>
 </dl>

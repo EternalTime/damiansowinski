@@ -191,13 +191,13 @@ with xmin &lt;= x &lt;= xmax where both p and q are positive contribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>ndarray</em>) – Wavenumber grid.</p></li>
-<li><p><strong>p, q</strong> (<em>ndarray</em>) – Modal fractions sampled on <cite>x</cite>.</p></li>
-<li><p><strong>xmin, xmax</strong> (<em>float, optional</em>) – Bounds of the valid k-range.</p></li>
+<li><p><strong>x</strong> (<em>ndarray</em>) - Wavenumber grid.</p></li>
+<li><p><strong>p, q</strong> (<em>ndarray</em>) - Modal fractions sampled on <cite>x</cite>.</p></li>
+<li><p><strong>xmin, xmax</strong> (<em>float, optional</em>) - Bounds of the valid k-range.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>float</em> – <span class="math notranslate nohighlight">\(\int p \, \log_2(p/q) \, dx\)</span> over the valid range.</p>
+<dd class="field-even"><p><em>float</em> - <span class="math notranslate nohighlight">\(\int p \, \log_2(p/q) \, dx\)</span> over the valid range.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -209,12 +209,12 @@ with xmin &lt;= x &lt;= xmax where both p and q are positive contribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>ndarray</em>) – Wavenumber grid.</p></li>
-<li><p><strong>p</strong> (<em>ndarray</em>) – Modal fraction sampled on <cite>x</cite>.</p></li>
+<li><p><strong>x</strong> (<em>ndarray</em>) - Wavenumber grid.</p></li>
+<li><p><strong>p</strong> (<em>ndarray</em>) - Modal fraction sampled on <cite>x</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>float</em> – <span class="math notranslate nohighlight">\(-\int p \, \log_2(p) \, dx\)</span>.</p>
+<dd class="field-even"><p><em>float</em> - <span class="math notranslate nohighlight">\(-\int p \, \log_2(p) \, dx\)</span>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -229,16 +229,16 @@ factor <span class="math notranslate nohighlight">\(x^{d-1}\)</span> so the resu
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>ndarray</em>) – Wavenumber grid.</p></li>
-<li><p><strong>y</strong> (<em>ndarray</em>) – Power spectrum sampled on <cite>x</cite>.</p></li>
-<li><p><strong>d</strong> (<em>int, optional</em>) – Number of spatial dimensions (default 3).</p></li>
-<li><p><strong>xmax, xmin</strong> (<em>float, optional</em>) – Bounds of the valid k-range.</p></li>
+<li><p><strong>x</strong> (<em>ndarray</em>) - Wavenumber grid.</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em>) - Power spectrum sampled on <cite>x</cite>.</p></li>
+<li><p><strong>d</strong> (<em>int, optional</em>) - Number of spatial dimensions (default 3).</p></li>
+<li><p><strong>xmax, xmin</strong> (<em>float, optional</em>) - Bounds of the valid k-range.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>x</strong> (<em>ndarray</em>) – The valid wavenumbers.</p></li>
-<li><p><strong>mf</strong> (<em>ndarray</em>) – The modal fraction on those wavenumbers.</p></li>
+<li><p><strong>x</strong> (<em>ndarray</em>) - The valid wavenumbers.</p></li>
+<li><p><strong>mf</strong> (<em>ndarray</em>) - The modal fraction on those wavenumbers.</p></li>
 </ul>
 </p>
 </dd>
@@ -252,13 +252,13 @@ factor <span class="math notranslate nohighlight">\(x^{d-1}\)</span> so the resu
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>ndarray</em>) – Wavenumber grid.</p></li>
-<li><p><strong>y</strong> (<em>ndarray</em>) – Spectrum sampled on <cite>x</cite>.</p></li>
-<li><p><strong>d</strong> (<em>int, optional</em>) – Number of spatial dimensions (default 3).</p></li>
+<li><p><strong>x</strong> (<em>ndarray</em>) - Wavenumber grid.</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em>) - Spectrum sampled on <cite>x</cite>.</p></li>
+<li><p><strong>d</strong> (<em>int, optional</em>) - Number of spatial dimensions (default 3).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em> – y divided by <span class="math notranslate nohighlight">\(\int y \, x^{d-1} \, dx\)</span>.</p>
+<dd class="field-even"><p><em>ndarray</em> - y divided by <span class="math notranslate nohighlight">\(\int y \, x^{d-1} \, dx\)</span>.</p>
 </dd>
 </dl>
 </dd></dl>

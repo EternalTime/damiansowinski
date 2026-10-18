@@ -6,12 +6,12 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCA.ca2d module &mdash; pyCA 0.1.0 documentation</title>
+  <title>pyCA.ca2d module - pyCA 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5bea863b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2d4c1ff1" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -112,7 +112,7 @@
 of its eight (Moore) neighbors, nothing more. The family is conventionally
 named in B/S notation: B lists the neighbor counts at which a dead cell is
 born, S the counts at which a live cell survives. Conway’s Game of Life is
-B3/S23 — born with exactly three neighbors, surviving with two or three —
+B3/S23 - born with exactly three neighbors, surviving with two or three -
 and remains the canonical inhabitant of the family.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyCA.ca2d.CA2D">
@@ -122,14 +122,14 @@ and remains the canonical inhabitant of the family.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>births</strong> (<em>sequence</em><em> of </em><em>int</em>) – Neighbor counts (0-8) at which a dead cell becomes alive.</p></li>
-<li><p><strong>survivals</strong> (<em>sequence</em><em> of </em><em>int</em>) – Neighbor counts (0-8) at which a live cell stays alive.</p></li>
-<li><p><strong>state</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em><em>, </em><em>optional</em>) – Initial 2d state. If omitted, a random state of the given <cite>shape</cite>
+<li><p><strong>births</strong> (<em>sequence</em><em> of </em><em>int</em>) - Neighbor counts (0-8) at which a dead cell becomes alive.</p></li>
+<li><p><strong>survivals</strong> (<em>sequence</em><em> of </em><em>int</em>) - Neighbor counts (0-8) at which a live cell stays alive.</p></li>
+<li><p><strong>state</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em><em>, </em><em>optional</em>) - Initial 2d state. If omitted, a random state of the given <cite>shape</cite>
 is drawn with density <cite>fill</cite>.</p></li>
-<li><p><strong>shape</strong> (<em>tuple</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Lattice shape used when <cite>state</cite> is omitted (default (128, 128)).</p></li>
-<li><p><strong>fill</strong> (<em>float</em><em>, </em><em>optional</em>) – Live-cell density of the random initial state (default 0.5).</p></li>
-<li><p><strong>memory</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of past states retained (default 256).</p></li>
-<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) – Random source; defaults to <code class="docutils literal notranslate"><span class="pre">numpy.random.default_rng()</span></code>.</p></li>
+<li><p><strong>shape</strong> (<em>tuple</em><em> of </em><em>int</em><em>, </em><em>optional</em>) - Lattice shape used when <cite>state</cite> is omitted (default (128, 128)).</p></li>
+<li><p><strong>fill</strong> (<em>float</em><em>, </em><em>optional</em>) - Live-cell density of the random initial state (default 0.5).</p></li>
+<li><p><strong>memory</strong> (<em>int</em><em>, </em><em>optional</em>) - Number of past states retained (default 256).</p></li>
+<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) - Random source; defaults to <code class="docutils literal notranslate"><span class="pre">numpy.random.default_rng()</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -165,7 +165,7 @@ is drawn with density <cite>fill</cite>.</p></li>
 <dd><p>Open a live display; close the window to stop.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em>, </em><em>optional</em>) – Milliseconds between frames (default 30).</p>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em>, </em><em>optional</em>) - Milliseconds between frames (default 30).</p>
 </dd>
 </dl>
 </dd></dl>

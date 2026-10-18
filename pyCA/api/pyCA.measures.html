@@ -6,12 +6,12 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCA.measures module &mdash; pyCA 0.1.0 documentation</title>
+  <title>pyCA.measures module - pyCA 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5bea863b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2d4c1ff1" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -122,8 +122,8 @@ spatial correlations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) – A state (1d) or spacetime history (2d, time along axis 0).</p></li>
-<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Block length (default 1).</p></li>
+<li><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) - A state (1d) or spacetime history (2d, time along axis 0).</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) - Block length (default 1).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -142,13 +142,13 @@ spatial correlations.</p>
 <p>The block entropies H_k grow at most linearly in k; their increments
 converge (from above) to the entropy rate, the number of new bits each
 additional cell carries once its neighbors to one side are known. Larger
-<cite>k</cite> tightens the estimate but needs exponentially more data — keep
+<cite>k</cite> tightens the estimate but needs exponentially more data - keep
 2**k well below the number of samples.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) – A state (1d) or spacetime history (2d, time along axis 0).</p></li>
-<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Block length of the finer scale (default 2). Must be &gt;= 1; k = 1
+<li><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) - A state (1d) or spacetime history (2d, time along axis 0).</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) - Block length of the finer scale (default 2). Must be &gt;= 1; k = 1
 returns H_1 itself, the rate estimate with no conditioning.</p></li>
 </ul>
 </dd>
@@ -166,19 +166,19 @@ returns H_1 itself, the rate estimate with no conditioning.</p></li>
 <span class="sig-prename descclassname"><span class="pre">pyCA.measures.</span></span><span class="sig-name descname"><span class="pre">lz_complexity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyCA/measures.html#lz_complexity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyCA.measures.lz_complexity" title="Link to this definition"></a></dt>
 <dd><p>Normalized Lempel-Ziv (LZ76) complexity, dimensionless.</p>
 <p>Parses each row into the phrases of Lempel and Ziv’s 1976 exhaustive
-history — each phrase the shortest word not yet producible by copying
-from what came before — using the Kaspar–Schuster scanning algorithm,
+history - each phrase the shortest word not yet producible by copying
+from what came before - using the Kaspar–Schuster scanning algorithm,
 and normalizes the phrase count by n/log2(n), the asymptotic count for
 an iid fair-coin string. A random row therefore reads near 1 and a
 structured one falls below. The mean over rows is returned.</p>
 <p>Two cautions. Unlike the block measures, the parse is sequential and
 does not wrap: rows are read left to right. And the normalized count
-converges to the entropy rate from above <em>slowly</em> — at n ~ 1000 a fair
-coin still reads ~1.05 — so compare rows of equal length, not values
+converges to the entropy rate from above <em>slowly</em> - at n ~ 1000 a fair
+coin still reads ~1.05 - so compare rows of equal length, not values
 across lengths.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) – A state (1d) or spacetime history (2d, time along axis 0).</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) - A state (1d) or spacetime history (2d, time along axis 0).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Mean over rows of c(n) log2(n) / n, where c(n) is the LZ76
@@ -209,8 +209,8 @@ means one determines the other.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) – A state (1d) or spacetime history (2d, time along axis 0).</p></li>
-<li><p><strong>distance</strong> (<em>int</em><em>, </em><em>optional</em>) – Spatial separation between the cell pair (default 1).</p></li>
+<li><p><strong>data</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em>) - A state (1d) or spacetime history (2d, time along axis 0).</p></li>
+<li><p><strong>distance</strong> (<em>int</em><em>, </em><em>optional</em>) - Spatial separation between the cell pair (default 1).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

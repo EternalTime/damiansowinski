@@ -5,13 +5,12 @@
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyGD.dynamics module &mdash; pyGD 0.1.0 documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>pyGD.dynamics module - pyGD 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=7d8a76d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=1ef31a4f" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -142,13 +141,13 @@ and mean phase <code class="docutils literal notranslate"><span class="pre">phi<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sigma</strong> (<em>float</em>) – Coupling strength.</p></li>
-<li><p><strong>G</strong> (<em>networkx.Graph</em>) – Interaction graph. Adjacency is extracted once as sparse CSR.</p></li>
-<li><p><strong>omegas</strong> (<em>array_like</em>) – Natural frequencies, one per node (node order = <code class="docutils literal notranslate"><span class="pre">list(G.nodes())</span></code>).</p></li>
-<li><p><strong>r0</strong> (<em>float</em><em>, </em><em>optional</em>) – Initial spread of phases; <code class="docutils literal notranslate"><span class="pre">theta</span> <span class="pre">=</span> <span class="pre">(2*U</span> <span class="pre">-</span> <span class="pre">1)*pi*(1</span> <span class="pre">-</span> <span class="pre">r0)</span></code> with
+<li><p><strong>sigma</strong> (<em>float</em>) - Coupling strength.</p></li>
+<li><p><strong>G</strong> (<em>networkx.Graph</em>) - Interaction graph. Adjacency is extracted once as sparse CSR.</p></li>
+<li><p><strong>omegas</strong> (<em>array_like</em>) - Natural frequencies, one per node (node order = <code class="docutils literal notranslate"><span class="pre">list(G.nodes())</span></code>).</p></li>
+<li><p><strong>r0</strong> (<em>float</em><em>, </em><em>optional</em>) - Initial spread of phases; <code class="docutils literal notranslate"><span class="pre">theta</span> <span class="pre">=</span> <span class="pre">(2*U</span> <span class="pre">-</span> <span class="pre">1)*pi*(1</span> <span class="pre">-</span> <span class="pre">r0)</span></code> with
 <code class="docutils literal notranslate"><span class="pre">U</span> <span class="pre">~</span> <span class="pre">Uniform[0,1)</span></code>. <code class="docutils literal notranslate"><span class="pre">r0</span> <span class="pre">=</span> <span class="pre">0</span></code> gives fully random phases (default).</p></li>
-<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) – Timestep. Default 0.0625 (= 1/16), matching the MATLAB.</p></li>
-<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) – Random source; defaults to <code class="docutils literal notranslate"><span class="pre">numpy.random.default_rng()</span></code>.</p></li>
+<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) - Timestep. Default 0.0625 (= 1/16), matching the MATLAB.</p></li>
+<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) - Random source; defaults to <code class="docutils literal notranslate"><span class="pre">numpy.random.default_rng()</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -238,8 +237,8 @@ matching the MATLAB <code class="docutils literal notranslate"><span class="pre"
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_steps</strong> (<em>int</em>) – Number of steps.</p></li>
-<li><p><strong>record</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, call <a class="reference internal" href="#pyGD.dynamics.Kuramoto.update_order_parameter" title="pyGD.dynamics.Kuramoto.update_order_parameter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update_order_parameter()</span></code></a> each step and return
+<li><p><strong>n_steps</strong> (<em>int</em>) - Number of steps.</p></li>
+<li><p><strong>record</strong> (<em>bool</em><em>, </em><em>optional</em>) - If True, call <a class="reference internal" href="#pyGD.dynamics.Kuramoto.update_order_parameter" title="pyGD.dynamics.Kuramoto.update_order_parameter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update_order_parameter()</span></code></a> each step and return
 the array of <code class="docutils literal notranslate"><span class="pre">r</span></code> values. Default False (faster; no measurement).</p></li>
 </ul>
 </dd>
@@ -281,12 +280,12 @@ driven by a Yokai agent, but is kept as an independent class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sigma</strong> (<em>float</em>) – Coupling strength.</p></li>
-<li><p><strong>G</strong> (<em>networkx.Graph</em>) – Interaction graph.</p></li>
-<li><p><strong>omegas</strong> (<em>array_like</em>) – Base natural frequencies, one per node.</p></li>
-<li><p><strong>ab</strong> (<em>float</em>) – The product alpha*beta (kick strength times hop speed).</p></li>
-<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) – Timestep. Default 0.0625.</p></li>
-<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) – Random source; defaults to <code class="docutils literal notranslate"><span class="pre">numpy.random.default_rng()</span></code>.</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) - Coupling strength.</p></li>
+<li><p><strong>G</strong> (<em>networkx.Graph</em>) - Interaction graph.</p></li>
+<li><p><strong>omegas</strong> (<em>array_like</em>) - Base natural frequencies, one per node.</p></li>
+<li><p><strong>ab</strong> (<em>float</em>) - The product alpha*beta (kick strength times hop speed).</p></li>
+<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) - Timestep. Default 0.0625.</p></li>
+<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) - Random source; defaults to <code class="docutils literal notranslate"><span class="pre">numpy.random.default_rng()</span></code>.</p></li>
 </ul>
 </dd>
 </dl>

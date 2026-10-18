@@ -4,12 +4,12 @@
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyEDW.figures &mdash; pyEDW 0.1.0 documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>pyEDW.figures - pyEDW 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=bbe758d8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4404f74" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -18,7 +18,7 @@
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/copybutton.js?v=e5238352"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -79,6 +79,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+
   <h1>Source code for pyEDW.figures</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Plotting helpers that regenerate the figures of the eDW paper.</span>
 
@@ -88,13 +89,13 @@
 <span class="sd">saving and styling. Colors follow the paper: white daisies in pink, black</span>
 <span class="sd">daisies in blue, temperature in green.</span>
 
-<span class="sd">- :func:`ensemble_scatter`   -- Fig. 1: daisy fractions, albedo, and</span>
+<span class="sd">- :func:`ensemble_scatter`   - Fig. 1: daisy fractions, albedo, and</span>
 <span class="sd">  temperature scattered over luminosity for one growth-rate bandwidth.</span>
-<span class="sd">- :func:`corner`             -- Fig. 2: pairwise joint distribution of the four</span>
+<span class="sd">- :func:`corner`             - Fig. 2: pairwise joint distribution of the four</span>
 <span class="sd">  dof at a single luminosity.</span>
-<span class="sd">- :func:`cooperation_vs_deltaI` -- Fig. 4: cooperation against the</span>
+<span class="sd">- :func:`cooperation_vs_deltaI` - Fig. 4: cooperation against the</span>
 <span class="sd">  agent-induced correlation change, split by viability.</span>
-<span class="sd">- :func:`information_vs_viability` -- Fig. 5: I(A:E) against viability.</span>
+<span class="sd">- :func:`information_vs_viability` - Fig. 5: I(A:E) against viability.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -122,7 +123,7 @@
 <div class="viewcode-block" id="ensemble_scatter">
 <a class="viewcode-back" href="../../api/pyEDW.html#pyEDW.figures.ensemble_scatter">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ensemble_scatter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">Ls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fig. 1: one bandwidth column -- fractions, albedo, temperature vs L.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fig. 1 (one bandwidth column): fractions, albedo, temperature vs L.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>

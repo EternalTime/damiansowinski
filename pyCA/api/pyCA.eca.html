@@ -6,12 +6,12 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCA.eca module &mdash; pyCA 0.1.0 documentation</title>
+  <title>pyCA.eca module - pyCA 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5bea863b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2d4c1ff1" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -126,12 +126,12 @@ and <code class="docutils literal notranslate"><span class="pre">state</span></c
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rule</strong> (<em>int</em>) – Wolfram rule number, 0-255.</p></li>
-<li><p><strong>state</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em><em>, </em><em>optional</em>) – Initial state. If omitted, a random state of length <cite>N</cite> is drawn.</p></li>
-<li><p><strong>N</strong> (<em>int</em><em>, </em><em>optional</em>) – Lattice size used when <cite>state</cite> is omitted (default 64).</p></li>
-<li><p><strong>memory</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of past states retained for <cite>spacetime</cite> and <cite>play</cite>. Defaults
+<li><p><strong>rule</strong> (<em>int</em>) - Wolfram rule number, 0-255.</p></li>
+<li><p><strong>state</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em><em>, </em><em>optional</em>) - Initial state. If omitted, a random state of length <cite>N</cite> is drawn.</p></li>
+<li><p><strong>N</strong> (<em>int</em><em>, </em><em>optional</em>) - Lattice size used when <cite>state</cite> is omitted (default 64).</p></li>
+<li><p><strong>memory</strong> (<em>int</em><em>, </em><em>optional</em>) - Number of past states retained for <cite>spacetime</cite> and <cite>play</cite>. Defaults
 to max(min(3*N, 5000), 300), matching the MATLAB class.</p></li>
-<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) – Random source; defaults to <code class="docutils literal notranslate"><span class="pre">numpy.random.default_rng()</span></code>.</p></li>
+<li><p><strong>rng</strong> (<em>numpy.random.Generator</em><em>, </em><em>optional</em>) - Random source; defaults to <code class="docutils literal notranslate"><span class="pre">numpy.random.default_rng()</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -188,7 +188,7 @@ to max(min(3*N, 5000), 300), matching the MATLAB class.</p></li>
 <dd><p>Open a live spacetime display; close the window to stop.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em>, </em><em>optional</em>) – Milliseconds between frames (default 30).</p>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em>, </em><em>optional</em>) - Milliseconds between frames (default 30).</p>
 </dd>
 </dl>
 </dd></dl>

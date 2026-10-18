@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab68666c" />
 
   
@@ -200,42 +200,42 @@ physical features and the configurational entropy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>phi0</strong> (<em>float</em>) – Core value of the scalar field.</p></li>
-<li><p><strong>lamb</strong> (<em>float, optional</em>) – Quartic self-interaction strength (default 0, the mini boson star).</p></li>
-<li><p><strong>alpha_range</strong> (<em>[float, float], optional</em>) – Initial bracket for the central lapse used by the shooting method
+<li><p><strong>phi0</strong> (<em>float</em>) - Core value of the scalar field.</p></li>
+<li><p><strong>lamb</strong> (<em>float, optional</em>) - Quartic self-interaction strength (default 0, the mini boson star).</p></li>
+<li><p><strong>alpha_range</strong> (<em>[float, float], optional</em>) - Initial bracket for the central lapse used by the shooting method
 (default [0, 1]). The supplied list is copied, never modified.</p></li>
-<li><p><strong>dr</strong> (<em>float, optional</em>) – Radial step size (default .01). For small <span class="math notranslate nohighlight">\(\phi_0\)</span> the
+<li><p><strong>dr</strong> (<em>float, optional</em>) - Radial step size (default .01). For small <span class="math notranslate nohighlight">\(\phi_0\)</span> the
 gradients are gentle but the star is large; for large
 <span class="math notranslate nohighlight">\(\phi_0\)</span> the reverse - lower <cite>dr</cite> if the shooting method
 stalls.</p></li>
-<li><p><strong>r_max</strong> (<em>float, optional</em>) – Maximum integration radius (default 50). Too small and the shot
+<li><p><strong>r_max</strong> (<em>float, optional</em>) - Maximum integration radius (default 50). Too small and the shot
 converges to a profile that is not yet the ground state; too large
 and the integration stops at <cite>phi_tol</cite> before reaching the tail.</p></li>
-<li><p><strong>phi_tol</strong> (<em>float, optional</em>) – Field amplitude at which the tail is declared converged
+<li><p><strong>phi_tol</strong> (<em>float, optional</em>) - Field amplitude at which the tail is declared converged
 (default 1e-6).</p></li>
-<li><p><strong>plot_progress</strong> (<em>bool, optional</em>) – Plot each shooting iterate live (default False).</p></li>
+<li><p><strong>plot_progress</strong> (<em>bool, optional</em>) - Plot each shooting iterate live (default False).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>r</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Radial grid.</p></li>
-<li><p><strong>phi</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Scalar field profile.</p></li>
-<li><p><strong>Phi</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Radial derivative of the scalar field profile.</p></li>
-<li><p><strong>a</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Radial metric function.</p></li>
-<li><p><strong>alpha</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Lapse, rescaled so <span class="math notranslate nohighlight">\(\alpha \to 1\)</span> at the outer edge
+<li><p><strong>r</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Radial grid.</p></li>
+<li><p><strong>phi</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Scalar field profile.</p></li>
+<li><p><strong>Phi</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Radial derivative of the scalar field profile.</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Radial metric function.</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Lapse, rescaled so <span class="math notranslate nohighlight">\(\alpha \to 1\)</span> at the outer edge
 (asymptotic flatness).</p></li>
-<li><p><strong>omega</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Frequency eigenvalue of the harmonic ansatz; <span class="math notranslate nohighlight">\(\omega &lt; 1\)</span>
+<li><p><strong>omega</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Frequency eigenvalue of the harmonic ansatz; <span class="math notranslate nohighlight">\(\omega &lt; 1\)</span>
 signals a gravitationally bound configuration.</p></li>
-<li><p><strong>rho</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Energy density.</p></li>
-<li><p><strong>mass</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Misner-Sharp mass within radius r,
+<li><p><strong>rho</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Energy density.</p></li>
+<li><p><strong>mass</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Misner-Sharp mass within radius r,
 <span class="math notranslate nohighlight">\(m(r) = (r/2)(1 - 1/a^2)\)</span>.</p></li>
-<li><p><strong>M</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Total (ADM) mass, mass[-1].</p></li>
-<li><p><strong>R</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Effective radius: the first moment of r over the proper energy
+<li><p><strong>M</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Total (ADM) mass, mass[-1].</p></li>
+<li><p><strong>R</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Effective radius: the first moment of r over the proper energy
 distribution.</p></li>
-<li><p><strong>denFT</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Radial Fourier transform of rho.</p></li>
-<li><p><strong>k</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Wavenumber grid of denFT.</p></li>
-<li><p><strong>mf</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Modal fraction <code class="docutils literal notranslate"><span class="pre">|denFT|**2</span> <span class="pre">/</span> <span class="pre">max|denFT|**2</span></code>.</p></li>
-<li><p><strong>Sc</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Configurational entropy, <span class="math notranslate nohighlight">\(-\int \mathrm{mf} \, \ln(\mathrm{mf})\)</span>
+<li><p><strong>denFT</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Radial Fourier transform of rho.</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Wavenumber grid of denFT.</p></li>
+<li><p><strong>mf</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Modal fraction <code class="docutils literal notranslate"><span class="pre">|denFT|**2</span> <span class="pre">/</span> <span class="pre">max|denFT|**2</span></code>.</p></li>
+<li><p><strong>Sc</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Configurational entropy, <span class="math notranslate nohighlight">\(-\int \mathrm{mf} \, \ln(\mathrm{mf})\)</span>
 over k-space with the d = 3 radial measure.</p></li>
 </ul>
 </dd>

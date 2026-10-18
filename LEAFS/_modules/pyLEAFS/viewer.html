@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyLEAFS.viewer &mdash; pyLEAFS 0.1.0 documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>pyLEAFS.viewer - pyLEAFS 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -472,7 +471,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_render_panel</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
 
         <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;PAUSED&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span> <span class="k">else</span> <span class="s2">&quot;running&quot;</span>
-        <span class="n">extinct</span> <span class="o">=</span> <span class="s2">&quot; — EXTINCTION&quot;</span> <span class="k">if</span> <span class="n">pop</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">extinct</span> <span class="o">=</span> <span class="s2">&quot; - EXTINCTION&quot;</span> <span class="k">if</span> <span class="n">pop</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;t = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">time</span><span class="si">:</span><span class="s2">7.2f</span><span class="si">}</span><span class="s2">   agents = </span><span class="si">{</span><span class="n">pop</span><span class="o">.</span><span class="n">count</span><span class="si">}</span><span class="s2">   &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;resources = </span><span class="si">{</span><span class="n">resource</span><span class="o">.</span><span class="n">total</span><span class="p">()</span><span class="si">}</span><span class="s2">   [</span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">]</span><span class="si">{</span><span class="n">extinct</span><span class="si">}</span><span class="s2">&quot;</span>

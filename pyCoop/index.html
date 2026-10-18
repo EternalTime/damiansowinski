@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCoop &mdash; pyCoop 0.1.0 documentation</title>
+  <title>pyCoop - pyCoop 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -88,27 +88,27 @@
 <h1>pyCoop<a class="headerlink" href="#pycoop" title="Link to this heading"></a></h1>
 <p>What does it take for a crowd to agree? Strip the question to its
 skeleton: <span class="math notranslate nohighlight">\(N\)</span> players on a graph, each carrying a continuous
-<em>action</em> in <span class="math notranslate nohighlight">\([-1, 1]\)</span> and a binary <em>opinion</em> — a thing they are
+<em>action</em> in <span class="math notranslate nohighlight">\([-1, 1]\)</span> and a binary <em>opinion</em> - a thing they are
 doing and a thing they believe, with no guarantee the two line up.
 Actions drift toward opinions; every so often a player compares their
 action against their neighborhood’s, and if they are committed to a side
 yet poorly coordinated with the crowd, they change their mind. The group
 wins when every action lands on the same side. From these spare rules
-comes a zoo of outcomes — clean consensus, <em>fraught</em> standoffs where
+comes a zoo of outcomes - clean consensus, <em>fraught</em> standoffs where
 every player is locally content while the group as a whole has failed,
-<em>obdurate</em> jams pinned on a lone holdout — all governed by a single
+<em>obdurate</em> jams pinned on a lone holdout - all governed by a single
 timescale and a pair of thresholds.</p>
 <p>pyCoop implements this model on arbitrary graphs. The dynamics are the
-exact embedded chain of the continuous-time model — actions drift toward
+exact embedded chain of the continuous-time model - actions drift toward
 opinions, opinions flip when a player is committed but poorly
-coordinated — with the inter-event clock exposed as a switch, so the
+coordinated - with the inter-event clock exposed as a switch, so the
 exponential law and a fixed-step variant can be compared head to head.
 The observables
-quantify what a state <em>is</em> — its agreement, its fraughtness, its
-obdurateness — and the visualization tools turn trajectories into pictures
+quantify what a state <em>is</em> - its agreement, its fraughtness, its
+obdurateness - and the visualization tools turn trajectories into pictures
 and film.</p>
 <p>If you’re new here, start with <a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a>, then work through
-the guides in order — the dynamics first, then the observables that
+the guides in order - the dynamics first, then the observables that
 classify what the dynamics produce, then the tools for looking at it all.</p>
 <section id="guide">
 <h2>Guide<a class="headerlink" href="#guide" title="Link to this heading"></a></h2>

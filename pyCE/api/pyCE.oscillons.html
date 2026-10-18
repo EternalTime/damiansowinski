@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab68666c" />
 
   
@@ -211,23 +211,23 @@ and Turner parametrization.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>asymmetry_factor</strong> (<em>float</em>) – Asymmetry epsilon of the K&amp;T dimensionless potential. DEFAULT: 0</p></li>
-<li><p><strong>dimension</strong> (<em>int</em>) – Number of SPATIAL dimensions. DEFAULT: 3</p></li>
-<li><p><strong>N</strong> (<em>int</em>) – Size of the spatial lattice. DEFAULT: 1500</p></li>
-<li><p><strong>radius_max</strong> (<em>float</em>) – Maximum radius of the spatial lattice. DEFAULT: 45</p></li>
-<li><p><strong>radius_MIB</strong> (<em>float</em>) – Radius at which coordinates get boosted. DEFAULT: 44</p></li>
-<li><p><strong>delta_MIB</strong> (<em>float</em>) – Width of the boost region. DEFAULT: .5</p></li>
-<li><p><strong>radius_cap</strong> (<em>float</em>) – Boundary of the oscillon; energy is integrated within it. DEFAULT: 42</p></li>
-<li><p><strong>tol</strong> (<em>float</em>) – Tolerance of the iterative scheme in the timestep. DEFAULT: 1e-8</p></li>
-<li><p><strong>dissipation</strong> (<em>float</em>) – Strength of the numerical dissipation. DEFAULT: 0.8</p></li>
-<li><p><strong>courant_factor</strong> (<em>float</em>) – Ratio <span class="math notranslate nohighlight">\(dt/dx\)</span>. DEFAULT: 0.5</p></li>
+<li><p><strong>asymmetry_factor</strong> (<em>float</em>) - Asymmetry epsilon of the K&amp;T dimensionless potential. DEFAULT: 0</p></li>
+<li><p><strong>dimension</strong> (<em>int</em>) - Number of SPATIAL dimensions. DEFAULT: 3</p></li>
+<li><p><strong>N</strong> (<em>int</em>) - Size of the spatial lattice. DEFAULT: 1500</p></li>
+<li><p><strong>radius_max</strong> (<em>float</em>) - Maximum radius of the spatial lattice. DEFAULT: 45</p></li>
+<li><p><strong>radius_MIB</strong> (<em>float</em>) - Radius at which coordinates get boosted. DEFAULT: 44</p></li>
+<li><p><strong>delta_MIB</strong> (<em>float</em>) - Width of the boost region. DEFAULT: .5</p></li>
+<li><p><strong>radius_cap</strong> (<em>float</em>) - Boundary of the oscillon; energy is integrated within it. DEFAULT: 42</p></li>
+<li><p><strong>tol</strong> (<em>float</em>) - Tolerance of the iterative scheme in the timestep. DEFAULT: 1e-8</p></li>
+<li><p><strong>dissipation</strong> (<em>float</em>) - Strength of the numerical dissipation. DEFAULT: 0.8</p></li>
+<li><p><strong>courant_factor</strong> (<em>float</em>) - Ratio <span class="math notranslate nohighlight">\(dt/dx\)</span>. DEFAULT: 0.5</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>E</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Energy history of the oscillon (set by <cite>simulate_oscillon</cite>).</p></li>
-<li><p><strong>core</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – Core value history, phi(r=0,t) (set by <cite>simulate_oscillon</cite>).</p></li>
-<li><p><strong>time</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Time values for the energy/core histories (set by
+<li><p><strong>E</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Energy history of the oscillon (set by <cite>simulate_oscillon</cite>).</p></li>
+<li><p><strong>core</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) - Core value history, phi(r=0,t) (set by <cite>simulate_oscillon</cite>).</p></li>
+<li><p><strong>time</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Time values for the energy/core histories (set by
 <cite>simulate_oscillon</cite>).</p></li>
 </ul>
 </dd>
@@ -240,12 +240,12 @@ and Turner parametrization.</p>
 <dd><p>Energy inside radius_cap and the flux through its surface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>T</strong> (<em>ndarray</em>) – Stress-energy components from <cite>stress_energy_tensor</cite>.</p>
+<dd class="field-odd"><p><strong>T</strong> (<em>ndarray</em>) - Stress-energy components from <cite>stress_energy_tensor</cite>.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>E</strong> (<em>float</em>) – Energy density integrated out to radius_cap.</p></li>
-<li><p><strong>dE</strong> (<em>float</em>) – Energy carried through the cap surface in one timestep
+<li><p><strong>E</strong> (<em>float</em>) - Energy density integrated out to radius_cap.</p></li>
+<li><p><strong>dE</strong> (<em>float</em>) - Energy carried through the cap surface in one timestep
 (surface area * momentum flux * dt).</p></li>
 </ul>
 </p>
@@ -260,16 +260,16 @@ and Turner parametrization.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>field_type</strong> (<em>str</em>) – Initial profile shape. Currently only ‘gaussian’ is implemented:
+<li><p><strong>field_type</strong> (<em>str</em>) - Initial profile shape. Currently only ‘gaussian’ is implemented:
 a Gaussian of radius <code class="docutils literal notranslate"><span class="pre">params[0]</span></code> (note
 <span class="math notranslate nohighlight">\(\mathrm{radius} = \sqrt{2} \sigma\)</span>) with amplitude at the
 true-vacuum field value
 <span class="math notranslate nohighlight">\(A = (\alpha + \sqrt{\alpha^2 - 4})/2\)</span>.</p></li>
-<li><p><strong>*params</strong> – Shape parameters; for ‘gaussian’, the radius r0.</p></li>
+<li><p><strong>*params</strong> - Shape parameters; for ‘gaussian’, the radius r0.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray, shape (3, N)</em> – Stacked initial data [phi, Phi, Pi]. <span class="math notranslate nohighlight">\(\Pi\)</span> is initialized
+<dd class="field-even"><p><em>ndarray, shape (3, N)</em> - Stacked initial data [phi, Phi, Pi]. <span class="math notranslate nohighlight">\(\Pi\)</span> is initialized
 to <span class="math notranslate nohighlight">\(-f \Phi\)</span>, i.e. the time derivative of <span class="math notranslate nohighlight">\(\phi\)</span> is
 zero in the boosted coordinates. Returns 0 if <cite>field_type</cite> is not
 recognized.</p>
@@ -298,10 +298,10 @@ instance as <cite>E</cite>, <cite>core</cite>, and <cite>time</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fields</strong> (<em>ndarray, shape (3, N)</em>) – Initial data from <cite>initialize_field</cite>.</p></li>
-<li><p><strong>plot_profile, plot_energy_density, plot_energy_shells</strong> (<em>bool</em>) – Live diagnostic plots updated at each recording step.</p></li>
-<li><p><strong>saveTag</strong> (<em>bool</em>) – Currently unused.</p></li>
-<li><p><strong>num_E_steps</strong> (<em>int</em>) – Number of timesteps between recorded samples.</p></li>
+<li><p><strong>fields</strong> (<em>ndarray, shape (3, N)</em>) - Initial data from <cite>initialize_field</cite>.</p></li>
+<li><p><strong>plot_profile, plot_energy_density, plot_energy_shells</strong> (<em>bool</em>) - Live diagnostic plots updated at each recording step.</p></li>
+<li><p><strong>saveTag</strong> (<em>bool</em>) - Currently unused.</p></li>
+<li><p><strong>num_E_steps</strong> (<em>int</em>) - Number of timesteps between recorded samples.</p></li>
 </ul>
 </dd>
 </dl>
@@ -316,7 +316,7 @@ instance as <cite>E</cite>, <cite>core</cite>, and <cite>time</cite>.</p>
 <dd class="field-odd"><p><strong>fields</strong> (<em>ndarray, shape (3, N)</em>)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray, shape (3, N)</em> – [rho, j, P]: energy density, radial momentum density (flux),
+<dd class="field-even"><p><em>ndarray, shape (3, N)</em> - [rho, j, P]: energy density, radial momentum density (flux),
 and radial pressure.</p>
 </dd>
 </dl>

@@ -185,15 +185,15 @@ Planck release-2 products from IRSA over the network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>telescope</strong> (<em>str</em>) – ‘Planck’ (downloaded from IRSA; requires network access) or
+<li><p><strong>telescope</strong> (<em>str</em>) - ‘Planck’ (downloaded from IRSA; requires network access) or
 ‘WMAP’ (9-year data bundled with the package).</p></li>
-<li><p><strong>ps</strong> (<em>str</em>) – Which spectrum to read. Currently only ‘TT’ is implemented.</p></li>
-<li><p><strong>psType</strong> (<em>str</em>) – ‘data’ for the observed spectrum, or ‘fit’/’bestfit’ for the
+<li><p><strong>ps</strong> (<em>str</em>) - Which spectrum to read. Currently only ‘TT’ is implemented.</p></li>
+<li><p><strong>psType</strong> (<em>str</em>) - ‘data’ for the observed spectrum, or ‘fit’/’bestfit’ for the
 Planck best-fit theory spectrum (Planck only).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>dict</em> – Keys ‘ell’, ‘Dl’, ‘Cl’ (with
+<dd class="field-even"><p><em>dict</em> - Keys ‘ell’, ‘Dl’, ‘Cl’ (with
 <span class="math notranslate nohighlight">\(C_\ell = 2\pi D_\ell / (\ell (\ell+1))\)</span>), and, for
 psType=’data’, ‘error’. Prints a message and returns None if the
 read fails.</p>

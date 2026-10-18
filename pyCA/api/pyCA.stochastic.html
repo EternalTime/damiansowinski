@@ -6,12 +6,12 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyCA.stochastic module &mdash; pyCA 0.1.0 documentation</title>
+  <title>pyCA.stochastic module - pyCA 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5bea863b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2d4c1ff1" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -109,7 +109,7 @@
 <p>Probabilistic elementary cellular automata beyond the Ising family.</p>
 <p>Two ways of corrupting a deterministic rule with noise. <a class="reference internal" href="#pyCA.stochastic.NoisyECA" title="pyCA.stochastic.NoisyECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoisyECA</span></code></a>
 applies the rule everywhere and then flips each output bit independently
-with probability <cite>noise</cite> — the epsilon-perturbed CAs whose phase transitions
+with probability <cite>noise</cite> - the epsilon-perturbed CAs whose phase transitions
 have been studied since Wolfram’s classification. <a class="reference internal" href="#pyCA.stochastic.AsyncECA" title="pyCA.stochastic.AsyncECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncECA</span></code></a> keeps
 the rule exact but breaks the synchronous clock: each step, only a random
 fraction of the cells update, the rest holding their values. Both reduce to
@@ -123,17 +123,17 @@ update_fraction = 1), and the tests hold them to it.</p>
 <p>Each step, every cell independently chooses (with probability
 <cite>update_fraction</cite>) whether to apply the rule to its current
 neighborhood; cells that decline keep their value. The rule itself is
-never corrupted — only the synchronous clock is.</p>
+never corrupted - only the synchronous clock is.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rule</strong> (<em>int</em>) – Wolfram rule number, 0-255.</p></li>
-<li><p><strong>state</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em><em>, </em><em>optional</em>) – Initial state. If omitted, a random state of length <cite>N</cite> is drawn.</p></li>
-<li><p><strong>update_fraction</strong> (<em>float</em><em>, </em><em>optional</em>) – Per-cell, per-step probability of updating (default 1, which is
+<li><p><strong>rule</strong> (<em>int</em>) - Wolfram rule number, 0-255.</p></li>
+<li><p><strong>state</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em><em>, </em><em>optional</em>) - Initial state. If omitted, a random state of length <cite>N</cite> is drawn.</p></li>
+<li><p><strong>update_fraction</strong> (<em>float</em><em>, </em><em>optional</em>) - Per-cell, per-step probability of updating (default 1, which is
 the synchronous ECA; 0 freezes the lattice).</p></li>
-<li><p><strong>N</strong> – As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
-<li><p><strong>memory</strong> – As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
-<li><p><strong>rng</strong> – As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
+<li><p><strong>N</strong> - As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
+<li><p><strong>memory</strong> - As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
+<li><p><strong>rng</strong> - As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -153,15 +153,15 @@ the synchronous ECA; 0 freezes the lattice).</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rule</strong> (<em>int</em>) – Wolfram rule number, 0-255.</p></li>
-<li><p><strong>state</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em><em>, </em><em>optional</em>) – Initial state. If omitted, a random state of length <cite>N</cite> is drawn.</p></li>
-<li><p><strong>noise</strong> (<em>float</em><em>, </em><em>optional</em>) – Per-cell, per-step probability of flipping the rule’s output
+<li><p><strong>rule</strong> (<em>int</em>) - Wolfram rule number, 0-255.</p></li>
+<li><p><strong>state</strong> (<em>array_like</em><em> of </em><em>0s and 1s</em><em>, </em><em>optional</em>) - Initial state. If omitted, a random state of length <cite>N</cite> is drawn.</p></li>
+<li><p><strong>noise</strong> (<em>float</em><em>, </em><em>optional</em>) - Per-cell, per-step probability of flipping the rule’s output
 (default 0). noise = 0 is the deterministic rule; noise = 1 is the
 complemented rule; noise = 0.5 is coin flipping, with the rule
 forgotten entirely.</p></li>
-<li><p><strong>N</strong> – As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
-<li><p><strong>memory</strong> – As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
-<li><p><strong>rng</strong> – As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
+<li><p><strong>N</strong> - As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
+<li><p><strong>memory</strong> - As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
+<li><p><strong>rng</strong> - As for <a class="reference internal" href="pyCA.eca.html#pyCA.eca.ECA" title="pyCA.eca.ECA"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyCA.eca.ECA</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>

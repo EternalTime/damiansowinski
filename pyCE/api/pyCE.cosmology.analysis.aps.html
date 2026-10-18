@@ -190,13 +190,13 @@ following Aghamousa, Arjunwadkar &amp; Souradeep (arXiv:1107.0516).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>p</strong> (<em>ndarray</em>) – A modal fraction.</p></li>
-<li><p><strong>q</strong> (<em>ndarray</em>) – A modal fraction. Zero entries are set to NaN in place and dropped
+<li><p><strong>p</strong> (<em>ndarray</em>) - A modal fraction.</p></li>
+<li><p><strong>q</strong> (<em>ndarray</em>) - A modal fraction. Zero entries are set to NaN in place and dropped
 from the sum.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>float</em> – <span class="math notranslate nohighlight">\(\sum_i p_i \, \log_2(p_i / q_i)\)</span> over finite entries.</p>
+<dd class="field-even"><p><em>float</em> - <span class="math notranslate nohighlight">\(\sum_i p_i \, \log_2(p_i / q_i)\)</span> over finite entries.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -220,11 +220,11 @@ from the sum.</p></li>
 <dd><p>Shannon entropy of a modal fraction, in bits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>p</strong> (<em>ndarray</em>) – A modal fraction. Non-positive entries are set to NaN in place and
+<dd class="field-odd"><p><strong>p</strong> (<em>ndarray</em>) - A modal fraction. Non-positive entries are set to NaN in place and
 dropped from the sum.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>float</em> – <span class="math notranslate nohighlight">\(-\sum_i p_i \, \log_2(p_i)\)</span> over finite entries.</p>
+<dd class="field-even"><p><em>float</em> - <span class="math notranslate nohighlight">\(-\sum_i p_i \, \log_2(p_i)\)</span> over finite entries.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -240,13 +240,13 @@ entries (unphysical, e.g. noise-dominated estimates) are set to NaN.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ell</strong> (<em>ndarray</em>) – Multipole moments.</p></li>
-<li><p><strong>Cl</strong> (<em>ndarray</em>) – Angular power spectrum <span class="math notranslate nohighlight">\(C_\ell\)</span>. Modified in place where
+<li><p><strong>ell</strong> (<em>ndarray</em>) - Multipole moments.</p></li>
+<li><p><strong>Cl</strong> (<em>ndarray</em>) - Angular power spectrum <span class="math notranslate nohighlight">\(C_\ell\)</span>. Modified in place where
 negative.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em> – Normalized modal fraction over ell.</p>
+<dd class="field-even"><p><em>ndarray</em> - Normalized modal fraction over ell.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -261,20 +261,20 @@ the risk. The algorithm follows arXiv:1107.0516v2.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>ndarray</em>) – Data vector of length N.</p></li>
-<li><p><strong>error</strong> (<em>ndarray</em>) – One-sigma errors on the data. Used both for the inverse-variance
+<li><p><strong>data</strong> (<em>ndarray</em>) - Data vector of length N.</p></li>
+<li><p><strong>error</strong> (<em>ndarray</em>) - One-sigma errors on the data. Used both for the inverse-variance
 weights and as a diagonal stand-in for the covariance matrix (the
 off-diagonal terms are set to zero until a full covariance is
 available).</p></li>
-<li><p><strong>U</strong> (<em>ndarray, shape (N, N)</em>) – Orthogonal basis matrix from <cite>npf_makeU</cite>.</p></li>
-<li><p><strong>lType</strong> (<em>str</em>) – Shrinkage scheme: ‘NSS’ keeps the first j coefficients (Nested
+<li><p><strong>U</strong> (<em>ndarray, shape (N, N)</em>) - Orthogonal basis matrix from <cite>npf_makeU</cite>.</p></li>
+<li><p><strong>lType</strong> (<em>str</em>) - Shrinkage scheme: ‘NSS’ keeps the first j coefficients (Nested
 Subset Selection); ‘Fractional’ applies monotone fractional
 weights <span class="math notranslate nohighlight">\(2^{-i}\)</span>.</p></li>
-<li><p><strong>JRange</strong> (<em>list of int</em>) – [minJ, maxJ], the range of shrinkage parameters scanned.</p></li>
+<li><p><strong>JRange</strong> (<em>list of int</em>) - [minJ, maxJ], the range of shrinkage parameters scanned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>dict</em> – ‘nbf’  : the nonparametric best fit evaluated at the data points,
+<dd class="field-even"><p><em>dict</em> - ‘nbf’  : the nonparametric best fit evaluated at the data points,
 ‘Risk’ : the risk estimate at each J in the scan,
 ‘EDoF’ : the effective degrees of freedom at each J.</p>
 </dd>
@@ -290,7 +290,7 @@ weights <span class="math notranslate nohighlight">\(2^{-i}\)</span>.</p></li>
 <dd class="field-odd"><p><strong>p</strong> (<em>ndarray</em>)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em> – p divided by its nansum, so the finite entries sum to one.</p>
+<dd class="field-even"><p><em>ndarray</em> - p divided by its nansum, so the finite entries sum to one.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -302,12 +302,12 @@ weights <span class="math notranslate nohighlight">\(2^{-i}\)</span>.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>ndarray</em>) – Sample points in [0, 1].</p></li>
-<li><p><strong>basis</strong> (<em>callable</em>) – Basis function basis(j, x), e.g. <cite>basis_cos</cite> or <cite>basis_leg</cite>.</p></li>
+<li><p><strong>x</strong> (<em>ndarray</em>) - Sample points in [0, 1].</p></li>
+<li><p><strong>basis</strong> (<em>callable</em>) - Basis function basis(j, x), e.g. <cite>basis_cos</cite> or <cite>basis_leg</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray, shape (len(x), len(x))</em> – Column i holds basis(i, x)/sqrt(N), so that U is (approximately)
+<dd class="field-even"><p><em>ndarray, shape (len(x), len(x))</em> - Column i holds basis(i, x)/sqrt(N), so that U is (approximately)
 orthogonal: <span class="math notranslate nohighlight">\(U^T U \sim \mathrm{identity}\)</span>.</p>
 </dd>
 </dl>

@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab68666c" />
 
   
@@ -199,33 +199,33 @@ configurational entropy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>asymmetry_factor</strong> (<em>float</em>) – Asymmetry <span class="math notranslate nohighlight">\(g\)</span> of the potential;
+<li><p><strong>asymmetry_factor</strong> (<em>float</em>) - Asymmetry <span class="math notranslate nohighlight">\(g\)</span> of the potential;
 <span class="math notranslate nohighlight">\(\alpha = (3/\sqrt{2}) (1 + g)\)</span>. <span class="math notranslate nohighlight">\(g = 0\)</span> corresponds to
 the degenerate (thin-wall) limit.</p></li>
-<li><p><strong>dimension</strong> (<em>int</em>) – Number of SPATIAL dimensions d.</p></li>
-<li><p><strong>N</strong> (<em>int</em>) – Maximum number of radial integration steps (grid spacing dr = 0.01).</p></li>
+<li><p><strong>dimension</strong> (<em>int</em>) - Number of SPATIAL dimensions d.</p></li>
+<li><p><strong>N</strong> (<em>int</em>) - Maximum number of radial integration steps (grid spacing dr = 0.01).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>r</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Radial grid on which the bounce was accepted.</p></li>
-<li><p><strong>B</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Bounce profile <span class="math notranslate nohighlight">\(B(r)\)</span>.</p></li>
-<li><p><strong>DB</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Radial derivative <span class="math notranslate nohighlight">\(B'(r)\)</span> of the bounce profile.</p></li>
-<li><p><strong>B0</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Core value <span class="math notranslate nohighlight">\(B(0)\)</span> found by the shooting method.</p></li>
-<li><p><strong>Bmin</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Lower end of the initial bracket for the shooting method.</p></li>
-<li><p><strong>Bmax</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Upper end of the initial bracket for the shooting method.</p></li>
-<li><p><strong>PEdens</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Potential energy density.</p></li>
-<li><p><strong>GEdens</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Gradient energy density.</p></li>
-<li><p><strong>rho</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Total energy density.</p></li>
-<li><p><strong>PE</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Radially integrated potential energy.</p></li>
-<li><p><strong>GE</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Radially integrated gradient energy.</p></li>
-<li><p><strong>E</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Radially integrated total energy.</p></li>
-<li><p><strong>Se</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Euclidean action: rho integrated in d+1 dimensions (the O(d+1)
+<li><p><strong>r</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Radial grid on which the bounce was accepted.</p></li>
+<li><p><strong>B</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Bounce profile <span class="math notranslate nohighlight">\(B(r)\)</span>.</p></li>
+<li><p><strong>DB</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Radial derivative <span class="math notranslate nohighlight">\(B'(r)\)</span> of the bounce profile.</p></li>
+<li><p><strong>B0</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Core value <span class="math notranslate nohighlight">\(B(0)\)</span> found by the shooting method.</p></li>
+<li><p><strong>Bmin</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Lower end of the initial bracket for the shooting method.</p></li>
+<li><p><strong>Bmax</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Upper end of the initial bracket for the shooting method.</p></li>
+<li><p><strong>PEdens</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Potential energy density.</p></li>
+<li><p><strong>GEdens</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Gradient energy density.</p></li>
+<li><p><strong>rho</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Total energy density.</p></li>
+<li><p><strong>PE</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Radially integrated potential energy.</p></li>
+<li><p><strong>GE</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Radially integrated gradient energy.</p></li>
+<li><p><strong>E</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Radially integrated total energy.</p></li>
+<li><p><strong>Se</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Euclidean action: rho integrated in d+1 dimensions (the O(d+1)
 bounce interpretation of the static d-dimensional profile).</p></li>
-<li><p><strong>denFT</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Radial Fourier transform of rho.</p></li>
-<li><p><strong>k</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Wavenumber grid of denFT.</p></li>
-<li><p><strong>mf</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) – Modal fraction <code class="docutils literal notranslate"><span class="pre">|denFT|**2</span> <span class="pre">/</span> <span class="pre">max|denFT|**2</span></code>.</p></li>
-<li><p><strong>Sc</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – Configurational entropy, <span class="math notranslate nohighlight">\(-\int \mathrm{mf} \, \ln(\mathrm{mf})\)</span>
+<li><p><strong>denFT</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Radial Fourier transform of rho.</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Wavenumber grid of denFT.</p></li>
+<li><p><strong>mf</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>) - Modal fraction <code class="docutils literal notranslate"><span class="pre">|denFT|**2</span> <span class="pre">/</span> <span class="pre">max|denFT|**2</span></code>.</p></li>
+<li><p><strong>Sc</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) - Configurational entropy, <span class="math notranslate nohighlight">\(-\int \mathrm{mf} \, \ln(\mathrm{mf})\)</span>
 over k-space with the d-dimensional radial measure.</p></li>
 </ul>
 </dd>

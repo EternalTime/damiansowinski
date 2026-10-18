@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pyLEAFS.spatialhash &mdash; pyLEAFS 0.1.0 documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>pyLEAFS.spatialhash - pyLEAFS 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -85,8 +84,8 @@
 <span class="sd">A :class:`SpatialHash` buckets an arbitrary ``(n, D)`` set of points into the</span>
 <span class="sd">regions of a shared :class:`~pyLEAFS.grid.Grid`, then answers</span>
 <span class="sd">Moore-neighbourhood queries.</span>
-<span class="sd">It is deliberately agnostic about what the points are --- resources, foragers,</span>
-<span class="sd">predators --- so the same structure serves every layer. Unlike the resource</span>
+<span class="sd">It is deliberately agnostic about what the points are - resources, foragers,</span>
+<span class="sd">predators - so the same structure serves every layer. Unlike the resource</span>
 <span class="sd">field&#39;s internal buffer, this is a lightweight index rebuilt from a positions</span>
 <span class="sd">array on demand.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -161,7 +160,7 @@
 <span class="sd">        ~numpy.ndarray of int</span>
 <span class="sd">            Indices into the indexed positions array of every point whose</span>
 <span class="sd">            region is in the Moore neighbourhood of ``pos``. Not distance</span>
-<span class="sd">            filtered --- the caller refines with actual displacements.</span>
+<span class="sd">            filtered; the caller refines with actual displacements.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">D</span><span class="p">)</span>
         <span class="n">ridx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">region_of</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>

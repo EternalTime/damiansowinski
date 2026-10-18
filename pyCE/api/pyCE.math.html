@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ab68666c" />
 
   
@@ -204,15 +204,15 @@ utilities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>d</strong> (<em>int</em>) – Number of spatial dimensions.</p></li>
-<li><p><strong>f</strong> (<em>ndarray</em>) – Field values <span class="math notranslate nohighlight">\(f(r)\)</span> sampled on the radial grid <cite>r</cite>.</p></li>
-<li><p><strong>r</strong> (<em>ndarray</em>) – Radial grid. Assumed to start near 0 and be (close to) uniform.</p></li>
+<li><p><strong>d</strong> (<em>int</em>) - Number of spatial dimensions.</p></li>
+<li><p><strong>f</strong> (<em>ndarray</em>) - Field values <span class="math notranslate nohighlight">\(f(r)\)</span> sampled on the radial grid <cite>r</cite>.</p></li>
+<li><p><strong>r</strong> (<em>ndarray</em>) - Radial grid. Assumed to start near 0 and be (close to) uniform.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>ft</strong> (<em>ndarray</em>) – Radial Fourier transform evaluated on the returned k-grid.</p></li>
-<li><p><strong>k</strong> (<em>ndarray</em>) – Conjugate radial grid in k-space. It has 5x as many points as <cite>r</cite>
+<li><p><strong>ft</strong> (<em>ndarray</em>) - Radial Fourier transform evaluated on the returned k-grid.</p></li>
+<li><p><strong>k</strong> (<em>ndarray</em>) - Conjugate radial grid in k-space. It has 5x as many points as <cite>r</cite>
 with spacing pi/(10*r[-1]), i.e. it resolves down to half the
 fundamental mode of the box and extends to 5x the usual band limit.</p></li>
 </ul>
@@ -244,17 +244,17 @@ the same grid, e.g. at every output step of a simulation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>d</strong> (<em>int</em>) – Number of spatial dimensions.</p></li>
-<li><p><strong>r</strong> (<em>ndarray</em>) – Radial grid the matrix will act on.</p></li>
+<li><p><strong>d</strong> (<em>int</em>) - Number of spatial dimensions.</p></li>
+<li><p><strong>r</strong> (<em>ndarray</em>) - Radial grid the matrix will act on.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>F</strong> (<em>ndarray, shape (5*len(r), len(r))</em>) – Transform matrix. Trapezoidal weights (the half-weight on the first
+<li><p><strong>F</strong> (<em>ndarray, shape (5*len(r), len(r))</em>) - Transform matrix. Trapezoidal weights (the half-weight on the first
 point and the grid spacings) are folded into the columns, and the
 k = 0 row implements the same seven-point extrapolation used in
 <a class="reference internal" href="#pyCE.math.radialFT" title="pyCE.math.radialFT"><code class="xref py py-func docutils literal notranslate"><span class="pre">radialFT()</span></code></a>.</p></li>
-<li><p><strong>k</strong> (<em>ndarray</em>) – Conjugate radial grid in k-space (same convention as
+<li><p><strong>k</strong> (<em>ndarray</em>) - Conjugate radial grid in k-space (same convention as
 <a class="reference internal" href="#pyCE.math.radialFT" title="pyCE.math.radialFT"><code class="xref py py-func docutils literal notranslate"><span class="pre">radialFT()</span></code></a>).</p></li>
 </ul>
 </p>
@@ -272,13 +272,13 @@ rule, where <span class="math notranslate nohighlight">\(\Omega_d\)</span> is th
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> (<em>ndarray</em>) – Radial grid.</p></li>
-<li><p><strong>y</strong> (<em>ndarray</em>) – Integrand sampled on <cite>r</cite>.</p></li>
-<li><p><strong>d</strong> (<em>int</em>) – Number of spatial dimensions.</p></li>
+<li><p><strong>r</strong> (<em>ndarray</em>) - Radial grid.</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em>) - Integrand sampled on <cite>r</cite>.</p></li>
+<li><p><strong>d</strong> (<em>int</em>) - Number of spatial dimensions.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>float</em> – The d-dimensional volume integral of y.</p>
+<dd class="field-even"><p><em>float</em> - The d-dimensional volume integral of y.</p>
 </dd>
 </dl>
 </dd></dl>
