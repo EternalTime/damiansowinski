@@ -1,5 +1,5 @@
 {
-  "version": "27b0767e28408aab",
+  "version": "c595f43ac0fea23a",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -139,6 +139,7 @@
         "number": "9",
         "pages": "106--120",
         "year": "1916",
+        "doi": "10.1002/andp.19163550905",
         "url": "https://onlinelibrary.wiley.com/doi/10.1002/andp.19163550905"
       }
     },
@@ -180,11 +181,11 @@
     "nordstrom1918": {
       "type": "article",
       "fields": {
-        "title": "On the Energy of the Gravitational Field in Einstein's Theory",
+        "title": "On the Energy of the Gravitation Field in Einstein's Theory",
         "author": "Nordstr\\\"om, Gunnar",
-        "journal": "Verhandlungen der Koninklijke Akademie van Wetenschappen te Amsterdam",
-        "volume": "26",
-        "pages": "1201--1208",
+        "journal": "Proceedings of the Royal Netherlands Academy of Arts and Sciences",
+        "volume": "20",
+        "pages": "1238--1245",
         "year": "1918",
         "url": "https://dwc.knaw.nl/DL/publications/PU00012316.pdf#page=2.00"
       }
@@ -2039,6 +2040,7 @@
         "author": "Vaidya, Prahlad Chunilal",
         "journal": "Proceedings of the Indian Academy of Sciences, Section A",
         "volume": "33",
+        "number": "5",
         "pages": "264--276",
         "year": "1951",
         "doi": "10.1007/BF03173260",
@@ -4843,8 +4845,10 @@
         "author": "Tariq, N. and Tupper, B. O. J.",
         "journal": "Journal of Mathematical Physics",
         "volume": "15",
+        "number": "12",
         "pages": "2232--2235",
         "year": "1974",
+        "doi": "10.1063/1.1666604",
         "url": "https://doi.org/10.1063/1.1666604"
       }
     },
@@ -6547,6 +6551,7 @@
         "number": "5",
         "pages": "1335--1336",
         "year": "1969",
+        "doi": "10.1103/PhysRev.186.1335",
         "url": "https://doi.org/10.1103/PhysRev.186.1335"
       }
     },
@@ -7211,6 +7216,7 @@
         "author": "Robinson, Ivor and Trautman, Andrzej",
         "journal": "Proceedings of the Royal Society of London A",
         "volume": "265",
+        "number": "1323",
         "pages": "463--473",
         "year": "1962",
         "doi": "10.1098/rspa.1962.0036",
@@ -8394,6 +8400,7 @@
         "author": "Khan, K. A. and Penrose, Roger",
         "journal": "Nature",
         "volume": "229",
+        "number": "5281",
         "pages": "185--186",
         "year": "1971",
         "doi": "10.1038/229185a0",
@@ -8459,6 +8466,7 @@
         "author": "Chandrasekhar, Subrahmanyan and Xanthopoulos, Basilis C.",
         "journal": "Proceedings of the Royal Society of London A",
         "volume": "408",
+        "number": "1835",
         "pages": "175--208",
         "year": "1986",
         "doi": "10.1098/rspa.1986.0116",
@@ -8485,6 +8493,7 @@
         "author": "Matzner, Richard A. and Tipler, Frank J.",
         "journal": "Physical Review D",
         "volume": "29",
+        "number": "8",
         "pages": "1575--1583",
         "year": "1984",
         "doi": "10.1103/PhysRevD.29.1575",
@@ -16731,7 +16740,7 @@
     "krasinski1999datt": {
       "type": "article",
       "fields": {
-        "title": "Editor's Note: On a Class of Solutions of the Gravitation Equations of Relativity, by B. Datt",
+        "title": "Editor's Note: On a Class of Solutions of the Gravitation Equations of Relativity",
         "author": "Krasiński, Andrzej",
         "journal": "General Relativity and Gravitation",
         "volume": "31",
