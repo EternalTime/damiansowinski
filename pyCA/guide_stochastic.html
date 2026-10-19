@@ -118,11 +118,89 @@ Frustration makes it flip eagerly; alignment makes it hold fast, absolutely so a
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.203125
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.015625
 </pre></div>
 </div>
 </div>
 </div>
+<p>Let’s watch the two dynamics compete.
+We hold <code class="docutils literal notranslate"><span class="pre">stochfrac</span></code> at 0.6 and raise the temperature from left to right; time runs down each panel.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.4</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">T</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)):</span>
+    <span class="n">ica</span> <span class="o">=</span> <span class="n">ICA</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">stochfrac</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+              <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">ica</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">127</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ica</span><span class="o">.</span><span class="n">spacetime</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;$T = </span><span class="si">%g</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="n">T</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;cell&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a092f326609e244faf88eb8a36e0e7d8870a6a9aef243eafb9ad552edf47a4b5.png" src="_images/a092f326609e244faf88eb8a36e0e7d8870a6a9aef243eafb9ad552edf47a4b5.png" />
+</div>
+</div>
+<p>In the cold a thermal cell flips only when its neighbors frustrate it, so aligned regions hold, and the white patches are domains of zeros.
+They are zeros because rule 110 leaves a run of zeros alone, while it sends <code class="docutils literal notranslate"><span class="pre">111</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code> and eats into runs of ones.
+As <span class="math notranslate nohighlight">\(T\)</span> grows the heat bath flips aligned cells too, and by <span class="math notranslate nohighlight">\(T = 10\)</span> the domains have melted into noise.</p>
+<p>Now hold the temperature low, <span class="math notranslate nohighlight">\(T = 0.5\)</span>, and turn up <code class="docutils literal notranslate"><span class="pre">stochfrac</span></code> instead; at 0 we have rule 110 itself.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.4</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)):</span>
+    <span class="n">ica</span> <span class="o">=</span> <span class="n">ICA</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">stochfrac</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+              <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">ica</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">127</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ica</span><span class="o">.</span><span class="n">spacetime</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;stochfrac = </span><span class="si">%g</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">f</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;cell&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cc1a61d0e7e0adcd72796d8a6c81f38bb606a1d9448f6b945e4caa39cdc50134.png" src="_images/cc1a61d0e7e0adcd72796d8a6c81f38bb606a1d9448f6b945e4caa39cdc50134.png" />
+</div>
+</div>
+<p>Rule 110’s triangles thin out as the heat bath claims more of the lattice, and domains of zeros grow in their place.</p>
+<p>The mean energy per site measures this.
+We let each run settle for 100 steps, then average <code class="docutils literal notranslate"><span class="pre">ica.energy</span></code> over the next 400, for three values of <code class="docutils literal notranslate"><span class="pre">stochfrac</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">):</span>
+    <span class="n">meanEnergy</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">temperatures</span><span class="p">:</span>
+        <span class="n">ica</span> <span class="o">=</span> <span class="n">ICA</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">stochfrac</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+                  <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+        <span class="n">ica</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">400</span><span class="p">):</span>
+            <span class="n">ica</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>
+            <span class="n">energy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ica</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+        <span class="n">meanEnergy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">energy</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">meanEnergy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;stochfrac = </span><span class="si">%g</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">f</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;mean energy per site&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6f8a6b2fd4c36d87533d75650c6e0939305a07f1a83d9c1bf3e8ba5084e4680a.png" src="_images/6f8a6b2fd4c36d87533d75650c6e0939305a07f1a83d9c1bf3e8ba5084e4680a.png" />
+</div>
+</div>
+<p>At low temperature the three curves start close together, between -0.2 and -0.16.
+As the temperature rises they climb and fan out: the larger <code class="docutils literal notranslate"><span class="pre">stochfrac</span></code>, the closer the energy comes to zero, its value for independent cells that are equally likely to be 0 or 1.</p>
 <p>Sweep the temperature at fixed <code class="docutils literal notranslate"><span class="pre">stochfrac</span></code> and watch the energy respond; then sweep <code class="docutils literal notranslate"><span class="pre">stochfrac</span></code> at fixed temperature and watch rule 110’s gliders fight the noise.
 At what noise level do they stop surviving long enough to collide?
 Map it out.</p>

@@ -51,7 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../guide_viz.html">Visualization</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../api/pycoop.html">pycoop package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/pycoop.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">License &amp; Contact</a></li>
 </ul>
 
@@ -181,11 +181,16 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    G : networkx.Graph or adjacency array (no self-loops)</span>
-<span class="sd">    u : agreement threshold (flip requires abs(sigma_bar_j) &lt; u)</span>
-<span class="sd">    l : position threshold (flip requires abs(sigma_j) &gt; l)</span>
-<span class="sd">    T : timescale; inter-event tau ~ Exp with mean T/N by default</span>
-<span class="sd">    step_law : &quot;exp&quot; (default), a fixed step h &gt; 0, or a callable rng -&gt; tau</span>
+<span class="sd">    G : networkx.Graph or array_like</span>
+<span class="sd">        the graph, or its adjacency array, with no self-loops.</span>
+<span class="sd">    u : float</span>
+<span class="sd">        agreement threshold (flip requires abs(sigma_bar_j) &lt; u)</span>
+<span class="sd">    l : float</span>
+<span class="sd">        position threshold (flip requires abs(sigma_j) &gt; l)</span>
+<span class="sd">    T : float</span>
+<span class="sd">        timescale; inter-event tau ~ Exp with mean T/N by default</span>
+<span class="sd">    step_law : str, float or callable</span>
+<span class="sd">        &quot;exp&quot; (default), a fixed step h &gt; 0, or a callable rng -&gt; tau</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">step_law</span><span class="o">=</span><span class="s2">&quot;exp&quot;</span><span class="p">):</span>

@@ -123,11 +123,11 @@ For a frozen lattice it vanishes; for fair coin flips it equals <span class="mat
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 0.9999993790120885
-2 1.9999916752380584
-3 2.9999836967750024
-4 3.9999716428022727
-5 4.999936768386151
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 0.9999994885104995
+2 1.9999878338528025
+3 2.9999747368937504
+4 3.9999424821916856
+5 4.9999013412115865
 </pre></div>
 </div>
 </div>
@@ -145,7 +145,7 @@ It is the honest measure of randomness: rule 90’s diagram looks busy, but know
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9999651255838784
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9999588590199009
 </pre></div>
 </div>
 </div>
@@ -170,7 +170,7 @@ Plotted against distance it is a correlation function with information-theoretic
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/353c63d2bb21c89a335f1553dc474e43eb304b3b4f5912d945e3084e057b0280.png" src="_images/353c63d2bb21c89a335f1553dc474e43eb304b3b4f5912d945e3084e057b0280.png" />
+<img alt="_images/bbcd055b51b307eac3f69d4f0cc671227d5c77ff1e1f369b9dcb4096a144ec08.png" src="_images/bbcd055b51b307eac3f69d4f0cc671227d5c77ff1e1f369b9dcb4096a144ec08.png" />
 </div>
 </div>
 </section>
@@ -179,26 +179,29 @@ Plotted against distance it is a correlation function with information-theoretic
 <p>The block measures see nothing longer than <span class="math notranslate nohighlight">\(k\)</span> cells.
 <a class="reference internal" href="api/pyCA.measures.html#pyCA.measures.lz_complexity" title="pyCA.measures.lz_complexity"><span class="xref myst py py-func"><code class="docutils literal notranslate"><span class="pre">pyCA.measures.lz_complexity()</span></code></span></a> has no such horizon: it parses each row into the phrases of Lempel and Ziv’s 1976 exhaustive history<a class="footnote-reference brackets" href="#footcite-lempel1976" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> - each phrase the shortest word that cannot be produced by copying from what came before - and counts them with the scanning algorithm of Kaspar and Schuster<a class="footnote-reference brackets" href="#footcite-kaspar1987" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.
 A row with structure at <em>any</em> length reuses its past and parses into few phrases; only genuine novelty forces new ones.
-The count is normalized by <span class="math notranslate nohighlight">\(n/\log_2 n\)</span>, its asymptotic value for fair coin flips, so a random row reads near 1 and a frozen one near 0:</p>
+The count is normalized by <span class="math notranslate nohighlight">\(n/\log_2 n\)</span>, its asymptotic value for fair coin flips, so a random row reads near 1 and a frozen one near 0.
+Here we follow it in time for four rules started from the same random row.
+Rule 0 freezes after one step, rules 90 and 30 stay near 1, and rule 110 drifts down as its periodic background spreads:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyCA</span><span class="w"> </span><span class="kn">import</span> <span class="n">ECA</span><span class="p">,</span> <span class="n">measures</span>
 
 <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">110</span><span class="p">):</span>
     <span class="n">ca</span> <span class="o">=</span> <span class="n">ECA</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
     <span class="n">ca</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">measures</span><span class="o">.</span><span class="n">lz_complexity</span><span class="p">(</span><span class="n">ca</span><span class="o">.</span><span class="n">state</span><span class="p">))</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="n">ca</span><span class="o">.</span><span class="n">spacetime</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">st</span><span class="p">)),</span> <span class="p">[</span><span class="n">measures</span><span class="o">.</span><span class="n">lz_complexity</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">st</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;rule </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">rule</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time step&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;LZ complexity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 0.01953125
-90 1.03515625
-30 1.064453125
-110 0.72265625
-</pre></div>
-</div>
+<img alt="_images/07cb7ae19ced966749ebd93df223f3d7eac7dc80f87fd0c55d622047cd86714a.png" src="_images/07cb7ae19ced966749ebd93df223f3d7eac7dc80f87fd0c55d622047cd86714a.png" />
 </div>
 </div>
 <p>Two cautions.
