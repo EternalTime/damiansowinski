@@ -548,7 +548,7 @@ The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, wh
 
 ### Bowers and Liang's Anisotropic Star
 
-A static star of uniform density whose pressure across the radius differs from its pressure along the radius. Richard Bowers and E. P. T. Liang solved it in 1974: with the sideways pressure the greater of the two, it holds more mass and reddens its light more than Schwarzschild's star of the same density can.
+A static star of uniform density whose pressure across the radius differs from its pressure along the radius. Richard Bowers and Edison Liang solved it in 1974: with the sideways pressure the greater of the two, it holds more mass and reddens its light more than Schwarzschild's star of the same density can.
 
 - id: `bowers_liang`
 - tags: anisotropic pressure, tangential pressure, static, stationary, spherically symmetric, stellar interior, compactness, maximum mass, quasar, regular centre, no horizon, matched solution, mass, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, hydrostatic equilibrium, gravitational redshift

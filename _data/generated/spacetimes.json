@@ -1806,6 +1806,7 @@
         "gibbons1983",
         "horowitz1998",
         "witten1982kk",
+        "brill1989",
         "brill1991",
         "witten1998thermal",
         "gubser1996",
@@ -2505,7 +2506,7 @@
         {
           "id": "schwarzschild",
           "kind": "family",
-          "text": "A Weyl field too, built on Newton's potential of a rod on the axis [antoci2001]. M. Basovník and Oldřich Semerák set the ring around Schwarzschild's hole and found the curvature inside the horizon strongly changed [basovnik2016]."
+          "text": "A Weyl field too, built on Newton's potential of a rod on the axis [antoci2001]. Marek Basovník and Oldřich Semerák set the ring around Schwarzschild's hole and found the curvature inside the horizon strongly changed [basovnik2016]."
         },
         {
           "id": "kerr",
@@ -4689,6 +4690,7 @@
         "taub1951",
         "ellismaccallum1969",
         "misner1969",
+        "misner1994",
         "bkl1970",
         "kasner1921",
         "misner1963",
@@ -5104,11 +5106,11 @@
       ],
       "references": [
         "caldwell2003",
-        "nojiri2005",
         "caldwell2002",
         "starobinsky2000",
         "mcinnes2002",
         "chiba2005",
+        "nojiri2005",
         "barrow2004",
         "fernandezjambrina2004",
         "ellis1973",
@@ -9389,6 +9391,7 @@
         "wiltshire1986",
         "beroiz2007",
         "myers1988",
+        "gleiser2005",
         "deser2003",
         "charmousis2008",
         "gurses2020",
@@ -9716,7 +9719,7 @@
       "id": "bowers_liang",
       "name": "Bowers and Liang's Anisotropic Star",
       "short_name": "Bowers-Liang Star",
-      "description": "A static star of uniform density whose pressure across the radius differs from its pressure along the radius. Richard Bowers and E. P. T. Liang solved it in 1974: with the sideways pressure the greater of the two, it holds more mass and reddens its light more than Schwarzschild's star of the same density can.",
+      "description": "A static star of uniform density whose pressure across the radius differs from its pressure along the radius. Richard Bowers and Edison Liang solved it in 1974: with the sideways pressure the greater of the two, it holds more mass and reddens its light more than Schwarzschild's star of the same density can.",
       "tags": [
         "anisotropic pressure",
         "tangential pressure",
@@ -9913,7 +9916,7 @@
         {
           "id": "schwarzschild",
           "kind": "special_case",
-          "text": "The sphere with no scalar charge. At $C = 0$, where $\\lambda = 1$, the field $\\phi$ is constant and the metric is Schwarzschild's in isotropic coordinates, with its horizon at $\\rho = B$ [bransdicke1961]."
+          "text": "The sphere with no scalar charge. At $C = 0$, where $\\lambda = 1$, the field $\\phi$ is constant and the metric is Schwarzschild's in isotropic coordinates, with its horizon at $\\rho = B$ [faraoni2016]."
         },
         {
           "id": "ppn_metric",
@@ -9940,6 +9943,7 @@
         "bransdicke1961",
         "brans2014",
         "will2014",
+        "faraoni2016",
         "thornewill1971",
         "dickegoldenberg1967",
         "dicke1962",
@@ -9948,7 +9952,6 @@
         "fisher1948",
         "bronnikov1973",
         "bronnikov1997",
-        "faraoni2016",
         "agnese1995",
         "brans1962",
         "campanelli1993",
@@ -10497,9 +10500,9 @@
         "nut1963",
         "misner1963",
         "clement2016",
+        "halla2023",
         "reissner1916",
         "nordstrom1918",
-        "halla2023",
         "morris1988",
         "clement2018",
         "hartle1972",
