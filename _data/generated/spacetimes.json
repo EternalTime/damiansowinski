@@ -6994,7 +6994,7 @@
             },
             {
               "symbol": "\\beta = \\beta(u,\\ell,\\theta)",
-              "description": "Dimensionless function, with $-e^{2\\beta}d\\ell/\\ell^2$ the affine distance along an outgoing ray. In vacuum $\\partial_\\ell\\beta = \\tfrac{1}{2}\\ell\\left(\\partial_\\ell\\gamma\\right)^2$, which no component assumes"
+              "description": "Dimensionless function, with $-e^{2\\beta}d\\ell/\\ell^2$ the affine distance along an outgoing ray. In vacuum $\\partial_\\ell\\beta = -\\tfrac{1}{2}\\ell\\left(\\partial_\\ell\\gamma\\right)^2$, which no component assumes"
             },
             {
               "symbol": "U = U(u,\\ell,\\theta)",
