@@ -1,0 +1,170 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Applet - pyLEAFS 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5b8a0f43" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=e5238352"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The model" href="theory.html" />
+    <link rel="prev" title="Getting started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyLEAFS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Applet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">The model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_core.html">Architecture</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pyLEAFS.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License &amp; Contact</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyLEAFS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Applet</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/applet.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+  <section id="applet">
+<h1>Applet<a class="headerlink" href="#applet" title="Link to this heading"></a></h1>
+<link rel="stylesheet" href="_static/leafs_applet.css">
+<div id="leafs-app"></div>
+<script src="_static/leafs_applet.js"></script><p>The 2d world of pyLEAFS, running live in your browser. It is the world
+<a class="reference internal" href="api/pyLEAFS.simulation.html#pyLEAFS.simulation.Simulation.forager" title="pyLEAFS.simulation.Simulation.forager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">forager()</span></code></a> builds, with the same rules and
+parameters, applied in the same order: the births and deaths of
+<a class="reference internal" href="api/pyLEAFS.fields.html#pyLEAFS.fields.ResourceField" title="pyLEAFS.fields.ResourceField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code></a>, region by region, then the steering,
+motion, harvest, metabolism, budding and death of
+<a class="reference internal" href="api/pyLEAFS.population.html#pyLEAFS.population.Population" title="pyLEAFS.population.Population"><code class="xref py py-class docutils literal notranslate"><span class="pre">Population</span></code></a>, stage by stage. Nothing is
+precomputed.</p>
+<p>The applet is yours to take apart. It lives in the library’s repository as
+<a class="reference external" href="https://github.com/EternalTime/LEAFS/blob/master/docs/_static/leafs_applet.js">docs/_static/leafs_applet.js</a>:
+plain JavaScript with no build step and no dependencies. The first part is the
+model, ported line for line from the modules it documents, along with the
+samplers behind its random numbers. The rest draws the world and its two
+panels. All of the model’s randomness passes through one function, <code class="docutils literal notranslate"><span class="pre">draw</span></code>, so
+you can feed it the draws of a seeded Python run and compare the two step by
+step.</p>
+<p>Green dots are resources and pink disks are foragers, each sized by its fuel,
+with a short line showing its heading. The world starts where the Python one
+does: the field near its equilibrium of
+<span class="math notranslate nohighlight">\(N_\mathrm{eq} = \Gamma L^2/(\epsilon\gamma)\)</span> resources per region, and
+five foragers with full tanks, which bud on the first step. The top panel on the
+right follows the census, each population divided by its carrying capacity,
+<span class="math notranslate nohighlight">\(N_A^{\max} = \Gamma V/\mu_0\)</span> for the foragers and
+<span class="math notranslate nohighlight">\(N_R^{\max} = \Gamma\tau_E V/\epsilon\)</span> for the resources: the foragers
+boom, graze the field down, and settle. Below it the phase plane shows the same
+run on log axes, with the equilibrium line
+<span class="math notranslate nohighlight">\(N_R/N_R^{\max} + N_A/N_A^{\max} = 1\)</span> of <a class="reference internal" href="theory.html"><span class="doc">The model</span></a> dashed.</p>
+<p>The census settles on that line wherever the foragers survive, as long as
+<span class="math notranslate nohighlight">\(\Xi\)</span> stays above about 0.2. At steady state the energy flowing in,
+<span class="math notranslate nohighlight">\(\Gamma V\)</span>, is either burned by the foragers, <span class="math notranslate nohighlight">\(\mu_0 N_A\)</span>, or lost
+when a resource decays, <span class="math notranslate nohighlight">\(\gamma\epsilon N_R\)</span>, and the sliders move
+the point along the line. Toward the bottom of the <span class="math notranslate nohighlight">\(\Xi\)</span> slider a single
+resource is worth most of a tank, and the energy that spills past a full one is
+lost too, so the census sits under the line. Narrow the sensing radius toward
+<span class="math notranslate nohighlight">\(r_\mathrm{col}\)</span> and the foragers, nearly blind, find food by bumping
+into it; they still get by, but fewer of them, on a fuller field. Speed them up
+and they graze the field bare and close in on <span class="math notranslate nohighlight">\(N_A^{\max}\)</span>. The
+homogeneity <span class="math notranslate nohighlight">\(\Xi\)</span> decides how the same energy is divided: slide it down
+for a few rich resources far apart, up for a pasture of lean ones, and watch the
+census swing harder in the sparse world.</p>
+<p>Tap a forager to follow it. A ring marks it, a faint circle its sensing radius,
+and a pink line its recent path, and the readout adds its fuel, age, harvest and
+offspring. Tap empty ground to drop in a new forager there, with a full tank and
+a random heading, as a click does in the <a class="reference internal" href="api/pyLEAFS.viewer.html#pyLEAFS.viewer.Viewer" title="pyLEAFS.viewer.Viewer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Viewer</span></code></a>. In
+Python the parameters are fixed when the world is built; here the sliders act on
+the running world, and Reset builds a fresh one from their values.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="theory.html" class="btn btn-neutral float-right" title="The model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Damian Sowinski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -9,6 +9,7 @@
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5b8a0f43" />
 
   
@@ -45,6 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../applet.html">Applet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../theory.html">The model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../guide_core.html">Architecture</a></li>
 </ul>
@@ -364,9 +366,14 @@
             <span class="k">if</span> <span class="n">disp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">d2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,ij-&gt;i&quot;</span><span class="p">,</span> <span class="n">disp</span><span class="p">,</span> <span class="n">disp</span><span class="p">)</span>
-            <span class="n">hits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">d2</span> <span class="o">&lt;=</span> <span class="n">r2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">harvest</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">rids</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">slots</span><span class="p">[</span><span class="n">j</span><span class="p">])):</span>
+            <span class="n">hits</span> <span class="o">=</span> <span class="n">d2</span> <span class="o">&lt;=</span> <span class="n">r2</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">hits</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="c1"># each hit once, highest slot first within its region, so that a</span>
+            <span class="c1"># swap-delete never moves a resource still waiting to be taken</span>
+            <span class="n">hits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">rids</span><span class="p">[</span><span class="n">hits</span><span class="p">],</span> <span class="n">slots</span><span class="p">[</span><span class="n">hits</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">rid</span><span class="p">,</span> <span class="n">slot</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">harvest</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">rid</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">slot</span><span class="p">)):</span>
                     <span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">resource</span><span class="o">.</span><span class="n">epsilon</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_harvested</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">energy</span>

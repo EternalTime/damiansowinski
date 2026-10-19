@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5b8a0f43" />
 
   
@@ -26,7 +27,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Architecture" href="guide_core.html" />
-    <link rel="prev" title="Getting started" href="getting_started.html" /> 
+    <link rel="prev" title="Applet" href="applet.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,6 +51,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-resource-field">The resource field</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#homogeneity">Homogeneity</a></li>
@@ -116,6 +118,34 @@ descendant of the MATLAB <code class="docutils literal notranslate"><span class=
 <div class="math notranslate nohighlight">
 \[N_\mathrm{eq} = \frac{\Gamma\,L^{D}}{\epsilon\,\gamma},\]</div>
 <p>which <a class="reference internal" href="api/pyLEAFS.fields.html#pyLEAFS.fields.ResourceField" title="pyLEAFS.fields.ResourceField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceField</span></code></a> exposes as <code class="docutils literal notranslate"><span class="pre">N_eq</span></code>.</p>
+<p>Start the field empty, with no agents, and it fills toward that count on the
+timescale <span class="math notranslate nohighlight">\(1/\gamma\)</span>. The dashed line is <span class="math notranslate nohighlight">\(N_\mathrm{eq}\)</span> summed over
+the regions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyLEAFS</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simulation</span><span class="p">,</span> <span class="n">palette</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_agents</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">field</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">field</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span> <span class="n">n0</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3000</span><span class="p">):</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">total</span><span class="p">())</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">dt</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3001</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="o">.</span><span class="n">resource_deep</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">N_eq</span> <span class="o">*</span> <span class="n">sim</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">n_regions</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;resources&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="_images/theory-1.png" class="plot-directive" src="_images/theory-1.png" />
+</figure>
 </section>
 <section id="homogeneity">
 <h2>Homogeneity<a class="headerlink" href="#homogeneity" title="Link to this heading"></a></h2>
@@ -138,6 +168,30 @@ spaced. Large <span class="math notranslate nohighlight">\(\Xi\)</span> is a <em
 packed. Homogeneity is the central control variable of the whole research
 program: the semantic-information threshold, the foraging phenotypes, and the
 punctuated evolutionary dynamics are all studied as functions of <span class="math notranslate nohighlight">\(\Xi\)</span>.</p>
+<p>Two newly filled fields on a <span class="math notranslate nohighlight">\(3 \times 3\)</span> grid of regions show the two
+ends, each dot’s area proportional to its resource’s energy <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyLEAFS</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simulation</span><span class="p">,</span> <span class="n">palette</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">Xi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)):</span>
+    <span class="n">sim</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">Xi</span><span class="o">=</span><span class="n">Xi</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">food</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">positions</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">food</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">food</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span> <span class="o">*</span> <span class="n">field</span><span class="o">.</span><span class="n">epsilon</span><span class="p">,</span>
+               <span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="o">.</span><span class="n">resource_deep</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">extent</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">extent</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\Xi = </span><span class="si">%g</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="n">Xi</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="_images/theory-2.png" class="plot-directive" src="_images/theory-2.png" />
+</figure>
 </section>
 <section id="the-agent">
 <h2>The agent<a class="headerlink" href="#the-agent" title="Link to this heading"></a></h2>
@@ -173,6 +227,41 @@ the <a class="reference internal" href="index.html"><span class="doc">pyLEAFS</s
 daughter a short distance away and the two split the fuel equally. An agent dies
 when <span class="math notranslate nohighlight">\(s \le 0\)</span>. In v1 the daughter is an exact clone; mutation of a genome
 is a <em>(later layer)</em>.</p>
+<p>Track one agent by its <code class="docutils literal notranslate"><span class="pre">id</span></code>: it starts full and buds on its first step, and
+from then on you see its fuel drain at the steady rate <span class="math notranslate nohighlight">\(\mu_0\)</span>, jump by
+<span class="math notranslate nohighlight">\(\epsilon\)</span> with each resource it collects, and halve when it reaches the
+budding threshold, the dashed line.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyLEAFS</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simulation</span><span class="p">,</span> <span class="n">palette</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pop</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># A bud halves the fuel within a step, so on a step where the agent buds</span>
+<span class="c1"># we also draw the fuel it had just before, twice what is left after.</span>
+<span class="n">t</span><span class="p">,</span> <span class="n">fuel</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1001</span><span class="p">):</span>
+    <span class="n">buds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">offspring</span><span class="p">[</span><span class="n">pop</span><span class="o">.</span><span class="n">index_of</span><span class="p">(</span><span class="n">agent</span><span class="p">)])</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="n">index_of</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pop</span><span class="o">.</span><span class="n">offspring</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">buds</span><span class="p">:</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">sim</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
+        <span class="n">fuel</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pop</span><span class="o">.</span><span class="n">fuel</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">sim</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
+    <span class="n">fuel</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">fuel</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fuel</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="o">.</span><span class="n">motor_wine</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">repro_threshold</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;fuel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="_images/theory-3.png" class="plot-directive" src="_images/theory-3.png" />
+</figure>
 </section>
 <section id="population-dynamics">
 <h2>Population dynamics<a class="headerlink" href="#population-dynamics" title="Link to this heading"></a></h2>
@@ -192,6 +281,39 @@ oscillation about this line rather than going extinct; that is the behavior the
 v1 test suite pins. Plotting the trajectory in the
 <span class="math notranslate nohighlight">\((N_R/N_R^{\max},\,N_A/N_A^{\max})\)</span> plane, and detecting the transition
 onto the equilibrium line, is the first of the <em>(later)</em> observables.</p>
+<p>A run of the default world shows the two normalized counts and their
+sum. The agents overshoot, graze the field down, and from then on the sum
+hovers about 1.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyLEAFS</span><span class="w"> </span><span class="kn">import</span> <span class="n">Simulation</span><span class="p">,</span> <span class="n">palette</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">forager</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">field</span><span class="p">,</span> <span class="n">pop</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sim</span><span class="o">.</span><span class="n">populations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">NR_max</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">N_eq</span> <span class="o">*</span> <span class="n">sim</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">n_regions</span>
+<span class="n">NA_max</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">Gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">extent</span><span class="p">)</span> <span class="o">/</span> <span class="n">pop</span><span class="o">.</span><span class="n">mu0</span>
+
+<span class="n">nR</span><span class="p">,</span> <span class="n">nA</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2000</span><span class="p">):</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">nR</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">total</span><span class="p">()</span> <span class="o">/</span> <span class="n">NR_max</span><span class="p">)</span>
+    <span class="n">nA</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">count</span> <span class="o">/</span> <span class="n">NA_max</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">dt</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2001</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">nR</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="o">.</span><span class="n">resource_deep</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$N_R/N_R^{\max}$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">nA</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="o">.</span><span class="n">motor_wine</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$N_A/N_A^{\max}$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nR</span><span class="p">,</span> <span class="n">nA</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;normalized count&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="_images/theory-4.png" class="plot-directive" src="_images/theory-4.png" />
+</figure>
 </section>
 <section id="semantic-information">
 <h2>Semantic information<a class="headerlink" href="#semantic-information" title="Link to this heading"></a></h2>
@@ -226,7 +348,7 @@ observables: semantic information, mutual information, and transfer entropy.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="applet.html" class="btn btn-neutral float-left" title="Applet" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="guide_core.html" class="btn btn-neutral float-right" title="Architecture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
