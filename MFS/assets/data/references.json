@@ -1,5 +1,5 @@
 {
-  "version": "76f379071b915728",
+  "version": "ca735e82dbaf6cca",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -5856,8 +5856,10 @@
         "author": "Weyl, Hermann",
         "journal": "Annalen der Physik",
         "volume": "359",
+        "number": "18",
         "pages": "117--145",
         "year": "1917",
+        "doi": "10.1002/andp.19173591804",
         "url": "https://doi.org/10.1002/andp.19173591804"
       }
     },
@@ -5894,8 +5896,10 @@
         "author": "Graves, John C. and Brill, Dieter R.",
         "journal": "Physical Review",
         "volume": "120",
+        "number": "4",
         "pages": "1507--1513",
         "year": "1960",
+        "doi": "10.1103/PhysRev.120.1507",
         "url": "https://doi.org/10.1103/PhysRev.120.1507"
       }
     },
@@ -5918,6 +5922,7 @@
         "author": "Majumdar, Sudhansu Datta",
         "journal": "Physical Review",
         "volume": "72",
+        "number": "5",
         "pages": "390--398",
         "year": "1947",
         "doi": "10.1103/PhysRev.72.390",
@@ -5931,6 +5936,7 @@
         "author": "Hartle, J. B. and Hawking, S. W.",
         "journal": "Communications in Mathematical Physics",
         "volume": "26",
+        "number": "2",
         "pages": "87--101",
         "year": "1972",
         "doi": "10.1007/BF01645696",
@@ -5968,8 +5974,10 @@
         "author": "Poisson, E. and Israel, W.",
         "journal": "Physical Review Letters",
         "volume": "63",
+        "number": "16",
         "pages": "1663--1666",
         "year": "1989",
+        "doi": "10.1103/PhysRevLett.63.1663",
         "url": "https://doi.org/10.1103/PhysRevLett.63.1663"
       }
     },
@@ -8444,6 +8452,7 @@
         "author": "Nutku, Yavuz and Halil, Mustafa",
         "journal": "Physical Review Letters",
         "volume": "39",
+        "number": "22",
         "pages": "1379--1382",
         "year": "1977",
         "doi": "10.1103/PhysRevLett.39.1379",
@@ -8457,6 +8466,7 @@
         "author": "Chandrasekhar, Subrahmanyan and Ferrari, Valeria",
         "journal": "Proceedings of the Royal Society of London A",
         "volume": "396",
+        "number": "1810",
         "pages": "55--74",
         "year": "1984",
         "doi": "10.1098/rspa.1984.0108",
@@ -15333,7 +15343,7 @@
     "hawking1999rotation": {
       "type": "article",
       "fields": {
-        "title": "Rotation and the AdS/CFT correspondence",
+        "title": "Rotation and the AdS-CFT correspondence",
         "author": "Hawking, S. W. and Hunter, C. J. and Taylor-Robinson, M. M.",
         "journal": "Physical Review D",
         "volume": "59",
@@ -24970,6 +24980,7 @@
         "address": "New York",
         "pages": "227--265",
         "year": "1962",
+        "note": "Republished in General Relativity and Gravitation 40, 1997-2027 (2008)",
         "doi": "10.1007/s10714-008-0661-1",
         "eprint": "gr-qc/0405109",
         "archiveprefix": "arXiv",

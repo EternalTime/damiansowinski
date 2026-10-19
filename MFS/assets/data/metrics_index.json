@@ -229,7 +229,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "f1f954f0d7ebd327",
+    "version": "26135b8921aa7d35",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -692,7 +692,7 @@
       "idealized model",
       "rigid rotation"
     ],
-    "version": "8a91035f18f38de1",
+    "version": "5dd37517ea96051d",
     "diagrams": "f0fbc5b3a954d5c0",
     "conformal": "35ac3817c45f10f9",
     "embedding": "b7f898b0ae23639c"
@@ -1037,7 +1037,7 @@
       "stationary",
       "black hole pair creation"
     ],
-    "version": "caf3f403f2d914e5",
+    "version": "6c5665e3891ae005",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
@@ -1068,7 +1068,7 @@
       "idealized model",
       "Einstein equations"
     ],
-    "version": "763886e218bcd3be",
+    "version": "0340f47f870b699d",
     "diagrams": "e8c5af81ff1b23c6",
     "conformal": "065779d03ab6d15d",
     "embedding": "3437f058dfb1c91b"
@@ -1110,7 +1110,7 @@
       "idealized model",
       "point charge"
     ],
-    "version": "745615d3f079c075",
+    "version": "481442897f513ac7",
     "diagrams": "0c8055201b356841",
     "conformal": "67014d080f0dd52b",
     "embedding": "2c30edaa0cee4bdc"
@@ -1138,7 +1138,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "cac3a02871396c95",
+    "version": "565208530e40db19",
     "diagrams": "df6268c48408964f",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
@@ -4759,7 +4759,7 @@
       "conformally flat",
       "three-dimensional"
     ],
-    "version": "c198fecfe9feb2df",
+    "version": "dcbc4e817b0a0f22",
     "diagrams": "9feb8b9b0371232c",
     "conformal": "53ebebdf4e877f10",
     "embedding": "64e28e383710d26c"
