@@ -1,5 +1,5 @@
 {
-  "version": "ca735e82dbaf6cca",
+  "version": "7b10c02b45a5e1b1",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -19,8 +19,9 @@
         "author": "Minkowski, Hermann",
         "journal": "Physikalische Zeitschrift",
         "volume": "10",
-        "pages": "75--88",
+        "pages": "104--111",
         "year": "1909",
+        "note": "English translation by W. Perrett and G. B. Jeffery in The Principle of Relativity (Dover, New York, 1952)",
         "url": "https://en.wikisource.org/wiki/Translation:Space_and_Time"
       }
     },
@@ -101,10 +102,10 @@
         "title": "The Radial Velocity of the Andromeda Nebula",
         "author": "Slipher, Vesto M.",
         "journal": "Lowell Observatory Bulletin",
-        "volume": "1",
+        "volume": "2",
         "pages": "56--57",
         "year": "1913",
-        "url": "https://ui.adsabs.harvard.edu/scan/manifest/1914PA.....22...19S"
+        "url": "https://www.roe.ac.uk/~jap/slipher/slipher_1913.pdf"
       }
     },
     "schwarzschild1916": {
@@ -352,7 +353,8 @@
         "volume": "10",
         "pages": "377--386",
         "year": "1922",
-        "url": "https://www.lorentz.leidenuniv.nl/Friedmann/On_the_geometry_of_curved_space/translation_Friedmann_1922.pdf"
+        "doi": "10.1007/BF01332580",
+        "url": "https://doi.org/10.1007/BF01332580"
       }
     },
     "wirtz1922": {
@@ -469,6 +471,7 @@
         "author": "G\\\"odel, Kurt",
         "journal": "Reviews of Modern Physics",
         "volume": "21",
+        "number": "3",
         "pages": "447--450",
         "year": "1949",
         "doi": "10.1103/RevModPhys.21.447",
@@ -684,6 +687,7 @@
         "journal": "Physical Review",
         "volume": "116",
         "pages": "1027--1034",
+        "doi": "10.1103/PhysRev.116.1027",
         "year": "1959",
         "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.116.1027"
       }
@@ -733,7 +737,7 @@
         "author": "Misner, Charles W and Thorne, Kip S and Wheeler, John Archibald",
         "year": "1973",
         "publisher": "W. H. Freeman",
-        "url": "https://press.princeton.edu/books/hardcover/9780691177793/gravitation?srsltid=AfmBOoqDvJhIsKXM48y2Yr-vsNBSPqBMEI4RCplggdIVS00x7GElskCM"
+        "url": "https://press.princeton.edu/books/hardcover/9780691177793/gravitation"
       }
     },
     "bronnikov1973": {
@@ -793,7 +797,7 @@
         "author": "Wald, Robert M",
         "year": "1984",
         "publisher": "University of Chicago Press",
-        "url": "https://icourse.club/uploads/files/b10bbb171326589762e3f2784ba527888988f8f5.pdf"
+        "url": "https://press.uchicago.edu/ucp/books/book/chicago/G/bo5952261.html"
       }
     },
     "morris1988": {
@@ -824,7 +828,7 @@
       "type": "misc",
       "fields": {
         "title": "Hermann Minkowski's Spacetime: The Theory that Einstein Overlooked",
-        "author": "Noreika, David",
+        "author": "Nolte, David D.",
         "year": "2021",
         "journal": "Galileo Unbound",
         "url": "https://galileo-unbound.blog/2021/04/24/hermann-minkowskis-spacetime-the-theory-that-einstein-overlooked/"
@@ -1804,7 +1808,7 @@
     "krasnikov2003": {
       "type": "article",
       "fields": {
-        "title": "The quantum inequalities do not forbid spacetime shortcuts",
+        "title": "Quantum inequalities do not forbid spacetime shortcuts",
         "author": "Krasnikov, S.",
         "journal": "Physical Review D",
         "volume": "67",
@@ -1852,6 +1856,7 @@
         "volume": "60",
         "number": "1",
         "pages": "22--42",
+        "doi": "10.1086/289716",
         "year": "1993",
         "url": "https://www.cambridge.org/core/journals/philosophy-of-science/article/abs/forever-is-a-day-supertasks-in-pitowsky-and-malamenthogarth-spacetimes/AD62CAFBCE764122E05CDA1B9C3C191F"
       }
@@ -2016,7 +2021,7 @@
         "journal": "Physical Review D",
         "volume": "33",
         "number": "8",
-        "pages": "2182--2188",
+        "pages": "2182--2195",
         "year": "1986",
         "doi": "10.1103/PhysRevD.33.2182",
         "url": "https://link.aps.org/doi/10.1103/PhysRevD.33.2182"
@@ -2124,9 +2129,15 @@
       "fields": {
         "title": "The fate of the failed supernova candidate M31-2014-DS1",
         "author": "Beasor, Emma R. and others",
-        "journal": "arXiv preprint arXiv:2601.05317",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "546",
+        "number": "3",
+        "pages": "stag052",
         "year": "2026",
-        "url": "https://arxiv.org/abs/2601.05317"
+        "doi": "10.1093/mnras/stag052",
+        "eprint": "2601.05317",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1093/mnras/stag052"
       }
     },
     "bianchi1898": {
@@ -3846,6 +3857,16 @@
         "url": "https://archive.org/details/contactnovel00saga"
       }
     },
+    "nova1999timetravel": {
+      "type": "misc",
+      "fields": {
+        "title": "Time Travel",
+        "author": "{NOVA}",
+        "howpublished": "PBS, first broadcast 12 October 1999; transcript",
+        "year": "1999",
+        "url": "https://www.pbs.org/wgbh/nova/transcripts/2612time.html"
+      }
+    },
     "einstein1935": {
       "type": "article",
       "fields": {
@@ -3891,7 +3912,7 @@
       "fields": {
         "title": "General relativistic non-linear field: a kink solution in a Schwarzschild geometry",
         "author": "Kodama, T.",
-        "journal": "Centro Brasileiro de Pesquisas F\\'{\\i}sicas, Notas de F\\'{\\i}sica CBPF-NF-003/78",
+        "journal": "Centro Brasileiro de Pesquisas F\\'{\\i}sicas, Notas de F\\'{\\i}sica CBPF-A0003/78",
         "year": "1978",
         "url": "https://cbpfindex.cbpf.br/publication_pdfs/nf00378.2012_04_16_11_31_00.pdf"
       }
@@ -3915,7 +3936,7 @@
       "fields": {
         "title": "Properties of general relativistic kink solution",
         "author": "Kodama, T. and de Oliveira, L. C. S. and Santos, F. C.",
-        "journal": "Centro Brasileiro de Pesquisas F\\'{\\i}sicas, Notas de F\\'{\\i}sica CBPF-NF-036/78",
+        "journal": "Centro Brasileiro de Pesquisas F\\'{\\i}sicas, Notas de F\\'{\\i}sica CBPF-A0036/78",
         "year": "1978",
         "url": "https://cbpfindex.cbpf.br/publication_pdfs/nf03678.2012_04_18_16_51_29.pdf"
       }
@@ -4006,6 +4027,7 @@
         "author": "Hawking, S. W.",
         "journal": "Physical Review D",
         "volume": "46",
+        "number": "2",
         "pages": "603--611",
         "year": "1992",
         "doi": "10.1103/PhysRevD.46.603",
@@ -4243,9 +4265,12 @@
         "author": "Friedman, John L. and Schleich, Kristin and Witt, Donald M.",
         "journal": "Physical Review Letters",
         "volume": "71",
+        "number": "10",
         "pages": "1486--1489",
         "year": "1993",
         "doi": "10.1103/PhysRevLett.71.1486",
+        "eprint": "gr-qc/9305017",
+        "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/gr-qc/9305017"
       }
     },
@@ -5298,6 +5323,7 @@
         "journal": "The Astrophysical Journal",
         "volume": "140",
         "pages": "417--433",
+        "doi": "10.1086/147938",
         "year": "1964",
         "url": "https://doi.org/10.1086/147938"
       }
@@ -5869,11 +5895,13 @@
         "title": "Selected Solutions of Einstein's Field Equations: Their Role in General Relativity and Astrophysics",
         "author": "Bič\\'ak, Jiř\\'i",
         "booktitle": "Einstein's Field Equations and Their Physical Implications",
+        "editor": "Schmidt, Bernd G.",
         "series": "Lecture Notes in Physics",
         "volume": "540",
         "publisher": "Springer",
         "pages": "1--126",
         "year": "2000",
+        "doi": "10.1007/3-540-46580-4_1",
         "url": "https://doi.org/10.1007/3-540-46580-4_1"
       }
     },
@@ -6013,6 +6041,7 @@
         "editor": "Schulmann, Robert and Kox, A. J. and Janssen, Michel and Illy, J\\'ozsef",
         "publisher": "Princeton University Press",
         "year": "1998",
+        "note": "English quotations from the English translation volume, translated by Ann Hentschel (Princeton University Press, 1998)",
         "url": "https://ui.adsabs.harvard.edu/abs/1998cpae.book.....S"
       }
     },
@@ -6094,6 +6123,7 @@
         "volume": "66",
         "pages": "145--151",
         "year": "1969",
+        "doi": "10.1017/S0305004100044807",
         "url": "https://doi.org/10.1017/S0305004100044807"
       }
     },
@@ -6106,6 +6136,7 @@
         "volume": "5",
         "pages": "603--613",
         "year": "1974",
+        "doi": "10.1007/BF02451402",
         "url": "https://doi.org/10.1007/BF02451402"
       }
     },
@@ -6118,6 +6149,7 @@
         "volume": "60",
         "pages": "81--83",
         "year": "1977",
+        "doi": "10.1016/0375-9601(77)90386-3",
         "url": "https://doi.org/10.1016/0375-9601(77)90386-3"
       }
     },
@@ -6130,6 +6162,7 @@
         "volume": "51",
         "pages": "87--90",
         "year": "1983",
+        "doi": "10.1103/PhysRevLett.51.87",
         "url": "https://doi.org/10.1103/PhysRevLett.51.87"
       }
     },
@@ -6142,6 +6175,7 @@
         "volume": "70",
         "pages": "427--445",
         "year": "1998",
+        "doi": "10.1103/RevModPhys.70.427",
         "url": "https://doi.org/10.1103/RevModPhys.70.427"
       }
     },
@@ -6154,6 +6188,7 @@
         "volume": "750",
         "pages": "591--594",
         "year": "2015",
+        "doi": "10.1016/j.physletb.2015.09.074",
         "url": "https://doi.org/10.1016/j.physletb.2015.09.074"
       }
     },
@@ -6549,7 +6584,7 @@
         "author": "Vaidya, P. C.",
         "journal": "The Astrophysical Journal",
         "volume": "144",
-        "pages": "943",
+        "pages": "943--952",
         "year": "1966",
         "url": "https://doi.org/10.1086/148692"
       }
@@ -6604,6 +6639,7 @@
         "number": "12",
         "pages": "2813--2822",
         "year": "1981",
+        "doi": "10.1103/PhysRevD.23.2813",
         "url": "https://doi.org/10.1103/PhysRevD.23.2813"
       }
     },
@@ -7017,6 +7053,7 @@
         "number": "3",
         "pages": "901--922",
         "year": "2011",
+        "note": "Golden Oldie reprint of the lectures first published in Relativit\\'e, Groupes et Topologie (Les Houches, 1963), 1964",
         "doi": "10.1007/s10714-010-1110-5",
         "url": "https://doi.org/10.1007/s10714-010-1110-5"
       }
@@ -8521,6 +8558,7 @@
         "author": "Yurtsever, Ulvi",
         "journal": "Physical Review D",
         "volume": "38",
+        "number": "6",
         "pages": "1706--1730",
         "year": "1988",
         "doi": "10.1103/PhysRevD.38.1706",
@@ -10980,7 +11018,7 @@
         "author": "Horowitz, Gary T.",
         "booktitle": "String Theory and Quantum Gravity '92: Proceedings of the Trieste Spring School and Workshop",
         "pages": "55--99",
-        "year": "1992",
+        "year": "1993",
         "eprint": "hep-th/9210119",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/hep-th/9210119"
@@ -12287,6 +12325,7 @@
         "year": "1921",
         "eprint": "1803.08616",
         "archiveprefix": "arXiv",
+        "note": "The eprint is the English translation by V. T. Toth, Int. J. Mod. Phys. D 27, 1870001 (2018)",
         "url": "https://inspirehep.net/literature/14621"
       }
     },
@@ -16441,7 +16480,7 @@
         "author": "Popper, Daniel M.",
         "journal": "Astrophysical Journal",
         "volume": "120",
-        "pages": "316",
+        "pages": "316--321",
         "year": "1954",
         "doi": "10.1086/145916",
         "url": "https://doi.org/10.1086/145916"
@@ -16512,8 +16551,7 @@
         "number": "6",
         "pages": "183",
         "year": "1943",
-        "note": "Reprinted in General Relativity and Gravitation 31, 119-120 (1999)",
-        "doi": "10.1023/A:1018871522880",
+        "note": "Reprinted in General Relativity and Gravitation 31, 119-120 (1999), doi:10.1023/A:1018871522880",
         "url": "https://www.currentscience.ac.in/Volumes/12/06/0183.pdf"
       }
     },
@@ -16534,7 +16572,7 @@
     "krasinski1999vaidya": {
       "type": "article",
       "fields": {
-        "title": "Editor's Note: The External Field of a Radiating Star in General Relativity, by P. C. Vaidya",
+        "title": "Editor's Note",
         "author": "Krasiński, Andrzej",
         "journal": "General Relativity and Gravitation",
         "volume": "31",
@@ -16646,7 +16684,7 @@
       "type": "article",
       "fields": {
         "title": "On the gravitational stability of the expanding universe",
-        "author": "Lifshitz, Evgeny",
+        "author": "Lifshitz, Evgenii",
         "journal": "Journal of Physics (USSR)",
         "volume": "10",
         "pages": "116--129",
@@ -23126,6 +23164,7 @@
         "year": "2020",
         "doi": "10.1088/1361-6382/ab7bba",
         "eprint": "1901.06561",
+        "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/1361-6382/ab7bba"
       }
     },
