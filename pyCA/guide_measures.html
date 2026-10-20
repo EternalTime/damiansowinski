@@ -11,7 +11,7 @@
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=2d4c1ff1" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=8484b181" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -48,7 +48,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+        </div>
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
@@ -71,6 +72,9 @@
 </ul>
 
         </div>
+  <div class="mathemagical-foot">
+    <a class="mathemagical" href="https://damiansowinski.com/">The Universe is Mathemagical</a>
+  </div>
       </div>
     </nav>
 
@@ -123,11 +127,11 @@ For a frozen lattice it vanishes; for fair coin flips it equals <span class="mat
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 0.9999994885104995
-2 1.9999878338528025
-3 2.9999747368937504
-4 3.9999424821916856
-5 4.9999013412115865
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 0.9999999578582512
+2 1.9999934492168643
+3 2.9999854547741274
+4 3.9999706001170927
+5 4.999929406382805
 </pre></div>
 </div>
 </div>
@@ -145,7 +149,7 @@ It is the honest measure of randomness: rule 90’s diagram looks busy, but know
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9999588590199009
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9999588062657119
 </pre></div>
 </div>
 </div>
@@ -164,13 +168,13 @@ Plotted against distance it is a correlation function with information-theoretic
 <span class="n">ds</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="p">[</span><span class="n">measures</span><span class="o">.</span><span class="n">mutual_information</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;distance&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;I (bits)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$I$ (bits)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bbcd055b51b307eac3f69d4f0cc671227d5c77ff1e1f369b9dcb4096a144ec08.png" src="_images/bbcd055b51b307eac3f69d4f0cc671227d5c77ff1e1f369b9dcb4096a144ec08.png" />
+<img alt="_images/32b09121fc799c5c3b71fe19704f6eee36933d459128f9b41e72f68d2538bce6.png" src="_images/32b09121fc799c5c3b71fe19704f6eee36933d459128f9b41e72f68d2538bce6.png" />
 </div>
 </div>
 </section>
@@ -201,7 +205,7 @@ Rule 0 freezes after one step, rules 90 and 30 stay near 1, and rule 110 drifts 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/07cb7ae19ced966749ebd93df223f3d7eac7dc80f87fd0c55d622047cd86714a.png" src="_images/07cb7ae19ced966749ebd93df223f3d7eac7dc80f87fd0c55d622047cd86714a.png" />
+<img alt="_images/1e79aab65cd810c076ce7e9bab7518f34c2b6fa4122257cbfbbcc3900ed4d59f.png" src="_images/1e79aab65cd810c076ce7e9bab7518f34c2b6fa4122257cbfbbcc3900ed4d59f.png" />
 </div>
 </div>
 <p>Two cautions.

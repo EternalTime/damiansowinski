@@ -11,7 +11,7 @@
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=2d4c1ff1" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=8484b181" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -46,7 +46,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+        </div>
+  <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="applet.html">Applet</a></li>
@@ -67,6 +68,9 @@
 </ul>
 
         </div>
+  <div class="mathemagical-foot">
+    <a class="mathemagical" href="https://damiansowinski.com/">The Universe is Mathemagical</a>
+  </div>
       </div>
     </nav>
 
@@ -116,7 +120,7 @@ The <a class="reference internal" href="api/pyCA.ca2d.html#pyCA.ca2d.CA2D" title
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1091
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1411
 </pre></div>
 </div>
 </div>
@@ -144,7 +148,7 @@ Within ten steps the random start has thinned to small clusters, and by step 100
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.4</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">axes</span><span class="p">):</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;t = </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;$t = </span><span class="si">%d</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="n">t</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -152,7 +156,7 @@ Within ten steps the random start has thinned to small clusters, and by step 100
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/16de32d3ad72e1be2f71f060df14d08a9ee693daa2b641b1632d724c410138c2.png" src="_images/16de32d3ad72e1be2f71f060df14d08a9ee693daa2b641b1632d724c410138c2.png" />
+<img alt="_images/415cbef6b537d001297f6b060e6cc62133bc6843721ed0066896f2b221235ab7.png" src="_images/415cbef6b537d001297f6b060e6cc62133bc6843721ed0066896f2b221235ab7.png" />
 </div>
 </div>
 <p>Summing each snapshot gives the number of live cells, and we plot that number against time.
@@ -167,7 +171,7 @@ The population falls by more than half in the first ten steps, declines slowly a
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/87d487d29dd26f1ac78cdcd272b014cae916ea1cfea4404745051daac72dec9a.png" src="_images/87d487d29dd26f1ac78cdcd272b014cae916ea1cfea4404745051daac72dec9a.png" />
+<img alt="_images/4718a1323f7ba99379a16bc18684c9b333bf47667a66fd911ce663d801cc33fd.png" src="_images/4718a1323f7ba99379a16bc18684c9b333bf47667a66fd911ce663d801cc33fd.png" />
 </div>
 </div>
 <p>The lattice is periodic in both directions, so gliders that leave one edge arrive at the other.</p>
@@ -226,7 +230,7 @@ HighLife thins to scattered clusters much as Life does, while Seeds keeps the wh
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/65e8f7c76ce54d63585527fd7a4e4c51963ebd191dca48965523cb24b2fa7340.png" src="_images/65e8f7c76ce54d63585527fd7a4e4c51963ebd191dca48965523cb24b2fa7340.png" />
+<img alt="_images/b56bdb48397ac9eeb94dfee2e14fcc36315710380cbf511fb00668717f3faafc.png" src="_images/b56bdb48397ac9eeb94dfee2e14fcc36315710380cbf511fb00668717f3faafc.png" />
 </div>
 </div>
 <p>Run a random soup under each and compare the late-time populations.
