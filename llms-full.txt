@@ -1015,7 +1015,7 @@ De Sitter space with each event identified with its images under a boost, propos
 
 ### Gowdy Cosmologies
 
-Closed vacuum universes holding gravitational waves that travel along one direction, with two commuting spacelike Killing vectors and space $T^3$, $S^3$, or $S^2 \times S^1$. Einstein's equations for them reduce to two coupled wave equations in one space dimension and a quadrature, and near the singularity each point of space approaches a Kasner universe of its own.
+Closed vacuum universes holding gravitational waves that travel along one direction, with two commuting spacelike Killing vectors and space $T^3$, $S^3$, $S^2 \times S^1$, or a space covered by one of them. Einstein's equations for them reduce to two coupled wave equations in one space dimension and a quadrature, and near the singularity each point of space approaches a Kasner universe of its own.
 
 - id: `gowdy`
 - tags: vacuum, cosmology, inhomogeneous, gravitational wave, closed universe, exact solution, time-dependent, curvature singularity, strong cosmic censorship, Lorentzian, Einstein equations, four-dimensional, idealized model, BKL, torus
@@ -2153,7 +2153,7 @@ Schwarzschild's metric with $\sqrt{r^2 + a^2}$ written for the areal radius, whi
 
 ### Small Universes
 
-A Friedmann universe whose space is a torus or another quotient of flat or hyperbolic space, made by declaring points a fixed step apart to be one point. At each point its geometry is Friedmann's, its volume can be finite with no curvature to close it, and an observer sees each galaxy many times over, at a different age each time. George Ellis reviewed such universes in 1971, and with G. Schreiber named them small universes in 1986.
+A Friedmann universe whose space is a torus or another quotient of flat or hyperbolic space, made by declaring points a fixed step apart to be one point. At each point its geometry is Friedmann's, its volume can be finite with no curvature to close it, and an observer sees each galaxy many times over, at a different age each time. George Ellis reviewed such universes in 1971, and with G. Schreiber called them small universes in 1986.
 
 - id: `small_universes`
 - tags: cosmology, topology, multiply connected, torus, compact, closed universe, hyperbolic space, expanding universe, FLRW, locally isotropic, ghost images, cosmic microwave background, big bang, curvature singularity, time-dependent, exact solution, Lorentzian, Einstein equations, idealized model, four-dimensional, conformally flat

@@ -4672,7 +4672,7 @@
         {
           "id": "small_universes",
           "kind": "family",
-          "text": "Friedmann universes whose space is a torus, which keeps the homogeneity of space and gives up its isotropy. Ya. B. Zel'dovich and A. A. Starobinskii put a universe that expands at three different rates on such a torus in 1984 [zeldovich1984]."
+          "text": "Friedmann universes whose space is a torus, which keeps the homogeneity of space and gives up its isotropy. Yakov Zel'dovich and Alexei Starobinsky put a universe that expands at three different rates on such a torus in 1984 [zeldovich1984]."
         },
         {
           "id": "tilted_universes",
@@ -22617,7 +22617,7 @@
       "id": "gowdy",
       "name": "Gowdy Cosmologies",
       "short_name": "Gowdy",
-      "description": "Closed vacuum universes holding gravitational waves that travel along one direction, with two commuting spacelike Killing vectors and space $T^3$, $S^3$, or $S^2 \\times S^1$. Einstein's equations for them reduce to two coupled wave equations in one space dimension and a quadrature, and near the singularity each point of space approaches a Kasner universe of its own.",
+      "description": "Closed vacuum universes holding gravitational waves that travel along one direction, with two commuting spacelike Killing vectors and space $T^3$, $S^3$, $S^2 \\times S^1$, or a space covered by one of them. Einstein's equations for them reduce to two coupled wave equations in one space dimension and a quadrature, and near the singularity each point of space approaches a Kasner universe of its own.",
       "tags": [
         "vacuum",
         "cosmology",
@@ -27925,7 +27925,7 @@
         {
           "id": "bianchi",
           "kind": "family",
-          "text": "Every other spatially homogeneous cosmology. The Kantowski-Sachs group has four parameters, and none of Bianchi's groups sits inside it acting simply transitively [kantowski1966, ellismaccallum1969]."
+          "text": "Every other spatially homogeneous cosmology. The Kantowski-Sachs group has four parameters, and none of Bianchi's groups sits inside it acting simply transitively [kantowski1966, ellismaccallum1969, collins1977]."
         },
         {
           "id": "szekeres",
@@ -40648,7 +40648,7 @@
         {
           "id": "tippett_tsang",
           "kind": "family",
-          "text": "A time machine in the shape of a box. Tippett and Tsang's bubble of 2017 carries its riders round a closed timelike curve, and like the wormhole it needs matter that violates the energy conditions [tippett2017]."
+          "text": "A time machine in the shape of a box. Benjamin Tippett and David Tsang's bubble of 2017 carries its riders round a closed timelike curve, and like the wormhole it needs matter that violates the energy conditions [tippett2017]."
         }
       ],
       "references": [
@@ -47811,7 +47811,7 @@
         {
           "id": "lifshitz_spacetime",
           "kind": "family",
-          "text": "Fill the space beside the wall with an anisotropic fluid and time and space warp at different rates, the scaling of Lifshitz spacetime, as Peter Koroteev and Maxim Libanov found in 2007 [koroteev2008]."
+          "text": "Fill the space beside the wall with an anisotropic fluid and time and space warp at different rates, the scaling of Lifshitz spacetime, as Peter Koroteev and Maxim Libanov found in 2008 [koroteev2008]."
         },
         {
           "id": "cremmer_scherk",
@@ -54444,7 +54444,7 @@
       "id": "small_universes",
       "name": "Small Universes",
       "short_name": "Small Universes",
-      "description": "A Friedmann universe whose space is a torus or another quotient of flat or hyperbolic space, made by declaring points a fixed step apart to be one point. At each point its geometry is Friedmann's, its volume can be finite with no curvature to close it, and an observer sees each galaxy many times over, at a different age each time. George Ellis reviewed such universes in 1971, and with G. Schreiber named them small universes in 1986.",
+      "description": "A Friedmann universe whose space is a torus or another quotient of flat or hyperbolic space, made by declaring points a fixed step apart to be one point. At each point its geometry is Friedmann's, its volume can be finite with no curvature to close it, and an observer sees each galaxy many times over, at a different age each time. George Ellis reviewed such universes in 1971, and with G. Schreiber called them small universes in 1986.",
       "tags": [
         "cosmology",
         "topology",
@@ -54489,7 +54489,7 @@
         {
           "id": "bianchi",
           "kind": "family",
-          "text": "Homogeneous universes that expand at different rates in different directions. A torus has no isotropy to lose, and Ya. B. Zel'dovich and A. A. Starobinskii put such a universe on one in 1984 [zeldovich1984]."
+          "text": "Homogeneous universes that expand at different rates in different directions. A torus has no isotropy to lose, and Yakov Zel'dovich and Alexei Starobinsky put such a universe on one in 1984 [zeldovich1984]."
         },
         {
           "id": "elliptic_de_sitter",
