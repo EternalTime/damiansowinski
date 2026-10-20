@@ -19919,7 +19919,7 @@
       "id": "freund_rubin",
       "name": "Freund-Rubin Compactification",
       "short_name": "Freund-Rubin",
-      "description": "Anti-de Sitter space of four dimensions times a 7-sphere of twice its radius, a solution of supergravity in eleven dimensions. A field with four indices fills the four large dimensions evenly, and Peter Freund and Mark Rubin found in 1980 that it splits the eleven into four and seven of its own accord. In 1997 Juan Maldacena found it again as the throat of a stack of membranes.",
+      "description": "Anti-de Sitter space of four dimensions times a 7-sphere of twice its radius, a solution of supergravity in eleven dimensions. A field with four indices fills the four large dimensions evenly, and Peter Freund and Mark Rubin found in 1980 that it splits the eleven into four and seven of its own accord. In 1993 Gary Gibbons and Paul Townsend found it again down the throat of the membrane, and Juan Maldacena conjectured that the throat is dual to a conformal field theory.",
       "tags": [
         "static",
         "stationary",
@@ -34156,7 +34156,7 @@
         {
           "id": "melvin",
           "kind": "family",
-          "text": "Far from its axis Melvin's magnetic universe approaches Levi-Civita's metric with $\\sigma = 1$ [kastor2021]."
+          "text": "Far from its axis Melvin's magnetic universe approaches a Levi-Civita metric that is not flat [kastor2021]."
         },
         {
           "id": "stockum_dust",
@@ -36877,8 +36877,8 @@
       "references": [
         "poisson1989",
         "poisson1997",
-        "penrose1968",
         "brady1999",
+        "penrose1968",
         "price1972",
         "simpson1973",
         "hiscock1981charged",
@@ -39002,7 +39002,6 @@
       "references": [
         "misner1967",
         "li1998",
-        "misner1963",
         "hawking1973",
         "hiscock1982",
         "levanony2011",

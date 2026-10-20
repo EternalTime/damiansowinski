@@ -928,7 +928,7 @@ The static, spherically symmetric spacetime of a mass that also carries a massle
 
 ### Freund-Rubin Compactification
 
-Anti-de Sitter space of four dimensions times a 7-sphere of twice its radius, a solution of supergravity in eleven dimensions. A field with four indices fills the four large dimensions evenly, and Peter Freund and Mark Rubin found in 1980 that it splits the eleven into four and seven of its own accord. In 1997 Juan Maldacena found it again as the throat of a stack of membranes.
+Anti-de Sitter space of four dimensions times a 7-sphere of twice its radius, a solution of supergravity in eleven dimensions. A field with four indices fills the four large dimensions evenly, and Peter Freund and Mark Rubin found in 1980 that it splits the eleven into four and seven of its own accord. In 1993 Gary Gibbons and Paul Townsend found it again down the throat of the membrane, and Juan Maldacena conjectured that the throat is dual to a conformal field theory.
 
 - id: `freund_rubin`
 - tags: static, stationary, eleven-dimensional, higher dimensions, supergravity, Kaluza-Klein, compact dimension, spontaneous compactification, product spacetime, homogeneous, anti-de Sitter, AdS/CFT, holography, brane, throat, near-horizon limit, supersymmetric, no horizon, no singularity, exact solution, Lorentzian, idealized model

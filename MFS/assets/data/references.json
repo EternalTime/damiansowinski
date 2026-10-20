@@ -1,5 +1,5 @@
 {
-  "version": "7b10c02b45a5e1b1",
+  "version": "ef7adb3c8957ec14",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -1328,6 +1328,8 @@
         "pages": "231--252",
         "year": "1998",
         "doi": "10.4310/ATMP.1998.v2.n2.a1",
+        "eprint": "hep-th/9711200",
+        "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/hep-th/9711200"
       }
     },
@@ -4901,8 +4903,12 @@
         "author": "Gibbons, G. W. and Townsend, P. K.",
         "journal": "Physical Review Letters",
         "volume": "71",
+        "number": "23",
         "pages": "3754--3757",
         "year": "1993",
+        "doi": "10.1103/PhysRevLett.71.3754",
+        "eprint": "hep-th/9307049",
+        "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevLett.71.3754"
       }
     },
@@ -5345,7 +5351,7 @@
       "fields": {
         "title": "Discovering the Kerr and Kerr-Schild metrics",
         "author": "Kerr, Roy P.",
-        "booktitle": "The Kerr Spacetime",
+        "booktitle": "The Kerr Spacetime: Rotating Black Holes in General Relativity",
         "editor": "Wiltshire, D. L. and Visser, M. and Scott, S. M.",
         "publisher": "Cambridge University Press",
         "year": "2009",
@@ -5409,6 +5415,7 @@
         "volume": "164",
         "pages": "1776--1779",
         "year": "1967",
+        "doi": "10.1103/PhysRev.164.1776",
         "url": "https://doi.org/10.1103/PhysRev.164.1776"
       }
     },
@@ -5479,8 +5486,10 @@
         "author": "Christodoulou, Demetrios and Ruffini, Remo",
         "journal": "Physical Review D",
         "volume": "4",
+        "number": "12",
         "pages": "3552--3555",
         "year": "1971",
+        "doi": "10.1103/PhysRevD.4.3552",
         "url": "https://doi.org/10.1103/PhysRevD.4.3552"
       }
     },
@@ -5493,6 +5502,7 @@
         "volume": "114",
         "pages": "151101",
         "year": "2015",
+        "doi": "10.1103/PhysRevLett.114.151101",
         "url": "https://doi.org/10.1103/PhysRevLett.114.151101"
       }
     },
@@ -5505,6 +5515,7 @@
         "volume": "8",
         "pages": "245--260",
         "year": "1968",
+        "doi": "10.1007/BF01645859",
         "url": "https://doi.org/10.1007/BF01645859"
       }
     },
@@ -5902,6 +5913,8 @@
         "pages": "1--126",
         "year": "2000",
         "doi": "10.1007/3-540-46580-4_1",
+        "eprint": "gr-qc/0004016",
+        "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1007/3-540-46580-4_1"
       }
     },
@@ -5990,8 +6003,10 @@
         "author": "Simpson, Michael and Penrose, Roger",
         "journal": "International Journal of Theoretical Physics",
         "volume": "7",
+        "number": "3",
         "pages": "183--197",
         "year": "1973",
+        "doi": "10.1007/BF00792069",
         "url": "https://doi.org/10.1007/BF00792069"
       }
     },
@@ -6016,8 +6031,10 @@
         "author": "Poisson, Eric and Israel, Werner",
         "journal": "Physical Review D",
         "volume": "41",
+        "number": "6",
         "pages": "1796--1809",
         "year": "1990",
+        "doi": "10.1103/PhysRevD.41.1796",
         "url": "https://doi.org/10.1103/PhysRevD.41.1796"
       }
     },
@@ -6028,8 +6045,12 @@
         "author": "Dafermos, Mihalis",
         "journal": "Communications on Pure and Applied Mathematics",
         "volume": "58",
+        "number": "4",
         "pages": "445--504",
         "year": "2005",
+        "doi": "10.1002/cpa.20071",
+        "eprint": "gr-qc/0307013",
+        "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1002/cpa.20071"
       }
     },
@@ -6075,8 +6096,10 @@
         "author": "Bonnor, William B.",
         "journal": "Journal of Physics A: Mathematical and General",
         "volume": "13",
+        "number": "6",
         "pages": "2121--2132",
         "year": "1980",
+        "doi": "10.1088/0305-4470/13/6/033",
         "url": "https://doi.org/10.1088/0305-4470/13/6/033"
       }
     },
@@ -6613,6 +6636,7 @@
         "number": "2",
         "pages": "127--130",
         "year": "1970",
+        "doi": "10.1007/BF00756891",
         "url": "https://doi.org/10.1007/BF00756891"
       }
     },
@@ -6939,7 +6963,7 @@
         "address": "New York",
         "isbn": "0-523-48566-2",
         "year": "1983",
-        "url": "https://archive.org/details/mcandrewschronic0000char"
+        "url": "https://openlibrary.org/books/OL7769473M"
       }
     },
     "oraifeartaigh2017": {
@@ -7280,10 +7304,11 @@
         "author": "Bini, Donato and Cherubini, Christian and Mashhoon, Bahram",
         "journal": "Physical Review D",
         "volume": "70",
+        "number": "4",
         "pages": "044020",
         "year": "2004",
         "doi": "10.1103/PhysRevD.70.044020",
-        "eprint": "arXiv:gr-qc/0401071",
+        "eprint": "gr-qc/0401071",
         "url": "https://doi.org/10.1103/PhysRevD.70.044020"
       }
     },
@@ -9301,6 +9326,7 @@
         "author": "Kastor, David and Traschen, Jennie",
         "journal": "Classical and Quantum Gravity",
         "volume": "38",
+        "number": "4",
         "pages": "045016",
         "year": "2021",
         "doi": "10.1088/1361-6382/abd141",
@@ -9354,6 +9380,7 @@
         "author": "Gibbons, G. W. and Mujtaba, A. H. and Pope, C. N.",
         "journal": "Classical and Quantum Gravity",
         "volume": "30",
+        "number": "12",
         "pages": "125008",
         "year": "2013",
         "doi": "10.1088/0264-9381/30/12/125008",
@@ -9382,6 +9409,7 @@
         "author": "Ernst, Frederick J. and Wild, Walter J.",
         "journal": "Journal of Mathematical Physics",
         "volume": "17",
+        "number": "2",
         "pages": "182--184",
         "year": "1976",
         "doi": "10.1063/1.522875",
@@ -10179,6 +10207,8 @@
         "pages": "4064--4071",
         "year": "1999",
         "doi": "10.1063/1.532943",
+        "eprint": "gr-qc/9810079",
+        "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1063/1.532943"
       }
     },
@@ -19229,7 +19259,7 @@
       "type": "article",
       "fields": {
         "title": "Blue-Sheet Instability of {Schwarzschild} Wormholes",
-        "author": "Redmount, I. H.",
+        "author": "Redmount, Ian H.",
         "journal": "Progress of Theoretical Physics",
         "volume": "73",
         "number": "6",
