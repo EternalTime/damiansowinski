@@ -734,7 +734,7 @@ The static, spherically symmetric charged black hole of low energy string theory
 
 ### Schwarzschild Black Hole in a Tidal Field
 
-Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1965, and the simplest of the distorted black holes of Robert Geroch and James Hartle. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.
+Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1966, and the simplest of the distorted black holes of Robert Geroch and James Hartle. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.
 
 - id: `distorted_schwarzschild`
 - tags: vacuum, static, stationary, axisymmetric, Weyl class, harmonic function, black hole, mass, quadrupole, horizon, Killing horizon, curvature singularity, not asymptotically flat, prolate spheroidal coordinates, no-hair theorem, black hole uniqueness, black hole thermodynamics, Hawking temperature, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, black hole shadow
@@ -2347,7 +2347,7 @@ Black holes in anti-de Sitter space whose horizons are planes, cylinders, tori, 
 
 ### Topological Star
 
-A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2020 as the simplest topological star, on a line element that also describes a black string with the same bubble behind its horizon.
+A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2021 as the simplest topological star, on a line element that also describes a black string with the same bubble behind its horizon.
 
 - id: `topological_star`
 - tags: static, stationary, five-dimensional, four-dimensional, soliton, no horizon, no singularity, black hole mimicker, bubble, nuts and bolts, cigar, topology, magnetic charge, electromagnetic field, Einstein-Maxwell, Kaluza-Klein, compact dimension, higher dimensions, black string, horizon, event horizon, extremal, orbifold, dilaton, Einstein-Maxwell-dilaton, naked singularity, photon sphere, quasinormal modes, echoes, Gregory-Laflamme instability, instability, string theory, mass, exact solution, Lorentzian, Einstein equations, idealized model

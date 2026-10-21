@@ -1,5 +1,5 @@
 {
-  "version": "a34cd39d2509afab",
+  "version": "06268629686279a1",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -399,8 +399,10 @@
         "author": "Eddington, Arthur Stanley",
         "journal": "Nature",
         "volume": "113",
+        "number": "2832",
         "pages": "192",
         "year": "1924",
+        "doi": "10.1038/113192a0",
         "url": "https://www.nature.com/articles/113192a0"
       }
     },
@@ -675,8 +677,10 @@
         "author": "Finkelstein, David",
         "journal": "Physical Review",
         "volume": "110",
+        "number": "4",
         "pages": "965--967",
         "year": "1958",
+        "doi": "10.1103/PhysRev.110.965",
         "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.110.965"
       }
     },
@@ -3304,6 +3308,7 @@
         "editor": "Witten, Louis",
         "publisher": "John Wiley and Sons",
         "address": "New York",
+        "pages": "49--101",
         "year": "1962",
         "url": "https://inspirehep.net/literature/45501"
       }
@@ -3315,6 +3320,7 @@
         "author": "Einstein, A. and Rosen, N.",
         "journal": "Journal of the Franklin Institute",
         "volume": "223",
+        "number": "1",
         "pages": "43--54",
         "year": "1937",
         "doi": "10.1016/S0016-0032(37)90583-0",
@@ -4022,6 +4028,7 @@
         "author": "Kim, Sung-Won and Thorne, Kip S",
         "journal": "Physical Review D",
         "volume": "43",
+        "number": "12",
         "pages": "3929--3947",
         "year": "1991",
         "doi": "10.1103/PhysRevD.43.3929",
@@ -4154,6 +4161,7 @@
         "author": "Hiscock, William A. and Konkowski, Deborah A.",
         "journal": "Physical Review D",
         "volume": "26",
+        "number": "6",
         "pages": "1225--1230",
         "year": "1982",
         "doi": "10.1103/PhysRevD.26.1225",
@@ -4197,6 +4205,7 @@
         "author": "Li, Li-Xin and Gott, J. Richard",
         "journal": "Physical Review Letters",
         "volume": "80",
+        "number": "14",
         "pages": "2980--2983",
         "year": "1998",
         "doi": "10.1103/PhysRevLett.80.2980",
@@ -5806,7 +5815,7 @@
         "address": "Leipzig",
         "year": "1913",
         "note": "Reprinted in Zeitschrift f\\\"ur Mathematik und Physik 62, 225--261 (1914). English translation: ``Outline of a Generalized Theory of Relativity and of a Theory of Gravitation'', The Collected Papers of Albert Einstein, Volume 4 (English translation supplement), Doc. 13",
-        "url": "https://einsteinpapers.press.princeton.edu/vol4-trans/163"
+        "url": "http://web.archive.org/web/20240825235833/https://einsteinpapers.press.princeton.edu/vol4-trans/163"
       }
     },
     "einstein1915perihelion": {
@@ -6137,8 +6146,10 @@
         "author": "Tipler, Frank J.",
         "journal": "Physical Review Letters",
         "volume": "37",
+        "number": "14",
         "pages": "879--882",
         "year": "1976",
+        "doi": "10.1103/PhysRevLett.37.879",
         "url": "https://doi.org/10.1103/PhysRevLett.37.879"
       }
     },
@@ -6186,6 +6197,7 @@
         "author": "Hawking, Stephen W.",
         "journal": "Physics Letters A",
         "volume": "60",
+        "number": "2",
         "pages": "81--83",
         "year": "1977",
         "doi": "10.1016/0375-9601(77)90386-3",
@@ -6199,6 +6211,7 @@
         "author": "Sorkin, Rafael D.",
         "journal": "Physical Review Letters",
         "volume": "51",
+        "number": "2",
         "pages": "87--90",
         "year": "1983",
         "doi": "10.1103/PhysRevLett.51.87",
@@ -8506,6 +8519,7 @@
         "author": "Szekeres, Peter",
         "journal": "Nature",
         "volume": "228",
+        "number": "5277",
         "pages": "1183--1184",
         "year": "1970",
         "doi": "10.1038/2281183a0",
@@ -8519,6 +8533,7 @@
         "author": "Szekeres, Peter",
         "journal": "Journal of Mathematical Physics",
         "volume": "13",
+        "number": "3",
         "pages": "286--294",
         "year": "1972",
         "doi": "10.1063/1.1665972",
@@ -9251,6 +9266,7 @@
         "author": "Bonnor, W. B.",
         "journal": "Proceedings of the Physical Society. Section A",
         "volume": "67",
+        "number": "3",
         "pages": "225--232",
         "year": "1954",
         "doi": "10.1088/0370-1298/67/3/305",
@@ -21778,7 +21794,7 @@
     "hansonsha2017": {
       "type": "incollection",
       "fields": {
-        "title": "Isometric Embedding of the {A1} Gravitational Instanton",
+        "title": "Isometric Embedding of the $A_1$ Gravitational Instanton",
         "author": "Hanson, Andrew J. and Sha, Ji-Ping",
         "booktitle": "Memorial Volume for Kerson Huang",
         "publisher": "World Scientific",
@@ -23524,7 +23540,7 @@
     "griffithspodolsky1998": {
       "type": "article",
       "fields": {
-        "title": "Interpreting a conformally flat pure radiation space-time",
+        "title": "Interpreting a conformally flat pure radiation spacetime",
         "author": "Griffiths, Jerry B. and Podolsk\\'y, Jiř\\'i",
         "journal": "Classical and Quantum Gravity",
         "volume": "15",
@@ -23854,8 +23870,6 @@
         "pages": "095006",
         "year": "2017",
         "doi": "10.1088/1361-6382/aa6549",
-        "eprint": "1310.7985",
-        "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/1361-6382/aa6549"
       }
     },

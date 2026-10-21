@@ -15034,7 +15034,7 @@
       "id": "distorted_schwarzschild",
       "name": "Schwarzschild Black Hole in a Tidal Field",
       "short_name": "Distorted Schwarzschild",
-      "description": "Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1965, and the simplest of the distorted black holes of Robert Geroch and James Hartle. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.",
+      "description": "Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1966, and the simplest of the distorted black holes of Robert Geroch and James Hartle. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.",
       "tags": [
         "vacuum",
         "static",
@@ -44120,12 +44120,12 @@
         {
           "id": "nordstrom_scalar",
           "kind": "special_case",
-          "text": "Nordström's scalar theory as a point of the plane. At $\\gamma = -1$ and $\\beta = 1/2$ the metric is the weak field of his point mass, which bends no light [deruelle2011]."
+          "text": "Nordström's scalar theory as a point of the plane. At $\\gamma = -1$, with a $\\beta$ that depends on how matter couples to the field, the metric is the weak field of his point mass, which bends no light [deruelle2011]."
         },
         {
           "id": "exponential_metric",
           "kind": "family",
-          "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$ and the post-Newtonian tests do not separate the two [boonserm2018]."
+          "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$, and the metric passes all the standard lowest-order weak-field tests [boonserm2018]."
         },
         {
           "id": "einstein_1912_static",
@@ -46170,7 +46170,7 @@
         {
           "id": "btz_multi_holes_wormholes",
           "kind": "family",
-          "text": "With a negative cosmological constant the same cutting and gluing makes black holes, any number of them joined behind their horizons. Alan Steif put particles and holes on one hyperbolic plane in 1995 [steif1996, brill1996]."
+          "text": "With a negative cosmological constant the same cutting and gluing makes black holes, any number of them joined behind their horizons. Alan Steif put particles and holes on one hyperbolic plane in 1996 [steif1996, brill1996]."
         },
         {
           "id": "quantum_btz",
@@ -59874,7 +59874,7 @@
       "id": "topological_star",
       "name": "Topological Star",
       "short_name": "Topological Star",
-      "description": "A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2020 as the simplest topological star, on a line element that also describes a black string with the same bubble behind its horizon.",
+      "description": "A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2021 as the simplest topological star, on a line element that also describes a black string with the same bubble behind its horizon.",
       "tags": [
         "static",
         "stationary",
