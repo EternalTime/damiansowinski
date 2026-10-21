@@ -162,7 +162,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "eef1df5f35297209",
+    "version": "f5756558ae78b9e6",
     "diagrams": "36a10a399fd9e586",
     "conformal": "212fdcd488402227",
     "embedding": "0e56a5456f5e3b52"
@@ -1534,7 +1534,7 @@
       "curvature singularity",
       "asymptotically flat"
     ],
-    "version": "26953fe674c2005b",
+    "version": "8a0f2213a1974b4c",
     "diagrams": "797bb029c7a77a1c",
     "conformal": "ba7f2b66e7041147",
     "embedding": "d878e36cfb97e520"
@@ -1584,7 +1584,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "63446ff2ddef6c65",
+    "version": "a462cc0efdaed615",
     "diagrams": "7c0ed7cc7e087f7f",
     "embedding": "3f468d0fec878b32"
   },
@@ -1759,7 +1759,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "93c4bc1078ead379",
+    "version": "5deb74d1ad43c227",
     "diagrams": "650c940a33d88a1c",
     "conformal": "c0043e438cd296ac",
     "embedding": "d1d99538ce0bd31c"
@@ -1874,7 +1874,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bea1e3d7764095d8",
+    "version": "155d8d1dab088905",
     "diagrams": "d86ff0a92ec2a5b0",
     "embedding": "eb113e431f8fa107"
   },
@@ -1904,7 +1904,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5098eaab1ff173d3",
+    "version": "205c935c08fbffcd",
     "diagrams": "fa2f1e08173abce4",
     "conformal": "f6e3d96167454df0",
     "embedding": "364e0217d4805443"
@@ -2236,7 +2236,7 @@
       "Einstein space",
       "cut and paste"
     ],
-    "version": "cac54fe1e2afe6ee",
+    "version": "5044301107847a19",
     "diagrams": "582c49f296d53450",
     "conformal": "1c0299b48c135ff5",
     "embedding": "4a468cbcc8c8e211"
@@ -2320,7 +2320,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c71e7af1ea41fcf7",
+    "version": "34e241cf05f3a1ba",
     "diagrams": "46f7eaaecdbd1ba2",
     "conformal": "82c544ce8dcb28c0",
     "embedding": "5af191b3a00d29f2"
@@ -2514,7 +2514,7 @@
       "idealized model",
       "BKL"
     ],
-    "version": "93f7346aa44fdfed",
+    "version": "9036853a4eb4381e",
     "diagrams": "487e58f217c89feb",
     "embedding": "779744327513578c"
   },
@@ -2589,7 +2589,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "dc25786c4247058c",
+    "version": "b81012d201c71c19",
     "diagrams": "aa8f329620c5927d",
     "conformal": "52493b5ac50704d6",
     "embedding": "c4aa8198bba8d575"
@@ -2778,7 +2778,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5e3236dc1199a9f2",
+    "version": "c6f3f8d68fea752c",
     "diagrams": "751e7bb9426ca853",
     "conformal": "c948590fa4547aec",
     "embedding": "d603369104ee5eab"
@@ -2942,7 +2942,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d9699813246c4066",
+    "version": "9bfe8e07097880e2",
     "diagrams": "40f73396333f824d",
     "conformal": "ca263c4f02fd012f",
     "embedding": "400c5460f3140ed9"
@@ -2970,7 +2970,7 @@
       "four-dimensional",
       "alternative theories of gravity"
     ],
-    "version": "015d67fbc78831b0",
+    "version": "470396427b4c9344",
     "diagrams": "cdb14d2cd4994bf6",
     "conformal": "12298805078c9773",
     "embedding": "93002f20411a5f03"
@@ -2994,7 +2994,7 @@
       "four-dimensional",
       "quantum inequality"
     ],
-    "version": "99af44936d7a7b41",
+    "version": "11b9998454395427",
     "diagrams": "8465ef9c4b047da5",
     "embedding": "166bc957997dd4b5"
   },
@@ -3058,7 +3058,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "a4daf227d4fa46cb"
+    "version": "86454cd10727cc45"
   },
   {
     "id": "levi_civita",
@@ -3113,7 +3113,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "07eeeac10aed4b46",
+    "version": "22fad424ae8b602f",
     "diagrams": "4ab32fd3e8390e5e",
     "conformal": "ef3ef065649addc5",
     "embedding": "77935accaa9e62b5"
@@ -3139,7 +3139,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "519ac864f2522aa1",
+    "version": "b784d31690abd15c",
     "diagrams": "8ae1647667d42c8c",
     "conformal": "5a36ce41d9009dbd",
     "embedding": "cd98817c46caeee2"
@@ -3195,7 +3195,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "aa2d1690f3b1c5cc",
+    "version": "435b24961cc92d23",
     "diagrams": "6e297744e2657a6c",
     "embedding": "8764c8fb21edf33b"
   },
@@ -3348,7 +3348,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "f8b90070121acdd1",
+    "version": "67cb000d24b6d29a",
     "diagrams": "bd7d5856e23baa9e",
     "conformal": "73dd5df297bbb623",
     "embedding": "581548ed12bf4ece"
@@ -3381,7 +3381,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ce0d3778ac75453c",
+    "version": "728fb049219d8355",
     "diagrams": "1e8a40c11bf25b40",
     "conformal": "5bfaa0670ab1bb25",
     "embedding": "2c9b70767c1e34be"
@@ -3438,7 +3438,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "7a91dc8cb1f39a4b",
+    "version": "cbefdecb418ada3b",
     "diagrams": "434dbc69f632abef",
     "conformal": "608160b20d1a5d0b",
     "embedding": "6358a5e6f5a871e8"
@@ -3579,7 +3579,7 @@
       "BKL",
       "homogeneous"
     ],
-    "version": "ccadc3bcc884eacd",
+    "version": "cd4984cb3f73112a",
     "embedding": "1762ae2364403f3b"
   },
   {
@@ -3687,7 +3687,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "43f3394b4b05e8ae",
+    "version": "cc918b93b045b5c5",
     "diagrams": "71b5d5fd56fc2bcf",
     "conformal": "87e0174e8f73dc88",
     "embedding": "3103128e785dc4ef"
@@ -3726,7 +3726,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "3c74e793616bf432",
+    "version": "cc2add2692bc0b41",
     "diagrams": "fbe2465fce912260",
     "conformal": "1a4a12f584d5c79c",
     "embedding": "d6b5347d467d964c"
@@ -3782,7 +3782,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "c497e92fdfe18fb5",
+    "version": "05ba08c818064705",
     "diagrams": "187982910fdaa5ce",
     "embedding": "90f8432b18d96a76"
   },
@@ -4004,7 +4004,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "dcf94a8877d8e608",
+    "version": "25059c9dce65c53c",
     "diagrams": "382c56b4dcf64971",
     "embedding": "9f6d91cb4fe80ffb"
   },
@@ -4096,7 +4096,7 @@
       "four-dimensional",
       "conformally flat"
     ],
-    "version": "960e9b33c8573a53",
+    "version": "7a05ae91b6153258",
     "diagrams": "15ccd759bdb6a22a",
     "conformal": "f8b6ad40c581351e",
     "embedding": "d0dbf15e01a964ff"
@@ -4400,7 +4400,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a15da452132af3ac",
+    "version": "d114a736484ecea8",
     "diagrams": "ef50bbbb10b2fcf3",
     "conformal": "7870256e2aa08cb4",
     "embedding": "7d4fbd4e5c072163"
@@ -4477,7 +4477,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "4175eb3509f9e2a0",
+    "version": "8176bd2728b9db3c",
     "diagrams": "6a3ce40ab242fc55",
     "conformal": "fcc119dbec4fbaa1",
     "embedding": "fabbc86e0024f31d"
@@ -4510,7 +4510,7 @@
       "six-dimensional",
       "idealized model"
     ],
-    "version": "f0b9e8900b251725",
+    "version": "4fc35fc6625e83f5",
     "diagrams": "5e04d5de76a9e104",
     "embedding": "2bcbcccd5666d405"
   },
@@ -4948,7 +4948,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8d3c71257a17661f",
+    "version": "facfb49ac2b3ca0a",
     "diagrams": "7276a636d705765d",
     "conformal": "e0a22ba6cfc54754",
     "embedding": "8003002e86c3bf6e"
@@ -4973,7 +4973,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7d550f90ff8b74e1",
+    "version": "da39468fdb383894",
     "diagrams": "d120d76fc965997d",
     "conformal": "b40fdbdc039b6c75",
     "embedding": "5b15cfdf325c286f"
@@ -5212,7 +5212,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "dce5adeb8e4b19ec",
+    "version": "4714d7493e0b8dc5",
     "diagrams": "54dd0e9e7887701d",
     "conformal": "0f87c7ddfbce658d",
     "embedding": "80461874aabb5765"
@@ -5409,7 +5409,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "d94c220d1e851bbb",
+    "version": "673860d1cf2adf86",
     "diagrams": "b6a409820f7523a2",
     "conformal": "27826ad818be5392",
     "embedding": "9eb052e28dc08c86"
@@ -5457,7 +5457,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "528ef67b2978e68e",
+    "version": "2c641a5b333f44ab",
     "diagrams": "54c4ab721c360189",
     "embedding": "d0eb9c1c758df3f4"
   },
@@ -5646,7 +5646,7 @@
       "conformally flat",
       "stationary"
     ],
-    "version": "d8bc7cec27efe026",
+    "version": "74d404dbed939208",
     "diagrams": "20e4b54fd89e7fb9",
     "conformal": "f6b963bc340f323d",
     "embedding": "05b4e9f05b7ea873"
