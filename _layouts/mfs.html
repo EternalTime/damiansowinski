@@ -2816,11 +2816,18 @@
             if (!frame.clientWidth) return null;
             var words = fig.getBoundingClientRect().width - fig.querySelector('.nr-plot').getBoundingClientRect().width;
             var usual = Math.min(frame.clientWidth, parseFloat(getComputedStyle(frame).flexBasis) / s || Infinity);
-            var name = fig.querySelector('.nr-xlabel .nr-name').getBoundingClientRect().width;
+            // The plot is at least as wide as the name under it, and a curvature figure's colour bar
+            // has a name under it too.
+            var name = Math.max.apply(null, [].map.call(fig.querySelectorAll('.nr-xlabel .nr-name'), function(n) {
+              return n.getBoundingClientRect().width;
+            }));
             // The plot is never shorter than the name of its vertical axis, which stands centred
-            // beside it, turned on its side.
-            var box = fig.querySelector('.nr-plot').getBoundingClientRect();
-            var side = box.height ? fig.querySelector('.nr-ylabel .nr-name').getBoundingClientRect().height * box.width / box.height : 0;
+            // beside it, turned on its side, and each panel of a curvature figure is held to its own.
+            var sides = fig.querySelectorAll('.nr-ylabel .nr-name');
+            var side = Math.max.apply(null, [].map.call(fig.querySelectorAll('.nr-plot'), function(plot, k) {
+              var box = plot.getBoundingClientRect();
+              return box.height && sides[k] ? sides[k].getBoundingClientRect().height * box.width / box.height : 0;
+            }));
             var plot = Math.max(0, usual - words / s, name, side);
             // The plot as it is without what its slices' labels need, which fitSliceLabels()
             // grows from, and at least what they need.
@@ -2839,14 +2846,16 @@
 
       /* The name of the vertical axis is mathematics, a square root or a bar taller than a
          letter, and it is turned on its side, so its column is as wide as the name set there
-         is tall, in ems of the diagram's words, which hold at every text size and in print.
+         is tall, in ems of the diagram's words, which hold at every text size and in print; the
+         panels of a curvature figure share the column, as wide as the tallest of their names.
          A figure not shown keeps what it has until it is. Every name is measured before any
          column is set. */
       function fitAxisNames(figures) {
         var widths = figures.map(function(fig) {
-          var name = fig.querySelector('.nr-ylabel .nr-name');
-          if (!fig.clientWidth || !name) return null;
-          return (name.getBoundingClientRect().width / parseFloat(getComputedStyle(fig).fontSize)).toFixed(4);
+          var names = fig.querySelectorAll('.nr-ylabel .nr-name');
+          if (!fig.clientWidth || !names.length) return null;
+          var tallest = Math.max.apply(null, [].map.call(names, function(name) { return name.getBoundingClientRect().width; }));
+          return (tallest / parseFloat(getComputedStyle(fig).fontSize)).toFixed(4);
         });
         figures.forEach(function(fig, i) {
           if (widths[i] !== null && fig.style.getPropertyValue('--nr-yname') !== widths[i]) fig.style.setProperty('--nr-yname', widths[i]);
@@ -2857,14 +2866,15 @@
       // Show every n-th number along an edge, the smallest n at which no two of those shown
       // come within a third of a number's height of each other, counted from zero where zero
       // is one of them. Every number is measured before any is hidden, which hiding cannot
-      // change, since a hidden number keeps its place.
+      // change, since a hidden number keeps its place. Each panel of a curvature figure and its
+      // colour bar is an edge of its own.
       function fitTicks(figures) {
         var edges = [];
         figures.forEach(function(fig) {
           if (!fig.clientWidth) return;
-          ['x', 'y'].forEach(function(axis) {
-            var ticks = [].slice.call(fig.querySelectorAll('.nr-' + axis + 'ticks .nr-tick'));
-            if (ticks.length) edges.push({ axis: axis, ticks: ticks });
+          [].forEach.call(fig.querySelectorAll('.nr-xticks, .nr-yticks'), function(edge) {
+            var ticks = [].slice.call(edge.querySelectorAll('.nr-tick'));
+            if (ticks.length) edges.push({ axis: edge.classList.contains('nr-xticks') ? 'x' : 'y', ticks: ticks });
           });
         });
         edges.forEach(function(e) {
@@ -3104,7 +3114,7 @@
             _figureObserver.observe(scroller.firstChild);
           }
         });
-        root.querySelectorAll('.mfs-nr-figure').forEach(function(figure) {
+        root.querySelectorAll('.mfs-nr-figure:not(.mfs-cv-figure)').forEach(function(figure) {
           var svg = figure.querySelector('svg'), readout = figure.querySelector('.mfs-nr-readout');
           var rx = readout.querySelector('.nr-rx'), ry = readout.querySelector('.nr-ry');
           var box = JSON.parse(svg.getAttribute('data-box')), mg = JSON.parse(svg.getAttribute('data-margins'));
@@ -3608,6 +3618,369 @@
         ].join('');
       }
 
+      /* ── Curvature figures ──
+         The Kretschmann and Ricci scalars of a spacetime, read from
+         MFS/assets/data/curvature/<id>.json, which _tools/derivations/curvature.py evaluates from
+         the published formulas; the page only draws them. A line view stacks one or more panels
+         over one coordinate, each a scalar on an axis of its own, and a map colours the cells of
+         a box of two coordinates by a scalar; either may be a movie, stepped through a parameter
+         or a time and played by wireMovie() as an embedding diagram is. Both are laid out as a
+         spacetime diagram is, by the same grid, with their numbers and the names of their axes
+         around the plot, so their words follow the reader's text size and are held to every
+         rule a spacetime diagram's words are; fitPlots(), fitAxisNames() and fitTicks() take
+         every panel of a figure. A map's colours are made into an image here, once for the dark
+         ground and once for paper, and the print copy prints the second. Views follow the chart
+         chosen above as the conformal diagram's do. _tools/README.md defines the file. */
+      var _curvatureCache = {};  // id → parsed JSON, or null where the spacetime has none
+      var _cvUid = 0;
+      var CV_W = 520;
+      // The colours a map runs through from its lowest value to its highest, on the dark ground and
+      // on paper: one hue, the page's cyan, for a scale of one sign, and the cyan and the pink with a
+      // grey between them for a signed one. A value between two stops takes the colour mixed
+      // linearly between them in sRGB, as _tools/README.md gives them for any other reader.
+      var CV_RAMPS = {
+        sequential: {
+          screen: ['#04191e', '#093139', '#104a56', '#186574', '#1f8295', '#279fb6', '#30bed9', '#38dfff', '#d2f6ff'],
+          paper: ['#ebf8fc', '#c2e1ea', '#99cad8', '#71b3c5', '#4a9cb0', '#268499', '#046c7f', '#005160', '#003742']
+        },
+        diverging: {
+          screen: ['#79e6ff', '#20bedb', '#1a8fa5', '#215e6b', '#2e2e2e', '#813b50', '#c65377', '#ff77a0', '#ffc1cf'],
+          paper: ['#036071', '#1f889e', '#6bb1c3', '#aed2db', '#f2f2f2', '#eebbc5', '#e3839a', '#cb3e6c', '#9e0148']
+        }
+      };
+
+      function fetchCurvature(id, cb) {
+        if (id in _curvatureCache) { cb(_curvatureCache[id]); return; }
+        withIndex(function(index) {
+          var entry = index.filter(function(e) { return e.id === id; })[0];
+          if (!entry || !entry.curvature) { _curvatureCache[id] = null; cb(null); return; }
+          fetch(stamped('{{ "/MFS/assets/data/curvature/" | relative_url }}' + id + '.json', entry.curvature))
+            .then(function(r) { return r.json(); })
+            .then(function(data) { _curvatureCache[id] = data; cb(data); })
+            .catch(function(e) {
+              console.error('Failed to load the curvature figure:', id, e);
+              _curvatureCache[id] = null;
+              cb(null);
+            });
+        });
+      }
+
+      // Where v stands along an axis of values, in the axis's own units: v itself, log10 v, or for
+      // a signed scale asinh(v/2L)/ln 10, which is linear within |v| < L and log10|v/L| far outside.
+      function cvPosition(scale, v) {
+        if (scale.kind === 'log') return v > 0 ? Math.log10(v) : NaN;
+        if (scale.kind === 'symlog') return Math.asinh(v / (2 * scale.linear)) / Math.LN10;
+        return v;
+      }
+      // The same as a fraction of the axis, 0 at its `from` and 1 at its `to`, and back.
+      function cvFraction(scale, v) {
+        var a = cvPosition(scale, scale.from), b = cvPosition(scale, scale.to);
+        return (cvPosition(scale, v) - a) / (b - a);
+      }
+      function cvValueAt(scale, s) {
+        var a = cvPosition(scale, scale.from), b = cvPosition(scale, scale.to), p = a + s * (b - a);
+        if (scale.kind === 'log') return Math.pow(10, p);
+        if (scale.kind === 'symlog') return 2 * scale.linear * Math.sinh(p * Math.LN10);
+        return p;
+      }
+      // A scale that runs through zero is coloured by the ramp of two hues, with zero at its grey and
+      // each side running as far toward its end as the farther end of the scale reaches; any other
+      // by the ramp of one hue from its `from` to its `to`. A value beyond either end takes the end's
+      // colour.
+      function cvSigned(scale) { return scale.kind !== 'log' && scale.from < 0 && scale.to > 0; }
+      function cvRampAt(scale, v) {
+        var t;
+        if (cvSigned(scale)) {
+          var reach = Math.max(Math.abs(cvPosition(scale, scale.from)), Math.abs(cvPosition(scale, scale.to)));
+          t = 0.5 + 0.5 * cvPosition(scale, v) / reach;
+        } else {
+          t = cvFraction(scale, v);
+        }
+        return !(t > 0) ? 0 : t > 1 ? 1 : t;
+      }
+      function cvRgb(hex) {
+        return [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
+      }
+      function cvColour(stops, t) {
+        var x = t * (stops.length - 1), i = Math.min(stops.length - 2, Math.floor(x)), w = x - i;
+        var a = cvRgb(stops[i]), b = cvRgb(stops[i + 1]);
+        return [0, 1, 2].map(function(k) { return Math.round(a[k] + w * (b[k] - a[k])); });
+      }
+      function cvStops(scale) { return CV_RAMPS[cvSigned(scale) ? 'diverging' : 'sequential']; }
+
+      // A map's cells as an image of a pixel each, the bottom row of the file the bottom of the
+      // image; the browser smooths it as it draws it larger.
+      function cvImage(grid, scale, stops) {
+        var canvas = document.createElement('canvas');
+        canvas.width = grid.nx;
+        canvas.height = grid.ny;
+        var ctx = canvas.getContext('2d'), img = ctx.createImageData(grid.nx, grid.ny);
+        for (var j = 0; j < grid.ny; j++) {
+          for (var i = 0; i < grid.nx; i++) {
+            var c = cvColour(stops, cvRampAt(scale, grid.cells[j][i])), o = 4 * ((grid.ny - 1 - j) * grid.nx + i);
+            img.data[o] = c[0]; img.data[o + 1] = c[1]; img.data[o + 2] = c[2]; img.data[o + 3] = 255;
+          }
+        }
+        ctx.putImageData(img, 0, 0);
+        return canvas.toDataURL('image/png');
+      }
+
+      // The views the curvature figure shows in the chart being read: those that name it, then those
+      // that name none, as the conformal diagram's.
+      function cvViews(metricId, coordId) {
+        var data = _curvatureCache[metricId];
+        if (!data || !data.views) return [];
+        return data.views.filter(function(v) { return v.system === coordId; })
+          .concat(data.views.filter(function(v) { return !v.system; }));
+      }
+
+      // The panels a view stacks, a map's plot being one panel whose values are its vertical coordinate.
+      function cvPanels(view) {
+        if (view.kind === 'line') return view.panels;
+        return [{ id: 'map', name: view.y.name, ticks: view.y.ticks, aspect: (view.x.to - view.x.from) / (view.y.to - view.y.from),
+                  scale: { kind: 'linear', from: view.y.from, to: view.y.to } }];
+      }
+
+      // A number and its tick mark, which stays when fitTicks() hides the number, at a fraction of
+      // its edge, across from the left or down from the top.
+      function cvTick(t, edge, s) {
+        var style = edge + ':' + (100 * s).toFixed(3) + '%';
+        return '<span class="nr-tickmark" style="' + style + '"></span>' +
+          '<span class="nr-tick" data-at="' + t.at + '" style="' + style + '">' + nrEsc(t.label) + '</span>';
+      }
+      function cvAcross(view, v) { return (v - view.x.from) / (view.x.to - view.x.from); }
+
+      function cvPath(points, X, Y) {
+        return points.map(function(p, i) { return (i ? 'L' : 'M') + X(p[0]).toFixed(2) + ' ' + Y(p[1]).toFixed(2); }).join(' ');
+      }
+
+      // What one frame of a view draws on a panel: its curves on that panel, cut at the panel's
+      // box, and its marks, a line view's at their values of the drawn coordinate and a map's at
+      // their points, drawn whole over the frame of the box.
+      function cvCurves(holder, panel, X, Y) {
+        return (holder.curves || []).filter(function(c) { return c.panel === panel.id; }).map(function(c) {
+          return nrEl('path', { 'class': 'cv-' + c['class'], d: cvPath(c.points, X, Y) });
+        }).join('');
+      }
+      function cvMarks(holder, view, X, Y, H) {
+        var out = [];
+        (holder.marks || []).forEach(function(m) {
+          if (view.kind === 'line') {
+            var x = X(m.x).toFixed(2);
+            out.push(nrEl('line', { 'class': 'cv-' + m['class'], x1: x, y1: 0, x2: x, y2: H.toFixed(1) }));
+          } else if (m.at) {
+            out.push(nrEl('circle', { 'class': 'cv-' + m['class'], cx: X(m.at[0]).toFixed(2), cy: Y(m.at[1]).toFixed(2), r: 5 }));
+          } else {
+            out.push(nrEl('path', { 'class': 'cv-' + m['class'], d: cvPath(m.points, X, Y) }));
+          }
+        });
+        return out.join('');
+      }
+
+      function cvMapImages(view, grid) {
+        var stops = cvStops(view.colour.scale), size = { x: 0, y: 0, width: CV_W, height: (CV_W / cvPanels(view)[0].aspect).toFixed(1),
+                                                          preserveAspectRatio: 'none' };
+        return nrEl('image', Object.assign({ 'class': 'cv-image cv-screen', href: cvImage(grid, view.colour.scale, stops.screen) }, size)) +
+          nrEl('image', Object.assign({ 'class': 'cv-image cv-paper', href: cvImage(grid, view.colour.scale, stops.paper) }, size));
+      }
+
+      // The SVG of panel k: its grid, a signed panel's zero, the view's own curves and marks, a
+      // group for each frame of a movie, the first shown, and the frame, the curves cut at its box.
+      function cvSvg(view, panel, k) {
+        var id = 'mfs-cv-' + (_cvUid++), W = CV_W, H = W / panel.aspect, line = view.kind === 'line';
+        function X(v) { return W * cvAcross(view, v); }
+        function Y(v) { return H * (1 - cvFraction(panel.scale, v)); }
+        var out = ['<defs>' + nrEl('clipPath', { id: id + '-clip' }, nrEl('rect', { x: 0, y: 0, width: W, height: H.toFixed(1) })) + '</defs>'];
+        var frames = (view.movie && view.movie.frames) || [];
+        if (line) {
+          view.x.ticks.forEach(function(t) { out.push(nrEl('line', { 'class': 'nr-grid', x1: X(t.at).toFixed(2), y1: 0, x2: X(t.at).toFixed(2), y2: H.toFixed(1) })); });
+          panel.ticks.forEach(function(t) { out.push(nrEl('line', { 'class': 'nr-grid', x1: 0, y1: Y(t.at).toFixed(2), x2: W, y2: Y(t.at).toFixed(2) })); });
+          if (panel.scale.kind !== 'log' && panel.scale.from < 0 && panel.scale.to > 0) {
+            out.push(nrEl('line', { 'class': 'cv-axis-zero', x1: 0, y1: Y(0).toFixed(2), x2: W, y2: Y(0).toFixed(2) }));
+          }
+        } else if (view.map) {
+          out.push(cvMapImages(view, view.map));
+        }
+        var inner = [cvCurves(view, panel, X, Y)], marks = [cvMarks(view, view, X, Y, H)];
+        frames.forEach(function(frame, n) {
+          var attrs = Object.assign({ 'class': 'cv-frame-g', 'data-frame': n }, n ? { style: 'display:none' } : {});
+          inner.push(nrEl('g', attrs, (!line && frame.map ? cvMapImages(view, frame.map) : '') + cvCurves(frame, panel, X, Y)));
+          marks.push(nrEl('g', attrs, cvMarks(frame, view, X, Y, H)));
+        });
+        out.push(nrEl('g', { 'clip-path': 'url(#' + id + '-clip)' }, inner.join('')));
+        out.push(nrEl('rect', { 'class': 'nr-frame', x: 0, y: 0, width: W, height: H.toFixed(1) }));
+        out.push(marks.join(''));
+        return nrEl('svg', { 'class': 'mfs-nr-svg mfs-cv-svg', viewBox: '0 0 ' + W + ' ' + H.toFixed(1), role: 'img',
+          'aria-label': (line ? 'Curvature, ' : 'Curvature map, ') + nrPlain(view.label) + ', ' + nrPlain(panel.name) },
+          out.join(''));
+      }
+
+      /* A curvature figure as nrFigure() lays out a spacetime diagram: the name of each panel's
+         vertical axis, its numbers and its plot in a row of their own, a gap between panels, then
+         the horizontal axis's numbers and name under the last; a map's colour bar, its numbers and
+         its name below those; and a movie's play button in the top left corner of the ground, with
+         the name of the frame shown above the plot, every frame's name held in one cell so that
+         nothing in it moves as the movie plays. The rows and the areas are written on the figure,
+         since their number follows its panels. */
+      function cvFigure(view, metricId, index) {
+        var panels = cvPanels(view), movie = view.movie, rows = [], areas = [], parts = [];
+        if (movie) {
+          var names = movie.frames.map(function(fr) { return fr.label; });
+          if (window.MfsTurn) names = MfsTurn.steady(names);
+          areas.push('". . frame ."');
+          rows.push('auto');
+          parts.push(MOVIE_PLAY + '<div class="cv-frame" aria-hidden="true"><span class="cv-word mfs-frame-labels">' +
+            names.map(function(name, k) { return '<span class="mfs-frame-label"' + (k ? ' hidden' : '') + '>' + nrEsc(name) + '</span>'; }).join('') +
+            '</span></div>');
+        }
+        panels.forEach(function(panel, k) {
+          if (k) {
+            areas.push('". . . xreach"');
+            rows.push('1.5em');
+          }
+          areas.push('"yname' + k + ' yticks' + k + ' plot' + k + ' xreach"');
+          rows.push('auto');
+          parts.push('<div class="nr-ylabel" aria-hidden="true" style="grid-area:yname' + k + '"><span class="nr-name">' + nrEsc(panel.name) + '</span></div>' +
+            '<div class="nr-yticks" aria-hidden="true" style="grid-area:yticks' + k + '"><span class="nr-sizer">' +
+              panel.ticks.map(function(t) { return '<span>' + nrEsc(t.label) + '</span>'; }).join('') + '</span>' +
+              panel.ticks.map(function(t) { return cvTick(t, 'top', 1 - cvFraction(panel.scale, t.at)); }).join('') + '</div>' +
+            '<div class="nr-plot" style="grid-area:plot' + k + '">' + cvSvg(view, panel, k) +
+              '<div class="mfs-nr-readout cv-readout"><span><span>' + nrEsc(view.x.name) + '</span> = <span class="cv-rx"></span></span>' +
+              '<span><span>' + nrEsc(panel.name) + '</span> = <span class="cv-ry"></span></span>' +
+              (view.kind === 'map' ? '<span><span>' + nrEsc(view.colour.name) + '</span> = <span class="cv-rv"></span></span>' : '') +
+              '</div></div>');
+        });
+        areas.push('". . xticks ."', '". . xname ."');
+        rows.push('auto', 'auto');
+        var last = view.x.ticks[view.x.ticks.length - 1], reach = [last.label];
+        parts.push('<div class="nr-xticks" aria-hidden="true">' + view.x.ticks.map(function(t) { return cvTick(t, 'left', cvAcross(view, t.at)); }).join('') + '</div>' +
+          '<div class="nr-xlabel" aria-hidden="true"><span class="nr-name">' + nrEsc(view.x.name) + '</span></div>');
+        if (view.kind === 'map') {
+          var scale = view.colour.scale, stops = cvStops(scale), uid = 'mfs-cv-' + (_cvUid++);
+          // The bar is drawn through 65 colours, each at its own place along the scale.
+          var gradient = function(name, ramp) {
+            var marks = [];
+            for (var s = 0; s <= 64; s++) {
+              var c = cvColour(ramp, cvRampAt(scale, cvValueAt(scale, s / 64)));
+              marks.push(nrEl('stop', { offset: (s / 64).toFixed(4), 'stop-color': 'rgb(' + c.join(',') + ')' }));
+            }
+            return nrEl('linearGradient', { id: uid + '-' + name, x1: 0, y1: 0, x2: 1, y2: 0 }, marks.join(''));
+          };
+          areas.push('". . bar ."', '". . barticks ."', '". . barname ."');
+          rows.push('auto', 'auto', 'auto');
+          reach.push(view.colour.ticks[view.colour.ticks.length - 1].label);
+          parts.push('<div class="cv-bar" aria-hidden="true"><svg class="mfs-nr-svg cv-bar-svg" viewBox="0 0 ' + CV_W + ' 18" preserveAspectRatio="none">' +
+              '<defs>' + gradient('screen', stops.screen) + gradient('paper', stops.paper) + '</defs>' +
+              nrEl('rect', { 'class': 'cv-screen', x: 0, y: 0, width: CV_W, height: 18, fill: 'url(#' + uid + '-screen)' }) +
+              nrEl('rect', { 'class': 'cv-paper', x: 0, y: 0, width: CV_W, height: 18, fill: 'url(#' + uid + '-paper)' }) +
+              nrEl('rect', { 'class': 'nr-frame', x: 0, y: 0, width: CV_W, height: 18 }) + '</svg></div>' +
+            '<div class="nr-xticks cv-barticks" aria-hidden="true">' +
+              view.colour.ticks.map(function(t) { return cvTick(t, 'left', cvFraction(scale, t.at)); }).join('') + '</div>' +
+            '<div class="nr-xlabel cv-barname" aria-hidden="true"><span class="nr-name">' + nrEsc(view.colour.name) + '</span></div>');
+        }
+        parts.push('<div class="nr-xreach" aria-hidden="true">' + reach.map(function(t) { return '<span>' + nrEsc(t) + '</span>'; }).join('') + '</div>');
+        var aspect = 1 / panels.reduce(function(a, p) { return a + 1 / p.aspect; }, 0);
+        return '<div class="mfs-fig-scroll mfs-nr-scroll" style="--nr-aspect:' + aspect.toFixed(4) + '">' +
+          '<div class="mfs-nr-figure mfs-cv-figure' + (movie ? ' mfs-cv-movie' : '') + '" data-cv-metric="' + nrEsc(metricId) +
+          '" data-cv-view="' + index + '" style="' + nrEsc('grid-template-rows:' + rows.join(' ') + ';grid-template-areas:' + areas.join(' ')) + '">' +
+          parts.join('') + '</div></div>';
+      }
+
+      function cvLegend(view) {
+        return '<div class="mfs-nr-legend">' + view.legend.map(function(item) {
+          var cls = 'cv-' + item[1];
+          var inner = item[0] === 'point' ? '<circle class="' + cls + '" cx="17" cy="8" r="4"/>'
+            : item[0] === 'fill' ? '<rect class="' + cls + '-fill cd-swatch-fill" x="2" y="2" width="30" height="12"/>'
+            : '<line class="' + cls + '" x1="2" y1="8" x2="32" y2="8"/>';
+          return '<span class="mfs-nr-item"><svg class="mfs-nr-swatch" width="34" height="16" viewBox="0 0 34 16">' + inner +
+            '</svg><span class="mfs-nr-itext">' + nrProse(nrEsc(item[2])) + '</span></span>';
+        }).join('') + '</div>';
+      }
+
+      function curvatureSection(metricId, coordId) {
+        var data = _curvatureCache[metricId], views = cvViews(metricId, coordId);
+        if (!views.length) return '';
+        function note(key, text) {
+          return '<div class="mfs-nr-note"><span class="mfs-nr-k">' + key + '</span> ' + nrProse(nrEsc(text)) + '</div>';
+        }
+        var buttons = views.length > 1 ? choices(views.map(function(v, i) {
+          return choiceButton(nrEsc(v.label), i === 0, {});
+        }), 'view') : '';
+        return [
+          '<div class="mfs-section mfs-diagram mfs-curvature">',
+            '<div class="mfs-section-head">',
+              '<div class="mfs-section-label">curvature</div>',
+              buttons,
+            '</div>',
+            views.map(function(view, i) {
+              return [
+                '<div class="mfs-nr-view' + (i ? ' mfs-nr-hidden' : '') + '">',
+                  cvFigure(view, metricId, data.views.indexOf(view)),
+                  '<div class="mfs-nr-text">',
+                    '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
+                    cvLegend(view),
+                    note('drawn at', view.settings),
+                    view.input ? note('drawn with', view.input) : '',
+                    note('scale', view.clip),
+                  '</div>',
+                '</div>'
+              ].join('');
+            }).join(''),
+          '</div>'
+        ].join('');
+      }
+
+      // A number under the pointer, in the room of the longest of its kind, so that its name and
+      // its point stay where they are as it changes: a coordinate to three decimals, as a spacetime
+      // diagram gives one, and a value to four figures, with its power of ten where it has one.
+      function cvRead(at, lo, hi) {
+        return at.toFixed(3).replace('-', '−').padStart(Math.max(lo.toFixed(3).length, hi.toFixed(3).length));
+      }
+      function cvReadValue(v) {
+        if (!isFinite(v)) return '';
+        var text = v === 0 ? '0' : Math.abs(v) >= 1e4 || Math.abs(v) < 1e-3 ? v.toExponential(3).replace('e+', 'e') : v.toPrecision(4);
+        return text.replace(/-/g, '−').padStart(10);
+      }
+
+      /* The values under the pointer on every panel, and a movie wired to the page's one player,
+         which hands it the frame to show: that frame's group of every panel is shown and the
+         others hidden, and its name is shown. A map's value under the pointer is its cell's in
+         the frame shown. */
+      function wireCurvature(root) {
+        root.querySelectorAll('.mfs-cv-figure').forEach(function(fig) {
+          var data = _curvatureCache[fig.getAttribute('data-cv-metric')];
+          var view = data && data.views[+fig.getAttribute('data-cv-view')];
+          if (!view) return;
+          var shown = 0, panels = cvPanels(view);
+          fig.querySelectorAll('.nr-plot').forEach(function(plot, k) {
+            var svg = plot.querySelector('svg'), readout = plot.querySelector('.cv-readout');
+            var rx = readout.querySelector('.cv-rx'), ry = readout.querySelector('.cv-ry'), rv = readout.querySelector('.cv-rv');
+            svg.addEventListener('mousemove', function(ev) {
+              var r = svg.getBoundingClientRect(), u = (ev.clientX - r.left) / r.width, v = 1 - (ev.clientY - r.top) / r.height;
+              if (u < 0 || u > 1 || v < 0 || v > 1) { readout.style.opacity = 0; return; }
+              readout.style.opacity = 1;
+              rx.textContent = cvRead(view.x.from + u * (view.x.to - view.x.from), view.x.from, view.x.to);
+              if (view.kind === 'line') {
+                ry.textContent = cvReadValue(cvValueAt(panels[k].scale, v));
+                return;
+              }
+              ry.textContent = cvRead(view.y.from + v * (view.y.to - view.y.from), view.y.from, view.y.to);
+              var grid = (view.movie && view.movie.frames[shown].map) || view.map;
+              var i = Math.min(grid.nx - 1, Math.floor(u * grid.nx)), j = Math.min(grid.ny - 1, Math.floor(v * grid.ny));
+              rv.textContent = cvReadValue(grid.cells[j][i]);
+            });
+            svg.addEventListener('mouseleave', function() { readout.style.opacity = 0; });
+          });
+          if (!view.movie) return;
+          var groups = [].slice.call(fig.querySelectorAll('.cv-frame-g')), names = [].slice.call(fig.querySelectorAll('.mfs-frame-label'));
+          wireMovie(fig, view.movie, function(k) {
+            shown = k;
+            groups.forEach(function(g) { g.style.display = +g.getAttribute('data-frame') === k ? '' : 'none'; });
+            names.forEach(function(el, n) { el.hidden = n !== k; });
+          }, function() {});
+        });
+      }
+
       /* ── The slice of the embedding diagram ──
          A spacetime diagram's view, a figure in three dimensions and a conformal diagram's
          view each carry under `slices` the moment the spacetime's embedding diagram is cut
@@ -3638,7 +4011,7 @@
         _sliceShown = shown ? shown.id : null;
         _shadeShown = region ? region.id : null;
         return (coordId ? diagramSection(metricId, coordId) : '') + conformalSection(metricId, coordId) +
-          embeddingSection(metricId, coordId);
+          embeddingSection(metricId, coordId) + curvatureSection(metricId, coordId);
       }
 
       function sliceClass(view) {
@@ -4087,7 +4460,7 @@
          plays and pauses it. `go(k)` draws frame k and `settle()` the frame shown in full. */
       var _movieObserver = null, _movieSeen = new Map();
       function wireMovie(drawing, movie, go, settle) {
-        var play = drawing.closest('.mfs-cd-figure').querySelector('.mfs-movie-play');
+        var play = drawing.closest('.mfs-cd-figure, .mfs-cv-figure').querySelector('.mfs-movie-play');
         var playing = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
         var elapsed = 0, last = null, tick = 0, seen = false, shown = 0;
         function step(now) {
@@ -4573,6 +4946,7 @@
         wireHeader(contentPanel.querySelector('.mfs-header'));
         wireDiagrams(contentPanel);
         wireTurning(contentPanel);
+        wireCurvature(contentPanel);
         if (_lineObserver) _lineObserver.disconnect();
         _lineObserver = null;
         wireLines(contentPanel);
@@ -4760,7 +5134,7 @@
         function load() {
           fetchBib(function() {
             fetchMetric(id, function(data) {
-              fetchDiagrams(id, function() { fetchConformal(id, function() { fetchEmbedding(id, function() {
+              fetchDiagrams(id, function() { fetchConformal(id, function() { fetchEmbedding(id, function() { fetchCurvature(id, function() {
                 if (seq !== _shown) return;
                 renderMetric(data).then(afterFrame).then(function() {
                   if (seq !== _shown) return;
@@ -4771,7 +5145,7 @@
                 });
                 el.scrollTop = 0;
                 bringIntoView(el);
-              }); }); });
+              }); }); }); });
             });
           });
         }
@@ -5328,6 +5702,30 @@
     .em-axis, .em-axis-far { fill: none; stroke: var(--text-dim); stroke-width: 1.4; stroke-dasharray: 2 4; stroke-linecap: round; }
     circle.em-particles { fill: var(--green-light); stroke: none; }
     .mfs-em-svg [class$="-far"] { stroke-opacity: 0.28; }
+    /* ── Curvature figures ── are laid out as a spacetime diagram is, on the same ground, with the
+       same words, grid and frame, by the rows and areas cvFigure() writes on each. A spacetime's
+       own scalars are drawn in the colours of the two families of light rays, K in pink and R in
+       cyan, a comparison dashed in grey, a horizon as a spacetime diagram marks g^rr = 0, and a
+       singularity and a point where the scalar vanishes as points; a map's colours are an image
+       under its frame, the dark ground's on the screen and paper's in print. A movie's play button
+       stands in the top left corner of the ground, as an embedding diagram's does, and the name
+       of its frame above the plot, below the button. */
+    .mfs-cv-figure.mfs-cv-movie { padding-top: max(2em, calc(34px + 0.5em)); }
+    .mfs-cv-figure .cv-frame { grid-area: frame; padding-bottom: 0.6em; }
+    .mfs-cv-figure .nr-xreach > span { display: block; }
+    .mfs-cv-figure .cv-bar { grid-area: bar; padding-top: 1em; }
+    .mfs-cv-figure .cv-barticks { grid-area: barticks; }
+    .mfs-cv-figure .cv-barname { grid-area: barname; }
+    .cv-bar-svg { display: block; width: 100%; height: 0.9em; overflow: visible; }
+    .cv-K, .cv-R { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .cv-K { stroke: var(--pink-light); }
+    .cv-R { stroke: var(--mfs-cyan-light); }
+    .cv-reference { fill: none; stroke: var(--text-mid); stroke-width: 1.6; stroke-dasharray: 6 4; }
+    .cv-horizon { fill: none; stroke: var(--cyan); stroke-width: 2; stroke-dasharray: 7 5; }
+    .cv-axis-zero { stroke: rgba(238,242,245,0.3); stroke-width: 1; }
+    circle.cv-singular { fill: var(--pink-dark); stroke: #000; stroke-width: 1.2; }
+    circle.cv-zero { fill: none; stroke: var(--text-bright); stroke-width: 2; }
+    .cv-paper { display: none; }
     /* A figure that turns, an embedding diagram or a figure of light cones: the drawing takes
        a drag and leaves a swipe up or down to the page, and the button that brings back the
        published figure sits in the top corner of the frame while the figure is turned, exactly
@@ -5985,6 +6383,16 @@
       .mfs-print-body .em-worldline, .mfs-print-body .em-worldline-far { stroke: #2a6e2a; }
       .mfs-print-body .em-axis, .mfs-print-body .em-axis-far { stroke: #666; }
       .mfs-print-body circle.em-particles { fill: #2a6e2a; stroke: none; }
+      /* A curvature figure in the print copy's inks, its map and its colour bar in paper's colours. */
+      .mfs-print-body .cv-screen { display: none; }
+      .mfs-print-body .cv-paper { display: inline; }
+      .mfs-print-body .cv-K { stroke: #d81b60; }
+      .mfs-print-body .cv-R { stroke: #238ba6; }
+      .mfs-print-body .cv-reference { stroke: #666; }
+      .mfs-print-body .cv-horizon { stroke: #0a6e82; }
+      .mfs-print-body .cv-axis-zero { stroke: #bbb; }
+      .mfs-print-body circle.cv-singular { fill: #c2185b; stroke: #fff; }
+      .mfs-print-body circle.cv-zero { stroke: #000; }
       /* A figure's label stands on the surface beside the circle it names, over its lines, on
          a ground of its own on the screen; the print copy clears every ground, so here it
          gets a white one, or the lines would cross it on paper. */

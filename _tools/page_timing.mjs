@@ -210,11 +210,12 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
       return Object.keys(moved).map(function (k) { return moved[k]; });
     };
   };
-  /* The words of a drawing's ground, a spacetime diagram's .mfs-nr-figure or the
-     .mfs-cd-drawing of a conformal diagram, a figure in three dimensions or an embedding
-     diagram, that a reader sees: its numbers, the names of its axes and its labels. */
+  /* The words of a drawing's ground, the .mfs-nr-figure of a spacetime diagram or a curvature
+     figure or the .mfs-cd-drawing of a conformal diagram, a figure in three dimensions or an
+     embedding diagram, that a reader sees: its numbers, the names of its axes and its labels,
+     and the name of a curvature movie's frame. */
   window.__mfsWords = function (ground) {
-    var words = ground.matches('.mfs-nr-figure') ? '.nr-tick, .nr-name, .nr-ref, .mfs-slice-label' : '.cd-at';
+    var words = ground.matches('.mfs-nr-figure') ? '.nr-tick, .nr-name, .nr-ref, .mfs-slice-label, .cv-word' : '.cd-at';
     return [].filter.call(ground.querySelectorAll(words), function (el) {
       return el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
     });
@@ -222,7 +223,8 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
   /* What a drawing is, for a message: its kind and the name its SVG gives it. */
   window.__mfsDrawingName = function (ground) {
     var figure = ground.closest('.mfs-cd-figure'), svg = ground.querySelector('svg');
-    var kind = !figure ? 'spacetime diagram' : figure.classList.contains('mfs-em-figure') ? 'embedding diagram'
+    var kind = ground.matches('.mfs-cv-figure') ? 'curvature figure' : !figure ? 'spacetime diagram'
+      : figure.classList.contains('mfs-em-figure') ? 'embedding diagram'
       : figure.classList.contains('mfs-pj-figure') ? 'figure' : 'conformal diagram';
     var name = svg && svg.getAttribute('aria-label') || '';
     return kind + ' "' + name.replace(/^[^,]*, /, '').slice(0, 48) + '"';
