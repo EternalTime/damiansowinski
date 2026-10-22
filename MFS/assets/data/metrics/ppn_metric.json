@@ -58,7 +58,7 @@
     {
       "id": "exponential_metric",
       "kind": "family",
-      "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$, and the metric passes all the standard lowest-order weak-field tests [boonserm2018]."
+      "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$, and the metric passes all the standard lowest order weak field tests [boonserm2018]."
     },
     {
       "id": "einstein_1912_static",
