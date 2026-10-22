@@ -742,11 +742,257 @@ def bach_weyl_ring(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Boulware and Deser's black hole
+
+BD_R0 = Fraction(13, 12)          # r_0 in units of the horizon radius r_h, as every drawing of the black hole takes it
+BD_ELL = Fraction(5, 12)          # the Gauss-Bonnet length in units of r_h, as every drawing of the black hole takes it
+BD_STEP = Fraction(1, 20)         # the step of l/r_0 from one frame of the movie to the next, and its first frame
+BD_LAST = Fraction(3, 2)          # the last frame's l/r_0
+
+
+def boulware_deser(ck, src):
+    """Boulware and Deser's black hole and its anti-de Sitter branch, their Kretschmann and Ricci
+    scalars against r.
+
+    Every chart of the black hole publishes the same K and R, functions of r alone through
+    W = sqrt(r^4 + 4 l^2 r_0^2), and the ingoing Eddington-Finkelstein chart covers every r > 0,
+    so it is the one read; the horizon is the zero of its published g^rr. The first view is the
+    black hole at r_0 = 13 r_h/12 and l = 5 r_h/12, the values every other drawing of it takes,
+    with r from 0 to 6 r_h, the box of its spacetime diagrams: K on a logarithmic axis from 10^-5
+    to 10^5 and R on a signed one, linear within 10^-3/r_h^2 of zero, from -1 to 10^4, beside
+    Tangherlini's two scalars of the same mass, read from tangherlini.json at its r_h = r_0. The
+    second is the anti-de Sitter branch, its own chart, at r_0 = l, the unit of length, with r
+    from 0 to 3 l: K on a logarithmic axis from 10 to 10^5 and R, negative at every r, on a
+    signed one from -10^5 to -10. The third steps l from r_0/20 to 3 r_0/2 at fixed mass, with
+    r from 0 to 3 r_0, through l = r_0, where the horizon r_h = sqrt(r_0^2 - l^2) closes. The
+    movie starts at r_0/20 and not at l = 0, Tangherlini's black hole, whose published R is
+    0 times a sum that rounding in W - r^2 leaves at 10^-9 rather than at zero; Tangherlini's
+    scalars are dashed in every frame instead.
+
+    What the captions state is checked here, in sixty digits: near the centre K is
+    12 r_0^2/l^2 r^4 on both branches and R is 6 r_0/l r^2 on the black hole and its negative on
+    the branch; the black hole's metric function is 1 - r_0/l at the centre; its K falls from the
+    centre outward, its R changes sign once, inside the horizon, at the radius stated, and is
+    least, -(10 - 7 sqrt 2)/l^2, at r = sqrt(2 l r_0); far out its K is Tangherlini's and its R
+    is -12 l^2 r_0^4/r^8, and the branch's K and R are anti-de Sitter space's 40/l^4 and -20/l^2
+    in five dimensions; the branch's g^rr is positive at every r; in the movie the horizon moves
+    in as l grows and is gone from l = r_0, and K near the centre and the least R fall and rise;
+    and every cut the clips state is where the curve leaves its panel."""
+    r0, ell = float(BD_R0), float(BD_ELL)
+    hole_params = {"r_0": r0, "\\ell": ell}
+    K = nr_published(src, "boulware_deser", "eddington_finkelstein_ingoing", "kretschmann", ["r"], ["r_0", "\\ell"])
+    R = nr_published(src, "boulware_deser", "eddington_finkelstein_ingoing", "ricci_scalar", ["r"], ["r_0", "\\ell"])
+    grr = nr_published(src, "boulware_deser", "eddington_finkelstein_ingoing", "inverse_metric_components", ["r"],
+                       ["r_0", "\\ell"], ("r", "r"))
+    Kb = nr_published(src, "boulware_deser", "spherical_plus", "kretschmann", ["r"], ["r_0", "\\ell"])
+    Rb = nr_published(src, "boulware_deser", "spherical_plus", "ricci_scalar", ["r"], ["r_0", "\\ell"])
+    grr_b = nr_published(src, "boulware_deser", "spherical_plus", "inverse_metric_components", ["r"], ["r_0", "\\ell"],
+                         ("r", "r"))
+    K_t = nr_published(src, "tangherlini", "spherical", "kretschmann", ["r"], ["r_h"])
+    R_t = nr_published(src, "tangherlini", "spherical", "ricci_scalar", ["r"], ["r_h"])
+    legend_K_R = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"]]
+    legend = legend_K_R + [["line", "reference", "Tangherlini's black hole of the same mass"],
+                           ["line", "horizon", "a horizon, where $g^{rr} = 0$"]]
+
+    def stack(K_name, R_name, K_scale, R_scale):
+        panels = [{"id": "K", "name": K_name, "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+                  {"id": "R", "name": R_name, "aspect": 2, "scale": R_scale, "ticks": value_ticks(R_scale)}]
+        return panels, {p["id"]: PLOT_W / p["aspect"] for p in panels}
+
+    def cut(fn, x_axis, scale, values):
+        """The radius inside which a curve leaves its panel, by its top or its bottom, where it
+        leaves it about the centre alone, and None where it never leaves it."""
+        up, down = beyond(fn, x_axis, scale, values)
+        outside = sorted(up + down)
+        step = (x_axis["to"] - x_axis["from"]) / (SAMPLES - 1)
+        joined = all(abs(b[0] - a[1] - step) < 1e-9 for a, b in zip(outside, outside[1:]))
+        if outside and (outside[0][0] != x_axis["from"] or not joined):
+            raise SystemExit(f"boulware_deser: a curve leaves its panel other than about the centre: {up} {down}")
+        return outside[-1][1] if outside else None
+
+    def near(fn, values, law, where):
+        """A published scalar against the law it follows near the centre, in sixty digits."""
+        ratios = [float(fn.exact([r] + values)) / law(r) for r in (1e-6, 1e-7, 1e-8)]
+        ck(where, all(abs(q - 1) < 1e-5 for q in ratios), f"{ratios}")
+
+    def far(fn, values, law, where):
+        ratios = [float(fn.exact([r] + values)) / law(r) for r in (1e4, 1e5)]
+        ck(where, all(abs(q - 1) < 1e-6 for q in ratios), f"{ratios}")
+
+    # The black hole at r_0 = 13 r_h/12 and l = 5 r_h/12.
+    x_axis = axis("$r/r_h$", 0, 6)
+    K_scale = {"kind": "log", "from": 1e-5, "to": 1e5}
+    R_scale = {"kind": "symlog", "from": -1, "to": 1e4, "linear": 1e-3}
+    panels, height = stack("$K\\,r_h^4$", "$R\\,r_h^2$", K_scale, R_scale)
+    shape_checks(ck, "boulware_deser hole", [p["aspect"] for p in panels])
+    reference = {"r_h": r0}
+    curves = (line_curves(ck, "boulware_deser Tangherlini", "K", "reference", K_t, "r", x_axis, K_scale, height["K"],
+                          reference)
+              + line_curves(ck, "boulware_deser Tangherlini", "R", "reference", R_t, "r", x_axis, R_scale, height["R"],
+                            reference)
+              + line_curves(ck, "boulware_deser hole", "K", "K", K, "r", x_axis, K_scale, height["K"], hole_params)
+              + line_curves(ck, "boulware_deser hole", "R", "R", R, "r", x_axis, R_scale, height["R"], hole_params))
+    values = [r0, ell]
+    horizons = zeros(ck, "boulware_deser hole horizons", grr, 0, 6, values)
+    ck("boulware_deser has one horizon, at r_h = sqrt(r_0^2 - l^2) = 1",
+       len(horizons) == 1 and abs(horizons[0] - 1) < 1e-12, f"{horizons}")
+    marks = [{"class": "horizon", "x": x} for x in horizons]
+    ck("boulware_deser Tangherlini's published K is 72 r_h^4/r^8",
+       all(abs(float(K_t.exact([r, r0])) * r ** 8 / (72 * r0 ** 4) - 1) < 1e-12 for r in (0.1, 1.0, 5.0)))
+    centre_f = float(grr.exact([1e-30] + values))
+    ck("boulware_deser the metric function at the centre is 1 - r_0/l = -8/5",
+       abs(centre_f - (1 - r0 / ell)) < 1e-12 and abs(centre_f + 1.6) < 1e-12, f"{centre_f}")
+    near(K, values, lambda r: 12 * r0 ** 2 / (ell ** 2 * r ** 4), "boulware_deser K grows as 12 r_0^2/l^2 r^4 at the centre")
+    near(R, values, lambda r: 6 * r0 / (ell * r ** 2), "boulware_deser R grows as 6 r_0/l r^2 at the centre")
+    rs = np.linspace(0, 6, SAMPLES)[1:]
+    ck("boulware_deser K falls from the centre outward", np.all(np.diff(K(rs, *values)) < 0))
+    sign = zeros(ck, "boulware_deser R", R, 0, 6, values)
+    # R changes sign where 2r^4 + 4r^2 W - 3W^2 vanishes, W = (2 + sqrt 10) r^2/3.
+    r_sign = math.sqrt(2 * ell * r0) * (9 / (5 + 4 * math.sqrt(10))) ** 0.25
+    ck("boulware_deser R changes sign once, inside the horizon, where W = (2 + sqrt 10) r^2/3",
+       len(sign) == 1 and abs(sign[0] - r_sign) < 1e-12 and sign[0] < horizons[0], f"{sign} {r_sign}")
+    r_least = math.sqrt(2 * ell * r0)
+    R_least = float(R.exact([r_least] + values))
+    fine = np.linspace(1e-3, 6, 600001)
+    ck("boulware_deser R is least at r = sqrt(2 l r_0), just inside the horizon, at -(10 - 7 sqrt 2)/l^2",
+       abs(R_least * ell ** 2 / -(10 - 7 * math.sqrt(2)) - 1) < 1e-12 and R_least <= float(np.min(R(fine, *values)))
+       and abs(float(fine[np.argmin(R(fine, *values))]) - r_least) < 1e-4 and r_sign < r_least < horizons[0],
+       f"r = {r_least:.6f}, R = {R_least:.6f}")
+    far(K, values, lambda r: 72 * r0 ** 4 / r ** 8, "boulware_deser K approaches Tangherlini's far out")
+    far(R, values, lambda r: -12 * ell ** 2 * r0 ** 4 / r ** 8, "boulware_deser R falls off as -12 l^2 r_0^4/r^8 far out")
+    cut_K, cut_t, cut_R = (cut(K, x_axis, K_scale, values), cut(K_t, x_axis, K_scale, [r0]),
+                           cut(R, x_axis, R_scale, values))
+    ck("boulware_deser R of Tangherlini stays inside its panel", cut(R_t, x_axis, R_scale, [r0]) is None)
+    hole = {
+        "id": "hole", "label": "the black hole", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": marks, "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Boulware and Deser's black hole against $r$ "
+            "($r_0 = 13r_h/12$, $\\ell = 5r_h/12$), the same at every $t$, $\\psi$, $\\theta$, and $\\phi$, beside "
+            "Tangherlini's of the same mass. Toward the centre Tangherlini's $K = 72r_0^4/r^8$ grows as $r^{-8}$. "
+            "Boulware and Deser's metric function stays finite there, $1 - r_0/\\ell = -8/5$ at $r = 0$, and its "
+            "$K$ grows as $12r_0^2/\\ell^2r^4$.",
+            "Near the centre $R$ grows as $6r_0/\\ell r^2$. It changes sign at "
+            f"$r = {sign[0]:.3f}\\,r_h$, inside the horizon, and is least, "
+            f"$-(10 - 7\\sqrt{{2}})/\\ell^2 = {R_least:.3f}/r_h^2$, at $r = \\sqrt{{2\\ell r_0}} = {r_least:.3f}\\,r_h$, "
+            "just inside it. Far out $K$ approaches Tangherlini's and $R$ falls off as $-12\\ell^2r_0^4/r^8$.",
+        ],
+        "settings": "$r_0 = 13r_h/12$ and $\\ell = 5r_h/12$, with the horizon radius $r_h = \\sqrt{r_0^2 - \\ell^2}$ "
+                    "the unit of every length.",
+        "clip": ("We draw $K\\,r_h^4$ on a logarithmic scale from $10^{-5}$ to $10^{5}$ and $R\\,r_h^2$ on a signed "
+                 "logarithmic scale, linear within $0.001$ of zero, from $-1$ to $10^{4}$, and cut each curve where it "
+                 f"leaves its panel, as Boulware and Deser's $K$ does inside $r = {cut_K:.3f}\\,r_h$, Tangherlini's "
+                 f"inside $r = {cut_t:.3f}\\,r_h$, and $R$ inside $r = {cut_R:.3f}\\,r_h$."),
+    }
+
+    # The anti-de Sitter branch at r_0 = l, the unit of length.
+    x_b = axis("$r/\\ell$", 0, 3)
+    Kb_scale = {"kind": "log", "from": 10, "to": 1e5}
+    Rb_scale = {"kind": "symlog", "from": -1e5, "to": -10, "linear": 1}
+    panels_b, height_b = stack("$K\\,\\ell^4$", "$R\\,\\ell^2$", Kb_scale, Rb_scale)
+    shape_checks(ck, "boulware_deser branch", [p["aspect"] for p in panels_b])
+    branch_params = {"r_0": 1.0, "\\ell": 1.0}
+    curves_b = (line_curves(ck, "boulware_deser branch", "K", "K", Kb, "r", x_b, Kb_scale, height_b["K"], branch_params)
+                + line_curves(ck, "boulware_deser branch", "R", "R", Rb, "r", x_b, Rb_scale, height_b["R"],
+                              branch_params))
+    unit = [1.0, 1.0]
+    wide = np.concatenate([np.linspace(0, 3, SAMPLES)[1:], np.geomspace(3, 1e4, 2001)])
+    ck("boulware_deser branch g^rr is positive at every r", np.all(grr_b(wide, *unit) > 0)
+       and not zeros(ck, "boulware_deser branch g^rr", grr_b, 0, 3, unit))
+    near(Kb, unit, lambda r: 12 / r ** 4, "boulware_deser branch K grows as 12 r_0^2/l^2 r^4 at the centre")
+    near(Rb, unit, lambda r: -6 / r ** 2, "boulware_deser branch R grows as -6 r_0/l r^2 at the centre")
+    far(Kb, unit, lambda r: 40.0, "boulware_deser branch K tends to 40/l^4, anti-de Sitter space's in five dimensions")
+    far(Rb, unit, lambda r: -20.0, "boulware_deser branch R tends to -20/l^2, anti-de Sitter space's in five dimensions")
+    ck("boulware_deser branch R is negative at every r", np.all(Rb(wide, *unit) < 0))
+    cut_Kb, cut_Rb = cut(Kb, x_b, Kb_scale, unit), cut(Rb, x_b, Rb_scale, unit)
+    branch = {
+        "id": "branch", "label": "the anti-de Sitter branch", "system": "spherical_plus", "kind": "line", "x": x_b,
+        "panels": panels_b, "curves": curves_b, "marks": [], "legend": legend_K_R,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the anti-de Sitter branch against $r$ "
+            "($r_0 = \\ell$), the same at every $t$, $\\psi$, $\\theta$, and $\\phi$. Toward the centre $K$ grows as "
+            "$12r_0^2/\\ell^2r^4$, as the black hole's does, and $R$ as $-6r_0/\\ell r^2$, the black hole's with its "
+            "sign changed. Here $g^{rr}$ is positive at every $r$, and the singularity at $r = 0$ has no horizon.",
+            "Far out $K$ tends to $40/\\ell^4$ and $R$ to $-20/\\ell^2$, the curvature of anti-de Sitter space of "
+            "radius $\\ell$ in five dimensions, set by the Gauss-Bonnet coupling.",
+        ],
+        "settings": "$\\ell = 1$, the unit of every length, and $r_0 = \\ell$.",
+        "clip": ("We draw $K\\,\\ell^4$ on a logarithmic scale from $10$ to $10^{5}$ and $R\\,\\ell^2$ on a signed "
+                 "logarithmic scale, linear within $1$ of zero, from $-10^{5}$ to $-10$, and cut each curve where it "
+                 f"leaves its panel, as $K$ does inside $r = {cut_Kb:.3f}\\,\\ell$ and $R$ inside "
+                 f"$r = {cut_Rb:.4f}\\,\\ell$."),
+    }
+
+    # The movie in l at fixed mass, r_0 = 1, through l = r_0, where the horizon closes.
+    x_m = axis("$r/r_0$", 0, 3)
+    Km_scale = {"kind": "log", "from": 1e-3, "to": 1e5}
+    Rm_scale = {"kind": "symlog", "from": -100, "to": 1e4, "linear": 0.01}
+    panels_m, height_m = stack("$K\\,r_0^4$", "$R\\,r_0^2$", Km_scale, Rm_scale)
+    shape_checks(ck, "boulware_deser movie", [p["aspect"] for p in panels_m])
+    mass = {"r_h": 1.0}
+    references = (line_curves(ck, "boulware_deser movie Tangherlini", "K", "reference", K_t, "r", x_m, Km_scale,
+                              height_m["K"], mass)
+                  + line_curves(ck, "boulware_deser movie Tangherlini", "R", "reference", R_t, "r", x_m, Rm_scale,
+                                height_m["R"], mass))
+    frames, cuts_K, cuts_R, least = [], [], [], []
+    for k in range(1, int(BD_LAST / BD_STEP) + 1):
+        value = float(BD_STEP * k)
+        name, params = f"boulware_deser at l = {value:.2f} r_0", {"r_0": 1.0, "\\ell": value}
+        frame_curves = (line_curves(ck, name, "K", "K", K, "r", x_m, Km_scale, height_m["K"], params)
+                        + line_curves(ck, name, "R", "R", R, "r", x_m, Rm_scale, height_m["R"], params))
+        found = zeros(ck, f"{name} horizons", grr, 0, 3, [1.0, value])
+        expected = [math.sqrt(1 - value ** 2)] if value < 1 else []
+        ck(f"{name} has its horizon at sqrt(r_0^2 - l^2), and none from l = r_0",
+           len(found) == len(expected) and all(abs(a - b) < 1e-12 for a, b in zip(found, expected)), f"{found}")
+        frames.append({"label": f"$\\ell = {value:.2f}\\,r_0$", "value": value, "curves": frame_curves,
+                       "marks": [{"class": "horizon", "x": x} for x in found]})
+        cuts_K.append(cut(K, x_m, Km_scale, [1.0, value]))
+        cuts_R.append(cut(R, x_m, Rm_scale, [1.0, value]))
+        least.append(float(np.min(R(np.linspace(1e-3, 3, SAMPLES), 1.0, value))))
+        if value > 1:
+            ck(f"{name} g^rr is positive at every r", np.all(grr(np.linspace(0, 3, SAMPLES), 1.0, value) > 0))
+    ck("boulware_deser the movie's horizon moves in as l grows",
+       all(b["marks"][0]["x"] < a["marks"][0]["x"] for a, b in zip(frames, frames[1:]) if b["marks"]))
+    ck("boulware_deser the movie's K and R leave their panels nearer the centre as l grows, never farther",
+       all(c is not None for c in cuts_K + cuts_R)
+       and all(b <= a for a, b in zip(cuts_K, cuts_K[1:])) and all(b <= a for a, b in zip(cuts_R, cuts_R[1:]))
+       and cuts_K[-1] < cuts_K[0] and cuts_R[-1] < cuts_R[0],
+       f"K {cuts_K[0]:.3f} to {cuts_K[-1]:.3f}, R {cuts_R[0]:.3f} to {cuts_R[-1]:.3f}")
+    ck("boulware_deser the movie's least R rises toward zero as l grows", all(b > a for a, b in zip(least, least[1:])),
+       f"{least[0]:.3f} to {least[-1]:.4f}")
+    cut_tm = cut(K_t, x_m, Km_scale, [1.0])
+    ck("boulware_deser the movie's Tangherlini R stays inside its panel", cut(R_t, x_m, Rm_scale, [1.0]) is None)
+    first, last = float(BD_STEP), float(BD_LAST)
+    movie = {
+        "id": "length", "label": f"$r_0/{int(1 / BD_STEP)} \\le \\ell \\le 3r_0/2$", "kind": "line", "x": x_m,
+        "panels": panels_m, "curves": references, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Boulware and Deser's black hole against $r$ as "
+            f"the Gauss-Bonnet length grows at fixed mass ($r_0/{int(1 / BD_STEP)} \\le \\ell \\le 3r_0/2$), beside "
+            "Tangherlini's of the same mass, the black hole at $\\ell = 0$. As $\\ell$ grows, $K$ near the centre, "
+            "$12r_0^2/\\ell^2r^4$, falls, and the least value of $R$, $-(10 - 7\\sqrt{2})/\\ell^2$ at "
+            "$r = \\sqrt{2\\ell r_0}$, rises toward zero.",
+            "The horizon $r_h = \\sqrt{r_0^2 - \\ell^2}$ moves in as $\\ell$ grows and closes at $\\ell = r_0$. Past "
+            "it $g^{rr}$ is positive at every $r$, and the singularity at $r = 0$ has no horizon.",
+        ],
+        "settings": f"$r_0 = 1$, the unit of every length, and $\\ell$ in steps of $r_0/{int(1 / BD_STEP)}$.",
+        "clip": ("We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-3}$ to $10^{5}$ and $R\\,r_0^2$ on a signed "
+                 "logarithmic scale, linear within $0.01$ of zero, from $-100$ to $10^{4}$, and cut each curve where it "
+                 f"leaves its panel: Boulware and Deser's $K$ passes the top inside $r = {cuts_K[0]:.3f}\\,r_0$ at "
+                 f"$\\ell = {first:.2f}\\,r_0$ and inside $r = {cuts_K[-1]:.3f}\\,r_0$ at $\\ell = {last:.2f}\\,r_0$, "
+                 f"its $R$ inside $r = {cuts_R[0]:.3f}\\,r_0$ and $r = {cuts_R[-1]:.3f}\\,r_0$, and Tangherlini's $K$ "
+                 f"inside $r = {cut_tm:.3f}\\,r_0$."),
+        "movie": {"variable": "$\\ell$", "seconds": 5, "frames": frames},
+    }
+    return [hole, branch, movie]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
     "bach_weyl_ring": bach_weyl_ring,
     "bardeen": bardeen,
+    "boulware_deser": boulware_deser,
 }
 
 
