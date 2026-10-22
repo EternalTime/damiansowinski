@@ -732,12 +732,17 @@ async function contents() {
       window.__mfsCurrent(i).forEach(function (m) { out.push('after the entry "' + entries[i].textContent + '" was pressed, ' + m); });
     }
     /* Where each section stands in what scrolls, measured here from the page: scrolled to a
-       section's top, and to halfway to the next one's, that section is the one being read.
-       Sections the scroll ends before reaching are left to the presses above. */
+       section's top, and to halfway to the next one's, the section being read is the last whose
+       top, or the end of the scroll for one too near the end to reach it, has come up to the
+       reading line, a third of the way down what shows below the line of the top. Sections the
+       scroll ends before reaching are left to the presses above. */
     function line() {
       var head = panel.querySelector('.mfs-header');
       if (!head.classList.contains('mfs-header-loose')) return head.getBoundingClientRect().bottom;
       return phone ? 0 : panel.getBoundingClientRect().top + panel.clientTop + parseFloat(getComputedStyle(panel).paddingTop);
+    }
+    function shows() {
+      return (phone ? window.innerHeight : panel.getBoundingClientRect().bottom - panel.clientTop) - line();
     }
     function frames() { return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); }); }
     async function scrollTo(y) {
@@ -756,7 +761,9 @@ async function contents() {
         if (places[q] < 0 || places[q] > far || next - tops[j] < 8) continue;
         await scrollTo(places[q]);
         // The name over the page may come loose or stick as it scrolls, which moves the line.
-        var here = labels.map(function (l) { return (l.closest('.mfs-section') || l).getBoundingClientRect().top - line(); });
+        var end = (phone ? document.documentElement.scrollHeight - window.innerHeight : panel.scrollHeight - panel.clientHeight) - at();
+        var ahead = shows() / 3;
+        var here = labels.map(function (l) { return Math.min((l.closest('.mfs-section') || l).getBoundingClientRect().top - line(), end) - ahead; });
         var reading = 0;
         here.forEach(function (h, n) { if (h <= 0.5) reading = n; });
         if (here.some(function (h) { return h > 0.5 && h < 3.5; })) continue;

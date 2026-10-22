@@ -947,8 +947,9 @@
       function onPhone() {
         return getComputedStyle(document.documentElement).getPropertyValue('--mfs-phone').trim() === '1';
       }
-      /* What scrolls the spacetime: how far it is scrolled, how far it can be, and how much
-         further would bring each of the sections to the top of what shows of it. */
+      /* What scrolls the spacetime: how far it is scrolled, how far it can be, how much
+         further would bring each of the sections to the top of what shows of it, and how tall
+         what shows of it is. */
       function scrolled(sections) {
         var panel = document.getElementById('mfs-content-panel'), phone = onPhone();
         var head = parseFloat(panel.style.getPropertyValue('--mfs-head')) || 0;
@@ -957,7 +958,8 @@
           panel: panel, phone: phone,
           at: phone ? window.scrollY : panel.scrollTop,
           end: phone ? document.documentElement.scrollHeight - window.innerHeight : panel.scrollHeight - panel.clientHeight,
-          further: sections.map(function(s) { return s.getBoundingClientRect().top - head - edge; })
+          further: sections.map(function(s) { return s.getBoundingClientRect().top - head - edge; }),
+          shows: (phone ? window.innerHeight : panel.getBoundingClientRect().bottom - panel.clientTop) - head - edge
         };
       }
       function jumpTo(section) {
@@ -968,18 +970,20 @@
 
       /* The entry of the section being read is pink, as the open spacetime's name is in the
          list, and nothing else about it changes, as the captain asked on 1 October 2026. A
-         section is being read from where its entry brings it, which is its top at the top of
-         what shows or, for a section too near the end to get there, the end of the scroll;
-         the one read is the last the reader has reached, and the first before any. Sections
-         that share the end of the scroll are all reached there together, and of those the
-         entry the reader pressed is the one marked, until they scroll by hand. tops are the
-         places each entry brings the spacetime to, at where it is scrolled to now, end how
-         far it scrolls, and pressed the entry last pressed or null. */
+         section is being read once its top has come up to the reading line, a third of the
+         way down what shows of the spacetime, so that a section that fills what shows is the
+         one marked though the end of the one before still shows above it; the one read is the
+         last the reader has reached, and the first before any. Where the spacetime stands at
+         the place an entry brought it to, its top at the top of what shows or, for a section
+         too near the end to get there, the end of the scroll, the entry the reader pressed is
+         the one marked, until they scroll by hand. tops are the places each entry brings the
+         spacetime to, at where it is scrolled to now, end how far it scrolls, pressed the entry
+         last pressed or null, and ahead how far below the top of what shows the line stands. */
       var REACHED = 2;
-      window._mfsCurrentEntry = function(tops, at, end, pressed) {
+      window._mfsCurrentEntry = function(tops, at, end, pressed, ahead) {
         var to = tops.map(function(t) { return Math.max(0, Math.min(t, end)); }), current = 0;
-        to.forEach(function(t, i) { if (t <= at + REACHED) current = i; });
-        if (pressed !== null && pressed < to.length && Math.abs(to[pressed] - to[current]) <= REACHED) current = pressed;
+        to.forEach(function(t, i) { if (t <= at + (ahead || 0) + REACHED) current = i; });
+        if (pressed !== null && pressed < to.length && Math.abs(to[pressed] - at) <= REACHED) current = pressed;
         return to.length ? current : -1;
       };
       var _sections = [], _pressed = null, _marking = false;
@@ -988,7 +992,7 @@
         var entries = toc.children;
         if (!entries.length || entries.length !== _sections.length) return;
         var s = scrolled(_sections);
-        var current = window._mfsCurrentEntry(s.further.map(function(f) { return s.at + f; }), s.at, s.end, _pressed);
+        var current = window._mfsCurrentEntry(s.further.map(function(f) { return s.at + f; }), s.at, s.end, _pressed, s.shows / 3);
         [].forEach.call(entries, function(entry, i) {
           var on = i === current;
           if (on === entry.classList.contains('mfs-toc-current')) return;
@@ -3780,7 +3784,9 @@
           } else if (m.at) {
             out.push(nrEl('circle', { 'class': 'cv-' + m['class'], cx: X(m.at[0]).toFixed(2), cy: Y(m.at[1]).toFixed(2), r: 5 }));
           } else {
-            out.push(nrEl('path', { 'class': 'cv-' + m['class'], d: cvPath(m.points, X, Y) }));
+            // A line over a map stands on a dark casing, so that it reads on every colour of the ramp.
+            var d = cvPath(m.points, X, Y);
+            out.push(nrEl('path', { 'class': 'cv-casing', d: d }), nrEl('path', { 'class': 'cv-' + m['class'], d: d }));
           }
         });
         return out.join('');
@@ -5742,6 +5748,7 @@
     .cv-axis-zero { stroke: rgba(238,242,245,0.3); stroke-width: 1; }
     circle.cv-singular { fill: var(--pink-dark); stroke: #000; stroke-width: 1.2; }
     circle.cv-zero { fill: none; stroke: var(--text-bright); stroke-width: 2; }
+    .cv-casing { fill: none; stroke: #000; stroke-width: 4; stroke-linecap: butt; }
     .cv-paper { display: none; }
     /* A figure that turns, an embedding diagram or a figure of light cones: the drawing takes
        a drag and leaves a swipe up or down to the page, and the button that brings back the
@@ -6414,6 +6421,7 @@
       .mfs-print-body .cv-axis-zero { stroke: #bbb; }
       .mfs-print-body circle.cv-singular { fill: #c2185b; stroke: #fff; }
       .mfs-print-body circle.cv-zero { stroke: #000; }
+      .mfs-print-body .cv-casing { stroke: #fff; }
       /* A figure's label stands on the surface beside the circle it names, over its lines, on
          a ground of its own on the screen; the print copy clears every ground, so here it
          gets a white one, or the lines would cross it on paper. */
