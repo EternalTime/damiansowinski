@@ -1697,7 +1697,7 @@ Flat spacetime in two dimensions that ends at a perfectly reflecting mirror on a
 
 ### Myers-Perry Rotating Black Hole
 
-The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry published in 1986, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane keeps its horizon at every spin.
+The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry gave in 1986, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane keeps its horizon at every spin.
 
 - id: `myers_perry`
 - tags: vacuum, rotating, rotating black hole, black hole, stationary, axisymmetric, angular momentum, mass, ergoregion, frame dragging, curvature singularity, ring singularity, conical singularity, horizon, event horizon, Cauchy horizon, causal structure, asymptotically flat, higher dimensions, five-dimensional, six-dimensional, Kerr-Schild, black ring, black hole uniqueness, Hopf fibration, exact solution, Lorentzian, Einstein equations, idealized model

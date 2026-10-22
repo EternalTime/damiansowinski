@@ -2,7 +2,7 @@
   "id": "myers_perry",
   "name": "Myers-Perry Rotating Black Hole",
   "short_name": "Myers-Perry",
-  "description": "The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry published in 1986, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane keeps its horizon at every spin.",
+  "description": "The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry gave in 1986, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane keeps its horizon at every spin.",
   "tags": [
     "vacuum",
     "rotating",
