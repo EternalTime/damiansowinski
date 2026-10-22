@@ -1013,7 +1013,7 @@ def brill_charged_taub_nut(ck, src):
     Nordstrom's; Brill's K is finite at every r drawn and stays inside its panel; K at r = 0 is
     8(r_q^4 + 6(l^2 - r_q^2)^2 - 6m^2l^2)/l^8; the black hole's horizons are r_- = m/4 and
     r_+ = 7m/4, its greatest and least K lie inside r_-, at the radii and values stated, and K
-    changes sign five times on the range drawn; the wormhole has no horizon, its K is even in r,
+    changes sign five times on the range drawn, the last time between the horizons; the wormhole has no horizon, its K is even in r,
     greatest at the throat, and changes sign twice, at the radius stated, and is least at the
     radius and value stated; far out K falls off as 48(m^2 - l^2)/r^6; and Reissner and
     Nordstrom's K, of an extremal black hole beside the black hole, falls off as 48m^2/r^6, is
@@ -1078,6 +1078,7 @@ def brill_charged_taub_nut(ck, src):
        f"{[m['x'] for m in marks]}")
     ck("brill_charged_taub_nut black hole K is greatest and least inside r_-", max(r_top, r_bottom) < 0.25)
     ck("brill_charged_taub_nut black hole K changes sign five times", len(sign) == 5, f"{sign}")
+    ck("brill_charged_taub_nut black hole K changes sign last between the horizons", 0.25 < sign[-1] < 1.75)
     m = float(BRILL_HOLE["m"])
     ck("brill_charged_taub_nut black hole Reissner and Nordstrom's of the same charge is extremal",
        BRILL_HOLE["r_q"] == BRILL_HOLE["m"])
@@ -1095,10 +1096,11 @@ def brill_charged_taub_nut(ck, src):
             "scalar vanishes. Toward $r = 0$ Reissner and Nordström's $K$ grows without bound. Brill's "
             "$\\Sigma = r^2 + l^2$ is never less than $l^2$, his $K$ is finite at every $r$, and inside $r_-$ the "
             "radius runs on through $r = 0$ to negative values, a second region far from the hole.",
-            f"At $r = 0$, $K = 8(r_q^4 + 6(l^2 - r_q^2)^2 - 6m^2l^2)/l^8 = {centre:.1f}/m^4$. Inside $r_-$, $K$ is "
+            "At $r = 0$, where $\\Sigma = l^2$, $K$ is $8(r_q^4 + 6(l^2 - r_q^2)^2 - 6m^2l^2)/l^8$, which is "
+            f"${centre:.1f}/m^4$ here. Inside $r_-$, $K$ is "
             f"greatest, ${K_top:.1f}/m^4$, at $r = {r_top:.3f}\\,m$ and least, ${K_bottom:.1f}/m^4$, at "
-            f"$r = {r_bottom:.3f}\\,m$, and it changes sign five times between $r = {sign[0]:.3f}\\,m$ and "
-            f"$r = {sign[-1]:.3f}\\,m$. Far out it falls off as $48(m^2 - l^2)/r^6$, and Reissner and "
+            f"$r = {r_bottom:.3f}\\,m$. It changes sign five times, the first at $r = {sign[0]:.3f}\\,m$ and the "
+            f"last at $r = {sign[-1]:.3f}\\,m$, between the horizons. Far out it falls off as $48(m^2 - l^2)/r^6$, and Reissner and "
             "Nordström's as $48m^2/r^6$.",
         ],
         "settings": "$m = 1$, the unit of every length, $l = 3m/4$, and $r_q = m$, so that $r_+ = 7m/4$ and "
@@ -1129,8 +1131,9 @@ def brill_charged_taub_nut(ck, src):
             "$t$, $\\theta$, and $\\phi$, beside Reissner and Nordström's of the same mass and charge. The stress "
             "tensor of the electromagnetic field is traceless, so the Ricci scalar vanishes. With no mass the two "
             "sides of the throat $r = 0$ are mirror images, and $K$ is the same at $r$ and at $-r$.",
-            f"At the throat $K$ is greatest, $8(r_q^4 + 6(l^2 - r_q^2)^2)/l^8 = {centre:.1f}/l^4$, where Reissner "
-            f"and Nordström's $56r_q^4/r^8$ grows without bound. It changes sign at $r = \\pm {sign[1]:.3f}\\,l$ and "
+            "At the throat, where $\\Sigma = l^2$, $K$ is greatest, $8(r_q^4 + 6(l^2 - r_q^2)^2)/l^8$, which is "
+            f"${centre:.1f}/l^4$ here, and there Reissner and Nordström's $56r_q^4/r^8$ grows without bound. "
+            f"It changes sign at $r = \\pm {sign[1]:.3f}\\,l$ and "
             f"is least, ${K_bottom:.3f}/l^4$, at $r = \\pm {abs(r_bottom):.3f}\\,l$. Far out it falls off as "
             "$-48l^2/r^6$.",
         ],

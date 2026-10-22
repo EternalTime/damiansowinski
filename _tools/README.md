@@ -1572,7 +1572,7 @@ The print copy prints the page as it was first drawn, with the chart's own confo
 `MFS/assets/data/curvature/<metric_id>.json` holds the curvature figure of one spacetime: its Kretschmann scalar $K$, and its Ricci scalar $R$ where that does not vanish, plotted from the formulas the spacetime's metric file publishes, as the captain asked on 22 October 2026.
 The page draws it under the heading "curvature", after the embedding diagram, and the application reads the same files.
 A spacetime has one where its curvature carries physics its formula does not show at a glance, as the research list of October 2026 sets out spacetime by spacetime; a spacetime without one has no file and the page no section, and no table has to name it, as `NOT_DRAWN` names the spacetimes without a conformal diagram.
-Bardeen's regular black hole and the Bach-Weyl ring have one.
+Bardeen's regular black hole, the Bach-Weyl ring, Boulware and Deser's black hole and Brill's charged Taub-NUT have one.
 
 `_tools/derivations/curvature.py` draws them, one function per spacetime, with what it draws and what it checks in its docstring.
 It needs the environment of "The test environment" above and took 26 seconds for both on 22 October 2026:
@@ -1610,7 +1610,7 @@ A logarithmic scale suits a scalar of one sign, a signed one a scalar that chang
 Every value is the published formula evaluated at its point, through the checker's `Reader`, with every name the chart holds as a function written out, as Bach and Weyl's $\psi$ and $\gamma$ are in their elliptic integrals, and $c$ set to 1.
 `Published` in the script reads a scalar, a component of the inverse metric or a component of the Riemann tensor that way, and stops on a value that depends on a coordinate or a parameter the figure neither draws nor sets, since the figure would then hold at one value of it alone.
 The parameters are those the spacetime's other drawings take, and each curve and each map gives them as the doubles it was evaluated at.
-A curve is sampled at 4001 points across its axis and kept where it is finite and within a quarter of its panel's height of the box, each stretch carried one sample further each way so that the line drawn runs to the edge it leaves by.
+A curve is sampled at 4001 points across its axis, or across the part of it a comparison's spacetime covers, as Reissner and Nordström's $r > 0$ beside Brill's whole line of $r$, and kept where it is finite and within a quarter of its panel's height of the box, each stretch carried one sample further each way so that the line drawn runs to the edge it leaves by.
 Each stretch is thinned by Ramer, Douglas and Peucker in the panel's own units, 520 across, so that it strays from the samples by less than $0.05$ of them, and its points are written as the doubles they were computed at.
 A horizon is a change of sign of the published $g^{xx}$ along the drawn coordinate $x$, found by bisection to the last digit, as the null ray diagrams find theirs.
 A map's cells hold its scalar at their centres, written to six significant figures.
@@ -1696,7 +1696,9 @@ The print copy prints every view, a movie at its first frame, and a map and its 
 Bardeen's regular black hole has two line views at $r_s = 1$, with $r$ from 0 to $2\,r_s$, the box of its spacetime diagrams: one at $g = r_s/3$, the charge its other drawings take, and a movie of $g$ from 0 to $r_s/2$ in steps of $r_s/60$, 31 frames, through the extremal charge $2r_s/3\sqrt{3}$, where its two horizons meet.
 Each stacks $K$ on a logarithmic axis from $10^{-1}$ to $10^5$ over $R$ on a signed one, linear within $0.01$ of zero, from $-10$ to $10^4$, with Schwarzschild's two scalars of the same mass dashed beside Bardeen's and the horizons marked.
 The Bach-Weyl ring has one map at $m = a/2$, its $K$ over $0 \le \rho \le 3a$, $|z| \le 2a$ of Weyl's chart in 150 cells across and 200 up, each a fiftieth of $a$ on a side, coloured on a logarithmic scale from $10^{-3}$ to $10^3$, with the ring and the two points of the axis where $K$ vanishes marked; the ring is a vacuum, so it has no $R$ to draw.
-The other eight of the first ten on the research list, Bonnor and Vaidya's charged star, Born and Infeld's point charge, Boulware and Deser's black hole, Bowers and Liang's star, the Brans-Dicke sphere, Brill's charged Taub-NUT, the C-metric and the Curzon-Chazy particle, take the same three shapes, each a function in `DRAWN` drawn at the parameters, ranges, clips and marks its entry in the list gives.
+Brill's charged Taub-NUT has two line views, each one panel of its $K$ over the box of its spacetime diagrams: the black hole at $m = 1$, $l = 3m/4$ and $r_q = m$, with $r$ from $-3\,m$ to $6\,m$ and the horizons $r_- = m/4$ and $r_+ = 7m/4$ marked, and the wormhole at $l = 1$, $m = 0$ and $r_q = 3l/2$, with $r$ from $-3\,l$ to $3\,l$.
+Each draws $K$ on a signed logarithmic axis, linear within $0.001$ of zero, from $-10^3$ to $10^3$, since it changes sign, with Reissner and Nordström's of the same mass and charge dashed for $r > 0$ alone, where their spacetime lies; every chart has $R = 0$, so it has no $R$ to draw.
+The other six of the first ten on the research list, Bonnor and Vaidya's charged star, Born and Infeld's point charge, Bowers and Liang's star, the Brans-Dicke sphere, the C-metric and the Curzon-Chazy particle, take the same three shapes, each a function in `DRAWN` drawn at the parameters, ranges, clips and marks its entry in the list gives.
 
 ## Checking the physics
 
