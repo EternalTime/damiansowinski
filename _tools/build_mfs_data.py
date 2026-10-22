@@ -859,9 +859,10 @@ CITATION = re.compile(r"\[([A-Za-z0-9_, ]+)\]")
 
 
 def cited_keys(text):
-    """The reference keys a prose field cites, in the order it first cites them."""
+    """The reference keys a prose field cites, in the order it first cites them. Mathematics is
+    left out first, since the 3 of $\\sqrt[3]{x}$ is an index and no citation."""
     keys = []
-    for bracket in CITATION.findall(text or ""):
+    for bracket in CITATION.findall(MATH.sub(" ", text or "")):
         for key in (k.strip() for k in bracket.split(",")):
             if key and key not in keys:
                 keys.append(key)

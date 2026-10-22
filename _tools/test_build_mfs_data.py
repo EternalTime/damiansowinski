@@ -7954,6 +7954,9 @@ class Citations(unittest.TestCase):
             read = [metric.get("history") or ""] + [entry["text"] for entry in metric.get("related") or []]
             self.assertEqual(metric.get("references", []), build.cited_keys(" ".join(read)), metric["id"])
 
+    def test_a_bracket_inside_mathematics_is_no_citation(self):
+        self.assertEqual(build.cited_keys("where $r < \\sqrt[3]{3m/\\Lambda}$ [podolsky2009]"), ["podolsky2009"])
+
     def test_a_citation_the_bibliography_has_no_entry_for_is_refused(self):
         metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "references": ["ghost"]}
         with self.assertRaises(build.DataError) as raised:
