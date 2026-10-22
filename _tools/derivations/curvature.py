@@ -290,16 +290,17 @@ def runs(mask):
     return list(zip(edges[::2], edges[1::2]))
 
 
-def sampled(ck, name, published, x_axis, scale, height, params):
+def sampled(ck, name, published, x_axis, scale, height, params, within=None):
     """A published scalar along the drawn coordinate, as the polylines a panel draws.
 
-    The scalar is sampled at SAMPLES points across the axis, and kept where it is finite and
+    The scalar is sampled at SAMPLES points across the axis, or across the part of it `within`
+    names where the scalar's own spacetime covers only that part, and kept where it is finite and
     within a quarter of the panel's height of its box, each stretch carried one sample further
     each way where that sample is finite, so that the line drawn runs to the edge it leaves by.
     Each stretch is thinned in the panel's own units, PLOT_W across and `height` up, so that the
     line drawn lies within TOLERANCE of the samples."""
     lo, hi = x_axis["from"], x_axis["to"]
-    xs = np.linspace(lo, hi, SAMPLES)
+    xs = np.linspace(*(within or (lo, hi)), SAMPLES)
     vs = published(xs, *params)
     p0, p1 = span(scale)
     pos = position(scale, vs)
@@ -325,10 +326,10 @@ def sampled(ck, name, published, x_axis, scale, height, params):
     return out
 
 
-def beyond(published, x_axis, scale, params):
+def beyond(published, x_axis, scale, params, within=None):
     """Where a scalar lies above its axis and where below it, as the intervals of the drawn
     coordinate, from the same samples sampled() takes."""
-    xs = np.linspace(x_axis["from"], x_axis["to"], SAMPLES)
+    xs = np.linspace(*(within or (x_axis["from"], x_axis["to"])), SAMPLES)
     vs = published(xs, *params)
     pos, (p0, p1) = position(scale, vs), span(scale)
     above = ~np.isfinite(vs) | (pos > p1)
@@ -395,10 +396,10 @@ def spread(points, n=24):
     return [flat[k] for k in picks]
 
 
-def line_curves(ck, name, panel, cls, published, coordinate, x_axis, scale, height, params):
+def line_curves(ck, name, panel, cls, published, coordinate, x_axis, scale, height, params, within=None):
     """The curves one published scalar draws on a panel, each checked in sixty digits."""
     values = [params[p] for p in params]
-    lines = sampled(ck, f"{name} {cls}", published, x_axis, scale, height, values)
+    lines = sampled(ck, f"{name} {cls}", published, x_axis, scale, height, values, within)
     picked = spread(lines)
     agrees(ck, f"{name} {cls}", published, [[x] + values for x, _ in picked], [v for _, v in picked])
     return [curve_entry(panel, cls, published, coordinate, params, line) for line in lines]
@@ -987,12 +988,166 @@ def boulware_deser(ck, src):
     return [hole, branch, movie]
 
 
+# ---------------------------------------------------------------- Brill's charged Taub-NUT
+
+BRILL_HOLE = {"m": Fraction(1), "l": Fraction(3, 4), "r_q": Fraction(1)}         # in units of m, as every drawing of the black hole takes it
+BRILL_WORMHOLE = {"m": Fraction(0), "l": Fraction(1), "r_q": Fraction(3, 2)}     # in units of l, as every drawing of the wormhole takes it
+BRILL_SCALE = {"kind": "symlog", "from": -1e3, "to": 1e3, "linear": 1e-3}
+
+
+def brill_charged_taub_nut(ck, src):
+    """Brill's charged Taub-NUT, its Kretschmann scalar over the whole line of r, for the black
+    hole and for the wormhole.
+
+    The published K depends on r alone, Sigma = r^2 + l^2 never vanishes while l is not zero, and
+    every chart in r publishes the same K, so one figure serves them all; R = 0 in every chart,
+    since the stress tensor of the electromagnetic field is traceless, and the figure is K alone.
+    Each view is one panel over the box of the spacetime diagrams, r from -3m to 6m for the black
+    hole at l = 3m/4, r_q = m, and from -3l to 3l for the wormhole at m = 0, r_q = 3l/2, K on a
+    signed logarithmic axis, linear within 10^-3 of zero, from -10^3 to 10^3, since K changes
+    sign. Reissner and Nordstrom's K of the same mass and charge, read from rn_metric.json at
+    r_s = 2m, is the comparison, drawn for r > 0 alone, where its spacetime lies, and the horizons
+    are the zeros of the published g^rr.
+
+    What the captions state is checked here: the published K at l = 0 is Reissner and
+    Nordstrom's; Brill's K is finite at every r drawn and stays inside its panel; K at r = 0 is
+    8(r_q^4 + 6(l^2 - r_q^2)^2 - 6m^2l^2)/l^8; the black hole's horizons are r_- = m/4 and
+    r_+ = 7m/4, its greatest and least K lie inside r_-, at the radii and values stated, and K
+    changes sign five times on the range drawn; the wormhole has no horizon, its K is even in r,
+    greatest at the throat, and changes sign twice, at the radius stated, and is least at the
+    radius and value stated; far out K falls off as 48(m^2 - l^2)/r^6; and Reissner and
+    Nordstrom's K, of an extremal black hole beside the black hole, falls off as 48m^2/r^6, is
+    56r_q^4/r^8 beside the wormhole, and leaves the top of its panel once, inside the radius the
+    clip states."""
+    K = nr_published(src, "brill_charged_taub_nut", "spherical", "kretschmann", ["r"], ["m", "l", "r_q"])
+    grr = nr_published(src, "brill_charged_taub_nut", "spherical", "inverse_metric_components", ["r"],
+                       ["m", "l", "r_q"], ("r", "r"))
+    K_rn = nr_published(src, "rn_metric", "spherical", "kretschmann", ["r"], ["r_s", "r_q"])
+    scale, aspect = BRILL_SCALE, 1.5
+    shape_checks(ck, "brill_charged_taub_nut", [aspect])
+    height = PLOT_W / aspect
+    near = np.linspace(0.05, 6, 41)
+    ck("brill_charged_taub_nut K at l = 0 is Reissner and Nordstrom's",
+       np.allclose(K(near, 1, 0.0, 1), K_rn(near, 2, 1), rtol=1e-13, atol=0)
+       and np.allclose(K(near, 0, 0.0, 1.5), K_rn(near, 0, 1.5), rtol=1e-13, atol=0))
+
+    def view(case, unit, lo, hi, name):
+        params = {key: float(value) for key, value in case.items()}
+        m, l, r_q = params["m"], params["l"], params["r_q"]
+        x_axis = axis(f"$r/{unit}$", lo, hi)
+        panel = {"id": "K", "name": f"$K\\,{unit}^4$", "aspect": aspect, "scale": scale, "ticks": value_ticks(scale)}
+        own = line_curves(ck, name, "K", "K", K, "r", x_axis, scale, height, params)
+        reference = line_curves(ck, f"{name} Reissner and Nordstrom", "K", "reference", K_rn, "r", x_axis, scale,
+                                height, {"r_s": 2 * m, "r_q": r_q}, within=(0, hi))
+        marks = [{"class": "horizon", "x": x} for x in zeros(ck, f"{name} horizons", grr, lo, hi, [m, l, r_q])]
+        rs = np.linspace(lo, hi, SAMPLES)
+        ck(f"{name} K is finite at every r drawn", np.all(np.isfinite(K(rs, m, l, r_q))))
+        up, down = beyond(K, x_axis, scale, [m, l, r_q])
+        ck(f"{name} K stays inside its panel", not up and not down, f"{up} {down}")
+        above, below = beyond(K_rn, x_axis, scale, [2 * m, r_q], within=(0, hi))
+        ck(f"{name} Reissner and Nordstrom's K leaves the top of its panel once, at r = 0",
+           len(above) == 1 and above[0][0] == 0 and not below, f"{above} {below}")
+        centre = float(K.exact([0, m, l, r_q]))
+        closed = 8 * (r_q ** 4 + 6 * (l ** 2 - r_q ** 2) ** 2 - 6 * m ** 2 * l ** 2) / l ** 8
+        ck(f"{name} K at r = 0 is 8(r_q^4 + 6(l^2 - r_q^2)^2 - 6m^2l^2)/l^8", abs(centre / closed - 1) < 1e-12,
+           f"{centre}")
+        far = 1e6
+        ck(f"{name} K falls off as 48(m^2 - l^2)/r^6 far out",
+           abs(float(K.exact([far, m, l, r_q])) * far ** 6 / (48 * (m ** 2 - l ** 2)) - 1) < 1e-4)
+        fine = np.linspace(lo, hi, 900001)
+        values = K(fine, m, l, r_q)
+        top, bottom = int(np.argmax(values)), int(np.argmin(values))
+        extremes = (float(fine[top]), float(values[top]), float(fine[bottom]), float(values[bottom]))
+        ck(f"{name} K is greatest and least at the samples kept", values[top] >= np.max(K(rs, m, l, r_q))
+           and values[bottom] <= np.min(K(rs, m, l, r_q)),
+           "greatest {1:.4f} at r = {0:.4f}, least {3:.4f} at r = {2:.4f}".format(*extremes))
+        sign = zeros(ck, f"{name} K", K, lo, hi, [m, l, r_q])
+        cut = above[0][1]
+        view = {
+            "kind": "line", "x": x_axis, "panels": [panel], "curves": reference + own, "marks": marks,
+            "clip": ("We draw $K\\," f"{unit}^4$ on a signed logarithmic scale, linear within $0.001$ of zero, from "
+                     "$-10^{3}$ to $10^{3}$, and cut each curve where it leaves its panel, as Reissner and "
+                     f"Nordström's $K$ does inside $r = {cut:.3f}\\,{unit}$."),
+        }
+        return view, centre, extremes, sign, marks
+
+    hole, centre, (r_top, K_top, r_bottom, K_bottom), sign, marks = view(BRILL_HOLE, "m", -3, 6,
+                                                                         "brill_charged_taub_nut black hole")
+    ck("brill_charged_taub_nut black hole has its horizons at m/4 and 7m/4",
+       len(marks) == 2 and abs(marks[0]["x"] - 0.25) < 1e-12 and abs(marks[1]["x"] - 1.75) < 1e-12,
+       f"{[m['x'] for m in marks]}")
+    ck("brill_charged_taub_nut black hole K is greatest and least inside r_-", max(r_top, r_bottom) < 0.25)
+    ck("brill_charged_taub_nut black hole K changes sign five times", len(sign) == 5, f"{sign}")
+    m = float(BRILL_HOLE["m"])
+    ck("brill_charged_taub_nut black hole Reissner and Nordstrom's of the same charge is extremal",
+       BRILL_HOLE["r_q"] == BRILL_HOLE["m"])
+    ck("brill_charged_taub_nut black hole Reissner and Nordstrom's K falls off as 48m^2/r^6 far out",
+       abs(float(K_rn.exact([1e6, 2 * m, float(BRILL_HOLE["r_q"])])) * 1e36 / (48 * m ** 2) - 1) < 1e-4)
+    hole.update({
+        "id": "black_hole", "label": "The black hole",
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                   ["line", "reference", "Reissner and Nordström's black hole of the same mass and charge"],
+                   ["line", "horizon", "a horizon, where $g^{rr} = 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of Brill's black hole against $r$ ($l = 3m/4$, $r_q = m$), the same at "
+            "every $t$, $\\theta$, and $\\phi$, beside Reissner and Nordström's of the same mass and charge, their "
+            "extremal black hole. The stress tensor of the electromagnetic field is traceless, so the Ricci "
+            "scalar vanishes. Toward $r = 0$ Reissner and Nordström's $K$ grows without bound. Brill's "
+            "$\\Sigma = r^2 + l^2$ is never less than $l^2$, his $K$ is finite at every $r$, and inside $r_-$ the "
+            "radius runs on through $r = 0$ to negative values, a second region far from the hole.",
+            f"At $r = 0$, $K = 8(r_q^4 + 6(l^2 - r_q^2)^2 - 6m^2l^2)/l^8 = {centre:.1f}/m^4$. Inside $r_-$, $K$ is "
+            f"greatest, ${K_top:.1f}/m^4$, at $r = {r_top:.3f}\\,m$ and least, ${K_bottom:.1f}/m^4$, at "
+            f"$r = {r_bottom:.3f}\\,m$, and it changes sign five times between $r = {sign[0]:.3f}\\,m$ and "
+            f"$r = {sign[-1]:.3f}\\,m$. Far out it falls off as $48(m^2 - l^2)/r^6$, and Reissner and "
+            "Nordström's as $48m^2/r^6$.",
+        ],
+        "settings": "$m = 1$, the unit of every length, $l = 3m/4$, and $r_q = m$, so that $r_+ = 7m/4$ and "
+                    "$r_- = m/4$.",
+    })
+
+    worm, centre, (r_top, K_top, r_bottom, K_bottom), sign, marks = view(BRILL_WORMHOLE, "l", -3, 3,
+                                                                         "brill_charged_taub_nut wormhole")
+    rs = np.linspace(0, 3, SAMPLES)
+    params = [float(v) for v in BRILL_WORMHOLE.values()]
+    ck("brill_charged_taub_nut wormhole has no horizon", not marks and np.all(grr(rs, *params) > 0))
+    r_q = float(BRILL_WORMHOLE["r_q"])
+    ck("brill_charged_taub_nut wormhole Reissner and Nordstrom's K is 56r_q^4/r^8",
+       np.allclose(K_rn(rs[1:], 0, r_q), 56 * r_q ** 4 / rs[1:] ** 8, rtol=1e-13, atol=0))
+    ck("brill_charged_taub_nut wormhole K is even in r", np.allclose(K(-rs, *params), K(rs, *params), rtol=1e-13, atol=0))
+    ck("brill_charged_taub_nut wormhole K is greatest at the throat", abs(r_top) < 1e-5 and abs(K_top / centre - 1) < 1e-9,
+       f"{r_top} {K_top}")
+    ck("brill_charged_taub_nut wormhole K changes sign twice, at r = +-r_0",
+       len(sign) == 2 and abs(sign[0] + sign[1]) < 1e-12, f"{sign}")
+    ck("brill_charged_taub_nut wormhole K is least where the caption says, on either side",
+       abs(K(-r_bottom, *params) / K_bottom - 1) < 1e-9 and abs(r_bottom) > sign[1], f"{r_bottom} {K_bottom}")
+    worm.update({
+        "id": "wormhole", "label": "The wormhole",
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                   ["line", "reference", "Reissner and Nordström's spacetime of the same mass and charge"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of Brill's wormhole against $r$ ($m = 0$, $r_q = 3l/2$), the same at every "
+            "$t$, $\\theta$, and $\\phi$, beside Reissner and Nordström's of the same mass and charge. The stress "
+            "tensor of the electromagnetic field is traceless, so the Ricci scalar vanishes. With no mass the two "
+            "sides of the throat $r = 0$ are mirror images, and $K$ is the same at $r$ and at $-r$.",
+            f"At the throat $K$ is greatest, $8(r_q^4 + 6(l^2 - r_q^2)^2)/l^8 = {centre:.1f}/l^4$, where Reissner "
+            f"and Nordström's $56r_q^4/r^8$ grows without bound. It changes sign at $r = \\pm {sign[1]:.3f}\\,l$ and "
+            f"is least, ${K_bottom:.3f}/l^4$, at $r = \\pm {abs(r_bottom):.3f}\\,l$. Far out it falls off as "
+            "$-48l^2/r^6$.",
+        ],
+        "settings": "$l = 1$, the unit of every length, $m = 0$, and $r_q = 3l/2$, so that $\\Delta = r^2 + 5l^2/4$ "
+                    "has no root.",
+    })
+    order = ("id", "label", "kind", "x", "panels", "curves", "marks", "legend", "caption", "settings", "clip")
+    return [{key: v[key] for key in order} for v in (hole, worm)]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
     "bach_weyl_ring": bach_weyl_ring,
     "bardeen": bardeen,
     "boulware_deser": boulware_deser,
+    "brill_charged_taub_nut": brill_charged_taub_nut,
 }
 
 

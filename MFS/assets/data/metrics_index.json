@@ -980,7 +980,8 @@
     "version": "4b987c78344b9e5e",
     "diagrams": "a6411ef1f1dca001",
     "conformal": "139a18a90eb98719",
-    "embedding": "65bf7e933e8622ef"
+    "embedding": "65bf7e933e8622ef",
+    "curvature": "faff6dd2ae5f0b21"
   },
   {
     "id": "bubbling_ads",
