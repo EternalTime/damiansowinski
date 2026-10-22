@@ -6,16 +6,17 @@ Run from anywhere:
     python3 _tools/build_mfs_data.py
 
 Reads   MFS/assets/data/metrics/*.json, MFS/assets/data/diagrams/*.json,
-        MFS/assets/data/conformal/*.json, MFS/assets/data/embedding/*.json
-        and assets/data/references.bib
+        MFS/assets/data/conformal/*.json, MFS/assets/data/embedding/*.json,
+        MFS/assets/data/curvature/*.json and assets/data/references.bib
 Writes  MFS/assets/data/metrics_index.json, MFS/assets/data/references.json and
         MFS/assets/data/relations.json, the relations the graph behind the list draws
 
 Pass --check to verify the written files are up to date without changing them.
 
 The diagram files are drawn by _tools/derivations/null_rays.py, the conformal diagram
-files by _tools/derivations/conformal.py and the embedding diagram files by
-_tools/derivations/embedding.py, which need sympy and numpy; this script only reads them.
+files by _tools/derivations/conformal.py, the embedding diagram files by
+_tools/derivations/embedding.py and the curvature figures by _tools/derivations/curvature.py,
+which need sympy and numpy; this script only reads them.
 It refuses any of them drawn from components its metric no longer publishes, and stamps
 each file's version into the index beside the metric's own.
 
@@ -446,6 +447,237 @@ def load_embedding(metrics):
     return embedding
 
 
+CURVATURE_KINDS = ("line", "map")
+CURVATURE_SCALARS = ("kretschmann", "ricci_scalar")
+SCALE_KINDS = ("linear", "log", "symlog")
+LEGEND_KINDS = ("line", "point", "fill")
+TEX_LABEL = re.compile(r"^\$[^$]+\$$")
+
+
+def finite(value):
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+
+
+def check_value_scale(at, scale):
+    """An axis of values, a panel's or a map's colour: linear, logarithmic or signed logarithmic,
+    from one number to a larger one, a logarithmic one above zero and a signed one with a linear
+    width above zero, as _tools/README.md defines them."""
+    kind, lo, hi = scale.get("kind"), scale.get("from"), scale.get("to")
+    if kind not in SCALE_KINDS:
+        raise DataError(f"{at} has a scale of the kind {kind!r}, which is none of {', '.join(SCALE_KINDS)}")
+    if not (finite(lo) and finite(hi) and lo < hi):
+        raise DataError(f"{at} has a scale that does not run from one number to a larger one")
+    if kind == "log" and lo <= 0:
+        raise DataError(f"{at} has a logarithmic scale that reaches zero or below")
+    if (kind == "symlog") != ("linear" in scale) or (kind == "symlog" and not (finite(scale["linear"]) and scale["linear"] > 0)):
+        raise DataError(f"{at} has a signed logarithmic scale without a linear width above zero, or a width on another")
+
+
+def check_ticks(at, ticks, lo, hi):
+    """Ticks at values strictly increasing inside [lo, hi], at least two, each labelled as TeX."""
+    values = [t.get("at") for t in ticks or []]
+    if len(values) < 2 or not all(finite(v) for v in values) or not all(b > a for a, b in zip(values, values[1:])):
+        raise DataError(f"{at} has fewer than two ticks, or ticks out of order")
+    if values[0] < lo - 1e-12 * abs(lo) or values[-1] > hi + 1e-12 * abs(hi):
+        raise DataError(f"{at} has a tick outside its range")
+    if not all(isinstance(t.get("label"), str) and TEX_LABEL.match(t["label"]) for t in ticks):
+        raise DataError(f"{at} has a tick whose label is not TeX between dollar signs")
+
+
+def check_axis(at, axis):
+    if not (isinstance(axis, dict) and isinstance(axis.get("name"), str) and TEX_LABEL.match(axis["name"])):
+        raise DataError(f"{at} has no name as TeX between dollar signs")
+    if not (finite(axis.get("from")) and finite(axis.get("to")) and axis["from"] < axis["to"]):
+        raise DataError(f"{at} does not run from one number to a larger one")
+    check_ticks(at, axis.get("ticks"), axis["from"], axis["to"])
+
+
+def check_drawn_from(at, item, read):
+    """A curve or a map names the chart and the scalar its values are, which the file's source
+    stamps, so that every value can be evaluated again from the metric file."""
+    fields = read.get((item.get("metric"), item.get("system")))
+    if fields is None:
+        raise DataError(f"{at} was drawn from {item.get('metric')}/{item.get('system')}, which the file's source "
+                        "does not stamp")
+    if item.get("scalar") not in CURVATURE_SCALARS or item["scalar"] not in fields:
+        raise DataError(f"{at} draws {item.get('scalar')!r}, which is no published curvature scalar the source stamps")
+    params = item.get("params")
+    if not (isinstance(params, dict) and all(finite(v) for v in params.values())):
+        raise DataError(f"{at} does not give each parameter it was drawn at as a number")
+
+
+def check_line(where, view, read, x):
+    """The panels, curves and marks of a line view, each frame's among them."""
+    panels = view.get("panels") or []
+    if not panels:
+        raise DataError(f"{where} draws no panel")
+    by_id = {}
+    for k, panel in enumerate(panels):
+        at = f"{where}, panel {panel.get('id')!r}"
+        if not isinstance(panel.get("id"), str) or panel["id"] in by_id:
+            raise DataError(f"{where} has a panel without an id of its own")
+        by_id[panel["id"]] = panel
+        if not (isinstance(panel.get("name"), str) and TEX_LABEL.match(panel["name"])):
+            raise DataError(f"{at} has no name as TeX between dollar signs")
+        check_value_scale(at, panel.get("scale") or {})
+        check_ticks(at, panel.get("ticks"), panel["scale"]["from"], panel["scale"]["to"])
+        if not (finite(panel.get("aspect")) and ASPECT_TALLEST - 1e-9 <= panel["aspect"] <= ASPECT_WIDEST + 1e-9):
+            raise DataError(f"{at} plots a panel outside 1:2 to 2:1; choose its aspect nearer 1:1")
+    whole = 1 / sum(1 / p["aspect"] for p in panels)
+    if not ASPECT_TALLEST - 1e-9 <= whole <= ASPECT_WIDEST + 1e-9:
+        raise DataError(f"{where} stacks its panels into a figure outside 1:2 to 2:1")
+    drawn = set()
+    for holder, name in [(view, "")] + [(f, f", frame {k}") for k, f in enumerate(view.get("movie", {}).get("frames", []))]:
+        for n, curve in enumerate(holder.get("curves") or []):
+            at = f"{where}{name}, curve {n}"
+            panel = by_id.get(curve.get("panel"))
+            if panel is None:
+                raise DataError(f"{at} stands on a panel the view does not draw")
+            check_drawn_from(at, curve, read)
+            points = curve.get("points") or []
+            if len(points) < 2 or not all(isinstance(p, list) and len(p) == 2 and finite(p[0]) and finite(p[1]) for p in points):
+                raise DataError(f"{at} is not a polyline of at least two points [x, value] of numbers")
+            xs = [p[0] for p in points]
+            if not all(b > a for a, b in zip(xs, xs[1:])) or xs[0] < x["from"] or xs[-1] > x["to"]:
+                raise DataError(f"{at} does not run one way across its axis inside it")
+            if panel["scale"]["kind"] == "log" and any(p[1] <= 0 for p in points):
+                raise DataError(f"{at} has a value at or below zero on a logarithmic panel")
+            drawn.add(curve.get("class"))
+        for mark in holder.get("marks") or []:
+            if not (finite(mark.get("x")) and x["from"] <= mark["x"] <= x["to"]):
+                raise DataError(f"{where}{name} marks a line outside its axis")
+            drawn.add(mark.get("class"))
+    if not any(holder.get("curves") for holder in [view] + view.get("movie", {}).get("frames", [])):
+        raise DataError(f"{where} draws no curve")
+    return drawn
+
+
+def check_map(where, view, read, x):
+    """The cells and marks of a map view, each frame's among them."""
+    y = view.get("y")
+    check_axis(f"{where}, its vertical axis", y)
+    aspect = (x["to"] - x["from"]) / (y["to"] - y["from"])
+    if not ASPECT_TALLEST - 1e-9 <= aspect <= ASPECT_WIDEST + 1e-9:
+        raise DataError(f"{where} maps a region outside 1:2 to 2:1; choose a box nearer 1:1")
+    colour = view.get("colour") or {}
+    if not (isinstance(colour.get("name"), str) and TEX_LABEL.match(colour["name"])):
+        raise DataError(f"{where} does not name what its colour is as TeX between dollar signs")
+    check_value_scale(f"{where}, its colour", colour.get("scale") or {})
+    check_ticks(f"{where}, its colour", colour.get("ticks"), colour["scale"]["from"], colour["scale"]["to"])
+    drawn = set()
+    for holder, name in [(view, "")] + [(f, f", frame {k}") for k, f in enumerate(view.get("movie", {}).get("frames", []))]:
+        grid = holder.get("map")
+        if grid is not None or not name:
+            at = f"{where}{name}, its map"
+            grid = grid or {}
+            check_drawn_from(at, grid, read)
+            nx, ny, rows = grid.get("nx"), grid.get("ny"), grid.get("cells") or []
+            if not (isinstance(nx, int) and isinstance(ny, int) and nx >= 2 and ny >= 2 and len(rows) == ny
+                    and all(isinstance(row, list) and len(row) == nx for row in rows)):
+                raise DataError(f"{at} does not give a value at each of its cells")
+            if not all(finite(v) for row in rows for v in row):
+                raise DataError(f"{at} gives a value that is not a number")
+            if colour["scale"]["kind"] == "log" and any(v <= 0 for row in rows for v in row):
+                raise DataError(f"{at} has a value at or below zero on a logarithmic colour")
+        for mark in holder.get("marks") or []:
+            points = [mark["at"]] if "at" in mark else mark.get("points") or []
+            if not points or not all(isinstance(p, list) and len(p) == 2 and finite(p[0]) and finite(p[1])
+                                     and x["from"] <= p[0] <= x["to"] and y["from"] <= p[1] <= y["to"] for p in points):
+                raise DataError(f"{where}{name} marks a point outside its box")
+            drawn.add(mark.get("class"))
+    return drawn
+
+
+def check_curvature_movie(where, view):
+    """A movie of a curvature view, as an embedding diagram's: at least two frames, each with its
+    label and a value of the movie's variable, the values strictly increasing, one pass taking a
+    positive number of seconds, and no word for how it repeats or turns."""
+    movie = view["movie"]
+    frames = movie.get("frames") or []
+    values = [f.get("value") for f in frames]
+    if len(frames) < 2 or not all(finite(v) for v in values) or not all(b > a for a, b in zip(values, values[1:])):
+        raise DataError(f"{where}: the movie does not run through its frames in order")
+    if not all(isinstance(f.get("label"), str) and TEX_LABEL.match(f["label"]) for f in frames) or \
+            not (isinstance(movie.get("variable"), str) and TEX_LABEL.match(movie["variable"])):
+        raise DataError(f"{where}: the movie leaves a frame or its variable unnamed in TeX")
+    if not (finite(movie.get("seconds")) and movie["seconds"] > 0):
+        raise DataError(f"{where}: the movie takes no time")
+    for word in ("loop", "turns"):
+        if word in movie:
+            raise DataError(f"{where}: the movie says how it {word[:-1] if word == 'turns' else word}s, which no "
+                            "curvature movie does: every movie plays forward and back, and none turns")
+
+
+def load_curvature(metrics):
+    """Every curvature figure file, refused if any field it was drawn from has changed, or if a
+    view is out of the shape _tools/README.md defines under "Curvature figures": a line view's
+    panels and a map's plot each between 1:2 and 2:1, every curve drawn from a curvature scalar
+    the file's source stamps, every value a number and above zero on a logarithmic scale, every
+    class drawn named in the legend and every class named drawn."""
+    by_id = {m["id"]: m for m in metrics}
+    curvature = {}
+    for path in sorted(CURVATURE_DIR.glob("*.json")):
+        if CONFLICT_COPY.search(path.stem):
+            continue
+        where = f"curvature/{path.name}"
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise DataError(f"{where} is not valid JSON: {exc}") from exc
+        if data.get("metric") != path.stem:
+            raise DataError(f"{where} carries the metric {data.get('metric')!r}")
+        if path.stem not in by_id:
+            raise DataError(f"{where} has no metric file to belong to")
+        if not data.get("source"):
+            raise DataError(f"{where} does not say what it was drawn from")
+        read = {}
+        for source in data["source"]:
+            metric = by_id.get(source["metric"])
+            if metric is None:
+                raise DataError(f"{where} was drawn from {source['metric']}.json, which does not exist")
+            systems = {s["id"]: s for s in metric.get("coordinates") or []}
+            if source["system"] not in systems:
+                raise DataError(f"{where} was drawn from {source['system']!r}, which "
+                                f"{source['metric']}.json has no coordinate system for")
+            if diagram_source_version(systems[source["system"]], source["fields"]) != source["version"]:
+                raise DataError(
+                    f"{where} was drawn from components of the {source['system']} system that "
+                    f"{source['metric']}.json no longer publishes; redraw it with "
+                    f"_tools/derivations/curvature.py --metric {path.stem}")
+            read[(source["metric"], source["system"])] = set(source["fields"])
+        views = data.get("views") or []
+        if not views:
+            raise DataError(f"{where} draws nothing")
+        ids = [view.get("id") for view in views]
+        if len(set(ids)) != len(ids) or not all(isinstance(i, str) for i in ids):
+            raise DataError(f"{where} has two views of one id, or a view without one")
+        for view in views:
+            at = f"{where}, the view {view['id']!r}"
+            if view.get("system") and view["system"] not in {s["id"] for s in by_id[path.stem]["coordinates"]}:
+                raise DataError(f"{at} names {view['system']!r}, which {path.stem}.json has no coordinate system for")
+            if view.get("kind") not in CURVATURE_KINDS:
+                raise DataError(f"{at} is of the kind {view.get('kind')!r}, which is neither a line nor a map")
+            for field in ("label", "settings", "clip"):
+                if not (isinstance(view.get(field), str) and view[field].strip()):
+                    raise DataError(f"{at} has no {field}")
+            if not (view.get("caption") and all(isinstance(p, str) and p.strip() for p in view["caption"])):
+                raise DataError(f"{at} has no caption")
+            check_axis(f"{at}, its horizontal axis", view.get("x"))
+            if "movie" in view:
+                check_curvature_movie(at, view)
+            drawn = (check_line if view["kind"] == "line" else check_map)(at, view, read, view["x"])
+            legend = view.get("legend") or []
+            if not all(isinstance(e, list) and len(e) == 3 and e[0] in LEGEND_KINDS and isinstance(e[2], str)
+                       for e in legend):
+                raise DataError(f"{at} has a legend entry that is not [kind, class, text]")
+            named = {e[1] for e in legend}
+            if drawn != named:
+                raise DataError(f"{at} draws {sorted(drawn - named)} without naming them in its legend, or names "
+                                f"{sorted(named - drawn)} it does not draw")
+        curvature[path.stem] = data
+    return curvature
+
+
 def check_slices(diagrams, conformal, embedding):
     """Every slice a spacetime diagram, a figure or a conformal diagram draws marks a surface
     of its spacetime's embedding diagram, by the view's id and the surface's place, and was
@@ -507,7 +739,7 @@ def check_shades(conformal, embedding):
                                     f"which are not both points of the profile {piece['id']!r}")
 
 
-def build_index(metrics, diagrams=None, conformal=None, embedding=None):
+def build_index(metrics, diagrams=None, conformal=None, embedding=None, curvature=None):
     index = []
     for m in metrics:
         entry = {
@@ -522,6 +754,8 @@ def build_index(metrics, diagrams=None, conformal=None, embedding=None):
             entry["conformal"] = content_version(conformal[m["id"]])
         if embedding and m["id"] in embedding:
             entry["embedding"] = content_version(embedding[m["id"]])
+        if curvature and m["id"] in curvature:
+            entry["curvature"] = content_version(curvature[m["id"]])
         index.append(entry)
     return index
 
@@ -841,12 +1075,12 @@ def check_conventions(metrics):
         raise DataError("\n".join(problems))
 
 
-def check_symbols(metrics, diagrams, conformal, embedding):
+def check_symbols(metrics, diagrams, conformal, embedding, curvature=None):
     """Refuse a symbol that a chart's mathematics or a drawing uses and nothing defines, naming
     every one at once. `symbols.py` holds the rule and the list of symbols that need no definition."""
     problems = [problem for metric in metrics
                 for problem in symbol_problems(metric, diagrams.get(metric["id"]), conformal.get(metric["id"]),
-                                               embedding.get(metric["id"]))]
+                                               embedding.get(metric["id"]), (curvature or {}).get(metric["id"]))]
     if problems:
         raise DataError("\n".join(problems))
 
@@ -885,7 +1119,7 @@ def dollar_problems(name, data):
 def check_dollars():
     """Refuse a metric or diagram file with an unbalanced `$` in any of its strings, naming each."""
     problems = []
-    for folder in (METRICS_DIR, DIAGRAMS_DIR, CONFORMAL_DIR, EMBEDDING_DIR):
+    for folder in (METRICS_DIR, DIAGRAMS_DIR, CONFORMAL_DIR, EMBEDDING_DIR, CURVATURE_DIR):
         for path in sorted(folder.glob("*.json")):
             if not CONFLICT_COPY.search(path.stem):
                 problems += dollar_problems(path.name, json.loads(path.read_text(encoding="utf-8")))
@@ -952,11 +1186,12 @@ def main(argv=None):
         check_aspects(diagrams)
         conformal = load_conformal(metrics)
         embedding = load_embedding(metrics)
+        curvature = load_curvature(metrics)
         check_slices(diagrams, conformal, embedding)
         check_shades(conformal, embedding)
-        check_symbols(metrics, diagrams, conformal, embedding)
+        check_symbols(metrics, diagrams, conformal, embedding, curvature)
         outputs = {
-            INDEX_FILE: serialise(build_index(metrics, diagrams, conformal, embedding)),
+            INDEX_FILE: serialise(build_index(metrics, diagrams, conformal, embedding, curvature)),
             REFERENCES_FILE: serialise(references),
             RELATIONS_FILE: serialise_relations(build_relations(metrics)),
         }

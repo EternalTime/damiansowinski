@@ -20,9 +20,10 @@ What is held to those definitions:
 
 - a chart's `domains`, `line_element`, components, curvature and `geodesics`, held to that chart
   alone, since the page shows one chart at a time;
-- every text of every spacetime diagram, conformal diagram and embedding diagram, its labels,
-  axes, legends, settings, inputs, restrictions and captions, held to all the spacetime's charts
-  together, since a caption may set one chart beside another, as in "the ingoing chart's $g_{vr}$".
+- every text of every spacetime diagram, conformal diagram, embedding diagram and curvature
+  figure, its labels, axes, legends, settings, inputs, restrictions, clips and captions, held to
+  all the spacetime's charts together, since a caption may set one chart beside another, as in
+  "the ingoing chart's $g_{vr}$".
 
 A drawing may also define a symbol of its own, one that belongs to the picture and not to the
 metric, such as the scale of a conformal map. Any of its texts may do so, in one of three ways:
@@ -112,7 +113,7 @@ SCALAR_FIELDS = {"ricci_scalar": "R", "kretschmann": "K"}
 NAMING = (
     "angle", "charge", "circle", "coordinate", "coordinates", "cosmological constant", "curve", "density",
     "distance", "event", "events", "factor", "function", "functions", "geodesic", "height", "integer", "integers",
-    "length", "map", "maps", "mass", "number", "parameter", "point", "points", "pressure", "radius", "rate", "scale",
+    "length", "map", "maps", "mass", "number", "parameter", "point", "points", "pressure", "radius", "rate", "scalar", "scale",
     "speed", "tension", "time", "unit", "width",
 )
 
@@ -360,19 +361,39 @@ def chart_mathematics(chart):
         yield "geodesics", equation
 
 
-def drawings(diagram=None, conformal=None, embedding=None):
+def drawings(diagram=None, conformal=None, embedding=None, curvature=None):
     """Yield (place, kind, view) for every drawing of a spacetime."""
     for part in ("systems", "projections"):
         for system, views in ((diagram or {}).get(part) or {}).items():
             for view in views:
                 yield f"diagrams {system}/{view['id']}", "diagrams", view
-    for kind, data in (("conformal", conformal), ("embedding", embedding)):
+    for kind, data in (("conformal", conformal), ("embedding", embedding), ("curvature", curvature)):
         for view in (data or {}).get("views") or []:
             yield f"{kind} {view['id']}", kind, view
 
 
+def curvature_texts(view):
+    """Yield (field, text) for every text of a curvature figure: the names of its axes, its
+    panels and its colour, their ticks, and the frames of its movie."""
+    for field in ("x", "y", "colour"):
+        if isinstance(view.get(field), dict):
+            yield field, view[field]["name"]
+            for tick in view[field].get("ticks") or []:
+                yield "ticks", tick["label"]
+    for panel in view.get("panels") or []:
+        yield "panels", panel["name"]
+        for tick in panel.get("ticks") or []:
+            yield "ticks", tick["label"]
+    if view.get("clip"):
+        yield "clip", view["clip"]
+    for frame in (view.get("movie") or {}).get("frames") or []:
+        yield "movie", frame["label"]
+
+
 def view_texts(view):
     """Yield (field, text) for every text of a drawing."""
+    if view.get("kind") in ("line", "map"):
+        yield from curvature_texts(view)
     figure, movie = view.get("figure") or {}, view.get("movie") or {}
     for field in ("label", "xlabel", "ylabel", "unit", "settings", "input", "restriction", "cone", "height"):
         if isinstance(view.get(field), str):
@@ -418,7 +439,7 @@ def undefined(tex, defined, coords):
     return missing
 
 
-def undefined_uses(metric, diagram=None, conformal=None, embedding=None):
+def undefined_uses(metric, diagram=None, conformal=None, embedding=None, curvature=None):
     """Yield (place, who could define it, field, symbol, text) for every use of a symbol that
     nothing defines."""
     charts = {chart["id"]: chart for chart in metric.get("coordinates") or []}
@@ -430,7 +451,7 @@ def undefined_uses(metric, diagram=None, conformal=None, embedding=None):
             for symbol in sorted(undefined(tex, definitions[chart_id], chart.get("coords") or [])):
                 yield (f"the chart '{chart_id}'", "neither its coordinates, its parameters nor its convention",
                        field, symbol, tex)
-    for place, kind, view in drawings(diagram, conformal, embedding):
+    for place, kind, view in drawings(diagram, conformal, embedding, curvature):
         defined = every_definition | set(DRAWN.get(kind, ()))
         texts = list(view_texts(view))
         for field, text in texts:
@@ -441,11 +462,11 @@ def undefined_uses(metric, diagram=None, conformal=None, embedding=None):
                     yield place, "neither a chart of the spacetime nor a definition of its own", field, symbol, text
 
 
-def symbol_problems(metric, diagram=None, conformal=None, embedding=None):
+def symbol_problems(metric, diagram=None, conformal=None, embedding=None, curvature=None):
     """Every symbol used where nothing defines it, one sentence for each symbol of each chart and
     of each drawing, naming the fields that use it."""
     found = {}
-    for place, definer, field, symbol, _ in undefined_uses(metric, diagram, conformal, embedding):
+    for place, definer, field, symbol, _ in undefined_uses(metric, diagram, conformal, embedding, curvature):
         found.setdefault((place, definer, symbol), set()).add(field)
     return [f"{metric['id']}.json: {place} uses ${symbol}$ in {', '.join(sorted(fields))}, and {definer} defines it"
             for (place, definer, symbol), fields in found.items()]
@@ -461,7 +482,7 @@ def main(argv=None):
     chosen = given or sorted(path.stem for path in (DATA / "metrics").glob("*.json"))
     problems = []
     for name in chosen:
-        files = [load(folder, name) for folder in ("metrics", "diagrams", "conformal", "embedding")]
+        files = [load(folder, name) for folder in ("metrics", "diagrams", "conformal", "embedding", "curvature")]
         problems += symbol_problems(*files)
     for problem in problems:
         print(problem)

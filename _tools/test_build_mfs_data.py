@@ -296,6 +296,34 @@ def embedding_prose(name, data):
                     yield f"{at}.rings[{ring['piece']} {ring['x']}]", ring["label"]
 
 
+def curvature_files():
+    return {p.stem: read(p) for p in sorted(build.CURVATURE_DIR.glob("*.json"))}
+
+
+def curvature_prose(name, data):
+    """Yield every field of a curvature figure file a reader sees, each with its place."""
+    for view in data["views"]:
+        where = f"curvature/{name}.json {view['id']}"
+        yield f"{where}.label", view["label"]
+        for position, paragraph in enumerate(view["caption"]):
+            yield f"{where}.caption[{position}]", paragraph
+        for field in ("settings", "input", "clip"):
+            if view.get(field):
+                yield f"{where}.{field}", view[field]
+        for position, (_, _, text) in enumerate(view["legend"]):
+            yield f"{where}.legend[{position}]", text
+        for field in ("x", "y", "colour"):
+            if view.get(field):
+                yield f"{where}.{field}.name", view[field]["name"]
+        for panel in view.get("panels", []):
+            yield f"{where}.panels[{panel['id']}].name", panel["name"]
+        movie = view.get("movie")
+        if movie:
+            yield f"{where}.movie.variable", movie["variable"]
+            for position, frame in enumerate(movie["frames"]):
+                yield f"{where}.movie.frames[{position}].label", frame["label"]
+
+
 def diagram_prose(name, diagram):
     """Yield every sentence carrying field of a diagram file, each with the name of its place:
     its flat views and its figures in three dimensions."""
@@ -509,10 +537,12 @@ class Index(unittest.TestCase):
 
     def test_entry_carries_the_search_fields_and_a_stamp(self):
         diagrams, conformal, embedding = diagram_files(), conformal_files(), embedding_files()
+        curvature = curvature_files()
         for entry, metric in zip(self.index, self.metrics):
             expected = ({"id", "name", "tags", "version"} | ({"diagrams"} if metric["id"] in diagrams else set())
                         | ({"conformal"} if metric["id"] in conformal else set())
-                        | ({"embedding"} if metric["id"] in embedding else set()))
+                        | ({"embedding"} if metric["id"] in embedding else set())
+                        | ({"curvature"} if metric["id"] in curvature else set()))
             self.assertEqual(set(entry), expected)
             self.assertEqual(entry["name"], metric["short_name"])
             self.assertEqual(entry["tags"], metric["tags"])
@@ -540,6 +570,14 @@ class Index(unittest.TestCase):
         stamped = {e["id"]: e["embedding"] for e in self.index if "embedding" in e}
         self.assertEqual(set(stamped), set(embedding))
         for metric_id, data in embedding.items():
+            self.assertEqual(stamped[metric_id], build.content_version(data))
+
+    def test_a_spacetime_with_a_curvature_figure_carries_its_stamp(self):
+        curvature = curvature_files()
+        self.assertTrue(curvature, "no curvature figure file was found, so nothing was checked")
+        stamped = {e["id"]: e["curvature"] for e in self.index if "curvature" in e}
+        self.assertEqual(set(stamped), set(curvature))
+        for metric_id, data in curvature.items():
             self.assertEqual(stamped[metric_id], build.content_version(data))
 
     def test_a_metric_missing_its_short_name_is_refused(self):
@@ -647,6 +685,16 @@ class Prose(unittest.TestCase):
             for field, value in embedding_prose(name, data):
                 self.assertNotRegex(value, r"\\u[0-9a-fA-F]{4}", field)
 
+    def test_no_curvature_figure_on_disk_carries_a_dash_in_its_prose(self):
+        fields = [(field, value) for name, data in curvature_files().items()
+                  for field, value in curvature_prose(name, data)]
+        self.assert_no_dashes(fields)
+
+    def test_no_curvature_figure_spells_a_character_as_an_escape(self):
+        for name, data in curvature_files().items():
+            for field, value in curvature_prose(name, data):
+                self.assertNotRegex(value, r"\\u[0-9a-fA-F]{4}", field)
+
     def test_no_metric_on_disk_spells_a_character_as_an_escape(self):
         # A \u escaped twice in the JSON reaches the page as the six characters of the
         # escape, as the î of Lemaître did in the Tolman-Bondi conventions, since neither
@@ -686,6 +734,8 @@ class Prose(unittest.TestCase):
                    for field, value in conformal_prose(name, data)]
         fields += [(field, field, value) for name, data in embedding_files().items()
                    for field, value in embedding_prose(name, data)]
+        fields += [(field, field, value) for name, data in curvature_files().items()
+                   for field, value in curvature_prose(name, data)]
         self.assertTrue(fields, "no prose was read, so nothing was checked")
         for where, field, value in fields:
             for pattern in MACHINERY:
@@ -705,6 +755,8 @@ class Prose(unittest.TestCase):
                    for field, value in conformal_prose(name, data)]
         fields += [(field, value) for name, data in embedding_files().items()
                    for field, value in embedding_prose(name, data)]
+        fields += [(field, value) for name, data in curvature_files().items()
+                   for field, value in curvature_prose(name, data)]
         templates = sorted({p for pattern in TEMPLATES for p in build.ROOT.glob(pattern)})
         self.assertTrue(templates, "no template was read, so none was checked")
         fields += [(str(p.relative_to(build.ROOT)), " ".join(p.read_text(encoding="utf-8").split()))
@@ -772,10 +824,11 @@ def voiced_prose():
             yield f"{metric['id']}.json: convention of {chart_id}", convention
         for entry in metric.get("related") or []:
             yield f"{metric['id']}.json: related {entry['id']}", entry["text"]
-    sentences = re.compile(r"\.(?:caption\[\d+\]|input|settings|height|restriction|stops\[\d+\]|start|end|edge)$")
+    sentences = re.compile(r"\.(?:caption\[\d+\]|input|settings|height|clip|restriction|stops\[\d+\]|start|end|edge)$")
     fields = [field for name, diagram in diagram_files().items() for field in diagram_prose(name, diagram)]
     fields += [field for name, data in conformal_files().items() for field in conformal_prose(name, data)]
     fields += [field for name, data in embedding_files().items() for field in embedding_prose(name, data)]
+    fields += [field for name, data in curvature_files().items() for field in curvature_prose(name, data)]
     for where, value in fields:
         if sentences.search(where) or " stops[" in where:
             yield where, value
@@ -915,6 +968,7 @@ class Contrast(unittest.TestCase):
         fields += [field for name, diagram in diagram_files().items() for field in diagram_prose(name, diagram)]
         fields += [field for name, data in conformal_files().items() for field in conformal_prose(name, data)]
         fields += [field for name, data in embedding_files().items() for field in embedding_prose(name, data)]
+        fields += [field for name, data in curvature_files().items() for field in curvature_prose(name, data)]
         fields += [("_layouts/mfs.html", self.layout_text()), ("MFS/index.markdown",
                     (build.ROOT / "MFS" / "index.markdown").read_text(encoding="utf-8"))]
         return fields
@@ -960,7 +1014,8 @@ class NoCost(unittest.TestCase):
 
     def texts(self):
         fields = Contrast().texts()
-        for folder in (build.METRICS_DIR, build.DIAGRAMS_DIR, build.CONFORMAL_DIR, build.EMBEDDING_DIR):
+        for folder in (build.METRICS_DIR, build.DIAGRAMS_DIR, build.CONFORMAL_DIR, build.EMBEDDING_DIR,
+                       build.CURVATURE_DIR):
             for path in sorted(folder.glob("*.json")):
                 fields += strings(read(path), path.name)
         return fields

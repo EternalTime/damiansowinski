@@ -194,7 +194,8 @@
     "version": "b3ebc7538e485359",
     "diagrams": "dc13a758c6ce9e83",
     "conformal": "a879de23f7faf4b3",
-    "embedding": "c140dd553d561027"
+    "embedding": "c140dd553d561027",
+    "curvature": "5b89e1d9ff940daa"
   },
   {
     "id": "btz",
@@ -271,7 +272,8 @@
     "version": "6e964bc8836e7eb7",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
-    "embedding": "1585df5452ac5572"
+    "embedding": "1585df5452ac5572",
+    "curvature": "0fd55eee7e303bb4"
   },
   {
     "id": "bartnik_mckinnon",
