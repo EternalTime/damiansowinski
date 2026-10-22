@@ -472,15 +472,21 @@ class OneThing(unittest.TestCase):
 
     def test_the_graph_turns_the_name_in_the_list_pink_and_nothing_else_and_scrolls_to_it(self):
         # The captain on 3 October 2026: its name turns the page's pink and its button gets no
-        # background.
-        self.assertIn("window._mfsListLight(i >= 0 ? graph.spacetimes[i].id : null);", page_function(self.source, "hover"))
+        # background. So does a name under the list's own pointer, for as long as the graph draws
+        # its spacetime lit, and only the graph's own pointer scrolls to it.
+        shown = page_function(self.source, "showLit")
+        self.assertIn("window._mfsListLight(on >= 0 ? graph.spacetimes[on].id : null, on >= 0 && on === hovered);", shown)
+        self.assertIn("showLit(on);", page_function(self.source, "render"))
+        self.assertIn("else { hover(-1); showLit(-1); }", page_function(self.source, "reveal"))
+        self.assertNotIn("_mfsListLight", page_function(self.source, "hover"))
         lit = [body for selectors, body in re.findall(r"\n    ([^{}\n]*mfs-result-lit[^{}\n]*)\{(.*?)\}", self.source, re.S)]
         self.assertEqual(lit, [" color: var(--pink-light); "])
         self.assertIn("\n    .mfs-result.mfs-result-lit { color: var(--pink-light); }\n", self.source)
         # The list's own hover keeps its background to itself.
         self.assertIn("\n    .mfs-result:hover, .mfs-keyword.mfs-keyword-on {\n", self.source)
-        listing = self.source[self.source.index("window._mfsListLight = function(id) {"):][:900]
+        listing = self.source[self.source.index("window._mfsListLight = function(id, bring) {"):][:900]
         self.assertIn("r.classList.toggle('mfs-result-lit', on);", listing)
+        self.assertIn("if (!on || !bring) return;", listing)
         self.assertIn("results.scrollBy({ top: by, behavior: reducedMotion() ? 'auto' : 'smooth' });", listing)
 
     def test_a_press_on_a_spacetime_in_the_graph_opens_it_as_its_name_in_the_list_does(self):

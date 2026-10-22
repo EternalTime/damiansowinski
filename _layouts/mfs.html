@@ -157,8 +157,9 @@
        behind it, and clearing the search brings the whole collection back. Each change moves on
        MfsGraph.sprung, and a reader who asked for less movement is put straight there. A drag
        turns the figure, two clicks bring back the view it opened at, the pointer on a spacetime
-       writes its name, lights its relations and lights its name in the list
-       (window._mfsListLight), and a press on one opens it, as its name in the list does. Only a
+       writes its name and lights its relations, the spacetime drawn lit, from either side, lights
+       its name in the list (window._mfsListLight), and a press on one opens it, as its name in
+       the list does. Only a
        spacetime the list shows can be lit or pressed. */
     (function() {
       var canvas = document.getElementById('mfs-graph');
@@ -272,6 +273,13 @@
         var i = named === null ? -1 : G.placesOf(graph, [named])[0];
         return i !== undefined && inList(i) ? i : -1;
       }
+      /* The list's name for the spacetime drawn lit is lit with it, for exactly as long, whichever
+         pointer lit it, and brought into view when the graph's own pointer did. */
+      function showLit(on) {
+        if (on === shownLit) return;
+        shownLit = on;
+        if (window._mfsListLight) window._mfsListLight(on >= 0 ? graph.spacetimes[on].id : null, on >= 0 && on === hovered);
+      }
 
       /* Whatever changed, the graph is brought up to date: on a phone nothing is fetched or
          worked out; elsewhere the relations are fetched once, and the whole collection and the
@@ -342,7 +350,7 @@
         if (on === canvas.classList.contains('mfs-graph-on')) return;
         canvas.classList.toggle('mfs-graph-on', on);
         if (on) draw();
-        else { hover(-1); }
+        else { hover(-1); showLit(-1); }
       }
 
       // How wide each name is at its size, asked of the page once and again when its face arrives.
@@ -390,7 +398,7 @@
           }
         }
         var before = items, on = lit();
-        shownLit = on;
+        showLit(on);
         items = graph.spacetimes.map(function(s, i) {
           var at = G.seen(camera, stands[i], W, H), f = Math.round(G.drawnAt(at.scale) * SCALES) / SCALES, m = widths[i];
           return { x: at.x, y: at.y, near: at.near, weight: s.degree, f: f, r: G.radius(f, s.degree, most),
@@ -516,7 +524,6 @@
         if (i === hovered) return;
         hovered = i;
         canvas.classList.toggle('mfs-graph-over', i >= 0);
-        if (window._mfsListLight) window._mfsListLight(i >= 0 ? graph.spacetimes[i].id : null);
         draw();
       }
       canvas.addEventListener('pointerdown', function(event) {
@@ -769,9 +776,9 @@
       color: var(--cyan);
     }
     .mfs-keyword { overflow-wrap: anywhere; user-select: none; -webkit-user-select: none; }
-    /* While the pointer is on its spacetime in the graph behind the list, a name turns the
-       page's pink and nothing else about it changes, as the captain asked on 3 October 2026,
-       so the two read as one thing. */
+    /* While its spacetime is drawn lit in the graph behind the list, whether the pointer is on
+       that spacetime or on the name, a name turns the page's pink and nothing else about it
+       changes, so the two read as one thing. */
     .mfs-result.mfs-result-lit { color: var(--pink-light); }
     .mfs-result:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
     /* The spacetime shown, and a name being pressed, turn pink, and nothing on the page
@@ -1143,8 +1150,9 @@
       }
 
       /* The list and the graph behind it are one thing, written and drawn: the pointer or the
-         keyboard on a name in the list lights its spacetime in the graph, and the pointer on a
-         spacetime in the graph turns its name in the list pink and scrolls the list to it. Only
+         keyboard on a name in the list lights its spacetime in the graph, the pointer on a
+         spacetime in the graph scrolls the list to its name, and whichever spacetime the graph
+         draws lit turns its name in the list pink while it is drawn so. Only
          a name the list shows can be lit either way, so a search's subgroup holds both. The
          pointer goes before the keyboard, as the graph's own pointer goes before the list.
          _pointed and _focused are the ids of the names under the pointer and holding the
@@ -1173,12 +1181,12 @@
         lightGraph();
       });
       results.addEventListener('focusout', function() { _focused = null; lightGraph(); });
-      window._mfsListLight = function(id) {
+      window._mfsListLight = function(id, bring) {
         _lit = id;
         results.querySelectorAll('.mfs-result').forEach(function(r) {
           var on = r.dataset.id === id;
           r.classList.toggle('mfs-result-lit', on);
-          if (!on) return;
+          if (!on || !bring) return;
           // Brought into view where the list scrolls, scrolling the list alone.
           var name = r.getBoundingClientRect(), list = results.getBoundingClientRect();
           var by = name.top < list.top ? name.top - list.top : name.bottom > list.bottom ? name.bottom - list.bottom : 0;

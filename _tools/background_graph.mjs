@@ -10,9 +10,9 @@
    the search, a key at a time, gathers exactly the spacetimes the list then shows, which are the
    ones carrying it, with the rest behind; clearing the search brings the whole graph back.
    The list and the graph read as one thing: the pointer or the keyboard on a name in the list
-   lights its spacetime in the graph, that one alone and with its name written, and the pointer
-   on a spacetime in the graph turns its name in the list the page's pink, with no background,
-   and scrolls the list to it, and both hold under a search, where a spacetime the search left out
+   lights its spacetime in the graph, that one alone and with its name written, and turns the
+   name the page's pink, and the pointer on a spacetime in the graph turns its name in the list
+   the page's pink, with no background, and scrolls the list to it, and both hold under a search, where a spacetime the search left out
    is never lit and never opened. A press on a spacetime in the graph opens it, and the graph
    stays where it is under the spacetime's panel, which covers it, standing still.
    The search field keeps its own colours in every state, empty, focused, typed in, with names
@@ -100,24 +100,35 @@ const pinkPoints = () => evaluate(`(function () {
 const drawn = "!window._mfsGraph.shows().drawing";
 
 /* The pointer and then the keyboard on a name in the list light its spacetime in the graph, that
-   one alone, with its name written, and nothing is lit once they leave; the pointer on a
-   spacetime in the graph turns its name in the list the page's pink, with nothing else about it
-   changed, and brings it into sight, and nothing is lit once it leaves. `ids` are the spacetimes the list shows. */
+   one alone, with its name written, and turn the name the page's pink without moving the list,
+   and nothing is lit once they leave; the pointer on a spacetime in the graph turns its name in
+   the list the page's pink, with nothing else about it changed, and brings it into sight, and
+   nothing is lit once it leaves. `ids` are the spacetimes the list shows. */
 async function asOneThing(ids, what) {
   await away();
   await evaluate("document.getElementById('mfs-search-results').scrollTop = 0");
   await until(`window._mfsGraph.shows().lit === null && ${drawn}`, `${what}: nothing is lit at first`);
   check((await pinkPoints()).length === 0 && (await litNames()).length === 0, `${what}: no point and no name is lit at first`);
+  const pink = await evaluate(`(function () {
+    var hex = getComputedStyle(document.documentElement).getPropertyValue('--pink-light').trim();
+    return 'rgb(' + [1, 3, 5].map(function (i) { return parseInt(hex.slice(i, i + 2), 16); }).join(', ') + ')';
+  })()`);
+  const scrolled = () => evaluate("document.getElementById('mfs-search-results').scrollTop");
 
-  const first = ids[0], at = await nameIn(first);
+  const first = ids[0], at = await nameIn(first), top = await scrolled();
   await point(at.x, at.y);
   await until(`window._mfsGraph.shows().lit === ${JSON.stringify(first)} && ${drawn}`, `${what}: the pointer on ${first} in the list lights it in the graph`);
   let state = await shows();
   check(state.litNamed, `${what}: ${first} lit from the list has its name written`);
   check(JSON.stringify(await pinkPoints()) === JSON.stringify([first]), `${what}: ${first} alone is drawn lit (${await pinkPoints()})`);
+  check(JSON.stringify(await litNames()) === JSON.stringify([first]), `${what}: the pointer on ${first} in the list lights it alone there (${await litNames()})`);
+  const pointed = await nameIn(first);
+  check(pointed.color === pink, `${what}: under the pointer, ${first}'s name turns the page's pink (${pointed.color}, pink ${pink})`);
+  check(await scrolled() === top, `${what}: the pointer on ${first} in the list leaves the list where it was`);
   await away();
   await until(`window._mfsGraph.shows().lit === null && ${drawn}`, `${what}: leaving ${first} in the list lets it go in the graph`);
   check((await pinkPoints()).length === 0, `${what}: no point is lit once the pointer leaves the list`);
+  check((await litNames()).length === 0, `${what}: no name is lit once the pointer leaves the list`);
 
   // The keyboard: Tab from the search field reaches the names in their order.
   await evaluate("document.getElementById('mfs-search-input').focus()");
@@ -127,9 +138,11 @@ async function asOneThing(ids, what) {
     check(focused === ids[k], `${what}: Tab ${k + 1} reaches ${ids[k]} in the list (${focused})`);
     await until(`window._mfsGraph.shows().lit === ${JSON.stringify(ids[k])} && ${drawn}`, `${what}: the keyboard on ${ids[k]} lights it in the graph`);
     check(JSON.stringify(await pinkPoints()) === JSON.stringify([ids[k]]), `${what}: the keyboard lights ${ids[k]} alone`);
+    check(JSON.stringify(await litNames()) === JSON.stringify([ids[k]]), `${what}: the keyboard lights ${ids[k]} alone in the list (${await litNames()})`);
   }
   await evaluate('document.activeElement.blur()');
   await until(`window._mfsGraph.shows().lit === null && ${drawn}`, `${what}: the keyboard leaving the list lets go in the graph`);
+  check((await litNames()).length === 0, `${what}: no name is lit once the keyboard leaves the list`);
 
   // The graph: a named spacetime in front whose name in the list is out of sight where it can be.
   await evaluate("document.getElementById('mfs-search-results').scrollTop = 0");
@@ -145,10 +158,6 @@ async function asOneThing(ids, what) {
     var r = b.getBoundingClientRect(), m = l.getBoundingClientRect(); return r.top >= m.top - 0.5 && r.bottom <= m.bottom + 0.5; })()`,
     `${what}: the list scrolls ${target.id} into sight`);
   check(JSON.stringify(await litNames()) === JSON.stringify([target.id]), `${what}: ${target.id} alone is lit in the list (${await litNames()})`);
-  const pink = await evaluate(`(function () {
-    var hex = getComputedStyle(document.documentElement).getPropertyValue('--pink-light').trim();
-    return 'rgb(' + [1, 3, 5].map(function (i) { return parseInt(hex.slice(i, i + 2), 16); }).join(', ') + ')';
-  })()`);
   const lit = await nameIn(target.id);
   check(lit.color === pink, `${what}: lit from the graph, ${target.id}'s name turns the page's pink (${lit.color}, pink ${pink})`);
   check(lit.background === bare.background, `${what}: lit from the graph, ${target.id}'s button keeps its background (${lit.background}, ${bare.background} unlit)`);
