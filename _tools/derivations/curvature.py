@@ -1144,11 +1144,236 @@ def brill_charged_taub_nut(ck, src):
     return [{key: v[key] for key in order} for v in (hole, worm)]
 
 
+# ---------------------------------------------------------------- Born and Infeld's point charge
+
+BI_STEPS = 30                     # the steps of r_s from Hoffmann's particle to the black hole in the movie
+BI_NUMBER = math.gamma(0.25) ** 2 / (6 * math.sqrt(math.pi))   # Born and Infeld's 1.2360
+
+
+def born_infeld_charge(ck, src):
+    """Born and Infeld's point charge at r_0 = 1 and r_q = r_0/2, its Kretschmann and Ricci
+    scalars against r.
+
+    The static chart's published K and R depend on r alone, and every chart publishes the same
+    two, so one figure serves all three charts. Two panels share the axis of r, from 0 to 4 r_0,
+    the box of the spacetime diagrams: K on a logarithmic axis from 10^-4 to 10^6, and R, which is
+    positive at every r, on a logarithmic axis from 10^-6 to 10^4. Reissner and Nordstrom's K of
+    the same mass and charge, read from rn_metric.json, is the comparison; their R vanishes, so it
+    has no curve on a logarithmic axis. R depends on r_q and r_0 alone, and is read with those two
+    parameters, so that the reading stops if it ever depends on the mass. The horizons are the
+    zeros of the static chart's published g^rr. The first view is Hoffmann's particle, whose whole
+    mass is the energy of its field, r_s = 2 (1.2360) r_q^2/r_0, and the second the black hole at
+    r_s = 2 r_0, the two cases every other drawing of it takes; the third steps r_s in equal steps
+    from the first to the second.
+
+    What the captions state is checked here: for the particle, g^rr tends to 1 - 2 r_q^2/r_0^2 at
+    the centre, so m vanishes there as r_q^2 r/r_0^2, g^rr is positive at every r drawn, and K r^4
+    tends to 16 r_q^4/r_0^4; for the black hole, K r^6 tends to 48 m_0^2 with m_0 = r_s/2 - 1.2360
+    r_q^2/r_0, and g^rr vanishes once, at r_h; Reissner and Nordstrom's K r^8 tends to 56 r_q^4 and
+    their R vanishes; R r^2 tends to 4 r_q^2/r_0^2 at the centre and R r^8 to r_q^2 r_0^4 far out;
+    K falls from the centre outward and approaches Reissner and Nordstrom's far out; in the movie
+    the horizon forms at the centre as soon as r_s passes the particle's and moves out to r_h,
+    one in every frame after the first; and every radius a clip states is where its curve
+    leaves the top of its panel."""
+    rq, r0 = 0.5, 1.0
+    particle = float(nr.BI_PARTICLE["r_s"])
+    hole = float(nr.BI_HOLE["r_s"])
+    x_axis = axis("$r/r_0$", 0, 4)
+    K_scale = {"kind": "log", "from": 1e-4, "to": 1e6}
+    R_scale = {"kind": "log", "from": 1e-6, "to": 1e4}
+    panels = [{"id": "K", "name": "$K\\,r_0^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R\\,r_0^2$", "aspect": 2, "scale": R_scale, "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "born_infeld_charge", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    names = ["r_s", "r_q", "r_0"]
+    K = nr_published(src, "born_infeld_charge", "static", "kretschmann", ["r"], names)
+    R = nr_published(src, "born_infeld_charge", "static", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, "born_infeld_charge", "static", "inverse_metric_components", ["r"], names, ("r", "r"))
+    K_rn = nr_published(src, "rn_metric", "spherical", "kretschmann", ["r"], ["r_s", "r_q"])
+    R_rn = nr_published(src, "rn_metric", "spherical", "ricci_scalar", ["r"], ["r_s", "r_q"])
+    # Read with the charge alone, R stops the script if it ever depends on the mass.
+    nr_published(src, "born_infeld_charge", "static", "ricci_scalar", ["r"], ["r_q", "r_0"])
+    ck("born_infeld_charge R depends on the charge and not on the mass", R.expr.free_symbols.isdisjoint(R.params[:1]),
+       f"{R.expr}")
+    ck("Reissner and Nordstrom's R vanishes", R_rn.expr == 0, f"{R_rn.expr}")
+
+    def top(fn, params):
+        """Where a curve that falls from the centre outward leaves the top of its panel, by
+        bisection on the drawn coordinate."""
+        scale = K_scale if fn in (K, K_rn) else R_scale
+        up, _ = beyond(fn, x_axis, scale, params)
+        ck(f"{fn.metric} {fn.field} at {params} leaves the top of its panel once, at the centre",
+           len(up) == 1 and up[0][0] == 0, f"{up}")
+        lo, hi = 0.0, float(x_axis["to"])
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            if mid in (lo, hi):
+                break
+            lo, hi = (mid, hi) if float(fn(mid, *params)) > scale["to"] else (lo, mid)
+        ck(f"{fn.metric} {fn.field} at {params} leaves its panel where the samples do",
+           up[0][1] <= hi <= up[0][1] + (x_axis["to"] - x_axis["from"]) / (SAMPLES - 1), f"{hi:.6f}")
+        return hi
+
+    def own(rs, name):
+        params = {"r_s": float(rs), "r_q": rq, "r_0": r0}
+        curves = (line_curves(ck, name, "K", "reference", K_rn, "r", x_axis, K_scale, height["K"],
+                              {"r_s": float(rs), "r_q": rq})
+                  + line_curves(ck, name, "K", "K", K, "r", x_axis, K_scale, height["K"], params)
+                  + line_curves(ck, name, "R", "R", R, "r", x_axis, R_scale, height["R"], params))
+        marks = [{"class": "horizon", "x": x} for x in zeros(ck, f"{name} horizons", grr, 0, 4, [float(rs), rq, r0])]
+        rs_grid = np.linspace(0, 4, SAMPLES)[1:]
+        ck(f"{name} K falls from the centre outward", np.all(np.diff(K(rs_grid, float(rs), rq, r0)) < 0))
+        ck(f"{name} K stays above the bottom of its panel", not beyond(K, x_axis, K_scale, [float(rs), rq, r0])[1]
+           and not beyond(K_rn, x_axis, K_scale, [float(rs), rq])[1])
+        far = 1e3
+        ck(f"{name} K approaches Reissner and Nordstrom's far out",
+           abs(float(K.exact([far, rs, rq, r0])) / float(K_rn.exact([far, rs, rq])) - 1) < 1e-5)
+        return curves, marks
+
+    # R, the same for every mass, checked at the particle's.
+    ck("born_infeld_charge R is positive at every r drawn",
+       np.all(R(np.linspace(0, 4, SAMPLES)[1:], particle, rq, r0) > 0))
+    ck("born_infeld_charge R stays above the bottom of its panel", not beyond(R, x_axis, R_scale, [particle, rq, r0])[1])
+    centre_R = float(R.exact([1e-5, particle, rq, r0])) * 1e-10
+    ck("born_infeld_charge R r^2 tends to 4 r_q^2/r_0^2 at the centre", abs(centre_R / (4 * rq ** 2 / r0 ** 2) - 1) < 1e-6,
+       f"{centre_R}")
+    far_R = float(R.exact([1e3, particle, rq, r0])) * 1e24
+    ck("born_infeld_charge R r^8 tends to r_q^2 r_0^4 far out", abs(far_R / (rq ** 2 * r0 ** 4) - 1) < 1e-5, f"{far_R}")
+    R_cut = top(R, [particle, rq, r0])
+    ck("born_infeld_charge 1.2360 is Born and Infeld's number", f"{BI_NUMBER:.4f}" == "1.2360", f"{BI_NUMBER}")
+    ck("born_infeld_charge Hoffmann's particle has r_s = 2 (1.2360) r_q^2/r_0",
+       abs(particle / (2 * BI_NUMBER * rq ** 2 / r0) - 1) < 1e-15, f"{particle}")
+    K_rn_centre = [float(K_rn.exact([1e-4, rs, rq])) * 1e-32 / (56 * rq ** 4) for rs in (particle, hole)]
+    ck("Reissner and Nordstrom's K r^8 tends to 56 r_q^4 at the centre", all(abs(v - 1) < 1e-3 for v in K_rn_centre),
+       f"{K_rn_centre}")
+    legend_lines = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+                    ["line", "reference", "Reissner and Nordström's $K$ for the same mass and charge"]]
+    horizon_legend = ["line", "horizon", "a horizon, where $g^{rr} = 0$"]
+
+    # Hoffmann's particle.
+    curves, marks = own(particle, "born_infeld_charge particle")
+    ck("born_infeld_charge Hoffmann's particle has no horizon", not marks
+       and np.all(grr(np.linspace(0, 4, SAMPLES)[1:], particle, rq, r0) > 0))
+    cone = float(grr.exact([1e-8, particle, rq, r0]))
+    ck("born_infeld_charge g^rr tends to 1 - 2 r_q^2/r_0^2 at the particle's centre, so m vanishes as r_q^2 r/r_0^2",
+       abs(cone - (1 - 2 * rq ** 2 / r0 ** 2)) < 1e-6, f"{cone}")
+    growth = [float(K.exact([r, particle, rq, r0])) * r ** 4 / (16 * rq ** 4 / r0 ** 4) for r in (1e-4, 1e-5)]
+    ck("born_infeld_charge K r^4 tends to 16 r_q^4/r_0^4 at the particle's centre", all(abs(v - 1) < 1e-6 for v in growth),
+       f"{growth}")
+    K_cut, K_rn_cut = top(K, [particle, rq, r0]), top(K_rn, [particle, rq])
+    still_particle = {
+        "id": "particle", "label": "Hoffmann's particle", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": marks, "legend": legend_lines,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Hoffmann's particle against $r$ "
+            "($r_q = r_0/2$, $r_s = 0.618\\,r_0$), the same at every $t$, $\\theta$, and $\\phi$, beside the $K$ of "
+            "Reissner and Nordström's metric of the same mass and charge. The whole mass is the energy of the field, "
+            "so $m$ vanishes at the centre, as $r_q^2r/r_0^2$, and $K$ grows toward it as $16r_q^4/(r_0^4r^4)$, "
+            "where Reissner and Nordström's grows as $56r_q^4/r^8$.",
+            "Reissner and Nordström's $R$ vanishes, since Maxwell's field has a traceless stress tensor. Born and "
+            "Infeld's $R$ is positive at every $r$, grows toward the centre as $4r_q^2/(r_0^2r^2)$, and falls off "
+            "as $r_q^2r_0^4/r^8$ far out, where $K$ approaches Reissner and Nordström's.",
+        ],
+        "settings": "$r_0 = 1$, the unit of every length, $r_q = r_0/2$, and $r_s = 0.618\\,r_0$, the mass of the "
+                    "field alone.",
+        "clip": ("We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-4}$ to $10^{6}$ and $R\\,r_0^2$ on one from "
+                 "$10^{-6}$ to $10^{4}$, and cut each curve where it leaves its panel, as the particle's $K$ does "
+                 f"inside $r = {K_cut:.3f}\\,r_0$, its $R$ inside $r = {R_cut:.3f}\\,r_0$, and Reissner and "
+                 f"Nordström's $K$ inside $r = {K_rn_cut:.3f}\\,r_0$."),
+    }
+
+    # The black hole.
+    curves, marks = own(hole, "born_infeld_charge hole")
+    ck("born_infeld_charge the black hole has one horizon, at r_h", len(marks) == 1
+       and abs(marks[0]["x"] - nr.BI_HORIZON) < 1e-12, f"{[m['x'] for m in marks]}")
+    r_h = marks[0]["x"]
+    m0 = hole / 2 - BI_NUMBER * rq ** 2 / r0
+    centre = [float(K.exact([r, hole, rq, r0])) * r ** 6 / (48 * m0 ** 2) for r in (1e-5, 1e-6)]
+    ck("born_infeld_charge K r^6 tends to 48 m_0^2 at the black hole's centre", all(abs(v - 1) < 1e-4 for v in centre),
+       f"m_0 = {m0:.6f}, {centre}")
+    K_cut, K_rn_cut = top(K, [hole, rq, r0]), top(K_rn, [hole, rq])
+    still_hole = {
+        "id": "hole", "label": "The black hole", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": marks, "legend": legend_lines + [horizon_legend],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the black hole against $r$ "
+            "($r_q = r_0/2$, $r_s = 2\\,r_0$), the same at every $t$, $\\theta$, and $\\phi$, beside the $K$ of "
+            "Reissner and Nordström's metric of the same mass and charge. With more mass than the field holds, the "
+            f"mass at the centre is $m_0 = r_s/2 - 1.2360\\,r_q^2/r_0 = {m0:.3f}\\,r_0$, and toward it $K$ grows as "
+            "$48m_0^2/r^6$, as Schwarzschild's does for the mass $m_0$, where Reissner and Nordström's grows as "
+            "$56r_q^4/r^8$.",
+            f"The horizon is at $r_h = {r_h:.3f}\\,r_0$, where $g^{{rr}} = 1 - 2m/r$ vanishes. $R$ is a function "
+            "of $r$, $r_q$, and $r_0$ alone, so it is the particle's, and far out $K$ approaches Reissner and "
+            "Nordström's.",
+        ],
+        "settings": f"$r_0 = 1$, the unit of every length, $r_q = r_0/2$, and $r_s = 2\\,r_0$, so that the horizon "
+                    f"is at $r_h = {r_h:.3f}\\,r_0$.",
+        "clip": ("We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-4}$ to $10^{6}$ and $R\\,r_0^2$ on one from "
+                 "$10^{-6}$ to $10^{4}$, and cut each curve where it leaves its panel, as the black hole's $K$ does "
+                 f"inside $r = {K_cut:.3f}\\,r_0$, its $R$ inside $r = {R_cut:.3f}\\,r_0$, and Reissner and "
+                 f"Nordström's $K$ inside $r = {K_rn_cut:.3f}\\,r_0$."),
+    }
+
+    # The movie in r_s, at fixed charge, from Hoffmann's particle to the black hole.
+    frames, horizons, K_cuts, K_rn_cuts = [], [], [], []
+    for k in range(BI_STEPS + 1):
+        rs = particle + (hole - particle) * k / BI_STEPS if k < BI_STEPS else hole
+        curves, marks = own(rs, f"born_infeld_charge at r_s = {rs:.4f}")
+        frames.append({"label": f"$r_s = {rs:.3f}\\,r_0$", "value": float(rs), "curves": curves, "marks": marks})
+        horizons.append([m["x"] for m in marks])
+        K_cuts.append(top(K, [rs, rq, r0]))
+        K_rn_cuts.append(top(K_rn, [rs, rq]))
+    ck("born_infeld_charge has no horizon in the first frame and one in every other",
+       horizons[0] == [] and all(len(h) == 1 for h in horizons[1:]), f"{horizons}")
+    outward = [h[0] for h in horizons[1:]]
+    ck("born_infeld_charge the horizon moves outward as r_s grows", all(b > a for a, b in zip(outward, outward[1:])))
+    ck("born_infeld_charge the last frame is the black hole", frames[-1]["value"] == hole and outward[-1] == r_h)
+    just_past = particle * (1 + 1e-6)
+    newborn = zeros(ck, "born_infeld_charge horizon just past the particle", grr, 1e-12, 0.01, [just_past, rq, r0])
+    ck("born_infeld_charge the horizon forms at the centre as r_s passes the particle's",
+       len(newborn) == 1 and newborn[0] < 1e-4, f"{newborn}")
+    sixth = []
+    for frame in frames[1:]:
+        rs = frame["value"]
+        m_c = rs / 2 - BI_NUMBER * rq ** 2 / r0
+        sixth.append(float(K.exact([1e-6, rs, rq, r0])) * 1e-36 / (48 * m_c ** 2))
+    ck("born_infeld_charge K grows as 48 m_0^2/r^6 at the centre in every frame after the first",
+       all(abs(v - 1) < 1e-3 for v in sixth), f"worst {max(abs(v - 1) for v in sixth):.1e}")
+    ck("born_infeld_charge the radius where K leaves the top grows from frame to frame",
+       all(b > a for a, b in zip(K_cuts, K_cuts[1:])), f"{K_cuts[0]:.4f} to {K_cuts[-1]:.4f}")
+    movie_view = {
+        "id": "mass", "label": "$0.618\\,r_0 \\le r_s \\le 2\\,r_0$", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": [], "marks": [], "legend": legend_lines + [horizon_legend],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Born and Infeld's point charge against $r$ as its "
+            "mass grows at fixed charge ($r_q = r_0/2$, $0.618\\,r_0 \\le r_s \\le 2\\,r_0$), beside the $K$ of "
+            "Reissner and Nordström's metric of the same mass and charge. At $r_s = 0.618\\,r_0$ the whole mass is "
+            "the energy of the field, and $K$ grows toward the centre as $16r_q^4/(r_0^4r^4)$. With any more mass "
+            "the mass at the centre, $m_0 = r_s/2 - 1.2360\\,r_q^2/r_0$, is positive, and $K$ grows there as "
+            "$48m_0^2/r^6$.",
+            "A horizon forms at the centre as soon as $r_s$ passes $0.618\\,r_0$, and moves out to "
+            f"$r_h = {r_h:.3f}\\,r_0$ at $r_s = 2\\,r_0$. $R$ is a function of $r$, $r_q$, and $r_0$ alone, so "
+            "it is the same in every frame.",
+        ],
+        "settings": f"$r_0 = 1$, the unit of every length, $r_q = r_0/2$, and $r_s$ in {BI_STEPS} equal steps from "
+                    "$0.618\\,r_0$ to $2\\,r_0$.",
+        "clip": ("The scales are those of Hoffmann's particle and the black hole, and we cut each curve where it "
+                 "leaves its panel: Born and Infeld's $K$ passes the top inside a radius that grows from "
+                 f"$r = {K_cuts[0]:.3f}\\,r_0$ in the first frame to ${K_cuts[-1]:.3f}\\,r_0$ in the last, "
+                 f"Reissner and Nordström's inside a radius between ${min(K_rn_cuts):.3f}\\,r_0$ and "
+                 f"${max(K_rn_cuts):.3f}\\,r_0$, "
+                 f"and $R$ inside $r = {R_cut:.3f}\\,r_0$ in every frame."),
+        "movie": {"variable": "$r_s$", "seconds": 5, "frames": frames},
+    }
+    return [still_particle, still_hole, movie_view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
     "bach_weyl_ring": bach_weyl_ring,
     "bardeen": bardeen,
+    "born_infeld_charge": born_infeld_charge,
     "boulware_deser": boulware_deser,
     "brill_charged_taub_nut": brill_charged_taub_nut,
 }
