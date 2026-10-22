@@ -537,6 +537,8 @@ def check_line(where, view, read, x):
             points = curve.get("points") or []
             if len(points) < 2 or not all(isinstance(p, list) and len(p) == 2 and finite(p[0]) and finite(p[1]) for p in points):
                 raise DataError(f"{at} is not a polyline of at least two points [x, value] of numbers")
+            if any(math.copysign(1, v) < 0 and v == 0 for p in points for v in p):
+                raise DataError(f"{at} writes a zero as -0.0")
             xs = [p[0] for p in points]
             if not all(b > a for a, b in zip(xs, xs[1:])) or xs[0] < x["from"] or xs[-1] > x["to"]:
                 raise DataError(f"{at} does not run one way across its axis inside it")

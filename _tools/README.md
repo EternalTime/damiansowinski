@@ -1622,7 +1622,7 @@ It refuses to write while any check fails.
 ### Checking the figures
 
 `build_mfs_data.py` loads every file with `load_curvature`, and refuses one drawn from a field its metric no longer publishes, naming the command that redraws it, as it refuses the other diagrams.
-It refuses as well a file out of the shape below: a panel or a map outside 1:2 to 2:1, or a stack of panels outside it as a whole; a scale of no known kind, a logarithmic scale reaching zero, a tick outside its axis or a label that is not TeX; a curve that does not run one way across its axis, a value that is not a number or not above zero on a logarithmic scale, and a curve or a map drawn from a chart or a scalar the file's `source` does not stamp; a movie out of order or saying how it loops; and a class drawn that the legend does not name, or named and not drawn.
+It refuses as well a file out of the shape below: a panel or a map outside 1:2 to 2:1, or a stack of panels outside it as a whole; a scale of no known kind, a logarithmic scale reaching zero, a tick outside its axis or a label that is not TeX; a curve that does not run one way across its axis, a value that is not a number, is written as `-0.0` or is not above zero on a logarithmic scale, and a curve or a map drawn from a chart or a scalar the file's `source` does not stamp; a movie out of order or saying how it loops; and a class drawn that the legend does not name, or named and not drawn.
 It stamps each file into the index as `curvature`, and holds the symbols of every text to "Every symbol is defined" above, as it holds a drawing's.
 `_tools/test_curvature.py` evaluates every value on disk again from the metric file it names, a curve's to a part in $10^{12}$ and a cell's to its six figures, and holds every horizon marked to a change of sign of the published $g^{xx}$ and every change of sign on the drawn range to a mark.
 `_tools/test_build_mfs_data.py` holds every text to the rules for prose, for the captain's voice and for dashes, as it holds the other diagrams', plays every movie through the page's own player, and holds the names of its frames to `MfsTurn.steady()`, and `node _tools/derivations/tex_check.cjs` sets every TeX string of the files.
@@ -1631,7 +1631,7 @@ It stamps each file into the index as `curvature`, and holds the symbols of ever
 ### The file, which the application reads
 
 The application downloads the file for a spacetime whose index entry carries `curvature`, the stamp of the whole file, which changes when the file does and not otherwise.
-Every number is a plain JSON number, every text is TeX in `$...$`, inside prose where the text is prose, and nothing in the file needs any relativity to draw.
+Every number is a plain JSON number, never written as `-0.0`, every text is TeX in `$...$`, inside prose where the text is prose, and nothing in the file needs any relativity to draw.
 
     {
       "metric": "bardeen",

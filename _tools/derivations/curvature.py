@@ -316,7 +316,8 @@ def sampled(ck, name, published, x_axis, scale, height, params):
         if stop - start < 2:
             continue
         keep = start + thinned(X[start:stop], Y[start:stop], TOLERANCE)
-        out.append([[float(x), float(v)] for x, v in zip(xs[keep], vs[keep])])
+        # Adding zero writes a zero as 0.0, never as -0.0.
+        out.append([[float(x) + 0.0, float(v) + 0.0] for x, v in zip(xs[keep], vs[keep])])
     ck(f"{name} has a curve to draw", out, f"{len(out)} stretches")
     if scale["kind"] == "log":
         ck(f"{name} is positive where a logarithmic axis draws it",
@@ -369,7 +370,7 @@ def cells(published, x_axis, y_axis, nx, ny, params):
 def rounded(v, digits=6):
     """A value written to `digits` significant figures, which the page and the checks read as
     the value at its point."""
-    return float(f"{v:.{digits}g}")
+    return float(f"{v:.{digits}g}") + 0.0
 
 
 def shape_checks(ck, where, aspects):
