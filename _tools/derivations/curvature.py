@@ -1595,6 +1595,215 @@ def c_metric(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Brans and Dicke's static sphere
+
+BDS_N = Fraction(1, 4)            # n at m = 0, as every drawing of the sphere takes it, which is omega = 6
+BDS_STEP = Fraction(1, 100)       # the step of n from one frame of the movie to the next, and its first frame
+BDS_CASSINI = 40000               # the least omega the Cassini spacecraft allows, as the page's convention says
+
+
+def brans_dicke_sphere(ck, src):
+    """Brans and Dicke's static sphere at m = 0 and r_0 = 1, its Kretschmann and Ricci scalars
+    against r in the spherical chart.
+
+    The spherical chart's published K and R depend on r alone. Two panels share the axis of r,
+    from the singularity at 2 r_0 to 8 r_0, the range of the embedding diagram: K on a logarithmic
+    axis from 10^-4 to 10^2 and R on one from 10^-6 to 10^2, since both are positive on the range
+    and both diverge at r = 2 r_0, where the spheres shrink to a point. Schwarzschild's K of the
+    same mass, GM/c^2 = (m + 1) r_0 = r_0, so r_s = 2 r_0, read from schwarzschild.json, is the
+    comparison; Schwarzschild's R vanishes and has no place on a logarithmic axis. No horizon is
+    marked, since the published g^rr = A^(1 - n) is positive at every r drawn. The first view is
+    the sphere at n = 1/4, omega = 6, the values every other drawing of it takes; the second steps
+    n from 1/100 to 1/4 at fixed mass, from omega = 198 down to 6.
+
+    What the captions state is checked here: omega = 2(1 - n)/n at m = 0; Schwarzschild's K at
+    2 r_0 is 3/4 r_0^4; the published g_thetatheta vanishes at 2 r_0; K and R are positive on the
+    range and diverge there as (r - 2 r_0)^-(2 + 2n) and (r - 2 r_0)^-(1 + n), measured in sixty
+    digits; K crosses Schwarzschild's once on the range, at the radius stated, and far out tends
+    to (n^2 - 2n + 2)/2 of it, with R falling off as 2n(1 - n) r_0^2/r^4; in the movie, K stands
+    above twice Schwarzschild's only inside the radii stated, which shrink as n does; and at the
+    n of the least omega Cassini allows K is within the fraction stated of Schwarzschild's outside
+    the radius stated."""
+    x_axis = axis("$r/r_0$", 2, 8)
+    K_scale = {"kind": "log", "from": 1e-4, "to": 1e2}
+    R_scale = {"kind": "log", "from": 1e-6, "to": 1e2}
+    # R's eight decades are ticked at every second one, which the page fits at every size, where
+    # nine labels stand as close as it allows and are thinned in one view and not the other.
+    R_ticks = [t for t in value_ticks(R_scale) if round(math.log10(t["at"])) % 2 == 0]
+    panels = [{"id": "K", "name": "$K\\,r_0^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R\\,r_0^2$", "aspect": 2, "scale": R_scale, "ticks": R_ticks}]
+    shape_checks(ck, "brans_dicke_sphere", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    names = ["r_0", "m", "n"]
+    K = nr_published(src, "brans_dicke_sphere", "spherical", "kretschmann", ["r"], names)
+    R = nr_published(src, "brans_dicke_sphere", "spherical", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, "brans_dicke_sphere", "spherical", "inverse_metric_components", ["r"], names, ("r", "r"))
+    g_thth = nr_published(src, "brans_dicke_sphere", "spherical", "metric_components", ["r"], names, ("\\theta", "\\theta"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    n = float(BDS_N)
+
+    def omega(n):
+        m = 0
+        return -2 * (m * m + n * n + m * n + m - n) / (m + n) ** 2
+    ck("brans_dicke_sphere omega is 2(1 - n)/n at m = 0, and 6 at n = 1/4",
+       omega(BDS_N) == 6 and all(omega(Fraction(k, 100)) == 2 * (1 - Fraction(k, 100)) / Fraction(k, 100)
+                                for k in range(1, 26)))
+
+    def reference():
+        return line_curves(ck, "brans_dicke_sphere Schwarzschild", "K", "reference", K_s, "r", x_axis, K_scale,
+                           height["K"], {"r_s": 2})
+
+    def own(value, name):
+        params = {"r_0": 1, "m": 0, "n": float(value)}
+        curves = (line_curves(ck, name, "K", "K", K, "r", x_axis, K_scale, height["K"], params)
+                  + line_curves(ck, name, "R", "R", R, "r", x_axis, R_scale, height["R"], params))
+        ck(f"{name} has no horizon on the range", not zeros(ck, f"{name} g^rr", grr, 2, 8, [1, 0, float(value)])
+           and np.all(grr(np.linspace(2, 8, SAMPLES)[1:], 1, 0, float(value)) > 0))
+        return curves
+
+    def ratio(value):
+        """K over Schwarzschild's K of the same mass, less one, as a function of r."""
+        return lambda r, *_: K(r, 1, 0, value) / K_s(r, 2) - 1
+
+    def crossing(value, level, hi=8):
+        """The greatest r between 2 r_0 and `hi` at which K stands `level` times Schwarzschild's."""
+        found = zeros(ck, f"brans_dicke_sphere at n = {value:.6f} K = {level} K_s",
+                      lambda r, *_: K(r, 1, 0, value) / K_s(r, 2) - level, 2, hi, [])
+        return max(found) if found else None
+
+    def edge(fn, scale, value):
+        """Where a curve leaves the top of its panel, the r at which it reaches the top, found by
+        bisection in log(r - 2 r_0); the curve falls at every r drawn, so it leaves once."""
+        up, down = beyond(fn, x_axis, scale, [1, 0, value])
+        falls = np.all(np.diff(fn(rs, 1, 0, value)) < 0)
+        ck(f"brans_dicke_sphere at n = {value:.4f} falls across the range and leaves its panel once, at the top",
+           falls and len(up) == 1 and up[0][0] == 2 and not down, f"{up} {down}")
+        lo, hi = -40.0, math.log(6.0)
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if float(fn(2 + math.exp(mid), 1, 0, value)) > scale["to"] else (lo, mid)
+        return 2 + math.exp(hi)
+
+    rs = np.linspace(2, 8, SAMPLES)[1:]
+    curves = reference() + own(BDS_N, "brans_dicke_sphere at n = 1/4")
+    # The figures of the captions.
+    centre_s = float(K_s.exact([2, 2]))
+    ck("Schwarzschild's K at r = 2 r_0 is 3/4 r_0^4", centre_s == 0.75, f"{centre_s}")
+    ck("brans_dicke_sphere the spheres shrink to a point at r = 2 r_0",
+       float(g_thth.exact([2 + 2.0 ** -40, 1, 0, n])) < 1e-2 and float(g_thth.exact([2, 1, 0, n])) == 0)
+    ck("brans_dicke_sphere K and R are positive on the range",
+       np.all(K(rs, 1, 0, n) > 0) and np.all(R(rs, 1, 0, n) > 0))
+    ck("Schwarzschild's K stays inside its panel", not any(beyond(K_s, x_axis, K_scale, [2])))
+    for fn, power, label in ((K, 2 + 2 * n, "K"), (R, 1 + n, "R")):
+        near = [2 + 2.0 ** -k for k in (20, 27, 34)]
+        logs = [float(sp.log(fn.exact([r, 1, 0, n]))) for r in near]
+        slopes = [(b - a) / (math.log(2.0 ** -k2) - math.log(2.0 ** -k1))
+                  for (a, k1), (b, k2) in zip(zip(logs, (20, 27)), zip(logs[1:], (27, 34)))]
+        ck(f"brans_dicke_sphere {label} diverges as (r - 2 r_0)^-{power}",
+           all(abs(-s / power - 1) < 1e-5 for s in slopes), f"{slopes}")
+    ck("brans_dicke_sphere the powers the caption writes are 2 + 2n and 1 + n", 2 + 2 * n == 5 / 2 and 1 + n == 5 / 4)
+    crosses = zeros(ck, "brans_dicke_sphere K = K_s", ratio(n), 2, 8, [])
+    ck("brans_dicke_sphere K crosses Schwarzschild's once on the range", len(crosses) == 1, f"{crosses}")
+    cross = crosses[0]
+    ck("brans_dicke_sphere K stands above Schwarzschild's inside the crossing and below it outside",
+       np.all(ratio(n)(rs[rs < cross]) > 0) and np.all(ratio(n)(rs[rs > cross]) < 0))
+    far = 1e4
+    tail = (n * n - 2 * n + 2) / 2
+    ck("brans_dicke_sphere K tends to (n^2 - 2n + 2)/2 of Schwarzschild's far out, 25/32 at n = 1/4",
+       abs(float(K.exact([far, 1, 0, n])) / float(K_s.exact([far, 2])) / tail - 1) < 1e-3 and tail == 25 / 32)
+    ck("brans_dicke_sphere R falls off as 2n(1 - n) r_0^2/r^4, 3 r_0^2/8 r^4 at n = 1/4",
+       abs(float(R.exact([far, 1, 0, n])) * far ** 4 / (2 * n * (1 - n)) - 1) < 1e-3 and 2 * n * (1 - n) == 3 / 8)
+    K_edge, R_edge = edge(K, K_scale, n), edge(R, R_scale, n)
+    legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+              ["line", "reference", "$K$ of Schwarzschild's black hole of the same mass"]]
+    still = {
+        "id": "omega", "label": "$n = 1/4$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Brans and Dicke's static sphere against $r$ "
+            "($m = 0$, $n = 1/4$, which is $\\omega = 6$), the same at every $t$, $\\theta$, and $\\phi$, beside "
+            "Schwarzschild's black hole of the same mass. At $r = 2r_0$ Schwarzschild's $K = 48r_0^2/r^6$ is a finite "
+            f"${centre_s:g}/r_0^4$ on its horizon. Brans and Dicke's spheres shrink to zero area there, with no horizon "
+            "to hide them, and $K$ grows without bound as $(r - 2r_0)^{-5/2}$.",
+            "Schwarzschild's $R$ vanishes, and Brans and Dicke's is positive at every $r$ and grows without bound as "
+            f"$(r - 2r_0)^{{-5/4}}$. $K$ crosses Schwarzschild's at $r = {cross:.3f}\\,r_0$ and far out falls to "
+            "$25/32$ of it, while $R$ falls off as $3r_0^2/8r^4$.",
+        ],
+        "settings": "$m = 0$, $n = 1/4$, and $r_0 = 1$, the unit of every length, so that $GM/c^2 = r_0$, and "
+                    "Schwarzschild's $r_s = 2r_0$.",
+        "clip": ("We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-4}$ to $10^{2}$ and $R\\,r_0^2$ on one from "
+                 "$10^{-6}$ to $10^{2}$, and cut each curve where it leaves its panel, as $K$ does inside "
+                 f"$r = {K_edge:.3f}\\,r_0$ and $R$ inside $r = {R_edge:.3f}\\,r_0$."),
+    }
+
+    # The movie in n, at fixed mass, from omega = 198 to the 6 of the first view.
+    frames = []
+    steps = int(BDS_N / BDS_STEP)
+    for k in range(1, steps + 1):
+        value = BDS_STEP * k
+        frames.append({"label": f"$n = {float(value):.2f}$", "value": float(value),
+                       "curves": own(value, f"brans_dicke_sphere at n = {float(value):.2f}"), "marks": []})
+    first, last = float(BDS_STEP), n
+    doubled = [crossing(f["value"], 2) for f in frames]
+    ck("brans_dicke_sphere K stands above twice Schwarzschild's in a layer that thins as n falls",
+       all(d is not None for d in doubled) and all(a < b for a, b in zip(doubled, doubled[1:])), f"{doubled}")
+    for value in (first, last):
+        r2 = crossing(value, 2)
+        ck(f"brans_dicke_sphere at n = {value} K is above twice Schwarzschild's inside r = {r2:.4f} alone",
+           np.all(K(rs[rs < r2], 1, 0, value) > 2 * K_s(rs[rs < r2], 2))
+           and np.all(K(rs[rs > r2], 1, 0, value) < 2 * K_s(rs[rs > r2], 2)))
+    values = [f["value"] for f in frames]
+    ck("brans_dicke_sphere R shrinks toward zero at every r as n falls",
+       all(np.all(R(rs, 1, 0, a) < R(rs, 1, 0, b)) for a, b in zip(values, values[1:])))
+    outer = rs[rs >= 3]
+    gaps = [float(np.max(np.abs(ratio(v)(outer)))) for v in values]
+    ck("brans_dicke_sphere K approaches Schwarzschild's outside r = 3 r_0 as n falls",
+       all(a < b for a, b in zip(gaps, gaps[1:])), f"{gaps[0]:.4f} to {gaps[-1]:.4f}")
+    edges = [(edge(K, K_scale, f["value"]), edge(R, R_scale, f["value"])) for f in frames]
+    reach = max(max(e) for e in edges) - 2
+    stated = math.ceil(reach * 100) / 100
+    ck("brans_dicke_sphere every curve of the movie leaves its panel nearer 2 r_0 as n falls, within the reach stated",
+       all(a[0] < b[0] and a[1] < b[1] for a, b in zip(edges, edges[1:])) and reach <= stated, f"{reach:.4f}")
+    # The least omega Cassini allows, and how near Schwarzschild's K the sphere's is there.
+    n_cassini = 2 / (BDS_CASSINI + 2)
+    ck("brans_dicke_sphere the least omega Cassini allows is n = 2/(omega + 2) at m = 0, below 5 x 10^-5",
+       omega(Fraction(2, BDS_CASSINI + 2)) == BDS_CASSINI and n_cassini < 5e-5)
+    fine = np.linspace(2, 8, 600001)[1:]
+    layer = []
+    for value in (n_cassini, n_cassini / 10, n_cassini / 100):
+        apart = np.abs(K(fine, 1, 0, value) / K_s(fine, 2) - 1)
+        layer.append(crossing(value, 1.01, 2.01))
+        wide = np.logspace(math.log10(8), 8, 2001)
+        ck(f"brans_dicke_sphere at n = {value:.3e} K is within a percent of Schwarzschild's outside r = {layer[-1]:.6f}",
+           np.all(apart[fine > layer[-1]] <= 0.01) and np.all(apart[fine < layer[-1] - 1e-5] > 0.01)
+           and np.all(np.abs(K(wide, 1, 0, value) / K_s(wide, 2) - 1) <= 0.01))
+    r_percent = layer[0]
+    ck("brans_dicke_sphere the layer of a percent thins further above Cassini's omega",
+       layer[0] > layer[1] > layer[2], f"{layer}")
+    movie_view = {
+        "id": "falling", "label": "$1/100 \\le n \\le 1/4$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": reference(), "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Brans and Dicke's static sphere against $r$ as "
+            "$n$ grows at fixed mass ($m = 0$, $1/100 \\le n \\le 1/4$, which is $198 \\ge \\omega \\ge 6$), beside "
+            "Schwarzschild's black hole. As $n$ falls, $\\omega = 2(1 - n)/n$ grows, $R$ shrinks toward zero, and $K$ "
+            "approaches Schwarzschild's except in a layer beside $r = 2r_0$ that thins with $n$ and where it still "
+            f"grows without bound: $K$ is above twice Schwarzschild's inside $r = {crossing(last, 2):.3f}\\,r_0$ at "
+            f"$n = 1/4$ and inside $r = {crossing(first, 2):.3f}\\,r_0$ at $n = 1/100$.",
+            "In 1961 Brans and Dicke took $\\omega \\ge 6$ from Mercury's perihelion, and the last frame is that least "
+            f"value. The Cassini spacecraft puts $\\omega$ above ${BDS_CASSINI // 1000}{{,}}000$, where "
+            f"$n < {tex_number(n_cassini, 2)}$ and $K$ is within a percent of Schwarzschild's outside "
+            f"$r = {r_percent:.4f}\\,r_0$.",
+        ],
+        "settings": "$m = 0$ and $r_0 = 1$, the unit of every length, so that $GM/c^2 = r_0$, and $n$ in steps of "
+                    f"$1/{int(1 / BDS_STEP)}$.",
+        "clip": ("The scales are those of $n = 1/4$, and we cut each curve where it leaves the top of its panel, "
+                 f"within ${stated:g}\\,r_0$ of $r = 2r_0$ in every frame; no curve passes the bottom."),
+        "movie": {"variable": "$n$", "seconds": 5, "frames": frames},
+    }
+    return [still, movie_view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -1602,6 +1811,7 @@ DRAWN = {
     "bardeen": bardeen,
     "born_infeld_charge": born_infeld_charge,
     "boulware_deser": boulware_deser,
+    "brans_dicke_sphere": brans_dicke_sphere,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "c_metric": c_metric,
 }

@@ -913,7 +913,8 @@
     "version": "173c534bda78ad90",
     "diagrams": "fd0321d9fcdcb54d",
     "conformal": "c776bb1e86cd5f7d",
-    "embedding": "a1c5b02d8ba65163"
+    "embedding": "a1c5b02d8ba65163",
+    "curvature": "ab77d8766b9699f0"
   },
   {
     "id": "brill_waves",
