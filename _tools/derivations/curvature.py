@@ -492,7 +492,7 @@ def bardeen(ck, src):
         "curves": still_refs + curves, "marks": marks, "legend": legend,
         "caption": [
             "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Bardeen's black hole against $r$ "
-            "($g = r_s/3$), the same at every $t$, $\\theta$ and $\\phi$, beside Schwarzschild's of the same mass. "
+            "($g = r_s/3$), the same at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's of the same mass. "
             "Toward the centre Schwarzschild's $K = 12r_s^2/r^6$ grows without bound, and Bardeen's levels off "
             f"inside $r_-$ and reaches $24r_s^2/g^6 = {centre_K:.0f}/r_s^4$ at $r = 0$, the curvature of de Sitter "
             f"space of radius $\\sqrt{{g^3/r_s}} = {math.sqrt(g ** 3):.3f}\\,r_s$.",
