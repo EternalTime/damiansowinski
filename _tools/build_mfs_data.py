@@ -43,6 +43,7 @@ RELATIONS_FILE = ROOT / "MFS" / "assets" / "data" / "relations.json"
 DIAGRAMS_DIR = ROOT / "MFS" / "assets" / "data" / "diagrams"
 CONFORMAL_DIR = ROOT / "MFS" / "assets" / "data" / "conformal"
 EMBEDDING_DIR = ROOT / "MFS" / "assets" / "data" / "embedding"
+CURVATURE_DIR = ROOT / "MFS" / "assets" / "data" / "curvature"
 
 VERSION_LENGTH = 16
 
