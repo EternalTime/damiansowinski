@@ -1374,7 +1374,7 @@ class ReadableDrawings(unittest.TestCase):
 
     # The rules that set a drawing's words, and the elements a word of a drawing is.
     GROUNDS = (".mfs-nr-figure", ".mfs-cd-drawing")
-    WORDS = (".mfs-nr-figure", ".nr-tick", ".nr-name", ".nr-ref", ".mfs-slice-label", ".mfs-nr-readout",
+    WORDS = (".mfs-nr-figure", ".nr-tick", ".nr-name", ".nr-ref", ".mfs-slice-label", ".mfs-nr-readout", ".cv-word",
              ".mfs-cd-labels", ".cd-at", ".cd-lab-small", ".cd-lab-coord", ".cd-lab-region", ".cd-lab-lab")
 
     @classmethod
@@ -4147,14 +4147,30 @@ class StacksAndMovies(unittest.TestCase):
             # Paused, it takes up where it stopped, so it loses the time it stood and no more.
             self.assertEqual(held, played[:len(held)], str(name))
             self.assertLessEqual(abs(len(held) - len(short)), 1, str(name))
-        # Every figure with a movie is wired to that one player, and nothing else in the page or
-        # the player keeps time for a movie.
+        # Every figure with a movie is wired to that one player, an embedding diagram's by
+        # wireTurning() and a curvature figure's by wireCurvature(), and nothing else in the page
+        # or the player keeps time for a movie.
         page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
         self.assertEqual(re.findall(r"if \(movie\) (\w+)\(", page), ["wireMovie"])
-        self.assertEqual(len(re.findall(r"\bwireMovie\(", page)), 2, "the page plays a movie some other way")
+        self.assertEqual(len(re.findall(r"\bwireMovie\(", page)), 3, "the page plays a movie some other way")
+        curvature = re.search(r"function wireCurvature\([\s\S]*?\n      \}\n", page)
+        self.assertIsNotNone(curvature, "no wireCurvature()")
+        self.assertEqual(len(re.findall(r"\bwireMovie\(", curvature.group(0))), 1)
         player = (build.ROOT / "MFS" / "assets" / "turn.js").read_text(encoding="utf-8")
         for clock in ("requestAnimationFrame", "setInterval", "setTimeout", "performance.now", "Date.now"):
             self.assertNotIn(clock, player, "MfsTurn keeps time of its own")
+
+    def test_the_page_plays_every_curvature_movie_forward_then_back(self):
+        # A curvature figure's movie is played by the same player, by the same rule.
+        movies = {(name, v["id"]): v["movie"] for name, data in curvature_files().items()
+                  for v in data["views"] if "movie" in v}
+        self.assertTrue(movies, "no curvature figure holds a movie, so none was played")
+        ms = 3 * 1000 * max(m["seconds"] for m in movies.values()) + 2000
+        for (name, movie), played in zip(movies.items(), self.frames_played(list(movies.values()), ms)):
+            n = len(movie["frames"])
+            up, down = list(range(n)), list(range(n - 2, 0, -1))
+            self.assertEqual(played, (up + down + up + down)[1:len(played) + 1], str(name))
+            self.assertGreaterEqual(len(played), 3 * (n - 1), str(name))
 
     def test_the_page_plays_a_movie_and_holds_it_still_for_a_reader_who_asks(self):
         page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
@@ -4201,6 +4217,9 @@ class SteadyMovieLabels(unittest.TestCase):
 
     def test_every_frames_number_fills_one_box_with_its_point_at_one_place(self):
         labels = {key: [f["label"] for f in v["movie"]["frames"]] for key, v in self.movies.items()}
+        # A curvature figure's movie names its frames by the same rule.
+        labels.update({("curvature", name, v["id"]): [f["label"] for f in v["movie"]["frames"]]
+                       for name, data in curvature_files().items() for v in data["views"] if "movie" in v})
         for (key, plain), made in zip(labels.items(), self.steady(list(labels.values()))):
             self.assertEqual(len(made), len(plain), key)
             boxes, shown = set(), [collections.Counter(), collections.Counter()]
@@ -4273,6 +4292,10 @@ class SteadyMovieLabels(unittest.TestCase):
         self.assertIsNotNone(figure, "no emFigure()")
         self.assertIn("MfsTurn.steady(names)", figure.group(0))
         self.assertIn("'<span class=\"mfs-frame-labels\">'", figure.group(0))
+        curvature = re.search(r"function cvFigure\([\s\S]*?\n      \}\n", page)
+        self.assertIsNotNone(curvature, "no cvFigure()")
+        self.assertIn("MfsTurn.steady(names)", curvature.group(0))
+        self.assertIn('<span class="cv-word mfs-frame-labels">', curvature.group(0))
         # Every name in one cell from its left edge, and a name not shown keeps its room, so the
         # label the place pins is as wide at every frame.
         rules = dict(re.findall(r"#mfs-content-panel (\.mfs-frame-label[^ {]*) \{([^}]*)\}", page))
@@ -4289,7 +4312,14 @@ class SteadyMovieLabels(unittest.TestCase):
         page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
         self.assertIn(".padStart(Math.max(lo.toFixed(3).length, hi.toFixed(3).length))", page)
         self.assertEqual(len(re.findall(r"r[xy]\.textContent = read\(", page)), 2)
-        self.assertEqual(len(re.findall(r"\br[xy]\.textContent = ", page)), 2)
+        # A curvature figure's values are set by the two readers that keep their room, its
+        # coordinates as a spacetime diagram's are and its values in ten places.
+        setters = re.findall(r"\br[xyv]\.textContent = (\w+)\(", page)
+        self.assertEqual(len(re.findall(r"\br[xyv]\.textContent = ", page)), len(setters))
+        self.assertEqual(set(setters), {"read", "cvRead", "cvReadValue"})
+        self.assertIn("return at.toFixed(3).replace('-', '−').padStart(Math.max(lo.toFixed(3).length, hi.toFixed(3).length));",
+                      page[page.index("function cvRead("):])
+        self.assertIn(".padStart(10);", page[page.index("function cvReadValue("):])
         self.assertRegex(page, r"\.mfs-nr-readout \.nr-ry \{ white-space: pre; font-variant-numeric: tabular-nums; \}")
 
 

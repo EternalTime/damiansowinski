@@ -478,7 +478,7 @@ A prime is passed over, so $r'$ is read as $r$.
 
 `MFS/assets/data/metrics_index.json` is one entry per metric file, in the order the search list shows them, carrying `id`, `name`, `tags` and `version`.
 Its `name` is the metric's `short_name`, which is what the search list shows, not the long `name` the page titles the spacetime with.
-An entry also carries `diagrams` when the spacetime has a file in `MFS/assets/data/diagrams/`, `conformal` when it has one in `MFS/assets/data/conformal/`, and `embedding` when it has one in `MFS/assets/data/embedding/`; the page fetches each file only for an entry that says so.
+An entry also carries `diagrams` when the spacetime has a file in `MFS/assets/data/diagrams/`, `conformal` when it has one in `MFS/assets/data/conformal/`, `embedding` when it has one in `MFS/assets/data/embedding/`, and `curvature` when it has one in `MFS/assets/data/curvature/`; the page fetches each file only for an entry that says so.
 
 `MFS/assets/data/references.json` is the whole of `assets/data/references.bib` parsed into JSON, so a reader can pull every reference the collection cites in one fetch instead of walking every metric file.
 The `.bib` file stays where it is and stays the one place a reference is written; the publications page still reads it.
@@ -489,7 +489,7 @@ A metric's `version` is a hash of that metric's content.
 It changes when the content changes and not otherwise, so reformatting a file or republishing the site leaves it alone.
 This is what the iOS application uses to fetch only the spacetimes that actually changed, since GitHub Pages rewrites every file's own tag on every publish.
 `references.json` carries one stamp of its own at the top for the same reason.
-An index entry's `diagrams`, `conformal` and `embedding` are the same kind of hash over that spacetime's diagram file, conformal diagram file and embedding diagram file, so the application can fetch a redrawn diagram without fetching its metric again.
+An index entry's `diagrams`, `conformal`, `embedding` and `curvature` are the same kind of hash over that spacetime's diagram file, conformal diagram file, embedding diagram file and curvature figure file, so the application can fetch a redrawn diagram without fetching its metric again.
 
 ## Checking
 
@@ -1035,7 +1035,7 @@ Its prose is for the reader of "Whom the prose is for" above; the tests hold eve
 It keeps the register the spacetime diagrams' captions keep, and it names what each point in the diagram is in that same construction: "each point in the diagram a 2-sphere of radius $r$" for a spherical spacetime, "each point in the diagram a single event rather than a 2-sphere of them" on a slice such as Minkowski's plane $y = z = 0$, and "each point in the diagram a circle around the string times a line along it" on the cosmic string's half plane.
 No caption says "This is the whole of" or "stands for".
 
-`_tools/derivations/tex_check.cjs` typesets every TeX string the page sets, in the metrics, the diagram files and the conformal files, a published value together with its negation, through the TeX input MathJax loads on the page, and exits non-zero naming each one it cannot set.
+`_tools/derivations/tex_check.cjs` typesets every TeX string the page sets, in the metrics, the diagram files, the conformal files and the curvature figures, a published value together with its negation, through the TeX input MathJax loads on the page, and exits non-zero naming each one it cannot set.
 sympy never reads the typesetting, so this is the check that catches a value that is right and prints as an error box:
 
     _tools/setup-env.sh
@@ -1496,6 +1496,7 @@ It starts Chrome with `_tools/chrome.mjs`, as `page_timing.mjs` does, and export
 A spacetime's spacetime diagram, conformal diagram and embedding diagram stand together, in that order, after the geodesics and before the references, as the captain asked on 28 September 2026.
 That is where the application's Graphs section stands, between its Maths and its References, and the page has no row of section buttons, so the three need no heading of their own.
 The spacetime diagram and the conformal diagram each draw the slice the embedding diagram is cut from, so the reader meets the line and then the surface cut along it.
+A spacetime with a curvature figure has it after the three, the last of the Graphs, under the heading "curvature"; "Curvature figures" below defines it.
 
 ### The slice of the embedding diagram
 
@@ -1565,6 +1566,137 @@ Nothing about the shade glows, and it is shown at once with the view, with no tr
 A view the conformal diagram shows with no shade answering it leaves the figure as published.
 A turned figure keeps its camera and takes the shade, as `shade()` in `MFS/assets/turn.js` draws it, and `turn_check.cjs` holds every shade drawn at the figure's camera to its published `layers`.
 The print copy prints the page as it was first drawn, with the chart's own conformal view shown and so no shade.
+
+## Curvature figures
+
+`MFS/assets/data/curvature/<metric_id>.json` holds the curvature figure of one spacetime: its Kretschmann scalar $K$, and its Ricci scalar $R$ where that does not vanish, plotted from the formulas the spacetime's metric file publishes, as the captain asked on 22 October 2026.
+The page draws it under the heading "curvature", after the embedding diagram, and the application reads the same files.
+It is the one figure a spacetime need not have: a spacetime has one where its curvature carries physics its formula does not show at a glance, as the research list of October 2026 sets out spacetime by spacetime, and a spacetime without one has no file and the page no section.
+Bardeen's regular black hole and the Bach-Weyl ring have one.
+
+`_tools/derivations/curvature.py` draws them, one function per spacetime, with what it draws and what it checks in its docstring.
+It needs the environment of "The test environment" above and took 26 seconds for both on 22 October 2026:
+
+    .venv.noindex/bin/python _tools/derivations/curvature.py
+    python3 _tools/build_mfs_data.py
+
+`--metric <metric_id>` redraws one spacetime, and `--verify` prints every check and writes nothing.
+A full run removes the file of a spacetime its table `DRAWN` does not list.
+
+### The three shapes
+
+A curvature figure has one or more views, each of one of three shapes.
+
+- A line view plots one coordinate across and stacks one or more panels over it, each a scalar on an axis of its own, as Bardeen's $K$ stands above its $R$: the spacetime's own curve, any comparison read from another spacetime's published scalar, as Schwarzschild's of the same mass, and a vertical line at each horizon.
+- A map colours a box of two coordinates, drawn at one scale on both axes, by a scalar at the centre of each cell of an even grid over it, as the Bach-Weyl ring's $K$ over the half plane of Weyl's $\rho$ and $z$, with points and curves marked on it.
+- A movie is either of those stepped through a parameter or a time, a frame for each value, as Bardeen's black hole is stepped through its charge $g$ from $0$ to $r_s/2$, and it plays as an embedding diagram's movie does.
+
+Two scalars never share an axis, since they have different units and different ranges: $K$ and $R$ each have a panel of their own.
+
+### Scales
+
+An axis of values, a panel's vertical axis or a map's colour, is of one of three kinds, and the position of a value $v$ along it, in the axis's own units, is
+
+- `linear`: $v$;
+- `log`: $\log_{10}v$, for $v > 0$ alone;
+- `symlog`: $\mathrm{asinh}(v/2L)/\ln 10$, with $L$ the scale's `linear` width, which is linear in $v$ within $|v| < L$ and tends to $\pm\log_{10}|v/L|$ far outside it, so that a scalar that changes sign and spans decades, as Bardeen's $R$ does, is drawn whole with its zero in sight.
+
+The axis runs from the position of its `from` to the position of its `to`, and a value beyond either end is cut at that end: a curve leaves its panel there, and a cell takes the colour of the end it passes.
+Every view says in its `clip` how each axis of values is scaled and where a value is cut, and the page prints it after "scale".
+A logarithmic scale suits a scalar of one sign, a signed one a scalar that changes sign, and a linear one a scalar that spans no decades; the research list gives the clip each spacetime needs.
+
+### The construction
+
+Every value is the published formula evaluated at its point, through the checker's `Reader`, with every name the chart holds as a function written out, as Bach and Weyl's $\psi$ and $\gamma$ are in their elliptic integrals, and $c$ set to 1.
+`Published` in the script reads a scalar, a component of the inverse metric or a component of the Riemann tensor that way, and stops on a value that depends on a coordinate or a parameter the figure neither draws nor sets, since the figure would then hold at one value of it alone.
+The parameters are those the spacetime's other drawings take, and each curve and each map gives them as the doubles it was evaluated at.
+A curve is sampled at 4001 points across its axis and kept where it is finite and within a quarter of its panel's height of the box, each stretch carried one sample further each way so that the line drawn runs to the edge it leaves by.
+Each stretch is thinned by Ramer, Douglas and Peucker in the panel's own units, 520 across, so that it strays from the samples by less than $0.05$ of them, and its points are written as the doubles they were computed at.
+A horizon is a change of sign of the published $g^{xx}$ along the drawn coordinate $x$, found by bisection to the last digit, as the null ray diagrams find theirs.
+A map's cells hold its scalar at their centres, written to six significant figures.
+
+The script checks two dozen points of every curve, and forty cells of every map and the cells beside its singularity, against the published formula evaluated again in sixty digits, which must agree to a part in $10^9$.
+Each spacetime's function also checks every figure its captions state: for Bardeen's black hole $K = 24r_s^2/g^6$ and $R = 12r_s/g^3$ at the centre, the zero of $R$ at $r = 2g$, its least value and where it lies, and the two horizons meeting at the extremal charge; for the Bach-Weyl ring its growth as $e^{a/\pi^2l_1}$ from outside the ring and its fall as $e^{-a/\pi^2l_1}$ from inside, measured in eighty digits at $l_1$ from $10^{-6}$ to $10^{-8}\,a$, its growth as $e^{\ln^2(l_1/a)/2\pi^2}$ from directly above, its value on the axis against Semerák's closed form of 2016, and the two points of the axis where $K$, his closed form and every published component of the Riemann tensor vanish.
+It refuses to write while any check fails.
+
+### Checking the figures
+
+`build_mfs_data.py` loads every file with `load_curvature`, and refuses one drawn from a field its metric no longer publishes, naming the command that redraws it, as it refuses the other diagrams.
+It refuses as well a file out of the shape below: a panel or a map outside 1:2 to 2:1, or a stack of panels outside it as a whole; a scale of no known kind, a logarithmic scale reaching zero, a tick outside its axis or a label that is not TeX; a curve that does not run one way across its axis, a value that is not a number or not above zero on a logarithmic scale, and a curve or a map drawn from a chart or a scalar the file's `source` does not stamp; a movie out of order or saying how it loops; and a class drawn that the legend does not name, or named and not drawn.
+It stamps each file into the index as `curvature`, and holds the symbols of every text to "Every symbol is defined" above, as it holds a drawing's.
+`_tools/test_curvature.py` evaluates every value on disk again from the metric file it names, a curve's to a part in $10^{12}$ and a cell's to its six figures, and holds every horizon marked to a change of sign of the published $g^{xx}$ and every change of sign on the drawn range to a mark.
+`_tools/test_build_mfs_data.py` holds every text to the rules for prose, for the captain's voice and for dashes, as it holds the other diagrams', plays every movie through the page's own player, and holds the names of its frames to `MfsTurn.steady()`, and `node _tools/derivations/tex_check.cjs` sets every TeX string of the files.
+`node _tools/page_timing.mjs` draws the figures as a reader sees them, on a desktop, on a phone at three times the usual text and in print, and holds every number and name to the rules of "The reader's text size" above and the figure to having no glow.
+
+### The file, which the application reads
+
+The application downloads the file for a spacetime whose index entry carries `curvature`, the stamp of the whole file, which changes when the file does and not otherwise.
+Every number is a plain JSON number, every text is TeX in `$...$`, inside prose where the text is prose, and nothing in the file needs any relativity to draw.
+
+    {
+      "metric": "bardeen",
+      "source": [{"metric": "bardeen", "system": "static", "fields": [...], "version": "..."}, ...],
+      "views": [view, ...]
+    }
+
+`source` is what `build_mfs_data.py` checks the file against, one entry for every coordinate system the figure read, which may be another spacetime's, as Bardeen's figure reads Schwarzschild's scalars from `schwarzschild.json`; the application can ignore it.
+`views` holds at least one view.
+A view is:
+
+- `id`: unique in the file.
+- `label`: the name of its button, TeX, wanted only when the figure has more than one view to show.
+- `system`, optional: the coordinate system the view belongs to. A view without it belongs to every chart, as every view does today, since a scalar is the same in every chart. Show the views that name the chart being read and then the views that name none, as the conformal diagram does.
+- `kind`: `"line"` or `"map"`.
+- `x`: the horizontal axis, `{"name", "from", "to", "ticks"}`: its name as TeX, as `$r/r_s$`, the values of the drawn coordinate at its two ends in the unit the name gives, and its ticks, each `{"at", "label"}`, at a value with its label as TeX, inside the axis and in order.
+- `panels`, a line view's: one or more, stacked from the top, each `{"id", "name", "aspect", "scale", "ticks"}`: an id unique in the view, the name of its vertical axis as TeX, as `$K\,r_s^4$`, its width over its height, between 1:2 and 2:1, its scale, `{"kind", "from", "to"}` with `"linear"` beside them for a signed scale, as "Scales" above defines them, and its ticks, each at a value of the scalar.
+- `y`, a map's: its vertical axis, as `x` is. A map is drawn at one scale on both axes, so its width over its height is `(x.to - x.from)/(y.to - y.from)`, between 1:2 and 2:1.
+- `colour`, a map's: `{"name", "scale", "ticks"}`, the quantity the colour shows, as `$K\,a^4$`, its scale and the ticks of its colour bar.
+- `map`, a map's: `{"metric", "system", "scalar", "x", "y", "params", "nx", "ny", "cells"}`: the chart and the scalar the values are, `"kretschmann"` or `"ricci_scalar"`; the chart's names of the two drawn coordinates, as `"\\rho"` and `"z"`; the parameters it was evaluated at, by the names the chart spells them with; and `cells`, `ny` rows from the bottom of the box to its top, each of `nx` values from its left to its right, the value of row $j$ and column $i$ being the scalar at $x = x_0 + (i + \tfrac12)(x_1 - x_0)/n_x$ and $y = y_0 + (j + \tfrac12)(y_1 - y_0)/n_y$, the box running from $(x_0, y_0)$ to $(x_1, y_1)$.
+- `curves`, a line view's: the curves drawn in every frame, each `{"panel", "class", "metric", "system", "scalar", "coordinate", "params", "points"}`: the panel it stands on, its class, the chart, scalar and parameters it was evaluated from, the chart's name of the drawn coordinate, and its points `[x, value]`, at least two, `x` strictly increasing inside the axis. A scalar that leaves its panel and comes back is two curves of one class.
+- `marks`: the marks drawn in every frame. On a line view each is `{"class", "x"}`, a vertical line through every panel at that value of the drawn coordinate; on a map each is `{"class", "at"}`, a point `[x, y]`, or `{"class", "points"}`, a polyline of them.
+- `movie`, optional: `{"variable", "seconds", "frames"}`, as an embedding diagram's: the name of what steps, as `$g$`, how long one pass takes, and at least two frames, each `{"label", "value"}` with the frame's own `curves` and `marks`, and on a map its own `map` where its cells change, drawn over what the view draws in every frame. The values strictly increase, and each label is one formula with its number after an `=`, as `$g = 0.333\,r_s$`, for `MfsTurn.steady()`. A movie carries no word for how it repeats and does not turn.
+- `legend`: `[kind, class, text]` for each class drawn, the kind `line` or `point`; every class drawn is named once, and nothing is named that is not drawn.
+- `caption`: a list of paragraphs, the first opening with a compact noun phrase naming what is drawn, its values in parentheses, as every caption on the page does.
+- `settings`: TeX prose giving the parameter values drawn at, printed after "drawn at".
+- `input`, optional: TeX prose naming a declared function or matter, printed after "drawn with".
+- `clip`: TeX prose saying how each axis of values is scaled and where a value is cut, printed after "scale".
+
+The classes drawn today are `K` for a spacetime's own Kretschmann scalar, `R` for its Ricci scalar and `reference` for a comparison, among the curves, and `horizon`, `singular` for a point where the scalar diverges and `zero` for a point where it vanishes, among the marks.
+
+### Drawing the figure
+
+The page lays a curvature figure out as it lays out a spacetime diagram, by the same grid, on the same ground and with the same words, tick marks and frame, so that its words grow with the reader's text around a plot never narrower than at the usual size, and the figure scrolls sideways in its own frame where they need more room than the panel has.
+Each panel's vertical name, its numbers and its plot stand in a row, 1.5 em of the figure's words apart from the next, and the horizontal axis's numbers and name stand under the last; a map's colour bar, its numbers and its name stand below those.
+`cvFigure()` in `_layouts/mfs.html` writes the rows and the areas of the grid on the figure, since their number follows its panels, and `fitPlots()`, `fitAxisNames()` and `fitTicks()` take every panel of a figure and its colour bar.
+Each plot is 520 units wide and 520 over its `aspect` tall, its curves cut at its box, its grid drawn at its ticks, and a panel whose scale runs through zero draws its zero as a faint line.
+
+A spacetime's own $K$ is drawn in the pink of the light rays that move right, `--pink-light`, and its $R$ in the cyan of those that move left, `--mfs-cyan-light`, each 2 wide; a `reference` in dashes of `--text-mid`; a `horizon` in the dashes a spacetime diagram marks $g^{rr} = 0$ with; a `singular` point in `--pink-dark` ringed in black; and a `zero` point as an open white circle, each point a circle of radius 5 units drawn over the frame.
+On paper they take the print copy's inks, as the print stylesheet sets them.
+A map's cells are an image of a pixel each, the bottom row of the file at its bottom, which the browser smooths as it draws it across the plot.
+A cell's colour is its value's place on the scale, from 0 at `from` to 1 at `to` and clamped at both, on a ramp of nine stops, mixed linearly between neighbouring stops in sRGB.
+A scale that runs through zero takes the ramp of two hues, with zero at its middle grey and each side running as far toward its end as the farther end of the scale reaches, and any other scale the ramp of one hue:
+
+| ramp | on the dark ground | on paper |
+| --- | --- | --- |
+| one hue | `#04191e` `#093139` `#104a56` `#186574` `#1f8295` `#279fb6` `#30bed9` `#38dfff` `#d2f6ff` | `#ebf8fc` `#c2e1ea` `#99cad8` `#71b3c5` `#4a9cb0` `#268499` `#046c7f` `#005160` `#003742` |
+| two hues | `#79e6ff` `#20bedb` `#1a8fa5` `#215e6b` `#2e2e2e` `#813b50` `#c65377` `#ff77a0` `#ffc1cf` | `#036071` `#1f889e` `#6bb1c3` `#aed2db` `#f2f2f2` `#eebbc5` `#e3839a` `#cb3e6c` `#9e0148` |
+
+Each ramp was worked out in OKLCH: the one hue at the page's cyan, hue 214, its lightness rising from 0.20 to 0.95 on the dark ground and falling from 0.97 to 0.31 on paper, and the two hues the cyan and the pink of the light rays about a neutral grey, each arm in equal steps of lightness, every stop brought inside sRGB by lowering its chroma alone.
+`CV_RAMPS` in `_layouts/mfs.html` holds them.
+The colour bar runs under the map from `from` to `to` through the same colours, at 65 places along it.
+
+The values under the pointer stand at the top right of each plot, as a spacetime diagram's do: the coordinate to three decimals, a panel's value at the pointer's height to four figures, and on a map the value of the cell under the pointer, each in the room of the longest of its kind.
+A movie's play button stands in the top left corner of the ground, in the size and colours of an embedding diagram's, and the name of the frame shown stands above the plot, every frame's name held in one cell, so that nothing in it moves as the movie plays.
+`wireCurvature()` wires the movie to the page's one movie player, which plays it forward, back and forward again, only while it is on the screen, and holds it at its first frame for a reader who asked for reduced motion.
+Nothing in the figure glows.
+The print copy prints every view, a movie at its first frame, and a map and its bar in paper's colours; it thins the numbers of each axis at the size they print at, as the screen does.
+
+### Which spacetimes
+
+Bardeen's regular black hole has two line views at $r_s = 1$, with $r$ from 0 to $2\,r_s$, the box of its spacetime diagrams: one at $g = r_s/3$, the charge its other drawings take, and a movie of $g$ from 0 to $r_s/2$ in steps of $r_s/60$, 31 frames, through the extremal charge $2r_s/3\sqrt{3}$, where its two horizons meet.
+Each stacks $K$ on a logarithmic axis from $10^{-1}$ to $10^5$ over $R$ on a signed one, linear within $0.01$ of zero, from $-10$ to $10^4$, with Schwarzschild's two scalars of the same mass dashed beside Bardeen's and the horizons marked.
+The Bach-Weyl ring has one map at $m = a/2$, its $K$ over $0 \le \rho \le 3a$, $|z| \le 2a$ of Weyl's chart in 150 cells across and 200 up, each a fiftieth of $a$ on a side, coloured on a logarithmic scale from $10^{-3}$ to $10^3$, with the ring and the two points of the axis where $K$ vanishes marked; the ring is a vacuum, so it has no $R$ to draw.
+The other eight of the first ten on the research list, Bonnor and Vaidya's charged star, Born and Infeld's point charge, Boulware and Deser's black hole, Bowers and Liang's star, the Brans-Dicke sphere, Brill's charged Taub-NUT, the C-metric and the Curzon-Chazy particle, take the same three shapes, each a function in `DRAWN` drawn at the parameters, ranges, clips and marks its entry in the list gives.
 
 ## Checking the physics
 

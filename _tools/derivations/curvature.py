@@ -599,9 +599,10 @@ def bach_weyl_ring(ck, src):
     K is finite at every cell, on the axis and on the disc; approaching the ring, at distances
     l_1 of 10^-2, 10^-3 and 10^-4 in Weyl's coordinates, it grows faster than any power from
     outside, along the plane, as a power from directly above, and falls to zero from inside,
-    along the disc; it vanishes on the axis at z = +-z_0, and every published component of the
-    Riemann tensor vanishes there with it; and the clip stated is where K leaves the colours,
-    on a grid four times as fine as the map's."""
+    along the disc; on the axis it is Semerak's closed form of 2016 and vanishes where his
+    bracket does, at z = +-z_0, and every published component of the Riemann tensor vanishes
+    there with it; and the clip stated is where K leaves the colours, on a grid four times as
+    fine as the map's."""
     m, a = float(BW_MASS), 1.0
     params = {"m": m, "a": a}
     K = nr_published(src, "bach_weyl_ring", "weyl", "kretschmann", ["rho", "z"], ["m", "a"])
@@ -661,6 +662,21 @@ def bach_weyl_ring(ck, src):
     least = float(exact(axis_rho, z0))
     ck("bach_weyl_ring K vanishes on the axis at z_0", least < 1e-20 * on_axis[0], f"z_0 = {z0:.6f}, K = {least:.1e}")
     ck("bach_weyl_ring K is the same at -z_0", float(exact(axis_rho, -z0)) < 1e-20 * on_axis[0])
+    # Semerák's closed form of K on the axis, his equation of section V D (Physical Review D 94,
+    # 104021, 2016), 12m^2((2z^2 - a^2)sqrt(z^2 + a^2) - 2mz^2)^2 / ((z^2 + a^2)^6 e^(4m/sqrt(z^2 + a^2))),
+    # which has one zero on each half of the axis, the root of the bracket.
+    def semerak(z):
+        w = math.sqrt(z * z + a * a)
+        return 12 * m ** 2 * ((2 * z * z - a * a) * w - 2 * m * z * z) ** 2 / (w ** 12 * math.exp(4 * m / w))
+    zs = np.linspace(0, 2, 21)
+    ck("bach_weyl_ring K on the axis is Semerak's closed form",
+       all(abs(v - semerak(z)) <= 1e-12 * max(1.0, semerak(z)) for v, z in zip(on_axis, zs)), f"centre {semerak(0):.6f}")
+    lo, hi = 0.5, 1.5
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        w = math.sqrt(mid * mid + a * a)
+        lo, hi = (mid, hi) if (2 * mid * mid - a * a) * w - 2 * m * mid * mid < 0 else (lo, mid)
+    ck("bach_weyl_ring K vanishes on the axis where Semerak's bracket does", abs(z0 - lo) < 1e-9, f"{lo:.9f}")
     entry = json.loads((build.METRICS_DIR / "bach_weyl_ring.json").read_text(encoding="utf-8"))
     weyl = next(s for s in entry["coordinates"] if s["id"] == "weyl")
     worst = 0.0

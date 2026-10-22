@@ -2862,6 +2862,7 @@
         });
       }
       window._mfsFitAxisNames = fitAxisNames;
+      window._mfsFitTicks = fitTicks;
 
       // Show every n-th number along an edge, the smallest n at which no two of those shown
       // come within a third of a number's height of each other, counted from zero where zero
@@ -3624,7 +3625,7 @@
          the published formulas; the page only draws them. A line view stacks one or more panels
          over one coordinate, each a scalar on an axis of its own, and a map colours the cells of
          a box of two coordinates by a scalar; either may be a movie, stepped through a parameter
-         or a time and played by wireMovie() as an embedding diagram is. Both are laid out as a
+         or a time and played by the movie player an embedding diagram has. Both are laid out as a
          spacetime diagram is, by the same grid, with their numbers and the names of their axes
          around the plot, so their words follow the reader's text size and are held to every
          rule a spacetime diagram's words are; fitPlots(), fitAxisNames() and fitTicks() take
@@ -4934,6 +4935,7 @@
         // otherwise point into is hidden while printing, and it draws every slice, since it
         // prints every view of the embedding diagram.
         window._mfsPrintBody = body.replace(/mfs-nr-(\d+)/g, 'mfs-nrp-$1').replace(/mfs-cd-(\d+)/g, 'mfs-cdp-$1')
+          .replace(/mfs-cv-(\d+)/g, 'mfs-cvp-$1')
           .replace(/ mfs-slice-off/g, '');
         window._mfsPrintName = data.name;
 
@@ -6131,6 +6133,8 @@
         });
         gathered.forEach(function(g) { g.line.style.setProperty('--mfs-fit', g.need.toFixed(3)); });
         window._mfsFitAxisNames([].slice.call(root.querySelectorAll('.mfs-nr-figure')));
+        // The numbers along each edge thinned at the size they print at, as on the screen.
+        window._mfsFitTicks([].slice.call(root.querySelectorAll('.mfs-nr-figure')));
         // The slices' labels at the size they print at, set on the plot as on the screen.
         window._mfsFitSliceLabels(root);
         root.style.cssText = '';

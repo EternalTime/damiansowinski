@@ -10,7 +10,9 @@
                   mathematics inside every history, convention and parameter description;
      diagrams     every label, tick, legend, caption and declared input of the null ray diagrams;
      conformal    every label, legend, caption, restriction, setting and input of the
-                  conformal diagrams.
+                  conformal diagrams;
+     curvature    every label, name of an axis, tick, legend, caption, setting, clip and
+                  frame of the curvature figures.
 
    It needs mathjax-full, which does not belong in the repository and which _tools/setup-env.sh
    installs in .node.noindex, the folder it reads by default:
@@ -46,7 +48,9 @@ const DATA = path.join(ROOT, 'MFS', 'assets', 'data');
 // Mathematics set as it stands, and prose whose mathematics sits between dollar signs.
 const MATH = new Set(['line_element', 'value', 'ricci_scalar', 'kretschmann', 'signature', 'domains', 'geodesics']);
 const PROSE = new Set(['history', 'convention', 'description', 'caption', 'input', 'settings', 'restriction',
-                       'label', 'xlabel', 'ylabel', 'legend', 'text', 'families', 'cone']);
+                       'label', 'xlabel', 'ylabel', 'legend', 'text', 'families', 'cone', 'clip', 'variable']);
+// A curvature figure names each axis under `name`, which a metric file uses for its title.
+const NAMED = new Set(['curvature']);
 
 function segments(text) {
   const out = [];
@@ -64,7 +68,7 @@ function walk(value, where, key, file) {
       const body = value.replace(/^\$|\$$/g, '');
       items.push([file, where, body]);
       if (key === 'value') items.push([file, where + ' negated', '-' + body]);
-    } else if (PROSE.has(key)) {
+    } else if (PROSE.has(key) || (key === 'name' && NAMED.has(file.split('/')[0]))) {
       segments(value.replace(/<[^>]*>/g, '')).forEach(function(s) { items.push([file, where, s]); });
     }
     return;
@@ -78,7 +82,7 @@ function walk(value, where, key, file) {
   }
 }
 
-for (const folder of ['metrics', 'diagrams', 'conformal']) {
+for (const folder of ['metrics', 'diagrams', 'conformal', 'curvature']) {
   const dir = path.join(DATA, folder);
   if (!fs.existsSync(dir)) continue;
   for (const name of fs.readdirSync(dir).sort()) {
