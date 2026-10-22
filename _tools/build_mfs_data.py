@@ -495,18 +495,33 @@ def check_axis(at, axis):
     check_ticks(at, axis.get("ticks"), axis["from"], axis["to"])
 
 
+FREE_FUNCTION = re.compile(r"^\s*\\?(\w+)\s*=\s*\\?\1\s*\(")
+
+
+def free_functions(system):
+    """The functions a chart leaves free, each a parameter written as `m = m(v)`, by its plain name."""
+    return {m.group(1) for p in system.get("parameters") or [] for m in [FREE_FUNCTION.match(p.get("symbol", ""))] if m}
+
+
 def check_drawn_from(at, item, read):
     """A curve or a map names the chart and the scalar its values are, which the file's source
-    stamps, so that every value can be evaluated again from the metric file."""
-    fields = read.get((item.get("metric"), item.get("system")))
-    if fields is None:
+    stamps, so that every value can be evaluated again from the metric file, and declares each
+    function the chart leaves free as a closed form, so that it can be evaluated at all."""
+    stamped = read.get((item.get("metric"), item.get("system")))
+    if stamped is None:
         raise DataError(f"{at} was drawn from {item.get('metric')}/{item.get('system')}, which the file's source "
                         "does not stamp")
-    if item.get("scalar") not in CURVATURE_SCALARS or item["scalar"] not in fields:
+    if item.get("scalar") not in CURVATURE_SCALARS or item["scalar"] not in stamped["fields"]:
         raise DataError(f"{at} draws {item.get('scalar')!r}, which is no published curvature scalar the source stamps")
     params = item.get("params")
     if not (isinstance(params, dict) and all(finite(v) for v in params.values())):
         raise DataError(f"{at} does not give each parameter it was drawn at as a number")
+    functions = item.get("functions", {})
+    if not (isinstance(functions, dict) and all(isinstance(v, str) and v.strip() for v in functions.values())):
+        raise DataError(f"{at} declares a function that is not written as a closed form")
+    if set(functions) != stamped["free"]:
+        raise DataError(f"{at} declares the functions {sorted(functions)}, where its chart leaves "
+                        f"{sorted(stamped['free'])} free")
 
 
 def check_line(where, view, read, x):
@@ -655,7 +670,8 @@ def load_curvature(metrics):
                     f"{where} was drawn from components of the {source['system']} system that "
                     f"{source['metric']}.json no longer publishes; redraw it with "
                     f"_tools/derivations/curvature.py --metric {path.stem}")
-            read[(source["metric"], source["system"])] = set(source["fields"])
+            read[(source["metric"], source["system"])] = {"fields": set(source["fields"]),
+                                                          "free": free_functions(systems[source["system"]])}
         views = data.get("views") or []
         if not views:
             raise DataError(f"{where} draws nothing")

@@ -5,7 +5,8 @@
 
 Every value a curvature figure carries is evaluated again here from the metric file it names,
 the published `kretschmann` or `ricci_scalar` read through the checker's Reader at the point,
-the other coordinates a curve holds fixed and the parameters the file gives, and held to the
+the other coordinates a curve holds fixed and the parameters the file gives, with each function
+the chart leaves free put in as the closed form the file declares for it, and held to the
 number written: a curve's value to the last few digits of a double, a map's cell to the six
 significant figures it is written to. Every horizon marked on a line view is a change of sign of
 the published g^xx along the drawn coordinate, and every change of sign on the drawn range is
@@ -45,8 +46,10 @@ class Evaluator:
         self.nr = null_rays
         self.made = {}
 
-    def __call__(self, metric_id, system_id, field, coords, params, indices=None):
-        key = (metric_id, system_id, field, tuple(coords), tuple(params), tuple(indices or ()))
+    def __call__(self, metric_id, system_id, field, coords, params, indices=None, functions=None):
+        functions = functions or {}
+        key = (metric_id, system_id, field, tuple(coords), tuple(params), tuple(indices or ()),
+               tuple(sorted(functions.items())))
         if key not in self.made:
             _, entry, reader = self.nr.load(metric_id, system_id)
             if field == "inverse_metric_components":
@@ -56,10 +59,18 @@ class Evaluator:
                 expr = reader(self.nr.strip_lhs(entry[field]))
             if reader.held:
                 expr = expr.subs(reader.held).doit()
+            names = {reader._plain(n): s for n, s in reader.symbol.items()}
+            names.update(reader.parameters)
+            for name, text in functions.items():
+                rep = sp.sympify(text, locals={**self.nr.DECLARED_FUNCTIONS, **names})
+                expr = expr.subs(reader.parameters[name], rep).doit()
             expr = expr.subs(reader.c, 1)
             by_plain = {reader._plain(name): symbol for name, symbol in reader.symbol.items()}
             symbols = [by_plain[reader._plain(c)] for c in coords] + [reader.parameters[reader._plain(p)] for p in params]
             stray = expr.free_symbols - set(symbols)
+            free = {f for f in reader.parameters.values() if isinstance(f, sp.Function)} & expr.atoms(sp.Function)
+            if free:
+                raise AssertionError(f"{metric_id}/{system_id} {field} holds {free}, which the figure does not declare")
             if stray:
                 raise AssertionError(f"{metric_id}/{system_id} {field} depends on {stray}, which the figure does not set")
             fn = sp.lambdify(symbols, sp.powsimp(expr, combine="exp"), self.nr.numeric_modules(expr))
@@ -114,7 +125,8 @@ class CurvatureValues(unittest.TestCase):
                         where = f"curvature/{name}.json {view['id']}{place} curve {k}"
                         params, fixed = list(curve["params"]), curve.get("fixed", {})
                         fn = self.evaluate(curve["metric"], curve["system"], curve["scalar"],
-                                           [curve["coordinate"]] + list(fixed), params)
+                                           [curve["coordinate"]] + list(fixed), params,
+                                           functions=curve.get("functions"))
                         points = np.array(curve["points"], dtype=float)
                         expected = fn(points[:, 0], *fixed.values(), *[curve["params"][p] for p in params])
                         with self.subTest(where):
@@ -135,7 +147,8 @@ class CurvatureValues(unittest.TestCase):
                         continue
                     where = f"curvature/{name}.json {view['id']}{place}"
                     params = list(grid["params"])
-                    fn = self.evaluate(grid["metric"], grid["system"], grid["scalar"], [grid["x"], grid["y"]], params)
+                    fn = self.evaluate(grid["metric"], grid["system"], grid["scalar"], [grid["x"], grid["y"]], params,
+                                       functions=grid.get("functions"))
                     nx, ny = grid["nx"], grid["ny"]
                     xs = x["from"] + (np.arange(nx) + 0.5) * (x["to"] - x["from"]) / nx
                     ys = y["from"] + (np.arange(ny) + 0.5) * (y["to"] - y["from"]) / ny
@@ -164,16 +177,17 @@ class CurvatureValues(unittest.TestCase):
                     for curve in picture["curves"]:
                         if curve["class"] != "reference":
                             key = (curve["metric"], curve["system"], curve["coordinate"],
-                                   tuple(curve.get("fixed", {}).items()), tuple(sorted(curve["params"].items())))
+                                   tuple(curve.get("fixed", {}).items()), tuple(sorted(curve["params"].items())),
+                                   tuple(sorted((curve.get("functions") or {}).items())))
                             charts.setdefault(key, []).append(curve)
                     if not charts:
                         continue
                     where = f"curvature/{name}.json {view['id']}{place}"
                     changes = []
-                    for (metric, system, coordinate, fixed, params), curves in charts.items():
+                    for (metric, system, coordinate, fixed, params, functions), curves in charts.items():
                         fn = self.evaluate(metric, system, "inverse_metric_components",
                                            [coordinate] + [c for c, _ in fixed], [p for p, _ in params],
-                                           (coordinate, coordinate))
+                                           (coordinate, coordinate), dict(functions))
                         values = [v for _, v in fixed] + [v for _, v in params]
                         # A chart alone holds across the whole axis; a chart joined to another at a
                         # surface holds where its own curves are drawn.
@@ -269,6 +283,16 @@ class CurvatureShape(unittest.TestCase):
         def unnamed(data):
             data["views"][0]["legend"] = data["views"][0]["legend"][1:]
         self.assertIn("legend", self.broken(unnamed))
+
+    def test_a_free_function_left_undeclared_is_refused(self):
+        files = curvature_files()
+        self.assertIn("bonnor_vaidya", files, "no figure declares a function, so none was checked")
+        for change in (lambda grid: grid.pop("functions"), lambda grid: grid["functions"].pop("q"),
+                       lambda grid: grid["functions"].update(q="")):
+            def undeclared(data, change=change):
+                change(data["views"][0]["map"])
+            with self.subTest(change):
+                self.assertIn("function", self.broken(undeclared, "bonnor_vaidya"))
 
     def test_a_movie_that_says_how_it_loops_is_refused(self):
         def looped(data):

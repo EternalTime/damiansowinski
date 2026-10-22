@@ -150,12 +150,15 @@ class Published:
     parameters, in the order named.
 
     The value is read through the checker's Reader, every name the reader holds as a function
-    written out, and c set to 1. A coordinate or a parameter the value depends on and the figure
-    does not name stops the script, since the figure would then hold only at one value of it."""
+    written out, every function the chart leaves free that `functions` declares put in as its
+    closed form, written as null_rays.py's rows write theirs, and c set to 1. A coordinate or a
+    parameter the value depends on and the figure does not name stops the script, since the
+    figure would then hold only at one value of it, and so does a free function left undeclared."""
 
-    def __init__(self, sources, metric_id, system_id, field, coords, params, indices=None):
+    def __init__(self, sources, metric_id, system_id, field, coords, params, indices=None, functions=None):
         _, entry, reader = nr.load(metric_id, system_id)
         self.metric, self.system, self.field = metric_id, system_id, field
+        self.functions = dict(functions or {})
         if field in ("metric_components", "inverse_metric_components", "riemann", "einstein_tensor"):
             variant = {"riemann": "ulll", "einstein_tensor": "ul"}.get(field)
             listed = entry[field]["variants"][variant]["nonzero"] if variant else entry[field]
@@ -166,10 +169,15 @@ class Published:
         sources.note(metric_id, system_id, ["coords", "parameters", field])
         if reader.held:
             expr = expr.subs(reader.held).doit()
+        expr = declared(reader, expr, self.functions)
         expr = expr.subs(reader.c, 1)
         by_plain = {reader._plain(name): symbol for name, symbol in reader.symbol.items()}
         self.coords = [by_plain[name] for name in coords]
         self.params = [reader.parameters[name] for name in params]
+        free = expr.atoms(sp.Function) & {f for f in reader.parameters.values() if isinstance(f, sp.Function)}
+        if free:
+            raise SystemExit(f"{metric_id}/{system_id}: the published {field} holds the free functions "
+                             f"{sorted(map(str, free))}, which the figure does not declare")
         stray = expr.free_symbols - set(self.coords) - set(self.params)
         if stray:
             raise SystemExit(f"{metric_id}/{system_id}: the published {field} depends on "
@@ -202,12 +210,27 @@ class Held:
     def __init__(self, published, fixed):
         self.published, self.fixed = published, {name: float(v) for name, v in fixed.items()}
         self.metric, self.system, self.field = published.metric, published.system, published.field
+        self.functions = published.functions
 
     def __call__(self, x, *params):
         return self.published(x, *self.fixed.values(), *params)
 
     def exact(self, values, digits=60):
         return self.published.exact([values[0], *self.fixed.values(), *values[1:]], digits)
+
+
+def declared(reader, expr, functions):
+    """A published expression with each free function of its chart that `functions` names put in
+    as the closed form written there, a sympy expression in the chart's coordinates and parameters,
+    as conformal.py's planes put in theirs."""
+    names = {reader._plain(n): s for n, s in reader.symbol.items()}
+    names.update(reader.parameters)
+    for name, text in functions.items():
+        if name not in reader.parameters or not isinstance(reader.parameters[name], sp.Function):
+            raise SystemExit(f"{name!r} is no function the chart leaves free")
+        rep = sp.sympify(text, locals={**nr.DECLARED_FUNCTIONS, **names})
+        expr = expr.subs(reader.parameters[name], rep).doit()
+    return expr
 
 
 def agrees(ck, name, published, points, values):
@@ -420,7 +443,10 @@ def curve_entry(panel, cls, published, coordinate, params, points):
              "scalar": published.field, "coordinate": coordinate}
     if isinstance(published, Held):
         entry["fixed"] = dict(published.fixed)
-    entry.update({"params": {name: float(value) for name, value in params.items()}, "points": points})
+    entry["params"] = {name: float(value) for name, value in params.items()}
+    if published.functions:
+        entry["functions"] = dict(published.functions)
+    entry["points"] = points
     return entry
 
 
@@ -612,9 +638,10 @@ def bardeen(ck, src):
     return [still, movie_view]
 
 
-def nr_published(src, metric_id, system_id, field, coords, params, indices=None):
+def nr_published(src, metric_id, system_id, field, coords, params, indices=None, functions=None):
     """A published value read as Published reads it, its parameters named as the chart spells them."""
-    return Published(src, metric_id, system_id, field, coords, [p.replace("\\", "") for p in params], indices)
+    return Published(src, metric_id, system_id, field, coords, [p.replace("\\", "") for p in params], indices,
+                     functions)
 
 
 # ---------------------------------------------------------------- Bach and Weyl's ring
@@ -776,6 +803,189 @@ def bach_weyl_ring(ck, src):
                  f"and falls below $10^{{-3}}/a^4$ within ${d_low:.2f}\\,a$ of the two points where it vanishes."),
     }
     return [view]
+
+
+# ---------------------------------------------------------------- Bonnor and Vaidya's radiating star
+
+BV_BOX = ((0, 3), (-1, 3))        # r/M and u/M: the star's trapped spheres, and the stretch over which it radiates
+BV_CELLS = (150, 200)             # the cells of the map across and up, each a fiftieth of M on a side
+BV_RANGE = (1e-3, 1e5)            # the colours of K M^4 run from the first to the second
+# The star as it radiates, at M = 1: its mass falls from M to M/2 and its charge from 24M/25 to
+# 27M/50 by one tanh of width l = M/2 about u = M, where both are 3M/4.
+BV_FUNCTIONS = {"m": "(3 - tanh(2*(u - 1)))/4",
+                "q": "Rational(3, 4) - Rational(21, 100)*tanh(2*(u - 1))"}
+
+
+def bonnor_vaidya(ck, src):
+    """Bonnor and Vaidya's radiating star, its Kretschmann scalar over the plane of the outgoing
+    chart's u and r, as the star sends out charged null dust and its mass and charge fall.
+
+    The outgoing chart publishes K in r and the free functions m(u) and q(u) of the retarded time,
+    the chart of a star that radiates, which the figure declares as one smooth stretch of radiation:
+    m = M(3 - tanh x)/4 and q = (3/4 - (21/100) tanh x)M with x = (u - M)/l and l = M/2,
+    so that the mass falls from M to M/2 and the charge from 0.96 M to 0.54 M, the mass faster, and
+    the two are equal, 3M/4, at u = M. The published Ricci scalar vanishes, so the figure is K
+    alone: a map over 0 <= r <= 3M and -M <= u <= 3M, at M = 1, in 150 cells across and 200 up,
+    each a fiftieth of M on a side, coloured on a logarithmic scale from 10^-3 to 10^5 in units of
+    1/M^4, with the marginally anti-trapped spheres, the zeros of the published g^rr, marked as the one
+    curve they make, the inner and the outer meeting at u = M.
+
+    What the caption states is checked here: the published Ricci scalar vanishes; K at every cell
+    is the closed form 8(6m^2r^2 - 12mq^2r + 7q^4)/r^8 at that u's m and q, and grows toward r = 0
+    as 56q^4/r^8; K falls as u grows at every r drawn; the declared m and q start at M and 0.96 M,
+    end at M/2 and 0.54 M and are equal at u = M alone, with q < m before it and q > m after; the
+    anti-trapped spheres are r = m +- sqrt(m^2 - q^2), start at 1.28 M and 0.72 M, meet at 3M/4 at
+    u = M, and every sphere between them has g^rr < 0, so that every future light cone there
+    points to larger r; after u = M g^rr is positive at every r drawn; and the clip stated is where
+    K leaves the colours, on a grid four times as fine."""
+    M = 1.0
+    OUT = "eddington_finkelstein_outgoing"
+    (r0, r1), (u0, u1) = BV_BOX
+    x_axis, y_axis = axis("$r/M$", r0, r1), axis("$u/M$", u0, u1)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "bonnor_vaidya", [aspect])
+    scale = {"kind": "log", "from": BV_RANGE[0], "to": BV_RANGE[1]}
+
+    def read(field, indices=None):
+        return nr_published(src, "bonnor_vaidya", OUT, field, ["r", "u"], [], indices, BV_FUNCTIONS)
+
+    ricci = read("ricci_scalar")
+    ck("bonnor_vaidya the published Ricci scalar vanishes", ricci.expr == 0, f"{ricci.expr}")
+    K, grr = read("kretschmann"), read("inverse_metric_components", ("r", "r"))
+
+    def mass(u):
+        return (3 - np.tanh(2 * (np.asarray(u, dtype=float) - 1))) / 4
+
+    def charge(u):
+        return 0.75 - 0.21 * np.tanh(2 * (np.asarray(u, dtype=float) - 1))
+
+    def closed(r, u):
+        m, q = mass(u), charge(u)
+        return 8 * (6 * m ** 2 * r ** 2 - 12 * m * q ** 2 * r + 7 * q ** 4) / r ** 8
+
+    # The declared profile.
+    us = np.linspace(u0, u1, SAMPLES)
+    ck("bonnor_vaidya the mass falls from M to M/2 and the charge from 0.96 M to 0.54 M",
+       np.all(np.diff(mass(us)) < 0) and np.all(np.diff(charge(us)) < 0)
+       and abs(mass(-1e3) - 1) < 1e-15 and abs(mass(1e3) - 0.5) < 1e-15
+       and abs(charge(-1e3) - 0.96) < 1e-15 and abs(charge(1e3) - 0.54) < 1e-15,
+       f"m from {mass(u0):.4f} to {mass(u1):.4f}, q from {charge(u0):.4f} to {charge(u1):.4f} across the box")
+    ck("bonnor_vaidya the mass and the charge are equal, 3M/4, at u = M alone, q < m before and q > m after",
+       mass(1.0) == 0.75 and charge(1.0) == 0.75 and np.all((charge(us) < mass(us)) == (us < 1)))
+
+    xs, ys, values = cells(K, x_axis, y_axis, *BV_CELLS, [])
+    X, Y = np.meshgrid(xs, ys)
+    ck("bonnor_vaidya K is finite and positive at every cell", np.all(np.isfinite(values)) and np.all(values > 0),
+       f"from {np.min(values):.3e} to {np.max(values):.3e}")
+    ck("bonnor_vaidya K at every cell is 8(6m^2r^2 - 12mq^2r + 7q^4)/r^8 at that u's m and q",
+       np.allclose(values, closed(X, Y), rtol=1e-12, atol=0))
+    rng = np.random.default_rng(1970)
+    nx, ny = BV_CELLS
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+                   | {(i, j) for i in (0, 1) for j in (ny // 2 - 1, ny // 2)})
+    agrees(ck, "bonnor_vaidya map", K, [[xs[i], ys[j]] for i, j in picks], [values[j, i] for i, j in picks])
+    centre = [float(K.exact([R, U]) * R ** 8) / (56 * float(charge(U)) ** 4) for R in (1e-6, 1e-8) for U in (-1.0, 1.0, 3.0)]
+    ck("bonnor_vaidya K grows toward r = 0 as 56q^4/r^8", all(abs(c - 1) < 1e-5 for c in centre), f"{centre[:3]}")
+    fine_r = np.linspace(1e-2, r1, 600)
+    FU, FR = np.meshgrid(us[::4], fine_r)
+    ck("bonnor_vaidya K falls as u grows at every r drawn", np.all(np.diff(K(FR, FU), axis=1) < 0))
+
+    # The marginally anti-trapped spheres: the zeros of the published g^rr at each u, from the inner
+    # to the outer, closing at u = M, where the two meet at r = 3M/4.
+    meet = 1.0
+    ts = np.linspace(0, 1, 400)[:-1]
+    track = u0 + (meet - u0) * (1 - (1 - ts) ** 2)
+    inner, outer = [], []
+    for u in track:
+        z = sorted(_g_zeros(grr, u, r1))
+        if len(z) != 2:
+            ck(f"bonnor_vaidya two anti-trapped spheres at u = {u:.4f}", False, f"{z}")
+            break
+        inner.append([z[0], float(u)])
+        outer.append([z[1], float(u)])
+    m_t, q_t = mass(track), charge(track)
+    ck("bonnor_vaidya the anti-trapped spheres are r = m +- sqrt(m^2 - q^2)",
+       np.allclose([p[0] for p in inner], m_t - np.sqrt(m_t ** 2 - q_t ** 2), rtol=0, atol=1e-10)
+       and np.allclose([p[0] for p in outer], m_t + np.sqrt(m_t ** 2 - q_t ** 2), rtol=0, atol=1e-10))
+    start = (outer[0][0], inner[0][0])
+    ck("bonnor_vaidya the anti-trapped spheres start at 1.28 M and 0.72 M", abs(start[0] - 1.28) < 5e-4 and abs(start[1] - 0.72) < 5e-4,
+       f"{start[0]:.6f}, {start[1]:.6f} at u = -M")
+    at_meet = float(grr(0.75, meet))
+    slope = float((grr(0.75 + 1e-6, meet) - grr(0.75 - 1e-6, meet)) / 2e-6)
+    ck("bonnor_vaidya the two meet at r = 3M/4 at u = M, a double zero of g^rr", abs(at_meet) < 1e-14 and abs(slope) < 1e-8,
+       f"g^rr = {at_meet:.1e}, its slope {slope:.1e}")
+    between = [float(grr(0.5 * (a[0] + b[0]), a[1])) for a, b in zip(inner, outer)]
+    ck("bonnor_vaidya every sphere between the two has g^rr < 0, its future cone pointing to larger r",
+       all(g < 0 for g in between), f"{max(between):.3e}")
+    later = grr(FR[:, FU[0] > meet + 1e-6], FU[:, FU[0] > meet + 1e-6])
+    ck("bonnor_vaidya after u = M g^rr is positive at every r drawn", np.all(later > 0), f"{np.min(later):.3e}")
+    curve = inner + [[0.75, meet]] + outer[::-1]
+    ck("bonnor_vaidya the anti-trapped spheres lie inside the box", all(r0 <= x <= r1 and u0 <= y <= u1 for x, y in curve))
+
+    # The clip, on a grid four times as fine as the map's.
+    fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [])
+    FX = np.meshgrid(fx, fy)[0]
+    d_high = float(FX[~(fine <= BV_RANGE[1])].max())
+    lo, hi = 1e-3, 2.0
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if closed(mid, u0) > BV_RANGE[1] else (lo, mid)
+    cut = lo
+    ck("bonnor_vaidya K passes the top of its colours only inside the radius stated, reached at u = -M",
+       abs(d_high - cut) < 2 * (r1 - r0) / (4 * nx), f"{cut:.6f} against {d_high:.6f}")
+    least = float(closed(r1, u1))
+    ck("bonnor_vaidya K is least at r = 3M, u = 3M, inside the colours", least <= float(np.min(fine)) and least > BV_RANGE[0],
+       f"{least:.4e}")
+    view = {
+        "id": "radiating", "label": "the plane of $u$ and $r$", "system": OUT, "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,M^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "bonnor_vaidya", "system": OUT, "scalar": "kretschmann", "x": "r", "y": "u", "params": {},
+                "functions": dict(BV_FUNCTIONS), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [{"class": "horizon", "points": curve}],
+        "legend": [["line", "horizon", "a marginally anti-trapped sphere, $r^2 - 2mr + q^2 = 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of Bonnor and Vaidya's radiating star over the plane of $u$ and $r$ ($m$ from $M$ "
+            "to $M/2$, $q$ from $0.96\\,M$ to $0.54\\,M$), the same at every $\\theta$ and $\\phi$. The star sends out "
+            "charged null dust over a stretch of retarded time about $u = M$, and its mass and charge fall together, the "
+            "mass faster, so that at each $u$ the curvature is $K = 8(6m^2r^2 - 12mq^2r + 7q^4)/r^8$ with that moment's "
+            "$m$ and $q$. At every $r$ it falls as the star radiates, and toward $r = 0$ it grows without bound, as "
+            "$56q^4/r^8$.",
+            f"The marginally anti-trapped spheres, $r = m \\pm \\sqrt{{m^2 - q^2}}$, start at $r = {start[0]:.2f}\\,M$ and "
+            f"$r = {start[1]:.2f}\\,M$, close in on each other as the star radiates, and meet at $r = 0.75\\,M$ at "
+            "$u = M$, where $m = q = 0.75\\,M$. Between them every future light cone points to larger $r$, as in a white "
+            "hole. After $u = M$ the charge exceeds the mass, and no sphere is anti-trapped. The Ricci scalar vanishes "
+            "throughout, since the stress tensors of the null dust and of the electric field are both traceless.",
+        ],
+        "settings": "$M = 1$, the unit of every length, and $\\ell = M/2$.",
+        "input": ("$m = M(3 - \\tanh x)/4$ and $q = (0.75 - 0.21\\tanh x)\\,M$, with $x = (u - M)/\\ell$: a star whose "
+                  "mass falls from $M$ to $M/2$ and whose charge falls from $0.96\\,M$ to $0.54\\,M$ as it radiates, the "
+                  "two equal at $u = M$."),
+        "clip": ("We colour $K\\,M^4$ on a logarithmic scale from $10^{-3}$ to $10^{5}$ and give a value beyond it the "
+                 f"colour of the end it passes: $K$ passes $10^{{5}}/M^4$ inside $r = {cut:.3f}\\,M$ and is least, "
+                 f"${tex_number(least)}/M^4$, at $r = 3M$, $u = 3M$."),
+    }
+    return [view]
+
+
+def _g_zeros(grr, u, r1, n=SAMPLES):
+    """The zeros of the published g^rr along r at one u, each a change of sign between two samples
+    found by bisection to the last digit."""
+    rs = np.linspace(1e-9, r1, n)
+    g = grr(rs, u)
+    out = []
+    for i in range(n - 1):
+        a, b, fa, fb = rs[i], rs[i + 1], g[i], g[i + 1]
+        if not (np.isfinite(fa) and np.isfinite(fb)) or fa == 0 or np.sign(fa) == np.sign(fb):
+            continue
+        for _ in range(200):
+            m = 0.5 * (a + b)
+            fm = float(grr(m, u))
+            if m in (a, b) or fm == 0:
+                break
+            a, b, fa = (m, b, fm) if np.sign(fm) == np.sign(fa) else (a, m, fa)
+        out.append(float(0.5 * (a + b)))
+    return out
 
 
 # ---------------------------------------------------------------- Boulware and Deser's black hole
@@ -2390,6 +2600,7 @@ def curzon_chazy(ck, src):
 DRAWN = {
     "bach_weyl_ring": bach_weyl_ring,
     "bardeen": bardeen,
+    "bonnor_vaidya": bonnor_vaidya,
     "born_infeld_charge": born_infeld_charge,
     "boulware_deser": boulware_deser,
     "bowers_liang": bowers_liang,

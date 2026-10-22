@@ -734,7 +734,8 @@
     "version": "447ac2bdd73e00f7",
     "diagrams": "2122349c176f47ed",
     "conformal": "f82fe13ee8206113",
-    "embedding": "c306446463337712"
+    "embedding": "c306446463337712",
+    "curvature": "28f92f5e309235e6"
   },
   {
     "id": "born_infeld_charge",
