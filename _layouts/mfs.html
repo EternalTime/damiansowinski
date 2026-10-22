@@ -4643,9 +4643,11 @@
          buttons, domains, conventions, tensors and diagrams all read that one choice, and
          choosing a chart draws them all again at once. */
       // A sentence of prose with each [key] turned into the number of that reference in the
-      // spacetime's list, linked to it. A key the list does not hold is dropped.
+      // spacetime's list, linked to it. A key the list does not hold is dropped. Mathematics is
+      // passed over whole, since the 3 of $\sqrt[3]{x}$ is an index and no citation.
       function citedProse(text, refs) {
-        return nrProse(text).replace(/\s*\[([^\]]+)\]/g, function(_, inner) {
+        return nrProse(text).replace(/(\$\$[\s\S]+?\$\$|\$[^$]+\$)|\s*\[([^\]]+)\]/g, function(_, math, inner) {
+          if (math) return math;
           var keys = inner.split(',').map(function(k) { return k.trim(); });
           return keys.map(function(key) {
             var idx = refs.indexOf(key);
