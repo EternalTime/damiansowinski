@@ -1571,7 +1571,7 @@ The print copy prints the page as it was first drawn, with the chart's own confo
 
 `MFS/assets/data/curvature/<metric_id>.json` holds the curvature figure of one spacetime: its Kretschmann scalar $K$, and its Ricci scalar $R$ where that does not vanish, plotted from the formulas the spacetime's metric file publishes, as the captain asked on 22 October 2026.
 The page draws it under the heading "curvature", after the embedding diagram, and the application reads the same files.
-It is the one figure a spacetime need not have: a spacetime has one where its curvature carries physics its formula does not show at a glance, as the research list of October 2026 sets out spacetime by spacetime, and a spacetime without one has no file and the page no section.
+A spacetime has one where its curvature carries physics its formula does not show at a glance, as the research list of October 2026 sets out spacetime by spacetime; a spacetime without one has no file and the page no section, and no table has to name it, as `NOT_DRAWN` names the spacetimes without a conformal diagram.
 Bardeen's regular black hole and the Bach-Weyl ring have one.
 
 `_tools/derivations/curvature.py` draws them, one function per spacetime, with what it draws and what it checks in its docstring.

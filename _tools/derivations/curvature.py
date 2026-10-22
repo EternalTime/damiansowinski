@@ -143,8 +143,8 @@ class Checks:
 # ---------------------------------------------------------------- reading a published function
 
 class Published:
-    """A published value of one chart, a curvature scalar, a component of the inverse metric or
-    one of the Riemann tensor with its first index raised, as a numpy function of the
+    """A published value of one chart, a curvature scalar, a component of the metric or of its
+    inverse, or one of the Riemann tensor with its first index raised, as a numpy function of the
     coordinates drawn and then the parameters, in the order named.
 
     The value is read through the checker's Reader, every name the reader holds as a function
@@ -154,8 +154,8 @@ class Published:
     def __init__(self, sources, metric_id, system_id, field, coords, params, indices=None):
         _, entry, reader = nr.load(metric_id, system_id)
         self.metric, self.system, self.field = metric_id, system_id, field
-        if field in ("inverse_metric_components", "riemann"):
-            listed = entry[field] if field == "inverse_metric_components" else entry[field]["variants"]["ulll"]["nonzero"]
+        if field in ("metric_components", "inverse_metric_components", "riemann"):
+            listed = entry[field] if field != "riemann" else entry[field]["variants"]["ulll"]["nonzero"]
             value = next(c["value"] for c in listed if c["indices"] == list(indices))
             expr = reader(value)
         else:
@@ -473,6 +473,9 @@ def bardeen(ck, src):
     r_least, R_least = float(fine[least]), float(R(fine[least], 1, g))
     ck("bardeen R is least just outside r_+", r_plus < r_least < 1, f"r = {r_least:.4f}, R = {R_least:.4f}")
     ck("bardeen R is least for all r drawn there", R_least <= float(np.min(R(rs, 1, g))) + 1e-12)
+    far = 1e3
+    ck("bardeen K approaches Schwarzschild's far out", abs(float(K.exact([far, 1, g])) * far ** 6 / 12 - 1) < 1e-5)
+    ck("bardeen R falls off as -3 r_s g^2/r^5 far out", abs(float(R.exact([far, 1, g])) * far ** 5 / (-3 * g ** 2) - 1) < 1e-5)
     still_refs = references()
     above_K, _ = beyond(K_s, x_axis, K_scale, [1])
     ck("Schwarzschild's K leaves the top of its panel once, at the centre",
@@ -493,9 +496,9 @@ def bardeen(ck, src):
         "caption": [
             "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Bardeen's black hole against $r$ "
             "($g = r_s/3$), the same at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's of the same mass. "
-            "Toward the centre Schwarzschild's $K = 12r_s^2/r^6$ grows without bound, and Bardeen's levels off "
-            f"inside $r_-$ and reaches $24r_s^2/g^6 = {centre_K:.0f}/r_s^4$ at $r = 0$, the curvature of de Sitter "
-            f"space of radius $\\sqrt{{g^3/r_s}} = {math.sqrt(g ** 3):.3f}\\,r_s$.",
+            "Toward the centre Schwarzschild's $K = 12r_s^2/r^6$ grows without bound, and Bardeen's rises to a "
+            f"finite $24r_s^2/g^6 = {centre_K:.0f}/r_s^4$ at $r = 0$, the curvature of de Sitter space of radius "
+            f"$\\sqrt{{g^3/r_s}} = {math.sqrt(g ** 3):.3f}\\,r_s$.",
             f"At the centre $R = 12r_s/g^3 = {centre_R:.0f}/r_s^2$. It changes sign at $r = 2g$, between the two "
             f"horizons, and is least, ${R_least:.3f}/r_s^2$, at $r = {r_least:.3f}\\,r_s$, just outside $r_+$. Far "
             "out $K$ approaches Schwarzschild's and $R$ falls off as $-3r_sg^2/r^5$.",
@@ -515,6 +518,8 @@ def bardeen(ck, src):
                        "curves": curves, "marks": marks})
         horizons.append(len(marks))
     extremal = 2 / (3 * math.sqrt(3))
+    gaps = [f["marks"][1]["x"] - f["marks"][0]["x"] for f in frames if len(f["marks"]) == 2]
+    ck("bardeen's two horizons approach each other as g grows", all(b < a for a, b in zip(gaps, gaps[1:])))
     ck("bardeen has two horizons below the extremal charge and none above it",
        all(n == (2 if 0 < v["value"] < extremal else 1 if v["value"] == 0 else 0)
            for n, v in zip(horizons, frames)), f"{horizons}")
@@ -551,7 +556,7 @@ def bardeen(ck, src):
        abs(K_top - (24e-5) ** (1 / 6)) < 1e-3, f"{K_top:.4f}")
     movie_clip = ("The scales are those of $g = r_s/3$, and we cut each curve where it leaves its panel: "
                   f"Bardeen's $K$ passes the top for $g < {K_top:.3f}\\,r_s$ and its $R$ for "
-                  f"$g < {R_top:.3f}\\,r_s$, and $R$ passes the bottom for $g < {R_bottom:.3f}\\,r_s$.")
+                  f"$0 < g < {R_top:.3f}\\,r_s$, and $R$ passes the bottom for $0 < g < {R_bottom:.3f}\\,r_s$.")
     movie_view = {
         "id": "growing", "label": f"$0 \\le g \\le r_s/{int(1 / BARDEEN_LAST)}$", "kind": "line", "x": x_axis,
         "panels": panels, "curves": references(), "marks": [], "legend": legend,
@@ -686,6 +691,14 @@ def bach_weyl_ring(ck, src):
         worst = max(worst, abs(float(riemann.exact([axis_rho, z0, m, a]))))
     ck("bach_weyl_ring every published Riemann component vanishes at z_0 on the axis", worst < 1e-9, f"{worst:.1e}")
 
+    # The circumference of the circle about the axis through a point, 2 pi sqrt(g_phiphi), grows
+    # without bound toward the ring along every direction drawn.
+    gpp = nr_published(src, "bach_weyl_ring", "weyl", "metric_components", ["rho", "z"], ["m", "a"], ("\\phi", "\\phi"))
+    growth = [[math.sqrt(float(gpp.exact([a + l * math.cos(angle), l * math.sin(angle), m, a]))) for l in (1e-2, 1e-4, 1e-6)]
+              for angle in (0.0, math.pi / 2, math.pi)]
+    ck("bach_weyl_ring the circles about the axis grow without bound toward the ring",
+       all(r[0] < r[1] < r[2] and r[2] > 10 * a for r in growth), f"{growth}")
+
     # Where K leaves the colours, on a grid four times as fine as the map's.
     fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [m, a])
     FX, FY = np.meshgrid(fx, fy)
@@ -716,8 +729,9 @@ def bach_weyl_ring(ck, src):
             "grows as $e^{a/\\pi^2l_1}$, and from directly above and below as $e^{\\ln^2(l_1/a)/2\\pi^2}$, each "
             "faster than any power of $l_1$. From inside, along the disc, it falls to zero as $e^{-a/\\pi^2l_1}$.",
             f"On the axis $K$ vanishes at $z = \\pm {z0:.3f}\\,a$, and there every component of the Riemann tensor "
-            "vanishes with it. Weyl's $\\rho$ and $z$ are lengths in a flat space that the metric stretches, and the "
-            "ring, the circle $\\rho = a$, has an infinite circumference.",
+            "vanishes with it. Weyl's $\\rho$ and $z$ are the cylindrical coordinates of the flat space in which "
+            "$c^2\\psi$ is Newton's potential of the ring, and the metric stretches them: the ring, the circle "
+            "$\\rho = a$, has an infinite circumference.",
         ],
         "settings": "$m = GM/c^2 = a/2$, with the radius $a$ of the ring in Weyl's coordinates the unit of every "
                     "length.",
