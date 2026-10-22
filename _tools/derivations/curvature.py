@@ -192,6 +192,24 @@ class Published:
         return self.expr.xreplace(point).evalf(digits)
 
 
+class Held:
+    """A published value of a chart in more coordinates than a curve draws, with the others held
+    at the numbers `fixed` gives them, by the names the chart spells them with, as a function of
+    the coordinate drawn and then the parameters, as a curve along the axis of a chart in r and
+    theta is drawn at theta = 0. The published value is read with the coordinate drawn first and
+    the held ones after it, in the order `fixed` names them."""
+
+    def __init__(self, published, fixed):
+        self.published, self.fixed = published, {name: float(v) for name, v in fixed.items()}
+        self.metric, self.system, self.field = published.metric, published.system, published.field
+
+    def __call__(self, x, *params):
+        return self.published(x, *self.fixed.values(), *params)
+
+    def exact(self, values, digits=60):
+        return self.published.exact([values[0], *self.fixed.values(), *values[1:]], digits)
+
+
 def agrees(ck, name, published, points, values):
     """Check `values`, written at `points`, against the published formula in sixty digits."""
     worst = 0.0
@@ -397,10 +415,13 @@ def shape_checks(ck, where, aspects):
 
 def curve_entry(panel, cls, published, coordinate, params, points):
     """A curve as the file holds it: what it is drawn from, so that every value can be evaluated
-    again, and its points [x, value]."""
-    return {"panel": panel, "class": cls, "metric": published.metric, "system": published.system,
-            "scalar": published.field, "coordinate": coordinate,
-            "params": {name: float(value) for name, value in params.items()}, "points": points}
+    again, the chart's other coordinates it holds fixed among it, and its points [x, value]."""
+    entry = {"panel": panel, "class": cls, "metric": published.metric, "system": published.system,
+             "scalar": published.field, "coordinate": coordinate}
+    if isinstance(published, Held):
+        entry["fixed"] = dict(published.fixed)
+    entry.update({"params": {name: float(value) for name, value in params.items()}, "points": points})
+    return entry
 
 
 def spread(points, n=24):
@@ -2113,6 +2134,257 @@ def bowers_liang(ck, src):
     return [still, compact, anisotropy]
 
 
+# ---------------------------------------------------------------- the Curzon-Chazy particle
+
+CC_CELLS = (57, 114)              # the cells of the map across and up, each a nineteenth of m on a side
+CC_RANGE = (1e-3, 1e3)            # the colours of K m^4 run from the first to the second, as the Bach-Weyl ring's
+CC_LINE = (1e-6, 1e6)             # the axis of K m^4 on both panels of the line view
+
+
+def crossing(fn, lo, hi):
+    """The point between lo and hi where fn changes sign, by bisection to the last digit."""
+    f_lo = fn(lo)
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        if mid in (lo, hi):
+            break
+        lo, hi, f_lo = (mid, hi, fn(mid)) if np.sign(fn(mid)) == np.sign(f_lo) else (lo, mid, f_lo)
+    return 0.5 * (lo + hi)
+
+
+def curzon_chazy(ck, src):
+    """The Curzon-Chazy particle at m = 1, its Kretschmann scalar over the half plane of Weyl's
+    rho and z and against r on the axis and in the plane theta = pi/2.
+
+    Weyl's chart publishes K in rho, z and R = sqrt(rho^2 + z^2), which the reader writes out, so
+    K is a function of rho and z alone, the same at every t and phi; the particle is a vacuum and
+    publishes R = 0 in both charts, so the figure is K alone. The first view is a map over the box
+    0 <= rho <= 3m, |z| <= 3m, the window of the research list, coloured on the Bach-Weyl ring's
+    logarithmic scale from 10^-3 to 10^3 in units of 1/m^4, with the singularity marked at the
+    origin and the two points of the axis where K vanishes, z = +-m. Its cells are a nineteenth of
+    m on a side, coarse enough that K at the centre of the cell beside the singularity, near
+    10^282/m^4, is a double, as it is not at a twentieth, where it passes e^709. The second view
+    is the spherical chart's K against r, from 0 to 3m, held at theta = 0 on one panel and at
+    theta = pi/2 on the other, each on a logarithmic axis from 10^-6 to 10^6; g^rr is positive at
+    every point, so nothing is marked.
+
+    What the captions state is checked here, in sixty digits and in eighty where K passes the
+    doubles: R = 0 in both charts; K is 16m^2(3R^4(R - m)^2 + m^2 rho^2(3R^2 - 3mR + m^2))
+    e^(2m^2 rho^2/R^4 - 4m/R)/R^12, whose last factor has no real root, so K vanishes at
+    rho = 0, z = +-m alone, and every published component of the Riemann tensor vanishes there
+    with it; the spherical chart's K is Weyl's at the same point; on the axis K is
+    48m^2(r - m)^2 e^(-4m/r)/r^8, with its two maxima at r = (1 +- 1/sqrt 3)m and the values
+    stated, and r ln K tends to -4m toward r = 0; in the plane K falls from the singularity
+    outward and r^2 ln K tends to 2m^2; along theta = 0.1, pi/4 and 3pi/4, r^2 ln K tends to
+    2m^2 sin^2 theta; far out K r^6 tends to 48m^2 in every direction; the circumference
+    2 pi sqrt(g_phiphi) of the circle about the axis grows without bound toward the origin along
+    every direction drawn but the axis; and the clips stated are where K leaves the colours, on a
+    grid four times as fine as the map's, and where each curve leaves its panel."""
+    m = 1.0
+    params = {"m": m}
+    K = nr_published(src, "curzon_chazy", "weyl", "kretschmann", ["rho", "z"], ["m"])
+    Ks = nr_published(src, "curzon_chazy", "spherical", "kretschmann", ["r", "theta"], ["m"])
+    for system, coords in (("weyl", ["rho", "z"]), ("spherical", ["r", "theta"])):
+        ricci = nr_published(src, "curzon_chazy", system, "ricci_scalar", coords, ["m"])
+        ck(f"curzon_chazy {system} publishes R = 0", ricci.expr == 0, f"{ricci.expr}")
+
+    # The scalar in closed form, and its zeros.
+    def closed(rho, z):
+        rho, z, mm = (sp.Float(float(v), 70) for v in (rho, z, m))
+        R = sp.sqrt(rho ** 2 + z ** 2)
+        bracket = 3 * R ** 4 * (R - mm) ** 2 + mm ** 2 * rho ** 2 * (3 * R ** 2 - 3 * mm * R + mm ** 2)
+        return (16 * mm ** 2 * bracket * sp.exp(2 * mm ** 2 * rho ** 2 / R ** 4 - 4 * mm / R) / R ** 12).evalf(60)
+    rng = np.random.default_rng(1924)
+    points = [(float(r * math.sin(t)), float(r * math.cos(t)))
+              for r, t in zip(rng.uniform(0.05, 4, 20), rng.uniform(0, math.pi, 20))]
+    worst = max(abs(float(K.exact([rho, z, m]) / closed(rho, z)) - 1) for rho, z in points)
+    ck("curzon_chazy K is 16m^2(3R^4(R - m)^2 + m^2 rho^2(3R^2 - 3mR + m^2))e^(2m^2 rho^2/R^4 - 4m/R)/R^12",
+       worst < 1e-50, f"worst {worst:.1e} at {len(points)} points")
+    R_, m_ = sp.symbols("R m", positive=True)
+    ck("curzon_chazy 3R^2 - 3mR + m^2 has no real root, so K vanishes on the axis alone",
+       sp.discriminant(3 * R_ ** 2 - 3 * m_ * R_ + m_ ** 2, R_) == -3 * m_ ** 2)
+    worst = max(abs(float(Ks.exact([math.hypot(rho, z), math.atan2(rho, z), m]) / K.exact([rho, z, m])) - 1)
+                for rho, z in points)
+    ck("curzon_chazy the spherical chart's K is Weyl's at the same point", worst < 1e-12, f"worst {worst:.1e}")
+    axis_rho = 1e-12
+    entry = json.loads((build.METRICS_DIR / "curzon_chazy.json").read_text(encoding="utf-8"))
+    weyl = next(s for s in entry["coordinates"] if s["id"] == "weyl")
+    worst = 0.0
+    for comp in weyl["riemann"]["variants"]["ulll"]["nonzero"]:
+        riemann = nr_published(src, "curzon_chazy", "weyl", "riemann", ["rho", "z"], ["m"], comp["indices"])
+        worst = max(worst, abs(float(riemann.exact([axis_rho, m, m]))), abs(float(riemann.exact([axis_rho, -m, m]))))
+    ck("curzon_chazy every published Riemann component vanishes at z = +-m on the axis", worst < 1e-9, f"{worst:.1e}")
+    ck("curzon_chazy K vanishes at z = +-m on the axis",
+       all(abs(float(K.exact([axis_rho, z, m]))) < 1e-20 for z in (m, -m)))
+
+    # The singularity, approached along the axis, in the plane and along three other directions.
+    def logs(theta, lengths):
+        return [float(sp.log(Ks.exact([r, theta, m], 80))) for r in lengths]
+    tiny = (1e-6, 1e-7, 1e-8)
+    along = [r * v for r, v in zip(tiny, logs(0.0, tiny))]
+    ck("curzon_chazy K falls to zero as e^(-4m/r) toward the singularity along the axis",
+       all(abs(v / (-4 * m) - 1) < 1e-3 for v in along), f"r ln K {along}")
+    for theta in (0.1, math.pi / 4, math.pi / 2, 3 * math.pi / 4):
+        rates = [r * r * v / (2 * m ** 2 * math.sin(theta) ** 2) for r, v in zip(tiny, logs(theta, tiny))]
+        ck(f"curzon_chazy K grows as e^(2m^2 sin^2 theta/r^2) toward the singularity at theta = {theta:.4f}",
+           all(abs(q - 1) < 1e-3 for q in rates), f"{rates}")
+    for theta in (0.0, math.pi / 4, math.pi / 2):
+        ratios = [float(Ks.exact([r, theta, m])) * r ** 6 / (48 * m ** 2) for r in (1e6, 1e7)]
+        ck(f"curzon_chazy K falls off as 48m^2/r^6 far out at theta = {theta:.4f}",
+           all(abs(q - 1) < 1e-5 for q in ratios), f"{ratios}")
+    gpp = nr_published(src, "curzon_chazy", "weyl", "metric_components", ["rho", "z"], ["m"], ("\\phi", "\\phi"))
+    growth = [[math.sqrt(float(gpp.exact([R * math.sin(theta), R * math.cos(theta), m]))) for R in (1e-1, 1e-2, 1e-3)]
+              for theta in (0.1, math.pi / 4, math.pi / 2, 3 * math.pi / 4)]
+    ck("curzon_chazy the circles about the axis grow without bound toward the singularity off the axis",
+       all(c[0] < c[1] < c[2] and c[2] > 10 * m for c in growth), f"{growth}")
+    ck("curzon_chazy the circumference of the circle through (rho, z) is 2 pi rho e^(m/R)",
+       all(abs(math.sqrt(float(gpp.exact([rho, z, m]))) / (rho * math.exp(m / math.hypot(rho, z))) - 1) < 1e-12
+           for rho, z in points))
+
+    # The map.
+    x_axis, y_axis = axis("$\\rho/m$", 0, 3), axis("$z/m$", -3, 3)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "curzon_chazy map", [aspect])
+    scale = {"kind": "log", "from": CC_RANGE[0], "to": CC_RANGE[1]}
+    nx, ny = CC_CELLS
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [m])
+    ck("curzon_chazy K is finite and positive at every cell", np.all(np.isfinite(values)) and np.all(values > 0),
+       f"from {np.min(values):.3e} to {np.max(values):.3e}")
+    _, _, finer = cells(K, x_axis, y_axis, 60, 120, [m])
+    ck("curzon_chazy K at the cell beside the singularity passes the doubles at cells a twentieth of m on a side",
+       not np.all(np.isfinite(finer)))
+    rng = np.random.default_rng(1925)
+    picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+    picks |= {(i, j) for i in (0, 1) for j in (ny // 2 - 2, ny // 2 - 1, ny // 2, ny // 2 + 1)}
+    picks = sorted(picks)
+    agrees(ck, "curzon_chazy map", K, [[xs[i], ys[j], m] for i, j in picks], [values[j, i] for i, j in picks])
+    fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [m])
+    FX, FY = np.meshgrid(fx, fy)
+    high, low = ~(fine <= CC_RANGE[1]), fine < CC_RANGE[0]
+    from_origin = np.hypot(FX, FY)
+    from_zero = np.minimum(np.hypot(FX, FY - m), np.hypot(FX, FY + m))
+    near_zero = low & (from_zero < from_origin)
+    near_origin = low & ~near_zero
+    d_high, d_zero, d_origin = (float(from_origin[high].max()), float(from_zero[near_zero].max()),
+                                float(from_origin[near_origin].max()))
+    ck("curzon_chazy K passes the top of its colours only beside the singularity", d_high < 0.7, f"within {d_high:.4f} m")
+    ck("curzon_chazy K passes the bottom of its colours only beside its zeros and the singularity",
+       d_zero < 0.2 and d_origin < 0.4, f"within {d_zero:.4f} m and {d_origin:.4f} m")
+    ck("curzon_chazy K falls below its colours beside the singularity only about the axis",
+       float(np.max(np.arctan2(FX[near_origin], np.abs(FY[near_origin])))) < math.pi / 4)
+    rows = [[rounded(v) for v in row] for row in values]
+    meridian = {
+        "id": "meridian", "label": "the half plane of $\\rho$ and $z$", "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "curzon_chazy", "system": "weyl", "scalar": "kretschmann", "x": "\\rho", "y": "z",
+                "params": params, "nx": nx, "ny": ny, "cells": rows},
+        "marks": [{"class": "singular", "at": [0.0, 0.0]}, {"class": "zero", "at": [0.0, m]},
+                  {"class": "zero", "at": [0.0, -m]}],
+        "legend": [["point", "singular", "the singularity, $\\rho = z = 0$"],
+                   ["point", "zero", "where $K = 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the Curzon-Chazy particle over the half plane of Weyl's $\\rho$ and $z$ "
+            "($m = 1$), the same at every $t$ and $\\phi$. The particle is a vacuum, so its Ricci scalar vanishes, "
+            "and $K$ is finite everywhere off the singularity at $\\rho = z = 0$.",
+            "At the singularity $K$ depends on the direction it is approached from, with $R = \\sqrt{\\rho^2 + z^2}$ "
+            "and $\\theta$ the angle from the axis. Along the axis it falls to zero as $e^{-4m/R}$, and along every "
+            "other direction it grows as $e^{2m^2\\sin^2\\theta/R^2}$, faster than any power of $R$.",
+            "Everywhere $K$ is $16m^2e^{2m^2\\rho^2/R^4 - 4m/R}/R^{12}$ times the sum of $3R^4(R - m)^2$ and "
+            "$m^2\\rho^2(3R^2 - 3mR + m^2)$, and $3R^2 - 3mR + m^2$ is positive at every $R$, so $K$ vanishes only on "
+            "the axis at $z = \\pm m$, and there every component of the Riemann tensor vanishes with it.",
+            "Weyl's $\\rho$ and $z$ are the cylindrical coordinates of the flat space in which $c^2\\psi$ is Newton's "
+            "potential of a point mass, and the metric stretches them: the circle about the axis through "
+            "$(\\rho, z)$ has circumference $2\\pi\\rho\\,e^{m/R}$, which grows without bound as $R \\to 0$ at every "
+            "$\\theta$ off the axis, so the singularity, drawn at one point, is a ring of infinite circumference.",
+        ],
+        "settings": "$m = GM/c^2 = 1$, the unit of every length.",
+        "clip": ("We colour $K\\,m^4$ on a logarithmic scale from $10^{-3}$ to $10^{3}$ and give a value beyond it "
+                 f"the colour of the end it passes: $K$ passes $10^{{3}}/m^4$ within ${d_high:.2f}\\,m$ of the "
+                 f"singularity and falls below $10^{{-3}}/m^4$ within ${d_zero:.2f}\\,m$ of the two points where it "
+                 f"vanishes and, about the axis, within ${d_origin:.2f}\\,m$ of the singularity."),
+    }
+
+    # K against r on the axis and in the plane, from the spherical chart.
+    x_r = axis("$r/m$", 0, 3)
+    line_scale = {"kind": "log", "from": CC_LINE[0], "to": CC_LINE[1]}
+    panels = [{"id": "axis", "name": "$K(r, 0)\\,m^4$", "aspect": 2, "scale": line_scale,
+               "ticks": value_ticks(line_scale)},
+              {"id": "plane", "name": "$K(r, \\pi/2)\\,m^4$", "aspect": 2, "scale": line_scale,
+               "ticks": value_ticks(line_scale)}]
+    shape_checks(ck, "curzon_chazy line", [p["aspect"] for p in panels])
+    height = PLOT_W / 2
+    on_axis, in_plane = Held(Ks, {"\\theta": 0.0}), Held(Ks, {"\\theta": math.pi / 2})
+    curves = (line_curves(ck, "curzon_chazy axis", "axis", "K", on_axis, "r", x_r, line_scale, height, params)
+              + line_curves(ck, "curzon_chazy plane", "plane", "K", in_plane, "r", x_r, line_scale, height, params))
+    grr = nr_published(src, "curzon_chazy", "spherical", "inverse_metric_components", ["r", "theta"], ["m"], ("r", "r"))
+    # In sixty digits, since e^(-2m/r) on the axis is below the doubles inside r = 0.003 m.
+    ck("curzon_chazy g^rr is positive at every r drawn on the axis and in the plane, so no horizon is marked",
+       all(grr.exact([r, theta, m]) > 0 for r in np.linspace(0, 3, 301)[1:] for theta in (0.0, math.pi / 2)))
+    worst = max(abs(float(on_axis.exact([r, m])) / (48 * m ** 2 * (r - m) ** 2 * math.exp(-4 * m / r) / r ** 8) - 1)
+                for r in (0.2, 0.5, 0.9, 1.1, 2.0, 3.0))
+    ck("curzon_chazy K on the axis is 48m^2(r - m)^2 e^(-4m/r)/r^8", worst < 1e-12, f"worst {worst:.1e}")
+    peaks = [m * (1 - 1 / math.sqrt(3)), m * (1 + 1 / math.sqrt(3))]
+    fine_r = np.linspace(1e-3, 3, 600001)
+    K_axis = on_axis(fine_r, m)
+    inner, outer = fine_r < m, fine_r > m
+    found = [float(fine_r[inner][np.argmax(K_axis[inner])]), float(fine_r[outer][np.argmax(K_axis[outer])])]
+    peak_K = [float(on_axis.exact([r, m])) for r in peaks]
+    # It rises and falls between them, checked where it is a double well above rounding: from
+    # r = 0.05 m, where it is 10^-26, and outside 10^-3 m of its zero.
+    def rising(a, b):
+        return np.all(np.diff(K_axis[(fine_r > a) & (fine_r < b)]) > 0)
+
+    def falling(a, b):
+        return np.all(np.diff(K_axis[(fine_r > a) & (fine_r < b)]) < 0)
+    ck("curzon_chazy K on the axis is largest on either side of r = m at r = (1 +- 1/sqrt 3)m",
+       all(abs(a - b) < 1e-4 for a, b in zip(found, peaks)) and rising(0.05, peaks[0]) and falling(peaks[0], m - 1e-3)
+       and rising(m + 1e-3, peaks[1]) and falling(peaks[1], 3), f"r = {found}, K = {peak_K}")
+    K_plane = in_plane(fine_r, m)
+    finite = np.isfinite(K_plane)
+    ck("curzon_chazy K in the plane falls from the singularity outward", np.all(np.diff(K_plane[finite]) < 0))
+    # Where each curve leaves its panel, at the crossings of 10^-6 and 10^6 found by bisection.
+    def level(fn, value):
+        return lambda r: math.log10(float(fn(r, m))) - math.log10(value)
+    up_a, down_a = beyond(on_axis, x_r, line_scale, [m])
+    up_p, down_p = beyond(in_plane, x_r, line_scale, [m])
+    # The formula is not finite at r = 0 itself, and K is below the doubles inside r = 0.006 m.
+    ck("curzon_chazy K on the axis leaves its panel by the bottom alone, about r = 0 and about r = m",
+       all(a == b == 0 for a, b in up_a) and len(down_a) == 2 and down_a[0][0] < 0.01
+       and down_a[1][0] < m < down_a[1][1], f"{up_a} {down_a}")
+    ck("curzon_chazy K in the plane leaves its panel by the top alone, about r = 0",
+       not down_p and len(up_p) == 1 and up_p[0][0] == 0, f"{up_p}")
+    cut_axis = crossing(level(on_axis, CC_LINE[0]), 0.05, 0.3)
+    dip = max(m - crossing(level(on_axis, CC_LINE[0]), 0.9, m - 1e-6),
+              crossing(level(on_axis, CC_LINE[0]), m + 1e-6, 1.1) - m)
+    cut_plane = crossing(level(in_plane, CC_LINE[1]), 0.2, 0.6)
+    ck("curzon_chazy the cuts stated bound the samples beyond each panel",
+       down_a[0][1] < cut_axis < down_a[0][1] + 3 / (SAMPLES - 1) and up_p[0][1] < cut_plane < up_p[0][1] + 3 / (SAMPLES - 1)
+       and m - dip <= down_a[1][0] and down_a[1][1] <= m + dip,
+       f"axis {cut_axis:.4f}, about r = m by {dip:.2e}, plane {cut_plane:.4f}")
+    line = {
+        "id": "directions", "label": "the axis and the plane $\\theta = \\pi/2$", "kind": "line", "x": x_r,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the Curzon-Chazy particle against $r$ on the axis, $\\theta = 0$, and in "
+            "the plane $\\theta = \\pi/2$ ($m = 1$), the same at every $t$ and $\\phi$. Far out both fall off as "
+            "$48m^2/r^6$, as Schwarzschild's does at the same mass.",
+            "On the axis $K = 48m^2(r - m)^2e^{-4m/r}/r^8$. It falls to zero as $e^{-4m/r}$ toward the singularity at "
+            "$r = 0$, vanishes at $r = m$, and has a maximum on either side of that zero, "
+            f"${peak_K[0]:.3f}/m^4$ at $r = (1 - 1/\\sqrt{{3}})\\,m = {peaks[0]:.3f}\\,m$ and "
+            f"${peak_K[1]:.4f}/m^4$ at $r = (1 + 1/\\sqrt{{3}})\\,m = {peaks[1]:.3f}\\,m$.",
+            "In the plane $K$ falls from the singularity outward, and toward $r = 0$ it grows without bound, as "
+            "$e^{2m^2/r^2}$.",
+        ],
+        "settings": "$m = GM/c^2 = 1$, the unit of every length.",
+        "clip": ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-6}$ to $10^{6}$ on both panels and cut each curve "
+                 f"where it leaves its panel: on the axis inside $r = {cut_axis:.3f}\\,m$ and within "
+                 f"${tex_number(dip, 2)}\\,m$ of $r = m$, and in the plane inside $r = {cut_plane:.3f}\\,m$."),
+    }
+    return [meridian, line]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -2124,6 +2396,7 @@ DRAWN = {
     "brans_dicke_sphere": brans_dicke_sphere,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "c_metric": c_metric,
+    "curzon_chazy": curzon_chazy,
 }
 
 

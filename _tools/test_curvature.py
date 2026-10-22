@@ -4,12 +4,13 @@
     .venv.noindex/bin/python -m unittest discover -s _tools
 
 Every value a curvature figure carries is evaluated again here from the metric file it names,
-the published `kretschmann` or `ricci_scalar` read through the checker's Reader at the point and
-the parameters the file gives, and held to the number written: a curve's value to the last few
-digits of a double, a map's cell to the six significant figures it is written to. Every horizon
-marked on a line view is a change of sign of the published g^xx along the drawn coordinate, and
-every change of sign on the drawn range is marked, the range of a chart joined to another at a
-surface, as a star's to Schwarzschild's vacuum, being the stretch its own curves cover. The file's shape is build_mfs_data.py's to
+the published `kretschmann` or `ricci_scalar` read through the checker's Reader at the point,
+the other coordinates a curve holds fixed and the parameters the file gives, and held to the
+number written: a curve's value to the last few digits of a double, a map's cell to the six
+significant figures it is written to. Every horizon marked on a line view is a change of sign of
+the published g^xx along the drawn coordinate, and every change of sign on the drawn range is
+marked, the range of a chart joined to another at a surface, as a star's to Schwarzschild's
+vacuum, being the stretch its own curves cover. The file's shape is build_mfs_data.py's to
 refuse, and the physics its captions state is curvature.py's to check before it writes.
 """
 
@@ -111,10 +112,11 @@ class CurvatureValues(unittest.TestCase):
                 for place, holder in holders(view):
                     for k, curve in enumerate(holder.get("curves", [])):
                         where = f"curvature/{name}.json {view['id']}{place} curve {k}"
-                        params = list(curve["params"])
-                        fn = self.evaluate(curve["metric"], curve["system"], curve["scalar"], [curve["coordinate"]], params)
+                        params, fixed = list(curve["params"]), curve.get("fixed", {})
+                        fn = self.evaluate(curve["metric"], curve["system"], curve["scalar"],
+                                           [curve["coordinate"]] + list(fixed), params)
                         points = np.array(curve["points"], dtype=float)
-                        expected = fn(points[:, 0], *[curve["params"][p] for p in params])
+                        expected = fn(points[:, 0], *fixed.values(), *[curve["params"][p] for p in params])
                         with self.subTest(where):
                             np.testing.assert_allclose(points[:, 1], expected, rtol=1e-12, atol=0, err_msg=where)
                         checked += len(points)
@@ -161,16 +163,18 @@ class CurvatureValues(unittest.TestCase):
                     charts = {}
                     for curve in picture["curves"]:
                         if curve["class"] != "reference":
-                            key = (curve["metric"], curve["system"], curve["coordinate"], tuple(sorted(curve["params"].items())))
+                            key = (curve["metric"], curve["system"], curve["coordinate"],
+                                   tuple(curve.get("fixed", {}).items()), tuple(sorted(curve["params"].items())))
                             charts.setdefault(key, []).append(curve)
                     if not charts:
                         continue
                     where = f"curvature/{name}.json {view['id']}{place}"
                     changes = []
-                    for (metric, system, coordinate, params), curves in charts.items():
-                        fn = self.evaluate(metric, system, "inverse_metric_components", [coordinate],
-                                           [p for p, _ in params], (coordinate, coordinate))
-                        values = [v for _, v in params]
+                    for (metric, system, coordinate, fixed, params), curves in charts.items():
+                        fn = self.evaluate(metric, system, "inverse_metric_components",
+                                           [coordinate] + [c for c, _ in fixed], [p for p, _ in params],
+                                           (coordinate, coordinate))
+                        values = [v for _, v in fixed] + [v for _, v in params]
                         # A chart alone holds across the whole axis; a chart joined to another at a
                         # surface holds where its own curves are drawn.
                         lo, hi = view["x"]["from"], view["x"]["to"]
@@ -202,12 +206,12 @@ class CurvatureShape(unittest.TestCase):
     def test_the_files_on_disk_load(self):
         self.assertEqual(set(build.load_curvature(build.load_metrics())), set(curvature_files()))
 
-    def broken(self, change):
+    def broken(self, change, name=None):
         import copy
         import tempfile
         from unittest import mock
         files = curvature_files()
-        name = sorted(files)[0]
+        name = name or sorted(files)[0]
         data = copy.deepcopy(files[name])
         change(data)
         with tempfile.TemporaryDirectory() as folder:
@@ -253,6 +257,13 @@ class CurvatureShape(unittest.TestCase):
             view = next(v for v in data["views"] if v["kind"] == "map")
             view["map"]["frame"] = "polar"
         self.assertIn("frame", self.broken(reframed))
+
+    def test_a_coordinate_held_at_no_number_is_refused(self):
+        def unheld(data):
+            view = next(v for v in data["views"] if v["kind"] == "line")
+            curve = next(c for c in view["curves"] if "fixed" in c)
+            curve["fixed"] = {name: "pi/2" for name in curve["fixed"]}
+        self.assertIn("holds fixed", self.broken(unheld, "curzon_chazy"))
 
     def test_a_class_drawn_and_not_named_is_refused(self):
         def unnamed(data):

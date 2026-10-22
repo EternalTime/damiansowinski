@@ -537,6 +537,10 @@ def check_line(where, view, read, x):
             if panel is None:
                 raise DataError(f"{at} stands on a panel the view does not draw")
             check_drawn_from(at, curve, read)
+            fixed = curve.get("fixed", {})
+            if not (isinstance(fixed, dict) and all(finite(v) for v in fixed.values())
+                    and curve.get("coordinate") not in fixed):
+                raise DataError(f"{at} does not give each other coordinate it holds fixed as a number")
             points = curve.get("points") or []
             if len(points) < 2 or not all(isinstance(p, list) and len(p) == 2 and finite(p[0]) and finite(p[1]) for p in points):
                 raise DataError(f"{at} is not a polyline of at least two points [x, value] of numbers")
