@@ -1159,8 +1159,9 @@ def born_infeld_charge(ck, src):
     the box of the spacetime diagrams: K on a logarithmic axis from 10^-4 to 10^6, and R, which is
     positive at every r, on a logarithmic axis from 10^-6 to 10^4. Reissner and Nordstrom's K of
     the same mass and charge, read from rn_metric.json, is the comparison; their R vanishes, so it
-    has no curve on a logarithmic axis. R depends on r_q and r_0 alone, and is read with those two
-    parameters, so that the reading stops if it ever depends on the mass. The horizons are the
+    has no curve on a logarithmic axis. R depends on r_q and r_0 alone, and is read once with those
+    two parameters, so that the reading stops if it ever depends on the mass; each curve of R
+    still carries the frame's r_s, as every curve of a frame does. The horizons are the
     zeros of the static chart's published g^rr. The first view is Hoffmann's particle, whose whole
     mass is the energy of its field, r_s = 2 (1.2360) r_q^2/r_0, and the second the black hole at
     r_s = 2 r_0, the two cases every other drawing of it takes; the third steps r_s in equal steps
