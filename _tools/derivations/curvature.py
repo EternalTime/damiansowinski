@@ -145,8 +145,9 @@ class Checks:
 
 class Published:
     """A published value of one chart, a curvature scalar, a component of the metric or of its
-    inverse, or one of the Riemann tensor with its first index raised, as a numpy function of the
-    coordinates drawn and then the parameters, in the order named.
+    inverse, one of the Riemann tensor with its first index raised, or one of the Einstein tensor
+    with its first index raised, as a numpy function of the coordinates drawn and then the
+    parameters, in the order named.
 
     The value is read through the checker's Reader, every name the reader holds as a function
     written out, and c set to 1. A coordinate or a parameter the value depends on and the figure
@@ -155,8 +156,9 @@ class Published:
     def __init__(self, sources, metric_id, system_id, field, coords, params, indices=None):
         _, entry, reader = nr.load(metric_id, system_id)
         self.metric, self.system, self.field = metric_id, system_id, field
-        if field in ("metric_components", "inverse_metric_components", "riemann"):
-            listed = entry[field] if field != "riemann" else entry[field]["variants"]["ulll"]["nonzero"]
+        if field in ("metric_components", "inverse_metric_components", "riemann", "einstein_tensor"):
+            variant = {"riemann": "ulll", "einstein_tensor": "ul"}.get(field)
+            listed = entry[field]["variants"][variant]["nonzero"] if variant else entry[field]
             value = next(c["value"] for c in listed if c["indices"] == list(indices))
             expr = reader(value)
         else:
@@ -295,9 +297,10 @@ def sampled(ck, name, published, x_axis, scale, height, params, within=None):
     """A published scalar along the drawn coordinate, as the polylines a panel draws.
 
     The scalar is sampled at SAMPLES points across the axis, or across the part of it `within`
-    names where the scalar's own spacetime covers only that part, and kept where it is finite and
-    within a quarter of the panel's height of its box, each stretch carried one sample further
-    each way where that sample is finite, so that the line drawn runs to the edge it leaves by.
+    names where the scalar's own chart or spacetime covers only that part, as a star's own chart
+    holds from its centre to its surface, and kept where it is finite and within a quarter of the
+    panel's height of its box, each stretch carried one sample further each way where that sample
+    is finite, so that the line drawn runs to the edge it leaves by.
     Each stretch is thinned in the panel's own units, PLOT_W across and `height` up, so that the
     line drawn lies within TOLERANCE of the samples."""
     lo, hi = x_axis["from"], x_axis["to"]
@@ -1804,6 +1807,312 @@ def brans_dicke_sphere(ck, src):
     return [still, movie_view]
 
 
+# ---------------------------------------------------------------- Bowers and Liang's star
+
+BL_Q = Fraction(1, 4)             # Q, as every drawing of the star takes it
+BL_RADIUS = Fraction(9, 8)        # R in units of r_s, as every drawing of the star takes it
+BL_REACH = 3                      # the plot runs from the centre to r = 3 r_s
+BL_STEP = Fraction(1, 36)         # the step of each movie, which lands on 8/9 and 1/4 and on no zero of R
+BL_COMPACT = [BL_STEP * k for k in range(15, 36)]       # r_s/R of the frames of the first movie
+BL_QS = [BL_STEP * k for k in range(1, 19)]             # Q of the frames of the second movie
+
+
+def bowers_liang(ck, src):
+    """Bowers and Liang's star at r_s = 1, its Kretschmann and Ricci scalars against r, inside the
+    star and in Schwarzschild's vacuum outside it.
+
+    The areal chart publishes K and R in r alone, through Z, N and P, and holds from the centre to
+    the surface r = R alone, so its scalars are drawn from 0 to R and Schwarzschild's, read from
+    schwarzschild.json, from R to the edge of the plot at 3 r_s, each a stretch of the same class.
+    Two panels share the axis of r: K on a logarithmic axis from 10^-2 to 10^4 and R on a signed
+    one, linear within 0.1/r_s^2 of zero, from -10^2 to 10. The radius R is a parameter of the
+    chart, so the Ricci scalar is written R^mu_mu. The first view is the star at Q = 1/4 and
+    R = 9 r_s/8, as every other drawing of it takes; the second steps r_s/R from 5/12 to 35/36 at
+    Q = 1/4 and fixed mass, through 8/9, toward the limit 1 - 3^(-1/Q) = 80/81 of a finite
+    central pressure; the third steps Q from 1/36 to 1/2 at R = 9 r_s/8, through 1/4, to
+    Schwarzschild's star of equal pressures, whose central pressure is infinite at that radius.
+
+    What the captions state is checked here: g^rr is positive on every stretch drawn, so no
+    horizon is marked; the density and the two pressures are read from the published Einstein
+    tensor, G^t_t = -8 pi G rho/c^2 and G^r_r and G^theta_theta 8 pi G/c^4 times p_r and p_perp,
+    and the published R is minus its trace; at the centre K = 3 r_s^2(P^2 + 4)/R^6 and
+    R = 3 r_s(2 - P)/R^3, and for the first view P = 1 + sqrt 3 and both pressures are
+    rho c^2/sqrt 3 there; K is least inside the star at the radius and value stated and greatest
+    at the surface, where Schwarzschild's is 12 r_s^2/R^6; R is negative throughout the star and
+    -3 r_s/R^3 at its surface, where p_r = 0 and p_perp = rho c^2; along the first movie K at the
+    centre grows, without bound toward 80/81, where N vanishes at the centre, and R is positive
+    throughout the star below r_s/R = 4/5, where it vanishes at the surface, and negative
+    throughout above 65/81, where it vanishes at the centre; along the second K at the centre
+    grows with Q, the star at Q = 1/2 has equal pressures and is interior_schwarzschild.json's,
+    N vanishes at its centre, and R is positive about the centre alone below
+    Q = ln(3/2)/ln 9, negative throughout up to Q = 3/8 and positive about the surface alone
+    above it; and the clip stated is where each curve leaves its panel."""
+    x_axis = axis("$r/r_s$", 0, BL_REACH)
+    K_scale = {"kind": "log", "from": 1e-2, "to": 1e4}
+    R_scale = {"kind": "symlog", "from": -100, "to": 10, "linear": 0.1}
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,r_s^2$", "aspect": 2, "scale": R_scale,
+               "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "bowers_liang", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    names = ["R", "r_s", "Q"]
+    K = nr_published(src, "bowers_liang", "areal", "kretschmann", ["r"], names)
+    Ric = nr_published(src, "bowers_liang", "areal", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, "bowers_liang", "areal", "inverse_metric_components", ["r"], names, ("r", "r"))
+    G = {i: nr_published(src, "bowers_liang", "areal", "einstein_tensor", ["r"], names, (i, i))
+         for i in ("t", "r", "\\theta", "\\phi")}
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    R_s = nr_published(src, "schwarzschild", "spherical", "ricci_scalar", ["r"], ["r_s"])
+    grr_s = nr_published(src, "schwarzschild", "spherical", "inverse_metric_components", ["r"], ["r_s"], ("r", "r"))
+
+    def inside(radius):
+        return (0.0, min(float(radius), BL_REACH))
+
+    def own(radius, q, name):
+        """The star's own scalars from its centre to its surface, the stretch its chart holds."""
+        params = {"R": float(radius), "r_s": 1.0, "Q": float(q)}
+        rs = np.linspace(*inside(radius), SAMPLES)
+        ck(f"{name} has no horizon inside the star", np.all(grr(rs, float(radius), 1, float(q)) > 0))
+        return (line_curves(ck, name, "K", "K", K, "r", x_axis, K_scale, height["K"], params, inside(radius))
+                + line_curves(ck, name, "R", "R", Ric, "r", x_axis, R_scale, height["R"], params, inside(radius)))
+
+    def vacuum(radius, name):
+        """Schwarzschild's scalars of the same mass from the surface to the edge of the plot."""
+        outside = (float(radius), float(BL_REACH))
+        rs = np.linspace(*outside, SAMPLES)
+        ck(f"{name} has no horizon outside the star", np.all(grr_s(rs, 1) > 0))
+        return (line_curves(ck, f"{name} outside", "K", "K", K_s, "r", x_axis, K_scale, height["K"], {"r_s": 1},
+                            outside)
+                + line_curves(ck, f"{name} outside", "R", "R", R_s, "r", x_axis, R_scale, height["R"], {"r_s": 1},
+                              outside))
+
+    def centre_P(radius, q):
+        """P at the centre, where Z = 1, exactly."""
+        return 2 / (3 * (1 - 1 / sp.Rational(radius)) ** sp.sympify(q) - 1)
+
+    def cut(fn, params, within):
+        """Where a curve leaves the top and the bottom of each panel, as beyond() finds it."""
+        return {name: beyond(fn_, x_axis, scale, params, within)
+                for name, fn_, scale in (("K", fn[0], K_scale), ("R", fn[1], R_scale))}
+
+    def signs(radius, q):
+        """How R changes sign through the star: how many times, and whether it is positive at the
+        centre and at the surface."""
+        values = Ric(np.linspace(0, float(radius), SAMPLES), float(radius), 1, float(q))
+        return int(np.sum(np.sign(values[:-1]) * np.sign(values[1:]) < 0)), values[0] > 0, values[-1] > 0
+
+    legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]]
+    clip = ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-2}$ to $10^{4}$ and $R^\\mu{}_\\mu\\,r_s^2$ on a "
+            "signed logarithmic scale, linear within $0.1$ of zero, from $-10^{2}$ to $10$")
+
+    # The star every other drawing takes.
+    R0, q0 = float(BL_RADIUS), float(BL_Q)
+    name = "bowers_liang at Q = 1/4, R = 9 r_s/8"
+    curves = own(BL_RADIUS, BL_Q, name) + vacuum(BL_RADIUS, name)
+    at = [R0, 1, q0]
+    P0 = centre_P(BL_RADIUS, BL_Q)
+    ck(f"{name} P at the centre is 1 + sqrt 3", abs(float(P0 - 1 - sp.sqrt(3))) < 1e-50, f"{float(P0)}")
+    centre_K, centre_R = float(K.exact([0] + at)), float(Ric.exact([0] + at))
+    ck(f"{name} K at the centre is 3 r_s^2(P^2 + 4)/R^6",
+       abs(centre_K / float(3 * (P0 ** 2 + 4) / sp.Rational(BL_RADIUS) ** 6) - 1) < 1e-12, f"{centre_K}")
+    ck(f"{name} R at the centre is 3 r_s(2 - P)/R^3",
+       abs(centre_R / float(3 * (2 - P0) / sp.Rational(BL_RADIUS) ** 3) - 1) < 1e-12, f"{centre_R}")
+    rho = -float(G["t"].exact([0] + at))       # 8 pi G rho/c^2, the same at every r
+    rs = np.linspace(0, R0, SAMPLES)
+    ck(f"{name} the density is uniform", np.allclose(-G["t"](rs, *at), rho, rtol=1e-13, atol=0), f"{rho}")
+    trace = [sum(float(G[i].exact([r] + at)) for i in G) for r in (0, 0.3, 0.7, 1.0, R0)]
+    published_R = [float(Ric.exact([r] + at)) for r in (0, 0.3, 0.7, 1.0, R0)]
+    ck(f"{name} R is minus the trace of the Einstein tensor",
+       all(abs(a + b) < 1e-12 * abs(b) for a, b in zip(published_R, trace)))
+    ck(f"{name} the two pressures at the centre are rho c^2/sqrt 3",
+       all(abs(float(G[i].exact([0] + at)) * math.sqrt(3) / rho - 1) < 1e-12 for i in ("r", "\\theta")))
+    ck(f"{name} at the surface p_r = 0 and p_perp = rho c^2",
+       abs(float(G["r"].exact([R0] + at))) < 1e-12 * rho and abs(float(G["\\theta"].exact([R0] + at)) / rho - 1) < 1e-12)
+    fine = np.linspace(0, R0, 200001)
+    Ks = K(fine, *at)
+    least = int(np.argmin(Ks))
+    r_least, K_least = float(fine[least]), float(Ks[least])
+    ck(f"{name} K falls from the centre to its least and rises from there to the surface",
+       0 < least < len(fine) - 1 and np.all(np.diff(Ks[:least + 1]) < 0) and np.all(np.diff(Ks[least:]) > 0),
+       f"r = {r_least:.4f}, K = {K_least:.4f}")
+    surface_K, outside_K = float(K.exact([R0] + at)), float(K_s.exact([R0, 1]))
+    ck(f"{name} Schwarzschild's K at the surface is 12 r_s^2/R^6", abs(outside_K * R0 ** 6 / 12 - 1) < 1e-12)
+    surface_R = float(Ric.exact([R0] + at))
+    ck(f"{name} R is negative throughout the star", np.all(Ric(rs, *at) < 0))
+    ck(f"{name} R at the surface is -3 r_s/R^3", abs(surface_R * R0 ** 3 / -3 - 1) < 1e-12, f"{surface_R}")
+    ck(f"{name} R vanishes outside", np.all(R_s(np.linspace(R0, BL_REACH, 101), 1) == 0))
+    for k, (up, down) in cut((K, Ric), at, inside(BL_RADIUS)).items():
+        ck(f"{name} {k} stays inside its panel", not up and not down, f"{up} {down}")
+    for k, (up, down) in cut((K_s, R_s), [1], (R0, float(BL_REACH))).items():
+        ck(f"{name} {k} outside stays inside its panel", not up and not down, f"{up} {down}")
+    still = {
+        "id": "star", "label": "$Q = 1/4$, $R = 9r_s/8$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Bowers and Liang's star against $r$ "
+            "($Q = 1/4$, $R = 9r_s/8$), the same at every $t$, $\\theta$, and $\\phi$, inside the star and in "
+            f"Schwarzschild's vacuum outside it. Inside, $K$ falls from ${centre_K:.2f}/r_s^4$ at the centre to "
+            f"${K_least:.2f}/r_s^4$ at $r = {r_least:.3f}\\,r_s$ and rises to ${surface_K:.2f}/r_s^4$ at the surface. "
+            f"Outside it is Schwarzschild's $12r_s^2/r^6$, which is ${outside_K:.3f}/r_s^4$ at $r = R$.",
+            "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - p_r - 2p_\\perp)/c^4$, negative throughout the "
+            f"star. At the centre both pressures are $\\rho c^2/\\sqrt{{3}}$ and $R^\\mu{{}}_\\mu = {centre_R:.3f}/r_s^2$, "
+            "and at the surface $p_r = 0$, $p_\\perp = \\rho c^2$, and "
+            f"$R^\\mu{{}}_\\mu = -3r_s/R^3 = {surface_R:.3f}/r_s^2$. Outside it vanishes. Both scalars jump at the "
+            "surface, where the density and the pressure across the radius fall to zero.",
+        ],
+        "settings": "$r_s = 1$, the unit of every length, $Q = 1/4$, and $R = 9r_s/8$.",
+        "clip": clip + ", and every value drawn lies within them.",
+    }
+
+    # The star of fixed mass made more compact, toward the limit of a finite central pressure.
+    frames, centres = [], []
+    for value in BL_COMPACT:
+        radius = 1 / value
+        name = f"bowers_liang at r_s/R = {float(value):.4f}"
+        curves = own(radius, BL_Q, name) + vacuum(radius, name)
+        params = [float(radius), 1, q0]
+        for k, (up, down) in cut((K, Ric), params, inside(radius)).items():
+            ck(f"{name} {k} stays inside its panel", not up and not down, f"{up} {down}")
+        centres.append(float(K.exact([0] + params)))
+        ck(f"{name} K at the centre is 3 r_s^2(P^2 + 4)/R^6", abs(centres[-1] / float(
+            3 * (centre_P(radius, BL_Q) ** 2 + 4) / sp.Rational(radius) ** 6) - 1) < 1e-12)
+        frames.append({"label": f"$r_s/R = {float(value):.3f}$", "value": float(value), "curves": curves, "marks": []})
+    ck("bowers_liang K at the centre grows with r_s/R", all(b > a for a, b in zip(centres, centres[1:])),
+       f"{centres[0]:.4f} to {centres[-1]:.4f}")
+    limit = 1 - sp.Integer(3) ** (-1 / sp.Rational(BL_Q))
+    ck("bowers_liang the limit of a finite central pressure is r_s/R = 80/81 at Q = 1/4", limit == sp.Rational(80, 81))
+    ck("bowers_liang N vanishes at the centre at r_s/R = 80/81",
+       sp.simplify(3 * (1 - limit) ** sp.Rational(BL_Q) - 1) == 0)
+    near = [float(K.exact([0, 1 / (float(limit) - d), 1, q0])) * d ** 2 for d in (1e-4, 1e-6, 1e-8)]
+    ck("bowers_liang K at the centre grows as (80/81 - r_s/R)^-2 toward the limit",
+       abs(near[2] / near[1] - 1) < 1e-3 and abs(near[1] / near[0] - 1) < 1e-1, f"{near}")
+    # Where R changes sign: at the surface at r_s/R = 4/5, at the centre at 65/81, where P = 2, and
+    # last of all, at c_last, where its greatest value inside the star, in a shell, falls to zero.
+    surface_zero, centre_zero = Fraction(4, 5), 1 - Fraction(2, 3) ** 4
+    ck("bowers_liang R vanishes at the surface at r_s/R = 4/5",
+       abs(float(Ric.exact([1 / float(surface_zero), 1 / float(surface_zero), 1, q0]))) < 1e-12)
+    ck("bowers_liang R vanishes at the centre at r_s/R = 65/81, where P = 2 and 3 p_r = rho c^2",
+       centre_zero == Fraction(65, 81) and centre_P(1 / centre_zero, BL_Q) == 2
+       and abs(float(Ric.exact([0, 1 / float(centre_zero), 1, q0]))) < 1e-12)
+
+    def greatest(c):
+        """The greatest value of R inside the star at r_s/R = c and where it lies, by the golden
+        section about the greatest of a fine grid."""
+        radius = 1 / c
+        grid = np.linspace(0, radius, SAMPLES)
+        k = int(np.argmax(Ric(grid, radius, 1, q0)))
+        lo, hi = grid[max(k - 1, 0)], grid[min(k + 1, SAMPLES - 1)]
+        golden = (math.sqrt(5) - 1) / 2
+        for _ in range(80):
+            a, b = hi - golden * (hi - lo), lo + golden * (hi - lo)
+            lo, hi = (a, hi) if float(Ric(a, radius, 1, q0)) < float(Ric(b, radius, 1, q0)) else (lo, b)
+        return float(Ric(0.5 * (lo + hi), radius, 1, q0)), 0.5 * (lo + hi) / radius
+    lo, hi = float(centre_zero), 0.9
+    for _ in range(60):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if greatest(mid)[0] > 0 else (lo, mid)
+    c_last = hi
+    ck("bowers_liang R turns negative at the surface, then at the centre, and last in a shell between",
+       float(surface_zero) < float(centre_zero) < c_last and 0.05 < greatest(c_last)[1] < 0.95,
+       f"c_last = {c_last:.6f}, the shell at r = {greatest(c_last)[1]:.3f} R")
+    scan = [(c, *signs(1 / c, BL_Q)) for c in np.linspace(float(BL_COMPACT[0]), float(BL_COMPACT[-1]), 1201)]
+    ck("bowers_liang R is positive throughout the star below r_s/R = 4/5, negative throughout above c_last, and "
+       "of both signs between",
+       all((n == 0 and centre and surface) if c < float(surface_zero) - 1e-9
+           else (n == 0 and not centre and not surface) if c > c_last + 1e-9
+           else n > 0 if float(surface_zero) + 1e-9 < c < c_last - 1e-9 else True
+           for c, n, centre, surface in scan)
+       and any(float(surface_zero) < c < c_last for c, *_ in scan), f"c_last = {c_last:.6f}")
+    first, last = BL_COMPACT[0], BL_COMPACT[-1]
+    compact = {
+        "id": "compactness", "label": f"${first} \\le r_s/R \\le {last}$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": [], "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Bowers and Liang's star against $r$ "
+            f"as a star of fixed mass is made more compact ($Q = 1/4$, ${first} \\le r_s/R \\le {last}$). Outside the star "
+            "both are Schwarzschild's in every frame. At the centre $K = 3r_s^2(P^2 + 4)/R^6$, which grows from "
+            f"${centres[0]:.4f}/r_s^4$ at $r_s/R = {first}$ to ${centres[-1]:.1f}/r_s^4$ at $r_s/R = {last}$, and without "
+            "bound as $r_s/R$ nears $1 - 3^{-1/Q} = 80/81$, where the central pressure is infinite.",
+            "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - p_r - 2p_\\perp)/c^4$. It is positive throughout "
+            f"the star for $r_s/R < 4/5$, negative throughout for $r_s/R > {c_last:.3f}$, and of both signs between. "
+            "It turns negative first at the surface, at $r_s/R = 4/5$, then at the centre, at $r_s/R = 65/81$, where "
+            "$3p_r = \\rho c^2$, and last in a shell between the two.",
+        ],
+        "settings": f"$r_s = 1$, the unit of every length, $Q = 1/4$, and $r_s/R$ in steps of ${BL_STEP}$.",
+        "clip": "The scales are those of $Q = 1/4$, $R = 9r_s/8$, and every value drawn lies within them.",
+        "movie": {"variable": "$r_s/R$", "seconds": 5, "frames": frames},
+    }
+
+    # The star of fixed mass and radius as its anisotropy changes, to Schwarzschild's star.
+    frames, centres, leaving = [], [], {}
+    for value in BL_QS:
+        name = f"bowers_liang at Q = {float(value):.4f}"
+        q = float(value)
+        params = [R0, 1, q]
+        curves = own(BL_RADIUS, value, name)
+        for k, (up, down) in cut((K, Ric), params, inside(BL_RADIUS)).items():
+            if up or down:
+                leaving[(float(value), k)] = (up, down)
+        if value < Fraction(1, 2):
+            centres.append(float(K.exact([0] + params)))
+        frames.append({"label": f"$Q = {q:.3f}$", "value": q, "curves": curves, "marks": []})
+    ck("bowers_liang K at the centre grows with Q below Q = 1/2", all(b > a for a, b in zip(centres, centres[1:])),
+       f"{centres[0]:.4f} to {centres[-1]:.4f}")
+    half = sp.Rational(1, 2)
+    ck("bowers_liang N vanishes at the centre at Q = 1/2 and R = 9 r_s/8",
+       sp.simplify(3 * (1 - 1 / sp.Rational(BL_RADIUS)) ** half - 1) == 0)
+    rs = np.linspace(0.05, R0, 41)
+    ck("bowers_liang at Q = 1/2 has equal pressures",
+       np.allclose(G["r"](rs, R0, 1, 0.5), G["\\theta"](rs, R0, 1, 0.5), rtol=1e-12, atol=0))
+    K_is = nr_published(src, "interior_schwarzschild", "spherical", "kretschmann", ["r"], ["r_s", "R"])
+    R_is = nr_published(src, "interior_schwarzschild", "spherical", "ricci_scalar", ["r"], ["r_s", "R"])
+    ck("bowers_liang at Q = 1/2 is Schwarzschild's star of uniform density",
+       all(abs(float(K.exact([r, R0, 1, 0.5])) / float(K_is.exact([r, 1, R0])) - 1) < 1e-12
+           and abs(float(Ric.exact([r, R0, 1, 0.5])) - float(R_is.exact([r, 1, R0]))) < 1e-12 * abs(float(R_is.exact([r, 1, R0])))
+           for r in (0.05, 0.4, 0.8, R0)))
+    q_centre = sp.log(sp.Rational(3, 2)) / sp.log(9)
+    q_surface = Fraction(3, 8)
+    ck("bowers_liang R vanishes at the centre at Q = ln(3/2)/ln 9, where P = 2",
+       abs(float((centre_P(BL_RADIUS, q_centre) - 2).evalf(60))) < 1e-50
+       and abs(float(Ric.exact([0, R0, 1, float(q_centre)]))) < 1e-12, f"Q = {float(q_centre):.6f}")
+    ck("bowers_liang R vanishes at the surface at Q = 3/8, where p_perp = rho c^2/2",
+       abs(float(Ric.exact([R0, R0, 1, float(q_surface)]))) < 1e-12
+       and abs(float(G["\\theta"].exact([R0, R0, 1, float(q_surface)])) / rho - 0.5) < 1e-12)
+    ck("bowers_liang R is positive about the centre alone below Q = ln(3/2)/ln 9, negative throughout up to "
+       "Q = 3/8, and positive about the surface alone above it",
+       all((n == 1 and centre and not surface) if q < float(q_centre) - 1e-9
+           else (n == 0 and not centre and not surface) if float(q_centre) + 1e-9 < q < float(q_surface) - 1e-9
+           else (n == 1 and surface and not centre) if q > float(q_surface) + 1e-9 else True
+           for q, n, centre, surface in [(q, *signs(BL_RADIUS, q)) for q in np.linspace(1e-3, 0.5, 1000)]))
+    ck("bowers_liang leaves its panels at Q = 1/2 alone, at the centre",
+       set(leaving) == {(0.5, "K"), (0.5, "R")} and leaving[(0.5, "K")][0] and not leaving[(0.5, "K")][1]
+       and leaving[(0.5, "R")][1] and not leaving[(0.5, "R")][0]
+       and leaving[(0.5, "K")][0][0][0] == 0 and leaving[(0.5, "R")][1][0][0] == 0, f"{leaving}")
+    K_top, R_bottom = leaving[(0.5, "K")][0][0][1], leaving[(0.5, "R")][1][0][1]
+    anisotropy = {
+        "id": "anisotropy", "label": f"${BL_QS[0]} \\le Q \\le {BL_QS[-1]}$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": vacuum(BL_RADIUS, "bowers_liang at R = 9 r_s/8"), "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Bowers and Liang's star against $r$ "
+            f"as its pressures change at fixed mass and radius (${BL_QS[0]} \\le Q \\le {BL_QS[-1]}$, $R = 9r_s/8$). Outside the "
+            "star both are Schwarzschild's in every frame. At $Q = 1/2$ the two pressures are equal and the star "
+            "is Schwarzschild's star of uniform density, whose central pressure is infinite at this radius, and so "
+            "is $K$ at its centre. As $Q$ falls, $K$ at the centre falls, to "
+            f"${centres[0]:.3f}/r_s^4$ at $Q = {BL_QS[0]}$.",
+            "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - p_r - 2p_\\perp)/c^4$. It is positive about the "
+            f"centre for $Q < \\ln(3/2)/\\ln 9 = {float(q_centre):.3f}$, where $3p_r < \\rho c^2$ at the centre, "
+            "negative throughout the star from there to $Q = 3/8$, and positive about the surface for $Q > 3/8$, "
+            "where $2p_\\perp < \\rho c^2$ at the surface.",
+        ],
+        "settings": f"$r_s = 1$, the unit of every length, $R = 9r_s/8$, and $Q$ in steps of ${BL_STEP}$.",
+        "clip": ("The scales are those of $Q = 1/4$, $R = 9r_s/8$, and we cut each curve where it leaves its panel, "
+                 f"as $K$ passes the top inside $r = {K_top:.3f}\\,r_s$ and $R^\\mu{{}}_\\mu$ the bottom inside "
+                 f"$r = {R_bottom:.3f}\\,r_s$ at $Q = 1/2$."),
+        "movie": {"variable": "$Q$", "seconds": 5, "frames": frames},
+    }
+    return [still, compact, anisotropy]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -1811,6 +2120,7 @@ DRAWN = {
     "bardeen": bardeen,
     "born_infeld_charge": born_infeld_charge,
     "boulware_deser": boulware_deser,
+    "bowers_liang": bowers_liang,
     "brans_dicke_sphere": brans_dicke_sphere,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "c_metric": c_metric,

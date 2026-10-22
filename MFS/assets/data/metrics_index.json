@@ -876,7 +876,8 @@
     "version": "a3ed39f4162e2004",
     "diagrams": "e3a9b0855962b188",
     "conformal": "956299fadfc78f36",
-    "embedding": "0147ab391063a7a6"
+    "embedding": "0147ab391063a7a6",
+    "curvature": "4ab34615cad1a0b2"
   },
   {
     "id": "brans_dicke_sphere",

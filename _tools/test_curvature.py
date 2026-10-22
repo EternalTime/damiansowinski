@@ -8,7 +8,8 @@ the published `kretschmann` or `ricci_scalar` read through the checker's Reader 
 the parameters the file gives, and held to the number written: a curve's value to the last few
 digits of a double, a map's cell to the six significant figures it is written to. Every horizon
 marked on a line view is a change of sign of the published g^xx along the drawn coordinate, and
-every change of sign on the drawn range is marked. The file's shape is build_mfs_data.py's to
+every change of sign on the drawn range is marked, the range of a chart joined to another at a
+surface, as a star's to Schwarzschild's vacuum, being the stretch its own curves cover. The file's shape is build_mfs_data.py's to
 refuse, and the physics its captions state is curvature.py's to check before it writes.
 """
 
@@ -78,6 +79,17 @@ def holders(view):
         yield f" frame {k}", frame
 
 
+def pictures(view):
+    """What a line view draws at once, with a name for each: the view alone, or each frame of its
+    movie with the curves and marks the view draws in every frame."""
+    frames = view.get("movie", {}).get("frames", [])
+    if not frames:
+        yield "", view
+    for k, frame in enumerate(frames):
+        yield f" frame {k}", {"curves": view.get("curves", []) + frame.get("curves", []),
+                              "marks": view.get("marks", []) + frame.get("marks", [])}
+
+
 @unittest.skipIf(np is None, "numpy and sympy are not installed")
 class CurvatureValues(unittest.TestCase):
     """Every value of every curvature figure is its published formula at its point."""
@@ -143,30 +155,43 @@ class CurvatureValues(unittest.TestCase):
             for view in data["views"]:
                 if view["kind"] != "line":
                     continue
-                for place, holder in holders(view):
-                    marks = [m["x"] for m in holder.get("marks", []) if m["class"] == "horizon"]
-                    own = [c for c in holder.get("curves", []) if c["class"] != "reference"]
-                    if not own:
+                for place, picture in pictures(view):
+                    marks = [m["x"] for m in picture["marks"] if m["class"] == "horizon"]
+                    # The charts the spacetime's own curves are drawn from, each at its parameters.
+                    charts = {}
+                    for curve in picture["curves"]:
+                        if curve["class"] != "reference":
+                            key = (curve["metric"], curve["system"], curve["coordinate"], tuple(sorted(curve["params"].items())))
+                            charts.setdefault(key, []).append(curve)
+                    if not charts:
                         continue
-                    curve = own[0]
-                    params = list(curve["params"])
-                    coordinate = curve["coordinate"]
-                    fn = self.evaluate(curve["metric"], curve["system"], "inverse_metric_components", [coordinate],
-                                       params, (coordinate, coordinate))
-                    values = [curve["params"][p] for p in params]
-                    # The centres of 20000 even steps, so that no sample stands on a zero written exactly,
-                    # as Schwarzschild's horizon r = r_s is at g = 0.
-                    lo, hi = view["x"]["from"], view["x"]["to"]
-                    xs = lo + (np.arange(20000) + 0.5) * (hi - lo) / 20000
-                    g = fn(xs, *values)
-                    ok = np.isfinite(g[:-1]) & np.isfinite(g[1:]) & (np.sign(g[:-1]) * np.sign(g[1:]) < 0)
-                    changes = xs[:-1][ok]
                     where = f"curvature/{name}.json {view['id']}{place}"
+                    changes = []
+                    for (metric, system, coordinate, params), curves in charts.items():
+                        fn = self.evaluate(metric, system, "inverse_metric_components", [coordinate],
+                                           [p for p, _ in params], (coordinate, coordinate))
+                        values = [v for _, v in params]
+                        # A chart alone holds across the whole axis; a chart joined to another at a
+                        # surface holds where its own curves are drawn.
+                        lo, hi = view["x"]["from"], view["x"]["to"]
+                        if len(charts) > 1:
+                            lo = min(c["points"][0][0] for c in curves)
+                            hi = max(c["points"][-1][0] for c in curves)
+                        # The centres of 20000 even steps, so that no sample stands on a zero written
+                        # exactly, as Schwarzschild's horizon r = r_s is at g = 0.
+                        xs = lo + (np.arange(20000) + 0.5) * (hi - lo) / 20000
+                        g = fn(xs, *values)
+                        ok = np.isfinite(g[:-1]) & np.isfinite(g[1:]) & (np.sign(g[:-1]) * np.sign(g[1:]) < 0)
+                        changes += list(xs[:-1][ok])
+                        for at in marks:
+                            if lo <= at <= hi:
+                                below, above = fn(np.array([at - 1e-9, at + 1e-9]), *values)
+                                with self.subTest(where):
+                                    self.assertLess(below * above, 0, f"{where}: g^xx does not change sign at {at}")
                     with self.subTest(where):
                         self.assertEqual(len(changes), len(marks), f"{where} marks {marks}, g^xx changes sign near {changes}")
-                        for at in marks:
-                            below, above = fn(np.array([at - 1e-9, at + 1e-9]), *values)
-                            self.assertLess(below * above, 0, f"{where}: g^xx does not change sign at {at}")
+                        self.assertTrue(all(any(abs(at - c) < (view["x"]["to"] - view["x"]["from"]) / 10000 for c in changes)
+                                            for at in marks), f"{where} marks {marks} away from the changes {changes}")
                     checked += 1
         self.assertGreater(checked, 0)
 
