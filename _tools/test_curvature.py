@@ -126,6 +126,9 @@ class CurvatureValues(unittest.TestCase):
                     xs = x["from"] + (np.arange(nx) + 0.5) * (x["to"] - x["from"]) / nx
                     ys = y["from"] + (np.arange(ny) + 0.5) * (y["to"] - y["from"]) / ny
                     X, Y = np.meshgrid(xs, ys)
+                    if grid.get("frame") == "meridian":
+                        # The box is the meridian plane, r sin theta across and r cos theta up.
+                        X, Y = np.hypot(X, Y), np.arctan2(X, Y)
                     expected = fn(X, Y, *[grid["params"][p] for p in params])
                     # Six significant figures: the value written is within half a unit of the sixth.
                     with self.subTest(where):
@@ -219,6 +222,12 @@ class CurvatureShape(unittest.TestCase):
                 curve = next(c for c in view["curves"] if c["panel"] == "K")
                 curve["points"][0][1] = -1.0
         self.assertIn("at or below zero", self.broken(negate))
+
+    def test_a_map_read_in_a_frame_of_no_known_kind_is_refused(self):
+        def reframed(data):
+            view = next(v for v in data["views"] if v["kind"] == "map")
+            view["map"]["frame"] = "polar"
+        self.assertIn("frame", self.broken(reframed))
 
     def test_a_class_drawn_and_not_named_is_refused(self):
         def unnamed(data):

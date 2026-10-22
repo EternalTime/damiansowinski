@@ -26,7 +26,8 @@ line   one coordinate across, and one or more panels stacked over it, each a sca
        spacetime's published scalar, and vertical lines at the horizons, the zeros of the
        published g^xx along the drawn coordinate.
 map    two coordinates, at one scale on both axes, and the scalar as a colour at the centre of
-       each cell of an even grid over the box, with points and curves marked on it.
+       each cell of an even grid over the box, with points and curves marked on it; in the frame
+       "meridian" the box is the meridian plane of a radius and an angle from the axis.
 movie  either of those stepped through a parameter or a time, a frame for each value, as an
        embedding diagram's movie is stepped.
 
@@ -359,12 +360,22 @@ def zeros(ck, name, published, lo, hi, params, n=SAMPLES):
     return out
 
 
-def cells(published, x_axis, y_axis, nx, ny, params):
+def meridian(X, Y):
+    """The radius r and the angle theta from the axis of the point (X, Y) of a meridian plane,
+    drawn across as r sin theta and up as r cos theta."""
+    return np.hypot(X, Y), np.arctan2(X, Y)
+
+
+def cells(published, x_axis, y_axis, nx, ny, params, frame=None):
     """A published scalar at the centres of an even grid of nx by ny cells over a map's box, a
-    row for each cell up, from the bottom, each with a value for each cell across."""
+    row for each cell up, from the bottom, each with a value for each cell across. In the frame
+    "meridian" the box is the meridian plane of the chart's radius and polar angle, and each
+    cell is read at the r and theta of its centre."""
     xs = x_axis["from"] + (np.arange(nx) + 0.5) * (x_axis["to"] - x_axis["from"]) / nx
     ys = y_axis["from"] + (np.arange(ny) + 0.5) * (y_axis["to"] - y_axis["from"]) / ny
     X, Y = np.meshgrid(xs, ys)
+    if frame == "meridian":
+        X, Y = meridian(X, Y)
     return xs, ys, published(X, Y, *params)
 
 
@@ -1369,6 +1380,221 @@ def born_infeld_charge(ck, src):
     return [still_particle, still_hole, movie_view]
 
 
+# ---------------------------------------------------------------- the C-metric
+
+CM_ALPHA = Fraction(1, 6)         # alpha in units of 1/m, as every drawing of the C-metric takes it
+CM_REACH = 8                      # the box runs out to r sin theta = 8 m and up to r cos theta = 8 m
+CM_CELLS = 20                     # the cells of the map to each m, across and up
+CM_RANGE = (1e-6, 1e2)            # the colours of K m^4 run from the first to the second
+
+
+def c_metric(ck, src):
+    """The C-metric at m = 1, alpha = 1/(6m) and C = 1/(1 + 2 alpha m) = 3/4, its Kretschmann
+    scalar over the meridian half plane of the spherical chart's r and theta.
+
+    The spherical chart publishes K = 48 m^2 (1 + alpha r cos theta)^6/r^6, a function of r and
+    theta alone, the same at every t and phi, and R = 0, so the figure is K alone, a map with r
+    and theta drawn as polar coordinates about r = 0, r sin theta across and r cos theta up, over
+    0 <= r sin theta <= 8 m and -1/alpha <= r cos theta <= 8 m. The chart ends below on the line
+    r cos theta = -1/alpha, null infinity, where 1 + alpha r cos theta vanishes, and the box ends
+    there with it; it reaches past the acceleration horizon r = 1/alpha = 6 m, out to the 8 m the
+    spacetime diagram of the inner axis reaches. The cells are a twentieth of m on a side,
+    coloured on a logarithmic scale from 10^-6 to 10^2 in units of 1/m^4. The horizons r = 2m and
+    r = 1/alpha, the zeros of the published g^rr, are marked as semicircles, the singularity
+    r = 0 as a point, and the cosmic string along the half axis theta = pi as a line.
+
+    What the captions state is checked here: R vanishes; at alpha = 0, K is Schwarzschild's
+    published scalar of the same mass; on the black hole horizon K falls from 1024/243 m^4 at
+    theta = 0 to 16/243 m^4 at theta = pi, 64 times less; K is 48 alpha^6 m^2 (d/r)^6 with
+    d = r cos theta + 1/alpha, so that every level is a conic of focus r = 0 and directrix d = 0,
+    the level 48 alpha^6 m^2 is the parabola r = d, and K tends to that level far out along
+    theta = 0; K diverges as 48 m^2/r^6 toward r = 0 from every direction; the Hong-Teo chart's
+    published K is the same scalar; with C = 3/4 a small circle about the half axis theta = 0 has
+    2 pi times its radius as its circumference and one about theta = pi half that, the cosmic
+    string, along which K is finite; and the clip stated is where K leaves the colours, on a grid
+    four times as fine as the map's, against where the conics of the two levels reach."""
+    m, alpha = 1.0, float(CM_ALPHA)
+    C = float(1 / (1 + 2 * CM_ALPHA))
+    params = {"m": m, "\\alpha": alpha}
+    K = nr_published(src, "c_metric", "spherical", "kretschmann", ["r", "theta"], ["m", "\\alpha"])
+    R = nr_published(src, "c_metric", "spherical", "ricci_scalar", ["r", "theta"], ["m", "\\alpha"])
+    grr = nr_published(src, "c_metric", "spherical", "inverse_metric_components", ["r", "theta"], ["m", "\\alpha"],
+                       ("r", "r"))
+    gthth = nr_published(src, "c_metric", "spherical", "metric_components", ["r", "theta"], ["m", "\\alpha"],
+                         ("\\theta", "\\theta"))
+    gphph = nr_published(src, "c_metric", "spherical", "metric_components", ["r", "theta"], ["m", "\\alpha", "C"],
+                         ("\\phi", "\\phi"))
+    K_ht = nr_published(src, "c_metric", "hong_teo", "kretschmann", ["x", "y"], ["m", "\\alpha"])
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    bottom = float(-1 / CM_ALPHA)
+    # Ticks every 2 m on both axes, as the spacetime diagram of the inner axis has them.
+    x_axis, y_axis = axis("$r\\sin\\theta/m$", 0, CM_REACH), axis("$r\\cos\\theta/m$", bottom, CM_REACH, 8)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "c_metric", [aspect])
+    scale = {"kind": "log", "from": CM_RANGE[0], "to": CM_RANGE[1]}
+    nx = round(CM_CELLS * (x_axis["to"] - x_axis["from"]))
+    ny = round(CM_CELLS * (y_axis["to"] - y_axis["from"]))
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [m, alpha], frame="meridian")
+    ck("c_metric K is finite and positive at every cell", np.all(np.isfinite(values)) and np.all(values > 0),
+       f"from {np.min(values):.3e} to {np.max(values):.3e}")
+    # Sixty digits at forty cells spread over the map, at the two beside the singularity and at
+    # four along null infinity.
+    rng = np.random.default_rng(1970)
+    picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+    centre = round(-bottom * CM_CELLS)
+    picks |= {(0, centre - 1), (0, centre)} | {(i, 0) for i in (0, nx // 3, 2 * nx // 3, nx - 1)}
+    picks = sorted(picks)
+    points = [[float(v) for v in meridian(xs[i], ys[j])] + [m, alpha] for i, j in picks]
+    agrees(ck, "c_metric map", K, points, [values[j, i] for i, j in picks])
+
+    r, th = K.coords
+    mm, aa = K.params
+    ck("c_metric R vanishes", sp.simplify(R.expr) == 0, f"R = {R.expr}")
+    schwarzschild = K_s.expr.subs({K_s.params[0]: 2 * mm, K_s.coords[0]: r})
+    ck("c_metric K at alpha = 0 is Schwarzschild's of the same mass", sp.simplify(K.expr.subs(aa, 0) - schwarzschild) == 0,
+       f"{schwarzschild}")
+    exact = {mm: 1, aa: sp.Rational(CM_ALPHA.numerator, CM_ALPHA.denominator), r: 2}
+    toward, beyond_ = K.expr.subs({**exact, th: 0}), K.expr.subs({**exact, th: sp.pi})
+    ck("c_metric K on the black hole horizon is 1024/243 m^4 at theta = 0 and 16/243 m^4 at theta = pi",
+       toward == sp.Rational(1024, 243) and beyond_ == sp.Rational(16, 243), f"{toward}, {beyond_}")
+    ck("c_metric K on the black hole horizon at theta = 0 is ((1 + 2 alpha m)/(1 - 2 alpha m))^6 = 64 times that at pi",
+       toward / beyond_ == ((1 + 2 * exact[aa]) / (1 - 2 * exact[aa])) ** 6 == 64)
+    around = np.linspace(0, math.pi, SAMPLES)
+    ck("c_metric K falls along the black hole horizon from theta = 0 to theta = pi",
+       np.all(np.diff(K(2.0, around, m, alpha)) < 0))
+    focus = 48 * aa ** 6 * mm ** 2 * ((r * sp.cos(th) + 1 / aa) / r) ** 6
+    ck("c_metric K is 48 alpha^6 m^2 (d/r)^6 with d = r cos theta + 1/alpha", sp.simplify(K.expr - focus) == 0)
+    level = 48 * alpha ** 6 * m ** 2
+    ck("c_metric 48 alpha^6 m^2 is 1/972 m^4", abs(level * 972 - 1) < 1e-15, tex_number(level))
+    on_parabola = []
+    for z in np.linspace(bottom / 2, CM_REACH, 9):
+        radius = z - bottom
+        on_parabola.append(float(K.exact([radius, math.acos(z / radius), m, alpha])) / level - 1)
+    ck("c_metric K is 48 alpha^6 m^2 on the parabola r = r cos theta + 1/alpha",
+       max(map(abs, on_parabola)) < 1e-12, f"worst {max(map(abs, on_parabola)):.1e}")
+    far = [float(K.exact([radius, 0, m, alpha])) / level - 1 for radius in (1e4, 1e8, 1e12)]
+    ck("c_metric K tends to 48 alpha^6 m^2 from above far out along theta = 0",
+       all(v > 0 for v in far) and far[0] > far[1] > far[2] and far[2] < 1e-10, f"{far}")
+    near = [float(K.exact([1e-8, angle, m, alpha])) * 1e-48 / 48 - 1 for angle in np.linspace(0, math.pi, 7)]
+    ck("c_metric K diverges as 48 m^2/r^6 toward r = 0 from every direction", max(map(abs, near)) < 1e-6,
+       f"worst {max(map(abs, near)):.1e}")
+    x, y = K_ht.coords
+    hong_teo = K_ht.expr.subs({x: sp.cos(th), y: 1 / (aa * r), K_ht.params[0]: mm, K_ht.params[1]: aa})
+    ck("c_metric the Hong-Teo chart's K is the same scalar at x = cos theta, y = 1/(alpha r)",
+       sp.simplify(hong_teo - K.expr) == 0)
+
+    # The horizons, the zeros of g^rr along rays from r = 0 across the box, at 2m and 1/alpha on
+    # every ray but theta = pi, where null infinity ends the ray at 1/alpha.
+    rays = []
+    for angle in np.linspace(0, math.pi, 13)[:-1]:
+        reach = min(CM_REACH / max(math.sin(angle), 1e-300), CM_REACH / math.cos(angle) if math.cos(angle) > 0
+                    else bottom / math.cos(angle) if math.cos(angle) < 0 else math.inf)
+        # A ray that ends on null infinity stops just short of it, where g^rr has its double zero.
+        rays.append(zeros(ck, f"c_metric g^rr at theta = {angle:.4f}", grr, 0.0, reach * (1 - 1e-9), [angle, m, alpha],
+                          n=4000))
+    radii = rays[0]
+    ck("c_metric has its horizons at r = 2m and r = 1/alpha on every ray",
+       all(len(z) == 2 and abs(z[0] - 2) < 1e-12 and abs(z[1] - 6) < 1e-12 for z in rays), f"{radii}")
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+
+    def semicircle(radius):
+        """The circle r = radius from theta = 0 to pi, in chords that stray from it by less than
+        TOLERANCE of the plot's units."""
+        n = math.ceil(math.pi / (2 * math.acos(1 - TOLERANCE / (radius * per_unit)))) + 1
+        angles = np.linspace(0, math.pi, n)
+        sag = radius * per_unit * (1 - math.cos(math.pi / (n - 1) / 2))
+        ck(f"c_metric the circle r = {radius:g} strays from its chords by less than the tolerance", sag < TOLERANCE,
+           f"{sag:.4f} in {n} points")
+        return [[float(radius * math.sin(a)) + 0.0, float(radius * math.cos(a)) + 0.0] for a in angles]
+    horizons = [semicircle(radius) for radius in radii]
+    flips = []
+    for line in horizons:
+        for px, py in line:
+            radius, angle = (float(v) for v in meridian(px, py))
+            if 1 + alpha * radius * (1 + 1e-7) * math.cos(angle) <= 0:
+                continue
+            inside, outside = grr(radius * (1 - 1e-7), angle, m, alpha), grr(radius * (1 + 1e-7), angle, m, alpha)
+            flips.append(float(inside) * float(outside) < 0)
+    ck("c_metric g^rr changes sign across every point of both horizons marked", all(flips), f"{len(flips)} points")
+
+    # The string: a small circle about each half axis, its circumference over 2 pi times the
+    # distance out to it along theta, from the published g_theta_theta and g_phi_phi.
+    delta = 1e-8
+
+    def turn(pole, toward_):
+        angle = pole + toward_ * delta
+        return float(sp.sqrt(gphph.exact([1.0, angle, m, alpha, C])) / (delta * sp.sqrt(gthth.exact([1.0, angle, m, alpha]))))
+    regular, string = turn(0.0, 1), turn(math.pi, -1)
+    ck("c_metric with C = 3/4 the half axis theta = 0 is regular", abs(regular - 1) < 1e-6, f"{regular:.9f}")
+    ck("c_metric with C = 3/4 the half axis theta = pi has circles of half the circumference, a string",
+       abs(string - 0.5) < 1e-6 and abs((1 - string) * 2 * math.pi - 8 * math.pi * alpha * m / (1 + 2 * alpha * m)) < 1e-5,
+       f"{string:.9f}")
+    along = K(np.linspace(1e-3, -bottom, SAMPLES)[1:-1], math.pi, m, alpha)
+    ck("c_metric K is finite and positive along the string", np.all(np.isfinite(along)) and np.all(along > 0))
+
+    # Where K leaves the colours, on a grid four times as fine as the map's, against the conics
+    # of the two levels: the top level an ellipse reaching farthest from r = 0 on theta = 0, and
+    # the bottom level a hyperbola reaching highest above null infinity on the right edge.
+    fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [m, alpha], frame="meridian")
+    FX, FY = np.meshgrid(fx, fy)
+    high, low = ~(fine <= CM_RANGE[1]), fine < CM_RANGE[0]
+    d_high = float(np.hypot(FX, FY)[high].max())
+    d_low = float((FY - bottom)[low].max())
+    q_high = (CM_RANGE[1] / level) ** (1 / 6)
+    r_high = 1 / (alpha * (q_high - 1))
+    q_low = (CM_RANGE[0] / level) ** (1 / 6)
+    lo_, hi_ = 0.0, CM_REACH - bottom
+    for _ in range(200):
+        mid = 0.5 * (lo_ + hi_)
+        lo_, hi_ = (mid, hi_) if mid < q_low * math.hypot(CM_REACH, mid + bottom) else (lo_, mid)
+    cell = 1 / (4 * CM_CELLS)
+    ck("c_metric K passes the top of its colours only near r = 0, inside the ellipse of that level",
+       r_high - 2 * cell < d_high <= r_high, f"within r = {d_high:.4f}, the ellipse reaching {r_high:.4f}")
+    ck("c_metric K passes the bottom of its colours only near null infinity, below the hyperbola of that level",
+       lo_ - 2 * cell < d_low <= lo_, f"within {d_low:.4f}, the hyperbola reaching {lo_:.4f}")
+    rows = [[rounded(v) for v in row] for row in values]
+    view = {
+        "id": "meridian", "label": "the half plane of $r$ and $\\theta$", "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "c_metric", "system": "spherical", "scalar": "kretschmann", "x": "r", "y": "\\theta",
+                "frame": "meridian", "params": params, "nx": nx, "ny": ny, "cells": rows},
+        "marks": [{"class": "horizon", "points": line} for line in horizons]
+                 + [{"class": "string", "points": [[0.0, 0.0], [0.0, bottom]]},
+                    {"class": "singular", "at": [0.0, 0.0]}],
+        "legend": [["line", "horizon", "the horizons $r = 2m$ and $r = 1/\\alpha$"],
+                   ["line", "string", "the cosmic string, $\\theta = \\pi$"],
+                   ["point", "singular", "$r = 0$, where $K$ diverges"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the C-metric over the half plane of $r$ and $\\theta$, drawn as polar "
+            "coordinates about the black hole ($\\alpha m = 1/6$), the same at every $t$ and $\\phi$. The spacetime "
+            "is a vacuum, so its Ricci scalar vanishes. At $\\alpha = 0$ the scalar "
+            "$K = 48m^2(1 + \\alpha r\\cos\\theta)^6/r^6$ is Schwarzschild's $48m^2/r^6$, the same in every "
+            "direction, and for $\\alpha > 0$ it is larger on the half axis $\\theta = 0$, between the black "
+            f"holes, than on the half axis $\\theta = \\pi$. On the black hole horizon it falls from "
+            f"${tex_number(float(toward))}/m^4$ at $\\theta = 0$ to ${tex_number(float(beyond_))}/m^4$ at "
+            "$\\theta = \\pi$, by the factor $((1 + 2\\alpha m)/(1 - 2\\alpha m))^6 = 64$.",
+            "In these coordinates every level of $K$ is a conic with its focus at the singularity $r = 0$ and the "
+            "line $r\\cos\\theta = -1/\\alpha$ as its directrix, since $K = 48\\alpha^6m^2(d/r)^6$ with "
+            "$d = r\\cos\\theta + 1/\\alpha$ the height above that line. The level "
+            f"$K = 48\\alpha^6m^2 = {level * 1e3:.2f} \\times 10^{{-3}}/m^4$, which $K$ approaches far out along $\\theta = 0$, "
+            "is a parabola, the levels above it are ellipses, and those below it are hyperbolas. On the "
+            "directrix $1 + \\alpha r\\cos\\theta$ vanishes, and $K$ with it: the line is null infinity, where "
+            "the chart ends.",
+            "The black hole horizon $r = 2m$ and the acceleration horizon $r = 1/\\alpha = 6m$, where $g^{rr}$ "
+            "vanishes, are circles about $r = 0$, and on the half axis $\\theta = \\pi$ the acceleration horizon lies at null "
+            "infinity. With $C = 1/(1 + 2\\alpha m)$ that half axis carries the cosmic string, a conical "
+            "singularity along which $K$ stays finite.",
+        ],
+        "settings": "$m = GM/c^2 = 1$, the unit of every length, $\\alpha = 1/(6m)$, and "
+                    "$C = 1/(1 + 2\\alpha m) = 3/4$, which leaves the half axis $\\theta = 0$ regular.",
+        "clip": ("We colour $K\\,m^4$ on a logarithmic scale from $10^{-6}$ to $10^{2}$ and give a value beyond it "
+                 f"the colour of the end it passes: $K$ passes $10^{{2}}/m^4$ inside $r = {d_high:.2f}\\,m$ "
+                 f"and falls below $10^{{-6}}/m^4$ within ${d_low:.2f}\\,m$ of null infinity."),
+    }
+    return [view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -1377,6 +1603,7 @@ DRAWN = {
     "born_infeld_charge": born_infeld_charge,
     "boulware_deser": boulware_deser,
     "brill_charged_taub_nut": brill_charged_taub_nut,
+    "c_metric": c_metric,
 }
 
 

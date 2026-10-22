@@ -449,6 +449,9 @@ def load_embedding(metrics):
 
 CURVATURE_KINDS = ("line", "map")
 CURVATURE_SCALARS = ("kretschmann", "ricci_scalar")
+# The frames a map's box may be read in other than its chart's two coordinates themselves: the
+# meridian plane of a radius and an angle from the axis.
+MAP_FRAMES = ("meridian",)
 SCALE_KINDS = ("linear", "log", "symlog")
 LEGEND_KINDS = ("line", "point", "fill")
 TEX_LABEL = re.compile(r"^\$[^$]+\$$")
@@ -573,6 +576,8 @@ def check_map(where, view, read, x):
             at = f"{where}{name}, its map"
             grid = grid or {}
             check_drawn_from(at, grid, read)
+            if "frame" in grid and grid["frame"] not in MAP_FRAMES:
+                raise DataError(f"{at} is read in the frame {grid['frame']!r}, which is none of {', '.join(MAP_FRAMES)}")
             nx, ny, rows = grid.get("nx"), grid.get("ny"), grid.get("cells") or []
             if not (isinstance(nx, int) and isinstance(ny, int) and nx >= 2 and ny >= 2 and len(rows) == ny
                     and all(isinstance(row, list) and len(row) == nx for row in rows)):
