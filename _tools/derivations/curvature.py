@@ -7054,6 +7054,292 @@ def majumdar_papapetrou(ck, src):
     return [meridian, line]
 
 
+# ---------------------------------------------------------------- the Myers-Perry black hole
+
+MYP_SPIN = Fraction(3, 5)         # a in units of sqrt(mu), as every drawing of the black hole in five dimensions takes it
+MYP_REACH = 3                     # the box runs out to 3 sqrt(mu) across and up, as the research list sets
+MYP_CELLS = 50                    # the cells of the map to each sqrt(mu), across and up
+MYP_SCALE = {"kind": "symlog", "from": -1e4, "to": 1e4, "linear": 1e-3}   # the colours of K mu^2
+
+
+def myers_perry(ck, src):
+    """The Myers-Perry black hole in five dimensions with one spin, at mu = 1 and a = 3 sqrt(mu)/5,
+    its Kretschmann scalar over the meridian quarter plane of the ingoing Kerr chart's r and theta in
+    the oblate frame.
+
+    The chart publishes K = 24 mu^2 (r^2 - 3 a^2 cos^2 theta)(3 r^2 - a^2 cos^2 theta)/(r^2 + a^2 cos^2 theta)^6,
+    a function of r and theta alone, the same at every v, phi and psi, and R = 0, so the figure is K
+    alone, a map in the frame "oblate" about the ring r = 0, theta = pi/2: sqrt(r^2 + a^2) sin theta
+    across and r cos theta up, the distances from the centre in the plane of rotation and in the plane
+    across it, as they are in flat space at mu = 0. Both are radii, theta running from 0 to pi/2 alone,
+    so the box is a quarter plane, each r a quarter ellipse with its focus on the ring, the ring the
+    point (a, 0) and r = 0 the disc the ring bounds, along the bottom edge. The box is
+    0 <= across, up <= 3 sqrt(mu), the reach of the research list, in cells a fiftieth of sqrt(mu) on a
+    side, coloured on a signed logarithmic scale, linear within 10^-3 of zero, from -10^4 to 10^4 in
+    units of 1/mu^2, which holds the centre of the disc, since K changes sign and diverges at the ring.
+    The ingoing chart runs through the horizon to r = 0, so every cell lies in its domain. The
+    horizon r_+, the zero of the published g^rr, is marked as a quarter ellipse, the ergosurface, the
+    zero of the published g_vv, as the curve r = sqrt(mu - a^2 cos^2 theta), and the ring as a point.
+
+    What the caption states is checked here: R vanishes; the same K in the one spin Boyer-Lindquist
+    chart and in the two spin chart at b = 0; at mu = 0 the published Boyer-Lindquist metric is flat
+    space with the two coordinates across and up the radii in two planes; K at a = 0 and K on the
+    equator are Tangherlini's published scalar at r_h = sqrt(mu); K = 24 mu^2 (1 + 2 cos 4 alpha)/Sigma^4
+    with tan alpha = a cos theta/r, in sixty digits at forty points; K vanishes on the curves
+    r = sqrt 3 a cos theta and r = a cos theta/sqrt 3, on the axis at those two r alone, and is negative
+    between them; g^rr has one zero on every ray, at r_+ = sqrt(mu - a^2), and g_vv one, at
+    sqrt(mu - a^2 cos^2 theta); on the horizon K is 72 mu^2/r_+^8 on the equator and the value stated at
+    the poles, and changes sign once between them, and at the poles it is negative for
+    sqrt(mu)/2 < a < sqrt(3 mu)/2 alone, vanishing at both ends; K on the horizon's equator is
+    72 mu^2/(mu - a^2)^4 at every spin, and Kerr's is 48 m^2/r_+^6 with r_+ >= m; toward the ring
+    K 2 a^4 d^4/3 mu^2 tends to 1 + 2 cos 2 chi, d the distance from the ring on the map and chi the angle
+    about it, in sixty digits at d = 10^-7 and 10^-9; on the disc K = 72 mu^2/a^8 cos^8 theta; the
+    horizon and the ergosurface across every point marked; and the clip stated is where |K| leaves
+    the colours, on a grid four times as fine as the map's."""
+    mu, a = 1.0, float(MYP_SPIN)
+    params = {"\\mu": mu, "a": a}
+    values = list(params.values())
+    names = list(params)
+
+    def read(system, field, indices=None, extra=()):
+        return nr_published(src, "myers_perry", system, field, ["r", "theta"], names + list(extra), indices)
+
+    K, ricci = read("ingoing_kerr", "kretschmann"), read("ingoing_kerr", "ricci_scalar")
+    grr = read("ingoing_kerr", "inverse_metric_components", ("r", "r"))
+    gvv = read("ingoing_kerr", "metric_components", ("v", "v"))
+    rp = math.sqrt(mu - a * a)
+    x_axis = axis("$\\sqrt{r^2 + a^2}\\,\\sin\\theta/\\sqrt{\\mu}$", 0, MYP_REACH)
+    y_axis = axis("$r\\cos\\theta/\\sqrt{\\mu}$", 0, MYP_REACH)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "myers_perry", [aspect])
+    scale = dict(MYP_SCALE)
+
+    # The frame: every point off the disc, as every cell's centre is, is read at the r and theta
+    # that draw it back there, with theta between 0 and pi/2.
+    X, Y = np.meshgrid(np.linspace(0, MYP_REACH, 61), np.linspace(1e-3, MYP_REACH, 60))
+    rr, th_ = oblate(X, Y, a)
+    back = np.hypot(np.sqrt(rr ** 2 + a * a) * np.sin(th_) - X, rr * np.cos(th_) - Y)
+    ck("myers_perry the oblate frame draws each point of the quarter plane back where it was read",
+       np.max(back) < 1e-12 and np.all(rr >= 0) and np.all((th_ >= 0) & (th_ <= math.pi / 2)),
+       f"worst {np.max(back):.1e}")
+
+    nx, ny = MYP_CELLS * MYP_REACH, MYP_CELLS * MYP_REACH
+    xs, ys, cellv = cells(K, x_axis, y_axis, nx, ny, values, frame="oblate", focus=a)
+    ck("myers_perry K is finite at every cell", np.all(np.isfinite(cellv)),
+       f"from {np.min(cellv):.4e} to {np.max(cellv):.4e}")
+    # Sixty digits at forty cells spread over the map, at the two beside the ring, the one at the
+    # centre of the disc and the corners.
+    rng = np.random.default_rng(1986)
+    ring_i = round(a * MYP_CELLS)
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+                   | {(ring_i - 1, 0), (ring_i, 0), (0, 0), (nx - 1, 0), (0, ny - 1), (nx - 1, ny - 1)})
+    points = [[float(v) for v in oblate(xs[i], ys[j], a)] + values for i, j in picks]
+    agrees(ck, "myers_perry map", K, points, [cellv[j, i] for i, j in picks])
+
+    r, th = K.coords
+    mu_, a_ = K.params
+    ck("myers_perry R vanishes", sp.simplify(ricci.expr) == 0, f"R = {ricci.expr}")
+    for system, extra in (("boyer_lindquist", ()), ("two_spins", ("b",))):
+        other = read(system, "kretschmann", extra=extra)
+        same = other.expr.subs({other.coords[0]: r, other.coords[1]: th, other.params[0]: mu_, other.params[1]: a_}
+                               | ({other.params[2]: 0} if extra else {}))
+        ck(f"myers_perry K in the chart {system}{' at b = 0' if extra else ''} is the ingoing chart's",
+           sp.simplify(same - K.expr) == 0)
+
+    # At mu = 0 the metric is flat space, sqrt(r^2 + a^2) sin theta and r cos theta the radii in the
+    # planes of phi and of psi.
+    g = {pair: read("boyer_lindquist", "metric_components", pair)
+         for pair in (("t", "t"), ("t", "\\phi"), ("r", "r"), ("\\theta", "\\theta"), ("\\phi", "\\phi"), ("\\psi", "\\psi"))}
+    flat = {pair: sp.simplify(c.expr.subs({c.coords[0]: r, c.coords[1]: th, c.params[0]: 0, c.params[1]: a_}))
+            for pair, c in g.items()}
+    Xs, Ys = sp.sqrt(r ** 2 + a_ ** 2) * sp.sin(th), r * sp.cos(th)
+    J = sp.Matrix([[sp.diff(Xs, r), sp.diff(Xs, th)], [sp.diff(Ys, r), sp.diff(Ys, th)]])
+    plane = sp.simplify(J.T * J)
+    ck("myers_perry at mu = 0 the published metric is flat space in the radii of the two planes",
+       flat[("t", "t")] == -1 and flat[("t", "\\phi")] == 0
+       and sp.simplify(plane[0, 0] - flat[("r", "r")]) == 0 and sp.simplify(plane[1, 1] - flat[("\\theta", "\\theta")]) == 0
+       and sp.simplify(plane[0, 1]) == 0 and sp.simplify(flat[("\\phi", "\\phi")] - Xs ** 2) == 0
+       and sp.simplify(flat[("\\psi", "\\psi")] - Ys ** 2) == 0, f"{flat}")
+
+    K_t = nr_published(src, "tangherlini", "spherical", "kretschmann", ["r"], ["r_h"])
+    tangherlini = K_t.expr.subs({K_t.params[0]: sp.sqrt(mu_), K_t.coords[0]: r})
+    ck("myers_perry K at a = 0 is Tangherlini's at r_h = sqrt(mu)", sp.simplify(K.expr.subs(a_, 0) - tangherlini) == 0,
+       f"{tangherlini}")
+    ck("myers_perry K on the equator is Tangherlini's at every spin",
+       sp.simplify(K.expr.subs(th, sp.pi / 2) - tangherlini) == 0)
+    y = a_ * sp.cos(th)
+    sigma = r ** 2 + y ** 2
+    real_part = sp.expand(((r + sp.I * y) ** 4 + (r - sp.I * y) ** 4) / 2)
+    ck("myers_perry K is 24 mu^2 (2 Re (r + i a cos theta)^4 + Sigma^2)/Sigma^6",
+       sp.simplify(24 * mu_ ** 2 * (2 * real_part + sigma ** 2) / sigma ** 6 - K.expr) == 0)
+    worst = 0.0
+    for rv, tv in zip(rng.uniform(0.05, 4, 40), rng.uniform(0, math.pi / 2, 40)):
+        exact = K.exact([rv, tv] + values)
+        s70 = sp.Float(rv, 70) ** 2 + (sp.Float(a, 70) * sp.cos(sp.Float(tv, 70))) ** 2
+        alpha = sp.atan2(sp.Float(a, 70) * sp.cos(sp.Float(tv, 70)), sp.Float(rv, 70))
+        worst = max(worst, abs(float(exact * s70 ** 4 / 24 - (1 + 2 * sp.cos(4 * alpha)))))
+    ck("myers_perry K is 24 mu^2 (1 + 2 cos 4 alpha)/Sigma^4 with tan alpha = a cos theta/r, in sixty digits",
+       worst < 1e-40, f"worst {worst:.1e}")
+    ck("myers_perry K vanishes on r = sqrt 3 a cos theta and on r = a cos theta/sqrt 3",
+       all(sp.simplify(K.expr.subs(r, c * a_ * sp.cos(th))) == 0 for c in (sp.sqrt(3), 1 / sp.sqrt(3))))
+    between = [float(K(c * a * math.cos(tv), tv, *values)) for tv in np.linspace(0, 1.5, 16) for c in (0.6, 1.0, 1.6)]
+    ck("myers_perry K is negative between the two curves where it vanishes", all(v < 0 for v in between))
+    ck("myers_perry K is even in r", sp.simplify(K.expr.subs(r, -r) - K.expr) == 0)
+    disc = 72 * mu_ ** 2 / (a_ ** 8 * sp.cos(th) ** 8)
+    ck("myers_perry K on the disc r = 0 is 72 mu^2/a^8 cos^8 theta", sp.simplify(K.expr.subs(r, 0) - disc) == 0)
+    centre = float(K.exact([0.0, 0.0] + values))
+    ck("myers_perry K at the centre of the disc is 72 mu^2/a^8", abs(centre * a ** 8 / 72 - 1) < 1e-14, f"{centre:.6f}")
+
+    # The axis: two zeros in the box, at a/sqrt 3 and sqrt 3 a.
+    def on(theta):
+        return lambda x, *p: K(x, np.full_like(np.asarray(x, dtype=float), theta), *values)
+    z = zeros(ck, "myers_perry K on the axis", on(0.0), 0.0, MYP_REACH, [])
+    expected = [a / math.sqrt(3), math.sqrt(3) * a]
+    ck("myers_perry K on the axis vanishes at a/sqrt 3 and sqrt 3 a alone",
+       len(z) == 2 and all(abs(u - v) < 1e-12 for u, v in zip(z, expected)), f"{z}")
+    signs = [float(K(x, 0.0, *values)) for x in (0.0, (z[0] + z[1]) / 2, MYP_REACH)]
+    ck("myers_perry K on the axis is negative between its zeros alone", signs[0] > 0 > signs[1] and signs[2] > 0,
+       f"{signs}")
+
+    # The horizon, one zero of g^rr on every ray, and the ergosurface, one zero of g_vv.
+    rays_ok, ergo_ok = [], []
+    for angle in np.linspace(0, math.pi / 2, 13):
+        hz = zeros(ck, f"myers_perry g^rr at theta = {angle:.4f}", lambda x, *p, t=angle: grr(x, t, *values),
+                   0.0, 2 * MYP_REACH, [])
+        rays_ok.append(len(hz) == 1 and abs(hz[0] - rp) < 1e-12)
+        ez = zeros(ck, f"myers_perry g_vv at theta = {angle:.4f}", lambda x, *p, t=angle: gvv(x, t, *values),
+                   0.0, 2 * MYP_REACH, [])
+        ergo_ok.append(len(ez) == 1 and abs(ez[0] - math.sqrt(mu - (a * math.cos(angle)) ** 2)) < 1e-12)
+    ck("myers_perry has one horizon, at r_+ = sqrt(mu - a^2), on every ray", all(rays_ok), f"{rp:.6f}")
+    ck("myers_perry has one ergosurface, at sqrt(mu - a^2 cos^2 theta), on every ray", all(ergo_ok))
+
+    # On the horizon: 72 mu^2/r_+^8 on its equator, negative at its poles.
+    pole, equator = float(K.exact([rp, 0.0] + values)), float(K.exact([rp, math.pi / 2] + values))
+    ck("myers_perry K on the equator of the horizon is 72 mu^2/r_+^8", abs(equator * rp ** 8 / 72 - 1) < 1e-14,
+       f"{equator:.6f}")
+    ck("myers_perry K at the poles of the horizon is negative", pole < 0, f"{pole:.6f}")
+    along = zeros(ck, "myers_perry K along the horizon",
+                  lambda t, *p: K(np.full_like(np.asarray(t, dtype=float), rp), t, *values), 0.0, math.pi / 2, [])
+    ck("myers_perry K changes sign once along the horizon from its pole to its equator", len(along) == 1, f"{along}")
+    on_pole = K.expr.subs({th: 0, r: sp.sqrt(mu_ - a_ ** 2)})
+    ck("myers_perry K at the poles of the horizon vanishes at a = sqrt(mu)/2 and sqrt(3 mu)/2",
+       all(sp.simplify(on_pole.subs(a_, c * sp.sqrt(mu_))) == 0 for c in (sp.Rational(1, 2), sp.sqrt(3) / 2)))
+    spins = np.linspace(0.0025, 0.9975, 200)       # off both zeros, a = 0.5 and 0.866
+    at_poles = [float(K(math.sqrt(1 - s * s), 0.0, 1.0, s)) for s in spins]
+    ck("myers_perry K at the poles of the horizon is negative for sqrt(mu)/2 < a < sqrt(3 mu)/2 alone",
+       all((v < 0) == (0.5 < s < math.sqrt(3) / 2) for v, s in zip(at_poles, spins)))
+    on_equator = K.expr.subs({th: sp.pi / 2, r: sp.sqrt(mu_ - a_ ** 2)})
+    ck("myers_perry K on the horizon's equator is 72 mu^2/(mu - a^2)^4 at every spin",
+       sp.simplify(on_equator - 72 * mu_ ** 2 / (mu_ - a_ ** 2) ** 4) == 0)
+    K_k = nr_published(src, "kerr", "boyer_lindquist", "kretschmann", ["r", "theta"], ["G", "M", "a"])
+    kr, kth = K_k.coords
+    kG, kM, ka = K_k.params
+    ck("myers_perry Kerr's K on the equator is 48 m^2/r^6, so 48 m^2/r_+^6 with r_+ >= m at every spin",
+       sp.simplify(K_k.expr.subs(kth, sp.pi / 2) - 48 * kG ** 2 * kM ** 2 / kr ** 6) == 0)
+
+    # Toward the ring: K 2 a^4 d^4/3 mu^2 tends to 1 + 2 cos 2 chi, in sixty digits, the point
+    # (a + d cos chi, d sin chi) read back to r and theta in seventy.
+    def near(d, chi):
+        mp = mpmath
+        with mp.workdps(70):
+            Xp, Yp, A = mp.mpf(a) + d * mp.cos(chi), d * mp.sin(chi), mp.mpf(a)
+            q = Xp ** 2 + Yp ** 2 - A ** 2
+            root = mp.sqrt(q ** 2 + 4 * A ** 2 * Yp ** 2)
+            r2 = (q + root) / 2 if q >= 0 else 2 * (A * Yp) ** 2 / (root - q)
+            rv = mp.sqrt(r2)
+            tv = mp.atan2(Xp * rv, Yp * mp.sqrt(r2 + A ** 2))
+            point = {r: sp.Float(rv, 70), th: sp.Float(tv, 70), mu_: 1, a_: sp.Float(A, 70)}
+            k = K.expr.xreplace(point).evalf(60)
+            return float(k * sp.Float(2 * A ** 4 * d ** 4 / 3, 70)) - (1 + 2 * math.cos(2 * float(chi)))
+    # Every twelfth of a half turn about the ring from the equator outside, short of the disc,
+    # chi = pi, where r = 0.
+    angles = [mpmath.mpf(k) * mpmath.pi / 12 for k in range(0, 12)]
+    gaps = [abs(near(mpmath.mpf(d), chi)) for d in ("1e-7", "1e-9") for chi in angles]
+    ck("myers_perry toward the ring K 2 a^4 d^4/3 mu^2 tends to 1 + 2 cos 2 chi", max(gaps) < 1e-5,
+       f"worst {max(gaps):.1e}")
+
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+
+    def drawn(radius):
+        """The curve r = radius(theta) from theta = 0 to pi/2 on the map, thinned so that it strays
+        from 4001 points of it by less than TOLERANCE of the plot's units."""
+        t = np.linspace(0, math.pi / 2, SAMPLES)
+        rv = radius(t)
+        Xc, Yc = np.sqrt(rv ** 2 + a * a) * np.sin(t), rv * np.cos(t)
+        keep = thinned(Xc * per_unit, Yc * per_unit, TOLERANCE)
+        return [[float(Xc[k]) + 0.0, float(Yc[k]) + 0.0] for k in keep]
+    horizon = drawn(lambda t: np.full_like(t, rp))
+    ergo = drawn(lambda t: np.sqrt(mu - (a * np.cos(t)) ** 2))
+
+    def flips(line, fn):
+        out = []
+        for px, py in line:
+            rv, tv = (float(v) for v in oblate(px, py, a))
+            out.append(float(fn(rv * (1 - 1e-7), tv, *values)) * float(fn(rv * (1 + 1e-7), tv, *values)) < 0)
+        return out
+    hf, ef = flips(horizon, grr), flips(ergo, gvv)
+    ck("myers_perry g^rr changes sign across every point of the horizon marked", all(hf), f"{len(hf)} points")
+    ck("myers_perry g_vv changes sign across every point of the ergosurface marked", all(ef), f"{len(ef)} points")
+
+    # Where |K| leaves the colours, on a grid four times as fine as the map's: only near the ring,
+    # beside it and along the disc it bounds.
+    fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, values, frame="oblate", focus=a)
+    FX, FY = np.meshgrid(fx, fy)
+    out_ = ~(np.abs(fine) <= MYP_SCALE["to"])
+    ck("myers_perry |K| passes the ends of its colours of both signs", np.any(fine > MYP_SCALE["to"])
+       and np.any(fine < MYP_SCALE["from"]))
+    d_clip = float(np.hypot(FX - a, FY)[out_].max())
+    # On the disc K = 72 mu^2/a^8 cos^8 theta passes 10^4 where a sin theta is past this.
+    on_disc = a - a * math.sqrt(1 - (72 / (MYP_SCALE["to"] * a ** 8)) ** 0.25)
+    coarse = np.meshgrid(xs, ys)
+    ck("myers_perry |K| passes 10^4/mu^2 only near the ring, on the map's cells as on the fine grid",
+       float(np.hypot(coarse[0] - a, coarse[1])[~(np.abs(cellv) <= MYP_SCALE["to"])].max()) <= d_clip
+       and abs(d_clip - on_disc) < 2 / (4 * MYP_CELLS), f"within {d_clip:.4f} of the ring, {on_disc:.4f} along the disc")
+    # The distance stated is rounded up, so that no value beyond the colours lies farther out.
+    d_stated = math.ceil(d_clip * 100) / 100
+
+    view = {
+        "id": "meridian", "label": "the quarter plane of $r$ and $\\theta$", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,\\mu^2$", "scale": scale, "ticks": every_second(scale)},
+        "map": {"metric": "myers_perry", "system": "ingoing_kerr", "scalar": "kretschmann", "x": "r", "y": "\\theta",
+                "frame": "oblate", "focus": "a", "params": params, "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in cellv]},
+        "marks": [{"class": "horizon", "points": horizon}, {"class": "ergosurface", "points": ergo},
+                  {"class": "singular", "at": [a, 0.0]}],
+        "legend": [["line", "horizon", "the horizon $r_+ = \\sqrt{\\mu - a^2}$, where $g^{rr} = 0$"],
+                   ["line", "ergosurface", "the ergosurface $r = \\sqrt{\\mu - a^2\\cos^2\\theta}$"],
+                   ["point", "singular", "the ring $r = 0$, $\\theta = \\pi/2$, where $K$ diverges"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the Myers-Perry black hole in five dimensions, turning in the plane of "
+            "$\\phi$ alone, over the quarter plane of $\\sqrt{r^2 + a^2}\\,\\sin\\theta$ and $r\\cos\\theta$ "
+            "($a = 0.6\\sqrt{\\mu}$), the same at every $t$, $\\phi$, and $\\psi$. The spacetime is a vacuum, so its "
+            "Ricci scalar vanishes. Across is the distance from the centre in the plane of rotation and up the "
+            "distance in the plane across it, as they are in flat space at $\\mu = 0$. Each $r$ is a quarter "
+            "ellipse with its focus on the ring singularity $r = 0$, $\\theta = \\pi/2$, a circle of radius $a$ "
+            "drawn as one point, and $r = 0$ is the disc the ring bounds, along the bottom edge.",
+            "Everywhere $K = 24\\mu^2(1 + 2\\cos 4\\alpha)/\\Sigma^4$, with $\\Sigma = r^2 + a^2\\cos^2\\theta$ and "
+            "$\\tan\\alpha = a\\cos\\theta/r$, and on the equator it is Tangherlini's $72\\mu^2/r^8$ at every spin. "
+            "It vanishes on the curves $r = \\sqrt{3}\\,a\\cos\\theta$ and $r = a\\cos\\theta/\\sqrt{3}$, which run "
+            f"from the axis at ${z[1]:.2f}\\sqrt{{\\mu}}$ and ${z[0]:.3f}\\sqrt{{\\mu}}$ into the ring, and it is "
+            "negative between them. There is one horizon, $r_+ = \\sqrt{\\mu - a^2}$, and no inner one. On it $K$ "
+            f"runs from $72\\mu^2/r_+^8 = {equator:.2f}/\\mu^2$ on the equator to ${pole:.2f}/\\mu^2$ at the poles, "
+            "where it is negative for $\\sqrt{\\mu}/2 < a < \\sqrt{3\\mu}/2$ alone.",
+            "Toward the ring $K \\approx 3\\mu^2(1 + 2\\cos 2\\chi)/2a^4d^4$, with the distance $d$ from the ring on "
+            "this map and the angle $\\chi$ about it from the equator outside: it grows as $d^{-4}$ and is negative "
+            "for $\\pi/3 < \\chi < 2\\pi/3$ alone. On the disc $K = 72\\mu^2/a^8\\cos^8\\theta$, which is "
+            f"${centre:.0f}/\\mu^2$ at its centre. As $a$ grows toward $\\sqrt{{\\mu}}$ the horizon shrinks onto the "
+            "disc, and $K$ on its equator, $72\\mu^2/(\\mu - a^2)^4$, grows without bound, where Kerr's "
+            "stays finite at its extreme spin.",
+        ],
+        "settings": "$D = 5$, $\\mu = 1$, so that $\\sqrt{\\mu}$ is the unit of every length, and $a = 0.6\\sqrt{\\mu}$, "
+                    f"so that $r_+ = {rp:.1f}\\sqrt{{\\mu}}$.",
+        "clip": ("We colour $K\\,\\mu^2$ on a signed logarithmic scale, linear within $0.001$ of zero, from $-10^{4}$ "
+                 "to $10^{4}$, and give a value beyond it the colour of the end it passes: $|K|$ passes "
+                 f"$10^{{4}}/\\mu^2$, of both signs, only within ${d_stated:.2f}\\sqrt{{\\mu}}$ of the ring."),
+    }
+    return [view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -7085,6 +7371,7 @@ DRAWN = {
     "majumdar_papapetrou": majumdar_papapetrou,
     "mcvittie": mcvittie,
     "melvin": melvin,
+    "myers_perry": myers_perry,
 }
 
 
