@@ -4128,6 +4128,175 @@ def hayward(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- Gowdy's torus universe
+
+GOWDY_BOX = ((0, 2 * math.pi), (-2, 4))   # theta, and tau from -2 to 4, the box of the logarithmic chart's spacetime diagram
+GOWDY_CELLS = (126, 120)          # the cells of the map across and up, each a twentieth of a unit of theta and of tau
+GOWDY_SCALE = {"kind": "symlog", "from": -10.0, "to": 1e6, "linear": 1e-2}   # the colours of K L^4
+# The wave as the other drawings of the torus declare it, without how it was checked, which the
+# figure states in its docstring and not on the page.
+GOWDY_INPUT = nr.GOWDY_INPUT.replace(", checked to solve this spacetime's own field equations;", ";")
+
+
+def gowdy(ck, src):
+    """A polarised Gowdy wave on the torus, its Kretschmann scalar over the plane of theta and the
+    logarithmic time tau = -ln t, at L = 1.
+
+    The logarithmic chart publishes K in tau, theta and the free functions P, Q and lambda, which
+    the figure declares as the wave every other drawing of the torus takes, Q = 0,
+    P = -(pi/4) Y_0(t) cos(theta) and lambda from its quadrature at t = e^-tau, so K is a function of
+    tau and theta alone, the same at every sigma and delta. The wave is a vacuum and the published
+    Ricci scalar vanishes on it, so the figure is K alone: a map over 0 <= theta <= 2 pi and
+    -2 <= tau <= 4, the box of the logarithmic chart's spacetime diagram, in 126 cells across and 120
+    up, coloured on a signed logarithmic scale, linear within 10^-2 of zero, from -10 to 10^6 in
+    units of 1/L^4, since K changes sign at late times and spans five decades toward the singularity.
+    The axes run one way, so tau grows up the map, toward the singularity.
+
+    What the caption states is checked here, in sixty digits where floating point would lose it:
+    the published Ricci scalar vanishes on the wave; K is the same at theta + pi and at 2 pi - theta;
+    toward the singularity d ln K/d tau is 3 + v^2 with v = cos(theta)/2, measured at tau = 20, and
+    already within 0.005 of it between tau = 3 and 4, with d ln(-g_tautau)/d tau = -(3 + v^2)/2,
+    so that K g_tautau^2 tends to a constant, K growing as the inverse fourth power of the proper
+    time to the singularity; K is positive at every theta after the last zero of K on
+    theta = pi/2, and positive on theta = 0 throughout; at every tau K is negative, if anywhere, on
+    one band about theta = pi/2 and one about 3 pi/2, and on theta = pi/2 itself exactly there; the
+    zeros on theta = pi/2 the caption gives; and the greatest and least values the clip gives, on a
+    grid twice as fine as the map's."""
+    L = 1.0
+    LOG = "logarithmic"
+    wave = nr._gowdy_wave("exp(-tau)")
+    (th0, th1), (ta0, ta1) = GOWDY_BOX
+    x_axis, y_axis = axis("$\\theta$", th0, th1), axis("$\\tau$", ta0, ta1)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "gowdy", [aspect])
+    scale = dict(GOWDY_SCALE)
+
+    def read(field, indices=None):
+        return nr_published(src, "gowdy", LOG, field, ["theta", "tau"], ["L"], indices, wave)
+
+    K, ricci = read("kretschmann"), read("ricci_scalar")
+    gtt = read("metric_components", ("\\tau", "\\tau"))
+    rng = np.random.default_rng(1971)
+    points = list(zip(rng.uniform(th0, th1, 12), rng.uniform(ta0, ta1, 12)))
+    worst = max(abs(float(ricci.exact([th, ta, L]))) for th, ta in points)
+    ck("gowdy the published Ricci scalar vanishes on the wave, in sixty digits", worst < 1e-40, f"worst {worst:.1e}")
+
+    nx, ny = GOWDY_CELLS
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [L])
+    ck("gowdy K is finite at every cell", np.all(np.isfinite(values)), f"from {np.min(values):.4e} to {np.max(values):.4e}")
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+                   | {(0, 0), (nx - 1, ny - 1), (nx // 4, ny - 1), (0, ny - 1)})
+    agrees(ck, "gowdy map", K, [[xs[i], ys[j], L] for i, j in picks], [values[j, i] for i, j in picks])
+    half = nx // 2
+    ck("gowdy K is the same at theta + pi, where P changes sign, and at 2 pi - theta",
+       np.allclose(values[:, :half], values[:, half:], rtol=1e-9, atol=1e-12)
+       and np.allclose(values, values[:, ::-1], rtol=1e-9, atol=1e-12))
+
+    # Toward the singularity: the rate of K and of the proper time, in sixty digits at tau = 20.
+    def rate(fn, theta, tau, step=1e-3):
+        return (float(sp.log(abs(fn.exact([theta, tau + step, L])))) - float(sp.log(abs(fn.exact([theta, tau - step, L]))))) / (2 * step)
+    angles = (0.0, math.pi / 6, math.pi / 4, math.pi / 3, math.pi / 2)
+    rates = [rate(K, th, 20.0) for th in angles]
+    ck("gowdy K grows as e^((3 + v^2) tau) toward the singularity, v = cos(theta)/2",
+       all(abs(r - (3 + math.cos(th) ** 2 / 4)) < 1e-9 for r, th in zip(rates, angles)), f"{rates}")
+    times = [rate(gtt, th, 20.0) for th in angles]
+    ck("gowdy -g_tautau shrinks as e^(-(3 + v^2) tau/2), so the proper time to the singularity as e^(-(3 + v^2) tau/4)",
+       all(abs(r + (3 + math.cos(th) ** 2 / 4) / 2) < 1e-9 for r, th in zip(times, angles)), f"{times}")
+    steady = [[float(K.exact([th, ta, L]) * gtt.exact([th, ta, L]) ** 2) for ta in (10.0, 15.0, 20.0)] for th in angles]
+    ck("gowdy K g_tautau^2 tends to a constant, K growing as the inverse fourth power of the proper time",
+       all(abs(s[1] / s[0] - 1) < 1e-6 and abs(s[2] / s[0] - 1) < 1e-6 for s in steady), f"{[s[0] for s in steady]}")
+    corner = [float(K.exact([th, ta1, L])) for th in (0.0, math.pi / 2)]
+    inside = [math.log(corner[0] / float(K.exact([0.0, 3.0, L]))), math.log(corner[1] / float(K.exact([math.pi / 2, 3.0, L])))]
+    ck("gowdy K grows at 3.25 on theta = 0 and at 3 on theta = pi/2 already between tau = 3 and tau = 4",
+       abs(inside[0] - 3.25) < 5e-3 and abs(inside[1] - 3) < 5e-3, f"{inside}")
+    ratio = corner[0] / corner[1]
+
+    # The signs, on a grid twice as fine as the map's.
+    fx, fy, fine = cells(K, x_axis, y_axis, 2 * nx, 2 * ny, [L])
+    FX, FY = np.meshgrid(fx, fy)
+
+    def on(theta):
+        return lambda tau, *p: K(np.full_like(np.asarray(tau, dtype=float), theta), tau, L)
+    z = zeros(ck, "gowdy K on theta = pi/2", on(math.pi / 2), ta0, ta1, [])
+    ck("gowdy K on theta = pi/2 changes sign five times, negative below the first and between the second and third "
+       "and the fourth and fifth",
+       len(z) == 5 and float(K(math.pi / 2, ta0, L)) < 0 and float(K(math.pi / 2, ta1, L)) > 0, f"{z}")
+    ck("gowdy K is positive on theta = 0 throughout", not zeros(ck, "gowdy K on theta = 0", on(0.0), ta0, ta1, [])
+       and float(K(0.0, ta0, L)) > 0)
+    last = z[-1] if z else ta1
+    ck("gowdy K is positive at every theta after the last zero on theta = pi/2",
+       np.all(fine[FY > last] > 0) and np.any(fine[FY < last] < 0), f"after tau = {last:.6f}")
+    middle = K(np.full_like(fy, math.pi / 2), fy, L)
+    banded = True
+    for row, centre in zip(fine, middle):
+        sign = np.sign(row[: nx])                 # theta from 0 to pi, each band about pi/2 by the symmetry above
+        changes = np.count_nonzero(np.diff(sign))
+        negative = np.any(sign < 0)
+        banded &= sign[0] > 0 and changes == (2 if negative else 0) and negative == (centre < 0)
+    ck("gowdy at every tau K is negative, if anywhere, on one band about theta = pi/2, as it is on pi/2 itself", banded)
+
+    # The greatest and least values, for the clip: K grows with tau after the last zero and is greatest on
+    # theta = 0 at tau = 4, and it is least on theta = pi/2, found there by the golden section.
+    after = FY[:, 0] > last + 0.5
+    ck("gowdy K grows with tau at every theta from half a unit after the last zero on", np.all(np.diff(fine[after], axis=0) > 0))
+    top = K(fx, np.full_like(fx, ta1), L)
+    greatest = corner[0]
+    ck("gowdy K is greatest at tau = 4 on theta = 0, pi, and 2 pi", np.all(top <= greatest * (1 + 1e-12))
+       and np.all(fine <= greatest), f"{greatest:.6e}")
+    lo, hi = -0.5, 0.1
+    golden = (math.sqrt(5) - 1) / 2
+    for _ in range(80):
+        c, d = hi - golden * (hi - lo), lo + golden * (hi - lo)
+        if float(K(math.pi / 2, c, L)) < float(K(math.pi / 2, d, L)):
+            hi = d
+        else:
+            lo = c
+    t_least = 0.5 * (lo + hi)
+    least = float(K.exact([math.pi / 2, t_least, L]))
+    k = np.unravel_index(np.argmin(fine), fine.shape)
+    ck("gowdy K is least on theta = pi/2 or 3 pi/2", float(np.min(fine)) >= least
+       and min(abs(FX[k] - math.pi / 2), abs(FX[k] - 3 * math.pi / 2)) < (th1 - th0) / (2 * nx)
+       and abs(FY[k] - t_least) < (ta1 - ta0) / (2 * ny), f"{least:.6f} at tau = {t_least:.6f}")
+    ck("gowdy K stays inside its colours", scale["from"] < least and greatest < scale["to"])
+    ck("gowdy the drawn-with line names the wave alone", GOWDY_INPUT != nr.GOWDY_INPUT and "checked" not in GOWDY_INPUT)
+
+    def tau(v):
+        return f"{v:.3f}"
+    view = {
+        "id": "torus", "label": "the plane of $\\theta$ and $\\tau$", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,L^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "gowdy", "system": LOG, "scalar": "kretschmann", "x": "\\theta", "y": "\\tau",
+                "params": {"L": L}, "functions": dict(wave), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [],
+        "legend": [],
+        "caption": [
+            "The Kretschmann scalar $K$ of a polarised Gowdy wave on the torus over the plane of $\\theta$ and "
+            "$\\tau = -\\ln t$ ($L = 1$), the same at every $\\sigma$ and $\\delta$, with $\\tau$ growing toward the "
+            "singularity. The wave is a vacuum, so its Ricci scalar vanishes. $K$ is the same at $\\theta + \\pi$, "
+            "where $P$ changes sign, which exchanges $\\sigma$ and $\\delta$, and at $2\\pi - \\theta$.",
+            "Toward the singularity $K$ is positive and grows as $e^{(3 + v^2)\\tau} = t^{-(3 + v^2)}$, with "
+            "$v = \\tfrac{1}{2}\\cos\\theta$, at the rate $3.25$ on $\\theta = 0$ and $\\pi$ and $3$ on "
+            "$\\theta = \\pi/2$ and $3\\pi/2$. Each $\\theta$ approaches a Kasner universe of its own, in which the "
+            "proper time to the singularity shrinks as $e^{-(3 + v^2)\\tau/4}$ and $K$ grows as its inverse fourth "
+            f"power. At $\\tau = 4$, $K$ on $\\theta = 0$ is ${ratio:.2f}$ times $K$ on $\\theta = \\pi/2$.",
+            f"For $\\tau < {tau(z[4])}$, which is $t > {math.exp(-z[4]):.3f}$, $K$ takes both signs. At each $\\tau$ "
+            "it is negative, if anywhere, on one band about $\\theta = \\pi/2$ and one about $\\theta = 3\\pi/2$, "
+            "where $P$ vanishes, and positive about $\\theta = 0$ and $\\pi$. The bands open and close as the wave "
+            f"oscillates: on $\\theta = \\pi/2$, $K$ is negative for ${tau(z[3])} < \\tau < {tau(z[4])}$, for "
+            f"${tau(z[1])} < \\tau < {tau(z[2])}$, and below $\\tau = {tau(z[0])}$, and it is least, "
+            f"${least:.2f}/L^4$, at $\\tau = {tau(t_least)}$.",
+        ],
+        "settings": "$L = 1$, the unit of every length.",
+        "input": GOWDY_INPUT,
+        "clip": ("We colour $K\\,L^4$ on a signed logarithmic scale, linear within $0.01$ of zero, from $-10$ to "
+                 "$10^{6}$, and no value passes either end: $K$ is greatest, "
+                 f"${tex_number(greatest)}/L^4$, at $\\tau = 4$ on $\\theta = 0$, $\\pi$, and $2\\pi$, and least, "
+                 f"${least:.2f}/L^4$, at $\\tau = {tau(t_least)}$ on $\\theta = \\pi/2$ and $3\\pi/2$."),
+    }
+    return [view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -4146,6 +4315,7 @@ DRAWN = {
     "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
     "fisher_jnw": fisher_jnw,
+    "gowdy": gowdy,
     "gravastar": gravastar,
     "hayward": hayward,
 }
