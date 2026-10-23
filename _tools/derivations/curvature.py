@@ -3849,6 +3849,138 @@ def fisher_jnw(ck, src):
     return [still, movie_view]
 
 
+# ---------------------------------------------------------------- the gravastar
+
+GS_RADIUS = Fraction(5, 4)        # the shell's R in units of r_s, as every drawing of the gravastar takes it
+GS_L = Fraction(2)                # L in units of r_s, as every drawing of the gravastar takes it
+GS_REACH = 4                      # the plot runs from the centre to r = 4 r_s, the edge of the exterior diagram
+
+
+def gravastar(ck, src):
+    """Mazur and Mottola's gravastar at r_s = 1, its Kretschmann and Ricci scalars against r,
+    in the de Sitter space inside the shell and in Schwarzschild's vacuum outside it.
+
+    Each chart publishes K and R in r alone, and holds on one side of the shell r = R alone, so
+    the interior chart's scalars are drawn from the centre to the shell and the exterior chart's
+    from the shell to the edge of the plot at 4 r_s, each a stretch of the same class; the
+    interior tortoise chart publishes the interior chart's two constants. Both scalars vary
+    along r alone, so a line plot holds all of them, and neither depends on a parameter the
+    figure could step through to show more than the still does, so there is no movie. Two panels
+    share the axis of r: K on a logarithmic axis from 10^-3 to 10^3 and R, which takes two values
+    alone and spans no decades, on a linear one from -1 to 4, so that its zero outside stands off
+    the frame. The radius R is a parameter of both charts, so the Ricci scalar is written R^mu_mu.
+    The comparison is Schwarzschild's K of the same mass, read from schwarzschild.json, drawn
+    inside the shell alone, since outside it is the gravastar's own.
+
+    What the caption states is checked here: R < L and r_s < R; g^rr is positive on each stretch,
+    so no horizon is marked; inside, K = 24/L^4 = 3/2 r_s^4 and R = 12/L^2 = 3/r_s^2 at every r,
+    and the interior tortoise chart publishes the same two; outside, K is Schwarzschild's
+    published K at every r and 12 r_s^2/R^6 at the shell, and R vanishes; Schwarzschild's K
+    stands above 24/L^4 at every r inside the shell and is 12/r_s^4 at r = r_s; and the clip
+    stated is where Schwarzschild's K leaves the top of its panel, the gravastar's own curves
+    staying inside both."""
+    x_axis = axis("$r/r_s$", 0, GS_REACH)
+    K_scale = {"kind": "log", "from": 1e-3, "to": 1e3}
+    R_scale = {"kind": "linear", "from": -1, "to": 4}
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,r_s^2$", "aspect": 2, "scale": R_scale,
+               "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "gravastar", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    inner, outer = ["r_s", "R", "L"], ["r_s", "R"]
+    K_in = nr_published(src, "gravastar", "interior", "kretschmann", ["r"], inner)
+    R_in = nr_published(src, "gravastar", "interior", "ricci_scalar", ["r"], inner)
+    grr_in = nr_published(src, "gravastar", "interior", "inverse_metric_components", ["r"], inner, ("r", "r"))
+    K_x = nr_published(src, "gravastar", "interior_tortoise", "kretschmann", ["x"], inner)
+    R_x = nr_published(src, "gravastar", "interior_tortoise", "ricci_scalar", ["x"], inner)
+    K_out = nr_published(src, "gravastar", "exterior", "kretschmann", ["r"], outer)
+    R_out = nr_published(src, "gravastar", "exterior", "ricci_scalar", ["r"], outer)
+    grr_out = nr_published(src, "gravastar", "exterior", "inverse_metric_components", ["r"], outer, ("r", "r"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+
+    shell, L = float(GS_RADIUS), float(GS_L)
+    at_in, at_out = [1, shell, L], [1, shell]
+    params_in = {"r_s": 1, "R": shell, "L": L}
+    params_out = {"r_s": 1, "R": shell}
+    inside, outside = (0.0, shell), (shell, float(GS_REACH))
+    ck("gravastar the shell lies between r_s and L", 1 < GS_RADIUS < GS_L)
+
+    # No horizon on either stretch.
+    rs_in, rs_out = np.linspace(*inside, SAMPLES), np.linspace(*outside, SAMPLES)
+    ck("gravastar g^rr is positive from the centre to the shell",
+       np.all(grr_in(rs_in, *at_in) > 0) and not zeros(ck, "gravastar interior g^rr", grr_in, *inside, at_in))
+    ck("gravastar g^rr is positive from the shell out",
+       np.all(grr_out(rs_out, *at_out) > 0) and not zeros(ck, "gravastar exterior g^rr", grr_out, *outside, at_out))
+
+    curves = (line_curves(ck, "gravastar Schwarzschild", "K", "reference", K_s, "r", x_axis, K_scale, height["K"],
+                          {"r_s": 1}, inside)
+              + line_curves(ck, "gravastar interior", "K", "K", K_in, "r", x_axis, K_scale, height["K"], params_in,
+                            inside)
+              + line_curves(ck, "gravastar exterior", "K", "K", K_out, "r", x_axis, K_scale, height["K"], params_out,
+                            outside)
+              + line_curves(ck, "gravastar interior", "R", "R", R_in, "r", x_axis, R_scale, height["R"], params_in,
+                            inside)
+              + line_curves(ck, "gravastar exterior", "R", "R", R_out, "r", x_axis, R_scale, height["R"], params_out,
+                            outside))
+
+    # The figures of the caption.
+    plateau_K, plateau_R = 24 / GS_L ** 4, 12 / GS_L ** 2
+    ck("gravastar 24/L^4 and 12/L^2 are 3/2 and 3 at L = 2 r_s",
+       plateau_K == Fraction(3, 2) and plateau_R == 3)
+    ck("gravastar K inside is 24/L^4 at every r",
+       np.all(K_in(rs_in, *at_in) == float(plateau_K)) and float(K_in.exact([0.7] + at_in)) == float(plateau_K))
+    ck("gravastar R inside is 12/L^2 at every r",
+       np.all(R_in(rs_in, *at_in) == float(plateau_R)) and float(R_in.exact([0.7] + at_in)) == float(plateau_R))
+    xs = np.linspace(0, 2.56, 101)
+    ck("gravastar the interior tortoise chart publishes the same K and R",
+       np.all(K_x(xs, *at_in) == float(plateau_K)) and np.all(R_x(xs, *at_in) == float(plateau_R)))
+    ck("gravastar K outside is Schwarzschild's published K at every r",
+       np.allclose(K_out(rs_out, *at_out), K_s(rs_out, 1), rtol=1e-14, atol=0))
+    ck("gravastar R vanishes outside", np.all(R_out(rs_out, *at_out) == 0))
+    shell_K = float(K_out.exact([shell] + at_out))
+    ck("gravastar K outside the shell is 12 r_s^2/R^6", abs(shell_K / (12 / shell ** 6) - 1) < 1e-15, f"{shell_K}")
+    ck("gravastar K jumps up at the shell", shell_K > float(plateau_K), f"{float(plateau_K)} to {shell_K}")
+    ck("gravastar Schwarzschild's K stands above 24/L^4 at every r inside the shell",
+       np.all(K_s(rs_in[1:], 1) > float(plateau_K)))
+    ck("gravastar Schwarzschild's K at its horizon r = r_s is 12/r_s^4", float(K_s.exact([1, 1])) == 12)
+    for name, fn, scale, params, within in (("interior K", K_in, K_scale, at_in, inside),
+                                            ("exterior K", K_out, K_scale, at_out, outside),
+                                            ("interior R", R_in, R_scale, at_in, inside),
+                                            ("exterior R", R_out, R_scale, at_out, outside)):
+        up, down = beyond(fn, x_axis, scale, params, within)
+        ck(f"gravastar {name} stays inside its panel", not up and not down, f"{up} {down}")
+    up, down = beyond(K_s, x_axis, K_scale, [1], inside)
+    ck("gravastar Schwarzschild's K leaves the top of its panel once, at the centre, and never the bottom",
+       len(up) == 1 and up[0][0] == 0 and not down, f"{up} {down}")
+    cut = (12 / K_scale["to"]) ** (1 / 6)
+    ck("gravastar Schwarzschild's K leaves the top where 12 r_s^2/r^6 = 10^3",
+       abs(up[0][1] - cut) < 2 * shell / (SAMPLES - 1), f"{up[0][1]:.5f} against {cut:.5f}")
+
+    legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"],
+              ["line", "reference", "$K$ of Schwarzschild's black hole of the same mass"]]
+    view = {
+        "id": "gravastar", "label": "$R = 1.25\\,r_s$, $L = 2\\,r_s$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of a gravastar against $r$ "
+            "($R = 1.25\\,r_s$, $L = 2\\,r_s$), the same at every $t$, $\\theta$, and $\\phi$, in the de Sitter space "
+            "inside the shell and in Schwarzschild's vacuum outside it, beside the $K$ of Schwarzschild's black hole "
+            f"of the same mass. Inside, $K = 24/L^4 = {float(plateau_K):g}/r_s^4$ at every $r$, and at the shell it "
+            f"jumps to Schwarzschild's $12r_s^2/R^6 = {shell_K:.3f}/r_s^4$, from which it falls as $12r_s^2/r^6$.",
+            "Inside the shell Schwarzschild's $K$ stands above $24/L^4$ at every $r$ and grows without bound toward "
+            "the centre, through $12/r_s^4$ at its horizon $r = r_s$. The Ricci scalar is "
+            f"$R^\\mu{{}}_\\mu = 12/L^2 = {float(plateau_R):g}/r_s^2$ inside, the value of de Sitter space of radius "
+            "$L$, and vanishes outside. The shell itself, with its surface density and stresses, puts a delta "
+            "function into the Ricci tensor at $r = R$.",
+        ],
+        "settings": "$r_s = 1$, the unit of every length, $R = 1.25\\,r_s$, and $L = 2\\,r_s$.",
+        "clip": ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10^{3}$ and $R^\\mu{}_\\mu\\,r_s^2$ on "
+                 "a linear scale from $-1$ to $4$, and cut Schwarzschild's $K$ where it leaves the top of its panel, "
+                 f"inside $r = {cut:.3f}\\,r_s$."),
+    }
+    return [view]
+
+
 # ---------------------------------------------------------------- Hayward's regular black hole
 
 HAYWARD_ELL = 12 / (7 * math.sqrt(7))   # l in units of m, as every drawing of Hayward's black hole takes it
@@ -4014,6 +4146,7 @@ DRAWN = {
     "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
     "fisher_jnw": fisher_jnw,
+    "gravastar": gravastar,
     "hayward": hayward,
 }
 

@@ -2065,7 +2065,8 @@
     "version": "4ed8bd3a16e1d7c0",
     "diagrams": "1e2a338fbaeb162f",
     "conformal": "c44e7367505c4a14",
-    "embedding": "eb3c3b7b2d474485"
+    "embedding": "eb3c3b7b2d474485",
+    "curvature": "8ec870cad48fb9b7"
   },
   {
     "id": "gravitational_instantons",
