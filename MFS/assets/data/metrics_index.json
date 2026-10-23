@@ -1341,7 +1341,8 @@
     "version": "cfae5965fc3292c9",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
-    "embedding": "0ccedb0f3c6098dc"
+    "embedding": "0ccedb0f3c6098dc",
+    "curvature": "5742d8418802ddc6"
   },
   {
     "id": "distorted_schwarzschild",

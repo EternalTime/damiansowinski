@@ -2802,6 +2802,366 @@ def damour_solodukhin(ck, src):
         "movie": {"variable": "$\\lambda$", "seconds": 5, "frames": frames},
     }
     return [still, movie_view]
+# ---------------------------------------------------------------- the charged dilaton black hole
+
+DBH_RD = Fraction(1, 2)           # r_d in units of r_s, as every drawing of the black hole takes it
+DBH_STEP = Fraction(1, 40)        # the step of r_d from one frame of the movie to the next, which lands on r_s/2
+DBH_LAST = Fraction(39, 40)       # the last frame's r_d; at r_s the published K loses its digits beside the horizon
+DBH_REACH = 6.5                   # the box of the spacetime diagrams runs out to r = 6.5 r_s
+DBH_K = {"kind": "log", "from": 1e-4, "to": 1e4}
+DBH_FRAMES = {   # chart: its label and the axis of its R
+    "static": ("Einstein metric", {"kind": "symlog", "from": -1e3, "to": 1e-1, "linear": 1e-4}),
+    "string_magnetic": ("String metric, magnetic charge", {"kind": "log", "from": 1e-4, "to": 1e2}),
+    "string_electric": ("String metric, electric charge", {"kind": "symlog", "from": -1e3, "to": 1e3, "linear": 1e-4}),
+}
+
+
+def every_second(scale):
+    """The ticks of an axis of values spanning eight decades or more at every second decade, its
+    top among them, and zero on a signed one, which the page fits at every size, where a label at
+    every decade stands as close as it allows and is thinned in one view and not the other."""
+    ticks = value_ticks(scale)
+    if len(ticks) < 9:
+        return ticks
+    top = round(math.log10(abs(scale["to"])))
+    return [t for t in ticks if t["at"] == 0 or (round(math.log10(abs(t["at"]))) - top) % 2 == 0]
+
+
+def dilaton_black_hole(ck, src):
+    """The charged dilaton black hole of Gibbons and Maeda and of Garfinkle, Horowitz and
+    Strominger at r_s = 1, its Kretschmann and Ricci scalars against r in the Einstein metric and
+    in the string metrics of the magnetically and the electrically charged hole.
+
+    Each chart's published K and R depend on r alone, and the three Einstein charts publish the
+    same two, so one view serves them; the string metrics are the Einstein metric times
+    e^(2 phi) = (1 - r_d/r)^-1 and 1 - r_d/r, different metrics with different curvature, each a
+    view of its own, labelled, as the embedding diagrams are, since a scalar of one metric never
+    shares an axis with a scalar of another. Every view stacks K on a logarithmic axis from 10^-4
+    to 10^4 over R, which changes sign in the Einstein metric and the electric string metric and
+    is drawn there on a signed logarithmic axis, linear within 10^-4 of zero, from -10^3 to 10^-1
+    and to 10^3, and is positive in the magnetic one and drawn on a logarithmic axis from 10^-4 to
+    10^2; an axis of eight decades or more is ticked at every second one. Each axis is cut close
+    enough to its curves that every sample beside the singularity, 1/4000 of the range from it,
+    lies beyond it, so that each line runs to the edge. The horizon is the zero of each chart's published
+    g^rr. The three stills are at r_d = r_s/2, the charge every other drawing takes, over the box
+    of the spacetime diagrams, r from r_d to 6.5 r_s, the Einstein metric's from r = 0 beside
+    Schwarzschild's of the same mass, read from schwarzschild.json, and each string metric's
+    beside the Einstein metric's K. The movie steps r_d in the Einstein metric from 0,
+    Schwarzschild's black hole, to 39 r_s/40, short of the extremal r_s, where the singularity
+    reaches the horizon and the published K, whose numerator then vanishes there as (r - r_s)^2,
+    is left with too few digits beside it to agree with itself in sixty to a part in 10^9.
+
+    What the captions state is checked here: the published scalars at r_d = 0 are
+    Schwarzschild's; Schwarzschild's K at r_d is 768/r_s^4; the Einstein metric's K stands above
+    Schwarzschild's at every r of the movie's range and approaches it far out; at the horizon K
+    is (12 r_s^2 - 12 r_s r_d + 5 r_d^2)/r_s^4 (r_s - r_d)^2 in the Einstein metric, 1/(r_s - r_d)^2
+    times that over r_s^2 in the magnetic one, and 3(4 r_s^2 - 4 r_s r_d + 3 r_d^2)/r_s^2 (r_s - r_d)^4
+    in the electric one, with R = 0, 3 r_d/r_s^3 and -3 r_d/r_s (r_s - r_d)^2, at the numbers
+    stated; R = 2 g^rr (d phi/dr)^2 in the Einstein metric, exactly, with e^(2 phi) = 1 - r_d/r,
+    so that it changes sign at the horizon alone; R's greatest value outside and where it lies;
+    the growth of every scalar toward r = r_d at the rate and with the coefficient stated,
+    measured in sixty digits at r - r_d from 10^-8 to 10^-10 r_s; R positive at every r in the
+    magnetic metric and changing sign once in the electric one, at 4 r_s r_d/(3 r_s + r_d), and its
+    least value there; the one crossing of the magnetic K with the Einstein metric's, and the
+    electric K above it at every r; the fall far out of every scalar as stated; and in the movie
+    the horizon at r_s in every frame, K there growing from frame to frame to the number stated
+    in the last, R vanishing there in every frame, the frames from which R passes the top of its
+    panel, and K passing the top and R the bottom toward r_d where the clip says."""
+    rd, reach = float(DBH_RD), DBH_REACH
+    names = ["r_s", "r_d"]
+    read = {}
+    for system in DBH_FRAMES:
+        read[system] = {field: nr_published(src, "dilaton_black_hole", system, field, ["r"], names)
+                        for field in ("kretschmann", "ricci_scalar")}
+        read[system]["grr"] = nr_published(src, "dilaton_black_hole", system, "inverse_metric_components", ["r"],
+                                           names, ("r", "r"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    R_s = nr_published(src, "schwarzschild", "spherical", "ricci_scalar", ["r"], ["r_s"])
+    K_E, R_E, grr_E = (read["static"][k] for k in ("kretschmann", "ricci_scalar", "grr"))
+
+    def panels(R_scale):
+        out = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": DBH_K, "ticks": every_second(DBH_K)},
+               {"id": "R", "name": "$R\\,r_s^2$", "aspect": 2, "scale": R_scale, "ticks": every_second(R_scale)}]
+        shape_checks(ck, f"dilaton_black_hole {R_scale['kind']} R", [p["aspect"] for p in out])
+        return out
+    height = PLOT_W / 2
+
+    def own(system, x_axis, value, name):
+        """The chart's own K and R at r_d = value, drawn from r = r_d out, where the chart holds,
+        and its horizon."""
+        R_scale = DBH_FRAMES[system][1]
+        params = {"r_s": 1, "r_d": float(value)}
+        within = (float(value), x_axis["to"])
+        curves = (line_curves(ck, name, "K", "K", read[system]["kretschmann"], "r", x_axis, DBH_K, height, params,
+                              within)
+                  + line_curves(ck, name, "R", "R", read[system]["ricci_scalar"], "r", x_axis, R_scale, height, params,
+                                within))
+        marks = [{"class": "horizon", "x": x}
+                 for x in zeros(ck, f"{name} horizons", read[system]["grr"], x_axis["from"], x_axis["to"],
+                                [1, float(value)])]
+        ck(f"{name} has its one horizon at r = r_s", len(marks) == 1 and abs(marks[0]["x"] - 1) < 1e-12,
+           f"{[m['x'] for m in marks]}")
+        first = np.linspace(*within, SAMPLES)[1]
+        for field, scale in (("kretschmann", DBH_K), ("ricci_scalar", R_scale)):
+            if field == "ricci_scalar" and value == 0:
+                continue
+            at = float(position(scale, read[system][field](first, 1, float(value))))
+            lo, hi = span(scale)
+            ck(f"{name} {field} lies beyond its panel at the first sample beside r = r_d", not lo <= at <= hi,
+               f"{at:.2f} on {lo:.2f} to {hi:.2f}")
+        return curves, marks
+
+    def cut(fn, x_axis, scale, params, name, within=None):
+        """Where a curve leaves the top of its panel toward the singularity: the samples above it
+        are one stretch from the left end of what is sampled, and the edge is crossed between its
+        last sample and the next, found there by bisection."""
+        above, below = beyond(fn, x_axis, scale, params, within)
+        start = within[0] if within else x_axis["from"]
+        ck(f"{name} leaves its panel once, by the top, toward the singularity",
+           len(above) == 1 and above[0][0] == start and not below, f"{above} {below}")
+        step = ((within or (x_axis["from"], x_axis["to"]))[1] - start) / (SAMPLES - 1)
+        top = span(scale)[1]
+        return crossing(lambda r: float(position(scale, fn(r, *params))) - top, above[0][1], above[0][1] + step)
+
+    def near(fn, system, coefficient, power):
+        """The scalar over coefficient/(r - r_d)^power toward r = r_d, in sixty digits."""
+        worst = max(abs(float(fn.exact([rd + d, 1, rd]) * (sp.Float(rd + d, 70) - sp.Float(rd, 70)) ** power)
+                        / coefficient - 1) for d in (1e-8, 1e-9, 1e-10))
+        ck(f"dilaton_black_hole {system} {fn.field} grows as {coefficient:.6g}/(r - r_d)^{power} toward r_d",
+           worst < 1e-6, f"worst {worst:.1e}")
+
+    def far(fn, system, coefficient, power):
+        at = 1e4
+        value = float(fn.exact([at, 1, rd])) * at ** power
+        ck(f"dilaton_black_hole {system} {fn.field} falls off as {coefficient:.6g}/r^{power}",
+           abs(value / coefficient - 1) < 1e-3, f"{value:.6g}")
+
+    def horizon(fn, system, closed, value):
+        at = float(fn.exact([1, 1, rd]))
+        ck(f"dilaton_black_hole {system} {fn.field} at the horizon is {value:g}",
+           abs(at - closed) <= 1e-12 * max(1, abs(closed)) and closed == value, f"{at}")
+
+    # The Einstein metric, from r = 0, beside Schwarzschild's black hole of the same mass.
+    x_einstein = axis("$r/r_s$", 0, reach, 8)
+    rs = np.linspace(0.05, reach, 41)
+    ck("dilaton_black_hole at r_d = 0 is Schwarzschild's",
+       np.allclose(K_E(rs, 1, 0.0), K_s(rs, 1), rtol=1e-13, atol=0) and np.allclose(R_E(rs, 1, 0.0), 0, atol=0))
+    r_sym, s_sym, d_sym = sp.symbols("r r_s r_d", positive=True)
+    R_E_sym = R_E.expr.subs(dict(zip(R_E.coords + R_E.params, (r_sym, s_sym, d_sym))))
+    grr_sym = grr_E.expr.subs(dict(zip(grr_E.coords + grr_E.params, (r_sym, s_sym, d_sym))))
+    phi = sp.log(1 - d_sym / r_sym) / 2
+    ck("dilaton_black_hole R is 2 g^rr (d phi/dr)^2 in the Einstein metric",
+       sp.simplify(R_E_sym - 2 * grr_sym * sp.diff(phi, r_sym) ** 2) == 0)
+    E_panels = panels(DBH_FRAMES["static"][1])
+    reference = (line_curves(ck, "dilaton_black_hole Schwarzschild", "K", "reference", K_s, "r", x_einstein, DBH_K,
+                             height, {"r_s": 1})
+                 + line_curves(ck, "dilaton_black_hole Schwarzschild", "R", "reference", R_s, "r", x_einstein,
+                               DBH_FRAMES["static"][1], height, {"r_s": 1}))
+    curves, marks = own("static", x_einstein, DBH_RD, "dilaton_black_hole Einstein metric")
+    K_s_rd = float(K_s.exact([rd, 1]))
+    ck("dilaton_black_hole Schwarzschild's K at r = r_d is 768/r_s^4", abs(K_s_rd - 768) < 1e-9, f"{K_s_rd}")
+    fine = np.linspace(rd, 200, 2000001)[1:]
+    ck("dilaton_black_hole K stands above Schwarzschild's at every r", np.all(K_E(fine, 1, rd) > K_s(fine, 1)))
+    far(K_E, "Einstein", 12, 6)
+    far(R_E, "Einstein", rd ** 2 / 2, 4)
+    K_h_E = (12 - 12 * rd + 5 * rd ** 2) / (1 - rd) ** 2
+    horizon(K_E, "Einstein", K_h_E, 29)
+    horizon(R_E, "Einstein", 0, 0)
+    ck("dilaton_black_hole Schwarzschild's K at the horizon is 12/r_s^4", float(K_s.exact([1, 1])) == 12)
+    ck("dilaton_black_hole Einstein R changes sign at the horizon alone",
+       zeros(ck, "dilaton_black_hole Einstein R", R_E, rd, reach, [1, rd]) == [1.0])
+    near(K_E, "Einstein", 3 * (1 - rd) ** 2 / (4 * rd ** 2), 4)
+    near(R_E, "Einstein", -(1 - rd) / (2 * rd), 2)
+    outside = np.linspace(1, reach, 2000001)
+    top = int(np.argmax(R_E(outside, 1, rd)))
+    r_top, R_top = float(outside[top]), float(R_E(outside[top], 1, rd))
+    ck("dilaton_black_hole Einstein R is greatest outside at (3 + sqrt 3) r_s/4",
+       abs(r_top - (3 + math.sqrt(3)) / 4) < 1e-5, f"R = {R_top:.5f} at r = {r_top:.5f}")
+    E_cut = {"K": cut(K_E, x_einstein, DBH_K, [1, rd], "dilaton_black_hole Einstein K", (rd, reach)),
+             "Schwarzschild": cut(K_s, x_einstein, DBH_K, [1], "dilaton_black_hole Schwarzschild's K")}
+    einstein = {
+        "id": "einstein", "label": DBH_FRAMES["static"][0], "kind": "line", "x": x_einstein, "panels": E_panels,
+        "curves": reference + curves, "marks": marks,
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+                   ["line", "reference", "Schwarzschild's black hole of the same mass"],
+                   ["line", "horizon", "the horizon, where $g^{rr} = 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the charged dilaton black hole against $r$ in the "
+            "Einstein metric ($r_d = r_s/2$), the same at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's of "
+            "the same mass. On the plane of $t$ and $r$ the metric is Schwarzschild's, and the spheres, of area "
+            "$4\\pi r(r - r_d)$, shrink to a point at $r = r_d$, where Schwarzschild's $K = 12r_s^2/r^6$ is a finite "
+            f"${K_s_rd:.0f}/r_s^4$ and the dilaton black hole's grows without bound, as "
+            "$3(r_s - r_d)^2/4r_d^2(r - r_d)^4$. Its $K$ stands above Schwarzschild's at every $r$ and approaches it "
+            "far out.",
+            "At the horizon $K$ is $(12r_s^2 - 12r_sr_d + 5r_d^2)/r_s^4(r_s - r_d)^2$, which is "
+            f"${K_h_E:.0f}/r_s^4$ here, where Schwarzschild's is $12/r_s^4$. With $\\varphi$ the dilaton, "
+            "$R = 2g^{rr}(\\partial_r\\varphi)^2$, which vanishes at the horizon and changes sign there: inside it $R$ "
+            "grows without bound toward $r = r_d$ as $-(r_s - r_d)/2r_d(r - r_d)^2$, and outside it is greatest, "
+            f"${R_top:.4f}/r_s^2$, at $r = {r_top:.3f}\\,r_s$, and falls off far out as $r_d^2/2r^4$.",
+        ],
+        "settings": "$r_s = 1$, the unit of every length, and $r_d = r_s/2$, the charge $Q = M$ in units with "
+                    "$G = c = 1$.",
+        "clip": ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and $R\\,r_s^2$ on a signed "
+                 "logarithmic scale, linear within $10^{-4}$ of zero, from $-10^{3}$ to $10^{-1}$, and cut each curve "
+                 f"where it leaves its panel, as $K$ does inside $r = {E_cut['K']:.3f}\\,r_s$ and Schwarzschild's $K$ "
+                 f"inside $r = {E_cut['Schwarzschild']:.3f}\\,r_s$."),
+    }
+
+    # Each string metric from its singularity r = r_d out, beside the Einstein metric's K.
+    x_string = axis("$r/r_s$", rd, reach, 8)
+    beside = line_curves(ck, "dilaton_black_hole Einstein metric beside a string metric", "K", "reference", K_E, "r",
+                         x_string, DBH_K, height, {"r_s": 1, "r_d": rd})
+    strings = {}
+    for system, charge in (("string_magnetic", "magnetically"), ("string_electric", "electrically")):
+        name = f"dilaton_black_hole {DBH_FRAMES[system][0]}"
+        curves, marks = own(system, x_string, DBH_RD, name)
+        K, R = read[system]["kretschmann"], read[system]["ricci_scalar"]
+        strings[system] = {
+            "id": system, "label": DBH_FRAMES[system][0], "kind": "line", "x": x_string,
+            "panels": panels(DBH_FRAMES[system][1]), "curves": beside + curves, "marks": marks,
+            "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+                       ["line", "reference", "$K$ of the Einstein metric"],
+                       ["line", "horizon", "the horizon, where $g^{rr} = 0$"]],
+            "cut": cut(K, x_string, DBH_K, [1, rd], f"{name} K"),
+            "opening": (f"The Kretschmann scalar $K$ and the Ricci scalar $R$ of the {charge} charged dilaton black "
+                        "hole against $r$ in its string metric ($r_d = r_s/2$), the same at every $t$, $\\theta$, and "
+                        "$\\phi$, beside $K$ of the Einstein metric."),
+            "settings": einstein["settings"],
+        }
+    K_M, R_M = read["string_magnetic"]["kretschmann"], read["string_magnetic"]["ricci_scalar"]
+    K_El, R_El = read["string_electric"]["kretschmann"], read["string_electric"]["ricci_scalar"]
+
+    # The magnetic string metric.
+    near(K_M, "magnetic", (1 - rd) ** 2 / rd ** 4, 2)
+    near(R_M, "magnetic", (1 - rd) / rd ** 2, 1)
+    K_h_M = (12 - 12 * rd + 5 * rd ** 2)
+    horizon(K_M, "magnetic", K_h_M, 7.25)
+    horizon(R_M, "magnetic", 3 * rd, 1.5)
+    ck("dilaton_black_hole magnetic K at the horizon is (r_s - r_d)^2/r_s^2 times the Einstein metric's",
+       abs(K_h_M / (K_h_E * (1 - rd) ** 2) - 1) < 1e-15)
+    ck("dilaton_black_hole magnetic R is positive at every r", np.all(R_M(fine, 1, rd) > 0))
+    far(K_M, "magnetic", 12 * (1 + rd ** 2), 6)
+    far(R_M, "magnetic", rd * (3 - rd), 4)
+    crossings = zeros(ck, "dilaton_black_hole magnetic K less the Einstein metric's",
+                      lambda r, *p: K_M(r, *p) - K_E(r, *p), rd + 1e-9, 200, [1, rd], n=2000001)
+    ck("dilaton_black_hole magnetic K crosses the Einstein metric's once, below it inside and above it outside",
+       len(crossings) == 1 and K_M(0.75, 1, rd) < K_E(0.75, 1, rd) and K_M(100.0, 1, rd) > K_E(100.0, 1, rd),
+       f"{crossings}")
+    K_cross = crossings[0]
+    magnetic = strings["string_magnetic"]
+    magnetic["caption"] = [
+        magnetic.pop("opening") + " The string metric is $e^{2\\varphi} = (1 - r_d/r)^{-1}$ times the Einstein "
+        "metric, its spheres have the area $4\\pi r^2$, and toward the singularity $r = r_d$ its $K$ grows as "
+        "$(r_s - r_d)^2/r_d^4(r - r_d)^2$ and its $R$ as $(r_s - r_d)/r_d^2(r - r_d)$, where the Einstein metric's $K$ "
+        "grows as the fourth power of $1/(r - r_d)$.",
+        "At the horizon $K$ is $(12r_s^2 - 12r_sr_d + 5r_d^2)/r_s^6$, which is "
+        f"${K_h_M:.2f}/r_s^4$ here, and $R = 3r_d/r_s^3 = {3 * rd:.1f}/r_s^2$, and $R$ is positive at every $r$. $K$ stands "
+        f"below the Einstein metric's inside $r = {K_cross:.3f}\\,r_s$ and above it beyond, and far out $K$ falls off "
+        "as $12(r_s^2 + r_d^2)/r^6$ and $R$ as $r_d(3r_s - r_d)/r^4$.",
+    ]
+
+    # The electric string metric.
+    near(K_El, "electric", 9 * (1 - rd) ** 2, 6)
+    near(R_El, "electric", 1 - rd, 3)
+    K_h_El = 3 * (4 - 4 * rd + 3 * rd ** 2) / (1 - rd) ** 4
+    horizon(K_El, "electric", K_h_El, 132)
+    horizon(R_El, "electric", -3 * rd / (1 - rd) ** 2, -6)
+    ck("dilaton_black_hole electric K stands above the Einstein metric's at every r",
+       np.all(K_El(fine, 1, rd) > K_E(fine, 1, rd)))
+    far(K_El, "electric", 12 * (1 + rd ** 2), 6)
+    far(R_El, "electric", -rd * (3 + rd), 4)
+    R_zero = zeros(ck, "dilaton_black_hole electric R", R_El, rd + 1e-9, 200, [1, rd], n=2000001)
+    ck("dilaton_black_hole electric R changes sign once, at 4 r_s r_d/(3 r_s + r_d), inside the horizon",
+       len(R_zero) == 1 and abs(R_zero[0] - 4 * rd / (3 + rd)) < 1e-12 and R_zero[0] < 1, f"{R_zero}")
+    inside = np.linspace(R_zero[0], 1, 2000001)
+    low = int(np.argmin(R_El(inside, 1, rd)))
+    r_low, R_low = float(inside[low]), float(R_El(inside[low], 1, rd))
+    ck("dilaton_black_hole electric R is least inside the horizon, and least of every r drawn",
+       R_low <= float(np.min(R_El(fine, 1, rd))) + 1e-12, f"R = {R_low:.4f} at r = {r_low:.4f}")
+    electric = strings["string_electric"]
+    electric["caption"] = [
+        electric.pop("opening") + " The string metric is $e^{2\\varphi} = 1 - r_d/r$ times the Einstein metric, its "
+        "spheres have the area $4\\pi(r - r_d)^2$, and toward the singularity $r = r_d$ its $K$ grows as "
+        "$9(r_s - r_d)^2/(r - r_d)^6$ and its $R$ as $(r_s - r_d)/(r - r_d)^3$, where the Einstein metric's $K$ grows "
+        "as the fourth power of $1/(r - r_d)$.",
+        "$K$ stands above the Einstein metric's at every $r$, and at the horizon it is "
+        "$3(4r_s^2 - 4r_sr_d + 3r_d^2)/r_s^2(r_s - r_d)^4$, which is "
+        f"${K_h_El:.0f}/r_s^4$ here, and $R$ is $-3r_d/r_s(r_s - r_d)^2$, which is "
+        f"${-3 * rd / (1 - rd) ** 2:.0f}/r_s^2$. $R$ changes sign "
+        f"at $r = 4r_sr_d/(3r_s + r_d) = {R_zero[0]:.3f}\\,r_s$, inside the horizon, is least, "
+        f"${R_low:.1f}/r_s^2$, at $r = {r_low:.3f}\\,r_s$, and far out $K$ falls off as $12(r_s^2 + r_d^2)/r^6$ and "
+        "$R$ as $-r_d(3r_s + r_d)/r^4$.",
+    ]
+    beside_cut = cut(K_E, x_string, DBH_K, [1, rd], "dilaton_black_hole Einstein metric's K beside a string metric")
+    for system, view in strings.items():
+        R_kind = ("on a logarithmic scale from $10^{-4}$ to $10^{2}$" if system == "string_magnetic" else
+                  "on a signed logarithmic scale, linear within $10^{-4}$ of zero, from $-10^{3}$ to $10^{3}$")
+        view["clip"] = ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and $R\\,r_s^2$ "
+                        f"{R_kind}, and cut each curve where it leaves its panel, as $K$ does inside "
+                        f"$r = {view.pop('cut'):.3f}\\,r_s$ and the Einstein metric's $K$ inside "
+                        f"$r = {beside_cut:.3f}\\,r_s$.")
+
+    # The movie in r_d, at fixed mass, from Schwarzschild's black hole to the extremal charge.
+    frames, horizon_K = [], []
+    for k in range(int(DBH_LAST / DBH_STEP) + 1):
+        value = DBH_STEP * k
+        curves, marks = own("static", x_einstein, value, f"dilaton_black_hole Einstein metric at r_d = {float(value):.3f}")
+        frames.append({"label": f"$r_d = {float(value):.3f}\\,r_s$", "value": float(value),
+                       "curves": curves, "marks": marks})
+        horizon_K.append(float(K_E.exact([1, 1, float(value)])))
+    closed = [(12 - 12 * v + 5 * v * v) / (1 - v) ** 2 for v in (float(DBH_STEP * k) for k in range(len(horizon_K)))]
+    ck("dilaton_black_hole Einstein K at the horizon is (12 r_s^2 - 12 r_s r_d + 5 r_d^2)/r_s^4 (r_s - r_d)^2 in every "
+       "frame, and grows from frame to frame", np.allclose(horizon_K, closed, rtol=1e-12, atol=0)
+       and all(b > a for a, b in zip(horizon_K, horizon_K[1:])), f"{horizon_K[0]:.3f} to {horizon_K[-1]:.0f}")
+    ck("dilaton_black_hole Einstein R at the horizon vanishes in every frame",
+       all(float(R_E.exact([1, 1, f["value"]])) == 0 for f in frames))
+    last, K_last = float(DBH_LAST), horizon_K[-1]
+    ck("dilaton_black_hole Einstein K at the horizon in the last frame is the number stated, inside its panel",
+       abs(K_last - 8085) < 1e-9 and K_last < DBH_K["to"], f"{K_last}")
+
+    def first(predicate):
+        """The least r_d at which `predicate` holds, by bisection between frames, where it holds at
+        the last frame and fails at the still's charge."""
+        lo, hi = rd, last
+        if predicate(lo) or not predicate(hi):
+            raise SystemExit("dilaton_black_hole: the clip of the movie does not change once as r_d grows")
+        for _ in range(60):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (lo, mid) if predicate(mid) else (mid, hi)
+        return hi
+
+    R_scale = DBH_FRAMES["static"][1]
+
+    def over_top(value):
+        """Whether R passes the top of its panel at a finite value, the sample at r = r_d itself
+        being no value at all."""
+        values = R_E(np.linspace(value, reach, SAMPLES)[1:], 1, value)
+        return bool(np.any(np.isfinite(values) & (values > R_scale["to"])))
+    R_top_from = first(over_top)
+    ck("dilaton_black_hole R passes the bottom toward r_d in every frame but the first, and K the top in every frame",
+       all(bool(beyond(R_E, x_einstein, R_scale, [1, f["value"]], (f["value"], reach))[1]) == (f["value"] > 0)
+           and beyond(K_E, x_einstein, DBH_K, [1, f["value"]], (f["value"], reach))[0] for f in frames))
+    movie = {
+        "id": "growing", "label": f"$0 \\le r_d \\le {last:.3f}\\,r_s$", "kind": "line", "x": x_einstein, "panels": E_panels,
+        "curves": reference, "marks": [], "legend": einstein["legend"],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the charged dilaton black hole against $r$ in the "
+            f"Einstein metric as its charge grows at fixed mass ($0 \\le r_d \\le {last:.3f}\\,r_s$), beside "
+            "Schwarzschild's. At "
+            "$r_d = 0$ the metric is Schwarzschild's, and as $r_d$ grows the singularity moves out from $r = 0$ toward "
+            "the horizon, which stays at $r = r_s$ for every charge.",
+            "At the horizon $K$ is $(12r_s^2 - 12r_sr_d + 5r_d^2)/r_s^4(r_s - r_d)^2$, which rises from $12/r_s^4$ at "
+            f"$r_d = 0$ to ${K_last:.0f}/r_s^4$ at $r_d = {last:.3f}\\,r_s$ and grows without bound as $r_d$ nears "
+            "the extremal charge $r_s$, where the singularity reaches the horizon. $R$ vanishes at the horizon at "
+            "every charge.",
+        ],
+        "settings": f"$r_s = 1$, the unit of every length, and $r_d$ in steps of $r_s/{int(1 / DBH_STEP)}$.",
+        "clip": ("The scales are those of $r_d = r_s/2$, and we cut each curve where it leaves its panel: $K$ passes "
+                 "the top toward $r = r_d$ in every frame, $R$ passes the bottom toward it for $r_d > 0$, and "
+                 f"$R$ passes the top for $r_d > {R_top_from:.3f}\\,r_s$."),
+        "movie": {"variable": "$r_d$", "seconds": 5, "frames": frames},
+    }
+    return [einstein, strings["string_magnetic"], strings["string_electric"], movie]
 
 
 # ---------------------------------------------------------------- Einstein's cluster
@@ -3289,6 +3649,7 @@ DRAWN = {
     "c_metric": c_metric,
     "curzon_chazy": curzon_chazy,
     "damour_solodukhin": damour_solodukhin,
+    "dilaton_black_hole": dilaton_black_hole,
     "einstein_cluster": einstein_cluster,
     "fisher_jnw": fisher_jnw,
 }
