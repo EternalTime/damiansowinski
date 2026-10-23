@@ -147,9 +147,9 @@ class Checks:
 
 class Published:
     """A published value of one chart, a curvature scalar, a component of the metric or of its
-    inverse, one of the Riemann tensor with its first index raised, or one of the Einstein tensor
-    with its first index raised, as a numpy function of the coordinates drawn and then the
-    parameters, in the order named.
+    inverse, one of the Riemann or the Weyl tensor with its first index raised, or one of the
+    Einstein tensor with its first index raised, as a numpy function of the coordinates drawn and
+    then the parameters, in the order named.
 
     The value is read through the checker's Reader, every name the reader holds as a function
     written out, every function the chart leaves free that `functions` declares put in as its
@@ -161,8 +161,8 @@ class Published:
         _, entry, reader = nr.load(metric_id, system_id)
         self.metric, self.system, self.field = metric_id, system_id, field
         self.functions = dict(functions or {})
-        if field in ("metric_components", "inverse_metric_components", "riemann", "einstein_tensor"):
-            variant = {"riemann": "ulll", "einstein_tensor": "ul"}.get(field)
+        if field in ("metric_components", "inverse_metric_components", "riemann", "weyl_tensor", "einstein_tensor"):
+            variant = {"riemann": "ulll", "weyl_tensor": "ulll", "einstein_tensor": "ul"}.get(field)
             listed = entry[field]["variants"][variant]["nonzero"] if variant else entry[field]
             value = next(c["value"] for c in listed if c["indices"] == list(indices))
             expr = reader(value)
@@ -6328,6 +6328,258 @@ def mcvittie(ck, src):
     return [map_view, movie_view]
 
 
+# ---------------------------------------------------------------- Melvin's magnetic universe
+
+MELVIN_REACH = 6                  # the line view runs over 0 <= B rho <= 6, as the research list sets
+MELVIN_K = {"kind": "log", "from": 1e-6, "to": 1e2}   # the axis of K/B^4
+ERNST_B = Fraction(1, 2)          # B in units of 1/r_s, as every drawing of Ernst's black hole takes it
+ERNST_REACH = 6                   # the box runs out to r sin theta = 6 r_s and |r cos theta| = 6 r_s
+ERNST_CELLS = 20                  # the cells of the map to each r_s, across and up
+ERNST_RANGE = (1e-5, 1e3)         # the colours of K r_s^4 run from the first to the second
+
+
+def melvin(ck, src):
+    """Melvin's magnetic universe at B = 1, its Kretschmann scalar against rho, and Ernst's black
+    hole in it at r_s = 1 and B = 1/(2 r_s), its Kretschmann scalar over the meridian half plane of
+    r and theta.
+
+    The cylindrical chart publishes K as a function of rho alone, the same at every t, phi and z,
+    so its view is a line, K/B^4 against B rho from 0 to 6 on a logarithmic axis from 10^-6 to
+    10^2, which holds the curve whole. Ernst's chart publishes K as a function of r and theta, so
+    its view is a map with r and theta drawn as polar coordinates about r = 0, r sin theta across
+    and r cos theta up, over 0 <= r sin theta <= 6 r_s and |r cos theta| <= 6 r_s, the reach of the
+    chart's spacetime diagram, in cells a twentieth of r_s on a side, coloured on a logarithmic
+    scale from 10^-5 to 10^3 in units of 1/r_s^4. The horizon r = r_s, the zero of the published
+    g^rr on every ray, is marked as a semicircle and the singularity r = 0 as a point. Both charts
+    publish R = 0, since the Maxwell stress is traceless, so the figure is K alone, and each view
+    belongs to its own chart, since the two are different spacetimes.
+
+    What the captions state is checked here: R vanishes in both charts; with Lambda = 1 + B^2 rho^2/4,
+    K = 12 B^4 (Lambda - 2)^2/Lambda^8 + 8 B^4/Lambda^8, the first term C_abcd C^abcd from the
+    published Weyl tensor and metric and the second 2 R_ab R^ab from the published Einstein tensor;
+    K = 20 B^4 on the axis, 12 B^4 of it the Weyl tensor's; K falls at every rho, the numerator of
+    its derivative a quadratic with no real root; every published component of the Weyl tensor
+    vanishes at B rho = 2, where the circles about the axis, of radius sqrt(g_phiphi), are widest,
+    and K = B^4/32 there; far out K falls off as 49152/B^8 rho^12, measured in sixty digits.
+    For Ernst's black hole: K at B = 0 is Schwarzschild's published scalar and at r_s = 0 Melvin's
+    at rho = r sin theta; K is the same at theta and pi - theta; on the axis
+    K = 12 r_s^2/r^6 + 24 B^2 r_s/r^3 + 20 B^4; far along the axis, at every rho drawn, K tends to
+    Melvin's at that rho, and along every other direction it falls off as 49152/B^8 rho^12; on the
+    horizon K falls from 77/4 r_s^4 at the poles to the value stated on the equator; toward r = 0
+    it grows as 12 r_s^2/r^6 from every direction; K falls along every ray and from the axis to the
+    equator at every r; and the clip stated is where K leaves the colours, on a grid four times as
+    fine as the map's, against the bisection along the axis, and where it is least."""
+    K = nr_published(src, "melvin", "cylindrical", "kretschmann", ["rho"], ["B"])
+    for system, coords, names in (("cylindrical", ["rho"], ["B"]), ("ernst", ["r", "theta"], ["r_s", "B"])):
+        ricci = nr_published(src, "melvin", system, "ricci_scalar", coords, names)
+        ck(f"melvin {system} publishes R = 0", ricci.expr == 0, f"{ricci.expr}")
+    rho, B = K.coords[0], K.params[0]
+    lam = 1 + B ** 2 * rho ** 2 / 4
+    weyl_part, field_part = 12 * B ** 4 * (lam - 2) ** 2 / lam ** 8, 8 * B ** 4 / lam ** 8
+    ck("melvin K is 12 B^4 (Lambda - 2)^2/Lambda^8 + 8 B^4/Lambda^8 with Lambda = 1 + B^2 rho^2/4",
+       sp.cancel(K.expr - weyl_part - field_part) == 0)
+
+    # The two parts, from the published Weyl tensor, metric and Einstein tensor of the chart, whose
+    # metric is diagonal, so that C_abcd C^abcd is the sum of (C^a_bcd)^2 g_aa g^bb g^cc g^dd.
+    _, entry, _ = nr.load("melvin", "cylindrical")
+    ck("melvin the cylindrical metric is diagonal",
+       all(c["indices"][0] == c["indices"][1] for c in entry["metric_components"] + entry["inverse_metric_components"]))
+
+    def comp(field, indices):
+        return nr_published(src, "melvin", "cylindrical", field, ["rho"], ["B"], indices).expr
+    down = {a: comp("metric_components", (a, a)) for a in entry["coords"]}
+    up = {a: comp("inverse_metric_components", (a, a)) for a in entry["coords"]}
+    weyl = [(c["indices"], comp("weyl_tensor", c["indices"])) for c in entry["weyl_tensor"]["variants"]["ulll"]["nonzero"]]
+    square = sum(v ** 2 * down[a] * up[b] * up[c] * up[d] for (a, b, c, d), v in weyl)
+    ck("melvin C_abcd C^abcd from the published Weyl tensor is 12 B^4 (Lambda - 2)^2/Lambda^8",
+       sp.cancel(square - weyl_part) == 0, f"{len(weyl)} components")
+    einstein = {tuple(c["indices"]): comp("einstein_tensor", c["indices"])
+                for c in entry["einstein_tensor"]["variants"]["ul"]["nonzero"]}
+    # R = 0, so R^a_b = G^a_b, and R_ab R^ab = R^a_b R^b_a.
+    contracted = sum(v * einstein.get((b, a), 0) for (a, b), v in einstein.items())
+    ck("melvin 2 R_ab R^ab from the published Einstein tensor is 8 B^4/Lambda^8",
+       sp.cancel(2 * contracted - field_part) == 0)
+    ck("melvin every published component of the Weyl tensor vanishes at B rho = 2",
+       all(sp.simplify(v.subs(rho, 2 / B)) == 0 for _, v in weyl))
+    on_axis, at_two = K.expr.subs(rho, 0), sp.simplify(K.expr.subs(rho, 2 / B))
+    ck("melvin K on the axis is 20 B^4, 12 B^4 of it the Weyl tensor's",
+       sp.simplify(on_axis - 20 * B ** 4) == 0 and sp.simplify(weyl_part.subs(rho, 0) - 12 * B ** 4) == 0)
+    ck("melvin K at B rho = 2 is B^4/32, all of it 2 R_ab R^ab", sp.simplify(at_two - B ** 4 / 32) == 0
+       and sp.simplify(weyl_part.subs(rho, 2 / B)) == 0, f"{at_two}")
+    circle = sp.sqrt(down["\\phi"])
+    widest = sp.solve(sp.diff(sp.simplify(circle.subs(B, 1)), rho), rho)
+    ck("melvin the circles about the axis are widest at B rho = 2", [w for w in widest if w.is_positive] == [2],
+       f"{widest}")
+    # K = B^4 k(B rho), and k falls at every rho: its derivative in x = B^2 rho^2 has a numerator
+    # that is a quadratic in x with a negative leading coefficient and no real root.
+    ck("melvin K is B^4 times a function of B rho", sp.cancel(K.expr - B ** 4 * K.expr.subs(B, 1).subs(rho, B * rho)) == 0)
+    x = sp.symbols("x", nonnegative=True)
+    slope = sp.Poly(sp.numer(sp.together(sp.diff(K.expr.subs(B, 1).subs(rho, sp.sqrt(x)), x))), x)
+    a2, a1, a0 = slope.all_coeffs() if slope.degree() == 2 else (0, 0, 0)
+    ck("melvin K falls at every rho", slope.degree() == 2 and a2 < 0 and a1 ** 2 - 4 * a2 * a0 < 0, f"{slope.as_expr()}")
+    far = [float(K.exact([v, 1.0])) * v ** 12 / 49152 for v in (1e4, 1e6)]
+    ck("melvin K falls off as 49152/B^8 rho^12 far out", all(abs(q - 1) < 1e-6 for q in far), f"{far}")
+
+    x_axis = axis("$B\\rho$", 0, MELVIN_REACH)
+    panels = [{"id": "K", "name": "$K/B^4$", "aspect": 2, "scale": MELVIN_K, "ticks": every_second(MELVIN_K)}]
+    shape_checks(ck, "melvin line", [p["aspect"] for p in panels])
+    height = PLOT_W / panels[0]["aspect"]
+    curves = line_curves(ck, "melvin", "K", "K", K, "\\rho", x_axis, MELVIN_K, height, {"B": 1.0})
+    up_, down_ = beyond(K, x_axis, MELVIN_K, [1.0])
+    ck("melvin K stays inside its panel", not up_ and not down_, f"{up_} {down_}")
+    edge = float(K.exact([MELVIN_REACH, 1.0]))
+    universe = {
+        "id": "universe", "label": "Melvin's universe", "system": "cylindrical", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of Melvin's universe against $\\rho$ ($B = 1$), the same at every $t$, "
+            "$\\phi$, and $z$. The stress of the magnetic field is traceless, so the Ricci scalar vanishes. With "
+            "$\\Lambda = 1 + B^2\\rho^2/4$, $K = 12B^4(\\Lambda - 2)^2/\\Lambda^8 + 8B^4/\\Lambda^8$, in which the "
+            "first term is $C_{\\alpha\\beta\\gamma\\delta}C^{\\alpha\\beta\\gamma\\delta}$, the square of the Weyl "
+            "tensor, and the second is $2R_{\\mu\\nu}R^{\\mu\\nu}$, "
+            "with $R_{\\mu\\nu} = 8\\pi GT_{\\mu\\nu}/c^4$ and $T_{\\mu\\nu}$ the stress of the field.",
+            "On the axis $K = 20B^4$, of which $12B^4$ is the Weyl tensor's, and $K$ falls from the axis outward. "
+            "At the Melvin radius $\\rho = 2/B$, where the circles about the axis are widest, the Weyl "
+            "tensor vanishes, and $K = B^4/32$ is the field's alone. Far out $K$ falls off as "
+            "$49152/B^8\\rho^{12}$.",
+        ],
+        "settings": "$B = 1$, so that $1/B$ is the unit of every length.",
+        "clip": ("We draw $K/B^4$ on a logarithmic scale from $10^{-6}$ to $10^{2}$, and every value drawn lies "
+                 f"within it, from $20$ on the axis to ${tex_number(edge)}$ at $B\\rho = {MELVIN_REACH}$."),
+    }
+    return [universe, ernst_hole(ck, src, K)]
+
+
+def ernst_hole(ck, src, melvin_K):
+    """Ernst's black hole in Melvin's universe, the map of melvin()'s second view, which its
+    docstring describes, with Melvin's own K, read from the cylindrical chart, to hold it to."""
+    rs, Bv = 1.0, float(ERNST_B)
+    params = {"r_s": rs, "B": Bv}
+    K = nr_published(src, "melvin", "ernst", "kretschmann", ["r", "theta"], ["r_s", "B"])
+    grr = nr_published(src, "melvin", "ernst", "inverse_metric_components", ["r", "theta"], ["r_s", "B"], ("r", "r"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    r, th = K.coords
+    r_s, B = K.params
+    ck("melvin Ernst's K at B = 0 is Schwarzschild's published scalar",
+       sp.cancel(K.expr.subs(B, 0) - K_s.expr.subs({K_s.coords[0]: r, K_s.params[0]: r_s})) == 0)
+    s = sp.symbols("s", positive=True)
+    bare = K.expr.subs(r_s, 0).subs(sp.sin(th), s)
+    melvin_at = melvin_K.expr.subs({melvin_K.coords[0]: r * s, melvin_K.params[0]: B})
+    ck("melvin Ernst's K at r_s = 0 is Melvin's at rho = r sin theta",
+       th not in bare.free_symbols and sp.cancel(bare - melvin_at) == 0)
+    ck("melvin Ernst's K is the same at theta and pi - theta", sp.simplify(K.expr.subs(th, sp.pi - th) - K.expr) == 0)
+    axis_K = 12 * r_s ** 2 / r ** 6 + 24 * B ** 2 * r_s / r ** 3 + 20 * B ** 4
+    ck("melvin Ernst's K on the axis is 12 r_s^2/r^6 + 24 B^2 r_s/r^3 + 20 B^4", sp.cancel(K.expr.subs(th, 0) - axis_K) == 0)
+    along = []
+    for rho_ in (0.0, 1.0, 2 / Bv, ERNST_REACH):
+        along.append([float(K.exact([math.hypot(rho_, z), math.atan2(rho_, z), rs, Bv]))
+                      / float(melvin_K.exact([rho_, Bv])) - 1 for z in (1e6, 1e8)])
+    ck("melvin Ernst's K tends far along the axis to Melvin's at every rho = r sin theta drawn",
+       all(abs(a) < 1e-4 and abs(b) < 1e-6 for a, b in along), f"{along}")
+    off = [[float(K.exact([radius, angle, rs, Bv])) * Bv ** 8 * (radius * math.sin(angle)) ** 12 / 49152 - 1
+            for radius in (1e6, 1e8)] for angle in (0.1, math.pi / 4, math.pi / 2)]
+    ck("melvin Ernst's K falls off as 49152/B^8 rho^12 along every direction off the axis",
+       all(abs(a) < 1e-4 and abs(b) < 1e-6 for a, b in off), f"{off}")
+    pole, equator = float(K.exact([rs, 0.0, rs, Bv])), float(K.exact([rs, math.pi / 2, rs, Bv]))
+    ck("melvin Ernst's K at the poles of the horizon is 12/r_s^4 + 24 B^2/r_s^2 + 20 B^4 = 77/4 r_s^4",
+       abs(pole / 19.25 - 1) < 1e-14 and pole > 12 > equator, f"{pole}, equator {equator}")
+    ninety = np.linspace(0, math.pi / 2, SAMPLES)
+    ck("melvin Ernst's K falls from the axis to the equator on every circle r drawn",
+       all(np.all(np.diff(K(radius, ninety, rs, Bv)) < 0) for radius in (0.1, 0.5, rs, 2.0, 4.0, 6.0, 8.5)))
+    radii = np.linspace(0, ERNST_REACH * math.sqrt(2), SAMPLES)[1:]
+    ck("melvin Ernst's K falls along every ray drawn",
+       all(np.all(np.diff(K(radii, angle, rs, Bv)) < 0) for angle in np.linspace(0, math.pi, 25)))
+    near = [float(K.exact([1e-8, angle, rs, Bv])) * 1e-48 / 12 - 1 for angle in np.linspace(0, math.pi, 7)]
+    ck("melvin Ernst's K grows as 12 r_s^2/r^6 toward r = 0 from every direction", max(map(abs, near)) < 1e-6,
+       f"worst {max(map(abs, near)):.1e}")
+
+    x_axis = axis("$r\\sin\\theta/r_s$", 0, ERNST_REACH, 3)
+    y_axis = axis("$r\\cos\\theta/r_s$", -ERNST_REACH, ERNST_REACH)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "melvin map", [aspect])
+    scale = {"kind": "log", "from": ERNST_RANGE[0], "to": ERNST_RANGE[1]}
+    nx = round(ERNST_CELLS * (x_axis["to"] - x_axis["from"]))
+    ny = round(ERNST_CELLS * (y_axis["to"] - y_axis["from"]))
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [rs, Bv], frame="meridian")
+    ck("melvin Ernst's K is finite and positive at every cell", np.all(np.isfinite(values)) and np.all(values > 0),
+       f"from {np.min(values):.3e} to {np.max(values):.3e}")
+    # Sixty digits at forty cells spread over the map, at the two beside the singularity and at the
+    # four corners.
+    rng = np.random.default_rng(1976)
+    picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+    picks |= {(0, ny // 2 - 1), (0, ny // 2)} | {(i, j) for i in (0, nx - 1) for j in (0, ny - 1)}
+    picks = sorted(picks)
+    points = [[float(v) for v in meridian(xs[i], ys[j])] + [rs, Bv] for i, j in picks]
+    agrees(ck, "melvin map", K, points, [values[j, i] for i, j in picks])
+
+    # The horizon, the zero of g^rr along rays from r = 0 across the box, at r_s on every ray.
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+    rays = []
+    for angle in np.linspace(0, math.pi, 13):
+        reach = min(ERNST_REACH / max(math.sin(angle), 1e-300), ERNST_REACH / max(abs(math.cos(angle)), 1e-300))
+        rays.append(zeros(ck, f"melvin g^rr at theta = {angle:.4f}", grr, 0.0, reach, [angle, rs, Bv], n=4000))
+    ck("melvin Ernst's horizon is at r = r_s on every ray", all(len(z) == 1 and abs(z[0] - rs) < 1e-12 for z in rays),
+       f"{rays[0]}")
+    n = math.ceil(math.pi / (2 * math.acos(1 - TOLERANCE / (rs * per_unit)))) + 1
+    sag = rs * per_unit * (1 - math.cos(math.pi / (n - 1) / 2))
+    ck("melvin the circle r = r_s strays from its chords by less than the tolerance", sag < TOLERANCE,
+       f"{sag:.4f} in {n} points")
+    horizon = [[float(rs * math.sin(a)) + 0.0, float(rs * math.cos(a)) + 0.0] for a in np.linspace(0, math.pi, n)]
+    flips = [float(grr(rs * (1 - 1e-7), float(meridian(px, py)[1]), rs, Bv))
+             * float(grr(rs * (1 + 1e-7), float(meridian(px, py)[1]), rs, Bv)) < 0 for px, py in horizon]
+    ck("melvin g^rr changes sign across every point of the horizon marked", all(flips), f"{len(flips)} points")
+
+    # Where K leaves the colours, on a grid four times as fine as the map's: the top inside the
+    # radius at which K on the axis, where it is largest at each r, passes it, and the bottom nowhere,
+    # K being least at the corner on the equator.
+    fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [rs, Bv], frame="meridian")
+    FX, FY = np.meshgrid(fx, fy)
+    high = ~(fine <= ERNST_RANGE[1])
+    d_high = float(np.hypot(FX, FY)[high].max())
+    cut = crossing(lambda v: float(K(v, 0.0, rs, Bv)) - ERNST_RANGE[1], 0.1, rs)
+    cell = 1 / (4 * ERNST_CELLS)
+    ck("melvin Ernst's K passes the top of its colours only inside the radius where it passes it on the axis",
+       cut - 2 * cell < d_high <= cut, f"within r = {d_high:.4f}, the axis crossing {cut:.4f}")
+    least = float(K.exact([ERNST_REACH, math.pi / 2, rs, Bv]))
+    lowest = int(np.argmin(fine))
+    ck("melvin Ernst's K stays above the bottom of its colours and is least at the corner on the equator",
+       least > ERNST_RANGE[0] and float(fine.flat[lowest]) >= least
+       and math.hypot(FX.flat[lowest] - ERNST_REACH, FY.flat[lowest]) < 2 * cell,
+       f"{least:.4e} at r = {ERNST_REACH} r_s, the finest cell {float(fine.flat[lowest]):.4e}")
+    rows = [[rounded(v) for v in row] for row in values]
+    return {
+        "id": "ernst", "label": "Ernst's black hole", "system": "ernst", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,r_s^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "melvin", "system": "ernst", "scalar": "kretschmann", "x": "r", "y": "\\theta",
+                "frame": "meridian", "params": params, "nx": nx, "ny": ny, "cells": rows},
+        "marks": [{"class": "horizon", "points": horizon}, {"class": "singular", "at": [0.0, 0.0]}],
+        "legend": [["line", "horizon", "the horizon $r = r_s$, where $g^{rr} = 0$"],
+                   ["point", "singular", "$r = 0$, where $K$ diverges"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of Ernst's black hole over the half plane of $r$ and $\\theta$, drawn as "
+            "polar coordinates about the hole ($B = 1/(2r_s)$), the same at every $t$ and $\\phi$. The stress of the "
+            "magnetic field is traceless, so the Ricci scalar vanishes. At $B = 0$ the scalar is Schwarzschild's "
+            "$12r_s^2/r^6$, the same in every direction, and at $r_s = 0$ it is that of Melvin's universe at "
+            "$\\rho = r\\sin\\theta$.",
+            "On the axis $K = 12r_s^2/r^6 + 24B^2r_s/r^3 + 20B^4$, which tends far from the hole to "
+            f"$20B^4 = {20 * Bv ** 4:g}/r_s^4$, the curvature on the axis of Melvin's universe. Far along the axis, "
+            "at every distance $\\rho = r\\sin\\theta$ from it, $K$ tends to Melvin's at that $\\rho$, and along "
+            "every other direction it falls off as Melvin's does, as $49152/B^8\\rho^{12}$, faster than "
+            "Schwarzschild's.",
+            "On the horizon $r = r_s$, where $g^{rr}$ vanishes, $K$ falls from "
+            f"$12/r_s^4 + 24B^2/r_s^2 + 20B^4 = {pole:g}/r_s^4$ at the poles to ${equator:.2f}/r_s^4$ on the "
+            "equator, on either side of Schwarzschild's $12/r_s^4$. Toward the singularity $r = 0$ it grows as "
+            "$12r_s^2/r^6$ from every direction, as Schwarzschild's does.",
+        ],
+        "settings": f"$r_s = 1$, the unit of every length, and $B = 1/(2r_s)$, so that the Melvin radius $2/B$ is "
+                    f"${2 / Bv:g}\\,r_s$.",
+        "clip": ("We colour $K\\,r_s^4$ on a logarithmic scale from $10^{-5}$ to $10^{3}$ and give a value beyond it "
+                 f"the colour of the end it passes: $K$ passes $10^{{3}}/r_s^4$ inside $r = {d_high:.2f}\\,r_s$ and "
+                 f"is least, ${tex_number(least)}/r_s^4$, on the equator at $r = {ERNST_REACH}\\,r_s$."),
+    }
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -6356,6 +6608,7 @@ DRAWN = {
     "kerr_taub_nut": kerr_taub_nut,
     "kiselev": kiselev,
     "mcvittie": mcvittie,
+    "melvin": melvin,
 }
 
 
