@@ -8602,6 +8602,381 @@ def reissner_nordstrom_de_sitter(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Roberts's collapsing scalar field
+
+ROBERTS_VIEWS = (("disperses", Fraction(9, 10)), ("threshold", Fraction(1)), ("collapses", Fraction(2)))   # p, as every drawing takes it
+ROBERTS_REACH = {"disperses": 3, "threshold": 3, "collapses": 0.6}   # x from the first ray to 3, as the research list sets, and past the singularity at p = 2
+ROBERTS_EDGE = 1e-6               # K vanishes on the first ray x = 0, below a logarithmic axis, so its curves start here, under a pixel out
+ROBERTS_K = {"kind": "log", "from": 1e-6, "to": 1e4}                     # the axis of K l^4 e^(-4 tau) in every view
+ROBERTS_R = {"kind": "symlog", "from": -1e2, "to": 0, "linear": 1e-6}    # the axis of R^mu_mu l^2 e^(-2 tau) in every view
+
+
+def roberts(ck, src):
+    """Roberts's massless scalar field at p = 9/10, 1 and 2, its Kretschmann and Ricci scalars
+    against the scaling chart's x, scaled free of tau.
+
+    The scaling chart publishes K = 3 p^4 (e^2x - 1)^2 e^-8x e^4tau/l^4 (cosh^2 x - p^2 sinh^2 x)^4
+    and R = -p^2 (e^2x - 1) e^-4x e^2tau/l^2 (cosh^2 x - p^2 sinh^2 x)^2, so K l^4 e^-4tau and
+    R l^2 e^-2tau depend on x alone: the field looks the same at every scale. Each line of constant
+    tau is a light ray moving out, u = -2 l e^-tau, and each curve is read on the ray tau = 0 at
+    l = 1, where the published scalars are those two products, and stands for every other ray, K
+    times 16/u^4 and R times 4/u^2. Every chart publishes the same two scalars at the same event, so
+    no view names a chart. The three views are the three values of p every other drawing takes, the
+    field dispersing, on the threshold and making a black hole, each with K on a logarithmic axis
+    from 10^-6 to 10^4 and R, negative at every x > 0, on a signed one, linear within 10^-6 of zero,
+    from -10^2 to 0, both ticked at every second decade and the same in every view, so that the
+    views can be set side by side; the threshold's two scalars are dashed beside the other two
+    fields'. x runs from the field's first ray, x = 0, to 3 for p <= 1, as the research list sets,
+    and to 0.6 for p = 2, past the singularity x_s = atanh(1/p) = ln 3/2, where that field's own
+    curves end. K vanishes at x = 0, so its curves start at ROBERTS_EDGE, and R's at x = 0. The
+    published g^xx changes sign nowhere on any range drawn, so nothing is marked; the apparent
+    horizon of p = 2, where the spheres along a ray stop growing, is no zero of it, and the caption
+    gives it.
+
+    What the captions state is checked here: K l^4 e^-4tau and R l^2 e^-2tau are the same at every
+    tau, measured in sixty digits; the double null, advanced and areal charts' K and R are the
+    scaling chart's at the same event; K = 3 R^2 in all five charts; the spheres shrink to a point
+    at u = v = 0, where every line of constant x meets; K and R vanish at x = 0, where K/x^2 tends
+    to 12 p^4; K is positive and R negative at every x > 0 drawn; for p <= 1 K rises to one greatest
+    value and falls, and R falls to one least value at the same x, at p = 1 the closed forms the
+    caption writes, 3/16 and -1/4 at x = ln 2/2; far out K falls as the areal radius to the power -6
+    and R as its cube for p < 1, and as its fourth and second powers at p = 1, measured in sixty
+    digits; at p = 1 K grows as 12/u^2 v^2 and R as 2/uv toward the null singularity u = 0 along
+    every ray of constant v, where the published g_thetatheta vanishes; at p = 2 the spheres along
+    a ray grow up to the apparent horizon atanh(1/p^2) alone and shrink to zero area at x_s, toward
+    which K grows as 1/108 (x_s - x)^4 and R as -1/18 (x_s - x)^2, measured in sixty digits, K
+    rising at every x on the way; K at p = 9/10 lies below the threshold's at every x > 0 drawn and
+    R above it, and at p = 2 K above it and R below; and every clip."""
+    names = ["p", "\\ell"]
+    K = nr_published(src, "roberts", "scaling", "kretschmann", ["x", "tau"], names)
+    R = nr_published(src, "roberts", "scaling", "ricci_scalar", ["x", "tau"], names)
+    g_thth = nr_published(src, "roberts", "scaling", "metric_components", ["x", "tau"], names, ("\\theta", "\\theta"))
+    gxx = nr_published(src, "roberts", "scaling", "inverse_metric_components", ["x", "tau"], names, ("x", "x"))
+    on_ray = {"\\tau": 0.0}
+    Kx, Rx, area, gxx_x = Held(K, on_ray), Held(R, on_ray), Held(g_thth, on_ray), Held(gxx, on_ray)
+    # Both axes span ten decades, so each is ticked at every second one, as Damour and Solodukhin's are.
+    panels = [{"id": "K", "name": "$K\\,\\ell^4e^{-4\\tau}$", "aspect": 2, "scale": ROBERTS_K,
+               "ticks": [t for t in value_ticks(ROBERTS_K) if round(math.log10(t["at"])) % 2 == 0]},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,\\ell^2e^{-2\\tau}$", "aspect": 2, "scale": ROBERTS_R,
+               "ticks": [t for t in value_ticks(ROBERTS_R) if t["at"] == 0 or round(math.log10(-t["at"])) % 2 == 0]}]
+    shape_checks(ck, "roberts", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    threshold = 1.0
+
+    # The field looks the same at every scale, every chart publishes the same two scalars at the
+    # same event, and K = 3 R^2 in each.
+    charts = {sid: (nr_published(src, "roberts", sid, "kretschmann", coords, ["p"]),
+                    nr_published(src, "roberts", sid, "ricci_scalar", coords, ["p"]))
+              for sid, coords in (("double_null", ["u", "v"]), ("advanced", ["v", "r"]), ("areal", ["v", "R"]),
+                                  ("diagonal", ["t", "rho"]))}
+    rng = np.random.default_rng(1989)
+    worst_scale = worst_charts = worst_ratio = 0.0
+    for _, value in ROBERTS_VIEWS:
+        p = float(value)
+        top = math.atanh(1 / p) if p > 1 else 4.0
+        for x, tau in zip(rng.uniform(0.02, 0.98 * top, 12), rng.uniform(-3, 3, 12)):
+            x, tau = float(x), float(tau)
+            k, r = K.exact([x, tau, p, 1]), R.exact([x, tau, p, 1])
+            e = sp.exp(sp.Float(tau, 70))
+            worst_scale = max(worst_scale, abs(float(k / e ** 4 / K.exact([x, 0, p, 1]) - 1)),
+                              abs(float(r / e ** 2 / R.exact([x, 0, p, 1]) - 1)))
+            worst_ratio = max(worst_ratio, abs(float(k / (3 * r * r) - 1)))
+            # The chart's own definitions: u = -2 l e^-tau, v = l e^-tau (e^2x - 1), Roberts's
+            # r = ((1 + p) v - u)/2, and the areal radius the square root of g_thetatheta.
+            u, v = -2 * math.exp(-tau), math.exp(-tau) * math.expm1(2 * x)
+            radius = math.sqrt(float(g_thth.exact([x, tau, p, 1])))
+            for sid, point in (("double_null", [u, v]), ("advanced", [v, ((1 + p) * v - u) / 2]), ("areal", [v, radius])):
+                kc, rc = charts[sid]
+                worst_charts = max(worst_charts, abs(float(kc.exact(point + [p]) / k - 1)),
+                                   abs(float(rc.exact(point + [p]) / r - 1)))
+        for sid, (kc, rc) in charts.items():
+            for a, b, s in zip(rng.uniform(0.1, 3, 6), rng.uniform(0.1, 3, 6), rng.uniform(-0.9, 0.9, 6)):
+                a, b, s = float(a), float(b), float(s)
+                point = {"double_null": [min(0.0, (1 - p) * b) - a, b],
+                         "advanced": [b, max((1 + p) / 2, p) * b + a],
+                         "areal": [b, math.sqrt(max(0.0, 1 - p * p)) * b / 2 + a],
+                         "diagonal": [s * min(1.0, 1 / p) * b, b]}[sid]
+                worst_ratio = max(worst_ratio, abs(float(kc.exact(point + [p]) / (3 * rc.exact(point + [p]) ** 2) - 1)))
+    ck("roberts K l^4 e^(-4 tau) and R l^2 e^(-2 tau) are the same at every tau", worst_scale < 1e-50,
+       f"worst {worst_scale:.1e}")
+    ck("roberts the double null, advanced and areal charts' K and R are the scaling chart's at the same event",
+       worst_charts < 1e-12, f"worst {worst_charts:.1e}")
+    ck("roberts K = 3 R^2 in all five charts", worst_ratio < 1e-50, f"worst {worst_ratio:.1e}")
+    g_dn = nr_published(src, "roberts", "double_null", "metric_components", ["u", "v"], ["p"], ("\\theta", "\\theta"))
+    ck("roberts the spheres on the first ray v = 0 shrink to a point at u = v = 0, as the field's first ray reaches the centre",
+       all(float(g_dn.exact([-d, 0, p])) == d * d / 4 for d in (1.0, 0.5) for p in (0.9, 1.0, 2.0))
+       and all(float(g_dn.exact([0, 0, p])) == 0 for p in (0.9, 1.0, 2.0)))
+    ck("roberts the published g^xx is negative at every x > 0 on every ray, so no horizon is marked",
+       all(float(gxx_x.exact([x, float(v), 1])) < 0 for x in np.linspace(0.01, 3, 60) for _, v in ROBERTS_VIEWS))
+
+    def ray(value, cls, reach, name):
+        """The two curves of the field at p = value on the ray tau = 0, in the classes K and R or
+        both in `cls`, K from ROBERTS_EDGE and R from the first ray, each as far as the field
+        reaches, to its singularity for p > 1."""
+        p = float(value)
+        end = math.atanh(1 / p) if p > 1 else reach
+        x_axis = axis("$x$", 0, reach)
+        params = {"p": p, "\\ell": 1}
+        return (line_curves(ck, f"{name} K", "K", cls or "K", Kx, "x", x_axis, ROBERTS_K, height["K"], params,
+                            within=(ROBERTS_EDGE, end))
+                + line_curves(ck, f"{name} R", "R", cls or "R", Rx, "x", x_axis, ROBERTS_R, height["R"], params,
+                              within=(0, end)))
+
+    def leaves(value, reach):
+        """Where each scalar of the field at p = value passes below and above its axis, from the
+        samples sampled() takes."""
+        p = float(value)
+        end = math.atanh(1 / p) if p > 1 else reach
+        x_axis = axis("$x$", 0, reach)
+        return (beyond(Kx, x_axis, ROBERTS_K, [p, 1], (ROBERTS_EDGE, end)),
+                beyond(Rx, x_axis, ROBERTS_R, [p, 1], (0, end)))
+
+    def greatest(p, hi):
+        """Where K is greatest on (0, hi) and R least, each by the golden section, with K and R there."""
+        x_k = golden(lambda s: -float(Kx(s, p, 1)), 0.0, hi)
+        x_r = golden(lambda s: float(Rx(s, p, 1)), 0.0, hi)
+        ck(f"roberts at p = {p} R is least where K is greatest", abs(x_k - x_r) < 1e-6, f"{x_k} {x_r}")
+        return x_k, float(Kx.exact([x_k, p, 1])), float(Rx.exact([x_k, p, 1]))
+
+    def far(p, fn, power, expected, label):
+        """fn times the areal radius to `power` far out along the ray, measured in sixty digits."""
+        values = [float(fn.exact([x, p, 1]) * area.exact([x, p, 1]) ** sp.Rational(power, 2)) for x in (20.0, 30.0)]
+        ck(f"roberts at p = {p} {label} falls far out as the areal radius to the power -{power}",
+           all(abs(v / expected - 1) < 1e-12 for v in values), f"{values} {expected}")
+
+    def single_peak(fn, xs, p, sign):
+        """Whether fn along xs rises to one extreme and falls back, its greatest for sign 1 and its
+        least for sign -1."""
+        steps = np.sign(np.diff(sign * fn(xs, p, 1)))
+        turns = np.flatnonzero(np.diff(steps) != 0)
+        return len(turns) == 1 and steps[0] > 0 and steps[-1] < 0
+
+    def level(fn, p, value, lo, hi):
+        """The x between lo and hi at which fn at p reaches value, which it passes once there, by bisection."""
+        return crossing(lambda s: float(fn(s, p, 1)) - value, lo, hi)
+
+    def held_to(name, cut, start, reach):
+        """Check that a crossing found by bisection lies between the sample sampled() cuts a curve at
+        and the next one, the samples being reach/(SAMPLES - 1) apart or closer."""
+        ck(f"roberts {name} leaves its axis at x = {cut:.6f}, where its samples do", start <= cut <= start + 1.01 * reach / (SAMPLES - 1),
+           f"{cut} {start}")
+
+    def bottom_cut(ps, lines, reach):
+        """A bound of one figure on the x within which the K of every field in ps passes below its
+        axis beside the first ray, where it rises from zero."""
+        cuts = []
+        for p, (_, below) in zip(ps, lines):
+            cut = level(Kx, p, ROBERTS_K["from"], ROBERTS_EDGE, 0.2)
+            held_to(f"at p = {p} K beside the first ray", cut, below[0][1], reach)
+            cuts.append(cut)
+        near = max(cuts)
+        power = math.floor(math.log10(near))
+        bound = math.ceil(near / 10 ** power) * 10 ** power
+        ck("roberts the bound stated on where K passes below its axis beside the first ray holds", near <= bound,
+           f"{cuts} {bound}")
+        return bound
+
+    ray_K = ("Each line of constant $\\tau$ is a light ray moving out, $u = -2\\ell e^{-\\tau}$, and "
+             "$K\\,\\ell^4e^{-4\\tau} = Ku^4/16$ depends on $x$ alone, so on every ray $K$ is $16/u^4$ times a function of $x$ alone.")
+    ray_R = ("On every light ray moving out, $u = -2\\ell e^{-\\tau}$, $R^\\mu{}_\\mu$ is $4/u^2$ times a function of $x$ alone, since "
+             "$R^\\mu{}_\\mu\\,\\ell^2e^{-2\\tau} = R^\\mu{}_\\mu u^2/4$ depends on $x$ alone.")
+    vertex = ("Along every line of constant $x$, $K$ grows as $u^{-4}$ toward $u = v = 0$, where the field's first ray "
+              "reaches the centre.")
+    square = "At every event $K = 3(R^\\mu{}_\\mu)^2$."
+    legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"],
+              ["line", "reference", "the threshold, $p = 1$"]]
+    both = ("We draw $K\\,\\ell^4e^{-4\\tau}$ on a logarithmic scale from $10^{-6}$ to $10^{4}$ and $R^\\mu{}_\\mu\\,\\ell^2e^{-2\\tau}$ "
+            "on a signed logarithmic scale, linear within $10^{-6}$ of zero, from $-10^{2}$ to $0$, the same in every view")
+    K_only = "We draw $K\\,\\ell^4e^{-4\\tau}$ on a logarithmic scale from $10^{-6}$ to $10^{4}$, the same in every view"
+    R_only = ("We draw $R^\\mu{}_\\mu\\,\\ell^2e^{-2\\tau}$ on a signed logarithmic scale, linear within $10^{-6}$ of zero, from "
+              "$-10^{2}$ to $0$, the same in every view")
+
+    def settings(label):
+        return (f"${label}$ and $\\tau = 0$, the light ray $u = -2\\ell$, with $\\ell$ any length, the unit of every "
+                "length.")
+
+    views = []
+
+    # The field dispersing, p = 9/10, beside the threshold.
+    p = 0.9
+    reach = ROBERTS_REACH["disperses"]
+    xs = np.linspace(ROBERTS_EDGE, reach, SAMPLES)
+    curves = ray(threshold, "reference", reach, "roberts threshold beside p = 9/10") + ray(p, None, reach, "roberts at p = 9/10")
+    ck("roberts at p = 9/10 K is positive and R negative at every x > 0 drawn", np.all(Kx(xs, p, 1) > 0) and np.all(Rx(xs, p, 1) < 0))
+    ck("roberts at p = 9/10 K and R vanish on the first ray, x = 0, where K/x^2 tends to 12 p^4",
+       float(Kx.exact([0, p, 1])) == 0 and float(Rx.exact([0, p, 1])) == 0
+       and abs(float(Kx.exact([1e-20, p, 1])) / 1e-40 / (12 * p ** 4) - 1) < 1e-15)
+    ck("roberts at p = 9/10 K rises to one greatest value and falls, and R to one least value",
+       single_peak(Kx, xs, p, 1) and single_peak(Rx, xs, p, -1))
+    x_top, K_top, R_low = greatest(p, reach)
+    ck("roberts at p = 9/10 K lies below the threshold's at every x > 0 drawn and R above it",
+       np.all(Kx(xs, p, 1) < Kx(xs, threshold, 1)) and np.all(Rx(xs, p, 1) > Rx(xs, threshold, 1)))
+    far(p, Kx, 6, 12 * p ** 4 / (1 - p * p), "K")
+    far(p, Rx, 3, -2 * p * p / math.sqrt(1 - p * p), "R")
+    ck("roberts at p = 9/10 the spheres along a ray grow at every x, so no sphere is trapped",
+       np.all(np.diff(area(xs, p, 1)) > 0))
+    (K_own, R_own), (K_ref, R_ref) = leaves(p, reach), leaves(threshold, reach)
+    near = bottom_cut([p, threshold], [K_own, K_ref], reach)
+    ck("roberts at p = 9/10 the threshold's K passes below its axis beside the first ray alone, and both R stay inside",
+       not K_ref[0] and len(K_ref[1]) == 1 and not any(R_own) and not any(R_ref) and not K_own[0]
+       and len(K_own[1]) == 2 and K_own[1][1][1] == xs[-1], f"{K_own} {K_ref}")
+    out = level(Kx, p, ROBERTS_K["from"], x_top, reach)
+    held_to("at p = 9/10 K far out", out, K_own[1][1][0] - reach / (SAMPLES - 1), reach)
+    K_clip = (f"and cut each curve where it leaves its panel: each $K$ passes below $10^{{-6}}$ within $x = {tex_number(near, 1)}$ of "
+              f"the first ray, where it vanishes, and at $p = 9/10$ beyond $x = {out:.2f}$.")
+    views.append({
+        "id": "disperses", "label": "$p = 9/10$", "kind": "line", "x": axis("$x$", 0, reach), "panels": panels,
+        "curves": curves, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of a massless scalar field falling in from "
+            "infinity and dispersing, against $x$ ($p = 9/10$), the same at every $\\theta$ and $\\phi$, beside the "
+            f"threshold $p = 1$. {ray_K} {ray_R} {vertex}",
+            "On the first ray, $x = 0$, $K$ vanishes, as in the flat space before it. "
+            f"It stays below the threshold's at every $x$ and is greatest at $x = {x_top:.3f}$, where "
+            f"$K\\,\\ell^4e^{{-4\\tau}} = {K_top:.3f}$. "
+            "Far out it falls as $R^{-6}$ in the areal radius $R$, as Schwarzschild's does. "
+            "$R^\\mu{}_\\mu$ vanishes on the first ray and is negative at every $x > 0$, above the threshold's, and "
+            f"least at $x = {x_top:.3f}$, where $R^\\mu{{}}_\\mu\\,\\ell^2e^{{-2\\tau}} = {R_low:.3f}$. "
+            f"Far out it falls off as $R^{{-3}}$ in the areal radius $R$. {square}",
+        ],
+        "ricci_sentences": [[0, 2], [1, 3], [1, 4]],
+        "per_scalar": scalar_clips(f"{K_only}, {K_clip}", f"{R_only}, and every value drawn lies within it."),
+        "settings": settings("p = 9/10"),
+        "clip": f"{both}, {K_clip[:-1]}; every $R^\\mu{{}}_\\mu$ drawn lies within its scale.",
+    })
+
+    # The threshold, p = 1, in closed form.
+    p = threshold
+    reach = ROBERTS_REACH["threshold"]
+    xs = np.linspace(ROBERTS_EDGE, reach, SAMPLES)
+    curves = ray(p, None, reach, "roberts at p = 1")
+    ck("roberts at p = 1 K is positive and R negative at every x > 0 drawn", np.all(Kx(xs, p, 1) > 0) and np.all(Rx(xs, p, 1) < 0))
+    worst = 0.0
+    for x in np.linspace(0.05, 6, 41):
+        y = sp.exp(-2 * sp.Float(float(x), 70))
+        worst = max(worst, abs(float(Kx.exact([float(x), p, 1]) / (3 * (1 - y) ** 2 * y ** 2) - 1)),
+                    abs(float(Rx.exact([float(x), p, 1]) / (-(1 - y) * y) - 1)))
+    ck("roberts at p = 1 K l^4 e^(-4 tau) = 3 (1 - e^-2x)^2 e^-4x and R l^2 e^(-2 tau) = -(1 - e^-2x) e^-2x",
+       worst < 1e-50, f"worst {worst:.1e}")
+    ck("roberts at p = 1 K rises to one greatest value and falls, and R to one least value",
+       single_peak(Kx, xs, p, 1) and single_peak(Rx, xs, p, -1))
+    x_top, K_top, R_low = greatest(p, reach)
+    ck("roberts at p = 1 K is greatest, 3/16, and R least, -1/4, at x = ln 2/2",
+       abs(x_top - math.log(2) / 2) < 1e-7 and abs(K_top - 3 / 16) < 1e-13 and abs(R_low + 1 / 4) < 1e-13,
+       f"{x_top} {K_top} {R_low}")
+    far(p, Kx, 4, 3.0, "K")
+    far(p, Rx, 2, -1.0, "R")
+    ck("roberts at p = 1 the spheres along a ray grow at every x, so no sphere is trapped",
+       np.all(np.diff(area(xs, p, 1)) > 0))
+    K_dn, R_dn = charts["double_null"]
+    lead_K = [float(K_dn.exact([-d, v, p])) * d * d * v * v for d in (1e-15, 1e-20) for v in (0.5, 1.0, 3.0)]
+    lead_R = [float(R_dn.exact([-d, v, p])) * -d * v for d in (1e-15, 1e-20) for v in (0.5, 1.0, 3.0)]
+    ck("roberts at p = 1 K grows as 12/u^2 v^2 and R as 2/uv toward u = 0 along every ray of constant v",
+       all(abs(k / 12 - 1) < 1e-12 for k in lead_K) and all(abs(r / 2 - 1) < 1e-12 for r in lead_R),
+       f"{lead_K} {lead_R}")
+    ck("roberts at p = 1 the spheres shrink to zero area at u = 0, the null singularity",
+       all(float(g_dn.exact([0, v, p])) == 0 for v in (0.5, 1.0, 3.0)))
+    K_own, R_own = leaves(p, reach)
+    near = bottom_cut([p], [K_own], reach)
+    ck("roberts at p = 1 K passes below its axis beside the first ray alone, and R stays inside",
+       not K_own[0] and len(K_own[1]) == 1 and not any(R_own), f"{K_own} {R_own}")
+    K_clip = (f"and cut each curve where it leaves its panel, as $K$ does within $x = {tex_number(near, 1)}$ of the first "
+              "ray, where it vanishes.")
+    views.append({
+        "id": "threshold", "label": "$p = 1$", "kind": "line", "x": axis("$x$", 0, reach), "panels": panels,
+        "curves": curves, "marks": [], "legend": legend[:2],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of a massless scalar field falling in from "
+            "infinity on the threshold of making a black hole, against $x$ ($p = 1$), the same at every $\\theta$ and "
+            f"$\\phi$. {ray_K} {ray_R} {vertex}",
+            "Here $K\\,\\ell^4e^{-4\\tau} = 3(1 - e^{-2x})^2e^{-4x}$, which vanishes on the first ray, $x = 0$, is "
+            f"greatest, $3/16$, at $x = \\tfrac{{1}}{{2}}\\ln 2 = {x_top:.3f}$, and far out falls as $R^{{-4}}$ in the areal "
+            "radius $R$, more slowly than Schwarzschild's $R^{-6}$. "
+            "Here $R^\\mu{}_\\mu\\,\\ell^2e^{-2\\tau} = -(1 - e^{-2x})e^{-2x}$, least, $-1/4$, at "
+            f"$x = \\tfrac{{1}}{{2}}\\ln 2$, and far out it falls off as $R^{{-2}}$ in the areal radius $R$. "
+            "The null singularity $u = 0$, where the spheres shrink to zero area, lies at $\\tau = \\infty$, and toward it "
+            "$K$ grows as $12/u^2v^2$ on every ray of constant $v$. "
+            "Toward the null singularity $u = 0$, $R^\\mu{}_\\mu$ falls without bound as $2/uv$ on every ray of constant $v$. "
+            f"{square}",
+        ],
+        "ricci_sentences": [[0, 2], [1, 1], [1, 3]],
+        "per_scalar": scalar_clips(f"{K_only}, {K_clip}", f"{R_only}, and every value drawn lies within it."),
+        "settings": settings("p = 1"),
+        "clip": f"{both}, {K_clip[:-1]}; $R^\\mu{{}}_\\mu$ lies within its scale.",
+    })
+
+    # The field making a black hole, p = 2, beside the threshold.
+    p = 2.0
+    reach = ROBERTS_REACH["collapses"]
+    x_s = math.atanh(1 / p)
+    ck("roberts at p = 2 the singularity x_s = atanh(1/p) is ln 3/2", abs(x_s - math.log(3) / 2) < 1e-15, f"{x_s}")
+    xs = np.linspace(ROBERTS_EDGE, x_s, SAMPLES)[:-1]
+    curves = ray(threshold, "reference", reach, "roberts threshold beside p = 2") + ray(p, None, reach, "roberts at p = 2")
+    ck("roberts at p = 2 K is positive and R negative at every x > 0 drawn", np.all(Kx(xs, p, 1) > 0) and np.all(Rx(xs, p, 1) < 0))
+    ck("roberts at p = 2 K and R vanish on the first ray, x = 0, where K/x^2 tends to 12 p^4",
+       float(Kx.exact([0, p, 1])) == 0 and float(Rx.exact([0, p, 1])) == 0
+       and abs(float(Kx.exact([1e-20, p, 1])) / 1e-40 / (12 * p ** 4) - 1) < 1e-15)
+    ck("roberts at p = 2 K rises and R falls at every x up to the singularity",
+       np.all(np.diff(Kx(xs, p, 1)) > 0) and np.all(np.diff(Rx(xs, p, 1)) < 0))
+    ck("roberts at p = 2 K lies above the threshold's at every x > 0 drawn and R below it",
+       np.all(Kx(xs, p, 1) > Kx(xs, threshold, 1)) and np.all(Rx(xs, p, 1) < Rx(xs, threshold, 1)))
+    lead = []
+    with mpmath.workdps(70):
+        exact_s = mpmath.atanh(mpmath.mpf(1) / 2)
+        for d in (1e-8, 1e-9, 1e-10):
+            x = float(exact_s - d)
+            gap = exact_s - mpmath.mpf(x)
+            lead.append((float(mpmath.mpf(str(Kx.exact([x, p, 1]))) * gap ** 4 * 108),
+                         float(mpmath.mpf(str(Rx.exact([x, p, 1]))) * gap ** 2 * -18)))
+    ck("roberts at p = 2 K grows as 1/108 (x_s - x)^4 and R as -1/18 (x_s - x)^2 toward the singularity",
+       all(abs(k - 1) < 1e-6 and abs(r - 1) < 1e-6 for k, r in lead), f"{lead}")
+    ck("roberts at p = 2 the spheres shrink to zero area at the singularity",
+       abs(float(area.exact([float(exact_s), p, 1]))) < 1e-15 and np.all(area(xs, p, 1) > 0))
+    apparent = math.atanh(1 / p ** 2)
+    widest = golden(lambda s: -float(area(s, p, 1)), 0.0, x_s)
+    grows = np.diff(area(xs, p, 1)) > 0
+    ck("roberts at p = 2 the spheres along a ray grow up to the apparent horizon atanh(1/p^2) alone and shrink after it",
+       abs(widest - apparent) < 1e-6 and np.all(grows[xs[1:] < apparent - 1e-3]) and not np.any(grows[xs[:-1] > apparent + 1e-3]),
+       f"{widest} {apparent}")
+    K_horizon = float(Kx.exact([apparent, p, 1]))
+    ck("roberts at p = 2 K l^4 e^(-4 tau) at the apparent horizon is 27/4", abs(K_horizon / 6.75 - 1) < 1e-13, f"{K_horizon}")
+    (K_own, R_own), (K_ref, R_ref) = leaves(p, reach), leaves(threshold, reach)
+    near = bottom_cut([p, threshold], [K_own, K_ref], reach)
+    ck("roberts at p = 2 K passes below its axis beside the first ray and above it beside the singularity, R below its axis "
+       "beside the singularity, and the threshold's K below its axis beside the first ray alone",
+       len(K_own[0]) == 1 and len(K_own[1]) == 1 and not R_own[0] and len(R_own[1]) == 1
+       and not K_ref[0] and len(K_ref[1]) == 1 and not any(R_ref), f"{K_own} {R_own} {K_ref}")
+    K_up = level(Kx, p, ROBERTS_K["to"], apparent, x_s * (1 - 1e-12))
+    R_down = level(Rx, p, ROBERTS_R["from"], apparent, x_s * (1 - 1e-12))
+    held_to("at p = 2 K beside the singularity", K_up, K_own[0][0][0] - reach / (SAMPLES - 1), reach)
+    held_to("at p = 2 R beside the singularity", R_down, R_own[1][0][0] - reach / (SAMPLES - 1), reach)
+    K_clip = (f"and cut each curve where it leaves its panel: each $K$ passes below $10^{{-6}}$ within $x = {tex_number(near, 1)}$ of "
+              f"the first ray, where it vanishes, and at $p = 2$ above $10^{{4}}$ beyond $x = {K_up:.3f}$.")
+    R_clip = f"and cut each curve where it leaves its panel, as $R^\\mu{{}}_\\mu$ at $p = 2$ does beyond $x = {R_down:.3f}$."
+    views.append({
+        "id": "collapses", "label": "$p = 2$", "kind": "line", "x": axis("$x$", 0, reach), "panels": panels,
+        "curves": curves, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of a massless scalar field falling in from "
+            "infinity and making a black hole, against $x$ ($p = 2$), the same at every $\\theta$ and $\\phi$, beside the "
+            f"threshold $p = 1$. {ray_K} {ray_R} {vertex}",
+            "Every light ray moving out ends on the singularity $x_s = \\tanh^{-1}(1/p) = \\tfrac{1}{2}\\ln 3 = "
+            f"{x_s:.3f}$, where the spheres shrink to zero area. "
+            "$K$ stands above the threshold's at every $x$ and grows toward the singularity as $1/108(x_s - x)^4$. "
+            f"Past the apparent horizon, $x = \\tanh^{{-1}}(1/p^2) = {apparent:.3f}$, where "
+            "$K\\,\\ell^4e^{-4\\tau} = 27/4$, the spheres along each ray shrink. "
+            "$R^\\mu{}_\\mu$ is negative at every $x > 0$, below the threshold's, and falls without bound toward the "
+            "singularity $x_s = \\tfrac{1}{2}\\ln 3$ as $-1/18(x_s - x)^2$. "
+            f"{square}",
+        ],
+        "ricci_sentences": [[0, 2], [1, 3]],
+        "per_scalar": scalar_clips(f"{K_only}, {K_clip}", f"{R_only}, {R_clip}"),
+        "settings": settings("p = 2"),
+        "clip": f"{both}, {K_clip[:-1]}, and $R^\\mu{{}}_\\mu$ at $p = 2$ below its scale beyond $x = {R_down:.3f}$.",
+    })
+    return views
+
+
 # ---------------------------------------------------------------- the regular radiation universe
 
 def senovilla(ck, src):
@@ -10434,6 +10809,7 @@ DRAWN = {
     "oppenheimer_snyder": oppenheimer_snyder,
     "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
+    "roberts": roberts,
     "schwarzschild": schwarzschild,
     "senovilla": senovilla,
     "simpson_visser": simpson_visser,
