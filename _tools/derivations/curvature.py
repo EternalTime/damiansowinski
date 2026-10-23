@@ -4793,6 +4793,252 @@ def einstein_rosen_waves(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Kiselev's black hole
+
+KISELEV_W = Fraction(-2, 3)       # w, as every drawing of Kiselev's black hole takes it
+KISELEV_RQ = 8                    # r_q in units of r_s, as every drawing of the black hole takes it
+KISELEV_REACH = 10                # the plot runs from the centre to r = 10 r_s, past the outer horizon
+KISELEV_STEP = Fraction(1, 60)    # the step of w from one frame of the movie to the next, which lands on -2/3
+KISELEV_FIRST = Fraction(-1)      # the first frame's w, the cosmological constant
+KISELEV_LAST = Fraction(-7, 20)   # the last frame's w, one step short of -1/3, where h = 1 for every r_q
+KISELEV_K = {"kind": "log", "from": 1e-6, "to": 1e2}
+KISELEV_R = {"kind": "log", "from": 1e-2, "to": 1e2}
+
+
+def kiselev(ck, src):
+    """Kiselev's black hole at r_s = 1 and r_q = 8 r_s, its Kretschmann and Ricci scalars against r.
+
+    The static chart's published K and R depend on r alone, through h = (r_q/r)^(3w + 1), and both
+    Eddington-Finkelstein charts publish the same two, so one figure serves every chart; a map over
+    r and an angle would be one colour along every circle, and w is a parameter, not a coordinate,
+    so the family is stepped through as a movie rather than drawn as a map. Two panels share the
+    axis of r, from 0 to 10 r_s, past the outer horizon: K on a logarithmic axis from 10^-6 to 10^2
+    and R on one from 10^-2 to 10^2, since both are positive at every r and every w < 0, with
+    Schwarzschild's K of the same mass, read from schwarzschild.json, dashed beside them;
+    Schwarzschild's R vanishes and has no place on a logarithmic axis. The horizons are the zeros
+    of the static chart's published g^rr. The first view is w = -2/3 at r_q = 8 r_s, the values every
+    other drawing takes, which the linear chart publishes; the second steps w from -1, the
+    cosmological constant, to -7/20 at fixed r_s and r_q, one step short of w = -1/3, where
+    h = 1 for every r_q and the metric function is -r_s/r.
+
+    What the captions state is checked here: both Eddington-Finkelstein charts publish the static
+    chart's K and R at every w, and the linear chart publishes them at w = -2/3; there K is
+    12 r_s^2/r^6 + 8/r_q^2 r^2 and R = 6/r_q r exactly, the hyperbolic and conformally flat charts of
+    the matter alone publishing 8/r_q^2 r^2 and 6/r_q r at the areal radius sqrt(g_thetatheta);
+    the horizons are (r_q/2)(1 -+ sqrt(1 - 4 r_s/r_q)); Schwarzschild's part equals the matter's at
+    r = (3 r_s^2 r_q^2/2)^(1/4), between the horizons, and the matter's is the stated multiple of it
+    at r_+; at w = -1, K is Schwarzschild's plus 24/r_q^4 and R = 12/r_q^2 exactly; far out K falls off
+    as r^(-6(w + 1)) and R as r^(-3(w + 1)), measured in sixty digits; K and R are positive and fall
+    at every r in every frame; the horizons approach each other frame by frame and meet at the w and
+    r stated, where g^rr and its derivative vanish, past which g^rr is negative at every r from
+    10^-6 to 10^8 r_s; and each curve leaves only the top of its panel, inside the radii the clips
+    state."""
+    names = ["r_s", "r_q", "w"]
+    rq = float(KISELEV_RQ)
+    x_axis = axis("$r/r_s$", 0, KISELEV_REACH)
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": KISELEV_K, "ticks": every_second(KISELEV_K)},
+              {"id": "R", "name": "$R\\,r_s^2$", "aspect": 2, "scale": KISELEV_R, "ticks": value_ticks(KISELEV_R)}]
+    shape_checks(ck, "kiselev", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    K = nr_published(src, "kiselev", "static", "kretschmann", ["r"], names)
+    R = nr_published(src, "kiselev", "static", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, "kiselev", "static", "inverse_metric_components", ["r"], names, ("r", "r"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    rs = np.linspace(0, KISELEV_REACH, SAMPLES)[1:]
+
+    # Every chart publishes the same two scalars: the Eddington-Finkelstein charts at every w, the
+    # linear chart at w = -2/3, and the charts of the matter alone at r_s = 0 and the areal radius.
+    for system in ("eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"):
+        for field, fn in (("kretschmann", K), ("ricci_scalar", R)):
+            other = nr_published(src, "kiselev", system, field, ["r"], names)
+            ck(f"kiselev {system} publishes the static chart's {field}",
+               all(np.allclose(other(rs, 1, rq, v), fn(rs, 1, rq, v), rtol=1e-14, atol=0)
+                   for v in (-1.0, -0.8, -2 / 3, -0.5, -0.35, 0.2)))
+    for field, fn in (("kretschmann", K), ("ricci_scalar", R)):
+        linear = nr_published(src, "kiselev", "linear", field, ["r"], ["r_s", "r_q"])
+        ck(f"kiselev's linear chart publishes the static chart's {field} at w = -2/3",
+           np.allclose(linear(rs, 1, rq), fn(rs, 1, rq, -2 / 3), rtol=1e-14, atol=0))
+    r, r_s, r_q, w = K.coords[0], *K.params
+    third = sp.Rational(-2, 3)
+    ck("kiselev K at w = -2/3 is 12 r_s^2/r^6 + 8/r_q^2 r^2",
+       sp.simplify(K.expr.subs(w, third) - 12 * r_s ** 2 / r ** 6 - 8 / (r_q ** 2 * r ** 2)) == 0)
+    ck("kiselev R at w = -2/3 is 6/r_q r", sp.simplify(R.expr.subs(w, third) - 6 / (r_q * r)) == 0)
+    ck("kiselev K at w = -1 is Schwarzschild's plus 24/r_q^4",
+       sp.simplify(K.expr.subs(w, -1) - 12 * r_s ** 2 / r ** 6 - 24 / r_q ** 4) == 0)
+    ck("kiselev R at w = -1 is 12/r_q^2", sp.simplify(R.expr.subs(w, -1) - 12 / r_q ** 2) == 0)
+    ck("Schwarzschild's published K at r_s = 1 is 12/r^6", np.allclose(K_s(rs, 1), 12 / rs ** 6, rtol=1e-14, atol=0))
+    for system, coords, points in (("hyperbolic", ["chi"], [(x,) for x in (0.05, 0.3, 1.0, 2.5, 6.0)]),
+                                   ("conformally_flat", ["tau", "rho"],
+                                    [(-0.5, 1.0), (0.0, 0.2), (1.5, 0.7), (4.0, 3.0), (-2.0, 5.0)])):
+        alone_K = nr_published(src, "kiselev", system, "kretschmann", coords, ["r_q"])
+        alone_R = nr_published(src, "kiselev", system, "ricci_scalar", coords, ["r_q"])
+        area = nr_published(src, "kiselev", system, "metric_components", coords, ["r_q"], ("\\theta", "\\theta"))
+        held = all(abs(float(alone_K.exact([*p, rq])) / float(K.exact([math.sqrt(float(area.exact([*p, rq]))), 0, rq,
+                                                                         -2 / 3])) - 1) < 1e-12
+                   and abs(float(alone_R.exact([*p, rq])) / float(R.exact([math.sqrt(float(area.exact([*p, rq]))), 0,
+                                                                         rq, -2 / 3])) - 1) < 1e-12
+                   for p in points)
+        ck(f"kiselev's {system} chart publishes the matter's 8/r_q^2 r^2 and 6/r_q r at the areal radius", held)
+
+    def own(value, name):
+        params = {"r_s": 1, "r_q": rq, "w": float(value)}
+        curves = (line_curves(ck, name, "K", "K", K, "r", x_axis, KISELEV_K, height["K"], params)
+                  + line_curves(ck, name, "R", "R", R, "r", x_axis, KISELEV_R, height["R"], params))
+        marks = [{"class": "horizon", "x": x}
+                 for x in zeros(ck, f"{name} horizons", grr, 0, KISELEV_REACH, [1, rq, float(value)])]
+        Ks, Rs = K(rs, 1, rq, float(value)), R(rs, 1, rq, float(value))
+        # At w = -1 the matter is a cosmological constant, and R is the same at every r.
+        flat = value == -1 and np.allclose(Rs, 12 / rq ** 2, rtol=1e-14, atol=0)
+        ck(f"{name} K and R are positive, K falls at every r drawn, and R falls or is constant",
+           np.all(Ks > 0) and np.all(Rs > 0) and np.all(np.diff(Ks) < 0) and (flat or np.all(np.diff(Rs) < 0)))
+        return curves, marks
+
+    def reference():
+        return line_curves(ck, "kiselev Schwarzschild", "K", "reference", K_s, "r", x_axis, KISELEV_K, height["K"],
+                           {"r_s": 1})
+
+    def top(fn, scale, value):
+        """Where a falling curve leaves the top of its panel, by bisection in log r, or 0 where it
+        stays below the top on the whole axis but for the centre itself."""
+        args = [1, rq, float(value)] if fn is not K_s else [1]
+
+        def at(log_r):
+            return float(fn(np.array([math.exp(log_r)]), *args)[0])
+        lo, hi = -300.0, math.log(KISELEV_REACH)
+        if at(hi) > scale["to"]:
+            raise SystemExit("kiselev: a curve passes the top of its panel across the whole axis")
+        if at(lo) <= scale["to"]:
+            return 0.0
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if at(mid) > scale["to"] else (lo, mid)
+        return math.exp(hi)
+
+    def bottom_free(fn, scale, args):
+        _, down = beyond(fn, x_axis, scale, args)
+        return not down
+
+    # The black hole at w = -2/3 and the figures of its caption.
+    w0 = float(KISELEV_W)
+    curves, marks = own(KISELEV_W, "kiselev at w = -2/3")
+    found = [m["x"] for m in marks]
+    root = math.sqrt(1 - 4 / rq)
+    ck("kiselev at w = -2/3 has its horizons at (r_q/2)(1 -+ sqrt(1 - 4 r_s/r_q))",
+       len(found) == 2 and abs(found[0] - rq / 2 * (1 - root)) < 1e-12 and abs(found[1] - rq / 2 * (1 + root)) < 1e-12,
+       f"{found}")
+    r_minus, r_plus = found
+    even = (3 * rq ** 2 / 2) ** 0.25
+    parts = zeros(ck, "kiselev K - K_s = K_s", lambda x, *_: K(x, 1, rq, w0) - 2 * K_s(x, 1), 0, KISELEV_REACH, [])
+    ck("kiselev's two parts of K are equal at r = (3 r_s^2 r_q^2/2)^(1/4) alone, between the horizons",
+       len(parts) == 1 and abs(parts[0] - even) < 1e-12 and r_minus < even < r_plus, f"{parts} against {even}")
+    ratio = float((K.exact([r_plus, 1, rq, w0]) - K_s.exact([r_plus, 1])) / K_s.exact([r_plus, 1]))
+    ck("kiselev the matter's part of K at r_+ is 2 r_+^4/3 r_q^2 times Schwarzschild's",
+       abs(ratio / (2 * r_plus ** 4 / (3 * rq ** 2)) - 1) < 1e-12, f"{ratio:.4f}")
+    still_refs = reference()
+    K_cut, Ks_cut, R_cut = top(K, KISELEV_K, w0), top(K_s, KISELEV_K, None), top(R, KISELEV_R, w0)
+    ck("kiselev R at w = -2/3 leaves the top where 6/r_q r = 10^2", abs(R_cut - 6 / (rq * 100)) < 1e-12, f"{R_cut}")
+    ck("no curve of w = -2/3 passes the bottom of its panel",
+       bottom_free(K, KISELEV_K, [1, rq, w0]) and bottom_free(R, KISELEV_R, [1, rq, w0])
+       and bottom_free(K_s, KISELEV_K, [1]))
+    legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+              ["line", "reference", "$K$ of Schwarzschild's black hole of the same mass"],
+              ["line", "horizon", "a horizon, where $g^{rr} = 0$"]]
+    still = {
+        "id": "hole", "label": "$w = -2/3$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": still_refs + curves, "marks": marks, "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Kiselev's black hole against $r$ "
+            f"($w = -2/3$, $r_q = {KISELEV_RQ}\\,r_s$), the same at every $t$, $\\theta$, and $\\phi$, beside "
+            "Schwarzschild's of the same mass. At $w = -2/3$ the term of $K$ that mixes the hole with the "
+            "matter vanishes, and $K = 12r_s^2/r^6 + 8/r_q^2r^2$ is Schwarzschild's plus the matter's alone. "
+            f"The two parts are equal at $r = (3r_s^2r_q^2/2)^{{1/4}} = {even:.3f}\\,r_s$, between the horizons. "
+            "Inside it Schwarzschild's part is the larger, and outside it the matter's, which falls off only as "
+            f"$1/r^2$ and at the outer horizon is already {ratio:.1f} times Schwarzschild's.",
+            "Schwarzschild's $R$ vanishes, and here $R = 6/r_qr$ is positive at every $r$. It grows toward the "
+            "centre only as $1/r$, while $K$ grows as $12r_s^2/r^6$.",
+        ],
+        "settings": f"$r_s = 1$, the unit of every length, $w = -2/3$, and $r_q = {KISELEV_RQ}\\,r_s$, so that "
+                    f"$r_- = {r_minus:.3f}\\,r_s$ and $r_+ = {r_plus:.3f}\\,r_s$.",
+        "clip": ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-6}$ to $10^{2}$ and $R\\,r_s^2$ on one from "
+                 "$10^{-2}$ to $10^{2}$, and cut each curve where it leaves its panel, as $K$ does inside "
+                 f"$r = {K_cut:.3f}\\,r_s$, Schwarzschild's inside $r = {Ks_cut:.3f}\\,r_s$, and $R$ inside "
+                 f"$r = {R_cut:.4f}\\,r_s$."),
+    }
+
+    # The movie in w, at fixed r_s and r_q, from the cosmological constant toward w = -1/3.
+    frames = []
+    steps = int((KISELEV_LAST - KISELEV_FIRST) / KISELEV_STEP)
+    for k in range(steps + 1):
+        value = KISELEV_FIRST + KISELEV_STEP * k
+        curves, marks = own(value, f"kiselev at w = {float(value):.4f}")
+        frames.append({"label": f"$w = {float(value):.3f}$", "value": float(value), "curves": curves, "marks": marks})
+    values = [f["value"] for f in frames]
+    ck("kiselev the movie runs from w = -1 to -7/20 through -2/3",
+       values[0] == -1 and values[-1] == -0.35 and w0 in values, f"{values[0]} to {values[-1]}")
+
+    # Where the horizons meet: g^rr = 1 - r_s/r - h and its derivative vanish together where
+    # r = r_s (p - 1)/p and h = 1/(1 - p), with p = 3w + 1, which is p ln(r_q/r) + ln(1 - p) = 0.
+    def double(p):
+        return p * math.log(rq * p / (p - 1)) + math.log(1 - p)
+    lo, hi = -1.5, -0.36
+    if not (double(lo) < 0 < double(hi)):
+        raise SystemExit("kiselev: the horizons do not meet once between the bracket's ends")
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if double(mid) < 0 else (lo, mid)
+    p_meet = 0.5 * (lo + hi)
+    w_meet, r_meet = (p_meet - 1) / 3, (p_meet - 1) / p_meet
+    at = float(grr.exact([r_meet, 1, rq, w_meet]))
+    eps = 1e-6
+    slope = float((grr.exact([r_meet + eps, 1, rq, w_meet]) - grr.exact([r_meet - eps, 1, rq, w_meet])) / (2 * eps))
+    ck("kiselev's g^rr and its derivative vanish together where the horizons meet",
+       abs(at) < 1e-14 and abs(slope) < 1e-10, f"w = {w_meet:.6f}, r = {r_meet:.6f}, {at:.1e}, {slope:.1e}")
+    counts = [len(f["marks"]) for f in frames]
+    ck("kiselev has two horizons in every frame before they meet and none after",
+       all(n == (2 if v < w_meet else 0) for n, v in zip(counts, values)), f"{counts}")
+    gaps = [f["marks"][1]["x"] - f["marks"][0]["x"] for f in frames if len(f["marks"]) == 2]
+    ck("kiselev's two horizons approach each other frame by frame", all(b < a for a, b in zip(gaps, gaps[1:])))
+    wide = np.logspace(-6, 8, 20001)
+    ck("kiselev's g^rr is negative at every r from 10^-6 to 10^8 r_s past the meeting",
+       all(np.all(grr(wide, 1, rq, v) < 0) for v in values if v > w_meet))
+    for value in (-0.9, w0, -0.5, -0.35):
+        far = [1e6, 1e8]
+        K_slope = float(sp.log(K.exact([far[1], 1, rq, value]) / K.exact([far[0], 1, rq, value]))) / math.log(100)
+        R_slope = float(sp.log(R.exact([far[1], 1, rq, value]) / R.exact([far[0], 1, rq, value]))) / math.log(100)
+        ck(f"kiselev at w = {value:.4f} K falls off far out as r^(-6(w + 1)) and R as r^(-3(w + 1))",
+           abs(K_slope + 6 * (value + 1)) < 1e-4 and abs(R_slope + 3 * (value + 1)) < 1e-4,
+           f"{K_slope:.6f}, {R_slope:.6f}")
+    K_tops = [top(K, KISELEV_K, v) for v in values]
+    R_tops = [top(R, KISELEV_R, v) for v in values]
+    ck("no curve of the movie passes the bottom of its panel",
+       all(bottom_free(K, KISELEV_K, [1, rq, v]) and bottom_free(R, KISELEV_R, [1, rq, v]) for v in values))
+    K_reach, R_reach = max(K_tops), max(R_tops)
+    K_stated, R_stated = math.ceil(K_reach * 1000) / 1000, math.ceil(R_reach * 1000) / 1000
+    ck("kiselev every curve of the movie leaves the top of its panel within the radii stated",
+       K_reach <= K_stated and R_reach <= R_stated, f"{K_reach:.5f}, {R_reach:.5f}")
+    movie_view = {
+        "id": "state", "label": f"${float(KISELEV_FIRST):g} \\le w \\le {float(KISELEV_LAST):g}$", "kind": "line",
+        "x": x_axis, "panels": panels, "curves": reference(), "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Kiselev's black hole against $r$ as $w$ grows "
+            f"at fixed $r_s$ and $r_q$ (${float(KISELEV_FIRST):g} \\le w \\le {float(KISELEV_LAST):g}$), beside "
+            "Schwarzschild's. At $w = -1$ the matter is a cosmological constant, $\\Lambda = 3/r_q^2$: $K$ is "
+            "Schwarzschild's plus $24/r_q^4$ and $R = 12/r_q^2$ at every $r$, as in de Sitter space. As $w$ grows "
+            "the matter's curvature falls off ever faster, far out $K$ as $r^{-6(w + 1)}$ and $R$ as "
+            "$r^{-3(w + 1)}$.",
+            f"The two horizons approach each other as $w$ grows and meet at $w = {w_meet:.3f}$, at "
+            f"$r = {r_meet:.3f}\\,r_s$. Past it $g^{{rr}}$ is negative at every $r$, and no static region is left.",
+        ],
+        "settings": f"$r_s = 1$, the unit of every length, $r_q = {KISELEV_RQ}\\,r_s$, and $w$ in steps of "
+                    f"$1/{int(1 / KISELEV_STEP)}$.",
+        "clip": ("The scales are those of $w = -2/3$, and we cut each curve where it leaves the top of its panel, "
+                 f"$K$ inside $r = {K_stated:.3f}\\,r_s$ and $R$ inside $r = {R_stated:.3f}\\,r_s$ in every frame; "
+                 "no curve passes the bottom."),
+        "movie": {"variable": "$w$", "seconds": 5, "frames": frames},
+    }
+    return [still, movie_view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -4816,6 +5062,7 @@ DRAWN = {
     "gravastar": gravastar,
     "hayward": hayward,
     "interior_schwarzschild": interior_schwarzschild,
+    "kiselev": kiselev,
 }
 
 

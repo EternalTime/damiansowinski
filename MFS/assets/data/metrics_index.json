@@ -2928,7 +2928,8 @@
     "version": "b332f802ac544769",
     "diagrams": "b8b3958f55b02f60",
     "conformal": "6ef2fd6aee9f0ecf",
-    "embedding": "f88f2136771d0f0a"
+    "embedding": "f88f2136771d0f0a",
+    "curvature": "5e99ec2c5a76dacc"
   },
   {
     "id": "kodama_kink",
