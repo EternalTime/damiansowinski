@@ -8378,6 +8378,145 @@ def nordstrom_scalar(ck, src):
     return [point, universe]
 
 
+# ---------------------------------------------------------------- the Oppenheimer-Snyder dust ball
+
+
+def oppenheimer_snyder(ck, src):
+    """The dust ball released at radius 2 r_s, on the embedding movie's proper-time frames.
+
+    Each interior piece samples the stored scalar in chi at fixed tau and maps chi to the
+    areal radius a sin chi. A quadratic declares a and its first two proper-time derivatives
+    at that fixed tau; it is a local second-order jet of the collapse cycloid, not a different
+    time evolution. The exterior pieces read the same metric file's vacuum chart directly.
+    Separate pieces preserve the density jump. The dashed vacuum continuation marks r_s even
+    before that radius belongs to the exterior. There is no map: a composite grid would need
+    two charts, while the movie resolves both the moving boundary and the rising plateau.
+
+    Checks reduce both stored interior formulas on the cycloid, verify every sampled value,
+    the 5/4 surface jump, the zero exterior Ricci scalar, the regular centre before the crunch,
+    the horizon crossing time, the final radius and scalar values, all scale bounds, and the
+    proper-time frames against the existing embedding movie.
+    """
+    metric = "oppenheimer_snyder"
+    inside, outside = "interior_comoving", "exterior_schwarzschild"
+    am, chi0 = 2 * math.sqrt(2), math.pi / 4
+    params = {"a_m": am, "chi_0": chi0}
+    x = axis("$r/r_s$", 0, 4)
+    scales = {"K": {"kind": "log", "from": 1e-3, "to": 1e6},
+              "R": {"kind": "symlog", "from": -1, "to": 1e3, "linear": 0.1}}
+    panels = [{"id": p, "name": "$K\\,r_s^4$" if p == "K" else "$R\\,r_s^2$",
+               "aspect": 2, "scale": scales[p], "ticks": value_ticks(scales[p])} for p in ("K", "R")]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    vacuum = {p: nr_published(src, metric, outside, scalar, ["r"], ["r_s"])
+              for scalar, p in SCALARS.items()}
+    grr = nr_published(src, metric, outside, "inverse_metric_components", ["r"], ["r_s"], ("r", "r"))
+    ck("dust vacuum horizon is r_s", abs(float(grr(1, 1))) < 1e-15
+       and float(grr(.9, 1)) < 0 < float(grr(1.1, 1)))
+    ck("dust vacuum Ricci scalar vanishes identically", vacuum["R"].expr == 0)
+    # The symbolic reduction uses the stored expressions and the cycloid's exact derivatives.
+    _, entry, reader = nr.load(metric, inside)
+    af = reader.parameters["a"]
+    t = af.args[0]
+    A, V, D, M = sp.symbols("A V D M", positive=True)
+    for field, expected in (("kretschmann", 15*M**2/A**6), ("ricci_scalar", 3*M/A**3)):
+        expression = reader(nr.strip_lhs(entry[field])).subs(reader.c, 1).xreplace(
+            {sp.diff(af, t, 2): D, sp.diff(af, t): V, af: A})
+        reduced = sp.simplify(expression.subs(D, -M/(2*A**2)).subs(V**2, M/A - 1))
+        ck(f"dust stored {field} reduces on the cycloid", sp.simplify(reduced - expected) == 0)
+    embedding = json.loads((build.EMBEDDING_DIR / f"{metric}.json").read_text())["views"][0]["movie"]
+    frames, measured = [], []
+    for number, frame in enumerate(embedding["frames"]):
+        tau = frame["value"]
+        eta = 0 if tau == 0 else crossing(lambda e: am*(e + math.sin(e))/2 - tau, 0, math.pi)
+        a = am*(1 + math.cos(eta))/2
+        adot, addot = -math.tan(eta/2), -am/(2*a*a)
+        surface = a*math.sin(chi0)
+        # Every declaration is used only at the fixed time about which this polynomial expands.
+        functions = {"a": f"({a!r}) + ({adot!r})*(tau - ({tau!r})) + ({addot/2!r})*(tau - ({tau!r}))**2"}
+        curves, scalars = [], {}
+        for field, p in SCALARS.items():
+            published = Held(nr_published(src, metric, inside, field, ["chi", "tau"], list(params),
+                                          functions=functions), {"\\tau": tau})
+            native_x = axis("$\\chi$", 0, chi0)
+            pieces = line_curves(ck, f"dust frame {number}", p, p, published, "\\chi", native_x,
+                                 scales[p], PLOT_W/2, params)
+            for piece in pieces:
+                native = [point[0] for point in piece["points"]]
+                piece["horizontal"] = {"expression": "a*sin(chi)", "values": native}
+                piece["points"] = [[float(a*math.sin(c)), value] for c, (_, value) in zip(native, piece["points"])]
+            curves += pieces
+            curves += line_curves(ck, f"vacuum frame {number}", p, p, vacuum[p], "r", x,
+                                  scales[p], PLOT_W/2, {"r_s": 1}, within=(surface, 4))
+            expected = 15*am**2/a**6 if p == "K" else 3*am/a**3
+            scalars[p] = float(published(0, *params.values()))
+            samples = published(np.linspace(0, chi0, SAMPLES), *params.values())
+            ck(f"dust frame {number} every sampled {p} is uniform and its cycloid value",
+               np.allclose(samples, expected, rtol=1e-12, atol=0))
+            ck(f"dust frame {number} {p} stays within its panel",
+               scales[p]["from"] < scalars[p] < scales[p]["to"])
+        ck(f"dust frame {number} surface K jumps by 5/4",
+           abs(scalars["K"]/float(vacuum["K"](surface, 1)) - 1.25) < 1e-12)
+        ck(f"dust frame {number} surface R drops to zero", scalars["R"] > 0 and float(vacuum["R"](surface, 1)) == 0)
+        measured.append((tau, surface, scalars["K"], scalars["R"]))
+        frames.append({"label": frame["label"], "value": tau, "curves": curves,
+                       "marks": [{"class": "front", "x": surface}]})
+    ck("dust movie shares the embedding's proper-time frames",
+       [f["value"] for f in frames] == [f["value"] for f in embedding["frames"]])
+    ck("dust surface shrinks and both interior scalars rise frame by frame",
+       all(b[1] < a[1] and b[2] > a[2] and b[3] > a[3] for a, b in zip(measured, measured[1:])))
+    ck("dust release radius and curvatures", np.allclose(measured[0], [0, 2, 15/64, 3/8], rtol=1e-12, atol=0))
+    ck("dust last time, radius and curvatures round to the caption",
+       abs(measured[-1][0] - 4.39) < .005 and abs(measured[-1][1] - .191) < .0005 and abs(measured[-1][2]/1e5 - 3.09) < .005
+       and abs(measured[-1][3] - 431) < .5)
+    crossing_time = am*(math.pi/2 + 1)/2
+    ck("dust surface crosses the vacuum horizon at the stated proper time", abs(crossing_time - 3.636) < .0005)
+    ck("dust crunch time is finite and after the movie", measured[-1][0] < am*math.pi/2
+       and abs(am*math.pi/2 - 4.443) < .0005)
+    cut = (12/1e6)**(1/6)
+    ck("vacuum comparison leaves the clip at the stated radius", abs(cut - .151) < .0005)
+    ck("vacuum K at the outer edge stays above the lower clip", float(vacuum["K"](4, 1)) > 1e-3)
+    comparison = line_curves(ck, "vacuum continuation", "K", "reference", vacuum["K"], "r", x,
+                             scales["K"], PLOT_W/2, {"r_s": 1})
+    kclip = ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10^6$ and cut a curve "
+             "where it leaves its panel: the dashed vacuum continuation passes the top inside $r = 0.151\\,r_s$. "
+             "Every value of the dust and its exterior lies within the scale.")
+    rclip = ("We draw $R\\,r_s^2$ on a signed logarithmic scale, linear within $0.1$ of zero, "
+             "from $-1$ to $10^3$, and every value lies within it.")
+    return [{"id": "collapse", "label": "The collapse", "kind": "line", "x": x, "panels": panels,
+             "curves": comparison, "marks": [{"class": "horizon", "x": 1}],
+             "movie": {"variable": "$c\\tau$", "seconds": embedding["seconds"], "frames": frames},
+             "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+                        ["line", "reference", "the vacuum continuation of the exterior"],
+                        ["line", "front", "the surface of the dust, $r = a\\sin\\chi_0$"],
+                        ["line", "horizon", "$r = r_s$, the horizon of the vacuum continuation"]],
+             "caption": [
+                 "The Kretschmann scalar $K$ and the Ricci scalar $R$ of a dust ball against areal radius "
+                 "as it collapses from rest ($R_0 = 2r_s$, $\\chi_0 = \\pi/4$), inside the dust and in the vacuum "
+                 "outside it, beside the vacuum continuation of the exterior. "
+                 "Inside the dust $K = 15a_m^2/a^6$ is uniform on every slice and rises as the surface shrinks. "
+                 "At the surface $K$ jumps down to four fifths of its interior value and falls outside as $12r_s^2/r^6$.",
+                 "Inside the dust $R = 3a_m/a^3$ is uniform and positive. "
+                 "At the surface $R$ jumps to zero and stays zero throughout the exterior.",
+                 "At release $K = 0.234375/r_s^4$ inside the dust. "
+                 "At release $R = 0.375/r_s^2$ inside the dust. "
+                 "The surface crosses $r_s$ at $c\\tau = 3.636\\,r_s$, when $K = 15/r_s^4$ inside it. "
+                 "$R = 3/r_s^2$ inside the dust when its surface crosses $r_s$. "
+                 "In the last frame, at $c\\tau = 4.39\\,r_s$, the surface is at $r = 0.191\\,r_s$ "
+                 "and $K = 3.09\\times10^5/r_s^4$ inside it. "
+                 "In the last frame $R = 431/r_s^2$ inside the dust. "
+                 "The centre is regular until the crunch at $c\\tau_s = \\pi a_m/2 = 4.443\\,r_s$, where $K$ diverges. "
+                 "$R$ diverges at the crunch, $c\\tau_s = 4.443\\,r_s$."],
+             "ricci_sentences": [[1, 0], [1, 1], [2, 1], [2, 3], [2, 5], [2, 7]],
+             "per_scalar": scalar_clips(kclip, rclip),
+             "settings": "$r_s = 1$, the unit of every length, $R_0 = 2r_s$, $\\chi_0 = \\pi/4$, "
+                         "and $a_m = 2\\sqrt{2}\\,r_s$; the moments are the dust's proper time since release, "
+                         "$0 \\le c\\tau \\le 4.39\\,r_s$.",
+             "input": "The collapse cycloid $a = a_m(1 + \\cos\\eta)/2$, with the parameter $\\eta$ fixed by "
+                      "$c\\tau = a_m(\\eta + \\sin\\eta)/2$. "
+                      "The exterior on each slice meets the dust at $r = a\\sin\\chi_0$.",
+             "clip": kclip + " " + rclip}]
+
+
 # ---------------------------------------------------------------- the charged hole in de Sitter space
 
 
@@ -8637,6 +8776,7 @@ RICCI_BESIDE = {
     ("hayward", "hole"): "Schwarzschild's $R = 0$",
     ("kiselev", "hole"): "",
     ("kiselev", "state"): "",
+    ("oppenheimer_snyder", "collapse"): "",
     ("quantum_oppenheimer_snyder", "hole"): "",
 }
 
@@ -8715,6 +8855,7 @@ DRAWN = {
     "myers_perry": myers_perry,
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "nordstrom_scalar": nordstrom_scalar,
+    "oppenheimer_snyder": oppenheimer_snyder,
     "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "senovilla": senovilla,

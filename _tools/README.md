@@ -1869,6 +1869,15 @@ Each view's scalars depend on one coordinate alone, so a map over a second would
 The uniform field's $K = 24c^8/a^4z^8$ is one power of $z$, which its formula shows at a glance, so that chart has no view.
 The plane wave the conformal chart's diagrams draw, $\Phi = 1 + \tfrac{1}{2}\cos(k(x - ct))$, has $K = R = 0$ at every event although its Ricci tensor does not vanish, as every $\Phi$ of $x - ct$ alone does, so the research list's line of its scalars against $x - ct$ would be two lines at zero, and the general chart has no view either.
 The file is 18 KB, and 6.1 KB as the server compresses it.
+Oppenheimer and Snyder's collapsing dust ball has one line view, a movie of the dust released from rest at $R_0 = 2r_s$, with $\chi_0 = \pi/4$ and $a_m = 2\sqrt{2}\,r_s$, the values of its other drawings, on the 63 proper-time frames of its embedding movie from release to $c\tau = 4.39\,r_s$, with the areal radius $r$ from 0 to $4\,r_s$.
+It stacks $K$ on a logarithmic axis from $10^{-3}$ to $10^6$ over $R$ on a signed one, linear within $0.1$ of zero, from $-1$ to $10^3$, which hold every value of the dust and its exterior.
+Each interior piece is drawn from the comoving chart at the frame's proper time, held fixed, and declares `horizontal` as `a*sin(chi)`, its native samples of $\chi$ beside the plotted points; it declares $a(\tau)$ as the quadratic Taylor polynomial of the collapse cycloid about that time, which gives the scale factor and its first two derivatives there, the only place it is read.
+Each exterior piece is drawn from the Schwarzschild chart outside the surface, so the uniform interior $K = 15a_m^2/a^6$ and $R = 3a_m/a^3$ meet the exterior through jumps, $K$ down by a factor $4/5$ and $R$ to zero.
+The exterior's $12r_s^2/r^6$ continues dashed inside the surface for comparison, with $r_s$ marked as that vacuum continuation's horizon, before the surface reaches it as well as after, and the surface moves as the solid white `front` mark.
+The value test holds the horizon mark to the Schwarzschild chart's inverse metric, and checks each mapped interior piece in its own coordinate $\chi$.
+The movie shows what a still cannot, the shrinking surface and the rising plateau; a map of the interior alone would not vary along $\chi$, and a map of the whole star would need two charts in one grid.
+Its function checks the stored formulas reduced on the cycloid, every sampled value, both jumps, the values at release, the surface crossing $r_s$ at $c\tau = 3.636\,r_s$, the last frame's radius $0.191\,r_s$ with $K = 3.09\times10^5/r_s^4$ and $R = 431/r_s^2$ inside it, the crunch at $c\tau_s = 4.443\,r_s$, and the stated clips.
+The file is 154 KB, and 36 KB as the server compresses it.
 
 The charged de Sitter black hole has one line view for each of its three charged charts, at $r_s = 1$, $r_q = r_s/2$ and $\Lambda = 27/(64r_s^2)$, the lukewarm parameters of its other drawings, over $0.2 \le r/r_s \le 3$.
 Each draws the stored $K$ on a logarithmic scale from $10^{-1}$ to $10^6$, in units of $r_s^{-4}$, with the inner, black hole and cosmological horizons marked at $0.431\,r_s$, $2r_s/3$ and $2r_s$.
