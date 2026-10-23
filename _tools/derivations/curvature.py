@@ -4859,8 +4859,9 @@ def khan_penrose(ck, src):
 
     What the caption states is checked here, in sixty digits: the published Ricci scalar
     vanishes; the declared domain is the published one; the cosmological chart's K is the double
-    null chart's at u = sin((tau + sigma)/2) and v = sin((tau - sigma)/2), and its fronts u = 0
-    and v = 0 are sigma = -tau and sigma = tau; K = 48/L^4 where the waves meet and
+    null chart's at u = sin((tau + sigma)/2) and v = sin((tau - sigma)/2), the map carrying the one
+    metric onto the other, its fronts u = 0 and v = 0 being sigma = -tau and sigma = tau and its
+    singularity tau = pi/2 being u^2 + v^2 = 1; K = 48/L^4 where the waves meet and
     48/L^4 cos^6 tau on each front, which is 48/L^4 (1 - u^2)^3 on v = 0; K grows with tau at
     every sigma and with cos sigma at every tau, so that it is greatest on sigma = 0, least on
     the fronts and least of all where the waves meet, which the sign of its derivative in
@@ -4924,6 +4925,9 @@ def khan_penrose(ck, src):
             worst = max(worst, abs(float(got / want) - 1))
     ck("khan_penrose the double null metric at u = sin((tau + sigma)/2), v = sin((tau - sigma)/2) is the cosmological one",
        worst < 1e-12, f"worst {worst:.1e}")
+    a, b = sp.symbols("a b")
+    ck("khan_penrose 1 - u^2 - v^2 = cos(tau) cos(sigma), so the singularity tau = pi/2 is u^2 + v^2 = 1",
+       sp.simplify(sp.expand_trig(1 - sp.sin(a) ** 2 - sp.sin(b) ** 2 - sp.cos(a + b) * sp.cos(a - b))) == 0)
 
     domain = domain_function("khan_penrose", COS, KP_DOMAIN, ["sigma", "tau"], ["L"])
     nx, ny = KP_CELLS
