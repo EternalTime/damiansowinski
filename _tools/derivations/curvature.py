@@ -9232,6 +9232,266 @@ def simpson_visser(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the topological star
+
+TS_SHORT = Fraction(3, 4)         # the shorter radius over the longer, r_S = 3r_B/4 in the star and r_B = 3r_S/4 in the black string, as every drawing of each takes it
+TS_REACH = 4                      # each plot runs from the bubble out by four of its unit, the box of its spacetime diagram
+TS_K = {"kind": "log", "from": 1e-4, "to": 1e4}                              # the axis of K on both views
+TS_STAR_R = {"kind": "log", "from": 1e-4, "to": 1e2}                         # the star's axis of R, positive at every r
+TS_STRING_R = {"kind": "symlog", "from": -1e2, "to": 1e2, "linear": 1e-4}   # the black string's, where the Einstein metric's changes sign
+TS_FAR = (1e4, 1e5)               # the radii, in the unit of each view, at which the falls far out are measured
+
+
+def topological_star(ck, src):
+    """Bah and Heidmann's topological star at r_B = 1 and r_S = 3r_B/4, and the black string of
+    the same line element at r_S = 1 and r_B = 3r_S/4, their Kretschmann and Ricci scalars against
+    r, each beside the Einstein metric of four dimensions it reduces to.
+
+    The charts of five dimensions in r publish the same K and R, functions of r, r_S and r_B alone,
+    the chart about the bubble publishes them at its r(rho), and the extremal chart is the case
+    r_S = r_B = m at r = rho + m; the star's view, read from Bah and Heidmann's chart, names no
+    chart, and the black string's, read from the ingoing chart, the one chart drawn with r_S > r_B,
+    names that one. A map over r and an angle would be one colour along every circle, and r_S and
+    r_B are each view's only lengths, so a movie of their ratio would carry the two views' shapes
+    and nothing new. Each view runs over the box of its spacetime diagram, from the bubble out by
+    four of its unit, and stacks K on a logarithmic axis from 10^-4 to 10^4, ticked at every second
+    decade, over R: the star's on a logarithmic axis from 10^-4 to 10^2, since both curves of R
+    are positive, and the black string's on a signed one, linear within 10^-4 of zero, from -10^2
+    to 10^2, since the Einstein metric's R changes sign at the horizon. Every curve leaving a panel
+    does so a few samples from the bubble, so that its line runs to the edge. The comparison is the
+    published einstein chart at the same r_S and r_B, whose metric is the star's plane of t, r and
+    the sphere times sqrt(g_yy), and whose K and R diverge on the bubble. The horizons are the
+    zeros of the published g^rr of each view's chart of five dimensions: none in the star, whose
+    g^rr vanishes on the bubble alone, the edge of its axis, and r = r_S in the black string.
+
+    What the captions state is checked here: the charts publish the same scalars; the einstein
+    chart's metric is sqrt(g_yy) times the star's; K of five dimensions on the bubble, 291/64r_B^4
+    and 16384/729r_S^4, its greatest value, positive and falling at every r > r_B, the numerators
+    of K and of its derivative having no root there; the Einstein metric's K and R growing toward
+    the bubble as (r - r_B)^-3 and (r - r_B)^-3/2 with the coefficients the captions state,
+    measured in sixty digits at r - r_B = 10^-20 and 10^-30; its K positive at every r drawn and
+    crossing the K of five dimensions once, the one root above r_B of the numerator of their
+    difference, above it inside and below it outside; far out K falling off as
+    12(r_S^2 + r_S r_B + r_B^2)/r^6 and the Einstein metric's as Schwarzschild's 3(2r_S + r_B)^2/r^6;
+    R = r_S r_B/2r^4 of five dimensions, and on the bubble 3/8r_B^2 and 32/27r_S^2; in the star the
+    Einstein metric's R above the star's at every r and both falling off far out as 3r_B^2/8r^4;
+    in the black string the Einstein metric's R changing sign once, at the horizon, and below the
+    black string's at every r; no horizon in the star and the one at r_S in the black string; and
+    every clip, each curve of five dimensions within its panels and each of the Einstein metric
+    leaving its panel once, beside the bubble."""
+    metric = "topological_star"
+    names = ["r_S", "r_B"]
+    short = float(TS_SHORT)
+    views = []
+    for case in ("star", "string"):
+        star = case == "star"
+        system = "bah_heidmann" if star else "eddington_finkelstein_ingoing"
+        unit = "r_B" if star else "r_S"
+        r_S, r_B = (short, 1.0) if star else (1.0, short)
+        params = {"r_S": r_S, "r_B": r_B}
+        values = [r_S, r_B]
+        where = f"{metric} {case}"
+        x_axis = axis(f"$r/{unit}$", r_B, r_B + TS_REACH)
+        R_scale = TS_STAR_R if star else TS_STRING_R
+        panels = [{"id": "K", "name": f"$K\\,{unit}^4$", "aspect": 2, "scale": TS_K, "ticks": every_second(TS_K)},
+                  {"id": "R", "name": f"$R\\,{unit}^2$", "aspect": 2, "scale": R_scale, "ticks": every_second(R_scale)}]
+        shape_checks(ck, where, [p["aspect"] for p in panels])
+        height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+        K = nr_published(src, metric, system, "kretschmann", ["r"], names)
+        R = nr_published(src, metric, system, "ricci_scalar", ["r"], names)
+        grr = nr_published(src, metric, system, "inverse_metric_components", ["r"], names, ("r", "r"))
+        K_4 = nr_published(src, metric, "einstein", "kretschmann", ["r"], names)
+        R_4 = nr_published(src, metric, "einstein", "ricci_scalar", ["r"], names)
+        rs = np.linspace(r_B, r_B + TS_REACH, SAMPLES)
+        out = rs[1:]
+
+        # Every chart of five dimensions publishes the same two scalars, the chart about the bubble
+        # at its r(rho), and the extremal chart is the case r_S = r_B = m at r = rho + m.
+        other = "eddington_finkelstein_ingoing" if star else "bah_heidmann"
+        for field, fn in (("kretschmann", K), ("ricci_scalar", R)):
+            same = nr_published(src, metric, other, field, ["r"], names)
+            ck(f"{where} {other} publishes the {field} of {system}",
+               np.allclose(same(rs, *values), fn(rs, *values), rtol=1e-14, atol=0))
+            if star:
+                rho = np.linspace(0, 4, 401)
+                bubble = nr_published(src, metric, "bubble", field, ["rho"], names)
+                ck(f"{where} the chart about the bubble publishes the {field} at r = r_B + (r_B - r_S) rho^2/4",
+                   np.allclose(bubble(rho, *values), fn(r_B + (r_B - r_S) * rho ** 2 / 4, *values), rtol=1e-13, atol=0))
+                extremal = nr_published(src, metric, "extremal", field, ["rho"], ["m"])
+                ck(f"{where} the extremal chart publishes the {field} at r_S = r_B = m and r = rho + m",
+                   np.allclose(extremal(rho[1:], 1.0), fn(rho[1:] + 1, 1.0, 1.0), rtol=1e-13, atol=0))
+        # The Einstein metric is the plane of t, r and the sphere of five dimensions times sqrt(g_yy).
+        if star:
+            g_yy = nr_published(src, metric, system, "metric_components", ["r"], names, ("y", "y"))
+            for index in (("t", "t"), ("r", "r"), ("\\theta", "\\theta")):
+                four = nr_published(src, metric, "einstein", "metric_components", ["r"], names, index)
+                five = nr_published(src, metric, system, "metric_components", ["r"], names, index)
+                ck(f"{where} the einstein chart's g_{index[0]}{index[1]} is sqrt(g_yy) times the star's",
+                   np.allclose(four(out, *values), np.sqrt(g_yy(out, *values)) * five(out, *values), rtol=1e-13, atol=0))
+
+        # Five dimensions: K on the bubble, and its fall.
+        r = K.coords[0]
+        exact = {K.params[0]: sp.nsimplify(r_S), K.params[1]: sp.nsimplify(r_B)}
+        K_exact = sp.together(K.expr.subs(exact))
+        K_b = sp.nsimplify(K_exact.subs(r, sp.nsimplify(r_B)))
+        ck(f"{where} K on the bubble is {'291/64r_B^4' if star else '16384/729r_S^4'}",
+           K_b == (sp.Rational(291, 64) if star else sp.Rational(16384, 729)), f"{K_b}")
+        for what, expr in (("K", K_exact), ("dK/dr", sp.together(sp.diff(K_exact, r)))):
+            numerator = sp.Poly(sp.expand(sp.fraction(expr)[0]), r)
+            above = [x for x in sp.real_roots(numerator) if x > sp.nsimplify(r_B)]
+            ck(f"{where} {what} has no zero at any r > r_B", not above, f"{above}")
+        drawn = K(rs, *values)
+        ck(f"{where} K is positive, greatest on the bubble, and falls at every r drawn",
+           np.all(drawn > 0) and np.all(np.diff(drawn) < 0))
+
+        # The Einstein metric beside the bubble, and its K against the K of five dimensions.
+        K_grow = Fraction(15, 1024) if star else Fraction(5, 144)
+        R_grow = 3 / 32 if star else -math.sqrt(3) / 12
+        for d in (1e-20, 1e-30):
+            # Sixty digits about the bubble, where r - r_B is far below a double's last digit of r_B.
+            gap_d = sp.Float(d, 70)
+            point = {K_4.coords[0]: sp.Float(r_B, 70) + gap_d, K_4.params[0]: sp.Float(r_S, 70),
+                     K_4.params[1]: sp.Float(r_B, 70)}
+            ck(f"{where} the Einstein metric's K grows as {K_grow}/(r - r_B)^3 at r - r_B = {d:g}",
+               abs(float(K_4.expr.xreplace(point).evalf(60) * gap_d ** 3) / float(K_grow) - 1) < 1e-9)
+            ck(f"{where} the Einstein metric's R grows as {R_grow:.6f}/(r - r_B)^(3/2) at r - r_B = {d:g}",
+               abs(float(R_4.expr.xreplace(point).evalf(60) * gap_d ** sp.Rational(3, 2)) / R_grow - 1) < 1e-9)
+        ck(f"{where} the Einstein metric's K is positive at every r drawn", np.all(K_4(out, *values) > 0))
+        K_4exact = sp.together(K_4.expr.subs({K_4.params[0]: exact[K.params[0]], K_4.params[1]: exact[K.params[1]]}))
+        gap = sp.together(K_4exact.subs(K_4.coords[0], r) - K_exact)
+        crossings = [float(x) for x in sp.real_roots(sp.Poly(sp.expand(sp.fraction(gap)[0]), r))
+                     if x > sp.nsimplify(r_B)]
+        ck(f"{where} the Einstein metric's K crosses the K of five dimensions once, inside the plot",
+           len(crossings) == 1 and r_B < crossings[0] < r_B + TS_REACH, f"{crossings}")
+        r_cross = crossings[0]
+        inner, outer = out[out < r_cross - 1e-9], out[out > r_cross + 1e-9]
+        ck(f"{where} the Einstein metric's K is above the K of five dimensions inside the crossing and below it outside",
+           np.all(K_4(inner, *values) > K(inner, *values)) and np.all(K_4(outer, *values) < K(outer, *values)))
+        for far in TS_FAR:
+            far = far * (r_B if star else r_S)
+            ck(f"{where} K falls off as 12(r_S^2 + r_S r_B + r_B^2)/r^6 at r = {far:g}",
+               abs(float(K.exact([far, *values])) * far ** 6 / (12 * (r_S ** 2 + r_S * r_B + r_B ** 2)) - 1) < 1e-3)
+            ck(f"{where} the Einstein metric's K falls off as Schwarzschild's 3(2r_S + r_B)^2/r^6 at r = {far:g}",
+               abs(float(K_4.exact([far, *values])) * far ** 6 / (3 * (2 * r_S + r_B) ** 2) - 1) < 1e-3)
+        ck("Schwarzschild's K is 3(2r_S + r_B)^2/r^6 at the mass M = c^2(2r_S + r_B)/4G",
+           12 * ((2 * r_S + r_B) / 2) ** 2 == 3 * (2 * r_S + r_B) ** 2)
+
+        # R of five dimensions, and the Einstein metric's beside it.
+        ck(f"{where} R is r_S r_B/2r^4", np.allclose(R(rs, *values), r_S * r_B / (2 * rs ** 4), rtol=1e-14, atol=0))
+        R_b = float(R.exact([r_B, *values]))
+        ck(f"{where} R on the bubble is {'3/8r_B^2' if star else '32/27r_S^2'}",
+           abs(R_b / (3 / 8 if star else 32 / 27) - 1) < 1e-15, f"{R_b}")
+        wide = np.geomspace(1e-12, 1e8, 200001) + r_B
+        if star:
+            ck(f"{where} the Einstein metric's R is above the star's at every r",
+               np.all(R_4(wide, *values) > R(wide, *values)))
+            for far in TS_FAR:
+                ck(f"{where} both R fall off as 3r_B^2/8r^4 at r = {far:g} r_B",
+                   abs(float(R.exact([far, *values])) * far ** 4 / (3 / 8) - 1) < 1e-3
+                   and abs(float(R_4.exact([far, *values])) * far ** 4 / (3 / 8) - 1) < 1e-3)
+        else:
+            turns = zeros(ck, f"{where} the Einstein metric's R", R_4, r_B + 1e-9, r_B + TS_REACH, values)
+            ck(f"{where} the Einstein metric's R changes sign once, at the horizon r = r_S",
+               len(turns) == 1 and abs(turns[0] - r_S) < 1e-12, f"{turns}")
+            ck(f"{where} the Einstein metric's R is below the black string's at every r",
+               np.all(R_4(wide, *values) < R(wide, *values)))
+
+        # The horizons.
+        marks = [{"class": "horizon", "x": x} for x in zeros(ck, f"{where} horizons", grr, r_B, r_B + TS_REACH, values)]
+        found = [m["x"] for m in marks]
+        ck(f"{where} {'has no horizon' if star else 'has its one horizon at r = r_S'}",
+           found == [] if star else (len(found) == 1 and abs(found[0] - r_S) < 1e-12), f"{found}")
+        ck(f"{where} g^rr is positive outside the {'bubble' if star else 'horizon'}",
+           np.all(grr(out[out > (r_B if star else r_S) + 1e-9], *values) > 0))
+
+        # The curves, and where they leave their panels.
+        curves = (line_curves(ck, f"{where} Einstein metric", "K", "reference", K_4, "r", x_axis, TS_K, height["K"],
+                              params)
+                  + line_curves(ck, where, "K", "K", K, "r", x_axis, TS_K, height["K"], params)
+                  + line_curves(ck, f"{where} Einstein metric", "R", "reference", R_4, "r", x_axis, R_scale,
+                                height["R"], params)
+                  + line_curves(ck, where, "R", "R", R, "r", x_axis, R_scale, height["R"], params))
+        for name, fn, scale in (("K", K, TS_K), ("R", R, R_scale)):
+            up, down = beyond(fn, x_axis, scale, values)
+            ck(f"{where} {name} stays inside its panel", not up and not down, f"{up} {down}")
+        # Off the bubble, where both are infinite, each scalar of the Einstein metric leaves its panel
+        # once, from the bubble out, and stays inside it beyond.
+        step = TS_REACH / (SAMPLES - 1)
+        cut = {}
+        for name, fn, scale, edge in (("K", K_4, TS_K, "top"), ("R", R_4, R_scale, "top" if star else "bottom")):
+            pos, (p0, p1) = position(scale, fn(out, *values)), span(scale)
+            leaves, other = (pos > p1, pos < p0) if edge == "top" else (pos < p0, pos > p1)
+            stretches = runs(leaves)
+            cut[name] = edge_cut(fn, values, scale, edge, r_B + 1, r_B + 1e-12)
+            ck(f"{where} the Einstein metric's {name} leaves the {edge} of its panel once, beside the bubble, "
+               "and nowhere else", len(stretches) == 1 and stretches[0][0] == 0 and not other.any()
+               and abs(cut[name] - out[stretches[0][1] - 1]) < step, f"inside r = {cut[name]:.6f}")
+        k_cut, r_cut = cut["K"], cut["R"]
+
+        legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+                  ["line", "reference", "the Einstein metric of four dimensions it reduces to"]]
+        if marks:
+            legend.append(["line", "horizon", "a horizon, where $g^{rr} = 0$"])
+        cuts = (f"as the Einstein metric's $K$ does inside $r = {k_cut:.3f}\\,{unit}$",
+                f"as the Einstein metric's $R$ does inside $r = {r_cut:.3f}\\,{unit}$")
+        if star:
+            K_text = ("We draw $K\\,r_B^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and cut each curve where it "
+                      f"leaves its panel, {cuts[0]}.")
+            R_text = ("We draw $R\\,r_B^2$ on a logarithmic scale from $10^{-4}$ to $10^{2}$ and cut each curve where it "
+                      f"leaves its panel, {cuts[1]}.")
+            clip = ("We draw $K\\,r_B^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and $R\\,r_B^2$ on one from "
+                    "$10^{-4}$ to $10^{2}$, and cut each curve where it leaves its panel, as the Einstein metric's $K$ "
+                    f"does inside $r = {k_cut:.3f}\\,r_B$ and its $R$ inside $r = {r_cut:.3f}\\,r_B$.")
+            caption = [
+                "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the topological star against $r$ "
+                "($r_S = 3r_B/4$), the same at every $t$, $\\theta$, $\\phi$, and $y$, beside the Einstein metric of "
+                "four dimensions it reduces to. On the bubble $r = r_B$, where the circle $y$ closes to a point, $K$ "
+                f"is greatest and finite, $291/64r_B^4 = {float(K_b):.3f}/r_B^4$, and it falls at every $r$. In four "
+                "dimensions the bubble is a naked singularity, and the Einstein metric's $K$ grows there without "
+                "bound, as $15/1024r_B(r - r_B)^3$. It crosses the star's $K$ once, at "
+                f"$r = {r_cross:.3f}\\,r_B$, and lies below it outside. Far out the star's $K$ falls off as "
+                "$12(r_S^2 + r_Sr_B + r_B^2)/r^6$, and the Einstein metric's as $3(2r_S + r_B)^2/r^6$, "
+                "Schwarzschild's of the same mass.",
+                f"$R = r_Sr_B/2r^4$ is positive at every $r$ and greatest on the bubble, $3/8r_B^2 = {R_b:.3f}/r_B^2$. "
+                "The Einstein metric's $R$ grows there without bound, as $3/32\\sqrt{r_B}(r - r_B)^{3/2}$, and lies "
+                "above the star's at every $r$. Far out each $R$ falls off as $3r_B^2/8r^4$.",
+            ]
+            settings = "$r_B = 1$, the unit of every length, and $r_S = 3r_B/4$."
+        else:
+            K_text = ("We draw $K\\,r_S^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and cut each curve where it "
+                      f"leaves its panel, {cuts[0]}.")
+            R_text = ("We draw $R\\,r_S^2$ on a signed logarithmic scale, linear within $10^{-4}$ of zero, from "
+                      f"$-10^{{2}}$ to $10^{{2}}$, and cut each curve where it leaves its panel, {cuts[1]}.")
+            clip = ("We draw $K\\,r_S^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and $R\\,r_S^2$ on a signed "
+                    "logarithmic scale, linear within $10^{-4}$ of zero, from $-10^{2}$ to $10^{2}$, and cut each curve "
+                    f"where it leaves its panel, as the Einstein metric's $K$ does inside $r = {k_cut:.3f}\\,r_S$ and "
+                    f"its $R$ inside $r = {r_cut:.3f}\\,r_S$.")
+            caption = [
+                "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the black string against $r$ "
+                "($r_B = 3r_S/4$), the same at every $v$, $\\theta$, $\\phi$, and $y$, beside the Einstein metric of "
+                "four dimensions it reduces to. $K$ passes the horizon $r = r_S$ smoothly and is greatest and finite "
+                f"on the bubble $r = r_B$ behind it, $16384/729r_S^4 = {float(K_b):.2f}/r_S^4$. In four dimensions the "
+                "bubble is a singularity inside the horizon, and the Einstein metric's $K$ grows there without bound, "
+                "as $5/144r_S(r - r_B)^3$. It crosses the black string's $K$ once, at "
+                f"$r = {r_cross:.3f}\\,r_S$, and lies below it outside.",
+                f"$R = r_Sr_B/2r^4$ is positive at every $r$ and greatest on the bubble, $32/27r_S^2 = {R_b:.3f}/r_S^2$. "
+                "The Einstein metric's $R$ changes sign at the horizon and falls without bound toward the bubble, as "
+                "$-\\sqrt{3}/12\\sqrt{r_S}(r - r_B)^{3/2}$. It lies below the black string's at every $r$.",
+            ]
+            settings = "$r_S = 1$, the unit of every length, and $r_B = 3r_S/4$."
+        view = {
+            "id": case, "label": "The star" if star else "The black string", "kind": "line", "x": x_axis,
+            "panels": panels, "curves": curves, "marks": marks, "legend": legend, "caption": caption,
+            "ricci_sentences": [[1, 0], [1, 1], [1, 2]],
+            "per_scalar": scalar_clips(K_text, R_text),
+            "settings": settings, "clip": clip,
+        }
+        if not star:
+            view = {"id": view.pop("id"), "label": view.pop("label"), "system": system, **view}
+        views.append(view)
+    return views
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -9363,6 +9623,7 @@ DRAWN = {
     "senovilla": senovilla,
     "simpson_visser": simpson_visser,
     "taub_nut": taub_nut,
+    "topological_star": topological_star,
 }
 
 
