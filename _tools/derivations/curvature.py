@@ -732,9 +732,7 @@ def bach_weyl_ring(ck, src):
     # The ring approached along three directions at distances l_1 of 10^-2, 10^-3 and 10^-4.
     # The ring approached along three directions, at distances l_1 from 10^-6 to 10^-8 in Weyl's
     # coordinates, in eighty digits, since K reaches e^(10^7) there.
-    # The next terms are smaller by the square root of l, so each step of a hundred in l takes a
-    # tenth off them.
-    lengths = (1e-8, 1e-10, 1e-12)
+    lengths = (1e-6, 1e-7, 1e-8)
 
     def logs(angle):
         return [float(sp.log(K.exact([a + l * math.cos(angle), l * math.sin(angle), m, a], 80))) for l in lengths]
