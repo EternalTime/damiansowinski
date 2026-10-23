@@ -4297,6 +4297,234 @@ def gowdy(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Schwarzschild's star of uniform density
+
+IS_RADIUS = Fraction(3, 2)        # R in units of r_s, as every drawing of the star takes it
+IS_REACH = 3 * IS_RADIUS          # the plot runs from the centre to r = 3R
+IS_STEP = Fraction(1, 30)         # the step of r_s/R from one frame of the movie to the next, which lands on 2/3 and not on 5/9
+IS_COMPACT = [IS_STEP * k for k in range(10, 27)]       # r_s/R of the frames, from 1/3 to 13/15, short of Buchdahl's 8/9
+IS_K = (1e-3, 1e3)                # the axis of K r_s^4 on both views
+IS_R = {"kind": "symlog", "from": -100, "to": 10, "linear": 0.1}   # the axis of R^mu_mu r_s^2 on both views
+
+
+def interior_schwarzschild(ck, src):
+    """Schwarzschild's star of uniform density at r_s = 1, its Kretschmann and Ricci scalars against
+    r, inside the star and in Schwarzschild's vacuum outside it.
+
+    The spherical chart publishes K and R in r alone and holds from the centre to the surface
+    r = R, so its scalars are drawn from 0 to R and Schwarzschild's, read from schwarzschild.json,
+    from R to the edge of the plot at 3R of the first view, each a stretch of the same class. The
+    chart is static and spherical, so a map over r and an angle would be one colour along every
+    circle, and both views are line views. Two panels share the axis of r: K on a logarithmic axis
+    from 10^-3 to 10^3, since it is positive at every r, and R on a signed one, linear within
+    0.1/r_s^2 of zero, from -10^2 to 10, since it changes sign inside the star. The radius R is a
+    parameter of the chart, so the Ricci scalar is written R^mu_mu. The first view is the star at
+    R = 3 r_s/2, as every other drawing of it takes; the second steps r_s/R from 1/3 to 13/15 at
+    fixed mass, through 2/3, toward Buchdahl's limit 8/9, where the central pressure is infinite.
+
+    What the captions state is checked here: g^rr is positive on every stretch drawn, so no
+    horizon is marked; the density is read from the published Einstein tensor, G^t_t =
+    -8 pi G rho/c^2 = -3 r_s/R^3 at every r, and the pressure, G^r_r = G^theta_theta =
+    8 pi G p/c^4, against (sqrt(1 - r^2 r_s/R^3) - sqrt(1 - r_s/R))/(3 sqrt(1 - r_s/R) -
+    sqrt(1 - r^2 r_s/R^3)) times rho c^2, rho c^2/sqrt 3 at the centre of the first view; the
+    published R is minus the trace of the Einstein tensor, 8 pi G(rho c^2 - 3p)/c^4; the published
+    Weyl tensor vanishes and K is (8 pi G/c^4)^2 (5 rho^2 c^4 + 6 rho c^2 p + 9 p^2)/3; K falls and
+    R rises from the centre to the surface, where K = 15 r_s^2/R^6 and R = 3 r_s/R^3, and
+    Schwarzschild's K = 12 r_s^2/R^6, so both jump down there; R vanishes once inside the first
+    view's star, at r = R sqrt((9 r_s/R - 5)/(4 r_s/R)), where 3p = rho c^2; along the movie K at
+    the centre grows frame by frame, R is positive throughout the star below
+    r_s/R = 5/9 and changes sign once above it, at that radius, which moves out toward the surface
+    frame by frame, and K at the centre grows as (8/9 - r_s/R)^-2 toward Buchdahl's limit, where
+    3 sqrt(1 - r_s/R) = 1; and every value drawn lies within the clip stated."""
+    x_axis = axis("$r/r_s$", 0, float(IS_REACH))
+    K_scale = {"kind": "log", "from": IS_K[0], "to": IS_K[1]}
+    R_scale = dict(IS_R)
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,r_s^2$", "aspect": 2, "scale": R_scale,
+               "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "interior_schwarzschild", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    names = ["r_s", "R"]
+    K = nr_published(src, "interior_schwarzschild", "spherical", "kretschmann", ["r"], names)
+    Ric = nr_published(src, "interior_schwarzschild", "spherical", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, "interior_schwarzschild", "spherical", "inverse_metric_components", ["r"], names, ("r", "r"))
+    G = {i: nr_published(src, "interior_schwarzschild", "spherical", "einstein_tensor", ["r"], names, (i, i))
+         for i in ("t", "r", "\\theta", "\\phi")}
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    R_s = nr_published(src, "schwarzschild", "spherical", "ricci_scalar", ["r"], ["r_s"])
+    grr_s = nr_published(src, "schwarzschild", "spherical", "inverse_metric_components", ["r"], ["r_s"], ("r", "r"))
+    reach = float(IS_REACH)
+
+    def own(radius, name):
+        """The star's own scalars from its centre to its surface, the stretch its chart holds."""
+        params = {"r_s": 1.0, "R": float(radius)}
+        inside = (0.0, float(radius))
+        ck(f"{name} has no horizon inside the star", np.all(grr(np.linspace(*inside, SAMPLES), 1, float(radius)) > 0))
+        return (line_curves(ck, name, "K", "K", K, "r", x_axis, K_scale, height["K"], params, inside)
+                + line_curves(ck, name, "R", "R", Ric, "r", x_axis, R_scale, height["R"], params, inside))
+
+    def vacuum(radius, name):
+        """Schwarzschild's scalars of the same mass from the surface to the edge of the plot."""
+        outside = (float(radius), reach)
+        ck(f"{name} has no horizon outside the star", np.all(grr_s(np.linspace(*outside, SAMPLES), 1) > 0))
+        return (line_curves(ck, f"{name} outside", "K", "K", K_s, "r", x_axis, K_scale, height["K"], {"r_s": 1},
+                            outside)
+                + line_curves(ck, f"{name} outside", "R", "R", R_s, "r", x_axis, R_scale, height["R"], {"r_s": 1},
+                              outside))
+
+    def within(name, radius):
+        """Both scalars stay inside their panels inside the star and outside it."""
+        for k, fn, scale in (("K", K, K_scale), ("R", Ric, R_scale)):
+            up, down = beyond(fn, x_axis, scale, [1, float(radius)], (0.0, float(radius)))
+            ck(f"{name} {k} stays inside its panel", not up and not down, f"{up} {down}")
+        for k, fn, scale in (("K", K_s, K_scale), ("R", R_s, R_scale)):
+            up, down = beyond(fn, x_axis, scale, [1], (float(radius), reach))
+            ck(f"{name} {k} outside stays inside its panel", not up and not down, f"{up} {down}")
+
+    def pressure(r, radius):
+        """8 pi G p/c^4 at r in a star of radius R, Schwarzschild's closed form, exactly."""
+        c = 1 / sp.Rational(radius)
+        a, b = sp.sqrt(1 - r ** 2 * c ** 3), sp.sqrt(1 - c)
+        return 3 * c ** 3 * (a - b) / (3 * b - a)
+
+    def zero(radius):
+        """The radius at which R vanishes, where 3p = rho c^2, R sqrt((9 r_s/R - 5)/(4 r_s/R)), or
+        None in a star with r_s/R <= 5/9, where it is positive throughout."""
+        c = 1 / sp.Rational(radius)
+        return sp.Rational(radius) * sp.sqrt((9 * c - 5) / (4 * c)) if c > sp.Rational(5, 9) else None
+
+    def signs(radius):
+        """How many times R changes sign through the star, and where, as zeros() finds it."""
+        return zeros(ck, f"interior_schwarzschild at R = {float(radius):.4f} R^mu_mu", Ric, 0, float(radius),
+                     [1, float(radius)])
+
+    _, entry, _ = nr.load("interior_schwarzschild", "spherical")
+    ck("interior_schwarzschild the published Weyl tensor vanishes",
+       all(not v["nonzero"] for v in entry["weyl_tensor"]["variants"].values()))
+
+    legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]]
+    clip = ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10^{3}$ and $R^\\mu{}_\\mu\\,r_s^2$ on a "
+            "signed logarithmic scale, linear within $0.1$ of zero, from $-10^{2}$ to $10$")
+
+    # The star every other drawing takes.
+    R0 = float(IS_RADIUS)
+    at = [1, R0]
+    name = "interior_schwarzschild at R = 3 r_s/2"
+    curves = own(IS_RADIUS, name) + vacuum(IS_RADIUS, name)
+    within(name, IS_RADIUS)
+    probes = [0, 0.2, 0.5, 0.9, 1.2, R0]
+    rho = -float(G["t"].exact([0] + at))       # 8 pi G rho/c^2, the same at every r
+    rs = np.linspace(0, R0, SAMPLES)
+    ck(f"{name} the density is uniform, 8 pi G rho/c^2 = 3 r_s/R^3",
+       abs(rho * R0 ** 3 / 3 - 1) < 1e-12 and np.allclose(-G["t"](rs, *at), rho, rtol=1e-13, atol=0), f"{rho}")
+    ck(f"{name} the pressure is the same along the radius and around it, and is Schwarzschild's",
+       all(abs(float(G["r"].exact([r] + at)) - float(G[i].exact([r] + at))) < 1e-12 * rho for r in probes
+           for i in ("\\theta", "\\phi"))
+       and all(abs(float(G["r"].exact([r] + at)) - float(pressure(sp.Rational(r), IS_RADIUS))) < 1e-12 * rho
+               for r in probes))
+    ck(f"{name} the pressure at the centre is rho c^2/sqrt 3",
+       sp.simplify(pressure(0, IS_RADIUS) / (3 / sp.Rational(IS_RADIUS) ** 3) - 1 / sp.sqrt(3)) == 0)
+    ck(f"{name} the pressure vanishes at the surface", abs(float(G["r"].exact([R0] + at))) < 1e-30)
+    ck(f"{name} R is minus the trace of the Einstein tensor, 8 pi G(rho c^2 - 3p)/c^4",
+       all(abs(float(Ric.exact([r] + at)) + sum(float(G[i].exact([r] + at)) for i in G)) < 1e-12 * rho
+           and abs(float(Ric.exact([r] + at)) - (rho - 3 * float(G["r"].exact([r] + at)))) < 1e-12 * rho
+           for r in probes))
+    ck(f"{name} K is (8 pi G/c^4)^2 (5 rho^2 c^4 + 6 rho c^2 p + 9 p^2)/3",
+       all(abs(float(K.exact([r] + at)) / ((5 * rho ** 2 + 6 * rho * p + 9 * p ** 2) / 3) - 1) < 1e-12
+           for r in probes for p in [float(G["r"].exact([r] + at))]))
+    centre_K, centre_R = float(K.exact([0] + at)), float(Ric.exact([0] + at))
+    surface_K, surface_R = float(K.exact([R0] + at)), float(Ric.exact([R0] + at))
+    outside_K = float(K_s.exact([R0, 1]))
+    ck(f"{name} K falls and R rises from the centre to the surface",
+       np.all(np.diff(K(rs, *at)) < 0) and np.all(np.diff(Ric(rs, *at)) > 0))
+    ck(f"{name} K at the surface is 15 r_s^2/R^6", abs(surface_K * R0 ** 6 / 15 - 1) < 1e-12, f"{surface_K}")
+    ck(f"{name} R at the surface is 3 r_s/R^3", abs(surface_R * R0 ** 3 / 3 - 1) < 1e-12, f"{surface_R}")
+    ck(f"{name} Schwarzschild's K at the surface is 12 r_s^2/R^6", abs(outside_K * R0 ** 6 / 12 - 1) < 1e-12)
+    ck(f"{name} K and R both jump down at the surface", outside_K < surface_K and surface_R > 0)
+    ck(f"{name} R vanishes outside", np.all(R_s(np.linspace(R0, reach, 101), 1) == 0))
+    r_zero = zero(IS_RADIUS)
+    found = signs(IS_RADIUS)
+    ck(f"{name} R vanishes once inside the star, at R sqrt((9 r_s/R - 5)/(4 r_s/R)) = 3 sqrt 6/8, where 3p = rho c^2",
+       len(found) == 1 and abs(found[0] / float(r_zero) - 1) < 1e-12 and sp.simplify(r_zero - 3 * sp.sqrt(6) / 8) == 0
+       and sp.simplify(3 * pressure(r_zero, IS_RADIUS) - 3 / sp.Rational(IS_RADIUS) ** 3) == 0
+       and centre_R < 0, f"{found}")
+    still = {
+        "id": "star", "label": "$R = 1.5\\,r_s$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Schwarzschild's star of uniform "
+            "density against $r$ ($R = 1.5\\,r_s$), the same at every $t$, $\\theta$, and $\\phi$, inside the star "
+            f"and in Schwarzschild's vacuum outside it. Inside, $K$ falls from ${centre_K:.2f}/r_s^4$ at the centre "
+            f"to $15r_s^2/R^6 = {surface_K:.2f}/r_s^4$ at the surface. Outside it is Schwarzschild's $12r_s^2/r^6$, "
+            f"which is ${outside_K:.2f}/r_s^4$ at $r = R$.",
+            "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - 3p)/c^4$ in the density $\\rho$, the same at "
+            "every $r$, and the pressure $p$, greatest at the centre, where it is $\\rho c^2/\\sqrt{3}$ and "
+            f"$R^\\mu{{}}_\\mu = {centre_R:.3f}/r_s^2$. It rises through zero at $r = {float(r_zero):.3f}\\,r_s$, "
+            f"where $3p = \\rho c^2$, to $3r_s/R^3 = {surface_R:.3f}/r_s^2$ at the surface, where $p = 0$. Outside "
+            "it vanishes. Both scalars jump at the surface, where the density falls to zero.",
+        ],
+        "settings": "$r_s = 1$, the unit of every length, and $R = 1.5\\,r_s$.",
+        "clip": clip + ", and every value drawn lies within them.",
+    }
+
+    # The star of fixed mass made more compact, toward Buchdahl's limit.
+    frames, centres, centre_Rs, moving = [], [], [], []
+    for value in IS_COMPACT:
+        radius = 1 / value
+        params = [1, float(radius)]
+        name = f"interior_schwarzschild at r_s/R = {float(value):.4f}"
+        curves = own(radius, name) + vacuum(radius, name)
+        within(name, radius)
+        centres.append(float(K.exact([0] + params)))
+        centre_Rs.append(float(Ric.exact([0] + params)))
+        p, d = pressure(0, radius), 3 * sp.Rational(value) ** 3
+        ck(f"{name} K at the centre is (8 pi G/c^4)^2 (5 rho^2 c^4 + 6 rho c^2 p + 9 p^2)/3",
+           abs(centres[-1] / float((5 * d ** 2 + 6 * d * p + 9 * p ** 2) / 3) - 1) < 1e-12)
+        found, r_zero = signs(radius), zero(radius)
+        ck(f"{name} R is positive throughout below r_s/R = 5/9 and changes sign once above it, where 3p = rho c^2",
+           (not found and centre_Rs[-1] > 0) if r_zero is None
+           else (len(found) == 1 and abs(found[0] / float(r_zero) - 1) < 1e-12 and centre_Rs[-1] < 0), f"{found}")
+        if r_zero is not None:
+            moving.append(float(r_zero) / float(radius))
+        frames.append({"label": f"$r_s/R = {float(value):.3f}$", "value": float(value), "curves": curves, "marks": []})
+    first, last = IS_COMPACT[0], IS_COMPACT[-1]
+    ck("interior_schwarzschild the movie runs from r_s/R = 1/3 through 2/3 to 13/15, on no zero of R at the centre",
+       first == Fraction(1, 3) and last == Fraction(13, 15) and Fraction(2, 3) in IS_COMPACT
+       and Fraction(5, 9) not in IS_COMPACT)
+    ck("interior_schwarzschild K at the centre grows with r_s/R", all(b > a for a, b in zip(centres, centres[1:])),
+       f"{centres[0]:.4f} to {centres[-1]:.4f}")
+    ck("interior_schwarzschild the zero of R moves out toward the surface as r_s/R grows",
+       len(moving) >= 2 and all(b > a for a, b in zip(moving, moving[1:])), f"{moving[0]:.4f} to {moving[-1]:.4f} R")
+    buchdahl = sp.Rational(8, 9)
+    ck("interior_schwarzschild 3 sqrt(1 - r_s/R) - 1 vanishes at Buchdahl's r_s/R = 8/9",
+       sp.simplify(3 * sp.sqrt(1 - buchdahl) - 1) == 0 and last < Fraction(8, 9))
+    near = [float(K.exact([0, 1, 1 / (float(buchdahl) - d)])) * d ** 2 for d in (1e-4, 1e-6, 1e-8)]
+    ck("interior_schwarzschild K at the centre grows as (8/9 - r_s/R)^-2 toward Buchdahl's limit",
+       abs(near[2] / near[1] - 1) < 1e-3 and abs(near[1] / near[0] - 1) < 1e-1, f"{near}")
+    last_zero = float(zero(1 / last)) * float(last)
+    compact = {
+        "id": "compactness", "label": f"${first} \\le r_s/R \\le {last}$", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": [], "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Schwarzschild's star of uniform "
+            f"density against $r$ as a star of fixed mass is made more compact (${first} \\le r_s/R \\le {last}$). "
+            "Outside the star both are Schwarzschild's in every frame. At the centre $K$ grows from "
+            f"${centres[0]:.4f}/r_s^4$ at $r_s/R = {first}$ to ${centres[-1]:.0f}/r_s^4$ at $r_s/R = {last}$, and "
+            "without bound as $r_s/R$ nears Buchdahl's $8/9$, where the central pressure is infinite.",
+            "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - 3p)/c^4$ in the density $\\rho$ and the pressure "
+            "$p$. It is positive throughout the star for "
+            "$r_s/R < 5/9$. Beyond, the pressure at the centre passes $\\rho c^2/3$, and $R^\\mu{}_\\mu$ is negative "
+            "inside the sphere where $3p = \\rho c^2$, which moves out toward the surface, to "
+            f"$r = {last_zero:.3f}\\,R$ at $r_s/R = {last}$, where $R^\\mu{{}}_\\mu = {centre_Rs[-1]:.1f}/r_s^2$ at "
+            "the centre.",
+        ],
+        "settings": f"$r_s = 1$, the unit of every length, and $r_s/R$ in steps of ${IS_STEP}$.",
+        "clip": "The scales are those of $R = 1.5\\,r_s$, and every value drawn lies within them.",
+        "movie": {"variable": "$r_s/R$", "seconds": 5, "frames": frames},
+    }
+    return [still, compact]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -4318,6 +4546,7 @@ DRAWN = {
     "gowdy": gowdy,
     "gravastar": gravastar,
     "hayward": hayward,
+    "interior_schwarzschild": interior_schwarzschild,
 }
 
 

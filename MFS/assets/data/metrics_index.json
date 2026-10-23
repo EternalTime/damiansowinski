@@ -4586,7 +4586,8 @@
     "version": "4205dd6e3f00b2a4",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
-    "embedding": "33dc4c3913188978"
+    "embedding": "33dc4c3913188978",
+    "curvature": "ecbe1bd09b737edc"
   },
   {
     "id": "schwarzschild_ads",
