@@ -3073,6 +3073,208 @@ def einstein_cluster(ck, src):
     return [speed_view, uniform_view, core_view]
 
 
+# ---------------------------------------------------------------- Fisher, Janis, Newman and Winicour's scalar field
+
+FJNW_GAMMA = Fraction(1, 2)       # gamma, as every drawing of the spacetime takes it
+FJNW_STEP = Fraction(1, 50)       # the step of gamma from one frame of the movie to the next
+FJNW_LAST = Fraction(49, 50)      # the last frame's gamma, one step short of Schwarzschild's gamma = 1
+FJNW_REACH = 5                    # the plot runs from the singularity r = b to r = 5b, the box of the spacetime diagrams
+
+
+def fisher_jnw(ck, src):
+    """A static mass with a massless scalar field at b = 1, its Kretschmann and Ricci scalars
+    against r in the spherical chart.
+
+    The spherical chart's published K and R depend on r alone, and every chart publishes the same
+    two, so one figure serves all four charts. Two panels share the axis of r, from the singularity
+    at r = b to 5b, the box of the spacetime diagrams: K on a logarithmic axis from 10^-4 to 10^2
+    and R on one from 10^-5 to 10, since both are positive on the range and both diverge at r = b,
+    where the spheres shrink to a point. Schwarzschild's K at r_s = b, read from schwarzschild.json,
+    is the comparison, since gamma = 1 is Schwarzschild's metric with r_s = b; Schwarzschild's R
+    vanishes and has no place on a logarithmic axis. No horizon is marked, since the published
+    g^rr = f^gamma is positive at every r drawn. The first view is gamma = 1/2, the value every
+    other drawing takes; the second steps gamma from 1/2 to 49/50 at fixed b, toward Schwarzschild's
+    black hole, as the scalar charge q = b sqrt(1 - gamma^2)/2 falls.
+
+    What the captions state is checked here: the published scalars at gamma = 1 are Schwarzschild's;
+    Schwarzschild's K at r = b is 12/b^4; the published g_thetatheta vanishes at r = b; K and R are
+    positive on the range and diverge there as (r - b)^(2 gamma - 4) and (r - b)^(gamma - 2),
+    measured in sixty digits, K with the factor (1 - gamma)^2 (7 gamma^2 - 2 gamma + 3)/4 b^(2 gamma);
+    K crosses Schwarzschild's once on the range, at the radius stated, and far out tends to gamma^2
+    of it, with R falling off as (1 - gamma^2) b^2/2 r^4; in the movie, R falls at every r as gamma
+    grows, K stands above twice Schwarzschild's only inside the radii stated, which shrink toward b
+    as gamma grows, and K approaches Schwarzschild's outside r = 2b."""
+    x_axis = axis("$r/b$", 1, FJNW_REACH)
+    K_scale = {"kind": "log", "from": 1e-4, "to": 1e2}
+    R_scale = {"kind": "log", "from": 1e-5, "to": 1e1}
+    panels = [{"id": "K", "name": "$K\\,b^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R\\,b^2$", "aspect": 2, "scale": R_scale, "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "fisher_jnw", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    names = ["b", "\\gamma"]
+    K = nr_published(src, "fisher_jnw", "spherical", "kretschmann", ["r"], names)
+    R = nr_published(src, "fisher_jnw", "spherical", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, "fisher_jnw", "spherical", "inverse_metric_components", ["r"], names, ("r", "r"))
+    g_thth = nr_published(src, "fisher_jnw", "spherical", "metric_components", ["r"], names, ("\\theta", "\\theta"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    gamma = float(FJNW_GAMMA)
+    rs = np.linspace(1, FJNW_REACH, SAMPLES)[1:]
+
+    def reference():
+        return line_curves(ck, "fisher_jnw Schwarzschild", "K", "reference", K_s, "r", x_axis, K_scale,
+                           height["K"], {"r_s": 1})
+
+    def own(value, name):
+        params = {"b": 1, "\\gamma": float(value)}
+        curves = (line_curves(ck, name, "K", "K", K, "r", x_axis, K_scale, height["K"], params)
+                  + line_curves(ck, name, "R", "R", R, "r", x_axis, R_scale, height["R"], params))
+        ck(f"{name} has no horizon on the range",
+           not zeros(ck, f"{name} g^rr", grr, 1, FJNW_REACH, [1, float(value)])
+           and np.all(grr(rs, 1, float(value)) > 0))
+        return curves
+
+    def crossing(value, level, lo=1, hi=FJNW_REACH):
+        """The greatest r between b and `hi` at which K stands `level` times Schwarzschild's."""
+        found = zeros(ck, f"fisher_jnw at gamma = {value:.4f} K = {level} K_s",
+                      lambda r, *_: K(r, 1, value) / K_s(r, 1) - level, lo, hi, [])
+        return max(found) if found else None
+
+    def edge(fn, scale, value):
+        """Where a curve leaves the top of its panel, the r at which it reaches the top, found by
+        bisection in log(r - b); the curve falls at every r drawn, so it leaves once."""
+        up, down = beyond(fn, x_axis, scale, [1, value])
+        falls = np.all(np.diff(fn(rs, 1, value)) < 0)
+        ck(f"fisher_jnw at gamma = {value:.4f} falls across the range and leaves its panel once, at the top",
+           falls and len(up) == 1 and up[0][0] == 1 and not down, f"{up} {down}")
+        lo, hi = -40.0, math.log(FJNW_REACH - 1)
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if float(fn(1 + math.exp(mid), 1, value)) > scale["to"] else (lo, mid)
+        return 1 + math.exp(hi)
+
+    def power(fn, value, expected, label):
+        """The slope of log fn against log(r - b) toward r = b, measured in sixty digits."""
+        near = [1 + 2.0 ** -k for k in (20, 27, 34)]
+        logs = [float(sp.log(fn.exact([r, 1, value]))) for r in near]
+        slopes = [(b - a) / (math.log(2.0 ** -k2) - math.log(2.0 ** -k1))
+                  for (a, k1), (b, k2) in zip(zip(logs, (20, 27)), zip(logs[1:], (27, 34)))]
+        ck(f"fisher_jnw at gamma = {value:.4f} {label} diverges as (r - b)^{expected}",
+           all(abs(s / expected - 1) < 1e-5 for s in slopes), f"{slopes}")
+
+    def factor(value):
+        return (1 - value) ** 2 * (7 * value ** 2 - 2 * value + 3) / 4
+
+    curves = reference() + own(FJNW_GAMMA, "fisher_jnw at gamma = 1/2")
+    # The figures of the captions.
+    at_one = np.linspace(1.05, FJNW_REACH, 41)
+    ck("fisher_jnw at gamma = 1 is Schwarzschild's with r_s = b",
+       np.allclose(K(at_one, 1, 1.0), K_s(at_one, 1), rtol=1e-13) and np.allclose(R(at_one, 1, 1.0), 0, atol=0))
+    horizon_s = float(K_s.exact([1, 1]))
+    ck("Schwarzschild's K at r = b is 12/b^4", horizon_s == 12, f"{horizon_s}")
+    ck("fisher_jnw the spheres shrink to a point at r = b",
+       float(g_thth.exact([1 + 2.0 ** -40, 1, gamma])) < 1e-5 and float(g_thth.exact([1, 1, gamma])) == 0)
+    ck("fisher_jnw K and R are positive on the range", np.all(K(rs, 1, gamma) > 0) and np.all(R(rs, 1, gamma) > 0))
+    ck("Schwarzschild's K stays inside its panel", not any(beyond(K_s, x_axis, K_scale, [1])))
+    power(K, gamma, 2 * gamma - 4, "K")
+    power(R, gamma, gamma - 2, "R")
+    ck("fisher_jnw the powers the caption writes at gamma = 1/2 are -3 and -3/2",
+       2 * gamma - 4 == -3 and gamma - 2 == -3 / 2)
+    for value in (gamma, 0.9, float(FJNW_LAST)):
+        near = 2.0 ** -50
+        lead = float(K.exact([1 + near, 1, value])) * near ** (4 - 2 * value)
+        ck(f"fisher_jnw at gamma = {value} K tends to (1 - gamma)^2 (7 gamma^2 - 2 gamma + 3)/4 b^(2 gamma) "
+           "times (r - b)^(2 gamma - 4)", abs(lead / factor(value) - 1) < 1e-9, f"{lead} {factor(value)}")
+    ck("fisher_jnw the factor is 15/64 at gamma = 1/2", factor(gamma) == 15 / 64)
+    crosses = zeros(ck, "fisher_jnw K = K_s", lambda r, *_: K(r, 1, gamma) / K_s(r, 1) - 1, 1, FJNW_REACH, [])
+    ck("fisher_jnw K crosses Schwarzschild's once on the range", len(crosses) == 1, f"{crosses}")
+    cross = crosses[0]
+    ratio = K(rs, 1, gamma) / K_s(rs, 1) - 1
+    ck("fisher_jnw K stands above Schwarzschild's inside the crossing and below it outside",
+       np.all(ratio[rs < cross] > 0) and np.all(ratio[rs > cross] < 0))
+    far = 1e4
+    ck("fisher_jnw K tends to gamma^2 of Schwarzschild's far out, 1/4 at gamma = 1/2",
+       abs(float(K.exact([far, 1, gamma])) / float(K_s.exact([far, 1])) / gamma ** 2 - 1) < 1e-3)
+    ck("fisher_jnw R falls off as (1 - gamma^2) b^2/2 r^4, 3 b^2/8 r^4 at gamma = 1/2",
+       abs(float(R.exact([far, 1, gamma])) * far ** 4 / ((1 - gamma ** 2) / 2) - 1) < 1e-3
+       and (1 - gamma ** 2) / 2 == 3 / 8)
+    K_edge, R_edge = edge(K, K_scale, gamma), edge(R, R_scale, gamma)
+    legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+              ["line", "reference", "$K$ of Schwarzschild's black hole with $r_s = b$, the case $\\gamma = 1$"]]
+    still = {
+        "id": "scalar", "label": "$\\gamma = 1/2$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of a static mass with a massless scalar field "
+            "against $r$ ($\\gamma = 1/2$), the same at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's "
+            "black hole with $r_s = b$, the case $\\gamma = 1$. At $r = b$ Schwarzschild's $K = 12b^2/r^6$ is a "
+            f"finite ${horizon_s:g}/b^4$ on its horizon. With the scalar field the spheres there shrink to zero "
+            "area, with no horizon to hide them, and $K$ grows without bound as $(r - b)^{-3}$.",
+            "Schwarzschild's $R$ vanishes, and here $R$ is positive at every $r$ and grows without bound as "
+            f"$(r - b)^{{-3/2}}$. $K$ crosses Schwarzschild's at $r = {cross:.3f}\\,b$ and far out falls to "
+            "$\\gamma^2 = 1/4$ of it, since the mass is $2GM/c^2 = \\gamma b$, while $R$ falls off as $3b^2/8r^4$.",
+        ],
+        "settings": "$\\gamma = 1/2$ and $b = 1$, the unit of every length, so that $2GM/c^2 = b/2$, and "
+                    "Schwarzschild's $r_s = b$.",
+        "clip": ("We draw $K\\,b^4$ on a logarithmic scale from $10^{-4}$ to $10^{2}$ and $R\\,b^2$ on one from "
+                 "$10^{-5}$ to $10^{1}$, and cut each curve where it leaves its panel, as $K$ does inside "
+                 f"$r = {K_edge:.3f}\\,b$ and $R$ inside $r = {R_edge:.3f}\\,b$."),
+    }
+
+    # The movie in gamma, at fixed b, from the gamma = 1/2 of the first view toward Schwarzschild's.
+    frames = []
+    steps = int((FJNW_LAST - FJNW_GAMMA) / FJNW_STEP)
+    for k in range(steps + 1):
+        value = FJNW_GAMMA + FJNW_STEP * k
+        frames.append({"label": f"$\\gamma = {float(value):.2f}$", "value": float(value),
+                       "curves": own(value, f"fisher_jnw at gamma = {float(value):.2f}"), "marks": []})
+    first, last = gamma, float(FJNW_LAST)
+    values = [f["value"] for f in frames]
+    ck("fisher_jnw the movie runs from gamma = 1/2 to 49/50", values[0] == first and values[-1] == last, f"{values}")
+    doubled = [crossing(v, 2) for v in values]
+    ck("fisher_jnw K stands above twice Schwarzschild's in a layer that thins as gamma grows",
+       all(d is not None for d in doubled) and all(a > b for a, b in zip(doubled, doubled[1:])), f"{doubled}")
+    for value in (first, last):
+        r2 = crossing(value, 2)
+        ck(f"fisher_jnw at gamma = {value} K is above twice Schwarzschild's inside r = {r2:.4f} alone",
+           np.all(K(rs[rs < r2], 1, value) > 2 * K_s(rs[rs < r2], 1))
+           and np.all(K(rs[rs > r2], 1, value) < 2 * K_s(rs[rs > r2], 1)))
+    power(K, last, 2 * last - 4, "K")
+    ck("fisher_jnw R shrinks toward zero at every r as gamma grows",
+       all(np.all(R(rs, 1, b) < R(rs, 1, a)) for a, b in zip(values, values[1:])))
+    outer = rs[rs >= 2]
+    gaps = [float(np.max(np.abs(K(outer, 1, v) / K_s(outer, 1) - 1))) for v in values]
+    ck("fisher_jnw K approaches Schwarzschild's outside r = 2b as gamma grows",
+       all(a > b for a, b in zip(gaps, gaps[1:])), f"{gaps[0]:.4f} to {gaps[-1]:.4f}")
+    edges = [(edge(K, K_scale, v), edge(R, R_scale, v)) for v in values]
+    reach = max(max(e) for e in edges) - 1
+    stated = math.ceil(reach * 100) / 100
+    ck("fisher_jnw every curve of the movie leaves its panel nearer r = b as gamma grows, within the reach stated",
+       all(a[0] > b[0] and a[1] > b[1] for a, b in zip(edges, edges[1:])) and reach <= stated, f"{reach:.4f}")
+    charge = [math.sqrt(1 - v ** 2) / 2 for v in (first, last)]
+    movie_view = {
+        "id": "growing", "label": "$1/2 \\le \\gamma \\le 49/50$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": reference(), "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of a static mass with a massless scalar field "
+            "against $r$ as $\\gamma$ grows at fixed $b$ ($1/2 \\le \\gamma \\le 49/50$), beside Schwarzschild's "
+            "black hole with $r_s = b$, the case $\\gamma = 1$. As $\\gamma$ grows, the scalar charge "
+            f"$q = b\\sqrt{{1 - \\gamma^2}}/2$ falls from ${charge[0]:.3f}\\,b$ to ${charge[1]:.3f}\\,b$, $R$ shrinks "
+            "toward zero, and $K$ approaches Schwarzschild's except in a layer beside $r = b$ that thins as "
+            f"$\\gamma$ grows: $K$ is above twice Schwarzschild's inside $r = {crossing(first, 2):.3f}\\,b$ at "
+            f"$\\gamma = 1/2$ and inside $r = {crossing(last, 2):.3f}\\,b$ at $\\gamma = 49/50$.",
+            "Toward $r = b$, $K$ grows as $(1 - \\gamma)^2(7\\gamma^2 - 2\\gamma + 3)(r - b)^{2\\gamma - 4}/4b^{2\\gamma}$. "
+            "The factor $(1 - \\gamma)^2$ shrinks as $\\gamma$ approaches 1, while the power stays below $-2$, so at "
+            "every $q > 0$ the sphere $r = b$ is a curvature singularity.",
+        ],
+        "settings": f"$b = 1$, the unit of every length, and $\\gamma$ in steps of $1/{int(1 / FJNW_STEP)}$, so that "
+                    "$2GM/c^2 = \\gamma b$ grows from $b/2$ to $0.98\\,b$.",
+        "clip": ("The scales are those of $\\gamma = 1/2$, and we cut each curve where it leaves the top of its panel, "
+                 f"within ${stated:g}\\,b$ of $r = b$ in every frame; no curve passes the bottom."),
+        "movie": {"variable": "$\\gamma$", "seconds": 5, "frames": frames},
+    }
+    return [still, movie_view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -3088,6 +3290,7 @@ DRAWN = {
     "curzon_chazy": curzon_chazy,
     "damour_solodukhin": damour_solodukhin,
     "einstein_cluster": einstein_cluster,
+    "fisher_jnw": fisher_jnw,
 }
 
 

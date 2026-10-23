@@ -1810,7 +1810,8 @@
     "version": "9d35572725aa9a41",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
-    "embedding": "3cdd1185c95f1f46"
+    "embedding": "3cdd1185c95f1f46",
+    "curvature": "4ffe343f4cced8c3"
   },
   {
     "id": "freund_rubin",
