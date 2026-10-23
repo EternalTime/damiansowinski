@@ -3552,7 +3552,8 @@
       "idealized model"
     ],
     "version": "26c681ce6b42c7df",
-    "embedding": "0c96027fa617beeb"
+    "embedding": "0c96027fa617beeb",
+    "curvature": "680446e324dac4e2"
   },
   {
     "id": "misner_zapolsky",

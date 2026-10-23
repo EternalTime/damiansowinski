@@ -89,6 +89,7 @@ sys.path.insert(0, str(HERE))
 
 import build_mfs_data as build  # noqa: E402
 import null_rays as nr  # noqa: E402
+import two_holes  # noqa: E402
 
 CURVATURE_DIR = build.CURVATURE_DIR
 
@@ -7556,6 +7557,315 @@ def myers_perry(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Misner and Brill-Lindquist's two holes
+
+MBL_STEP = Fraction(1, 10)        # the step of a from one frame of the movie to the next, every second frame of the embedding movies
+MBL_FIRST, MBL_LAST = Fraction(1, 2), Fraction(2)   # the first and last frames' a, in units of alpha, as the embedding movies'
+MBL_TOP = 4                       # the box runs over 0 <= rho <= 4 alpha and |z| <= 4 alpha, as the embedding's midplane
+MBL_CELLS = 10                    # the cells of the map to each alpha, across and up
+MBL_MAP = {"kind": "log", "from": 1e-4, "to": 1e-2}    # the colours of K alpha^4
+
+
+def mbl_psi(a):
+    """Brill and Lindquist's psi for two equal holes of alpha = 1 at z = +-a, in sympy's spelling of
+    the cylindrical chart's coordinates, a written as the fraction it is."""
+    A = Fraction(a).limit_denominator(1000)
+    return {"psi": f"1 + 1/sqrt(rho**2 + (z - ({A}))**2) + 1/sqrt(rho**2 + (z + ({A}))**2)"}
+
+
+def mbl_minimal(ck, where, path, ends, grad):
+    """Check that a curve of the half plane of rho and z, a dense solution path(s) = (rho, z, theta)
+    over s in `ends`, is a minimal surface of revolution of the published metric: its tangent turns
+    as n . grad ln sqrt(g_rhorho g_phiphi), n = (-sin theta, cos theta), the geodesic equation of the
+    half plane in the metric g_rhorho g_phiphi (drho^2 + dz^2), measured by central differences of
+    the curve's own angle and of the published components."""
+    s = np.linspace(ends[0] + 0.05 * (ends[1] - ends[0]), ends[1] - 0.05 * (ends[1] - ends[0]), 40)
+    h = 1e-5 * (ends[1] - ends[0])
+    rho, z, theta = path(s)
+    turn = (path(s + h)[2] - path(s - h)[2]) / (2 * h)
+    d_rho, d_z = grad(rho, z)
+    want = -np.sin(theta) * d_rho + np.cos(theta) * d_z
+    worst = float(np.max(np.abs(turn - want)))
+    ck(f"misner_brill_lindquist {where} is a minimal surface of the published metric", worst < 1e-5,
+       f"its turning off by {worst:.1e}")
+
+
+def mbl_polyline(ck, where, points, per_unit):
+    """A marked curve as the file holds it: its points [rho, z], thinned in the plot's own units so
+    that the line drawn strays from the curve by less than TOLERANCE."""
+    X, Y = per_unit * points[:, 0], per_unit * points[:, 1]
+    keep = thinned(X, Y, TOLERANCE)
+    ck(f"misner_brill_lindquist {where} is drawn in {len(keep)} of {len(points)} points", len(keep) >= 2)
+    return [[float(p[0]) + 0.0, float(p[1]) + 0.0] for p in points[keep]]
+
+
+def misner_brill_lindquist(ck, src):
+    """Brill and Lindquist's slice of two equal holes at alpha = 1, its Kretschmann scalar over the
+    half plane of the cylindrical chart's rho and z as the holes are set from a = alpha/2 to 2 alpha
+    apart.
+
+    The slice is space at one moment, so its scalars are those of its own metric, psi^4 times flat
+    space. The cylindrical chart publishes K in rho, z, psi and the derivatives of psi, the free
+    function the figure declares as Brill and Lindquist's psi = 1 + alpha/r_1 + alpha/r_2 for each
+    frame's a, as the embedding movies take it, so K is a function of rho and z alone, the same at
+    every phi. psi is harmonic off the punctures, so R = 0, and the figure is K alone: a movie of a
+    map over 0 <= rho <= 4 alpha and |z| <= 4 alpha, the reach of the embedding's midplane, in cells a
+    tenth of alpha on a side, coloured on a logarithmic scale from 10^-4 to 10^-2 in units of
+    1/alpha^4, with a from alpha/2 to 2 alpha in steps of alpha/10, every second frame of the
+    embedding movies. Each frame marks the two punctures and the minimal surfaces two_holes.py
+    finds: each hole's throat, and the apparent horizon around both while a < 1.532 alpha. The
+    isotropic chart's one hole has no view: its K, 6 r_s^2/R^6 at the circumference radius R, is
+    Schwarzschild's spacetime scalar halved, and a line against r, the only axis a curve can take,
+    squeezes the whole second sheet into r < r_s/4.
+
+    What the captions state is checked here: R vanishes and K = 4 G^i_j G^j_i from the published
+    Einstein tensor, so that K = 4 R_ij R^ij, at points of every frame; the published metric is psi^4
+    times flat space with two_holes.py's psi, and every curve marked is a minimal surface of it, the
+    throats closing on the axis and the apparent horizon crossing the midplane at right angles,
+    present in a frame exactly when a lies below the critical 1.532 alpha; toward each puncture K
+    falls to zero as 24 m_1^2 r_1^6/alpha^12 with m_1 = 2 alpha + alpha^2/a, two_holes.masses' own
+    mass of the hole, measured in sixty digits; K is greatest on the axis in every frame, between
+    each hole and the midplane for a > alpha and at the centre from alpha/2 to alpha, the two peaks
+    meeting at a = alpha, where the second derivative of K along the axis at the centre changes
+    sign, found in eighty digits; the greatest value falls frame by frame as a falls; at a = 0 the
+    two holes are the isotropic chart's one hole of r_s = 8 alpha, whose K is greatest on its throat,
+    3/2048 alpha^4, and far apart each is that of r_s = 4 alpha, 3/128 alpha^4 on its throat. The
+    clip is where the values leave their colours, on grids four times as fine as each frame's map."""
+    alpha = 1.0
+    cyl = "cylindrical"
+
+    def read(field, functions, indices=None, coords=("rho", "z")):
+        return nr_published(src, "misner_brill_lindquist", cyl, field, list(coords), [], indices, functions)
+
+    # The published K with a left as a symbol, for the place where the peaks meet.
+    _, entry, reader = nr.load("misner_brill_lindquist", cyl)
+    names = {reader._plain(n): s for n, s in reader.symbol.items()}
+    rho_s, z_s, a_s = names["rho"], names["z"], sp.Symbol("a", positive=True)
+    psi_s = 1 + 1 / sp.sqrt(rho_s ** 2 + (z_s - a_s) ** 2) + 1 / sp.sqrt(rho_s ** 2 + (z_s + a_s) ** 2)
+    K_a = reader(nr.strip_lhs(entry["kretschmann"])).subs(reader.parameters["psi"], psi_s).doit()
+    K_mp = sp.lambdify((rho_s, z_s, a_s), K_a, "mpmath")
+
+    values = [MBL_FIRST + k * MBL_STEP for k in range(int((MBL_LAST - MBL_FIRST) / MBL_STEP) + 1)]
+    x_axis = axis("$\\rho/\\alpha$", 0, MBL_TOP, 3)
+    y_axis = axis("$z/\\alpha$", -MBL_TOP, MBL_TOP)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "misner_brill_lindquist map", [aspect])
+    nx = round(MBL_CELLS * (x_axis["to"] - x_axis["from"]))
+    ny = round(MBL_CELLS * (y_axis["to"] - y_axis["from"]))
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+    critical = two_holes.critical()
+    ck("misner_brill_lindquist a surface surrounds both holes below a = 1.532 alpha", abs(critical - 1.532) < 5e-4,
+       f"{critical:.6f}")
+
+    frames, peaks, lows, highs = [], [], [], []
+    for a in values:
+        a = float(a)
+        where = f"at a = {a:g}"
+        functions = mbl_psi(a)
+        K = read("kretschmann", functions)
+        ricci = read("ricci_scalar", functions)
+        xs, ys, cells_ = cells(K, x_axis, y_axis, nx, ny, [])
+        ck(f"misner_brill_lindquist K is finite and positive at every cell {where}",
+           np.all(np.isfinite(cells_)) and np.all(cells_ > 0), f"from {np.min(cells_):.3e} to {np.max(cells_):.3e}")
+        rng = np.random.default_rng(1963)
+        picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+        # The cells beside each puncture, where K falls to zero.
+        jp = round((a - y_axis["from"]) * MBL_CELLS)
+        jm = round((-a - y_axis["from"]) * MBL_CELLS)
+        picks |= {(0, j) for j in (jp - 1, jp, jm - 1, jm)}
+        picks = sorted(picks)
+        agrees(ck, f"misner_brill_lindquist map {where}", K, [[xs[i], ys[j]] for i, j in picks],
+               [cells_[j, i] for i, j in picks])
+
+        # R = 0, and K = 4 R_ij R^ij from the published Einstein tensor, R^i_j = G^i_j where R = 0.
+        spots = [[0.3, 0.2], [1.1, a], [2.5, -1.7], [0.05, 0.0], [3.9, 3.9], [0.7, -a - 0.4]]
+        ck(f"misner_brill_lindquist R vanishes {where}",
+           all(abs(float(ricci.exact(p))) < 1e-45 for p in spots))
+        einstein = {tuple(c["indices"]): read("einstein_tensor", functions, tuple(c["indices"]))
+                    for c in entry["einstein_tensor"]["variants"]["ul"]["nonzero"]}
+        worst = 0.0
+        for p in spots:
+            square = sum(v.exact(p) * einstein[(b, a_)].exact(p) for (a_, b), v in einstein.items() if (b, a_) in einstein)
+            worst = max(worst, abs(float(4 * square / K.exact(p)) - 1))
+        ck(f"misner_brill_lindquist K = 4 R_ij R^ij {where}", worst < 1e-40, f"{worst:.1e}")
+
+        # The published metric is psi^4 times flat space with two_holes.py's psi.
+        g_rr = read("metric_components", functions, ("\\rho", "\\rho"))
+        g_zz = read("metric_components", functions, ("z", "z"))
+        g_pp = read("metric_components", functions, ("\\phi", "\\phi"))
+        ok = all(abs(float(g_rr(r, zz)) / two_holes.psi(a, r, zz)[0] ** 4 - 1) < 1e-14
+                 and abs(float(g_zz(r, zz)) / two_holes.psi(a, r, zz)[0] ** 4 - 1) < 1e-14
+                 and abs(float(g_pp(r, zz)) / (two_holes.psi(a, r, zz)[0] ** 4 * r * r) - 1) < 1e-14 for r, zz in spots)
+        ck(f"misner_brill_lindquist the published metric is psi^4 times flat space with two_holes' psi {where}", ok)
+
+        def grad(r, zz, h=1e-6):
+            def L(r_, z_):
+                return 0.5 * np.log(g_rr(r_, z_) * g_pp(r_, z_))
+            return (L(r + h, zz) - L(r - h, zz)) / (2 * h), (L(r, zz + h) - L(r, zz - h)) / (2 * h)
+
+        # The marks: the punctures, each hole's throat, and the apparent horizon around both.
+        z0 = two_holes.throat(a)
+        ck(f"misner_brill_lindquist the throat closes on the axis {where}", abs(two_holes.throat_miss(a, z0)) < 1e-6)
+        path, end = two_holes.curve(a, z0, "throat")
+        mbl_minimal(ck, f"throat {where}", path, (0.0, end), grad)
+        y = path(np.linspace(0, end, 2001))
+        upper = np.column_stack([y[0], y[1]])
+        ck(f"misner_brill_lindquist the throat surrounds the puncture {where}",
+           upper[0, 1] > a > upper[-1, 1] > 0 and np.all(upper[:, 0] >= 0))
+        throat = mbl_polyline(ck, f"throat {where}", upper, per_unit)
+        marks = [{"class": "zero", "at": [0.0, a]}, {"class": "zero", "at": [0.0, -a]},
+                 {"class": "horizon", "points": throat},
+                 {"class": "horizon", "points": [[p[0], -p[1] + 0.0] for p in throat]}]
+        zc = two_holes.common(a)
+        ck(f"misner_brill_lindquist a surface surrounds both holes exactly while a < 1.532 alpha {where}",
+           (zc is not None) == (a < critical))
+        if zc is not None:
+            ck(f"misner_brill_lindquist the apparent horizon crosses the midplane at right angles {where}",
+               abs(two_holes.common_miss(a, zc)) < 1e-6)
+            path, end = two_holes.curve(a, zc, "common")
+            mbl_minimal(ck, f"apparent horizon {where}", path, (0.0, end), grad)
+            y = path(np.linspace(0, end, 2001))
+            half = np.column_stack([y[0], y[1]])
+            ck(f"misner_brill_lindquist the apparent horizon surrounds both throats {where}", zc > z0 and half[-1, 0] > 0)
+            whole = np.vstack([half, (half * [1, -1])[::-1][1:]])
+            whole[len(half) - 1, 1] = 0.0
+            marks.append({"class": "horizon", "points": mbl_polyline(ck, f"apparent horizon {where}", whole, per_unit)})
+        ck(f"misner_brill_lindquist every mark lies inside the box {where}",
+           all(0 <= p[0] <= MBL_TOP and abs(p[1]) <= MBL_TOP for m in marks for p in ([m["at"]] if "at" in m else m["points"])))
+
+        # Toward each puncture K falls to zero as 24 m_1^2 r_1^6/alpha^12, m_1 the hole's own mass.
+        m1 = two_holes.masses(a)[1]
+        ck(f"misner_brill_lindquist the hole's own mass is 2 alpha + alpha^2/a {where}", abs(m1 - (2 + 1 / a)) < 1e-15)
+        fall = [float(K.exact([d * math.sin(t), a + d * math.cos(t)])) / (24 * m1 ** 2 * d ** 6) - 1
+                for d in (1e-6, 1e-8) for t in (1e-6, 1.0, math.pi / 2, 2.5, math.pi - 1e-6)]
+        ck(f"misner_brill_lindquist K falls to zero toward the puncture as 24 m_1^2 r_1^6/alpha^12 {where}",
+           max(abs(v) for v in fall[5:]) < 1e-6 and max(abs(v) for v in fall[:5]) < 1e-4, f"{max(map(abs, fall)):.1e}")
+
+        # Where K is greatest: on the axis, found by the golden section in sixty digits.
+        fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [])
+        FX, FY = np.meshgrid(fx, fy)
+
+        def on_axis(zz):
+            return float(K(1e-9, zz))
+        line = np.linspace(0, MBL_TOP, 8001)
+        top = float(line[int(np.argmax(K(1e-9, line)))])
+        z_peak = abs(golden(lambda zz: -on_axis(zz), max(top - 1e-3, 0.0), top + 1e-3)) if top > 0 else 0.0
+        peak = float(K.exact([1e-25, z_peak]))
+        centre = float(K.exact([1e-25, 0.0]))
+        ck(f"misner_brill_lindquist K is greatest on the axis {where}", float(np.max(fine)) <= peak
+           and FX.flat[int(np.argmax(fine))] < 1 / (4 * MBL_CELLS), f"{peak:.6e} at z = {z_peak:.4f}")
+        if a > alpha:
+            ck(f"misner_brill_lindquist K is greatest between each hole and the midplane {where}",
+               0 < z_peak < upper[-1, 1] + 0.05 and on_axis(1e-3) > centre, f"z = {z_peak:.4f}, the throat's inner pole {upper[-1, 1]:.4f}")
+        else:
+            ck(f"misner_brill_lindquist K is greatest at the centre {where}", z_peak < 1e-3 or peak <= centre * (1 + 1e-12),
+               f"{centre:.8e} against {peak:.8e} at z = {z_peak:.4f}")
+            peak, z_peak = centre, 0.0
+        peaks.append((a, peak, z_peak))
+        low = fine < MBL_MAP["from"]
+        lows.append(float(np.minimum(np.hypot(FX, FY - a), np.hypot(FX, FY + a))[low].max()) if low.any() else 0.0)
+        high = ~(fine <= MBL_MAP["to"])
+        highs.append(float(np.hypot(FX, np.abs(FY) - z_peak)[high].max()) if high.any() else None)
+
+        frame = {"label": f"$a = {a:.2f}\\,\\alpha$", "value": a, "marks": marks}
+        grid = {"metric": "misner_brill_lindquist", "system": cyl, "scalar": "kretschmann", "x": "\\rho", "y": "z",
+                "params": {}, "functions": functions, "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in cells_]}
+        frames.append((frame, grid))
+
+    ck("misner_brill_lindquist the greatest K falls frame by frame as a falls",
+       all(p[1] < q[1] for p, q in zip(peaks, peaks[1:])), f"from {peaks[-1][1]:.4e} to {peaks[0][1]:.4e}")
+    # The two peaks on the axis meet at the centre at a = alpha: K(h) - K(0) on the axis changes sign
+    # there, in eighty digits.
+    mpmath.mp.dps = 80
+
+    def bulge(a):
+        h = mpmath.mpf("1e-12")
+        return K_mp(mpmath.mpf("1e-40"), h, mpmath.mpf(a)) - K_mp(mpmath.mpf("1e-40"), mpmath.mpf(0), mpmath.mpf(a))
+    lo, hi = mpmath.mpf("0.9"), mpmath.mpf("1.1")
+    ck("misner_brill_lindquist K has a least value along the axis at the centre above a = alpha and its greatest below",
+       bulge(lo) < 0 < bulge(hi))
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if bulge(mid) < 0 else (lo, mid)
+    meet = float((lo + hi) / 2)
+    mpmath.mp.dps = 15
+    ck("misner_brill_lindquist the two peaks meet at the centre at a = alpha", abs(meet - 1) < 1e-10, f"{meet:.15f}")
+
+    # At a = 0 the two holes are the isotropic chart's one hole of r_s = 8 alpha, and far apart each is
+    # one of r_s = 4 alpha, its K greatest on its throat.
+    iso = nr_published(src, "misner_brill_lindquist", "isotropic", "kretschmann", ["r"], ["r_s"])
+    merged = read("kretschmann", {"psi": "1 + 2/sqrt(rho**2 + z**2)"})
+    r_, rs_ = iso.coords[0], iso.params[0]
+    ck("misner_brill_lindquist one hole's K is 6 r_s^2/R^6 with R = r (1 + r_s/4r)^2, which the view of it would repeat",
+       sp.cancel(iso.expr - 6 * rs_ ** 2 / (r_ * (1 + rs_ / (4 * r_)) ** 2) ** 6) == 0)
+    worst = max(abs(float(merged.exact([r, zz]) / iso.exact([math.hypot(r, zz), 8.0])) - 1)
+                for r, zz in ((0.75, 1.0), (3.0, -4.0), (1.5, 2.0), (0.375, -0.5), (5.0, 12.0), (0.125, 0.0)))
+    ck("misner_brill_lindquist at a = 0 K is that of one hole of r_s = 8 alpha", worst < 1e-50, f"{worst:.1e}")
+    merged_top, apart_top = float(iso.exact([2.0, 8.0])), float(iso.exact([1.0, 4.0]))
+    ck("misner_brill_lindquist one hole's K on its throat is 3/2048 alpha^4 at r_s = 8 alpha and 3/128 alpha^4 at r_s = 4 alpha",
+       abs(merged_top / (3 / 2048) - 1) < 1e-15 and abs(apart_top / (3 / 128) - 1) < 1e-15)
+    far = read("kretschmann", mbl_psi(10 ** 6))
+    alone = [float(far.exact([math.sin(t), 1e6 + math.cos(t)])) / (3 / 128) - 1 for t in (1e-6, 1.0, math.pi / 2, math.pi - 1e-6)]
+    ck("misner_brill_lindquist far apart each hole's K on its throat tends to 3/128 alpha^4", max(map(abs, alone)) < 1e-5,
+       f"{alone}")
+    ck("misner_brill_lindquist the greatest K of every frame lies between the merged hole's and one hole's",
+       all(3 / 2048 < p[1] < 3 / 128 for p in peaks))
+
+    # The clip: K below the colours only beside the punctures, above them only in the last frames.
+    d_low = max(lows)
+    over = [(a, d) for (a, _, _), d in zip(peaks, highs) if d is not None]
+    ck("misner_brill_lindquist K falls below its colours only beside the punctures", 0 < d_low < 0.2, f"within {d_low:.4f} alpha")
+    ck("misner_brill_lindquist K passes the top of its colours only at a = 1.9 and 2 alpha, beside its greatest value",
+       [a for a, _ in over] == [1.9, 2.0] and max(d for _, d in over) < 0.5, f"{over}")
+    d_high = max(d for _, d in over)
+    first, last = peaks[0], peaks[-1]
+
+    scale = dict(MBL_MAP)
+    movie_frames = []
+    for k, (frame, grid) in enumerate(frames):
+        if k:
+            frame["map"] = grid
+        movie_frames.append(frame)
+    two = {
+        "id": "two_holes", "label": "Two holes", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,\\alpha^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": frames[0][1], "marks": [],
+        "movie": {"variable": "$a$", "seconds": 5, "frames": movie_frames},
+        "legend": [["line", "horizon", "a minimal surface: the throat of each hole and, for $a < 1.53\\,\\alpha$, "
+                                       "the apparent horizon around both"],
+                   ["point", "zero", "a puncture, $\\rho = 0$, $z = \\pm a$, where $K \\to 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of Brill and Lindquist's two equal holes over the half plane of $\\rho$ and "
+            "$z$ at a range of separations ($a$ from $\\alpha/2$ to $2\\,\\alpha$), the same at every $\\phi$. "
+            "The slice is space at one moment, so $K$ is that of its own metric, $\\psi^4$ times flat space. "
+            "$\\psi$ is harmonic between the holes, so the Ricci scalar vanishes, and $K = 4R_{ij}R^{ij}$, a sum of "
+            "squares.",
+            "Each puncture $z = \\pm a$ is the far end of the sheet beyond that hole's throat, drawn as a point, "
+            "and there $K$ falls to zero, as $24m_1^2r_1^6/\\alpha^{12}$, with $r_1$ the distance to the puncture and "
+            "$m_1 = 2\\alpha + \\alpha^2/a$ the hole's mass seen from its own sheet. From "
+            f"$a = {critical:.2f}\\,\\alpha$ down a minimal surface surrounds both holes, the apparent horizon of a "
+            "single black hole.",
+            "$K$ is greatest on the axis. For $a > \\alpha$ it peaks between each hole and the midplane, and as the "
+            "holes draw together the two peaks meet at the centre at $a = \\alpha$. The greatest value falls as they "
+            f"approach, from ${last[1]:.4f}/\\alpha^4$ at $a = 2\\alpha$ to ${first[1]:.4f}/\\alpha^4$ at "
+            "$a = \\alpha/2$. Far apart each hole is Schwarzschild's of $GM/c^2 = 2\\alpha$, with $K = 3/128\\alpha^4$ "
+            "on its throat, and at $a = 0$ the two are one of $GM/c^2 = 4\\alpha$, with $K = 3/2048\\alpha^4$ on its "
+            "throat.",
+        ],
+        "settings": "$\\alpha = 1$, the unit of every length and of $a$, with two equal holes "
+                    "($\\alpha_1 = \\alpha_2 = \\alpha$) at $z = \\pm a$, and $a$ in steps of $0.1\\,\\alpha$.",
+        "input": ("Brill and Lindquist's $\\psi = 1 + \\alpha/r_1 + \\alpha/r_2$, with "
+                  "$r_1 = \\sqrt{\\rho^2 + (z - a)^2}$ and $r_2 = \\sqrt{\\rho^2 + (z + a)^2}$ the distances to the "
+                  "two punctures."),
+        "clip": ("We colour $K\\,\\alpha^4$ on a logarithmic scale from $10^{-4}$ to $10^{-2}$ and give a value beyond it "
+                 f"the colour of the end it passes: $K$ falls below $10^{{-4}}/\\alpha^4$ within ${d_low:.2f}\\,\\alpha$ "
+                 f"of each puncture and passes $10^{{-2}}/\\alpha^4$ only at $a = 1.9\\,\\alpha$ and $2\\,\\alpha$, within "
+                 f"${d_high:.2f}\\,\\alpha$ of where it is greatest."),
+    }
+    return [two]
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -7672,6 +7982,7 @@ DRAWN = {
     "majumdar_papapetrou": majumdar_papapetrou,
     "mcvittie": mcvittie,
     "melvin": melvin,
+    "misner_brill_lindquist": misner_brill_lindquist,
     "myers_perry": myers_perry,
 }
 
