@@ -2800,7 +2800,7 @@
           '<div class="nr-ylabel" aria-hidden="true"><span class="nr-name">' + nrEsc(view.ylabel) + '</span></div>' +
           '<div class="nr-yticks" aria-hidden="true"><span class="nr-sizer">' +
             view.ticks.y.map(function(t) { return '<span>' + nrEsc(t.label) + '</span>'; }).join('') + '</span>' + ys.join('') + '</div>' +
-          '<div class="nr-plot">' + nrSvg(view, f) + refs.join('') + sliceLabels.join('') +
+          '<div class="nr-plot"' + (view.mirror ? ' data-mirror="1"' : '') + '>' + nrSvg(view, f) + refs.join('') + sliceLabels.join('') +
             '<div class="mfs-nr-readout"><span><span>' + nrEsc(view.xlabel) + '</span> = <span class="nr-rx"></span></span>' +
             '<span><span>' + nrEsc(view.ylabel) + '</span> = <span class="nr-ry"></span></span></div></div>' +
           '<div class="nr-xticks" aria-hidden="true">' + xs.join('') + '</div>' +
@@ -4143,7 +4143,7 @@
       }
 
       function sliceAttrs(mark) {
-        return { 'class': sliceClass(mark.view), 'data-slice-view': mark.view };
+        return { 'class': sliceClass(mark.view), 'data-slice-view': mark.view, 'data-slice-name': mark.label };
       }
 
       // The corner of the label pinned at its place.
@@ -4229,17 +4229,151 @@
          three moments, which lie within a tenth of their plot's height there and would need it
          seven times as wide, the labels left past the plot or over another, each kept in turn
          while it is clear, are named in the legend instead, as slices.py names a label it finds
-         no side for, and come back on the plot at a size where they fit. A plot holds four labels at most, which makes
-         trying every choice of sides cheap. A label stands on the edge of what it names, the
-         edge of its line's stroke or of its dot, and labels may touch; nothing is added between
-         them. Every label is measured before any is moved, as the lines are. */
+         no side for, and come back on the plot at a size where they fit. Paper cannot scroll,
+         so the print copy's plots, fitted with `still` set, are never drawn larger, and a label
+         with no clear side there is named in the legend at once. The search for the choice of
+         sides tries each label's clear places, cheapest first, gives up on any partial choice
+         already costlier than the best found, and stops at the best found after SLICE_STEPS
+         choices, which keeps it cheap for the twelve labels of the light beam's print copy,
+         where every slice is drawn. A label stands on the edge of what it names, the edge of its
+         line's stroke or of its dot, and labels may touch; nothing is added between them. A
+         label is read as naming the line it stands beside, so it never lies over the line or dot
+         of a slice of another name, and it stays on its own side of every line of symmetry: the
+         centre of a view through the centre, and a slice's straight line that mirrors every
+         other line of its embedding view onto one of them, as r = 0 does Simpson and Visser's
+         four moments inside their horizons. Until that was held, the print copy on a phone set
+         the label of r = -0.4 r_s across r = 0, beside r = 0.4 r_s, and a reader could take each
+         label for the other's. These two rules never draw a plot larger: at the size the plot
+         takes for the rest, a place that breaks either counts as one past the plot, so a label
+         with no other is named in the legend. A moment two embedding views mark on one
+         line, as the light beam's two views do in print, is named once. Every label and line is
+         measured before any label is moved, as the lines are. */
       var SLICE_EDGE = 1.3, SLICE_DOT = 5.1;  // the stroke's half width and the dot's, in the drawing's units
       var SLICE_GROW = 4;                     // the most a plot is drawn larger for its slices' labels
+      var SLICE_STEPS = 20000;                // the most choices of sides tried once one is found
       var SLICE_SIDES = [['br', 0, -1], ['tr', 0, 1], ['bl', 1, -1], ['tl', 1, 1],
                          ['bl', 0, -1], ['tl', 0, 1], ['br', -1, -1], ['tr', -1, 1]];
       var SLICE_FAR_SIDES = [['bl', 0, -1], ['tl', 0, 1], ['br', -1, -1], ['tr', -1, 1]];
       var SLICE_POINT_SIDES = [['bl', 1, -1], ['tl', 1, 1], ['br', -1, -1], ['tr', -1, 1]];
-      function fitSliceLabels(root) {
+      // The slices' lines and dots drawn on a plot, as fractions of it, each with the embedding
+      // view and the name of its slice, and the plot's lines of symmetry, each as two points.
+      function sliceGeometry(plot, box) {
+        var svg = plot.querySelector('svg'), lines = [];
+        function frac(pt, ctm) {
+          var q = svg.createSVGPoint();
+          q.x = pt.x; q.y = pt.y;
+          q = q.matrixTransform(ctm);
+          return [(q.x - box.left) / box.width, (q.y - box.top) / box.height];
+        }
+        if (svg && box.width && box.height) {
+          [].forEach.call(svg.querySelectorAll('g[data-slice-name]'), function(g) {
+            if (!g.getClientRects().length) return;
+            var key = g.dataset.sliceView + '\u0000' + g.dataset.sliceName;
+            [].forEach.call(g.querySelectorAll('path.nr-slice'), function(path) {
+              var ctm = path.getScreenCTM(), length = path.getTotalLength(), pts = [];
+              if (!ctm) return;
+              var n = Math.max(1, Math.min(400, Math.ceil(length / 2)));
+              for (var i = 0; i <= n; i++) pts.push(frac(path.getPointAtLength(length * i / n), ctm));
+              lines.push({ key: key, name: g.dataset.sliceName, view: g.dataset.sliceView, pts: pts });
+            });
+            [].forEach.call(g.querySelectorAll('circle.nr-slice'), function(dot) {
+              var ctm = dot.getScreenCTM();
+              if (ctm) lines.push({ key: key, name: g.dataset.sliceName, view: g.dataset.sliceView, dot: true,
+                                    pts: [frac({ x: dot.cx.baseVal.value, y: dot.cy.baseVal.value }, ctm)] });
+            });
+          });
+        }
+        lines.forEach(function(line) {
+          var xs = line.pts.map(function(q) { return q[0]; }), ys = line.pts.map(function(q) { return q[1]; });
+          line.box = [Math.min.apply(null, xs), Math.min.apply(null, ys), Math.max.apply(null, xs), Math.max.apply(null, ys)];
+        });
+        // Lines of symmetry, found in pixels, since a mirror keeps lengths.
+        var w = box.width, h = box.height, tol = 0.015 * Math.max(w, h);
+        function px(q) { return [q[0] * w, q[1] * h]; }
+        function mirror(q, a, b) {
+          var dx = b[0] - a[0], dy = b[1] - a[1], t = ((q[0] - a[0]) * dx + (q[1] - a[1]) * dy) / (dx * dx + dy * dy);
+          return [2 * (a[0] + t * dx) - q[0], 2 * (a[1] + t * dy) - q[1]];
+        }
+        function near(q, r) { return Math.abs(q[0] - r[0]) < tol && Math.abs(q[1] - r[1]) < tol; }
+        // A line's two ends and its middle, the marks two lines are matched by.
+        function marks(line) {
+          var pts = line.pts.map(px);
+          return [pts[0], pts[pts.length >> 1], pts[pts.length - 1]];
+        }
+        var axes = plot.dataset.mirror ? [[[0.5, 0], [0.5, 1]]] : [];
+        lines.forEach(function(axis) {
+          if (axis.dot) return;
+          var own = lines.filter(function(l) { return l.key === axis.key; });
+          if (own.length !== 1) return;
+          var pts = axis.pts.map(px), a = pts[0], b = pts[pts.length - 1];
+          var len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+          if (len < tol || pts.some(function(q) {
+            return Math.abs((q[0] - a[0]) * (b[1] - a[1]) - (q[1] - a[1]) * (b[0] - a[0])) / len > 1;
+          })) return;
+          var group = lines.filter(function(l) { return l.view === axis.view && l !== axis; });
+          var paired = false;
+          var holds = group.length && group.every(function(l) {
+            var m = marks(l).map(function(q) { return mirror(q, a, b); });
+            return group.some(function(o) {
+              var k = marks(o);
+              var same = near(m[1], k[1]) && (near(m[0], k[0]) && near(m[2], k[2]) || near(m[0], k[2]) && near(m[2], k[0]));
+              if (same && o.key !== l.key) paired = true;
+              return same;
+            });
+          });
+          if (holds && paired) axes.push([axis.pts[0], axis.pts[axis.pts.length - 1]]);
+        });
+        return { lines: lines, axes: axes };
+      }
+
+      // Whether a label's box, rect in the plot's pixels, set beside the point at, keeps clear
+      // of every other slice's line and dot and on the side of every line of symmetry its
+      // point stands on.
+      function sliceClear(p, L, rect, at) {
+        function sx(q) { return q[0] * p.W; }
+        function sy(q) { return q[1] * p.H; }
+        // The segment from a to b within the box r, by Liang and Barsky's clipping.
+        function crosses(a, b, r) {
+          var t0 = 0, t1 = 1, dx = b[0] - a[0], dy = b[1] - a[1];
+          var edges = [[-dx, a[0] - r[0]], [dx, r[2] - a[0]], [-dy, a[1] - r[1]], [dy, r[3] - a[1]]];
+          for (var i = 0; i < 4; i++) {
+            var q = edges[i][0], d = edges[i][1];
+            if (q === 0) { if (d < 0) return false; continue; }
+            var t = d / q;
+            if (q < 0) { if (t > t1) return false; if (t > t0) t0 = t; }
+            else { if (t < t0) return false; if (t < t1) t1 = t; }
+          }
+          return true;
+        }
+        for (var i = 0; i < p.lines.length; i++) {
+          var line = p.lines[i];
+          if (line.name === L.name) continue;
+          // A line's stroke or a dot reaches this far past its middle; labels may touch it.
+          var pad = (line.dot ? SLICE_DOT : SLICE_EDGE) * L.unit - 0.5;
+          var r = [rect[0] - pad, rect[1] - pad, rect[2] + pad, rect[3] + pad];
+          if (sx(line.box) >= r[2] || sy(line.box) >= r[3] || line.box[2] * p.W <= r[0] || line.box[3] * p.H <= r[1]) continue;
+          if (line.dot) {
+            var q = [sx(line.pts[0]), sy(line.pts[0])];
+            if (q[0] > r[0] && q[0] < r[2] && q[1] > r[1] && q[1] < r[3]) return false;
+            continue;
+          }
+          for (var k = 1; k < line.pts.length; k++) {
+            if (crosses([sx(line.pts[k - 1]), sy(line.pts[k - 1])], [sx(line.pts[k]), sy(line.pts[k])], r)) return false;
+          }
+        }
+        return p.axes.every(function(axis) {
+          var a = [sx(axis[0]), sy(axis[0])], b = [sx(axis[1]), sy(axis[1])];
+          function side(q) { return (b[0] - a[0]) * (q[1] - a[1]) - (b[1] - a[1]) * (q[0] - a[0]); }
+          var len = Math.hypot(b[0] - a[0], b[1] - a[1]), own = side(at) / len;
+          // A label of the line of symmetry itself, or of a point on it, keeps no side.
+          if (Math.abs(own) < 1) return true;
+          return [[rect[0], rect[1]], [rect[2], rect[1]], [rect[0], rect[3]], [rect[2], rect[3]]].every(function(q) {
+            return side(q) / len * Math.sign(own) > -0.5;
+          });
+        });
+      }
+
+      function fitSliceLabels(root, still) {
         function overlaps(a, b) { return a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3]; }
         var plots = [].slice.call(root.querySelectorAll('.nr-plot')).map(function(plot) {
           var labels = [].slice.call(plot.querySelectorAll('.mfs-slice-label')).filter(function(el) {
@@ -4247,8 +4381,28 @@
           });
           if (!labels.length) return null;
           var box = plot.getBoundingClientRect(), fig = plot.closest('.mfs-nr-figure');
+          var geometry = sliceGeometry(plot, box);
+          // A moment two embedding views both mark on the same line is named once, by the label
+          // of the first; the box of everything a label's slice draws tells the line.
+          function drawn(el) {
+            var own = geometry.lines.filter(function(l) { return l.key === el.dataset.sliceView + '\u0000' + el.dataset.sliceName; });
+            if (!own.length) return null;
+            function edge(k, pick) { return pick.apply(null, own.map(function(l) { return l.box[k]; })); }
+            return [edge(0, Math.min), edge(1, Math.min), edge(2, Math.max), edge(3, Math.max)];
+          }
+          labels = labels.filter(function(el, i) {
+            var mine = drawn(el);
+            var twin = !!mine && labels.slice(0, i).some(function(first) {
+              var theirs = first.dataset.sliceName === el.dataset.sliceName && drawn(first);
+              return theirs && theirs.every(function(v, k) { return Math.abs(v - mine[k]) < 0.005; });
+            });
+            el.classList.toggle('mfs-slice-twin', twin);
+            return !twin;
+          });
+          if (!labels.length) return null;
           return {
-            fig: fig, base: fig._mfsPlot || box.width, aspect: box.height / box.width,
+            lines: geometry.lines, axes: geometry.axes,
+            fig: fig, base: still ? box.width : fig._mfsPlot || box.width, aspect: box.height / box.width,
             // A reference line's label, at the plot's right hand edge and above its line, which
             // stands at a fraction of the plot's height.
             refs: [].slice.call(plot.querySelectorAll('.nr-ref')).map(function(el) {
@@ -4259,12 +4413,13 @@
               var r = el.getBoundingClientRect(), d = el.dataset;
               return { el: el, w: r.width, h: r.height, vw: +d.vw,
                        at: [+d.x, +d.y], far: d.far ? d.far.split(' ').map(Number) : null,
-                       own: [d.anchor, +d.dx, +d.dy], point: !!d.point };
+                       own: [d.anchor, +d.dx, +d.dy], point: !!d.point,
+                       name: d.sliceName };
             })
           };
         }).filter(Boolean);
         // The labels' best places on the plot drawn W wide.
-        function arrange(p, W) {
+        function arrange(p, W, strict) {
           p.W = W;
           p.H = W * p.aspect;
           p.others = p.refs.map(function(o) {
@@ -4283,18 +4438,29 @@
               var y0 = pair[1][1] * p.H + side[2] * L.unit + a[1] / 100 * h;
               var slide = w <= p.W ? Math.max(0, -x0) - Math.max(0, x0 + w - p.W) : 0;
               var rect = [x0 + slide, y0, x0 + slide + w, y0 + h];
-              var inside = rect[0] >= -0.5 && rect[1] >= -0.5 && rect[2] <= p.W + 0.5 && rect[3] <= p.H + 0.5;
+              var inside = rect[0] >= -0.5 && rect[1] >= -0.5 && rect[2] <= p.W + 0.5 && rect[3] <= p.H + 0.5 &&
+                (!strict || sliceClear(p, L, rect, [pair[1][0] * p.W, pair[1][1] * p.H]));
               var cost = (inside ? 0 : 10000) + order +
                 100 * p.others.filter(function(o) { return overlaps(rect, o); }).length;
               return { side: side, at: pair[1], slide: slide, rect: rect, cost: cost };
             });
           });
-          var n = p.labels.length, best = null, pick = [];
+          // A label with a clear place takes one of those, cheapest first; one with none goes to
+          // the legend, so it is tried at its cheapest place alone and stands over no other.
+          var n = p.labels.length, best = null, pick = [], steps = 0;
+          var choices = p.labels.map(function(L) {
+            var clear = L.options.filter(function(o) { return o.cost < 10000; });
+            if (!clear.length) clear = [L.options.reduce(function(a, o) { return o.cost < a.cost ? o : a; })];
+            return clear.sort(function(a, b) { return a.cost - b.cost; });
+          });
           (function search(i, total) {
-            if (best && total >= best.total) return;
+            if (best && (total >= best.total || steps > SLICE_STEPS)) return;
+            steps++;
             if (i === n) { best = { total: total, pick: pick.slice() }; return; }
-            p.labels[i].options.forEach(function(option) {
-              var clash = pick.filter(function(other) { return overlaps(option.rect, other.rect); }).length;
+            choices[i].forEach(function(option) {
+              var clash = option.cost < 10000 ? pick.filter(function(other) {
+                return other.cost < 10000 && overlaps(option.rect, other.rect);
+              }).length : 0;
               pick.push(option);
               search(i + 1, total + option.cost + 100 * clash);
               pick.pop();
@@ -4304,13 +4470,16 @@
         }
         var grown = [];
         plots.forEach(function(p) {
-          var best = null, grow = 1;
-          for (var g = 1; ; g = Math.min(g * 1.1, SLICE_GROW)) {
+          var best = null, grow = 1, most = still ? 1 : SLICE_GROW;
+          for (var g = 1; ; g = Math.min(g * 1.1, most)) {
             var tried = arrange(p, p.base * g);
             if (!best || tried.total < best.total) { best = tried; grow = g; }
-            if (tried.total < 100 || g === SLICE_GROW) break;
+            if (tried.total < 100 || g === most) break;
           }
-          arrange(p, p.base * grow);
+          // The plot takes the size the labels need to stand clear of the plot's edge and of
+          // each other, and at that size, never larger, they take the sides that keep them
+          // clear of other slices' lines and on their own side of a line of symmetry.
+          best = arrange(p, p.base * grow, true);
           // A label that even then stands past the plot or over another is named in the legend
           // instead, as one slices.py finds no side for is, each kept in turn while it is clear.
           var kept = [];
@@ -5811,6 +5980,7 @@
     /* A label named in the legend instead keeps its box, so fitSliceLabels() measures it again
        at the next size, and is not seen. */
     .mfs-slice-elsewhere { visibility: hidden; }
+    .mfs-slice-twin { display: none; }
     .mfs-slice-label {
       position: absolute; white-space: nowrap; line-height: 1; pointer-events: none;
       color: var(--text-bright); background: rgba(0,6,9,0.72); padding: 0.12em 0.3em; border-radius: 3px;
@@ -6295,7 +6465,7 @@
         // The numbers along each edge thinned at the size they print at, as on the screen.
         window._mfsFitTicks([].slice.call(root.querySelectorAll('.mfs-nr-figure')));
         // The slices' labels at the size they print at, set on the plot as on the screen.
-        window._mfsFitSliceLabels(root);
+        window._mfsFitSliceLabels(root, true);
         root.style.cssText = '';
       }
 
@@ -6349,10 +6519,14 @@
          390 pixels: the colour bar of Bonnor and Vaidya's map stood 265 pixels wide there,
          thinned for the 329 it had stood, and its numbers ran into each other. So the numbers
          along each edge are thinned again once the copy is laid out for print, at the width it
-         prints at, which the browser lays it out at before it prints. */
+         prints at, which the browser lays it out at before it prints. The slices' labels are
+         set on their plots again then as well: Simpson and Visser's six moments, set for a
+         plot 12cm wide, stood over each other on the phone's 274 pixels. */
       if (window.matchMedia) window.matchMedia('print').addEventListener('change', function(e) {
         var root = document.getElementById('mfs-print-root');
-        if (e.matches && root) window._mfsFitTicks([].slice.call(root.querySelectorAll('.mfs-nr-figure')));
+        if (!e.matches || !root) return;
+        window._mfsFitTicks([].slice.call(root.querySelectorAll('.mfs-nr-figure')));
+        window._mfsFitSliceLabels(root, true);
       });
     })();
   </script>
