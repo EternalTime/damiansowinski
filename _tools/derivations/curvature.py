@@ -8378,8 +8378,6 @@ def nordstrom_scalar(ck, src):
     return [point, universe]
 
 
-# ---------------------------------------------------------------- the two places of a figure
-
 # ---------------------------------------------------------------- the charged hole in de Sitter space
 
 
@@ -8463,6 +8461,140 @@ def reissner_nordstrom_de_sitter(ck, src):
         })
     return views
 
+
+# ---------------------------------------------------------------- the regular radiation universe
+
+def senovilla(ck, src):
+    """The radiation universe at a = 1, over -1 <= act <= 1 and 0 <= a rho <= 1.
+
+    The map shows the two-coordinate dependence of K; the radial movie shows its changing
+    profile through contraction and expansion. Its 41 moments match the embedding movie's
+    time window. The Ricci scalar vanishes and is stated in the caption alone.
+
+    Every stored sample is compared to the published scalar, with forty cells and each
+    curve checked again in sixty digits. In U = cosh^2(act) and V = cosh^2(3a rho),
+    the published K and the negatives of its two derivatives have positive polynomial
+    numerators in U - 1 and V - 1. This proves positivity, a finite global maximum at the
+    bounce on the axis, and monotonicity toward it in both coordinates. The caption's
+    endpoint values, time symmetry, asymptotic decay, changing radial profile, R = 0,
+    traceless source, regular axis and absence of a radial horizon are also checked."""
+    params = {"a": 1.0}
+    K = Published(src, "senovilla", "cylindrical", "kretschmann", ["rho", "t"], ["a"])
+    R = Published(src, "senovilla", "cylindrical", "ricci_scalar", ["rho", "t"], ["a"])
+    radial = axis("$a\\rho$", 0, 1)
+    time_axis = axis("$act$", -1, 1)
+    K_scale = {"kind": "log", "from": 1e-4, "to": 1e3}
+    panels = [{"id": "K", "name": "$K/a^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)}]
+    shape_checks(ck, "senovilla radial", [2])
+    shape_checks(ck, "senovilla map", [2])
+    rho, t = K.coords
+    a = K.params[0]
+    U, V = sp.symbols("U V", positive=True)
+    q, w = sp.symbols("q w", nonnegative=True)
+    rational = K.expr.subs({sp.cosh(a * t): sp.sqrt(U), sp.cosh(3 * a * rho): sp.sqrt(V)}) / (24 * a ** 4)
+    for name, expr in (("K", rational), ("-dK/dU", -sp.diff(rational, U)),
+                       ("-dK/dV", -sp.diff(rational, V))):
+        numerator, denominator = sp.fraction(sp.factor(expr))
+        coefficients = sp.Poly(sp.expand(numerator.subs({U: q + 1, V: w + 1})), q, w).coeffs()
+        ck(f"senovilla {name} is positive for U >= 1 and V >= 1",
+           all(c > 0 for c in coefficients) and denominator.is_positive is True)
+    centre = float(K.exact([0, 0, 1]))
+    end_axis = float(K.exact([0, 1, 1]))
+    least = float(K.exact([1, 1, 1]))
+    axis_U = sp.cosh(a * t) ** 2
+    axis_K = 24 * a ** 4 * (57 * axis_U ** 2 - 32 * axis_U + 8) / axis_U ** 6
+    ck("senovilla K on the axis has the closed form 24 a^4 (57 U^2 - 32 U + 8)/U^6",
+       sp.simplify(K.expr.subs(rho, 0) - axis_K) == 0)
+    ck("senovilla K has global maximum 792 a^4 at the bounce on the axis", centre == 792)
+    ck("senovilla caption endpoint values", abs(end_axis - 33.6) < 0.05
+       and abs(least - 1.10e-4) < 0.005e-4, f"axis {end_axis:.12g}, outer corner {least:.12g}")
+    ck("senovilla R vanishes identically", R.expr == 0)
+    ck("senovilla K is even in time", sp.simplify(K.expr.subs(t, -t) - K.expr) == 0)
+    ck("senovilla K decays as cosh^-8(act) at fixed radius",
+       sp.simplify(sp.limit(rational * U ** 4, U, sp.oo) - (24 * V + 33) / V ** 4) == 0)
+    ck("senovilla K decays as cosh^-4(3 a rho) at fixed time",
+       sp.simplify(sp.limit(rational * V ** 2, V, sp.oo) - 8 / U ** 6) == 0)
+    ratio0 = float(K(1, 0, 1) / K(0, 0, 1))
+    ratio1 = float(K(1, 1, 1) / K(0, 1, 1))
+    ck("senovilla radial profile changes shape as well as height", ratio0 / ratio1 > 7,
+       f"outer/axis {ratio0:.9g} at bounce, {ratio1:.9g} at endpoints")
+    grr = Published(src, "senovilla", "cylindrical", "inverse_metric_components", ["rho", "t"], ["a"],
+                    ["\\rho", "\\rho"])
+    ck("senovilla g^rhorho is positive at all finite coordinates",
+       sp.simplify(grr.expr - 1 / (sp.cosh(a * t) ** 4 * sp.cosh(3 * a * rho) ** 2)) == 0)
+    gphiphi = Published(src, "senovilla", "cylindrical", "metric_components", ["rho", "t"], ["a"],
+                       ["\\phi", "\\phi"])
+    ck("senovilla the axis has circumference over proper radius tending to 2 pi",
+       sp.simplify(sp.limit(gphiphi.expr * grr.expr / rho ** 2, rho, 0)) == 1)
+    trace = sp.S.Zero
+    for coordinate in ("t", "\\rho", "\\phi", "z"):
+        component = Published(src, "senovilla", "cylindrical", "einstein_tensor", ["rho", "t"], ["a"],
+                              [coordinate, coordinate])
+        trace += component.expr
+    ck("senovilla the radiation source is traceless", sp.simplify(trace) == 0)
+
+    frames = []
+    for moment in np.linspace(-1, 1, 41):
+        held = Held(K, {"t": float(moment)})
+        frame_curves = line_curves(ck, f"senovilla act = {moment:.2f}", "K", "K", held,
+                                   "\\rho", radial, K_scale, PLOT_W / 2, params)
+        up, down = beyond(held, radial, K_scale, [1])
+        ck(f"senovilla act = {moment:.2f} K stays inside its panel", not up and not down)
+        frames.append({"label": f"$act = {moment:.2f}$", "value": float(moment),
+                       "curves": frame_curves, "marks": []})
+    settings = "$a = 1$, so that $1/a$ is the unit of every length."
+    k_clip = ("We draw $K/a^4$ on a logarithmic scale from $10^{-4}$ to $10^3$; "
+              "every value drawn lies within it.")
+    line = {
+        "id": "bounce", "label": "through the bounce", "kind": "line", "x": radial, "panels": panels,
+        "curves": [], "marks": [],
+        "movie": {"variable": "$act$", "seconds": 6, "frames": frames},
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "caption": ["The Kretschmann scalar $K$ of the radiation universe against "
+                    "$\\rho$ through contraction and expansion ($a = 1$, $-1 \\le act \\le 1$), "
+                    "the same at every $\\phi$ and $z$. "
+                    "$K$ rises at every fixed $\\rho$ until the bounce at $t = 0$ and then falls, "
+                    "its radial profile changing shape as well as height. "
+                    f"On the axis $K$ rises from ${end_axis:.1f}a^4$ at $act = -1$ to $792a^4$ "
+                    f"at the bounce, its global maximum, and returns to ${end_axis:.1f}a^4$ at $act = 1$. "
+                    "The radiation has a traceless stress tensor, so the Ricci scalar vanishes."],
+        "settings": settings + " The moments run in steps of $0.05$ in $act$.", "clip": k_clip,
+    }
+    map_K = Published(src, "senovilla", "cylindrical", "kretschmann", ["t", "rho"], ["a"])
+    nx, ny = 200, 100
+    xs, ys, values = cells(map_K, time_axis, radial, nx, ny, [1])
+    ck("senovilla map cells are finite and inside the logarithmic colours",
+       np.all(np.isfinite(values)) and np.min(values) > K_scale["from"] and np.max(values) < K_scale["to"])
+    picks = [(i, j) for i in np.linspace(0, nx - 1, 8, dtype=int)
+             for j in np.linspace(0, ny - 1, 5, dtype=int)]
+    agrees(ck, "senovilla map", map_K, [[xs[i], ys[j], 1] for i, j in picks],
+           [values[j, i] for i, j in picks])
+    heat = {
+        "id": "plane", "label": "the plane of $ct$ and $\\rho$", "kind": "map",
+        "x": time_axis, "y": radial,
+        "colour": {"name": "$K/a^4$", "scale": K_scale, "ticks": value_ticks(K_scale)},
+        "map": {"metric": "senovilla", "system": "cylindrical", "scalar": "kretschmann",
+                "x": "t", "y": "\\rho", "params": params, "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [], "legend": [],
+        "caption": ["The Kretschmann scalar $K$ of the radiation universe over the plane of $ct$ and $\\rho$ "
+                    "($a = 1$), the same at every $\\phi$ and $z$. "
+                    "The curvature is finite through the bounce at $t = 0$, and is the same at $t$ and $-t$. "
+                    "At every moment $K$ falls outward from the regular axis, and at every radius "
+                    "it falls away from the bounce in either time direction. "
+                    "The radiation has a traceless stress tensor, so the Ricci scalar vanishes.",
+                    "At fixed radius $K$ tends to zero as $\\cosh^{-8}(act)$ far in the past and future. "
+                    "At fixed time it tends to zero as $\\cosh^{-4}(3a\\rho)$ far from the axis. "
+                    "The maximum $792a^4$ at $t = \\rho = 0$ is finite."],
+        "settings": settings,
+        "clip": ("We colour $K/a^4$ on a logarithmic scale from $10^{-4}$ to $10^3$, and give a value "
+                 "beyond it the colour of the end it passes. Every value in this window lies within it, "
+                 f"from ${tex_number(least)}a^4$ at $a\\rho = 1$, $act = \\pm 1$, to $792a^4$ at the bounce on the axis."),
+    }
+    return [line, heat]
+
+
+# ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
     """The scale of a view that draws both scalars as each of its two places on the page states
@@ -8585,6 +8717,7 @@ DRAWN = {
     "nordstrom_scalar": nordstrom_scalar,
     "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
+    "senovilla": senovilla,
 }
 
 
