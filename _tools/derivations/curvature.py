@@ -7866,6 +7866,86 @@ def misner_brill_lindquist(ck, src):
     return [two]
 
 
+# ---------------------------------------------------------------- the extreme Kerr throat
+
+def near_horizon_extreme_kerr(ck, src):
+    """The throat's K against polar angle, unchanged along its other coordinates.
+
+    Check the four charts' agreement, the zeros and signs of K, its reflection symmetry,
+    its extrema and finite range, and R = 0 throughout, which the caption states.
+    The two interior zero angles are named ticks on the axis.
+    """
+    name = "near_horizon_extreme_kerr"
+    K = Published(src, name, "poincare", "kretschmann", ["theta"], ["r_0"])
+    R = Published(src, name, "poincare", "ricci_scalar", ["theta"], ["r_0"])
+    theta, r0 = K.coords[0], K.params[0]
+    ck(f"{name} R vanishes throughout", R.expr == 0)
+    for system in ("inverse_radius", "global", "near_nhek"):
+        for field, original in (("kretschmann", K), ("ricci_scalar", R)):
+            other = Published(src, name, system, field, ["theta"], ["r_0"])
+            ck(f"{name} {system} has the same {field}", sp.simplify(other.expr - original.expr) == 0)
+    u = sp.symbols("u", real=True)
+    angular = 192 * (u ** 2 - 14 * u + 1) * (1 - u) / (1 + u) ** 6
+    ck(f"{name} K has the stated angular factors",
+       sp.trigsimp(K.expr * r0 ** 4 - angular.subs(u, sp.cos(theta) ** 2)) == 0)
+    ck(f"{name} K is unchanged on reflection about the equator",
+       sp.trigsimp(K.expr.subs(theta, sp.pi - theta) - K.expr) == 0)
+    zero_u = 7 - 4 * sp.sqrt(3)
+    ck(f"{name} K vanishes at both poles and at cos(theta) = plus or minus (2 - sqrt(3))",
+       K.expr.subs(theta, 0) == 0 and K.expr.subs(theta, sp.pi) == 0
+       and sp.simplify(angular.subs(u, zero_u)) == 0 and 0 < zero_u < 1)
+    roots = zeros(ck, name, K, 0, math.pi, [1.0])
+    theta0 = math.acos(2 - math.sqrt(3))
+    ck(f"{name} K changes sign only at the two named interior angles",
+       len(roots) == 2 and max(abs(a - b) for a, b in zip(roots, (theta0, math.pi - theta0))) < 1e-14)
+    ck(f"{name} K is negative in the polar caps and positive in the equatorial belt",
+       angular.subs(u, sp.Rational(1, 2)) < 0 and angular.subs(u, 0) > 0
+       and sp.simplify(angular.subs(u, 0)) == 192)
+    # The denominator stays positive on 0 <= u <= 1; all extrema are endpoints or roots
+    # of the derivative's cubic, of which exactly one lies in that interval.
+    derivative = sp.factor(sp.diff(angular, u))
+    cubic = u ** 3 - 21 * u ** 2 + 35 * u - 7
+    stationary = [float(sp.re(v)) for v in sp.nroots(cubic) if abs(float(sp.im(v))) < 1e-14 and 0 < sp.re(v) < 1]
+    ck(f"{name} K has one stationary latitude in each hemisphere",
+       sp.cancel(derivative - 576 * cubic / (1 + u) ** 7) == 0 and len(stationary) == 1)
+    least = float(angular.subs(u, stationary[0]))
+    least_angle = math.acos(math.sqrt(stationary[0]))
+    ck(f"{name} K is finite with minimum -92.527 and maximum 192 in units of r_0^-4",
+       abs(least + 92.5272641299684) < 1e-10 and least > -100 and angular.subs(u, 0) == 192,
+       f"minimum {least:.12f} at theta/pi = {least_angle / math.pi:.12f}")
+    x_axis = {"name": "$\\theta$", "from": 0, "to": math.pi,
+              "ticks": [{"at": at, "label": text} for at, text in (
+                  (0, "$0$"), (math.pi / 4, "$\\pi/4$"), (theta0, "$\\theta_0$"),
+                  (math.pi / 2, "$\\pi/2$"), (math.pi - theta0, "$\\pi-\\theta_0$"),
+                  (3 * math.pi / 4, "$3\\pi/4$"), (math.pi, "$\\pi$"))]}
+    k_scale = {"kind": "linear", "from": -100, "to": 200}
+    panels = [{"id": "K", "name": "$K\\,r_0^4$", "aspect": 2, "scale": k_scale, "ticks": value_ticks(k_scale)}]
+    shape_checks(ck, name, [p["aspect"] for p in panels])
+    curves = line_curves(ck, name, "K", "K", K, "\\theta", x_axis, k_scale, PLOT_W / 2, {"r_0": 1.0})
+    above, below = beyond(K, x_axis, k_scale, [1.0])
+    ck(f"{name} K stays inside its panel", not above and not below)
+    k_clip = "We draw $K\\,r_0^4$ on a signed linear scale from $-100$ to $200$, with no value clipped."
+    return [{
+        "id": "latitude", "label": "Pole to pole", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the extreme Kerr throat against $\\theta$ "
+            "($r_0 = 1$), the same at every radius, time, and $\\phi$.",
+            "$K$ vanishes at both poles and at $\\theta_0$ and $\\pi - \\theta_0$, "
+            "where $\\theta_0 = \\arccos(2 - \\sqrt{3})$. "
+            "It is negative between each pole and the nearer of these angles, and positive between them. "
+            "On the equator it is greatest, $192/r_0^4$, and it is finite at every angle. "
+            f"Its least value is ${least:.3f}/r_0^4$, at $\\theta = {least_angle / math.pi:.3f}\\pi$ and "
+            f"${1 - least_angle / math.pi:.3f}\\pi$.",
+            "The throat is a vacuum, so the Ricci scalar vanishes.",
+        ],
+        "settings": ("$r_0 = 1$, the unit of every length, with $0 \\le \\theta \\le \\pi$ from pole to pole "
+                     "and $\\theta_0 = \\arccos(2 - \\sqrt{3})$ the angle of the first interior zero of $K$."),
+        "clip": k_clip,
+    }]
+
+
 # ---------------------------------------------------------------- the quantum Oppenheimer-Snyder black hole
 
 QOS_ALPHA = Fraction(5, 4)        # alpha in units of m^2, as every drawing of the black hole takes it
@@ -8501,6 +8581,7 @@ DRAWN = {
     "melvin": melvin,
     "misner_brill_lindquist": misner_brill_lindquist,
     "myers_perry": myers_perry,
+    "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "nordstrom_scalar": nordstrom_scalar,
     "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
