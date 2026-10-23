@@ -2835,7 +2835,8 @@
     "version": "b63624f58e240968",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "76f39633ed5e928c",
-    "embedding": "21f2586270043652"
+    "embedding": "21f2586270043652",
+    "curvature": "ea4b88a84ec6927b"
   },
   {
     "id": "kerr_taub_nut",

@@ -27,7 +27,8 @@ line   one coordinate across, and one or more panels stacked over it, each a sca
        published g^xx along the drawn coordinate.
 map    two coordinates, at one scale on both axes, and the scalar as a colour at the centre of
        each cell of an even grid over the box, with points and curves marked on it; in the frame
-       "meridian" the box is the meridian plane of a radius and an angle from the axis.
+       "meridian" the box is the meridian plane of a radius and an angle from the axis, and in
+       the frame "oblate" the meridian plane of oblate spheroidal coordinates about a ring.
 movie  either of those stepped through a parameter or a time, a frame for each value, as an
        embedding diagram's movie is stepped.
 
@@ -410,16 +411,36 @@ def meridian(X, Y):
     return np.hypot(X, Y), np.arctan2(X, Y)
 
 
-def cells(published, x_axis, y_axis, nx, ny, params, frame=None):
+def oblate(X, Y, focus):
+    """The radius r and the angle theta from the axis of the point (X, Y) of the meridian plane of
+    oblate spheroidal coordinates about a ring of radius `focus`, drawn across as
+    sqrt(r^2 + focus^2) sin theta and up as r cos theta, on the sheet r >= 0, as Kerr and Schild's
+    Cartesian coordinates draw Boyer and Lindquist's r and theta. Each level of r is the spheroid
+    X^2/(r^2 + focus^2) + Y^2/r^2 = 1, so r^2 is the root at or above zero of
+    r^4 - (X^2 + Y^2 - focus^2) r^2 - focus^2 Y^2 = 0, and r = 0 is the disc |X| < focus, Y = 0.
+    Inside the spheroid through the ring the root is taken in the form that keeps its digits
+    beside the disc, where r^2 is far below X^2 + Y^2 - focus^2."""
+    s = X * X + Y * Y - focus * focus
+    q = np.sqrt(s * s + 4 * focus * focus * Y * Y)
+    with np.errstate(all="ignore"):
+        r2 = np.where(s >= 0, 0.5 * (s + q), 2 * focus * focus * Y * Y / (q - s))
+    r = np.sqrt(r2)
+    return r, np.arctan2(X * r, Y * np.sqrt(r2 + focus * focus))
+
+
+def cells(published, x_axis, y_axis, nx, ny, params, frame=None, focus=None):
     """A published scalar at the centres of an even grid of nx by ny cells over a map's box, a
     row for each cell up, from the bottom, each with a value for each cell across. In the frame
-    "meridian" the box is the meridian plane of the chart's radius and polar angle, and each
-    cell is read at the r and theta of its centre."""
+    "meridian" the box is the meridian plane of the chart's radius and polar angle, and in the
+    frame "oblate" the meridian plane of oblate spheroidal coordinates about a ring of radius
+    `focus`, and each cell is read at the r and theta of its centre."""
     xs = x_axis["from"] + (np.arange(nx) + 0.5) * (x_axis["to"] - x_axis["from"]) / nx
     ys = y_axis["from"] + (np.arange(ny) + 0.5) * (y_axis["to"] - y_axis["from"]) / ny
     X, Y = np.meshgrid(xs, ys)
     if frame == "meridian":
         X, Y = meridian(X, Y)
+    elif frame == "oblate":
+        X, Y = oblate(X, Y, focus)
     return xs, ys, published(X, Y, *params)
 
 
@@ -696,7 +717,9 @@ def bach_weyl_ring(ck, src):
     # The ring approached along three directions at distances l_1 of 10^-2, 10^-3 and 10^-4.
     # The ring approached along three directions, at distances l_1 from 10^-6 to 10^-8 in Weyl's
     # coordinates, in eighty digits, since K reaches e^(10^7) there.
-    lengths = (1e-6, 1e-7, 1e-8)
+    # The next terms are smaller by the square root of l, so each step of a hundred in l takes a
+    # tenth off them.
+    lengths = (1e-8, 1e-10, 1e-12)
 
     def logs(angle):
         return [float(sp.log(K.exact([a + l * math.cos(angle), l * math.sin(angle), m, a], 80))) for l in lengths]
@@ -5039,6 +5062,337 @@ def kiselev(ck, src):
     return [still, movie_view]
 
 
+# ---------------------------------------------------------------- Kerr and Newman's charged rotating black hole
+
+KN_SPIN = Fraction(3, 5)          # a in units of M, as every drawing of the black hole takes it
+KN_CHARGE = Fraction(1, 2)        # r_Q in units of M, as every drawing of the black hole takes it
+KN_BOX = ((0, 2.5), (0, 2.5))     # rho/M and z/M above the plane, K being the same at -z: the lobe over the pole
+KN_CELLS = 60                     # the cells of the quarter plane to each M, across and up
+KN_RING_BOX = ((0.45, 0.75), (-0.15, 0.15))   # rho/M and z/M about the ring rho = a, z = 0
+KN_RING_CELLS = 500               # the cells about the ring to each M, across and up
+KN_SCALE = {"kind": "symlog", "from": -1e4, "to": 1e4, "linear": 1e-3}        # the colours of K M^4 on the quarter plane
+KN_RING_SCALE = {"kind": "symlog", "from": -1e8, "to": 1e8, "linear": 1e2}    # and about the ring
+
+
+def kerr_newman(ck, src):
+    """The Kerr-Newman black hole at G = c = M = 1, a = 3M/5 and r_Q = M/2, its Kretschmann scalar
+    over the meridian plane of Kerr and Schild's rho and z, and about its ring.
+
+    The Boyer-Lindquist chart publishes K in r and theta alone, the same at every t and phi, and
+    R = 0, so the figure is K alone, two maps in the frame "oblate", rho = sqrt(r^2 + a^2) sin theta
+    across and z = r cos theta up, on the sheet r >= 0, in which r = 0 is the disc rho < a, z = 0,
+    and the ring rho = a, z = 0 is where K diverges: the quarter plane 0 <= rho, z <= 2.5M, which
+    holds the outer horizon, everything inside it and the lobe where K < 0 over the pole, K being the
+    same at -z, in cells a sixtieth of M on a side, coloured on a signed logarithmic scale from -10^4
+    to 10^4 in units of 1/M^4, linear within 10^-3 of zero, and the square 0.45M <= rho <= 0.75M,
+    |z| <= 0.15M about the ring, in cells a five hundredth of M on a side, from -10^8 to 10^8, linear
+    within 10^2. The horizons r = r_+ and r = r_-, the zeros of the published g^rr, are marked as
+    spheroids, and the ring as a point.
+
+    What the captions state is checked here: R vanishes; K at r_Q = 0 is Kerr's published scalar,
+    at a = 0 and on the equator at every a it is Reissner and Nordstrom's, positive at every r, and
+    it is 48 Re((M - r_Q^2/conj(zeta))^2/zeta^6) + 8 r_Q^4/|zeta|^8 with zeta = r + i a cos theta;
+    far out it approaches 48 M^2/r^6; on the axis it changes sign at the three radii the caption
+    gives, and on the outer horizon at the angle from each pole it gives; on the disc it is
+    8(7 r_Q^4 - 6 M^2 a^2 cos^2 theta)/(a^8 cos^8 theta), at the centre the value the caption gives,
+    changing sign once, at the rho it gives, and growing without bound toward the ring, where
+    Kerr's, -48 M^2/(a^6 cos^6 theta), falls without bound; zeta and g_thetatheta vanish at the
+    ring; at a distance l from the ring in these coordinates and an angle beta from the plane
+    outside it, measured in eighty digits at l from 10^-8 to 10^-12, K grows as
+    (1 + 6 cos 2 beta) r_Q^4/(2 a^4 l^4) and Kerr's as 6 M^2 cos 3 beta/(a^3 l^3); on circles about
+    the ring of l from 10^-4 to 10^-2, K changes sign four times, positive along the plane on both
+    sides and negative above and below, and Kerr's six times; the lobe where K < 0 over each pole,
+    on a grid eight times as fine as the quarter plane's, reaches the ring in Kerr's spacetime and
+    stops short of it by the distance the caption gives; K is the same at z and -z; and the clip
+    stated is where K leaves the colours, on a grid four times as fine as each map's."""
+    import scipy.ndimage
+    M, a, q = 1.0, float(KN_SPIN), float(KN_CHARGE)
+    params = {"M": M, "a": a, "G": 1.0, "r_Q": q}
+    values = [M, a, 1.0, q]
+    names = ["M", "a", "G", "r_Q"]
+    K = nr_published(src, "kerr_newman", "boyer_lindquist", "kretschmann", ["r", "theta"], names)
+    R = nr_published(src, "kerr_newman", "boyer_lindquist", "ricci_scalar", ["r", "theta"], names)
+    grr = nr_published(src, "kerr_newman", "boyer_lindquist", "inverse_metric_components", ["r", "theta"], names,
+                       ("r", "r"))
+    gthth = nr_published(src, "kerr_newman", "boyer_lindquist", "metric_components", ["r", "theta"], names,
+                         ("\\theta", "\\theta"))
+    K_kerr = nr_published(src, "kerr", "boyer_lindquist", "kretschmann", ["r", "theta"], ["M", "a", "G"])
+    K_rn = nr_published(src, "rn_metric", "spherical", "kretschmann", ["r"], ["r_s", "r_q"])
+    kerr = [M, a, 1.0]
+
+    # ---- the scalar itself
+    r, th = K.coords
+    mm, aa, gg, qq = K.params
+    ck("kerr_newman R vanishes", sp.simplify(R.expr) == 0, f"R = {R.expr}")
+    kr, kth = K_kerr.coords
+    as_kerr = K_kerr.expr.xreplace(dict(zip([kr, kth, *K_kerr.params], [r, th, mm, aa, gg])))
+    ck("kerr_newman K at r_Q = 0 is Kerr's published K", sp.simplify(K.expr.subs(qq, 0) - as_kerr) == 0)
+    as_rn = K_rn.expr.xreplace({K_rn.coords[0]: r, K_rn.params[0]: 2 * gg * mm, K_rn.params[1]: qq})
+    ck("kerr_newman K at a = 0 is Reissner and Nordstrom's published K", sp.simplify(K.expr.subs(aa, 0) - as_rn) == 0)
+    ck("kerr_newman K on the equator is Reissner and Nordstrom's at every a",
+       sp.simplify(K.expr.subs(th, sp.pi / 2) - as_rn) == 0)
+    equator = sp.expand(sp.simplify(as_rn * r ** 8 / 8))
+    ck("kerr_newman K on the equator is 8(6M^2r^2 - 12Mr_Q^2r + 7r_Q^4)/r^8, positive at every r",
+       sp.expand(equator - (6 * gg ** 2 * mm ** 2 * r ** 2 - 12 * gg * mm * qq ** 2 * r + 7 * qq ** 4)) == 0
+       and sp.discriminant(equator, r) == -24 * gg ** 2 * mm ** 2 * qq ** 4, f"{equator}")
+    zeta, zbar = r + sp.I * aa * sp.cos(th), r - sp.I * aa * sp.cos(th)
+    half = (gg * mm - qq ** 2 / zbar) ** 2 / zeta ** 6
+    other = (gg * mm - qq ** 2 / zeta) ** 2 / zbar ** 6
+    closed = 24 * (half + other) + 8 * qq ** 4 / (zeta * zbar) ** 4
+    ck("kerr_newman K is 48 Re((M - r_Q^2/conj(zeta))^2/zeta^6) + 8r_Q^4/|zeta|^8, zeta = r + i a cos theta",
+       sp.expand(sp.numer(sp.together(K.expr - closed))) == 0)
+    far = [float(K.exact([radius, angle, *values])) * radius ** 6 / 48 - 1
+           for radius in (1e4, 1e8) for angle in (0.0, 0.7, math.pi / 2)]
+    ck("kerr_newman K approaches 48M^2/r^6 far out", max(map(abs, far[3:])) < 1e-6 and max(map(abs, far[:3])) < 1e-2,
+       f"{far}")
+
+    # ---- the horizons, the zeros of the published g^rr along r, the same on every ray
+    rays = [zeros(ck, f"kerr_newman g^rr at theta = {angle:.4f}", grr, 0.0, 4.0, [angle, *values])
+            for angle in np.linspace(0.1, math.pi - 0.1, 7)]
+    root = math.sqrt(M * M - a * a - q * q)
+    ck("kerr_newman g^rr vanishes at r_- = M - sqrt(M^2 - a^2 - r_Q^2) and r_+ = M + sqrt(M^2 - a^2 - r_Q^2) on every ray",
+       all(len(z) == 2 and abs(z[0] - (M - root)) < 1e-12 and abs(z[1] - (M + root)) < 1e-12 for z in rays),
+       f"{rays[0]}")
+    r_in, r_out = rays[0]
+
+    def spheroid(radius, per_unit, lo=0.0, hi=math.pi):
+        """The spheroid r = radius from theta = lo to hi, in chords that stray from it by less than
+        TOLERANCE of the plot's units, `per_unit` of them to M."""
+        def at(angle):
+            return np.sqrt(radius ** 2 + a * a) * np.sin(angle), radius * np.cos(angle)
+        n = 9
+        while True:
+            angles = np.linspace(lo, hi, n)
+            x, y = at(angles)
+            mx, my = at(0.5 * (angles[1:] + angles[:-1]))
+            dx, dy = np.diff(x), np.diff(y)
+            sag = np.abs(dy * (mx - x[:-1]) - dx * (my - y[:-1])) / np.hypot(dx, dy) * per_unit
+            if sag.max() < TOLERANCE:
+                break
+            n = 2 * n - 1
+        ck(f"kerr_newman the spheroid r = {radius:.4f} strays from its chords by less than the tolerance", True,
+           f"{sag.max():.4f} in {n} points")
+        return [[float(px) + 0.0, float(py) + 0.0] for px, py in zip(x, y)]
+
+    def flips(line):
+        out = []
+        for px, py in line:
+            radius, angle = (float(v) for v in oblate(px, py, a))
+            if 1e-6 < angle < math.pi - 1e-6:
+                out.append(float(grr(radius * (1 - 1e-7), angle, *values)) * float(grr(radius * (1 + 1e-7), angle, *values)) < 0)
+        return out
+
+    # ---- the disc r = 0 and the ring, where zeta vanishes
+    on_disc = K.expr.subs(r, 0)
+    ck("kerr_newman K on the disc is 8(7r_Q^4 - 6M^2a^2cos^2theta)/(a^8cos^8theta)",
+       sp.simplify(on_disc - 8 * (7 * qq ** 4 - 6 * gg ** 2 * mm ** 2 * aa ** 2 * sp.cos(th) ** 2)
+                   / (aa ** 8 * sp.cos(th) ** 8)) == 0)
+    exact = {mm: 1, gg: 1, aa: sp.Rational(KN_SPIN.numerator, KN_SPIN.denominator),
+             qq: sp.Rational(KN_CHARGE.numerator, KN_CHARGE.denominator)}
+    centre = on_disc.subs({**exact, th: 0})
+    ck("kerr_newman K at the centre of the disc is 8(7r_Q^4 - 6M^2a^2)/a^8",
+       centre == 8 * (7 * exact[qq] ** 4 - 6 * exact[aa] ** 2) / exact[aa] ** 8, f"{centre} = {float(centre):.4f}")
+    c0 = math.sqrt(7 * q ** 4 / (6 * M * M * a * a))
+    rho0 = a * math.sqrt(1 - c0 * c0)
+    across = zeros(ck, "kerr_newman K along the disc", lambda rho, *p: K(np.zeros_like(rho), np.arcsin(rho / a), *values),
+                   1e-9, a * (1 - 1e-9), [])
+    ck("kerr_newman K on the disc changes sign once, at rho = a sqrt(1 - 7r_Q^4/6M^2a^2)",
+       len(across) == 1 and abs(across[0] - rho0) < 1e-12 and float(centre) < 0, f"{across}, {rho0:.6f}")
+    ck("kerr_newman Kerr's K on the disc is -48M^2/(a^6cos^6theta)",
+       sp.simplify(as_kerr.subs(r, 0) + 48 * gg ** 2 * mm ** 2 / (aa ** 6 * sp.cos(th) ** 6)) == 0)
+    rim = [float(K(0.0, math.acos(c), *values)) for c in (1e-2, 1e-3)]
+    rim_kerr = [float(K_kerr(0.0, math.acos(c), *kerr)) for c in (1e-2, 1e-3)]
+    ck("kerr_newman K on the disc grows without bound toward the ring, and Kerr's falls without bound",
+       0 < rim[0] < rim[1] and rim_kerr[1] < rim_kerr[0] < 0, f"{rim}, {rim_kerr}")
+    gr, gth = gthth.coords
+    ck("kerr_newman zeta vanishes at the ring, where g_thetatheta = r^2 + a^2 cos^2 theta does",
+       sp.simplify(gthth.expr - (gr ** 2 + gthth.params[1] ** 2 * sp.cos(gth) ** 2)) == 0
+       and gthth.expr.subs({gr: 0, gth: sp.pi / 2}) == 0)
+
+    # The ring approached at a distance l in these coordinates and an angle beta from the plane outside
+    # it, the point's r and theta found in eighty digits.
+    def toward(fn, params_, l, beta, digits=80):
+        sp_a = sp.Float(a, digits)
+        X = sp_a + sp.Float(l, digits) * sp.cos(sp.Float(beta, digits))
+        Y = sp.Float(l, digits) * sp.sin(sp.Float(beta, digits))
+        s = X * X + Y * Y - sp_a * sp_a
+        root_ = sp.sqrt(s * s + 4 * sp_a * sp_a * Y * Y)
+        r2 = (s + root_) / 2 if s >= 0 else 2 * sp_a * sp_a * Y * Y / (root_ - s)
+        rr = sp.sqrt(r2)
+        angle = sp.atan2(X * rr, Y * sp.sqrt(r2 + sp_a * sp_a))
+        point = {fn.coords[0]: rr.evalf(digits), fn.coords[1]: angle.evalf(digits)}
+        point.update({s_: sp.Float(float(v), digits) for s_, v in zip(fn.params, params_)})
+        return float(fn.expr.xreplace(point).evalf(digits))
+    # The next terms are smaller by the square root of l, so each step of a hundred in l takes a
+    # tenth off them.
+    lengths = (1e-8, 1e-10, 1e-12)
+    charged = {}
+    for beta in (0.0, math.pi / 4, math.pi / 2, 3 * math.pi / 4, math.pi, -math.pi / 2):
+        charged[beta] = [toward(K, values, l, beta) * 2 * a ** 4 * l ** 4 / (q ** 4 * (1 + 6 * math.cos(2 * beta))) - 1
+                         for l in lengths]
+    ck("kerr_newman K grows as (1 + 6cos2beta) r_Q^4/(2a^4l^4) toward the ring",
+       all(abs(v[2]) < 1e-4 and abs(v[1]) < abs(v[0]) / 9 and abs(v[2]) < abs(v[1]) / 9 for v in charged.values()),
+       f"{charged}")
+    uncharged = {}
+    for beta in (0.0, math.pi / 4, math.pi / 3, 2 * math.pi / 3, math.pi):
+        uncharged[beta] = [toward(K_kerr, kerr, l, beta) * a ** 3 * l ** 3 / (6 * M * M * math.cos(3 * beta)) - 1
+                           for l in lengths]
+    ck("kerr_newman Kerr's K grows as 6M^2cos3beta/(a^3l^3) toward the ring",
+       all(abs(v[2]) < 1e-4 and abs(v[1]) < abs(v[0]) / 9 and abs(v[2]) < abs(v[1]) / 9 for v in uncharged.values()),
+       f"{uncharged}")
+    turns = np.linspace(-math.pi, math.pi, 20001)
+    signs = {}
+    for l in (1e-2, 1e-3, 1e-4):
+        rr, angle = oblate(a + l * np.cos(turns), l * np.sin(turns), a)
+        own, theirs = K(rr, angle, *values), K_kerr(rr, angle, *kerr)
+        signs[l] = (int(np.count_nonzero(np.diff(np.sign(own)))), int(np.count_nonzero(np.diff(np.sign(theirs)))))
+        ck(f"kerr_newman about the ring at l = {l:g} K is positive along the plane on both sides and negative above and below",
+           own[10000] > 0 and own[0] > 0 and own[-1] > 0 and own[15000] < 0 and own[5000] < 0)
+    ck("kerr_newman on circles about the ring K changes sign four times and Kerr's six times",
+       all(v == (4, 6) for v in signs.values()), f"{signs}")
+
+    # The lobe where K < 0 over each pole, on a grid eight times as fine as the half plane's: the
+    # region about the axis point r = 3M/2, between the second and third zeros of K on the axis.
+    on_axis = zeros(ck, "kerr_newman K on the axis", lambda radius, *p: K(radius, np.zeros_like(radius), *values),
+                    1e-9, 4.0, [])
+    ck("kerr_newman K on the axis changes sign three times, the second and third about the outer horizon",
+       len(on_axis) == 3 and on_axis[1] < r_out < on_axis[2] and float(K(0.0, 0.0, *values)) < 0, f"{on_axis}")
+    polar = zeros(ck, "kerr_newman K on the outer horizon", lambda angle, *p: K(np.full_like(angle, r_out), angle, *values),
+                  0.0, math.pi / 2, [])
+    ck("kerr_newman K on the outer horizon is negative near the pole and changes sign once between pole and equator",
+       len(polar) == 1 and float(K(r_out, 0.0, *values)) < 0, f"{math.degrees(polar[0]):.4f} degrees")
+
+    (x0, x1), (y0, y1) = KN_BOX
+    x_axis, y_axis = axis("$\\rho/M$", x0, x1), axis("$z/M$", y0, y1)
+
+    def lobe_gap(fn, params_):
+        n = 8 * KN_CELLS
+        fx, fy, fine = cells(fn, x_axis, y_axis, n * (x1 - x0), n * (y1 - y0), params_, frame="oblate", focus=a)
+        labels, _ = scipy.ndimage.label(fine < 0)
+        FX, FY = np.meshgrid(fx, fy)
+        j, i = np.argmin(np.abs(fy - 1.5)), 0
+        lobe = labels == labels[j, i]
+        return float(np.hypot(FX - a, FY)[lobe].min()), 1 / n
+    gap, cell = lobe_gap(K, values)
+    gap_kerr, _ = lobe_gap(K_kerr, kerr)
+    ck("kerr_newman the lobe where K < 0 over the pole reaches the ring in Kerr's spacetime and stops short of it here",
+       gap_kerr < 2 * cell and gap > 20 * cell, f"{gap:.4f} M, Kerr's {gap_kerr:.4f} M")
+
+    # ---- the two maps
+    def drawn(box, per_m, scale, where, per_unit):
+        (bx0, bx1), (by0, by1) = box
+        xa = axis("$\\rho/M$", bx0, bx1) if per_m == KN_CELLS else axis("$\\rho/M$", bx0, bx1, 4)
+        ya = axis("$z/M$", by0, by1) if per_m == KN_CELLS else axis("$z/M$", by0, by1, 4)
+        shape_checks(ck, f"kerr_newman {where}", [(xa["to"] - xa["from"]) / (ya["to"] - ya["from"])])
+        nx, ny = round(per_m * (bx1 - bx0)), round(per_m * (by1 - by0))
+        xs, ys, grid = cells(K, xa, ya, nx, ny, values, frame="oblate", focus=a)
+        ck(f"kerr_newman {where} K is finite at every cell", np.all(np.isfinite(grid)),
+           f"from {np.min(grid):.4e} to {np.max(grid):.4e}")
+        _, _, mirrored = cells(K, xa, {"from": -by1, "to": -by0}, nx, ny, values, frame="oblate", focus=a)
+        ck(f"kerr_newman {where} K is the same at z and -z", np.allclose(grid, mirrored[::-1], rtol=1e-9, atol=0))
+        rng = np.random.default_rng(1965)
+        ring_i = round((a - bx0) * per_m)
+        picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+        picks |= {(i, int(j)) for i in (ring_i - 1, ring_i) for j in np.argsort(np.abs(ys))[:2]}
+        picks = sorted(picks)
+        points = [[float(v) for v in oblate(xs[i], ys[j], a)] + values for i, j in picks]
+        agrees(ck, f"kerr_newman {where}", K, points, [grid[j, i] for i, j in picks])
+        fx, fy, fine = cells(K, xa, ya, 4 * nx, 4 * ny, values, frame="oblate", focus=a)
+        FX, FY = np.meshgrid(fx, fy)
+        from_ring = np.hypot(FX - a, FY)
+        high, low = ~(fine <= scale["to"]), fine < scale["from"]
+        d_high, d_low = float(from_ring[high].max()), float(from_ring[low].max())
+        ck(f"kerr_newman {where} K passes the ends of its colours only about the ring",
+           d_high < 0.2 and d_low < 0.2, f"within {d_high:.4f} M and {d_low:.4f} M")
+        return xa, ya, nx, ny, grid, d_high, d_low
+
+    xa, ya, nx, ny, grid, d_high, d_low = drawn(KN_BOX, KN_CELLS, KN_SCALE, "quarter plane", PLOT_W / (x1 - x0))
+    horizons = [[[px, max(py, 0.0)] for px, py in spheroid(radius, PLOT_W / (x1 - x0), 0.0, math.pi / 2)]
+                for radius in (r_out, r_in)]
+    ck("kerr_newman quarter plane g^rr changes sign across every point of both horizons marked",
+       all(flips(line) and all(flips(line)) for line in horizons))
+    (rx0, rx1), (ry0, ry1) = KN_RING_BOX
+    rxa, rya, rnx, rny, rgrid, r_high, r_low = drawn(KN_RING_BOX, KN_RING_CELLS, KN_RING_SCALE, "ring",
+                                                     PLOT_W / (rx1 - rx0))
+    # The inner horizon crosses the square about the ring between its top and bottom edges.
+    edge = math.acos(ry1 / r_in)
+    inner = spheroid(r_in, PLOT_W / (rx1 - rx0), edge, math.pi - edge)
+    inner = [[min(max(px, rx0), rx1), min(max(py, ry0), ry1)] for px, py in inner]
+    ck("kerr_newman ring the inner horizon enters the square at its top and leaves it at its bottom",
+       abs(inner[0][1] - ry1) < 1e-12 and abs(inner[-1][1] - ry0) < 1e-12 and inner[0][0] > rx0 and all(flips(inner)),
+       f"from rho = {inner[0][0]:.4f}")
+
+    def degrees(v):
+        return f"{math.degrees(v):.1f}"
+    ring = {"class": "singular", "at": [a, 0.0]}
+    settings = ("$G = c = M = 1$, so that $GM/c^2$ is the unit of every length, $a = 0.6\\,GM/c^2$ and "
+                f"$r_Q = 0.5\\,GM/c^2$, so that $r_+ = {r_out:.3f}\\,GM/c^2$ and $r_- = {r_in:.3f}\\,GM/c^2$.")
+
+    def clip(scale, top, bottom, high_, low_):
+        return (f"We colour $K\\,M^4$ on a signed logarithmic scale, linear within ${tex_number(scale['linear'])}$ of "
+                f"zero, from $-10^{{{top}}}$ to $10^{{{top}}}$, and give a value beyond it the colour of the end it "
+                f"passes: $K$ passes $10^{{{top}}}/M^4$ within ${high_:.{bottom}f}\\,M$ of the ring and "
+                f"$-10^{{{top}}}/M^4$ within ${low_:.{bottom}f}\\,M$ of it.")
+    whole = {
+        "id": "meridian", "label": "the quarter plane of $\\rho$ and $z$", "kind": "map", "x": xa, "y": ya,
+        "colour": {"name": "$K\\,M^4$", "scale": dict(KN_SCALE), "ticks": every_second(KN_SCALE)},
+        "map": {"metric": "kerr_newman", "system": "boyer_lindquist", "scalar": "kretschmann", "x": "r", "y": "\\theta",
+                "frame": "oblate", "focus": "a", "params": params, "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in grid]},
+        "marks": [{"class": "horizon", "points": line} for line in horizons] + [ring],
+        "legend": [["line", "horizon", "the horizons $r = r_\\pm$"],
+                   ["point", "singular", "the ring, where $K$ diverges"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the Kerr-Newman black hole over the quarter plane of "
+            "$\\rho = \\sqrt{r^2 + a^2}\\sin\\theta$ and $z = r\\cos\\theta \\ge 0$ ($a = 0.6\\,M$, $r_Q = 0.5\\,M$), "
+            "the same at every $t$ and $\\phi$, and at $z$ and $-z$. The stress tensor of the electromagnetic field is traceless, so the Ricci "
+            "scalar vanishes. With $\\zeta = r + ia\\cos\\theta$ and $\\bar\\zeta = r - ia\\cos\\theta$, "
+            "$K = 48\\,\\mathrm{Re}\\,((M - r_Q^2/\\bar\\zeta)^2/\\zeta^6) + 8r_Q^4/|\\zeta|^8$, which at $r_Q = 0$ is "
+            "Kerr's $48\\,\\mathrm{Re}(M^2/\\zeta^6)$. On the equator $\\zeta = r$, and "
+            "$K = 8(6M^2r^2 - 12Mr_Q^2r + 7r_Q^4)/r^8$ is Reissner and Nordström's, positive at every $r$.",
+            "In these coordinates, Kerr and Schild's, each surface of constant $r$ is a spheroid, the horizons "
+            "$r_\\pm = M \\pm \\sqrt{M^2 - a^2 - r_Q^2}$ among them, and $r = 0$ is the disc $\\rho < a$, $z = 0$. "
+            "Its rim, the ring $\\rho = a$, is where $\\zeta$ vanishes and $K$ diverges. Through the disc the "
+            "spacetime continues to $r < 0$, and above it the quarter plane holds $r \\ge 0$.",
+            f"Along the axis $K$ changes sign at $r = {on_axis[0]:.3f}\\,M$, ${on_axis[1]:.3f}\\,M$, and "
+            f"${on_axis[2]:.3f}\\,M$. Over each pole it is negative in a lobe that reaches past the outer horizon, "
+            f"on which $K < 0$ within ${degrees(polar[0])}^\\circ$ of the pole, and with the charge the lobe stops "
+            f"${gap:.2f}\\,M$ short of the ring, where Kerr's reaches it. Far out $K$ approaches Schwarzschild's "
+            "$48M^2/r^6$.",
+        ],
+        "settings": settings,
+        "clip": clip(KN_SCALE, 4, 2, d_high, d_low),
+    }
+    about = {
+        "id": "ring", "label": "about the ring", "kind": "map", "x": rxa, "y": rya,
+        "colour": {"name": "$K\\,M^4$", "scale": dict(KN_RING_SCALE), "ticks": every_second(KN_RING_SCALE)},
+        "map": {"metric": "kerr_newman", "system": "boyer_lindquist", "scalar": "kretschmann", "x": "r", "y": "\\theta",
+                "frame": "oblate", "focus": "a", "params": params, "nx": rnx, "ny": rny,
+                "cells": [[rounded(v) for v in row] for row in rgrid]},
+        "marks": [{"class": "horizon", "points": inner}, ring],
+        "legend": [["line", "horizon", "the inner horizon $r = r_-$"],
+                   ["point", "singular", "the ring, where $K$ diverges"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the Kerr-Newman black hole about its ring, over "
+            f"${rx0}\\,M \\le \\rho \\le {rx1}\\,M$ and $|z| \\le {ry1}\\,M$ of the plane of "
+            "$\\rho = \\sqrt{r^2 + a^2}\\sin\\theta$ and $z = r\\cos\\theta$ ($a = 0.6\\,M$, $r_Q = 0.5\\,M$), "
+            "which the inner horizon crosses. With $\\zeta = r + ia\\cos\\theta$, at a small distance $\\ell$ from "
+            "the ring in these coordinates and an angle $\\beta$ from the plane outside it, "
+            "$\\zeta^2 \\approx 2a\\ell e^{i\\beta}$.",
+            "Kerr's $K$ grows there as $6M^2\\cos 3\\beta/a^3\\ell^3$ and vanishes on three curves through the ring, "
+            "which divide the plane about it into six sectors of alternating sign. The charge's terms grow faster, "
+            "and $K$ grows as $(1 + 6\\cos 2\\beta)\\,r_Q^4/2a^4\\ell^4$ and vanishes on two curves through the ring. "
+            "It is positive along the plane on both sides of the ring and negative above and below it.",
+            "On the disc $K = 8(7r_Q^4 - 6M^2a^2\\cos^2\\theta)/a^8\\cos^8\\theta$, which is "
+            f"${tex_number(float(centre))}/M^4$ at its centre, changes sign at $\\rho = {rho0:.3f}\\,M$, and grows "
+            "without bound toward the ring, where Kerr's $-48M^2/a^6\\cos^6\\theta$ falls without bound.",
+        ],
+        "settings": settings,
+        "clip": clip(KN_RING_SCALE, 8, 3, r_high, r_low),
+    }
+    return [whole, about]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -5062,6 +5416,7 @@ DRAWN = {
     "gravastar": gravastar,
     "hayward": hayward,
     "interior_schwarzschild": interior_schwarzschild,
+    "kerr_newman": kerr_newman,
     "kiselev": kiselev,
 }
 

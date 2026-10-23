@@ -156,6 +156,15 @@ class CurvatureValues(unittest.TestCase):
                     if grid.get("frame") == "meridian":
                         # The box is the meridian plane, r sin theta across and r cos theta up.
                         X, Y = np.hypot(X, Y), np.arctan2(X, Y)
+                    elif grid.get("frame") == "oblate":
+                        # The box is the meridian plane of oblate spheroidal coordinates about a ring of
+                        # radius f, sqrt(r^2 + f^2) sin theta across and r cos theta up, on the sheet r >= 0,
+                        # r^2 taken inside the spheroid through the ring in the form that keeps its digits.
+                        f = grid["params"][grid["focus"]]
+                        s = X * X + Y * Y - f * f
+                        q = np.sqrt(s * s + 4 * f * f * Y * Y)
+                        r2 = np.where(s >= 0, (s + q) / 2, 2 * f * f * Y * Y / np.where(s >= 0, 1, q - s))
+                        X, Y = np.sqrt(r2), np.arctan2(X * np.sqrt(r2), Y * np.sqrt(r2 + f * f))
                     expected = fn(X, Y, *[grid["params"][p] for p in params])
                     # Six significant figures: the value written is within half a unit of the sixth.
                     with self.subTest(where):
@@ -271,6 +280,16 @@ class CurvatureShape(unittest.TestCase):
             view = next(v for v in data["views"] if v["kind"] == "map")
             view["map"]["frame"] = "polar"
         self.assertIn("frame", self.broken(reframed))
+
+    def test_a_map_read_about_a_ring_of_no_named_radius_is_refused(self):
+        files = curvature_files()
+        self.assertIn("kerr_newman", files, "no map is read about a ring, so none was checked")
+        for change in (lambda grid: grid.pop("focus"), lambda grid: grid.update(focus="b"),
+                       lambda grid: grid.pop("frame")):
+            def unfocused(data, change=change):
+                change(next(v for v in data["views"] if v["kind"] == "map")["map"])
+            with self.subTest(change):
+                self.assertIn("ring", self.broken(unfocused, "kerr_newman"))
 
     def test_a_coordinate_held_at_no_number_is_refused(self):
         def unheld(data):

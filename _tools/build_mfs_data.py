@@ -450,8 +450,9 @@ def load_embedding(metrics):
 CURVATURE_KINDS = ("line", "map")
 CURVATURE_SCALARS = ("kretschmann", "ricci_scalar")
 # The frames a map's box may be read in other than its chart's two coordinates themselves: the
-# meridian plane of a radius and an angle from the axis.
-MAP_FRAMES = ("meridian",)
+# meridian plane of a radius and an angle from the axis, and the meridian plane of oblate
+# spheroidal coordinates about a ring, whose radius the map's `focus` names among its parameters.
+MAP_FRAMES = ("meridian", "oblate")
 SCALE_KINDS = ("linear", "log", "symlog")
 LEGEND_KINDS = ("line", "point", "fill")
 TEX_LABEL = re.compile(r"^\$[^$]+\$$")
@@ -597,6 +598,10 @@ def check_map(where, view, read, x):
             check_drawn_from(at, grid, read)
             if "frame" in grid and grid["frame"] not in MAP_FRAMES:
                 raise DataError(f"{at} is read in the frame {grid['frame']!r}, which is none of {', '.join(MAP_FRAMES)}")
+            if (grid.get("frame") == "oblate") != ("focus" in grid) or ("focus" in grid and not (
+                    isinstance(grid["focus"], str) and grid["params"].get(grid["focus"], 0) > 0)):
+                raise DataError(f"{at} is read about a ring without naming the parameter its radius is, or names a "
+                                "focus outside the frame \"oblate\"")
             nx, ny, rows = grid.get("nx"), grid.get("ny"), grid.get("cells") or []
             if not (isinstance(nx, int) and isinstance(ny, int) and nx >= 2 and ny >= 2 and len(rows) == ny
                     and all(isinstance(row, list) and len(row) == nx for row in rows)):
