@@ -24,6 +24,10 @@
         document.documentElement.classList.add('is-desktop');
       }
     })();
+    /* A page opened at a spacetime's address, ?spacetime= and its id, which the search script
+       reads, never shows the list: the browser draws the page as it comes, and on a slow
+       connection it draws the list before it has read that script. */
+    if (new URLSearchParams(window.location.search).get('spacetime')) document.documentElement.classList.add('mfs-asked');
   </script>
 
   <script>
@@ -630,84 +634,11 @@
     })();
   </script>
 
-  <!-- The title comes before the panels so that on a phone, where it is in the flow of the
-       page rather than fixed over it, it heads the column they stack in. The title and the
-       exit sign are one row there, which the phone stylesheet lays out; elsewhere the row
-       has no box of its own and each is fixed in its corner.
-       Apple's App Store badge for the application stands before the exit sign in its corner,
-       the captain's order of 15 October 2026, the artwork the studio's site uses, unaltered;
-       on a phone it takes a row of its own below the title and the sign. -->
-  <div id="mfs-banner">
-  <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;max-width:calc(100% - 7em - 8.75rem);"></div>
-  <div id="mfs-corner">
-  <div id="mfs-appstore"><a href="https://apps.apple.com/us/app/my-favorite-spacetimes/id6810529195" target="_blank" rel="noopener"><img src="{{ '/assets/images/app_store_button_white.svg' | relative_url }}" alt="Download on the App Store"></a></div>
-  <a id="mfs-exit" href="{{ '/' | relative_url }}" style="z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--mfs-cyan-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
-  </div>
-  </div>
-
-<div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
-    width:var(--mfs-left-w);height:320px;
-    background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
-    overflow:hidden;pointer-events:none;
-    padding:min(1em, 16px); display:flex; flex-direction:column;">
-  <!-- The panel holds two views side by side and shows one: the list of spacetimes with its
-       search field, and the contents of the spacetime that is open. Pressing a spacetime
-       slides the list out to the left and the contents in from the right, and the link at
-       the head of the contents slides the list back; the search script below says how. -->
-  <div id="mfs-panes">
-  <div id="mfs-list-pane" class="mfs-pane">
-  <!-- The search field and, under it while something is typed, the keywords it can be finished
-       with. The browser offers nothing of its own in the field: not its history of what was typed
-       there, which it showed in a white list under the field and filled the field from in its
-       own colours as the captain typed on 5 October 2026, nor a correction or a mark under a
-       keyword it does not know. The search script says how the keywords are offered. -->
-  <div id="mfs-search-field">
-  <input id="mfs-search-input" type="text" placeholder="Search spacetimes…"
-    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-    role="combobox" aria-autocomplete="list" aria-controls="mfs-keywords" aria-expanded="false"
-    style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--cyan);border-radius:4px;
-    color:var(--text-bright);padding:0.4em 0.5em;font-family:'Source Code Pro',monospace;font-size:0.85em;
-    outline:none;box-sizing:border-box; flex-shrink:0;">
-  <div id="mfs-keywords" role="listbox" aria-label="Keywords" hidden></div>
-  </div>
-  <div id="mfs-search-results" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;"></div>
-  </div>
-  <nav id="mfs-toc-pane" class="mfs-pane mfs-pane-off" aria-label="Contents of this spacetime" inert>
-    <button type="button" id="mfs-toc-back" class="mfs-toc-back">‹ All spacetimes</button>
-    <div id="mfs-toc"></div>
-  </nav>
-  </div>
-  </div>
-
-<!-- Buy Me a Coffee panel. Its bottom edge lies on the bottom edge of the spacetime's panel,
-     and #mfs-search-panel ends 6px above its top, so the two borders stand apart by that much.
-     Its top, width and max height come from syncPanel() in the panel animation script below,
-     never from here, and its height is left to its content so the panel stays as small as
-     its contents need.
-     #mfs-coffee-scroll takes the overflow when the viewport is short, so only the copy scrolls
-     and the button below it stays visible as a non-scrolling bottom row. -->
-<div id="mfs-coffee-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
-    width:var(--mfs-left-w);
-    background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
-    overflow:hidden;pointer-events:none;
-    padding:min(1em, 16px); display:flex; flex-direction:column; align-items:center; gap:0.7em;">
-  <div id="mfs-coffee-scroll" style="align-self:stretch;min-height:0;overflow-y:auto;">
-    <p id="mfs-coffee-text" style="margin:0;font-size:0.72em;line-height:1.5;
-      color:var(--mfs-cyan-light);letter-spacing:0.02em;text-align:left;">
-      Please let me know if you would like any other spacetimes added to the collection, or if (gasp) you see an error somewhere.
-      General relativity calculations are best fueled by coffee, so if you find this site useful lend me a hand in the endless struggle of keeping myself caffeinated.
-    </p>
-  </div>
-  <!-- MFS_BUY_ME_A_COFFEE_URL: the one place the Buy Me a Coffee address lives -->
-  <a id="mfs-coffee-link" href="https://buymeacoffee.com/owlsnestcreations" target="_blank" rel="noopener noreferrer" style="display:block;width:170px;max-width:100%;flex-shrink:0;">
-    <img src="{{ '/assets/images/buy-me-a-coffee-black-button.png' | relative_url }}" alt="Buy me a coffee"
-      style="display:block;width:100%;height:auto;">
-  </a>
-  </div>
-
-  <!-- This stylesheet stands before the search script, which asks the browser which slides
-       are running the moment it is read: a view set aside before its rule here had been
-       read would slide out in front of the reader as the rule arrived. -->
+  <!-- This stylesheet stands before the banner and the panels, and so before the search
+       script, which asks the browser which slides are running the moment it is read: on a
+       slow connection the browser draws what it has read of the page as it comes, and a view
+       drawn before its rule here had been read, or set aside before then, would slide out in
+       front of the reader as the rule arrived. -->
   <style>
     /* Every size of the prose and its headings is in rem, the reader's own text size, so that
        enlarging the text in the browser (Chrome's font size, a larger default font, or
@@ -801,6 +732,9 @@
       visibility: hidden;
       transition: transform 220ms cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0s 220ms;
     }
+    /* A page opened at a spacetime's address has the list out of the panel from the first
+       frame drawn, until the search script sets it aside itself; see .mfs-asked in the head. */
+    .mfs-asked #mfs-list-pane { transform: translateX(-100%); visibility: hidden; }
     @media (prefers-reduced-motion: reduce) {
       .mfs-pane, .mfs-pane.mfs-pane-off { transition: none; }
     }
@@ -830,6 +764,81 @@
        name is in the list. */
     .mfs-toc-entry.mfs-toc-current, .mfs-toc-entry:active, .mfs-toc-back:active { color: var(--pink-light); }
   </style>
+
+  <!-- The title comes before the panels so that on a phone, where it is in the flow of the
+       page rather than fixed over it, it heads the column they stack in. The title and the
+       exit sign are one row there, which the phone stylesheet lays out; elsewhere the row
+       has no box of its own and each is fixed in its corner.
+       Apple's App Store badge for the application stands before the exit sign in its corner,
+       the artwork the studio's site uses, unaltered; on a phone it takes a row of its own
+       below the title and the sign. -->
+  <div id="mfs-banner">
+  <div id="mfs-title" style="position:fixed;top:0.6em;left:0.8em;z-index:20;font-family:'Source Code Pro',monospace;font-size:2.2em;letter-spacing:0.08em;line-height:1.2;pointer-events:none;max-width:calc(100% - 7em - 8.75rem);"></div>
+  <div id="mfs-corner">
+  <div id="mfs-appstore"><a href="https://apps.apple.com/us/app/my-favorite-spacetimes/id6810529195" target="_blank" rel="noopener"><img src="{{ '/assets/images/app_store_button_white.svg' | relative_url }}" alt="Download on the App Store"></a></div>
+  <a id="mfs-exit" href="{{ '/' | relative_url }}" style="z-index:20;font-family:'Source Code Pro',monospace !important;font-size:1.7em;color:var(--mfs-cyan-light);text-decoration:none;letter-spacing:0.05em;line-height:1.2;">Exit</a>
+  </div>
+  </div>
+
+<div id="mfs-search-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
+    width:var(--mfs-left-w);height:320px;
+    background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
+    overflow:hidden;pointer-events:none;
+    padding:min(1em, 16px); display:flex; flex-direction:column;">
+  <!-- The panel holds two views side by side and shows one: the list of spacetimes with its
+       search field, and the contents of the spacetime that is open. Pressing a spacetime
+       slides the list out to the left and the contents in from the right, and the link at
+       the head of the contents slides the list back; the search script below says how. -->
+  <div id="mfs-panes">
+  <div id="mfs-list-pane" class="mfs-pane">
+  <!-- The search field and, under it while something is typed, the keywords it can be finished
+       with. The browser offers nothing of its own in the field: not its history of what was typed
+       there, which it would show in a white list under the field and fill the field from in its
+       own colours, nor a correction or a mark under a keyword it does not know. The search
+       script says how the keywords are offered. -->
+  <div id="mfs-search-field">
+  <input id="mfs-search-input" type="text" placeholder="Search spacetimes…"
+    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+    role="combobox" aria-autocomplete="list" aria-controls="mfs-keywords" aria-expanded="false"
+    style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--cyan);border-radius:4px;
+    color:var(--text-bright);padding:0.4em 0.5em;font-family:'Source Code Pro',monospace;font-size:0.85em;
+    outline:none;box-sizing:border-box; flex-shrink:0;">
+  <div id="mfs-keywords" role="listbox" aria-label="Keywords" hidden></div>
+  </div>
+  <div id="mfs-search-results" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;"></div>
+  </div>
+  <nav id="mfs-toc-pane" class="mfs-pane mfs-pane-off" aria-label="Contents of this spacetime" inert>
+    <button type="button" id="mfs-toc-back" class="mfs-toc-back">‹ All spacetimes</button>
+    <div id="mfs-toc"></div>
+  </nav>
+  </div>
+  </div>
+
+<!-- Buy Me a Coffee panel. Its bottom edge lies on the bottom edge of the spacetime's panel,
+     and #mfs-search-panel ends 6px above its top, so the two borders stand apart by that much.
+     Its top, width and max height come from syncPanel() in the panel animation script below,
+     never from here, and its height is left to its content so the panel stays as small as
+     its contents need.
+     #mfs-coffee-scroll takes the overflow when the viewport is short, so only the copy scrolls
+     and the button below it stays visible as a non-scrolling bottom row. -->
+<div id="mfs-coffee-panel" style="position:fixed;z-index:15;box-sizing:border-box;border-radius:0 12px 12px 0;
+    width:var(--mfs-left-w);
+    background:rgba(0,0,0,0.8);border:2px solid var(--cyan);border-left:none;
+    overflow:hidden;pointer-events:none;
+    padding:min(1em, 16px); display:flex; flex-direction:column; align-items:center; gap:0.7em;">
+  <div id="mfs-coffee-scroll" style="align-self:stretch;min-height:0;overflow-y:auto;">
+    <p id="mfs-coffee-text" style="margin:0;font-size:0.72em;line-height:1.5;
+      color:var(--mfs-cyan-light);letter-spacing:0.02em;text-align:left;">
+      Please let me know if you would like any other spacetimes added to the collection, or if (gasp) you see an error somewhere.
+      General relativity calculations are best fueled by coffee, so if you find this site useful lend me a hand in the endless struggle of keeping myself caffeinated.
+    </p>
+  </div>
+  <!-- MFS_BUY_ME_A_COFFEE_URL: the one place the Buy Me a Coffee address lives -->
+  <a id="mfs-coffee-link" href="https://buymeacoffee.com/owlsnestcreations" target="_blank" rel="noopener noreferrer" style="display:block;width:170px;max-width:100%;flex-shrink:0;">
+    <img src="{{ '/assets/images/buy-me-a-coffee-black-button.png' | relative_url }}" alt="Buy me a coffee"
+      style="display:block;width:100%;height:auto;">
+  </a>
+  </div>
 
   <script>
     /* The widest word of the given texts, in ems of el's font: a word runs to a space, or to
@@ -1069,8 +1078,9 @@
         try { window.history.replaceState(window.history.state, '', url); } catch (e) {}
       }
       var asked = new URLSearchParams(window.location.search).get(ASKED);
-      // Before the page is first drawn, so the list is never seen and only the contents slide in.
+      // The list, out of sight from the first frame, is set aside where it stands and only the contents slide in.
       if (asked) showContents(true);
+      document.documentElement.classList.remove('mfs-asked');
 
       /* What a search compares, a name, a tag or the text typed, with its capitals and its
          accents taken off, so "natario" finds Natário, "godel" Gödel and "lemaitre" Lemaître, and
@@ -1312,8 +1322,11 @@
          and brings the name into view where the list scrolls; it scrolls the list alone,
          never the page or the panel the list has slid out of, which scrollIntoView() would.
          The spacetime already open is not drawn again: its name in the list brings its
-         contents and its page back. */
-      var _open = null;
+         contents and its page back. The script that draws a spacetime comes after this one
+         in the page, and on a slow connection the index, and with it the address or a
+         reader's press on a name, can come before the browser has read it: the spacetime
+         open then is drawn once the page has been read, unless the list is back by then. */
+      var _open = null, _waiting = false;
       window._mfsOpen = function(id) {
         var fresh = !(id === _open && _built === id);
         if (fresh) { _built = null; _fill = null; _pageIn = false; }
@@ -1322,6 +1335,10 @@
         if (!fresh) { if (window._mfsPageBack) window._mfsPageBack(); return; }
         _open = id;
         if (window._mfsShowMetric) window._mfsShowMetric(id);
+        else if (!_waiting) {
+          _waiting = true;
+          document.addEventListener('DOMContentLoaded', function() { if (_want) window._mfsShowMetric(_open); });
+        }
         results.querySelectorAll('.mfs-result').forEach(function(r) {
           var on = r.dataset.id === id;
           r.classList.toggle('mfs-result-active', on);

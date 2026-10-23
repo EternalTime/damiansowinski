@@ -80,7 +80,10 @@
    typed and the list where it was scrolled to, and the open spacetime's name in the list must
    bring its contents and its page back without drawing it again. Last, the page is opened at
    the address of a spacetime, ?spacetime= and its id, and must come up on that spacetime
-   with its contents showing and the list never having slid.
+   with its contents showing and the list never having slid, with the page itself coming as
+   slowly as over a poor phone connection and every file it fetches at once, so that the
+   index of spacetimes, and the address with it, is read before the script that draws a
+   spacetime, as a link opened on the live site can find it.
 
    It prints one line per chart, slowest last, then every page error and console error the
    page raised and every label that moved, and exits non-zero if any chart missed the budget
@@ -831,10 +834,19 @@ async function contents() {
 }
 
 /* Open the page at a spacetime's own address: it must come up on that spacetime with its
-   contents showing, and the list must never have slid: it is out from the start. */
+   contents showing, and the list must never have slid: it is out from the start. The page
+   comes at 64 kB a second and nothing else is slowed, so the index of spacetimes, which the
+   list fetches near the top of the page, comes before the browser has read the script that
+   draws a spacetime, far down it; a local server otherwise sends the page at once and hides
+   the order in which a reader's browser reads it. */
 async function direct(id) {
   opened = `${id} by its address`;
-  await send('Page.navigate', { url: `${base}/MFS/?spacetime=${id}` });
+  const url = `${base}/MFS/?spacetime=${id}`;
+  await send('Network.enable');
+  const slowed = await send('Network.emulateNetworkConditionsByRule', { matchedNetworkConditions: [
+    { urlPattern: url, latency: 0, downloadThroughput: 64 * 1024, uploadThroughput: -1 }] });
+  if (slowed.error) errors.push(`${opened}: Chrome could not slow the page: ${slowed.error.message}`);
+  await send('Page.navigate', { url });
   let found = null;
   for (let i = 0; i < LIMIT_S * 10 && !found; i++) {
     await sleep(100);
