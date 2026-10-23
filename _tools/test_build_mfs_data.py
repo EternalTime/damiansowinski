@@ -7893,13 +7893,13 @@ class Relations(unittest.TestCase):
         for path, text in before.items():
             self.assertEqual(path.read_text(encoding="utf-8"), text)
 
-    def test_the_page_lists_them_right_after_the_history(self):
+    def test_the_page_lists_them_last_before_the_references(self):
         page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
         body = page[page.index("var body = ["):]
-        history, related, coordinates = (body.index(mark) for mark in (
-            "mfs-section-label\">history<", "relatedSection(data),", "mfs-section-label\">coordinates<"))
-        self.assertLess(history, related)
-        self.assertLess(related, coordinates)
+        geodesics, related, references = (body.index(mark) for mark in (
+            "mfs-section-label\">Geodesics<", "relatedSection(data),", "mfs-section-label\">references<"))
+        self.assertLess(geodesics, related)
+        self.assertLess(related, references)
         self.assertIn("mfs-section-label\">Related Spacetimes<", page)
 
 
@@ -7913,7 +7913,6 @@ class SectionOrder(unittest.TestCase):
 
     ORDER = (
         ("history", 'mfs-section-label">history<'),
-        ("related spacetimes", "relatedSection(data),"),
         ("coordinates", 'mfs-section-label">coordinates<'),
         ("conventions", "conventionSection(data, coord),"),
         ("spacetime diagram", "diagramSection(data.id, coord.id)"),
@@ -7932,6 +7931,7 @@ class SectionOrder(unittest.TestCase):
         ("Einstein tensor", 'mfs-section-label">Einstein tensor<'),
         ("Weyl tensor", 'mfs-section-label">Weyl tensor<'),
         ("geodesics", 'mfs-section-label">Geodesics<'),
+        ("related spacetimes", "relatedSection(data),"),
         ("references", 'mfs-section-label">references<'),
     )
 

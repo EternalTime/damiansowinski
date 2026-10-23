@@ -4974,11 +4974,11 @@
         });
       }
 
-      /* The spacetimes this one is related to stand right after its history, as the captain
-         asked on 1 October 2026: each by the name the list shows it under, which opens it,
-         and a sentence or two on why. They are the `related` entries of the spacetime's own
-         file, in the order written there, and are set as the history's prose is, so every
-         rule that holds the history's text holds theirs. */
+      /* The spacetimes this one is related to stand last before the references: each by the
+         name the list shows it under, which opens it, and a sentence or two on why. They are
+         the `related` entries of the spacetime's own file, in the order written there, and
+         are set as the history's prose is, so every rule that holds the history's text
+         holds theirs. */
       function relatedSection(data) {
         var related = (data.related || []).filter(function(r) { return r && r.id && r.text; });
         if (!related.length) return '';
@@ -5067,8 +5067,6 @@
               }).join('') + '</div>',
             '</div>'
           ].join('') : '',
-
-          relatedSection(data),
 
           /* The chart is chosen before anything that depends on it, which the captain asked
              for on 27 September 2026, so the coordinates open the mathematics, their buttons
@@ -5248,6 +5246,8 @@
               }).join(''),
             '</div>'
           ].join('') : '',
+
+          relatedSection(data),
 
           (data.references && data.references.length) ? [
             '<div class="mfs-section mfs-references">',
