@@ -482,15 +482,23 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
     }
     return out;
   };
-  /* The contents against the headings of the page as drawn, and the contents showing. */
+  /* The contents against the headings of the page as drawn, or the shorter names they carry
+     for the list, each entry on one line, and the contents showing. */
   window.__mfsContents = async function () {
     function texts(selector) {
       return [].map.call(document.querySelectorAll(selector), function (el) { return el.textContent.trim(); });
     }
-    var heads = texts('#mfs-content-panel .mfs-section-label'), entries = texts('#mfs-toc .mfs-toc-entry'), out = [];
+    var heads = [].map.call(document.querySelectorAll('#mfs-content-panel .mfs-section-label'), function (el) {
+      return el.getAttribute('data-mfs-entry') || el.textContent.trim();
+    }), entries = texts('#mfs-toc .mfs-toc-entry'), out = [];
     if (!heads.length || heads.join('|') !== entries.join('|')) {
       out.push('the contents read ' + JSON.stringify(entries) + ', not the headings ' + JSON.stringify(heads));
     }
+    [].forEach.call(document.querySelectorAll('#mfs-toc .mfs-toc-entry'), function (el) {
+      var range = document.createRange();
+      range.selectNodeContents(el);
+      if (range.getClientRects().length > 1) out.push('the entry "' + el.textContent + '" takes more than one line');
+    });
     return out.concat(await window.__mfsShowing(true), window.__mfsCurrent());
   };
   window.__mfsSettled = function () {

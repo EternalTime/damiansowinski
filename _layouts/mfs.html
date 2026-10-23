@@ -1026,6 +1026,8 @@
         window.addEventListener(by, function() { _pressed = null; }, { passive: true, capture: true });
       });
 
+      /* An entry reads its heading, or the shorter name the heading carries in data-mfs-entry
+         where the heading would not fit the list's line, so every entry stays on one line. */
       window._mfsContents = function(id, page) {
         _built = id;
         listen(page);
@@ -1038,7 +1040,7 @@
             var entry = toc.appendChild(document.createElement('button'));
             entry.type = 'button';
             entry.className = 'mfs-toc-entry';
-            entry.textContent = label.textContent.trim();
+            entry.textContent = label.getAttribute('data-mfs-entry') || label.textContent.trim();
             entry.addEventListener('click', function() { _pressed = i; jumpTo(section); markSoon(); });
             _sections.push(section);
           });
@@ -4019,7 +4021,8 @@
         return [
           '<div class="mfs-section mfs-diagram mfs-curvature">',
             '<div class="mfs-section-head">',
-              '<div class="mfs-section-label">' + (ricci ? 'Ricci scalar diagram' : 'Kretschmann scalar diagram') + '</div>',
+              '<div class="mfs-section-label" data-mfs-entry="' + (ricci ? 'Ricci diagram' : 'Kretschmann diagram') + '">' +
+                (ricci ? 'Ricci scalar diagram' : 'Kretschmann scalar diagram') + '</div>',
               buttons,
             '</div>',
             views.map(function(view, i) {
