@@ -3164,6 +3164,220 @@ def dilaton_black_hole(ck, src):
     return [einstein, strings["string_magnetic"], strings["string_electric"], movie]
 
 
+# ---------------------------------------------------------------- Einstein's static field of 1912
+
+E1912_REACH = 6                   # the plot runs from the centre to r = 6 m, the reach of the embedding diagram
+E1912_K = {"kind": "log", "from": 1e-4, "to": 1e4}
+E1912_R = {"kind": "symlog", "from": -1e4, "to": 1e-3, "linear": 1e-4}
+
+
+def einstein_1912_static(ck, src):
+    """The field outside a static body by Einstein's equations of February and of March 1912, at
+    m = 1, its Kretschmann and Ricci scalars against r, beside Schwarzschild's black hole.
+
+    Each chart's published K and R depend on r alone, and its published g^rr is 1, so no horizon
+    is marked. Both views share the axis of r from the centre to 6 m, the reach of the embedding
+    diagram, so that the sphere where the speed of light vanishes, r = m in February and m/2 in
+    March, stands at its own place on it, and each draws its chart's scalars from that sphere out,
+    where the chart begins. K is drawn on a logarithmic axis from 10^-4 to 10^4. February's R
+    vanishes and has no panel; March's is negative at every r and is drawn on a signed one, linear
+    within 10^-4 of zero, from -10^4 to 10^-3, with Schwarzschild's R = 0 beside it. Schwarzschild's
+    K of the same mass, GM/c^2 = m, so r_s = 2m, read from schwarzschild.json, is the comparison.
+
+    What the captions state is checked here: the published scalars against the closed forms the
+    captions write, and Schwarzschild's against 48 m^2/r^6; the lapse N = sqrt(-g_tt) against
+    1 - m/r and (1 - m/2r)^2, Laplace's equation for the first and Einstein's March equation
+    N lap N = (grad N)^2/2 for the second, February's R = 0 and March's R = -(grad N)^2/N^2, every
+    nonzero component of the published Riemann tensor carrying two indices t; K's growth as
+    (r - m)^-2 and (r - m/2)^-4 and R's as (r - m/2)^-2, measured in sixty digits; the one
+    crossing of Schwarzschild's K on the range, at (2 + sqrt 2) m in February and at m in March,
+    where both are 48/m^4, K above it inside and below it outside; K tending far out to half of
+    Schwarzschild's and March's R to -m^2/r^4; Schwarzschild's K at r = m; and every cut the clips
+    state, each bounding the samples beyond its panel."""
+    x_axis = axis("$r/m$", 0, E1912_REACH)
+    # Eight decades are ticked at every second one, as the Brans-Dicke sphere's R is, which the page
+    # fits at every size.
+    def even(scale):
+        return [t for t in value_ticks(scale) if t["at"] == 0 or round(math.log10(abs(t["at"]))) % 2 == 0]
+    K_panel = {"id": "K", "name": "$K\\,m^4$", "aspect": 2, "scale": E1912_K, "ticks": even(E1912_K)}
+    R_panel = {"id": "R", "name": "$R\\,m^2$", "aspect": 2, "scale": E1912_R, "ticks": even(E1912_R)}
+    shape_checks(ck, "einstein_1912_static February", [K_panel["aspect"]])
+    shape_checks(ck, "einstein_1912_static March", [K_panel["aspect"], R_panel["aspect"]])
+    height = PLOT_W / K_panel["aspect"]
+    m = 1.0
+    singular = {"february": 1.0, "march": 0.5}
+    K = {c: nr_published(src, "einstein_1912_static", c, "kretschmann", ["r"], ["m"]) for c in singular}
+    R = {c: nr_published(src, "einstein_1912_static", c, "ricci_scalar", ["r"], ["m"]) for c in singular}
+    grr = {c: nr_published(src, "einstein_1912_static", c, "inverse_metric_components", ["r"], ["m"], ("r", "r"))
+           for c in singular}
+    gtt = {c: nr_published(src, "einstein_1912_static", c, "metric_components", ["r"], ["m"], ("t", "t"))
+           for c in singular}
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    R_s = nr_published(src, "schwarzschild", "spherical", "ricci_scalar", ["r"], ["r_s"])
+    params = {"m": m}
+
+    # The closed forms the captions write, and the lapse of each chart.
+    r, ms = K["february"].coords[0], K["february"].params[0]
+    closed = {
+        ("february", "K"): 24 * ms**2 / (r**4 * (r - ms) ** 2),
+        ("february", "R"): sp.Integer(0),
+        ("march", "K"): 16 * ms**2 * (24 * r**2 - 32 * r * ms + 11 * ms**2) / (r**4 * (2 * r - ms) ** 4),
+        ("march", "R"): -4 * ms**2 / (r**2 * (2 * r - ms) ** 2),
+    }
+    lapse = {"february": 1 - ms / r, "march": (1 - ms / (2 * r)) ** 2}
+    for c in singular:
+        for name, fn in (("K", K[c]), ("R", R[c])):
+            ex = fn.expr.subs({fn.coords[0]: r, fn.params[0]: ms})
+            ck(f"einstein_1912_static {c} {name} is the closed form the caption writes",
+               sp.simplify(ex - closed[(c, name)]) == 0, f"{closed[(c, name)]}")
+        N = lapse[c]
+        ck(f"einstein_1912_static {c} g_tt is -N^2 with N = {N}",
+           sp.simplify(gtt[c].expr.subs({gtt[c].coords[0]: r, gtt[c].params[0]: ms}) + N**2) == 0)
+        ck(f"einstein_1912_static {c} g^rr is 1, so no horizon",
+           sp.simplify(grr[c].expr - 1) == 0)
+        dN = sp.diff(N, r)
+        lap = sp.diff(N, r, 2) + 2 * dN / r
+        if c == "february":
+            ck("einstein_1912_static february N is harmonic outside the body, so R = -2 lap N/N = 0",
+               sp.simplify(lap) == 0 and closed[(c, "R")] == 0)
+        else:
+            ck("einstein_1912_static march N lap N = (grad N)^2/2 outside the body, Einstein's March equation",
+               sp.simplify(N * lap - dN**2 / 2) == 0)
+            ck("einstein_1912_static march R = -2 lap N/N = -(grad N)^2/N^2",
+               sp.simplify(closed[(c, "R")] + 2 * lap / N) == 0 and sp.simplify(closed[(c, "R")] + dN**2 / N**2) == 0)
+        ck(f"einstein_1912_static {c} N is positive outside the singular sphere and vanishes on it",
+           N.subs({ms: 1, r: singular[c]}) == 0
+           and all(N.subs({ms: 1, r: x}) > 0 for x in (singular[c] + sp.Rational(1, 1000), 2, E1912_REACH)))
+        _, entry, _ = nr.load("einstein_1912_static", c)
+        components = entry["riemann"]["variants"]["ulll"]["nonzero"]
+        ck(f"einstein_1912_static {c} every nonzero component of the Riemann tensor carries two indices t, "
+           "so space is flat", components and all(comp["indices"].count("t") == 2 for comp in components),
+           f"{len(components)} components")
+    rss = K_s.coords[0], K_s.params[0]
+    ck("Schwarzschild's K is 48 m^2/r^6 at r_s = 2m",
+       sp.simplify(K_s.expr.subs({rss[0]: r, rss[1]: 2 * ms}) - 48 * ms**2 / r**6) == 0)
+    ck("Schwarzschild's R vanishes", sp.simplify(R_s.expr) == 0)
+
+    def cut(fn, value, scale, edge, lo):
+        """Where a curve that falls across the range leaves its panel by the top, or by the bottom
+        for a scalar that grows toward minus infinity, the r it reaches that edge at, found by
+        bisection, and checked to bound the samples beyond the panel. The sample on the singular
+        sphere itself is not finite, which beyond() counts as above the panel."""
+        hi = float(E1912_REACH)
+
+        def inside(x):
+            v = float(fn(x, value))
+            return v < scale["to"] if edge == "top" else v > scale["from"]
+        a, b = lo, hi
+        for _ in range(200):
+            mid = 0.5 * (a + b)
+            a, b = (a, mid) if inside(mid) else (mid, b)
+        up, down = beyond(fn, x_axis, scale, [value], (lo, hi))
+        out, other = (up, down) if edge == "top" else (down, up)
+        step = (hi - lo) / (SAMPLES - 1)
+        start = lo if edge == "top" else lo + step
+        ck(f"einstein_1912_static {fn.metric} {fn.system} {fn.field} leaves its panel once, by the {edge}, "
+           f"inside r = {b:.4f}",
+           len(out) == 1 and abs(out[0][0] - start) < 1e-12 and out[0][1] < b < out[0][1] + 2 * step
+           and other in ([], [(lo, lo)]) and inside(out[0][1] + step), f"{up} {down}")
+        return b
+
+    views = []
+    legend_K = ["line", "K", "$K$, the Kretschmann scalar"]
+    legend_R = ["line", "R", "$R$, the Ricci scalar"]
+    s_cut = cut(K_s, 2.0, E1912_K, "top", 0.0)
+    for c in singular:
+        lo = singular[c]
+        rs = np.linspace(lo, E1912_REACH, SAMPLES)[1:]
+        Kv, Ksv = K[c](rs, m), K_s(rs, 2.0)
+        ck(f"einstein_1912_static {c} K and |R| fall across the range",
+           np.all(np.diff(Kv) < 0) and np.all(np.diff(np.abs(R[c](rs, m))) <= 0))
+        # The growth toward the singular sphere, in sixty digits.
+        for name, fn, power in (("K", K[c], 2 if c == "february" else 4), ("R", R[c], 2)):
+            if c == "february" and name == "R":
+                continue
+            near = [lo + 2.0 ** -k for k in (20, 27, 34)]
+            logs = [float(sp.log(abs(fn.exact([x, m])))) for x in near]
+            slopes = [(b - a) / (7 * math.log(0.5)) for a, b in zip(logs, logs[1:])]
+            ck(f"einstein_1912_static {c} {name} grows without bound as (r - {lo:g} m)^-{power}",
+               all(abs(-s / power - 1) < 1e-5 for s in slopes), f"{slopes}")
+        far = 1e5
+        ck(f"einstein_1912_static {c} K tends far out to half of Schwarzschild's",
+           abs(float(K[c].exact([far, m])) / float(K_s.exact([far, 2])) - 0.5) < 1e-4)
+        crosses = zeros(ck, f"einstein_1912_static {c} K = K_s", lambda x, *_: K[c](x, m) / K_s(x, 2.0) - 1,
+                        lo, E1912_REACH, [])
+        exact_cross = 2 + math.sqrt(2) if c == "february" else 1.0
+        ck(f"einstein_1912_static {c} K crosses Schwarzschild's once on the range, at r = {exact_cross:.6f} m",
+           len(crosses) == 1 and abs(crosses[0] - exact_cross) < 1e-12, f"{crosses}")
+        ck(f"einstein_1912_static {c} K stands above Schwarzschild's inside the crossing and below it outside",
+           np.all(Kv[rs < exact_cross] > Ksv[rs < exact_cross]) and np.all(Kv[rs > exact_cross] < Ksv[rs > exact_cross]))
+        k_cut = cut(K[c], m, E1912_K, "top", lo)
+        curves = (line_curves(ck, f"einstein_1912_static {c} Schwarzschild", "K", "reference", K_s, "r", x_axis,
+                              E1912_K, height, {"r_s": 2.0})
+                  + line_curves(ck, f"einstein_1912_static {c}", "K", "K", K[c], "r", x_axis, E1912_K, height,
+                                params, (lo, E1912_REACH)))
+        if c == "february":
+            ck("Schwarzschild's K is 48/m^4 at r = m and 3/4 m^4 on its horizon r = 2m",
+               float(K_s.exact([1, 2])) == 48 and float(K_s.exact([2, 2])) == 0.75)
+            views.append({
+                "id": "february", "label": "Outside a body, February", "kind": "line", "x": x_axis,
+                "panels": [K_panel], "curves": curves, "marks": [],
+                "legend": [legend_K, ["line", "reference", "$K$ of Schwarzschild's black hole of the same mass"]],
+                "caption": [
+                    "The Kretschmann scalar $K$ of the field outside a static body by Einstein's equation of February "
+                    "1912 against $r$ ($m = 1$), the same at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's "
+                    "black hole of the same mass. Outside the body $\\nabla^2N = 0$, so the Ricci scalar "
+                    "$R = -2\\nabla^2N/N$ vanishes. On the sphere $r = m$, where the speed of light falls to zero, "
+                    "$K = 24m^2/r^4(r - m)^2$ grows without bound as $(r - m)^{-2}$, and Schwarzschild's "
+                    "$K = 48m^2/r^6$ is a finite $48/m^4$ there, inside its horizon at $r = 2m$.",
+                    f"$K$ stands above Schwarzschild's inside $r = (2 + \\sqrt{{2}})\\,m = {crosses[0]:.3f}\\,m$ and "
+                    "below it outside. Space is flat in Einstein's theory, so every component of the Riemann tensor "
+                    "that does not vanish carries two indices $t$, and far out $K$ falls off as $24m^2/r^6$, half of "
+                    "Schwarzschild's.",
+                ],
+                "settings": "$m = GM/c^2 = 1$, the unit of every length, so that $N = 1 - m/r$ and Schwarzschild's "
+                            "$r_s = 2m$.",
+                "clip": ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and cut each curve where "
+                         f"it leaves the top of its panel, as $K$ does inside $r = {k_cut:.3f}\\,m$ and Schwarzschild's "
+                         f"inside $r = {s_cut:.3f}\\,m$."),
+            })
+            continue
+        ck("einstein_1912_static march K and Schwarzschild's are both 48/m^4 at r = m",
+           float(K[c].exact([1, m])) == 48 and float(K_s.exact([1, 2])) == 48)
+        ck("einstein_1912_static march R is negative at every r of the range", np.all(R[c](rs, m) < 0))
+        ck("einstein_1912_static march R falls off far out as -m^2/r^4",
+           abs(float(R[c].exact([far, m])) * far**4 + 1) < 1e-4)
+        r_cut = cut(R[c], m, E1912_R, "bottom", lo)
+        curves += (line_curves(ck, "einstein_1912_static march Schwarzschild", "R", "reference", R_s, "r", x_axis,
+                               E1912_R, height, {"r_s": 2.0})
+                   + line_curves(ck, "einstein_1912_static march", "R", "R", R[c], "r", x_axis, E1912_R, height,
+                                 params, (lo, E1912_REACH)))
+        views.append({
+            "id": "march", "label": "Outside a body, March", "kind": "line", "x": x_axis,
+            "panels": [K_panel, R_panel], "curves": curves, "marks": [],
+            "legend": [legend_K, legend_R, ["line", "reference", "Schwarzschild's black hole of the same mass"]],
+            "caption": [
+                "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the field outside a static body by Einstein's "
+                "equation of March 1912 against $r$ ($m = 1$), the same at every $t$, $\\theta$, and $\\phi$, beside "
+                "Schwarzschild's black hole of the same mass. On the sphere $r = m/2$, where the speed of light falls "
+                "to zero, $K$ grows without bound as $(r - m/2)^{-4}$. It equals Schwarzschild's $48/m^4$ at $r = m$, "
+                "stands above it inside and below it outside, and far out falls off as $24m^2/r^6$, half of "
+                "Schwarzschild's, as in February.",
+                "Schwarzschild's $R$ vanishes. Outside the body $N\\nabla^2N = \\tfrac{1}{2}(\\nabla N)^2$, so "
+                "$R = -2\\nabla^2N/N = -(\\nabla N)^2/N^2$, which is $-4m^2/r^2(2r - m)^2$. It is negative at every "
+                "$r$, grows without bound as $(r - m/2)^{-2}$ toward the sphere $r = m/2$, and far out falls off as "
+                "$-m^2/r^4$.",
+            ],
+            "settings": "$m = GM/c^2 = 1$, the unit of every length, so that $N = (1 - m/2r)^2$ and Schwarzschild's "
+                        "$r_s = 2m$.",
+            "clip": ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and $R\\,m^2$ on a signed "
+                     "logarithmic scale, linear within $10^{-4}$ of zero, from $-10^{4}$ to $10^{-3}$, and cut each "
+                     f"curve where it leaves its panel, as $K$ does inside $r = {k_cut:.3f}\\,m$, $R$ inside "
+                     f"$r = {r_cut:.3f}\\,m$, and Schwarzschild's $K$ inside $r = {s_cut:.3f}\\,m$."),
+        })
+    return views
+
+
 # ---------------------------------------------------------------- Einstein's cluster
 
 EC_SPEED = Fraction(1, 2)         # V, the speed of the particles of Einstein's own cluster, as every drawing takes it
@@ -3650,6 +3864,7 @@ DRAWN = {
     "curzon_chazy": curzon_chazy,
     "damour_solodukhin": damour_solodukhin,
     "dilaton_black_hole": dilaton_black_hole,
+    "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
     "fisher_jnw": fisher_jnw,
 }

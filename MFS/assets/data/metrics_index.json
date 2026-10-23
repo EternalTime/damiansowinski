@@ -1550,7 +1550,8 @@
     "version": "8a0f2213a1974b4c",
     "diagrams": "797bb029c7a77a1c",
     "conformal": "ba7f2b66e7041147",
-    "embedding": "d878e36cfb97e520"
+    "embedding": "d878e36cfb97e520",
+    "curvature": "be3c6f80d448c662"
   },
   {
     "id": "einstein_dirac_maxwell_wormhole",
