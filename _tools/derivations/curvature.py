@@ -89,6 +89,7 @@ sys.path.insert(0, str(HERE))
 
 import build_mfs_data as build  # noqa: E402
 import null_rays as nr  # noqa: E402
+import slices  # noqa: E402
 import two_holes  # noqa: E402
 
 CURVATURE_DIR = build.CURVATURE_DIR
@@ -9725,6 +9726,178 @@ def vaidya(ck, src):
     return out
 
 
+# ---------------------------------------------------------------- Van Den Broeck's pocket
+
+VDB_L0 = 4                        # l_0 in units of R, as every drawing of the pocket takes it
+VDB_BOX = (-4, 1)                 # l/R from the centre of the pocket to the sphere r = R where the wall begins
+VDB_JOINS = (Fraction(-5, 2), Fraction(-3, 2), Fraction(-1, 2), Fraction(1, 2))   # where the pieces of r(l) meet
+VDB_K = {"kind": "symlog", "from": -1.0, "to": 1e4, "linear": 1.0}     # the axis of K R^4, its zero in sight
+VDB_R = {"kind": "linear", "from": -20, "to": 10}                      # the axis of R^mu_mu R^2
+VDB_FUNCTIONS = {"v_s": "2", "f": nr._vdb_shape(nr._VDB_RS), "B": nr._vdb_factor(nr._VDB_RS)}   # the bubble of the diagrams
+
+
+def van_den_broeck(ck, src):
+    """The pocket inside Van Den Broeck's bubble at R = 1, its Kretschmann and Ricci scalars against
+    the proper distance l from the middle of its neck.
+
+    Krasnikov's chart publishes K and R as functions of r(l) and its first two derivatives, and the
+    figure declares the pocket every other drawing of the drive declares, null_rays._VDB_R, at
+    l_0 = 4R: the areal radius l + 4 on a flat floor, 7/4 - (l + 2)^2 round the rim, -l on a flat
+    lid, l^2 + 1/4 through the neck and l outside it. One line view runs from the centre of the
+    pocket, l = -4R, out to the sphere r = R where the wall of the bubble begins, the box of the
+    chart's spacetime diagram. It stacks K on a signed logarithmic axis, linear within 1/R^4 of
+    zero, from -1 to 10^4, which holds K = 0 on the flat floor, lid and outside in sight beside its
+    greatest value 1536/R^4 in the neck, over R, written R^mu_mu since R is the radius of the
+    wall, on a linear axis from -20 to 10, since it changes sign and spans no decades. r'' jumps
+    where the pieces meet, so both scalars jump there, and each curve draws a jump as the step
+    between two neighbouring samples. Nothing is marked: g^ll = 1 at every l.
+
+    What the caption states is checked here: the comoving chart, with the B of the same pocket, and
+    the Cartesian chart of the bubble moving at v_s = 2, with the wall and the B of the diagrams,
+    publish the same K and R at the same sphere, the second in sixty digits at events of two
+    moments; G^t_t = -R/2 from the published Einstein tensor, so that R is 16 pi G/c^4 times the
+    energy density an observer at rest measures; K = R = 0 on the floor, the lid and outside; round
+    the rim K is least in the middle and greatest at the edges, and R rises from 256/49 R^2 to
+    16/3 R^2; through the neck K falls from 1536/R^4 at the narrowest sphere r = R/4 to 128/R^4 at
+    either end, and R = -16 l^2/R^2 r^2, negative but at l = 0; r and r' are continuous and r''
+    jumps at the four joins, and the samples of both scalars jump there and nowhere else; and every
+    value drawn lies within its panel."""
+    metric = "van_den_broeck"
+    shape = {"r": nr._VDB_R}
+    params = {"l_0": VDB_L0}
+    values = [float(VDB_L0)]
+    x_axis = axis("$l/R$", *VDB_BOX)
+    panels = [{"id": "K", "name": "$K\\,R^4$", "aspect": 2, "scale": VDB_K, "ticks": value_ticks(VDB_K)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,R^2$", "aspect": 2, "scale": VDB_R, "ticks": value_ticks(VDB_R)}]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    K = nr_published(src, metric, "proper_radial", "kretschmann", ["l"], ["l_0"], functions=shape)
+    R = nr_published(src, metric, "proper_radial", "ricci_scalar", ["l"], ["l_0"], functions=shape)
+    G = nr_published(src, metric, "proper_radial", "einstein_tensor", ["l"], ["l_0"], ("t", "t"), functions=shape)
+    # The centre l = -4R is 0/0 in the published formulas, the limit of the flat floor round it.
+    ls = np.linspace(*VDB_BOX, SAMPLES)[1:]
+    Ks, Rs = K(ls, *values), R(ls, *values)
+    joins = [float(j) for j in VDB_JOINS]
+    floor, rim, lid, neck, outside = (ls < joins[0], (ls >= joins[0]) & (ls < joins[1]),
+                                      (ls >= joins[1]) & (ls < joins[2]), (ls >= joins[2]) & (ls < joins[3]),
+                                      ls >= joins[3])
+
+    # The pocket is the same in every chart.
+    Kp = nr_published(src, metric, "pocket", "kretschmann", ["r"], [], functions={"B": nr._vdb_factor("r")})
+    Rp = nr_published(src, metric, "pocket", "ricci_scalar", ["r"], [], functions={"B": nr._vdb_factor("r")})
+    away = ls[np.min(np.abs(ls[:, None] - np.array(joins)[None, :]), axis=1) > 1e-6][::50]
+    rhos = np.array([slices.vdb_radius(l) for l in away])
+    for name, fn, mine in (("K", Kp, K), ("R", Rp, R)):
+        ck(f"{metric} the comoving chart publishes Krasnikov's chart's {name} at the same sphere",
+           np.allclose(fn(rhos), mine(away, *values), rtol=1e-9, atol=1e-9), f"{len(away)} spheres")
+    Kc = nr_published(src, metric, "cartesian", "kretschmann", ["t", "x", "y", "z"], [], functions=VDB_FUNCTIONS)
+    Rc = nr_published(src, metric, "cartesian", "ricci_scalar", ["t", "x", "y", "z"], [], functions=VDB_FUNCTIONS)
+    worst = 0.0
+    for t, (nx_, ny_, nz_) in ((0.0, (1.0, 0.0, 0.0)), (0.7, (0.6, 0.0, 0.8))):
+        for l in (-3.0, -2.2, -1.0, -0.3, 0.1, 0.8):
+            rho = slices.vdb_radius(l)
+            event = [t, 2 * t + rho * nx_, rho * ny_, rho * nz_]
+            for fn, mine in ((Kc, K), (Rc, R)):
+                a, b = float(fn.exact(event)), float(mine.exact([l, *values]))
+                worst = max(worst, abs(a - b) / max(abs(b), 1.0))
+    ck(f"{metric} the Cartesian chart of the moving bubble publishes the pocket's K and R inside the wall",
+       worst < AGREE, f"worst {worst:.1e} at twelve events")
+
+    # The energy density an observer at rest measures is -G^t_t c^4/8 pi G.
+    ck(f"{metric} G^t_t = -R/2, so that R is 16 pi G/c^4 times the energy density",
+       np.allclose(G(ls, *values), -Rs / 2, rtol=1e-12, atol=1e-12))
+
+    # Flat where r' = +-1 and r'' = 0.
+    flat = floor | lid | outside
+    ck(f"{metric} K = R = 0 on the floor, the lid and outside the neck",
+       np.all(Ks[flat] == 0) and np.all(Rs[flat] == 0) and np.all(Ks[rim | neck] > 0))
+
+    # The rim.
+    K_mid, K_edge = float(K.exact([-2, *values])), float(K.exact([-2.5, *values]))
+    R_mid, R_edge = float(R.exact([-2, *values])), float(R.exact([-2.5, *values]))
+    u = ls[rim] + 2
+    ck(f"{metric} K and R are the same at either side of the middle of the rim",
+       np.allclose(K(-2 - u[u > 0], *values), K(-2 + u[u > 0], *values), rtol=1e-12)
+       and np.allclose(R(-2 - u[u > 0], *values), R(-2 + u[u > 0], *values), rtol=1e-12))
+    half = ls[rim & (ls <= -2)]
+    ck(f"{metric} round the rim K falls and R falls toward its middle",
+       np.all(np.diff(K(half, *values)) < 0) and np.all(np.diff(R(half, *values)) < 0))
+    ck(f"{metric} round the rim K is 26112/2401 R^4 in the middle and 128/9 R^4 at the edges",
+       abs(K_mid * 2401 / 26112 - 1) < 1e-12 and abs(K_edge * 9 / 128 - 1) < 1e-12, f"{K_mid}, {K_edge}")
+    ck(f"{metric} round the rim R is 256/49 R^2 in the middle and 16/3 R^2 at the edges",
+       abs(R_mid * 49 / 256 - 1) < 1e-12 and abs(R_edge * 3 / 16 - 1) < 1e-12, f"{R_mid}, {R_edge}")
+
+    # The neck.
+    K_narrow, K_end = float(K.exact([0, *values])), float(K.exact([-0.5, *values]))
+    R_narrow, R_end = float(R.exact([0, *values])), float(R.exact([-0.5, *values]))
+    ck(f"{metric} K is 1536/R^4 at the narrowest sphere and 128/R^4 at either end of the neck",
+       K_narrow == 1536 and K_end == 128, f"{K_narrow}, {K_end}")
+    ln = ls[neck]
+    ck(f"{metric} through the neck K falls from the narrowest sphere toward either end",
+       np.all(np.diff(K(ln[ln <= 0], *values)) > 0) and np.all(np.diff(K(ln[ln >= 0], *values)) < 0))
+    ck(f"{metric} through the neck R = -16 l^2/R^2 r^2",
+       np.allclose(Rs[neck], -16 * ln ** 2 / (ln ** 2 + 0.25) ** 2, rtol=1e-12, atol=1e-12))
+    ck(f"{metric} R is 0 at the narrowest sphere, -16/R^2 at the ends of the neck and negative between",
+       R_narrow == 0 and R_end == -16 and np.all(Rs[neck & (ls != 0)] < 0), f"{R_narrow}, {R_end}")
+    ratio = K_narrow / K_mid
+    ck(f"{metric} K at the narrowest sphere is {ratio:.0f} times its least value round the rim",
+       K_mid <= float(np.min(Ks[rim])) and f"{ratio:.0f}" == "141", f"{ratio:.4f}")
+
+    # The joins: r and r' run on, r'' jumps, and so do both scalars, there and nowhere else.
+    l_ = K.coords[0]
+    pieces = [e for e, _ in sp.sympify(nr._VDB_R, locals={"l": l_}).args]
+    smooth = all(sp.simplify(a.diff(l_, k) - b.diff(l_, k)).subs(l_, sp.Rational(j.numerator, j.denominator)) == 0
+                 for a, b, j in zip(pieces, pieces[1:], VDB_JOINS) for k in (0, 1))
+    kinks = all(sp.simplify(a.diff(l_, 2) - b.diff(l_, 2)) != 0 for a, b in zip(pieces, pieces[1:]))
+    ck(f"{metric} r and r' are continuous and r'' jumps at each join", smooth and kinks)
+    # A jump is a step between neighbouring samples ten times either step beside it.
+    step = ls[1] - ls[0]
+    for name, vs in (("K", Ks), ("R", Rs)):
+        d = np.abs(np.diff(vs))
+        beside = np.maximum(np.concatenate([[0], d[:-1]]), np.concatenate([d[1:], [0]]))
+        at = ls[1:][(d > 1) & (d > 10 * beside)]
+        ck(f"{metric} {name} jumps at the four joins and nowhere else",
+           len(at) == 4 and all(abs(a - j) <= step for a, j in zip(at, joins)), f"{at}")
+
+    curves = (line_curves(ck, metric, "K", "K", K, "l", x_axis, VDB_K, height["K"], params)
+              + line_curves(ck, metric, "R", "R", R, "l", x_axis, VDB_R, height["R"], params))
+    for name, fn, scale in (("K", K, VDB_K), ("R", R, VDB_R)):
+        up, down = beyond(fn, x_axis, scale, values, (ls[0], VDB_BOX[1]))
+        ck(f"{metric} {name} stays inside its panel", not up and not down, f"{up} {down}")
+
+    K_clip = "We draw $K\\,R^4$ on a signed logarithmic scale, linear within $1$ of zero, from $-1$ to $10^{4}$"
+    R_clip = "$R^\\mu{}_\\mu\\,R^2$ on a linear scale from $-20$ to $10$"
+    return [{
+        "id": "pocket", "label": "The pocket", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the pocket inside Van Den Broeck's "
+            "bubble against the proper distance $l$ from the middle of its neck ($l_0 = 4R$), the same at every $t$, "
+            "$\\theta$, and $\\phi$, from the centre of the pocket out to the sphere $r = R$, where the wall begins. "
+            "The floor of the pocket, where the ship rides, its lid, and the space outside the neck are flat, and "
+            f"there $K = 0$. Round the rim $K$ rises from ${tex_number(K_mid)}/R^4$ in its middle to "
+            f"${tex_number(K_edge)}/R^4$ at its edges. Through the neck it rises from ${K_end:.0f}/R^4$ at either end "
+            f"to ${K_narrow:.0f}/R^4$ at the narrowest sphere, $r = R/4$, ${ratio:.0f}$ times its least value round "
+            "the rim. $K$ jumps where the pieces of $r(l)$ meet, at $l = -5R/2$, $-3R/2$, $-R/2$, and $R/2$, since "
+            "$r''$ jumps there while $r$ and $r'$ are continuous.",
+            "$R^\\mu{}_\\mu$ is $16\\pi G/c^4$ times the energy density an observer at rest in the bubble measures, "
+            "and it vanishes wherever the space is flat. Round the rim it is positive, rising from "
+            f"${tex_number(R_mid)}/R^2$ in the middle to ${tex_number(R_edge)}/R^2$ at the edges. Through the neck it "
+            f"is $-16l^2/R^2r^2$, from ${R_end:.0f}/R^2$ at either end up to $0$ at the narrowest sphere, the negative "
+            "energy the pocket needs. $R^\\mu{}_\\mu$ jumps where the "
+            "pieces of $r(l)$ meet.",
+        ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 2], [1, 3]],
+        "per_scalar": scalar_clips(K_clip + ", and every value drawn lies within it.",
+                                   "We draw " + R_clip + ", and every value drawn lies within it."),
+        "settings": "$R = 1$, the radius at which the wall of the bubble begins, the unit of every length, and "
+                    "$l_0 = 4R$.",
+        "input": nr.VDB_POCKET + ".",
+        "clip": K_clip + " and " + R_clip + ", and every value drawn lies within them.",
+    }]
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -9858,6 +10031,7 @@ DRAWN = {
     "taub_nut": taub_nut,
     "topological_star": topological_star,
     "vaidya": vaidya,
+    "van_den_broeck": van_den_broeck,
 }
 
 
