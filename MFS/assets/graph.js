@@ -123,6 +123,44 @@
     return { x: W / 2 + reach * X, y: H / 2 - reach * Y, near: Math.max(0, Math.min(1, (Z + 1) / 2)), scale: scale };
   }
 
+  // The application's GraphZoom: only distances grow, so points and names keep their size.
+  // The room stays inside the whole graph, and at the whole graph its middle is unchanged.
+  function wholeZoom() {
+    return { by: 1, x: 0, y: 0 };
+  }
+  function carried(zoom, dx, dy, W, H) {
+    var x = (zoom.by - 1) * W / 2, y = (zoom.by - 1) * H / 2;
+    return { by: zoom.by, x: Math.max(-x, Math.min(x, zoom.x + dx)), y: Math.max(-y, Math.min(y, zoom.y + dy)) };
+  }
+  function zoomed(zoom, factor, px, py, W, H, most) {
+    if (!isFinite(factor) || !(factor > 0)) return zoom;
+    var by = Math.max(1, Math.min(Math.max(1, most), zoom.by * factor)), k = by / zoom.by;
+    var x = px - W / 2, y = py - H / 2;
+    return carried({ by: by, x: x - (x - zoom.x) * k, y: y - (y - zoom.y) * k }, 0, 0, W, H);
+  }
+  function zoomSeen(zoom, p, W, H) {
+    if (zoom.by === 1 && zoom.x === 0 && zoom.y === 0) return { x: p.x, y: p.y };
+    return { x: W / 2 + zoom.x + zoom.by * (p.x - W / 2), y: H / 2 + zoom.y + zoom.by * (p.y - H / 2) };
+  }
+  function blendZoom(a, b, p, W, H) {
+    if (p === 0) return a;
+    if (p === 1) return b;
+    return carried({ by: Math.max(1, Math.exp(Math.log(a.by) + (Math.log(b.by) - Math.log(a.by)) * p)),
+      x: a.x + (b.x - a.x) * p, y: a.y + (b.y - a.y) * p }, 0, 0, W, H);
+  }
+  // At the upper bound the nearest two opening points stand the widest name apart, beside
+  // the widest point. Zero or one point has nowhere to zoom in to.
+  function mostZoom(home, W, H, widths) {
+    if (home.length < 2 || !(W > 0) || !(H > 0)) return 1;
+    var points = home.map(function(p) { return seen(start(), p, W, H); }), nearest = Infinity;
+    for (var i = 0; i < points.length; i++) for (var j = i + 1; j < points.length; j++) {
+      nearest = Math.min(nearest, Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y));
+    }
+    if (!(nearest > 0) || !isFinite(nearest)) return 1;
+    var widest = Math.max.apply(null, [0].concat(widths));
+    return Math.max(1, (2 * DOT * LARGEST * WIDE + GAP + widest * LARGEST + CLEAR) / nearest);
+  }
+
   // A name's box on one side of its point: after it, before it, above, below, and then the four
   // corners, which a name takes only where no side is free.
   var SIDES = 8;
@@ -578,7 +616,9 @@
     LETTER: LETTER, MOST: MOST, SIDES: SIDES, LENGTH: LENGTH, STRETCH: STRETCH, SWEEPS: SWEEPS,
     EVENNESS: EVENNESS, RECEDE: RECEDE, SPRING: SPRING, DAMPING: DAMPING, SETTLE: SETTLE,
     model: model, placesOf: placesOf, start: start, isStart: isStart, turned: turned, girth: girth,
-    drawnAt: drawnAt, radius: radius, seen: seen, box: box, dot: dot, meet: meet, within: within,
+    drawnAt: drawnAt, radius: radius, seen: seen, wholeZoom: wholeZoom, carried: carried,
+    zoomed: zoomed, zoomSeen: zoomSeen, blendZoom: blendZoom, mostZoom: mostZoom,
+    box: box, dot: dot, meet: meet, within: within,
     twoLines: twoLines, inOrder: inOrder, labels: labels, hit: hit, arranged: arranged, axes: axes,
     gathered: gathered, apartAll: apartAll, receded: receded, goal: goal, sprung: sprung, blend: blend,
     layouts: layouts

@@ -186,6 +186,7 @@
       var G = null, graph = null, most = 0, worker = null, local = null, seq = 0, waiting = {};
       var home = null, room = [0, 0], laidFor = '', doneFor = '';
       var stands = null, behind = [], trip = null, camera = null, items = [], sides = [];
+      var zoom = { by: 1, x: 0, y: 0 }, zoomLimit = 1, hasKeys = false;
       // hovered is the spacetime under the graph's own pointer, named the id of the one the list
       // lights, and shownLit the one the last frame drew lit, each -1 or null for none.
       var widths = [], hovered = -1, named = null, shownLit = -1, frame = 0, timer = 0;
@@ -332,13 +333,14 @@
         var first = !home;
         doneFor = key;
         home = whole.map(function(p) { return { x: p[0], y: p[1], z: p[2] }; });
+        measureZoom();
         var to = G.goal(home, members, places);
         behind = to.behind;
         if (first) {
           stands = to.to;
           trip = null;
         } else {
-          trip = { from: stands, to: to.to, camera: camera, set: performance.now() };
+          trip = { from: stands, to: to.to, camera: camera, zoom: zoom, set: performance.now() };
           // Unseen, under the spacetime's panel or faded out, it is put straight there.
           if (reducedMotion() || opened || !canvas.classList.contains('mfs-graph-on')) trip.set -= G.SETTLE * 1000;
         }
@@ -370,6 +372,12 @@
           lines.forEach(function(line) { w = Math.max(w, Math.ceil(ctx.measureText(line).width)); });
           return { lines: lines, w: w };
         });
+        measureZoom();
+      }
+      function measureZoom() {
+        if (!home) return;
+        zoomLimit = G.mostZoom(home, room[0], room[1], widths.map(function(m) { return m.w; }));
+        zoom = G.zoomed(zoom, 1, room[0] / 2, room[1] / 2, room[0], room[1], zoomLimit);
       }
 
       function render() {
@@ -389,6 +397,7 @@
           if (seconds >= G.SETTLE) {
             stands = trip.to;
             camera = G.start();
+            zoom = G.wholeZoom();
             trip = null;
             // Standing still, the names are given their room afresh, in the order a view opens with.
             items.forEach(function(item) { item.side = -1; });
@@ -398,14 +407,16 @@
               return { x: a.x + (b.x - a.x) * p, y: a.y + (b.y - a.y) * p, z: a.z + (b.z - a.z) * p };
             });
             camera = G.blend(trip.camera, G.start(), p);
+            zoom = G.blendZoom(trip.zoom, G.wholeZoom(), p, W, H);
             draw();
           }
         }
         var before = items, on = lit();
         showLit(on);
         items = graph.spacetimes.map(function(s, i) {
-          var at = G.seen(camera, stands[i], W, H), f = Math.round(G.drawnAt(at.scale) * SCALES) / SCALES, m = widths[i];
-          return { x: at.x, y: at.y, near: at.near, weight: s.degree, f: f, r: G.radius(f, s.degree, most),
+          var at = G.seen(camera, stands[i], W, H), place = G.zoomSeen(zoom, at, W, H);
+          var f = Math.round(G.drawnAt(at.scale) * SCALES) / SCALES, m = widths[i];
+          return { x: place.x, y: place.y, near: at.near, weight: s.degree, f: f, r: G.radius(f, s.degree, most),
                    w: m.w * f, h: m.lines.length * G.LINE * f, rank: i === on ? 0 : behind[i] ? 3 : 2,
                    must: i === on, behind: behind[i] && i !== on, side: before[i] ? before[i].side : -1 };
         });
@@ -530,14 +541,90 @@
         canvas.classList.toggle('mfs-graph-over', i >= 0);
         draw();
       }
+      function takeHold() {
+        hasKeys = true;
+        if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur();
+      }
+      function zoomGraph(factor, p, dx, dy) {
+        takeHold();
+        if (trip) { stands = trip.to; trip = null; }
+        // Touches arrive one at a time, even when both fingers move together. Carry and zoom
+        // in one step so an intermediate whole view cannot hold back half of that movement.
+        var from = { by: zoom.by, x: zoom.x + (dx || 0), y: zoom.y + (dy || 0) };
+        zoom = G.zoomed(from, factor, p[0], p[1], roomBox.clientWidth, roomBox.clientHeight, zoomLimit);
+        hover(-1);
+        draw();
+      }
+      // A browser delivers a trackpad pinch as a wheel with Control. Command and the wheel
+      // zoom about the pointer too; the plain wheel carries a magnified view and otherwise
+      // belongs to the page. Panels receive their own events above this canvas.
+      canvas.addEventListener('wheel', function(event) {
+        if (!shown() || opened) return;
+        var W = roomBox.clientWidth, H = roomBox.clientHeight;
+        var unit = event.deltaMode === 1 ? 10 : event.deltaMode === 2 ? H : 1;
+        if (event.ctrlKey || event.metaKey) {
+          if (!event.deltaY) return;
+          event.preventDefault();
+          zoomGraph(Math.exp(Math.max(-2, Math.min(2, -event.deltaY * unit * 0.01))), where(event));
+        } else if (zoom.by > 1) {
+          event.preventDefault();
+          takeHold();
+          if (trip) { stands = trip.to; trip = null; }
+          zoom = G.carried(zoom, -event.deltaX * unit, -event.deltaY * unit, W, H);
+          hover(-1);
+          draw();
+        }
+      }, { passive: false });
+      document.addEventListener('pointerdown', function(event) {
+        if (event.target !== canvas) hasKeys = false;
+      }, true);
+      document.addEventListener('focusin', function(event) {
+        if (event.target !== canvas) hasKeys = false;
+      });
+      window.addEventListener('blur', function() { hasKeys = false; });
+      document.addEventListener('keydown', function(event) {
+        if (!hasKeys || !shown() || opened || !(event.metaKey || event.ctrlKey) || event.altKey) return;
+        if (event.key === '+' || event.key === '=' || event.key === '-') {
+          event.preventDefault();
+          zoomGraph(event.key === '-' ? 1 / 1.25 : 1.25, [roomBox.clientWidth / 2, roomBox.clientHeight / 2]);
+        } else if (event.key === '0') {
+          event.preventDefault();
+          turnBack();
+        }
+      });
+      // Two touches share the same anchored zoom and carry as a trackpad pinch, while a
+      // single touch keeps the drag's rotation. Lifting a finger never opens a spacetime.
+      var touches = {}, pinch = null;
+      function fingers() {
+        var ids = Object.keys(touches);
+        if (ids.length < 2) return null;
+        var a = touches[ids[0]], b = touches[ids[1]];
+        return { x: (a[0] + b[0]) / 2, y: (a[1] + b[1]) / 2, span: Math.hypot(a[0] - b[0], a[1] - b[1]) };
+      }
       canvas.addEventListener('pointerdown', function(event) {
-        if (!event.isPrimary || event.button !== 0) return;
+        if (event.button !== 0 || !shown() || opened) return;
+        if (event.pointerType !== 'touch' && !event.isPrimary) return;
+        takeHold();
         try { canvas.setPointerCapture(event.pointerId); } catch (e) {}
+        if (event.pointerType === 'touch') {
+          touches[event.pointerId] = where(event);
+          pinch = fingers();
+          if (pinch) { held = null; travelled = SLACK; hover(-1); return; }
+        }
         held = where(event);
         travelled = 0;
       });
       canvas.addEventListener('pointermove', function(event) {
         var p = where(event);
+        if (touches[event.pointerId]) {
+          touches[event.pointerId] = p;
+          var next = fingers();
+          if (next && pinch) {
+            zoomGraph(pinch.span > 0 ? next.span / pinch.span : 1, [next.x, next.y], next.x - pinch.x, next.y - pinch.y);
+            pinch = next;
+            return;
+          }
+        }
         if (!held) { hover(pointedAt(p)); return; }
         var dx = p[0] - held[0], dy = p[1] - held[1];
         held = p;
@@ -549,6 +636,17 @@
         draw();
       });
       function letGo(event) {
+        if (touches[event.pointerId]) {
+          delete touches[event.pointerId];
+          if (pinch) {
+            pinch = fingers();
+            var ids = Object.keys(touches);
+            held = ids.length === 1 ? touches[ids[0]] : null;
+            travelled = SLACK;
+            canvas.classList.remove('mfs-graph-held');
+            return;
+          }
+        }
         if (!held) return;
         var press = event.type === 'pointerup' && travelled < SLACK, p = where(event);
         held = null;
@@ -560,11 +658,14 @@
       canvas.addEventListener('pointerup', letGo);
       canvas.addEventListener('pointercancel', letGo);
       canvas.addEventListener('pointerleave', function() { if (!held) hover(-1); });
-      canvas.addEventListener('dblclick', function() {
-        if (!home || G.isStart(camera)) return;
-        trip = { from: stands, to: trip ? trip.to : stands, camera: camera, set: performance.now() };
+      function turnBack() {
+        if (!home || (G.isStart(camera) && zoom.by === 1)) return;
+        trip = { from: stands, to: trip ? trip.to : stands, camera: camera, zoom: zoom, set: performance.now() };
         if (reducedMotion()) trip.set -= G.SETTLE * 1000;
         draw();
+      }
+      canvas.addEventListener('dblclick', function(event) {
+        if (pointedAt(where(event)) < 0) turnBack();
       });
 
       window.addEventListener('resize', function() { reveal(); updateSoon(); draw(); });
@@ -619,6 +720,7 @@
             lit: graph && shownLit >= 0 ? graph.spacetimes[shownLit].id : null,
             litNamed: shownLit >= 0 && sides[shownLit] >= 0,
             drawing: !!frame,
+            zoom: { by: zoom.by, x: zoom.x, y: zoom.y, most: zoomLimit },
             canvas: { left: r.left, top: r.top, right: r.right, bottom: r.bottom, width: canvas.width, height: canvas.height },
             room: { left: box.left, top: box.top, right: box.right, bottom: box.bottom },
             front: seenAt(function(i) { return !behind[i]; }),

@@ -91,6 +91,52 @@ class Relations(unittest.TestCase):
         self.assertEqual(len(graph["edges"]), len(relations["edges"]))
 
 
+class Zoom(unittest.TestCase):
+    """The page's own zoom entry point keeps the application bounds and the point under the hand."""
+
+    def test_page_zoom_holds_its_anchor_and_both_bounds(self):
+        script = """
+        const roomBox = { clientWidth: 1000, clientHeight: 500 };
+        const home = [{ x: 0, y: 0, z: 0 }, { x: 0.1, y: 0, z: 0 }];
+        const zoomLimit = G.mostZoom(home, 1000, 500, [80, 120]);
+        let zoom = G.wholeZoom(), trip = null, stands = [];
+        function takeHold() {}
+        function hover() {}
+        function draw() {}
+        """ + page_function(PAGE.read_text(encoding="utf-8"), "zoomGraph") + """
+        zoomGraph(2, [750, 375]);
+        const anchored = G.zoomSeen(zoom, { x: 750, y: 375 }, 1000, 500);
+        const doubled = zoom;
+        zoomGraph(1e6, [0, 0]);
+        const most = zoom;
+        const nearest = 22.5 * most.by;
+        zoom = G.carried(zoom, 1e6, -1e6, 1000, 500);
+        const carried = zoom;
+        zoomGraph(1e-6, [1000, 500]);
+        const whole = zoom;
+        zoomGraph(NaN, [0, 0]);
+        zoomGraph(-1, [0, 0]);
+        const invalid = zoom;
+        zoomGraph(1.5, [730, 375], 30, 0);
+        zoomGraph(4 / 3, [700, 375], -30, 0);
+        const fingers = G.zoomSeen(zoom, { x: 700, y: 375 }, 1000, 500);
+        process.stdout.write(JSON.stringify({ anchored, doubled, most, nearest, carried, whole, invalid,
+            fingers,
+            none: G.mostZoom([], 1000, 500, []), one: G.mostZoom(home.slice(0, 1), 1000, 500, [120]) }));
+        """
+        result = node(script, None)
+        self.assertEqual(result["anchored"], {"x": 750, "y": 375})
+        self.assertEqual(result["doubled"], {"by": 2, "x": -250, "y": -125})
+        # Widest point on each end plus the measured widest name and the existing label spacing.
+        self.assertAlmostEqual(result["nearest"], 2 * 3.5 * 1.3 * 2.25 + 3 + 120 * 1.3 + 2)
+        self.assertAlmostEqual(result["carried"]["x"], (result["most"]["by"] - 1) * 500)
+        self.assertAlmostEqual(result["carried"]["y"], -(result["most"]["by"] - 1) * 250)
+        self.assertEqual(result["whole"], {"by": 1, "x": 0, "y": 0})
+        self.assertEqual(result["invalid"], result["whole"])
+        self.assertEqual(result["fingers"], {"x": 700, "y": 375})
+        self.assertEqual((result["none"], result["one"]), (1, 1))
+
+
 class SearchToGraph(unittest.TestCase):
     """Typing a keyword gathers exactly the spacetimes the list then shows, the spacetimes carrying
     it, and clearing the search brings back the whole graph."""

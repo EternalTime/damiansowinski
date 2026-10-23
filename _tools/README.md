@@ -191,7 +191,17 @@ The graph shows what the list shows.
 `mfsSearch` in `_layouts/mfs.html` is the search's one answer, and the list draws it and hands it to the graph: while nothing is typed the whole collection is gathered in the room, a search gathers the spacetimes it finds into a view of their own filling the room and sends the rest back behind them, faded and without names, and clearing the search brings the whole collection back.
 Each change moves on a spring and stands still once it has arrived, and a reader who asked for reduced motion is put straight there.
 The layouts are worked out in a worker running `graph.js`, a pause in typing of 120ms after the last key, so the list never waits on them, and the canvas is drawn only while something on it moves.
-A drag turns the figure, two clicks bring back the view it opened at, and a press on a spacetime opens it as its name in the list does.
+A drag turns the figure and keeps its zoom, two clicks on empty space bring back the view it opened at, and a press on a spacetime opens it as its name in the list does.
+
+A trackpad pinch or the wheel with Command held zooms the graph about the pointer, and two fingers on a touch screen zoom it about their middle and carry it as they move.
+The point under the hand stays there until an edge of the whole graph holds it back.
+The least zoom shows the whole graph in its opening position, and the greatest puts the nearest two spacetimes in the opening view a whole name apart, the widest name beside the widest point.
+The view stays inside the whole graph's edges, and points and names keep their size as the distances between points grow.
+The wheel alone carries a zoomed view and belongs to the page at the whole graph; the list and an open spacetime keep their own scrolling.
+A press, drag or pinch gives the graph the keyboard: Command and plus or minus zoom about its middle a quarter at a time, and Command and zero brings back the opening view.
+Control works for these keys too.
+Going to a panel or its search field gives the keyboard back to the page.
+A search gathering its spacetimes and a change in the room bring back the whole view on the gathering's spring, and an open spacetime covers the view where the reader left it.
 
 The list and the graph read as one thing, one written and the other drawn, as the captain asked on 3 October 2026: "The two interfaces need to feel like they're doing the same thing, one textually the other visually."
 The pointer or the keyboard on a name in the list lights its spacetime in the graph, its point and its relations in the page's pink and its name written, as the timeline lights a chosen spacetime, and the pointer on a spacetime in the graph lights it the same way and turns its name in the list the page's pink, `--pink-light`, with no background, as the captain asked on 3 October 2026, scrolling the list to it, smoothly unless the reader asked for reduced motion.
