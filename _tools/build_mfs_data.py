@@ -25,6 +25,7 @@ symbols.py, beside this file, holds that rule.
 """
 
 import argparse
+import ast
 import hashlib
 import json
 import math
@@ -562,6 +563,8 @@ def check_line(where, view, read, x):
                 raise DataError(f"{at} is not a polyline of at least two points [x, value] of numbers")
             if any(math.copysign(1, v) < 0 and v == 0 for p in points for v in p):
                 raise DataError(f"{at} writes a zero as -0.0")
+            if "horizontal" in curve:
+                check_horizontal(at, curve, read[(curve["metric"], curve["system"])]["coords"])
             xs = [p[0] for p in points]
             if not all(b > a for a, b in zip(xs, xs[1:])) or xs[0] < x["from"] or xs[-1] > x["to"]:
                 raise DataError(f"{at} does not run one way across its axis inside it")
@@ -575,6 +578,44 @@ def check_line(where, view, read, x):
     if not any(holder.get("curves") for holder in [view] + view.get("movie", {}).get("frames", [])):
         raise DataError(f"{where} draws no curve")
     return drawn
+
+
+def check_horizontal(at, curve, coords):
+    """A mapped curve keeps its plotted points and declares their native coordinates beside them.
+    The expression uses plain chart names, declared parameters and elementary functions alone."""
+    horizontal = curve["horizontal"]
+    if not isinstance(horizontal, dict) or set(horizontal) != {"expression", "values"}:
+        raise DataError(f"{at} needs a horizontal expression and its native coordinate values")
+    values = horizontal["values"]
+    if not (isinstance(values, list) and len(values) == len(curve["points"])
+            and all(finite(v) and not (v == 0 and math.copysign(1, v) < 0) for v in values)
+            and (all(b > a for a, b in zip(values, values[1:]))
+                 or all(b < a for a, b in zip(values, values[1:])))):
+        raise DataError(f"{at} needs one finite, monotone native coordinate per horizontal point")
+    plain = lambda name: name.replace("\\", "")
+    coordinate = plain(curve.get("coordinate", ""))
+    native = {plain(c) for c in coords}
+    fixed = {plain(c) for c in curve.get("fixed", {})}
+    if coordinate not in native or not fixed <= native:
+        raise DataError(f"{at} names a horizontal coordinate outside its chart")
+    elementary = {"sin", "cos", "tan", "asin", "acos", "atan", "sinh", "cosh", "tanh", "sqrt", "exp", "log", "Abs"}
+    names = {coordinate, "pi"} | fixed | set(curve["params"]) | set(curve.get("functions", {}))
+    try:
+        tree = ast.parse(horizontal["expression"], mode="eval")
+        allowed = (ast.Expression, ast.BinOp, ast.UnaryOp, ast.Call, ast.Name, ast.Load, ast.Constant,
+                   ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Pow, ast.USub, ast.UAdd)
+        for node in ast.walk(tree):
+            if not isinstance(node, allowed):
+                raise ValueError("not a closed form")
+            if isinstance(node, ast.Name) and node.id not in names | elementary:
+                raise ValueError(f"undeclared name {node.id}")
+            if isinstance(node, ast.Call) and (not isinstance(node.func, ast.Name)
+                    or node.func.id not in elementary or len(node.args) != 1 or node.keywords):
+                raise ValueError("not an elementary function of one argument")
+            if isinstance(node, ast.Constant) and not finite(node.value):
+                raise ValueError("not a finite number")
+    except (SyntaxError, TypeError, ValueError) as exc:
+        raise DataError(f"{at} has no closed horizontal expression in its declared coordinates: {exc}") from exc
 
 
 def check_map(where, view, read, x):
@@ -816,6 +857,7 @@ def load_curvature(metrics):
                     f"{source['metric']}.json no longer publishes; redraw it with "
                     f"_tools/derivations/curvature.py --metric {path.stem}")
             read[(source["metric"], source["system"])] = {"fields": set(source["fields"]),
+                                                          "coords": systems[source["system"]]["coords"],
                                                           "free": free_functions(systems[source["system"]])}
         views = data.get("views") or []
         if not views:

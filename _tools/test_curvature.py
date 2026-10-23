@@ -47,13 +47,17 @@ class Evaluator:
         self.nr = null_rays
         self.made = {}
 
-    def __call__(self, metric_id, system_id, field, coords, params, indices=None, functions=None):
+    def __call__(self, metric_id, system_id, field, coords, params, indices=None, functions=None, expression=None):
         functions = functions or {}
         key = (metric_id, system_id, field, tuple(coords), tuple(params), tuple(indices or ()),
-               tuple(sorted(functions.items())))
+               tuple(sorted(functions.items())), expression)
         if key not in self.made:
             _, entry, reader = self.nr.load(metric_id, system_id)
-            if field == "inverse_metric_components":
+            if expression is not None:
+                names = {reader._plain(n): s for n, s in reader.symbol.items()}
+                names.update(reader.parameters)
+                expr = sp.sympify(expression, locals={**self.nr.DECLARED_FUNCTIONS, **names})
+            elif field == "inverse_metric_components":
                 value = next(c["value"] for c in entry[field] if c["indices"] == list(indices))
                 expr = reader(value)
             else:
@@ -145,7 +149,16 @@ class CurvatureValues(unittest.TestCase):
                                            [curve["coordinate"]] + list(fixed), params,
                                            functions=curve.get("functions"))
                         points = np.array(curve["points"], dtype=float)
-                        expected = fn(points[:, 0], *fixed.values(), *[curve["params"][p] for p in params])
+                        native = curve.get("horizontal", {}).get("values", points[:, 0])
+                        arguments = [native, *fixed.values(), *[curve["params"][p] for p in params]]
+                        expected = fn(*arguments)
+                        if "horizontal" in curve:
+                            horizontal = self.evaluate(curve["metric"], curve["system"], "horizontal",
+                                                       [curve["coordinate"]] + list(fixed), params,
+                                                       functions=curve.get("functions"),
+                                                       expression=curve["horizontal"]["expression"])
+                            with self.subTest(where + " horizontal"):
+                                np.testing.assert_allclose(points[:, 0], horizontal(*arguments), rtol=1e-12, atol=1e-14)
                         with self.subTest(where):
                             np.testing.assert_allclose(points[:, 1], expected, rtol=1e-12, atol=0, err_msg=where)
                         checked += len(points)
@@ -209,8 +222,12 @@ class CurvatureValues(unittest.TestCase):
                     marks = [m["x"] for m in picture["marks"] if m["class"] == "horizon"]
                     # The charts the spacetime's own curves are drawn from, each at its parameters.
                     charts = {}
+                    mapped = any("horizontal" in c for c in picture["curves"])
                     for curve in picture["curves"]:
-                        if curve["class"] != "reference":
+                        # A mapped radial profile marks the vacuum comparison's horizon, including
+                        # its continuation inside the matter. It is not a zero of g^chi_chi.
+                        if ((mapped and curve["class"] == "reference") or
+                                (not mapped and curve["class"] != "reference")):
                             key = (curve["metric"], curve["system"], curve["coordinate"],
                                    tuple(curve.get("fixed", {}).items()), tuple(sorted(curve["params"].items())),
                                    tuple(sorted((curve.get("functions") or {}).items())))
@@ -254,6 +271,23 @@ class CurvatureShape(unittest.TestCase):
 
     def test_the_files_on_disk_load(self):
         self.assertEqual(set(build.load_curvature(build.load_metrics())), set(curvature_files()))
+
+    def test_horizontal_coordinates_require_a_closed_expression_and_native_samples(self):
+        import copy
+        curve = {"coordinate": "\\chi", "fixed": {"\\tau": 0}, "params": {"a_m": 2},
+                 "functions": {"a": "a_m - tau**2/4"}, "points": [[0, 1], [1, 1]],
+                 "horizontal": {"expression": "a*sin(chi)", "values": [0, 0.5]}}
+        build.check_horizontal("curve", curve, ["\\tau", "\\chi"])
+        for change in (lambda h: h.update(expression="a*sin(theta)"),
+                       lambda h: h.update(expression="a.__class__"),
+                       lambda h: h.update(expression="sin(chi, 2)"),
+                       lambda h: h.update(values=[0]),
+                       lambda h: h.update(values=[0, 0]),
+                       lambda h: h.update(values=[0, float("inf")])):
+            broken = copy.deepcopy(curve)
+            change(broken["horizontal"])
+            with self.subTest(change), self.assertRaises(build.DataError):
+                build.check_horizontal("curve", broken, ["\\tau", "\\chi"])
 
     def broken(self, change, name=None):
         import copy
