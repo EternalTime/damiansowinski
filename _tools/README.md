@@ -1695,7 +1695,7 @@ The values under the pointer stand at the top right of each plot, as a spacetime
 A movie's play button stands in the top left corner of the ground, in the size and colours of an embedding diagram's, and the name of the frame shown stands above the plot, every frame's name held in one cell, so that nothing in it moves as the movie plays.
 `wireCurvature()` wires the movie to the page's one movie player, which plays it forward, back and forward again, only while it is on the screen, and holds it at its first frame for a reader who asked for reduced motion.
 Nothing in the figure glows.
-The print copy prints every view, a movie at its first frame, and a map and its bar in paper's colours; it thins the numbers of each axis at the size they print at, as the screen does.
+The print copy prints every view, a movie at its first frame, and a map and its bar in paper's colours; it thins the numbers of each axis and of each colour bar at the size they print at, as the screen does, and again once the copy is laid out for print, at the width it prints at, 390 pixels on a phone, where until 22 October 2026 the nine numbers under Bonnor and Vaidya's bar and the C-metric's ran into each other.
 
 ### Which spacetimes
 

@@ -6206,6 +6206,17 @@
           window.print();
         }
       });
+
+      /* printPrepare() lays the copy out off the page, where a figure takes its full 12cm, but
+         the copy prints as wide as the paper or the screen it is laid out on, and a phone's is
+         390 pixels: the colour bar of Bonnor and Vaidya's map stood 265 pixels wide there,
+         thinned for the 329 it had stood, and its numbers ran into each other. So the numbers
+         along each edge are thinned again once the copy is laid out for print, at the width it
+         prints at, which the browser lays it out at before it prints. */
+      if (window.matchMedia) window.matchMedia('print').addEventListener('change', function(e) {
+        var root = document.getElementById('mfs-print-root');
+        if (e.matches && root) window._mfsFitTicks([].slice.call(root.querySelectorAll('.mfs-nr-figure')));
+      });
     })();
   </script>
 

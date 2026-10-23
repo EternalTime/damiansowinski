@@ -593,6 +593,9 @@ async function printCopy() {
   })`);
   if (!ready) { errors.push(`${opened}: the print copy was never set`); return; }
   await send('Emulation.setEmulatedMedia', { media: 'print' });
+  /* The browser lays the copy out for print and runs what the page does on print, as
+     thinning the numbers at the width they print at, in its next frame, before it prints. */
+  await evaluate('window.__mfsSettled()');
   for (const m of await evaluate(`window.__mfsMargins(document.getElementById('mfs-print-root'))
       .concat(window.__mfsReadable(document.getElementById('mfs-print-root'), true),
               window.__mfsGlow(document.getElementById('mfs-print-root')))`)) {
