@@ -4577,7 +4577,8 @@
     "version": "5e5aad02c6f8738c",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
-    "embedding": "9b1644f6000a6db1"
+    "embedding": "9b1644f6000a6db1",
+    "curvature": "3eb7b2ae49365938"
   },
   {
     "id": "interior_schwarzschild",

@@ -10152,6 +10152,160 @@ def zipoy_voorhees(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Schwarzschild's black hole
+
+SCH_REACH = 6                     # the plot runs from the centre to r = 6 r_s, as the research list sets
+SCH_K = {"kind": "log", "from": 1e-4, "to": 1e4}   # the axis of K r_s^4, as the quantum Oppenheimer-Snyder black hole's
+SCH_CHARTS = ("spherical", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing")
+SCH_PROBES = (0.25, 0.5, 1.5, 3.0, 6.0)   # r/r_s at which the tidal field is read, inside and outside the horizon
+# The energies per unit rest energy of three bodies falling straight in: dropped from rest at 2 r_s, from rest
+# far away, and thrown in from far away at 0.866 c.
+SCH_ENERGIES = (math.sqrt(0.5), 1.0, 2.0)
+# The Sun's GM in m^3/s^2, the IAU's nominal value, and the speed of light in m/s.
+SCH_GM_SUN = 1.3271244e20
+SCH_C = 299792458.0
+
+
+def schwarzschild(ck, src):
+    """Schwarzschild's black hole at r_s = 1, its Kretschmann scalar against r, from the centre
+    out past the horizon.
+
+    Every chart publishes K = 12 r_s^2/r^6, a function of r alone, and R = 0, since the spacetime is
+    a vacuum, so the figure is K alone; a map over r and an angle would be one colour along every
+    circle, and r_s is the one length, so a movie of it would change the scale and nothing else. The
+    spherical chart covers r > r_s alone, and the ingoing Eddington-Finkelstein chart, whose domain
+    is r > 0, carries the same K across the horizon to the singularity, so the curve is read from
+    it, over 0 < r <= 6 r_s, as the research list sets. K is drawn on a logarithmic axis from 10^-4
+    to 10^4, ticked at every second decade, as the quantum Oppenheimer-Snyder black hole's is, which
+    holds the curve from r = 0.326 r_s out, and the horizon is the zero of the published g^rr.
+
+    What the caption states is checked here: the three charts publish the same K, 12 r_s^2/r^6,
+    and R = 0, and the published Weyl tensor is the Riemann tensor; the one horizon lies at r = r_s,
+    in the ingoing and the spherical chart alike, and K there is 12/r_s^4, which is
+    3c^8/(4G^4M^4); K is positive and falls at every r drawn; for bodies falling straight in at three
+    energies, at radii inside and outside the horizon, the published Riemann tensor of the ingoing
+    chart stretches each along the radius at r_s/r^3 per unit length and squeezes it across at half
+    that, and 8 times the sum of the squares of the three rates is K; at the horizon of a black
+    hole of the Sun's mass the stretch c^2/r_s^2 is about 10^10 per second squared, and at 10^9 of
+    it about 10^-8; and the curve leaves its panel at the top alone, inside the radius the clip
+    states."""
+    metric = "schwarzschild"
+    chart = "eddington_finkelstein_ingoing"
+    params, values = {"r_s": 1.0}, [1.0]
+    x_axis = axis("$r/r_s$", 0, SCH_REACH)
+    aspect = 1.25   # taller than Taub-NUT's, so the eight decades the curve falls through read beside its caption
+    panel = {"id": "K", "name": "$K\\,r_s^4$", "aspect": aspect, "scale": SCH_K, "ticks": even_decades(SCH_K)}
+    shape_checks(ck, metric, [aspect])
+    height = PLOT_W / aspect
+    K = nr_published(src, metric, chart, "kretschmann", ["r"], ["r_s"])
+    grr = nr_published(src, metric, chart, "inverse_metric_components", ["r"], ["r_s"], ("r", "r"))
+    r, r_s = K.coords[0], K.params[0]
+
+    # Every chart publishes the same two scalars, and the Weyl tensor is the Riemann tensor.
+    for system in SCH_CHARTS:
+        Ks = nr_published(src, metric, system, "kretschmann", ["r"], ["r_s"])
+        Rs = nr_published(src, metric, system, "ricci_scalar", ["r"], ["r_s"])
+        ck(f"{metric} {system} publishes K = 12 r_s^2/r^6",
+           sp.simplify(Ks.expr.xreplace({Ks.coords[0]: r, Ks.params[0]: r_s}) - 12 * r_s ** 2 / r ** 6) == 0,
+           f"{Ks.expr}")
+        ck(f"{metric} {system} publishes R = 0", Rs.expr == 0, f"{Rs.expr}")
+    entry = json.loads((build.METRICS_DIR / f"{metric}.json").read_text(encoding="utf-8"))
+    ingoing = next(s for s in entry["coordinates"] if s["id"] == chart)
+    coords = ["v", "r", "\\theta", "\\phi"]
+
+    def read(field, indices):
+        return nr_published(src, metric, chart, field, ["r", "theta"], ["r_s"], indices)
+    riemann = {tuple(c["indices"]): read("riemann", c["indices"]) for c in ingoing["riemann"]["variants"]["ulll"]["nonzero"]}
+    weyl = {tuple(c["indices"]): read("weyl_tensor", c["indices"])
+            for c in ingoing["weyl_tensor"]["variants"]["ulll"]["nonzero"]}
+    ck(f"{metric} the published Weyl tensor is the published Riemann tensor",
+       set(weyl) == set(riemann) and all(sp.simplify(weyl[k].expr - riemann[k].expr) == 0 for k in riemann),
+       f"{len(riemann)} components")
+    metric_g = {tuple(c["indices"]): read("metric_components", c["indices"]) for c in ingoing["metric_components"]}
+
+    # The horizon, in the ingoing chart the curve is read from and in the spherical chart.
+    marks = [{"class": "horizon", "x": x} for x in zeros(ck, f"{metric} horizon", grr, 0, SCH_REACH, values)]
+    grr_s = nr_published(src, metric, "spherical", "inverse_metric_components", ["r"], ["r_s"], ("r", "r"))
+    ck(f"{metric} has its one horizon at r = r_s",
+       len(marks) == 1 and abs(marks[0]["x"] - 1) < 1e-12 and float(grr.exact([1.0, 1.0])) == 0
+       and float(grr_s.exact([1.0, 1.0])) == 0, f"{[h['x'] for h in marks]}")
+
+    # K at the horizon, and its fall.
+    G, M, c = sp.symbols("G M c", positive=True)
+    at_horizon = K.expr.subs(r, r_s)
+    ck(f"{metric} K at the horizon is 12/r_s^4, which is 3c^8/(4G^4M^4)",
+       sp.simplify(at_horizon - 12 / r_s ** 4) == 0
+       and sp.simplify(at_horizon.subs(r_s, 2 * G * M / c ** 2) - 3 * c ** 8 / (4 * G ** 4 * M ** 4)) == 0)
+    rs = np.linspace(0, SCH_REACH, SAMPLES)[1:]
+    drawn = K(rs, *values)
+    ck(f"{metric} K is positive and falls at every r drawn", np.all(drawn > 0) and np.all(np.diff(drawn) < 0))
+
+    # The tidal field of a body falling straight in with energy E per unit rest energy, whose
+    # four-velocity in the ingoing chart is u^r = -sqrt(E^2 - f), u^v = 1/(E + sqrt(E^2 - f)) with
+    # f = 1 - r_s/r, at every radius it reaches: the eigenvalues of R^a_bcd u^b u^d are 0 along u,
+    # -r_s/r^3 along the radius, a stretch, and r_s/2r^3 twice across it, a squeeze, whatever E is.
+    worst_rates, worst_norm, worst_K, probed = 0.0, 0.0, 0.0, 0
+    for energy, probe in ((e, x) for e in SCH_ENERGIES for x in SCH_PROBES if e * e >= 1 - 1 / x):
+        probed += 1
+        point = [probe, 1.0, 1.0]   # r, theta and r_s; K and the rates are the same at every theta
+        g = np.zeros((4, 4))
+        for (a, b), comp in metric_g.items():
+            g[coords.index(a), coords.index(b)] = float(comp.exact(point))
+        u = np.zeros(4)
+        speed = math.sqrt(energy * energy - (1 - 1 / probe))
+        u[0], u[1] = 1 / (energy + speed), -speed
+        worst_norm = max(worst_norm, abs(u @ g @ u + 1))
+        tidal = np.zeros((4, 4))
+        for (a, b, cc, d), comp in riemann.items():
+            tidal[coords.index(a), coords.index(cc)] += float(comp.exact(point)) * u[coords.index(b)] * u[coords.index(d)]
+        rates = np.sort(np.linalg.eigvals(tidal).real)
+        expected = np.sort([0.0, -1 / probe ** 3, 1 / (2 * probe ** 3), 1 / (2 * probe ** 3)])
+        worst_rates = max(worst_rates, float(np.max(np.abs(rates - expected))) * probe ** 3)
+        worst_K = max(worst_K, abs(8 * float(np.sum(rates ** 2)) / float(K.exact([probe, 1.0])) - 1))
+    ck(f"{metric} each body falling straight in has a four-velocity of norm -1", worst_norm < 1e-12 and probed >= 12,
+       f"worst {worst_norm:.1e} at {probed} points")
+    ck(f"{metric} a body falling straight in is stretched at r_s/r^3 along the radius and squeezed at half that "
+       "across it, inside and outside the horizon, at every energy", worst_rates < 1e-12, f"worst {worst_rates:.1e}")
+    ck(f"{metric} K is 8 times the sum of the squares of the three tidal rates", worst_K < 1e-12,
+       f"worst {worst_K:.1e}")
+    sun = 2 * SCH_GM_SUN / SCH_C ** 2
+    stretch = SCH_C ** 2 / sun ** 2
+    ck(f"{metric} the stretch at the horizon is about 10^10 per second squared at the Sun's mass and 10^-8 at 10^9 "
+       "of it", abs(stretch / 1e10 - 1) < 0.05 and abs(stretch * 1e-18 / 1e-8 - 1) < 0.05,
+       f"r_s = {sun:.2f} m, {stretch:.4e} and {stretch * 1e-18:.4e}")
+
+    # The curve, and where it leaves its panel.
+    curves = line_curves(ck, metric, "K", "K", K, "r", x_axis, SCH_K, height, params)
+    up, down = beyond(K, x_axis, SCH_K, values)
+    cut = (12e-4) ** (1 / 6)
+    ck(f"{metric} K leaves the top of its panel once, at the centre, and never the bottom",
+       len(up) == 1 and up[0][0] == 0 and not down, f"{up} {down}")
+    ck(f"{metric} K leaves the top where 12 r_s^2/r^6 = 10^4", abs(up[0][1] - cut) < SCH_REACH / (SAMPLES - 1),
+       f"{up[0][1]:.5f} against {cut:.5f}")
+
+    return [{
+        "id": "hole", "label": "$r_s = 1$", "kind": "line", "x": x_axis, "panels": [panel],
+        "curves": curves, "marks": marks,
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                   ["line", "horizon", "the horizon, where $g^{rr} = 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of Schwarzschild's black hole against $r$ ($r_s = 1$), the same at every "
+            "$t$, $\\theta$, and $\\phi$. The spacetime is a vacuum, so its Ricci scalar vanishes. "
+            "$K = 12r_s^2/r^6$ grows without bound toward the singularity at $r = 0$, and at the horizon "
+            "$r = r_s$ it is finite, $12/r_s^4$. The spherical chart covers $r > r_s$ alone, and $K$ is the same "
+            "function of $r$ inside the horizon, in the Eddington-Finkelstein charts, which reach $r = 0$.",
+            "A body falling straight in is stretched along the radius at $r_sc^2/r^3$ for each unit of its length "
+            "and squeezed across it at half that, and $K$ is $8/c^4$ times the sum of the squares of these three "
+            "rates. At the horizon $K = 3c^8/4G^4M^4$ falls as the fourth power of the mass, and the stretch there, "
+            "$c^2/r_s^2$, is about $10^{10}\\,\\mathrm{s^{-2}}$ for a black hole of mass $M_\\odot$ and "
+            "$10^{-8}\\,\\mathrm{s^{-2}}$ for one of $10^9M_\\odot$.",
+        ],
+        "settings": "$r_s = 1$, the unit of every length.",
+        "clip": ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and cut the curve where it "
+                 f"leaves its panel, inside $r = {cut:.3f}\\,r_s$."),
+    }]
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -10280,6 +10434,7 @@ DRAWN = {
     "oppenheimer_snyder": oppenheimer_snyder,
     "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
+    "schwarzschild": schwarzschild,
     "senovilla": senovilla,
     "simpson_visser": simpson_visser,
     "taub_nut": taub_nut,
