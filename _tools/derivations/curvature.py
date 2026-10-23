@@ -10126,7 +10126,7 @@ def zipoy_voorhees(ck, src):
             "$-1/2$ to $1$), the same at every $t$ and $\\phi$ and at $\\theta$ and $\\pi - \\theta$. The spacetime "
             "is a vacuum, so its Ricci scalar vanishes. At $q = 0$ it is Schwarzschild's black hole, whose "
             "$K = 48m^2/r^6$ is the same in every direction and finite on the horizon $r = 2m$.",
-            "For every $q \\neq 0$ the sphere $r = 2m$ is a curvature singularity instead, where the chart ends. "
+            "For every $q \\neq 0$ the sphere $r = 2m$ is a curvature singularity, where the chart ends. "
             "Off the axis $K$ grows toward it as $(r - 2m)^{-2(q^2 + q + 1)}$, and along the axis as "
             "$(r - 2m)^{2q - 2}$, so it grows faster along the axis when the field is prolate, $q < 0$, and faster "
             "off it when the field is oblate, $q > 0$. From $q = 1$ up $K$ stays finite along the axis, where it "
