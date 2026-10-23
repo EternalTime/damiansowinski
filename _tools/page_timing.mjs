@@ -37,7 +37,9 @@
    the caption beside its drawing and in the page's white, no two labels over each other, and
    a spacetime diagram's tick marks at least half an em of its numbers long and a tenth of one
    thick. --print does the same for the print copy of each chart, as the page lays it out for
-   paper once its print button is pressed, the browser's print dialog left closed.
+   paper once its print button is pressed, the browser's print dialog left closed. On the
+   page and in its print copy, each related spacetime's name must stand on a line of its own
+   above the sentence on why.
 
    Nothing on the page glows, as the captain asked on 29 September 2026: "No glow anywhere".
    In each of those states it counts as an error every element whose computed style carries
@@ -228,6 +230,23 @@ await send('Page.addScriptToEvaluateOnNewDocument', { source: `
       : figure.classList.contains('mfs-pj-figure') ? 'figure' : 'conformal diagram';
     var name = svg && svg.getAttribute('aria-label') || '';
     return kind + ' "' + name.replace(/^[^,]*, /, '').slice(0, 48) + '"';
+  };
+  /* Every related spacetime in root whose name does not stand on a line of its own above the
+     sentence on why, so that it runs into the sentence. */
+  window.__mfsRelated = function (root) {
+    var out = [];
+    [].forEach.call(root.querySelectorAll('.mfs-related p'), function (p) {
+      var link = p.querySelector('.mfs-related-link'), rest = document.createRange();
+      if (!link || !link.nextSibling) return;
+      rest.setStartAfter(link);
+      rest.setEnd(p, p.childNodes.length);
+      var name = link.getClientRects(), after = rest.getClientRects();
+      if (!name.length || !after.length) return;
+      if (after[0].top < name[name.length - 1].bottom - 0.5) {
+        out.push('the related spacetime "' + link.textContent + '" runs into its sentence');
+      }
+    });
+    return out;
   };
   /* Every drawing shown in root whose words are not all readable, as the captain asked on
      30 September 2026: every word at least the size of the caption beside it and in the
@@ -554,7 +573,7 @@ function timed(action, chart) {
           result.moved = stop();
           return window.__mfsContents();
         }).then(function (contents) {
-          result.margins = window.__mfsMargins(panel).concat(window.__mfsReadable(panel), window.__mfsGlow(document.documentElement), window.__mfsPink(),
+          result.margins = window.__mfsMargins(panel).concat(window.__mfsReadable(panel), window.__mfsGlow(document.documentElement), window.__mfsPink(), window.__mfsRelated(panel),
             window.__mfsSizes(), window.__mfsPanelEdges(), contents);
           resolve(result);
         });
@@ -606,7 +625,8 @@ async function printCopy() {
   await evaluate('window.__mfsSettled()');
   for (const m of await evaluate(`window.__mfsMargins(document.getElementById('mfs-print-root'))
       .concat(window.__mfsReadable(document.getElementById('mfs-print-root'), true),
-              window.__mfsGlow(document.getElementById('mfs-print-root')))`)) {
+              window.__mfsGlow(document.getElementById('mfs-print-root')),
+              window.__mfsRelated(document.getElementById('mfs-print-root')))`)) {
     errors.push(`${opened}: print: ${m}`);
   }
   await send('Emulation.setEmulatedMedia', { media: '' });

@@ -5774,11 +5774,12 @@
     #mfs-content-panel .mfs-history .mfs-math {
       color: var(--mfs-cyan-light) !important;
     }
-    /* A related spacetime's name stands on a line of its own above the sentence on why, and
-       opens that spacetime. It is coloured as a link in the references is at rest and under
-       the pointer. */
+    /* A related spacetime's name stands on a line of its own above the sentence on why, on
+       the page and in its print copy alike, and on the page it opens that spacetime. The print
+       copy is outside #mfs-content-panel, so the name's own line is set here for both. On the
+       page it is coloured as a link in the references is at rest and under the pointer. */
+    a.mfs-related-link { display: block; width: fit-content; max-width: 100%; }
     #mfs-content-panel a.mfs-related-link {
-      display: block; width: fit-content; max-width: 100%;
       color: var(--cyan) !important; text-decoration: underline;
       text-decoration-color: rgba(0,229,255,0.3); text-underline-offset: 0.2em;
       transition: text-decoration-color 0.15s;
