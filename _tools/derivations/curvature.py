@@ -3836,6 +3836,56 @@ FJNW_LAST = Fraction(49, 50)      # the last frame's gamma, one step short of Sc
 FJNW_REACH = 5                    # the plot runs from the singularity r = b to r = 5b, the box of the spacetime diagrams
 
 
+def einstein_rosen_bridge(ck, src):
+    """The neutral and massless charged bridges, K against u on both sheets.
+
+    The neutral coordinate has units sqrt(r_s), the charged one units r_q, so each is drawn
+    in its own bridge units, with K in inverse fourth powers of the bridge radius. The ranges
+    are those of their spacetime diagrams: |u| <= 2.2 sqrt(r_s) and |u| <= 3 r_q. Both radii
+    are 1, as in their other drawings. K depends on u alone, so a second coordinate adds no
+    information; both fields are static, so neither needs a movie. Both publish R = 0 away
+    from the bridge. The finite values at u = 0 are the limits from the sheets, not a scalar
+    assigned to the degenerate metric there. No horizon mark is inferred from g^uu, which is
+    positive on both sheets and has no zero.
+    """
+    metric = "einstein_rosen_bridge"
+    x_axis = axis("$u/\\sqrt{r_s},\\ u/r_q$", -3, 3)
+    scale = {"kind": "log", "from": 1e-4, "to": 1e2}
+    aspect = 1.5
+    panel = {"id": "K", "name": "$K\\,r_s^4,\\ K\\,r_q^4$", "aspect": aspect,
+             "scale": scale, "ticks": value_ticks(scale)}
+    shape_checks(ck, metric, [aspect])
+    curves = []
+    for chart, parameter, cls, reach in (("bridge", "r_s", "K", 2.2),
+                                          ("charged_bridge", "r_q", "reference", 3.0)):
+        K = nr_published(src, metric, chart, "kretschmann", ["u"], [parameter])
+        curves += line_curves(ck, f"{metric} {chart}", "K", cls, K, "u", x_axis,
+                              scale, PLOT_W / aspect, {parameter: 1.0}, within=(-reach, reach))
+    return [{
+        "id": "sheets", "label": "The neutral and charged bridges", "kind": "line",
+        "x": x_axis, "panels": [panel], "curves": curves, "marks": [],
+        "legend": [["line", "K", "the neutral bridge"],
+                   ["line", "reference", "the charged bridge with no mass"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the neutral and massless charged bridges against $u$, "
+            "the same at every $t$, $\\theta$, and $\\phi$. The horizontal coordinate is $u/\\sqrt{r_s}$ "
+            "for the neutral bridge and $u/r_q$ for the charged one, and the vertical coordinate is "
+            "$K r_s^4$ and $K r_q^4$, respectively. Negative and positive $u$ cover the two sheets, "
+            "with the bridge at $u = 0$.",
+            "For the neutral bridge $r = r_s + u^2$ and $K = 12r_s^2/r^6$. For the charged bridge "
+            "$r^2 = u^2 + r_q^2$ and $K = 56r_q^4/r^8$. From either sheet $K$ tends to "
+            "$12/r_s^4$ at the neutral bridge and $56/r_q^4$ at the charged one. These are the "
+            "limits from $u \\ne 0$; the metric is degenerate at $u = 0$. On each sheet the Ricci "
+            "scalar vanishes.",
+        ],
+        "settings": "$r_s = 1$ for the neutral bridge, $r_q = 1$ and zero mass for the charged one, "
+                    "each radius the unit of length in its curve. We draw $|u| \\le 2.2\\sqrt{r_s}$ "
+                    "for the neutral bridge and $|u| \\le 3r_q$ for the charged one.",
+        "clip": "We draw $K$ in inverse fourth powers of each bridge radius on a logarithmic scale "
+                "from $10^{-4}$ to $10^2$; both curves lie wholly within the panel.",
+    }]
+
+
 def fisher_jnw(ck, src):
     """A static mass with a massless scalar field at b = 1, its Kretschmann and Ricci scalars
     against r in the spherical chart.
@@ -11133,6 +11183,7 @@ DRAWN = {
     "dilaton_black_hole": dilaton_black_hole,
     "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
+    "einstein_rosen_bridge": einstein_rosen_bridge,
     "einstein_rosen_waves": einstein_rosen_waves,
     "fisher_jnw": fisher_jnw,
     "gowdy": gowdy,
