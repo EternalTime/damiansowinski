@@ -8044,6 +8044,258 @@ def quantum_oppenheimer_snyder(ck, src):
                  "logarithmic scale, linear within $10^{-5}$ of zero, from $-10^{2}$ to $0$, and cut each curve where it "
                  f"leaves its panel, as Schwarzschild's $K$ does inside $r = {cut:.3f}\\,m$."),
     }]
+# ---------------------------------------------------------------- Nordström's scalar theory
+
+NS_REACH = 6                      # the point mass runs from the centre to r = 6 m, on the axes of Einstein's 1912 field
+NS_POINT_K = E1912_K              # the axis of K m^4 of the point mass, the same as Einstein's 1912 field's
+NS_DUST_K = {"kind": "log", "from": 1.0, "to": 1e8}                       # the axis of K L^4 of the dust universe
+NS_DUST_R = {"kind": "symlog", "from": -1e4, "to": 0, "linear": 1.0}      # and of R L^2, negative at every t
+NS_WAVE = {"Phi": "1 + cos(x - t)/2"}   # the plane wave, at k = 1, as the light cone and conformal diagrams declare it
+NS_CHARTS = ("conformal", "spherical", "uniform", "dust")
+
+
+def even_decades(scale):
+    """The ticks of an axis of eight decades or more at every second decade, and at zero, as the
+    Brans-Dicke sphere's R and Einstein's 1912 field are ticked, which the page fits at every size."""
+    return [t for t in value_ticks(scale) if t["at"] == 0 or round(math.log10(abs(t["at"]))) % 2 == 0]
+
+
+def edge_cut(fn, params, scale, edge, lo, hi):
+    """Where a scalar that crosses one edge of its panel once between lo and hi, inside at lo and
+    beyond at hi, reaches that edge, the top or the bottom, found by bisection."""
+    def inside(x):
+        v = float(fn(x, *params))
+        return math.isfinite(v) and (v < scale["to"] if edge == "top" else v > scale["from"])
+    a, b = lo, hi
+    for _ in range(200):
+        mid = 0.5 * (a + b)
+        a, b = (mid, b) if inside(mid) else (a, mid)
+    return 0.5 * (a + b)
+
+
+def nordstrom_scalar(ck, src):
+    """Nordström's scalar theory of gravity: the Kretschmann scalar of the point mass at m = 1
+    against r, beside Schwarzschild's black hole, and the Kretschmann and Ricci scalars of the
+    dust universe at L = 1 against ct.
+
+    Every chart of the theory is a spacetime of its own, Minkowski's metric times a conformal factor
+    Phi, so each view belongs to the chart it is drawn in, as Melvin's universe and Ernst's black
+    hole in it do. The point mass's K is a function of r alone and its R vanishes, so the view is
+    one panel of K, on the axes of Einstein's static field of 1912, r from 0 to 6 m and K on a
+    logarithmic axis from 10^-4 to 10^4, so that the two fields of a static body by scalar theories
+    of 1912 read alike; its curve runs from the singular sphere r = m, where the chart begins, out,
+    and Schwarzschild's K of the same mass, GM/c^2 = m, so r_s = 2m, read from schwarzschild.json, is
+    dashed across the whole axis. The published g^rr = (1 - m/r)^-2 is positive at every r, so no
+    horizon is marked. The dust universe's K and R are functions of t alone, the same at every
+    comoving r, so the view stacks K on a logarithmic axis from 1 to 10^8 over R, negative at every t,
+    on a signed one, linear within 1 of zero, from -10^4 to 0, against ct from the bang at -L to the
+    crunch at L, the box of its spacetime diagram.
+
+    The uniform field's K = 24 c^8/a^4 z^8 is one power of z, which its formula shows at a glance,
+    so it has no view. The plane wave the conformal chart's diagrams declare, Phi = 1 + cos(k(x - ct))/2,
+    has K = R = 0 at every event although its Ricci tensor does not vanish, so it has no view either,
+    and that is checked here.
+
+    What the captions state is checked here: the published Weyl tensor vanishing in every chart, so
+    that K = 2 G^a_b G^b_a - R^2/3 from the published Einstein tensor, which is R_ab R^ab, in the
+    point mass's and the dust universe's charts; for the point mass the published R = 0, K against
+    the closed form the caption writes, Phi = 1 - m/r and g_thth = (r - m)^2 vanishing at r = m, no
+    change of sign of g^rr, K's growth as 24 m^4/(r - m)^8, measured in sixty digits, K falling at
+    every r drawn and above Schwarzschild's 48 m^2/r^6 at every r > m, their difference having no
+    root there, K tending far out to Schwarzschild's as 1 + 22m/3r times it, Schwarzschild's 48/m^4
+    at r = m, and where each curve leaves the top of its panel; for the dust universe K and R
+    against the forms in Phi = 1 - c^2t^2/L^2 the caption writes, Phi^2 = g_rr, both the same at t
+    and -t, K least and R nearest zero at t = 0, 48/L^4 and -12/L^2, R negative at every t, R as
+    -24 pi G rho/c^2 with rho = rho_0/Phi^3 and L = c/sqrt(2 pi G rho_0), the growth of K and R as
+    (L - |ct|)^-8 and (L - |ct|)^-3 with the coefficients 3L^4/2 and -3L/2, measured in sixty
+    digits, and where each curve leaves its panel; and for the plane wave the published K and R
+    vanishing and the published G^t_t not."""
+    m = 1.0
+
+    # Every chart is conformally flat, and K is then 2 R_ab R^ab - R^2/3, with R_ab R^ab = G^a_b G^b_a.
+    for chart in NS_CHARTS:
+        _, entry, _ = nr.load("nordstrom_scalar", chart)
+        ck(f"nordstrom_scalar {chart} publishes a vanishing Weyl tensor, so it is conformally flat",
+           all(v["nonzero"] == [] for v in entry["weyl_tensor"]["variants"].values()))
+
+    def ricci_square(chart, coords, params):
+        _, entry, _ = nr.load("nordstrom_scalar", chart)
+        listed = [c["indices"] for c in entry["einstein_tensor"]["variants"]["ul"]["nonzero"]]
+        parts = {tuple(i): nr_published(src, "nordstrom_scalar", chart, "einstein_tensor", coords, params, tuple(i))
+                 for i in listed}
+        return sum(parts[(a, b)].expr * parts[(b, a)].expr for a, b in parts if (b, a) in parts)
+
+    # ---- the point mass
+    x_axis = axis("$r/m$", 0, NS_REACH)
+    K_panel = {"id": "K", "name": "$K\\,m^4$", "aspect": 2, "scale": NS_POINT_K, "ticks": even_decades(NS_POINT_K)}
+    shape_checks(ck, "nordstrom_scalar point mass", [K_panel["aspect"]])
+    height = PLOT_W / K_panel["aspect"]
+    K = nr_published(src, "nordstrom_scalar", "spherical", "kretschmann", ["r"], ["m"])
+    R = nr_published(src, "nordstrom_scalar", "spherical", "ricci_scalar", ["r"], ["m"])
+    grr = nr_published(src, "nordstrom_scalar", "spherical", "inverse_metric_components", ["r"], ["m"], ("r", "r"))
+    gtt = nr_published(src, "nordstrom_scalar", "spherical", "metric_components", ["r"], ["m"], ("t", "t"))
+    gthth = nr_published(src, "nordstrom_scalar", "spherical", "metric_components", ["r"], ["m"],
+                         ("\\theta", "\\theta"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    r, ms = K.coords[0], K.params[0]
+
+    def own(fn):
+        return fn.expr.subs({fn.coords[0]: r, fn.params[0]: ms})
+
+    closed = 8 * ms**2 * (6 * r**2 - 4 * ms * r + ms**2) / (r - ms) ** 8
+    ck("nordstrom_scalar point mass K is the closed form the caption writes", sp.simplify(own(K) - closed) == 0)
+    ck("nordstrom_scalar point mass R vanishes outside the body", sp.simplify(R.expr) == 0)
+    ck("nordstrom_scalar point mass g_tt is -Phi^2 with Phi = 1 - m/r", sp.simplify(own(gtt) + (1 - ms / r) ** 2) == 0)
+    ck("nordstrom_scalar point mass g_thth is (r - m)^2, so the sphere r = m has no area",
+       sp.simplify(own(gthth) - (r - ms) ** 2) == 0)
+    ck("nordstrom_scalar point mass K = 2 G^a_b G^b_a from the published Einstein tensor",
+       sp.simplify(2 * ricci_square("spherical", ["r"], ["m"]) - K.expr) == 0)
+    ck("nordstrom_scalar point mass g^rr changes sign nowhere on the range, so no horizon",
+       zeros(ck, "nordstrom_scalar point mass g^rr", grr, m, NS_REACH, [m]) == []
+       and np.all(grr(np.linspace(m, NS_REACH, SAMPLES)[1:], m) > 0))
+    near = [m + 10.0 ** -k for k in (8, 10, 12)]
+    growth = [float(K.exact([x, m]) * sp.Float(x - m, 70) ** 8) for x in near]
+    ck("nordstrom_scalar point mass K grows as 24 m^4/(r - m)^8 toward r = m",
+       all(abs(g / 24 - 1) < 1e-6 for g in growth), f"{growth}")
+    rs = np.linspace(m, NS_REACH, SAMPLES)[1:]
+    ck("nordstrom_scalar point mass K falls at every r drawn", np.all(np.diff(K(rs, m)) < 0))
+    gap = sp.together((closed - 48 * ms**2 / r**6).subs(ms, 1))
+    numerator = sp.Poly(sp.expand(sp.fraction(gap)[0]), r)
+    roots = [x for x in sp.real_roots(numerator) if x > 1]
+    ck("nordstrom_scalar point mass K stands above Schwarzschild's 48 m^2/r^6 at every r > m",
+       not roots and float(gap.subs(r, 2)) > 0, f"{roots}")
+    ck("Schwarzschild's published K at r_s = 2m is 48 m^2/r^6",
+       sp.simplify(K_s.expr.subs({K_s.coords[0]: r, K_s.params[0]: 2 * ms}) - 48 * ms**2 / r**6) == 0)
+    ck("Schwarzschild's K is 48/m^4 at r = m", float(K_s.exact([1, 2])) == 48)
+    approach = [float((K.exact([far, m]) / K_s.exact([far, 2]) - 1) * far) for far in (1e5, 1e6)]
+    ck("nordstrom_scalar point mass K tends far out to Schwarzschild's as 1 + 22m/3r times it",
+       all(abs(a * 3 / 22 - 1) < 1e-3 for a in approach), f"{approach}")
+    k_cut = edge_cut(K, [m], NS_POINT_K, "top", NS_REACH, m)
+    s_cut = edge_cut(K_s, [2.0], NS_POINT_K, "top", NS_REACH, 0.0)
+    step = NS_REACH / (SAMPLES - 1)
+    up, down = beyond(K, x_axis, NS_POINT_K, [m], (m, NS_REACH))
+    ck(f"nordstrom_scalar point mass K leaves its panel once, by the top, inside r = {k_cut:.4f} m",
+       len(up) == 1 and up[0][0] == m and abs(up[0][1] - k_cut) < step and not down, f"{up} {down}")
+    up, down = beyond(K_s, x_axis, NS_POINT_K, [2.0])
+    ck(f"Schwarzschild's K leaves its panel once, by the top, inside r = {s_cut:.4f} m",
+       len(up) == 1 and up[0][0] == 0 and abs(up[0][1] - s_cut) < step and not down, f"{up} {down}")
+    curves = (line_curves(ck, "nordstrom_scalar point mass Schwarzschild", "K", "reference", K_s, "r", x_axis,
+                          NS_POINT_K, height, {"r_s": 2.0})
+              + line_curves(ck, "nordstrom_scalar point mass", "K", "K", K, "r", x_axis, NS_POINT_K, height,
+                            {"m": m}, (m, NS_REACH)))
+    point = {
+        "id": "point_mass", "label": "Point mass", "system": "spherical", "kind": "line", "x": x_axis,
+        "panels": [K_panel], "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                   ["line", "reference", "$K$ of Schwarzschild's black hole of the same mass"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the field outside a static body in Nordström's theory against $r$ "
+            "($m = 1$), the same at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's black hole of the same "
+            "mass. Outside the body $T = 0$, so the Ricci scalar $R = 24\\pi G\\,T/c^4$ vanishes. On the sphere "
+            "$r = m$, where $\\Phi = 1 - m/r$ vanishes and the sphere has no area, "
+            "$K = 8m^2(6r^2 - 4mr + m^2)/(r - m)^8$ grows without bound as $24m^4/(r - m)^8$, and Schwarzschild's "
+            "$K = 48m^2/r^6$ is a finite $48/m^4$ there, inside its horizon at $r = 2m$.",
+            "$K$ stands above Schwarzschild's at every $r$, and far out it falls off as $48m^2/r^6$ too, approaching "
+            "Schwarzschild's as $1 + 22m/3r$ times it. Every spacetime of Nordström's theory is conformally flat, "
+            "so its Weyl tensor vanishes, and $K = 2R_{\\mu\\nu}R^{\\mu\\nu}$ is the Ricci tensor's alone, where "
+            "Schwarzschild's, whose Ricci tensor vanishes, is the Weyl tensor's alone.",
+        ],
+        "settings": "$m = GM/c^2 = 1$, the unit of every length, so that Schwarzschild's $r_s = 2m$.",
+        "clip": ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and cut each curve where it "
+                 f"leaves the top of its panel, as $K$ does inside $r = {k_cut:.3f}\\,m$ and Schwarzschild's inside "
+                 f"$r = {s_cut:.3f}\\,m$."),
+    }
+
+    # ---- the dust universe
+    t_axis = axis("$ct/L$", -1, 1)
+    panels = [{"id": "K", "name": "$K\\,L^4$", "aspect": 2, "scale": NS_DUST_K, "ticks": even_decades(NS_DUST_K)},
+              {"id": "R", "name": "$R\\,L^2$", "aspect": 2, "scale": NS_DUST_R, "ticks": value_ticks(NS_DUST_R)}]
+    shape_checks(ck, "nordstrom_scalar dust", [p["aspect"] for p in panels])
+    heights = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    L = 1.0
+    Kd = nr_published(src, "nordstrom_scalar", "dust", "kretschmann", ["t"], ["L"])
+    Rd = nr_published(src, "nordstrom_scalar", "dust", "ricci_scalar", ["t"], ["L"])
+    grr_d = nr_published(src, "nordstrom_scalar", "dust", "metric_components", ["t"], ["L"], ("r", "r"))
+    t, Ls = Kd.coords[0], Kd.params[0]
+
+    def dust(fn):
+        return fn.expr.subs({fn.coords[0]: t, fn.params[0]: Ls})
+
+    Phi = 1 - t**2 / Ls**2
+    ck("nordstrom_scalar dust g_rr is Phi^2 with Phi = 1 - c^2t^2/L^2", sp.simplify(dust(grr_d) - Phi**2) == 0)
+    ck("nordstrom_scalar dust K is 48(8 - 12 Phi + 5 Phi^2)/L^4 Phi^8",
+       sp.simplify(dust(Kd) - 48 * (8 - 12 * Phi + 5 * Phi**2) / (Ls**4 * Phi**8)) == 0)
+    ck("nordstrom_scalar dust R is -12/L^2 Phi^3", sp.simplify(dust(Rd) + 12 / (Ls**2 * Phi**3)) == 0)
+    G, rho0, c = sp.symbols("G rho_0 c", positive=True)
+    rho = rho0 / Phi**3
+    ck("nordstrom_scalar dust R is -24 pi G rho/c^2 with rho = rho_0/Phi^3 and L = c/sqrt(2 pi G rho_0)",
+       sp.simplify((-24 * sp.pi * G * rho / c**2).subs(rho0, c**2 / (2 * sp.pi * G * Ls**2)) - dust(Rd)) == 0)
+    ck("nordstrom_scalar dust K = 2 G^a_b G^b_a - R^2/3 from the published Einstein tensor",
+       sp.simplify(2 * ricci_square("dust", ["t"], ["L"]) - Rd.expr**2 / 3 - Kd.expr) == 0)
+    ck("nordstrom_scalar dust K and R are the same at t and -t",
+       sp.simplify(dust(Kd) - dust(Kd).subs(t, -t)) == 0 and sp.simplify(dust(Rd) - dust(Rd).subs(t, -t)) == 0)
+    ts = np.linspace(-1, 1, SAMPLES)[1:-1]
+    Kv, Rv = Kd(ts, L), Rd(ts, L)
+    middle = SAMPLES // 2 - 1
+    ck("nordstrom_scalar dust K is least and R nearest zero at t = 0, 48/L^4 and -12/L^2",
+       float(Kd.exact([0, L])) == 48 and float(Rd.exact([0, L])) == -12 and ts[middle] == 0
+       and np.all(np.diff(Kv[middle:]) > 0) and np.all(np.diff(Kv[:middle + 1]) < 0)
+       and np.all(np.diff(Rv[middle:]) < 0) and np.all(np.diff(Rv[:middle + 1]) > 0))
+    ck("nordstrom_scalar dust R is negative at every t", np.all(Rv < 0))
+    for name, fn, power, coefficient in (("K", Kd, 8, 1.5), ("R", Rd, 3, -1.5)):
+        near = [1 - 10.0 ** -k for k in (8, 10, 12)]
+        ratios = [float(fn.exact([x, L]) * (1 - sp.Float(x, 70)) ** power) for x in near]
+        ck(f"nordstrom_scalar dust {name} grows as {coefficient:g}/(L - |ct|)^{power} toward the crunch, and the bang",
+           all(abs(q / coefficient - 1) < 1e-6 for q in ratios), f"{ratios}")
+    kd_cut = edge_cut(Kd, [L], NS_DUST_K, "top", 0.0, 1.0)
+    rd_cut = edge_cut(Rd, [L], NS_DUST_R, "bottom", 0.0, 1.0)
+    t_step = 2 / (SAMPLES - 1)
+    for name, fn, scale, cut_at, edge in (("K", Kd, NS_DUST_K, kd_cut, "top"), ("R", Rd, NS_DUST_R, rd_cut, "bottom")):
+        up, down = beyond(fn, t_axis, scale, [L])
+        out, other = (up, down) if edge == "top" else (down, up)
+        if edge == "bottom":
+            # The samples on the bang and the crunch are not finite, which beyond() counts as above.
+            other = [o for o in other if o not in ((-1.0, -1.0), (1.0, 1.0))]
+        ck(f"nordstrom_scalar dust {name} leaves its panel by the {edge} for |ct| > {cut_at:.4f} L alone",
+           len(out) == 2 and abs(out[0][1] + cut_at) < t_step and abs(out[1][0] - cut_at) < t_step and not other,
+           f"{up} {down}")
+    curves = (line_curves(ck, "nordstrom_scalar dust", "K", "K", Kd, "t", t_axis, NS_DUST_K, heights["K"], {"L": L})
+              + line_curves(ck, "nordstrom_scalar dust", "R", "R", Rd, "t", t_axis, NS_DUST_R, heights["R"], {"L": L}))
+    k_clip = ("We draw $K\\,L^4$ on a logarithmic scale from $1$ to $10^{8}$ and cut each curve where it leaves its panel, "
+              f"as $K$ does for $|ct| > {kd_cut:.3f}\\,L$.")
+    r_clip = ("We draw $R\\,L^2$ on a signed logarithmic scale, linear within $1$ of zero, from $-10^{4}$ to $0$, and cut "
+              f"each curve where it leaves its panel, as $R$ does for $|ct| > {rd_cut:.3f}\\,L$.")
+    universe = {
+        "id": "dust", "label": "Dust universe", "system": "dust", "kind": "line", "x": t_axis, "panels": panels,
+        "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Nordström's universe of dust against $ct$ "
+            "($L = 1$), the same at every $r$, $\\theta$, and $\\phi$. With the scale factor "
+            "$\\Phi = 1 - c^2t^2/L^2$, $K = 48(8 - 12\\Phi + 5\\Phi^2)/L^4\\Phi^8$. It is the same at $t$ and $-t$, "
+            "least at the greatest expansion, $t = 0$, where it is $48/L^4$, and grows without bound as "
+            "$3L^4/2(L - |ct|)^8$ toward the bang at $ct = -L$ and the crunch at $ct = L$, where $\\Phi$ vanishes.",
+            "By Einstein and Fokker's field equation, $R = 24\\pi G\\,T/c^4 = -24\\pi G\\rho/c^2$, with "
+            "$\\rho = \\rho_0/\\Phi^3$ the density of the dust, so $R = -12/L^2\\Phi^3$. It is negative at every $t$, "
+            "nearest zero, $-12/L^2$, at $t = 0$, and grows without bound as $-3L/2(L - |ct|)^3$ toward the bang and "
+            "the crunch.",
+        ],
+        "ricci_sentences": [[1, 0], [1, 1]],
+        "per_scalar": scalar_clips(k_clip, r_clip),
+        "settings": "$L = 1$, the unit of every length.",
+        "clip": ("We draw $K\\,L^4$ on a logarithmic scale from $1$ to $10^{8}$ and $R\\,L^2$ on a signed logarithmic "
+                 "scale, linear within $1$ of zero, from $-10^{4}$ to $0$, and cut each curve where it leaves its panel, "
+                 f"as $K$ does for $|ct| > {kd_cut:.3f}\\,L$ and $R$ for $|ct| > {rd_cut:.3f}\\,L$."),
+    }
+
+    # ---- the plane wave, which has no view, since its K and R vanish
+    coords = ["t", "x", "y", "z"]
+    Kw = nr_published(src, "nordstrom_scalar", "conformal", "kretschmann", coords, [], functions=NS_WAVE)
+    Rw = nr_published(src, "nordstrom_scalar", "conformal", "ricci_scalar", coords, [], functions=NS_WAVE)
+    Gw = nr_published(src, "nordstrom_scalar", "conformal", "einstein_tensor", coords, [], ("t", "t"), NS_WAVE)
+    ck("nordstrom_scalar plane wave has K = R = 0 at every event", sp.simplify(Kw.expr) == 0 and sp.simplify(Rw.expr) == 0)
+    ck("nordstrom_scalar plane wave has a Ricci tensor that does not vanish", float(Gw.exact([0.3, 1.1, 0, 0])) != 0)
+    return [point, universe]
 
 
 # ---------------------------------------------------------------- the two places of a figure
@@ -8249,6 +8501,7 @@ DRAWN = {
     "melvin": melvin,
     "misner_brill_lindquist": misner_brill_lindquist,
     "myers_perry": myers_perry,
+    "nordstrom_scalar": nordstrom_scalar,
     "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
 }
