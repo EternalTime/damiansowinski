@@ -870,15 +870,16 @@
          the captain asked on 1 October 2026, and the two never cross: both stand to the
          panel's left when out of it, and one comes in only once the other has left. Pressing
          a spacetime slides the list out, and its contents slide in once the list is out and
-         the spacetime is drawn, so they come in whole and never fill a panel already in
-         place; "‹ All spacetimes" slides the contents out, and the spacetime's page out to
-         the right with them, and then the list back in. The
-         list is never drawn again for it, so it comes back with the search as it was typed
-         and at the place it was scrolled to. The view out of sight is inert, so neither the
+         the spacetime's page slides in, so they come in whole and never fill a panel already
+         in place. The contents come in with the page, after its mathematics and figures are
+         set, so a heavy page cannot hold the slide. "‹ All spacetimes" slides the contents
+         out, and the spacetime's page out to the right with them, and then the list back in.
+         The list is never drawn again for it, so it comes back with the search as it was
+         typed and at the place it was scrolled to. The view out of sight is inert, so neither the
          keyboard nor a search of the page reaches it. The stylesheet does each slide, and
          the script waits on the slides the browser reports, so a reader who asked for
          reduced motion, for whom there are none, gets the swap at once. */
-      var _want = false, _turn = 0, _rest = true, _fill = null, _after = null;
+      var _want = false, _turn = 0, _rest = true, _fill = null, _after = null, _pageIn = false;
       function put(pane, on) {
         pane.classList.toggle('mfs-pane-off', !on);
         pane.inert = !on;
@@ -901,7 +902,7 @@
         if (!_rest) return;
         if (_fill) { _fill(); _fill = null; }
         if (_want) {
-          if (toc.firstChild) put(tocPane, true);
+          if (toc.firstChild && _pageIn) put(tocPane, true);
           return;
         }
         put(listPane, true);
@@ -929,6 +930,7 @@
         // A reader who pressed the link from the keyboard goes on in the search field.
         var keyed = back.matches(':focus-visible');
         // The spacetime leaves with its contents, and its address with it.
+        _pageIn = false;
         if (window._mfsPageAway) window._mfsPageAway();
         address(null);
         showContents(false, false, keyed ? function() { input.focus({ preventScroll: true }); } : null);
@@ -1048,6 +1050,12 @@
           markSoon();
         };
         enter();
+      };
+
+      // The spacetime's page calls this as it slides in, which brings its contents in with it.
+      window._mfsPageIn = function() {
+        _pageIn = true;
+        if (_want) enter();
       };
 
       /* A spacetime has an address of its own, the page's with ?spacetime= and its id, which
@@ -1308,7 +1316,7 @@
       var _open = null;
       window._mfsOpen = function(id) {
         var fresh = !(id === _open && _built === id);
-        if (fresh) { _built = null; _fill = null; }
+        if (fresh) { _built = null; _fill = null; _pageIn = false; }
         showContents(true, fresh);
         address(id);
         if (!fresh) { if (window._mfsPageBack) window._mfsPageBack(); return; }
@@ -5409,6 +5417,7 @@
         var el = contentPanel, slide = ++_slides;
         el.style.transition = 'transform ' + SLIDE_DUR + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         el.style.transform  = 'translateX(0)';
+        if (window._mfsPageIn) window._mfsPageIn();
         setTimeout(function() {
           if (slide !== _slides) return;
           el.style.pointerEvents = 'all';
