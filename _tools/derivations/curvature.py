@@ -7866,6 +7866,186 @@ def misner_brill_lindquist(ck, src):
     return [two]
 
 
+# ---------------------------------------------------------------- the quantum Oppenheimer-Snyder black hole
+
+QOS_ALPHA = Fraction(5, 4)        # alpha in units of m^2, as every drawing of the black hole takes it
+QOS_REACH = 6                     # the plot runs from the centre to r = 6 m, past the outer horizon
+QOS_HEAVY = (1e-6, 1e-12)         # alpha in units of m^2 of two black holes far heavier than the Planck mass
+
+
+def quantum_oppenheimer_snyder(ck, src):
+    """The vacuum outside the quantum Oppenheimer-Snyder ball of dust at m = 1, its Kretschmann
+    and Ricci scalars against r.
+
+    The four exterior charts publish the same K and R, functions of r, m and alpha alone, and the
+    vacuum holds outside r_b = (alpha m/2)^(1/3), the least radius the surface of the dust reaches;
+    one line view serves them all, and a map over r and an angle would be one colour along every
+    circle. Two panels share the axis of r, from 0 to 6 m, past the outer horizon, and the curves
+    of the black hole run from r_b outward: K on a logarithmic axis from 10^-4 to 10^4, which
+    holds the curve whole, its greatest value 5760/alpha^2 at r_b and its least 10^-3/m^4 at 6 m,
+    and R, negative at every r, on a signed one, linear within 10^-5/m^2 of zero, from -10^2 to 0,
+    both ticked at every second decade, as the charged dilaton black hole's are. The comparison is
+    Schwarzschild's K of the same mass, r_s = 2m, read from schwarzschild.json; its R vanishes and
+    has no place on the signed axis's decades. The horizons are the zeros of the static chart's
+    published g^rr. The black hole is drawn at alpha = 5m^2/4, the area every other drawing of it
+    takes, where r_+ = 1.777 m, r_- = 1.127 m and r_b = 0.855 m.
+
+    What the caption states is checked here: the four exterior charts publish the same K and R;
+    g^rr = 1 at r_b, where the surface of the dust turns round; the horizons are the two real roots
+    of r^4 - 2m r^3 + alpha m^2, at the radii the settings state; K at r_b is 5760/alpha^2, thirty
+    times Schwarzschild's 48 m^2/r^6, and R there -24/alpha; K is positive and falls at every r > 0,
+    the numerators of K and of its derivative having no positive root; K crosses Schwarzschild's
+    once, at r^3 = 39 alpha m/20, between the horizons, the one positive root of the numerator of
+    their difference, and lies below it outside; their ratio is least, 14/39, at r^3 = 39 alpha m/10,
+    within a tenth of m inside r_+; far out K approaches Schwarzschild's; R is negative at every r
+    drawn; at the alpha of two black holes far heavier than the Planck mass, K is within a percent
+    of Schwarzschild's outside a tenth of r_+; and only Schwarzschild's K leaves its panel, at the
+    top about the centre, inside the radius the clip states."""
+    metric = "quantum_oppenheimer_snyder"
+    alpha = float(QOS_ALPHA)
+    params = {"m": 1.0, "\\alpha": alpha}
+    values = [1.0, alpha]
+    names = ["m", "\\alpha"]
+    x_axis = axis("$r/m$", 0, QOS_REACH)
+    K_scale = {"kind": "log", "from": 1e-4, "to": 1e4}
+    R_scale = {"kind": "symlog", "from": -1e2, "to": 0, "linear": 1e-5}
+    # Both axes span eight decades or more, so each is ticked at every second one, as the charged
+    # dilaton black hole's are, which the page fits at every size.
+    K_ticks = [t for t in value_ticks(K_scale) if round(math.log10(t["at"])) % 2 == 0]
+    R_ticks = [t for t in value_ticks(R_scale) if t["at"] == 0 or round(math.log10(-t["at"])) % 2 == 0]
+    panels = [{"id": "K", "name": "$K\\,m^4$", "aspect": 2, "scale": K_scale, "ticks": K_ticks},
+              {"id": "R", "name": "$R\\,m^2$", "aspect": 2, "scale": R_scale, "ticks": R_ticks}]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    K = nr_published(src, metric, "static", "kretschmann", ["r"], names)
+    R = nr_published(src, metric, "static", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, metric, "static", "inverse_metric_components", ["r"], names, ("r", "r"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    r_b = (alpha / 2) ** (1 / 3)
+    within = (r_b, QOS_REACH)
+    rs = np.linspace(r_b, QOS_REACH, SAMPLES)
+
+    # Every exterior chart publishes the same two scalars.
+    for system in ("painleve_gullstrand", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"):
+        for field, fn in (("kretschmann", K), ("ricci_scalar", R)):
+            other = nr_published(src, metric, system, field, ["r"], names)
+            ck(f"{metric} {system} publishes the static chart's {field}",
+               np.allclose(other(rs, *values), fn(rs, *values), rtol=1e-14, atol=0))
+
+    # The edge of the vacuum and the horizons.
+    ck(f"{metric} g^rr is 1 at r_b, where the surface of the dust turns round",
+       abs(float(grr.exact([r_b, *values])) - 1) < 1e-12)
+    marks = [{"class": "horizon", "x": x} for x in zeros(ck, f"{metric} horizons", grr, r_b, QOS_REACH, values)]
+    found = [m["x"] for m in marks]
+    r = K.coords[0]
+    roots = [float(x) for x in sp.real_roots(sp.Poly(r ** 4 - 2 * r ** 3 + sp.Rational(QOS_ALPHA.numerator,
+                                                                                       QOS_ALPHA.denominator), r))]
+    ck(f"{metric} has its horizons at the two real roots of r^4 - 2m r^3 + alpha m^2",
+       len(found) == 2 == len(roots) and all(abs(a - b) < 1e-12 for a, b in zip(found, roots)), f"{found}")
+    r_minus, r_plus = found
+    ck(f"{metric} has r_+, r_- and r_b at the radii its settings state",
+       [f"{x:.3f}" for x in (r_plus, r_minus, r_b)] == ["1.777", "1.127", "0.855"])
+
+    # The figures of the caption.
+    K_b, R_b = float(K.exact([r_b, *values])), float(R.exact([r_b, *values]))
+    ck(f"{metric} K at r_b is 5760/alpha^2", abs(K_b * alpha ** 2 / 5760 - 1) < 1e-12, f"{K_b}")
+    ck(f"{metric} R at r_b is -24/alpha", abs(R_b * alpha / -24 - 1) < 1e-12, f"{R_b}")
+    ck("Schwarzschild's published K at r_s = 2m is 48 m^2/r^6",
+       np.allclose(K_s(rs, 2.0), 48 / rs ** 6, rtol=1e-14, atol=0))
+    ck(f"{metric} K at r_b is thirty times Schwarzschild's",
+       abs(K_b / float(K_s.exact([r_b, 2.0])) / 30 - 1) < 1e-12)
+    drawn = K(rs, *values)
+    ck(f"{metric} K is positive and falls at every r drawn", np.all(drawn > 0) and np.all(np.diff(drawn) < 0))
+    m_, a_ = K.params
+    exact = {m_: 1, a_: sp.Rational(QOS_ALPHA.numerator, QOS_ALPHA.denominator)}
+    K_exact = sp.together(K.expr.subs(exact))
+    for what, expr in (("K", K_exact), ("dK/dr", sp.together(sp.diff(K_exact, r)))):
+        numerator = sp.Poly(sp.expand(sp.fraction(expr)[0]), r)
+        positive = [x for x in sp.real_roots(numerator) if x > 0]
+        ck(f"{metric} {what} has no zero at any r > 0", not positive, f"{positive}")
+    ck(f"{metric} K falls at every r > 0", float(sp.diff(K_exact, r).subs(r, 1)) < 0)
+    gap = sp.together(K_exact - 48 / r ** 6)
+    crossings = [x for x in sp.real_roots(sp.Poly(sp.expand(sp.fraction(gap)[0]), r)) if x > 0]
+    r_cross = (39 * alpha / 20) ** (1 / 3)
+    ck(f"{metric} K crosses Schwarzschild's once, at r^3 = 39 alpha m/20, between the horizons",
+       len(crossings) == 1 and abs(float(crossings[0]) - r_cross) < 1e-12 and r_minus < r_cross < r_plus,
+       f"{[float(x) for x in crossings]}")
+    ck(f"{metric} K lies below Schwarzschild's outside the crossing",
+       np.all(K(rs[rs > r_cross + 1e-9], *values) < K_s(rs[rs > r_cross + 1e-9], 2.0)))
+    r_least = (39 * alpha / 10) ** (1 / 3)
+    least = float(K.exact([r_least, *values]) / K_s.exact([r_least, 2.0]))
+    ck(f"{metric} K over Schwarzschild's is 14/39 at r^3 = 39 alpha m/10", abs(least * 39 / 14 - 1) < 1e-12,
+       f"{least}")
+    fine = np.linspace(r_b, QOS_REACH, 400001)
+    ratio = K(fine, *values) / K_s(fine, 2.0)
+    lowest = int(np.argmin(ratio))
+    ck(f"{metric} K over Schwarzschild's is least at r^3 = 39 alpha m/10, just inside r_+",
+       abs(fine[lowest] - r_least) < 2e-5 and least <= float(np.min(ratio)) + 1e-15
+       and r_minus < r_least < r_plus and r_plus - r_least < 0.1, f"r = {r_least:.6f}, r_+ = {r_plus:.6f}")
+    for far in (1e3, 1e4):
+        ck(f"{metric} K approaches Schwarzschild's 48 m^2/r^6 at r = {far:g} m",
+           abs(float(K.exact([far, *values])) * far ** 6 / 48 - 1) < 1e-5)
+    ck(f"{metric} R is negative at every r drawn", np.all(R(rs, *values) < 0))
+    # A black hole of a star's mass has alpha/m^2 far below these; at each, K departs from
+    # Schwarzschild's by a percent only inside a tenth of r_+.
+    for heavy in QOS_HEAVY:
+        plus = max(float(x) for x in sp.real_roots(sp.Poly(r ** 4 - 2 * r ** 3 + sp.Float(heavy, 30), r)))
+        out = np.geomspace((heavy / 2) ** (1 / 3), 10 * plus, 400001)
+        off = np.abs(K(out, 1.0, heavy) / K_s(out, 2.0) - 1) >= 0.01
+        ck(f"{metric} K at alpha = {heavy:g} m^2 is within a percent of Schwarzschild's outside a tenth of r_+",
+           off.any() and out[off].max() < plus / 10, f"{out[off].max():.4g} against r_+ = {plus:.6f}")
+
+    # The curves, and where they leave their panels.
+    curves = (line_curves(ck, f"{metric} Schwarzschild", "K", "reference", K_s, "r", x_axis, K_scale, height["K"],
+                          {"r_s": 2})
+              + line_curves(ck, metric, "K", "K", K, "r", x_axis, K_scale, height["K"], params, within)
+              + line_curves(ck, metric, "R", "R", R, "r", x_axis, R_scale, height["R"], params, within))
+    for name, fn, scale in (("K", K, K_scale), ("R", R, R_scale)):
+        up, down = beyond(fn, x_axis, scale, values, within)
+        ck(f"{metric} {name} stays inside its panel", not up and not down, f"{up} {down}")
+    up, down = beyond(K_s, x_axis, K_scale, [2.0])
+    ck("Schwarzschild's K leaves the top of its panel once, at the centre, and never the bottom",
+       len(up) == 1 and up[0][0] == 0 and not down, f"{up} {down}")
+    cut = (48e-4) ** (1 / 6)
+    step = QOS_REACH / (SAMPLES - 1)
+    ck("Schwarzschild's K leaves the top where 48 m^2/r^6 = 10^4", abs(up[0][1] - cut) < step,
+       f"{up[0][1]:.5f} against {cut:.5f}")
+
+    return [{
+        "id": "hole", "label": "$\\alpha = 5m^2/4$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": marks,
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+                   ["line", "reference", "$K$ of Schwarzschild's black hole of the same mass"],
+                   ["line", "horizon", "a horizon, where $g^{rr} = 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the quantum Oppenheimer-Snyder black hole "
+            "against $r$ ($\\alpha = 5m^2/4$), the same at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's "
+            "black hole of the same mass. The vacuum outside the dust ends at "
+            f"$r_b = (\\alpha m/2)^{{1/3}} = {r_b:.3f}\\,m$, where the surface of the dust turns round, and there $K$ "
+            f"is greatest, $5760/\\alpha^2 = {K_b:.1f}/m^4$, thirty times Schwarzschild's $48m^2/r^6$. $K$ crosses "
+            f"Schwarzschild's once, at $r = (39\\alpha m/20)^{{1/3}} = {r_cross:.3f}\\,m$, between the two horizons, "
+            "and lies below it outside. Their ratio is least, $14/39$, at "
+            f"$r = (39\\alpha m/10)^{{1/3}} = {r_least:.3f}\\,m$, just inside $r_+$. Far out $K$ approaches "
+            "Schwarzschild's.",
+            f"At $r_b$, $R = -24/\\alpha = {R_b:.1f}/m^2$. $R = -6\\alpha m^2/r^6$ is negative at every $r$, and "
+            "Schwarzschild's vanishes. The area $\\alpha$ is of the order of the Planck length squared, so at "
+            "$\\alpha = 5m^2/4$ the mass $M$ is of the order of the Planck mass. For a black hole of a star's mass, "
+            "$K$ differs from Schwarzschild's by more than a percent only far inside $r_+$.",
+        ],
+        "ricci_sentences": [[1, 0], [1, 1]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,m^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and cut each curve where it leaves its "
+            f"panel, as Schwarzschild's $K$ does inside $r = {cut:.3f}\\,m$.",
+            "We draw $R\\,m^2$ on a signed logarithmic scale, linear within $10^{-5}$ of zero, from $-10^{2}$ to $0$; "
+            "no curve leaves its panel."),
+        "settings": f"$m = 1$, the unit of every length, and $\\alpha = 5m^2/4$, so that $r_+ = {r_plus:.3f}\\,m$, "
+                    f"$r_- = {r_minus:.3f}\\,m$, and $r_b = {r_b:.3f}\\,m$.",
+        "clip": ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and $R\\,m^2$ on a signed "
+                 "logarithmic scale, linear within $10^{-5}$ of zero, from $-10^{2}$ to $0$, and cut each curve where it "
+                 f"leaves its panel, as Schwarzschild's $K$ does inside $r = {cut:.3f}\\,m$."),
+    }]
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 # ---------------------------------------------------------------- the charged hole in de Sitter space
@@ -7993,6 +8173,7 @@ RICCI_BESIDE = {
     ("hayward", "hole"): "Schwarzschild's $R = 0$",
     ("kiselev", "hole"): "",
     ("kiselev", "state"): "",
+    ("quantum_oppenheimer_snyder", "hole"): "",
 }
 
 
@@ -8068,6 +8249,7 @@ DRAWN = {
     "melvin": melvin,
     "misner_brill_lindquist": misner_brill_lindquist,
     "myers_perry": myers_perry,
+    "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
 }
 
