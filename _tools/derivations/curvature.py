@@ -6800,6 +6800,260 @@ def ernst_hole(ck, src, melvin_K):
     }
 
 
+# ---------------------------------------------------------------- Majumdar and Papapetrou's two holes
+
+MP_BOX = ((0, 5), (-5, 5))        # rho/m and z/m, the reach of the spacetime diagrams along the axis and the midplane
+MP_CELLS = (100, 200)             # the cells of the map across and up, each a twentieth of m on a side
+MP_SCALE = {"kind": "log", "from": 1e-4, "to": 1e1}   # the colours of K m^4, and the axis of the line view
+# Each of the two holes alone, at z = 2m and at z = -2m, in the Cartesian chart the pair is drawn in
+# along the axis.
+MP_ALONE = ("1 + 1/sqrt(x**2 + y**2 + (z - 2)**2)", "1 + 1/sqrt(x**2 + y**2 + (z + 2)**2)")
+# The pair as both views write it, in the half plane's rho, which along the axis is x = y = 0.
+MP_INPUT = ("Two holes, each of mass parameter $m$, on the axis at $z = \\pm 2m$: $U = 1 + m/r_1 + m/r_2$, with "
+            "$r_1 = \\sqrt{\\rho^2 + (z - 2m)^2}$ and $r_2 = \\sqrt{\\rho^2 + (z + 2m)^2}$ the distances from them")
+MP_MAP_INPUT = MP_INPUT + "."
+MP_LINE_INPUT = MP_INPUT + "; each alone, dashed, is $U = 1 + m/r_1$ or $U = 1 + m/r_2$."
+
+
+def majumdar_papapetrou(ck, src):
+    """Two of Majumdar and Papapetrou's holes, each of mass parameter m = 1, at z = +-2m on the
+    axis, the pair every other drawing of the spacetime declares: their Kretschmann scalar over
+    the half plane of rho and z, and along the axis beside each hole alone.
+
+    The cylindrical chart publishes K in rho, z and the derivatives of the free potential U, which
+    the figure declares as the pair's, U = 1 + m/r_1 + m/r_2, so K is a function of rho and z alone,
+    the same at every t and phi. U is harmonic away from the holes, so the published Ricci scalar,
+    -2 Laplacian(U)/U^3, vanishes on the pair and the figure is K alone. The first view is a map over
+    0 <= rho <= 5m, |z| <= 5m, the reach of the spacetime diagrams along the axis and across the
+    midplane, in cells a twentieth of m on a side, coloured on a logarithmic scale from 10^-4 to 10
+    in units of 1/m^4, which holds every cell. Nothing is marked: each horizon is the one point
+    rho = 0, z = +-2m of the chart, where g^rr = 1/U^2 vanishes without changing sign, and the
+    caption says where it is. The second view is the Cartesian chart's K held at x = y = 0, along
+    the axis z from -5m to 5m, on the same scale, with each hole alone, U = 1 + m/r_1 and
+    U = 1 + m/r_2, dashed beside it; one hole alone is the isotropic chart's single hole, at the
+    distance r = |z -+ 2m| from it.
+
+    What the captions state is checked here, in sixty digits: the published Ricci scalar vanishes
+    on the pair in both charts; the two charts publish the same K; one hole alone in the Cartesian
+    chart is the isotropic chart's K at r = |z - 2m|, which is 8m^2(6r^2 + m^2)/(r + m)^8; K is
+    positive and finite at every cell and below 8/m^4 on a grid four times as fine as the map's;
+    toward each horizon K tends to 8/m^4 from every direction, and g_zz d^2 to m^2, so that the
+    point is a sphere of area 4 pi m^2; within a coordinate distance d of a hole K is one hole's at
+    5d/4, to a part in 10^4 at d = m/100 and falling as d^2, (8 - 80d/m)/m^4 against one hole's
+    (8 - 64d/m)/m^4; at the midpoint every published component of the Einstein tensor vanishes and
+    K = 3/64m^4, against one hole's 200/6561m^4 at 2m; far out K r^6 tends to 192m^2; along the
+    axis K rises from the midpoint to each horizon and falls beyond it, and crosses one hole's alone
+    at |z| = 0.308m and 10.39m alone; far out it tends to four times one hole's; g^zz is positive
+    along the axis, so no horizon is marked; and the clips stated, that no value passes either end,
+    with the least value of the map at its far corners and of the line view at its ends."""
+    one = 1.0
+    (r0, r1), (z0, z1) = MP_BOX
+    pair = {"U": nr.MP_TWO_CYLINDRICAL}
+    K = nr_published(src, "majumdar_papapetrou", "cylindrical", "kretschmann", ["rho", "z"], [], functions=pair)
+    ricci = nr_published(src, "majumdar_papapetrou", "cylindrical", "ricci_scalar", ["rho", "z"], [], functions=pair)
+    Kc = nr_published(src, "majumdar_papapetrou", "cartesian", "kretschmann", ["z", "x", "y"], [],
+                      functions={"U": nr.MP_TWO})
+    ricci_c = nr_published(src, "majumdar_papapetrou", "cartesian", "ricci_scalar", ["z", "x", "y"], [],
+                           functions={"U": nr.MP_TWO})
+    alone = [nr_published(src, "majumdar_papapetrou", "cartesian", "kretschmann", ["z", "x", "y"], [],
+                          functions={"U": u}) for u in MP_ALONE]
+    Ki = nr_published(src, "majumdar_papapetrou", "isotropic", "kretschmann", ["r"], ["m"])
+    gzz = nr_published(src, "majumdar_papapetrou", "cylindrical", "metric_components", ["rho", "z"], [], ("z", "z"),
+                       functions=pair)
+
+    def iso(r):
+        return float(Ki.exact([r, one]))
+
+    rng = np.random.default_rng(1947)
+    points = [(float(r * math.sin(t)), float(r * math.cos(t)))
+              for r, t in zip(rng.uniform(0.05, 7, 16), rng.uniform(0, math.pi, 16))]
+    worst = max(max(abs(float(ricci.exact([rho, z]))), abs(float(ricci_c.exact([z, rho, 0.0]))))
+                for rho, z in points)
+    ck("majumdar_papapetrou the published Ricci scalar vanishes on the pair in both charts, in sixty digits",
+       worst < 1e-40, f"worst {worst:.1e}")
+    worst = max(abs(float(Kc.exact([z, rho * math.cos(p), rho * math.sin(p)]) / K.exact([rho, z])) - 1)
+                for (rho, z), p in zip(points, rng.uniform(0, 2 * math.pi, len(points))))
+    ck("majumdar_papapetrou the Cartesian chart's K is the cylindrical chart's at the same point", worst < 1e-12,
+       f"worst {worst:.1e}")
+    worst = max(abs(float(alone[0].exact([z, x, y])) / iso(math.sqrt(x * x + y * y + (z - 2) ** 2)) - 1)
+                for x, y, z in rng.uniform(-4, 4, (12, 3)))
+    ck("majumdar_papapetrou one hole alone in the Cartesian chart is the isotropic chart's K", worst < 1e-12,
+       f"worst {worst:.1e}")
+    ck("majumdar_papapetrou the isotropic chart publishes K = 8m^2(6r^2 + m^2)/(r + m)^8",
+       all(abs(iso(r) / (8 * (6 * r * r + 1) / (r + 1) ** 8) - 1) < 1e-14 for r in (0.1, 0.5, 1, 2, 4)))
+
+    # The horizons, approached along seven directions: K tends to 8/m^4, the area of the sphere to
+    # 4 pi m^2, and close by K is one hole's at 5/4 of the distance.
+    angles = [k * math.pi / 6 for k in range(7)]
+    angles[0], angles[-1] = 1e-9, math.pi - 1e-9
+
+    def near(angle, d, hole=2.0):
+        return [d * math.sin(angle), hole + d * math.cos(angle)]
+    limits = [float(K.exact(near(a, 1e-9, h))) for a in angles for h in (2.0, -2.0)]
+    ck("majumdar_papapetrou K tends to 8/m^4 toward each horizon from every direction",
+       all(abs(v / 8 - 1) < 1e-7 for v in limits), f"{min(limits):.10f} to {max(limits):.10f}")
+    ck("majumdar_papapetrou K at the horizon of one hole alone is 8/m^4", abs(iso(0.0) - 8) < 1e-40)
+    areas = [float(gzz.exact(near(a, d, h))) * d * d for a in angles for h in (2.0, -2.0) for d in (1e-8,)]
+    ck("majumdar_papapetrou g_zz d^2 tends to m^2 toward each horizon, a sphere of area 4 pi m^2",
+       all(abs(v - 1) < 1e-7 for v in areas), f"{min(areas):.10f} to {max(areas):.10f}")
+    # At d = 10^-4 m, where the doubles of the point still give d to a part in 10^11, and the other
+    # hole's potential differs from 1/4 by about d/16.
+    offsets = [float(sp.sqrt(gzz.exact(near(a, 1e-4, h)))) - 1e4 for a in angles for h in (2.0, -2.0)]
+    ck("majumdar_papapetrou U - m/d tends to 5/4 toward each horizon, the other hole adding 1/4 to one hole's 1",
+       all(abs(v - 1.25) < 1e-5 for v in offsets), f"{min(offsets):.9f} to {max(offsets):.9f}")
+    stretch = [[float(K.exact(near(a, d))) / iso(1.25 * d) - 1 for d in (1e-2, 1e-3, 1e-4)] for a in angles]
+    ck("majumdar_papapetrou within d of a hole K is one hole's at 5d/4, to a part in 10^4 at d = m/100, "
+       "the difference falling as d^2",
+       all(abs(s[0]) < 1e-4 and abs(s[1]) < 1.5e-2 * abs(s[0]) + 1e-15 and abs(s[2]) < 1.5e-2 * abs(s[1]) + 1e-15
+           for s in stretch), f"{[s[0] for s in stretch]}")
+    slopes = [(8 - float(K.exact(near(a, 1e-7)))) / 1e-7 for a in angles] + [(8 - iso(1e-7)) / 1e-7]
+    ck("majumdar_papapetrou K falls from a horizon as (8 - 80d/m)/m^4, and one hole's as (8 - 64d/m)/m^4",
+       all(abs(s / 80 - 1) < 1e-5 for s in slopes[:-1]) and abs(slopes[-1] / 64 - 1) < 1e-5, f"{slopes}")
+
+    # The midpoint, where the field vanishes, and far out.
+    centre = 1e-12
+    midpoint = float(K.exact([centre, 0.0]))
+    ck("majumdar_papapetrou K at the midpoint is 3/64m^4", abs(midpoint * 64 / 3 - 1) < 1e-20, f"{midpoint}")
+    entry = json.loads((build.METRICS_DIR / "majumdar_papapetrou.json").read_text(encoding="utf-8"))
+    cylindrical = next(s for s in entry["coordinates"] if s["id"] == "cylindrical")
+    worst = 0.0
+    for comp in cylindrical["einstein_tensor"]["variants"]["ul"]["nonzero"]:
+        G = nr_published(src, "majumdar_papapetrou", "cylindrical", "einstein_tensor", ["rho", "z"], [],
+                         comp["indices"], pair)
+        worst = max(worst, abs(float(G.exact([centre, 0.0]))))
+    ck("majumdar_papapetrou every published component of the Einstein tensor vanishes at the midpoint",
+       worst < 1e-20, f"{worst:.1e}")
+    single = iso(2.0)
+    ck("majumdar_papapetrou one hole alone has K = 200/6561m^4 at 2m", abs(single * 6561 / 200 - 1) < 1e-40,
+       f"{single}")
+    far = [[float(K.exact([r * math.sin(t), r * math.cos(t)])) * r ** 6 / 192 for t in (1e-3, math.pi / 4, math.pi / 2)]
+           for r in (1e7, 1e8)]
+    ck("majumdar_papapetrou K r^6 tends to 192m^2 far out, as one extremal hole's of mass parameter 2m",
+       all(abs(q - 1) < 2e-5 for row in far for q in row), f"{far}")
+
+    # The map.
+    x_axis, y_axis = axis("$\\rho/m$", r0, r1), axis("$z/m$", z0, z1)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "majumdar_papapetrou map", [aspect])
+    scale = dict(MP_SCALE)
+    nx, ny = MP_CELLS
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [])
+    ck("majumdar_papapetrou K is finite and positive at every cell", np.all(np.isfinite(values)) and np.all(values > 0),
+       f"from {np.min(values):.4e} to {np.max(values):.4e}")
+    picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+    # The cells beside each horizon, and the corners.
+    picks |= {(i, j) for i in (0, 1) for j in (ny // 2 + 2 * ny // 10 - 1, ny // 2 + 2 * ny // 10,
+                                                ny // 2 - 2 * ny // 10 - 1, ny // 2 - 2 * ny // 10)}
+    picks |= {(nx - 1, 0), (nx - 1, ny - 1), (0, 0), (0, ny - 1)}
+    picks = sorted(picks)
+    agrees(ck, "majumdar_papapetrou map", K, [[xs[i], ys[j]] for i, j in picks], [values[j, i] for i, j in picks])
+    fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [])
+    corner = float(K.exact([r1, z1]))
+    ck("majumdar_papapetrou K is below 8/m^4 everywhere and least at the far corners of the box",
+       np.all(fine < 8) and np.all(fine >= corner) and abs(float(K.exact([r1, z0])) / corner - 1) < 1e-40,
+       f"from {np.min(fine):.4e} to {np.max(fine):.6f}, {corner:.6e} at the corners")
+    ck("majumdar_papapetrou K stays inside its colours, its least value a few times 10^-4 as the clip writes it",
+       scale["from"] < corner < 1e-3 and 8 < scale["to"], f"{corner:.6e}")
+    meridian = {
+        "id": "meridian", "label": "the half plane of $\\rho$ and $z$", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "majumdar_papapetrou", "system": "cylindrical", "scalar": "kretschmann", "x": "\\rho",
+                "y": "z", "params": {}, "functions": dict(pair), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [],
+        "legend": [],
+        "caption": [
+            "The Kretschmann scalar $K$ of two Majumdar-Papapetrou holes over the half plane of $\\rho$ and $z$ "
+            "($m = 1$, the holes at $z = \\pm 2m$), the same at every $t$ and $\\phi$. $U$ is harmonic away from "
+            "the holes, so the Ricci scalar vanishes, and $K$ is positive and finite everywhere.",
+            "Each horizon is a sphere of area $4\\pi m^2$, which the chart draws as the one point $\\rho = 0$, "
+            "$z = \\pm 2m$, and toward it $K$ tends to $8/m^4$ from every direction, the value at the horizon of "
+            "one hole alone. Within a small coordinate distance $d$ of a hole $U$ is near $5/4 + m/d$, the other "
+            "hole adding $1/4$ to one hole's $1 + m/d$, and that only rescales the distance: there $K$ is one "
+            "hole's at $5d/4$, $(8 - 80d/m)/m^4$ against one hole's $(8 - 64d/m)/m^4$.",
+            "Midway between the holes the electric field vanishes, and $K = 3/64m^4$ is the tidal curvature alone. "
+            "Far out the pair is one extremal hole of mass parameter $2m$, and $K$ falls off as $192m^2/r^6$, "
+            "with $r = \\sqrt{\\rho^2 + z^2}$.",
+        ],
+        "settings": "$m = GM/c^2 = 1$, the unit of every length.",
+        "input": MP_MAP_INPUT,
+        "clip": ("We colour $K\\,m^4$ on a logarithmic scale from $10^{-4}$ to $10^{1}$, and no value passes either "
+                 "end: $K$ tends to its greatest value, $8/m^4$, at each horizon and is least, "
+                 f"${tex_number(corner)}/m^4$, at the far corners of the box, $\\rho = 5m$, "
+                 "$z = \\pm 5m$."),
+    }
+
+    # K along the axis, beside each hole alone.
+    z_axis = axis("$z/m$", z0, z1)
+    panels = [{"id": "K", "name": "$K\\,m^4$", "aspect": 2, "scale": scale, "ticks": value_ticks(scale)}]
+    shape_checks(ck, "majumdar_papapetrou line", [p["aspect"] for p in panels])
+    height = PLOT_W / panels[0]["aspect"]
+    on_axis = {"x": 0.0, "y": 0.0}
+    pair_axis = Held(Kc, on_axis)
+    alone_axis = [Held(a, on_axis) for a in alone]
+    curves = []
+    for k, fn in enumerate(alone_axis):
+        curves += line_curves(ck, f"majumdar_papapetrou alone {k}", "K", "reference", fn, "z", z_axis, scale,
+                              height, {})
+    curves += line_curves(ck, "majumdar_papapetrou axis", "K", "K", pair_axis, "z", z_axis, scale, height, {})
+    gzz_inv = Held(nr_published(src, "majumdar_papapetrou", "cartesian", "inverse_metric_components", ["z", "x", "y"],
+                                [], ("z", "z"), {"U": nr.MP_TWO}), on_axis)
+    zs = np.linspace(z0, z1, SAMPLES)
+    g = gzz_inv(zs)
+    ck("majumdar_papapetrou g^zz = 1/U^2 is positive along the axis but at the horizons, where it vanishes without "
+       "changing sign, so no horizon is marked", np.all(g[np.abs(np.abs(zs) - 2) > 1e-9] > 0) and np.all(g >= 0))
+    between, outside = np.linspace(1e-6, 2 - 1e-6, 200001), np.linspace(2 + 1e-6, z1, 200001)
+    ck("majumdar_papapetrou K on the axis rises from the midpoint to each horizon and falls beyond it",
+       np.all(np.diff(pair_axis(between)) > 0) and np.all(np.diff(pair_axis(outside)) < 0)
+       and np.allclose(pair_axis(-between), pair_axis(between), rtol=1e-12, atol=0))
+    ck("majumdar_papapetrou K on the axis at the midpoint is the map's",
+       abs(float(pair_axis.exact([0.0])) / midpoint - 1) < 1e-20)
+
+    def gap(z):
+        return float(pair_axis(z)) - float(alone_axis[0](z))
+    reach = np.linspace(1e-6, 2 - 1e-6, 4001).tolist() + np.linspace(2 + 1e-6, 40, 40001).tolist()
+    signs = np.sign([gap(z) for z in reach])
+    flips = [i for i in range(len(reach) - 1) if signs[i] != signs[i + 1] and abs(reach[i + 1] - reach[i]) < 0.01]
+    cuts = [crossing(gap, reach[i], reach[i + 1]) for i in flips]
+    ck("majumdar_papapetrou K on the axis crosses one hole's alone at |z| = 0.308m and 10.39m alone, above it about "
+       "the midpoint and far out and below it beside the hole",
+       len(cuts) == 2 and abs(cuts[0] - 0.308) < 5e-4 and abs(cuts[1] - 10.39) < 5e-3 and gap(0.0) > 0
+       and gap(1.0) < 0 and gap(5.0) < 0 and gap(20.0) > 0, f"{cuts}")
+    tail = [float(pair_axis.exact([z])) / float(alone_axis[0].exact([z])) for z in (1e7, 1e8)]
+    ck("majumdar_papapetrou K on the axis tends far out to four times one hole's alone",
+       all(abs(q / 4 - 1) < 1e-5 for q in tail), f"{tail}")
+    least = min(float(fn.exact([z])) for fn in alone_axis for z in (z0, z1))
+    lowest = min(float(np.nanmin(fn(zs))) for fn in alone_axis + [pair_axis])
+    for name, fn in (("the pair", pair_axis), ("one hole", alone_axis[0]), ("the other", alone_axis[1])):
+        up, down = beyond(fn, z_axis, scale, [])
+        # The published K is not a number at a horizon itself, which beyond() counts as above.
+        ck(f"majumdar_papapetrou {name} stays inside its panel", not down and all(b - a < 1e-9 for a, b in up),
+           f"{up} {down}")
+    ck("majumdar_papapetrou the least value on the axis is one hole's alone at the far end",
+       abs(lowest / least - 1) < 1e-12 and scale["from"] < least < 1e-3, f"{least:.6e}")
+    cut_in, cut_out = cuts
+    line = {
+        "id": "axis", "label": "the axis", "kind": "line", "x": z_axis, "panels": panels, "curves": curves,
+        "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar of the pair"],
+                   ["line", "reference", "one hole alone, at $z = 2m$ or at $z = -2m$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the same two holes along the axis $\\rho = 0$ ($m = 1$), the same at every "
+            "$t$, beside each hole alone, which is the extremal Reissner-Nordström black hole, with "
+            "$K = 8m^2(6r^2 + m^2)/(r + m)^8$ at the coordinate distance $r$ from it.",
+            "At each horizon both reach $8/m^4$. Beside it the pair's $K$ is the lower, in to "
+            f"$z = \\pm {cut_in:.3f}\\,m$ between the holes and out to $z = \\pm {cut_out:.2f}\\,m$ beyond them, and "
+            f"about the midpoint it is the higher, $3/64m^4 = {midpoint:.4f}/m^4$ against one hole's "
+            f"$200/6561m^4 = {single:.4f}/m^4$. Far out it tends to four times one hole's.",
+        ],
+        "settings": "$m = GM/c^2 = 1$, the unit of every length.",
+        "input": MP_LINE_INPUT,
+        "clip": ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-4}$ to $10^{1}$, and no curve leaves it: the "
+                 f"least value drawn is one hole's alone at the far end of the axis, ${tex_number(least)}/m^4$."),
+    }
+    return [meridian, line]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -6828,6 +7082,7 @@ DRAWN = {
     "kerr_taub_nut": kerr_taub_nut,
     "khan_penrose": khan_penrose,
     "kiselev": kiselev,
+    "majumdar_papapetrou": majumdar_papapetrou,
     "mcvittie": mcvittie,
     "melvin": melvin,
 }
