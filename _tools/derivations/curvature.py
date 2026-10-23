@@ -4817,6 +4817,222 @@ def einstein_rosen_waves(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Khan and Penrose's colliding plane waves
+
+KP_BOX = ((-math.pi / 2, math.pi / 2), (0, math.pi / 2))   # sigma and tau: the triangle where both waves have passed
+# The cells of the map across and up, a two hundredth of pi wide and as tall: one more across than
+# twice up, so that no cell's centre lies on a front, where the centres of square cells would.
+KP_CELLS = (201, 100)
+KP_SCALE = {"kind": "log", "from": 1.0, "to": 1e9}          # the colours of K L^4
+KP_DOMAIN = "Abs(sigma) <= tau"                              # the cosmological chart's domain, where both waves have passed
+KP_TOP = 1e9                                                # where the clip says K leaves the colours
+
+
+def domain_function(metric_id, system_id, text, coords, params):
+    """The domain a map declares for its chart, a closed form in sympy's spelling of the chart's
+    coordinates and parameters, as a numpy function true where the chart holds, read as
+    _tools/test_curvature.py reads it."""
+    _, _, reader = nr.load(metric_id, system_id)
+    names = {reader._plain(n): s for n, s in reader.symbol.items()}
+    names.update(reader.parameters)
+    expr = sp.sympify(text, locals={**nr.DECLARED_FUNCTIONS, **names})
+    symbols = [names[c] for c in coords] + [reader.parameters[p] for p in params]
+    if expr.free_symbols - set(symbols):
+        raise SystemExit(f"{metric_id}/{system_id}: the domain {text!r} depends on more than the map sets")
+    fn = sp.lambdify(symbols, expr, "numpy")
+    return lambda *values: np.broadcast_to(np.asarray(fn(*values), dtype=bool),
+                                           np.broadcast(*[np.asarray(v, dtype=float) for v in values]).shape)
+
+
+def khan_penrose(ck, src):
+    """Khan and Penrose's colliding plane waves at L = 1, their Kretschmann scalar over the plane
+    of sigma and tau of the cosmological chart, the region where both waves have passed.
+
+    The cosmological chart publishes K in tau and sigma alone, the same at every x and y, and
+    R = 0, since the spacetime is a vacuum, so the figure is K alone: a map over the box
+    |sigma| <= pi/2, 0 <= tau <= pi/2, in 201 cells across and 100 up, coloured on a logarithmic
+    scale from 1 to 10^9 in units of 1/L^4. The chart holds on the triangle |sigma| <= tau, which
+    the map declares as its domain, and every cell whose centre lies outside it, ahead of one
+    front or the other, where the spacetime is flat, is null and left the ground. The fronts
+    sigma = tau, where v = 0, and sigma = -tau, where u = 0, are marked as lines, and the two
+    corners where each meets the singularity tau = pi/2, at u = 1 and at v = 1, as points.
+
+    What the caption states is checked here, in sixty digits: the published Ricci scalar
+    vanishes; the declared domain is the published one; the cosmological chart's K is the double
+    null chart's at u = sin((tau + sigma)/2) and v = sin((tau - sigma)/2), and its fronts u = 0
+    and v = 0 are sigma = -tau and sigma = tau; K = 48/L^4 where the waves meet and
+    48/L^4 cos^6 tau on each front, which is 48/L^4 (1 - u^2)^3 on v = 0; K grows with tau at
+    every sigma and with cos sigma at every tau, so that it is greatest on sigma = 0, least on
+    the fronts and least of all where the waves meet, which the sign of its derivative in
+    cos^2 sigma shows for every point of the triangle; toward the singularity
+    K cos^7 tau tends to 63 cos(sigma)/L^4 off the fronts, measured at pi/2 - tau = 10^-12,
+    while on the fronts it is 48 cos(tau)/L^4; and the clip stated, where K passes 10^9 on
+    sigma = 0 and on the fronts, found by bisection."""
+    L = 1.0
+    COS = "cosmological"
+    (s0, s1), (t0, t1) = KP_BOX
+    x_axis = {"name": "$\\sigma$", "from": s0, "to": s1,
+              "ticks": [{"at": -math.pi / 2, "label": "$-\\pi/2$"}, {"at": -math.pi / 4, "label": "$-\\pi/4$"},
+                        {"at": 0.0, "label": "$0$"}, {"at": math.pi / 4, "label": "$\\pi/4$"},
+                        {"at": math.pi / 2, "label": "$\\pi/2$"}]}
+    y_axis = {"name": "$\\tau$", "from": t0, "to": t1,
+              "ticks": [{"at": 0.0, "label": "$0$"}, {"at": math.pi / 4, "label": "$\\pi/4$"},
+                        {"at": math.pi / 2, "label": "$\\pi/2$"}]}
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "khan_penrose", [aspect])
+    scale = dict(KP_SCALE)
+
+    K = nr_published(src, "khan_penrose", COS, "kretschmann", ["sigma", "tau"], ["L"])
+    ricci = nr_published(src, "khan_penrose", COS, "ricci_scalar", ["sigma", "tau"], ["L"])
+    Kd = nr_published(src, "khan_penrose", "double_null", "kretschmann", ["u", "v"], ["L"])
+    ck("khan_penrose the published Ricci scalar vanishes", ricci.expr == 0)
+    entry = json.loads((build.METRICS_DIR / "khan_penrose.json").read_text(encoding="utf-8"))
+    chart = next(c for c in entry["coordinates"] if c["id"] == COS)
+    ck("khan_penrose the declared domain is the published one, tau in [0, pi/2) and |sigma| <= tau",
+       chart["domains"][:2] == ["\\tau \\in [0, \\pi/2)", "\\sigma \\in [-\\tau, \\tau]"], f"{chart['domains'][:2]}")
+
+    def exact(sigma, tau):
+        return K.exact([sigma, tau, L])
+
+    # The two charts' scalars at one event, and which front is which.
+    rng = np.random.default_rng(1971)
+    taus = rng.uniform(0.01, t1 - 0.01, 12)
+    events = [(float(rng.uniform(-t, t)), float(t)) for t in taus]
+    def at_event(fn, sg, ta):
+        a, b = sp.Float(sg, 70), sp.Float(ta, 70)
+        return fn.expr.xreplace({fn.coords[0]: sp.sin((b + a) / 2), fn.coords[1]: sp.sin((b - a) / 2),
+                                 fn.params[0]: sp.Float(L, 70)}).evalf(60)
+    worst = max(abs(float(exact(sg, ta) / at_event(Kd, sg, ta)) - 1) for sg, ta in events)
+    ck("khan_penrose the cosmological chart's K is the double null chart's at u = sin((tau + sigma)/2), "
+       "v = sin((tau - sigma)/2), in sixty digits", worst < 1e-40, f"worst {worst:.1e}")
+    # The map between the charts carries the double null metric onto the cosmological one: with
+    # u = sin a and v = sin b, tau = a + b and sigma = a - b, g_tautau = -g_sigmasigma = g_uv cos a cos b/2,
+    # so that sigma = tau is v = 0 and sigma = -tau is u = 0.
+    def metric(system, coords, indices):
+        return nr_published(src, "khan_penrose", system, "metric_components", coords, ["L"], indices)
+    guv = metric("double_null", ["u", "v"], ("u", "v"))
+    gxd = metric("double_null", ["u", "v"], ("x", "x"))
+    gtt = metric(COS, ["sigma", "tau"], ("\\tau", "\\tau"))
+    gss = metric(COS, ["sigma", "tau"], ("\\sigma", "\\sigma"))
+    gxc = metric(COS, ["sigma", "tau"], ("x", "x"))
+    worst = 0.0
+    for sg, ta in events:
+        a, b = sp.Float((ta + sg) / 2, 70), sp.Float((ta - sg) / 2, 70)
+        uv = [float(sp.sin(a)), float(sp.sin(b)), L]
+        pulled = guv.exact(uv) * sp.cos(a) * sp.cos(b) / 2
+        for got, want in ((gtt.exact([sg, ta, L]), pulled), (gss.exact([sg, ta, L]), -pulled), (gxc.exact([sg, ta, L]), gxd.exact(uv))):
+            worst = max(worst, abs(float(got / want) - 1))
+    ck("khan_penrose the double null metric at u = sin((tau + sigma)/2), v = sin((tau - sigma)/2) is the cosmological one",
+       worst < 1e-12, f"worst {worst:.1e}")
+
+    domain = domain_function("khan_penrose", COS, KP_DOMAIN, ["sigma", "tau"], ["L"])
+    nx, ny = KP_CELLS
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [L])
+    X, Y = np.meshgrid(xs, ys)
+    inside = domain(X, Y, L)
+    ck("khan_penrose no cell's centre lies within 10^-6 of a front", np.min(np.abs(np.abs(X) - Y)) > 1e-6,
+       f"nearest {np.min(np.abs(np.abs(X) - Y)):.2e}")
+    ck("khan_penrose the cells drawn are the same at -sigma", np.array_equal(inside, inside[:, ::-1])
+       and np.allclose(values[inside], values[:, ::-1][inside], rtol=1e-9, atol=0), f"{int(inside.sum())} drawn")
+    ck("khan_penrose K is finite and positive at every cell drawn",
+       np.all(np.isfinite(values[inside])) and np.all(values[inside] > 0),
+       f"from {np.min(values[inside]):.4e} to {np.max(values[inside]):.4e}")
+    # Forty cells or more spread over the triangle, and the cells drawn nearest the apex, the top and
+    # each top corner, where K is largest.
+    top = np.flatnonzero(inside[ny - 1])
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 200), rng.integers(0, ny, 200)) if inside[j, i]}
+                   | {(nx // 2, 0), (nx // 2, ny - 1), (int(top[0]), ny - 1), (int(top[-1]), ny - 1)})
+    ck("khan_penrose forty cells or more are checked in sixty digits, beside the apex, the top and its corners among them",
+       len(picks) >= 40 and all(inside[j, i] for i, j in picks), f"{len(picks)} cells")
+    agrees(ck, "khan_penrose map", K, [[xs[i], ys[j], L] for i, j in picks], [values[j, i] for i, j in picks])
+
+    # Where the waves meet, and on each front.
+    meet = float(exact(0.0, 0.0))
+    ck("khan_penrose K = 48/L^4 where the waves meet", abs(meet - 48) < 1e-40, f"{meet}")
+    fronts = [float(exact(sign * ta, ta) * sp.cos(sp.Float(ta, 70)) ** 6) for ta in (0.1, 0.7, 1.3, 1.55) for sign in (1, -1)]
+    ck("khan_penrose K = 48/L^4 cos^6 tau on each front", all(abs(f - 48) < 1e-40 for f in fronts), f"{fronts}")
+    on_v0 = [float(Kd.exact([u, 0.0, L]) * (1 - sp.Float(u, 70) ** 2) ** 3) for u in (0.1, 0.5, 0.9, 0.999)]
+    ck("khan_penrose K = 48/L^4 (1 - u^2)^3 on the front v = 0", all(abs(f - 48) < 1e-40 for f in on_v0), f"{on_v0}")
+
+    # K grows with cos sigma at every tau: its derivative in S = cos^2 sigma, at C = cos^2 tau, is
+    # S^(-5/2) (63 S^2/2 + 9 S C - 9 C^2/2) times 1/L^4 C^(7/2), positive wherever S >= C > 0, as it
+    # is on the triangle; and it grows with tau at every sigma, on a fine grid.
+    Ssym, Csym = sp.symbols("S C", positive=True)
+    form = (3 * Csym ** 2 + 63 * Ssym ** 2 - 18 * Ssym * Csym) / (Ssym ** sp.Rational(3, 2) * Csym ** sp.Rational(7, 2))
+    cs, ct = sp.symbols("c_sigma c_tau", positive=True)       # cos sigma and cos tau, positive on the triangle
+    same = sp.simplify(K.expr.subs({K.params[0]: 1, sp.cos(K.coords[0]): cs, sp.cos(K.coords[1]): ct})
+                       - form.subs({Ssym: cs ** 2, Csym: ct ** 2}))
+    ck("khan_penrose K is the published form in S = cos^2 sigma and C = cos^2 tau", same == 0, f"{same}")
+    slope = sp.factor(sp.diff(form, Ssym) * Ssym ** sp.Rational(5, 2) * Csym ** sp.Rational(7, 2))
+    ck("khan_penrose dK/dS is (63 S^2/2 + 9 S C - 9 C^2/2) / S^(5/2) C^(7/2)",
+       sp.simplify(slope - (sp.Rational(63, 2) * Ssym ** 2 + 9 * Ssym * Csym - sp.Rational(9, 2) * Csym ** 2)) == 0, f"{slope}")
+    ck("khan_penrose so K grows with cos sigma at every tau, wherever S >= C, as on the triangle",
+       sp.Rational(63, 2) + 9 - sp.Rational(9, 2) > 0)
+    fx, fy, fine = cells(K, x_axis, y_axis, 2 * nx, 2 * ny, [L])
+    FX, FY = np.meshgrid(fx, fy)
+    fin = domain(FX, FY, L)
+    rising = all(np.all(np.diff(fine[fin[:, i], i]) > 0) for i in range(fine.shape[1]) if fin[:, i].sum() > 1)
+    ck("khan_penrose K grows with tau at every sigma, on a grid twice as fine as the map's", rising)
+    ck("khan_penrose so K is least where the waves meet", float(np.min(fine[fin])) > meet, f"{np.min(fine[fin]):.6f}")
+
+    # Toward the singularity, off the fronts and on them.
+    gap = sp.Float("1e-12", 70)
+    near = sp.pi / 2 - gap
+    tails = [float(K.expr.subs({K.coords[0]: sp.Float(sg, 70), K.coords[1]: near, K.params[0]: 1}).evalf(60)
+                   * sp.cos(near).evalf(60) ** 7 / sp.cos(sp.Float(sg, 70))) for sg in (0.0, 0.5, 1.0, 1.4)]
+    ck("khan_penrose K cos^7 tau tends to 63 cos(sigma)/L^4 off the fronts, at pi/2 - tau = 10^-12",
+       all(abs(t / 63 - 1) < 1e-9 for t in tails), f"{tails}")
+
+    # The clip: where K passes the top of its colours on sigma = 0 and on the fronts.
+    def passes(fn):
+        lo, hi = 0.0, t1
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if fn(mid) < KP_TOP else (lo, mid)
+        return 0.5 * (lo + hi)
+    middle = passes(lambda ta: float(K(0.0, ta, L)))
+    front = passes(lambda ta: 48 / math.cos(ta) ** 6)
+    ck("khan_penrose K passes 10^9 on sigma = 0 below where it does on the fronts, and at no cell below it",
+       middle < front and np.all(values[inside & (Y < middle)] < KP_TOP), f"{middle:.6f} and {front:.6f}")
+    ck("khan_penrose K stays above the bottom of its colours", scale["from"] < meet)
+
+    rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(values, inside)]
+    view = {
+        "id": "interaction", "label": "the plane of $\\sigma$ and $\\tau$", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,L^4$", "scale": scale, "ticks": every_second(scale)},
+        "map": {"metric": "khan_penrose", "system": COS, "scalar": "kretschmann", "x": "\\sigma", "y": "\\tau",
+                "params": {"L": L}, "domain": KP_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
+        "marks": [{"class": "front", "points": [[0.0, 0.0], [math.pi / 2, math.pi / 2]]},
+                  {"class": "front", "points": [[0.0, 0.0], [-math.pi / 2, math.pi / 2]]},
+                  {"class": "singular", "at": [math.pi / 2, math.pi / 2]},
+                  {"class": "singular", "at": [-math.pi / 2, math.pi / 2]}],
+        "legend": [["line", "front", "the wave fronts, $u = 0$ and $v = 0$"],
+                   ["point", "singular", "where a front meets the singularity, $u = 1$ or $v = 1$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the Khan-Penrose spacetime where both waves have passed, over the plane "
+            "of $\\sigma$ and $\\tau$ ($L = 1$), the same at every $x$ and $y$, with $\\tau$ growing toward the "
+            "singularity. The spacetime is a vacuum, so its Ricci scalar vanishes. Outside the triangle "
+            "$|\\sigma| \\le \\tau$, ahead of one wave or the other, it is flat, and the map leaves it blank.",
+            "The waves meet at $\\sigma = \\tau = 0$, where $K = 48/L^4$, its least value. Their fronts are "
+            "impulsive, $v = 0$ on $\\sigma = \\tau$ and $u = 0$ on $\\sigma = -\\tau$, with "
+            "$u = \\sin\\tfrac{1}{2}(\\tau + \\sigma)$ and $v = \\sin\\tfrac{1}{2}(\\tau - \\sigma)$. Each "
+            "carries its curvature as a delta function on the front, and behind it $K$ jumps from zero to "
+            "$48/L^4\\cos^6\\tau$, which is $48/L^4(1 - u^2)^3$ on $v = 0$.",
+            "Each wave focuses the other, and at $\\tau = \\pi/2$, which is $u^2 + v^2 = 1$, they end in a "
+            "spacelike singularity, the top of the map. $K$ grows with $\\tau$ at every $\\sigma$ and is "
+            "greatest on $\\sigma = 0$ at every $\\tau$. Toward the singularity it grows as "
+            "$63\\cos\\sigma/L^4\\cos^7\\tau$ between the fronts and as $48/L^4\\cos^6\\tau$ on them. "
+            "Each front meets the singularity at a top corner of the map, at $u = 1$ on $v = 0$ and at $v = 1$ "
+            "on $u = 0$, where the fold singularities $u = 1$ and $v = 1$ of the flat regions end.",
+        ],
+        "settings": "$L = 1$, the focal length of each wave, the unit of every length.",
+        "clip": ("We colour $K\\,L^4$ on a logarithmic scale from $1$ to $10^{9}$ and give a value beyond it the "
+                 f"colour of its top: $K$ passes $10^{{9}}/L^4$ above $\\tau = {middle:.3f}$ on $\\sigma = 0$ and "
+                 f"above $\\tau = {front:.3f}$ on the fronts."),
+    }
+    return [view]
+
+
 # ---------------------------------------------------------------- Kiselev's black hole
 
 KISELEV_W = Fraction(-2, 3)       # w, as every drawing of Kiselev's black hole takes it
@@ -6606,6 +6822,7 @@ DRAWN = {
     "kerr": kerr,
     "kerr_newman": kerr_newman,
     "kerr_taub_nut": kerr_taub_nut,
+    "khan_penrose": khan_penrose,
     "kiselev": kiselev,
     "mcvittie": mcvittie,
     "melvin": melvin,

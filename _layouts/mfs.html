@@ -3722,7 +3722,8 @@
       function cvStops(scale) { return CV_RAMPS[cvSigned(scale) ? 'diverging' : 'sequential']; }
 
       // A map's cells as an image of a pixel each, the bottom row of the file the bottom of the
-      // image; the browser smooths it as it draws it larger.
+      // image; the browser smooths it as it draws it larger. A null cell, outside the domain of the
+      // map's chart, is left clear, so that the plot's ground shows there.
       function cvImage(grid, scale, stops) {
         var canvas = document.createElement('canvas');
         canvas.width = grid.nx;
@@ -3730,7 +3731,9 @@
         var ctx = canvas.getContext('2d'), img = ctx.createImageData(grid.nx, grid.ny);
         for (var j = 0; j < grid.ny; j++) {
           for (var i = 0; i < grid.nx; i++) {
-            var c = cvColour(stops, cvRampAt(scale, grid.cells[j][i])), o = 4 * ((grid.ny - 1 - j) * grid.nx + i);
+            var v = grid.cells[j][i], o = 4 * ((grid.ny - 1 - j) * grid.nx + i);
+            if (v === null) continue;
+            var c = cvColour(stops, cvRampAt(scale, v));
             img.data[o] = c[0]; img.data[o + 1] = c[1]; img.data[o + 2] = c[2]; img.data[o + 3] = 255;
           }
         }
@@ -3952,7 +3955,7 @@
         return at.toFixed(3).replace('-', '−').padStart(Math.max(lo.toFixed(3).length, hi.toFixed(3).length));
       }
       function cvReadValue(v) {
-        if (!isFinite(v)) return '';
+        if (v === null || !isFinite(v)) return '';
         var text = v === 0 ? '0' : Math.abs(v) >= 1e4 || Math.abs(v) < 1e-3 ? v.toExponential(3).replace('e+', 'e') : v.toPrecision(4);
         return text.replace(/-/g, '−').padStart(10);
       }
@@ -5748,6 +5751,8 @@
     /* An ergosurface is dotted, as the conformal and embedding diagrams dot theirs, and white, as
        every line on a map is. */
     .cv-ergosurface { fill: none; stroke: var(--text-bright); stroke-width: 2.4; stroke-dasharray: 1 4.5; stroke-linecap: round; }
+    /* An impulsive wave front is solid and white, as every line on a map is. */
+    .cv-front { fill: none; stroke: var(--text-bright); stroke-width: 2; }
     .cv-axis-zero { stroke: rgba(238,242,245,0.3); stroke-width: 1; }
     circle.cv-singular { fill: var(--pink-dark); stroke: #000; stroke-width: 1.2; }
     circle.cv-zero { fill: none; stroke: var(--text-bright); stroke-width: 2; }
@@ -6433,6 +6438,7 @@
       .mfs-print-body .cv-string { stroke: #a8841f; }
       .mfs-print-body .cv-map .cv-horizon { stroke: #000; }
       .mfs-print-body .cv-ergosurface { stroke: #000; }
+      .mfs-print-body .cv-front { stroke: #000; }
       .mfs-print-body .cv-axis-zero { stroke: #bbb; }
       .mfs-print-body circle.cv-singular { fill: #c2185b; stroke: #fff; }
       .mfs-print-body circle.cv-zero { stroke: #000; }

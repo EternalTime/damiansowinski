@@ -606,9 +606,17 @@ def check_map(where, view, read, x):
             if not (isinstance(nx, int) and isinstance(ny, int) and nx >= 2 and ny >= 2 and len(rows) == ny
                     and all(isinstance(row, list) and len(row) == nx for row in rows)):
                 raise DataError(f"{at} does not give a value at each of its cells")
-            if not all(finite(v) for row in rows for v in row):
+            # A map that declares its chart's domain leaves each cell outside it null.
+            if "domain" in grid and not (isinstance(grid["domain"], str) and grid["domain"].strip()):
+                raise DataError(f"{at} declares a domain that is not written as a closed form")
+            values = [v for row in rows for v in row if v is not None]
+            if "domain" not in grid and len(values) < nx * ny:
+                raise DataError(f"{at} leaves a cell null without declaring the domain of its chart")
+            if not values:
+                raise DataError(f"{at} leaves every cell null")
+            if not all(finite(v) for v in values):
                 raise DataError(f"{at} gives a value that is not a number")
-            if colour["scale"]["kind"] == "log" and any(v <= 0 for row in rows for v in row):
+            if colour["scale"]["kind"] == "log" and any(v <= 0 for v in values):
                 raise DataError(f"{at} has a value at or below zero on a logarithmic colour")
         for mark in holder.get("marks") or []:
             points = [mark["at"]] if "at" in mark else mark.get("points") or []

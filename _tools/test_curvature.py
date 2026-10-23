@@ -8,9 +8,10 @@ the published `kretschmann` or `ricci_scalar` read through the checker's Reader 
 the other coordinates a curve holds fixed and the parameters the file gives, with each function
 the chart leaves free put in as the closed form the file declares for it, and held to the
 number written: a curve's value to the last few digits of a double, a map's cell to the six
-significant figures it is written to. Every horizon marked on a line view is a change of sign of
-the published g^xx along the drawn coordinate, and every change of sign on the drawn range is
-marked, the range of a chart joined to another at a surface, as a star's to Schwarzschild's
+significant figures it is written to. A map that declares the domain of its chart leaves null
+every cell whose centre lies outside it, and no other. Every horizon marked on a line view is a
+change of sign of the published g^xx along the drawn coordinate, and every change of sign on the
+drawn range is marked, the range of a chart joined to another at a surface, as a star's to Schwarzschild's
 vacuum, being the stretch its own curves cover. The file's shape is build_mfs_data.py's to
 refuse, and the physics its captions state is curvature.py's to check before it writes.
 """
@@ -82,6 +83,22 @@ class Evaluator:
                 return np.array(np.broadcast_to(np.asarray(out, dtype=float), shape))
             self.made[key] = evaluate
         return self.made[key]
+
+    def domain(self, metric_id, system_id, text, coords, params):
+        """The domain a map declares for its chart, a closed form in sympy's spelling of the chart's
+        coordinates and parameters, as a numpy function that is true where the chart holds."""
+        _, _, reader = self.nr.load(metric_id, system_id)
+        names = {reader._plain(n): s for n, s in reader.symbol.items()}
+        names.update(reader.parameters)
+        by_plain = {reader._plain(name): symbol for name, symbol in reader.symbol.items()}
+        symbols = [by_plain[reader._plain(c)] for c in coords] + [reader.parameters[reader._plain(p)] for p in params]
+        expr = sp.sympify(text, locals={**self.nr.DECLARED_FUNCTIONS, **names})
+        stray = expr.free_symbols - set(symbols)
+        if stray:
+            raise AssertionError(f"{metric_id}/{system_id} the domain {text!r} depends on {stray}, which the map does not set")
+        fn = sp.lambdify(symbols, expr, "numpy")
+        return lambda *values: np.broadcast_to(np.asarray(fn(*values), dtype=bool),
+                                               np.broadcast(*[np.asarray(v, dtype=float) for v in values]).shape)
 
 
 def holders(view):
@@ -165,12 +182,21 @@ class CurvatureValues(unittest.TestCase):
                         q = np.sqrt(s * s + 4 * f * f * Y * Y)
                         r2 = np.where(s >= 0, (s + q) / 2, 2 * f * f * Y * Y / np.where(s >= 0, 1, q - s))
                         X, Y = np.sqrt(r2), np.arctan2(X * np.sqrt(r2), Y * np.sqrt(r2 + f * f))
-                    expected = fn(X, Y, *[grid["params"][p] for p in params])
+                    values = [grid["params"][p] for p in params]
+                    expected = fn(X, Y, *values)
+                    written = np.array([[np.nan if v is None else v for v in row] for row in grid["cells"]], dtype=float)
+                    drawn = ~np.isnan(written)
+                    if "domain" in grid:
+                        inside = self.evaluate.domain(grid["metric"], grid["system"], grid["domain"],
+                                                      [grid["x"], grid["y"]], params)(X, Y, *values)
+                        with self.subTest(where):
+                            np.testing.assert_array_equal(drawn, inside, err_msg=f"{where}: a cell is null inside "
+                                                          f"the domain {grid['domain']!r}, or a number outside it")
                     # Six significant figures: the value written is within half a unit of the sixth.
                     with self.subTest(where):
-                        np.testing.assert_allclose(np.array(grid["cells"], dtype=float), expected, rtol=5.1e-6, atol=0,
-                                                   err_msg=where)
-                    checked += nx * ny
+                        self.assertTrue(np.any(drawn), f"{where} leaves every cell null")
+                        np.testing.assert_allclose(written[drawn], expected[drawn], rtol=5.1e-6, atol=0, err_msg=where)
+                    checked += int(np.count_nonzero(drawn))
         self.assertGreater(checked, 1000)
 
     def test_every_horizon_marked_is_a_zero_of_the_published_inverse_metric_and_every_zero_is_marked(self):
@@ -312,6 +338,13 @@ class CurvatureShape(unittest.TestCase):
                 change(data["views"][0]["map"])
             with self.subTest(change):
                 self.assertIn("function", self.broken(undeclared, "bonnor_vaidya"))
+
+    def test_a_null_cell_without_a_domain_is_refused(self):
+        def emptied(data):
+            view = next(v for v in data["views"] if v["kind"] == "map")
+            view["map"].pop("domain", None)
+            view["map"]["cells"][0][0] = None
+        self.assertIn("domain", self.broken(emptied, "bach_weyl_ring"))
 
     def test_a_movie_that_says_how_it_loops_is_refused(self):
         def looped(data):
