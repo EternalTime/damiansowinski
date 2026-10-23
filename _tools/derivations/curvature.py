@@ -3849,6 +3849,153 @@ def fisher_jnw(ck, src):
     return [still, movie_view]
 
 
+# ---------------------------------------------------------------- Hayward's regular black hole
+
+HAYWARD_ELL = 12 / (7 * math.sqrt(7))   # l in units of m, as every drawing of Hayward's black hole takes it
+HAYWARD_REACH = 4                       # the plot runs from the centre to r = 4 m, the box of its spacetime diagrams
+
+
+def hayward(ck, src):
+    """Hayward's regular black hole at m = 1, its Kretschmann and Ricci scalars against r.
+
+    Every chart publishes the same K and R, functions of r, m and l alone, and the forming and
+    evaporating chart publishes them at each moment's m(v), so they are this hole's wherever its
+    mass m(v) stands at m_0, from v = 2 m_0 to 4 m_0; one line view serves all four charts, and a
+    map over r and an angle would be one colour along every circle. Two panels share the axis of
+    r, from 0 to 4 m, the box of the spacetime diagrams: K on a logarithmic axis from 10^-2 to
+    10^3, which holds Hayward's curve whole, its centre 24/l^4 = 136.2/m^4 and its least value
+    0.0103/m^4 at 4 m, and R on a signed one, linear within 0.001/m^2 of zero, from -1 to 10^2,
+    since R changes sign at r^3 = 4 m l^2. Schwarzschild's two scalars of the same mass, r_s = 2m,
+    read from schwarzschild.json, are the comparison, and the horizons are the zeros of the static
+    chart's published g^rr. The hole is drawn at l = 12m/7 sqrt 7, the length every other drawing
+    of it takes, where the horizons are r_- = 6m/7 and r_+ = 12m/7.
+
+    What the caption states is checked here: the four charts publish the same K and R, the
+    evaporating chart's at its declared m(v) on the plateau; the two horizons are 6m/7 and 12m/7;
+    K at the centre is 24/l^4 and R there 12/l^2; K falls from the centre outward and lies below
+    Schwarzschild's 48 m^2/r^6 at every r > 0, their difference having no positive root; R vanishes at r^3 = 4 m l^2 alone, between
+    the horizons, and is least, -8/81 l^2, at r^3 = 7 m l^2, between them too, at the radius and
+    value stated; far out K approaches Schwarzschild's 48 m^2/r^6 and R falls off as
+    -24 m^2 l^2/r^6; and only Schwarzschild's K leaves its panel, at the top about the centre,
+    inside the radius the clip states."""
+    ell = HAYWARD_ELL
+    params = {"m": 1.0, "\\ell": ell}
+    values = [1.0, ell]
+    names = ["m", "\\ell"]
+    x_axis = axis("$r/m$", 0, HAYWARD_REACH)
+    K_scale = {"kind": "log", "from": 1e-2, "to": 1e3}
+    R_scale = {"kind": "symlog", "from": -1, "to": 1e2, "linear": 1e-3}
+    panels = [{"id": "K", "name": "$K\\,m^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R\\,m^2$", "aspect": 2, "scale": R_scale, "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "hayward", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    K = nr_published(src, "hayward", "static", "kretschmann", ["r"], names)
+    R = nr_published(src, "hayward", "static", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, "hayward", "static", "inverse_metric_components", ["r"], names, ("r", "r"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    R_s = nr_published(src, "schwarzschild", "spherical", "ricci_scalar", ["r"], ["r_s"])
+    rs = np.linspace(0, HAYWARD_REACH, SAMPLES)
+    out = rs[1:]
+
+    # Every chart publishes the same two scalars, the evaporating one at its declared mass, which is
+    # m_0 from v = 2 m_0 to 4 m_0.
+    for system in ("eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"):
+        for field, fn in (("kretschmann", K), ("ricci_scalar", R)):
+            other = nr_published(src, "hayward", system, field, ["r"], names)
+            ck(f"hayward {system} publishes the static chart's {field}",
+               np.allclose(other(rs, *values), fn(rs, *values), rtol=1e-14, atol=0))
+    for field, fn in (("kretschmann", K), ("ricci_scalar", R)):
+        evaporating = nr_published(src, "hayward", "evaporating", field, ["v", "r"], ["\\ell"],
+                                   functions={"m": nr.HAYWARD_MASS})
+        plateau = all(np.allclose(evaporating(v, rs, ell), fn(rs, *values), rtol=1e-14, atol=0)
+                      for v in (2.0, 2.5, 3.0, 3.5, 4.0))
+        ck(f"hayward's evaporating chart publishes the static chart's {field} while m(v) = m_0", plateau)
+
+    # The horizons and the figures of the caption.
+    marks = [{"class": "horizon", "x": x} for x in zeros(ck, "hayward horizons", grr, 0, HAYWARD_REACH, values)]
+    found = [m["x"] for m in marks]
+    ck("hayward has its two horizons at 6m/7 and 12m/7",
+       len(found) == 2 and abs(found[0] - 6 / 7) < 1e-12 and abs(found[1] - 12 / 7) < 1e-12, f"{found}")
+    r_minus, r_plus = found
+    centre_K, centre_R = float(K.exact([0, *values])), float(R.exact([0, *values]))
+    ck("hayward K at the centre is 24/l^4", abs(centre_K * ell ** 4 / 24 - 1) < 1e-12, f"{centre_K}")
+    ck("hayward R at the centre is 12/l^2", abs(centre_R * ell ** 2 / 12 - 1) < 1e-12, f"{centre_R}")
+    ck("hayward K falls from the centre outward", np.all(np.diff(K(rs, *values)) < 0))
+    ck("hayward K lies below Schwarzschild's at every r drawn", np.all(K(out, *values) < K_s(out, 2.0)))
+    # The published K holds l in even powers alone, so at l^2 = 144/343 the numerator of
+    # Schwarzschild's K less Hayward's is a polynomial in r with rational coefficients.
+    r, m, l = K.coords[0], *K.params
+    gap = sp.together(48 * m ** 2 / r ** 6 - K.expr).subs({m: 1, l: sp.Rational(12, 7) / sp.sqrt(7)})
+    numerator, denominator = (sp.Poly(sp.expand(part), r) for part in sp.fraction(sp.together(gap)))
+    positive_roots = [x for poly in (numerator, denominator) for x in sp.real_roots(poly) if x > 0]
+    ck("hayward K lies below Schwarzschild's at every r > 0",
+       not positive_roots and float(gap.subs(r, 1)) > 0, f"{positive_roots}")
+    ck("Schwarzschild's published K at r_s = 2m is 48 m^2/r^6",
+       np.allclose(K_s(out, 2.0), 48 / out ** 6, rtol=1e-14, atol=0))
+    sign_change = zeros(ck, "hayward R", R, 0, HAYWARD_REACH, values)
+    r_zero = (4 * ell ** 2) ** (1 / 3)
+    ck("hayward R vanishes at r^3 = 4 m l^2 alone, between the horizons",
+       len(sign_change) == 1 and abs(sign_change[0] - r_zero) < 1e-12 and r_minus < r_zero < r_plus,
+       f"{sign_change}")
+    r_least = (7 * ell ** 2) ** (1 / 3)
+    R_least = float(R.exact([r_least, *values]))
+    ck("hayward R at r^3 = 7 m l^2 is -8/81 l^2", abs(R_least * 81 * ell ** 2 / -8 - 1) < 1e-12, f"{R_least}")
+    fine = np.linspace(0, HAYWARD_REACH, 400001)
+    lowest = int(np.argmin(R(fine, *values)))
+    ck("hayward R is least at r^3 = 7 m l^2, between the horizons",
+       abs(fine[lowest] - r_least) < 2e-5 and r_minus < r_least < r_plus
+       and R_least <= float(np.min(R(fine, *values))) + 1e-15, f"r = {r_least:.6f}, R = {R_least:.6f}")
+    for far in (1e3, 1e4):
+        ck(f"hayward K approaches Schwarzschild's 48 m^2/r^6 at r = {far:g} m",
+           abs(float(K.exact([far, *values])) * far ** 6 / 48 - 1) < 1e-5)
+        ck(f"hayward R falls off as -24 m^2 l^2/r^6 at r = {far:g} m",
+           abs(float(R.exact([far, *values])) * far ** 6 / (-24 * ell ** 2) - 1) < 1e-5)
+
+    # The curves, and where they leave their panels.
+    curves = (line_curves(ck, "hayward Schwarzschild", "K", "reference", K_s, "r", x_axis, K_scale, height["K"],
+                          {"r_s": 2})
+              + line_curves(ck, "hayward Schwarzschild", "R", "reference", R_s, "r", x_axis, R_scale, height["R"],
+                            {"r_s": 2})
+              + line_curves(ck, "hayward", "K", "K", K, "r", x_axis, K_scale, height["K"], params)
+              + line_curves(ck, "hayward", "R", "R", R, "r", x_axis, R_scale, height["R"], params))
+    for name, fn, scale in (("K", K, K_scale), ("R", R, R_scale)):
+        up, down = beyond(fn, x_axis, scale, values)
+        ck(f"hayward {name} stays inside its panel", not up and not down, f"{up} {down}")
+    up, down = beyond(K_s, x_axis, K_scale, [2.0])
+    ck("Schwarzschild's K leaves the top of its panel once, at the centre, and never the bottom",
+       len(up) == 1 and up[0][0] == 0 and not down, f"{up} {down}")
+    cut = (48e-3) ** (1 / 6)
+    step = HAYWARD_REACH / (SAMPLES - 1)
+    ck("Schwarzschild's K leaves the top where 48 m^2/r^6 = 10^3", abs(up[0][1] - cut) < step,
+       f"{up[0][1]:.5f} against {cut:.5f}")
+    up, down = beyond(R_s, x_axis, R_scale, [2.0])
+    ck("Schwarzschild's R stays inside its panel", not up and not down)
+
+    return [{
+        "id": "hole", "label": "$\\ell = 12m/7\\sqrt{7}$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": marks,
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+                   ["line", "reference", "Schwarzschild's black hole of the same mass"],
+                   ["line", "horizon", "a horizon, where $g^{rr} = 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Hayward's black hole against $r$ "
+            f"($\\ell = 12m/7\\sqrt{{7}} = {ell:.3f}\\,m$), the same at every $t$, $\\theta$, and $\\phi$, beside "
+            "Schwarzschild's of the same mass. Toward the centre Schwarzschild's $K = 48m^2/r^6$ grows without "
+            f"bound, and Hayward's rises to a finite $24/\\ell^4 = {centre_K:.1f}/m^4$ at $r = 0$, the curvature of "
+            "de Sitter space of radius $\\ell$. It lies below Schwarzschild's at every $r$.",
+            f"At the centre $R = 12/\\ell^2 = {centre_R:.2f}/m^2$. It changes sign at "
+            f"$r = (4m\\ell^2)^{{1/3}} = {r_zero:.3f}\\,m$ and is least, $-8/81\\ell^2 = {R_least:.3f}/m^2$, at "
+            f"$r = (7m\\ell^2)^{{1/3}} = {r_least:.3f}\\,m$, both between the two horizons. Far out $K$ approaches "
+            "Schwarzschild's and $R$ falls off as $-24m^2\\ell^2/r^6$.",
+        ],
+        "settings": f"$m = 1$, the unit of every length, and $\\ell = 12m/7\\sqrt{{7}} = {ell:.3f}\\,m$, so that "
+                    "$r_+ = 12m/7$ and $r_- = 6m/7$.",
+        "clip": ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-2}$ to $10^{3}$ and $R\\,m^2$ on a signed "
+                 "logarithmic scale, linear within $0.001$ of zero, from $-1$ to $10^{2}$, and cut each curve where it "
+                 f"leaves its panel, as Schwarzschild's $K$ does inside $r = {cut:.3f}\\,m$."),
+    }]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -3867,6 +4014,7 @@ DRAWN = {
     "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
     "fisher_jnw": fisher_jnw,
+    "hayward": hayward,
 }
 
 
