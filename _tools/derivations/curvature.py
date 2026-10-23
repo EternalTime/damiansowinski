@@ -8733,6 +8733,246 @@ def senovilla(ck, src):
     return [line, heat]
 
 
+# ---------------------------------------------------------------- Taub-NUT space
+
+TN_L = Fraction(1, 2)             # l in units of m, as every drawing of Taub-NUT space takes it
+TN_REACH = 6                      # the plot runs over |r| <= 6m, through r = 0 and past r_- to negative r
+TN_SCALE = {"kind": "symlog", "from": -1e4, "to": 1e4, "linear": 1e-3}   # the axis of K m^4 on both views
+TN_STEP = Fraction(1, 20)         # the step of l from one frame of the movie to the next, and its first frame
+TN_LAST = Fraction(2)             # the last frame's l
+TN_NEAR = 0.01                    # within a percent of Schwarzschild's, where the movie's first frame is
+
+
+def taub_nut(ck, src):
+    """Taub-NUT space at m = 1, its Kretschmann scalar over the whole line of r, at the NUT
+    parameter l = m/2 its other drawings take, and as l grows at fixed mass.
+
+    The published K depends on r alone, and Sigma = r^2 + l^2 never vanishes while l is not zero, so
+    K is finite at every r; R = 0, since the spacetime is a vacuum, and the figure is K alone. The
+    spherical chart covers r > r_+ alone, and K, a scalar, is the same function of r across the
+    horizons, in Taub's cosmology between them and in the second NUT region at negative r, so the
+    views run over -6m <= r <= 6m, the range of the research list, through r_+, r = 0 and r_-. Each
+    is one panel, K on a signed logarithmic axis, linear within 10^-3 of zero, from -10^4 to 10^4,
+    ticked at every second decade, since K changes sign; Schwarzschild's K of the same mass, read
+    from schwarzschild.json at r_s = 2m, is the comparison, drawn for r > 0 alone, where its
+    spacetime lies, and the horizons are the zeros of the published g^rr. The first view is the
+    still at l = m/2; the second steps l from m/20 to 2m by m/20, and starts short of l = 0, where
+    the metric is Schwarzschild's and g^rr has a pole at r = 0 where it changes sign.
+
+    What the captions state is checked here: the published R vanishes; K is the real part of
+    48 (m + il)^2/(r + il)^6, and so 48 (m^2 + l^2) cos(6 psi - 2 beta)/Sigma^3 at every r of every
+    frame, and at l = 0 it is Schwarzschild's published scalar, 48 m^2/r^6; K is finite at every r
+    drawn in every frame; the horizons are r_+- = m +- sqrt(m^2 + l^2) in every frame, r_+ rising and
+    r_- falling as l grows; K at r = 0 is 48 (l^2 - m^2)/l^6 in sixty digits, below zero for l < m,
+    zero at l = m and above it beyond; at l = m/2 K stays inside its panel, is greatest and least
+    between the horizons at the radii and values stated, and changes sign six times, on the range
+    drawn, at r = l cot(beta/3 + pi/12 + k pi/6), the last inside r_+; at l = m K is odd in r; far out
+    K falls off as 48 (m^2 - l^2)/r^6 on both sides, and at l = 2m it changes sign six times out to
+    100 m, at r = l cot(beta/3 + pi/12 + k pi/6), and is below zero outside the first and the last,
+    which lies past the range drawn; at l = m/20 K is within a percent of
+    Schwarzschild's outside the radius the caption states; Schwarzschild's K leaves the top of its
+    panel once, inside (48/10^4)^(1/6) m; and the l below which K passes the top and the bottom of
+    its panel, which the movie's clip states, are each crossed once as l grows."""
+    m = 1.0
+    x_axis = axis("$r/m$", -TN_REACH, TN_REACH)
+    scale, aspect = TN_SCALE, 1.5
+    panel = {"id": "K", "name": "$K\\,m^4$", "aspect": aspect, "scale": scale, "ticks": even_decades(scale)}
+    shape_checks(ck, "taub_nut", [aspect])
+    height = PLOT_W / aspect
+    K = nr_published(src, "taub_nut", "spherical", "kretschmann", ["r"], ["m", "l"])
+    R = nr_published(src, "taub_nut", "spherical", "ricci_scalar", ["r"], ["m", "l"])
+    grr = nr_published(src, "taub_nut", "spherical", "inverse_metric_components", ["r"], ["m", "l"], ("r", "r"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    r, mm, ll = K.coords[0], *K.params
+
+    ck("taub_nut R vanishes", sp.simplify(R.expr) == 0, f"R = {R.expr}")
+    rr, mr, lr = sp.symbols("r m l", real=True)
+    complex_form = 48 * sp.expand(sp.re(sp.expand((mr + sp.I * lr) ** 2 * (rr - sp.I * lr) ** 6))) / (rr ** 2 + lr ** 2) ** 6
+    complex_form = complex_form.xreplace({rr: r, mr: mm, lr: ll})
+    ck("taub_nut K is the real part of 48 (m + il)^2/(r + il)^6", sp.simplify(complex_form - K.expr) == 0)
+    schwarzschild = K_s.expr.xreplace({K_s.coords[0]: r, K_s.params[0]: 2 * mm})
+    ck("taub_nut K at l = 0 is Schwarzschild's published scalar of the same mass, 48 m^2/r^6",
+       sp.simplify(K.expr.subs(ll, 0) - schwarzschild) == 0 and sp.simplify(schwarzschild - 48 * mm ** 2 / r ** 6) == 0)
+    ck("taub_nut K at l = m is odd in r", sp.simplify(K.expr.subs(ll, mm) + K.expr.subs({ll: mm, r: -r})) == 0)
+    centre = sp.simplify(K.expr.subs(r, 0) - 48 * (ll ** 2 - mm ** 2) / ll ** 6)
+    ck("taub_nut K at r = 0 is 48 (l^2 - m^2)/l^6", centre == 0, f"{centre}")
+
+    def closed(rv, l):
+        """K as 48 (m^2 + l^2) cos(6 psi - 2 beta)/Sigma^3, with psi the angle of r + il and beta that of
+        m + il, and the bound 48 (m^2 + l^2)/Sigma^3 on its size."""
+        sigma = rv ** 2 + l ** 2
+        bound = 48 * (m * m + l * l) / sigma ** 3
+        return bound * np.cos(6 * np.arctan2(l, rv) - 2 * math.atan2(l, m)), bound
+
+    rs = np.linspace(-TN_REACH, TN_REACH, SAMPLES)
+    step = 2 * TN_REACH / (SAMPLES - 1)
+    cut = edge_cut(K_s, [2 * m], scale, "top", TN_REACH, 0.0)
+    ck("Schwarzschild's K leaves the top of its panel where 48 m^2/r^6 = 10^4",
+       abs(cut - (48e-4) ** (1 / 6)) < 1e-12, f"{cut}")
+
+    def own(l, name):
+        """The curves and the horizons of one value of l, each checked as the docstring says."""
+        params = {"m": m, "l": float(l)}
+        lv = float(l)
+        curves = line_curves(ck, name, "K", "K", K, "r", x_axis, scale, height, params)
+        marks = [{"class": "horizon", "x": x} for x in zeros(ck, f"{name} horizons", grr, -TN_REACH, TN_REACH, [m, lv])]
+        root = math.sqrt(m * m + lv * lv)
+        ck(f"{name} has its horizons at r_+- = m +- sqrt(m^2 + l^2)",
+           len(marks) == 2 and abs(marks[0]["x"] - (m - root)) < 1e-12 and abs(marks[1]["x"] - (m + root)) < 1e-12,
+           f"{[h['x'] for h in marks]}")
+        values = K(rs, m, lv)
+        form, bound = closed(rs, lv)
+        ck(f"{name} K is finite at every r drawn", np.all(np.isfinite(values)))
+        ck(f"{name} K is 48 (m^2 + l^2) cos(6 psi - 2 beta)/Sigma^3 at every r drawn",
+           np.all(np.abs(values - form) <= 1e-9 * bound))
+        at_zero = float(K.exact([0, m, lv]))
+        ck(f"{name} K at r = 0 is 48 (l^2 - m^2)/l^6 in sixty digits",
+           abs(at_zero - 48 * (lv ** 2 - m * m) / lv ** 6) <= 1e-12 * 48 * (lv ** 2 + m * m) / lv ** 6, f"{at_zero}")
+        far = [float(K.exact([x, m, lv])) * x ** 6 / (48 * (m * m - lv * lv)) for x in (1e9, -1e9)] if lv != m else [1, 1]
+        ck(f"{name} K falls off far out as 48 (m^2 - l^2)/r^6 on both sides", all(abs(f - 1) < 1e-4 for f in far),
+           f"{far}")
+        return curves, marks, at_zero
+
+    def references():
+        return line_curves(ck, "taub_nut Schwarzschild", "K", "reference", K_s, "r", x_axis, scale, height,
+                           {"r_s": 2 * m}, within=(0, TN_REACH))
+
+    up, down = beyond(K_s, x_axis, scale, [2 * m], within=(0, TN_REACH))
+    ck("Schwarzschild's K leaves the top of its panel once, at r = 0",
+       len(up) == 1 and up[0][0] == 0 and abs(up[0][1] - cut) < step and not down, f"{up} {down}")
+    legend = [["line", "K", "$K$, the Kretschmann scalar"],
+              ["line", "reference", "Schwarzschild's black hole of the same mass"],
+              ["line", "horizon", "a horizon, where $g^{rr} = 0$"]]
+
+    # ---- the still, at l = m/2
+    l = float(TN_L)
+    name = "taub_nut at l = m/2"
+    curves, marks, at_zero = own(TN_L, name)
+    r_minus, r_plus = (h["x"] for h in marks)
+    ck(f"{name} has r_- below zero and r_+ above it", r_minus < 0 < r_plus)
+    up, down = beyond(K, x_axis, scale, [m, l])
+    ck(f"{name} K stays inside its panel", not up and not down, f"{up} {down}")
+    fine = np.linspace(-TN_REACH, TN_REACH, 1200001)
+    values = K(fine, m, l)
+    top, bottom = int(np.argmax(values)), int(np.argmin(values))
+    span_step = fine[1] - fine[0]
+    r_top = golden(lambda x: -float(K(x, m, l)), fine[top] - span_step, fine[top] + span_step)
+    r_bottom = golden(lambda x: float(K(x, m, l)), fine[bottom] - span_step, fine[bottom] + span_step)
+    K_top, K_bottom = float(K(r_top, m, l)), float(K(r_bottom, m, l))
+    ck(f"{name} K is greatest and least between the horizons", r_minus < min(r_top, r_bottom)
+       and max(r_top, r_bottom) < r_plus and K_top >= np.max(values) and K_bottom <= np.min(values),
+       f"greatest {K_top:.4f} at r = {r_top:.5f}, least {K_bottom:.4f} at r = {r_bottom:.5f}")
+    sign = zeros(ck, f"{name} K", K, -TN_REACH, TN_REACH, [m, l])
+    beta = math.atan2(l, m)
+    predicted = sorted(l / math.tan(beta / 3 + math.pi / 12 + k * math.pi / 6) for k in range(6))
+    ck(f"{name} K changes sign six times, at r = l cot(beta/3 + pi/12 + k pi/6)",
+       len(sign) == 6 and all(abs(a - b) < 1e-9 for a, b in zip(sign, predicted)), f"{sign}")
+    ck(f"{name} K changes sign last inside r_+", sign[-1] < r_plus)
+    ck(f"{name} K falls off far out as three quarters of Schwarzschild's", 48 * (m * m - l * l) / (48 * m * m) == 0.75)
+    still = {
+        "id": "nut", "label": "$l = m/2$", "kind": "line", "x": x_axis, "panels": [panel],
+        "curves": references() + curves, "marks": marks, "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ of Taub-NUT space against $r$ ($l = m/2$), the same at every $t$, $\\theta$, "
+            "and $\\phi$, beside Schwarzschild's of the same mass. The spacetime is a vacuum, so its Ricci scalar "
+            "vanishes. Toward $r = 0$ Schwarzschild's $K = 48m^2/r^6$ grows without bound, while "
+            "$\\Sigma = r^2 + l^2$ is never less than $l^2$, and $K$ is finite at every $r$. The spherical chart "
+            "covers $r > r_+$ alone, and $K$ is the same function of $r$ across the horizons "
+            "$r_\\pm = m \\pm \\sqrt{m^2 + l^2}$: in Taub's cosmology between them, where $r$ is a time, and past "
+            "$r = 0$ and $r_-$ in a second NUT region at negative $r$.",
+            "With $\\psi$ the angle of $r + il = \\sqrt{\\Sigma}\\,e^{i\\psi}$ and $\\beta$ the angle of "
+            "$m + il = \\sqrt{m^2 + l^2}\\,e^{i\\beta}$, the scalar is $K = 48\\,\\mathrm{Re}\\,[(m + il)^2/(r + il)^6]$, "
+            "Schwarzschild's $48m^2/r^6$ with its mass and its radius each moved into the complex plane, which is "
+            "$48(m^2 + l^2)\\cos(6\\psi - 2\\beta)/\\Sigma^3$. "
+            f"At $r = 0$, where $\\Sigma = l^2$, $K = 48(l^2 - m^2)/l^6$, which is ${at_zero:.0f}/m^4$ here. $K$ is "
+            f"greatest, ${K_top:.0f}/m^4$, at $r = {r_top:.3f}\\,m$, and least, ${K_bottom:.0f}/m^4$, at "
+            f"$r = {r_bottom:.3f}\\,m$, both in Taub's cosmology. It changes sign six times, where "
+            f"$\\cos(6\\psi - 2\\beta) = 0$, from $r = {sign[0]:.3f}\\,m$ to $r = {sign[-1]:.3f}\\,m$, the last inside "
+            "$r_+$. Far out it falls off as $48(m^2 - l^2)/r^6$, three quarters of Schwarzschild's.",
+        ],
+        "settings": f"$m = GM/c^2 = 1$, the unit of every length, and $l = m/2$, so that $r_+ = {r_plus:.3f}\\,m$ and "
+                    f"$r_- = {r_minus:.3f}\\,m$.",
+        "clip": ("We draw $K\\,m^4$ on a signed logarithmic scale, linear within $0.001$ of zero, from $-10^{4}$ to "
+                 "$10^{4}$, and cut each curve where it leaves its panel, as Schwarzschild's $K$ does inside "
+                 f"$r = {cut:.3f}\\,m$."),
+    }
+
+    # ---- the movie in l, at fixed mass, from near Schwarzschild's black hole to l = 2m
+    frames, centres, horizons = [], [], []
+    for k in range(1, int(TN_LAST / TN_STEP) + 1):
+        value = TN_STEP * k
+        curves, marks, at_zero = own(value, f"taub_nut at l = {float(value):.3f}")
+        frames.append({"label": f"$l = {float(value):.3f}\\,m$", "value": float(value), "curves": curves, "marks": marks})
+        centres.append((float(value), at_zero))
+        horizons.append([h["x"] for h in marks])
+    ck("taub_nut K at r = 0 is below zero for l < m, zero at l = m and above zero beyond",
+       all((c < 0) if v < m else (c == 0) if v == m else (c > 0) for v, c in centres), f"{centres[:3]}")
+    ck("taub_nut r_+ rises and r_- falls as l grows",
+       all(b[1] > a[1] and b[0] < a[0] for a, b in zip(horizons, horizons[1:])))
+    first, last = float(TN_STEP), float(TN_LAST)
+    first_centre = centres[0][1]
+    # Where K at l = m/20 comes within a percent of Schwarzschild's for good, on the side r > 0 it is drawn.
+    def apart(x):
+        return np.abs(K(x, m, first) / K_s(x, 2 * m) - 1) >= TN_NEAR
+    outside = np.linspace(0, TN_REACH, SAMPLES)[1:]
+    last_apart = int(np.flatnonzero(apart(outside))[-1])
+    a, b = outside[last_apart], outside[last_apart + 1]
+    for _ in range(200):
+        mid = 0.5 * (a + b)
+        a, b = (mid, b) if apart(mid) else (a, mid)
+    near = float(b)
+    ck("taub_nut at l = m/20 K is within a percent of Schwarzschild's outside the radius the caption states, "
+       "and not just inside it", not np.any(apart(np.linspace(near, TN_REACH, 100 * SAMPLES)))
+       and bool(apart(near - 1e-9)), f"{near}")
+
+    def threshold(edge):
+        """The l below which K passes the given edge of its panel and above which it stays inside it,
+        by bisection between the first frame and l = m/2, checked against every frame."""
+        def passes(lv):
+            up, down = beyond(K, x_axis, scale, [m, lv])
+            return bool(up if edge == "top" else down)
+        lo, hi = first, l
+        ck(f"taub_nut K passes the {edge} of its panel at l = m/20 and not at l = m/2", passes(lo) and not passes(hi))
+        for _ in range(60):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if passes(mid) else (lo, mid)
+        ck(f"taub_nut K passes the {edge} of its panel in a frame exactly when l < {hi:.4f} m",
+           all(passes(f["value"]) == (f["value"] < hi) for f in frames))
+        return hi
+    l_top, l_bottom = threshold("top"), threshold("bottom")
+    # Where K at l = 2m is below zero far out: past its last change of sign on each side.
+    tail_beta = math.atan2(last, m)
+    tail = sorted(last / math.tan(tail_beta / 3 + math.pi / 12 + k * math.pi / 6) for k in range(-1, 5))
+    found = zeros(ck, "taub_nut at l = 2m K out to 100 m", K, -100, 100, [m, last], n=200001)
+    ck("taub_nut at l = 2m K changes sign six times, at r = l cot(beta/3 + pi/12 + k pi/6), and is below zero "
+       "outside the first and the last", len(found) == 6 and all(abs(a - b) < 1e-9 for a, b in zip(found, tail))
+       and float(K(tail[0] - 1, m, last)) < 0 and float(K(tail[-1] + 1, m, last)) < 0
+       and tail[0] > -TN_REACH and tail[-1] > TN_REACH, f"{found}")
+    root = math.sqrt(m * m + last * last)
+    movie_view = {
+        "id": "growing", "label": "$m/20 \\le l \\le 2m$", "kind": "line", "x": x_axis, "panels": [panel],
+        "curves": references(), "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ of Taub-NUT space against $r$ as its NUT parameter grows at fixed mass "
+            "($m/20 \\le l \\le 2m$), beside Schwarzschild's. At $l = 0$ the metric is Schwarzschild's, and as $l$ "
+            "falls toward it $K = 48(l^2 - m^2)/l^6$ at $r = 0$ falls without bound, to "
+            f"${tex_number(first_centre, 4)}/m^4$ at $l = m/20$. There $K$ is within a percent of Schwarzschild's "
+            f"outside $r = {near:.3f}\\,m$.",
+            "At $l = m$, $(m + il)^2 = 2im^2$ is imaginary, so $K$ is odd in $r$ and vanishes at $r = 0$, where it is "
+            "above zero for every $l > m$. Far out $K$ falls off as $48(m^2 - l^2)/r^6$, so for $l > m$ it is below "
+            f"zero far out, at $l = 2m$ for $r < {tail[0]:.3f}\\,m$ and $r > {tail[-1]:.1f}\\,m$. "
+            "The horizons $r_\\pm = m \\pm \\sqrt{m^2 + l^2}$ move apart as $l$ grows, to "
+            f"$r_+ = {m + root:.3f}\\,m$ and $r_- = {m - root:.3f}\\,m$ at $l = 2m$.",
+        ],
+        "settings": f"$m = GM/c^2 = 1$, the unit of every length, and $l$ in steps of $m/{int(1 / TN_STEP)}$.",
+        "clip": ("The scale is that of $l = m/2$, and we cut each curve where it leaves its panel: $K$ passes the top "
+                 f"for $l < {l_top:.3f}\\,m$ and the bottom for $l < {l_bottom:.3f}\\,m$, and Schwarzschild's $K$ "
+                 f"passes the top inside $r = {cut:.3f}\\,m$."),
+        "movie": {"variable": "$l$", "seconds": 5, "frames": frames},
+    }
+    return [still, movie_view]
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -8859,6 +9099,7 @@ DRAWN = {
     "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "senovilla": senovilla,
+    "taub_nut": taub_nut,
 }
 
 
