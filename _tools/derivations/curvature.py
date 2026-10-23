@@ -5640,6 +5640,332 @@ def kerr(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- the Kerr-Taub-NUT black hole
+
+KTN_SPIN = Fraction(1)            # a in units of m, as every drawing of the black hole takes it
+KTN_NUTS = (Fraction(5, 4), Fraction(1, 2))   # l in units of m: every other drawing's, which has no ring, and one with a ring
+KTN_REACH = 3                     # the box runs over |r| <= 3 m, through both horizons and r = 0
+KTN_CELLS = 30                    # the cells of the map to each m of r and each radian of theta
+KTN_SCALE = {"kind": "symlog", "from": -1e6, "to": 1e6, "linear": 1e-2}   # the colours of K m^4 in both views
+KTN_CHARTS = ("boyer_lindquist", "one_string", "kerr_ingoing", "kerr_outgoing", "plebanski")
+
+
+def kerr_taub_nut(ck, src):
+    """The Kerr-Taub-NUT black hole at m = 1 and a = m, its Kretschmann scalar over the plane of
+    the ingoing Kerr chart's r and theta, at the twist l = 5m/4 its other drawings take, which
+    leaves it no ring, and at l = m/2, which gives it one.
+
+    Every chart publishes the same K, a function of r and theta alone, the same at every time and
+    every angle about the axis, and R = 0, so the figure is K alone, two maps over -3m <= r <= 3m
+    and 0 <= theta <= pi, read in the ingoing Kerr chart, the one that runs through both horizons
+    and on to negative r, in cells a thirtieth of a unit on a side, 180 across and 94 up. K changes
+    sign, so both are coloured on one signed logarithmic scale, linear within 10^-2 of zero, from
+    -10^6 to 10^6 in units of 1/m^4. The horizons r_+ and r_-, the zeros of the published g^rr, are
+    marked at every theta, the ergosurfaces r = m +- sqrt(m^2 + l^2 - a^2 cos^2 theta), the zeros of the
+    published g_vv, with the mark Kerr's map uses, and at l = m/2 the ring r = 0, cos theta = -l/a, as a
+    point. Kerr's oblate frame is not used: it draws the sheet r >= 0 alone, where these maps run on
+    through r = 0 to negative r, and at l = m/2 it would split the lobes about the ring across the disc. The axes
+    run one way, so theta grows up the map and the southern half of the axis is its top edge.
+
+    What the captions state is checked here: R vanishes in every chart; K is the same in every
+    chart, the Plebanski-Demianski chart's at q = r and p = l + a cos theta; K is the real part of
+    48 (m + il)^2/(r + i(l + a cos theta))^6, which is 48 (m^2 + l^2) cos(6 psi - 2 beta)/Sigma^3,
+    and at l = 0 it is Kerr's published scalar; the horizons lie at r_+- = m +- sqrt(m^2 + l^2 - a^2)
+    on rows of theta across the box. At l = 5m/4: Sigma is never less than (l - a)^2 = m^2/16, its
+    value at r = 0 on theta = pi; K is finite at every cell; K vanishes on the southern half of the
+    axis at exactly six r, the six curves of cos(6 psi - 2 beta) = 0 each crossing it once, five
+    within 0.5 m of r = 0; and K is greatest and least on that half axis, at the r the golden
+    section finds there, above and below every value on a grid twice as fine as the map's, which
+    the clip states. At l = m/2: Sigma vanishes at r = 0, theta = 2 pi/3 alone; the ring sits at
+    theta = pi when l = a and at pi/2 when l = 0; K Sigma^3 reaches 48 (m^2 + l^2) and changes sign
+    twelve times about the ring, in sixty digits; both horizons lie at positive r, the ring inside
+    r_-, and the inner ergosurface runs through it; and |K| passes 10^6/m^4 only where
+    Sigma^3 < 48 (m^2 + l^2)/10^6, on a grid four times as fine as the map's, which the clip states.
+    In both views the ergosurfaces, the zeros of the published g_vv, are checked on rows between the
+    poles and for a change of sign of g_vv across every point drawn."""
+    m, a = 1.0, float(KTN_SPIN)
+    x_axis = axis("$r/m$", -KTN_REACH, KTN_REACH)
+    quarters = ["$0$", "$\\pi/4$", "$\\pi/2$", "$3\\pi/4$", "$\\pi$"]
+    y_axis = {"name": "$\\theta$", "from": 0, "to": math.pi,
+              "ticks": [{"at": k * math.pi / 4, "label": label} for k, label in enumerate(quarters)]}
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "kerr_taub_nut", [aspect])
+    nx, ny = round(KTN_CELLS * (x_axis["to"] - x_axis["from"])), round(KTN_CELLS * math.pi)
+    scale = dict(KTN_SCALE)
+
+    def read(system, field, coords=("r", "theta"), indices=None):
+        return nr_published(src, "kerr_taub_nut", system, field, list(coords), ["m", "a", "l"], indices)
+
+    K = read("kerr_ingoing", "kretschmann")
+    grr = read("kerr_ingoing", "inverse_metric_components", indices=("r", "r"))
+    gvv = read("kerr_ingoing", "metric_components", indices=("v", "v"))
+    r, th = K.coords
+    mm, aa, ll = K.params
+
+    # The same scalars in every chart.
+    for system in KTN_CHARTS:
+        coords = ("q", "p") if system == "plebanski" else ("r", "theta")
+        R = read(system, "ricci_scalar", coords)
+        ck(f"kerr_taub_nut R vanishes in the {system} chart", sp.simplify(R.expr) == 0, f"R = {R.expr}")
+        other = read(system, "kretschmann", coords)
+        names = dict(zip(other.params, K.params))
+        if system == "plebanski":
+            names.update({other.coords[0]: r, other.coords[1]: ll + aa * sp.cos(th)})
+        else:
+            names.update(dict(zip(other.coords, K.coords)))
+        ck(f"kerr_taub_nut the {system} chart's K is the ingoing chart's", sp.simplify(other.expr.xreplace(names) - K.expr) == 0)
+    rr, pp = sp.symbols("r p", real=True)
+    mr, lr = sp.symbols("m l", real=True)
+    complex_form = sp.expand(sp.re(sp.expand((mr + sp.I * lr) ** 2 * (rr - sp.I * pp) ** 6))) * 48 / (rr ** 2 + pp ** 2) ** 6
+    complex_form = complex_form.xreplace({rr: r, pp: ll + aa * sp.cos(th), mr: mm, lr: ll})
+    ck("kerr_taub_nut K is the real part of 48 (m + il)^2/(r + i(l + a cos theta))^6",
+       sp.simplify(complex_form - K.expr) == 0)
+    K_kerr = nr_published(src, "kerr", "boyer_lindquist", "kretschmann", ["r", "theta"], ["M", "a", "G"])
+    kerr = K_kerr.expr.xreplace({K_kerr.coords[0]: r, K_kerr.coords[1]: th, K_kerr.params[0]: mm,
+                                 K_kerr.params[1]: aa, K_kerr.params[2]: 1})
+    ck("kerr_taub_nut K at l = 0 is Kerr's published scalar", sp.simplify(K.expr.subs(ll, 0) - kerr) == 0)
+    ck("kerr_taub_nut K is even in r at l = 0 alone, so the sheet r < 0 differs from r > 0",
+       sp.simplify((K.expr - K.expr.subs(r, -r)).subs(ll, 0)) == 0 and sp.simplify(K.expr - K.expr.subs(r, -r)) != 0)
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    schwarzschild = K_s.expr.xreplace({K_s.coords[0]: r, K_s.params[0]: 2 * mm})
+    ck("kerr_taub_nut K at a = l = 0 is Schwarzschild's published scalar of the same mass, 48 m^2/r^6",
+       sp.simplify(K.expr.subs({ll: 0, aa: 0}) - schwarzschild) == 0
+       and sp.simplify(schwarzschild - 48 * mm ** 2 / r ** 6) == 0)
+
+    def polar(rv, thv, l):
+        """Sigma and the angles psi of r + i(l + a cos theta) and beta of m + il."""
+        p = l + a * np.cos(thv)
+        return rv ** 2 + p ** 2, np.arctan2(p, rv), math.atan2(l, m)
+
+    def closed(rv, thv, l):
+        sigma, psi, beta = polar(rv, thv, l)
+        return 48 * (m * m + l * l) * np.cos(6 * psi - 2 * beta) / sigma ** 3
+
+    views = []
+    for l in KTN_NUTS:
+        lv = float(l)
+        tag = f"kerr_taub_nut l = {l}"
+        params = {"m": m, "a": a, "l": lv}
+        values_at = [m, a, lv]
+        xs, ys, values = cells(K, x_axis, y_axis, nx, ny, values_at)
+        ck(f"{tag} K is finite at every cell", np.all(np.isfinite(values)),
+           f"from {np.min(values):.4e} to {np.max(values):.4e}")
+        rng = np.random.default_rng(1966)
+        picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+        # The cells about r = 0 on the row nearest the southern half of the axis or the ring.
+        ring = math.acos(-lv / a) if lv <= a else math.pi
+        row = min(int(ring / math.pi * ny), ny - 1)
+        picks |= {(i, j) for i in (nx // 2 - 1, nx // 2) for j in (max(row - 1, 0), row)}
+        picks = sorted(picks)
+        agrees(ck, f"{tag} map", K, [[xs[i], ys[j], *values_at] for i, j in picks], [values[j, i] for i, j in picks])
+        fx, fy, fine = cells(K, x_axis, y_axis, 2 * nx, 2 * ny, values_at)
+        FX, FY = np.meshgrid(fx, fy)
+        bound = 48 * (m * m + lv * lv) / polar(FX, FY, lv)[0] ** 3
+        ck(f"{tag} K is 48 (m^2 + l^2) cos(6 psi - 2 beta)/Sigma^3 at every point of a grid twice as fine",
+           np.all(np.abs(fine - closed(FX, FY, lv)) <= 1e-9 * bound))
+
+        # The horizons, the zeros of g^rr on rows of theta across the box.
+        rows = [zeros(ck, f"{tag} g^rr at theta = {t:.4f}", grr, x_axis["from"], x_axis["to"], [t, *values_at])
+                for t in np.linspace(0, math.pi, 13)]
+        root = math.sqrt(m * m + lv * lv - a * a)
+        r_minus, r_plus = m - root, m + root
+        ck(f"{tag} g^rr vanishes at r_- = m - sqrt(m^2 + l^2 - a^2) and r_+ on every row",
+           all(len(z) == 2 and abs(z[0] - r_minus) < 1e-12 and abs(z[1] - r_plus) < 1e-12 for z in rows),
+           f"{rows[0]}")
+        # The ergosurfaces, the zeros of g_tt, here g_vv, on rows of theta between the poles, where they
+        # meet the horizons; at l = m/2 the inner one runs through the ring, where g_vv is 0/0, and that
+        # row is left out.
+        angles = [t for t in np.linspace(0, math.pi, 13)[1:-1] if abs(t - ring) > 1e-9]
+        ergo_ok = []
+        for t in angles:
+            ez = zeros(ck, f"{tag} g_vv at theta = {t:.4f}", gvv, x_axis["from"], x_axis["to"], [t, *values_at])
+            root_t = math.sqrt(m * m + lv * lv - (a * math.cos(t)) ** 2)
+            ergo_ok.append(len(ez) == 2 and abs(ez[0] - (m - root_t)) < 1e-9 and abs(ez[1] - (m + root_t)) < 1e-9)
+        ck(f"{tag} g_vv vanishes at r = m -+ sqrt(m^2 + l^2 - a^2 cos^2 theta) on every row between the poles",
+           all(ergo_ok), f"{len(ergo_ok)} rows")
+        ck(f"{tag} the ergosurfaces meet the horizons on the axis",
+           sp.simplify((mm + sp.sqrt(mm ** 2 + ll ** 2 - aa ** 2 * sp.cos(th) ** 2)).subs(th, 0)
+                       - (mm + sp.sqrt(mm ** 2 + ll ** 2 - aa ** 2))) == 0)
+        per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+
+        def drawn(radius):
+            """The curve r = radius(theta) from theta = 0 to pi on the map, thinned so that it strays
+            from SAMPLES points of it by less than TOLERANCE of the plot's units."""
+            t = np.linspace(0, math.pi, SAMPLES)
+            rv = radius(t)
+            keep = thinned(rv * per_unit, t * per_unit, TOLERANCE)
+            return [[float(rv[k]) + 0.0, float(t[k]) + 0.0] for k in keep]
+        ergos = [drawn(lambda t, s=s: m + s * np.sqrt(m * m + lv * lv - (a * np.cos(t)) ** 2)) for s in (1, -1)]
+        flips = []
+        for line in ergos:
+            for rv, tv in line:
+                if rv * rv + (lv + a * math.cos(tv)) ** 2 < 1e-12:
+                    continue            # the ring, where g_vv is not defined
+                below, above = gvv(rv - 1e-7, tv, *values_at), gvv(rv + 1e-7, tv, *values_at)
+                flips.append(float(below) * float(above) < 0)
+        ck(f"{tag} g_vv changes sign across every point of both ergosurfaces marked but the ring", all(flips),
+           f"{len(flips)} points")
+        marks = ([{"class": "horizon", "points": [[h, 0.0], [h, math.pi]]} for h in (r_minus, r_plus)]
+                 + [{"class": "ergosurface", "points": line} for line in ergos])
+        legend = [["line", "horizon", "the horizons $r_\\pm = m \\pm \\sqrt{m^2 + l^2 - a^2}$"],
+                  ["line", "ergosurface", "the ergosurfaces $r = m \\pm \\sqrt{m^2 + l^2 - a^2\\cos^2\\theta}$"]]
+        settings = (f"$m = GM/c^2 = 1$, the unit of every length, $a = m$, and $l = {tex_fraction(l, 'm')}$, so that "
+                    f"$r_+ = {tex_fraction(Fraction(r_plus).limit_denominator(100), 'm')}$ and "
+                    f"$r_- = {tex_fraction(Fraction(r_minus).limit_denominator(100), 'm')}$.")
+        ck(f"{tag} the horizons are the fractions the settings write",
+           all(abs(float(Fraction(h).limit_denominator(100)) - h) < 1e-12 for h in (r_minus, r_plus)), settings)
+        common = ("The spacetime is a vacuum, so its Ricci scalar vanishes. With $z = r + i(l + a\\cos\\theta)$, "
+                  "the scalar is $K = 48\\,\\mathrm{Re}\\,[(m + il)^2/z^6]$, Schwarzschild's $48m^2/r^6$ with its "
+                  "mass and its radius each moved into the complex plane, and at $l = 0$ it is Kerr's. With $\\psi$ "
+                  "the angle of $z = \\sqrt{\\Sigma}\\,e^{i\\psi}$ and $\\beta$ the angle of "
+                  "$m + il = \\sqrt{m^2 + l^2}\\,e^{i\\beta}$, it is "
+                  "$K = 48(m^2 + l^2)\\cos(6\\psi - 2\\beta)/\\Sigma^3$.")
+
+        if lv > a:
+            sigma = (FX ** 2 + (lv + a * np.cos(FY)) ** 2)
+            least = (lv - a) ** 2
+            ck(f"{tag} Sigma is never less than (l - a)^2, its value at r = 0 on theta = pi",
+               np.all(sigma >= least) and least == 1 / 16
+               and sp.simplify((r ** 2 + (ll + aa * sp.cos(th)) ** 2).subs({r: 0, th: sp.pi}) - (ll - aa) ** 2) == 0)
+            # The zeros on the southern half of the axis, where p = l - a: one for each of the six
+            # curves cos(6 psi - 2 beta) = 0, which are rays from p = 0 in the plane of r and p.
+            def south(rv, *_):
+                return K(rv, np.full_like(np.asarray(rv, dtype=float), math.pi), *values_at)
+            far = zeros(ck, f"{tag} K on theta = pi", south, -50.0, 50.0, [], n=200_001)
+            beta = math.atan2(lv, m)
+            rays = sorted((lv - a) / math.tan((2 * beta + math.pi / 2 + k * math.pi) / 6) for k in range(-1, 5))
+            ck(f"{tag} K vanishes on the southern half of the axis at six r, where the six curves cross it",
+               len(far) == 6 and all(abs(z - w) < 1e-9 for z, w in zip(far, rays)), f"{far}")
+            near = [z for z in far if abs(z) < 0.5]
+            ck(f"{tag} five of the six crossings lie within 0.5 m of r = 0, the sixth outside the box",
+               len(near) == 5 and max(abs(z) for z in far) > KTN_REACH, f"{far}")
+
+            def extreme(sign, lo, hi):
+                golden = (math.sqrt(5) - 1) / 2
+                for _ in range(100):
+                    c, d = hi - golden * (hi - lo), lo + golden * (hi - lo)
+                    if sign * float(south(c)) > sign * float(south(d)):
+                        hi = d
+                    else:
+                        lo = c
+                at = 0.5 * (lo + hi)
+                return at, float(K.exact([at, math.pi, *values_at]))
+            k_hi, k_lo = np.unravel_index(np.argmax(fine), fine.shape), np.unravel_index(np.argmin(fine), fine.shape)
+            r_hi, greatest = extreme(1, FX[k_hi] - 0.05, FX[k_hi] + 0.05)
+            r_lo, lowest = extreme(-1, FX[k_lo] - 0.05, FX[k_lo] + 0.05)
+            edge = np.linspace(-0.2, 0.2, 40001)
+            on_edge = south(edge)
+            ck(f"{tag} K is greatest and least on the southern half of the axis, at the r the golden section finds",
+               np.all(fine <= greatest) and np.all(fine >= lowest) and np.all(on_edge <= greatest * (1 + 1e-12))
+               and np.all(on_edge >= lowest * (1 + 1e-12)) and FY[k_hi] > math.pi * (1 - 2 / ny) and FY[k_lo] > math.pi * (1 - 2 / ny),
+               f"{greatest:.6e} at r = {r_hi:.6f}, {lowest:.6e} at r = {r_lo:.6f}")
+            ck(f"{tag} K stays inside its colours, both extremes of the order of 10^5 the clip writes them in",
+               scale["from"] < lowest and greatest < scale["to"] and 1e5 <= greatest < 1e6 and -1e6 < lowest <= -1e5)
+            K0 = float(K.exact([0.0, math.pi, *values_at]))
+            ck(f"{tag} K on the axis at r = 0 is 48(l^2 - m^2)/(l - a)^6", abs(K0 / (48 * (lv * lv - m * m) / (lv - a) ** 6) - 1) < 1e-12,
+               f"{K0:.6f}")
+            view = {
+                "id": "no_ring", "label": f"$l = {tex_fraction(l, 'm')}$", "kind": "map", "x": x_axis, "y": y_axis,
+                "caption": [
+                    "The Kretschmann scalar $K$ of the Kerr-Taub-NUT black hole over the plane of $r$ and $\\theta$ "
+                    f"($a = m$, $l = {tex_fraction(l, 'm')}$), the same at every $t$ and $\\phi$, with $r$ running on "
+                    "through zero to negative values inside the black hole. With $|l| > |a|$, "
+                    "$\\Sigma = r^2 + (l + a\\cos\\theta)^2$ is never less than $(l - a)^2 = m^2/16$, its value at "
+                    "$r = 0$ on the southern half of the axis, $\\theta = \\pi$, and $K$ is finite everywhere.",
+                    common,
+                    "$K$ vanishes where $\\cos(6\\psi - 2\\beta) = 0$, on six curves that each cross the southern half "
+                    "of the axis once, all but one within $0.5\\,m$ of $r = 0$. The Misner strings of the twist lie "
+                    "along the axis, on $\\theta = 0$ or $\\theta = \\pi$ as the chart places them, and $K$ is finite "
+                    "and smooth there.",
+                ],
+                "settings": settings,
+                "clip": ("We colour $K\\,m^4$ on a signed logarithmic scale, linear within $0.01$ of zero, from "
+                         "$-10^{6}$ to $10^{6}$, and no value passes either end: $K$ is greatest, "
+                         f"${greatest / 1e5:.3f} \\times 10^{{5}}/m^4$, at $r = {r_hi:.3f}\\,m$, and least, "
+                         f"${lowest / 1e5:.3f} \\times 10^{{5}}/m^4$, at $r = {r_lo:.3f}\\,m$, both on the southern half "
+                         "of the axis."),
+            }
+        else:
+            angle = sp.acos(-ll / aa)
+            ck(f"{tag} Sigma vanishes at r = 0 where cos theta = -l/a, theta = pi when l = a and pi/2 when l = 0",
+               sp.simplify((r ** 2 + (ll + aa * sp.cos(th)) ** 2).subs({r: 0, th: angle})) == 0
+               and angle.subs(ll, aa) == sp.pi and angle.subs(ll, 0) == sp.pi / 2)
+            sigma = FX ** 2 + (lv + a * np.cos(FY)) ** 2
+            ring_sigma = (r ** 2 + (ll + aa * sp.cos(th)) ** 2).subs({r: 0, th: 2 * sp.pi / 3, ll: sp.Rational(l.numerator, l.denominator),
+                                                                          aa: sp.Rational(KTN_SPIN.numerator, KTN_SPIN.denominator)})
+            ck(f"{tag} Sigma vanishes at r = 0, theta = 2 pi/3, and at no point of a grid twice as fine",
+               ring_sigma == 0 and np.all(sigma > 0) and abs(ring - 2 * math.pi / 3) < 1e-15)
+            # About the ring, on a circle of radius 10^-3 m in the plane of r and theta, in sixty digits.
+            around = np.linspace(0, 2 * math.pi, 721)[:-1]
+            scaled = [float(K.exact([1e-3 * math.cos(t), ring + 1e-3 * math.sin(t), *values_at])
+                            * ((1e-3 * math.cos(t)) ** 2 + (lv + a * math.cos(ring + 1e-3 * math.sin(t))) ** 2) ** 3)
+                      for t in around]
+            signs = np.sign(scaled)
+            changes = int(np.count_nonzero(signs != np.roll(signs, 1)))
+            peak = 48 * (m * m + lv * lv)
+            ck(f"{tag} K changes sign twelve times about the ring", changes == 12, f"{changes}")
+            ck(f"{tag} K Sigma^3 reaches 48 (m^2 + l^2) about the ring and never passes it",
+               max(map(abs, scaled)) <= peak * (1 + 1e-12) and max(map(abs, scaled)) > peak * (1 - 1e-4),
+               f"{max(map(abs, scaled)):.9f} of {peak}")
+            ck(f"{tag} both horizons lie at positive r, the ring inside r_-", 0 < r_minus < r_plus)
+            inner = mm - sp.sqrt(mm ** 2 + ll ** 2 - aa ** 2 * sp.cos(th) ** 2)
+            ck(f"{tag} the inner ergosurface runs through the ring, r = 0 where cos theta = -l/a, as Kerr's does at l = 0",
+               all(sp.simplify(inner.subs({mm: 1, aa: KTN_SPIN, ll: nut, th: sp.acos(-nut / KTN_SPIN)})) == 0
+                   for nut in (sp.Rational(l.numerator, l.denominator), sp.Integer(0))))
+            # Where |K| leaves the colours, on a grid four times as fine as the map's.
+            qx, qy, quad = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, values_at)
+            QX, QY = np.meshgrid(qx, qy)
+            root_sigma = np.sqrt(QX ** 2 + (lv + a * np.cos(QY)) ** 2)
+            beyond_ = ~(np.abs(quad) <= scale["to"])
+            reach = (peak / scale["to"]) ** (1 / 6)
+            d_out = float(root_sigma[beyond_].max())
+            ck(f"{tag} |K| passes 10^6/m^4 only where Sigma^3 < 48 (m^2 + l^2)/10^6, about the ring",
+               reach * 0.95 < d_out <= reach and np.all(np.abs(quad[root_sigma > reach]) <= scale["to"]),
+               f"within sqrt(Sigma) = {d_out:.4f}, the bound {reach:.4f}")
+            marks.append({"class": "singular", "at": [0.0, ring]})
+            legend.append(["point", "singular", "the ring, $r = 0$, $\\cos\\theta = -l/a$"])
+            view = {
+                "id": "ring", "label": f"$l = {tex_fraction(l, 'm')}$", "kind": "map", "x": x_axis, "y": y_axis,
+                "caption": [
+                    "The Kretschmann scalar $K$ of the Kerr-Taub-NUT black hole over the plane of $r$ and $\\theta$ "
+                    f"($a = m$, $l = {tex_fraction(l, 'm')}$), the same at every $t$ and $\\phi$. With $|l| < |a|$, "
+                    "$\\Sigma = r^2 + (l + a\\cos\\theta)^2$ vanishes on the ring $r = 0$, $\\cos\\theta = -l/a$, here "
+                    "$\\theta = 2\\pi/3$, a circle of latitude off the equator, and there $K$ diverges.",
+                    common,
+                    "About the ring $|K|$ grows as $\\Sigma^{-3}$ off the six curves through it where "
+                    "$\\cos(6\\psi - 2\\beta) = 0$, on which it vanishes, and it changes sign across each of them, "
+                    "twelve times around the ring. Both horizons lie at positive $r$, and, as in Kerr's black "
+                    "hole, the ring lies inside $r_-$ and the inner ergosurface runs through it. "
+                    "As $l$ falls from $a$ to $0$, the ring moves "
+                    "from the southern half of the axis, $\\theta = \\pi$, to the equator, where Kerr's lies.",
+                ],
+                "settings": settings,
+                "clip": ("We colour $K\\,m^4$ on a signed logarithmic scale, linear within $0.01$ of zero, from "
+                         "$-10^{6}$ to $10^{6}$, and give a value beyond it the colour of the end it passes: "
+                         f"$|K|$ passes $10^{{6}}/m^4$ only where $\\sqrt{{\\Sigma}} < {d_out:.3f}\\,m$, about the ring."),
+            }
+        view.update({
+            "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": every_second(scale)},
+            "map": {"metric": "kerr_taub_nut", "system": "kerr_ingoing", "scalar": "kretschmann", "x": "r",
+                    "y": "\\theta", "params": params, "nx": nx, "ny": ny,
+                    "cells": [[rounded(v) for v in row] for row in values]},
+            "marks": marks,
+            "legend": legend,
+        })
+        views.append({k: view[k] for k in ("id", "label", "kind", "x", "y", "colour", "map", "marks", "legend",
+                                           "caption", "settings", "clip")})
+    return views
+
+
+def tex_fraction(value, unit):
+    """A fraction of a unit as the captions write it, as 5m/4, m/2, -m/4 or 3m/2."""
+    value = Fraction(value)
+    sign = "-" if value < 0 else ""
+    n, d = abs(value.numerator), value.denominator
+    top = unit if n == 1 else f"{n}{unit}"
+    return sign + (top if d == 1 else f"{top}/{d}")
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -5665,6 +5991,7 @@ DRAWN = {
     "interior_schwarzschild": interior_schwarzschild,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
+    "kerr_taub_nut": kerr_taub_nut,
     "kiselev": kiselev,
 }
 
