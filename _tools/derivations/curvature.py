@@ -9042,6 +9042,61 @@ ROBERTS_K = {"kind": "log", "from": 1e-6, "to": 1e4}                     # the a
 ROBERTS_R = {"kind": "symlog", "from": -1e2, "to": 0, "linear": 1e-6}    # the axis of R^mu_mu l^2 e^(-2 tau) in every view
 
 
+def rn_metric(ck, src):
+    """The charged hole's radial K at r_q = 12 r_s/25, beside Schwarzschild's.
+
+    K depends on r alone and R vanishes, so a second coordinate repeats the profile.
+    The horizontal declaration maps native radius to log10(r/r_s), with decade ticks
+    labelled by radius, and keeps every scalar value in its native units.
+    Both horizons are zeros of the stored inverse metric.
+    """
+    metric, system = "rn_metric", "spherical"
+    params = {"r_s": 1.0, "r_q": 0.48}
+    K = nr_published(src, metric, system, "kretschmann", ["r"], list(params))
+    R = nr_published(src, metric, system, "ricci_scalar", ["r"], list(params))
+    grr = nr_published(src, metric, system, "inverse_metric_components", ["r"], list(params), ("r", "r"))
+    reference = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    x = {"name": "$r/r_s$", "from": -2, "to": math.log10(2),
+         "ticks": [{"at": k, "label": decade(k)} for k in range(-2, 1)]
+                  + [{"at": math.log10(2), "label": "$2$"}]}
+    scale = {"kind": "log", "from": 0.1, "to": 1e17}
+    aspect = 1.25
+    shape_checks(ck, metric, [aspect])
+    curves = []
+    native = np.geomspace(0.01, 2, SAMPLES)
+    plotted = np.log10(native)
+    for cls, published, settings in (("K", K, params), ("reference", reference, {"r_s": 1.0})):
+        values = published(native, *settings.values())
+        X = PLOT_W*(plotted - x["from"])/(x["to"] - x["from"])
+        p0, p1 = span(scale)
+        Y = PLOT_W/aspect*(1 - (position(scale, values) - p0)/(p1 - p0))
+        keep = thinned(X, Y, TOLERANCE)
+        points = [[float(plotted[i]), float(values[i])] for i in keep]
+        curve = curve_entry("K", cls, published, "r", settings, points)
+        curve["horizontal"] = {"expression": "log(r/r_s)/log(10)",
+                               "values": [float(native[i]) for i in keep]}
+        curves.append(curve)
+        agrees(ck, f"{metric} {cls}", published,
+               [[float(native[i]), *settings.values()] for i in keep], [float(values[i]) for i in keep])
+        ck(f"{metric} {cls} stays within its logarithmic panel",
+           np.all(np.isfinite(values)) and np.all(values >= scale["from"]) and np.all(values <= scale["to"]))
+    horizons = zeros(ck, f"{metric} horizons", grr, .01, 2, list(params.values()))
+    ck(f"{metric} R vanishes", R.expr == 0)
+    return [{"id": "radial", "kind": "line", "x": x,
+             "panels": [{"id": "K", "name": "$K\\,r_s^4$", "aspect": aspect,
+                         "scale": scale, "ticks": every_second(scale)}],
+             "curves": curves, "marks": [{"class": "horizon", "x": math.log10(h)} for h in horizons],
+             "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                        ["line", "reference", "Schwarzschild's black hole of the same mass"],
+                        ["line", "horizon", "the horizons $r_-$ and $r_+$, where $g^{rr} = 0$"]],
+             "caption": ["The Kretschmann scalar $K$ of the charged black hole against the areal radius $r$ "
+                         "($r_q = 0.48\\,r_s$), the same at every time and angle, "
+                         "beside Schwarzschild's of the same mass. Its Ricci scalar vanishes."],
+             "settings": "$r_s = 1$, the unit of every length, and $r_q = 0.48\\,r_s$.",
+             "clip": "Both axes are logarithmic, with $r/r_s$ from $10^{-2}$ to $2$ and "
+                     "$K\\,r_s^4$ from $10^{-1}$ to $10^{17}$; every value drawn lies within the panel."}]
+
+
 def roberts(ck, src):
     """Roberts's massless scalar field at p = 9/10, 1 and 2, its Kretschmann and Ricci scalars
     against the scaling chart's x, scaled free of tau.
@@ -11334,6 +11389,7 @@ DRAWN = {
     "oppenheimer_snyder": oppenheimer_snyder,
     "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
+    "rn_metric": rn_metric,
     "roberts": roberts,
     "schwarzschild": schwarzschild,
     "senovilla": senovilla,
