@@ -2595,6 +2595,215 @@ def curzon_chazy(ck, src):
     return [meridian, line]
 
 
+# ---------------------------------------------------------------- Damour and Solodukhin's wormhole
+
+DS_LAMBDA = Fraction(1, 5)        # lambda, as every drawing of the wormhole takes it
+DS_STEPS = 8                      # the frames of the movie from lambda = 1/5 to 1, and as many from 1/25 to 1/5
+DS_REACH = 2.2                    # the plot runs over |u| <= 2.2 sqrt(r_s), the box of the Einstein-Rosen diagram
+
+
+def damour_solodukhin(ck, src):
+    """Damour and Solodukhin's wormhole at r_s = 1, its Kretschmann and Ricci scalars against
+    Einstein and Rosen's u, through the throat.
+
+    Every chart publishes the same K and R, functions of the areal r alone, and the spherical
+    chart covers one side of the throat, so the figure reads them in the Einstein-Rosen chart,
+    r = r_s + u^2, whose u runs through the throat at u = 0 from one side to the other. Two panels
+    share the axis of u, from -2.2 to 2.2 sqrt(r_s), the box of the Einstein-Rosen spacetime
+    diagram: K on a logarithmic axis from 10^-4 to 10^6, and R, negative at every u, on a signed
+    one, linear within 10^-6 of zero, from -10^3 to 0, both ticked at every second decade, which
+    hold every curve of both views whole, the highest K a decade below the top. The comparison is
+    the Einstein-Rosen bridge's K, 12 r_s^2/(u^2 + r_s)^6, Schwarzschild's black hole of the same
+    r_s in the same u, read from einstein_rosen_bridge.json; its R vanishes and has no place on
+    the signed axis's decades. No
+    horizon is marked, since the published g^uu = 1/4(u^2 + r_s) is positive at every u. The first
+    view is the wormhole at lambda = 1/5, the value every other drawing of it takes; the second
+    steps lambda from 1/25 to 1 by the factor 5^(1/8), 17 frames, through 1/5.
+
+    What the captions state is checked here: the Einstein-Rosen chart's K and R are the spherical
+    chart's at r = r_s + u^2, and the bridge's K is Schwarzschild's there and the wormhole's at
+    lambda = 0; K and R are even in u; at the throat K = 6/r_s^4 + 1/4 lambda^4 r_s^4 and
+    R = -1/2 lambda^2 r_s^2, in every frame; K falls and R rises toward zero from the throat
+    outward, and R is negative at every u; |R| is half its throat value at the u stated; K crosses
+    the bridge's once on each side, at the u and r stated, above it inside and below it outside,
+    and at that r alone of all r > r_s, the one root there of the numerator of their difference;
+    far out K tends to (6 + 6/(1 + lambda^2)^2) r_s^2/r^6 while R falls off as
+    -lambda^2 r_s^2/2(1 + lambda^2)^2 r^4; in the movie K at the throat stands above the bridge's
+    12/r_s^4 for lambda < 24^(-1/4) alone, K approaches the bridge's outside |u| = 1/2 as lambda
+    falls, and at lambda = 1/25 is within a percent of it outside the u stated; and no curve of
+    either view leaves its panel."""
+    x_axis = axis("$u/\\sqrt{r_s}$", -DS_REACH, DS_REACH)
+    K_scale = {"kind": "log", "from": 1e-4, "to": 1e6}
+    R_scale = {"kind": "symlog", "from": -1e3, "to": 0, "linear": 1e-6}
+    # Both axes span about ten decades, so each is ticked at every second one, as the Brans-Dicke
+    # sphere's R is, which the page fits at every size.
+    K_ticks = [t for t in value_ticks(K_scale) if round(math.log10(t["at"])) % 2 == 0]
+    R_ticks = [t for t in value_ticks(R_scale) if t["at"] == 0 or round(math.log10(-t["at"])) % 2 == 0]
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": K_scale, "ticks": K_ticks},
+              {"id": "R", "name": "$R\\,r_s^2$", "aspect": 2, "scale": R_scale, "ticks": R_ticks}]
+    shape_checks(ck, "damour_solodukhin", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    names = ["r_s", "\\lambda"]
+    K = nr_published(src, "damour_solodukhin", "einstein_rosen", "kretschmann", ["u"], names)
+    R = nr_published(src, "damour_solodukhin", "einstein_rosen", "ricci_scalar", ["u"], names)
+    guu = nr_published(src, "damour_solodukhin", "einstein_rosen", "inverse_metric_components", ["u"], names, ("u", "u"))
+    K_r = nr_published(src, "damour_solodukhin", "spherical", "kretschmann", ["r"], names)
+    R_r = nr_published(src, "damour_solodukhin", "spherical", "ricci_scalar", ["r"], names)
+    K_b = nr_published(src, "einstein_rosen_bridge", "bridge", "kretschmann", ["u"], ["r_s"])
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    lam = float(DS_LAMBDA)
+    us = np.linspace(-DS_REACH, DS_REACH, SAMPLES)
+    out = us[us > 0]
+
+    # The charts and the comparison agree.
+    # Sixty-fourths of sqrt(r_s), whose r = r_s + u^2 is a double exactly.
+    rng = np.random.default_rng(2007)
+    points = rng.integers(-140, 141, 20) / 64
+    worst = max(max(abs(float(K.exact([u, 1, lam]) / K_r.exact([1 + u * u, 1, lam])) - 1),
+                    abs(float(R.exact([u, 1, lam]) / R_r.exact([1 + u * u, 1, lam])) - 1)) for u in points)
+    ck("damour_solodukhin the Einstein-Rosen chart's K and R are the spherical chart's at r = r_s + u^2",
+       worst < 1e-50, f"worst {worst:.1e}")
+    worst = max(max(abs(float(K_b.exact([u, 1]) / K_s.exact([1 + u * u, 1])) - 1),
+                    abs(float(K.exact([u, 1, 0]) / K_b.exact([u, 1])) - 1)) for u in points)
+    ck("damour_solodukhin the bridge's K is Schwarzschild's at r = r_s + u^2 and the wormhole's at lambda = 0",
+       worst < 1e-50, f"worst {worst:.1e}")
+    ck("damour_solodukhin K and R are even in u",
+       np.array_equal(K(us, 1, lam), K(-us, 1, lam)) and np.array_equal(R(us, 1, lam), R(-us, 1, lam)))
+    ck("the bridge's K at u = 0 is 12/r_s^4", float(K_b.exact([0, 1])) == 12)
+
+    def reference():
+        return line_curves(ck, "damour_solodukhin bridge", "K", "reference", K_b, "u", x_axis, K_scale, height["K"],
+                           {"r_s": 1})
+
+    def throat(value):
+        """K and R at the throat, against 6/r_s^4 + 1/4 lambda^4 r_s^4 and -1/2 lambda^2 r_s^2."""
+        k, r = float(K.exact([0, 1, value])), float(R.exact([0, 1, value]))
+        ck(f"damour_solodukhin at lambda = {value:.4f} K at the throat is 6/r_s^4 + 1/4 lambda^4 r_s^4",
+           abs(k / (6 + 1 / (4 * value ** 4)) - 1) < 1e-12, f"{k}")
+        ck(f"damour_solodukhin at lambda = {value:.4f} R at the throat is -1/2 lambda^2 r_s^2",
+           abs(r / (-1 / (2 * value ** 2)) - 1) < 1e-12, f"{r}")
+        return k, r
+
+    def own(value, name):
+        params = {"r_s": 1, "lambda": float(value)}
+        curves = (line_curves(ck, name, "K", "K", K, "u", x_axis, K_scale, height["K"], params)
+                  + line_curves(ck, name, "R", "R", R, "u", x_axis, R_scale, height["R"], params))
+        ck(f"{name} has no horizon on the range", not zeros(ck, f"{name} g^uu", guu, -DS_REACH, DS_REACH, [1, value])
+           and np.all(guu(us, 1, value) > 0))
+        for label, fn, scale in (("K", K, K_scale), ("R", R, R_scale)):
+            up, down = beyond(fn, x_axis, scale, [1, value])
+            ck(f"{name} {label} stays inside its panel", not up and not down, f"{up} {down}")
+        return curves
+
+    def apart(value):
+        """K over the bridge's, less one, as a function of u."""
+        return lambda u, *_: K(u, 1, value) / K_b(u, 1) - 1
+
+    curves = reference() + own(DS_LAMBDA, "damour_solodukhin at lambda = 1/5")
+    ck("the bridge's K stays inside its panel", not any(beyond(K_b, x_axis, K_scale, [1])))
+    # The figures of the captions.
+    K0, R0 = throat(lam)
+    ck("damour_solodukhin the throat values the caption writes are 649/4 and -25/2",
+       6 + 1 / (4 * DS_LAMBDA ** 4) == Fraction(649, 4) and -1 / (2 * DS_LAMBDA ** 2) == Fraction(-25, 2))
+    ck("damour_solodukhin K falls and R rises from the throat outward, and R is negative at every u",
+       np.all(np.diff(K(out, 1, lam)) < 0) and np.all(np.diff(R(out, 1, lam)) > 0) and np.all(R(us, 1, lam) < 0))
+    half = zeros(ck, "damour_solodukhin |R| = |R_0|/2", lambda u, *_: R(u, 1, lam) / R0 - 0.5, 0, DS_REACH, [])
+    ck("damour_solodukhin |R| falls to half its throat value once on each side", len(half) == 1, f"{half}")
+    u_half = half[0]
+    crosses = zeros(ck, "damour_solodukhin K = K_bridge", apart(lam), 0, DS_REACH, [])
+    ck("damour_solodukhin K crosses the bridge's once on each side", len(crosses) == 1, f"{crosses}")
+    u_cross = crosses[0]
+    ck("damour_solodukhin K stands above the bridge's inside the crossing and below it outside",
+       np.all(apart(lam)(us[np.abs(us) < u_cross]) > 0) and np.all(apart(lam)(us[np.abs(us) > u_cross]) < 0))
+    # Beyond the range as well: in r = r_s + u^2 the difference of the two is a polynomial in r over
+    # a positive denominator, with one root above r_s alone.
+    r = sp.Symbol("r", positive=True)
+    u_sym, rs_sym, lam_sym = K.coords + K.params
+    gap = (K.expr.subs({u_sym: sp.sqrt(r - 1), rs_sym: 1, lam_sym: DS_LAMBDA})
+           - K_b.expr.subs({K_b.coords[0]: sp.sqrt(r - 1), K_b.params[0]: 1}))
+    numerator, _ = sp.fraction(sp.factor(sp.together(gap)))
+    roots = sp.Poly(numerator, r).count_roots(1, None)
+    ck("damour_solodukhin K crosses the bridge's at one r > r_s alone", roots == 1
+       and abs(float(sp.Poly(numerator, r).intervals(inf=1, eps=1e-15)[0][0][0]) - (1 + u_cross ** 2)) < 1e-9,
+       f"{roots} roots")
+    far = math.sqrt(1e4 - 1)
+    tail_K, tail_R = 6 + 6 / (1 + lam ** 2) ** 2, -lam ** 2 / (2 * (1 + lam ** 2) ** 2)
+    ck("damour_solodukhin K tends to (6 + 6/(1 + lambda^2)^2) r_s^2/r^6 far out",
+       abs(float(K.exact([far, 1, lam])) * 1e4 ** 6 / tail_K - 1) < 1e-3, f"{float(K.exact([far, 1, lam])) * 1e24:.6f}")
+    ck("damour_solodukhin R falls off as -lambda^2 r_s^2/2(1 + lambda^2)^2 r^4",
+       abs(float(R.exact([far, 1, lam])) * 1e4 ** 4 / tail_R - 1) < 1e-3, f"{float(R.exact([far, 1, lam])) * 1e16:.6f}")
+    legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+              ["line", "reference", "$K$ of Schwarzschild's black hole of the same $r_s$"]]
+    clip = ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10^{6}$ and $R\\,r_s^2$ on a signed "
+            "logarithmic scale, linear within $10^{-6}$ of zero, from $-10^{3}$ to $0$; no curve leaves its panel.")
+    still = {
+        "id": "throat", "label": "$\\lambda = 1/5$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the Damour-Solodukhin wormhole against Einstein "
+            "and Rosen's $u$ ($\\lambda = 1/5$), the same at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's "
+            "black hole of the same $r_s$. The areal radius is $r = r_s + u^2$, so $u$ runs from one side of the "
+            "throat $u = 0$ to the other. At the throat $K = 6/r_s^4 + 1/4\\lambda^4r_s^4 = "
+            f"{K0:g}/r_s^4$, where Schwarzschild's horizon has $K = 12/r_s^4$, and $K$ stands above Schwarzschild's "
+            f"only within $|u| < {u_cross:.3f}\\sqrt{{r_s}}$, inside the sphere $r = {1 + u_cross ** 2:.3f}\\,r_s$.",
+            f"At the throat $R = -1/2\\lambda^2r_s^2 = {R0:g}/r_s^2$, and $|R|$ falls to half of that at "
+            f"$|u| = {u_half:.3f}\\sqrt{{r_s}}$. $R$ is negative at every $u$. Far out $K$ approaches "
+            "$(6 + 6/(1 + \\lambda^2)^2)r_s^2/r^6$, "
+            f"${tail_K / 12:.3f}$ of Schwarzschild's, and $R$ falls off as $-\\lambda^2r_s^2/2(1 + \\lambda^2)^2r^4$.",
+        ],
+        "settings": "$r_s = 1$, the unit of every length, and $\\lambda = 1/5$.",
+        "clip": clip,
+    }
+
+    # The movie in lambda, at fixed r_s, from a wormhole near Schwarzschild's black hole to lambda = 1.
+    frames, values = [], []
+    for k in range(-DS_STEPS, DS_STEPS + 1):
+        value = 5.0 ** (k / DS_STEPS - 1)
+        values.append(value)
+        frames.append({"label": f"$\\lambda = {value:.3f}$", "value": value,
+                       "curves": own(value, f"damour_solodukhin at lambda = {value:.4f}"), "marks": []})
+        throat(value)
+    first, last = values[0], values[-1]
+    ck("damour_solodukhin the movie runs from 1/25 to 1 through 1/5",
+       first == 1 / 25 and last == 1.0 and values[DS_STEPS] == lam, f"{first!r} {last!r}")
+    meets = 24 ** -0.25
+    ck("damour_solodukhin K at the throat stands above the bridge's 12/r_s^4 for lambda < 24^(-1/4) alone",
+       all((float(K.exact([0, 1, v])) > 12) == (v < meets) for v in values)
+       and abs(float(K.exact([0, 1, meets])) / 12 - 1) < 1e-12, f"{meets:.6f}")
+    outer = us[np.abs(us) >= 0.5]
+    gaps = [float(np.max(np.abs(apart(v)(outer)))) for v in values]
+    ck("damour_solodukhin K approaches the bridge's outside |u| = 1/2 as lambda falls",
+       all(a < b for a, b in zip(gaps, gaps[1:])), f"{gaps[0]:.4f} to {gaps[-1]:.4f}")
+    fine = np.linspace(0, DS_REACH, 400001)
+    far_off = np.abs(apart(first)(fine)) > 0.01
+    u_percent = float(fine[np.flatnonzero(far_off)[-1] + 1])
+    wide = np.sqrt(np.logspace(math.log10(DS_REACH ** 2 + 1), 8, 2001) - 1)
+    ck(f"damour_solodukhin at lambda = 1/25 K is within a percent of the bridge's outside |u| = {u_percent:.4f}",
+       np.all(~far_off[fine >= u_percent]) and np.all(np.abs(apart(first)(wide)) <= 0.01))
+    K_first, R_first = float(K.exact([0, 1, first])), float(R.exact([0, 1, first]))
+    K_last, R_last = float(K.exact([0, 1, last])), float(R.exact([0, 1, last]))
+    movie_view = {
+        "id": "closing", "label": "$1/25 \\le \\lambda \\le 1$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": reference(), "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the Damour-Solodukhin wormhole against Einstein "
+            "and Rosen's $u$ as $\\lambda$ grows at fixed $r_s$ ($1/25 \\le \\lambda \\le 1$), beside "
+            "Schwarzschild's black hole of the same $r_s$. At the throat $K = 6/r_s^4 + 1/4\\lambda^4r_s^4$ falls "
+            f"from ${tex_number(K_first, 4)}/r_s^4$ to ${K_last:g}/r_s^4$ and $R = -1/2\\lambda^2r_s^2$ from "
+            f"${R_first:g}/r_s^2$ to ${R_last:g}/r_s^2$. $K$ there stands above the $12/r_s^4$ of Schwarzschild's "
+            f"horizon only for $\\lambda < 24^{{-1/4}} = {meets:.3f}$.",
+            "As $\\lambda$ falls, $K$ approaches Schwarzschild's at every $u$ but the throat, where it grows without "
+            "bound, though at $\\lambda = 0$ the throat is Schwarzschild's horizon with $K = 12/r_s^4$. At "
+            f"$\\lambda = 1/25$, $K$ is within a percent of Schwarzschild's outside $|u| = {u_percent:.3f}\\sqrt{{r_s}}$, "
+            f"the sphere $r = {1 + u_percent ** 2:.3f}\\,r_s$.",
+        ],
+        "settings": f"$r_s = 1$, the unit of every length, and $\\lambda$ in steps of the factor $5^{{1/{DS_STEPS}}}$.",
+        "clip": clip,
+        "movie": {"variable": "$\\lambda$", "seconds": 5, "frames": frames},
+    }
+    return [still, movie_view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -2608,6 +2817,7 @@ DRAWN = {
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "c_metric": c_metric,
     "curzon_chazy": curzon_chazy,
+    "damour_solodukhin": damour_solodukhin,
 }
 
 
