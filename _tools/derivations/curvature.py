@@ -7872,57 +7872,82 @@ def misner_brill_lindquist(ck, src):
 
 
 def reissner_nordstrom_de_sitter(ck, src):
-    """The lukewarm hole's K and R against areal radius, at its other drawings' parameters.
+    """The lukewarm hole's K against areal radius, at its other drawings' parameters.
 
-    Each charged chart has the same curves from 0.2 to 3 r_s, with the three zeros of its
-    published g^rr marked. K is logarithmic and R linear, since R is constant. The full K
+    Each charged chart has the same curve from 0.2 to 3 r_s, with the three zeros of its
+    published g^rr marked. K is logarithmic; the caption states the constant R. The full K
     retains its explicitly stated de Sitter floor, so every sample is a stored scalar value.
     The cosmological chart publishes the uncharged special case and has no charged view.
     A second coordinate or a movie would repeat the radial information.
+
+    Checks hold every charged chart to the stored closed forms, the exact horizon radii,
+    monotonic K, its r^-8 central divergence, the de Sitter floor and where it dominates,
+    constant R, and the declared scale containing every sample.
     """
     metric = "reissner_nordstrom_de_sitter"
     params = {"r_s": 1, "r_q": 0.5, "Lambda": 27 / 64}
     x_axis = axis("$r/r_s$", 0.2, 3)
     K_scale = {"kind": "log", "from": 0.1, "to": 1e6}
-    R_scale = {"kind": "linear", "from": 0, "to": 2}
     panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2,
-               "scale": K_scale, "ticks": value_ticks(K_scale)},
-              {"id": "R", "name": "$R\\,r_s^2$", "aspect": 2,
-               "scale": R_scale, "ticks": value_ticks(R_scale)}]
+               "scale": K_scale, "ticks": value_ticks(K_scale)}]
     shape_checks(ck, metric, [p["aspect"] for p in panels])
     K_clip = ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-1}$ to $10^6$ and cut the curve "
               "where it leaves its panel; every value drawn lies within it.")
-    R_clip = ("We draw $R\\,r_s^2$ on a linear scale from $0$ to $2$ and cut the curve where it "
-              "leaves its panel; every value drawn lies within it.")
     views = []
     for system in ("static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"):
         K = nr_published(src, metric, system, "kretschmann", ["r"], list(params))
         R = nr_published(src, metric, system, "ricci_scalar", ["r"], list(params))
         grr = nr_published(src, metric, system, "inverse_metric_components", ["r"], list(params), ("r", "r"))
-        curves = (line_curves(ck, metric, "K", "K", K, "r", x_axis, K_scale, PLOT_W / 2, params)
-                  + line_curves(ck, metric, "R", "R", R, "r", x_axis, R_scale, PLOT_W / 2, params))
+        curves = line_curves(ck, metric, "K", "K", K, "r", x_axis, K_scale, PLOT_W / 2, params)
         horizons = zeros(ck, f"{metric}/{system} horizons", grr, 0.2, 3, list(params.values()))
         ck(f"{metric}/{system} has three horizons", len(horizons) == 3, str(horizons))
+        r = K.coords[0]
+        r_s, r_q, Lambda = K.params
+        expected = 12*r_s**2/r**6 - 48*r_s*r_q**2/r**7 + 56*r_q**4/r**8 + 8*Lambda**2/3
+        ck(f"{metric}/{system} K is the radial closed form", sp.simplify(K.expr - expected) == 0)
+        ck(f"{metric}/{system} R is 4 Lambda", sp.simplify(R.expr - 4*Lambda) == 0)
+        held = K.expr.subs({r_s: 1, r_q: sp.Rational(1, 2), Lambda: sp.Rational(27, 64)})
+        floor = sp.Rational(243, 512)
+        ck(f"{metric}/{system} K tends to 243/512 at infinity", sp.limit(held, r, sp.oo) == floor)
+        ck(f"{metric}/{system} K grows as 56 r_q^4/r^8 at the centre",
+           sp.limit(held*r**8, r, 0) == sp.Rational(7, 2))
+        derivative = -4*(18*r**2 - 21*r + 7)/r**9
+        ck(f"{metric}/{system} K falls for every positive radius",
+           sp.simplify(sp.diff(held, r) - derivative) == 0 and 21**2 - 4*18*7 < 0)
+        expected_horizons = [(2*math.sqrt(7) - 4)/3, 2/3, 2]
+        ck(f"{metric}/{system} has the exact lukewarm horizons",
+           len(horizons) == 3 and np.allclose(horizons, expected_horizons, rtol=1e-13), str(horizons))
+        dominance = crossing(lambda x: float(K(x, *params.values())) - 2*float(floor), 1, 2)
+        ck(f"{metric}/{system} the floor dominates beyond 1.508 r_s",
+           abs(dominance - 1.50800629804038) < 1e-12, f"r = {dominance:.14f}")
+        ck(f"{metric}/{system} R is 27/16 at every radius",
+           float(R.exact([1] + list(params.values()))) == 27/16)
+        up, down = beyond(K, x_axis, K_scale, list(params.values()))
+        ck(f"{metric}/{system} K stays inside its panel", not up and not down)
+        ck(f"{metric}/{system} the stated de Sitter floor rounds to 0.4746",
+           f"{float(floor):.4f}" == "0.4746")
+        ck(f"{metric}/{system} the stated inner horizon rounds to 0.431",
+           f"{horizons[0]:.3f}" == "0.431")
         views.append({
-            "id": system, "system": system, "kind": "line", "x": x_axis, "panels": panels,
+            "id": system, "system": system, "label": "$r_q = r_s/2$",
+            "kind": "line", "x": x_axis, "panels": panels,
             "curves": curves, "marks": [{"class": "horizon", "x": r} for r in horizons],
             "legend": [["line", "K", "$K$, the Kretschmann scalar"],
-                       ["line", "R", "$R$, the Ricci scalar"],
                        ["line", "horizon", "the inner, black hole, and cosmological horizons, $g^{rr} = 0$"]],
             "caption": [
-                "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the lukewarm charged black hole "
+                "The Kretschmann scalar $K$ of the lukewarm charged black hole "
                 "in de Sitter space against the areal radius $r$ ($r_q = r_s/2$), "
                 "the same at every time and angle. "
                 "Toward the centre $K$ grows as $56r_q^4/r^8$. "
-                "Far out $K$ approaches the de Sitter value $8\\Lambda^2/3 = 0.4746/r_s^4$.",
-                "The Ricci scalar is constant, $R = 4\\Lambda = 27/(16r_s^2)$; "
-                "the electric field has zero stress-energy trace."
+                "It falls at every radius toward the de Sitter value $8\\Lambda^2/3 = 0.4746/r_s^4$. "
+                "That constant contribution exceeds the remaining part of $K$ beyond $r = 1.508\\,r_s$.",
+                "The Ricci scalar is constant, $R = 4\\Lambda = 27/(16r_s^2)$, since the electric field's "
+                "stress tensor is traceless."
             ],
-            "ricci_sentences": [[1, 0]], "per_scalar": scalar_clips(K_clip, R_clip),
             "settings": "$r_s = 1$, the unit of every length, $r_q = r_s/2$ and "
                         "$\\Lambda = 27/(64r_s^2)$, so that $r_- = 0.431\\,r_s$, "
                         "$r_+ = 2r_s/3$, and $r_c = 2r_s$.",
-            "clip": K_clip + " " + R_clip,
+            "clip": K_clip,
         })
     return views
 

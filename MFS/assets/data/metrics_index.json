@@ -4400,7 +4400,8 @@
     "version": "b1809a519c7e0afc",
     "diagrams": "f6c6ac1947d0b4e9",
     "conformal": "639eea78631ca3e1",
-    "embedding": "342b4919bb1495ae"
+    "embedding": "342b4919bb1495ae",
+    "curvature": "58681f439a504154"
   },
   {
     "id": "roberts",

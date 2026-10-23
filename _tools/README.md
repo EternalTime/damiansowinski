@@ -1583,7 +1583,7 @@ The print copy prints the page as it was first drawn, with the chart's own confo
 `MFS/assets/data/curvature/<metric_id>.json` holds the curvature figure of one spacetime: its Kretschmann scalar $K$, and its Ricci scalar $R$ where that does not vanish, plotted from the formulas the spacetime's metric file publishes, as the captain asked on 22 October 2026.
 The page draws its Kretschmann scalar under the heading "Kretschmann scalar diagram", after the Kretschmann scalar, and its Ricci scalar under the heading "Ricci scalar diagram", after the Ricci scalar, and the application reads the same files.
 A spacetime has one where its curvature carries physics its formula does not show at a glance, as the research list of October 2026 sets out spacetime by spacetime; a spacetime without one has no file and the page no section, and no table has to name it, as `NOT_DRAWN` names the spacetimes without a conformal diagram.
-Bardeen's regular black hole, the Bach-Weyl ring, Bonnor and Vaidya's radiating star, Born and Infeld's point charge, Boulware and Deser's black hole, Bowers and Liang's star, the Brans-Dicke sphere, Brill's charged Taub-NUT, the C-metric, the Curzon-Chazy particle, Damour and Solodukhin's wormhole, the charged dilaton black hole, Einstein's static field of 1912, Einstein's cluster, the Einstein-Rosen waves, the scalar field of Fisher, Janis, Newman and Winicour, Gowdy's polarised wave on the torus, the gravastar, Hayward's regular black hole, Schwarzschild's star of uniform density, the Kerr-Newman black hole, Khan and Penrose's colliding plane waves, Kiselev's black hole, Kerr's black hole, the Kerr-Taub-NUT black hole, McVittie's mass, Melvin's magnetic universe, Majumdar and Papapetrou's two holes, Brill and Lindquist's two black holes and the Myers-Perry black hole have one.
+Bardeen's regular black hole, the Bach-Weyl ring, Bonnor and Vaidya's radiating star, Born and Infeld's point charge, Boulware and Deser's black hole, Bowers and Liang's star, the Brans-Dicke sphere, Brill's charged Taub-NUT, the C-metric, the charged de Sitter black hole, the Curzon-Chazy particle, Damour and Solodukhin's wormhole, the charged dilaton black hole, Einstein's static field of 1912, Einstein's cluster, the Einstein-Rosen waves, the scalar field of Fisher, Janis, Newman and Winicour, Gowdy's polarised wave on the torus, the gravastar, Hayward's regular black hole, Schwarzschild's star of uniform density, the Kerr-Newman black hole, Khan and Penrose's colliding plane waves, Kiselev's black hole, Kerr's black hole, the Kerr-Taub-NUT black hole, McVittie's mass, Melvin's magnetic universe, Majumdar and Papapetrou's two holes, Brill and Lindquist's two black holes and the Myers-Perry black hole have one.
 
 `_tools/derivations/curvature.py` draws them, one function per spacetime, with what it draws and what it checks in its docstring.
 It needs the environment of "The test environment" above and took 26 seconds for both on 22 October 2026:
@@ -1847,6 +1847,15 @@ $K$ depends on $\theta$ as strongly as on $r$, so a line plot at a few $\theta$ 
 The scalar is the same in every chart of one spin, so the view names no chart, and the caption says it is the hole of five dimensions with one spin, as the embedding diagram's views say their dimension.
 A movie of the spin would hold some thirty maps in one file, and the caption states what it would show, the horizon shrinking onto the disc and $K$ on its equator growing as $72\mu^2/(\mu - a^2)^4$, so the figure has none.
 The file is 223 KB, and 90 KB as the server compresses it.
+
+The charged de Sitter black hole has one line view for each of its three charged charts, at $r_s = 1$, $r_q = r_s/2$ and $\Lambda = 27/(64r_s^2)$, the lukewarm parameters of its other drawings, over $0.2 \le r/r_s \le 3$.
+Each draws the stored $K$ on a logarithmic scale from $10^{-1}$ to $10^6$, in units of $r_s^{-4}$, with the inner, black hole and cosmological horizons marked at $0.431\,r_s$, $2r_s/3$ and $2r_s$.
+The constant Ricci scalar, $R = 27/(16r_s^2)$, is stated in the caption.
+Every value drawn lies within its scale, and each panel is twice as wide as it is tall.
+The full $K$ is retained in the landed scalar format, with its constant de Sitter contribution $8\Lambda^2/3 = 243/(512r_s^4)$ stated in the caption, including where it exceeds the remaining part, $r = 1.508\,r_s$.
+The generator checks the stored closed forms in each charged chart, the exact horizons, the monotonic fall of $K$, its $56r_q^4/r^8$ growth toward the centre, its constant floor and where it dominates, $R = 27/(16r_s^2)$ everywhere, and every clip claim.
+A map would repeat the same value along its second coordinate, and a movie adds no independent coordinate dependence.
+The cosmological chart publishes the uncharged special case, so the charged views name their own charts.
 
 ## Checking the physics
 
