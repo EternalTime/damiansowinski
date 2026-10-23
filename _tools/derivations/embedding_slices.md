@@ -940,6 +940,7 @@ The tests, which run without sympy, hold every slice drawn to where its embeddin
 The three diagrams of a spacetime stand together as one run, in the place the spacetime diagram has now: after the geodesics and before the references.
 That is where the mathematics ends and the reading ends, which is the order of the application's buttons, the history, the maths, the new Graphs and the references, and it keeps the chart chosen at the top in force over all three, as it is over every quantity between.
 The website's spacetime page has no row of section buttons, so the run has no button of its own and no heading above the three headings it holds.
+On the website each diagram now stands beside the mathematics it draws, the spacetime diagram and the conformal diagram after the coordinates and the embedding diagram after the metric, while the application keeps the run; `_tools/README.md` gives the order under "Where the diagrams stand".
 
 The order within the run is the spacetime diagram, the conformal diagram, then the embedding diagram.
 The two that carry the slice come first, from the chart's own plane to the whole spacetime, and the surface they point to comes last, so the eye reads the line and then the surface cut along it.

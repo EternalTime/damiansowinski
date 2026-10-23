@@ -585,8 +585,15 @@ def bardeen(ck, src):
             f"$\\sqrt{{g^3/r_s}} = {math.sqrt(g ** 3):.3f}\\,r_s$.",
             f"At the centre $R = 12r_s/g^3 = {centre_R:.0f}/r_s^2$. It changes sign at $r = 2g$, between the two "
             f"horizons, and is least, ${R_least:.3f}/r_s^2$, at $r = {r_least:.3f}\\,r_s$, just outside $r_+$. Far "
-            "out $K$ approaches Schwarzschild's and $R$ falls off as $-3r_sg^2/r^5$.",
+            "out $K$ approaches Schwarzschild's. Far out $R$ falls off as $-3r_sg^2/r^5$.",
         ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 3]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-1}$ to $10^{5}$ and cut each curve where it "
+            f"leaves its panel, as Schwarzschild's $K$ does inside $r = {cut:.3f}\\,r_s$.",
+            "We draw $R\\,r_s^2$ on a signed logarithmic scale, linear within $0.01$ of zero, from $-10$ to $10^{4}$, and "
+            "every value drawn lies within it.",
+            reference="Schwarzschild's $R = 0$"),
         "settings": f"$r_s = 1$, the unit of every length, and $g = r_s/3$, so that $r_+ = {r_plus:.3f}\\,r_s$ and "
                     f"$r_- = {r_minus:.3f}\\,r_s$.",
         "clip": clip,
@@ -653,6 +660,13 @@ def bardeen(ck, src):
             f"$g = 2r_s/3\\sqrt{{3}} = {extremal:.3f}\\,r_s$. Past it $g^{{rr}}$ is positive at every $r$, and no "
             "horizon is left.",
         ],
+        "ricci_sentences": [],
+        "per_scalar": scalar_clips(
+            "The scale is that of $g = r_s/3$, and we cut each curve where it leaves its panel: Bardeen's $K$ passes the "
+            f"top for $g < {K_top:.3f}\\,r_s$.",
+            "The scale is that of $g = r_s/3$, and we cut each curve where it leaves its panel: Bardeen's $R$ passes the "
+            f"top for $0 < g < {R_top:.3f}\\,r_s$ and the bottom for $0 < g < {R_bottom:.3f}\\,r_s$.",
+            reference="Schwarzschild's $R = 0$"),
         "settings": f"$r_s = 1$, the unit of every length, and $g$ in steps of $r_s/{int(1 / BARDEEN_STEP)}$.",
         "clip": movie_clip,
         "movie": {"variable": "$g$", "seconds": 5, "frames": frames},
@@ -1145,8 +1159,16 @@ def boulware_deser(ck, src):
             "Near the centre $R$ grows as $6r_0/\\ell r^2$. It changes sign at "
             f"$r = {sign[0]:.3f}\\,r_h$, inside the horizon, and is least, "
             f"$-(10 - 7\\sqrt{{2}})/\\ell^2 = {R_least:.3f}/r_h^2$, at $r = \\sqrt{{2\\ell r_0}} = {r_least:.3f}\\,r_h$, "
-            "just inside it. Far out $K$ approaches Tangherlini's and $R$ falls off as $-12\\ell^2r_0^4/r^8$.",
+            "just inside it. Far out $K$ approaches Tangherlini's. Far out $R$ falls off as $-12\\ell^2r_0^4/r^8$.",
         ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 3]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_h^4$ on a logarithmic scale from $10^{-5}$ to $10^{5}$ and cut each curve where it leaves "
+            f"its panel, as Boulware and Deser's $K$ does inside $r = {cut_K:.3f}\\,r_h$ and Tangherlini's inside "
+            f"$r = {cut_t:.3f}\\,r_h$.",
+            "We draw $R\\,r_h^2$ on a signed logarithmic scale, linear within $0.001$ of zero, from $-1$ to $10^{4}$, and "
+            f"cut each curve where it leaves its panel, as $R$ does inside $r = {cut_R:.3f}\\,r_h$.",
+            reference="Tangherlini's $R = 0$"),
         "settings": "$r_0 = 13r_h/12$ and $\\ell = 5r_h/12$, with the horizon radius $r_h = \\sqrt{r_0^2 - \\ell^2}$ "
                     "the unit of every length.",
         "clip": ("We draw $K\\,r_h^4$ on a logarithmic scale from $10^{-5}$ to $10^{5}$ and $R\\,r_h^2$ on a signed "
@@ -1181,11 +1203,18 @@ def boulware_deser(ck, src):
         "caption": [
             "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the anti-de Sitter branch against $r$ "
             "($r_0 = \\ell$), the same at every $t$, $\\psi$, $\\theta$, and $\\phi$. Toward the centre $K$ grows as "
-            "$12r_0^2/\\ell^2r^4$, as the black hole's does, and $R$ as $-6r_0/\\ell r^2$, the black hole's with its "
-            "sign changed. Here $g^{rr}$ is positive at every $r$, and the singularity at $r = 0$ has no horizon.",
-            "Far out $K$ tends to $40/\\ell^4$ and $R$ to $-20/\\ell^2$, the curvature of anti-de Sitter space of "
-            "radius $\\ell$ in five dimensions, set by the Gauss-Bonnet coupling.",
+            "$12r_0^2/\\ell^2r^4$, as the black hole's does. Toward the centre $R$ grows as $-6r_0/\\ell r^2$, the "
+            "black hole's with its sign changed. Here $g^{rr}$ is positive at every $r$, and the singularity at $r = 0$ has no horizon.",
+            "Far out $K$ tends to $40/\\ell^4$, the curvature of anti-de Sitter space of radius $\\ell$ in five "
+            "dimensions, set by the Gauss-Bonnet coupling. Far out $R$ tends to $-20/\\ell^2$, the curvature of "
+            "anti-de Sitter space of radius $\\ell$ in five dimensions, set by the Gauss-Bonnet coupling.",
         ],
+        "ricci_sentences": [[0, 2], [1, 1]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,\\ell^4$ on a logarithmic scale from $10$ to $10^{5}$ and cut each curve where it leaves its "
+            f"panel, as $K$ does inside $r = {cut_Kb:.3f}\\,\\ell$.",
+            "We draw $R\\,\\ell^2$ on a signed logarithmic scale, linear within $1$ of zero, from $-10^{5}$ to $-10$, and "
+            f"cut each curve where it leaves its panel, as $R$ does inside $r = {cut_Rb:.4f}\\,\\ell$."),
         "settings": "$\\ell = 1$, the unit of every length, and $r_0 = \\ell$.",
         "clip": ("We draw $K\\,\\ell^4$ on a logarithmic scale from $10$ to $10^{5}$ and $R\\,\\ell^2$ on a signed "
                  "logarithmic scale, linear within $1$ of zero, from $-10^{5}$ to $-10$, and cut each curve where it "
@@ -1240,11 +1269,22 @@ def boulware_deser(ck, src):
             "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Boulware and Deser's black hole against $r$ as "
             f"the Gauss-Bonnet length grows at fixed mass ($r_0/{int(1 / BD_STEP)} \\le \\ell \\le 3r_0/2$), beside "
             "Tangherlini's of the same mass, the black hole at $\\ell = 0$. As $\\ell$ grows, $K$ near the centre, "
-            "$12r_0^2/\\ell^2r^4$, falls, and the least value of $R$, $-(10 - 7\\sqrt{2})/\\ell^2$ at "
+            "$12r_0^2/\\ell^2r^4$, falls. As $\\ell$ grows, the least value of $R$, $-(10 - 7\\sqrt{2})/\\ell^2$ at "
             "$r = \\sqrt{2\\ell r_0}$, rises toward zero.",
             "The horizon $r_h = \\sqrt{r_0^2 - \\ell^2}$ moves in as $\\ell$ grows and closes at $\\ell = r_0$. Past "
             "it $g^{rr}$ is positive at every $r$, and the singularity at $r = 0$ has no horizon.",
         ],
+        "ricci_sentences": [[0, 2]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-3}$ to $10^{5}$ and cut each curve where it leaves "
+            f"its panel: Boulware and Deser's $K$ passes the top inside $r = {cuts_K[0]:.3f}\\,r_0$ at "
+            f"$\\ell = {first:.2f}\\,r_0$ and inside $r = {cuts_K[-1]:.3f}\\,r_0$ at $\\ell = {last:.2f}\\,r_0$, and "
+            f"Tangherlini's inside $r = {cut_tm:.3f}\\,r_0$.",
+            "We draw $R\\,r_0^2$ on a signed logarithmic scale, linear within $0.01$ of zero, from $-100$ to $10^{4}$, "
+            f"and cut each curve where it leaves its panel: Boulware and Deser's $R$ passes the top inside "
+            f"$r = {cuts_R[0]:.3f}\\,r_0$ at $\\ell = {first:.2f}\\,r_0$ and inside $r = {cuts_R[-1]:.3f}\\,r_0$ at "
+            f"$\\ell = {last:.2f}\\,r_0$.",
+            reference="Tangherlini's $R = 0$"),
         "settings": f"$r_0 = 1$, the unit of every length, and $\\ell$ in steps of $r_0/{int(1 / BD_STEP)}$.",
         "clip": ("We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-3}$ to $10^{5}$ and $R\\,r_0^2$ on a signed "
                  "logarithmic scale, linear within $0.01$ of zero, from $-100$ to $10^{4}$, and cut each curve where it "
@@ -1542,8 +1582,15 @@ def born_infeld_charge(ck, src):
             "where Reissner and Nordström's grows as $56r_q^4/r^8$.",
             "Reissner and Nordström's $R$ vanishes, since Maxwell's field has a traceless stress tensor. Born and "
             "Infeld's $R$ is positive at every $r$, grows toward the centre as $4r_q^2/(r_0^2r^2)$, and falls off "
-            "as $r_q^2r_0^4/r^8$ far out, where $K$ approaches Reissner and Nordström's.",
+            "as $r_q^2r_0^4/r^8$ far out. Far out $K$ approaches Reissner and Nordström's.",
         ],
+        "ricci_sentences": [[1, 0], [1, 1]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-4}$ to $10^{6}$ and cut each curve where it leaves "
+            f"its panel, as the particle\'s $K$ does inside $r = {K_cut:.3f}\\,r_0$ and Reissner and Nordström's inside "
+            f"$r = {K_rn_cut:.3f}\\,r_0$.",
+            "We draw $R\\,r_0^2$ on a logarithmic scale from $10^{-6}$ to $10^{4}$ and cut each curve where it leaves "
+            f"its panel, as the particle\'s $R$ does inside $r = {R_cut:.3f}\\,r_0$."),
         "settings": "$r_0 = 1$, the unit of every length, $r_q = r_0/2$, and $r_s = 0.618\\,r_0$, the mass of the "
                     "field alone.",
         "clip": ("We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-4}$ to $10^{6}$ and $R\\,r_0^2$ on one from "
@@ -1573,9 +1620,16 @@ def born_infeld_charge(ck, src):
             "$48m_0^2/r^6$, as Schwarzschild's does for the mass $m_0$, where Reissner and Nordström's grows as "
             "$56r_q^4/r^8$.",
             f"The horizon is at $r_h = {r_h:.3f}\\,r_0$, where $g^{{rr}} = 1 - 2m/r$ vanishes. $R$ is a function "
-            "of $r$, $r_q$, and $r_0$ alone, so it is the particle's, and far out $K$ approaches Reissner and "
+            "of $r$, $r_q$, and $r_0$ alone, so it is the particle's. Far out $K$ approaches Reissner and "
             "Nordström's.",
         ],
+        "ricci_sentences": [[1, 1]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-4}$ to $10^{6}$ and cut each curve where it leaves "
+            f"its panel, as the black hole\'s $K$ does inside $r = {K_cut:.3f}\\,r_0$ and Reissner and Nordström's inside "
+            f"$r = {K_rn_cut:.3f}\\,r_0$.",
+            "We draw $R\\,r_0^2$ on a logarithmic scale from $10^{-6}$ to $10^{4}$ and cut each curve where it leaves "
+            f"its panel, as the black hole\'s $R$ does inside $r = {R_cut:.3f}\\,r_0$."),
         "settings": f"$r_0 = 1$, the unit of every length, $r_q = r_0/2$, and $r_s = 2\\,r_0$, so that the horizon "
                     f"is at $r_h = {r_h:.3f}\\,r_0$.",
         "clip": ("We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-4}$ to $10^{6}$ and $R\\,r_0^2$ on one from "
@@ -1625,6 +1679,14 @@ def born_infeld_charge(ck, src):
             f"$r_h = {r_h:.3f}\\,r_0$ at $r_s = 2\\,r_0$. $R$ is a function of $r$, $r_q$, and $r_0$ alone, so "
             "it is the same in every frame.",
         ],
+        "ricci_sentences": [[1, 1]],
+        "per_scalar": scalar_clips(
+            "The scale is that of Hoffmann's particle and the black hole, and we cut each curve where it leaves its "
+            "panel: Born and Infeld's $K$ passes the top inside a radius that grows from "
+            f"$r = {K_cuts[0]:.3f}\\,r_0$ in the first frame to ${K_cuts[-1]:.3f}\\,r_0$ in the last, and Reissner and "
+            f"Nordström's inside a radius between ${min(K_rn_cuts):.3f}\\,r_0$ and ${max(K_rn_cuts):.3f}\\,r_0$.",
+            "The scale is that of Hoffmann's particle and the black hole, and we cut each curve where it leaves its "
+            f"panel: $R$ passes the top inside $r = {R_cut:.3f}\\,r_0$ in every frame."),
         "settings": f"$r_0 = 1$, the unit of every length, $r_q = r_0/2$, and $r_s$ in {BI_STEPS} equal steps from "
                     "$0.618\\,r_0$ to $2\\,r_0$.",
         "clip": ("The scales are those of Hoffmann's particle and the black hole, and we cut each curve where it "
@@ -1985,8 +2047,14 @@ def brans_dicke_sphere(ck, src):
             "to hide them, and $K$ grows without bound as $(r - 2r_0)^{-5/2}$.",
             "Schwarzschild's $R$ vanishes, and Brans and Dicke's is positive at every $r$ and grows without bound as "
             f"$(r - 2r_0)^{{-5/4}}$. $K$ crosses Schwarzschild's at $r = {cross:.3f}\\,r_0$ and far out falls to "
-            "$25/32$ of it, while $R$ falls off as $3r_0^2/8r^4$.",
+            "$25/32$ of it. Far out $R$ falls off as $3r_0^2/8r^4$.",
         ],
+        "ricci_sentences": [[1, 0], [1, 2]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-4}$ to $10^{2}$ and cut each curve where it leaves "
+            f"its panel, as $K$ does inside $r = {K_edge:.3f}\\,r_0$.",
+            "We draw $R\\,r_0^2$ on a logarithmic scale from $10^{-6}$ to $10^{2}$ and cut each curve where it leaves "
+            f"its panel, as $R$ does inside $r = {R_edge:.3f}\\,r_0$."),
         "settings": "$m = 0$, $n = 1/4$, and $r_0 = 1$, the unit of every length, so that $GM/c^2 = r_0$, and "
                     "Schwarzschild's $r_s = 2r_0$.",
         "clip": ("We draw $K\\,r_0^4$ on a logarithmic scale from $10^{-4}$ to $10^{2}$ and $R\\,r_0^2$ on one from "
@@ -2044,15 +2112,22 @@ def brans_dicke_sphere(ck, src):
         "caption": [
             "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Brans and Dicke's static sphere against $r$ as "
             "$n$ grows at fixed mass ($m = 0$, $1/100 \\le n \\le 1/4$, which is $198 \\ge \\omega \\ge 6$), beside "
-            "Schwarzschild's black hole. As $n$ falls, $\\omega = 2(1 - n)/n$ grows, $R$ shrinks toward zero, and $K$ "
+            "Schwarzschild's black hole. As $n$ falls, $\\omega = 2(1 - n)/n$ grows, and $K$ "
             "approaches Schwarzschild's except in a layer beside $r = 2r_0$ that thins with $n$ and where it still "
             f"grows without bound: $K$ is above twice Schwarzschild's inside $r = {crossing(last, 2):.3f}\\,r_0$ at "
-            f"$n = 1/4$ and inside $r = {crossing(first, 2):.3f}\\,r_0$ at $n = 1/100$.",
+            f"$n = 1/4$ and inside $r = {crossing(first, 2):.3f}\\,r_0$ at $n = 1/100$. As $n$ falls, $R$ shrinks "
+            "toward zero.",
             "In 1961 Brans and Dicke took $\\omega \\ge 6$ from Mercury's perihelion, and the last frame is that least "
             f"value. The Cassini spacecraft puts $\\omega$ above ${BDS_CASSINI // 1000}{{,}}000$, where "
             f"$n < {tex_number(n_cassini, 2)}$ and $K$ is within a percent of Schwarzschild's outside "
             f"$r = {r_percent:.4f}\\,r_0$.",
         ],
+        "ricci_sentences": [[0, 2]],
+        "per_scalar": scalar_clips(
+            "The scale is that of $n = 1/4$, and we cut each curve where it leaves the top of its panel, within "
+            f"${stated:g}\\,r_0$ of $r = 2r_0$ in every frame; no curve passes the bottom.",
+            "The scale is that of $n = 1/4$, and we cut each curve where it leaves the top of its panel, within "
+            f"${stated:g}\\,r_0$ of $r = 2r_0$ in every frame; no curve passes the bottom."),
         "settings": "$m = 0$ and $r_0 = 1$, the unit of every length, so that $GM/c^2 = r_0$, and $n$ in steps of "
                     f"$1/{int(1 / BDS_STEP)}$.",
         "clip": ("The scales are those of $n = 1/4$, and we cut each curve where it leaves the top of its panel, "
@@ -2212,9 +2287,15 @@ def bowers_liang(ck, src):
             "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - p_r - 2p_\\perp)/c^4$, negative throughout the "
             f"star. At the centre both pressures are $\\rho c^2/\\sqrt{{3}}$ and $R^\\mu{{}}_\\mu = {centre_R:.3f}/r_s^2$, "
             "and at the surface $p_r = 0$, $p_\\perp = \\rho c^2$, and "
-            f"$R^\\mu{{}}_\\mu = -3r_s/R^3 = {surface_R:.3f}/r_s^2$. Outside it vanishes. Both scalars jump at the "
+            f"$R^\\mu{{}}_\\mu = -3r_s/R^3 = {surface_R:.3f}/r_s^2$. Outside it vanishes. $R^\\mu{{}}_\\mu$ jumps at "
+            "the surface, where the density and the pressure across the radius fall to zero. $K$ jumps at the "
             "surface, where the density and the pressure across the radius fall to zero.",
         ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 2], [1, 3]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-2}$ to $10^{4}$, and every value drawn lies within it.",
+            "We draw $R^\\mu{}_\\mu\\,r_s^2$ on a signed logarithmic scale, linear within $0.1$ of zero, from $-10^{2}$ "
+            "to $10$, and every value drawn lies within it."),
         "settings": "$r_s = 1$, the unit of every length, $Q = 1/4$, and $R = 9r_s/8$.",
         "clip": clip + ", and every value drawn lies within them.",
     }
@@ -2285,7 +2366,8 @@ def bowers_liang(ck, src):
         "caption": [
             "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Bowers and Liang's star against $r$ "
             f"as a star of fixed mass is made more compact ($Q = 1/4$, ${first} \\le r_s/R \\le {last}$). Outside the star "
-            "both are Schwarzschild's in every frame. At the centre $K = 3r_s^2(P^2 + 4)/R^6$, which grows from "
+            "$K$ is Schwarzschild's in every frame. Outside the star $R^\\mu{}_\\mu$ vanishes in every frame, as "
+            "Schwarzschild's does. At the centre $K = 3r_s^2(P^2 + 4)/R^6$, which grows from "
             f"${centres[0]:.4f}/r_s^4$ at $r_s/R = {first}$ to ${centres[-1]:.1f}/r_s^4$ at $r_s/R = {last}$, and without "
             "bound as $r_s/R$ nears $1 - 3^{-1/Q} = 80/81$, where the central pressure is infinite.",
             "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - p_r - 2p_\\perp)/c^4$. It is positive throughout "
@@ -2293,6 +2375,10 @@ def bowers_liang(ck, src):
             "It turns negative first at the surface, at $r_s/R = 4/5$, then at the centre, at $r_s/R = 65/81$, where "
             "$3p_r = \\rho c^2$, and last in a shell between the two.",
         ],
+        "ricci_sentences": [[0, 2], [1, 0], [1, 1], [1, 2]],
+        "per_scalar": scalar_clips(
+            "The scale is that of $Q = 1/4$, $R = 9r_s/8$, and every value drawn lies within it.",
+            "The scale is that of $Q = 1/4$, $R = 9r_s/8$, and every value drawn lies within it."),
         "settings": f"$r_s = 1$, the unit of every length, $Q = 1/4$, and $r_s/R$ in steps of ${BL_STEP}$.",
         "clip": "The scales are those of $Q = 1/4$, $R = 9r_s/8$, and every value drawn lies within them.",
         "movie": {"variable": "$r_s/R$", "seconds": 5, "frames": frames},
@@ -2350,7 +2436,8 @@ def bowers_liang(ck, src):
         "caption": [
             "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Bowers and Liang's star against $r$ "
             f"as its pressures change at fixed mass and radius (${BL_QS[0]} \\le Q \\le {BL_QS[-1]}$, $R = 9r_s/8$). Outside the "
-            "star both are Schwarzschild's in every frame. At $Q = 1/2$ the two pressures are equal and the star "
+            "star $K$ is Schwarzschild's in every frame. Outside the star $R^\\mu{}_\\mu$ vanishes in every "
+            "frame, as Schwarzschild's does. At $Q = 1/2$ the two pressures are equal and the star "
             "is Schwarzschild's star of uniform density, whose central pressure is infinite at this radius, and so "
             "is $K$ at its centre. As $Q$ falls, $K$ at the centre falls, to "
             f"${centres[0]:.3f}/r_s^4$ at $Q = {BL_QS[0]}$.",
@@ -2359,6 +2446,12 @@ def bowers_liang(ck, src):
             "negative throughout the star from there to $Q = 3/8$, and positive about the surface for $Q > 3/8$, "
             "where $2p_\\perp < \\rho c^2$ at the surface.",
         ],
+        "ricci_sentences": [[0, 2], [1, 0], [1, 1]],
+        "per_scalar": scalar_clips(
+            "The scale is that of $Q = 1/4$, $R = 9r_s/8$, and we cut each curve where it leaves its panel, as $K$ "
+            f"passes the top inside $r = {K_top:.3f}\\,r_s$ at $Q = 1/2$.",
+            "The scale is that of $Q = 1/4$, $R = 9r_s/8$, and we cut each curve where it leaves its panel, as "
+            f"$R^\\mu{{}}_\\mu$ passes the bottom inside $r = {R_bottom:.3f}\\,r_s$ at $Q = 1/2$."),
         "settings": f"$r_s = 1$, the unit of every length, $R = 9r_s/8$, and $Q$ in steps of ${BL_STEP}$.",
         "clip": ("The scales are those of $Q = 1/4$, $R = 9r_s/8$, and we cut each curve where it leaves its panel, "
                  f"as $K$ passes the top inside $r = {K_top:.3f}\\,r_s$ and $R^\\mu{{}}_\\mu$ the bottom inside "
@@ -2773,8 +2866,13 @@ def damour_solodukhin(ck, src):
             f"At the throat $R = -1/2\\lambda^2r_s^2 = {R0:g}/r_s^2$, and $|R|$ falls to half of that at "
             f"$|u| = {u_half:.3f}\\sqrt{{r_s}}$. $R$ is negative at every $u$. Far out $K$ approaches "
             "$(6 + 6/(1 + \\lambda^2)^2)r_s^2/r^6$, "
-            f"${tail_K / 12:.3f}$ of Schwarzschild's, and $R$ falls off as $-\\lambda^2r_s^2/2(1 + \\lambda^2)^2r^4$.",
+            f"${tail_K / 12:.3f}$ of Schwarzschild's. Far out $R$ falls off as $-\\lambda^2r_s^2/2(1 + \\lambda^2)^2r^4$.",
         ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 3]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10^{6}$; no curve leaves its panel.",
+            "We draw $R\\,r_s^2$ on a signed logarithmic scale, linear within $10^{-6}$ of zero, from $-10^{3}$ to $0$; no "
+            "curve leaves its panel."),
         "settings": "$r_s = 1$, the unit of every length, and $\\lambda = 1/5$.",
         "clip": clip,
     }
@@ -2813,7 +2911,7 @@ def damour_solodukhin(ck, src):
             "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the Damour-Solodukhin wormhole against Einstein "
             "and Rosen's $u$ as $\\lambda$ grows at fixed $r_s$ ($1/25 \\le \\lambda \\le 1$), beside "
             "Schwarzschild's black hole of the same $r_s$. At the throat $K = 6/r_s^4 + 1/4\\lambda^4r_s^4$ falls "
-            f"from ${tex_number(K_first, 4)}/r_s^4$ to ${K_last:g}/r_s^4$ and $R = -1/2\\lambda^2r_s^2$ from "
+            f"from ${tex_number(K_first, 4)}/r_s^4$ to ${K_last:g}/r_s^4$. At the throat $R = -1/2\\lambda^2r_s^2$ falls from "
             f"${R_first:g}/r_s^2$ to ${R_last:g}/r_s^2$. $K$ there stands above the $12/r_s^4$ of Schwarzschild's "
             f"horizon only for $\\lambda < 24^{{-1/4}} = {meets:.3f}$.",
             "As $\\lambda$ falls, $K$ approaches Schwarzschild's at every $u$ but the throat, where it grows without "
@@ -2821,6 +2919,11 @@ def damour_solodukhin(ck, src):
             f"$\\lambda = 1/25$, $K$ is within a percent of Schwarzschild's outside $|u| = {u_percent:.3f}\\sqrt{{r_s}}$, "
             f"the sphere $r = {1 + u_percent ** 2:.3f}\\,r_s$.",
         ],
+        "ricci_sentences": [[0, 2]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10^{6}$; no curve leaves its panel.",
+            "We draw $R\\,r_s^2$ on a signed logarithmic scale, linear within $10^{-6}$ of zero, from $-10^{3}$ to $0$; no "
+            "curve leaves its panel."),
         "settings": f"$r_s = 1$, the unit of every length, and $\\lambda$ in steps of the factor $5^{{1/{DS_STEPS}}}$.",
         "clip": clip,
         "movie": {"variable": "$\\lambda$", "seconds": 5, "frames": frames},
@@ -3023,6 +3126,14 @@ def dilaton_black_hole(ck, src):
             "grows without bound toward $r = r_d$ as $-(r_s - r_d)/2r_d(r - r_d)^2$, and outside it is greatest, "
             f"${R_top:.4f}/r_s^2$, at $r = {r_top:.3f}\\,r_s$, and falls off far out as $r_d^2/2r^4$.",
         ],
+        "ricci_sentences": [[1, 1]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and cut each curve where it leaves "
+            f"its panel, as $K$ does inside $r = {E_cut['K']:.3f}\\,r_s$ and Schwarzschild's $K$ inside "
+            f"$r = {E_cut['Schwarzschild']:.3f}\\,r_s$.",
+            "We draw $R\\,r_s^2$ on a signed logarithmic scale, linear within $10^{-4}$ of zero, from $-10^{3}$ to "
+            "$10^{-1}$, and cut each curve where it leaves its panel.",
+            reference="Schwarzschild's $R = 0$"),
         "settings": "$r_s = 1$, the unit of every length, and $r_d = r_s/2$, the charge $Q = M$ in units with "
                     "$G = c = 1$.",
         "clip": ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and $R\\,r_s^2$ on a signed "
@@ -3076,13 +3187,14 @@ def dilaton_black_hole(ck, src):
     magnetic["caption"] = [
         magnetic.pop("opening") + " The string metric is $e^{2\\varphi} = (1 - r_d/r)^{-1}$ times the Einstein "
         "metric, its spheres have the area $4\\pi r^2$, and toward the singularity $r = r_d$ its $K$ grows as "
-        "$(r_s - r_d)^2/r_d^4(r - r_d)^2$ and its $R$ as $(r_s - r_d)/r_d^2(r - r_d)$, where the Einstein metric's $K$ "
-        "grows as the fourth power of $1/(r - r_d)$.",
+        "$(r_s - r_d)^2/r_d^4(r - r_d)^2$, where the Einstein metric's $K$ grows as the fourth power of "
+        "$1/(r - r_d)$. Toward the singularity its $R$ grows as $(r_s - r_d)/r_d^2(r - r_d)$.",
         "At the horizon $K$ is $(12r_s^2 - 12r_sr_d + 5r_d^2)/r_s^6$, which is "
-        f"${K_h_M:.2f}/r_s^4$ here, and $R = 3r_d/r_s^3 = {3 * rd:.1f}/r_s^2$, and $R$ is positive at every $r$. $K$ stands "
-        f"below the Einstein metric's inside $r = {K_cross:.3f}\\,r_s$ and above it beyond, and far out $K$ falls off "
-        "as $12(r_s^2 + r_d^2)/r^6$ and $R$ as $r_d(3r_s - r_d)/r^4$.",
+        f"${K_h_M:.2f}/r_s^4$ here. At the horizon $R = 3r_d/r_s^3 = {3 * rd:.1f}/r_s^2$, and $R$ is positive at "
+        f"every $r$. $K$ stands below the Einstein metric's inside $r = {K_cross:.3f}\\,r_s$ and above it beyond, and "
+        "far out $K$ falls off as $12(r_s^2 + r_d^2)/r^6$. Far out $R$ falls off as $r_d(3r_s - r_d)/r^4$.",
     ]
+    magnetic["ricci_sentences"] = [[0, 2], [1, 1], [1, 3]]
 
     # The electric string metric.
     near(K_El, "electric", 9 * (1 - rd) ** 2, 6)
@@ -3106,24 +3218,31 @@ def dilaton_black_hole(ck, src):
     electric["caption"] = [
         electric.pop("opening") + " The string metric is $e^{2\\varphi} = 1 - r_d/r$ times the Einstein metric, its "
         "spheres have the area $4\\pi(r - r_d)^2$, and toward the singularity $r = r_d$ its $K$ grows as "
-        "$9(r_s - r_d)^2/(r - r_d)^6$ and its $R$ as $(r_s - r_d)/(r - r_d)^3$, where the Einstein metric's $K$ grows "
-        "as the fourth power of $1/(r - r_d)$.",
+        "$9(r_s - r_d)^2/(r - r_d)^6$, where the Einstein metric's $K$ grows as the fourth power of $1/(r - r_d)$. "
+        "Toward the singularity its $R$ grows as $(r_s - r_d)/(r - r_d)^3$.",
         "$K$ stands above the Einstein metric's at every $r$, and at the horizon it is "
         "$3(4r_s^2 - 4r_sr_d + 3r_d^2)/r_s^2(r_s - r_d)^4$, which is "
-        f"${K_h_El:.0f}/r_s^4$ here, and $R$ is $-3r_d/r_s(r_s - r_d)^2$, which is "
+        f"${K_h_El:.0f}/r_s^4$ here. At the horizon $R$ is $-3r_d/r_s(r_s - r_d)^2$, which is "
         f"${-3 * rd / (1 - rd) ** 2:.0f}/r_s^2$. $R$ changes sign "
         f"at $r = 4r_sr_d/(3r_s + r_d) = {R_zero[0]:.3f}\\,r_s$, inside the horizon, is least, "
-        f"${R_low:.1f}/r_s^2$, at $r = {r_low:.3f}\\,r_s$, and far out $K$ falls off as $12(r_s^2 + r_d^2)/r^6$ and "
-        "$R$ as $-r_d(3r_s + r_d)/r^4$.",
+        f"${R_low:.1f}/r_s^2$, at $r = {r_low:.3f}\\,r_s$, and far out falls off as $-r_d(3r_s + r_d)/r^4$. Far out "
+        "$K$ falls off as $12(r_s^2 + r_d^2)/r^6$.",
     ]
+    electric["ricci_sentences"] = [[0, 2], [1, 1], [1, 2]]
     beside_cut = cut(K_E, x_string, DBH_K, [1, rd], "dilaton_black_hole Einstein metric's K beside a string metric")
     for system, view in strings.items():
         R_kind = ("on a logarithmic scale from $10^{-4}$ to $10^{2}$" if system == "string_magnetic" else
                   "on a signed logarithmic scale, linear within $10^{-4}$ of zero, from $-10^{3}$ to $10^{3}$")
+        own_cut = view.pop("cut")
         view["clip"] = ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and $R\\,r_s^2$ "
                         f"{R_kind}, and cut each curve where it leaves its panel, as $K$ does inside "
-                        f"$r = {view.pop('cut'):.3f}\\,r_s$ and the Einstein metric's $K$ inside "
+                        f"$r = {own_cut:.3f}\\,r_s$ and the Einstein metric's $K$ inside "
                         f"$r = {beside_cut:.3f}\\,r_s$.")
+        view["per_scalar"] = scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and cut each curve where it leaves "
+            f"its panel, as $K$ does inside $r = {own_cut:.3f}\\,r_s$ and the Einstein metric's $K$ inside "
+            f"$r = {beside_cut:.3f}\\,r_s$.",
+            f"We draw $R\\,r_s^2$ {R_kind}, and cut each curve where it leaves its panel.")
 
     # The movie in r_d, at fixed mass, from Schwarzschild's black hole to the extremal charge.
     frames, horizon_K = [], []
@@ -3179,6 +3298,13 @@ def dilaton_black_hole(ck, src):
             "the extremal charge $r_s$, where the singularity reaches the horizon. $R$ vanishes at the horizon at "
             "every charge.",
         ],
+        "ricci_sentences": [[1, 1]],
+        "per_scalar": scalar_clips(
+            "The scale is that of $r_d = r_s/2$, and we cut each curve where it leaves its panel: $K$ passes the top "
+            "toward $r = r_d$ in every frame.",
+            "The scale is that of $r_d = r_s/2$, and we cut each curve where it leaves its panel: $R$ passes the bottom "
+            f"toward $r = r_d$ for $r_d > 0$, and the top for $r_d > {R_top_from:.3f}\\,r_s$.",
+            reference="Schwarzschild's $R = 0$"),
         "settings": f"$r_s = 1$, the unit of every length, and $r_d$ in steps of $r_s/{int(1 / DBH_STEP)}$.",
         "clip": ("The scales are those of $r_d = r_s/2$, and we cut each curve where it leaves its panel: $K$ passes "
                  "the top toward $r = r_d$ in every frame, $R$ passes the bottom toward it for $r_d > 0$, and "
@@ -3392,6 +3518,13 @@ def einstein_1912_static(ck, src):
                 "$r$, grows without bound as $(r - m/2)^{-2}$ toward the sphere $r = m/2$, and far out falls off as "
                 "$-m^2/r^4$.",
             ],
+            "ricci_sentences": [[1, 0], [1, 1], [1, 2]],
+            "per_scalar": scalar_clips(
+                "We draw $K\\,m^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and cut each curve where it leaves its "
+                f"panel, as $K$ does inside $r = {k_cut:.3f}\\,m$ and Schwarzschild's $K$ inside $r = {s_cut:.3f}\\,m$.",
+                "We draw $R\\,m^2$ on a signed logarithmic scale, linear within $10^{-4}$ of zero, from $-10^{4}$ to "
+                f"$10^{{-3}}$, and cut each curve where it leaves its panel, as $R$ does inside $r = {r_cut:.3f}\\,m$.",
+                reference="Schwarzschild's $R = 0$"),
             "settings": "$m = GM/c^2 = 1$, the unit of every length, so that $N = (1 - m/2r)^2$ and Schwarzschild's "
                         "$r_s = 2m$.",
             "clip": ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-4}$ to $10^{4}$ and $R\\,m^2$ on a signed "
@@ -3598,6 +3731,10 @@ def einstein_cluster(ck, src):
     K_clip = (f"We draw $K\\,r_s^4$ on a logarithmic scale from $10^{{{round(math.log10(EC_K[0]))}}}$ to "
               f"$10^{{{round(math.log10(EC_K[1]))}}}$ and $R^\\mu{{}}_\\mu\\,r_s^2$ on one from "
               f"$10^{{{round(math.log10(EC_R[0]))}}}$ to ${EC_R[1]:g}$")
+    EC_K_clip = (f"We draw $K\\,r_s^4$ on a logarithmic scale from $10^{{{round(math.log10(EC_K[0]))}}}$ to "
+                 f"$10^{{{round(math.log10(EC_K[1]))}}}$")
+    EC_R_clip = (f"We draw $R^\\mu{{}}_\\mu\\,r_s^2$ on a logarithmic scale from $10^{{{round(math.log10(EC_R[0]))}}}$ to "
+                 f"${EC_R[1]:g}$")
     own = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]]
     settings = "$r_s = 1$, the unit of every length, $V = 1/2$, and $R = 3\\,r_s$."
     speed_view = {
@@ -3618,8 +3755,14 @@ def einstein_cluster(ck, src):
             "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - 2p_\\perp)/c^4$, with no pressure along the "
             "radius and the pressure $p_\\perp = \\rho c^2V^2/2$ along the circles of the particles, so "
             f"$R^\\mu{{}}_\\mu = 1/(4r^2)$ inside, which is ${1 / (4 * R0 ** 2):#.3g}/r_s^2$ at the surface. Outside it "
-            "vanishes. Both scalars jump at the surface, where the density falls to zero.",
+            "vanishes. $R^\\mu{}_\\mu$ jumps at the surface, where the density falls to zero. $K$ jumps at the surface, "
+            "where the density falls to zero.",
         ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 2]],
+        "per_scalar": scalar_clips(
+            EC_K_clip + f", and cut each curve where it leaves its panel, as $K$ does inside $r = {top_KS:.3f}\\,r_s$.",
+            EC_R_clip + f", and cut each curve where it leaves its panel, as $R^\\mu{{}}_\\mu$ does inside "
+            f"$r = {top_RS:.3f}\\,r_s$."),
         "settings": settings,
         "clip": (K_clip + ", and cut each curve where it leaves its panel, as $K$ does inside "
                  f"$r = {top_KS:.3f}\\,r_s$ and $R^\\mu{{}}_\\mu$ inside $r = {top_RS:.3f}\\,r_s$."),
@@ -3640,10 +3783,17 @@ def einstein_cluster(ck, src):
             f"it is Schwarzschild's $12r_s^2/r^6$, which is ${vacuum_K:#.3g}/r_s^4$ at $r = R$.",
             "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - 2p_\\perp)/c^4$, with no pressure along the "
             "radius and the pressure $p_\\perp$ along the circles of the particles. It falls from "
-            f"$3r_s/R^3 = {centre_RU:#.3g}/r_s^2$ at the centre, where $p_\\perp = 0$ and "
-            f"$K = 5(R^\\mu{{}}_\\mu)^2/3$, to ${surface_RU:#.3g}/r_s^2$ at the surface. Outside it vanishes. Both "
-            "scalars jump at the surface, where the density falls to zero.",
+            f"$3r_s/R^3 = {centre_RU:#.3g}/r_s^2$ at the centre, where $p_\\perp = 0$, to "
+            f"${surface_RU:#.3g}/r_s^2$ at the surface. Outside it vanishes. At the centre "
+            "$K = 5(R^\\mu{}_\\mu)^2/3$. $R^\\mu{}_\\mu$ jumps at the surface, where the density falls to zero. $K$ "
+            "jumps at the surface, where the density falls to zero.",
         ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 2], [1, 4]],
+        "per_scalar": scalar_clips(
+            EC_K_clip + ", and cut each curve where it leaves its panel, as the $K$ of Einstein's cluster does inside "
+            f"$r = {top_KS:.3f}\\,r_s$.",
+            EC_R_clip + ", and cut each curve where it leaves its panel, as the $R^\\mu{}_\\mu$ of Einstein's cluster "
+            f"does inside $r = {top_RS:.3f}\\,r_s$."),
         "settings": "$r_s = 1$, the unit of every length, and $R = 3\\,r_s$.",
         "clip": (K_clip + ", and cut each curve where it leaves its panel, as the $K$ of Einstein's cluster does "
                  f"inside $r = {top_KS:.3f}\\,r_s$ and its $R^\\mu{{}}_\\mu$ inside $r = {top_RS:.3f}\\,r_s$."),
@@ -3657,12 +3807,19 @@ def einstein_cluster(ck, src):
         "caption": [
             "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of a cluster with no surface against $r$ "
             "($b = 2\\,r_s$), the same at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's $K$ for the same "
-            "mass. Both fall from the centre outward with no jump, and $K$ lies below Schwarzschild's $12r_s^2/r^6$ "
-            f"at every $r$, ${ratio_edge:.2f}$ of it at $r = 9\\,r_s$, and approaches it far out.",
+            "mass. $K$ falls from the centre outward with no jump, lies below Schwarzschild's $12r_s^2/r^6$ "
+            f"at every $r$, ${ratio_edge:.2f}$ of it at $r = 9\\,r_s$, and approaches it far out. $R^\\mu{{}}_\\mu$ "
+            "falls from the centre outward with no jump.",
             "At the centre the pressure $p_\\perp$ along the circles of the particles vanishes, as it does at the "
-            "centre of Florides's cluster, and $R^\\mu{}_\\mu = 3/(4r_s^2)$ and $K = 5(R^\\mu{}_\\mu)^2/3 = 15/(16r_s^4)$. "
+            "centre of Florides's cluster, and $R^\\mu{}_\\mu = 3/(4r_s^2)$. At the centre "
+            "$K = 5(R^\\mu{}_\\mu)^2/3 = 15/(16r_s^4)$. "
             "Far out $R^\\mu{}_\\mu$ falls off as $3r_sb^2/r^5$.",
         ],
+        "ricci_sentences": [[0, 2], [1, 0], [1, 2]],
+        "per_scalar": scalar_clips(
+            EC_K_clip + f", and cut each curve where it leaves its panel, as Schwarzschild's $K$ does inside "
+            f"$r = {top_Ks:.3f}\\,r_s$.",
+            EC_R_clip + ", and cut each curve where it leaves its panel."),
         "settings": "$r_s = 1$, the unit of every length, and $b = 2\\,r_s$.",
         "input": nr.EC_CORE_INPUT,
         "clip": (K_clip + ", and cut each curve where it leaves its panel, as Schwarzschild's $K$ does inside "
@@ -3809,8 +3966,14 @@ def fisher_jnw(ck, src):
             "area, with no horizon to hide them, and $K$ grows without bound as $(r - b)^{-3}$.",
             "Schwarzschild's $R$ vanishes, and here $R$ is positive at every $r$ and grows without bound as "
             f"$(r - b)^{{-3/2}}$. $K$ crosses Schwarzschild's at $r = {cross:.3f}\\,b$ and far out falls to "
-            "$\\gamma^2 = 1/4$ of it, since the mass is $2GM/c^2 = \\gamma b$, while $R$ falls off as $3b^2/8r^4$.",
+            "$\\gamma^2 = 1/4$ of it, since the mass is $2GM/c^2 = \\gamma b$. Far out $R$ falls off as $3b^2/8r^4$.",
         ],
+        "ricci_sentences": [[1, 0], [1, 2]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,b^4$ on a logarithmic scale from $10^{-4}$ to $10^{2}$ and cut each curve where it leaves its "
+            f"panel, as $K$ does inside $r = {K_edge:.3f}\\,b$.",
+            "We draw $R\\,b^2$ on a logarithmic scale from $10^{-5}$ to $10^{1}$ and cut each curve where it leaves its "
+            f"panel, as $R$ does inside $r = {R_edge:.3f}\\,b$."),
         "settings": "$\\gamma = 1/2$ and $b = 1$, the unit of every length, so that $2GM/c^2 = b/2$, and "
                     "Schwarzschild's $r_s = b$.",
         "clip": ("We draw $K\\,b^4$ on a logarithmic scale from $10^{-4}$ to $10^{2}$ and $R\\,b^2$ on one from "
@@ -3856,14 +4019,21 @@ def fisher_jnw(ck, src):
             "The Kretschmann scalar $K$ and the Ricci scalar $R$ of a static mass with a massless scalar field "
             "against $r$ as $\\gamma$ grows at fixed $b$ ($1/2 \\le \\gamma \\le 49/50$), beside Schwarzschild's "
             "black hole with $r_s = b$, the case $\\gamma = 1$. As $\\gamma$ grows, the scalar charge "
-            f"$q = b\\sqrt{{1 - \\gamma^2}}/2$ falls from ${charge[0]:.3f}\\,b$ to ${charge[1]:.3f}\\,b$, $R$ shrinks "
-            "toward zero, and $K$ approaches Schwarzschild's except in a layer beside $r = b$ that thins as "
+            f"$q = b\\sqrt{{1 - \\gamma^2}}/2$ falls from ${charge[0]:.3f}\\,b$ to ${charge[1]:.3f}\\,b$, and $K$ "
+            "approaches Schwarzschild's except in a layer beside $r = b$ that thins as "
             f"$\\gamma$ grows: $K$ is above twice Schwarzschild's inside $r = {crossing(first, 2):.3f}\\,b$ at "
-            f"$\\gamma = 1/2$ and inside $r = {crossing(last, 2):.3f}\\,b$ at $\\gamma = 49/50$.",
+            f"$\\gamma = 1/2$ and inside $r = {crossing(last, 2):.3f}\\,b$ at $\\gamma = 49/50$. As $\\gamma$ grows, $R$ "
+            "shrinks toward zero.",
             "Toward $r = b$, $K$ grows as $(1 - \\gamma)^2(7\\gamma^2 - 2\\gamma + 3)(r - b)^{2\\gamma - 4}/4b^{2\\gamma}$. "
             "The factor $(1 - \\gamma)^2$ shrinks as $\\gamma$ approaches 1, while the power stays below $-2$, so at "
             "every $q > 0$ the sphere $r = b$ is a curvature singularity.",
         ],
+        "ricci_sentences": [[0, 2]],
+        "per_scalar": scalar_clips(
+            "The scale is that of $\\gamma = 1/2$, and we cut each curve where it leaves the top of its panel, within "
+            f"${stated:g}\\,b$ of $r = b$ in every frame; no curve passes the bottom.",
+            "The scale is that of $\\gamma = 1/2$, and we cut each curve where it leaves the top of its panel, within "
+            f"${stated:g}\\,b$ of $r = b$ in every frame; no curve passes the bottom."),
         "settings": f"$b = 1$, the unit of every length, and $\\gamma$ in steps of $1/{int(1 / FJNW_STEP)}$, so that "
                     "$2GM/c^2 = \\gamma b$ grows from $b/2$ to $0.98\\,b$.",
         "clip": ("The scales are those of $\\gamma = 1/2$, and we cut each curve where it leaves the top of its panel, "
@@ -3997,6 +4167,11 @@ def gravastar(ck, src):
             "$L$, and vanishes outside. The shell itself, with its surface density and stresses, puts a delta "
             "function into the Ricci tensor at $r = R$.",
         ],
+        "ricci_sentences": [[1, 1], [1, 2]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10^{3}$ and cut Schwarzschild's $K$ where it "
+            f"leaves the top of its panel, inside $r = {cut:.3f}\\,r_s$.",
+            "We draw $R^\\mu{}_\\mu\\,r_s^2$ on a linear scale from $-1$ to $4$."),
         "settings": "$r_s = 1$, the unit of every length, $R = 1.25\\,r_s$, and $L = 2\\,r_s$.",
         "clip": ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10^{3}$ and $R^\\mu{}_\\mu\\,r_s^2$ on "
                  "a linear scale from $-1$ to $4$, and cut Schwarzschild's $K$ where it leaves the top of its panel, "
@@ -4142,8 +4317,15 @@ def hayward(ck, src):
             f"At the centre $R = 12/\\ell^2 = {centre_R:.2f}/m^2$. It changes sign at "
             f"$r = (4m\\ell^2)^{{1/3}} = {r_zero:.3f}\\,m$ and is least, $-8/81\\ell^2 = {R_least:.3f}/m^2$, at "
             f"$r = (7m\\ell^2)^{{1/3}} = {r_least:.3f}\\,m$, both between the two horizons. Far out $K$ approaches "
-            "Schwarzschild's and $R$ falls off as $-24m^2\\ell^2/r^6$.",
+            "Schwarzschild's. Far out $R$ falls off as $-24m^2\\ell^2/r^6$.",
         ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 3]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,m^4$ on a logarithmic scale from $10^{-2}$ to $10^{3}$ and cut each curve where it leaves its "
+            f"panel, as Schwarzschild's $K$ does inside $r = {cut:.3f}\\,m$.",
+            "We draw $R\\,m^2$ on a signed logarithmic scale, linear within $0.001$ of zero, from $-1$ to $10^{2}$, and "
+            "cut each curve where it leaves its panel.",
+            reference="Schwarzschild's $R = 0$"),
         "settings": f"$m = 1$, the unit of every length, and $\\ell = 12m/7\\sqrt{{7}} = {ell:.3f}\\,m$, so that "
                     "$r_+ = 12m/7$ and $r_- = 6m/7$.",
         "clip": ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-2}$ to $10^{3}$ and $R\\,m^2$ on a signed "
@@ -4485,8 +4667,14 @@ def interior_schwarzschild(ck, src):
             "every $r$, and the pressure $p$, greatest at the centre, where it is $\\rho c^2/\\sqrt{3}$ and "
             f"$R^\\mu{{}}_\\mu = {centre_R:.3f}/r_s^2$. It rises through zero at $r = {float(r_zero):.3f}\\,r_s$, "
             f"where $3p = \\rho c^2$, to $3r_s/R^3 = {surface_R:.3f}/r_s^2$ at the surface, where $p = 0$. Outside "
-            "it vanishes. Both scalars jump at the surface, where the density falls to zero.",
+            "it vanishes. $R^\\mu{}_\\mu$ jumps at the surface, where the density falls to zero. $K$ jumps at the "
+            "surface, where the density falls to zero.",
         ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 2], [1, 3]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10^{3}$, and every value drawn lies within it.",
+            "We draw $R^\\mu{}_\\mu\\,r_s^2$ on a signed logarithmic scale, linear within $0.1$ of zero, from $-10^{2}$ "
+            "to $10$, and every value drawn lies within it."),
         "settings": "$r_s = 1$, the unit of every length, and $R = 1.5\\,r_s$.",
         "clip": clip + ", and every value drawn lies within them.",
     }
@@ -4532,7 +4720,8 @@ def interior_schwarzschild(ck, src):
         "caption": [
             "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Schwarzschild's star of uniform "
             f"density against $r$ as a star of fixed mass is made more compact (${first} \\le r_s/R \\le {last}$). "
-            "Outside the star both are Schwarzschild's in every frame. At the centre $K$ grows from "
+            "Outside the star $K$ is Schwarzschild's in every frame. Outside the star $R^\\mu{}_\\mu$ vanishes "
+            "in every frame, as Schwarzschild's does. At the centre $K$ grows from "
             f"${centres[0]:.4f}/r_s^4$ at $r_s/R = {first}$ to ${centres[-1]:.0f}/r_s^4$ at $r_s/R = {last}$, and "
             "without bound as $r_s/R$ nears Buchdahl's $8/9$, where the central pressure is infinite.",
             "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - 3p)/c^4$ in the density $\\rho$ and the pressure "
@@ -4542,6 +4731,10 @@ def interior_schwarzschild(ck, src):
             f"$r = {last_zero:.3f}\\,R$ at $r_s/R = {last}$, where $R^\\mu{{}}_\\mu = {centre_Rs[-1]:.1f}/r_s^2$ at "
             "the centre.",
         ],
+        "ricci_sentences": [[0, 2], [1, 0], [1, 1], [1, 2]],
+        "per_scalar": scalar_clips(
+            "The scale is that of $R = 1.5\\,r_s$, and every value drawn lies within it.",
+            "The scale is that of $R = 1.5\\,r_s$, and every value drawn lies within it."),
         "settings": f"$r_s = 1$, the unit of every length, and $r_s/R$ in steps of ${IS_STEP}$.",
         "clip": "The scales are those of $R = 1.5\\,r_s$, and every value drawn lies within them.",
         "movie": {"variable": "$r_s/R$", "seconds": 5, "frames": frames},
@@ -5199,8 +5392,14 @@ def kiselev(ck, src):
             "Inside it Schwarzschild's part is the larger, and outside it the matter's, which falls off only as "
             f"$1/r^2$ and at the outer horizon is already {ratio:.1f} times Schwarzschild's.",
             "Schwarzschild's $R$ vanishes, and here $R = 6/r_qr$ is positive at every $r$. It grows toward the "
-            "centre only as $1/r$, while $K$ grows as $12r_s^2/r^6$.",
+            "centre only as $1/r$. Toward the centre $K$ grows as $12r_s^2/r^6$.",
         ],
+        "ricci_sentences": [[1, 0], [1, 1]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-6}$ to $10^{2}$ and cut each curve where it leaves "
+            f"its panel, as $K$ does inside $r = {K_cut:.3f}\\,r_s$ and Schwarzschild's inside $r = {Ks_cut:.3f}\\,r_s$.",
+            "We draw $R\\,r_s^2$ on a logarithmic scale from $10^{-2}$ to $10^{2}$ and cut each curve where it leaves "
+            f"its panel, as $R$ does inside $r = {R_cut:.4f}\\,r_s$."),
         "settings": f"$r_s = 1$, the unit of every length, $w = -2/3$, and $r_q = {KISELEV_RQ}\\,r_s$, so that "
                     f"$r_- = {r_minus:.3f}\\,r_s$ and $r_+ = {r_plus:.3f}\\,r_s$.",
         "clip": ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-6}$ to $10^{2}$ and $R\\,r_s^2$ on one from "
@@ -5267,12 +5466,19 @@ def kiselev(ck, src):
             "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Kiselev's black hole against $r$ as $w$ grows "
             f"at fixed $r_s$ and $r_q$ (${float(KISELEV_FIRST):g} \\le w \\le {float(KISELEV_LAST):g}$), beside "
             "Schwarzschild's. At $w = -1$ the matter is a cosmological constant, $\\Lambda = 3/r_q^2$: $K$ is "
-            "Schwarzschild's plus $24/r_q^4$ and $R = 12/r_q^2$ at every $r$, as in de Sitter space. As $w$ grows "
-            "the matter's curvature falls off ever faster, far out $K$ as $r^{-6(w + 1)}$ and $R$ as "
+            "Schwarzschild's plus $24/r_q^4$, as in de Sitter space. At $w = -1$, $R = 12/r_q^2$ at every $r$, as in "
+            "de Sitter space. As $w$ grows the matter's curvature falls off ever faster, far out $K$ as "
+            "$r^{-6(w + 1)}$. As $w$ grows the matter's curvature falls off ever faster, far out $R$ as "
             "$r^{-3(w + 1)}$.",
             f"The two horizons approach each other as $w$ grows and meet at $w = {w_meet:.3f}$, at "
             f"$r = {r_meet:.3f}\\,r_s$. Past it $g^{{rr}}$ is negative at every $r$, and no static region is left.",
         ],
+        "ricci_sentences": [[0, 2], [0, 4]],
+        "per_scalar": scalar_clips(
+            "The scale is that of $w = -2/3$, and we cut each curve where it leaves the top of its panel, $K$ inside "
+            f"$r = {K_stated:.3f}\\,r_s$ in every frame; no curve passes the bottom.",
+            "The scale is that of $w = -2/3$, and we cut each curve where it leaves the top of its panel, $R$ inside "
+            f"$r = {R_stated:.3f}\\,r_s$ in every frame; no curve passes the bottom."),
         "settings": f"$r_s = 1$, the unit of every length, $r_q = {KISELEV_RQ}\\,r_s$, and $w$ in steps of "
                     f"$1/{int(1 / KISELEV_STEP)}$.",
         "clip": ("The scales are those of $w = -2/3$, and we cut each curve where it leaves the top of its panel, "
@@ -6526,15 +6732,27 @@ def mcvittie(ck, src):
             "$r_s$ and $\\Lambda$. Far from the mass $R^\\mu{}_\\mu$ tends to that of the universe, "
             f"$12H^2/c^2 + 6\\dot{{H}}/c$, which falls from ${tex_number(R_u[y0])}/r_s^2$ at $ct = r_s$ to "
             f"${tex_number(R_u[y1])}/r_s^2$ at $ct = {y1}\\,r_s$. As $H$ falls toward $H_0$ and $\\dot{{H}}$ rises toward "
-            "zero, both scalars approach Schwarzschild-de Sitter's, $K = 12r_s^2/R^6 + 8\\Lambda^2/3$ and "
-            f"$R^\\mu{{}}_\\mu = 4\\Lambda$, and at $ct = {y1}\\,r_s$ each is within ${near}$ percent of them outside "
+            "zero, $K$ approaches Schwarzschild-de Sitter's, $K = 12r_s^2/R^6 + 8\\Lambda^2/3$, and at "
+            f"$ct = {y1}\\,r_s$ it is within ${near}$ percent of it outside $R = {MCV_NEAR}\\,r_s$. As $H$ falls toward "
+            "$H_0$ and $\\dot{H}$ rises toward zero, $R^\\mu{}_\\mu$ approaches Schwarzschild-de Sitter's, "
+            f"$R^\\mu{{}}_\\mu = 4\\Lambda$, and at $ct = {y1}\\,r_s$ it is within ${near}$ percent of it outside "
             f"$R = {MCV_NEAR}\\,r_s$.",
             "Toward the sphere $R = r_s$, $R^\\mu{}_\\mu$ falls without bound at every moment, as "
-            "$6\\dot{H}/c\\sqrt{1 - r_s/R}$, where the pressure of the fluid grows without bound, and $K$ grows as "
-            "$(R^\\mu{}_\\mu)^2/3$. $R^\\mu{}_\\mu$ is negative in a layer about that sphere which thins as "
+            "$6\\dot{H}/c\\sqrt{1 - r_s/R}$, where the pressure of the fluid grows without bound. Toward the sphere "
+            "$R = r_s$, $K$ grows as $(R^\\mu{}_\\mu)^2/3$. $R^\\mu{}_\\mu$ is negative in a layer about that sphere which thins as "
             f"$|\\dot{{H}}|$ falls: inside $R = {zeros_R[0]:.2f}\\,r_s$ at $ct = r_s$, and within "
             f"${tex_number(zeros_R[-1] - 1, 2)}\\,r_s$ of $R = r_s$ at $ct = {y1}\\,r_s$.",
         ],
+        "ricci_sentences": [[0, 1], [0, 3], [1, 0], [1, 2]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-2}$ to $10^{3}$, the same in every frame, and cut each "
+            f"curve where it leaves its panel: $K$ passes the top within ${tex_number(tops[0], 2)}\\,r_s$ of $R = r_s$ "
+            f"at $ct = r_s$ and within ${tex_number(tops[-1], 2)}\\,r_s$ at $ct = {y1}\\,r_s$, and never passes the "
+            "bottom.",
+            "We draw $R^\\mu{}_\\mu\\,r_s^2$ on a signed logarithmic scale, linear within $0.1$ of zero, from $-10$ to "
+            "$10$, the same in every frame, and cut each curve where it leaves its panel: $R^\\mu{}_\\mu$ passes the "
+            f"bottom within ${tex_number(bottoms[0], 2)}\\,r_s$ of $R = r_s$ at $ct = r_s$ and within "
+            f"${tex_number(bottoms[-1], 2)}\\,r_s$ at $ct = {y1}\\,r_s$, and never passes the top."),
         "settings": f"$r_s = 1$, the unit of every length and of $ct$, and $ct$ in steps of $r_s/{int(1 / MCV_STEP)}$.",
         "input": nr.MCV_INPUT,
         "clip": ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-2}$ to $10^{3}$ and $R^\\mu{}_\\mu\\,r_s^2$ on a "
@@ -7340,6 +7558,91 @@ def myers_perry(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- the two places of a figure
+
+def scalar_clips(kretschmann, ricci, reference=None):
+    """The scale of a view that draws both scalars as each of its two places on the page states
+    it, the Kretschmann scalar's after the Kretschmann scalar and the Ricci scalar's after the Ricci
+    scalar, each of its own panel alone, and the name its comparison takes on the Ricci scalar's
+    panel where that differs, as Schwarzschild's $R = 0$ does from Schwarzschild's black hole.
+    draw() completes each with the legend of what its panels draw."""
+    out = {"kretschmann": {"clip": kretschmann}, "ricci_scalar": {"clip": ricci}}
+    if reference:
+        out["ricci_scalar"]["reference"] = reference
+    return out
+
+
+# What the opening of a view's Ricci scalar place stands its scalar beside, where that differs from
+# what the caption stands both beside: nothing, "", where the Ricci scalar's panel draws no
+# comparison, and the comparison as that panel draws it where it vanishes there, the name its legend
+# gives it. Every other view's opening keeps the caption's own comparison, which its Ricci scalar's
+# panel draws too.
+RICCI_BESIDE = {
+    ("bardeen", "charge"): "Schwarzschild's $R = 0$",
+    ("bardeen", "growing"): "Schwarzschild's $R = 0$",
+    ("born_infeld_charge", "particle"): "",
+    ("born_infeld_charge", "hole"): "",
+    ("born_infeld_charge", "mass"): "",
+    ("boulware_deser", "hole"): "Tangherlini's $R = 0$",
+    ("boulware_deser", "length"): "Tangherlini's $R = 0$, the black hole's at $\\ell = 0$",
+    ("brans_dicke_sphere", "omega"): "",
+    ("brans_dicke_sphere", "falling"): "",
+    ("damour_solodukhin", "throat"): "",
+    ("damour_solodukhin", "closing"): "",
+    ("dilaton_black_hole", "einstein"): "Schwarzschild's $R = 0$",
+    ("dilaton_black_hole", "string_magnetic"): "",
+    ("dilaton_black_hole", "string_electric"): "",
+    ("dilaton_black_hole", "growing"): "Schwarzschild's $R = 0$",
+    ("einstein_1912_static", "march"): "Schwarzschild's $R = 0$",
+    ("einstein_cluster", "core"): "",
+    ("fisher_jnw", "scalar"): "",
+    ("fisher_jnw", "growing"): "",
+    ("gravastar", "gravastar"): "",
+    ("hayward", "hole"): "Schwarzschild's $R = 0$",
+    ("kiselev", "hole"): "",
+    ("kiselev", "state"): "",
+}
+
+
+def place_legends(ck, metric_id, view):
+    """Give each place of a view that draws both scalars its opening, the caption's first sentence,
+    which names both scalars, as it reads naming that place's alone, and the legend of what its own
+    panels draw: the view's entries for the classes of the curves on them in any frame and of every
+    mark, which runs through every panel, a comparison on the Ricci scalar's panels under the name
+    `scalar_clips` gives it. A comparison that vanishes at every point of a Ricci scalar's panel
+    must be given that name, since the view's own names the spacetime it is read from."""
+    first = build.caption_sentences(view["caption"][0])[0]
+    holders = [view] + list((view.get("movie") or {}).get("frames") or [])
+    ricci = build.curvature_ricci_panels(view)
+    for scalar, on in (("kretschmann", False), ("ricci_scalar", True)):
+        place = view["per_scalar"][scalar]
+        panels = {p["id"] for p, r in zip(view["panels"], ricci) if r == on}
+        curves = [c for h in holders for c in h.get("curves") or [] if c["panel"] in panels]
+        drawn = {c["class"] for c in curves} | {m["class"] for h in holders for m in h.get("marks") or []}
+        reference = place.pop("reference", None)
+        opening = build.place_opening(first, on)
+        ck(f"{metric_id} {view['id']} opens its caption on both scalars, so each place can open on its own",
+           opening is not None, first[:60])
+        beside = RICCI_BESIDE.get((metric_id, view["id"]))
+        if on and opening and beside is not None:
+            opening = build.rebeside(opening, beside)
+        clip = place.pop("clip")
+        place["opening"], place["clip"] = opening, clip
+        if on:
+            vanishing = [c for c in curves if c["class"] == "reference" and all(p[1] == 0 for p in c["points"])]
+            ck(f"{metric_id} {view['id']} names the comparison that vanishes on the Ricci scalar's panel",
+               not vanishing or reference is not None)
+        place["legend"] = [[kind, cls, reference if (cls == "reference" and reference) else text]
+                           for kind, cls, text in view["legend"] if cls in drawn]
+        if on and opening:
+            # The opening names a comparison only where the panel draws one, and by its legend's name
+            # where that is not the caption's.
+            named = {cls: text for _, cls, text in place["legend"]}
+            ck(f"{metric_id} {view['id']} opens its Ricci scalar's place beside only what that panel draws",
+               (", beside " in opening) == ("reference" in named)
+               and (reference is None or reference in opening), opening[-80:])
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -7380,6 +7683,23 @@ def draw(metric_id, ck):
     views = DRAWN[metric_id](ck, src)
     ids = [v["id"] for v in views]
     ck(f"{metric_id} names each view once", len(set(ids)) == len(ids), f"{ids}")
+    # The page shows a view that draws both scalars in two places, its Ricci scalar after the Ricci
+    # scalar, and takes the sentences of its caption that go there from `ricci_sentences`.
+    for v in views:
+        ricci = build.curvature_ricci_panels(v)
+        if any(ricci) and not all(ricci):
+            if "per_scalar" in v:
+                place_legends(ck, metric_id, v)
+            ck(f"{metric_id} {v['id']} states the scale of each of its two places", "per_scalar" in v)
+            problem = "it names none"
+            if "ricci_sentences" in v:
+                try:
+                    build.check_ricci_sentences(v["id"], v)
+                    problem = None
+                except build.DataError as exc:
+                    problem = str(exc)
+            ck(f"{metric_id} {v['id']} says which sentences of its caption are the Ricci scalar's", problem is None,
+               problem or "")
     return {"metric": metric_id, "source": src.stamps(), "views": views}
 
 

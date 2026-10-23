@@ -647,6 +647,138 @@ def check_curvature_movie(where, view):
                             "curvature movie does: every movie plays forward and back, and none turns")
 
 
+def caption_sentences(paragraph):
+    """The sentences of a paragraph of a curvature caption, as the page counts them for
+    `ricci_sentences`: each runs to a full stop that a space follows outside TeX, and the spaces
+    after it are dropped."""
+    out, start, math_on, i = [], 0, False, 0
+    while i < len(paragraph):
+        c = paragraph[i]
+        if c == "\\":
+            i += 2
+            continue
+        if c == "$":
+            math_on = not math_on
+        elif c == "." and not math_on and paragraph[i + 1:i + 2] == " ":
+            out.append(paragraph[start:i + 1])
+            i += 1
+            while paragraph[i:i + 1] == " ":
+                i += 1
+            start = i
+            continue
+        i += 1
+    out.append(paragraph[start:])
+    return out
+
+
+def curvature_ricci_panels(view):
+    """Whether each panel of a curvature view draws the Ricci scalar, as the page reads it: a panel
+    of a line view when a curve on it in any frame is read from the Ricci scalar, and a map's one
+    plot when its cells are."""
+    holders = [view] + list((view.get("movie") or {}).get("frames") or [])
+    if view.get("kind") == "map":
+        return [any((h.get("map") or {}).get("scalar") == "ricci_scalar" for h in holders)]
+    return [any(c.get("panel") == panel.get("id") and c.get("scalar") == "ricci_scalar"
+                for h in holders for c in h.get("curves") or []) for panel in view.get("panels") or []]
+
+
+# A caption of a view that draws both scalars opens on both, and each of its two places opens on
+# its own: "The Kretschmann scalar $K$ and the Ricci scalar $R$ of" becomes "The Kretschmann scalar
+# $K$ of" after the Kretschmann scalar and "The Ricci scalar $R$ of" after the Ricci scalar, the
+# rest of the sentence as written.
+BOTH_SCALARS = re.compile(r"^The Kretschmann scalar \$K\$ and the Ricci scalar (\$[^$]+\$) of ")
+
+
+def place_opening(paragraph, ricci):
+    """The first sentence or paragraph of a caption that opens on both scalars as the place of one
+    of them opens it, which curvature.py writes into `per_scalar`, or None where it does not open
+    on both."""
+    both = BOTH_SCALARS.match(paragraph)
+    if not both:
+        return None
+    rest = paragraph[both.end():]
+    return (f"The Ricci scalar {both.group(1)} of " if ricci else "The Kretschmann scalar $K$ of ") + rest
+
+
+def rebeside(opening, beside):
+    """An opening with what it stands its scalar beside replaced: its last ", beside ..." clause
+    becomes ", beside" and the given comparison, or goes where that is empty."""
+    head = opening[:-1].rsplit(", beside ", 1)[0]
+    return head + (", beside " + beside if beside else "") + "."
+
+
+def curvature_place_drawn(view, ricci):
+    """The classes the panels of one scalar draw in a view: the curves on them in any frame, and
+    every mark, which runs through every panel."""
+    holders = [view] + list((view.get("movie") or {}).get("frames") or [])
+    panels = {p.get("id") for p, r in zip(view.get("panels") or [], curvature_ricci_panels(view)) if r == ricci}
+    return ({c.get("class") for h in holders for c in h.get("curves") or [] if c.get("panel") in panels}
+            | {m.get("class") for h in holders for m in h.get("marks") or []})
+
+
+def check_per_scalar(at, view):
+    """A view's `per_scalar`, what each of its two places on the page states of its own scalar:
+    for the Kretschmann scalar and for the Ricci scalar the opening of its caption, the caption's
+    first sentence naming that scalar alone with the rest as written, a scale, prose, and the
+    legend of what its panels draw, every class they draw named once and nothing named they do
+    not draw."""
+    ricci = curvature_ricci_panels(view)
+    if not (any(ricci) and not all(ricci)):
+        raise DataError(f"{at} states the scale of each scalar's place, but does not draw a panel of each scalar")
+    places = view["per_scalar"]
+    if not (isinstance(places, dict) and set(places) == set(CURVATURE_SCALARS)):
+        raise DataError(f"{at} does not state its places as {' and '.join(CURVATURE_SCALARS)}")
+    for scalar, place in places.items():
+        where = f"{at}, the place of {scalar}"
+        if not (isinstance(place, dict) and set(place) == {"opening", "clip", "legend"}):
+            raise DataError(f"{where} is not an opening, a clip and a legend")
+        first = caption_sentences(view["caption"][0])[0]
+        own = place_opening(first, scalar == "ricci_scalar")
+        # The Ricci scalar's place may stand it beside another comparison, or none, than the caption's.
+        if place["opening"] != own and not (scalar == "ricci_scalar" and own is not None and ", beside " in own
+                                            and place["opening"].startswith(own[:-1].rsplit(", beside ", 1)[0])
+                                            and place["opening"].endswith(".")):
+            raise DataError(f"{where} does not open as its caption does, on its own scalar alone: "
+                            f"{str(place['opening'])[:60]}")
+        if not (isinstance(place["clip"], str) and place["clip"].strip()):
+            raise DataError(f"{where} has no clip")
+        legend = place["legend"]
+        if not (isinstance(legend, list) and all(isinstance(e, list) and len(e) == 3 and e[0] in LEGEND_KINDS
+                                                 and isinstance(e[2], str) and e[2].strip() for e in legend)):
+            raise DataError(f"{where} has a legend entry that is not [kind, class, text]")
+        named, drawn = [e[1] for e in legend], curvature_place_drawn(view, scalar == "ricci_scalar")
+        if len(set(named)) != len(named) or set(named) != drawn:
+            raise DataError(f"{where} draws {sorted(drawn)} and names {named} in its legend")
+
+
+def check_ricci_sentences(at, view):
+    """A view's `ricci_sentences`, the sentences of its caption the page shows after the Ricci
+    scalar: each [paragraph, sentence] of the caption once and in order, on a view that draws a
+    panel of each scalar, every paragraph of whose caption the page can take apart and put back
+    together word for word."""
+    named = view["ricci_sentences"]
+    ricci = curvature_ricci_panels(view)
+    if not (any(ricci) and not all(ricci)):
+        raise DataError(f"{at} says which sentences of its caption are the Ricci scalar's, but does not draw a "
+                        "panel of each scalar")
+    if place_opening(view["caption"][0], True) is None:
+        raise DataError(f"{at} names the Ricci scalar's sentences, but its caption does not open "
+                        "\"The Kretschmann scalar $K$ and the Ricci scalar ... of\", which each place opens on its own scalar")
+    sentences = [caption_sentences(p) for p in view["caption"]]
+    for paragraph, parts in zip(view["caption"], sentences):
+        if " ".join(parts) != paragraph or not all(part.endswith(".") for part in parts):
+            raise DataError(f"{at} has a caption paragraph the page cannot take apart into sentences, each ending "
+                            "with a full stop and one space after it: " + paragraph[:60])
+    if not (isinstance(named, list) and all(isinstance(at_, list) and len(at_) == 2 and
+                                            all(isinstance(k, int) and not isinstance(k, bool) for k in at_)
+                                            for at_ in named)):
+        raise DataError(f"{at} names the Ricci scalar's sentences other than as [paragraph, sentence]")
+    if not all(0 <= p < len(sentences) and 0 <= k < len(sentences[p]) for p, k in named):
+        raise DataError(f"{at} names a sentence its caption does not have, among {named}")
+    if [tuple(a) for a in named] != sorted({tuple(a) for a in named}):
+        raise DataError(f"{at} names the Ricci scalar's sentences out of order, or one twice")
+
+
 def load_curvature(metrics):
     """Every curvature figure file, refused if any field it was drawn from has changed, or if a
     view is out of the shape _tools/README.md defines under "Curvature figures": a line view's
@@ -702,6 +834,10 @@ def load_curvature(metrics):
                     raise DataError(f"{at} has no {field}")
             if not (view.get("caption") and all(isinstance(p, str) and p.strip() for p in view["caption"])):
                 raise DataError(f"{at} has no caption")
+            if "ricci_sentences" in view:
+                check_ricci_sentences(at, view)
+            if "per_scalar" in view:
+                check_per_scalar(at, view)
             check_axis(f"{at}, its horizontal axis", view.get("x"))
             if "movie" in view:
                 check_curvature_movie(at, view)

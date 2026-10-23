@@ -386,6 +386,10 @@ def curvature_texts(view):
             yield "ticks", tick["label"]
     if view.get("clip"):
         yield "clip", view["clip"]
+    for place in (view.get("per_scalar") or {}).values():
+        yield "clip", place["clip"]
+        for entry in place["legend"]:
+            yield "legend", entry[2]
     for frame in (view.get("movie") or {}).get("frames") or []:
         yield "movie", frame["label"]
 

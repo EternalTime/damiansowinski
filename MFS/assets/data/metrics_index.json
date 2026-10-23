@@ -273,7 +273,7 @@
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572",
-    "curvature": "55b44f3a32763357"
+    "curvature": "c74a9aae67336060"
   },
   {
     "id": "bartnik_mckinnon",
@@ -774,7 +774,7 @@
     "diagrams": "57ee5c7562cefd4b",
     "conformal": "e2bbbb9cac6bd337",
     "embedding": "5e7af1a4e6b9a9b6",
-    "curvature": "3ccc7ec6fc5fddd9"
+    "curvature": "4545effe452d8526"
   },
   {
     "id": "boson_star",
@@ -847,7 +847,7 @@
     "diagrams": "aad81dc2048a0547",
     "conformal": "6c5c22a5247f56a8",
     "embedding": "d857ba18e7d9066a",
-    "curvature": "4bf76918e0393138"
+    "curvature": "875808198beb89a7"
   },
   {
     "id": "bowers_liang",
@@ -878,7 +878,7 @@
     "diagrams": "e3a9b0855962b188",
     "conformal": "956299fadfc78f36",
     "embedding": "0147ab391063a7a6",
-    "curvature": "4ab34615cad1a0b2"
+    "curvature": "e0fc95f39523b139"
   },
   {
     "id": "brans_dicke_sphere",
@@ -916,7 +916,7 @@
     "diagrams": "fd0321d9fcdcb54d",
     "conformal": "c776bb1e86cd5f7d",
     "embedding": "a1c5b02d8ba65163",
-    "curvature": "ab77d8766b9699f0"
+    "curvature": "e0e7276a7b696dc6"
   },
   {
     "id": "brill_waves",
@@ -1244,7 +1244,7 @@
     "diagrams": "703438847ca6a35b",
     "conformal": "7f7b3ad43c1f628e",
     "embedding": "759b3c0dec35465e",
-    "curvature": "193839550f129ea4"
+    "curvature": "da03d2027d9d2a6a"
   },
   {
     "id": "datt_ruban_t_models",
@@ -1342,7 +1342,7 @@
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
-    "curvature": "5742d8418802ddc6"
+    "curvature": "dd6ec211e1e91ec7"
   },
   {
     "id": "distorted_schwarzschild",
@@ -1501,7 +1501,7 @@
     "diagrams": "dd0f4a73eb933b73",
     "conformal": "7807b351c1311ade",
     "embedding": "ab81073436048cb9",
-    "curvature": "b1f87db5587b067b"
+    "curvature": "bcadd12b5e2ce63c"
   },
   {
     "id": "einstein_static",
@@ -1551,7 +1551,7 @@
     "diagrams": "797bb029c7a77a1c",
     "conformal": "ba7f2b66e7041147",
     "embedding": "d878e36cfb97e520",
-    "curvature": "be3c6f80d448c662"
+    "curvature": "22fa11235874bb97"
   },
   {
     "id": "einstein_dirac_maxwell_wormhole",
@@ -1814,7 +1814,7 @@
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46",
-    "curvature": "4ffe343f4cced8c3"
+    "curvature": "0f94112712e7110b"
   },
   {
     "id": "freund_rubin",
@@ -2068,7 +2068,7 @@
     "diagrams": "1e2a338fbaeb162f",
     "conformal": "c44e7367505c4a14",
     "embedding": "eb3c3b7b2d474485",
-    "curvature": "8ec870cad48fb9b7"
+    "curvature": "510b0aa9a0a06aba"
   },
   {
     "id": "gravitational_instantons",
@@ -2188,7 +2188,7 @@
     "diagrams": "a15527f5015cc33a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3",
-    "curvature": "ea65ddbd2b2c2e5f"
+    "curvature": "42c25927dc8304f6"
   },
   {
     "id": "hiscock",
@@ -2933,7 +2933,7 @@
     "diagrams": "b8b3958f55b02f60",
     "conformal": "6ef2fd6aee9f0ecf",
     "embedding": "f88f2136771d0f0a",
-    "curvature": "5e99ec2c5a76dacc"
+    "curvature": "94cff053104263c8"
   },
   {
     "id": "kodama_kink",
@@ -3410,7 +3410,7 @@
     "diagrams": "1e8a40c11bf25b40",
     "conformal": "5bfaa0670ab1bb25",
     "embedding": "2c9b70767c1e34be",
-    "curvature": "8245d7264fd8aa87"
+    "curvature": "0107beb4aaf05ab3"
   },
   {
     "id": "melvin",
@@ -4597,7 +4597,7 @@
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978",
-    "curvature": "ecbe1bd09b737edc"
+    "curvature": "8dd40b428038d002"
   },
   {
     "id": "schwarzschild_ads",

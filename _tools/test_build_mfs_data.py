@@ -312,6 +312,10 @@ def curvature_prose(name, data):
                 yield f"{where}.{field}", view[field]
         for position, (_, _, text) in enumerate(view["legend"]):
             yield f"{where}.legend[{position}]", text
+        for scalar, place in (view.get("per_scalar") or {}).items():
+            yield f"{where}.per_scalar.{scalar}.clip", place["clip"]
+            for position, (_, _, text) in enumerate(place["legend"]):
+                yield f"{where}.per_scalar.{scalar}.legend[{position}]", text
         for field in ("x", "y", "colour"):
             if view.get(field):
                 yield f"{where}.{field}.name", view[field]["name"]
@@ -7897,6 +7901,186 @@ class Relations(unittest.TestCase):
         self.assertLess(history, related)
         self.assertLess(related, coordinates)
         self.assertIn("mfs-section-label\">Related Spacetimes<", page)
+
+
+class SectionOrder(unittest.TestCase):
+    """The sections of a spacetime's page stand in the order _tools/README.md gives under "Where the
+    diagrams stand", each diagram beside the mathematics it draws: the spacetime diagram and the
+    conformal diagram after the coordinates and their conventions, the embedding diagram after the
+    metric, and the curvature figure's Ricci scalar after the Ricci scalar and its Kretschmann scalar
+    after the Kretschmann scalar. The contents beside the page and its print copy read the page as
+    drawn, so they follow it."""
+
+    ORDER = (
+        ("history", 'mfs-section-label">history<'),
+        ("related spacetimes", "relatedSection(data),"),
+        ("coordinates", 'mfs-section-label">coordinates<'),
+        ("conventions", "conventionSection(data, coord),"),
+        ("spacetime diagram", "diagramSection(data.id, coord.id)"),
+        ("conformal diagram", "conformalSection(data.id, hasCoords ? coord.id : null),"),
+        ("line element", 'mfs-section-label">line element<'),
+        ("metric", 'mfs-section-label">metric<'),
+        ("embedding diagram", "embeddingSection(data.id, hasCoords ? coord.id : null),"),
+        ("inverse metric", 'mfs-section-label">inverse metric<'),
+        ("Christoffel symbols", 'mfs-section-label">Christoffel symbols<'),
+        ("Riemann tensor", 'mfs-section-label">Riemann tensor<'),
+        ("Ricci tensor", 'mfs-section-label">Ricci tensor<'),
+        ("Ricci scalar", 'mfs-section-label">Ricci scalar<'),
+        ("Ricci scalar diagram", "curvatureSection(data.id, hasCoords ? coord.id : null, true),"),
+        ("Kretschmann scalar", 'mfs-section-label">Kretschmann scalar<'),
+        ("Kretschmann scalar diagram", "curvatureSection(data.id, hasCoords ? coord.id : null, false),"),
+        ("Einstein tensor", 'mfs-section-label">Einstein tensor<'),
+        ("Weyl tensor", 'mfs-section-label">Weyl tensor<'),
+        ("geodesics", 'mfs-section-label">Geodesics<'),
+        ("references", 'mfs-section-label">references<'),
+    )
+
+    def test_the_page_writes_its_sections_in_order(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        body = page[page.index("var body = ["):page.index("window._mfsPrintBody = ")]
+        for name, mark in self.ORDER:
+            self.assertEqual(body.count(mark), 1, name)
+        places = [body.index(mark) for _, mark in self.ORDER]
+        self.assertEqual(places, sorted(places))
+        # The slice and the shade first drawn are set before the body, so before every diagram.
+        self.assertLess(page.index("firstViews(data.id, hasCoords ? coord.id : null);"), page.index("var body = ["))
+
+    def test_the_readme_gives_the_same_order(self):
+        readme = (build.ROOT / "_tools" / "README.md").read_text(encoding="utf-8")
+        start = readme.index("The sections of a spacetime's page stand in this order")
+        block = re.search(r"\n\n((?:    .*\n)+)", readme[start:]).group(1)
+        names = [n.strip() for n in " ".join(block.split()).split(",")]
+        self.assertEqual(names, [name for name, _ in self.ORDER])
+
+
+class CurvatureCaptionSplit(unittest.TestCase):
+    """A curvature view that draws both scalars stands in two places, and `ricci_sentences` says
+    which sentences of its caption go under the Ricci scalar, every other under the Kretschmann
+    scalar. The page counts a caption's sentences as build_mfs_data.caption_sentences() does, and
+    every such view on disk names its Ricci scalar's sentences."""
+
+    def test_each_place_opens_on_its_own_scalar_with_the_rest_as_written(self):
+        opened = 0
+        for name, data in curvature_files().items():
+            for view in data["views"]:
+                if "per_scalar" not in view:
+                    continue
+                first = build.caption_sentences(view["caption"][0])[0]
+                rest = first[first.index(" of ") + 4:]
+                kretschmann = view["per_scalar"]["kretschmann"]["opening"]
+                ricci = view["per_scalar"]["ricci_scalar"]["opening"]
+                self.assertEqual(kretschmann, "The Kretschmann scalar $K$ of " + rest, f"{name} {view['id']}")
+                # The Ricci scalar's place stands it beside only what its panel draws, by that curve's
+                # name in its legend, as Bardeen's beside Schwarzschild's $R = 0$.
+                head = rest.rsplit(", beside ", 1)[0].rstrip(".")
+                self.assertTrue(ricci.startswith("The Ricci scalar $R") and " of " + head in ricci, f"{name} {view['id']}")
+                legend = {e[1]: e[2] for e in view["per_scalar"]["ricci_scalar"]["legend"]}
+                self.assertEqual(", beside " in ricci, "reference" in legend, f"{name} {view['id']}")
+                if "reference" in legend and legend["reference"].endswith("$R = 0$"):
+                    self.assertIn(legend["reference"], ricci, f"{name} {view['id']}")
+                opened += 1
+        self.assertTrue(opened)
+
+    def test_no_sentence_of_a_place_names_the_other_scalar_but_as_a_relation(self):
+        # Every sentence of a two-scalar view's caption stands with one scalar: one under the
+        # Ricci scalar names no K, and one under the Kretschmann scalar names R only where it states
+        # how K stands to R, as K = 5(R^mu_mu)^2/3 does.
+        relations = ("K = 5(R^\\mu{}_\\mu)^2/3", "$K$ grows as $(R^\\mu{}_\\mu)^2/3$")
+        for name, data in curvature_files().items():
+            for view in data["views"]:
+                if "ricci_sentences" not in view:
+                    continue
+                ricci_name = [p["name"] for p, r in zip(view["panels"], build.curvature_ricci_panels(view)) if r][0]
+                symbol = "R^\\mu{}_\\mu" if "\\mu" in ricci_name else "R"
+                named = {tuple(a) for a in view["ricci_sentences"]}
+                for i, paragraph in enumerate(view["caption"]):
+                    for j, sentence in enumerate(build.caption_sentences(paragraph)):
+                        if (i, j) == (0, 0):
+                            continue
+                        maths = re.findall(r"\$[^$]*\$", sentence)
+                        k = any(re.search(r"(^|[^A-Za-z\\])K([^A-Za-z]|$)", m) for m in maths)
+                        r = (any(symbol in m for m in maths) if symbol != "R" else
+                             any(re.search(r"(^|[^A-Za-z\\])R([^A-Za-z_]|$)", m) for m in maths))
+                        where = f"{name} {view['id']} [{i},{j}]"
+                        if (i, j) in named:
+                            self.assertFalse(k, where + " names K under the Ricci scalar")
+                        elif r:
+                            self.assertTrue(any(rel in sentence for rel in relations), where + " names R under K")
+
+    def test_the_page_counts_every_captions_sentences_as_the_build_does(self):
+        if shutil.which("node") is None:
+            self.skipTest("Node is not installed, so the page's counting cannot be run")
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        counting = re.search(r"      function cvSentences\([\s\S]*?\n      \}\n", page)
+        self.assertIsNotNone(counting, "no cvSentences()")
+        paragraphs = [p for data in curvature_files().values() for view in data["views"] for p in view["caption"]]
+        self.assertTrue(paragraphs)
+        script = (counting.group(0) + "const texts = JSON.parse(require('fs').readFileSync(0, 'utf8'));"
+                  "console.log(JSON.stringify(texts.map(cvSentences)));")
+        run = subprocess.run(["node", "-e", script], input=json.dumps(paragraphs), capture_output=True, text=True,
+                             check=True)
+        for paragraph, sentences in zip(paragraphs, json.loads(run.stdout)):
+            self.assertEqual(sentences, build.caption_sentences(paragraph), paragraph[:60])
+            self.assertEqual(" ".join(sentences), paragraph)
+
+    def test_every_view_of_both_scalars_names_its_ricci_scalars_sentences(self):
+        both = 0
+        for name, data in curvature_files().items():
+            for view in data["views"]:
+                ricci = build.curvature_ricci_panels(view)
+                if any(ricci) and not all(ricci):
+                    both += 1
+                    self.assertTrue("ricci_sentences" in view, f"{name} {view['id']} names none")
+                    build.check_ricci_sentences(f"{name} {view['id']}", view)
+                    self.assertTrue("per_scalar" in view, f"{name} {view['id']} states no scale of each place")
+                    build.check_per_scalar(f"{name} {view['id']}", view)
+                    # A comparison that vanishes on the Ricci scalar's panel is named as what it is.
+                    zero = any(c["class"] == "reference" and all(p[1] == 0 for p in c["points"])
+                               for h in [view] + view.get("movie", {}).get("frames", [])
+                               for c in h.get("curves", []) if c["panel"] == "R")
+                    names = {e[1]: e[2] for e in view["per_scalar"]["ricci_scalar"]["legend"]}
+                    if zero:
+                        self.assertTrue(names["reference"].endswith("$R = 0$"), f"{name} {view['id']}")
+                else:
+                    self.assertFalse("ricci_sentences" in view, f"{name} {view['id']} draws one scalar")
+                    self.assertFalse("per_scalar" in view, f"{name} {view['id']} draws one scalar")
+        self.assertTrue(both, "no view draws both scalars, so nothing was checked")
+
+    def test_a_split_that_loses_or_repeats_a_sentence_is_refused(self):
+        view = {"kind": "line", "panels": [{"id": "K"}, {"id": "R"}],
+                "curves": [{"panel": "K", "scalar": "kretschmann"}, {"panel": "R", "scalar": "ricci_scalar"}],
+                "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of one $K = 1.5$. Two.", "Three."]}
+        build.check_ricci_sentences("v", dict(view, ricci_sentences=[[0, 1], [1, 0]]))
+        for bad in ([[0, 2]], [[1, 0], [0, 1]], [[0, 1], [0, 1]], [[0]], "all"):
+            with self.assertRaises(build.DataError, msg=str(bad)):
+                build.check_ricci_sentences("v", dict(view, ricci_sentences=bad))
+        with self.assertRaises(build.DataError):
+            build.check_ricci_sentences("v", dict(view, curves=view["curves"][:1], ricci_sentences=[]))
+        with self.assertRaises(build.DataError):
+            build.check_ricci_sentences("v", dict(view, caption=["The Kretschmann scalar $K$ of one. Two."],
+                                                  ricci_sentences=[]))
+
+    def test_a_place_that_names_what_it_does_not_draw_is_refused(self):
+        view = {"kind": "line", "panels": [{"id": "K"}, {"id": "R"}],
+                "curves": [{"panel": "K", "class": "K", "scalar": "kretschmann"},
+                           {"panel": "R", "class": "R", "scalar": "ricci_scalar"},
+                           {"panel": "K", "class": "reference", "scalar": "kretschmann"}],
+                "marks": [{"class": "horizon", "x": 1}]}
+        view["caption"] = ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of one. Two."]
+        good = {"kretschmann": {"opening": "The Kretschmann scalar $K$ of one.", "clip": "K.",
+                                "legend": [["line", "K", "k"], ["line", "reference", "s"], ["line", "horizon", "h"]]},
+                "ricci_scalar": {"opening": "The Ricci scalar $R$ of one.", "clip": "R.",
+                                 "legend": [["line", "R", "r"], ["line", "horizon", "h"]]}}
+        build.check_per_scalar("v", dict(view, per_scalar=good))
+        bad = copy.deepcopy(good)
+        bad["ricci_scalar"]["legend"].append(["line", "reference", "s"])
+        missing = copy.deepcopy(good)
+        del missing["kretschmann"]["clip"]
+        reworded = copy.deepcopy(good)
+        reworded["ricci_scalar"]["opening"] = "The Ricci scalar $R$ of another."
+        for places in (bad, missing, reworded, {"kretschmann": good["kretschmann"]}):
+            with self.assertRaises(build.DataError):
+                build.check_per_scalar("v", dict(view, per_scalar=places))
 
 
 class Bibliography(unittest.TestCase):

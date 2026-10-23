@@ -526,7 +526,7 @@ The guards in single test files that skip a test where sympy or numpy is absent 
 ## Spacetime diagrams
 
 `MFS/assets/data/diagrams/<metric_id>.json` holds the spacetime diagrams of one spacetime: null rays and future light cones on a plane of the time and one spatial coordinate, for each coordinate system that has any, for Kerr and Kerr-Newman the principal null rays, which leave every such plane, and figures in three dimensions where no plane carries the causal structure, as "Figures in three dimensions" below describes.
-The page draws them in a section per coordinate system, the first of the three diagrams that close the mathematics, after the geodesics, and the application displays the same files.
+The page draws them in a section per coordinate system, after the coordinates and their conventions, as "Where the diagrams stand" below says, and the application displays the same files.
 Nothing in them is drawn by eye or computed by the page.
 `_tools/derivations/null_rays.py` computes every ray, cone and marker from the system's published `metric_components`, `inverse_metric_components`, `kretschmann` and `domains`, and for the principal null rays its `weyl_tensor` and `christoffel` as well, read through the checker's own `Reader`, and its docstring records the method.
 
@@ -1057,7 +1057,7 @@ Every slice of constant $t$ in Lentz's class is flat for every potential $\phi$,
 Three draw a quantity as a height over a plane in place of a slice, since their slices are flat and what makes each spacetime what it is shows in a number on the plane: Alcubierre's warp drive draws the expansion $\theta$ of the observers who ride its slices, Natário's the energy density $\varepsilon$ those observers measure, and the Krasnikov tube $1 - k$, how far it tips the light cone.
 The moving mirror draws one as well: a moment of its two dimensions is a half line, so its view draws the flux of energy the mirror of Good, Anderson and Evans radiates, read from the published conformal factor of the chart that brings that mirror to rest, as a height over the plane of $t$ and $x$.
 No height is a distance, and each of the three views says under `height` what its height stands for.
-The page draws it under the heading "embedding diagram", just below the conformal diagram, and the application reads the same files.
+The page draws it under the heading "embedding diagram", just below the metric, and the application reads the same files.
 The file is the definition in "The file, which the application reads" below, and the application is built against that section, so a change to the shape of the file is a change to it first.
 
 `_tools/derivations/embedding.py` draws them, one function per spacetime with its derivation in its docstring, reading the published metric through the checker's `Reader` with the `load` and `published_matrix` the null rays use.
@@ -1493,12 +1493,21 @@ It holds every point drawn to the box, every label shown to the drawing, the res
 
 It starts Chrome with `_tools/chrome.mjs`, as `page_timing.mjs` does, and exports its checks, so a driver for another browser runs the same ones.
 
-## The three diagrams together
+## Where the diagrams stand
 
-A spacetime's spacetime diagram, conformal diagram and embedding diagram stand together, in that order, after the geodesics and before the references, as the captain asked on 28 September 2026.
-That is where the application's Graphs section stands, between its Maths and its References, and the page has no row of section buttons, so the three need no heading of their own.
-The spacetime diagram and the conformal diagram each draw the slice the embedding diagram is cut from, so the reader meets the line and then the surface cut along it.
-A spacetime with a curvature figure has it after the three, the last of the Graphs, under the heading "curvature"; "Curvature figures" below defines it.
+Each diagram stands beside the mathematics it draws, on the site alone: the application keeps them together in its Graphs section, between its Maths and its References.
+The sections of a spacetime's page stand in this order, each where the spacetime has it:
+
+    history, related spacetimes, coordinates, conventions, spacetime diagram, conformal diagram,
+    line element, metric, embedding diagram, inverse metric, Christoffel symbols, Riemann tensor,
+    Ricci tensor, Ricci scalar, Ricci scalar diagram, Kretschmann scalar, Kretschmann scalar diagram,
+    Einstein tensor, Weyl tensor, geodesics, references
+
+The spacetime diagram and the conformal diagram follow the coordinates, since they draw a plane of two of them and the whole spacetime in them, and they follow the conventions too, which stand right under the coordinates and say what the coordinates and the parameters drawn at are.
+The embedding diagram follows the metric it embeds.
+The spacetime diagram and the conformal diagram each draw the slice the embedding diagram is cut from, so the reader meets the line and then, further on, the surface cut along it.
+A curvature figure stands after the scalars it plots: what it draws of the Ricci scalar after the Ricci scalar, under the heading "Ricci scalar diagram", and the rest after the Kretschmann scalar, under the heading "Kretschmann scalar diagram", each named as the other diagrams are; "Curvature figures" below defines it.
+The contents beside the page and its print copy read its headings as drawn, so they follow the same order.
 
 ### The slice of the embedding diagram
 
@@ -1572,7 +1581,7 @@ The print copy prints the page as it was first drawn, with the chart's own confo
 ## Curvature figures
 
 `MFS/assets/data/curvature/<metric_id>.json` holds the curvature figure of one spacetime: its Kretschmann scalar $K$, and its Ricci scalar $R$ where that does not vanish, plotted from the formulas the spacetime's metric file publishes, as the captain asked on 22 October 2026.
-The page draws it under the heading "curvature", after the embedding diagram, and the application reads the same files.
+The page draws its Kretschmann scalar under the heading "Kretschmann scalar diagram", after the Kretschmann scalar, and its Ricci scalar under the heading "Ricci scalar diagram", after the Ricci scalar, and the application reads the same files.
 A spacetime has one where its curvature carries physics its formula does not show at a glance, as the research list of October 2026 sets out spacetime by spacetime; a spacetime without one has no file and the page no section, and no table has to name it, as `NOT_DRAWN` names the spacetimes without a conformal diagram.
 Bardeen's regular black hole, the Bach-Weyl ring, Bonnor and Vaidya's radiating star, Born and Infeld's point charge, Boulware and Deser's black hole, Bowers and Liang's star, the Brans-Dicke sphere, Brill's charged Taub-NUT, the C-metric, the Curzon-Chazy particle, Damour and Solodukhin's wormhole, the charged dilaton black hole, Einstein's static field of 1912, Einstein's cluster, the Einstein-Rosen waves, the scalar field of Fisher, Janis, Newman and Winicour, Gowdy's polarised wave on the torus, the gravastar, Hayward's regular black hole, Schwarzschild's star of uniform density, the Kerr-Newman black hole, Khan and Penrose's colliding plane waves, Kiselev's black hole, Kerr's black hole, the Kerr-Taub-NUT black hole, McVittie's mass, Melvin's magnetic universe, Majumdar and Papapetrou's two holes and the Myers-Perry black hole have one.
 
@@ -1663,6 +1672,10 @@ A view is:
 - `movie`, optional: `{"variable", "seconds", "frames"}`, as an embedding diagram's: the name of what steps, as `$g$`, how long one pass takes, and at least two frames, each `{"label", "value"}` with the frame's own `curves` and `marks`, and on a map its own `map` where its cells change, drawn over what the view draws in every frame. The values strictly increase, and each label is one formula with its number after an `=`, as `$g = 0.333\,r_s$`, for `MfsTurn.steady()`. A movie carries no word for how it repeats and does not turn.
 - `legend`: `[kind, class, text]` for each class drawn, the kind `line` or `point`; every class drawn is named once, and nothing is named that is not drawn.
 - `caption`: a list of paragraphs, the first opening with a compact noun phrase naming what is drawn, its values in parentheses, as every caption on the page does.
+- `ricci_sentences`, optional: on a view that draws a panel of each scalar, the sentences of `caption` the page shows under the Ricci scalar's panel, each `[paragraph, sentence]` counted from 0, in order; every other sentence it shows under the Kretschmann scalar's, the sentence about both included. A paragraph's sentences each run to a full stop that one space follows outside TeX, so every sentence of such a caption ends with a full stop, and the page puts each place's sentences back together in their order, a paragraph left with none dropped. Without it the whole caption stands under the Kretschmann scalar. `curvature.py` writes it for every view that draws both scalars, an empty list where no sentence is the Ricci scalar's alone, and the application can ignore it.
+  Such a caption opens "The Kretschmann scalar $K$ and the Ricci scalar $R$ of", or $R^\mu{}_\mu$ in place of $R$, and each place opens on its own scalar: "The Kretschmann scalar $K$ of" under the one and "The Ricci scalar $R$ of" under the other, the rest of that first sentence as written, as `per_scalar` writes it, except that the Ricci scalar's place stands its scalar beside only what its own panel draws: it drops the caption's "beside ..." where that panel draws no comparison, and names a comparison that vanishes there as its legend does, "beside Schwarzschild's $R = 0$", as `RICCI_BESIDE` in `curvature.py` sets it and `curvature.py` checks against the legend; `build_mfs_data.py` refuses a caption with `ricci_sentences` that opens otherwise.
+  Every other sentence of such a caption names one scalar, or states how $K$ stands to $R$, as $K = 5(R^\mu{}_\mu)^2/3$ does and stays with $K$: a fact of each, as "Far out $K$ approaches Schwarzschild's and $R$ falls off as ...", is written as two sentences, one for each place.
+- `per_scalar`, optional: on a view that draws a panel of each scalar, what each of its two places states of its own scalar alone, `{"kretschmann": place, "ricci_scalar": place}`, each place `{"opening", "clip", "legend"}`: the caption's first sentence naming that place's scalar alone, which `build_mfs_data.place_opening()` holds to the caption's own, its scale, TeX prose printed after "scale" in place of `clip`, and its legend, entries as `legend`'s, naming every class its panels draw, a curve on one of them in any frame or a mark, and nothing else. A comparison takes the name of what that panel draws of it, as Schwarzschild's $R$, which vanishes, is "Schwarzschild's $R = 0$" where the view's own legend names Schwarzschild's black hole. `curvature.py` writes it for every view that draws both scalars, and the application can ignore it, reading `clip` and `legend` as before.
 - `settings`: TeX prose giving the parameter values drawn at, printed after "drawn at".
 - `input`, optional: TeX prose naming a declared function or matter, printed after "drawn with".
 - `clip`: TeX prose saying how each axis of values is scaled and where a value is cut, printed after "scale".
@@ -1675,6 +1688,13 @@ The page lays a curvature figure out as it lays out a spacetime diagram, by the 
 Each panel's vertical name, its numbers and its plot stand in a row, 1.5 em of the figure's words apart from the next, and the horizontal axis's numbers and name stand under the last; a map's colour bar, its numbers and its name stand below those.
 `cvFigure()` in `_layouts/mfs.html` writes the rows and the areas of the grid on the figure, since their number follows its panels, and `fitPlots()`, `fitAxisNames()` and `fitTicks()` take every panel of a figure and its colour bar.
 Each plot is 520 units wide and 520 over its `aspect` tall, its curves cut at its box, its grid drawn at its ticks, and a panel whose scale runs through zero draws its zero as a faint line.
+
+The figure stands in two places: its panels of the Ricci scalar under "Ricci scalar diagram", after the Ricci scalar, and its other panels under "Kretschmann scalar diagram", after the Kretschmann scalar.
+A panel is the Ricci scalar's when a curve drawn on it in any frame is read from `ricci_scalar`, and a map when its cells are, as `curvature_ricci_panels()` in `build_mfs_data.py` reads it too; a figure of the Kretschmann scalar alone stands after the Kretschmann scalar only.
+Each place shows the views that draw a panel of its own, with a button for each where it has more than one, and each view there its own panels, its caption opened on its own scalar and split as `ricci_sentences` says, and its own legend and scale from `per_scalar`.
+Without `per_scalar` a place takes the view's legend entries for what its panels draw, their curves and every mark, since a mark runs through every panel, and the view's whole `clip`.
+Both places print the view's settings and the function it is drawn with.
+A view chosen in one place is chosen in the other where the other shows it, and a movie in both places is one movie: its two figures show one frame, and the button of either plays and pauses both.
 
 A spacetime's own $K$ is drawn in the pink of the light rays that move right, `--pink-light`, and its $R$ in the cyan of those that move left, `--mfs-cyan-light`, each 2 wide; a `reference` in dashes of `--text-mid`; a `horizon` in the dashes a spacetime diagram marks $g^{rr} = 0$ with, in the cyan of the light rays on a line view and in white on a map, whose colours are that cyan; an `ergosurface` in the dots a conformal or an embedding diagram marks one with, in white, as it is drawn on maps alone; a `string` in the gold of a world line, 3 wide; a `front` in solid white, 2 wide; a `singular` point in `--pink-dark` ringed in black; and a `zero` point as an open white circle, each point a circle of radius 5 units drawn over the frame.
 Every line marked on a map, as the C-metric's horizons and string, Bonnor and Vaidya's anti-trapped spheres and Khan and Penrose's wave fronts are, stands on a solid black casing 4 units wide, so that it reads on every colour of the ramp, its own colour where the ramp is dark and the casing where it is near white.

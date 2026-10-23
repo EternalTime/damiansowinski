@@ -3086,21 +3086,41 @@
          every figure is measured before any is marked. */
       var _figureObserver = null;
       function wireDiagrams(root) {
+        function buttonsOf(section) { return section.querySelectorAll('.mfs-diagram > .mfs-section-head .mfs-choice'); }
+        function show(section, i) {
+          var buttons = buttonsOf(section), views = section.querySelectorAll('.mfs-nr-view'), button = buttons[i];
+          views.forEach(function(v, j) { v.classList.toggle('mfs-nr-hidden', i !== j); });
+          buttons.forEach(function(b, j) {
+            b.classList.toggle('mfs-choice-on', i === j);
+            b.setAttribute('aria-pressed', String(i === j));
+          });
+          fitFigures([].slice.call(views[i].querySelectorAll('.nr-plot, .mfs-fig-scroll')));
+          fitProseMath([].slice.call(views[i].querySelectorAll(PROSE)));
+          fitLines(root, [section]);
+          if (button.hasAttribute('data-em-id')) showSlices(root, button.getAttribute('data-em-id'));
+          if (button.hasAttribute('data-cd-view')) showShade(root, button.getAttribute('data-cd-view'));
+        }
         root.querySelectorAll('.mfs-diagram').forEach(function(section) {
-          var buttons = section.querySelectorAll('.mfs-diagram > .mfs-section-head .mfs-choice');
-          var views = section.querySelectorAll('.mfs-nr-view');
-          buttons.forEach(function(button, i) {
+          buttonsOf(section).forEach(function(button, i) {
             button.addEventListener('click', function() {
-              views.forEach(function(v, j) { v.classList.toggle('mfs-nr-hidden', i !== j); });
-              buttons.forEach(function(b, j) {
-                b.classList.toggle('mfs-choice-on', i === j);
-                b.setAttribute('aria-pressed', String(i === j));
+              show(section, i);
+              // A view of the curvature figure chosen in one of its places is chosen in the
+              // other too, where the other shows it. The other place may stand above this one
+              // and change height, so the page is scrolled to keep the button pressed where it
+              // stood: on a desktop the spacetime's panel scrolls, on a phone the page.
+              var pick = button.getAttribute('data-cv-pick');
+              if (pick === null) return;
+              var stood = button.getBoundingClientRect().top;
+              root.querySelectorAll('.mfs-curvature').forEach(function(other) {
+                if (other === section) return;
+                var j = [].map.call(buttonsOf(other), function(b) { return b.getAttribute('data-cv-pick'); }).indexOf(pick);
+                if (j >= 0) show(other, j);
               });
-              fitFigures([].slice.call(views[i].querySelectorAll('.nr-plot, .mfs-fig-scroll')));
-              fitProseMath([].slice.call(views[i].querySelectorAll(PROSE)));
-              fitLines(root, [section]);
-              if (button.hasAttribute('data-em-id')) showSlices(root, button.getAttribute('data-em-id'));
-              if (button.hasAttribute('data-cd-view')) showShade(root, button.getAttribute('data-cd-view'));
+              var moved = button.getBoundingClientRect().top - stood, panel = document.getElementById('mfs-content-panel');
+              if (!moved) return;
+              var was = panel.scrollTop;
+              panel.scrollTop += moved;
+              if (panel.scrollTop === was) window.scrollBy(0, moved);
             });
           });
         });
@@ -3757,6 +3777,25 @@
                   scale: { kind: 'linear', from: view.y.from, to: view.y.to } }];
       }
 
+      /* The figure stands in two places: what it draws of the Ricci scalar after the Ricci scalar,
+         under "Ricci scalar diagram", and the rest after the Kretschmann scalar, under "Kretschmann
+         scalar diagram". A panel draws the Ricci scalar
+         when its curves are read from it, and a map when its cells are. Each place shows the views
+         that draw a panel of its own, with their buttons, and each view there its own panels,
+         caption, legend and scale; a view chosen in one place is chosen in the other where the
+         other shows it, and a movie is one movie in both, played and paused from either. */
+      function cvRicci(view, panel) {
+        var holders = [view].concat((view.movie && view.movie.frames) || []);
+        if (view.kind === 'map') return holders.some(function(h) { return !!h.map && h.map.scalar === 'ricci_scalar'; });
+        return holders.some(function(h) {
+          return (h.curves || []).some(function(c) { return c.panel === panel.id && c.scalar === 'ricci_scalar'; });
+        });
+      }
+      // The panels a view draws in the place of the Ricci scalar, or of the Kretschmann scalar.
+      function cvShown(view, ricci) {
+        return cvPanels(view).filter(function(panel) { return cvRicci(view, panel) === ricci; });
+      }
+
       // A number and its tick mark, which stays when fitTicks() hides the number, at a fraction of
       // its edge, across from the left or down from the top.
       function cvTick(t, edge, s) {
@@ -3840,8 +3879,8 @@
          the name of the frame shown above the plot, every frame's name held in one cell so that
          nothing in it moves as the movie plays. The rows and the areas are written on the figure,
          since their number follows its panels. */
-      function cvFigure(view, metricId, index) {
-        var panels = cvPanels(view), movie = view.movie, rows = [], areas = [], parts = [];
+      function cvFigure(view, metricId, index, ricci) {
+        var panels = cvShown(view, ricci), movie = view.movie, rows = [], areas = [], parts = [];
         if (movie) {
           var names = movie.frames.map(function(fr) { return fr.label; });
           if (window.MfsTurn) names = MfsTurn.steady(names);
@@ -3900,12 +3939,29 @@
         var aspect = 1 / panels.reduce(function(a, p) { return a + 1 / p.aspect; }, 0);
         return '<div class="mfs-fig-scroll mfs-nr-scroll" style="--nr-aspect:' + aspect.toFixed(4) + '">' +
           '<div class="mfs-nr-figure mfs-cv-figure' + (movie ? ' mfs-cv-movie' : '') + '" data-cv-metric="' + nrEsc(metricId) +
-          '" data-cv-view="' + index + '" style="' + nrEsc('grid-template-rows:' + rows.join(' ') + ';grid-template-areas:' + areas.join(' ')) + '">' +
+          '" data-cv-view="' + index + '" data-cv-ricci="' + (ricci ? 1 : 0) + '" style="' + nrEsc('grid-template-rows:' + rows.join(' ') + ';grid-template-areas:' + areas.join(' ')) + '">' +
           parts.join('') + '</div></div>';
       }
 
-      function cvLegend(view) {
-        return '<div class="mfs-nr-legend' + (view.kind === 'map' ? ' cv-map' : '') + '">' + view.legend.map(function(item) {
+      // What a view that draws both scalars states of one of them in that scalar's place, its scale
+      // and its legend, from its `per_scalar`; null for a view of one scalar, or one without it.
+      function cvPlace(view, ricci) {
+        if (!view.per_scalar || !cvShown(view, !ricci).length) return null;
+        return view.per_scalar[ricci ? 'ricci_scalar' : 'kretschmann'] || null;
+      }
+
+      // The legend of what the given panels draw: the place's own where the file gives it, and
+      // otherwise the view's entries for a curve on one of them and every mark, which a line view
+      // draws through every panel.
+      function cvLegend(view, panels, place) {
+        var ids = panels.map(function(p) { return p.id; }), drawn = {};
+        [view].concat((view.movie && view.movie.frames) || []).forEach(function(h) {
+          (h.curves || []).forEach(function(c) { if (ids.indexOf(c.panel) >= 0) drawn[c['class']] = true; });
+          (h.marks || []).forEach(function(m) { drawn[m['class']] = true; });
+        });
+        var items = place ? place.legend : view.kind === 'map' ? view.legend
+          : view.legend.filter(function(item) { return drawn[item[1]]; });
+        return '<div class="mfs-nr-legend' + (view.kind === 'map' ? ' cv-map' : '') + '">' + items.map(function(item) {
           var cls = 'cv-' + item[1];
           var inner = item[0] === 'point' ? '<circle class="' + cls + '" cx="17" cy="8" r="4"/>'
             : item[0] === 'fill' ? '<rect class="' + cls + '-fill cd-swatch-fill" x="2" y="2" width="30" height="12"/>'
@@ -3915,31 +3971,67 @@
         }).join('') + '</div>';
       }
 
-      function curvatureSection(metricId, coordId) {
-        var data = _curvatureCache[metricId], views = cvViews(metricId, coordId);
+      // The sentences of a paragraph, each running to a full stop that a space follows outside
+      // TeX, as _tools/README.md counts them for `ricci_sentences`.
+      function cvSentences(text) {
+        var out = [], start = 0, math = false;
+        for (var i = 0; i < text.length; i++) {
+          var c = text[i];
+          if (c === '\\') { i++; continue; }
+          if (c === '$') math = !math;
+          else if (c === '.' && !math && text[i + 1] === ' ') {
+            out.push(text.slice(start, i + 1));
+            while (text[i + 1] === ' ') i++;
+            start = i + 1;
+          }
+        }
+        out.push(text.slice(start));
+        return out;
+      }
+
+      // A view's caption in the place of the Ricci scalar, or of the Kretschmann scalar. A view
+      // that draws both opens each place on its own scalar, as its `per_scalar` writes the first
+      // sentence, then has the sentences its `ricci_sentences` names in the first and every other
+      // in the second, each paragraph keeping its sentences in their order and one left with none
+      // dropped; a view that draws one has its whole caption there.
+      function cvCaption(view, ricci) {
+        if (!cvShown(view, !ricci).length) return view.caption;
+        var named = {}, place = cvPlace(view, ricci);
+        (view.ricci_sentences || []).forEach(function(at) { named[at[0] + ' ' + at[1]] = true; });
+        return view.caption.map(function(p, i) {
+          return cvSentences(p).map(function(sentence, j) {
+            var opening = i === 0 && j === 0 && place ? place.opening : null;
+            return opening || (!!named[i + ' ' + j] === ricci ? sentence : '');
+          }).filter(function(sentence) { return sentence; }).join(' ');
+        }).filter(function(p) { return p; });
+      }
+
+      function curvatureSection(metricId, coordId, ricci) {
+        var data = _curvatureCache[metricId];
+        var views = cvViews(metricId, coordId).filter(function(view) { return cvShown(view, ricci).length; });
         if (!views.length) return '';
         function note(key, text) {
           return '<div class="mfs-nr-note"><span class="mfs-nr-k">' + key + '</span> ' + nrProse(nrEsc(text)) + '</div>';
         }
         var buttons = views.length > 1 ? choices(views.map(function(v, i) {
-          return choiceButton(nrEsc(v.label), i === 0, {});
+          return choiceButton(nrEsc(v.label), i === 0, { 'data-cv-pick': v.id });
         }), 'view') : '';
         return [
           '<div class="mfs-section mfs-diagram mfs-curvature">',
             '<div class="mfs-section-head">',
-              '<div class="mfs-section-label">curvature</div>',
+              '<div class="mfs-section-label">' + (ricci ? 'Ricci scalar diagram' : 'Kretschmann scalar diagram') + '</div>',
               buttons,
             '</div>',
             views.map(function(view, i) {
               return [
                 '<div class="mfs-nr-view' + (i ? ' mfs-nr-hidden' : '') + '">',
-                  cvFigure(view, metricId, data.views.indexOf(view)),
+                  cvFigure(view, metricId, data.views.indexOf(view), ricci),
                   '<div class="mfs-nr-text">',
-                    '<div class="mfs-nr-caption">', view.caption.map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
-                    cvLegend(view),
+                    '<div class="mfs-nr-caption">', cvCaption(view, ricci).map(function(p) { return '<p>' + nrProse(nrEsc(p)) + '</p>'; }).join(''), '</div>',
+                    cvLegend(view, cvShown(view, ricci), cvPlace(view, ricci)),
                     note('drawn at', view.settings),
                     view.input ? note('drawn with', view.input) : '',
-                    note('scale', view.clip),
+                    note('scale', (cvPlace(view, ricci) || view).clip),
                   '</div>',
                 '</div>'
               ].join('');
@@ -3963,13 +4055,15 @@
       /* The values under the pointer on every panel, and a movie wired to the page's one player,
          which hands it the frame to show: that frame's group of every panel is shown and the
          others hidden, and its name is shown. A map's value under the pointer is its cell's in
-         the frame shown. */
+         the frame shown. A view drawn in both places is one movie, its two figures handed each
+         frame together. */
       function wireCurvature(root) {
+        var movies = {}, order = [];
         root.querySelectorAll('.mfs-cv-figure').forEach(function(fig) {
           var data = _curvatureCache[fig.getAttribute('data-cv-metric')];
           var view = data && data.views[+fig.getAttribute('data-cv-view')];
           if (!view) return;
-          var shown = 0, panels = cvPanels(view);
+          var shown = 0, panels = cvShown(view, fig.getAttribute('data-cv-ricci') === '1');
           fig.querySelectorAll('.nr-plot').forEach(function(plot, k) {
             var svg = plot.querySelector('svg'), readout = plot.querySelector('.cv-readout');
             var rx = readout.querySelector('.cv-rx'), ry = readout.querySelector('.cv-ry'), rv = readout.querySelector('.cv-rv');
@@ -3991,11 +4085,18 @@
           });
           if (!view.movie) return;
           var groups = [].slice.call(fig.querySelectorAll('.cv-frame-g')), names = [].slice.call(fig.querySelectorAll('.mfs-frame-label'));
-          wireMovie(fig, view.movie, function(k) {
+          var key = fig.getAttribute('data-cv-metric') + ' ' + fig.getAttribute('data-cv-view');
+          if (!movies[key]) { movies[key] = { movie: view.movie, figs: [], shows: [] }; order.push(key); }
+          movies[key].figs.push(fig);
+          movies[key].shows.push(function(k) {
             shown = k;
             groups.forEach(function(g) { g.style.display = +g.getAttribute('data-frame') === k ? '' : 'none'; });
             names.forEach(function(el, n) { el.hidden = n !== k; });
-          }, function() {});
+          });
+        });
+        order.forEach(function(key) {
+          var m = movies[key];
+          wireMovie(m.figs, m.movie, function(k) { m.shows.forEach(function(show) { show(k); }); }, function() {});
         });
       }
 
@@ -4024,12 +4125,13 @@
           .concat(data.views.filter(function(v) { return !v.system; }));
       }
 
-      function graphSections(metricId, coordId) {
+      // The slices and the shade drawn as the page is drawn: those of the first view of the
+      // embedding diagram and of the conformal diagram the chart shows, set before any of the
+      // diagrams is written, wherever on the page each stands.
+      function firstViews(metricId, coordId) {
         var shown = emViews(metricId, coordId)[0], region = cdViews(metricId, coordId)[0];
         _sliceShown = shown ? shown.id : null;
         _shadeShown = region ? region.id : null;
-        return (coordId ? diagramSection(metricId, coordId) : '') + conformalSection(metricId, coordId) +
-          embeddingSection(metricId, coordId) + curvatureSection(metricId, coordId);
       }
 
       function sliceClass(view) {
@@ -4475,15 +4577,19 @@
          forward again, each end shown once at its turnaround, and never jumps to its start. It plays
          once the page has drawn it and only while it is on the screen, and a reader who asks for
          reduced motion finds it paused on its first frame. The button in its top left corner
-         plays and pauses it. `go(k)` draws frame k and `settle()` the frame shown in full. */
+         plays and pauses it. `go(k)` draws frame k and `settle()` the frame shown in full. A movie
+         drawn in two places, as a curvature figure's Kretschmann and Ricci scalars are, is given
+         both drawings: it plays while either is on the screen, and the button of either plays and
+         pauses both. */
       var _movieObserver = null, _movieSeen = new Map();
       function wireMovie(drawing, movie, go, settle) {
-        var play = drawing.closest('.mfs-cd-figure, .mfs-cv-figure').querySelector('.mfs-movie-play');
+        var drawings = [].concat(drawing);
+        var plays = drawings.map(function(d) { return d.closest('.mfs-cd-figure, .mfs-cv-figure').querySelector('.mfs-movie-play'); });
         var playing = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-        var elapsed = 0, last = null, tick = 0, seen = false, shown = 0;
+        var elapsed = 0, last = null, tick = 0, seen = new Set(), shown = 0;
         function step(now) {
           tick = 0;
-          if (!drawing.isConnected || !playing || !seen) { last = null; return; }
+          if (!drawings.every(function(d) { return d.isConnected; }) || !playing || !seen.size) { last = null; return; }
           if (last !== null) elapsed += now - last;
           last = now;
           var k = MfsTurn.movieFrame(movie, elapsed);
@@ -4493,24 +4599,28 @@
           }
           tick = requestAnimationFrame(step);
         }
-        function run() { if (playing && seen && !tick) tick = requestAnimationFrame(step); }
-        function name() { play.textContent = playing ? 'pause' : 'play'; }
+        function run() { if (playing && seen.size && !tick) tick = requestAnimationFrame(step); }
+        function name() { plays.forEach(function(play) { play.textContent = playing ? 'pause' : 'play'; }); }
         name();
-        play.addEventListener('click', function() {
-          playing = !playing;
-          name();
-          if (playing) run();
-          else settle();
+        plays.forEach(function(play) {
+          play.addEventListener('click', function() {
+            playing = !playing;
+            name();
+            if (playing) run();
+            else settle();
+          });
         });
-        if (!window.IntersectionObserver) { seen = true; run(); return; }
+        if (!window.IntersectionObserver) { drawings.forEach(function(d) { seen.add(d); }); run(); return; }
         if (!_movieObserver) {
           _movieObserver = new IntersectionObserver(function(entries) {
             entries.forEach(function(e) { var f = _movieSeen.get(e.target); if (f) f(e.isIntersecting); });
           });
         }
         _movieSeen.forEach(function(_, el) { if (!el.isConnected) { _movieObserver.unobserve(el); _movieSeen.delete(el); } });
-        _movieSeen.set(drawing, function(on) { seen = on; run(); });
-        _movieObserver.observe(drawing);
+        drawings.forEach(function(d) {
+          _movieSeen.set(d, function(on) { if (on) seen.add(d); else seen.delete(d); run(); });
+          _movieObserver.observe(d);
+        });
       }
 
       /* The conventions a spacetime is written in: its signature, and the paragraph that says
@@ -4722,6 +4832,9 @@
           '</div>'
         ].join('');
 
+        // The slice and the shade first drawn, set before any diagram is written.
+        firstViews(data.id, hasCoords ? coord.id : null);
+
         // Geodesic toggle — default massive
         var body = [
 
@@ -4762,9 +4875,9 @@
           /* The chart is chosen before anything that depends on it, which the captain asked
              for on 27 September 2026, so the coordinates open the mathematics, their buttons
              and then the chart's domains, and everything below them is the chart's: every
-             quantity is written in it, and the diagrams after the geodesics show its views.
-             The conventions below follow the chart as well, and they stand between the
-             domains and the line element, which the application does too. */
+             quantity is written in it, and the diagrams show its views. The conventions
+             below follow the chart as well, and they stand right under the domains, which
+             the application does too. */
           (hasCoords ? [
             '<div class="mfs-section mfs-coordinates">',
               '<div class="mfs-section-head">',
@@ -4789,6 +4902,19 @@
 
           conventionSection(data, coord),
 
+          /* Each diagram stands beside the mathematics it draws, on the site alone, since the
+             application keeps its Graphs together:
+             the spacetime diagram and the conformal diagram after the coordinates, the plane
+             of two of them and the whole spacetime in them, and after the conventions, which
+             say what those coordinates and the parameters drawn at are; the embedding
+             diagram after the metric it embeds; and the curvature figure after the scalars it
+             plots, its Ricci scalar after the Ricci scalar and its Kretschmann scalar after
+             the Kretschmann scalar. The spacetime diagram and the conformal diagram both draw
+             the slice the embedding diagram is cut from, so the eye meets the line and then,
+             further on, the surface cut along it. */
+          hasCoords ? diagramSection(data.id, coord.id) : '',
+          conformalSection(data.id, hasCoords ? coord.id : null),
+
           ((hasCoords && !coordHasContent) ? [
             '<div class="mfs-section"><div class="mfs-placeholder">',
               'Differential geometry not yet complete. Come back soon.',
@@ -4808,6 +4934,8 @@
               buildMetricMatrix(coord.metric_components, coord.coords, 'g_{\\mu\\nu}'),
             '</div>'
           ].join('') : ''),
+
+          embeddingSection(data.id, hasCoords ? coord.id : null),
 
           (coord.inverse_metric_components ? [
             '<div class="mfs-section">',
@@ -4871,12 +4999,16 @@
             '</div>'
           ].join('') : ''),
 
+          curvatureSection(data.id, hasCoords ? coord.id : null, true),
+
           (coord.kretschmann ? [
             '<div class="mfs-section">',
               '<div class="mfs-section-label">Kretschmann scalar</div>',
               renderScalar(coord.kretschmann),
             '</div>'
           ].join('') : ''),
+
+          curvatureSection(data.id, hasCoords ? coord.id : null, false),
 
           (coord.einstein_tensor ? (function() {
             var eConv = coord.einstein_tensor.default;
@@ -4918,17 +5050,6 @@
               }).join(''),
             '</div>'
           ].join('') : '',
-
-          /* A spacetime's three diagrams stand together, as the captain asked on 28 September
-             2026: "Put each spacetime's embedding diagram next to its spacetime diagram and
-             its conformal diagram, as one group." They close the mathematics, after the
-             geodesics and before the references, which is where the application's Graphs
-             section stands between its Maths and its References. The spacetime diagram comes
-             first, in the chart's own plane, then the conformal diagram of the whole
-             spacetime, both drawing the slice the embedding diagram is cut from, and the
-             embedding diagram last, so the eye meets the line and then the surface cut along
-             it. graphSections() says which slice is drawn. */
-          graphSections(data.id, hasCoords ? coord.id : null),
 
           (data.references && data.references.length) ? [
             '<div class="mfs-section mfs-references">',
