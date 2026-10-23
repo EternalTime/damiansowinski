@@ -3828,9 +3828,10 @@
           } else if (m.at) {
             out.push(nrEl('circle', { 'class': 'cv-' + m['class'], cx: X(m.at[0]).toFixed(2), cy: Y(m.at[1]).toFixed(2), r: 5 }));
           } else {
-            // A line over a map stands on a dark casing, so that it reads on every colour of the ramp.
+            // A line over a map stands on a dark casing, so that it reads on every colour of the ramp,
+            // a singular curve's wider, so that it covers the stepped edge of the null cells beside it.
             var d = cvPath(m.points, X, Y);
-            out.push(nrEl('path', { 'class': 'cv-casing', d: d }), nrEl('path', { 'class': 'cv-' + m['class'], d: d }));
+            out.push(nrEl('path', { 'class': 'cv-casing cv-casing-' + m['class'], d: d }), nrEl('path', { 'class': 'cv-' + m['class'], d: d }));
           }
         });
         return out.join('');
@@ -5851,8 +5852,8 @@
        same words, grid and frame, by the rows and areas cvFigure() writes on each. A spacetime's
        own scalars are drawn in the colours of the two families of light rays, K in pink and R in
        cyan, a comparison dashed in grey, a horizon as a spacetime diagram marks g^rr = 0, a
-       cosmic string in the gold of a world line, and a singularity and a point where the scalar
-       vanishes as points; a map's colours are an image
+       cosmic string in the gold of a world line, a singularity as a point, or on a map as a pink
+       line, and a point where the scalar vanishes as a point; a map's colours are an image
        under its frame, the dark ground's on the screen and paper's in print. A movie's play button
        stands in the top left corner of the ground, as an embedding diagram's does, and the name
        of its frame above the plot, below the button. */
@@ -5879,6 +5880,10 @@
     .cv-front { fill: none; stroke: var(--text-bright); stroke-width: 2; }
     .cv-axis-zero { stroke: rgba(238,242,245,0.3); stroke-width: 1; }
     circle.cv-singular { fill: var(--pink-dark); stroke: #000; stroke-width: 1.2; }
+    /* A singular curve on a map is solid and in the pink of a singular point, on a casing wide
+       enough to cover the stepped edge of the null cells where the chart ends at it. */
+    path.cv-singular, line.cv-singular { fill: none; stroke: var(--pink-dark); stroke-width: 3; stroke-linecap: round; }
+    .cv-casing.cv-casing-singular { stroke-width: 8; }
     circle.cv-zero { fill: none; stroke: var(--text-bright); stroke-width: 2; }
     .cv-casing { fill: none; stroke: #000; stroke-width: 4; stroke-linecap: butt; }
     .cv-paper { display: none; }
@@ -6565,6 +6570,7 @@
       .mfs-print-body .cv-front { stroke: #000; }
       .mfs-print-body .cv-axis-zero { stroke: #bbb; }
       .mfs-print-body circle.cv-singular { fill: #c2185b; stroke: #fff; }
+      .mfs-print-body path.cv-singular, .mfs-print-body line.cv-singular { stroke: #c2185b; }
       .mfs-print-body circle.cv-zero { stroke: #000; }
       .mfs-print-body .cv-casing { stroke: #fff; }
       /* A figure's label stands on the surface beside the circle it names, over its lines, on

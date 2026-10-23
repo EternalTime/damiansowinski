@@ -9898,6 +9898,260 @@ def van_den_broeck(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- the Zipoy-Voorhees metric
+
+ZV_FIRST = Fraction(-1, 2)        # the first frame's q, the prolate field every other drawing takes
+ZV_LAST = Fraction(1)             # the last frame's q, the oblate field every other drawing takes
+ZV_STEP = Fraction(1, 4)          # the step of q from one frame of the movie to the next, which lands on q = 0
+ZV_REACH = 6                      # the box runs out to r sin theta = 6 m and up to r cos theta = 6 m, the reach of its spacetime diagrams
+ZV_CELLS = 20                     # the cells of the map to each m, across and up, fine enough that the edge r = 2m reads as a circle
+ZV_MAP = {"kind": "log", "from": 1e-5, "to": 1e1}   # the colours of K m^4
+ZV_DOMAIN = "r > 2*m"             # the spherical chart's domain, outside the singularity, or the horizon at q = 0
+
+
+def zipoy_voorhees(ck, src):
+    """The Zipoy-Voorhees metric at m = 1, its Kretschmann scalar over the meridian quarter plane of
+    the spherical chart's r and theta as q is stepped from the prolate -1/2 to the oblate 1.
+
+    The spherical chart publishes K as a function of r and theta alone, the same at every t and phi,
+    and R = 0, so the figure is K alone: a movie of a map with r and theta drawn as polar coordinates
+    about r = 0, r sin theta across and r cos theta up, over the quarter plane 0 <= r sin theta,
+    r cos theta <= 6 m, the reach of the spacetime diagrams, since K is the same at theta and
+    pi - theta. The cells are a twentieth of m on a side, coloured on a logarithmic scale from 10^-5 to
+    10 in units of 1/m^4, and q runs from -1/2 to 1 in steps of 1/4, through Schwarzschild's q = 0.
+    The chart covers r > 2m alone, which the map declares as its domain, so the cells inside are
+    null, except in the frame q = 0, Schwarzschild's, whose K is finite inside the horizon and drawn
+    there too. The frame q = 0 marks the horizon r = 2m, the zero of the published g^rr, as a quarter
+    circle, every other frame the singularity r = 2m as the same quarter circle, which covers the
+    stepped edge of the null cells, and each frame of q > 0 the zero of K on the axis at r = (2 + q) m.
+
+    What the caption states is checked here: R vanishes in both charts; the prolate spheroidal
+    chart's K is the spherical chart's at x = r/m - 1, y = cos theta and delta = 1 + q, and at x = 1
+    Weyl's rho and z are 0 and m y, the rod; K is the same at theta and pi - theta; at q = 0 K is
+    Schwarzschild's published scalar of r_s = 2m, and g^rr changes sign at r = 2m on every ray; on the
+    axis K is 48 m^2 (1 + q)^2 (r - (2 + q) m)^2 f^(2q)/(r^6 (r - 2m)^2), so that it vanishes at
+    r = (2 + q) m, and K is above zero at every cell off the axis on a grid four times as fine as the
+    map's in every frame; toward r = 2m, measured in sixty digits at r - 2m from 10^-8 to 10^-10 m, K
+    grows as (r - 2m)^(-2(q^2 + q + 1)) off the axis and as (r - 2m)^(2q - 2) along it, and tends to
+    3/4m^4 along the axis at q = 1 and to zero at q = 2; far out K r^6 tends to 48 (1 + q)^2 m^2; the
+    values stated on the circle r = 3m; at q = -1/2 K falls and at q = 1 it grows from the axis to the
+    equator on every circle drawn; and the clip stated is where K leaves the colours, on that grid."""
+    m = 1.0
+    K = nr_published(src, "zipoy_voorhees", "spherical", "kretschmann", ["r", "theta"], ["m", "q"])
+    K_ps = nr_published(src, "zipoy_voorhees", "prolate_spheroidal", "kretschmann", ["x", "y"], ["m", "\\delta"])
+    grr = nr_published(src, "zipoy_voorhees", "spherical", "inverse_metric_components", ["r", "theta"], ["m", "q"],
+                       ("r", "r"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    for system, coords, params in (("spherical", ["r", "theta"], ["m", "q"]),
+                                   ("prolate_spheroidal", ["x", "y"], ["m", "\\delta"])):
+        ricci = nr_published(src, "zipoy_voorhees", system, "ricci_scalar", coords, params)
+        ck(f"zipoy_voorhees {system} publishes R = 0", ricci.expr == 0, f"{ricci.expr}")
+    domain = domain_function("zipoy_voorhees", "spherical", ZV_DOMAIN, ["r", "theta"], ["m", "q"])
+
+    r, th = K.coords
+    mm, qq = K.params
+    rng = np.random.default_rng(1966)
+    spots = [(float(rr), float(t), float(q)) for rr, t, q in
+             zip(rng.uniform(2.05, 9, 20), rng.uniform(0, math.pi, 20), rng.uniform(-0.5, 1, 20))]
+    worst = max(abs(float(K_ps.exact([rr / m - 1, math.cos(t), m, 1 + q]) / K.exact([rr, t, m, q])) - 1)
+                for rr, t, q in spots)
+    ck("zipoy_voorhees the prolate spheroidal chart's K is the spherical chart's at x = r/m - 1, y = cos theta, "
+       "delta = 1 + q", worst < 1e-12, f"worst {worst:.1e} at {len(spots)} points")
+    x_, y_ = sp.symbols("x y", real=True)
+    weyl_rho, weyl_z = mm * sp.sqrt((x_ ** 2 - 1) * (1 - y_ ** 2)), mm * x_ * y_
+    ck("zipoy_voorhees at x = 1 Weyl's rho = m sqrt((x^2 - 1)(1 - y^2)) and z = m x y are 0 and m y, the rod |z| <= m",
+       weyl_rho.subs(x_, 1) == 0 and weyl_z.subs(x_, 1) == mm * y_)
+    ck("zipoy_voorhees K is the same at theta and pi - theta", sp.simplify(K.expr.subs(th, sp.pi - th) - K.expr) == 0)
+    schwarzschild = K_s.expr.subs({K_s.params[0]: 2 * mm, K_s.coords[0]: r})
+    ck("zipoy_voorhees K at q = 0 is Schwarzschild's of r_s = 2m", sp.simplify(K.expr.subs(qq, 0) - schwarzschild) == 0,
+       f"{schwarzschild}")
+    f_ = 1 - 2 * mm / r
+    on_axis = 48 * mm ** 2 * (1 + qq) ** 2 * (r - (2 + qq) * mm) ** 2 * f_ ** (2 * qq) / (r ** 6 * (r - 2 * mm) ** 2)
+    worst = max(abs(float(K.exact([rr, 0.0, m, q])) / float(on_axis.subs({mm: m, qq: q, r: rr})) - 1)
+                for rr, _, q in spots if abs(rr - (2 + q) * m) > 1e-3)
+    ck("zipoy_voorhees K on the axis is 48 m^2 (1 + q)^2 (r - (2 + q) m)^2 f^(2q)/(r^6 (r - 2m)^2)", worst < 1e-12,
+       f"worst {worst:.1e}")
+
+    # The singularity, approached off the axis and along it, in sixty digits.
+    def power(theta, q):
+        lengths = (1e-8, 1e-9, 1e-10)
+        logs = [float(sp.log(K.exact([2 * m + d, theta, m, q]))) for d in lengths]
+        return [(a - b) / math.log(d0 / d1) for a, b, d0, d1 in zip(logs, logs[1:], lengths, lengths[1:])]
+    for q in (-0.5, -0.1, 0.1, 0.5, 1.0):
+        for theta in (0.1, math.pi / 4, math.pi / 2):
+            rates = power(theta, q)
+            ck(f"zipoy_voorhees K grows as (r - 2m)^(-2(q^2 + q + 1)) toward r = 2m off the axis at q = {q:g}, "
+               f"theta = {theta:.4f}", all(abs(p + 2 * (q * q + q + 1)) < 1e-5 for p in rates), f"{rates}")
+    for q in (-0.5, 0.1, 0.5):
+        rates = power(0.0, q)
+        ck(f"zipoy_voorhees K grows as (r - 2m)^(2q - 2) toward r = 2m along the axis at q = {q:g}",
+           all(abs(p - (2 * q - 2)) < 1e-6 for p in rates), f"{rates}")
+    finite = float(K.exact([2 * m + 1e-12, 0.0, m, 1.0]))
+    vanishing = float(K.exact([2 * m + 1e-6, 0.0, m, 2.0]))
+    ck("zipoy_voorhees along the axis K tends to 3/4m^4 at r = 2m at q = 1 and to zero at q = 2",
+       abs(finite / 0.75 - 1) < 1e-10 and 0 < vanishing < 1e-11, f"{finite:.12f}, {vanishing:.2e}")
+    ck("zipoy_voorhees the axis's power 2 - 2q is above the plane's 2(q^2 + q + 1) for q < 0 and below it for q > 0",
+       sp.factor(2 - 2 * qq - 2 * (qq ** 2 + qq + 1)) == -2 * qq * (qq + 2))
+    for q in (-0.5, 1.0):
+        far = [float(K.exact([rr, theta, m, q])) * rr ** 6 / (48 * (1 + q) ** 2 * m ** 2) - 1
+               for rr in (1e6,) for theta in (0.0, math.pi / 4, math.pi / 2)]
+        ck(f"zipoy_voorhees K falls off as 48 (1 + q)^2 m^2/r^6 far out at q = {q:g}", max(map(abs, far)) < 1e-5,
+           f"{far}")
+    # The values the caption states on the circle r = 3m.
+    exact = {mm: 1, r: 3}
+    circle = {(q, t): sp.nsimplify(sp.simplify(K.expr.subs({**exact, qq: q, th: t})))
+              for q in (sp.Rational(-1, 2), sp.Integer(0), sp.Integer(1)) for t in (0, sp.pi / 2)}
+    ck("zipoy_voorhees on r = 3m K is 1/9 and 37 sqrt 3/1152 at q = -1/2, 16/243 at q = 0, and 0 and 2^16/3^12 at q = 1",
+       circle == {(sp.Rational(-1, 2), 0): sp.Rational(1, 9), (sp.Rational(-1, 2), sp.pi / 2): 37 * sp.sqrt(3) / 1152,
+                  (0, 0): sp.Rational(16, 243), (0, sp.pi / 2): sp.Rational(16, 243),
+                  (1, 0): 0, (1, sp.pi / 2): sp.Rational(2 ** 16, 3 ** 12)}, f"{circle}")
+    rings = np.linspace(2 + 1e-3, ZV_REACH * math.sqrt(2), 400)[:, None]
+    angles = np.linspace(0, math.pi / 2, 2001)[None, :]
+    ck("zipoy_voorhees at q = -1/2 K falls from the axis to the equator on every circle drawn",
+       np.all(np.diff(K(rings, angles, m, -0.5), axis=1) < 0))
+    ck("zipoy_voorhees at q = 1 K grows from the axis to the equator on every circle drawn",
+       np.all(np.diff(K(rings, angles, m, 1.0), axis=1) > 0))
+
+    x_axis, y_axis = axis("$r\\sin\\theta/m$", 0, ZV_REACH), axis("$r\\cos\\theta/m$", 0, ZV_REACH)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "zipoy_voorhees map", [aspect])
+    nx = ny = round(ZV_CELLS * ZV_REACH)
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+    values_q = [ZV_FIRST + k * ZV_STEP for k in range(int((ZV_LAST - ZV_FIRST) / ZV_STEP) + 1)]
+    n = math.ceil((math.pi / 2) / (2 * math.acos(1 - TOLERANCE / (2 * m * per_unit)))) + 1
+    ck("zipoy_voorhees the quarter circle r = 2m strays from its chords by less than the tolerance",
+       2 * m * per_unit * (1 - math.cos(math.pi / 2 / (n - 1) / 2)) < TOLERANCE, f"{n} points")
+    # The sphere r = 2m: the horizon at q = 0, and the singularity, the edge of the chart, at every other q.
+    sphere = [[float(2 * m * math.sin(a)) + 0.0, float(2 * m * math.cos(a)) + 0.0] for a in np.linspace(0, math.pi / 2, n)]
+    frames, highs, lows = [], [], []
+    for qf in values_q:
+        q = float(qf)
+        where = f"at q = {q:g}"
+        xs, ys, grid = cells(K, x_axis, y_axis, nx, ny, [m, q], frame="meridian")
+        X, Y = np.meshgrid(xs, ys)
+        R_, T_ = meridian(X, Y)
+        # At q = 0 the spacetime is Schwarzschild's, whose K is finite inside the horizon down to r = 0,
+        # so that frame draws every cell; every other frame ends at the singularity r = 2m.
+        inside = domain(R_, T_, m, q) if qf != 0 else np.ones(R_.shape, dtype=bool)
+        ck(f"zipoy_voorhees no cell's centre lies within 10^-3 m of r = 2m {where}", np.min(np.abs(R_ - 2 * m)) > 1e-3,
+           f"nearest {np.min(np.abs(R_ - 2 * m)):.2e}")
+        ck(f"zipoy_voorhees K is finite and positive at every cell drawn {where}",
+           np.all(np.isfinite(grid[inside])) and np.all(grid[inside] > 0),
+           f"from {np.min(grid[inside]):.3e} to {np.max(grid[inside]):.3e}")
+        # Forty cells spread over the quarter plane, the cells drawn nearest r = 2m on the axis, on the
+        # equator and between, and the cells about the zero on the axis.
+        drawn = [(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 200), rng.integers(0, ny, 200)) if inside[j, i]]
+        picks = set(drawn[:40])
+        diagonal = np.flatnonzero(np.diag(inside))[0]
+        picks |= {(int(np.flatnonzero(inside[0])[0]), 0), (0, int(np.flatnonzero(inside[:, 0])[0])),
+                  (int(diagonal), int(diagonal))}
+        picks |= {(0, j) for j in range(ny) if abs(ys[j] - (2 + q) * m) < 0.2 and inside[j, 0]}
+        picks = sorted(picks)
+        agrees(ck, f"zipoy_voorhees map {where}", K, [[*map(float, meridian(xs[i], ys[j])), m, q] for i, j in picks],
+               [grid[j, i] for i, j in picks])
+
+        fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [m, q], frame="meridian")
+        FX, FY = np.meshgrid(fx, fy)
+        FR, FT = meridian(FX, FY)
+        fin = domain(FR, FT, m, q) if qf != 0 else np.ones(FR.shape, dtype=bool)
+        ck(f"zipoy_voorhees K is above zero at every point off the axis on a grid four times as fine {where}",
+           np.all(fine[fin] > 0), f"least {np.min(fine[fin]):.3e}")
+        high = fin & ~(fine <= ZV_MAP["to"])
+        low = fin & (fine < ZV_MAP["from"])
+        if qf == 0:
+            hole = float(FR[high].max())
+            worst = float(np.max(np.abs(grid * R_ ** 6 / (48 * m ** 2) - 1)))
+            ck("zipoy_voorhees at q = 0 every cell, inside the horizon too, is Schwarzschild's 48 m^2/r^6",
+               worst < 1e-12, f"worst {worst:.1e}")
+        else:
+            highs.append(float(FR[high].max() - 2 * m) if high.any() else None)
+        lows.append(float(np.hypot(FX, FY - (2 + q) * m)[low].max()) if low.any() else None)
+
+        marks = []
+        if qf == 0:
+            # The horizon of Schwarzschild's black hole, a zero of g^rr on every ray.
+            rays = [zeros(ck, f"zipoy_voorhees g^rr at q = 0, theta = {angle:.4f}", grr, 1.0, ZV_REACH, [angle, m, 0.0])
+                    for angle in np.linspace(0, math.pi / 2, 13)]
+            ck("zipoy_voorhees at q = 0 g^rr changes sign at r = 2m alone on every ray",
+               all(len(z) == 1 and abs(z[0] - 2 * m) < 1e-12 for z in rays), f"{rays[0]}")
+            marks.append({"class": "horizon", "points": sphere})
+        else:
+            marks.append({"class": "singular", "points": sphere})
+        if qf > 0:
+            zero = 2 + qf               # in units of m = 1
+            ck(f"zipoy_voorhees K vanishes on the axis at r = (2 + q) m {where}",
+               K.expr.subs({mm: 1, qq: sp.Rational(qf.numerator, qf.denominator), th: 0,
+                            r: sp.Rational(zero.numerator, zero.denominator)}) == 0)
+            marks.append({"class": "zero", "at": [0.0, float(zero) * m]})
+        frame = {"label": f"$q = {q:.2f}$", "value": q, "marks": marks}
+        rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(grid, inside)]
+        frames.append((frame, {"metric": "zipoy_voorhees", "system": "spherical", "scalar": "kretschmann", "x": "r",
+                               "y": "\\theta", "frame": "meridian", "params": {"m": m, "q": q},
+                               **({"domain": ZV_DOMAIN} if qf != 0 else {}), "nx": nx, "ny": ny, "cells": rows}))
+
+    # The clip: K passes the top of its colours beside r = 2m alone, in every frame but q = 0, farthest
+    # out at q = 1, and falls below the bottom only beside the zero on the axis.
+    over = [(float(q), d) for q, d in zip([q for q in values_q if q != 0], highs) if d is not None]
+    d_high = max(d for _, d in over)
+    ck("zipoy_voorhees K passes the top of its colours in every frame but q = 0, beside r = 2m, farthest out at q = 1",
+       len(over) == len(values_q) - 1 and d_high == over[-1][1] and d_high < 0.5, f"{over}")
+    # At q = 0, inside the horizon, where 48 m^2/r^6 = 10/m^4.
+    cut = (48 * m ** 2 / ZV_MAP["to"]) ** (1 / 6)
+    ck("zipoy_voorhees at q = 0 K passes the top of its colours inside r = (4.8)^(1/6) m alone",
+       cut - 2 * ZV_REACH / (4 * nx) < hole <= cut, f"{hole:.4f} against {cut:.4f}")
+    under = [(float(q), d) for q, d in zip(values_q, lows) if d is not None]
+    d_low = max([d for _, d in under] or [0.0])
+    ck("zipoy_voorhees K falls below the bottom of its colours only beside the zero on the axis",
+       all(q > 0 for q, _ in under) and d_low < 0.05, f"{under}")
+
+    scale = dict(ZV_MAP)
+    movie_frames = []
+    for k, (frame, grid) in enumerate(frames):
+        if k:
+            frame["map"] = grid
+        movie_frames.append(frame)
+    s = {key: tex_number(float(v), 3) for key, v in circle.items()}
+    view = {
+        "id": "deformation", "label": "the meridian plane of $r$ and $\\theta$", "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": frames[0][1], "marks": [],
+        "movie": {"variable": "$q$", "seconds": 5, "frames": movie_frames},
+        "legend": [["line", "singular", "the curvature singularity $r = 2m$, for $q \\neq 0$"],
+                   ["line", "horizon", "the horizon $r = 2m$ of Schwarzschild's black hole, at $q = 0$"],
+                   ["point", "zero", "$r = (2 + q)\\,m$ on the axis, where $K = 0$, for $q > 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the Zipoy-Voorhees metric over the meridian plane of $r$ and $\\theta$, "
+            "drawn as polar coordinates about $r = 0$, as the deformation runs from prolate to oblate ($q$ from "
+            "$-1/2$ to $1$), the same at every $t$ and $\\phi$ and at $\\theta$ and $\\pi - \\theta$. The spacetime "
+            "is a vacuum, so its Ricci scalar vanishes. At $q = 0$ it is Schwarzschild's black hole, whose "
+            "$K = 48m^2/r^6$ is the same in every direction and finite on the horizon $r = 2m$.",
+            "For every $q \\neq 0$ the sphere $r = 2m$ is a curvature singularity instead, where the chart ends. "
+            "Off the axis $K$ grows toward it as $(r - 2m)^{-2(q^2 + q + 1)}$, and along the axis as "
+            "$(r - 2m)^{2q - 2}$, so it grows faster along the axis when the field is prolate, $q < 0$, and faster "
+            "off it when the field is oblate, $q > 0$. From $q = 1$ up $K$ stays finite along the axis, where it "
+            "tends to $3/4m^4$ at $q = 1$: how the singularity looks depends on the direction it is approached from.",
+            "On the axis $K$ carries the factor $(r - (2 + q)m)^2$, so for $q > 0$ it vanishes at $r = (2 + q)m$, "
+            "which moves out from $r = 2m$ to $3m$ as $q$ grows. On the circle $r = 3m$ the prolate field's $K$ "
+            f"falls from $1/9m^4$ on the axis to ${s[(sp.Rational(-1, 2), sp.pi / 2)]}/m^4$ on the equator, "
+            f"Schwarzschild's is ${s[(0, 0)]}/m^4$ at every $\\theta$, and the oblate field's grows from zero to "
+            f"${s[(1, sp.pi / 2)]}/m^4$.",
+            "Far out $K$ falls off as $48M^2/r^6$ in every direction, as Schwarzschild's does at the same mass "
+            "$GM/c^2 = (1 + q)m$. In Weyl's $\\rho$ and $z$ the sphere $r = 2m$ is the rod $\\rho = 0$, "
+            "$|z| \\le m$, whose Newtonian potential is the metric's $\\psi$. For $q \\neq 0$ the map leaves the disc "
+            "inside it blank, and at $q = 0$ it draws Schwarzschild's $K$ inside the horizon as well.",
+        ],
+        "settings": "$m = 1$, the unit of every length, and $q$ in steps of $1/4$, from the prolate $q = -1/2$ to the "
+                    "oblate $q = 1$ that every other drawing takes.",
+        "clip": ("We colour $K\\,m^4$ on a logarithmic scale from $10^{-5}$ to $10$ and give a value beyond it the "
+                 "colour of the end it passes: $K$ passes $10/m^4$ beside $r = 2m$ in every frame but "
+                 f"$q = 0$, at most ${d_high:.2f}\\,m$ outside it at $q = 1$, and at $q = 0$ inside "
+                 f"$r = {cut:.2f}\\,m$; it falls below $10^{{-5}}/m^4$ "
+                 f"only within ${tex_number(d_low, 2)}\\,m$ of the zero on the axis."),
+    }
+    return [view]
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -10032,6 +10286,7 @@ DRAWN = {
     "topological_star": topological_star,
     "vaidya": vaidya,
     "van_den_broeck": van_den_broeck,
+    "zipoy_voorhees": zipoy_voorhees,
 }
 
 
