@@ -4525,6 +4525,274 @@ def interior_schwarzschild(ck, src):
     return [still, compact]
 
 
+# ---------------------------------------------------------------- the Einstein-Rosen waves
+
+ER_BOX = ((0, 10), (-8, 8))       # rho/a and ct/a: the pulse coming in, on the axis, and going out, as the research list sets
+ER_CELLS = (160, 256)             # the cells of the map across and up, each a sixteenth of a on a side
+ER_SCALE = {"kind": "symlog", "from": -1e5, "to": 1e6, "linear": 1e-4}   # the colours of K a^4
+ER_FAR = 8.0                      # the moment ct = 8a, the last the box holds, at which the pulse is far out
+# The pulse as the figure prints it, each formula short enough to stand in the caption's column on a
+# phone: null_rays.ER_INPUT's psi and gamma with a^2 + rho^2 - c^2t^2 named w and gamma's bracket
+# less one named beta.
+ER_INPUT = ("The pulse of Weber, Wheeler, and Bonnor, of width $a$: $\\psi = \\sqrt{2}\\,C\\sqrt{D_+ + w}/D_+$ and "
+            "$\\gamma = C^2(1 + \\beta)/2a^2$, with $\\beta = \\dfrac{w - 2a^2}{D_+} - \\dfrac{2a^2\\rho^2D_-^2}{D_+^4}$, "
+            "$w = a^2 + \\rho^2 - c^2t^2$, and $D_\\pm^2 = w^2 \\pm 4a^2c^2t^2$, at $C = a$.")
+
+
+def golden(fn, lo, hi, steps=80):
+    """Where fn is least between lo and hi, by the golden section."""
+    ratio = (math.sqrt(5) - 1) / 2
+    for _ in range(steps):
+        c, d = hi - ratio * (hi - lo), lo + ratio * (hi - lo)
+        lo, hi = (lo, d) if fn(c) < fn(d) else (c, hi)
+    return 0.5 * (lo + hi)
+
+
+def weyl_parts(metric, riemann, coords, point):
+    """The squares E_ab E^ab and B_ab B^ab of the electric and magnetic parts of the Riemann
+    tensor of a vacuum, its Weyl tensor, for the observer at rest in a chart whose metric is
+    diagonal, from the published metric and Riemann components at one point in sixty digits:
+    `metric` maps each coordinate to its published g_xx, and `riemann` each published (ulll)
+    index tuple to its component. In the orthonormal frame of that observer, 0 its time,
+    E_ij = R_0i0j and B_ij = eps_ikl R_kl0j/2."""
+    g = [sp.Float(metric[x].exact(point), 60) for x in coords]
+    lowered = {}
+    for indices, component in riemann.items():
+        a, b, c, d = (coords.index(x) for x in indices)
+        lowered[(a, b, c, d)] = g[a] * component.exact(point) / sp.sqrt(abs(g[a] * g[b] * g[c] * g[d]))
+
+    def frame(a, b, c, d):
+        return lowered.get((a, b, c, d), 0)
+    E = [[frame(0, i, 0, j) for j in (1, 2, 3)] for i in (1, 2, 3)]
+    B = [[sum(sp.LeviCivita(i, k, l) * frame(k + 1, l + 1, 0, j + 1) for k in range(3) for l in range(3)) / 2
+          for j in range(3)] for i in range(3)]
+    return (float(sum(E[i][j] ** 2 for i in range(3) for j in range(3))),
+            float(sum(B[i][j] ** 2 for i in range(3) for j in range(3))))
+
+
+def einstein_rosen_waves(ck, src):
+    """The pulse of Weber, Wheeler, and Bonnor at C = a = 1, its Kretschmann scalar over the plane
+    of rho and ct of the cylindrical chart, coming in, focusing on the axis and going out.
+
+    The cylindrical chart publishes K in rho, t and the derivatives of its free functions psi and
+    gamma, which the figure declares as the pulse the spacetime's other drawings take, with the
+    closed form of gamma; the published Ricci scalar vanishes on the pulse, so the figure is K
+    alone, a map over 0 <= rho <= 10a and -8a <= ct <= 8a, the window of the research list, in
+    160 cells across and 256 up, each a sixteenth of a on a side, coloured on a signed logarithmic
+    scale from -10^5 to 10^6 in units of 1/a^4, linear within 10^-4 of zero, since K changes sign.
+    g^rhorho = e^(2psi - 2gamma) is positive everywhere and K is finite, so no horizon or
+    singularity is marked; the two events of the axis where every component of the Riemann tensor
+    vanishes are.
+
+    What the caption states is checked here, in sixty digits where the published formula loses
+    digits beside the axis: the pulse solves the published G^t_t, G^t_rho, G^phi_phi and G^z_z,
+    and the published R vanishes on it; the psi and gamma the input line prints, in w and beta, are the
+    declared pulse; gamma = 0 on the axis and psi = 2 at the focus; K is the
+    same at t and -t; on the axis at t = 0 K is 192e^8/a^4, the greatest value on the map; on the
+    axis every published component of the Riemann tensor changes sign at |ct| = t_z, found by
+    bisection, and K falls from the focus to zero there, rises to a second peak, found by the
+    golden section, and then falls to the value stated at ct = 8a; the outgoing crest's height and
+    place at ct = 2a and 8a; K is positive at t = 0, and from the |ct| and the rho stated on it is
+    negative on one band of rho at each moment, which reaches the axis at t_z and lies between the
+    stated distances inside and outside the light cone rho = |ct|; K = 8(E_ab E^ab - B_ab B^ab)
+    for the observer at rest, from the published metric and Riemann tensor, B vanishes at t = 0,
+    B^2 > E^2 in the band, and the percentages by which the two differ on the crest and in the
+    band at ct = 8a; and K stays inside its colours, between its least value, found by the golden
+    section, and the focus."""
+    S = "cylindrical"
+    pulse = nr._er_pulse("t", "rho")
+    (r0, r1), (t0, t1) = ER_BOX
+    x_axis, y_axis = axis("$\\rho/a$", r0, r1), axis("$ct/a$", t0, t1)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "einstein_rosen_waves", [aspect])
+    scale = dict(ER_SCALE)
+
+    def read(field, indices=None):
+        return nr_published(src, "einstein_rosen_waves", S, field, ["rho", "t"], [], indices, pulse)
+
+    K, ricci = read("kretschmann"), read("ricci_scalar")
+    rng = np.random.default_rng(1937)
+    sample = [[float(r), float(t)] for r, t in zip(rng.uniform(0.05, r1, 12), rng.uniform(t0, t1, 12))]
+    scale_K = max(abs(float(K.exact(p))) for p in sample)
+    worst = max(abs(float(ricci.exact(p))) for p in sample)
+    ck("einstein_rosen_waves the published Ricci scalar vanishes on the pulse", worst < 1e-40 * max(scale_K, 1.0),
+       f"{worst:.1e}")
+    worst = max(abs(float(read("einstein_tensor", ij).exact(p))) for ij in nr.ER_SOLVES for p in sample)
+    ck("einstein_rosen_waves the pulse solves the published G^t_t, G^t_rho, G^phi_phi and G^z_z", worst < 1e-40,
+       f"{worst:.1e}")
+    rho_, t_ = sp.symbols("rho t", real=True)
+    psi, gamma = (sp.sympify(pulse[name], locals={"rho": rho_, "t": t_}) for name in ("psi", "gamma"))
+    # The input line's psi and gamma, written in w and beta, are the declared pulse.
+    w = 1 + rho_ ** 2 - t_ ** 2
+    dp, dm2 = sp.sqrt(w ** 2 + 4 * t_ ** 2), w ** 2 - 4 * t_ ** 2
+    beta = (w - 2) / dp - 2 * rho_ ** 2 * dm2 / dp ** 4
+    printed = {psi: sp.sqrt(2) * sp.sqrt(dp + w) / dp, gamma: (1 + beta) / 2}
+    worst = max(abs(float((a - b).subs({rho_: r, t_: t}).evalf(60))) for a, b in printed.items() for r, t in sample)
+    ck("einstein_rosen_waves the psi and gamma the input line prints are the declared pulse", worst < 1e-50,
+       f"worst {worst:.1e}")
+    ck("einstein_rosen_waves gamma = 0 on the axis and psi = 2C/a at the focus",
+       sp.simplify(sp.factor(gamma.subs(rho_, 0), deep=True)) == 0 and sp.simplify(psi.subs({rho_: 0, t_: 0}) - 2) == 0)
+
+    # The map.
+    nx, ny = ER_CELLS
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [])
+    ck("einstein_rosen_waves K is finite at every cell", np.all(np.isfinite(values)),
+       f"from {np.min(values):.3e} to {np.max(values):.3e}")
+    picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+    picks |= {(i, j) for i in (0, 1) for j in (ny // 2 - 1, ny // 2)}
+    picks = sorted(picks)
+    agrees(ck, "einstein_rosen_waves map", K, [[xs[i], ys[j]] for i, j in picks], [values[j, i] for i, j in picks])
+    ck("einstein_rosen_waves K is the same at t and -t, cell for cell", np.allclose(values, values[::-1], rtol=1e-9, atol=0))
+    worst = max(abs(float(K.exact([r, t]) / K.exact([r, -t])) - 1) for r, t in sample)
+    ck("einstein_rosen_waves K is the same at t and -t in sixty digits", worst < 1e-50, f"worst {worst:.1e}")
+
+    # The published Riemann tensor, for the axis and for the electric and magnetic parts below.
+    entry = json.loads((build.METRICS_DIR / "einstein_rosen_waves.json").read_text(encoding="utf-8"))
+    chart = next(s for s in entry["coordinates"] if s["id"] == S)
+    coords = ["t", "\\rho", "\\phi", "z"]
+    metric = {x: read("metric_components", (x, x)) for x in coords}
+    riemann = {tuple(c["indices"]): read("riemann", c["indices"]) for c in chart["riemann"]["variants"]["ulll"]["nonzero"]}
+
+    # The focus, and the axis, where the published formula holds 1/rho and is read in sixty digits.
+    axis_rho = 1e-9
+    focus = float(K.exact([axis_rho, 0.0]))
+    exact_focus = float(192 * sp.exp(8))
+    ck("einstein_rosen_waves K on the axis at t = 0 is 192e^8/a^4", abs(focus / exact_focus - 1) < 1e-12,
+       f"{focus:.10e}")
+    fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [])
+    FX, FY = np.meshgrid(fx, fy)
+    top = np.unravel_index(np.argmax(fine), fine.shape)
+    ck("einstein_rosen_waves K is greatest at the focus", float(np.max(fine)) < exact_focus
+       and FX[top] < 0.01 and abs(FY[top]) < 0.02, f"{float(np.max(fine)):.6e} at rho = {FX[top]:.4f}, ct = {FY[top]:.4f}")
+
+    # On the axis every published component of the Riemann tensor changes sign at one moment
+    # |ct| = t_z, found by bisection of R^t_rhotrho, and K, their sum of squares there, touches zero.
+    def on_axis(t):
+        return float(K.exact([axis_rho, t]))
+    tz = crossing(lambda t: float(riemann[("t", "\\rho", "t", "\\rho")].exact([axis_rho, t])), 0.2, 0.4)
+    at_focus = max(abs(float(c.exact([1e-12, 0.0]))) for c in riemann.values())
+    at_zero = max(abs(float(c.exact([1e-12, tz]))) for c in riemann.values())
+    ck("einstein_rosen_waves every published Riemann component vanishes on the axis at |ct| = t_z",
+       at_zero < 1e-9 * at_focus and abs(on_axis(tz)) < 1e-15 * exact_focus and on_axis(-tz) == on_axis(tz),
+       f"t_z = {tz:.6f}, the largest {at_zero:.1e} against {at_focus:.1e} at t = 0")
+    peak = golden(lambda t: -on_axis(t), 0.4, 0.8)
+    times = sorted(set(np.linspace(0, ER_FAR, 161).tolist()) | {tz, peak})
+    axis_K = [on_axis(t) for t in times]
+    k_z, k_p = times.index(tz), times.index(peak)
+    ck("einstein_rosen_waves K on the axis falls to zero at t_z, rises to its second peak and then falls",
+       all(a > b for a, b in zip(axis_K[:k_z], axis_K[1:k_z + 1]))
+       and all(a < b for a, b in zip(axis_K[k_z:k_p], axis_K[k_z + 1:k_p + 1]))
+       and all(a > b > 0 for a, b in zip(axis_K[k_p:], axis_K[k_p + 1:])),
+       f"t_z = {tz:.4f}, peak {axis_K[k_p]:.6g} at {peak:.4f}, {axis_K[-1]:.4e} at ct = 8a")
+    axis_peak, axis_far = axis_K[k_p], axis_K[-1]
+    far_decade = math.floor(math.log10(axis_far))     # written as a power of ten, as the clip writes K
+
+    # The outgoing crest, the greatest K at each moment off the axis.
+    def crest(t):
+        r = golden(lambda r: -float(K(r, t)), t - 2, t)
+        return r, float(K.exact([r, t]))
+    crests = {t: crest(t) for t in (2.0, ER_FAR)}
+    for t, (r, v) in crests.items():
+        row = K(np.linspace(0.01, r1, SAMPLES), t)
+        ck(f"einstein_rosen_waves the crest at ct = {t:g}a is the greatest K off the axis at that moment",
+           v >= float(np.max(row)) * (1 - 1e-9) and v > on_axis(t), f"{v:.6g} at rho = {r:.4f}")
+
+    # Where K is negative: one band of rho at each moment from its birth on, about the light cone,
+    # reaching the axis at t_z.
+    rs = np.linspace(1e-3, r1, 20001)
+
+    def least(t):
+        return float(np.min(K(rs, t)))
+    ck("einstein_rosen_waves K is positive at t = 0", least(0.0) > 0 and float(np.min(values)) < 0,
+       f"{least(0.0):.3e}")
+    lo, hi = 0.0, 1.0
+    for _ in range(60):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if least(mid) > 0 else (lo, mid)
+    onset = hi
+    born = float(rs[np.argmin(K(rs, onset))])
+    inside, outside, single = [], [], True
+    for t in np.linspace(onset + 1e-3, ER_FAR, 800):
+        neg = K(rs, t) < 0
+        single &= np.count_nonzero(np.diff(neg.astype(int))) == 2 or (neg[0] and np.count_nonzero(np.diff(neg.astype(int))) == 1)
+        inside.append(t - rs[neg].min())
+        outside.append(rs[neg].max() - t)
+    below = [least(t) for t in np.linspace(0, onset - 1e-3, 50)]
+    ck("einstein_rosen_waves K is negative from |ct| = onset on, on one band of rho at each moment",
+       single and all(v > 0 for v in below), f"onset {onset:.4f} at rho = {born:.4f}")
+    ck("einstein_rosen_waves the band reaches the axis at t_z",
+       all(float(K.exact([r, tz])) < 0 for r in (1e-2, 1e-4, 1e-6)) and float(K(1e-2, tz - 0.05)) > 0
+       and float(K(1e-2, tz + 0.05)) > 0)
+    band = (max(inside), max(outside))
+    ck("einstein_rosen_waves the band lies within the stated distances of the light cone",
+       band[0] < 0.35 and band[1] < 1.1 and min(outside) > 0, f"{band[0]:.4f} inside, {band[1]:.4f} outside")
+
+    # The electric and magnetic parts of the Weyl tensor.
+    trough = {t: golden(lambda r: float(K(r, t)), t - 0.5, t + 1.0) for t in (1.0, ER_FAR)}
+    points = sample[:6] + [[r, ER_FAR] for r in (crests[ER_FAR][0], trough[ER_FAR])] + [[trough[1.0], 1.0]]
+    worst, parts = 0.0, []
+    for p in points:
+        E2, B2 = weyl_parts(metric, riemann, coords, p)
+        parts.append((E2, B2))
+        worst = max(worst, abs(8 * (E2 - B2) / float(K.exact(p)) - 1))
+    ck("einstein_rosen_waves K = 8(E_ab E^ab - B_ab B^ab) for the observer at rest", worst < 1e-12, f"worst {worst:.1e}")
+    at_rest = [weyl_parts(metric, riemann, coords, [r, 0.0]) for r in (0.5, 2.0, 6.0)]
+    ck("einstein_rosen_waves the magnetic part vanishes at t = 0", all(B2 < 1e-40 * E2 for E2, B2 in at_rest))
+    ck("einstein_rosen_waves the magnetic part is the larger in the band",
+       all(B2 > E2 for E2, B2 in parts[7:]) and all(float(K.exact(p)) < 0 for p in points[7:]))
+    differ = [abs(E2 - B2) / max(E2, B2) for E2, B2 in parts[6:8]]
+    ck("einstein_rosen_waves on the crest and the trough at ct = 8a the two parts nearly agree",
+       all(d < 0.1 for d in differ), f"{100 * differ[0]:.2f} and {100 * differ[1]:.2f} percent")
+
+    # The colours: K stays inside them.
+    bottom = np.unravel_index(np.argmin(fine), fine.shape)
+    r_min, t_min = float(FX[bottom]), abs(float(FY[bottom]))
+    for _ in range(6):
+        r_min = golden(lambda r: float(K(r, t_min)), r_min - 0.05, r_min + 0.05)
+        t_min = golden(lambda t: float(K(r_min, t)), t_min - 0.05, t_min + 0.05)
+    lowest = float(K.exact([r_min, t_min]))
+    ck("einstein_rosen_waves K stays inside its colours", ER_SCALE["from"] < lowest <= float(np.min(fine))
+       and exact_focus < ER_SCALE["to"], f"least {lowest:.6e} at rho = {r_min:.4f}, |ct| = {t_min:.4f}")
+
+    view = {
+        "id": "pulse", "label": "the plane of $\\rho$ and $ct$", "system": S, "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,a^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "einstein_rosen_waves", "system": S, "scalar": "kretschmann", "x": "\\rho", "y": "t",
+                "params": {}, "functions": dict(pulse), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [{"class": "zero", "at": [0.0, tz]}, {"class": "zero", "at": [0.0, -tz]}],
+        "legend": [["point", "zero", "where every component of the Riemann tensor vanishes"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of a pulse of Weber, Wheeler, and Bonnor over the plane of $\\rho$ and $ct$ "
+            "($C = a$), the same at every $\\phi$ and $z$. The waves are a vacuum, so the Ricci scalar vanishes, and $K$ "
+            "is the same at $t$ and $-t$. The pulse comes in from far out about the light cone $\\rho = -ct$, focuses on "
+            f"the axis at $t = 0$, where $K = 192e^8/a^4 = {tex_number(exact_focus)}/a^4$ is greatest, and goes out "
+            "again about $\\rho = ct$.",
+            f"On the axis $K$ falls from the focus to zero at $|ct| = {tz:.3f}\\,a$, where every component of the "
+            f"Riemann tensor vanishes, rises to a second peak of ${tex_number(axis_peak)}/a^4$ at "
+            f"$|ct| = {peak:.3f}\\,a$, and then falls, to ${tex_number(axis_far / 10 ** far_decade)} \\times "
+            f"10^{{{far_decade}}}/a^4$ at $ct = \\pm 8a$. The crest of "
+            f"the outgoing wave, where $K$ is greatest at each moment, runs ${2 - crests[2.0][0]:.2f}\\,a$ inside the "
+            f"light cone at $ct = 2a$, with $K = {tex_number(crests[2.0][1])}/a^4$, and "
+            f"${ER_FAR - crests[ER_FAR][0]:.2f}\\,a$ inside it at $ct = 8a$, with $K = {tex_number(crests[ER_FAR][1])}/a^4$.",
+            f"$K$ is negative in a band that runs with each wave, between ${band[0]:.2f}\\,a$ inside the light cone "
+            f"$\\rho = |ct|$ and ${band[1]:.2f}\\,a$ outside it. The band starts at $|ct| = {onset:.2f}\\,a$ as a point "
+            f"at $\\rho = {born:.2f}\\,a$ and reaches the axis at $|ct| = {tz:.3f}\\,a$. In a vacuum "
+            "$K = 8(E_{ab}E^{ab} - B_{ab}B^{ab})$, with $E_{ab}$ and $B_{ab}$ the electric and magnetic parts of the "
+            "Weyl tensor that an observer at rest measures, so in the band the magnetic part is the larger. At $t = 0$ "
+            "the magnetic part vanishes, and $K$ is positive at every $\\rho$. Far out the pulse nears a plane wave, in "
+            "which the two parts are equal and $K$ vanishes: at $ct = 8a$ they differ by "
+            f"${100 * differ[0]:.1f}$ percent on the crest and ${100 * differ[1]:.1f}$ percent in the band.",
+        ],
+        "settings": "$C = a$, with $a$ the unit of every length.",
+        "input": ER_INPUT,
+        "clip": ("We colour $K\\,a^4$ on a signed logarithmic scale, linear within $10^{-4}$ of zero, from $-10^{5}$ to "
+                 f"$10^{{6}}$, and $K$ stays inside it, from ${tex_number(lowest)}/a^4$ at $\\rho = {r_min:.2f}\\,a$, "
+                 f"$ct = \\pm {t_min:.2f}\\,a$, to ${tex_number(exact_focus)}/a^4$ at the focus."),
+    }
+    return [view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -4542,6 +4810,7 @@ DRAWN = {
     "dilaton_black_hole": dilaton_black_hole,
     "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
+    "einstein_rosen_waves": einstein_rosen_waves,
     "fisher_jnw": fisher_jnw,
     "gowdy": gowdy,
     "gravastar": gravastar,

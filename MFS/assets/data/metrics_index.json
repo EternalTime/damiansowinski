@@ -1653,7 +1653,8 @@
     "version": "9ab3a30f6eabd56d",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
-    "embedding": "f736444606912902"
+    "embedding": "f736444606912902",
+    "curvature": "91617267c2761ed8"
   },
   {
     "id": "elliptic_de_sitter",
