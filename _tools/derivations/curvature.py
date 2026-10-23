@@ -5966,6 +5966,368 @@ def tex_fraction(value, unit):
     return sign + (top if d == 1 else f"{top}/{d}")
 
 
+# ---------------------------------------------------------------- McVittie's mass
+
+MCV_BOX = ((1, 7), (1, 7))        # R/r_s from the singular sphere out, and ct/r_s over the moments of the embedding movie
+MCV_CELLS = (120, 120)            # the cells of the map across and up, each a twentieth of r_s on a side
+MCV_MAP = {"kind": "log", "from": 1e-1, "to": 1e2}      # the colours of K r_s^4
+MCV_K = {"kind": "log", "from": 1e-2, "to": 1e3}        # the movie's axis of K r_s^4
+MCV_R = {"kind": "symlog", "from": -10.0, "to": 10.0, "linear": 0.1}   # the movie's axis of R^mu_mu r_s^2
+MCV_STEP = Fraction(1, 5)         # the step of ct from one frame of the movie to the next, as the embedding movie's
+MCV_LAMBDA = Fraction(1, 5)       # Lambda r_s^2 = 3 H_0^2 r_s^2/c^2 of the universe declared, as Schwarzschild-de Sitter's views take it
+MCV_NEAR = 1.1                    # the radius outside which the caption says how near the last frame is to Schwarzschild-de Sitter
+
+
+def mcvittie(ck, src):
+    """McVittie's mass in a universe of dust and a cosmological constant at r_s = 1, its
+    Kretschmann scalar over the plane of R and ct of the areal chart, and its Kretschmann and Ricci
+    scalars against R as the universe expands.
+
+    The areal chart publishes K and R in R, the Hubble rate H(t) and its derivative, which the
+    figure declares as the expansion every other drawing of the spacetime takes, null_rays.MCV_H,
+    H = H_0 coth(3 H_0 t/2) with H_0 = c/(sqrt 15 r_s), so that Lambda r_s^2 = 1/5; the isotropic
+    chart publishes the same two scalars of the same event, so the views name no chart. The map
+    colours K over r_s <= R <= 7 r_s and r_s <= ct <= 7 r_s, the moments of the embedding movie,
+    in 120 cells across and 120 up, each a twentieth of r_s on a side, on a logarithmic scale from
+    10^-1 to 10^2 in units of 1/r_s^4, with the apparent horizons, the zeros of the published g^RR
+    at each t, marked as the one curve the inner and the outer make from their birth. The movie
+    steps ct over the frames of the embedding movie, from r_s to 7 r_s by r_s/5, 31 frames, with K
+    on a logarithmic axis from 10^-2 to 10^3 over R on a signed one, linear within 0.1 of zero,
+    from -10 to 10, Schwarzschild-de Sitter's two scalars at the same r_s and Lambda dashed beside
+    them, and the apparent horizons marked. The sphere R = r_s, the left edge of every view, is the
+    curvature singularity.
+
+    What the captions state is checked here: the declared H is (da/dt)/a of the declared a, solves
+    H^2 = H_0^2(1 + a^-3) for dust and Lambda = 3 H_0^2 = 1/5, and falls at every t, so dH/dt < 0;
+    the isotropic chart's K and R at the same event are the areal chart's; far out K and R tend to
+    the universe's 12H^4 + 12(H^2 + dH/dt)^2 and 12H^2 + 6 dH/dt, which fall at every t drawn,
+    toward Schwarzschild-de Sitter's 8 Lambda^2/3 and 4 Lambda; K varies by more than a factor of
+    ten along ct, so the map shows what one curve cannot; toward R = r_s, R grows without bound
+    as 6 (dH/dt)/sqrt(1 - r_s/R), K as 12 (dH/dt)^2/(1 - r_s/R) and so as R^2/3, and the published
+    G^theta_theta, the pressure, without bound, each measured in seventy digits at R - r_s = 10^-20
+    and 10^-30; R is negative inside the one zero R = r_s/(1 - (9/16) sech^4(3 H_0 t/2)) at every
+    frame and positive outside it; the apparent horizons are born together as a double zero of
+    g^RR at R = 3 r_s/2, at the t where H^2 = 4/27 r_s^2, and are the roots of H^2 R^3 - R + 1 = 0,
+    two at every frame after it and none before, the inner falling and the outer rising frame by
+    frame toward Schwarzschild-de Sitter's horizons, the zeros of its published g^rr; wherever g^RR
+    < 0 both radial light rays of the published metric move to larger R; at the last frame both
+    scalars are within the percent stated of Schwarzschild-de Sitter's outside R = 1.1 r_s; and
+    every clip stated is where a scalar leaves its colours or its panel, found by bisection in
+    log(R - r_s)."""
+    F = {"H": nr.MCV_H}
+    lam = float(MCV_LAMBDA)
+    (x0, x1), (y0, y1) = MCV_BOX
+    x_axis, y_axis = axis("$R/r_s$", x0, x1), axis("$ct/r_s$", y0, y1)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "mcvittie map", [aspect])
+
+    def read(field, indices=None, system="areal", coords=("R", "t"), functions=F):
+        return nr_published(src, "mcvittie", system, field, list(coords), ["r_s"], indices, functions)
+
+    K, ricci = read("kretschmann"), read("ricci_scalar")
+    grr, pressure = read("inverse_metric_components", ("R", "R")), read("einstein_tensor", ("\\theta", "\\theta"))
+    metric = {ij: read("metric_components", ij) for ij in (("t", "t"), ("t", "R"), ("R", "R"))}
+    sds = ["r_s", "\\Lambda"]
+    K_s = nr_published(src, "schwarzschild_de_sitter", "static", "kretschmann", ["r"], sds)
+    R_s = nr_published(src, "schwarzschild_de_sitter", "static", "ricci_scalar", ["r"], sds)
+    g_s = nr_published(src, "schwarzschild_de_sitter", "static", "inverse_metric_components", ["r"], sds, ("r", "r"))
+
+    # The declared expansion.
+    t_ = sp.Symbol("t", positive=True)
+    H_t = sp.sympify(nr.MCV_H, locals={"t": t_})
+    a_t = sp.sympify(nr.MCV_A, locals={"t": t_})
+    dH_t = sp.diff(H_t, t_)
+    H0 = 1 / sp.sqrt(15)
+    rates = [sp.Rational(k, 4) for k in range(1, 41)]
+    worst = max(abs(float(((sp.diff(a_t, t_) / a_t - H_t).subs(t_, t)).evalf(60))) for t in rates)
+    ck("mcvittie the declared H is (da/dt)/a of the declared a", worst < 1e-50, f"worst {worst:.1e}")
+    worst = max(abs(float((H_t ** 2 - H0 ** 2 * (1 + a_t ** -3)).subs(t_, t).evalf(60))) for t in rates)
+    ck("mcvittie the declared H solves H^2 = H_0^2 (1 + a^-3), dust and Lambda = 3 H_0^2 = 1/5",
+       worst < 1e-50 and 3 * H0 ** 2 == MCV_LAMBDA, f"worst {worst:.1e}")
+    H_f, dH_f = sp.lambdify(t_, H_t, "numpy"), sp.lambdify(t_, dH_t, "numpy")
+    ts = np.linspace(0.05, 50, 20001)
+    ck("mcvittie H falls at every t, so dH/dt < 0, toward H_0", np.all(dH_f(ts) < 0) and abs(H_f(200.0) - float(H0)) < 1e-15,
+       f"dH/dt from {dH_f(ts[0]):.3e} to {dH_f(ts[-1]):.3e}")
+
+    def universe_K(t):
+        H, dH = H_f(t), dH_f(t)
+        return 12 * H ** 4 + 12 * (H ** 2 + dH) ** 2
+
+    def universe_R(t):
+        return 12 * H_f(t) ** 2 + 6 * dH_f(t)
+
+    # Both charts publish the same scalars of an event, the isotropic chart at its declared a.
+    Ki = read("kretschmann", system="isotropic", coords=("r", "t"), functions={"a": nr.MCV_A})
+    Ri = read("ricci_scalar", system="isotropic", coords=("r", "t"), functions={"a": nr.MCV_A})
+    a_f = sp.lambdify(t_, a_t, "numpy")
+    rng = np.random.default_rng(1933)
+    worst = 0.0
+    for r_area, t in zip(rng.uniform(1.05, x1, 12), rng.uniform(y0, y1, 12)):
+        a = float(a_f(t))
+        # The comoving r of the areal radius R = a r (1 + r_s/4ar)^2 outside the throat.
+        r = ((2 * r_area - 1) + 2 * math.sqrt(r_area * (r_area - 1))) / (4 * a)
+        R = a * r * (1 + 1 / (4 * a * r)) ** 2
+        for areal, iso in ((K, Ki), (ricci, Ri)):
+            worst = max(worst, abs(float(iso.exact([r, t, 1])) / float(areal.exact([R, t, 1])) - 1))
+    ck("mcvittie the isotropic chart's K and R at an event are the areal chart's", worst < 1e-12, f"worst {worst:.1e}")
+
+    # Far out, the universe; and its curvature falls as it expands.
+    far = 1e12
+    worst = max(max(abs(float(K.exact([far, t, 1])) / universe_K(t) - 1), abs(float(ricci.exact([far, t, 1])) / universe_R(t) - 1))
+                for t in (1.0, 2.0, 4.0, 7.0))
+    ck("mcvittie far out K and R tend to the universe's 12H^4 + 12(H^2 + dH/dt)^2 and 12H^2 + 6 dH/dt", worst < 1e-9,
+       f"worst {worst:.1e}")
+    span_t = np.linspace(y0, y1, 4001)
+    ck("mcvittie the universe's K and R fall at every t drawn",
+       np.all(np.diff(universe_K(span_t)) < 0) and np.all(np.diff(universe_R(span_t)) < 0))
+    K_late, R_late = float(K_s.exact([far, 1, lam])), float(R_s.exact([far, 1, lam]))
+    ck("mcvittie Schwarzschild-de Sitter's K far out is 8 Lambda^2/3 and its R is 4 Lambda",
+       abs(K_late / (8 * lam ** 2 / 3) - 1) < 1e-12 and R_late == 4 * lam, f"{K_late}, {R_late}")
+    ck("mcvittie the universe's K and R tend to Schwarzschild-de Sitter's far values as t grows",
+       abs(universe_K(200.0) / K_late - 1) < 1e-12 and abs(universe_R(200.0) / R_late - 1) < 1e-12)
+    K_u = {t: universe_K(t) for t in (float(y0), float(y1))}
+    R_u = {t: universe_R(t) for t in (float(y0), float(y1))}
+    ck("mcvittie the universe's K varies along ct by more than a factor of ten, so the map holds more than one curve",
+       K_u[y0] / K_u[y1] > 10, f"{K_u[y0]:.4f} to {K_u[y1]:.4f}")
+    ck("mcvittie Schwarzschild's 12 r_s^2/R^6 at R = r_s is above the universe's K at every t drawn",
+       np.all(universe_K(span_t) < 12))
+
+    # Toward R = r_s, in seventy digits.
+    def deep(pub, gap, t):
+        point = {pub.coords[0]: 1 + sp.Rational(1, 10 ** gap), pub.coords[1]: sp.Rational(t), pub.params[0]: 1}
+        return pub.expr.xreplace(point).evalf(70)
+
+    leads = []
+    for t in (1, 4, 7):
+        dH = sp.Float(dH_t.subs(t_, t).evalf(70), 70)
+        for gap in (20, 30):
+            s = sp.sqrt(1 - 1 / (1 + sp.Rational(1, 10 ** gap)))
+            Kd, Rd, Gd = deep(K, gap, t), deep(ricci, gap, t), deep(pressure, gap, t)
+            leads.append((float(Rd * s / (6 * dH)), float(Kd * s ** 2 / (12 * dH ** 2)), float(Kd / Rd ** 2 * 3),
+                          float(Gd * s / (-2 * dH))))
+    ck("mcvittie toward R = r_s R grows as 6 dH/dt/sqrt(1 - r_s/R), K as 12 (dH/dt)^2/(1 - r_s/R) and as R^2/3, "
+       "and G^theta_theta, the pressure, without bound", all(abs(v - 1) < 1e-8 for lead in leads for v in lead),
+       f"{leads[-1]}")
+
+    # The zero of R at each moment, inside which R is negative.
+    def ricci_zero(t):
+        return 1 / (1 - Fraction(9, 16) * float(1 / np.cosh(3 * t / (2 * math.sqrt(15)))) ** 4)
+
+    gaps = 1 + np.exp(np.linspace(-34, math.log(x1 - 1), 8001))
+
+    def ricci_root(t):
+        lo, hi = 1 + 1e-14, float(x1)
+        if not (ricci(lo, t, 1) < 0 < ricci(hi, t, 1)):
+            return None
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            if mid in (lo, hi):
+                break
+            lo, hi = (mid, hi) if ricci(mid, t, 1) < 0 else (lo, mid)
+        return 0.5 * (lo + hi)
+
+    # The apparent horizons, born together as a double zero of g^RR at R = 3 r_s/2 where H^2 = 4/27 r_s^2.
+    birth = float(2 * sp.sqrt(15) / 3 * sp.atanh(3 / (2 * sp.sqrt(5))))
+    at_birth = float(grr.exact([1.5, birth, 1]))
+    slope = float((grr.exact([1.5 + 1e-7, birth, 1]) - grr.exact([1.5 - 1e-7, birth, 1])) / 2e-7)
+    ck("mcvittie the apparent horizons are born as a double zero of g^RR at R = 3 r_s/2, where H^2 = 4/27 r_s^2",
+       abs(at_birth) < 1e-15 and abs(slope) < 1e-9 and abs(H_f(birth) ** 2 - 4 / 27) < 1e-15, f"ct = {birth:.6f}")
+
+    def cubic(t):
+        roots = np.roots([H_f(t) ** 2, 0, -1, 1])
+        return sorted(float(z.real) for z in roots if abs(z.imag) < 1e-12 and z.real > 1)
+
+    def horizons(t):
+        return _g_zeros(lambda R, u: grr(R, u, 1.0), t, x1)
+
+    sds_horizons = zeros(ck, "mcvittie Schwarzschild-de Sitter horizons", g_s, 1, x1, [1, lam])
+    ck("mcvittie Schwarzschild-de Sitter has two horizons on the range", len(sds_horizons) == 2, f"{sds_horizons}")
+
+    # The map.
+    nx, ny = MCV_CELLS
+    scale = dict(MCV_MAP)
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [1.0])
+    ck("mcvittie K is finite and positive at every cell", np.all(np.isfinite(values)) and np.all(values > 0),
+       f"from {np.min(values):.4e} to {np.max(values):.4e}")
+    picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+    picks |= {(i, j) for i in (0, 1) for j in (0, ny // 2, ny - 1)}
+    picks = sorted(picks)
+    agrees(ck, "mcvittie map", K, [[xs[i], ys[j], 1.0] for i, j in picks], [values[j, i] for i, j in picks])
+    fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [1.0])
+    least = float(K.exact([x1, y1, 1]))
+    ck("mcvittie K passes the top of its colours only beside R = r_s, in the first column of cells",
+       np.all(values[:, 1:] < scale["to"]), f"{int(np.sum(values >= scale['to']))} cells")
+    ck("mcvittie K is least at R = 7 r_s, ct = 7 r_s, inside the colours",
+       least <= float(np.min(fine)) and least > scale["from"], f"{least:.6e}")
+
+    def reach(fn, t, level, below=False):
+        """How near R = r_s a scalar at t passes `level`: the one stretch from R = r_s out where it
+        does, its end found by bisection in log(R - r_s)."""
+        v = fn(gaps, t, 1)
+        passing = v < level if below else v > level
+        k = int(np.argmin(passing)) - 1
+        ck(f"mcvittie at ct = {t:.1f} passes {level:g} on one stretch from R = r_s out",
+           k >= 0 and passing[:k + 1].all() and not passing[k + 1:].any())
+        lo, hi = math.log(gaps[k] - 1), math.log(gaps[k + 1] - 1)
+        for _ in range(100):
+            mid = 0.5 * (lo + hi)
+            hit = fn(1 + math.exp(mid), t, 1)
+            lo, hi = (mid, hi) if (hit < level if below else hit > level) else (lo, mid)
+        return math.exp(lo)
+
+    map_top = [reach(K, t, scale["to"]) for t in (1.0, 2.0, 4.0, 7.0)]
+    ck("mcvittie K passes the top of its colours in a layer beside R = r_s that thins as t grows",
+       all(a > b for a, b in zip(map_top, map_top[1:])), f"{map_top}")
+
+    # The apparent horizons on the map, from the inner at ct = 7 r_s to their birth and out along the outer.
+    track = birth + (y1 - birth) * np.linspace(0, 1, 300)[1:] ** 2
+    inner, outer = [], []
+    for t in track:
+        z = horizons(float(t))
+        if len(z) != 2:
+            ck(f"mcvittie two apparent horizons at ct = {t:.5f}", False, f"{z}")
+            break
+        inner.append([z[0], float(t)])
+        outer.append([z[1], float(t)])
+    worst = max(abs(a[0] - b) for pair in zip(inner, outer) for a, b in zip(pair, cubic(pair[0][1])))
+    ck("mcvittie the apparent horizons are the roots of H^2 R^3 - R + 1 = 0", worst < 1e-10, f"worst {worst:.1e}")
+    curve = inner[::-1] + [[1.5, birth]] + outer
+    ck("mcvittie the apparent horizons lie inside the box", all(x0 <= x <= x1 and y0 <= y <= y1 for x, y in curve))
+    # Where g^RR < 0 the ingoing radial ray of the published metric moves to larger R as well.
+    points = [(R, t) for R, t in zip(rng.uniform(1.02, x1, 400), rng.uniform(y0, y1, 400))]
+    agree = True
+    for R, t in points:
+        g_tt, g_tR, g_RR = (float(metric[ij](R, t, 1)) for ij in (("t", "t"), ("t", "R"), ("R", "R")))
+        rays = np.roots([g_RR, 2 * g_tR, g_tt])
+        agree &= bool(np.all(rays.real > 0)) == bool(grr(R, t, 1) < 0)
+    ck("mcvittie wherever g^RR < 0 both radial light rays move to larger R, and only there", agree)
+
+    map_view = {
+        "id": "plane", "label": "the plane of $R$ and $ct$", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,r_s^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "mcvittie", "system": "areal", "scalar": "kretschmann", "x": "R", "y": "t",
+                "params": {"r_s": 1.0}, "functions": dict(F), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [{"class": "horizon", "points": curve}],
+        "legend": [["line", "horizon", "an apparent horizon, $1 - r_s/R - H^2R^2/c^2 = 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of McVittie's mass over the plane of $R$ and $ct$ ($\\Lambda r_s^2 = 1/5$), the "
+            "same at every $\\theta$ and $\\phi$, in a universe of dust and a cosmological constant. Far from the mass $K$ "
+            "tends to the curvature of the universe, $12H^4/c^4 + 12(H^2/c^2 + \\dot{H}/c)^2$, which falls as the universe "
+            f"expands, from ${tex_number(K_u[y0])}/r_s^4$ at $ct = r_s$ to ${tex_number(K_u[y1])}/r_s^4$ at "
+            f"$ct = {y1}\\,r_s$, toward the $8\\Lambda^2/3 = {tex_number(K_late)}/r_s^4$ of de Sitter space. Nearer the "
+            "mass Schwarzschild's $12r_s^2/R^6$ rises above it, and toward the sphere $R = r_s$, the curvature singularity, "
+            "$K$ grows without bound at every moment, as $12\\dot{H}^2/c^2(1 - r_s/R)$, since $\\dot{H} < 0$ at every $t$.",
+            "The apparent horizons, where $1 - r_s/R - H^2R^2/c^2 = 0$, appear together at $R = 1.5\\,r_s$ at "
+            f"$ct = {birth:.2f}\\,r_s$, where $H^2 = 4c^2/27r_s^2$, and part as $H$ falls toward $H_0$. At "
+            f"$ct = {y1}\\,r_s$ they stand at $R = {inner[-1][0]:.3f}\\,r_s$ and ${outer[-1][0]:.3f}\\,r_s$, and as $t$ "
+            f"grows they approach ${sds_horizons[0]:.3f}\\,r_s$ and ${sds_horizons[1]:.3f}\\,r_s$, the horizons of the "
+            "Schwarzschild-de Sitter black hole with the same $r_s$ and $\\Lambda$. Wherever "
+            "$1 - r_s/R - H^2R^2/c^2 < 0$, as at every $R$ before the horizons appear and inside the inner one and outside "
+            "the outer one after, both radial light rays move out to larger $R$.",
+        ],
+        "settings": "$r_s = 1$, the unit of every length and of $ct$.",
+        "input": nr.MCV_INPUT,
+        "clip": ("We colour $K\\,r_s^4$ on a logarithmic scale from $10^{-1}$ to $10^{2}$ and give a value beyond it the "
+                 f"colour of the end it passes: $K$ passes $10^{{2}}/r_s^4$ only within ${tex_number(map_top[0], 2)}\\,r_s$ "
+                 f"of $R = r_s$ at $ct = r_s$, and in a thinner layer later, and is least, ${tex_number(least)}/r_s^4$, at "
+                 f"$R = {x1}\\,r_s$, $ct = {y1}\\,r_s$."),
+    }
+
+    # The movie in ct, over the moments of the embedding movie.
+    frames_t = [float(y0 + MCV_STEP * k) for k in range(int((y1 - y0) / MCV_STEP) + 1)]
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": MCV_K, "ticks": value_ticks(MCV_K)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,r_s^2$", "aspect": 2, "scale": MCV_R, "ticks": value_ticks(MCV_R)}]
+    shape_checks(ck, "mcvittie movie", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    sds_params = {"r_s": 1, "\\Lambda": lam}
+    references = (line_curves(ck, "mcvittie Schwarzschild-de Sitter", "K", "reference", K_s, "r", x_axis, MCV_K,
+                              height["K"], sds_params)
+                  + line_curves(ck, "mcvittie Schwarzschild-de Sitter", "R", "reference", R_s, "r", x_axis, MCV_R,
+                                height["R"], sds_params))
+    for fn, sc in ((K_s, MCV_K), (R_s, MCV_R)):
+        up, down = beyond(fn, x_axis, sc, [1, lam])
+        ck("mcvittie Schwarzschild-de Sitter's scalars stay inside their panels", not up and not down, f"{up} {down}")
+    frames, counts, zeros_R = [], [], []
+    for t in frames_t:
+        name = f"mcvittie at ct = {t:.1f}"
+        Kt, Rt, gt = Held(K, {"t": t}), Held(ricci, {"t": t}), Held(grr, {"t": t})
+        curves = (line_curves(ck, name, "K", "K", Kt, "R", x_axis, MCV_K, height["K"], {"r_s": 1})
+                  + line_curves(ck, name, "R", "R", Rt, "R", x_axis, MCV_R, height["R"], {"r_s": 1}))
+        marks = [{"class": "horizon", "x": x} for x in zeros(ck, f"{name} apparent horizons", gt, x0, x1, [1])]
+        ck(f"{name} the horizons marked are the roots of H^2 R^3 - R + 1 = 0",
+           len(marks) == len(cubic(t)) and all(abs(m["x"] - z) < 1e-10 for m, z in zip(marks, cubic(t))))
+        counts.append(len(marks))
+        root = ricci_root(t)
+        signs = ricci(gaps, t, 1)
+        ck(f"{name} R is negative inside its one zero, R = r_s/(1 - (9/16) sech^4(3 H_0 t/2)), and positive outside",
+           root is not None and abs(root / ricci_zero(t) - 1) < 1e-12
+           and np.all(signs[gaps < root * (1 - 1e-9)] < 0) and np.all(signs[gaps > root * (1 + 1e-9)] > 0),
+           f"{root}")
+        zeros_R.append(root)
+        # Every frame's number has one decimal, so that MfsTurn.steady() pads none of them with a
+        # phantom ".0" and no gap opens between the number and r_s.
+        frames.append({"label": f"$ct = {t:.1f}\\,r_s$", "value": t, "curves": curves, "marks": marks})
+    ck("mcvittie no apparent horizon before their birth and two at every frame after it",
+       all(n == (2 if t > birth else 0) for n, t in zip(counts, frames_t)), f"{counts}")
+    pairs = [f["marks"] for f in frames if len(f["marks"]) == 2]
+    ck("mcvittie the inner apparent horizon falls and the outer rises frame by frame, toward Schwarzschild-de Sitter's",
+       all(b[0]["x"] < a[0]["x"] and b[1]["x"] > a[1]["x"] for a, b in zip(pairs, pairs[1:]))
+       and pairs[-1][0]["x"] > sds_horizons[0] and pairs[-1][1]["x"] < sds_horizons[1]
+       and all(abs(z - w) < 1e-6 for z, w in zip(cubic(200.0), sds_horizons)))
+    ck("mcvittie the layer where R is negative thins frame by frame", all(b < a for a, b in zip(zeros_R, zeros_R[1:])))
+    last = frames_t[-1]
+    out = np.linspace(MCV_NEAR, x1, SAMPLES)
+    near_K = float(np.max(np.abs(K(out, last, 1) / K_s(out, 1, lam) - 1)))
+    near_R = float(np.max(np.abs(ricci(out, last, 1) / R_s(out, 1, lam) - 1)))
+    near = math.ceil(100 * max(near_K, near_R))
+    ck("mcvittie at the last frame both scalars are within the percent stated of Schwarzschild-de Sitter's outside 1.1 r_s",
+       max(near_K, near_R) < near / 100, f"K {100 * near_K:.3f}, R {100 * near_R:.3f} percent")
+    apart = [max(float(np.max(np.abs(K(out, t, 1) / K_s(out, 1, lam) - 1))),
+                 float(np.max(np.abs(ricci(out, t, 1) / R_s(out, 1, lam) - 1)))) for t in frames_t]
+    ck("mcvittie both scalars approach Schwarzschild-de Sitter's outside 1.1 r_s frame by frame",
+       all(b < a for a, b in zip(apart, apart[1:])), f"{apart[0]:.4f} to {apart[-1]:.4f}")
+    tops = [reach(K, t, MCV_K["to"]) for t in frames_t]
+    bottoms = [reach(ricci, t, MCV_R["from"], below=True) for t in frames_t]
+    ck("mcvittie the layers where K passes the top and R the bottom thin frame by frame",
+       all(b < a for a, b in zip(tops, tops[1:])) and all(b < a for a, b in zip(bottoms, bottoms[1:])))
+    whole = np.linspace(x0, x1, SAMPLES)[1:]
+    ck("mcvittie K never passes the bottom of its panel nor R the top",
+       all(np.all(K(whole, t, 1) > MCV_K["from"]) and np.all(ricci(whole, t, 1) < MCV_R["to"]) for t in frames_t))
+    movie_view = {
+        "id": "expanding", "label": "$r_s \\le ct \\le 7\\,r_s$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": references, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"],
+                   ["line", "reference", "Schwarzschild-de Sitter's black hole with the same $r_s$ and $\\Lambda$"],
+                   ["line", "horizon", "an apparent horizon, where $g^{RR} = 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of McVittie's mass against $R$ as the "
+            f"universe expands ($r_s \\le ct \\le {y1}\\,r_s$), beside the Schwarzschild-de Sitter black hole with the same "
+            "$r_s$ and $\\Lambda$. Far from the mass $R^\\mu{}_\\mu$ tends to that of the universe, "
+            f"$12H^2/c^2 + 6\\dot{{H}}/c$, which falls from ${tex_number(R_u[y0])}/r_s^2$ at $ct = r_s$ to "
+            f"${tex_number(R_u[y1])}/r_s^2$ at $ct = {y1}\\,r_s$. As $H$ falls toward $H_0$ and $\\dot{{H}}$ rises toward "
+            "zero, both scalars approach Schwarzschild-de Sitter's, $K = 12r_s^2/R^6 + 8\\Lambda^2/3$ and "
+            f"$R^\\mu{{}}_\\mu = 4\\Lambda$, and at $ct = {y1}\\,r_s$ each is within ${near}$ percent of them outside "
+            f"$R = {MCV_NEAR}\\,r_s$.",
+            "Toward the sphere $R = r_s$, $R^\\mu{}_\\mu$ falls without bound at every moment, as "
+            "$6\\dot{H}/c\\sqrt{1 - r_s/R}$, where the pressure of the fluid grows without bound, and $K$ grows as "
+            "$(R^\\mu{}_\\mu)^2/3$. $R^\\mu{}_\\mu$ is negative in a layer about that sphere which thins as "
+            f"$|\\dot{{H}}|$ falls: inside $R = {zeros_R[0]:.2f}\\,r_s$ at $ct = r_s$, and within "
+            f"${tex_number(zeros_R[-1] - 1, 2)}\\,r_s$ of $R = r_s$ at $ct = {y1}\\,r_s$.",
+        ],
+        "settings": f"$r_s = 1$, the unit of every length and of $ct$, and $ct$ in steps of $r_s/{int(1 / MCV_STEP)}$.",
+        "input": nr.MCV_INPUT,
+        "clip": ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-2}$ to $10^{3}$ and $R^\\mu{}_\\mu\\,r_s^2$ on a "
+                 "signed logarithmic scale, linear within $0.1$ of zero, from $-10$ to $10$, the same in every frame, and "
+                 f"cut each curve where it leaves its panel: $K$ passes the top within ${tex_number(tops[0], 2)}\\,r_s$ of "
+                 f"$R = r_s$ at $ct = r_s$ and within ${tex_number(tops[-1], 2)}\\,r_s$ at $ct = {y1}\\,r_s$, and "
+                 f"$R^\\mu{{}}_\\mu$ passes the bottom within ${tex_number(bottoms[0], 2)}\\,r_s$ and "
+                 f"${tex_number(bottoms[-1], 2)}\\,r_s$. Neither passes the other end of its panel."),
+        "movie": {"variable": "$ct$", "seconds": 5, "frames": frames},
+    }
+    return [map_view, movie_view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -5993,6 +6355,7 @@ DRAWN = {
     "kerr_newman": kerr_newman,
     "kerr_taub_nut": kerr_taub_nut,
     "kiselev": kiselev,
+    "mcvittie": mcvittie,
 }
 
 
