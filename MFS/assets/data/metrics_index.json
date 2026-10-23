@@ -1499,7 +1499,8 @@
     "version": "051f378ac3ef121e",
     "diagrams": "dd0f4a73eb933b73",
     "conformal": "7807b351c1311ade",
-    "embedding": "ab81073436048cb9"
+    "embedding": "ab81073436048cb9",
+    "curvature": "b1f87db5587b067b"
   },
   {
     "id": "einstein_static",

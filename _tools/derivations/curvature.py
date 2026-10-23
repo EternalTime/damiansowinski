@@ -2804,6 +2804,275 @@ def damour_solodukhin(ck, src):
     return [still, movie_view]
 
 
+# ---------------------------------------------------------------- Einstein's cluster
+
+EC_SPEED = Fraction(1, 2)         # V, the speed of the particles of Einstein's own cluster, as every drawing takes it
+EC_RADIUS = 3                     # R in units of r_s, the radius of both clusters with a surface, as every drawing takes it
+EC_REACH = 9                      # the plot runs from the centre to r = 3R
+EC_K = (1e-5, 1e2)                # the axis of K r_s^4 on every view
+EC_R = (1e-4, 1e1)                # the axis of R^mu_mu r_s^2 on every view
+EC_CENTRE = 1e-6                  # the areal chart's scalars are 0/0 at r = 0, so its curves start here, under a pixel out
+
+
+def einstein_cluster(ck, src):
+    """Einstein's cluster at r_s = 1, its Kretschmann and Ricci scalars against the areal radius r,
+    for the three clusters its other drawings take: Einstein's own of constant speed at V = 1/2 and
+    R = 3 r_s, Florides's of uniform density of the same mass and radius, and the cluster with no
+    surface of the areal chart, at the core radius b = 2 r_s declared as null_rays.EC_CORE.
+
+    Every chart is static and spherical, so both scalars depend on the radius alone and each
+    view is a line view; a map over r and an angle would be the same colour along every circle.
+    The isotropic and hyperspherical charts are the first two clusters in another radius, so the
+    clusters are drawn once, against the areal radius, in the constant_speed, uniform, and areal
+    charts, and each view belongs to every chart, as the embedding diagram's three views do.
+    Two panels share the axis of r from 0 to 3R: K on a logarithmic axis from 10^-5 to 10^2 and
+    R, written R^mu_mu since R is the cluster's radius, on a logarithmic one from 10^-4 to 10,
+    since it is positive inside every cluster and vanishes outside one. The clusters with a
+    surface are drawn from the centre to the surface, where their charts end, and Schwarzschild's
+    scalars of the same mass, read from schwarzschild.json, from the surface out, in the same
+    classes, since that vacuum is their exterior; its R vanishes, so the R panel has no curve
+    there. Each of the two is dashed beside the other inside the surface, and the cluster with no
+    surface is drawn across the whole axis with Schwarzschild's K of the same mass dashed.
+
+    What the captions state is checked here: g^rr is positive on every stretch drawn, so no
+    horizon is marked; r_s = 2V^2R/(1 + 2V^2) is 1; the density and the pressure along the
+    circles are read from the published Einstein tensor, G^t_t = -8 pi G rho/c^2 and G^theta_theta
+    8 pi G/c^4 times p_perp, the pressure along the radius vanishing in every chart, and the
+    published R is 8 pi G(rho c^2 - 2 p_perp)/c^4, minus the trace; Einstein's cluster has
+    K = 35/48r^4, R = 1/4r^2, a density growing as 1/r^2 and p_perp = rho c^2 V^2/2; Florides's
+    has a uniform density, K rising from 15 r_s^2/R^6 at the centre to the value stated at the
+    surface and R falling from 3 r_s/R^3 to 3 r_s(2R - 3r_s)/(2R^3(R - r_s)); Schwarzschild's
+    K = 12 r_s^2/R^6 at the surface and the jump of each scalar there; the cluster with no
+    surface has K and R falling from the centre outward, below Schwarzschild's K at every r
+    drawn, approaching it far out, and R falling off as 3 r_s b^2/r^5; at each regular centre
+    p_perp vanishes and K = 5 R^2/3; and the clip stated is where each curve leaves its panel."""
+    x_axis = axis("$r/r_s$", 0, EC_REACH)
+    K_scale = {"kind": "log", "from": EC_K[0], "to": EC_K[1]}
+    R_scale = {"kind": "log", "from": EC_R[0], "to": EC_R[1]}
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,r_s^2$", "aspect": 2, "scale": R_scale,
+               "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "einstein_cluster", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    V, R0, b = float(EC_SPEED), float(EC_RADIUS), 2.0
+    speed = {"V": V, "R": R0}
+    uniform = {"r_s": 1, "R": R0}
+    core = {"Phi": nr.EC_CORE}
+
+    def chart(system, params, functions=None):
+        """The published K, R, g^rr, G^t_t and G^theta_theta of one chart, each a function of r."""
+        names = list(params)
+        out = {field: nr_published(src, "einstein_cluster", system, field, ["r"], names, functions=functions)
+               for field in ("kretschmann", "ricci_scalar")}
+        out["grr"] = nr_published(src, "einstein_cluster", system, "inverse_metric_components", ["r"], names,
+                                  ("r", "r"), functions)
+        for i in ("t", "\\theta"):
+            out[i] = nr_published(src, "einstein_cluster", system, "einstein_tensor", ["r"], names, (i, i), functions)
+        return out
+
+    S, U, C = chart("constant_speed", speed), chart("uniform", uniform), chart("areal", {}, core)
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    grr_s = nr_published(src, "schwarzschild", "spherical", "inverse_metric_components", ["r"], ["r_s"], ("r", "r"))
+    at = {"constant_speed": [V, R0], "uniform": [1, R0], "areal": []}
+
+    for system in ("constant_speed", "uniform", "areal"):
+        _, entry, _ = nr.load("einstein_cluster", system)
+        listed = [c["indices"] for c in entry["einstein_tensor"]["variants"]["ul"]["nonzero"]]
+        ck(f"einstein_cluster {system} has no pressure along the radius", ["r", "r"] not in listed, f"{listed}")
+    ck("einstein_cluster the cluster of constant speed has r_s = 2V^2R/(1 + 2V^2) = 1",
+       2 * EC_SPEED ** 2 * EC_RADIUS / (1 + 2 * EC_SPEED ** 2) == 1)
+
+    inside, outside, whole = (0.0, R0), (R0, float(EC_REACH)), (EC_CENTRE, float(EC_REACH))
+    rs_in, rs_out = np.linspace(*inside, SAMPLES), np.linspace(*outside, SAMPLES)
+    ck("einstein_cluster has no horizon inside either cluster with a surface",
+       np.all(S["grr"](rs_in, *at["constant_speed"]) > 0) and np.all(U["grr"](rs_in, *at["uniform"]) > 0))
+    ck("einstein_cluster has no horizon outside the surface", np.all(grr_s(rs_out, 1) > 0))
+    ck("einstein_cluster has no horizon in the cluster with no surface",
+       np.all(C["grr"](np.linspace(*whole, SAMPLES)) > 0))
+
+    def scalars(name, fns, system, params, cls, within, functions=None):
+        """The K and R a chart draws over `within`, in the classes K and R or both as `reference`."""
+        published = {"K": fns["kretschmann"], "R": fns["ricci_scalar"]}
+        return [curve for panel, scale in (("K", K_scale), ("R", R_scale))
+                for curve in line_curves(ck, f"{name} {panel}", panel, cls if cls == "reference" else panel,
+                                         published[panel], "r", x_axis, scale, height[panel], params, within)]
+
+    def vacuum(name):
+        """Schwarzschild's K of the same mass from the surface to the edge of the plot; its R vanishes."""
+        return line_curves(ck, f"{name} outside", "K", "K", K_s, "r", x_axis, K_scale, height["K"], {"r_s": 1},
+                           outside)
+
+    def cut(name, fn, params, within, scale):
+        """The radius inside which a curve passes the top of its panel, found by bisection to the last
+        digit, or None where it stays inside; a curve that passes the bottom, or the top anywhere but
+        about the centre, fails the check."""
+        up, down = beyond(fn, x_axis, scale, params, within)
+        ck(f"einstein_cluster {name} leaves its panel about the centre alone",
+           not down and (not up or (len(up) == 1 and up[0][0] == within[0])), f"{up} {down}")
+        if not up:
+            return None
+        top = scale["to"]
+        return crossing(lambda r: float(fn(r, *params)) - top, up[0][1], up[0][1] + (within[1] - within[0]) / (SAMPLES - 1))
+
+    def exact(fn, system, r):
+        return float(fn.exact([r] + at[system]))
+
+    # Einstein's own cluster, of constant speed.
+    rho_S = [-exact(S["t"], "constant_speed", r) for r in (0.1, 1, R0)]
+    ck("einstein_cluster the density of the cluster of constant speed grows as 1/r^2",
+       all(abs(rho * r ** 2 * 3 - 1) < 1e-12 for rho, r in zip(rho_S, (0.1, 1, R0))), f"{rho_S}")
+    ck("einstein_cluster the pressure along the circles is rho c^2 V^2/2 in the cluster of constant speed",
+       all(abs(exact(S["\\theta"], "constant_speed", r) / -exact(S["t"], "constant_speed", r) - V ** 2 / 2) < 1e-12
+           for r in (0.1, 1, R0)))
+    ck("einstein_cluster K of the cluster of constant speed is 35/48r^4 and R is 1/4r^2",
+       all(abs(exact(S["kretschmann"], "constant_speed", r) * r ** 4 * 48 / 35 - 1) < 1e-12
+           and abs(exact(S["ricci_scalar"], "constant_speed", r) * r ** 2 * 4 - 1) < 1e-12 for r in (0.01, 0.5, 2, R0)))
+    surface_S = exact(S["kretschmann"], "constant_speed", R0)
+    vacuum_K = float(K_s.exact([R0, 1]))
+    ck("einstein_cluster Schwarzschild's K at the surface is 12 r_s^2/R^6", abs(vacuum_K * R0 ** 6 / 12 - 1) < 1e-12)
+    ck("einstein_cluster K of the cluster of constant speed jumps up at the surface", surface_S < vacuum_K,
+       f"{surface_S:.6f} to {vacuum_K:.6f}")
+
+    # Florides's cluster, of uniform density.
+    rho_U = -exact(U["t"], "uniform", 0)
+    ck("einstein_cluster the density of the cluster of uniform density is 3 r_s/R^3 throughout",
+       abs(rho_U * R0 ** 3 / 3 - 1) < 1e-12
+       and np.allclose(-U["t"](rs_in, *at["uniform"]), rho_U, rtol=1e-13, atol=0), f"{rho_U}")
+    centre_KU, centre_RU = exact(U["kretschmann"], "uniform", 0), exact(U["ricci_scalar"], "uniform", 0)
+    surface_KU, surface_RU = exact(U["kretschmann"], "uniform", R0), exact(U["ricci_scalar"], "uniform", R0)
+    ck("einstein_cluster K at the centre of the cluster of uniform density is 15 r_s^2/R^6",
+       abs(centre_KU * R0 ** 6 / 15 - 1) < 1e-12, f"{centre_KU}")
+    ck("einstein_cluster R at the centre of the cluster of uniform density is 3 r_s/R^3",
+       abs(centre_RU * R0 ** 3 / 3 - 1) < 1e-12, f"{centre_RU}")
+    ck("einstein_cluster R at the surface of the cluster of uniform density is 3 r_s(2R - 3r_s)/(2R^3(R - r_s))",
+       abs(surface_RU / (3 * (2 * R0 - 3) / (2 * R0 ** 3 * (R0 - 1))) - 1) < 1e-12, f"{surface_RU}")
+    ck("einstein_cluster K rises and R falls from the centre of the cluster of uniform density to its surface",
+       np.all(np.diff(U["kretschmann"](rs_in, *at["uniform"])) > 0)
+       and np.all(np.diff(U["ricci_scalar"](rs_in, *at["uniform"])) < 0))
+    ck("einstein_cluster K of the cluster of uniform density jumps down at the surface", surface_KU > vacuum_K,
+       f"{surface_KU:.6f} to {vacuum_K:.6f}")
+
+    # The cluster with no surface.
+    centre_KC, centre_RC = float(C["kretschmann"].exact([1e-20])), float(C["ricci_scalar"].exact([1e-20]))
+    ck("einstein_cluster K at the centre of the cluster with no surface is 15/16r_s^4",
+       abs(centre_KC * 16 / 15 - 1) < 1e-12, f"{centre_KC}")
+    ck("einstein_cluster R at the centre of the cluster with no surface is 3/4r_s^2",
+       abs(centre_RC * 4 / 3 - 1) < 1e-12, f"{centre_RC}")
+    rs_whole = np.linspace(*whole, SAMPLES)
+    ck("einstein_cluster K and R of the cluster with no surface fall from the centre outward",
+       np.all(np.diff(C["kretschmann"](rs_whole)) < 0) and np.all(np.diff(C["ricci_scalar"](rs_whole)) < 0))
+    ck("einstein_cluster K of the cluster with no surface lies below Schwarzschild's at every r drawn",
+       np.all(C["kretschmann"](rs_whole) < K_s(rs_whole, 1)))
+    ratio_edge = float(C["kretschmann"].exact([float(EC_REACH)])) / float(K_s.exact([float(EC_REACH), 1]))
+    far = [float(C["kretschmann"].exact([r])) / float(K_s.exact([r, 1])) for r in (1e2, 1e3, 1e4)]
+    ck("einstein_cluster K of the cluster with no surface approaches Schwarzschild's far out",
+       abs(far[2] - 1) < 1e-6 and abs(far[2] - 1) < abs(far[1] - 1) < abs(far[0] - 1), f"{far}")
+    tail = [float(C["ricci_scalar"].exact([r])) * r ** 5 / (3 * b ** 2) for r in (1e2, 1e3, 1e4, 1e5, 1e6)]
+    ck("einstein_cluster R of the cluster with no surface falls off as 3 r_s b^2/r^5",
+       abs(tail[-1] - 1) < 1e-5 and all(abs(c - 1) < abs(a - 1) for a, c in zip(tail, tail[1:])), f"{tail}")
+
+    # At each regular centre the pressure vanishes and the Weyl tensor with it, so K = 5 R^2/3.
+    ck("einstein_cluster the pressure along the circles vanishes at each regular centre",
+       abs(exact(U["\\theta"], "uniform", 0)) < 1e-30 and abs(float(C["\\theta"].exact([1e-20]))) < 1e-30)
+    ck("einstein_cluster K = 5 R^2/3 at each regular centre",
+       abs(centre_KU / (5 * centre_RU ** 2 / 3) - 1) < 1e-12 and abs(centre_KC / (5 * centre_RC ** 2 / 3) - 1) < 1e-12)
+
+    for fns, system, params, within in ((S, "constant_speed", speed, inside), (U, "uniform", uniform, inside),
+                                        (C, "areal", {}, whole)):
+        for name, fn in (("kretschmann", fns["kretschmann"]), ("ricci_scalar", fns["ricci_scalar"])):
+            ck(f"einstein_cluster {system} {name} is positive on the stretch drawn",
+               np.all(fn(np.linspace(within[0] + 1e-9, within[1], SAMPLES), *at[system]) > 0))
+    top_KS = cut("constant speed K", S["kretschmann"], at["constant_speed"], inside, K_scale)
+    top_RS = cut("constant speed R", S["ricci_scalar"], at["constant_speed"], inside, R_scale)
+    top_Ks = cut("Schwarzschild K", K_s, [1], (0.0, float(EC_REACH)), K_scale)
+    ck("einstein_cluster the curves of constant speed and Schwarzschild's K pass the top at "
+       "(35/4800)^(1/4), 1/sqrt 40, and (12/100)^(1/6)",
+       top_KS is not None and top_RS is not None and top_Ks is not None
+       and abs(top_KS / (35 / 4800) ** 0.25 - 1) < 1e-12 and abs(top_RS * math.sqrt(40) - 1) < 1e-12
+       and abs(top_Ks / 0.12 ** (1 / 6) - 1) < 1e-12, f"{top_KS} {top_RS} {top_Ks}")
+    for fns, system, within in ((U, "uniform", inside), (C, "areal", whole)):
+        for name, scale in (("kretschmann", K_scale), ("ricci_scalar", R_scale)):
+            ck(f"einstein_cluster {system} {name} stays inside its panel",
+               cut(f"{system} {name}", fns[name], at[system], within, scale) is None)
+    ck("einstein_cluster Schwarzschild's K outside the surface stays inside its panel",
+       cut("Schwarzschild K outside", K_s, [1], outside, K_scale) is None)
+
+    K_clip = (f"We draw $K\\,r_s^4$ on a logarithmic scale from $10^{{{round(math.log10(EC_K[0]))}}}$ to "
+              f"$10^{{{round(math.log10(EC_K[1]))}}}$ and $R^\\mu{{}}_\\mu\\,r_s^2$ on one from "
+              f"$10^{{{round(math.log10(EC_R[0]))}}}$ to ${EC_R[1]:g}$")
+    own = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]]
+    settings = "$r_s = 1$, the unit of every length, $V = 1/2$, and $R = 3\\,r_s$."
+    speed_view = {
+        "id": "speed", "label": "Constant speed", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": (scalars("einstein_cluster uniform beside", U, "uniform", uniform, "reference", inside)
+                   + scalars("einstein_cluster constant speed", S, "constant_speed", speed, "own", inside)
+                   + vacuum("einstein_cluster constant speed")),
+        "marks": [], "legend": own + [["line", "reference", "Florides's cluster of uniform density, of the same mass "
+                                                            "and radius"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Einstein's cluster of constant speed "
+            "against $r$ ($V = 1/2$, $R = 3\\,r_s$), the same at every $t$, $\\theta$, and $\\phi$, inside the cluster "
+            "and in Schwarzschild's vacuum outside it, beside Florides's cluster of uniform density of the same mass "
+            "and radius. Inside, $K = 35/(48r^4)$, which grows without bound toward the centre, where the density "
+            "grows as $1/r^2$, and is "
+            f"${surface_S:#.3g}/r_s^4$ at the surface. Outside it is Schwarzschild's $12r_s^2/r^6$, which is "
+            f"${vacuum_K:#.3g}/r_s^4$ at $r = R$.",
+            "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - 2p_\\perp)/c^4$, with no pressure along the "
+            "radius and the pressure $p_\\perp = \\rho c^2V^2/2$ along the circles of the particles, so "
+            f"$R^\\mu{{}}_\\mu = 1/(4r^2)$ inside, which is ${1 / (4 * R0 ** 2):#.3g}/r_s^2$ at the surface. Outside it "
+            "vanishes. Both scalars jump at the surface, where the density falls to zero.",
+        ],
+        "settings": settings,
+        "clip": (K_clip + ", and cut each curve where it leaves its panel, as $K$ does inside "
+                 f"$r = {top_KS:.3f}\\,r_s$ and $R^\\mu{{}}_\\mu$ inside $r = {top_RS:.3f}\\,r_s$."),
+    }
+    uniform_view = {
+        "id": "uniform", "label": "Uniform density", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": (scalars("einstein_cluster constant speed beside", S, "constant_speed", speed, "reference", inside)
+                   + scalars("einstein_cluster uniform", U, "uniform", uniform, "own", inside)
+                   + vacuum("einstein_cluster uniform")),
+        "marks": [], "legend": own + [["line", "reference", "Einstein's cluster of constant speed, of the same mass "
+                                                            "and radius"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Florides's cluster of uniform density "
+            "against $r$ ($R = 3\\,r_s$), the same at every $t$, $\\theta$, and $\\phi$, inside the cluster and in "
+            "Schwarzschild's vacuum outside it, beside Einstein's cluster of constant speed of the same mass and "
+            "radius. Inside, $K$ rises from "
+            f"$15r_s^2/R^6 = {centre_KU:#.3g}/r_s^4$ at the centre to ${surface_KU:#.3g}/r_s^4$ at the surface. Outside "
+            f"it is Schwarzschild's $12r_s^2/r^6$, which is ${vacuum_K:#.3g}/r_s^4$ at $r = R$.",
+            "The Ricci scalar is $R^\\mu{}_\\mu = 8\\pi G(\\rho c^2 - 2p_\\perp)/c^4$, with no pressure along the "
+            "radius and the pressure $p_\\perp$ along the circles of the particles. It falls from "
+            f"$3r_s/R^3 = {centre_RU:#.3g}/r_s^2$ at the centre, where $p_\\perp = 0$ and "
+            f"$K = 5(R^\\mu{{}}_\\mu)^2/3$, to ${surface_RU:#.3g}/r_s^2$ at the surface. Outside it vanishes. Both "
+            "scalars jump at the surface, where the density falls to zero.",
+        ],
+        "settings": "$r_s = 1$, the unit of every length, and $R = 3\\,r_s$.",
+        "clip": (K_clip + ", and cut each curve where it leaves its panel, as the $K$ of Einstein's cluster does "
+                 f"inside $r = {top_KS:.3f}\\,r_s$ and its $R^\\mu{{}}_\\mu$ inside $r = {top_RS:.3f}\\,r_s$."),
+    }
+    core_view = {
+        "id": "core", "label": "No surface", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": (line_curves(ck, "einstein_cluster Schwarzschild beside", "K", "reference", K_s, "r", x_axis,
+                               K_scale, height["K"], {"r_s": 1})
+                   + scalars("einstein_cluster no surface", C, "areal", {}, "own", whole)),
+        "marks": [], "legend": own + [["line", "reference", "Schwarzschild's $K$ for the same mass"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of a cluster with no surface against $r$ "
+            "($b = 2\\,r_s$), the same at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's $K$ for the same "
+            "mass. Both fall from the centre outward with no jump, and $K$ lies below Schwarzschild's $12r_s^2/r^6$ "
+            f"at every $r$, ${ratio_edge:.2f}$ of it at $r = 9\\,r_s$, and approaches it far out.",
+            "At the centre the pressure $p_\\perp$ along the circles of the particles vanishes, as it does at the "
+            "centre of Florides's cluster, and $R^\\mu{}_\\mu = 3/(4r_s^2)$ and $K = 5(R^\\mu{}_\\mu)^2/3 = 15/(16r_s^4)$. "
+            "Far out $R^\\mu{}_\\mu$ falls off as $3r_sb^2/r^5$.",
+        ],
+        "settings": "$r_s = 1$, the unit of every length, and $b = 2\\,r_s$.",
+        "input": nr.EC_CORE_INPUT,
+        "clip": (K_clip + ", and cut each curve where it leaves its panel, as Schwarzschild's $K$ does inside "
+                 f"$r = {top_Ks:.3f}\\,r_s$."),
+    }
+    return [speed_view, uniform_view, core_view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -2818,6 +3087,7 @@ DRAWN = {
     "c_metric": c_metric,
     "curzon_chazy": curzon_chazy,
     "damour_solodukhin": damour_solodukhin,
+    "einstein_cluster": einstein_cluster,
 }
 
 
