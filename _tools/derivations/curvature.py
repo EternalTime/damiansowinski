@@ -9492,6 +9492,239 @@ def topological_star(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Vaidya's radiating star
+
+VAIDYA_RAMP = 2                   # the dust arrives, or leaves, over 0 <= cv <= 2 r_s, at r_s = 1
+VAIDYA_BOX = ((0, 3), (-1.5, 2.5))   # r/r_s and cv/r_s: flat space, the shell and the black hole it leaves
+VAIDYA_CELLS = (150, 200)         # the cells of the map across and up, each a fiftieth of r_s on a side
+VAIDYA_SCALE = {"kind": "symlog", "from": 0.0, "to": 1e5, "linear": 1e-3}   # the colours of K r_s^4
+# The shell of the spacetime diagrams, of mass M at G = 1 and r_s = 2GM/c^2 = 1, spread over a
+# time 2 r_s/c: in the ingoing chart the dust falls in at the steady rate dm/dv = M/(2 r_s), and in
+# the outgoing chart, its time reverse, it leaves at that rate.
+VAIDYA_FUNCTIONS = {
+    "eddington_finkelstein_ingoing": {"m": "Piecewise((0, v < 0), (v/4, v < 2), (Rational(1, 2), True))"},
+    "eddington_finkelstein_outgoing": {"m": "Piecewise((Rational(1, 2), u < 0), ((2 - u)/4, u < 2), (0, True))"},
+}
+# The same profiles on the stretch where the dust flows, for the light rays traced across it.
+VAIDYA_FLOWING = {"eddington_finkelstein_ingoing": {"m": "v/4"},
+                  "eddington_finkelstein_outgoing": {"m": "(2 - u)/4"}}
+
+
+def vaidya(ck, src):
+    """Vaidya's radiating star at G = 1 and r_s = 2GM/c^2 = 1, its Kretschmann scalar over the plane
+    of each chart's time and r, as a shell of null dust of mass M falls in, and as it leaves.
+
+    Each chart publishes K = 48G^2m^2/c^4r^6 in r and the free function m of its own time. The
+    spacetime diagrams' shell, of mass M along v = 0, would leave K zero on one side and
+    Schwarzschild's on the other, so the figure spreads that mass over 0 <= cv <= 2 r_s: in the
+    ingoing chart m = 0 before, M cv/2r_s while the dust falls in and M after, and in the outgoing
+    chart its time reverse, m = M before, M(1 - cu/2r_s) while the dust leaves and 0 after. Each map
+    runs over 0 <= r <= 3 r_s and four r_s of its time, the outgoing box the ingoing one reversed,
+    in 150 cells across and 200 up, each a fiftieth of r_s on a side, coloured on a signed
+    logarithmic scale, linear within 10^-3 of zero, from 0 to 10^5 in units of 1/r_s^4, since K
+    vanishes in flat space, with the marginally trapped or anti-trapped sphere, the zero of the
+    published g^rr at each moment, marked as one curve. The published Ricci scalar vanishes, so the
+    figure is K alone, and K at each moment is Schwarzschild's of that moment's mass, one power of r
+    scaled by m^2, so a movie of its profile would slide one line along a logarithmic axis, which
+    the map's colours show; the figure has none.
+
+    What the captions state is checked here: the published Ricci scalar vanishes in both charts; K
+    at every cell is 48m^2/r^6 at that moment's m, zero in flat space and Schwarzschild's 12/r^6
+    where the mass is M; it grows with v at every r while the dust falls in and falls with u while
+    it leaves; the outgoing map is the ingoing one reversed in time, cell for cell; the declared m
+    runs from 0 to M, or from M to 0, at the rate M/2r_s; the zeros of the published g^rr are
+    r = 2m, one at every moment the mass is above zero and none after, with g^rr < 0 inside, so
+    that every future light cone there points to smaller r in the ingoing chart and to larger r in
+    the outgoing one; K on that sphere is 3/4m^4 and 12/r_s^4 at m = M; the event horizon, the
+    outgoing light ray of the published metric that reaches r_s as the last dust does, leaves the
+    centre in flat space at the moment stated and lies outside the trapped sphere while the dust
+    falls, and the white hole's horizon, the ingoing ray that leaves r_s as the first dust does,
+    reaches the centre at the moment stated, the same moment reversed; and the clip stated is where
+    K leaves the colours, on a grid four times as fine."""
+    IN, OUT = "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"
+    W = VAIDYA_RAMP
+    (r0, r1), (v0, v1) = VAIDYA_BOX
+    u0, u1 = W - v1, W - v0
+    nx, ny = VAIDYA_CELLS
+    scale = VAIDYA_SCALE
+    boxes = {IN: (axis("$r/r_s$", r0, r1), axis("$cv/r_s$", v0, v1)),
+             OUT: (axis("$r/r_s$", r0, r1), axis("$cu/r_s$", u0, u1))}
+    times = {IN: "v", OUT: "u"}
+    params = {"G": 1.0}
+
+    def read(system, field, indices=None, functions=None):
+        return nr_published(src, "vaidya", system, field, ["r", times[system]], list(params), indices,
+                            VAIDYA_FUNCTIONS[system] if functions is None else functions)
+
+    def mass(system, t):
+        t = np.asarray(t, dtype=float)
+        if system == IN:
+            return np.where(t < 0, 0.0, np.where(t < W, t / (2 * W), 0.5))
+        return np.where(t < 0, 0.5, np.where(t < W, (W - t) / (2 * W), 0.0))
+
+    def light_ray(system):
+        """The light ray of the published metric that stands at r_s where the dust stops falling in,
+        traced back to where the dust starts, in the ingoing chart, and the one that stands at r_s
+        where the dust starts to leave, traced on to where the last of it has left, in the outgoing
+        chart: dr/dt = -g_tt/2g_tr, in thirty digits, across the stretch where the dust flows."""
+        t = times[system]
+        g_tt = read(system, "metric_components", (t, t), VAIDYA_FLOWING[system])
+        g_tr = read(system, "metric_components", (t, "r"), VAIDYA_FLOWING[system])
+        slope = sp.lambdify(g_tt.coords + g_tt.params, -g_tt.expr / (2 * g_tr.expr), "mpmath")
+        with mpmath.workdps(30):
+            if system == IN:
+                ray = mpmath.odefun(lambda s, r: -slope(r, W - s, 1), 0, mpmath.mpf(1))
+            else:
+                ray = mpmath.odefun(lambda s, r: slope(r, s, 1), 0, mpmath.mpf(1))
+            return ray, float(ray(W))
+
+    views, cells_of, rays = {}, {}, {}
+    for system in (IN, OUT):
+        x_axis, y_axis = boxes[system]
+        aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+        shape_checks(ck, f"vaidya {system}", [aspect])
+        ricci = read(system, "ricci_scalar")
+        ck(f"vaidya {system} the published Ricci scalar vanishes", ricci.expr == 0, f"{ricci.expr}")
+        K, grr = read(system, "kretschmann"), read(system, "inverse_metric_components", ("r", "r"))
+        ts = np.linspace(y_axis["from"], y_axis["to"], SAMPLES)
+        ms = mass(system, ts)
+        ck(f"vaidya {system} the declared m against its closed form",
+           np.allclose(K(1.0, ts, 1.0), 48 * ms ** 2, rtol=1e-14, atol=0))
+        rate = np.diff(mass(system, [0.5, 1.5])) / 1.0
+        ck(f"vaidya {system} the mass runs between 0 and M at the rate M/2r_s, over 0 <= ct <= 2r_s",
+           float(mass(system, -1e3)) + float(mass(system, 1e3)) == 0.5 and abs(abs(float(rate[0])) - 0.25) < 1e-15,
+           f"m from {float(mass(system, -1e3))} to {float(mass(system, 1e3))}, dm/dt = {float(rate[0])}")
+
+        xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [1.0])
+        X, Y = np.meshgrid(xs, ys)
+        m_cells = mass(system, Y)
+        ck(f"vaidya {system} K is finite and at or above zero at every cell", np.all(np.isfinite(values)) and np.all(values >= 0),
+           f"from {np.min(values):.3e} to {np.max(values):.3e}")
+        ck(f"vaidya {system} K at every cell is 48m^2/r^6 at that moment's m",
+           np.allclose(values, 48 * m_cells ** 2 / X ** 6, rtol=1e-12, atol=0))
+        flat, full = m_cells == 0, m_cells == 0.5
+        ck(f"vaidya {system} K vanishes where m = 0 and is Schwarzschild's 12/r^6 where m = M",
+           np.all(values[flat] == 0) and np.allclose(values[full], 12 / X[full] ** 6, rtol=1e-14, atol=0)
+           and flat.any() and full.any())
+        rng = np.random.default_rng(1943)
+        picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+                       | {(i, j) for i in (0, 1) for j in (ny // 2 - 1, ny // 2, ny - 1)})
+        agrees(ck, f"vaidya {system} map", K, [[xs[i], ys[j], 1.0] for i, j in picks], [values[j, i] for i, j in picks])
+        fine_r = np.linspace(1e-2, r1, 600)
+        FT, FR = np.meshgrid(np.linspace(0, W, SAMPLES)[1:-1], fine_r)
+        step = np.diff(K(FR, FT, 1.0), axis=1)
+        ck(f"vaidya {system} K " + ("grows with v at every r while the dust falls in" if system == IN
+                                    else "falls with u at every r while the dust leaves"),
+           np.all(step > 0) if system == IN else np.all(step < 0))
+        cells_of[system] = values
+
+        # The marginally trapped or anti-trapped sphere: the zero of the published g^rr at each moment.
+        track = np.unique(np.concatenate([np.linspace(y_axis["from"], y_axis["to"], 2001), [1e-6, W - 1e-6]]))
+        sphere, counts = [], []
+        for t in track:
+            z = _g_zeros(lambda r, at: grr(r, at, 1.0), t, r1)
+            counts.append((float(t), len(z)))
+            if len(z) == 1:
+                sphere.append([z[0], float(t)])
+        flowing = [(t, n) for t, n in counts if float(mass(system, t)) > 0]
+        ck(f"vaidya {system} g^rr has one zero at every moment the mass is above zero and none at any other",
+           all(n == 1 for _, n in flowing) and all(n == 0 for t, n in counts if float(mass(system, t)) == 0),
+           f"{len(sphere)} zeros at {len(counts)} moments")
+        ck(f"vaidya {system} the zero of g^rr is r = 2m",
+           np.allclose([p[0] for p in sphere], 2 * mass(system, [p[1] for p in sphere]), rtol=0, atol=1e-12))
+        inside = [float(grr(0.5 * p[0], p[1], 1.0)) for p in sphere]
+        ck(f"vaidya {system} g^rr < 0 inside the sphere, every future light cone there pointing to "
+           + ("smaller r" if system == IN else "larger r"), all(g < 0 for g in inside), f"{max(inside):.3e}")
+        on = [float(K(p[0], p[1], 1.0)) * float(mass(system, p[1])) ** 4 for p in sphere]
+        ck(f"vaidya {system} K on the sphere is 3/4m^4, and 12/r_s^4 at m = M",
+           np.allclose(on, 0.75, rtol=1e-10, atol=0) and abs(float(K(1.0, 1.5 * W, 1.0)) - 12) < 1e-12
+           if system == IN else np.allclose(on, 0.75, rtol=1e-10, atol=0) and abs(float(K(1.0, -0.25, 1.0)) - 12) < 1e-12)
+        X_plot = PLOT_W * (np.array([p[0] for p in sphere]) - r0) / (r1 - r0)
+        height = PLOT_W / aspect
+        Y_plot = height * (1 - (np.array([p[1] for p in sphere]) - y_axis["from"]) / (y_axis["to"] - y_axis["from"]))
+        curve = [sphere[k] for k in thinned(X_plot, Y_plot, TOLERANCE)]
+        ck(f"vaidya {system} the sphere lies inside the box",
+           all(r0 <= x <= r1 and y_axis["from"] <= y <= y_axis["to"] for x, y in curve), f"{len(curve)} points")
+
+        # Where K leaves the top of its colours, on a grid four times as fine as the map's.
+        fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [1.0])
+        FX = np.meshgrid(fx, fy)[0]
+        d_high = float(FX[~(fine <= scale["to"])].max())
+        cut = (12 / scale["to"]) ** (1 / 6)
+        ck(f"vaidya {system} K passes the top of its colours only inside the radius stated, reached where m = M",
+           abs(d_high - cut) < 2 * (r1 - r0) / (4 * nx) and abs(float(K(cut, 1.5 * W if system == IN else -0.25, 1.0))
+                                                                 - scale["to"]) < 1e-6 * scale["to"],
+           f"{cut:.6f} against {d_high:.6f}")
+        ck(f"vaidya {system} no value falls below the bottom of its colours", float(np.min(fine)) >= scale["from"])
+        rays[system] = light_ray(system)
+        views[system] = {"x": x_axis, "y": y_axis, "curve": curve, "cut": cut}
+
+    ck("vaidya the outgoing map is the ingoing one reversed in time, cell for cell",
+       np.allclose(cells_of[OUT], cells_of[IN][::-1], rtol=1e-12, atol=0))
+    (ray_in, at_start), (ray_out, at_end) = rays[IN], rays[OUT]
+    birth, arrival = -2 * at_start, W + 2 * at_end
+    ck("vaidya the event horizon leaves the centre in flat space before any dust arrives",
+       birth < 0 and abs(at_start - at_end) < 1e-25, f"cv = {birth:.10f} r_s, the white hole's horizon arriving at cu = {arrival:.10f} r_s")
+    with mpmath.workdps(30):
+        outside = [float(ray_in(W - v)) - v / 2 for v in np.linspace(0, W, 41)[:-1]]
+    ck("vaidya the event horizon lies outside the trapped sphere while the dust falls in", min(outside) > 0,
+       f"by at least {min(outside):.4f} r_s")
+    ck("vaidya the event horizon is born inside the box", v0 < birth < 0 and u0 < W < arrival < u1)
+
+    common = ("The Ricci scalar vanishes throughout, since the stress tensor of the null dust is traceless.")
+    out = []
+    for system in (IN, OUT):
+        v = views[system]
+        falling = system == IN
+        t = times[system]
+        out.append({
+            "id": "accreting" if falling else "radiating",
+            "label": f"the plane of ${t}$ and $r$", "system": system, "kind": "map", "x": v["x"], "y": v["y"],
+            "colour": {"name": "$K\\,r_s^4$", "scale": scale, "ticks": value_ticks(scale)},
+            "map": {"metric": "vaidya", "system": system, "scalar": "kretschmann", "x": "r", "y": t,
+                    "params": params, "functions": dict(VAIDYA_FUNCTIONS[system]), "nx": nx, "ny": ny,
+                    "cells": [[rounded(c) for c in row] for row in cells_of[system]]},
+            "marks": [{"class": "horizon", "points": v["curve"]}],
+            "legend": [["line", "horizon", f"the marginally {'' if falling else 'anti-'}trapped sphere, $r = 2Gm/c^2$"]],
+            "caption": ([
+                "The Kretschmann scalar $K$ of a shell of null dust falling into flat space over the plane of $v$ and $r$ "
+                "($m$ from $0$ to $M$), the same at every $\\theta$ and $\\phi$. The dust falls in at a steady rate from "
+                "$v = 0$ to $cv = 2r_s$, so that at each $v$ the curvature is Schwarzschild's for that moment's mass, "
+                "$K = 48G^2m^2/c^4r^6$. Before the first dust arrives space is flat and $K = 0$. While the dust falls in, "
+                "$K$ grows at every $r$, and once the last has passed it is Schwarzschild's. At every $v > 0$ it grows "
+                "without bound toward $r = 0$, as $r^{-6}$.",
+                "The marginally trapped sphere, $r = 2Gm/c^2$, leaves the centre with the first dust and grows as "
+                "$r = cv/2$ to $r_s$ at $cv = 2r_s$, where it stays. Inside it every future light cone points to smaller "
+                "$r$. On it $K = 3c^8/4G^4m^4$, which falls as the hole grows, to $12/r_s^4$. The event horizon, not "
+                "drawn, is the outgoing light ray that reaches $r_s$ with the last of the dust: it leaves the centre at "
+                f"$cv = {birth:.2f}\\,r_s$, in flat space, where $K = 0$, before any dust has arrived. " + common,
+            ] if falling else [
+                "The Kretschmann scalar $K$ of a star that sends its whole mass out as null dust over the plane of $u$ "
+                "and $r$ ($m$ from $M$ to $0$), the same at every $\\theta$ and $\\phi$. The dust leaves at a steady "
+                "rate from $u = 0$ to $cu = 2r_s$, so that at each $u$ the curvature is Schwarzschild's for that "
+                "moment's mass, $K = 48G^2m^2/c^4r^6$. It is the shell falling in run backward in time. Before the "
+                "dust leaves $K$ is Schwarzschild's. While it leaves, $K$ falls at every $r$, and once the last has left "
+                "space is flat and $K = 0$. At every $cu < 2r_s$ it grows without bound toward $r = 0$, as $r^{-6}$.",
+                "The marginally anti-trapped sphere, $r = 2Gm/c^2$, stays at $r_s$ until the dust starts to leave and "
+                "then shrinks as $r = r_s - cu/2$ to the centre at $cu = 2r_s$. Inside it every future light cone "
+                "points to larger $r$, as in a white hole. On it $K = 3c^8/4G^4m^4$, which grows from $12/r_s^4$ "
+                "without bound as the sphere shrinks. The white hole's horizon, not drawn, is the ingoing light ray "
+                "that leaves $r_s$ with the first of the dust: it reaches the centre at "
+                f"$cu = {arrival:.2f}\\,r_s$, in flat space, after the last dust has left. " + common,
+            ]),
+            "settings": f"$G = 1$ and $r_s = 2GM/c^2 = 1$, the unit of every length and of $c{t}$.",
+            "input": (("$m = 0$ for $v < 0$, $Mcv/2r_s$ for $0 \\le cv \\le 2r_s$ and $M$ after: the shell of mass "
+                       "$M$ that the spacetime diagram drops along $v = 0$, spread over a time $2r_s/c$.") if falling else
+                      ("$m = M$ for $u < 0$, $M(1 - cu/2r_s)$ for $0 \\le cu \\le 2r_s$ and $0$ after: the shell of mass "
+                       "$M$ that the spacetime diagram sends out along $u = 0$, spread over a time $2r_s/c$.")),
+            "clip": ("We colour $K\\,r_s^4$ on a signed logarithmic scale, linear within $10^{-3}$ of zero, from $0$ to "
+                     "$10^{5}$, since $K$ vanishes in flat space, and give a value beyond it the colour of its top: $K$ "
+                     f"passes $10^{{5}}/r_s^4$ inside $r = {v['cut']:.3f}\\,r_s$ where $m = M$, and nearer the centre "
+                     "where $m < M$."),
+        })
+    return out
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -9624,6 +9857,7 @@ DRAWN = {
     "simpson_visser": simpson_visser,
     "taub_nut": taub_nut,
     "topological_star": topological_star,
+    "vaidya": vaidya,
 }
 
 
