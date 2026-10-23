@@ -7869,6 +7869,49 @@ def misner_brill_lindquist(ck, src):
 
 # ---------------------------------------------------------------- the extreme Kerr throat
 
+def morris_thorne(ck, src):
+    """Both scalars through the throat in proper distance at the declared zero redshift.
+
+    The radius profile is the one the embedding takes, out to the same areal radius.
+    Check the stored formulas, reflection symmetry, throat extrema and finite ranges.
+    """
+    name = "morris_thorne"
+    functions = {"Phi": "0", "r": "sqrt(l**2 + b_0**2)"}
+    K = Published(src, name, "proper_radial", "kretschmann", ["l"], ["b_0"], functions=functions)
+    R = Published(src, name, "proper_radial", "ricci_scalar", ["l"], ["b_0"], functions=functions)
+    x_axis = axis("$l/b_0$", -math.sqrt(24), math.sqrt(24))
+    scales = {"K": {"kind": "log", "from": 1e-5, "to": 1e2},
+              "R": {"kind": "symlog", "from": -10, "to": 0, "linear": 1e-3}}
+    panels = [{"id": p, "name": label, "aspect": 2, "scale": scales[p], "ticks": value_ticks(scales[p])}
+              for p, label in (("K", "$K\\,b_0^4$"), ("R", "$R\\,b_0^2$"))]
+    shape_checks(ck, name, [p["aspect"] for p in panels])
+    curves = []
+    for p, fn in (("K", K), ("R", R)):
+        curves += line_curves(ck, name, p, p, fn, "l", x_axis, scales[p], PLOT_W / 2, {"b_0": 1})
+        above, below = beyond(fn, x_axis, scales[p], [1])
+        ck(f"{name} {p} stays inside its panel", not above and not below)
+    k_clip = ("We draw $K\\,b_0^4$ on a logarithmic scale from $10^{-5}$ to $10^2$, "
+              "with every value inside the panel.")
+    r_clip = ("We draw $R\\,b_0^2$ on a signed logarithmic scale, linear within $0.001$ of zero, "
+              "from $-10$ to $0$, with every value inside the panel.")
+    return [{
+        "id": "throat", "label": "Through the throat", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the wormhole against the proper "
+            "distance $l$ through its throat ($b_0 = 1$), the same at every $t$, $\\theta$, and $\\phi$.",
+            "$K$ is greatest at the throat, $12/b_0^4$ at $l = 0$, and falls toward zero on both sides.",
+            "$R$ is negative throughout, least at the throat, $-2/b_0^2$ at $l = 0$, "
+            "and rises toward zero on both sides.",
+        ],
+        "ricci_sentences": [[2, 0]], "per_scalar": scalar_clips(k_clip, r_clip),
+        "settings": "$b_0 = 1$, the throat radius and unit of length, with $|l| \\le \\sqrt{24}\\,b_0$.",
+        "input": "$\\Phi = 0$ and $r(l) = \\sqrt{l^2 + b_0^2}$, equivalent to $b(r) = b_0^2/r$.",
+        "clip": k_clip + " " + r_clip,
+    }]
+
+
 def near_horizon_extreme_kerr(ck, src):
     """The throat's K against polar angle, unchanged along its other coordinates.
 
@@ -10803,6 +10846,7 @@ DRAWN = {
     "mcvittie": mcvittie,
     "melvin": melvin,
     "misner_brill_lindquist": misner_brill_lindquist,
+    "morris_thorne": morris_thorne,
     "myers_perry": myers_perry,
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "nordstrom_scalar": nordstrom_scalar,
