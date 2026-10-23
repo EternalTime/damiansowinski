@@ -5745,6 +5745,9 @@
     /* On a map the horizon is white, as a zero is, since the map's own colours are the cyan of
        a horizon on a line view. */
     .cv-map .cv-horizon { stroke: var(--text-bright); }
+    /* An ergosurface is dotted, as the conformal and embedding diagrams dot theirs, and white, as
+       every line on a map is. */
+    .cv-ergosurface { fill: none; stroke: var(--text-bright); stroke-width: 2.4; stroke-dasharray: 1 4.5; stroke-linecap: round; }
     .cv-axis-zero { stroke: rgba(238,242,245,0.3); stroke-width: 1; }
     circle.cv-singular { fill: var(--pink-dark); stroke: #000; stroke-width: 1.2; }
     circle.cv-zero { fill: none; stroke: var(--text-bright); stroke-width: 2; }
@@ -6429,6 +6432,7 @@
       .mfs-print-body .cv-horizon { stroke: #0a6e82; }
       .mfs-print-body .cv-string { stroke: #a8841f; }
       .mfs-print-body .cv-map .cv-horizon { stroke: #000; }
+      .mfs-print-body .cv-ergosurface { stroke: #000; }
       .mfs-print-body .cv-axis-zero { stroke: #bbb; }
       .mfs-print-body circle.cv-singular { fill: #c2185b; stroke: #fff; }
       .mfs-print-body circle.cv-zero { stroke: #000; }

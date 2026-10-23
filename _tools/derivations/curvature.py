@@ -79,6 +79,7 @@ import time
 from fractions import Fraction
 from pathlib import Path
 
+import mpmath
 import numpy as np
 import sympy as sp
 
@@ -5393,6 +5394,252 @@ def kerr_newman(ck, src):
     return [whole, about]
 
 
+# ---------------------------------------------------------------- Kerr's rotating black hole
+
+KERR_A = Fraction(9, 10)          # a in units of m = GM/c^2, as every drawing of Kerr's black hole takes it
+KERR_REACH = 3.5                  # the box runs out to 3.5 m and from -3.5 m to 3.5 m up, past the zero of K on the axis at (2 + sqrt 3) a
+KERR_CELLS = 40                   # the cells of the map to each m, across and up
+KERR_SCALE = {"kind": "symlog", "from": -1e3, "to": 1e3, "linear": 1e-3}   # the colours of K m^4, as Brill's
+
+
+def kerr(ck, src):
+    """Kerr's black hole at G = c = M = 1, so that m = GM/c^2 = 1, and a = 9m/10, its Kretschmann
+    scalar over the meridian half plane of Boyer and Lindquist's r and theta in the oblate frame.
+
+    The chart publishes K = 48 G^2 M^2 (r^2 - a^2 cos^2 theta)((r^2 + a^2 cos^2 theta)^2
+    - 16 r^2 a^2 cos^2 theta)/c^4 (r^2 + a^2 cos^2 theta)^6, a function of r and theta alone, the same
+    at every t and phi, and R = 0, so the figure is K alone, a map in the frame "oblate" about
+    the ring r = 0, theta = pi/2: sqrt(r^2 + a^2) sin theta across and r cos theta up, the cylindrical
+    radius and height of Kerr and Schild's Cartesian coordinates, in which each r is a half ellipse
+    with its foci on the ring, the ring is the point (a, 0) and r = 0 is the disc the ring bounds.
+    The box is 0 <= across <= 3.5 m and |up| <= 3.5 m, which holds the zero of K on the axis at
+    (2 + sqrt 3) a, in cells a fortieth of m on a side, coloured on Brill's signed logarithmic scale,
+    linear within 10^-3 of zero, from -10^3 to 10^3 in units of 1/m^4, since K changes sign and
+    diverges at the ring. The chart's domain is r > r_+, and the map reads its K inside as well,
+    where the scalar is the same rational function and finite. The horizons r_+ and r_-, the zeros
+    of the published g^rr, are marked as half ellipses, the ergosurfaces, the zeros of the published
+    g_tt, as the curves r = m +- sqrt(m^2 - a^2 cos^2 theta), and the ring as a point.
+
+    What the caption states is checked here: R vanishes; K at a = 0 and K on the equator are
+    Schwarzschild's published scalar of the same mass; K = 48 m^2 Re (r + i a cos theta)^-6, and so
+    48 m^2 cos 6 psi/Sigma^3 with tan psi = a cos theta/r, in sixty digits at forty points; K is even
+    in r; on the axis K vanishes at (2 - sqrt 3) a, a and (2 + sqrt 3) a and nowhere else in the box,
+    negative below the first and between the last two; on the outer horizon K is 48 m^2/r_+^6 on the
+    equator and the value stated at the poles, and changes sign once between them, and at the poles
+    it is negative for a > m/2 alone, vanishing at a = m/2; toward the ring K a^3 d^3/6 m^2 tends to
+    cos 3 chi, d the distance from the ring on the map and chi the angle about it, in sixty digits
+    at d = 10^-7 and 10^-9; on the disc K = -48 m^2/a^6 cos^6 theta; g^rr is positive at every r < 0;
+    the map is the same above and below the equator; the horizons and the ergosurfaces on rays and
+    across every point marked; and the clip stated is where |K| leaves the colours, on a grid four
+    times as fine as the map's."""
+    m, a = 1.0, float(KERR_A)
+    params = {"G": 1.0, "M": m, "a": a}
+    values = list(params.values())
+    names = list(params)
+
+    def read(field, indices=None):
+        return nr_published(src, "kerr", "boyer_lindquist", field, ["r", "theta"], names, indices)
+
+    K, ricci = read("kretschmann"), read("ricci_scalar")
+    grr, gtt = read("inverse_metric_components", ("r", "r")), read("metric_components", ("t", "t"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    rp, rm = m + math.sqrt(m * m - a * a), m - math.sqrt(m * m - a * a)
+    x_axis = axis("$\\sqrt{r^2 + a^2}\\,\\sin\\theta/m$", 0, KERR_REACH)
+    y_axis = axis("$r\\cos\\theta/m$", -KERR_REACH, KERR_REACH, 8)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "kerr", [aspect])
+    scale = dict(KERR_SCALE)
+
+    # The frame: every point off the disc, as every cell's centre is, is read at the r and theta
+    # that draw it back there; on the disc r = 0 and theta is that of either face.
+    X, Y = np.meshgrid(np.linspace(0, KERR_REACH, 71), np.linspace(-KERR_REACH, KERR_REACH, 140))
+    rr, th_ = oblate(X, Y, a)
+    back = np.hypot(np.sqrt(rr ** 2 + a * a) * np.sin(th_) - X, rr * np.cos(th_) - Y)
+    ck("kerr the oblate frame draws each point off the disc back where it was read", np.max(back) < 1e-12
+       and np.all(rr >= 0), f"worst {np.max(back):.1e}")
+
+    nx, ny = round(KERR_CELLS * KERR_REACH), round(2 * KERR_CELLS * KERR_REACH)
+    xs, ys, cellv = cells(K, x_axis, y_axis, nx, ny, values, frame="oblate", focus=a)
+    ck("kerr K is finite at every cell", np.all(np.isfinite(cellv)), f"from {np.min(cellv):.4e} to {np.max(cellv):.4e}")
+    ck("kerr the map is the same above and below the equator", np.allclose(cellv, cellv[::-1], rtol=1e-9, atol=1e-15))
+    # Sixty digits at forty cells spread over the map, at the four about the ring, the two at the
+    # centre of the disc and the corners.
+    rng = np.random.default_rng(1963)
+    ring_i, mid = round(a * KERR_CELLS), ny // 2
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+                   | {(ring_i - 1, mid - 1), (ring_i, mid - 1), (ring_i - 1, mid), (ring_i, mid), (0, mid - 1), (0, mid)}
+                   | {(0, 0), (nx - 1, 0), (0, ny - 1), (nx - 1, ny - 1)})
+    points = [[float(v) for v in oblate(xs[i], ys[j], a)] + values for i, j in picks]
+    agrees(ck, "kerr map", K, points, [cellv[j, i] for i, j in picks])
+
+    r, th = K.coords
+    G_, M_, a_ = K.params
+    ck("kerr R vanishes", sp.simplify(ricci.expr) == 0, f"R = {ricci.expr}")
+    schwarzschild = K_s.expr.subs({K_s.params[0]: 2 * G_ * M_, K_s.coords[0]: r})
+    ck("kerr K at a = 0 is Schwarzschild's of the same mass", sp.simplify(K.expr.subs(a_, 0) - schwarzschild) == 0,
+       f"{schwarzschild}")
+    ck("kerr K on the equator is Schwarzschild's of the same mass at the same r",
+       sp.simplify(K.expr.subs(th, sp.pi / 2) - schwarzschild) == 0)
+    y = a_ * sp.cos(th)
+    complex_ = 48 * G_ ** 2 * M_ ** 2 * sp.expand(((r - sp.I * y) ** 6 + (r + sp.I * y) ** 6) / 2) / (r ** 2 + y ** 2) ** 6
+    ck("kerr K is 48 m^2 Re (r + i a cos theta)^-6", sp.simplify(K.expr - complex_) == 0)
+    spread_ = list(zip(rng.uniform(0.05, 4, 40), rng.uniform(0, math.pi, 40)))
+    worst = 0.0
+    for rv, tv in spread_:
+        exact = K.exact([rv, tv] + values)
+        sigma = sp.Float(rv, 70) ** 2 + (sp.Float(a, 70) * sp.cos(sp.Float(tv, 70))) ** 2
+        psi = sp.atan2(sp.Float(a, 70) * sp.cos(sp.Float(tv, 70)), sp.Float(rv, 70))
+        worst = max(worst, abs(float(exact * sigma ** 3 / 48 - sp.cos(6 * psi))))
+    ck("kerr K is 48 m^2 cos 6 psi/Sigma^3 with tan psi = a cos theta/r, in sixty digits", worst < 1e-40,
+       f"worst {worst:.1e}")
+    ck("kerr K is even in r", sp.simplify(K.expr.subs(r, -r) - K.expr) == 0)
+    disc = -48 * G_ ** 2 * M_ ** 2 / (a_ ** 6 * sp.cos(th) ** 6)
+    ck("kerr K on the disc r = 0 is -48 m^2/a^6 cos^6 theta", sp.simplify(K.expr.subs(r, 0) - disc) == 0)
+    centre = float(disc.subs({G_: 1, M_: 1, a_: sp.Rational(KERR_A.numerator, KERR_A.denominator), th: 0}))
+    ck("kerr K at the centre of the disc is -48 m^2/a^6", abs(centre * a ** 6 / -48 - 1) < 1e-15, f"{centre:.6f}")
+    behind = grr(-np.logspace(-6, 2, 400)[:, None], np.linspace(0, math.pi, 7)[None, :], *values)
+    ck("kerr g^rr is positive at every r < 0, so the sheet beyond the disc has no horizon", np.all(behind > 0))
+
+    # The axis: three zeros in the box, at (2 - sqrt 3) a, a and (2 + sqrt 3) a.
+    def on(theta):
+        return lambda x, *p: K(x, np.full_like(np.asarray(x, dtype=float), theta), *values)
+    z = zeros(ck, "kerr K on the axis", on(0.0), 0.0, KERR_REACH, [])
+    expected = [(2 - math.sqrt(3)) * a, a, (2 + math.sqrt(3)) * a]
+    ck("kerr K on the axis vanishes at (2 - sqrt 3) a, a and (2 + sqrt 3) a alone",
+       len(z) == 3 and all(abs(u - v) < 1e-12 for u, v in zip(z, expected)), f"{z}")
+    signs = [float(K(x, 0.0, *values)) for x in (0.0, (z[0] + z[1]) / 2, (z[1] + z[2]) / 2, KERR_REACH)]
+    ck("kerr K on the axis is negative below the first zero and between the last two, positive otherwise",
+       signs[0] < 0 < signs[1] and signs[2] < 0 < signs[3], f"{signs}")
+    ck("kerr K at the centre of the disc is K on the axis at r = 0", abs(signs[0] / centre - 1) < 1e-12)
+
+    # The outer horizon: Schwarzschild's 48 m^2/r_+^6 on its equator, negative at its poles.
+    pole, equator = float(K.exact([rp, 0.0] + values)), float(K.exact([rp, math.pi / 2] + values))
+    ck("kerr K on the equator of the outer horizon is 48 m^2/r_+^6", abs(equator * rp ** 6 / 48 - 1) < 1e-12,
+       f"{equator:.6f}")
+    ck("kerr K at the poles of the outer horizon is negative", pole < 0, f"{pole:.6f}")
+    along = zeros(ck, "kerr K along the outer horizon", lambda t, *p: K(np.full_like(np.asarray(t, dtype=float), rp), t,
+                                                                         *values), 0.0, math.pi / 2, [])
+    ck("kerr K changes sign once along the outer horizon from its pole to its equator", len(along) == 1, f"{along}")
+    half = sp.Rational(1, 2)
+    at_half = K.expr.subs({G_: 1, M_: 1, a_: half, th: 0, r: 1 + sp.sqrt(1 - half ** 2)})
+    ck("kerr K at the poles of the outer horizon vanishes at a = m/2", sp.simplify(at_half) == 0, f"{sp.simplify(at_half)}")
+    spins = np.linspace(0.01, 0.99, 99)
+    at_poles = [float(K(1 + math.sqrt(1 - s * s), 0.0, 1.0, 1.0, s)) for s in spins]
+    ck("kerr K at the poles of the outer horizon is negative for a > m/2 alone",
+       all((v < 0) == (s > 0.5) for v, s in zip(at_poles, spins)))
+
+    # Toward the ring: K a^3 d^3/6 m^2 tends to cos 3 chi, in sixty digits, the point (a + d cos chi,
+    # d sin chi) read back to r and theta in seventy.
+    def near(d, chi):
+        mp = mpmath
+        with mp.workdps(70):
+            Xp, Yp, A = mp.mpf(a) + d * mp.cos(chi), d * mp.sin(chi), mp.mpf(a)
+            q = Xp ** 2 + Yp ** 2 - A ** 2
+            root = mp.sqrt(q ** 2 + 4 * A ** 2 * Yp ** 2)
+            r2 = (q + root) / 2 if q >= 0 else 2 * (A * Yp) ** 2 / (root - q)
+            rv = mp.sqrt(r2)
+            tv = mp.atan2(Xp / mp.sqrt(r2 + A ** 2), Yp / rv)
+            point = {r: sp.Float(rv, 70), th: sp.Float(tv, 70), G_: 1, M_: 1, a_: sp.Float(A, 70)}
+            k = K.expr.xreplace(point).evalf(60)
+            return float(k * sp.Float(A ** 3 * d ** 3 / 6, 70)) - math.cos(3 * float(chi))
+    # Every twelfth of a turn about the ring but the disc itself, chi = pi, where r = 0.
+    angles = [mpmath.mpf(k) * mpmath.pi / 12 for k in range(-11, 12)]
+    gaps = [abs(near(mpmath.mpf(d), chi)) for d in ("1e-7", "1e-9") for chi in angles]
+    ck("kerr toward the ring K a^3 d^3/6 m^2 tends to cos 3 chi", max(gaps) < 1e-5, f"worst {max(gaps):.1e}")
+
+    # The horizons and the ergosurfaces on rays across the box.
+    rays_ok, ergo_ok = [], []
+    for angle in np.linspace(0, math.pi, 13):
+        hz = zeros(ck, f"kerr g^rr at theta = {angle:.4f}", lambda x, *p, t=angle: grr(x, t, *values), 0.0, 4.0, [])
+        rays_ok.append(len(hz) == 2 and abs(hz[0] - rm) < 1e-12 and abs(hz[1] - rp) < 1e-12)
+        if abs(angle - math.pi / 2) > 1e-9:
+            ez = zeros(ck, f"kerr g_tt at theta = {angle:.4f}", lambda x, *p, t=angle: gtt(x, t, *values), 0.0, 4.0, [])
+            root = math.sqrt(m * m - (a * math.cos(angle)) ** 2)
+            ergo_ok.append(len(ez) == 2 and abs(ez[0] - (m - root)) < 1e-9 and abs(ez[1] - (m + root)) < 1e-12)
+    ck("kerr has its horizons at r_- and r_+ on every ray", all(rays_ok), f"{rm:.6f}, {rp:.6f}")
+    ck("kerr has its ergosurfaces at m -+ sqrt(m^2 - a^2 cos^2 theta) on every ray off the equator", all(ergo_ok))
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+
+    def drawn(radius):
+        """The curve r = radius(theta) from theta = 0 to pi on the map, thinned so that it strays from
+        4001 points of it by less than TOLERANCE of the plot's units."""
+        t = np.linspace(0, math.pi, SAMPLES)
+        rv = radius(t)
+        Xc, Yc = np.sqrt(rv ** 2 + a * a) * np.sin(t), rv * np.cos(t)
+        keep = thinned(Xc * per_unit, Yc * per_unit, TOLERANCE)
+        return [[float(Xc[k]) + 0.0, float(Yc[k]) + 0.0] for k in keep]
+    horizons = [drawn(lambda t, v=v: np.full_like(t, v)) for v in (rp, rm)]
+    ergos = [drawn(lambda t, s=s: m + s * np.sqrt(m * m - (a * np.cos(t)) ** 2)) for s in (1, -1)]
+
+    def flips(lines, fn):
+        out = []
+        for line in lines:
+            for px, py in line:
+                rv, tv = (float(v) for v in oblate(px, py, a))
+                if rv < 1e-6:
+                    continue            # the inner ergosurface meets the ring, where g_tt is not defined
+                out.append(float(fn(rv * (1 - 1e-7), tv, *values)) * float(fn(rv * (1 + 1e-7), tv, *values)) < 0)
+        return out
+    hf, ef = flips(horizons, grr), flips(ergos, gtt)
+    ck("kerr g^rr changes sign across every point of both horizons marked", all(hf), f"{len(hf)} points")
+    ck("kerr g_tt changes sign across every point of both ergosurfaces marked but the ring", all(ef), f"{len(ef)} points")
+
+    # Where |K| leaves the colours, on a grid four times as fine as the map's: only near the ring,
+    # where to leading order it does inside d = (6 m^2/10^3 a^3)^(1/3).
+    fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, values, frame="oblate", focus=a)
+    FX, FY = np.meshgrid(fx, fy)
+    out_ = ~(np.abs(fine) <= KERR_SCALE["to"])
+    ck("kerr |K| passes the ends of its colours of both signs", np.any(fine > KERR_SCALE["to"])
+       and np.any(fine < KERR_SCALE["from"]))
+    d_clip = float(np.hypot(FX - a, FY)[out_].max())
+    lead = (6 / (1e3 * a ** 3)) ** (1 / 3)
+    coarse = np.meshgrid(xs, ys)
+    ck("kerr |K| passes 10^3/m^4 only near the ring, on the map's cells as on the fine grid",
+       float(np.hypot(coarse[0] - a, coarse[1])[~(np.abs(cellv) <= KERR_SCALE["to"])].max()) <= d_clip
+       and abs(d_clip - lead) < 0.1, f"within {d_clip:.4f} of the ring, {lead:.4f} to leading order")
+    # The distance stated is rounded up, so that no value beyond the colours lies farther out.
+    d_stated = math.ceil(d_clip * 100) / 100
+
+    view = {
+        "id": "meridian", "label": "the half plane of $r$ and $\\theta$", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "kerr", "system": "boyer_lindquist", "scalar": "kretschmann", "x": "r", "y": "\\theta",
+                "frame": "oblate", "focus": "a", "params": params, "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in cellv]},
+        "marks": [{"class": "horizon", "points": line} for line in horizons]
+                 + [{"class": "ergosurface", "points": line} for line in ergos]
+                 + [{"class": "singular", "at": [a, 0.0]}],
+        "legend": [["line", "horizon", "the horizons $r_\\pm = m \\pm \\sqrt{m^2 - a^2}$"],
+                   ["line", "ergosurface", "the ergosurfaces $r = m \\pm \\sqrt{m^2 - a^2\\cos^2\\theta}$"],
+                   ["point", "singular", "the ring $r = 0$, $\\theta = \\pi/2$, where $K$ diverges"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of Kerr's black hole over the half plane of $\\sqrt{r^2 + a^2}\\,\\sin\\theta$ "
+            "and $r\\cos\\theta$ ($a = 0.9\\,m$), the same at every $t$ and $\\phi$. The spacetime is a vacuum, so its "
+            "Ricci scalar vanishes. In these coordinates each $r$ is a half ellipse with its foci on the ring "
+            "singularity $r = 0$, $\\theta = \\pi/2$, a circle of radius $a$ drawn as one point, and $r = 0$ is the "
+            "disc the ring bounds. $K$ is finite everywhere off the ring, on both horizons and inside them, where "
+            "the chart of Boyer and Lindquist fails.",
+            "Everywhere $K = 48m^2\\,\\mathrm{Re}\\,(r + ia\\cos\\theta)^{-6}$, Schwarzschild's $48m^2/r^6$ with $r$ "
+            "made complex, and on the equator it is Schwarzschild's. On the axis it vanishes at "
+            "$r = (2 - \\sqrt{3})\\,a$, $a$, and $(2 + \\sqrt{3})\\,a$, which are "
+            f"${z[0]:.3f}\\,m$, ${z[1]:.1f}\\,m$, and ${z[2]:.2f}\\,m$, and it is negative between the last two. "
+            f"So on the outer horizon $K$ runs from $48m^2/r_+^6 = {equator:.2f}/m^4$ on the equator to "
+            f"${pole:.2f}/m^4$ at the poles, where it is negative for every $a > m/2$.",
+            "Toward the ring $K \\approx 6m^2\\cos 3\\chi/a^3d^3$, with the distance $d$ from the ring on this map "
+            "and the angle $\\chi$ about it from the equator outside: it grows as $d^{-3}$ and takes each sign in "
+            "three sectors of $\\pi/3$. On the disc $K = -48m^2/a^6\\cos^6\\theta$, which is "
+            f"${centre:.1f}/m^4$ at its centre. $K$ is even in $r$, so it takes the same values on the "
+            "second sheet $r < 0$ beyond the disc, which has no horizon.",
+        ],
+        "settings": f"$G = c = M = 1$, so that $m = GM/c^2 = 1$ is the unit of every length, and $a = 0.9\\,m$, so "
+                    f"that $r_+ = {rp:.3f}\\,m$ and $r_- = {rm:.3f}\\,m$.",
+        "clip": ("We colour $K\\,m^4$ on a signed logarithmic scale, linear within $0.001$ of zero, from $-10^{3}$ "
+                 "to $10^{3}$, and give a value beyond it the colour of the end it passes: $|K|$ passes "
+                 f"$10^{{3}}/m^4$, of both signs, only within ${d_stated:.2f}\\,m$ of the ring."),
+    }
+    return [view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -5416,6 +5663,7 @@ DRAWN = {
     "gravastar": gravastar,
     "hayward": hayward,
     "interior_schwarzschild": interior_schwarzschild,
+    "kerr": kerr,
     "kerr_newman": kerr_newman,
     "kiselev": kiselev,
 }

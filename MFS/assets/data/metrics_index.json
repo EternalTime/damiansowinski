@@ -2644,7 +2644,8 @@
     "version": "b9c943f24987e5e7",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
-    "embedding": "48db04f9a5970be7"
+    "embedding": "48db04f9a5970be7",
+    "curvature": "1b6a47fced6ece42"
   },
   {
     "id": "kerr_scalar_hair",
