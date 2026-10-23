@@ -8973,6 +8973,265 @@ def taub_nut(ck, src):
     return [still, movie_view]
 
 
+# ---------------------------------------------------------------- the Simpson-Visser black bounce
+
+SV_REACH = 4                      # the plot runs over |r| <= 4 r_s, through the sphere of least area, as the research list sets
+SV_K = {"kind": "log", "from": 1e-3, "to": 1e3}                      # the axis of K r_s^4 on every view
+SV_R = {"kind": "symlog", "from": -1.0, "to": 1e2, "linear": 1e-3}   # the axis of R r_s^2 on every view
+# a in units of r_s, as every drawing of the spacetime takes it: the view, its label and its name.
+SV_LENGTHS = ((Fraction(1, 2), "bounce", "$a = r_s/2$", "the black bounce"),
+              (Fraction(1), "null", "$a = r_s$", "the one way wormhole"),
+              (Fraction(2), "wormhole", "$a = 2\\,r_s$", "the traversable wormhole"))
+
+
+def simpson_visser(ck, src):
+    """The Simpson-Visser spacetime at r_s = 1, its Kretschmann and Ricci scalars against r over
+    the whole line, for the black bounce, the one way wormhole and the traversable wormhole.
+
+    The spherical and both Eddington-Finkelstein charts publish the same K and R, functions of r
+    through the areal radius rho = sqrt(r^2 + a^2) alone, and the areal chart publishes them in rho,
+    which covers one side of the sphere of least area r = 0 at a time; one line view for each a
+    serves every chart, and a map over r and an angle would be one colour along every circle. Two
+    panels share the axis of r, from -4 to 4 r_s, through r = 0, as the research list sets: K on a
+    logarithmic axis from 10^-3 to 10^3 and R on a signed one, linear within 10^-3 of zero, from -1
+    to 10^2, since it changes sign where rho = 3 r_s/2, the same scales in every view, which hold
+    every curve of the spacetime whole. The comparison is Schwarzschild's K of the same mass, the
+    spacetime at a = 0, read from schwarzschild.json and drawn for r > 0 alone, where its
+    spacetime lies; its R vanishes, so the Ricci scalar's panel draws no comparison. The horizons
+    are the changes of sign of the published g^rr = 1 - r_s/rho, two at a = r_s/2 and none at
+    a = r_s, where g^rr touches zero at r = 0 alone, or at a = 2 r_s. The three views are the
+    values of a every other drawing of the spacetime takes, the three kinds of spacetime it holds
+    past Schwarzschild's; a movie of a would add only K at r = 0 growing as a falls, which the
+    captions give in closed form, so the figure has none.
+
+    What the captions state is checked here: the three charts in r publish the same K and R, and
+    the areal chart's are theirs at rho = sqrt(r^2 + a^2); at a = 0 the published K is
+    Schwarzschild's and R vanishes; K and R are even in r; the horizons lie at
+    r = +-sqrt(r_s^2 - a^2) where a < r_s, g^rr vanishes at r = 0 without changing sign at a = r_s
+    and is at least 1 - r_s/a at a = 2 r_s; K at r = 0 is (9 r_s^2 - 16 a r_s + 12 a^2)/a^6 and R
+    there (3 r_s - 2a)/a^3; K is positive and falls from r = 0 outward, the numerator of dK/drho
+    having no root at rho > a; K crosses Schwarzschild's once at r > 0, the one root at rho > a of
+    the numerator of their difference, at the r stated, below it inside and above it outside; far
+    out K approaches 12 r_s^2/r^6 + 16 a^2 r_s/r^7 and R falls off as -2a^2/r^4; R changes sign
+    where rho = 3 r_s/2 alone, at r = +-sqrt(9 r_s^2/4 - a^2), outside the horizons at a = r_s/2,
+    and is least where rho = 15 r_s/8, at the r and value stated, or, at a = 2 r_s, negative at
+    every r and least on the throat; and only Schwarzschild's K leaves its panel, at the top about
+    r = 0, inside the radius the clip states."""
+    metric = "simpson_visser"
+    names = ["r_s", "a"]
+    x_axis = axis("$r/r_s$", -SV_REACH, SV_REACH)
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": SV_K, "ticks": value_ticks(SV_K)},
+              {"id": "R", "name": "$R\\,r_s^2$", "aspect": 2, "scale": SV_R, "ticks": value_ticks(SV_R)}]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    K = nr_published(src, metric, "spherical", "kretschmann", ["r"], names)
+    R = nr_published(src, metric, "spherical", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, metric, "spherical", "inverse_metric_components", ["r"], names, ("r", "r"))
+    K_rho = nr_published(src, metric, "areal", "kretschmann", ["rho"], names)
+    R_rho = nr_published(src, metric, "areal", "ricci_scalar", ["rho"], names)
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    rs = np.linspace(-SV_REACH, SV_REACH, SAMPLES)
+    out = rs[rs > 0]
+
+    # Every chart publishes the same two scalars, the areal chart in the areal radius.
+    for system in ("eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"):
+        for field, fn in (("kretschmann", K), ("ricci_scalar", R)):
+            other = nr_published(src, metric, system, field, ["r"], names)
+            ck(f"{metric} {system} publishes the spherical chart's {field}",
+               all(np.allclose(other(rs, 1, float(a)), fn(rs, 1, float(a)), rtol=1e-14, atol=0)
+                   for a, *_ in SV_LENGTHS))
+    # At sixty-fourths of r_s and quarters of r_s for a, in sixty digits, rho = sqrt(r^2 + a^2) exactly.
+    rng = np.random.default_rng(2019)
+    points = [(sp.Rational(int(r), 64), sp.Rational(int(a), 4))
+              for r, a in zip(rng.integers(-256, 257, 20), rng.integers(1, 9, 20))]
+
+    def at(published, x, a):
+        point = dict(zip(published.coords + published.params, (x, 1, a)))
+        return published.expr.xreplace(point).evalf(60)
+    worst = max(max(abs(at(K, r, a) / at(K_rho, sp.sqrt(r * r + a * a), a) - 1),
+                    abs(at(R, r, a) / at(R_rho, sp.sqrt(r * r + a * a), a) - 1)) for r, a in points)
+    ck(f"{metric} the areal chart's K and R are the spherical chart's at rho = sqrt(r^2 + a^2)",
+       worst < 1e-50, f"worst {float(worst):.1e}")
+    ck(f"{metric} at a = 0 K is Schwarzschild's and R vanishes",
+       np.allclose(K(out, 1, 0.0), K_s(out, 1), rtol=1e-13, atol=0) and np.all(R(out, 1, 0.0) == 0))
+
+    # In the areal radius the published K is rational, so its turns and its crossings of
+    # Schwarzschild's are the roots of polynomials in rho.
+    rho, r_s, a_sym = K_rho.coords[0], *K_rho.params
+
+    def reference():
+        return line_curves(ck, f"{metric} Schwarzschild", "K", "reference", K_s, "r", x_axis, SV_K, height["K"],
+                           {"r_s": 1}, within=(0, SV_REACH))
+
+    up, down = beyond(K_s, x_axis, SV_K, [1], within=(0, SV_REACH))
+    ck("Schwarzschild's K leaves the top of its panel once, at r = 0, and never the bottom",
+       len(up) == 1 and up[0][0] == 0 and not down, f"{up} {down}")
+    cut = (12e-3) ** (1 / 6)
+    ck("Schwarzschild's K leaves the top where 12 r_s^2/r^6 = 10^3",
+       abs(up[0][1] - cut) < SV_REACH / (SAMPLES - 1), f"{up[0][1]:.5f} against {cut:.5f}")
+    legend = {"K": ["line", "K", "$K$, the Kretschmann scalar"], "R": ["line", "R", "$R$, the Ricci scalar"],
+              "reference": ["line", "reference", "$K$ of Schwarzschild's black hole of the same mass"],
+              "horizon": ["line", "horizon", "a horizon, where $g^{rr} = 0$"]}
+    clip = ("We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10^{3}$ and $R\\,r_s^2$ on a signed "
+            "logarithmic scale, linear within $0.001$ of zero, from $-1$ to $10^{2}$, and cut each curve where it "
+            f"leaves its panel, as Schwarzschild's $K$ does inside $r = {cut:.3f}\\,r_s$.")
+    per_scalar = (
+        "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10^{3}$ and cut each curve where it leaves its "
+        f"panel, as Schwarzschild's $K$ does inside $r = {cut:.3f}\\,r_s$.",
+        "We draw $R\\,r_s^2$ on a signed logarithmic scale, linear within $0.001$ of zero, from $-1$ to $10^{2}$; no "
+        "curve leaves its panel.")
+
+    views = []
+    for length, view_id, label, title in SV_LENGTHS:
+        a = float(length)
+        name = f"{metric} at a = {length} r_s"
+        params = {"r_s": 1, "a": a}
+        values = [1.0, a]
+        curves = (reference()
+                  + line_curves(ck, name, "K", "K", K, "r", x_axis, SV_K, height["K"], params)
+                  + line_curves(ck, name, "R", "R", R, "r", x_axis, SV_R, height["R"], params))
+        for label_, fn, scale in (("K", K, SV_K), ("R", R, SV_R)):
+            up, down = beyond(fn, x_axis, scale, values)
+            ck(f"{name} {label_} stays inside its panel", not up and not down, f"{up} {down}")
+        ck(f"{name} K and R are even in r",
+           np.array_equal(K(rs, *values), K(-rs, *values)) and np.array_equal(R(rs, *values), R(-rs, *values)))
+
+        # The horizons, from an even number of samples, so that none stands on r = 0, where at a = r_s
+        # g^rr touches zero without changing sign.
+        found = zeros(ck, f"{name} horizons", grr, -SV_REACH, SV_REACH, values, n=SAMPLES + 1)
+        marks = [{"class": "horizon", "x": x} for x in found]
+        if length < 1:
+            edge = math.sqrt(1 - a * a)
+            ck(f"{name} has its two horizons at r = +-sqrt(r_s^2 - a^2)",
+               len(found) == 2 and abs(found[0] + edge) < 1e-12 and abs(found[1] - edge) < 1e-12, f"{found}")
+        elif length == 1:
+            ck(f"{name} g^rr vanishes at r = 0 alone, without changing sign",
+               not found and float(grr.exact([0, *values])) == 0 and np.all(grr(rs[rs != 0], *values) > 0))
+        else:
+            ck(f"{name} g^rr is at least 1 - r_s/a, so there is no horizon",
+               not found and np.all(grr(rs, *values) >= 1 - 1 / a) and float(grr.exact([0, *values])) == 1 - 1 / a)
+
+        # K: its value at r = 0, its fall, its crossing of Schwarzschild's, and its approach far out.
+        K0 = float(K.exact([0, *values]))
+        ck(f"{name} K at r = 0 is (9 r_s^2 - 16 a r_s + 12 a^2)/a^6",
+           abs(K0 / ((9 - 16 * a + 12 * a * a) / a ** 6) - 1) < 1e-12, f"{K0}")
+        held = {r_s: 1, a_sym: sp.Rational(length.numerator, length.denominator)}
+        K_exact = sp.together(K_rho.expr.subs(held))
+        turns = sp.Poly(sp.fraction(sp.together(sp.diff(K_exact, rho)))[0], rho)
+        ck(f"{name} K falls from r = 0 outward, dK/drho having no zero at rho > a",
+           turns.count_roots(a, None) == 0 and float(sp.diff(K_exact, rho).subs(rho, a + 1)) < 0
+           and np.all(K(out, *values) > 0) and np.all(np.diff(K(out, *values)) < 0))
+        gap = sp.Poly(sp.fraction(sp.together(K_exact - 12 / (rho ** 2 - held[a_sym] ** 2) ** 3))[0], rho)
+        ck(f"{name} K crosses Schwarzschild's at one rho > a alone", gap.count_roots(a, None) == 1
+           and gap.eval(a) != 0, f"{gap.count_roots(a, None)} roots")
+        crosses = zeros(ck, f"{name} K = K_s", lambda x, *_: K(x, *values) / K_s(x, 1) - 1, 0.01, 10, [])
+        ck(f"{name} K crosses Schwarzschild's once", len(crosses) == 1, f"{crosses}")
+        r_cross = crosses[0]
+        inside, outside = out[out < r_cross], out[out > r_cross]
+        ck(f"{name} K lies below Schwarzschild's inside the crossing and above it outside",
+           np.all(K(inside, *values) < K_s(inside, 1)) and np.all(K(outside, *values) > K_s(outside, 1))
+           and float(K.exact([20, *values]) - K_s.exact([20, 1])) > 0)
+        for far in (1e3, 1e4):
+            ck(f"{name} K approaches 12 r_s^2/r^6 + 16 a^2 r_s/r^7 at r = {far:g} r_s",
+               abs(float((K.exact([far, *values]) - 12 / sp.Float(far, 70) ** 6) * far ** 7) / (16 * a * a) - 1)
+               < 1e-2)
+        # R: its value at r = 0, its zeros where rho = 3 r_s/2, its least value, and its fall far out.
+        R0 = float(R.exact([0, *values]))
+        ck(f"{name} R at r = 0 is (3 r_s - 2a)/a^3", abs(R0 / ((3 - 2 * a) / a ** 3) - 1) < 1e-12, f"{R0}")
+        signs = zeros(ck, f"{name} R", R, -SV_REACH, SV_REACH, values)
+        for far in (1e3, 1e4):
+            ck(f"{name} R falls off as -2a^2/r^4 at r = {far:g} r_s",
+               abs(float(R.exact([far, *values])) * far ** 4 / (-2 * a * a) - 1) < 1e-2)
+        fine = np.linspace(0, SV_REACH, 400001)
+        lowest = int(np.argmin(R(fine, *values)))
+        if a < 1.5:
+            r_zero, r_least = math.sqrt(9 / 4 - a * a), math.sqrt(225 / 64 - a * a)
+            R_least = float(R.exact([r_least, *values]))
+            ck(f"{name} R vanishes where rho = 3 r_s/2 alone, at r = +-sqrt(9 r_s^2/4 - a^2)",
+               len(signs) == 2 and abs(signs[0] + r_zero) < 1e-12 and abs(signs[1] - r_zero) < 1e-12, f"{signs}")
+            ck(f"{name} R is least, -(3/4)(8/15)^5 a^2/r_s^4, where rho = 15 r_s/8",
+               abs(R_least / (-0.75 * (8 / 15) ** 5 * a * a) - 1) < 1e-12 and abs(fine[lowest] - r_least) < 2e-5
+               and R_least <= float(np.min(R(fine, *values))) + 1e-15, f"r = {r_least:.6f}, R = {R_least:.6f}")
+            if found:
+                ck(f"{name} R changes sign outside the horizons", r_zero > found[1])
+        else:
+            ck(f"{name} R is negative at every r and least on the throat, rising toward zero on both sides",
+               not signs and np.all(R(rs, *values) < 0) and lowest == 0 and np.all(np.diff(R(fine, *values)) > 0))
+
+        # The caption, in the house shape: the Kretschmann scalar's paragraph, then the Ricci
+        # scalar's, every number in it one measured above.
+        rho_text = "the areal radius $\\rho = \\sqrt{r^2 + a^2}$"
+        opening = (f"The Kretschmann scalar $K$ and the Ricci scalar $R$ of {title} against $r$ ({label}), the same "
+                   "at every $t$, $\\theta$, and $\\phi$, beside Schwarzschild's black hole of the same mass.")
+        tail = (f"It lies below Schwarzschild's out to $r = {r_cross:.3f}\\,r_s$ and above it beyond, and far out "
+                "approaches it as $12r_s^2/r^6 + 16a^2r_s/r^7$.")
+        if length < 1:
+            K_text = [
+                opening,
+                "Toward $r = 0$ Schwarzschild's $K = 12r_s^2/r^6$ grows without bound, and the black bounce's rises on "
+                "the sphere of least area $r = 0$, between the two horizons, to a finite "
+                f"$(9r_s^2 - 16ar_s + 12a^2)/a^6$, which is ${K0:.0f}/r_s^4$ here.",
+                f"$K$ depends on $r$ through {rho_text} alone, so it is the same at $r$ and at $-r$, and it falls from "
+                "$r = 0$ outward on both sides.",
+                tail,
+            ]
+            R_text = [
+                f"On the sphere of least area $r = 0$, $R = (3r_s - 2a)/a^3 = {R0:.0f}/r_s^2$.",
+                f"In {rho_text}, $R = -a^2(2\\rho - 3r_s)/\\rho^5$, which changes sign where $\\rho = 3r_s/2$, at "
+                f"$r = \\pm {r_zero:.3f}\\,r_s$, outside the horizons.",
+                f"It is least, ${R_least:.5f}/r_s^2$, where $\\rho = 15r_s/8$, at $r = \\pm {r_least:.3f}\\,r_s$, and far "
+                "out falls off as $-2a^2/r^4$.",
+            ]
+        elif length == 1:
+            K_text = [
+                opening,
+                "The horizon is the throat $r = 0$, where $g^{rr} = 1 - r_s/\\sqrt{r^2 + a^2}$ falls to zero without "
+                "changing sign.",
+                "Toward $r = 0$ Schwarzschild's $K = 12r_s^2/r^6$ grows without bound, and the wormhole's rises there "
+                f"to a finite $(9r_s^2 - 16ar_s + 12a^2)/a^6$, which is ${K0:.0f}/r_s^4$ here.",
+                f"$K$ depends on $r$ through {rho_text} alone, so it is the same at $r$ and at $-r$, and it falls from "
+                "the throat outward on both sides.",
+                tail,
+            ]
+            R_text = [
+                f"On the throat $r = 0$, $R = (3r_s - 2a)/a^3 = {R0:.0f}/r_s^2$.",
+                f"In {rho_text}, $R = -a^2(2\\rho - 3r_s)/\\rho^5$, which changes sign where $\\rho = 3r_s/2$, at "
+                f"$r = \\pm {r_zero:.3f}\\,r_s$.",
+                f"It is least, ${R_least:.4f}/r_s^2$, where $\\rho = 15r_s/8$, at $r = \\pm {r_least:.3f}\\,r_s$, and far "
+                "out falls off as $-2a^2/r^4$.",
+            ]
+        else:
+            K_text = [
+                opening,
+                f"The areal radius $\\rho = \\sqrt{{r^2 + a^2}}$ is least on the throat $r = 0$, where it is $a = {a:.0f}\\,r_s$, "
+                "so $g^{rr} = 1 - r_s/\\rho$ is at least $1 - r_s/a = 1/2$ and the wormhole has no horizon.",
+                f"On the throat $K$ is $(9r_s^2 - 16ar_s + 12a^2)/a^6$, which is ${K0:.3f}/r_s^4$ here, and toward $r = 0$ "
+                "Schwarzschild's $K = 12r_s^2/r^6$ grows without bound.",
+                "$K$ depends on $r$ through $\\rho$ alone, so it is the same at $r$ and at $-r$, and it falls from the "
+                "throat outward on both sides.",
+                tail,
+            ]
+            R_text = [
+                f"In {rho_text}, $R = -a^2(2\\rho - 3r_s)/\\rho^5$, negative at every $r$, since $\\rho \\ge a > 3r_s/2$.",
+                f"It is least on the throat, $(3r_s - 2a)/a^3 = {R0:.3f}/r_s^2$, rises toward zero on both sides, and far "
+                "out falls off as $-2a^2/r^4$.",
+            ]
+        settings = f"$r_s = 1$, the unit of every length, and {label}"
+        if found:
+            settings += f", so that $r_\\pm = \\pm\\sqrt{{r_s^2 - a^2}} = \\pm {found[1]:.3f}\\,r_s$"
+        views.append({
+            "id": view_id, "label": label, "kind": "line", "x": x_axis, "panels": panels,
+            "curves": curves, "marks": marks,
+            "legend": [legend[cls] for cls in ("K", "R", "reference", "horizon") if cls != "horizon" or marks],
+            "caption": [" ".join(K_text), " ".join(R_text)],
+            "ricci_sentences": [[1, k] for k in range(len(R_text))],
+            "per_scalar": scalar_clips(*per_scalar),
+            "settings": settings + ".",
+            "clip": clip,
+        })
+    return views
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -9018,6 +9277,9 @@ RICCI_BESIDE = {
     ("kiselev", "state"): "",
     ("oppenheimer_snyder", "collapse"): "",
     ("quantum_oppenheimer_snyder", "hole"): "",
+    ("simpson_visser", "bounce"): "",
+    ("simpson_visser", "null"): "",
+    ("simpson_visser", "wormhole"): "",
 }
 
 
@@ -9099,6 +9361,7 @@ DRAWN = {
     "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "senovilla": senovilla,
+    "simpson_visser": simpson_visser,
     "taub_nut": taub_nut,
 }
 
