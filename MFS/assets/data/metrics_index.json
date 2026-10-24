@@ -1668,7 +1668,8 @@
     "version": "1cfd1873a09d9833",
     "diagrams": "8393e9b253125f33",
     "conformal": "c45f19da93e85da3",
-    "embedding": "626bd0932cbe6704"
+    "embedding": "626bd0932cbe6704",
+    "curvature": "5a02953b012cb23e"
   },
   {
     "id": "einstein_rosen_waves",

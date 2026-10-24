@@ -3828,13 +3828,7 @@ def einstein_cluster(ck, src):
     return [speed_view, uniform_view, core_view]
 
 
-# ---------------------------------------------------------------- Fisher, Janis, Newman and Winicour's scalar field
-
-FJNW_GAMMA = Fraction(1, 2)       # gamma, as every drawing of the spacetime takes it
-FJNW_STEP = Fraction(1, 50)       # the step of gamma from one frame of the movie to the next
-FJNW_LAST = Fraction(49, 50)      # the last frame's gamma, one step short of Schwarzschild's gamma = 1
-FJNW_REACH = 5                    # the plot runs from the singularity r = b to r = 5b, the box of the spacetime diagrams
-
+# ---------------------------------------------------------------- the neutral and charged bridges
 
 def einstein_rosen_bridge(ck, src):
     """The neutral and massless charged bridges, K against u on both sheets.
@@ -3847,6 +3841,11 @@ def einstein_rosen_bridge(ck, src):
     from the bridge. The finite values at u = 0 are the limits from the sheets, not a scalar
     assigned to the degenerate metric there. No horizon mark is inferred from g^uu, which is
     positive on both sheets and has no zero.
+
+    The checks hold the two stored scalars to their areal-radius formulas, R to zero, the
+    evenness and strict fall of K away from the bridge, its two limits there, the zero of g_tt
+    there and positivity of g^uu, the stated ranges and every sampled value to the stored
+    formula, and every value to the bounds of the logarithmic panel.
     """
     metric = "einstein_rosen_bridge"
     x_axis = axis("$u/\\sqrt{r_s},\\ u/r_q$", -3, 3)
@@ -3859,8 +3858,36 @@ def einstein_rosen_bridge(ck, src):
     for chart, parameter, cls, reach in (("bridge", "r_s", "K", 2.2),
                                           ("charged_bridge", "r_q", "reference", 3.0)):
         K = nr_published(src, metric, chart, "kretschmann", ["u"], [parameter])
+        R = nr_published(src, metric, chart, "ricci_scalar", ["u"], [parameter])
+        guu = nr_published(src, metric, chart, "inverse_metric_components", ["u"], [parameter], ("u", "u"))
+        gtt = nr_published(src, metric, chart, "metric_components", ["u"], [parameter], ("t", "t"))
+        u, radius = K.coords[0], K.params[0]
+        areal = radius + u ** 2 if chart == "bridge" else sp.sqrt(u ** 2 + radius ** 2)
+        expected = 12 * radius ** 2 / areal ** 6 if chart == "bridge" else 56 * radius ** 4 / areal ** 8
+        ck(f"{metric} {chart} K is its stated areal-radius formula", sp.simplify(K.expr - expected) == 0)
+        ck(f"{metric} {chart} R vanishes on each sheet", R.expr == 0)
+        ck(f"{metric} {chart} K is even in u", sp.simplify(K.expr.subs(u, -u) - K.expr) == 0)
+        peak = 12 if chart == "bridge" else 56
+        ck(f"{metric} {chart} K tends to {peak}/radius^4 from either sheet",
+           all(sp.simplify(sp.limit(K.expr, u, 0, dir=side) - peak / radius ** 4) == 0
+               for side in ("+", "-")))
+        ck(f"{metric} {chart} g_tt vanishes at the bridge", gtt.expr.subs(gtt.coords[0], 0) == 0)
+        points = np.linspace(0, reach, SAMPLES)
+        values = K(points, 1.0)
+        ck(f"{metric} {chart} K is positive and falls from the bridge on each sheet",
+           np.all(values > 0) and np.all(np.diff(values) < 0))
+        ck(f"{metric} {chart} g^uu is positive on both sheets",
+           np.all(guu(points, 1.0) > 0) and np.all(guu(-points, 1.0) > 0))
+        ck(f"{metric} {chart} every sampled value lies inside the stated scale",
+           np.all(np.isfinite(values)) and np.min(values) >= scale["from"] and np.max(values) <= scale["to"],
+           f"{np.min(values):.9g} to {np.max(values):.9g}")
         curves += line_curves(ck, f"{metric} {chart}", "K", cls, K, "u", x_axis,
                               scale, PLOT_W / aspect, {parameter: 1.0}, within=(-reach, reach))
+        written = np.array(curves[-1]["points"])
+        ck(f"{metric} {chart} keeps the stated coordinate range",
+           written[0, 0] == -reach and written[-1, 0] == reach)
+        ck(f"{metric} {chart} every written value is its stored scalar",
+           np.array_equal(written[:, 1], K(written[:, 0], 1.0)))
     return [{
         "id": "sheets", "label": "The neutral and charged bridges", "kind": "line",
         "x": x_axis, "panels": [panel], "curves": curves, "marks": [],
@@ -3884,6 +3911,14 @@ def einstein_rosen_bridge(ck, src):
         "clip": "We draw $K$ in inverse fourth powers of each bridge radius on a logarithmic scale "
                 "from $10^{-4}$ to $10^2$; both curves lie wholly within the panel.",
     }]
+
+
+# ---------------------------------------------------------------- Fisher, Janis, Newman and Winicour's scalar field
+
+FJNW_GAMMA = Fraction(1, 2)       # gamma, as every drawing of the spacetime takes it
+FJNW_STEP = Fraction(1, 50)       # the step of gamma from one frame of the movie to the next
+FJNW_LAST = Fraction(49, 50)      # the last frame's gamma, one step short of Schwarzschild's gamma = 1
+FJNW_REACH = 5                    # the plot runs from the singularity r = b to r = 5b, the box of the spacetime diagrams
 
 
 def fisher_jnw(ck, src):
