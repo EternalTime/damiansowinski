@@ -2671,6 +2671,19 @@ for _function in _TOV_FUNCTIONS.values():
 DECLARED_FUNCTIONS.update(_TOV_FUNCTIONS)
 
 
+def _boson_profile(name):
+    def value(r, order):
+        return bs.star(bs.SIGMA_C).values(r)[name][order].reshape(np.shape(r))
+    return value
+
+
+_BOSON_FUNCTIONS = _nm_declare({"boson_a": _boson_profile("a"), "boson_alpha": _boson_profile("alpha")})
+for _function in _BOSON_FUNCTIONS.values():
+    # Repeat the stored scalar arithmetic at high precision with the numerical profile held.
+    _function._eval_evalf = lambda self, prec: sp.Float(float(self._imp_(float(self.args[0]))), prec)
+DECLARED_FUNCTIONS.update(_BOSON_FUNCTIONS)
+
+
 def e12_tortoise(x):
     """x_* of the declared star on the line through its centre, dx_*/dx = 1/N from x_* = 0 at the
     centre: one quadrature inside the star, and outside it Einstein's r + m ln(r - m/2) -
