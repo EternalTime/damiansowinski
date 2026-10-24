@@ -1833,6 +1833,18 @@ Flat spacetime cut along the future light cone of one event and joined again wit
 - chart Behind the Wave: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Ahead of the Wave: coordinates $(T, R, \phi, z)$, $$ds^2 = -c^2dT^2 + dR^2 + \beta^2R^2d\phi^2 + dz^2$$
 
+### Perturbed Friedmann Universe in Bardeen's Potentials
+
+A Friedmann universe with two small gravitational potentials laid over it, kept to first order in them. It is the spacetime in which the fluctuations of the microwave background and the growth of structure are calculated, and in the longitudinal gauge its two potentials are Bardeen's gauge invariants.
+
+- id: `bardeen_perturbations`
+- tags: cosmology, expanding universe, FLRW, time-dependent, inhomogeneous, approximate solution, weak field, cosmic microwave background, structure formation, inflation, gravitational redshift, Lorentzian, Einstein equations, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bardeen_perturbations.json
+- chart Longitudinal gauge (conformal Newtonian): coordinates $(\eta, x, y, z)$, $$ds^2 = a^2\left(-\left(1 + 2\Phi\right)d\eta^2 + \left(1 - 2\Psi\right)\left(dx^2 + dy^2 + dz^2\right)\right)$$
+- chart Longitudinal gauge in curved space: coordinates $(\eta, x, y, z)$, $$ds^2 = a^2\left(-\left(1 + 2\Phi\right)d\eta^2 + \dfrac{1 - 2\Psi}{\Omega^2}\left(dx^2 + dy^2 + dz^2\right)\right)$$
+- chart Synchronous gauge: coordinates $(\eta, x, y, z)$, $$ds^2 = a^2\left(-d\eta^2 + \left(1 - 2\psi + 2\partial_x^2E\right)dx^2 + \left(1 - 2\psi + 2\partial_y^2E\right)dy^2 + \left(1 - 2\psi + 2\partial_z^2E\right)dz^2 + 4\partial_x\partial_yE\,dx\,dy + 4\partial_x\partial_zE\,dx\,dz + 4\partial_y\partial_zE\,dy\,dz\right)$$
+
 ### Petrov Homogeneous Vacuum
 
 An empty spacetime that is curved and still the same at every event: four symmetries carry any event to any other in exactly one way, and no other vacuum without a cosmological constant has such a group. Its light cones turn steadily as one walks along one direction, and it is the field outside a cylinder of dust that spins with the circle round its surface a path of light.

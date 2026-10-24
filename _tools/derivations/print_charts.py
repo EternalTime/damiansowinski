@@ -21,7 +21,7 @@ string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, fre
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce,
-maximally_supersymmetric_plane_wave and kodama_kink, and Godel's cylindrical chart.
+maximally_supersymmetric_plane_wave, kodama_kink and bardeen_perturbations, and Godel's cylindrical chart.
 
     .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -9960,6 +9960,289 @@ def eih_arguments(system):
 
 
 CHARTS["eih_many_bodies"] = [lambda s=s: eih_many_bodies(s) for s in EIH_CHARTS]
+
+
+# -- The perturbed Friedmann universe in Bardeen's potentials ----------------------------
+
+BP_CHARTS = ["longitudinal", "longitudinal_curved", "synchronous"]
+BP_FUNCTIONS = "(\\eta,x,y,z)"
+BP_SPACE = "\\left(dx^2 + dy^2 + dz^2\\right)"
+BP_OMEGA = "\\Omega = 1 + \\dfrac{k}{4}\\left(x^2 + y^2 + z^2\\right)"
+
+
+def bardeen_perturbations(system):
+    """The Friedmann universe with scalar perturbations, to first order in them, in three charts.
+
+    longitudinal         Mukhanov, Feldman and Brandenberger's longitudinal (conformal Newtonian)
+                         gauge, their (3.21) on flat space, in the signature (-,+,+,+). Phi in
+                         g_etaeta is Bardeen's Phi_A and Psi in the metric of space is his -Phi_H,
+                         by their remark below (3.13); Ma and Bertschinger's (2) is the same metric
+                         with their psi = Phi and phi = Psi, and their (3) states the same relation.
+    longitudinal_curved  the same gauge on Mukhanov, Feldman and Brandenberger's background (2.1)
+                         and (2.2), whose space of curvature k is written conformally flat.
+    synchronous          the gauge phi = B = 0 of their (2.10), with psi and E free, which is the
+                         synchronous gauge of Lifshitz and Ma and Bertschinger's (1) for the scalar
+                         modes, with h_ij = -2 psi delta_ij + 2 d_i d_j E.
+
+    Every tensor is kept to first order in the potentials, as vm.ORDERS declares, so no component
+    assumes a field equation. bardeen_perturbations_check holds each chart to its sources before
+    it is written, and bardeen_perturbations.md beside this file is the derivation."""
+    coords = ["\\eta", "x", "y", "z"]
+    reals = " \\in (-\\infty, \\infty)"
+    domains = [name + reals for name in coords]
+    if system == "longitudinal":
+        name = "Longitudinal gauge (conformal Newtonian)"
+        parameters = ["a = a(\\eta)", "\\Phi = \\Phi" + BP_FUNCTIONS, "\\Psi = \\Psi" + BP_FUNCTIONS]
+        line = ("ds^2 = a^2\\left(-\\left(1 + 2\\Phi\\right)d\\eta^2 + \\left(1 - 2\\Psi\\right)" + BP_SPACE + "\\right)")
+        lead = ("Phi", "Psi")
+    elif system == "longitudinal_curved":
+        name = "Longitudinal gauge in curved space"
+        parameters = ["a = a(\\eta)", "k", BP_OMEGA, "\\Phi = \\Phi" + BP_FUNCTIONS, "\\Psi = \\Psi" + BP_FUNCTIONS]
+        line = ("ds^2 = a^2\\left(-\\left(1 + 2\\Phi\\right)d\\eta^2 + \\dfrac{1 - 2\\Psi}{\\Omega^2}" + BP_SPACE + "\\right)")
+        domains.append("x^2 + y^2 + z^2 < -4/k \\;\\text{for}\\; k < 0")
+        lead = ("Phi", "Psi")
+    else:
+        name = "Synchronous gauge"
+        parameters = ["a = a(\\eta)", "\\psi = \\psi" + BP_FUNCTIONS, "E = E" + BP_FUNCTIONS]
+        diagonal = " + ".join("\\left(1 - 2\\psi + 2\\partial_" + i + "^2E\\right)d" + i + "^2" for i in "xyz")
+        cross = " + ".join("4\\partial_" + i + "\\partial_" + j + "E\\,d" + i + "\\,d" + j
+                           for i, j in (("x", "y"), ("x", "z"), ("y", "z")))
+        line = "ds^2 = a^2\\left(-d\\eta^2 + " + diagonal + " + " + cross + "\\right)"
+        lead = ("psi", "E")
+    key = ("bardeen_perturbations", system)
+    probe = vm.Reader(coords, parameters, (), kept=vm.ORDERS[key], held=vm.HELD.get(key, ()))
+    extra = {}
+    if key in vm.HELD:
+        # The curved chart holds its conformal factor Omega: every derivative of it is written by
+        # its slopes, polynomials in x, y and z, and every part of a value that depends on them
+        # through k r^2 alone by 4(Omega - 1), so that each value is printed in Omega; the printed
+        # value is read back the same way, and verify_metrics.py writes Omega out to compare.
+        radial = bardeen_perturbations_radial(probe)
+        omega = probe.parameters["Omega"]
+        definition = probe.held[omega]
+
+        def reduce(value):
+            value = sp.sympify(value)
+            slopes = {d: sp.diff(definition, *d.variables) for d in value.atoms(sp.Derivative) if d.expr == omega}
+            return probe.truncated(radial(value.xreplace(slopes)))
+        extra["reduce"] = reduce
+    return {**extra,
+        "metric_id": "bardeen_perturbations",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line},
+        "chart_line_element": line,
+        "printer": {"primed": ["a"], "lead": [probe.parameters[k] for k in ("a_pprime", "a_prime") + lead], "flip": False,
+                    "rank": bardeen_perturbations_order(probe)},
+        "pretty": bardeen_perturbations_grouped(probe),
+        "components": bardeen_perturbations_metric(system),
+        "check": lambda chart: bardeen_perturbations_check(chart, system),
+    }
+
+
+def bardeen_perturbations_metric(system):
+    """The metric and its inverse to first order, written as the line element writes them."""
+    if system == "synchronous":
+        return {}
+    if system == "longitudinal":
+        space, inverse = "a^2\\left(1 - 2\\Psi\\right)", "\\dfrac{1 + 2\\Psi}{a^2}"
+    else:
+        space = "\\dfrac{a^2\\left(1 - 2\\Psi\\right)}{\\Omega^2}"
+        inverse = "\\dfrac{\\left(1 + 2\\Psi\\right)\\Omega^2}{a^2}"
+    metric = {("\\eta", "\\eta"): "-a^2\\left(1 + 2\\Phi\\right)"}
+    inv = {("\\eta", "\\eta"): "-\\dfrac{1 - 2\\Phi}{a^2}"}
+    for i in "xyz":
+        metric[(i, i)] = space
+        inv[(i, i)] = inverse
+    return {"metric_components": metric, "inverse_metric_components": inv}
+
+
+def bardeen_perturbations_small(reader):
+    small = set(reader.potentials)
+    return lambda e: bool((e.atoms(AppliedUndef) | {d.expr for d in e.atoms(sp.Derivative)}) & small)
+
+
+def bardeen_perturbations_order(reader):
+    """The order of a term in the potentials, so that each value is printed with the terms of the
+    unperturbed Friedmann universe first, each with its first order correction beside it as
+    (1 - 2 Phi) a'', and the terms that carry derivatives of the potentials after them."""
+    is_small = bardeen_perturbations_small(reader)
+
+    def order(term):
+        term = sp.sympify(term)
+        if not is_small(term):
+            return 0
+        for factor in sp.Mul.make_args(term):
+            if isinstance(factor, sp.Add) and any(t.is_Number for t in factor.args):
+                return 0
+        return 1
+
+    return order
+
+
+def bardeen_perturbations_radial(reader):
+    omega = reader.parameters.get("Omega")
+    space = [reader.symbol[name] for name in ("x", "y", "z")]
+    k = reader.parameters.get("k")
+
+    def radial(value):
+        """The value with every part that depends on x, y and z through r^2 = x^2 + y^2 + z^2 alone,
+        and carries at least one power of k for each power of r^2, written by k r^2 = 4(Omega - 1),
+        the definition of the conformal factor the chart holds, so that its own term reads as
+        Friedmann's 6k/a^2 does."""
+        if omega is None:
+            return value
+        # Omega is held as a function of x, y and z, so it stands as a plain symbol while they move.
+        W = sp.Dummy("Omega")
+        value = sp.sympify(value).xreplace({omega: W})
+        parts = {}
+        for term in sp.Add.make_args(sp.expand(value)):
+            if term == 0:
+                continue
+            # The factors that are not powers of x, y, z, k or Omega, split off whole, so that no
+            # derivative of a potential is touched.
+            coefficient, product = term.as_coeff_Mul()
+            rest = sp.Mul(*[b ** e for b, e in product.as_powers_dict().items() if b not in (*space, k, W)])
+            parts[rest] = parts.get(rest, 0) + term / rest
+        s_ = sp.Dummy("s", positive=True)
+        out = 0
+        for rest, poly in parts.items():
+            # A common monomial in x, y and z comes out first, as the x of k x r^2 d_x Psi.
+            exponents = [min(m[i] for m in sp.Poly(poly, *space).monoms()) for i in range(3)]
+            common = sp.Mul(*[c ** e for c, e in zip(space, exponents)])
+            rest, poly = rest * common, sp.expand(poly / common)
+            along = sp.expand(poly.subs({space[0]: sp.sqrt(s_), space[1]: 0, space[2]: 0}))
+            if sp.expand(along.subs(s_, sum(c ** 2 for c in space)) - poly) != 0:
+                out += rest * poly
+                continue
+            written = 0
+            for monomial in sp.Add.make_args(along):
+                n = sp.degree(monomial, s_)
+                m = sp.degree(monomial, k)
+                if n and m >= n:
+                    written += monomial / (s_ ** n * k ** n) * (4 * (W - 1)) ** n
+                else:
+                    written += monomial.subs(s_, sum(c ** 2 for c in space))
+            out += rest * written
+        return sp.expand(out).xreplace({W: omega})
+
+    return radial
+
+
+def bardeen_perturbations_grouped(reader):
+    """A value written as a sum over the products of the scale factor and its derivatives, each
+    multiplying the sum of the terms in the potentials that share it, so that K reads
+    12 (1 - 4 Phi) a''^2/a^6 + ... and a derivative of a potential stands in one bracket."""
+    is_small = bardeen_perturbations_small(reader)
+    radial = bardeen_perturbations_radial(reader)
+
+    def grouped(value):
+        groups = {}
+        for term in sp.Add.make_args(radial(value)):
+            coefficient, rest = term.as_coeff_Mul()
+            background, potentials = sp.Integer(1), sp.Integer(1)
+            for factor in sp.Mul.make_args(rest):
+                if is_small(factor):
+                    potentials *= factor
+                else:
+                    background *= factor
+            groups[background] = groups.get(background, 0) + coefficient * potentials
+        out = []
+        for background, inner in groups.items():
+            content, primitive = inner.primitive() if isinstance(inner, sp.Add) else (inner, sp.Integer(1))
+            out.append(content * background * primitive)
+        return sp.Add(*out)
+
+    return grouped
+
+
+def bardeen_perturbations_mfb(chart, k):
+    """G^mu_nu of the longitudinal gauge as Mukhanov, Feldman and Brandenberger write it, the
+    background (4.2) plus the perturbation (4.8) at B = E = 0, in their signature (+,-,-,-), on the
+    space gamma_ij = delta_ij / (1 + k r^2/4)^2 of their (2.2)."""
+    eta, *space = chart.symbols
+    a = chart.reader.parameters["a"]
+    Phi, Psi = chart.reader.parameters["Phi"], chart.reader.parameters["Psi"]
+    H = sp.diff(a, eta) / a
+    omega = 1 + k * sum(s ** 2 for s in space) / 4
+    gamma = sp.eye(3) / omega ** 2
+    gamma_inv = sp.eye(3) * omega ** 2
+    root = omega ** -3
+
+    def laplacian(f):
+        return sum(sp.diff(root * gamma_inv[i, i] * sp.diff(f, space[i]), space[i]) for i in range(3)) / root
+
+    def hessian(f, i, j):
+        connection = sum(gamma_inv[m, m] * (sp.diff(gamma[m, i], space[j]) + sp.diff(gamma[m, j], space[i])
+                                            - sp.diff(gamma[i, j], space[m])) / 2 * sp.diff(f, space[m])
+                         for m in range(3))
+        return sp.diff(f, space[i], space[j]) - connection
+
+    D = Phi - Psi
+    out = sp.zeros(4, 4)
+    out[0, 0] = (3 * (H ** 2 + k) + 2 * (-3 * H * (H * Phi + sp.diff(Psi, eta)) + laplacian(Psi) + 3 * k * Psi)) / a ** 2
+    for i in range(3):
+        out[0, i + 1] = 2 * sp.diff(H * Phi + sp.diff(Psi, eta), space[i]) / a ** 2
+        # G^i_0 = g^ij G_j0 and G^0_i = g^00 G_0i, and G_0i is first order, so at first order
+        # G^i_0 = -gamma^ij G^0_j.
+        out[i + 1, 0] = -gamma_inv[i, i] * out[0, i + 1]
+        for j in range(3):
+            trace = ((2 * sp.diff(H, eta) + H ** 2) * Phi + H * sp.diff(Phi, eta) + sp.diff(Psi, eta, 2)
+                     + 2 * H * sp.diff(Psi, eta) - k * Psi + laplacian(D) / 2)
+            value = -2 * ((trace if i == j else 0) - gamma_inv[i, i] * hessian(D, i, j) / 2) / a ** 2
+            if i == j:
+                value += (2 * sp.diff(H, eta) + H ** 2 + k) / a ** 2
+            out[i + 1, j + 1] = value
+    return out
+
+
+def bardeen_perturbations_check(chart, system):
+    """What each chart is held to before it is written.
+
+    longitudinal, longitudinal_curved: the Einstein tensor G^mu_nu is minus Mukhanov, Feldman and
+    Brandenberger's (4.2) plus (4.8), since reversing the signature keeps G_mu_nu and reverses
+    G^mu_nu, so that its components and Ma and Bertschinger's (23) are the same equations.
+    synchronous: pulled back along their (3.22), eta -> eta + d_eta E and x^i -> x^i + d_i E, the
+    longitudinal chart with Phi = -d_eta^2 E - (a'/a) d_eta E and Psi = psi + (a'/a) d_eta E, their
+    (3.23), is this chart to first order, so these are Bardeen's potentials of this chart."""
+    reader = chart.reader
+    eta = chart.symbols[0]
+    if system != "synchronous":
+        k = reader.parameters["k"] if system == "longitudinal_curved" else 0
+        mixed = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+        theirs = bardeen_perturbations_mfb(chart, k)
+        # The curved chart's conformal factor, held while the tensors are built, written out.
+        written = {}
+        omega = reader.parameters.get("Omega")
+        if omega is not None:
+            written = {omega: 1 + k * sum(s ** 2 for s in chart.symbols[1:]) / 4}
+        for i in range(4):
+            for j in range(4):
+                ours = sp.sympify(mixed[i][j]).xreplace(written).doit()
+                if reader.through(ours + theirs[i, j], 1) != 0:
+                    raise AssertionError(f"bardeen_perturbations: G^{i}_{j} of the {system} chart is not "
+                                         "Mukhanov, Feldman and Brandenberger's")
+        return
+    a = reader.parameters["a"]
+    psi, E = reader.parameters["psi"], reader.parameters["E"]
+    H = sp.diff(a, eta) / a
+    shift = sp.diff(E, eta)
+    Phi = -sp.diff(E, eta, 2) - H * shift
+    Psi = psi + H * shift
+    # The longitudinal metric at the shifted point: the potentials move at second order only, and
+    # the scale factor by a' d_eta E.
+    scale = (a + sp.diff(a, eta) * shift) ** 2
+    longitudinal = sp.diag(-scale * (1 + 2 * Phi), *[scale * (1 - 2 * Psi)] * 3)
+    moved = [eta + shift] + [s + sp.diff(E, s) for s in chart.symbols[1:]]
+    jacobian = sp.Matrix(4, 4, lambda i, j: sp.diff(moved[i], chart.symbols[j]))
+    pulled = jacobian.T * longitudinal * jacobian
+    for i in range(4):
+        for j in range(i, 4):
+            if reader.through(pulled[i, j] - chart.geo.g[i, j], 1) != 0:
+                raise AssertionError(f"bardeen_perturbations: the longitudinal chart pulled back misses the "
+                                     f"synchronous chart in slot {i}{j}")
+
+
+CHARTS["bardeen_perturbations"] = [lambda s=s: bardeen_perturbations(s) for s in BP_CHARTS]
 
 
 

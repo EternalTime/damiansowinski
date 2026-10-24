@@ -1299,7 +1299,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "8178e4535c58b964",
+    "version": "9180cc10399bcfc9",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -1866,7 +1866,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "718c7d6df8806dae",
+    "version": "63dafb07878442c4",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -3440,7 +3440,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "728fb049219d8355",
+    "version": "4015f3d15e69931b",
     "diagrams": "1e8a40c11bf25b40",
     "conformal": "5bfaa0670ab1bb25",
     "embedding": "2c9b70767c1e34be",
@@ -4015,7 +4015,7 @@
       "idealized model",
       "equivalence principle"
     ],
-    "version": "26178dbb77e5cd0b",
+    "version": "ad790903b002fec5",
     "diagrams": "197eec2d67db791c",
     "conformal": "6588b3545cfd1a4f",
     "embedding": "7438e54f373b2e03"
@@ -4048,6 +4048,27 @@
     "diagrams": "e88c36460f2d0d45",
     "conformal": "0658bc8d7d0d08b1",
     "embedding": "bfee67da3b69aec1"
+  },
+  {
+    "id": "bardeen_perturbations",
+    "name": "Perturbed Friedmann Universe",
+    "tags": [
+      "cosmology",
+      "expanding universe",
+      "FLRW",
+      "time-dependent",
+      "inhomogeneous",
+      "approximate solution",
+      "weak field",
+      "cosmic microwave background",
+      "structure formation",
+      "inflation",
+      "gravitational redshift",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional"
+    ],
+    "version": "680e812df6fc5534"
   },
   {
     "id": "petrov_homogeneous",
@@ -5108,7 +5129,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "08c85f2575e488ba",
+    "version": "124a2a2b08168024",
     "diagrams": "99c54951a880e0fc",
     "embedding": "afe08c1a64cd8527"
   },
@@ -5342,7 +5363,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "771611a1ff968047",
+    "version": "96a7f9bb716ddced",
     "diagrams": "b997809f786afa14",
     "embedding": "aefa04627c7f6154"
   },

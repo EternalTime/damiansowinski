@@ -56,6 +56,11 @@
       "id": "sultana_dyer",
       "kind": "family",
       "text": "A black hole in the universe of dust that swallows the matter around it, which McVittie's mass never does. It is conformal to Schwarzschild's metric and is no member of McVittie's family [carrera2010mcvittie]."
+    },
+    {
+      "id": "bardeen_perturbations",
+      "kind": "family",
+      "text": "Small potentials laid over a Friedmann universe. Far from the mass McVittie's metric is one of them, with $\\Phi = \\Psi = -r_s/2ar$ to first order in $r_s$."
     }
   ],
   "references": [

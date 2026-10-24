@@ -146,6 +146,11 @@
       "id": "lqc_bounce",
       "kind": "special_case",
       "text": "The flat universe of a massless scalar field as loop quantum cosmology has it, $a = (1 + t^2/t_b^2)^{1/6}$, which bounces where Einstein's equations put a big bang [cai2014, ashtekar2006improved]."
+    },
+    {
+      "id": "bardeen_perturbations",
+      "kind": "generalisation",
+      "text": "The Friedmann universe with two small potentials laid over it, $\\Phi$ in $g_{\\eta\\eta}$ and $\\Psi$ in the metric of space. At $\\Phi = \\Psi = 0$ its longitudinal gauge is Friedmann's metric in conformal time."
     }
   ],
   "references": [

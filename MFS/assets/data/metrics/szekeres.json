@@ -67,6 +67,11 @@
       "id": "datt_ruban_t_models",
       "kind": "special_case",
       "text": "The spherical members of the second class: dust on a tube of spheres that all share one radius, found by B. Datt in 1938 and by Vladimir Ruban in 1968 [datt1938, ruban1968, krasinski1999datt]."
+    },
+    {
+      "id": "bardeen_perturbations",
+      "kind": "family",
+      "text": "Small potentials laid over a Friedmann universe, lumps of any shape kept to first order in their amplitude."
     }
   ],
   "references": [

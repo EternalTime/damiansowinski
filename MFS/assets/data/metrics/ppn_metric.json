@@ -74,6 +74,11 @@
       "id": "eih_many_bodies",
       "kind": "family",
       "text": "General relativity's field of many moving bodies, to the same order. One body at rest there is this metric at $\\beta = \\gamma = 1$ [will2014]."
+    },
+    {
+      "id": "bardeen_perturbations",
+      "kind": "family",
+      "text": "Small potentials laid over an expanding universe, as these are laid over flat space. At $a = 1$ the longitudinal gauge carries this metric to first order in the mass, with $\\Phi = -m/r$ and $\\Psi = -\\gamma m/r$."
     }
   ],
   "references": [

@@ -720,6 +720,57 @@
    "\\phi"
   ]
  },
+ "bardeen_perturbations/longitudinal": {
+  "stamp": "b6c0631bcbf5bff3",
+  "relations": {},
+  "orders": [
+   {
+    "Phi": 1,
+    "Psi": 1
+   },
+   1
+  ],
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
+ "bardeen_perturbations/longitudinal_curved": {
+  "stamp": "8e0ae66efb045c8c",
+  "relations": {},
+  "orders": [
+   {
+    "Phi": 1,
+    "Psi": 1
+   },
+   1
+  ],
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
+ "bardeen_perturbations/synchronous": {
+  "stamp": "dcdc5bd807e6455a",
+  "relations": {},
+  "orders": [
+   {
+    "psi": 1,
+    "E": 1
+   },
+   1
+  ],
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
  "bartnik_mckinnon/areal": {
   "stamp": "ea22f8845195bc14",
   "relations": {},

@@ -143,7 +143,9 @@ _tools/test_ppn_metric.py checks by adding such terms and finding the kept ones 
 The small quantities of such a system may be declared functions of the coordinates, as the
 potentials of Einstein, Infeld and Hoffmann's field of many bodies are: its ORDERS line gives
 each function its order, and a derivative of one along the named time counts one order more
-each time it is taken, since the bodies that make the potentials move slowly.
+each time it is taken, since the bodies that make the potentials move slowly. A system that
+names no time may declare its potentials the same way, as the perturbed Friedmann universe does,
+and then every derivative of a potential counts as the potential does.
 """
 
 import argparse
@@ -2255,6 +2257,19 @@ DIMENSIONS = {
         "t": "T", "x": "L", "y": "L", "z": "L", "U": "1", "\\psi": "1", "\\chi": "L**2",
         "V_1": "1", "V_2": "1", "V_3": "1",
     },
+    # The perturbed Friedmann universe: the conformal time eta, with a deta = c dt, and the comoving
+    # x, y and z are lengths, the scale factor and the potentials pure numbers, the curvature k an
+    # inverse area as in FRW's charts, and E, whose second derivatives along space perturb the metric
+    # of space, an area.
+    ("bardeen_perturbations", "longitudinal"): {
+        "\\eta": "L", "x": "L", "y": "L", "z": "L", "a": "1", "\\Phi": "1", "\\Psi": "1",
+    },
+    ("bardeen_perturbations", "longitudinal_curved"): {
+        "\\eta": "L", "x": "L", "y": "L", "z": "L", "a": "1", "k": "1/L**2", "\\Omega": "1", "\\Phi": "1", "\\Psi": "1",
+    },
+    ("bardeen_perturbations", "synchronous"): {
+        "\\eta": "L", "x": "L", "y": "L", "z": "L", "a": "1", "\\psi": "1", "E": "L**2",
+    },
     # Three dimensions, where 4Gm/c^2 is a pure number, so alpha = 1 - 4Gm/c^2 is one too. The
     # isotropic radius and the isotropic x and y are lengths, measured in the arbitrary length ell,
     # as are the coordinate distances rho_1 and rho_2 from two particles at rest and half their
@@ -2433,11 +2448,21 @@ ORDERS = {
     # potential third and psi fourth, and each derivative along the time counts one order more.
     ("eih_many_bodies", "harmonic"): ({"U": 2, "chi": 2, "V_1": 3, "V_2": 3, "V_3": 3, "psi": 4}, 2, "t"),
     ("eih_many_bodies", "standard"): ({"U": 2, "chi": 2, "V_1": 3, "V_2": 3, "V_3": 3, "psi": 4}, 2, "t"),
+    # The perturbed Friedmann universe, kept to first order in its potentials, functions of all
+    # four coordinates; no time is named, so each derivative of a potential counts as it does.
+    ("bardeen_perturbations", "longitudinal"): ({"Phi": 1, "Psi": 1}, 1),
+    ("bardeen_perturbations", "longitudinal_curved"): ({"Phi": 1, "Psi": 1}, 1),
+    ("bardeen_perturbations", "synchronous"): ({"psi": 1, "E": 1}, 1),
 }
 
 # The defined names a system holds as functions of the coordinates while its tensors are built.
 # See "Adding a spacetime, as far as the checker is concerned" in _tools/README.md.
 HELD = {
+    # The conformal factor of the curved space of a perturbed Friedmann universe, a quadratic in the
+    # coordinates: held, every value is printed in it, as the space's own Christoffel symbols
+    # k x/(2 Omega) are, where written out it multiplies through every term. It has a relation with
+    # x, y and z, so it has no rates, and each comparison writes it out.
+    ("bardeen_perturbations", "longitudinal_curved"): ("Omega",),
     # Tolman's phase, half a logarithm of radicals, which stands only inside a cosine or a sine
     # and whose derivative along r is algebraic.
     ("tolman_vii", "spherical"): ("psi",),
@@ -3719,11 +3744,12 @@ class Reader:
         self.slow = None
         if kept:
             weights, highest, *slow = kept
-            # A post-Newtonian system may count a declared function of the coordinates as small, as
-            # the potentials of many bodies are: its order is the function's own, and each
-            # derivative of it along the slow time counts one order more, since the sources move
-            # slowly. Any other system counts constants alone.
-            potentials = {name for name in weights if slow and name in self.functions
+            # A system may count a declared function of the coordinates as small, as the potentials
+            # of many bodies are and the potentials of a perturbed Friedmann universe: its order is
+            # the function's own. In a post-Newtonian system each derivative of it along the slow
+            # time counts one order more, since the sources move slowly; in any other, every
+            # derivative counts as the function does.
+            potentials = {name for name in weights if name in self.functions
                           and self.functions[name][0] not in self.held}
             stray = [name for name in weights if name not in potentials
                      and (name not in self.parameters or not self.parameters[name].is_Symbol)]
@@ -3812,13 +3838,13 @@ class Reader:
     def _scaled(self, expression):
         """The expression with each small parameter scaled by its power of the one symbol, and
         each small function and each of its derivatives by theirs, a derivative along the slow
-        time one power more for each time it is taken."""
+        time of a post-Newtonian system one power more for each time it is taken."""
         scaled, small, _ = self.order
         expression = sp.sympify(expression)
         if not self.potentials:
             return expression.xreplace(scaled)
         rule = dict(scaled)
-        time = self.symbol[self.coords[self.slow[0]]]
+        time = self.symbol[self.coords[self.slow[0]]] if self.slow else None
         for function, weight in self.potentials.items():
             rule[function] = small ** weight * function
         for derivative in expression.atoms(sp.Derivative):

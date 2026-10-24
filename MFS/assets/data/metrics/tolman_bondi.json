@@ -76,6 +76,11 @@
       "id": "datt_ruban_t_models",
       "kind": "family",
       "text": "The spherical dust that this family leaves out: every shell has the same radius, and the shells stack along a tube [ruban1969, krasinski1999datt]."
+    },
+    {
+      "id": "bardeen_perturbations",
+      "kind": "family",
+      "text": "Small potentials laid over a Friedmann universe, lumps of any shape kept to first order in their amplitude."
     }
   ],
   "references": [

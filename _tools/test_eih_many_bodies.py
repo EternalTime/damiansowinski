@@ -368,9 +368,11 @@ class Orders(unittest.TestCase):
         self.assertEqual(sp.expand(reader.through(value, 5) - (U + U ** 2 + D(U, x) + D(U, t) + D(U, (t, 3))
                                                               + m * D(U, t))), 0)
         self.assertEqual(sp.expand(reader.through(value, 2) - (U + D(U, x))), 0)
-        # A system that names no slow time counts constants alone.
-        with self.assertRaises(vm.LatexError):
-            vm.Reader(["t", "x"], ["U = U(t,x)"], (), kept=({"U": 2}, 2))
+        # A system that names no slow time counts every derivative of a potential as the potential,
+        # as a perturbed Friedmann universe does.
+        plain = vm.Reader(["t", "x"], ["U = U(t,x)"], (), kept=({"U": 2}, 2))
+        self.assertEqual(sp.expand(plain.through(U + U ** 2 + D(U, t) + D(U, (t, 3)), 2)
+                                   - (U + D(U, t) + D(U, (t, 3)))), 0)
 
     def test_terms_of_the_next_order_in_the_metric_move_nothing_that_is_kept(self):
         """With an arbitrary function of the four coordinates put in each of the ten components at
