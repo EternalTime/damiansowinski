@@ -1,0 +1,111 @@
+{
+  "id": "bardeen_perturbations",
+  "name": "Perturbed Friedmann Universe in Bardeen's Potentials",
+  "short_name": "Perturbed Friedmann Universe",
+  "description": "",
+  "tags": [],
+  "signature": "(-,+,+,+)",
+  "convention": "",
+  "history": "",
+  "related": [],
+  "references": [],
+  "coordinates": [
+    {
+      "id": "longitudinal",
+      "name": "Longitudinal gauge (conformal Newtonian)",
+      "coords": [
+        "\\eta",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "\\eta \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "a = a(\\eta)",
+          "description": "Scale factor ($a > 0$); primes denote $d/d\\eta$"
+        },
+        {
+          "symbol": "\\Phi = \\Phi(\\eta,x,y,z)",
+          "description": "Potential in $g_{\\eta\\eta}$ ($|\\Phi| \\ll 1$), Bardeen's $\\Phi_A$; in the Newtonian limit it is the Newtonian potential over $c^2$"
+        },
+        {
+          "symbol": "\\Psi = \\Psi(\\eta,x,y,z)",
+          "description": "Potential in the metric of space ($|\\Psi| \\ll 1$), Bardeen's $-\\Phi_H$; it equals $\\Phi$ wherever the matter carries no anisotropic stress"
+        }
+      ],
+      "convention": "We use the conformal time $\\eta$, with $a\\,d\\eta = c\\,dt$, and comoving Cartesian coordinates $(x, y, z)$, all lengths."
+    },
+    {
+      "id": "longitudinal_curved",
+      "name": "Longitudinal gauge in curved space",
+      "coords": [
+        "\\eta",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "\\eta \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "a = a(\\eta)",
+          "description": "Scale factor ($a > 0$); primes denote $d/d\\eta$"
+        },
+        {
+          "symbol": "k",
+          "description": "Spatial curvature ($k \\in \\{-1,0,+1\\}$)"
+        },
+        {
+          "symbol": "\\Phi = \\Phi(\\eta,x,y,z)",
+          "description": "Potential in $g_{\\eta\\eta}$ ($|\\Phi| \\ll 1$), Bardeen's $\\Phi_A$; in the Newtonian limit it is the Newtonian potential over $c^2$"
+        },
+        {
+          "symbol": "\\Psi = \\Psi(\\eta,x,y,z)",
+          "description": "Potential in the metric of space ($|\\Psi| \\ll 1$), Bardeen's $-\\Phi_H$; it equals $\\Phi$ wherever the matter carries no anisotropic stress"
+        }
+      ],
+      "convention": "We use the conformal time $\\eta$, with $a\\,d\\eta = c\\,dt$, and comoving Cartesian coordinates $(x, y, z)$, all lengths, in which space is conformally flat."
+    },
+    {
+      "id": "synchronous",
+      "name": "Synchronous gauge",
+      "coords": [
+        "\\eta",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "\\eta \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "a = a(\\eta)",
+          "description": "Scale factor ($a > 0$); primes denote $d/d\\eta$"
+        },
+        {
+          "symbol": "\\psi = \\psi(\\eta,x,y,z)",
+          "description": "Perturbation of the trace of the metric of space ($|\\psi| \\ll 1$)"
+        },
+        {
+          "symbol": "E = E(\\eta,x,y,z)",
+          "description": "Potential of the traceless part of the metric of space, an area ($|\\partial_i\\partial_j E| \\ll 1$)"
+        }
+      ],
+      "convention": "We use the conformal time $\\eta$, with $a\\,d\\eta = c\\,dt$, and comoving Cartesian coordinates $(x, y, z)$, all lengths."
+    }
+  ]
+}
