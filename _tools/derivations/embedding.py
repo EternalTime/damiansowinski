@@ -7196,6 +7196,69 @@ def jackiw_teitelboim_black_hole(ck, src):
                         "space carries it."])]
 
 
+def eternal_traversable_wormhole(ck, src):
+    """The Euclidean section of Maldacena and Qi's eternal traversable wormhole with the global time
+    made periodic, the low temperature phase of their section 4.5.1, Euclidean anti-de Sitter space of
+    two dimensions with t ~ t + beta', here at beta' = 2 pi and L = 1. With t = -i theta the global
+    metric L^2 (-dt^2 + dsigma^2)/sin^2(sigma) is L^2 (dsigma^2 + dtheta^2)/sin^2(sigma), a cylinder
+    whose circle of theta has the radius L/sin(sigma), least at the middle sigma = pi/2, a neck of
+    radius L that joins the two boundaries. Out from the neck the circles grow as cosh of the proper
+    distance, and with drho/dsigma = -L cos(sigma)/sin^2(sigma) the surface of revolution needs
+    g_sigmasigma >= (drho/dsigma)^2, |cot sigma| <= 1: it stands in flat space from sigma = pi/4 to
+    3 pi/4, where the circle has the radius sqrt(2) L and the profile runs flat, and no surface of
+    revolution in flat space carries it beyond, which is checked. In u = cot(sigma) the height is
+    z = int_0^(-u) sqrt((1 - w^2)/(1 + w^2)) dw, an elliptic integral, checked by quadrature. The
+    meridians theta = 0 and pi are the moment t = 0, where the Euclidean and Lorentzian sections meet,
+    so that moment is the one marked on the other diagrams."""
+    from scipy.integrate import quad
+    P = {"L": 1, "phi_h": 1}
+    sl = Slice(src, "eternal_traversable_wormhole", "global", "\\sigma", "t", {}, P, swept={"t": "-I*t"})
+    lo, hi = math.pi / 4, 3 * math.pi / 4
+    ck.stops("eternal traversable wormhole, the Euclidean cylinder beyond sigma = pi/4", sl,
+             np.linspace(1e-3, lo - 1e-3, 300))
+    ck.stops("eternal traversable wormhole, the Euclidean cylinder beyond sigma = 3 pi/4", sl,
+             np.linspace(hi + 1e-3, math.pi - 1e-3, 300))
+    Z = quad(lambda w: math.sqrt((1 - w * w) / (1 + w * w)), 0.0, 1.0, epsabs=1e-14, epsrel=1e-14)[0]
+    size = 2 * math.sqrt(2)
+    marks = [(lo, "r", None), (math.pi / 3, "r", None), (math.pi / 2, "throat", "$\\sigma = \\pi/2$"),
+             (2 * math.pi / 3, "r", None), (hi, "r", None)]
+    neck = Piece("cylinder", "sheet", sl, lo, hi, -Z, 1,
+                 (("stops", "the slice runs on toward the boundary $\\sigma = 0$, where no surface of revolution "
+                            "in flat space carries it"),
+                  ("stops", "the slice runs on toward the boundary $\\sigma = \\pi$, where no surface of "
+                            "revolution in flat space carries it")),
+                 marks, size)
+    ck.isometry("eternal traversable wormhole, the Euclidean cylinder", neck)
+    ck.radius("eternal traversable wormhole, the Euclidean cylinder: radius L/sin(sigma)", neck,
+              lambda s: 1 / np.sin(s), size)
+
+    def height(s):
+        return np.array([quad(lambda w: math.sqrt(max(0.0, (1 - w * w) / (1 + w * w))), 0.0, -1 / math.tan(x),
+                              epsabs=1e-13, epsrel=1e-13)[0] for x in np.atleast_1d(s)])
+    ck.form("eternal traversable wormhole, the Euclidean cylinder: z = int sqrt((1 - w^2)/(1 + w^2)) dw", neck,
+            height, size)
+    ck.add("eternal traversable wormhole: g_sigmasigma = (drho/dsigma)^2 at sigma = pi/4 and 3 pi/4, so the profile runs flat",
+           float(np.max(np.abs(sl.defect_at(np.array([lo, hi]))))), 1e-12)
+    surface = Surface([neck])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *neck.at(math.pi / 2), "$\\sigma = \\pi/2$", dx=14)
+    ring_label(fig, [0, 0, 0], *neck.at(hi), "$3\\pi/4$")
+    ring_label(fig, [0, 0, 0], *neck.at(lo), "$\\pi/4$")
+    fig.legend("fill", "cover", "the Euclidean section from $\\sigma = \\pi/4$ to $3\\pi/4$, as far as a surface in "
+                                "flat space carries it")
+    fig.legend("line", "r", "$\\sigma$ constant, at $\\pi/4$, $\\pi/3$, $2\\pi/3$ and $3\\pi/4$: the circle of "
+                            "Euclidean global time")
+    fig.legend("line", "throat", "the neck $\\sigma = \\pi/2$, the smallest circle, of radius $L$, where the "
+                                 "dilaton is least")
+    fig.legend("line", "meridian", "$\\theta$ constant, every $15°$")
+    return [view("cylinder", "The Euclidean cylinder", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, the unit of every length, on the surface of $\\sigma$ and the angle "
+                          "$\\theta = it$ of period $2\\pi$, the period of the Euclidean global time.",
+                 stops=["Beyond $\\sigma = \\pi/4$ and $3\\pi/4$ the circles grow faster than the distance out to "
+                        "them, as $\\cosh$ of the proper distance from the neck, and no surface of revolution in "
+                        "flat space carries the slice."])]
+
+
 def vaidya(ck, src):
     """The imploding shell of radiation the conformal diagram draws: the ingoing chart with m = 0
     for v < 0 and M for v > 0, r_s = 2GM/c^2 = 1. A slice of constant v is null, so the moments
@@ -17261,6 +17324,7 @@ DRAWN = {
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "witten_black_hole": witten_black_hole,
     "jackiw_teitelboim_black_hole": jackiw_teitelboim_black_hole,
+    "eternal_traversable_wormhole": eternal_traversable_wormhole,
     "myers_perry": myers_perry,
     "black_saturn": black_saturn,
     "dilaton_black_hole": dilaton_black_hole,
@@ -19380,6 +19444,19 @@ CAPTIONS = {
         "temperature $\\hbar c\\lambda/2\\pi k_B$, the same for every mass.",
         "The meridians $\\theta = 0$ and $\\theta = \\pi$ are the moment $t = 0$ on the two sides of the "
         "horizon, the line along which the Euclidean section meets the black hole.",
+    ],
+    ("eternal_traversable_wormhole", "cylinder"): [
+        "The Euclidean section of the wormhole with the global time made periodic, drawn as a surface in flat "
+        "space with every distance along it the metric distance. With the time turned to the angle "
+        "$\\theta = it$ of period $2\\pi$ the metric is $L^2(d\\sigma^2 + d\\theta^2)/\\sin^2\\sigma$, a cylinder "
+        "whose circle at $\\sigma$ has the radius $L/\\sin\\sigma$, so the neck at $\\sigma = \\pi/2$ joins the "
+        "two boundaries.",
+        "The surface is the low temperature phase of the coupled boundaries, thermal anti-de Sitter space, whose "
+        "circle of Euclidean time never closes. Out from the neck the circles grow as $\\cosh$ of the proper "
+        "distance, and at $\\sigma = \\pi/4$ and $3\\pi/4$, where the radius is $\\sqrt{2}\\,L$, the surface runs "
+        "flat, the farthest a surface in flat space carries it.",
+        "The meridians $\\theta = 0$ and $\\theta = \\pi$ are the moment $t = 0$, the line along which the "
+        "Euclidean section meets the wormhole.",
     ],
     ("jackiw_teitelboim_black_hole", "disc"): [
         "The Euclidean section of the black hole, drawn as a surface in three dimensional Minkowski space with "
