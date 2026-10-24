@@ -668,7 +668,8 @@
     "version": "d310c4c58505c8fd",
     "diagrams": "c33a80d5fbd3405b",
     "conformal": "5a2e7ecd5c36aed6",
-    "embedding": "2e2e3d2fe70fcce0"
+    "embedding": "2e2e3d2fe70fcce0",
+    "curvature": "8a3d2a2465a5ec1a"
   },
   {
     "id": "bonnor_rotating_dust",

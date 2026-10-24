@@ -1664,6 +1664,15 @@ The surface is a solid white line on a dark casing at fixed $r = r_b$, and the f
 The generator checks every cell against the dust mass-density identity, the stored Ricci scalar against $2M'/(R^2R')$, the stored radial pressure against zero, independent sixty-digit cycloids at 58 cells, the release and collapse times, the absence of shell crossings, the Schwarzschild exterior, and the colour clip.
 It checks the central values $375/(16r_b^4)$ at release and $36443.137/r_b^4$ at $ct = 1.3r_b$, the surface values $3/r_b^4$ and $14.285770/r_b^4$ at those times, and the central growth $80/[27c^4(t_c-t)^4]$ toward the first singularity.
 
+The `bonnor_magnetic_dipole` figure colours the stored Kretschmann scalar over the meridian half plane at $m = 1$ and $b = 2\sqrt{2}\,m$, the parameters of its existing diagrams.
+It uses the landed `meridian` frame, $r\sin\theta$ across and $r\cos\theta$ up, over the existing radial interval $4 < r/m \le 8$, with the complement left clear by its declared domain.
+The strut $r = 4m$ is a solid white semicircle on a dark casing, with the degenerate horizons at its two endpoints; these are coordinate lengths, and the whole inner semicircle represents the axis between the holes.
+Both radius and polar angle change the curvature, so the map shows their variation together.
+Its 160 by 320 cells use a logarithmic scale from $10^{-4}$ to $10$ for $K m^4$, and every coloured cell lies within it.
+The generator evaluates every cell from the stored formula in sixty digits because its numerator loses digits near a pole, checks the double evaluation against it, and the curvature tests evaluate every written cell again.
+It checks the vanishing Ricci scalar, reflection symmetry, length scaling, domain and scale limits, the strut's vanishing azimuthal circumference and chord accuracy, and the double zero of $g_{tt}$ at each horizon.
+The stated values are $0.00124866/m^4$ on the axis and $0.000194185/m^4$ on the equator at $r = 8m$, and the limits $131/(64m^4)$ along the exterior axis and $0.0574134/m^4$ along the equator toward $r = 4m$.
+
 ### The three shapes
 
 A curvature figure has one or more views, each of one of three shapes.

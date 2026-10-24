@@ -12034,7 +12034,11 @@ def bonnor_magnetic_dipole(ck, src):
     The strut r = 4m is its inner semicircle, with the two horizons at its endpoints.
     The scalar depends on both r and theta; its Ricci scalar vanishes.
     The map leaves the complement of the radial interval clear.
-    Every cell is read from the stored scalar and a spread is checked in sixty digits.
+    Every cell is evaluated from the stored scalar in sixty digits to retain the digits
+    cancelled by its polynomial numerator near a pole.
+    The checks cover the domain, logarithmic limits, reflection and length scaling,
+    dependence on both coordinates, the stated values on the axis and equator, the
+    strut's vanishing azimuthal circumference and the horizon's double zero of g_tt.
     """
     name, system = "bonnor_magnetic_dipole", "spheroidal"
     params = {"m": 1.0, "b": 2 * math.sqrt(2)}
@@ -12049,9 +12053,52 @@ def bonnor_magnetic_dipole(ck, src):
     inside = (radius > 4) & (radius <= 8)
     scale = {"kind": "log", "from": 1e-4, "to": 10}
     shape_checks(ck, name, [0.5])
+    high = sp.lambdify(K.coords + K.params, K.expr, "mpmath", cse=True)
+    raw = values[inside].copy()
+    with mpmath.workdps(60):
+        for j, i in np.argwhere(inside):
+            values[j, i] = float(high(*[mpmath.mpf(float(v)) for v in
+                                        (radius[j, i], angle[j, i], *params.values())]))
+    ck(f"{name} every cell agrees with the stored formula in double and sixty-digit arithmetic",
+       np.allclose(raw, values[inside], rtol=5e-6, atol=0),
+       f"{np.count_nonzero(inside)} cells, worst double cancellation {np.max(np.abs(raw / values[inside] - 1)):.2e}")
     ck(f"{name} K is finite and positive in the domain",
        np.all(np.isfinite(values[inside])) and np.all(values[inside] > 0))
     ck(f"{name} R vanishes", R.expr == 0)
+    ck(f"{name} every coloured cell lies inside the logarithmic limits",
+       np.all(values[inside] >= scale["from"]) and np.all(values[inside] <= scale["to"]),
+       f"{np.min(values[inside]):.9g} to {np.max(values[inside]):.9g}")
+    r, th = K.coords
+    m, b = K.params
+    fixed = K.expr.subs({m: 1, b: sp.sqrt(8)})
+    on_axis = sp.cancel(fixed.subs(th, 0))
+    on_equator = sp.cancel(fixed.subs(th, sp.pi / 2))
+    near_axis = sp.limit(on_axis, r, 4, dir="+")
+    near_equator = sp.limit(on_equator, r, 4, dir="+")
+    ck(f"{name} the exterior axis limit at a hole is 131/64",
+       near_axis == sp.Rational(131, 64), str(near_axis))
+    ck(f"{name} the equatorial strut limit is 0.0574134",
+       abs(float(near_equator) - 0.0574134) < 5e-7, str(near_equator))
+    far_axis, far_equator = float(on_axis.subs(r, 8)), float(on_equator.subs(r, 8))
+    ck(f"{name} at r = 8m the axis and equator are 0.00124866 and 0.000194185",
+       abs(far_axis / 0.00124866 - 1) < 3e-6 and abs(far_equator / 0.000194185 - 1) < 3e-6,
+       f"{far_axis:.12g}, {far_equator:.12g}")
+    ck(f"{name} K varies with both radius and polar angle",
+       far_axis != far_equator and float(near_axis) != far_axis and float(near_equator) != far_equator)
+    mirrored = K(radius[inside], math.pi - angle[inside], *params.values())
+    ck(f"{name} K is reflection symmetric about the equatorial plane",
+       np.allclose(mirrored, values[inside], rtol=5e-6, atol=0))
+    ck(f"{name} K has inverse fourth-power length scaling",
+       abs(float(K.exact([12, 0.7, 2, 4 * math.sqrt(2)])) * 16
+           / float(K.exact([6, 0.7, 1, 2 * math.sqrt(2)])) - 1) < AGREE)
+    gtt = Published(src, name, system, "metric_components", ["r", "theta"], list(params), ("t", "t"))
+    gphph = Published(src, name, system, "metric_components", ["r", "theta"], list(params), ("\\phi", "\\phi"))
+    ga = sp.cancel(gtt.expr.subs({gtt.params[0]: 1, gtt.params[1]: sp.sqrt(8), gtt.coords[1]: 0}))
+    ck(f"{name} g_tt has a double zero at each marked horizon",
+       ga.subs(gtt.coords[0], 4) == 0 and sp.diff(ga, gtt.coords[0]).subs(gtt.coords[0], 4) == 0
+       and sp.diff(ga, gtt.coords[0], 2).subs(gtt.coords[0], 4) != 0)
+    gp = gphph.expr.subs({gphph.params[0]: 1, gphph.params[1]: sp.sqrt(8), gphph.coords[0]: 4})
+    ck(f"{name} the inner semicircle is the axis between the holes", sp.simplify(gp) == 0)
     indices = np.argwhere(inside)
     picks = indices[np.linspace(0, len(indices) - 1, 40).astype(int)]
     agrees(ck, name, K,
@@ -12059,6 +12106,8 @@ def bonnor_magnetic_dipole(ck, src):
            [values[j, i] for j, i in picks])
     angles = np.linspace(0, math.pi, 161)
     strut = [[float(4 * math.sin(a)) + 0.0, float(4 * math.cos(a)) + 0.0] for a in angles]
+    ck(f"{name} the strut's chords stay within the drawing tolerance",
+       4 * (PLOT_W / 8) * (1 - math.cos(math.pi / 320)) < TOLERANCE)
     return [{
         "id": "meridian", "label": "the meridian half plane", "kind": "map",
         "x": x_axis, "y": y_axis,
@@ -12067,14 +12116,20 @@ def bonnor_magnetic_dipole(ck, src):
                 "x": "r", "y": "\\theta", "frame": "meridian", "params": params,
                 "domain": "(r > 4*m) & (r <= 8*m)", "nx": nx, "ny": ny,
                 "cells": [[rounded(values[j, i]) if inside[j, i] else None for i in range(nx)] for j in range(ny)]},
-        "marks": [{"class": "string", "points": strut},
+        "marks": [{"class": "front", "points": strut},
                   {"class": "horizon", "at": [0.0, 4.0]}, {"class": "horizon", "at": [0.0, -4.0]}],
-        "legend": [["line", "string", "the strut, $r = 4m$, $0 < \\theta < \\pi$"],
+        "legend": [["line", "front", "the strut, $r = 4m$, $0 < \\theta < \\pi$"],
                    ["point", "horizon", "the two degenerate horizons, $r = 4m$, $\\theta = 0, \\pi$"]],
         "caption": ["The Kretschmann scalar $K$ of the magnetic dipole over the meridian half plane "
                     "($b = 2\\sqrt{2}\\,m$), the same at every $t$ and $\\phi$. "
                     "We draw Bonnor's $r$ and $\\theta$ as polar coordinates, with the strut on the inner semicircle. "
-                    "The Ricci scalar vanishes."],
+                    "Its two endpoints are the degenerate horizons. The Ricci scalar vanishes.",
+                    "At $r = 8m$, $K = 0.00124866/m^4$ on the outer axis and $0.000194185/m^4$ on the equator. "
+                    "Toward $r = 4m$ along the exterior axis it tends to $131/(64m^4) = 2.046875/m^4$, "
+                    "and along the equator to $0.0574134/m^4$. The curvature varies with both radius and polar angle.",
+                    "The axes are coordinate lengths: the circles about the symmetry axis shrink to zero "
+                    "on the whole inner semicircle, the axis between the holes. "
+                    "The empty half disc lies outside the exterior chart, and the empty corners beyond $r = 8m$ lie outside the drawn range."],
         "settings": "$m = 1$, the unit of every length, and $b = 2\\sqrt{2}\\,m$.",
         "clip": "We colour $K\\,m^4$ logarithmically from $10^{-4}$ to $10$, over $4 < r/m \\le 8$. "
                 "Every coloured cell lies within the scale; cells outside this radial interval stay clear.",
