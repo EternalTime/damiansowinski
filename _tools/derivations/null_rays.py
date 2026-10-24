@@ -1659,6 +1659,7 @@ WITTEN = {"lambda": 1, "m": 1}
 # The black hole of Jackiw and Teitelboim's gravity, drawn in units of its curvature radius with the
 # horizon at r_h = L.
 JT = {"L": 1, "r_h": 1}
+ETW = {"L": 1, "phi_h": 1}
 
 # Simpson and Visser's three geometries at r_s = 1: the black bounce, a = r_s/2, whose horizons are
 # r = +-sqrt(3)/2, the one way wormhole, a = r_s, and the traversable wormhole, a = 2 r_s.
@@ -3508,6 +3509,23 @@ DIAGRAMS = [
     Diagram("jackiw_teitelboim_black_hole", "poincare", "tz", "$T$ and $z$", ("T", "z"), (0, 6, -3, 3),
             "$z/L$", "$cT/L$", JT, tau="T", where="4 - T**2 + z**2",
             marked=(("shell", {"x0": "0", "r": "2"}, "both", "the horizons"),)),
+    # Maldacena and Qi's eternal traversable wormhole at L = 1, in each of its three charts: the global
+    # strip between its two boundaries, with the middle sigma = pi/2 where the dilaton is least and the
+    # two rays through it at t = 0, which cross from boundary to boundary; the Poincare patch beside
+    # the boundary sigma = 0, with the same rays and the middle z^2 - t_P^2 = 1; and the thermal wedge.
+    Diagram("eternal_traversable_wormhole", "global", "strip", "$t$ and $\\sigma$", ("t", "\\sigma"),
+            (0, math.pi, -math.pi / 2, math.pi / 2), "$\\sigma$", "$t$", ETW, tau="t",
+            lines=(("throat", "r", "pi/2", "the middle of the wormhole, $\\sigma = \\pi/2$, where the dilaton is least"),),
+            marked=(("event", {"x0": "0", "r": "pi/2"}, "both",
+                     "the light rays through the middle at $t = 0$, each from one boundary to the other"),)),
+    Diagram("eternal_traversable_wormhole", "poincare", "tz", "$t_P$ and $z$", ("t_P", "z"), (0, 3, -1.5, 1.5),
+            "$z$", "$t_P$", ETW, tau="t_P",
+            curves=(("world", "sqrt(1 + t_P**2)", "the middle of the wormhole, $z^2 - t_P^2 = 1$, where the "
+                                                 "dilaton is least"),),
+            marked=(("event", {"x0": "0", "r": "1"}, "both",
+                     "the light rays through the middle at $t_P = 0$, each from one boundary to the other"),)),
+    Diagram("eternal_traversable_wormhole", "thermal", "radial", "$t_R$ and $\\rho$", ("t_R", "\\rho"),
+            (0, 3, -1.5, 1.5), "$\\rho$", "$t_R$", ETW, tau="t_R"),
     # The moving mirror of Fulling and Davies at kappa = 1: see _mirror_rows.
     *_mirror_rows(),
     # Roberts's collapsing scalar field, one view for each of its three outcomes in each chart. The
@@ -8226,6 +8244,35 @@ CAPTIONS = {
         "$\\phi = \\phi_r\\left(1 - r_h^2(c^2T^2 - z^2)/4L^4\\right)/z$ vanishes on the hyperbola "
         "$c^2T^2 - z^2 = 4L^4/r_h^2$, and the chart reaches past the horizons into both interiors and a part of "
         "the second outside.",
+    ],
+    ("eternal_traversable_wormhole", "global", "strip"): [
+        "The plane of $t$ and $\\sigma$, each point in the diagram a single event. The metric is "
+        "$L^2/\\sin^2\\sigma$ times Minkowski's, so the light rays are the lines of constant $t \\pm \\sigma$, "
+        "at 45°.",
+        "The edges $\\sigma = 0$ and $\\pi$ are the two boundaries, coupled to each other, and a ray leaving one "
+        "reaches the other after the time $\\pi$. The dilaton $\\phi = \\phi_h\\left(1 + (\\pi/2 - "
+        "\\sigma)\\cot\\sigma\\right)$ is the same at every $t$, least on the middle line $\\sigma = \\pi/2$, and "
+        "grows as $\\pi\\phi_h/2\\sigma$ toward the boundary $\\sigma = 0$ and in the mirror image toward "
+        "$\\sigma = \\pi$. Every event sends light to both boundaries.",
+    ],
+    ("eternal_traversable_wormhole", "poincare", "tz"): [
+        "The plane of $t_P$ and $z$, each point in the diagram a single event. The metric is $L^2/z^2$ times "
+        "Minkowski's, so the light rays are the lines of constant $t_P \\pm z$, at 45°.",
+        "The edge $z = 0$ is the boundary $\\sigma = 0$ of the global chart, and the chart covers the triangle "
+        "$|t \\pm \\sigma| < \\pi$ beside it, with $t_P \\pm z = \\tan((t \\pm \\sigma)/2)$. The dilaton "
+        "$\\phi = \\phi_h(1 + x\\arctan x)$ changes with $t_P$ and is least on the hyperbola $z^2 - t_P^2 = 1$, the "
+        "middle of the wormhole. The marked rays cross it at $t_P = 0$ and leave the chart as $z \\to \\infty$, on "
+        "their way to the other boundary.",
+    ],
+    ("eternal_traversable_wormhole", "thermal", "radial"): [
+        "The plane of $t_R$ and $\\rho$, each point in the diagram a single event. The edges of the cones are "
+        "$d\\rho/dt_R = \\pm\\sinh\\rho$, so $t_R \\mp \\ln\\tanh(\\rho/2)$ is constant along a ray.",
+        "The chart covers the wedge $\\cos\\sigma > |\\sin t|$ of the global chart beside the boundary "
+        "$\\sigma = 0$, with $\\tanh t_R = \\sin t/\\cos\\sigma$ and $\\cosh\\rho = \\cos t/\\sin\\sigma$. Its "
+        "edge $\\rho = 0$, reached as $t_R \\to \\pm\\infty$, is the pair of light rays through the middle of the "
+        "wormhole at $t = 0$, which run on to the other boundary. The dilaton $\\phi = \\phi_h(1 + x\\arctan x)$, "
+        "with $x = \\sinh\\rho\\cosh t_R$, changes with $t_R$, and the symmetry the wormhole keeps is the shift of "
+        "the global time $t$.",
     ],
     **ROBERTS_CAPTIONS,
     ("einstein_rosen_bridge", "bridge", "radial"): [
@@ -16510,6 +16557,12 @@ CLOSED_FORMS = {
     ("jackiw_teitelboim_black_hole", "kruskal", "plane"): (lambda U, V: V, lambda U, V: U, None),
     ("jackiw_teitelboim_black_hole", "global", "strip"): (lambda t, s: t + s, lambda t, s: t - s, None),
     ("jackiw_teitelboim_black_hole", "poincare", "tz"): (lambda T, z: T + z, lambda T, z: T - z, None),
+    # Maldacena and Qi's eternal traversable wormhole at L = 1: the global and Poincare charts are
+    # conformally flat in their own coordinates, and the thermal chart's tortoise coordinate is ln tanh(rho/2).
+    ("eternal_traversable_wormhole", "global", "strip"): (lambda t, s: t + s, lambda t, s: t - s, None),
+    ("eternal_traversable_wormhole", "poincare", "tz"): (lambda T, z: T + z, lambda T, z: T - z, None),
+    ("eternal_traversable_wormhole", "thermal", "radial"):
+        (lambda t, p: t + np.log(np.tanh(p / 2)), lambda t, p: t - np.log(np.tanh(p / 2)), lambda t, p: p > 0.02),
     # Roberts's collapse: the advanced and the retarded null coordinate v and u, in each chart's own coordinates.
     **{("roberts", "double_null", case): (lambda u, v: v, lambda u, v: u, None) for case in ROBERTS_CASES},
     # Hiscock's evaporating hole: an ingoing ray keeps v and an outgoing one u, whatever the mass

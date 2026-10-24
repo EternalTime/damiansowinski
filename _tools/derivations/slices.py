@@ -986,6 +986,21 @@ def jackiw_teitelboim(chart):
     return [Mark(m, along(0.0, 2 * math.exp(-hi), min(6.0, 2 * math.exp(hi))))]
 
 
+def eternal_traversable_wormhole(chart):
+    """The moment t = 0 of Maldacena and Qi's eternal traversable wormhole, the meridians theta = 0
+    and pi of its Euclidean cylinder, as far as the embedding reaches in the global sigma, pi/4 to
+    3 pi/4, at L = 1: t = 0 across the strip in the global chart; t_P = 0 with z = tan(sigma/2) in
+    the Poincare chart; and t_R = 0 with cosh(rho) = 1/sin(sigma) in the thermal chart, which holds
+    only the half sigma <= pi/2, out from its edge rho = 0 at the middle of the strip."""
+    m = moments("eternal_traversable_wormhole")[0]
+    lo, hi = m.reach("global", "\\sigma")
+    if chart == "global":
+        return [Mark(m, along(0.0, lo, hi))]
+    if chart == "poincare":
+        return [Mark(m, along(0.0, math.tan(lo / 2), math.tan(hi / 2)))]
+    return [Mark(m, along(0.0, 0.0, math.acosh(1 / math.sin(lo))))]
+
+
 def witten(chart):
     """The moment t = 0 of Witten's black hole outside the horizon, the meridian theta = 0 of his
     cigar, as far as the embedding reaches in his proper distance r, at lambda = m = 1: level in
@@ -2777,6 +2792,9 @@ FLAT = {
     **{("jackiw_teitelboim_black_hole", chart, view): (lambda chart=chart: jackiw_teitelboim(chart))
        for chart, view in (("static", "radial"), ("proper_distance", "radial"), ("kruskal", "plane"),
                            ("global", "strip"), ("poincare", "tz"))},
+    # Maldacena and Qi's eternal traversable wormhole: the moment t = 0 across the strip, in each chart.
+    **{("eternal_traversable_wormhole", chart, view): (lambda chart=chart: eternal_traversable_wormhole(chart))
+       for chart, view in (("global", "strip"), ("poincare", "tz"), ("thermal", "radial"))},
     # Witten's black hole in two dimensions: the moment t = 0 outside the horizon in each chart, and
     # on both sides of it on the Kruskal plane.
     **{("witten_black_hole", chart, view): (lambda chart=chart: witten(chart))
