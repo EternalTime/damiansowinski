@@ -11844,17 +11844,152 @@ def tolman_bondi(ck, src):
     The density at release is proportional to 1 - r^2 inside r_b = 1, with total mass
     2GM/c^2 = r_b/2. Each shell follows the cycloid already declared as lw_r, with
     k = 2M(r)/r^3, R = r lw_r(t sqrt(k), 1), and E = -k r^2/2.
-    The map ends at the first shell-focusing singularity, t = pi/sqrt(5)."""
+    The map ends at the first shell-focusing singularity, t = pi/sqrt(5).
+    Every cell is checked against the mass-density identity for K and the stored Ricci
+    scalar against the dust density. Sixty-digit cycloids check cells across the map and
+    beside its singular corner. The release, shell collapse times, absence of shell
+    crossings, vacuum continuation, central growth and colour clipping are checked."""
     name, system = "tolman_bondi", "comoving_synchronous"
     k = "Piecewise(((5 - 3*r**2)/4, r < 1), (1/(2*r**3), True))"
     functions = {"R": f"r*lw_r(t*sqrt({k}), 1)", "E": f"-r**2*({k})/2"}
     K = Published(src, name, system, "kretschmann", ["r", "t"], [], functions=functions)
+    ricci = Published(src, name, system, "ricci_scalar", ["r", "t"], [], functions=functions)
+    pressure = Published(src, name, system, "einstein_tensor", ["r", "t"], [], ("r", "r"), functions)
     x_axis, y_axis = axis("$r/r_b$", 0, 1.5), axis("$ct/r_b$", 0, math.pi / math.sqrt(5))
-    nx, ny = 24, 24
-    _, _, values = cells(K, x_axis, y_axis, nx, ny, [])
+    nx, ny = 240, 225
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [])
+    X, T = np.meshgrid(xs, ys)
     scale = {"kind": "log", "from": 0.1, "to": 1e6}
     shape_checks(ck, name, [1.5 / y_axis["to"]])
     ck("tolman_bondi K is finite and positive in every cell", np.all(np.isfinite(values)) and np.all(values > 0))
+
+    r, t = K.coords
+    local = {"r": r, "t": t, **nr.DECLARED_FUNCTIONS}
+    radius = sp.sympify(functions["R"], locals=local)
+    energy = sp.sympify(functions["E"], locals=local)
+    kv = sp.sympify(k, locals=local)
+    mass = kv * r ** 3 / 2
+    derivs = [radius, sp.diff(radius, r), sp.diff(radius, t), sp.diff(radius, t, 2)]
+    with np.errstate(invalid="ignore"):
+        R, Rr, Rt, Rtt = (sp.lambdify((r, t), d, "numpy")(X, T) for d in derivs)
+    M, Mr = (sp.lambdify(r, d, "numpy")(X) for d in (mass, sp.diff(mass, r)))
+    q, p = M / R ** 3, Mr / (R ** 2 * Rr)
+    expected = 48 * q ** 2 - 32 * q * p + 12 * p ** 2
+    ck("tolman_bondi every cell agrees with the dust mass-density identity for K",
+       np.allclose(values, expected, rtol=AGREE, atol=0), f"worst {np.max(np.abs(values / expected - 1)):.2e}")
+    rv = ricci(X, T)
+    ck("tolman_bondi the stored Ricci scalar is the dust density 2M'/(R^2 R') at every cell",
+       np.allclose(rv, 2 * p, rtol=AGREE, atol=1e-10), f"worst absolute error {np.max(np.abs(rv - 2 * p)):.2e}")
+    ck("tolman_bondi the stored radial pressure vanishes at every cell",
+       np.all(np.abs(pressure(X, T)) < AGREE * (q + np.abs(p))))
+    ck("tolman_bondi every shell is falling and no shells cross before the centre collapses",
+       np.all(R > 0) and np.all(Rr > 0) and np.all(Rt < 0) and np.all(Rtt < 0), f"least R' = {np.min(Rr):.6g}")
+    ck("tolman_bondi K varies in both drawn coordinates",
+       np.all(np.ptp(values, axis=0) > 0) and np.all(np.ptp(values, axis=1) > 0))
+    ck("tolman_bondi the exterior is Schwarzschild's K = 3/R^6 and has zero Ricci scalar",
+       np.allclose(values[X >= 1], 3 / R[X >= 1] ** 6, rtol=AGREE, atol=0)
+       and np.all(np.abs(rv[X >= 1]) < 1e-10))
+
+    # The declared lw_r is evaluated independently at sixty digits from the implicit cycloid.
+    # Only time derivatives of lw_r(t sqrt(k), 1) occur: its second argument is constant.
+    eta = sp.Symbol("eta", real=True)
+    jet = (1 + sp.cos(eta)) / 2
+    jets = [sp.lambdify(eta, jet, "mpmath")]
+    for _ in range(3):
+        jet = sp.diff(jet, eta) * 2 / (1 + sp.cos(eta))
+        jets.append(sp.lambdify(eta, jet, "mpmath"))
+
+    def angle(want):
+        if not want:
+            return mpmath.mpf(0)
+        seed = mpmath.mpf(nr._lw_eta_one(float(want)))
+        return mpmath.findroot(lambda e: e + mpmath.sin(e) - want, (seed, seed + mpmath.mpf("0.00001")))
+
+    def exact(scalar, x, time):
+        with mpmath.workdps(60):
+            at = scalar.expr.xreplace({r: sp.Float(x, 70), t: sp.Float(time, 70)})
+            e = angle(2 * mpmath.mpf(time) * mpmath.sqrt((5 - 3 * mpmath.mpf(x) ** 2) / 4
+                      if x < 1 else 1 / (2 * mpmath.mpf(x) ** 3)))
+            replace = {}
+            for f in at.atoms(sp.Function):
+                label = f.func.__name__
+                if label in ("lw_r", "lw_r_10", "lw_r_20", "lw_r_30"):
+                    order = 0 if label == "lw_r" else int(label[-2])
+                    replace[f] = sp.Float(str(jets[order](e)), 60)
+            return float(at.xreplace(replace).evalf(60))
+
+    picks = {(int(i), int(j)) for i, j in zip(np.linspace(0, nx - 1, 40), np.linspace(0, ny - 1, 40))}
+    picks.update((i, ny - 1) for i in range(12))
+    picks.update((i, j) for i in (nx * 2 // 3 - 1, nx * 2 // 3) for j in (0, ny // 2, ny - 1))
+    for scalar, sampled in ((K, values), (ricci, rv)):
+        worst = max(abs(exact(scalar, float(xs[i]), float(ys[j])) - sampled[j, i])
+                    / max(abs(sampled[j, i]), 1.0) for i, j in sorted(picks))
+        ck(f"tolman_bondi {scalar.field} agrees with independent sixty-digit cycloids",
+           worst < AGREE, f"worst {worst:.2e} at {len(picks)} cells")
+
+    release_r = np.linspace(0.001, 1.5, SAMPLES)
+    release = K(release_r, 0.0)
+    formula = np.where(release_r < 1, (375 - 750 * release_r ** 2 + 423 * release_r ** 4) / 16,
+                       3 / release_r ** 6)
+    ck("tolman_bondi K at release is its regular central polynomial and the vacuum exterior",
+       np.allclose(release, formula, rtol=AGREE, atol=0))
+    with np.errstate(invalid="ignore"):
+        at_release = sp.lambdify((r, t), radius, "numpy")(release_r, 0.0)
+        speed_release = sp.lambdify((r, t), sp.diff(radius, t), "numpy")(release_r, 0.0)
+    ck("tolman_bondi every shell is released from rest at R = r",
+       np.allclose(at_release, release_r, rtol=1e-14, atol=0)
+       and np.all(np.abs(speed_release) < 1e-14))
+    ck("tolman_bondi E = -GM(r)/(c^2 r) and total 2GM/c^2 = 1/2",
+       sp.simplify(energy + mass / r) == 0 and mass.subs(r, 1) == sp.Rational(1, 4))
+    collapse = [math.pi / (2 * math.sqrt(float(kv.subs(r, x)))) for x in (0, 1 / 3, 2 / 3, 1)]
+    ck("tolman_bondi shells collapse at increasing times, first pi/sqrt(5), surface pi/sqrt(2)",
+       all(b > a for a, b in zip(collapse, collapse[1:]))
+       and abs(collapse[0] - y_axis["to"]) < 1e-14 and abs(collapse[-1] - math.pi / math.sqrt(2)) < 1e-14,
+       f"ct/r_b = {collapse}")
+    with mpmath.workdps(60):
+        a = jets[0](angle(mpmath.mpf("1.3") * mpmath.sqrt(5)))
+        centre = float(mpmath.mpf(375) / (16 * a ** 6))
+    ck("tolman_bondi K at the centre rises from 375/16 to its stated value at ct = 1.3",
+       abs(float(K(1e-6, 0)) / (375 / 16) - 1) < 1e-9
+       and abs(exact(K, 1e-6, 1.3) / centre - 1) < 1e-9, f"{375 / 16:.8g} to {centre:.8g}")
+    surface = exact(K, 1.0, 1.3)
+    ck("tolman_bondi the surface curvature at ct = 1.3 remains finite", 0 < surface < centre,
+       f"K r_b^4 = {surface:.8g}")
+    ck("tolman_bondi K grows toward the central singularity with inverse fourth power of time left",
+       abs(exact(K, 1e-7, y_axis["to"] - 1e-6) * 1e-24 / (80 / 27) - 1) < 1e-3)
+
+    # At each shell the colour clips once, late in its fall. The bounds round outward from
+    # the continuous boundary, rather than from a cell centre on the finite grid.
+    def bisect(fn, lo, hi):
+        for _ in range(70):
+            mid = (lo + hi) / 2
+            if fn(mid) > 0:
+                hi = mid
+            else:
+                lo = mid
+        return (lo + hi) / 2
+
+    with mpmath.workdps(60):
+        a_cut = (mpmath.mpf(375) / (16 * scale["to"])) ** (mpmath.mpf(1) / 6)
+        eta_cut = 2 * mpmath.acos(mpmath.sqrt(a_cut))
+        time_cut = float((eta_cut + mpmath.sin(eta_cut)) / mpmath.sqrt(5))
+    radius_cut = bisect(lambda x: scale["to"] - float(K(x, y_axis["to"])), 0.001, 0.9)
+    radius_bound = math.ceil(radius_cut * 100) / 100
+    time_bound = math.floor(time_cut * 100) / 100
+    clipped = values > scale["to"]
+    ck("tolman_bondi the upper colour clip is confined to the stated central corner",
+       np.any(clipped) and np.all(X[clipped] < radius_bound) and np.all(T[clipped] > time_bound)
+       and abs(float(K(radius_cut, y_axis["to"])) / scale["to"] - 1) < AGREE
+       and abs(exact(K, 1e-6, time_cut) / scale["to"] - 1) < AGREE,
+       f"r/r_b < {radius_bound:.2f}, ct/r_b > {time_bound:.2f}; continuous crossings {radius_cut:.8g}, {time_cut:.8g}")
+    ck("tolman_bondi every cell is above the lower colour limit",
+       np.all(values >= scale["from"]), f"sampled K r_b^4 = {np.min(values):.8g} to {np.max(values):.8g}")
+    ck("tolman_bondi every shell's K increases before the first singularity",
+       np.all(np.diff(values, axis=0) > 0))
+    ck("tolman_bondi the surface and singular point are at fixed comoving coordinates",
+       float(radius.subs({r: 1, t: 0}).replace(lambda f: f.func.__name__ == "lw_r", lambda f: sp.Integer(1))) == 1
+       and abs(y_axis["to"] - collapse[0]) < 1e-14)
+
     return [{
         "id": "collapse", "label": "the collapsing cloud", "kind": "map", "system": system,
         "x": x_axis, "y": y_axis,
@@ -11862,13 +11997,31 @@ def tolman_bondi(ck, src):
         "map": {"metric": name, "system": system, "scalar": "kretschmann", "x": "r", "y": "t",
                 "params": {}, "functions": functions, "nx": nx, "ny": ny,
                 "cells": [[rounded(v) for v in row] for row in values]},
-        "marks": [{"class": "surface", "points": [[1.0, 0.0], [1.0, y_axis["to"]]]}],
-        "legend": [["line", "surface", "the surface of the cloud, $r = r_b$"]],
-        "caption": ["The Kretschmann scalar $K$ of the inhomogeneous dust cloud over the plane of $t$ and $r$, "
-                    "the same at every $\\theta$ and $\\phi$. Each shell falls from rest at $t = 0$."],
-        "settings": "$r_b = 1$, the unit of every length, and $2GM/c^2 = r_b/2$.",
-        "input": "Density at release proportional to $1 - r^2/r_b^2$, with $R(r,0) = r$ and $E = -GM(r)/c^2r$.",
-        "clip": "We colour $K\\,r_b^4$ logarithmically from $10^{-1}$ to $10^6$; values above the top take its colour.",
+        "marks": [{"class": "front", "points": [[1.0, 0.0], [1.0, y_axis["to"]]]},
+                  {"class": "singular", "at": [0.0, y_axis["to"]]}],
+        "legend": [["line", "front", "the surface of the cloud, $r = r_b$"],
+                   ["point", "singular", "the first shell-focusing singularity, at the centre"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the inhomogeneous dust cloud over the plane of $t$ and the shell label "
+            "$r$ ($E = -GM(r)/c^2r$), the same at every $\\theta$ and $\\phi$. Each shell starts at rest at "
+            "$R = r$ at $t = 0$ and falls on its own cycloid. The centre reaches $R = 0$ first, at "
+            f"$ct = \\pi r_b/\\sqrt{{5}} = {collapse[0]:.4f}\\,r_b$, the top of the map. The shells "
+            f"$r_b/3$ and $2r_b/3$ collapse at $ct = {collapse[1]:.4f}\\,r_b$ and ${collapse[2]:.4f}\\,r_b$, "
+            f"and the surface at $ct = \\pi r_b/\\sqrt{{2}} = {collapse[3]:.4f}\\,r_b$.",
+            "At release $K = 375/(16r_b^4)$ at the centre and $3/r_b^4$ at the surface. At "
+            f"$ct = 1.3\\,r_b$ those values are ${tex_number(centre)}/r_b^4$ and ${surface:.3f}/r_b^4$. "
+            "Toward the first singularity the central $K$ grows as $80/[27c^4(t_c - t)^4]$, with "
+            "$ct_c = \\pi r_b/\\sqrt{5}$. Outside the cloud $K = 12r_s^2/R^6$ with $r_s = r_b/2$, "
+            "and grows as the freely falling shells shrink.",
+        ],
+        "settings": "$r_b = 1$, the unit of every length, and $2GM/c^2 = r_b/2$, with $M$ the total mass "
+                    "and $M(r)$ the mass inside the shell labelled $r$.",
+        "input": "Density at release proportional to $1 - r^2/r_b^2$. With $x = r/r_b$, the enclosed mass is "
+                 "$GM(r)/(c^2r_b) = (5x^3 - 3x^5)/8$ inside the cloud and $1/4$ outside it.",
+        "clip": ("We colour $K\\,r_b^4$ on a logarithmic scale from $10^{-1}$ to $10^6$, over "
+                 "$0 \\le r/r_b \\le 1.5$ from release to the first central collapse. Values above $10^6$ "
+                 f"take the top colour, confined to $r < {radius_bound:.2f}\\,r_b$ and "
+                 f"$ct > {time_bound:.2f}\\,r_b$; no cell falls below the lower limit."),
     }]
 
 

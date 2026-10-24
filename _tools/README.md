@@ -1655,6 +1655,15 @@ At $r = 0.7m_0$, the scalar is $149/m_0^4$ at $v = -m_0$, $123/m_0^4$ at $v = -1
 The generator checks every one of the 4001 radial samples per frame in sixty-digit arithmetic with the numerical mass profile held, every retained point, the logarithmic limits, the shell domain and matching relation, the change in radial shape, the stated magnitudes, and the two asymptotic powers directly from the stored scalar.
 Each apparent horizon in the band is a sign change of the stored inverse metric, marked in its own frame.
 
+The `tolman_bondi` figure is a heat map of the stored Kretschmann scalar over comoving shell label and proper time, for the cloud released from rest that the embedding draws.
+Its density at release is proportional to $1 - r^2/r_b^2$, its total mass satisfies $2GM/c^2 = r_b/2$, and its declared functions are $R = r\,\mathtt{lw\_r}(t\sqrt{k},1)$ and $E = -kr^2/2$, with $k = (5 - 3r^2)/4$ inside $r_b = 1$ and $1/(2r^3)$ outside.
+The existing declared cycloid and its derivatives enter the stored scalar directly, with no new profile reader.
+The map spans $0 \le r/r_b \le 1.5$, including the vacuum exterior, and $0 \le ct/r_b \le \pi/\sqrt{5}$, from release to the first central collapse; both coordinates change the curvature, so the map shows the different rates of shell collapse together.
+Its 240 by 225 cells use a logarithmic scale from $10^{-1}$ to $10^6$ for $K r_b^4$; higher values take the top colour, confined to $r < 0.29r_b$ and $ct > 1.36r_b$, and no cell falls below the lower limit.
+The surface is a solid white line on a dark casing at fixed $r = r_b$, and the first singularity is marked at the upper left corner.
+The generator checks every cell against the dust mass-density identity, the stored Ricci scalar against $2M'/(R^2R')$, the stored radial pressure against zero, independent sixty-digit cycloids at 58 cells, the release and collapse times, the absence of shell crossings, the Schwarzschild exterior, and the colour clip.
+It checks the central values $375/(16r_b^4)$ at release and $36443.137/r_b^4$ at $ct = 1.3r_b$, the surface values $3/r_b^4$ and $14.285770/r_b^4$ at those times, and the central growth $80/[27c^4(t_c-t)^4]$ toward the first singularity.
+
 ### The three shapes
 
 A curvature figure has one or more views, each of one of three shapes.
