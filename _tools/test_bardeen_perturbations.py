@@ -6,7 +6,7 @@ longitudinal chart is the published conformal chart of FRW; the published synchr
 published flat longitudinal chart pulled back along eta -> eta + d_eta E and x^i -> x^i + d_i E,
 with Bardeen's potentials the ones its convention states; the space components off the diagonal
 of the Einstein tensor are d_i d_j (Psi - Phi); and the nine tenths the History gives. It also
-holds the rule by which the checker counts a potential of a system that names no slow time. The
+holds the rule by which the checker counts a potential of a system whose order names no slow time. The
 tests need sympy, and are skipped where it is absent.
 """
 import importlib.util
@@ -37,7 +37,7 @@ def chart(metric_id, system):
 @unittest.skipUnless(HAS_SYMPY, "needs sympy")
 class Orders(unittest.TestCase):
     """The first order the checker keeps where the small quantities are potentials of all four
-    coordinates and no slow time is named."""
+    coordinates and the line's third item, None, says no time is slow."""
 
     @classmethod
     def setUpClass(cls):
@@ -47,7 +47,7 @@ class Orders(unittest.TestCase):
 
     def test_every_derivative_of_a_potential_counts_as_the_potential(self):
         sp, vm = self.sp, self.vm
-        reader = vm.Reader(["\\eta", "x"], ["a = a(\\eta)", "\\Phi = \\Phi(\\eta,x)"], (), kept=({"Phi": 1}, 1))
+        reader = vm.Reader(["\\eta", "x"], ["a = a(\\eta)", "\\Phi = \\Phi(\\eta,x)"], (), kept=({"Phi": 1}, 1, None))
         eta, x = reader.symbol["\\eta"], reader.symbol["x"]
         a, Phi = reader.parameters["a"], reader.parameters["Phi"]
         D = sp.Derivative
@@ -56,6 +56,9 @@ class Orders(unittest.TestCase):
         self.assertEqual(sp.expand(reader.through(value, 1) - kept), 0)
         self.assertEqual(sp.expand(reader.through(value, 0) - a ** 2), 0)
         self.assertIsNone(reader.slow)
+        # A line of two items still counts constants alone and refuses a function.
+        with self.assertRaises(vm.LatexError):
+            vm.Reader(["\\eta", "x"], ["\\Phi = \\Phi(\\eta,x)"], (), kept=({"Phi": 1}, 1))
 
     def test_terms_of_the_second_order_in_the_metric_move_nothing_that_is_kept(self):
         """With an arbitrary function of the four coordinates put in each of the ten components at

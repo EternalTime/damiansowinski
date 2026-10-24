@@ -143,9 +143,10 @@ _tools/test_ppn_metric.py checks by adding such terms and finding the kept ones 
 The small quantities of such a system may be declared functions of the coordinates, as the
 potentials of Einstein, Infeld and Hoffmann's field of many bodies are: its ORDERS line gives
 each function its order, and a derivative of one along the named time counts one order more
-each time it is taken, since the bodies that make the potentials move slowly. A system that
-names no time may declare its potentials the same way, as the perturbed Friedmann universe does,
-and then every derivative of a potential counts as the potential does.
+each time it is taken, since the bodies that make the potentials move slowly. A line whose third
+item is None declares its potentials the same way with no time slow, as the perturbed Friedmann
+universe's does, and then every derivative of a potential counts as the potential does; a line of
+two items counts constants alone and refuses a function.
 """
 
 import argparse
@@ -2449,10 +2450,11 @@ ORDERS = {
     ("eih_many_bodies", "harmonic"): ({"U": 2, "chi": 2, "V_1": 3, "V_2": 3, "V_3": 3, "psi": 4}, 2, "t"),
     ("eih_many_bodies", "standard"): ({"U": 2, "chi": 2, "V_1": 3, "V_2": 3, "V_3": 3, "psi": 4}, 2, "t"),
     # The perturbed Friedmann universe, kept to first order in its potentials, functions of all
-    # four coordinates; no time is named, so each derivative of a potential counts as it does.
-    ("bardeen_perturbations", "longitudinal"): ({"Phi": 1, "Psi": 1}, 1),
-    ("bardeen_perturbations", "longitudinal_curved"): ({"Phi": 1, "Psi": 1}, 1),
-    ("bardeen_perturbations", "synchronous"): ({"psi": 1, "E": 1}, 1),
+    # four coordinates; the third item None says no time is slow, so each derivative of a potential
+    # counts as the potential does.
+    ("bardeen_perturbations", "longitudinal"): ({"Phi": 1, "Psi": 1}, 1, None),
+    ("bardeen_perturbations", "longitudinal_curved"): ({"Phi": 1, "Psi": 1}, 1, None),
+    ("bardeen_perturbations", "synchronous"): ({"psi": 1, "E": 1}, 1, None),
 }
 
 # The defined names a system holds as functions of the coordinates while its tensors are built.
@@ -3743,23 +3745,26 @@ class Reader:
         # order a component without one is kept to, which is the lowest order of the curvature.
         self.slow = None
         if kept:
-            weights, highest, *slow = kept
-            # A system may count a declared function of the coordinates as small, as the potentials
-            # of many bodies are and the potentials of a perturbed Friedmann universe: its order is
-            # the function's own. In a post-Newtonian system each derivative of it along the slow
-            # time counts one order more, since the sources move slowly; in any other, every
-            # derivative counts as the function does.
-            potentials = {name for name in weights if name in self.functions
+            weights, highest, *named = kept
+            # A declared function of the coordinates is counted as small, at its own order, only
+            # where the line says how its derivatives count: a post-Newtonian system names its slow
+            # time, along which each derivative counts one order more, since the sources move
+            # slowly, as the potentials of many bodies do; a line whose third item is None counts
+            # every derivative as the function does, as the potentials of a perturbed Friedmann
+            # universe do. A line of two items counts constants alone, so a function named there,
+            # as a post-Newtonian line that forgot its time would name one, is refused.
+            slow = named[0] if named else None
+            potentials = {name for name in weights if named and name in self.functions
                           and self.functions[name][0] not in self.held}
             stray = [name for name in weights if name not in potentials
                      and (name not in self.parameters or not self.parameters[name].is_Symbol)]
             if stray:
                 raise LatexError(f"an order is declared for {stray}, which are not constants of the system")
             small = sp.Dummy("epsilon", positive=True)
-            if slow:
-                if slow[0] not in self.coords:
-                    raise LatexError(f"post-Newtonian orders are declared along {slow[0]!r}, which is not a coordinate")
-                self.slow = (self.coords.index(slow[0]), highest)
+            if slow is not None:
+                if slow not in self.coords:
+                    raise LatexError(f"post-Newtonian orders are declared along {slow!r}, which is not a coordinate")
+                self.slow = (self.coords.index(slow), highest)
                 # Every tensor is built two orders further, as far as any component is kept.
                 highest += 2
             self.order = ({self.parameters[name]: small ** weight * self.parameters[name]

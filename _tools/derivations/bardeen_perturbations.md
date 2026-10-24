@@ -35,10 +35,11 @@ The functions are left free, so no component assumes a field equation.
 
 ## Step 3: what the checker counts as an order
 
-Each chart is kept to first order in its potentials: `ORDERS` declares `({"Phi": 1, "Psi": 1}, 1)` for the longitudinal charts and `({"psi": 1, "E": 1}, 1)` for the synchronous one, with no time named.
-Until this spacetime a declared function could be counted as small only in a post-Newtonian system, which names a slow time along which each derivative counts one order more; `Reader` now counts it in any system, and where no time is named every derivative of a potential counts as the potential does, since a cosmological perturbation varies as fast in time as in space.
-`Reader._scaled` is the whole of the change: with no slow time the power of a derivative along time is zero.
-A system that names no time and declares no function counts constants alone, as before, and the post-Newtonian systems are unchanged; `_tools/test_bardeen_perturbations.py` holds both, and holds a function of all four coordinates added at second order to every component to move no tensor handed over.
+Each chart is kept to first order in its potentials: `ORDERS` declares `({"Phi": 1, "Psi": 1}, 1, None)` for the longitudinal charts and `({"psi": 1, "E": 1}, 1, None)` for the synchronous one.
+The third item of an `ORDERS` line says how the derivatives of a declared function count: a post-Newtonian system names its slow time there, and each derivative along it counts one order more, since the sources move slowly; `None` says no time is slow, and every derivative counts as the function does, since a linear perturbation of a Friedmann universe is kept to first order in the potentials whatever derivatives act on them.
+A line of two items counts constants alone and refuses a function, as before, so a post-Newtonian line that forgot its time is still caught.
+`Reader._scaled` gives a derivative along the slow time its extra power only where a slow time is named, and `null_rays.py` takes a line as post-Newtonian only where its third item names a time.
+`_tools/test_bardeen_perturbations.py` holds the new path and the refusal of a two item line, `_tools/test_eih_many_bodies.py` holds the post-Newtonian path unchanged, and a function of all four coordinates added at second order to every component moves no tensor handed over.
 
 ## Step 4: what each chart is held to
 

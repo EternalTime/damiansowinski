@@ -13797,7 +13797,7 @@ def quotient_checks(chart, n=241):
     component that does not vanish would leave the check not finite, and the view refused.
     """
     kept = vm.ORDERS.get((chart.spec.metric, chart.spec.system), ())
-    if len(kept) > 2:
+    if len(kept) > 2 and kept[2] is not None:
         # A post-Newtonian chart publishes its Christoffel symbols cut where its metric stops fixing
         # them, so its lifted rays are geodesics by them only up to the terms left out, which are
         # smaller by two powers of v/c. The check is made with v/c a hundredth of what is drawn,
