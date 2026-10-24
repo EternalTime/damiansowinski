@@ -11641,6 +11641,67 @@ def levi_civita(ck, src):
     }]
 
 
+def mass_inflation(ck, src):
+    """Ori's interior radial K at geometrically spaced advanced times approaching zero.
+
+    Use the existing shell solution and charge, with the interior advanced time held in
+    each frame. The radial band 0.1 to 0.7 lies inside the shell throughout. Every sampled
+    value is checked with sixty-digit arithmetic with the numerical mass profile held.
+    Check the horizon marks, radial shape change, logarithmic limits and horizon growth.
+    """
+    import ori_shell as ori
+
+    name = "mass_inflation"
+    functions = {"m": "ori_mass_behind(v)"}
+    K = Published(src, name, "ingoing", "kretschmann", ["r", "v"], ["r_q"], functions=functions)
+    R = Published(src, name, "ingoing", "ricci_scalar", ["r", "v"], ["r_q"], functions=functions)
+    grr = Published(src, name, "ingoing", "inverse_metric_components", ["r", "v"], ["r_q"],
+                    ("r", "r"), functions)
+    shell = ori.shell()
+    params = {"r_q": float(Fraction(24, 25))}
+    x_axis = axis("$r/m_0$", 0.1, 0.7)
+    scale = {"kind": "log", "from": 1e2, "to": 1e19}
+    aspect = 1.25
+    panel = {"id": "K", "name": "$K m_0^4$", "aspect": aspect, "scale": scale,
+             "ticks": [{"at": 10.0 ** k, "label": decade(k)} for k in range(2, 20, 3)]}
+    shape_checks(ck, name, [aspect])
+    ck(f"{name} publishes R = 0", R.expr == 0)
+    frames = []
+    for k in range(19):
+        v = -10.0 ** (-k)
+        held = Held(K, {"v": v})
+        lines = sampled(ck, f"{name} v = {v:g}", held, x_axis, scale, PLOT_W / aspect,
+                        list(params.values()))
+        curves = [curve_entry("K", "K", held, "r", params, line) for line in lines]
+        marks = [{"class": "horizon", "x": r} for r in
+                 zeros(ck, f"{name} v = {v:g}", Held(grr, {"v": v}), 0.1, 0.7, list(params.values()))]
+        frames.append({"label": f"$v = -10^{{{-k}}}\\,m_0$", "value": v,
+                       "curves": curves, "marks": marks})
+    return [{
+        "id": "interior", "label": "Behind the shell", "kind": "line", "system": "ingoing",
+        "x": x_axis, "panels": [panel], "curves": [], "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                   ["line", "horizon", "the apparent horizon, where $g^{rr} = 0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ behind Ori's outgoing shell against the areal radius $r$ "
+            "($r_q = 0.96\\,m_0$), at advanced times $v = -10^{-k}m_0$ for $k = 0, \\ldots, 18$. "
+            "The interior advanced time $v$ approaches zero at the Cauchy horizon. "
+            "The Ricci scalar vanishes.",
+            "The scalar grows without bound as the Cauchy horizon is approached. "
+            "At $r = 0.7\\,m_0$ it rises through eleven orders of magnitude between "
+            "$v = -10^{-9}m_0$ and $v = -10^{-18}m_0$. "
+            "The charge term dominates toward small $r$, where $K$ varies as $r^{-8}$; "
+            "as the mass grows, $K$ approaches $48m(v)^2/r^6$ at fixed positive $r$.",
+        ],
+        "settings": "$m_0 = 1$, the final mass outside the shell and the unit of length, "
+                    "with $r_q = 0.96\\,m_0$ and $0.1 \\le r/m_0 \\le 0.7$.",
+        "input": nr.MI_BEHIND_INPUT,
+        "clip": "We draw $K m_0^4$ on a logarithmic scale from $10^2$ to $10^{19}$. "
+                "Every drawn value in every frame lies within these limits; no value is clipped.",
+        "movie": {"variable": "$v$", "seconds": 12, "frames": frames},
+    }]
+
+
 def scalar_clips(kretschmann, ricci, reference=None):
     """The scale of a view that draws both scalars as each of its two places on the page states
     it, the Kretschmann scalar's after the Kretschmann scalar and the Ricci scalar's after the Ricci
@@ -11762,6 +11823,7 @@ DRAWN = {
     "khan_penrose": khan_penrose,
     "kiselev": kiselev,
     "levi_civita": levi_civita,
+    "mass_inflation": mass_inflation,
     "majumdar_papapetrou": majumdar_papapetrou,
     "mcvittie": mcvittie,
     "melvin": melvin,
