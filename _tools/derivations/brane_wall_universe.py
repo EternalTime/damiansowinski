@@ -116,3 +116,70 @@ def psi(t, w):
 def focal_distance(t):
     """w_*(t) = ln(1 + 4t)/2, where psi and the lapse vanish."""
     return 0.5 * np.log1p(4 * np.asarray(t, dtype=float))
+
+
+# ---------------------------------------------------------------- one moment of the wall's own time
+
+KAPPA = 2.0                                     # the surface gravity f'(1)/2 of the drawn hole
+
+
+def kruskal_product(r):
+    """Kruskal's UV = (1 - r) e^(2 arctan r)/(1 + r) at r, with U = -e^(-2u) and V = e^(2v) outside."""
+    r = np.asarray(r, dtype=float)
+    return (1 - r) / (1 + r) * np.exp(2 * np.arctan(r))
+
+
+class Moment:
+    """The surface of constant t of the Gaussian normal chart, the wall's own moment at its proper time
+    t, followed out from the wall along the normal geodesics, which keep E = da/d(c tau) = 1/a along the
+    static Killing vector. Mukohyama, Shiromizu and Maeda's (7) at k = 0 and l = mu = 1 is
+
+        2 r^2 + E^2 = sqrt(4 + E^4) cosh(2 (w_0 - w)),   cosh(2 w_0) = (2 a^2 + E^2)/sqrt(4 + E^4),
+
+    so r falls from the wall to r_min^2 = (sqrt(4 + E^4) - E^2)/2 < 1 at w = w_0, inside the black hole,
+    and grows again into the other exterior. With dr/dw = -+sqrt(f + E^2) before and after w_0 and
+    dt/dw = E/f, the null times change as dv/dw = -1/(E + sqrt(f + E^2)) before w_0 and
+    du/dw = -1/(E + sqrt(f + E^2)) after it, both smooth through the horizons, so V = e^(2v) is
+    followed from the wall to w_0 and U from w_0 on, the other from UV = kruskal_product(r)."""
+
+    def __init__(self, t):
+        self.t = float(t)
+        self.a = float(scale_factor(self.t))
+        self.E = 1 / self.a
+        root = np.sqrt(4 + self.E ** 4)
+        self.root = root
+        self.w0 = 0.5 * np.arccosh((2 * self.a ** 2 + self.E ** 2) / root)
+        self.r_min = np.sqrt((root - self.E ** 2) / 2)
+        u_w, v_w = null_times(self.a) if self.a > 1 else (None, None)
+        self.v_wall = v_w
+
+    def radius(self, w):
+        w = np.asarray(w, dtype=float)
+        return np.sqrt((self.root * np.cosh(2 * (self.w0 - w)) - self.E ** 2) / 2)
+
+    def rate(self, w):
+        """1/(E + sqrt(f + E^2)), with f + E^2 = (dr/dw)^2."""
+        r = self.radius(w)
+        return 1 / (self.E + np.sqrt(np.maximum(lapse_squared(r, 1, 1, 0) + self.E ** 2, 0)))
+
+    def kruskal(self, w):
+        """(U, V) at the proper distances w from the wall, for a wall outside the horizon."""
+        from scipy.integrate import quad
+        w = np.atleast_1d(np.asarray(w, dtype=float))
+        V0 = np.exp(KAPPA * self.v_wall)
+        V_min = V0 * np.exp(-KAPPA * quad(self.rate, 0, self.w0, epsabs=1e-13, epsrel=1e-13)[0])
+        U_min = float(kruskal_product(self.r_min)) / V_min
+        U, V = np.empty_like(w), np.empty_like(w)
+        for i, x in enumerate(w):
+            if x <= self.w0:
+                V[i] = V0 * np.exp(-KAPPA * quad(self.rate, 0, x, epsabs=1e-13, epsrel=1e-13)[0])
+                U[i] = float(kruskal_product(self.radius(x))) / V[i]
+            else:
+                U[i] = U_min * np.exp(KAPPA * quad(self.rate, self.w0, x, epsabs=1e-13, epsrel=1e-13)[0])
+                V[i] = float(kruskal_product(self.radius(x))) / U[i]
+        return U, V
+
+    def static(self, w):
+        """(t, r) of the static chart along the moment, t = (ln|V| - ln|U|)/2k in each cell."""
+        U, V = self.kruskal(w)
+        return (np.log(np.abs(V)) - np.log(np.abs(U))) / (2 * KAPPA), self.radius(w)
