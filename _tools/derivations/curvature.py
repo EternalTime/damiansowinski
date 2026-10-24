@@ -11550,10 +11550,39 @@ def levi_civita(ck, src):
     embedding's inner radius 1/16 to the spacetime diagram's outer radius 4, in the fixed
     length unit rho_0 in which the stored powers of rho are evaluated. The logarithmic scale
     10^-4 to 10^4 holds every sampled value, so none is clipped vertically.
+
+    Check the stored closed form, radial power, flat members, reflection in sigma = 1/4,
+    conicity independence and absence of horizons. Every one of the 4001 samples per frame
+    is evaluated again in sixty-digit arithmetic before thinning, and every written point
+    is checked again against the stored scalar as well.
     """
     name = "levi_civita"
     K = Published(src, name, "weyl", "kretschmann", ["rho"], ["sigma", "C"])
     R = Published(src, name, "weyl", "ricci_scalar", ["rho"], ["sigma", "C"])
+    grr = Published(src, name, "weyl", "inverse_metric_components", ["rho"], ["sigma", "C"],
+                    ("\\rho", "\\rho"))
+    rho = K.coords[0]
+    sigma, conicity = K.params
+    D = 4 * sigma ** 2 - 2 * sigma + 1
+    closed = 64 * sigma ** 2 * (2 * sigma - 1) ** 2 * D / rho ** (4 * D)
+    power = sp.simplify(-rho * sp.diff(K.expr, rho) / K.expr)
+    ck(f"{name} the stored scalar is the stated radial power law", sp.simplify(K.expr - closed) == 0)
+    ck(f"{name} the radial power is 16(sigma - 1/4)^2 + 3, least at sigma = 1/4",
+       sp.simplify(power - (16 * (sigma - sp.Rational(1, 4)) ** 2 + 3)) == 0)
+    ck(f"{name} K at sigma = 1/4 is 3/(4 rho^3)",
+       sp.simplify(K.expr.subs(sigma, sp.Rational(1, 4)) - 3 / (4 * rho ** 3)) == 0)
+    ck(f"{name} K is the same at sigma and 1/2 - sigma",
+       sp.simplify(K.expr.subs(sigma, sp.Rational(1, 2) - sigma) - K.expr) == 0)
+    ck(f"{name} K does not depend on C", conicity not in K.expr.free_symbols)
+    metric = json.loads((build.METRICS_DIR / f"{name}.json").read_text(encoding="utf-8"))
+    weyl = next(s for s in metric["coordinates"] if s["id"] == "weyl")
+    components = [Published(src, name, "weyl", "riemann", ["rho"], ["sigma", "C"], c["indices"])
+                  for c in weyl["riemann"]["variants"]["ulll"]["nonzero"]]
+    for flat in (0, sp.Rational(1, 2)):
+        ck(f"{name} K vanishes identically at sigma = {flat}", K.expr.subs(sigma, flat) == 0)
+        ck(f"{name} every stored Riemann component vanishes at sigma = {flat}",
+           all(sp.simplify(c.expr.subs(c.params[0], flat)) == 0 for c in components),
+           f"{len(components)} components")
     x_axis = axis("$\\rho/\\rho_0$", 1 / 16, 4)
     x_axis["ticks"].insert(0, {"at": 1 / 16, "label": "$1/16$"})
     scale = {"kind": "log", "from": 1e-4, "to": 1e4}
@@ -11564,15 +11593,30 @@ def levi_civita(ck, src):
     ck(f"{name} publishes R = 0", R.expr == 0)
     frames = []
     samples = np.linspace(x_axis["from"], x_axis["to"], SAMPLES)
+    exact_K = sp.lambdify(K.coords + K.params, K.expr, "mpmath")
     for k in range(1, 20):
         sigma = float(Fraction(k, 40))
         params = {"sigma": sigma, "C": 1.0}
         values = K(samples, sigma, 1.0)
+        with mpmath.workdps(60):
+            worst = max(float(abs(mpmath.mpf(float(value)) / exact_K(mpmath.mpf(float(x)),
+                              mpmath.mpf(sigma), mpmath.mpf(1)) - 1)) for x, value in zip(samples, values))
+        ck(f"{name} sigma = {sigma:g} all samples agree with the stored formula in sixty digits",
+           worst < AGREE, f"worst {worst:.2e} at {len(samples)} samples")
+        ck(f"{name} sigma = {sigma:g} K is positive and falls outward",
+           np.all(values > 0) and np.all(np.diff(values) < 0))
+        ck(f"{name} sigma = {sigma:g} has a positive radial power and axis divergence",
+           float(power.subs(K.params[0], sigma)) > 0 and float(K.exact([1, sigma, 1])) > 0)
+        ck(f"{name} sigma = {sigma:g} has no horizon on the drawn range",
+           np.all(grr(samples, sigma, 1.0) > 0))
         ck(f"{name} sigma = {sigma:g} stays inside the stated logarithmic scale",
            np.all(np.isfinite(values)) and np.all(values >= scale["from"]) and np.all(values <= scale["to"]),
            f"{np.min(values):.8g} to {np.max(values):.8g}")
         curves = line_curves(ck, f"{name} sigma = {sigma:g}", "K", "K", K, "\\rho",
                              x_axis, scale, PLOT_W / aspect, params)
+        for curve in curves:
+            agrees(ck, f"{name} sigma = {sigma:g} every written point", K,
+                   [[x, sigma, 1.0] for x, _ in curve["points"]], [v for _, v in curve["points"]])
         frames.append({"label": f"$\\sigma = {sigma:.3f}$", "value": sigma,
                        "curves": curves, "marks": []})
     return [{

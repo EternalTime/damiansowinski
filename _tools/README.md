@@ -1641,6 +1641,8 @@ Its nineteen frames take $\sigma = k/40$ for $k = 1, \ldots, 19$, through $1/4$,
 The radial interval $1/16 \le \rho/\rho_0 \le 4$ joins the embedding's inner radius to the spacetime diagram's outer radius, and the logarithmic scale $10^{-4} \le K\rho_0^4 \le 10^4$ holds every frame whole.
 The stored scalar depends on $\rho$ and the parameter $\sigma$ alone, so a spatial map would repeat each curve along its second coordinate; the movie shows the changing radial power across the family in the collection's line format.
 The stored Ricci scalar vanishes for every $\sigma$.
+The generator checks the stored power law, its least radial exponent $3$ at $\sigma = 1/4$, where $K\rho_0^4 = 3/(4x^3)$ with $x = \rho/\rho_0$, the equality at $\sigma$ and $1/2 - \sigma$, the absence of $C$, the vanishing of every stored Riemann component at both flat values, and the absence of horizons.
+It evaluates all 4001 samples per frame again in sixty-digit arithmetic, checks every written point against the stored scalar, and holds every sampled value to the stated logarithmic limits.
 
 ### The three shapes
 
