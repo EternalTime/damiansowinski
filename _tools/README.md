@@ -1636,6 +1636,12 @@ The generator checks all 4001 samples of each scalar again in sixty-digit scalar
 The Ricci formula cancels near zero, so its error there is measured against a millionth of its central value, as a central curvature bounds the polytrope's cancellation error.
 Both scalars depend on radius alone, so a second coordinate would repeat the curve, and no movie adds information to the still.
 
+The `levi_civita` figure is one line movie of the Weyl chart's $K$ against $\rho/\rho_0$, with $C = 1$ and $\rho_0$ the fixed length unit in the stored powers of $\rho$.
+Its nineteen frames take $\sigma = k/40$ for $k = 1, \ldots, 19$, through $1/4$, the value of the spacetime's other drawings; the flat members $\sigma = 0$ and $1/2$ have no frame.
+The radial interval $1/16 \le \rho/\rho_0 \le 4$ joins the embedding's inner radius to the spacetime diagram's outer radius, and the logarithmic scale $10^{-4} \le K\rho_0^4 \le 10^4$ holds every frame whole.
+The stored scalar depends on $\rho$ and the parameter $\sigma$ alone, so a spatial map would repeat each curve along its second coordinate; the movie shows the changing radial power across the family in the collection's line format.
+The stored Ricci scalar vanishes for every $\sigma$.
+
 ### The three shapes
 
 A curvature figure has one or more views, each of one of three shapes.

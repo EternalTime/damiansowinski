@@ -11541,6 +11541,62 @@ def boson_star(ck, src):
 
 # ---------------------------------------------------------------- the two places of a figure
 
+def levi_civita(ck, src):
+    """The static cylinder's radial K as sigma varies between its two flat members.
+
+    The Weyl chart's scalar depends on rho and sigma, with C absent and R identically zero.
+    Draw nineteen nonflat members at sigma = k/40, k = 1 through 19, including the sigma = 1/4
+    of the other drawings, in the existing line-movie format. The radial interval joins the
+    embedding's inner radius 1/16 to the spacetime diagram's outer radius 4, in the fixed
+    length unit rho_0 in which the stored powers of rho are evaluated. The logarithmic scale
+    10^-4 to 10^4 holds every sampled value, so none is clipped vertically.
+    """
+    name = "levi_civita"
+    K = Published(src, name, "weyl", "kretschmann", ["rho"], ["sigma", "C"])
+    R = Published(src, name, "weyl", "ricci_scalar", ["rho"], ["sigma", "C"])
+    x_axis = axis("$\\rho/\\rho_0$", 1 / 16, 4)
+    x_axis["ticks"].insert(0, {"at": 1 / 16, "label": "$1/16$"})
+    scale = {"kind": "log", "from": 1e-4, "to": 1e4}
+    aspect = 1.25
+    panel = {"id": "K", "name": "$K\\rho_0^4$", "aspect": aspect,
+             "scale": scale, "ticks": even_decades(scale)}
+    shape_checks(ck, name, [aspect])
+    ck(f"{name} publishes R = 0", R.expr == 0)
+    frames = []
+    samples = np.linspace(x_axis["from"], x_axis["to"], SAMPLES)
+    for k in range(1, 20):
+        sigma = float(Fraction(k, 40))
+        params = {"sigma": sigma, "C": 1.0}
+        values = K(samples, sigma, 1.0)
+        ck(f"{name} sigma = {sigma:g} stays inside the stated logarithmic scale",
+           np.all(np.isfinite(values)) and np.all(values >= scale["from"]) and np.all(values <= scale["to"]),
+           f"{np.min(values):.8g} to {np.max(values):.8g}")
+        curves = line_curves(ck, f"{name} sigma = {sigma:g}", "K", "K", K, "\\rho",
+                             x_axis, scale, PLOT_W / aspect, params)
+        frames.append({"label": f"$\\sigma = {sigma:.3f}$", "value": sigma,
+                       "curves": curves, "marks": []})
+    return [{
+        "id": "mass", "label": "$0 < \\sigma < 1/2$", "kind": "line", "x": x_axis, "panels": [panel],
+        "curves": [], "marks": [], "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the static cylinder against Weyl's radius $\\rho$ as the mass "
+            "parameter $\\sigma$ runs from $1/40$ to $19/40$ in steps of $1/40$ ($C = 1$), the same at every "
+            "$t$, $\\phi$ and $z$. The spacetime is flat at $\\sigma = 0$ and $\\sigma = 1/2$. "
+            "Its Ricci scalar vanishes for every $\\sigma$.",
+            "$K$ grows without bound toward the axis and falls toward zero at large $\\rho$ in every member "
+            "drawn. The radial power $4(4\\sigma^2 - 2\\sigma + 1)$ is least at $\\sigma = 1/4$, where "
+            "$K\\rho_0^4 = 3/(4x^3)$ and $x = \\rho/\\rho_0$. The same curve occurs at $\\sigma$ and "
+            "$1/2 - \\sigma$; the conicity $C$ does not enter $K$.",
+        ],
+        "settings": "$C = 1$, with $\\rho_0$ the fixed unit of length in which the powers of $\\rho$ are "
+                    "evaluated, and $\\sigma = k/40$ for $k = 1, \\ldots, 19$.",
+        "clip": "We draw $K\\rho_0^4$ on a logarithmic scale from $10^{-4}$ to $10^4$, over "
+                "$1/16 \\le \\rho/\\rho_0 \\le 4$. The curve stops at these two radii; every frame lies "
+                "wholly within the vertical limits.",
+        "movie": {"variable": "$\\sigma$", "seconds": 8, "frames": frames},
+    }]
+
+
 def scalar_clips(kretschmann, ricci, reference=None):
     """The scale of a view that draws both scalars as each of its two places on the page states
     it, the Kretschmann scalar's after the Kretschmann scalar and the Ricci scalar's after the Ricci
@@ -11661,6 +11717,7 @@ DRAWN = {
     "kerr_taub_nut": kerr_taub_nut,
     "khan_penrose": khan_penrose,
     "kiselev": kiselev,
+    "levi_civita": levi_civita,
     "majumdar_papapetrou": majumdar_papapetrou,
     "mcvittie": mcvittie,
     "melvin": melvin,
