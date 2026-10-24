@@ -556,6 +556,17 @@ A static star of uniform density whose pressure across the radius differs from i
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/bowers_liang.json
 - chart Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -N^{1/Q}c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Braneworld Cosmology
+
+A universe with three dimensions of space that is a wall in anti-de Sitter space of five, moving through the static black hole of that space, as Per Kraus and Daisuke Ida set it out in 1999. Those who live on the wall read its motion as the expansion of their universe, with a Friedmann equation that carries the square of the density and the black hole's mass as a term that falls off like radiation.
+
+- id: `brane_wall_universe`
+- tags: braneworld, brane, domain wall, thin shell, junction conditions, matched solution, higher dimensions, anti-de Sitter, negative cosmological constant, cosmological constant, reflection symmetry, black hole, horizon, event horizon, Birkhoff theorem, cosmology, expanding universe, FLRW, causal structure, time-dependent, exact solution, Lorentzian, Einstein equations, five-dimensional, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/brane_wall_universe.json
+- chart Static Bulk, One Side: coordinates $(t, r, \chi, \theta, \phi)$, $$ds^2 = -\left(k + \dfrac{r^2}{\ell^2} - \dfrac{\mu}{r^2}\right)c^2dt^2 + \dfrac{dr^2}{k + \dfrac{r^2}{\ell^2} - \dfrac{\mu}{r^2}} + r^2\left(\dfrac{d\chi^2}{1 - k\chi^2} + \chi^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Gaussian Normal, One Side: coordinates $(t, w, \chi, \theta, \phi)$, $$ds^2 = -N^2c^2dt^2 + dw^2 + A^2\left(\dfrac{d\chi^2}{1 - k\chi^2} + \chi^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Brans-Dicke Static Sphere
 
 The gravitational field outside a static, spherical body in Carl Brans and Robert Dicke's theory of 1961, where a scalar field beside the metric sets the strength of gravity from place to place. With the coupling constant $\omega$ it bends light by $(3 + 2\omega)/(4 + 2\omega)$ of Einstein's value, and where Schwarzschild's horizon would stand its spheres shrink to zero area at infinite curvature, with no horizon to hide them.

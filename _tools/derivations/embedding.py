@@ -17290,7 +17290,104 @@ def black_to_white_hole(ck, src):
                  input=nr.BWH_INPUT)]
 
 
+def brane_wall_universe(ck, src):
+    """The wall's own moment t = l/c, the surface of constant t of the Gaussian normal chart, on the
+    side kept, in units of l, for the wall the other diagrams draw: mu = l^2, k = 0 and no matter
+    beside the tension, so that r_h = l, the wall moves as a^2 = 2ct and stands at a = sqrt(2) l. The
+    surface is that of w and chi, theta and phi held fixed, g_ww = 1 and g_chichi = A^2, with the strip
+    0 <= chi < 2 pi rolled up so that chi runs once round, so rho = A, the areal radius r of the static
+    chart. Along the moment r follows Mukohyama, Shiromizu and Maeda's (7), with E = 1/a,
+    2r^2 + E^2 = sqrt(4 + E^4) cosh(2(w_0 - w)): it falls from the wall through the horizon to its
+    least value r_min = 0.884 l at w_0 = 0.708 l, inside the black hole, and grows again through the
+    other horizon into the other exterior. There (d_w A)^2 = f(A) + E^2 = A^2 - 1/A^2 + 1/2, which
+    is 1 at A^4 - A^2/2 - 1 = 0, r = 1.1317 l: between the two circles of that radius the circles
+    grow more slowly than the distance along the surface and flat space carries it, with
+    dz/dw = sqrt(1 - (d_w A)^2), and beyond them three dimensional Minkowski space does, with
+    dZ/dw = sqrt((d_w A)^2 - 1), as the black string's moment is drawn. Each is checked. The drawing
+    stops on the other exterior at r = 3l."""
+    name = "braneworld cosmology"
+    params = dict(nr.BWU)
+    fixed_at = {"t": 1, "theta": "pi/2", "phi": 0}
+    functions = {"a": "sqrt(2*t)"}
+    sl = Slice(src, "brane_wall_universe", "gaussian_normal", "w", "\\chi", fixed_at, params, functions=functions)
+    msl = Slice(src, "brane_wall_universe", "gaussian_normal", "w", "\\chi", fixed_at, params, functions=functions,
+                space="minkowski")
+    m = nr.bwu.Moment(1.0)
+    level_r = math.sqrt((1 + math.sqrt(17)) / 4)
+    half = 0.5 * math.acosh((2 * level_r ** 2 + m.E ** 2) / m.root)
+    level_in, level_out = m.w0 - half, m.w0 + half
+    # The two level circles named exactly, so that the tangent at each join is exact: with E^2 = 1/2,
+    # sqrt(4 + E^4) = sqrt(17)/2, cosh(2 w_0) = 9/sqrt(17) and 2r^2 + E^2 = (2 + sqrt(17))/2 there.
+    r17 = sp.sqrt(17)
+    exact_w0 = sp.acosh(9 / r17) / 2
+    exact_half = sp.acosh((2 + r17) / r17) / 2
+    ck.add(f"{name}: w_0 = arcosh(9/sqrt(17))/2", abs(float(exact_w0) - m.w0), 1e-12)
+    ck.add(f"{name}: the level circles lie arcosh((2 + sqrt(17))/sqrt(17))/2 either side of w_0",
+           abs(float(exact_half) - half), 1e-12)
+    sl.known = msl.known = {level_in: exact_w0 - exact_half, level_out: exact_w0 + exact_half}
+    across = 0.5 * math.acosh((2 + m.E ** 2) / m.root)
+    horizon_in, horizon_out = m.w0 - across, m.w0 + across
+    top = m.w0 + 0.5 * math.acosh((2 * 9 + m.E ** 2) / m.root)
+    size = 2 * 3.0
+    ck.add(f"{name}: the wall stands at a = sqrt(2) l", abs(float(sl.rho_at(np.array([0.0]))[0]) - math.sqrt(2)), 1e-9)
+    ck.add(f"{name}: the narrowest circle is r_min = 0.8836 l, inside the horizon", abs(m.r_min - 0.8836155), 1e-6)
+    ck.add(f"{name}: (d_w A)^2 = 1 at r = 1.1317 l, A^4 - A^2/2 - 1 = 0", abs(level_r ** 4 - level_r ** 2 / 2 - 1), 1e-12)
+    for w in (level_in, level_out):
+        ck.add(f"{name}: the surface lies level at w = {w:.4f} l", abs(float(sl.defect_at(np.array([w]))[0])), 1e-9)
+    ck.stops(f"{name}, from the wall to the first level circle in flat space", sl, np.linspace(0, level_in, 200)[:-1])
+    ck.stops(f"{name}, the other exterior beyond the second level circle in flat space", sl,
+             np.linspace(level_out, top + 2, 300)[1:])
+    inward = np.linspace(level_in, level_out, 402)[1:-1]
+    ck.add(f"{name}: between the level circles no surface in Minkowski space carries the moment, "
+           "(drho/dw)^2 - g_ww < 0", float(max(0.0, np.max(-msl.defect_at(inward)))), 0.0)
+    if not np.all(msl.defect_at(inward) > 0):
+        ck.items[-1]["ok"] = False
+
+    join = ("at $r = 1.13\\,\\ell$ the surface lies level, in flat space toward the narrowest circle and in "
+            "Minkowski space beyond")
+    wall_piece = Piece("wall", "sheet", msl, 0.0, level_in, 0.0, 1,
+                       (("edge", "the wall, where this side meets its mirror image"), ("join", join)),
+                       [(0.0, "surface", None)], size)
+    neck = Piece("neck", "sheet", sl, level_in, level_out, wall_piece.at(level_in)[1], 1,
+                 (("join", join), ("join", join)),
+                 [(horizon_in, "horizon", None), (m.w0, "throat", None), (horizon_out, "horizon", None)], size)
+    far = Piece("other_exterior", "sheet", msl, level_out, top, neck.at(level_out)[1], 1,
+                (("join", join), ("edge", "the sheet runs on toward a light cone, to $r \\to \\infty$")),
+                [(level_out + 0.5 * (top - level_out), "r", None), (top, "r", None)], size)
+    for p in (wall_piece, neck, far):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {p.id} {space}", p)
+        ck.radius(f"{name}, {p.id}, rho = r(w) of Mukohyama, Shiromizu and Maeda {space}", p, m.radius, size)
+    # At each level circle drho/dw = -+1 and both profiles lie level, dz/dw = 0 in flat space and
+    # dZ/dw = 0 in Minkowski space, which the zero defect there checks, so the two pieces share their
+    # tangent; sympy's limit of the slope through the nested radicals of A does not come out real, so
+    # the point they share is checked here directly.
+    for a, b, w in ((wall_piece, neck, level_in), (neck, far, level_out)):
+        ck.add(f"{name}: {a.id} and {b.id} meet in one circle at r = 1.1317 l",
+               float(np.max(np.abs(np.array(a.at(w)) - b.at(w)))), JOIN)
+        ck.add(f"{name}: drho/dw = -+1 at r = 1.1317 l, so both pieces leave the circle level",
+               abs(abs(float(np.gradient(m.radius(np.array([w - 1e-6, w, w + 1e-6])), 1e-6)[1])) - 1), 1e-6)
+    surface = Surface([wall_piece, neck, far], label="$t = \\ell/c$", time=1.0)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *wall_piece.at(0.0), "the wall")
+    ring_label(fig, [0, 0, 0], *neck.at(m.w0), "$0.88\\,\\ell$", dx=14)
+    ring_label(fig, [0, 0, 0], *far.at(top), "$3\\ell$")
+    fig.legend("fill", "cover", "the wall's moment $t = \\ell/c$ on the side kept, which $w$ and $\\chi$ cover")
+    fig.legend("line", "surface", "the wall, $w = 0$, where $r = \\sqrt{2}\\,\\ell$ and this side meets its mirror image")
+    fig.legend("line", "horizon", "the horizons, $r = r_h$, where the moment enters the black hole and leaves it")
+    fig.legend("line", "throat", "the narrowest circle, $r = 0.88\\,\\ell$ at $w = 0.71\\,\\ell$, inside the black hole")
+    fig.legend("line", "r", "$r$ constant on the other exterior, at $2\\ell$ and $3\\ell$")
+    fig.legend("line", "meridian", "$\\chi$ constant, every $\\pi/12$")
+    return [view("moment", "The moment $t = \\ell/c$", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell = 1$, the unit of every length, $\\mu = \\ell^2$, so that $r_h = \\ell$, and $k = 0$, "
+                          "with the strip $0 \\le \\chi < 2\\pi$ rolled up so that $\\chi$ runs once round the axis. "
+                          "Every length along the surface outside the two circles $r = 1.13\\,\\ell$ is measured with "
+                          "$dX^2 + dY^2 - dZ^2$.",
+                 input=nr.BWU_INPUT)]
+
+
 DRAWN = {
+    "brane_wall_universe": brane_wall_universe,
     "moving_mirror": moving_mirror,
     "aichelburg_sexl": aichelburg_sexl,
     "hotta_tanaka": hotta_tanaka,
@@ -18324,6 +18421,17 @@ CAPTIONS = {
         "$-\\tanh^2(\\tfrac{3\\rho}{2L})/L^2$: it vanishes at the tip and tends far out to $-1/L^2$, the curvature "
         "of the hyperbolic plane on which anti-de Sitter space's own static slice lies. The sheet nears the light "
         "cone of the space it is drawn in, dashed, without reaching it.",
+    ],
+    ("brane_wall_universe", "moment"): [
+        "The surface of $w$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) of the wall's own moment $t = \\ell/c$, for "
+        "the wall with no matter beside its tension ($\\mu = \\ell^2$, $k = 0$), with $\\chi$ rolled once round "
+        "the axis, every distance along the surface the metric distance. It runs from the wall, at "
+        "$r = \\sqrt{2}\\,\\ell$, through the horizon to its narrowest circle, $r = 0.88\\,\\ell$ inside the black "
+        "hole, and out through the other horizon into the other exterior.",
+        "On the slice the metric is $dw^2 + A^2d\\chi^2$, and the circles change along it as "
+        "$(\\partial_wA)^2 = A^2/\\ell^2 - \\mu/A^2 + \\dot{a}^2$, which is 1 on the two circles $r = 1.13\\,\\ell$. "
+        "Between them the surface lies in flat space; outside them the circles change faster than the distance "
+        "along the surface, and the surface lies in three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$).",
     ],
     ("topological_black_hole", "string"): [
         "The plane $z = 0$ across the black string at the moment $t = 0$ ($\\mu = L$, $r_h = L$) through both of "

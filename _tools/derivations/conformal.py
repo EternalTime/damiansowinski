@@ -25757,7 +25757,156 @@ def black_to_white_hole(ck, src):
     return views
 
 
+class BWUTower(AdSHoleTower):
+    """The Tower of the planar black hole of anti-de Sitter space in five dimensions, f = r^2/l^2 -
+    mu/r^2 at mu = l^2 = 1, which has one positive root r_h = 1 and the roots -1 and +-i. In closed
+    form r* = ln|(r - 1)/(r + 1)|/4 + arctan(r)/2, zero at r = 0 and pi/4 as r -> infinity, the
+    surface gravity is f'(1)/2 = 2, and Kruskal's UV = (1 - r) e^(2 arctan r)/(1 + r), one formula
+    for every r > 0: 1 at r = 0, 0 on the horizon and -B = -e^pi on the conformal boundary. Each is
+    checked in sympy on construction."""
+
+    def __init__(self, f, r):
+        self.f_sym = sp.simplify(f)
+        rstar = sp.log((r - 1) / (r + 1)) / 4 + sp.atan(r) / 2
+        assert sp.simplify(sp.diff(rstar, r) - 1 / self.f_sym) == 0, "dr*/dr is not 1/f"
+        assert sp.limit(rstar, r, sp.oo) == sp.pi / 4, "r* does not tend to pi/4"
+        self.kappa = [sp.simplify(sp.diff(self.f_sym, r).subs(r, 1) / 2)]
+        assert self.kappa[0] == 2, f"the surface gravity is {self.kappa[0]}"
+        self.kp, self.rf, self.far = 2.0, [1.0], float(np.pi / 4)
+        self.B = float(np.exp(2 * self.kp * self.far))
+
+    def rstar(self, r):
+        return nr.bwu.tortoise(r)
+
+    def UV(self, r):
+        r = np.asarray(r, dtype=float)
+        return (1 - r) / (1 + r) * np.exp(2 * np.arctan(r))
+
+
+def bwu_wall(a):
+    """(p, q) of the wall at the areal radius a: Kruskal's U = -exp(-2(a - arctan a)) and
+    V = -(1 - a) e^(2a)/(1 + a), which hold for every a > 0, so that UV is the UV of r = a."""
+    a = np.asarray(a, dtype=float)
+    return np.arctan(-np.exp(-2 * (a - np.arctan(a)))), np.arctan(-(1 - a) * np.exp(2 * a) / (1 + a))
+
+
+def brane_wall_universe(ck, src):
+    """One side of the wall the other diagrams draw, at l = mu = 1, k = 0 and no matter beside the
+    tension, in the planar black hole of anti-de Sitter space in five dimensions, each point in
+    the diagram a flat 3-space. BWUTower places the static chart's cells as Schwarzschild-anti-de
+    Sitter's are placed, with the singularities r = 0 on T = +-pi/2 and the boundaries on
+    tan p tan q = -e^pi, which crosses T = 0 at X = 2 arctan e^(pi/2) = 2.722.
+
+    On the wall u = t - r* = a - arctan(a) and v = t + r* = a + 2r*(a) - arctan(a), so
+    U = -e^(-2u) and V = e^(2v) = (a - 1) e^(2a)/(a + 1) outside the horizon, and the same forms
+    run on below it, where V < 0. The wall leaves r = 0 at U = V = -1, the middle of the past
+    singularity, crosses the past horizon V = 0 at U = -e^(pi/2 - 2), and reaches the corner
+    where the right boundary meets the future singularity as a -> infinity. The side kept is the
+    one where r falls away from the wall, which holds the black hole, the white hole on that side
+    of the wall and the other exterior whole, and beyond the wall lies the mirror image of the
+    same side. Each is checked."""
+    st = Plane(src, "brane_wall_universe", "static", ("t", "r"), BWU_AT, nr.BWU)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    T = BWUTower(st.gi[1, 1], st.x1)
+    name = "Braneworld cosmology"
+    ck.limit(f"{name}: the published g^rr vanishes at r_h = l", float(st.gi[1, 1].subs(st.x1, 1)), 0.0, 1e-12)
+    ck.chart(f"{name} static, exterior", st, lambda t, r: T.pq("I", t, r),
+             ck.uniform(-4, 4), ck.uniform(1.001, 40), lambda t, r: (1, 0))
+    ck.chart(f"{name} static, black hole", st, lambda t, r: T.pq("II", t, r),
+             ck.uniform(-4, 4), ck.uniform(0.01, 0.999), lambda t, r: (0, -1))
+    ck.chart(f"{name} static, white hole", st, lambda t, r: T.pq("IV", t, r),
+             ck.uniform(-4, 4), ck.uniform(0.01, 0.999), lambda t, r: (0, 1))
+    ck.chart(f"{name} static, other exterior", st, lambda t, r: T.pq("I'", t, r),
+             ck.uniform(-4, 4), ck.uniform(1.001, 40), lambda t, r: (-1, 0))
+    rr = np.linspace(0.05, 5, 50)
+    for cell, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
+        pp, qq = T.pq(cell, 0.3 + 0 * rr[sel], rr[sel])
+        ck.limit(f"{name}, {cell}: tan p tan q is Kruskal's UV", np.tan(pp) * np.tan(qq), T.UV(rr[sel]), 1e-8)
+    a = np.linspace(1.01, 6, 60)
+    ck.limit(f"{name}: the wall's closed form is the static chart's at t = a + r*(a) - arctan(a)",
+             np.concatenate(bwu_wall(a)), np.concatenate(T.pq("I", nr.bwu.static_time(a), a)), 1e-9)
+    ck.limit(f"{name}: the wall's UV is the UV of r = a, above and below the horizon",
+             np.prod([np.tan(x) for x in bwu_wall(np.linspace(0.01, 6, 80))], axis=0), T.UV(np.linspace(0.01, 6, 80)),
+             1e-9)
+    p0, q0 = bwu_wall(np.array([1e-9]))
+    ck.limit(f"{name}: the wall leaves r = 0 in the middle of the past singularity", point(p0[0], q0[0]), [0, -HALF], 1e-6)
+    ck.limit(f"{name}: the wall stays below the future horizon p = 0, so no ray from the black hole reaches it",
+             float(np.max(bwu_wall(np.linspace(0.01, 60, 400))[0]) < 0), 1.0)
+    p1, q1 = bwu_wall(np.array([60.0]))
+    ck.limit(f"{name}: the wall reaches the corner of the right boundary and the future singularity",
+             point(p1[0], q1[0]), [HALF, HALF], 1e-3)
+    s = np.linspace(0.02, 8, 400)
+    dp, dq = (np.gradient(x, s) for x in bwu_wall(s))
+    ck.limit(f"{name}: the wall is timelike and future directed, dp > 0 and dq > 0",
+             float(min(np.min(dp), np.min(dq)) > 0), 1.0)
+    # On the wall the static time runs as dt/da = a^4/(a^4 - 1), (a/l) over f(a) times d(c tau)/da = a.
+    fine = np.linspace(1.2, 6, 4000)
+    ck.limit(f"{name}: dt/da on the wall is a^4/(a^4 - 1), the junction condition at rho = 0",
+             np.gradient(nr.bwu.static_time(fine), fine, edge_order=2), fine ** 4 / (fine ** 4 - 1), 1e-4)
+    K = st.kretschmann
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite(f"{name}: the Kretschmann scalar is finite at r = r_h", K(np.zeros(3), np.array([0.999, 1, 1.001])))
+
+    B = T.B
+    reach = 2 * np.arctan(np.sqrt(B))
+    ck.limit(f"{name}: the boundary crosses T = 0 at X = 2 arctan e^(pi/2)", reach, 2 * np.arctan(np.exp(HALF)), 1e-12)
+    box = [-reach - 0.3, reach + 0.3, -HALF - 0.25, HALF + 0.25]
+    bp, bq = T.boundary()
+    right = [point(x, y) for x, y in zip(bp, bq)]           # from (pi/2, -pi/2) up to (pi/2, pi/2)
+    left = [[-x, t_] for x, t_ in right[::-1]]              # from (-pi/2, pi/2) down to (-pi/2, -pi/2)
+    along = np.exp(np.linspace(-14, np.log(60.0), 900))
+    wp, wq = bwu_wall(along)
+    wall = [[0.0, -HALF]] + [point(x, y) for x, y in zip(wp, wq)] + [[HALF, HALF]]
+    kept = wall + left
+    beyond = wall + right[::-1]
+    named = min(left, key=lambda at: abs(at[1] - 1.2))
+
+    v = View("kept", "One side", box)
+    v.fill("region", kept)
+    v.fill("removed", beyond)
+    for r in (1.25, 2.0, 4.0):
+        t = spread(-np.inf, np.inf, 500, 6)
+        v.curve("r", *T.pq("I'", t, np.full_like(t, r)))
+    for r in (0.4, 0.7, 0.9):
+        t = spread(-np.inf, np.inf, 500, 6)
+        v.curve("r", *T.pq("II", t, np.full_like(t, r)))
+    v.curve("surface", wp, wq)
+    v.curve("boundary", -bq, -bp)
+    v.curve("boundary", bp, bq)
+    v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+    v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+    v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+    v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+    v.label_xt(named, "$r \\to \\infty$", "l", "small", dx=6)
+    v.label_xt([-1.6, -0.6], "other exterior", cls="region")
+    v.label_xt([0, 1.15], "black hole", cls="region")
+    v.label(tuple(float(x[0]) for x in bwu_wall(np.array([2.0]))), "the wall", "tl", "small", dx=5, dy=3)
+    v.legend("removed", "beyond the wall, where $r > a$, which the mirror image of the side kept replaces")
+    v.legend("surface", "the wall $r = a$, from the past singularity to the corner of the boundary")
+    v.legend("r", "$r$ constant, at $0.4$, $0.7$ and $0.9\\,\\ell$ in the black hole and $1.25$, $2$ and $4\\,\\ell$ "
+                  "in the other exterior")
+    v.legend("horizon", "the horizon $r_h = \\ell$")
+    v.legend("boundary", "the conformal boundary $r \\to \\infty$, timelike")
+    v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+    v.set(settings="$\\ell = 1$, $\\mu = \\ell^2$, so that $r_h = \\ell$, and $k = 0$.", input=nr.BWU_INPUT)
+    # The embedded moment, the wall's own t = l/c, from the wall through the black hole into the other
+    # exterior, as far out as the surface reaches.
+    moment, = slices.moments("brane_wall_universe")
+    lo, hi = moment.reach("gaussian_normal", "w")
+    along_w = np.linspace(lo, hi, 400)
+    U, V = nr.bwu.Moment(1.0).kruskal(along_w)
+    ck.limit(f"{name}: the moment leaves the wall where the wall stands at t = l/c",
+             [float(np.arctan(U[0])), float(np.arctan(V[0]))], [float(x[0]) for x in bwu_wall(np.array([math.sqrt(2)]))], 1e-9)
+    ck.limit(f"{name}: the moment is spacelike, dU dV < 0 along it", float(np.max(np.gradient(U, along_w) * np.gradient(V, along_w)) < 0), 1.0)
+    v.slice(moment, [(np.arctan(U), np.arctan(V))])
+    return [v]
+
+
+BWU_AT = {"chi": "1/2", "theta": "pi/2", "phi": "0"}
+
+
 DRAWN = {
+    "brane_wall_universe": brane_wall_universe,
     "big_rip": big_rip,
     "moving_mirror": moving_mirror,
     "draining_bathtub": draining_bathtub,
@@ -29907,6 +30056,18 @@ CAPTIONS = {
         "Schwarzschild's and is timelike while the mass falls, so it ends inside the event horizon's future, at "
         "the same point. The radiation crosses $\\mathscr{I}^+$ between the rays $u_1$ and $u_0$, crowded against "
         "the Cauchy horizon by the redshift of the light that left just outside the horizon.",
+    ],
+    ("brane_wall_universe", "kept"): [
+        "One side of a wall that moves past the planar black hole of anti-de Sitter space in five dimensions, "
+        "drawn for a wall with no matter beside its tension ($\\mu = \\ell^2$, $k = 0$), each point in the "
+        "diagram a flat 3-space. The wall comes out of the past singularity at its middle, crosses the past "
+        "horizon, and runs up to the corner where the conformal boundary meets the future singularity, which "
+        "it reaches only as its universe grows without end. The side kept is the one where $r$ falls away from "
+        "the wall, and on the far side of the wall lies its mirror image.",
+        "The side kept holds the black hole, the part of the white hole behind the wall, and the other "
+        "exterior whole, out to its own conformal boundary. The wall stays below the future horizon of the "
+        "black hole, so a light ray sent into the bulk from the wall falls through that horizon, and no signal "
+        "from the black hole or the other exterior reaches the wall.",
     ],
     ("israel_shell", "interior"): [
         "A spacetime in which a spherical shell of dust falls from rest at infinity ($\\mu = r_s/2$), each point "

@@ -1076,6 +1076,27 @@ def _bm_radial(which, r):
     return float(getattr(bartnik_mckinnon.soliton(1), which)(r)[0])
 
 
+def _bwu(view):
+    """The wall's own moment t = l/c, the surface of constant t of the Gaussian normal chart, at
+    l = mu = 1. On that chart's plane it is the line t = 1 from the wall out to the edge w_*(1) =
+    ln(5)/2 where its normals meet; on the static chart's plane it runs from the wall at
+    t = 0.496 to the horizon, crowding toward it as t grows without bound, and through the black
+    hole from horizon to horizon, its narrowest circle r_min = 0.884 at w_0 = 0.708, the static t
+    falling from infinity to minus infinity, as brane_wall_universe.Moment follows it."""
+    import brane_wall_universe as bwu
+    m, = moments("brane_wall_universe")
+    lo, hi = m.reach("gaussian_normal", "w")
+    if view == "tw":
+        return [Mark(m, along(1.0, lo, min(hi, float(bwu.focal_distance(1.0)))))]
+    moment = bwu.Moment(1.0)
+    across = 0.5 * math.acosh((2 + moment.E ** 2) / moment.root)
+    w_in, w_out = moment.w0 - across, moment.w0 + across
+    outside = lo + (w_in - lo) * (1 - np.geomspace(1e-12, 1.0, N)[::-1])
+    inside = np.concatenate([w_in + (moment.w0 - w_in) * np.geomspace(1e-12, 1.0, N // 2),
+                             w_out - (w_out - moment.w0) * np.geomspace(1e-12, 1.0, N // 2)[::-1]])
+    return [Mark(m, [np.column_stack(moment.static(outside)), np.column_stack(moment.static(np.sort(inside)))])]
+
+
 def _israel_shell(view):
     """Israel's shell of dust: each moment is the slice v - r = w of the ingoing chart over the piece
     read in it, outside the shell, and the moment of the flat time T at which that slice meets the
@@ -3574,6 +3595,8 @@ FLAT = {
     ("black_to_white_hole", "schwarzschild", "radial"): lambda: _black_to_white_hole("radial"),
     ("black_to_white_hole", "painleve_gullstrand_ingoing", "falling"): lambda: _black_to_white_hole("painleve"),
     ("black_to_white_hole", "lemaitre", "falling"): lambda: _black_to_white_hole("lemaitre"),
+    ("brane_wall_universe", "static", "radial"): lambda: _bwu("radial"),
+    ("brane_wall_universe", "gaussian_normal", "tw"): lambda: _bwu("tw"),
     ("israel_shell", "interior", "radial"): lambda: _israel_shell("radial"),
     ("israel_shell", "interior", "through"): lambda: _israel_shell("through"),
     ("israel_shell", "exterior", "radial"): lambda: _israel_shell("schwarzschild"),

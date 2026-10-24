@@ -2358,7 +2358,7 @@
         },
         {
           "symbol": "Q = \\sqrt{1 + \\ell^2\\left(\\dfrac{\\dot{a}^2 + k}{a^2} - \\dfrac{\\mu}{a^4}\\right)}",
-          "description": "Junction factor, with $Q = 1 + \\rho/\\sigma$ on the wall for $\\rho$ the energy density of the matter on it and $\\sigma = 3c^4/4\\pi G_5\\ell$ its tension, which is the modified Friedmann equation"
+          "description": "Junction factor: on the wall $Q = 1 + \\rho/\\sigma$, for $\\rho$ the energy density of the matter on it and $\\sigma = 3c^4/4\\pi G_5\\ell$ its tension, and squared it is the modified Friedmann equation"
         },
         {
           "symbol": "A = a\\sqrt{\\cosh(2w/\\ell) + \\dfrac{\\ell^2\\left(\\dot{a}^2 + k\\right)}{2a^2}\\left(\\cosh(2w/\\ell) - 1\\right) - Q\\sinh(2w/\\ell)}",
@@ -2369,7 +2369,7 @@
           "description": "Lapse, $N = \\partial_tA/\\dot{a}$, equal to $1$ on the wall"
         }
       ],
-      "convention": "We use coordinates $(t, w, \\chi, \\theta, \\phi)$ on one side of the wall, with $t$ the proper time on the wall, $w$ the proper distance from it, a length, and $\\chi$ a comoving radius, a pure number. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use coordinates $(t, w, \\chi, \\theta, \\phi)$ on one side of the wall, with $t$ the proper time on the wall, carrying dimensions of time, $w$ the proper distance from it, a length, and $\\chi$ a comoving radius, a pure number. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -N^2c^2dt^2 + dw^2 + A^2\\left(\\dfrac{d\\chi^2}{1 - k\\chi^2} + \\chi^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
