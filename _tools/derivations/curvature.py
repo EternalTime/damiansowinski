@@ -11404,6 +11404,134 @@ def tov(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- the boson star
+
+def boson_star(ck, src):
+    """The two radial scalars of the heaviest ground state, on the existing 0 to 20 range.
+
+    The declared profiles are the existing numerical star, with its central field 0.271.
+    The first radius is 0.01, a quarter of a plot unit from the centre, to keep the stored
+    expressions' removable divisions by r away from zero. Their central limits are checked
+    symbolically using the regular series. Every one of the 4001 samples of each scalar is
+    evaluated again with sixty-digit scalar arithmetic and the numerical profiles held;
+    R's cancellation error near zero is measured against a millionth of its central value.
+    Checks also cover the Ricci maximum, the matter trace, the vacuum limits, the absence of
+    horizons, and both scales. A second coordinate would repeat the radial curve.
+    """
+    from scipy.optimize import minimize_scalar
+
+    star = nr.bs.star(nr.bs.SIGMA_C)
+    src.note("boson_star", "areal", ["einstein_tensor"])
+    functions = {"a": "boson_a(r)", "alpha": "boson_alpha(r)"}
+    K = Published(src, "boson_star", "areal", "kretschmann", ["r"], [], functions=functions)
+    R = Published(src, "boson_star", "areal", "ricci_scalar", ["r"], [], functions=functions)
+    inverse = Published(src, "boson_star", "areal", "inverse_metric_components", ["r"], [],
+                        ("r", "r"), functions)
+    x_axis = axis("$\\mu r$", 0, 20)
+    within = (0.01, 20)
+    K_scale = {"kind": "log", "from": 1e-7, "to": 1e-1}
+    R_scale = {"kind": "symlog", "from": 0, "to": 1e-1, "linear": 1e-4}
+    panels = [{"id": "K", "name": "$K/\\mu^4$", "aspect": 2,
+               "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R/\\mu^2$", "aspect": 2,
+               "scale": R_scale, "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "boson_star", [p["aspect"] for p in panels])
+
+    # The central limits of the stored formulas, with the lapse's constant factor divided out.
+    r = K.coords[0]
+    a2, l2 = sp.symbols("a2 l2", real=True)
+    local = {nr.DECLARED_FUNCTIONS[name](r): value for name, value in (
+        ("boson_a", 1 + a2 * r ** 2), ("boson_a1", 2 * a2 * r), ("boson_a2", 2 * a2),
+        ("boson_alpha", 1 + l2 * r ** 2), ("boson_alpha1", 2 * l2 * r), ("boson_alpha2", 2 * l2))}
+    limit_K = sp.limit(K.expr.xreplace(local), r, 0)
+    limit_R = sp.limit(R.expr.xreplace(local), r, 0)
+    ck("boson_star the stored K has the finite central limit 48(a2^2 + l2^2)",
+       sp.simplify(limit_K - 48 * (a2 ** 2 + l2 ** 2)) == 0)
+    ck("boson_star the stored R has the finite central limit 12(a2 - l2)",
+       sp.simplify(limit_R - 12 * (a2 - l2)) == 0)
+    coefficients = {a2: star.series[0][1], l2: star.series[1][1]}
+    centre_K, centre_R = float(limit_K.subs(coefficients)), float(limit_R.subs(coefficients))
+    ck("boson_star the caption's central K and R match the regular series",
+       f"{centre_K:.7f}" == "0.0780214" and f"{centre_R:.7f}" == "0.0667868",
+       f"K = {centre_K:.12g}, R = {centre_R:.12g}")
+    ck("boson_star the first samples approach the central limits within 0.005 percent",
+       abs(float(K(within[0])) / centre_K - 1) < 5e-5
+       and abs(float(R(within[0])) / centre_R - 1) < 5e-5)
+
+    peak = minimize_scalar(lambda x: -float(R(x)), bounds=(0.1, 3), method="bounded",
+                           options={"xatol": 1e-11})
+    peak_r, peak_R = float(peak.x), float(-peak.fun)
+    ck("boson_star the caption's Ricci maximum has the stated radius and value",
+       peak.success and f"{peak_r:.4f}" == "0.9176" and f"{peak_R:.7f}" == "0.0684706",
+       f"r = {peak_r:.12g}, R = {peak_R:.12g}")
+    ck("boson_star the Ricci maximum is about two and a half percent above the centre",
+       abs((peak_R / centre_R - 1) - 0.025) < 0.0003, f"{100 * (peak_R / centre_R - 1):.9g} percent")
+    ck("boson_star the existing star's mass and frequency match its declared values", not star.stated(),
+       f"M = {star.M:.12g}, omega = {star.omega:.12g}")
+    curves = []
+    xs = np.linspace(*within, SAMPLES)
+    for name, fn, scale in (("K", K, K_scale), ("R", R, R_scale)):
+        values = fn(xs)
+        if name == "K":
+            agrees(ck, f"boson_star all {SAMPLES} {name} samples", fn, [[x] for x in xs], values)
+        else:
+            exact = np.array([float(fn.exact([x])) for x in xs])
+            error = float(np.max(np.abs(values - exact) / np.maximum(np.abs(exact), 1e-6 * centre_R)))
+            ck(f"boson_star all {SAMPLES} R samples agree with the stored formula in sixty digits",
+               error < AGREE, f"worst {error:.1e}, with a floor of 10^-6 of central R near zero")
+        ck(f"boson_star {name} is finite and positive at every sample", np.all(np.isfinite(values) & (values > 0)))
+        ck(f"boson_star {name} stays inside its panel",
+           np.all((values >= scale["from"]) & (values <= scale["to"])))
+        # Every retained point is among the samples checked above, including R's tail near zero.
+        lines = sampled(ck, f"boson_star {name}", fn, x_axis, scale, PLOT_W / 2, [], within)
+        curves += [curve_entry(name, name, fn, "r", {}, line) for line in lines]
+    ck("boson_star K falls from its central maximum", float(K(xs[0])) < centre_K and np.all(np.diff(K(xs)) < 0))
+    rv = R(xs)
+    ck("boson_star R rises to its one interior maximum and then falls",
+       np.all(np.diff(rv[xs < peak_r]) > 0) and np.all(np.diff(rv[xs > peak_r]) < 0))
+    sigma, slope = star.field(xs)
+    profiles = star.values(xs)
+    trace = 2 * (2 * sigma ** 2 + slope ** 2 / profiles["a"][0] ** 2
+                 - star.omega ** 2 * sigma ** 2 / profiles["alpha"][0] ** 2)
+    ck("boson_star R agrees with the independent matter trace at every sample",
+       np.max(np.abs(rv - trace)) < 1e-10 * centre_R)
+    ck("boson_star has no horizon on the drawn range", np.all(inverse(np.linspace(0, 20, SAMPLES)) > 0))
+    compactness, _ = star.compactness()
+    ck("boson_star has no trapped sphere", compactness < 1, f"largest 2M(r)/r = {compactness:.9g}")
+    far = np.linspace(star.edge * 1.01, 2 * star.edge, 100)
+    ck("boson_star K tends to the vacuum value 48 M^2/r^6",
+       np.allclose(K(far), 48 * star.M ** 2 / far ** 6, rtol=1e-12, atol=0))
+    ck("boson_star R vanishes in the vacuum", np.max(np.abs(R(far))) < 1e-14 * centre_R)
+    ck("boson_star the drawn tail already approaches the vacuum curvature",
+       abs(float(K(20)) * 20 ** 6 / (48 * star.M ** 2) - 1) < 2e-6 and float(R(20)) < 1e-8 * centre_R)
+
+    k_clip = ("We draw $K/\\mu^4$ on a logarithmic scale from $10^{-7}$ to $10^{-1}$; "
+              "every value drawn lies within it.")
+    r_clip = ("We draw $R/\\mu^2$ on a signed logarithmic scale, linear within $10^{-4}$ of zero, "
+              "from $0$ to $10^{-1}$; every value drawn lies within it.")
+    return [{
+        "id": "star", "label": "The heaviest ground state", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the heaviest boson star against the areal "
+            "radius $r$ ($\\sigma(0) = 0.271$), the same at every $t$, $\\theta$, and $\\phi$. "
+            "At the centre $K$ is finite and greatest, $0.0780214\\,\\mu^4$, and falls outward through the star, "
+            "approaching the vacuum value $48M^2/r^6$ far out. The star has no surface or horizon.",
+            "The Ricci scalar rises from $0.0667868\\,\\mu^2$ at the centre to its small maximum "
+            "$0.0684706\\,\\mu^2$ at $\\mu r = 0.9176$, then falls toward zero as the field dies away. "
+            "In a vacuum $R = 0$.",
+        ],
+        "ricci_sentences": [[1, 0], [1, 1]], "per_scalar": scalar_clips(k_clip, r_clip),
+        "settings": ("$G = c = \\mu = 1$, with $1/\\mu = \\hbar/mc$ the reduced Compton wavelength "
+                     "of a boson of mass $m$, and the star's total mass $M = 0.633$, rounded."),
+        "input": ("The ground state of a free complex scalar field with central amplitude "
+                  "$\\sigma(0) = 0.271$, where $\\sigma$ is the dimensionless field amplitude, "
+                  "and frequency $\\omega = 0.853\\,\\mu c$, rounded."),
+        "clip": k_clip + " " + r_clip,
+    }]
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -11504,6 +11632,7 @@ DRAWN = {
     "born_infeld_charge": born_infeld_charge,
     "boulware_deser": boulware_deser,
     "bowers_liang": bowers_liang,
+    "boson_star": boson_star,
     "brans_dicke_sphere": brans_dicke_sphere,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "c_metric": c_metric,
