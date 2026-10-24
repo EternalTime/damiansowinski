@@ -233,6 +233,7 @@ import kodama_kink as kk  # noqa: E402
 import bubbling_ads  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
 import black_to_white_hole as bwh  # noqa: E402
+import brane_wall_universe as bwu  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
 import charged_shell as cshell  # noqa: E402
@@ -2099,6 +2100,26 @@ class israel_r_adv(sp.Function):
     _imp_ = staticmethod(ishell.radius_at_advanced)
 
 
+# The universe on a wall moving past a black hole in five dimensions as both of its diagrams draw it, in
+# units of l: no matter beside the tension, a flat space on the wall and mu = l^2, so r_h = l. The wall
+# moves as a^2 = 2 c tau, brane_wall_universe.py writes its static time in closed form, and the static
+# chart declares its radius at the static time, the root of that form.
+BWU = {"ell": 1, "mu": 1, "k": 0}
+BWU_POINT = {"chi": "1/2", "theta": "pi/2", "phi": "0"}
+BWU_INPUT = ("A wall with no matter beside its tension, $\\rho = 0$, a flat space on it, $k = 0$, and a black hole "
+             "of $\\mu = \\ell^2$, so that $r_h = \\ell$. It moves as $(da/d(c\\tau))^2 = \\mu/a^2$, so "
+             "$a^2 = 2\\ell c\\tau$, and at the static time $ct = a + r_* - \\ell\\arctan(a/\\ell)$, with the "
+             "tortoise radius $r_* = (\\ell/4)\\ln|(r - \\ell)/(r + \\ell)| + (\\ell/2)\\arctan(r/\\ell)$ at "
+             "$r = a$.")
+
+
+class bwu_a_static(sp.Function):
+    """The radius of the wall at the static time t, brane_wall_universe.radius_at_static_time."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(bwu.radius_at_static_time)
+
+
 # The quantum Oppenheimer-Snyder black hole as every diagram draws it, m = 1 and alpha = 5/4 m^2:
 # r_b = 0.855, r_- = 1.127 and r_+ = 1.777 m. quantum_os.py holds the surface of the dust, which
 # falls from rest far away, turns round at r_b at tau = 0 and goes back out, as a radius at the time of
@@ -2503,7 +2524,7 @@ DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__:
                       "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind,
                       "hiscock_m_out": hiscock_m_out, "hiscock_dm_out": hiscock_dm_out,
                       "hiscock_d2m_out": hiscock_d2m_out, "hiscock_r_out": hiscock_r_out,
-                      "israel_r_out": israel_r_out, "israel_r_adv": israel_r_adv,
+                      "israel_r_out": israel_r_out, "israel_r_adv": israel_r_adv, "bwu_a_static": bwu_a_static,
                       "charged_r_in": charged_r_in, "charged_r_out": charged_r_out,
                       "charged_r_inside": charged_r_inside, "charged_r_adv": charged_r_adv,
                       "charged_r_ret": charged_r_ret,
@@ -4684,6 +4705,18 @@ DIAGRAMS = [
             boson=BOSON, input=bs.INPUT),
     Diagram("boson_star", "isotropic", "radial", "$t$ and $R$", ("t", "R"), (0, 20, -10, 10),
             "$\\mu R$", "$\\mu ct$", {}, EQUATOR, areal=True, boson=BOSON, input=bs.INPUT),
+    # The universe on a wall moving past a black hole, in units of l: the static chart on one side of the
+    # wall, the side r < a, through the horizon, and the Gaussian normal chart from the wall out to where
+    # its normals from neighbouring moments meet, w_* = ln(1 + 4ct/l) l/2.
+    Diagram("brane_wall_universe", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\ell$", "$ct/\\ell$", BWU, BWU_POINT, orient="ingoing", functions={"a": "bwu_a_static(t)"},
+            where="bwu_a_static(t) - r", input=BWU_INPUT,
+            curves=(("shell", "bwu_a_static(t)", "the wall, $r = a$"),)),
+    Diagram("brane_wall_universe", "gaussian_normal", "tw", "$t$ and $w$", ("t", "w"), (0, 2, 0, 2),
+            "$w/\\ell$", "$ct/\\ell$", BWU, BWU_POINT, functions={"a": "sqrt(2*t)"},
+            where="2*t - exp(w)*sinh(w)", input=BWU_INPUT,
+            lines=(("shell", "r", "0", "the wall, $w = 0$"),),
+            curves=(("mark", "log(1 + 4*t)/2", "$N = 0$, where the normals to the wall from neighbouring moments meet"),)),
     # Kodama's kink at f = 1.25, in units of 1/mu: the whole wormhole along the proper radial distance,
     # and one side of it in Kodama's areal radius, out from the throat at r_0 = 1.475/mu.
     Diagram("kodama_kink", "proper_radial", "radial", "$t$ and $R$", ("t", "R"), (-6, 6, -6, 6),
@@ -10831,6 +10864,24 @@ CAPTIONS = {
         "lies, and $t$ rises along every timelike curve, which therefore cannot close. Neither family here is a "
         "null geodesic, and light launched along either is turned away from the axis.",
     ],
+    ("brane_wall_universe", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\chi = 1/2$, $\\theta = \\pi/2$, $\\phi = 0$) on one side of the wall, drawn "
+        "for a wall with no matter beside its tension, in a flat space, past a black hole of horizon $r_h = \\ell$. "
+        "The edges of the cones are $dr/d(ct) = \\pm(r^2/\\ell^2 - \\mu/r^2)$, so $ct \\mp r_*$ is constant along a "
+        "ray. The wall moves out along $r = a(t)$, and beyond it lies the mirror image of this side.",
+        "The wall comes out of the horizon as $t \\to -\\infty$ and moves out ever faster in the static time, "
+        "since its expansion in its own time, $a^2 = 2\\ell c\\tau$, is that of a universe of radiation. Inside "
+        "$r_h$ the static time is a direction of space, and the future there is toward smaller $r$.",
+    ],
+    ("brane_wall_universe", "gaussian_normal", "tw"): [
+        "The plane of $t$ and $w$ ($\\chi = 1/2$, $\\theta = \\pi/2$, $\\phi = 0$) on one side of the wall, which "
+        "stands at $w = 0$, drawn for the same wall as the static chart, where $Q = 1$ and "
+        "$A^2 = a^2\\left(e^{-2w/\\ell} + \\ell^2\\sinh^2(w/\\ell)/4c^2t^2\\right)$. The time $t$ is the proper "
+        "time on the wall, and the cones there are those of Minkowski space.",
+        "Away from the wall the lapse $N$ falls, and the cones close onto the curve $N = 0$, "
+        "$w = (\\ell/2)\\ln(1 + 4ct/\\ell)$, where the normals to the wall from neighbouring moments meet. "
+        "Beyond it the coordinates go on with their time reversed, and the hatching marks that region.",
+    ],
     ("kodama_kink", "proper_radial", "radial"): [
         "The plane of $t$ and $R$ ($\\theta = \\pi/2$, $\\phi = 0$) through Kodama's kink at $f = 1.25$, with "
         "$R < 0$ on one side of the throat and $R > 0$ on the other. The functions $h$ and $r$ come from "
@@ -16544,6 +16595,10 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: 10 * ori_shell.label_behind(np.minimum(v, -1e-3), r, -1.0),
          lambda v, r: (v < -1e-3) & (r < ori_shell.shell().radius_behind(np.minimum(v, -1e-3)) - 0.01)
          & (r > ori_shell.horizons(ori_shell.shell().mass_behind(np.minimum(v, -1e-3)))[0] + 0.03)),
+    # The wall past the black hole at l = mu = 1: ct +- r_* in the static chart, r_* = ln|(r - 1)/(r + 1)|/4
+    # + arctan(r)/2.
+    ("brane_wall_universe", "static", "radial"):
+        (lambda t, r: t + bwu.tortoise(r), lambda t, r: t - bwu.tortoise(r), _away(1)),
     # Israel's shell at r_s = 1: cT +- r in the flat space inside it, and Schwarzschild's ct +- r_*, and v
     # and v - 2r_*, outside it.
     ("israel_shell", "interior", "radial"): (lambda T, r: T + r, lambda T, r: T - r, None),

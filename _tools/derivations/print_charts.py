@@ -32904,7 +32904,7 @@ def brane_wall_universe(system):
 
     The static chart is Kraus's (8), JHEP 1999(12), 011, f = k + r^2/l^2 - mu/r^2 over a unit
     3-space of curvature k, written d chi^2/(1 - k chi^2) + chi^2 dOmega^2 as Bowcock, Charmousis
-    and Gregory write it, Class. Quantum Grav. 17, 4745 (2000), their (2)\\; the wall is r = a(t),
+    and Gregory write it, Class. Quantum Grav. 17, 4745 (2000), their (2); the wall is r = a(t),
     which the chart declares and its domains bound.
 
     The Gaussian normal chart is the solution of Binetruy, Deffayet, Ellwanger and Langlois,
@@ -32913,12 +32913,12 @@ def brane_wall_universe(system):
     signs: A^2 = a^2 phi, the square of the areal radius of their (14), and the lapse
     N = psi/sqrt(phi) = d_t A/a', which is BDEL's (38). The arXiv copy of MSM's (24) carries
     1 + l^2(2H^2 + H' + K/a^2) where their (26) and the definition psi = phi + phi_t/2H carry
-    l^2/2\\; brane_wall_universe.md Step 3 derives the second. A, N and Q are names the chart
-    defines, held as functions while the tensors are built, so the metric and the Christoffel
-    symbols are written in them\\; the curvature is written as the bulk has it, the Weyl tensor of
-    the black hole, mu/A^4 times the 2-plane of t and w and the 3-space, beside -(g g - g g)/l^2,
-    once brane_wall_universe_check has held that form to the Riemann tensor of the chart written
-    out, component by component."""
+    l^2/2; brane_wall_universe.md Step 3 derives the second. A, N and Q are names the chart
+    defines, held as functions while the tensors are built, so the metric, the Christoffel symbols,
+    the Weyl tensor and the Kretschmann scalar are written in them. The Riemann, Ricci and Einstein
+    tensors are written as the bulk has them, the Weyl tensor of the black hole, mu/A^4 times the
+    2-plane of t and w and the 3-space, beside -(g g - g g)/l^2, once brane_wall_universe_check has
+    held that form to the Riemann tensor of the chart written out, component by component."""
     if system == "static":
         f = "\\left(k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}\\right)"
         bare = "k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}"
@@ -33000,8 +33000,9 @@ def brane_wall_universe_check(chart, system):
     """Both charts solve R_mu_nu = -(4/l^2) g_mu_nu, and the static chart's Kretschmann scalar is
     the black hole's. In the Gaussian normal chart every component of the Riemann tensor, with A,
     N and Q written out, is the bulk's form of brane_wall_universe_bulk, which then stands for it:
-    the chart's geometry takes that tensor, so the curvature is printed in A and N as the bulk
-    has it. The definitions are held at the wall as well, A = a, N = 1 and d_w A = -aQ/l there,
+    the chart's geometry takes that tensor, so the Riemann, Ricci and Einstein tensors are printed
+    in A and N as the bulk has them, and the Weyl tensor and the Kretschmann scalar as the names
+    have them. The definitions are held at the wall as well, A = a, N = 1 and d_w A = -aQ/l there,
     which with the junction conditions makes Q = 1 + rho/sigma."""
     geo, reader = chart.geo, chart.reader
     ell = reader.parameters["ell"]
