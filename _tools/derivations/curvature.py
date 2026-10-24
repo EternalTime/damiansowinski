@@ -11397,7 +11397,7 @@ def tov(ck, src):
         "per_scalar": scalar_clips(K_clip, R_clip),
         "settings": ("$G = c = M_\\odot = 1$, so lengths are in $GM_\\odot/c^2$, "
                      f"$K$ in its inverse fourth power and $R^\\mu{{}}_\\mu$ in its inverse square; $M = {mass:.2f}$ "
-                     f"and the surface radius $R = {radius:.2f}$."),
+                     f"and the surface radius $R = {radius:.2f}$, both rounded."),
         "input": ("A polytrope, $p = \\kappa\\rho_0^2$ and $\\rho = \\rho_0 + p$, with rest mass density $\\rho_0$, "
                   "energy density $\\rho$, $\\kappa = 100$ and central $\\rho_0 = 1.28\\times10^{-3}$."),
         "clip": K_clip + " " + R_clip,
