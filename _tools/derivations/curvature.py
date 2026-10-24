@@ -11485,6 +11485,12 @@ def boson_star(ck, src):
         # Every retained point is among the samples checked above, including R's tail near zero.
         lines = sampled(ck, f"boson_star {name}", fn, x_axis, scale, PLOT_W / 2, [], within)
         curves += [curve_entry(name, name, fn, "r", {}, line) for line in lines]
+    ricci_points = [point for curve in curves if curve["panel"] == "R" for point in curve["points"]]
+    nearest = min(ricci_points, key=lambda point: abs(point[0] - peak_r))
+    ck("boson_star the nearest drawn Ricci point lies just inside the optimized maximum at r = 0.9145",
+       nearest[0] < peak_r and f"{nearest[0]:.4f}" == "0.9145"
+       and nearest == max(ricci_points, key=lambda point: point[1]),
+       f"drawn r = {nearest[0]:.12g}, optimized r = {peak_r:.12g}")
     ck("boson_star K falls from its central maximum", float(K(xs[0])) < centre_K and np.all(np.diff(K(xs)) < 0))
     rv = R(xs)
     ck("boson_star R rises to its one interior maximum and then falls",
@@ -11519,7 +11525,8 @@ def boson_star(ck, src):
             "At the centre $K$ is finite and greatest, $0.0780214\\,\\mu^4$, and falls outward through the star, "
             "approaching the vacuum value $48M^2/r^6$ far out. The star has no surface or horizon.",
             "The Ricci scalar rises from $0.0667868\\,\\mu^2$ at the centre to its small maximum "
-            "$0.0684706\\,\\mu^2$ at $\\mu r = 0.9176$, then falls toward zero as the field dies away. "
+            "$0.0684706\\,\\mu^2$ at $\\mu r = 0.9176$, with the nearest drawn point a little inside it "
+            "at $\\mu r = 0.9145$, then falls toward zero as the field dies away. "
             "In a vacuum $R = 0$.",
         ],
         "ricci_sentences": [[1, 0], [1, 1]], "per_scalar": scalar_clips(k_clip, r_clip),
