@@ -1,5 +1,5 @@
 {
-  "version": "17cf11013455a121",
+  "version": "962adbe1836841e5",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -31240,6 +31240,134 @@
         "eprint": "hep-th/0210234",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/1126-6708/2002/11/021"
+      }
+    },
+    "astorino2022swirling": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes in a swirling universe",
+        "author": "Astorino, Marco and Martelli, Riccardo and Viganò, Adriano",
+        "journal": "Physical Review D",
+        "volume": "106",
+        "number": "6",
+        "pages": "064014",
+        "year": "2022",
+        "doi": "10.1103/PhysRevD.106.064014",
+        "eprint": "2205.13548",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.106.064014"
+      }
+    },
+    "astorino2022removal": {
+      "type": "article",
+      "fields": {
+        "title": "Removal of conical singularities from rotating {C}-metrics and dual {CFT} entropy",
+        "author": "Astorino, Marco",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "10",
+        "pages": "074",
+        "year": "2022",
+        "doi": "10.1007/JHEP10(2022)074",
+        "eprint": "2207.14305",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP10(2022)074"
+      }
+    },
+    "capobianco2024": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesic motion in a swirling universe: The complete set of solutions",
+        "author": "Capobianco, Rogério and Hartmann, Betti and Kunz, Jutta",
+        "journal": "Physical Review D",
+        "volume": "109",
+        "number": "6",
+        "pages": "064042",
+        "year": "2024",
+        "doi": "10.1103/PhysRevD.109.064042",
+        "eprint": "2312.17347",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.109.064042"
+      }
+    },
+    "moreira2024": {
+      "type": "article",
+      "fields": {
+        "title": "Twisting shadows: Light rings, lensing, and shadows of black holes in swirling universes",
+        "author": "Moreira, Zeus S. and Herdeiro, Carlos A. R. and Crispino, Luís C. B.",
+        "journal": "Physical Review D",
+        "volume": "109",
+        "number": "10",
+        "pages": "104020",
+        "year": "2024",
+        "doi": "10.1103/PhysRevD.109.104020",
+        "eprint": "2401.05658",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.109.104020"
+      }
+    },
+    "barrientos2024": {
+      "type": "article",
+      "fields": {
+        "title": "Mixing ``Magnetic'' and ``Electric'' {Ehlers-Harrison} transformations: the electromagnetic swirling spacetime and novel type {I} backgrounds",
+        "author": "Barrientos, José and Cisterna, Adolfo and Kolář, Ivan and Müller, Keanu and Oyarzo, Marcelo and Pallikaris, Konstantinos",
+        "journal": "The European Physical Journal C",
+        "volume": "84",
+        "number": "7",
+        "pages": "724",
+        "year": "2024",
+        "doi": "10.1140/epjc/s10052-024-13093-x",
+        "eprint": "2401.02924",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-024-13093-x"
+      }
+    },
+    "dipinto2025": {
+      "type": "article",
+      "fields": {
+        "title": "{Kerr-Newman} black hole in a {Melvin}-swirling universe",
+        "author": "Di Pinto, Andrea and Klemm, Silke and Viganò, Adriano",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "6",
+        "pages": "150",
+        "year": "2025",
+        "doi": "10.1007/JHEP06(2025)150",
+        "eprint": "2503.07780",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP06(2025)150"
+      }
+    },
+    "astorino2025binary": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating and swirling binary black hole system balanced by its gravitational spin-spin interaction",
+        "author": "Astorino, Marco and Torresan, Matilde",
+        "journal": "Physical Review D",
+        "volume": "112",
+        "number": "6",
+        "pages": "064034",
+        "year": "2025",
+        "doi": "10.1103/3954-766n",
+        "eprint": "2502.08706",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/3954-766n"
+      }
+    },
+    "colleaux2025": {
+      "type": "article",
+      "fields": {
+        "title": "Double {Wick} rotations between symmetries of {Taub-NUT}, near-horizon extreme {Kerr}, and swirling spacetimes",
+        "author": "Colléaux, Aimeric and Kolář, Ivan and Málek, Tomáš",
+        "journal": "Physical Review D",
+        "volume": "112",
+        "number": "12",
+        "pages": "124040",
+        "year": "2025",
+        "doi": "10.1103/y6sl-b6x4",
+        "eprint": "2509.22309",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/y6sl-b6x4"
       }
     }
   }
