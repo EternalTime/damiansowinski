@@ -4531,10 +4531,11 @@ class TurningLightConeFigures(unittest.TestCase):
         # in its surface X = 0 seen from the side, V left out.
         still = {f"{name}/{figure['id']}" for name, data in diagram_files().items()
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
-        # Ernst and Wild's ergoregion is its meridional plane seen from the side, t and phi left out.
+        # Ernst and Wild's ergoregion is its meridional plane seen from the side, t and phi left out, and so
+        # are the ergoregions of the swirling universe and of the black hole in it.
         self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
                                  "point_particle_2plus1/beam", "schrodinger_spacetime/trap", "kerr_melvin/tube",
-                                 "maximally_supersymmetric_plane_wave/focus"})
+                                 "maximally_supersymmetric_plane_wave/focus", "swirling_universe_black_hole/ergo"})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -5284,6 +5285,9 @@ class Slices(unittest.TestCase):
               # Ernst and Wild's hole in the stronger field of the figure of its ergoregion, another member
               # of the family than the hole whose equator is embedded.
               "kerr_melvin/boyer_lindquist/tube",
+              # The ergoregions of the swirling universe and of the black hole in it, meridional planes that
+              # meet the embedded equatorial moments only in the line drawn as the equatorial plane.
+              "swirling_universe_black_hole/spherical/ergo", "swirling_universe_black_hole/cylindrical/ergo",
               # Brill's charged Taub-NUT: the regular half axis, which the embedded equatorial plane does not
               # meet, and Brill's universe between the horizons, where constant t is no moment of space.
               *[f"brill_charged_taub_nut/{s}/{v}" for s, v in (("one_string", "black_hole"), ("one_string", "wormhole"),
@@ -5664,6 +5668,11 @@ class Slices(unittest.TestCase):
                     # each chart's drawings marking its own moment.
                     "melvin/cylindrical/radial": {"ernst"}, "conformal melvin/cylindrical": {"ernst"},
                     "melvin/ernst/radial": {"universe"}, "conformal melvin/ernst": {"universe"},
+                    # The swirling universe with no hole and the hole inside it, the same.
+                    "swirling_universe_black_hole/cylindrical/radial": {"hole"},
+                    "conformal swirling_universe_black_hole/cylindrical": {"hole"},
+                    "swirling_universe_black_hole/spherical/radial": {"universe"},
+                    "conformal swirling_universe_black_hole/spherical": {"universe"},
                     # Einstein's cluster of constant speed, Florides's of uniform density and the declared
                     # cluster with no surface are three spacetimes of one entry, each chart's drawings marking
                     # the moment of its own.
