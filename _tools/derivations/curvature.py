@@ -11110,6 +11110,51 @@ def schwarzschild(ck, src):
     }]
 
 
+def ellis_bronnikov(ck, src):
+    """The wormhole's two scalars over both sides of its throat, at ell = 1.
+
+    The published scalars depend on proper r alone, so a line shows their whole variation.
+    The range -3 to 3 ell and the unit ell = 1 are the radial spacetime diagram's.
+    K is logarithmic from 10^-3 to 10^2; R is signed logarithmic from -10 to zero,
+    linear within 10^-3. Both curves lie wholly inside their panels.
+    """
+    x_axis = axis("$r/\\ell$", -3, 3)
+    K_scale = {"kind": "log", "from": 1e-3, "to": 1e2}
+    R_scale = {"kind": "symlog", "from": -10, "to": 0, "linear": 1e-3}
+    panels = [{"id": "K", "name": "$K\\,\\ell^4$", "aspect": 2,
+               "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R\\,\\ell^2$", "aspect": 2,
+               "scale": R_scale, "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "ellis_bronnikov", [p["aspect"] for p in panels])
+    K = nr_published(src, "ellis_bronnikov", "spherical", "kretschmann", ["r"], ["ell"])
+    R = nr_published(src, "ellis_bronnikov", "spherical", "ricci_scalar", ["r"], ["ell"])
+    curves = []
+    for name, fn, scale in (("K", K, K_scale), ("R", R, R_scale)):
+        curves += line_curves(ck, "ellis_bronnikov", name, name, fn, "r", x_axis, scale,
+                              PLOT_W / 2, {"ell": 1})
+        ck(f"ellis_bronnikov {name} stays inside its panel", not any(beyond(fn, x_axis, scale, [1])))
+    k_clip = ("We draw $K\\,\\ell^4$ on a logarithmic scale from $10^{-3}$ to $10^{2}$; "
+              "every value drawn lies within it.")
+    r_clip = ("We draw $R\\,\\ell^2$ on a signed logarithmic scale, linear within $10^{-3}$ of zero, "
+              "from $-10$ to $0$; every value drawn lies within it.")
+    return [{
+        "id": "throat", "label": "both sides of the throat", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the Ellis-Bronnikov wormhole against "
+            "the proper distance $r$ ($\\ell = 1$), across both sides of the throat $r = 0$, the same at "
+            "every $t$, $\\theta$, and $\\phi$. At the throat $K$ is finite and greatest, $12/\\ell^4$, "
+            "and falls symmetrically on either side, approaching $12\\ell^4/r^8$ far out.",
+            "$R$ is negative at every $r$, least at the throat, $-2/\\ell^2$, and rises symmetrically "
+            "toward zero on either side, approaching $-2\\ell^2/r^4$ far out.",
+        ],
+        "ricci_sentences": [[1, 0]], "per_scalar": scalar_clips(k_clip, r_clip),
+        "settings": "$\\ell = 1$, the unit of every length.",
+        "clip": k_clip + " " + r_clip,
+    }]
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -11220,6 +11265,7 @@ DRAWN = {
     "einstein_cluster": einstein_cluster,
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "einstein_rosen_waves": einstein_rosen_waves,
+    "ellis_bronnikov": ellis_bronnikov,
     "fisher_jnw": fisher_jnw,
     "gowdy": gowdy,
     "gravastar": gravastar,
