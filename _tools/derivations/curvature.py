@@ -12025,12 +12025,69 @@ def tolman_bondi(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- Bonnor's magnetic dipole
+
+def bonnor_magnetic_dipole(ck, src):
+    """The dipole's exterior in the landed polar meridian frame, at m = 1 and b = sqrt(8).
+
+    The existing diagrams' radial interval 4 <= r/m <= 8 is drawn as a half annulus.
+    The strut r = 4m is its inner semicircle, with the two horizons at its endpoints.
+    The scalar depends on both r and theta; its Ricci scalar vanishes.
+    The map leaves the complement of the radial interval clear.
+    Every cell is read from the stored scalar and a spread is checked in sixty digits.
+    """
+    name, system = "bonnor_magnetic_dipole", "spheroidal"
+    params = {"m": 1.0, "b": 2 * math.sqrt(2)}
+    K = Published(src, name, system, "kretschmann", ["r", "theta"], list(params))
+    R = Published(src, name, system, "ricci_scalar", ["r", "theta"], list(params))
+    x_axis = axis("$r\\sin\\theta/m$", 0, 8, 5)
+    y_axis = axis("$r\\cos\\theta/m$", -8, 8, 9)
+    nx, ny = 160, 320
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, list(params.values()), frame="meridian")
+    X, Y = np.meshgrid(xs, ys)
+    radius, angle = meridian(X, Y)
+    inside = (radius > 4) & (radius <= 8)
+    scale = {"kind": "log", "from": 1e-4, "to": 10}
+    shape_checks(ck, name, [0.5])
+    ck(f"{name} K is finite and positive in the domain",
+       np.all(np.isfinite(values[inside])) and np.all(values[inside] > 0))
+    ck(f"{name} R vanishes", R.expr == 0)
+    indices = np.argwhere(inside)
+    picks = indices[np.linspace(0, len(indices) - 1, 40).astype(int)]
+    agrees(ck, name, K,
+           [[radius[j, i], angle[j, i], *params.values()] for j, i in picks],
+           [values[j, i] for j, i in picks])
+    angles = np.linspace(0, math.pi, 161)
+    strut = [[float(4 * math.sin(a)) + 0.0, float(4 * math.cos(a)) + 0.0] for a in angles]
+    return [{
+        "id": "meridian", "label": "the meridian half plane", "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": name, "system": system, "scalar": "kretschmann",
+                "x": "r", "y": "\\theta", "frame": "meridian", "params": params,
+                "domain": "(r > 4*m) & (r <= 8*m)", "nx": nx, "ny": ny,
+                "cells": [[rounded(values[j, i]) if inside[j, i] else None for i in range(nx)] for j in range(ny)]},
+        "marks": [{"class": "string", "points": strut},
+                  {"class": "horizon", "at": [0.0, 4.0]}, {"class": "horizon", "at": [0.0, -4.0]}],
+        "legend": [["line", "string", "the strut, $r = 4m$, $0 < \\theta < \\pi$"],
+                   ["point", "horizon", "the two degenerate horizons, $r = 4m$, $\\theta = 0, \\pi$"]],
+        "caption": ["The Kretschmann scalar $K$ of the magnetic dipole over the meridian half plane "
+                    "($b = 2\\sqrt{2}\\,m$), the same at every $t$ and $\\phi$. "
+                    "We draw Bonnor's $r$ and $\\theta$ as polar coordinates, with the strut on the inner semicircle. "
+                    "The Ricci scalar vanishes."],
+        "settings": "$m = 1$, the unit of every length, and $b = 2\\sqrt{2}\\,m$.",
+        "clip": "We colour $K\\,m^4$ logarithmically from $10^{-4}$ to $10$, over $4 < r/m \\le 8$. "
+                "Every coloured cell lies within the scale; cells outside this radial interval stay clear.",
+    }]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
     "bach_weyl_ring": bach_weyl_ring,
     "bardeen": bardeen,
     "bardeen_perturbations": bardeen_perturbations,
+    "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "bonnor_vaidya": bonnor_vaidya,
     "born_infeld_charge": born_infeld_charge,
     "boulware_deser": boulware_deser,
