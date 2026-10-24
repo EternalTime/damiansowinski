@@ -11304,6 +11304,20 @@ def ellis_bronnikov(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- the polytropic star
+
+def tov(ck, src):
+    """Radial curvature of the shared polytrope, through its surface into vacuum.
+
+    The published scalars receive the declared mass and redshift profiles of StarSolver.
+    Their regular central limits, matter trace, vacuum limits and absence of horizons are
+    checked before the curves are written.
+    """
+    solver = nr.tov_star()
+    src.note("tov", "spherical", ["einstein_tensor"])
+    return []
+
+
 # ---------------------------------------------------------------- the two places of a figure
 
 def scalar_clips(kretschmann, ricci, reference=None):
@@ -11444,6 +11458,7 @@ DRAWN = {
     "simpson_visser": simpson_visser,
     "taub_nut": taub_nut,
     "topological_star": topological_star,
+    "tov": tov,
     "vaidya": vaidya,
     "van_den_broeck": van_den_broeck,
     "zipoy_voorhees": zipoy_voorhees,

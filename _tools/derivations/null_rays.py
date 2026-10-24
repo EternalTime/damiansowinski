@@ -2649,6 +2649,28 @@ def _e12_star(q, order):
 DECLARED_FUNCTIONS.update(_nm_declare({"e12_star": _e12_star}))
 
 
+def tov_star():
+    """The polytrope shared by the radial drawings, in G = c = M_sun = 1."""
+    key = ("tov", "spherical", 100.0, 1.28e-3)
+    if key not in _SOLVERS:
+        _SOLVERS[key] = StarSolver(*key)
+    return _SOLVERS[key]
+
+
+def _tov_profile(name):
+    def value(r, order):
+        return tov_star().values(r)[name][order].reshape(np.shape(r))
+    return value
+
+
+_TOV_FUNCTIONS = _nm_declare({"tov_m": _tov_profile("m"), "tov_Phi": _tov_profile("Phi")})
+for _function in _TOV_FUNCTIONS.values():
+    # The profile has the precision of its numerical solution; scalar arithmetic can then
+    # be repeated in sixty digits with those same profile values.
+    _function._eval_evalf = lambda self, prec: sp.Float(float(self._imp_(float(self.args[0]))), prec)
+DECLARED_FUNCTIONS.update(_TOV_FUNCTIONS)
+
+
 def e12_tortoise(x):
     """x_* of the declared star on the line through its centre, dx_*/dx = 1/N from x_* = 0 at the
     centre: one quadrature inside the star, and outside it Einstein's r + m ln(r - m/2) -
