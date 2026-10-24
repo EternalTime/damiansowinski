@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 186,
+  "count": 187,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1569,6 +1569,11 @@
           "id": "maximally_supersymmetric_plane_wave",
           "kind": "family",
           "text": "A plane wave of ten dimensions, the Penrose limit of anti-de Sitter space of five dimensions times a 5-sphere along a light ray circling the sphere [blau2002penrose, berenstein2002]."
+        },
+        {
+          "id": "eternal_traversable_wormhole",
+          "kind": "family",
+          "text": "Anti-de Sitter space of two dimensions, whose two boundaries Maldacena and Qi coupled to each other to make a wormhole that stays open [maldacena2018]."
         }
       ],
       "references": [
@@ -1623,7 +1628,8 @@
         "mertens2023",
         "lin2004",
         "blau2002penrose",
-        "berenstein2002"
+        "berenstein2002",
+        "maldacena2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -4452,6 +4458,11 @@
           "id": "jackiw_teitelboim_black_hole",
           "kind": "family",
           "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions, whose metric is anti-de Sitter space of two dimensions with a dilaton that marks a horizon. With no horizon and its curvature radius set to $b$, its static chart is the plane of $t$ and $r$ of Bertotti and Robinson's static chart."
+        },
+        {
+          "id": "eternal_traversable_wormhole",
+          "kind": "family",
+          "text": "Global anti-de Sitter space of two dimensions held open as a wormhole by a coupling of its two boundaries [maldacena2018]. Times a sphere, such a throat joins two magnetically charged black holes in the wormhole of Maldacena, Milekhin, and Popov [maldacena2023]."
         }
       ],
       "references": [
@@ -4483,7 +4494,9 @@
         "horvath1977",
         "podolsky2025",
         "strominger1996",
-        "freund1980"
+        "freund1980",
+        "maldacena2018",
+        "maldacena2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -17896,6 +17909,11 @@
           "id": "kodama_kink",
           "kind": "family",
           "text": "Takeshi Kodama's wormhole of 1978, whose throat he set beside this bridge [kodama1978preprint]. It has no horizon, and a light signal can cross it [kodama1979preprint]."
+        },
+        {
+          "id": "eternal_traversable_wormhole",
+          "kind": "family",
+          "text": "A wormhole in two dimensions that stays open for ever, its two boundaries coupled so that light crosses between them [maldacena2018]."
         }
       ],
       "references": [
@@ -17929,7 +17947,8 @@
         "blazquez2021",
         "shenker2014",
         "kodama1978preprint",
-        "kodama1979preprint"
+        "kodama1979preprint",
+        "maldacena2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -26651,6 +26670,11 @@
           "id": "near_horizon_extreme_kerr",
           "kind": "family",
           "text": "The throat of the extreme Kerr black hole, anti-de Sitter space of two dimensions with a deformed sphere twisted over it. Its near-NHEK chart carries $r(r - 2k)$ where the static chart of this black hole has $r^2 - r_h^2$, the same factor after a shift of $r$ by $k$."
+        },
+        {
+          "id": "eternal_traversable_wormhole",
+          "kind": "family",
+          "text": "The same strip of anti-de Sitter space with its two boundaries coupled to each other. The coupling makes negative energy, the dilaton grows toward both boundaries and stays static, and light crosses from one boundary to the other [maldacena2018]."
         }
       ],
       "references": [
@@ -26662,7 +26686,8 @@
         "lemos1994",
         "achucarro1993",
         "almheiri2015",
-        "almheiri2020"
+        "almheiri2020",
+        "maldacena2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/jackiw_teitelboim_black_hole.json",
@@ -36479,6 +36504,226 @@
       ]
     },
     {
+      "id": "eternal_traversable_wormhole",
+      "name": "Maldacena-Qi Eternal Traversable Wormhole",
+      "short_name": "Maldacena-Qi",
+      "description": "A wormhole in two spacetime dimensions that stays open for ever. It is anti-de Sitter space of two dimensions in Jackiw-Teitelboim gravity, with its two boundaries coupled to each other: the coupling makes negative energy in the quantum fields between them, which holds the dilaton static, and light crosses from one boundary to the other. Two coupled Sachdev-Ye-Kitaev models share its gravitational dynamics.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "no horizon",
+        "negative energy",
+        "energy condition violation",
+        "topological censorship",
+        "quantum field theory in curved spacetime",
+        "dilaton",
+        "dilaton gravity",
+        "lower-dimensional gravity",
+        "two-dimensional",
+        "anti-de Sitter",
+        "constant curvature",
+        "holography",
+        "AdS/CFT",
+        "exact solution",
+        "Lorentzian",
+        "idealized model",
+        "Einstein space",
+        "cosmological constant",
+        "negative cosmological constant",
+        "conformally flat",
+        "static",
+        "stationary"
+      ],
+      "signature": "(-,+)",
+      "convention": "The metric and the dilaton $\\phi$ solve $R = -2/L^2$ and $\\nabla_\\mu\\nabla_\\nu\\phi - g_{\\mu\\nu}\\nabla^2\\phi + g_{\\mu\\nu}\\phi/L^2 = -T_{\\mu\\nu}$, with $T_{\\mu\\nu}$ the stress tensor of the matter fields. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "jackiw_teitelboim_black_hole",
+          "kind": "family",
+          "text": "The black hole of the same gravity, on the same strip of anti-de Sitter space. With its two boundaries uncoupled, the dilaton vanishes in the future and the past of the strip, and no light ray passes from one boundary to the other [maldacena2018]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Anti-de Sitter space in four dimensions. Its version in two dimensions is the whole strip on which this wormhole stands, $L^2(-dt^2 + d\\sigma^2)/\\sin^2\\sigma$."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "Anti-de Sitter space of two dimensions times a sphere, the throat of an extreme charged black hole. Such a throat in global coordinates, joining two magnetically charged black holes, is the wormhole of Maldacena, Milekhin, and Popov in four dimensions [maldacena2023]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "The bridge of Einstein and Rosen, a wormhole that closes before light can cross it. Gao, Jafferis, and Wall made such a bridge traversable for a while by coupling its two sides [gao2017]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "The traversable wormhole of Morris and Thorne, held open by exotic matter. In this wormhole the negative energy comes from quantum fields under a coupling of the two boundaries [maldacena2018]."
+        },
+        {
+          "id": "near_horizon_extreme_kerr",
+          "kind": "family",
+          "text": "The throat of the extreme Kerr black hole, anti-de Sitter space of two dimensions with a deformed sphere twisted over it. The gravity of this wormhole, nearly anti-de Sitter gravity in two dimensions, approximates the dynamics of nearly extreme black holes [maldacena2018]."
+        },
+        {
+          "id": "witten_black_hole",
+          "kind": "family",
+          "text": "The black hole of string theory in two dimensions, another solution of gravity with a dilaton. Its curvature grows without bound at its singularity."
+        }
+      ],
+      "references": [
+        "maldacena2018",
+        "maldacena1999",
+        "almheiri2015",
+        "engelsoy2016",
+        "jensen2016",
+        "maldacena2016",
+        "maldacena2017",
+        "galloway1999",
+        "gao2017",
+        "sachdev1993",
+        "maldacena2016remarks",
+        "maldacena2023"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/eternal_traversable_wormhole.json",
+      "charts": [
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "t",
+            "\\sigma"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\sigma \\in (0, \\pi)",
+            "\\sigma = 0, \\pi \\;\\text{(the two boundaries)}",
+            "\\sigma = \\pi/2 \\;\\text{(where the dilaton is least)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The radius of curvature, a length; the Ricci scalar is $-2/L^2$ everywhere"
+            },
+            {
+              "symbol": "\\phi_h",
+              "description": "The least value of the dilaton, dimensionless, at the middle of the wormhole; it sets the negative energy of the matter fields"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\sigma)$, both dimensionless, and the dilaton is $\\phi = \\phi_h\\left(1 + (\\pi/2 - \\sigma)\\cot\\sigma\\right)$, with $T_{tt} = T_{\\sigma\\sigma} = -\\phi_h$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{L^2}{\\sin^2\\sigma}\\left(-dt^2 + d\\sigma^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-L^2\\csc^2\\sigma"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "L^2\\csc^2\\sigma"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{L^2}",
+          "kretschmann": "K = \\dfrac{4}{L^4}"
+        },
+        {
+          "id": "poincare",
+          "name": "Poincaré",
+          "coordinates": [
+            "t_P",
+            "z"
+          ],
+          "domains": [
+            "t_P \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "z = 0 \\;\\text{(a boundary)}",
+            "z^2 - t_P^2 = 1 \\;\\text{(where the dilaton is least)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The radius of curvature, a length; the Ricci scalar is $-2/L^2$ everywhere"
+            },
+            {
+              "symbol": "\\phi_h",
+              "description": "The least value of the dilaton, dimensionless, at the middle of the wormhole; it sets the negative energy of the matter fields"
+            }
+          ],
+          "convention": "We use coordinates $(t_P, z)$, both dimensionless, and the dilaton is $\\phi = \\phi_h(1 + x\\arctan x)$ with $x = (1 + t_P^2 - z^2)/2z$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{L^2}{z^2}\\left(-dt_P^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t_P",
+                "t_P"
+              ],
+              "value": "-\\dfrac{L^2}{z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{L^2}{z^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{L^2}",
+          "kretschmann": "K = \\dfrac{4}{L^4}"
+        },
+        {
+          "id": "thermal",
+          "name": "Thermal",
+          "coordinates": [
+            "t_R",
+            "\\rho"
+          ],
+          "domains": [
+            "t_R \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\rho = 0 \\;\\text{(the edge of the chart)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The radius of curvature, a length; the Ricci scalar is $-2/L^2$ everywhere"
+            },
+            {
+              "symbol": "\\phi_h",
+              "description": "The least value of the dilaton, dimensionless, at the middle of the wormhole; it sets the negative energy of the matter fields"
+            }
+          ],
+          "convention": "We use coordinates $(t_R, \\rho)$, both dimensionless, and the dilaton is $\\phi = \\phi_h(1 + x\\arctan x)$ with $x = \\sinh\\rho\\cosh t_R$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = L^2\\left(-\\sinh^2\\rho\\,dt_R^2 + d\\rho^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t_R",
+                "t_R"
+              ],
+              "value": "-L^2\\sinh^2\\rho"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "L^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{L^2}",
+          "kretschmann": "K = \\dfrac{4}{L^4}"
+        }
+      ]
+    },
+    {
       "id": "btz_multi_holes_wormholes",
       "name": "Many Black Holes and Wormholes in Three Dimensions",
       "short_name": "Many Black Holes and Wormholes in Three Dimensions",
@@ -40416,6 +40661,11 @@
           "id": "kodama_kink",
           "kind": "special_case",
           "text": "Takeshi Kodama's wormhole of 1978, held open by a ghost scalar field with a quartic potential and known only numerically [kodama1978preprint]. Both of its functions are fixed by the field."
+        },
+        {
+          "id": "eternal_traversable_wormhole",
+          "kind": "family",
+          "text": "A traversable wormhole in two dimensions whose negative energy comes from quantum fields, under a coupling of its two boundaries [maldacena2018]."
         }
       ],
       "references": [
@@ -40445,7 +40695,8 @@
         "clement2016",
         "blazquez2021",
         "james2015",
-        "kodama1978preprint"
+        "kodama1978preprint",
+        "maldacena2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -42362,6 +42613,11 @@
           "id": "vuorio_warped_ads",
           "kind": "family",
           "text": "Anti-de Sitter space of three dimensions with its fibres squashed or stretched. Each slice of this throat at constant latitude is such a space, warped along a spacelike circle [bengtsson2006]."
+        },
+        {
+          "id": "eternal_traversable_wormhole",
+          "kind": "family",
+          "text": "Anti-de Sitter space of two dimensions in global coordinates, with a static dilaton, made a wormhole by a coupling of its two boundaries [maldacena2018]."
         }
       ],
       "references": [
@@ -42378,7 +42634,8 @@
         "compere2017",
         "gralla2018",
         "meinel2002",
-        "bengtsson2006"
+        "bengtsson2006",
+        "maldacena2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/near_horizon_extreme_kerr.json",
@@ -63665,6 +63922,11 @@
           "id": "jackiw_teitelboim_black_hole",
           "kind": "family",
           "text": "The black hole of Jackiw and Teitelboim's gravity, another gravity with a dilaton in two dimensions. Its curvature is the same negative constant everywhere, and its temperature grows with the size of its horizon."
+        },
+        {
+          "id": "eternal_traversable_wormhole",
+          "kind": "family",
+          "text": "A wormhole in another gravity with a dilaton in two dimensions, Jackiw-Teitelboim gravity, on the strip of anti-de Sitter space [maldacena2018]."
         }
       ],
       "references": [
@@ -63682,7 +63944,8 @@
         "russo1992",
         "horowitz1993",
         "davies1977",
-        "good2016"
+        "good2016",
+        "maldacena2018"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/witten_black_hole.json",

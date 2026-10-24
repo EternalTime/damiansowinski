@@ -1511,6 +1511,18 @@ A spacetime construction containing a worldline of infinite proper length that l
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = \Omega^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
 
+### Maldacena-Qi Eternal Traversable Wormhole
+
+A wormhole in two spacetime dimensions that stays open for ever. It is anti-de Sitter space of two dimensions in Jackiw-Teitelboim gravity, with its two boundaries coupled to each other: the coupling makes negative energy in the quantum fields between them, which holds the dilaton static, and light crosses from one boundary to the other. Two coupled Sachdev-Ye-Kitaev models share its gravitational dynamics.
+
+- id: `eternal_traversable_wormhole`
+- tags: wormhole, traversable, no horizon, negative energy, energy condition violation, topological censorship, quantum field theory in curved spacetime, dilaton, dilaton gravity, lower-dimensional gravity, two-dimensional, anti-de Sitter, constant curvature, holography, AdS/CFT, exact solution, Lorentzian, idealized model, Einstein space, cosmological constant, negative cosmological constant, conformally flat, static, stationary
+- signature: (-,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/eternal_traversable_wormhole.json
+- chart Global: coordinates $(t, \sigma)$, $$ds^2 = \dfrac{L^2}{\sin^2\sigma}\left(-dt^2 + d\sigma^2\right)$$
+- chart Poincaré: coordinates $(t_P, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-dt_P^2 + dz^2\right)$$
+- chart Thermal: coordinates $(t_R, \rho)$, $$ds^2 = L^2\left(-\sinh^2\rho\,dt_R^2 + d\rho^2\right)$$
+
 ### Many Black Holes and Wormholes in Three Dimensions
 
 Anti-de Sitter space of three dimensions cut along timelike surfaces and glued back together, which makes any number of black holes joined behind their horizons, or one black hole with a wormhole of any genus inside it. Every exterior is that of a Bañados-Teitelboim-Zanelli black hole, and the whole spacetime is drawn on Poincaré's disc.

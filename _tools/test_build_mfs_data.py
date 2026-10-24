@@ -6660,6 +6660,15 @@ class Slices(unittest.TestCase):
                 "kruskal": [-math.tanh(hi / 2), math.tanh(hi / 2)],
                 "global": [math.pi / 2 - math.atan(math.sinh(hi)), math.pi / 2 + math.atan(math.sinh(hi))],
                 "poincare": [2 * math.exp(-hi), 2 * math.exp(hi)]}[key.split("/")[1]]
+        if key.startswith("eternal_traversable_wormhole/"):
+            # The Euclidean cylinder is read in the global sigma at L = 1, and its meridians are the moment
+            # t = 0: level in every chart, across the strip in the global chart, at z = tan(sigma/2) on the
+            # Poincare plane, and in the thermal chart on the half sigma <= pi/2 alone, from its edge rho = 0
+            # at the middle out to cosh(rho) = 1/sin(sigma).
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), {
+                "global": [lo, hi], "poincare": [math.tan(lo / 2), math.tan(hi / 2)],
+                "thermal": [0.0, math.acosh(1 / math.sin(lo))]}[key.split("/")[1]]
         if key.startswith("witten_black_hole/"):
             # The cigar is read in Witten's proper distance r at lambda = m = 1, and its meridian theta = 0 is
             # the moment t = 0 from the horizon out, where e^(2x) = w = cosh^2 r and e^sigma = sinh r: level in
