@@ -17367,7 +17367,7 @@ def brane_wall_universe(ck, src):
                float(np.max(np.abs(np.array(a.at(w)) - b.at(w)))), JOIN)
         ck.add(f"{name}: drho/dw = -+1 at r = 1.1317 l, so both pieces leave the circle level",
                abs(abs(float(np.gradient(m.radius(np.array([w - 1e-6, w, w + 1e-6])), 1e-6)[1])) - 1), 1e-6)
-    surface = Surface([wall_piece, neck, far], label="$t = \\ell/c$", time=1.0)
+    surface = Surface([wall_piece, neck, far])
     fig = figure_of([surface], {"sheet": "cover"}, size)
     ring_label(fig, [0, 0, 0], *wall_piece.at(0.0), "the wall")
     ring_label(fig, [0, 0, 0], *neck.at(m.w0), "$0.88\\,\\ell$", dx=14)

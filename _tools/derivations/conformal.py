@@ -25891,7 +25891,7 @@ def brane_wall_universe(ck, src):
     v.set(settings="$\\ell = 1$, $\\mu = \\ell^2$, so that $r_h = \\ell$, and $k = 0$.", input=nr.BWU_INPUT)
     # The embedded moment, the wall's own t = l/c, from the wall through the black hole into the other
     # exterior, as far out as the surface reaches.
-    moment, = slices.moments("brane_wall_universe")
+    moment, = slices.moments("brane_wall_universe", label=slices.BWU_MOMENT)
     lo, hi = moment.reach("gaussian_normal", "w")
     along_w = np.linspace(lo, hi, 400)
     U, V = nr.bwu.Moment(1.0).kruskal(along_w)

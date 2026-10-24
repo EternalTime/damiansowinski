@@ -6933,6 +6933,9 @@ class Slices(unittest.TestCase):
                         if key == "tippett_tsang/polar/strip":
                             checked += self.check_polar_moment(key, view, surface, mark)
                             continue
+                        if key.startswith("brane_wall_universe/"):
+                            checked += self.check_wall_moment(key, view, surface, mark)
+                            continue
                         Y_of, ends = self.flat_expected(key, view, surface, mark)
                         for line in mark["lines"] + [[p] for p in mark["points"]]:
                             for u in line:
@@ -6979,6 +6982,51 @@ class Slices(unittest.TestCase):
             self.assertAlmostEqual(X0 + u[0] * (X1 - X0), reach, delta=1.5e-4 * (X1 - X0),
                                    msg=f"{key} {mark['label']} stops at {u}")
         return len(line)
+
+    @staticmethod
+    def wall_moment():
+        """The wall's own moment t = l/c of the braneworld cosmology, at l = mu = 1 and k = 0, as
+        brane_wall_universe.Moment follows it along the normal geodesics from the wall, by the
+        distance w along it."""
+        sys.path.insert(0, str(build.ROOT / "_tools" / "derivations"))
+        import brane_wall_universe
+        return brane_wall_universe
+
+    def check_wall_moment(self, key, view, surface, mark):
+        """The wall's own moment on its two flat views. On the Gaussian normal plane it is the line
+        ct = l from the wall out to w_* = ln(5)/2, where the lapse vanishes and the view is hatched.
+        On the static plane every point lies on the curve (t(w), r(w)) the moment draws through the
+        exterior and the black hole, and each line ends at the wall or on the box."""
+        import numpy as np
+        bwu = self.wall_moment()
+        X0, X1, Y0, Y1 = view["box"]
+        lo, hi = self.reach(surface)
+        if key.split("/")[1] == "gaussian_normal":
+            (line,) = mark["lines"]
+            for u in line:
+                self.assertAlmostEqual(Y0 + u[1] * (Y1 - Y0), 1.0, delta=1.5e-4 * (Y1 - Y0), msg=key)
+            ends = sorted(X0 + u[0] * (X1 - X0) for u in (line[0], line[-1]))
+            for got, want in zip(ends, (lo, min(hi, float(bwu.focal_distance(1.0))))):
+                self.assertAlmostEqual(got, want, delta=1.5e-4 * (X1 - X0), msg=key)
+            return len(line)
+        moment = bwu.Moment(1.0)
+        across = 0.5 * math.acosh((2 + moment.E ** 2) / moment.root)
+        w_in, w_out = moment.w0 - across, moment.w0 + across
+        crowd = 1 - np.geomspace(1e-12, 1.0, 4000)[::-1]
+        w = np.concatenate([lo + (w_in - lo) * crowd, w_in + (moment.w0 - w_in) * np.geomspace(1e-12, 1.0, 4000),
+                            w_out - (w_out - moment.w0) * np.geomspace(1e-12, 1.0, 4000)[::-1]])
+        t, r = moment.static(w)
+        curve = np.column_stack([(r - X0) / (X1 - X0), (t - Y0) / (Y1 - Y0)])
+        checked = 0
+        for line in mark["lines"]:
+            for u in line:
+                self.assertLess(float(np.min(np.hypot(*(curve - u).T))), 6e-4, f"{key} {mark['label']} at {u}")
+                checked += 1
+            for u in (line[0], line[-1]):
+                edge = min(u[0], 1 - u[0], u[1], 1 - u[1]) < 1.5e-4
+                wall = math.hypot(u[0] - curve[0][0], u[1] - curve[0][1]) < 1.5e-4
+                self.assertTrue(edge or wall, f"{key} {mark['label']} stops at {u}")
+        return checked
 
     def check_bounce_moment(self, key, view, surface, mark):
         """A moment of constant r between the horizons of the black bounce, a = r_s/2: one upright line
@@ -7104,6 +7152,20 @@ class Slices(unittest.TestCase):
                             f = lambda r: (1 - r) * math.exp(4 * r - 2 * math.atan(r)) / (1 + r) - tp * tq
                             r = bisect(f, 0, 20)
                             self.assertLess(abs(math.log(tq) / 2 - r + math.atan(r)), 5e-3, f"{where} at {(X, T)}")
+                    elif metric_id == "brane_wall_universe":
+                        # The wall's own moment, p = arctan U and q = arctan V along it, as
+                        # brane_wall_universe.Moment follows Kruskal's U and V out from the wall.
+                        import numpy as np
+                        lo, hi = self.reach(surface)
+                        U, V = self.wall_moment().Moment(1.0).kruskal(np.linspace(lo, hi, 3000))
+                        p, q = np.arctan(U), np.arctan(V)
+                        a, b = np.column_stack([q - p, p + q])[:-1], np.column_stack([q - p, p + q])[1:]
+                        for X, T in points:
+                            # The distance from the point to the polyline through the moment's samples.
+                            d = b - a
+                            s = np.clip(((X - a[:, 0]) * d[:, 0] + (T - a[:, 1]) * d[:, 1]) / np.maximum((d * d).sum(1), 1e-300), 0, 1)
+                            gap = np.hypot(a[:, 0] + s * d[:, 0] - X, a[:, 1] + s * d[:, 1] - T)
+                            self.assertLess(float(np.min(gap)), 2e-4, f"{where} at {(X, T)}")
                     elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "gowdy", "senovilla"):
                         lo, hi = self.reach(surface)
                         for X, T in points:

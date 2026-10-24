@@ -1076,6 +1076,9 @@ def _bm_radial(which, r):
     return float(getattr(bartnik_mckinnon.soliton(1), which)(r)[0])
 
 
+BWU_MOMENT = "$t = \\ell/c$"
+
+
 def _bwu(view):
     """The wall's own moment t = l/c, the surface of constant t of the Gaussian normal chart, at
     l = mu = 1. On that chart's plane it is the line t = 1 from the wall out to the edge w_*(1) =
@@ -1084,7 +1087,7 @@ def _bwu(view):
     hole from horizon to horizon, its narrowest circle r_min = 0.884 at w_0 = 0.708, the static t
     falling from infinity to minus infinity, as brane_wall_universe.Moment follows it."""
     import brane_wall_universe as bwu
-    m, = moments("brane_wall_universe")
+    m, = moments("brane_wall_universe", label=BWU_MOMENT)
     lo, hi = m.reach("gaussian_normal", "w")
     if view == "tw":
         return [Mark(m, along(1.0, lo, min(hi, float(bwu.focal_distance(1.0)))))]
