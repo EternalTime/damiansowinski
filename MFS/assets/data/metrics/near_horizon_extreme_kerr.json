@@ -62,6 +62,11 @@
       "id": "vuorio_warped_ads",
       "kind": "family",
       "text": "Anti-de Sitter space of three dimensions with its fibres squashed or stretched. Each slice of this throat at constant latitude is such a space, warped along a spacelike circle [bengtsson2006]."
+    },
+    {
+      "id": "eternal_traversable_wormhole",
+      "kind": "family",
+      "text": "Anti-de Sitter space of two dimensions in global coordinates, with a static dilaton, made a wormhole by a coupling of its two boundaries [maldacena2018]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "compere2017",
     "gralla2018",
     "meinel2002",
-    "bengtsson2006"
+    "bengtsson2006",
+    "maldacena2018"
   ],
   "coordinates": [
     {

@@ -32,7 +32,43 @@
   "signature": "(-,+)",
   "convention": "The metric and the dilaton $\\phi$ solve $R = -2/L^2$ and $\\nabla_\\mu\\nabla_\\nu\\phi - g_{\\mu\\nu}\\nabla^2\\phi + g_{\\mu\\nu}\\phi/L^2 = -T_{\\mu\\nu}$, with $T_{\\mu\\nu}$ the stress tensor of the matter fields. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Anti-de Sitter space in two dimensions is a strip, $ds^2 = L^2(-dt^2 + d\\sigma^2)/\\sin^2\\sigma$ with $0 < \\sigma < \\pi$, whose two edges are two boundaries [maldacena2018]. A light ray leaving one boundary reaches the other after the global time $\\pi$, so the strip \"behaves like a traversable wormhole\", in the words of Juan Maldacena and Xiao-Liang Qi [maldacena2018]. Its boundary conditions alone are not consistent in a quantum theory of gravity with excitations of finite energy, as Maldacena, Jeremy Michelson, and Andrew Strominger found in the throat of an extreme black hole, where \"all finite-energy excitations of $AdS_2 \\times S^2$ are suppressed\" [maldacena2018, maldacena1999].¶Nearly anti-de Sitter boundary conditions are consistent, and Jackiw-Teitelboim gravity describes them: a dilaton $\\phi$ holds the curvature at $R = -2/L^2$, and on the physical boundary it takes a large fixed value $\\phi_r/\\epsilon$ [maldacena2018]. In the models of this kind that Ahmed Almheiri and Joseph Polchinski built to study backreaction, the time on the boundary becomes a dynamical variable [almheiri2015, engelsoy2016]. Near such a throat a generic theory of gravity is \"a novel hydrodynamics coupled to the correlation functions of a conformal quantum mechanics\", as Kristan Jensen rewrote it, and its dual is maximally chaotic [jensen2016]. The gravitational dynamics becomes a single time on the boundary, with the Schwarzian derivative for its action, in the work of Maldacena, Douglas Stanford, and Zhenbin Yang [maldacena2016]. Julius Engelsöy, Thomas G. Mertens, and Herman Verlinde wrote the same description, a dynamical boundary time with a Schwarzian action [engelsoy2016]. Maldacena, Stanford, and Yang summed it up a year later: \"the whole dynamics reduces to the motion of the boundary in a rigid $AdS_2$ space\" [maldacena2017].¶A static dilaton that grows toward both boundaries needs negative energy: one equation of the metric, the Raychaudhuri equation of two dimensions, integrates along a light ray from boundary to boundary to $-2\\phi_r = \\int dX^+\\,T_{X^+X^+}$, with $X^+$ the affine parameter along the ray [maldacena2018]. So the null energy along the ray has to be negative, and matter obeying the integrated null energy condition cannot supply it, a special case of the topological censorship that forbids traversable wormholes in asymptotically flat and anti-de Sitter spaces of more than two dimensions [maldacena2018, galloway1999]. Ping Gao, Daniel Louis Jafferis, and Aron C. Wall coupled the two boundaries of the eternal BTZ black hole by a double trace deformation, $\\delta S = \\int dt\\,d^{d-1}x\\,h(t,x)\\mathcal{O}_R(t,x)\\mathcal{O}_L(-t,x)$, switched on after a time $t_0$ [gao2017]. The quantum stress tensor then carries \"negative average null energy, whose gravitational backreaction renders the Einstein-Rosen bridge traversable\" [gao2017]. Maldacena, Stanford, and Yang followed the effect into nearly anti-de Sitter space, where the coupling pulls the two boundaries toward each other and brings them into causal contact [maldacena2017].¶Maldacena and Qi left the coupling on for ever, $g\\sum_{i=1}^N\\int du\\,O^i_L(u)O^i_R(u)$ between $N$ operators of dimension $\\Delta$ at equal times on the two boundaries [maldacena2018]. With $N$ large the two boundary times $t_l(u)$ and $t_r(u)$ obey one action, a Schwarzian for each boundary and a term from the coupling [maldacena2018]. The vanishing of its $SL(2)$ charges picks the solution $t_l = t_r = t'\\tilde u$, with $(t')^{2(1 - \\Delta)} = \\eta\\Delta$, for the rescaled time $\\tilde u = Nu/\\phi_r$ and $\\eta$ the coupling in the same units [maldacena2018]. Both boundaries then sit at constant $\\sigma$, the dilaton does not depend on $t$, and the strip is \"a traversable wormhole that is static and time independent, an eternal traversable wormhole\" [maldacena2018]. For free fermions the coupling becomes a boundary condition that passes part of each wave from one edge to the other, and their energy on the strip gives the dilaton $\\phi = \\phi_h\\left(1 + (\\pi/2 - \\sigma)\\cot\\sigma\\right)$, up to a constant [maldacena2018]. Its excitations fall into the towers $t'(\\tilde\\Delta + n)$ of $SL(2)$, with the gap $t'\\Delta$, and the gravity adds one oscillator of frequency $t'\\sqrt{2(1 - \\Delta)}$, the boundary graviton [maldacena2018].¶The same action governs two copies of the Sachdev-Ye-Kitaev model, $N$ Majorana fermions with random couplings among $q$ at a time, joined by $H_{\\rm int} = i\\mu\\sum_j\\psi^j_L\\psi^j_R$ [maldacena2018, sachdev1993]. At low energy each copy has the Schwarzian action Maldacena and Stanford derived, and the coupling adds the term the gravity has, so the two systems share one gravitational sector [maldacena2016remarks, maldacena2018]. Their ground state is close to the thermofield double of the two uncoupled models at a temperature set by $\\mu$, and at large $q$ equal to it [maldacena2018]. Heated, the coupled models pass from thermal anti-de Sitter space at low temperature to two black holes at high temperature in a Hawking-Page transition, and in the microcanonical ensemble the two phases are continuously connected [maldacena2018]. Cooled from a pair of black holes by a colder system, they settle into the wormhole, which Maldacena and Qi offer as a practical way to prepare two copies of the model in the thermofield double state [maldacena2018].¶Two nearly extreme black holes held close together could supply the coupling, with fields whose fluctuations near the two are correlated, as Maldacena and Qi suggested [maldacena2018]. Maldacena, Alexey Milekhin, and Fedor Popov built it in four dimensions, from a pair of extreme black holes of opposite magnetic charge in Einstein and Maxwell's theory with charged massless fermions [maldacena2023]. The lowest Landau level gives each fermion as many massless fields in two dimensions as there are quanta of magnetic flux, moving along the field lines, and their negative Casimir-like energy holds the throat open [maldacena2023]. The throat is anti-de Sitter space of two dimensions times a sphere in global coordinates, with a symmetry under the global time of the strip and no horizon [maldacena2023]. It is fragile, and enough energy sent into a mouth makes a pair of horizons [maldacena2023].",
-  "related": [],
+  "related": [
+    {
+      "id": "jackiw_teitelboim_black_hole",
+      "kind": "family",
+      "text": "The black hole of the same gravity, on the same strip of anti-de Sitter space. With its two boundaries uncoupled, the dilaton vanishes in the future and the past of the strip, and no light ray passes from one boundary to the other [maldacena2018]."
+    },
+    {
+      "id": "anti_de_sitter",
+      "kind": "family",
+      "text": "Anti-de Sitter space in four dimensions. Its version in two dimensions is the whole strip on which this wormhole stands, $L^2(-dt^2 + d\\sigma^2)/\\sin^2\\sigma$."
+    },
+    {
+      "id": "bertotti_robinson",
+      "kind": "family",
+      "text": "Anti-de Sitter space of two dimensions times a sphere, the throat of an extreme charged black hole. Such a throat in global coordinates, joining two magnetically charged black holes, is the wormhole of Maldacena, Milekhin, and Popov in four dimensions [maldacena2023]."
+    },
+    {
+      "id": "einstein_rosen_bridge",
+      "kind": "family",
+      "text": "The bridge of Einstein and Rosen, a wormhole that closes before light can cross it. Gao, Jafferis, and Wall made such a bridge traversable for a while by coupling its two sides [gao2017]."
+    },
+    {
+      "id": "morris_thorne",
+      "kind": "family",
+      "text": "The traversable wormhole of Morris and Thorne, held open by exotic matter. In this wormhole the negative energy comes from quantum fields under a coupling of the two boundaries [maldacena2018]."
+    },
+    {
+      "id": "near_horizon_extreme_kerr",
+      "kind": "family",
+      "text": "The throat of the extreme Kerr black hole, anti-de Sitter space of two dimensions with a deformed sphere twisted over it. The gravity of this wormhole, nearly anti-de Sitter gravity in two dimensions, approximates the dynamics of nearly extreme black holes [maldacena2018]."
+    },
+    {
+      "id": "witten_black_hole",
+      "kind": "family",
+      "text": "The black hole of string theory in two dimensions, another solution of gravity with a dilaton. Its curvature grows without bound at its singularity."
+    }
+  ],
   "references": [
     "maldacena2018",
     "maldacena1999",

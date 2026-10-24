@@ -66,6 +66,11 @@
       "id": "near_horizon_extreme_kerr",
       "kind": "family",
       "text": "The throat of the extreme Kerr black hole, anti-de Sitter space of two dimensions with a deformed sphere twisted over it. Its near-NHEK chart carries $r(r - 2k)$ where the static chart of this black hole has $r^2 - r_h^2$, the same factor after a shift of $r$ by $k$."
+    },
+    {
+      "id": "eternal_traversable_wormhole",
+      "kind": "family",
+      "text": "The same strip of anti-de Sitter space with its two boundaries coupled to each other. The coupling makes negative energy, the dilaton grows toward both boundaries and stays static, and light crosses from one boundary to the other [maldacena2018]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "lemos1994",
     "achucarro1993",
     "almheiri2015",
-    "almheiri2020"
+    "almheiri2020",
+    "maldacena2018"
   ],
   "coordinates": [
     {

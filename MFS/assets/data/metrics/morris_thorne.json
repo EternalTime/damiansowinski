@@ -102,6 +102,11 @@
       "id": "kodama_kink",
       "kind": "special_case",
       "text": "Takeshi Kodama's wormhole of 1978, held open by a ghost scalar field with a quartic potential and known only numerically [kodama1978preprint]. Both of its functions are fixed by the field."
+    },
+    {
+      "id": "eternal_traversable_wormhole",
+      "kind": "family",
+      "text": "A traversable wormhole in two dimensions whose negative energy comes from quantum fields, under a coupling of its two boundaries [maldacena2018]."
     }
   ],
   "references": [
@@ -131,7 +136,8 @@
     "clement2016",
     "blazquez2021",
     "james2015",
-    "kodama1978preprint"
+    "kodama1978preprint",
+    "maldacena2018"
   ],
   "coordinates": [
     {

@@ -57,6 +57,11 @@
       "id": "jackiw_teitelboim_black_hole",
       "kind": "family",
       "text": "The black hole of Jackiw and Teitelboim's gravity, another gravity with a dilaton in two dimensions. Its curvature is the same negative constant everywhere, and its temperature grows with the size of its horizon."
+    },
+    {
+      "id": "eternal_traversable_wormhole",
+      "kind": "family",
+      "text": "A wormhole in another gravity with a dilaton in two dimensions, Jackiw-Teitelboim gravity, on the strip of anti-de Sitter space [maldacena2018]."
     }
   ],
   "references": [
@@ -74,7 +79,8 @@
     "russo1992",
     "horowitz1993",
     "davies1977",
-    "good2016"
+    "good2016",
+    "maldacena2018"
   ],
   "coordinates": [
     {

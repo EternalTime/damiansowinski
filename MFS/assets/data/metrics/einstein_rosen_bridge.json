@@ -111,6 +111,11 @@
       "id": "kodama_kink",
       "kind": "family",
       "text": "Takeshi Kodama's wormhole of 1978, whose throat he set beside this bridge [kodama1978preprint]. It has no horizon, and a light signal can cross it [kodama1979preprint]."
+    },
+    {
+      "id": "eternal_traversable_wormhole",
+      "kind": "family",
+      "text": "A wormhole in two dimensions that stays open for ever, its two boundaries coupled so that light crosses between them [maldacena2018]."
     }
   ],
   "references": [
@@ -144,7 +149,8 @@
     "blazquez2021",
     "shenker2014",
     "kodama1978preprint",
-    "kodama1979preprint"
+    "kodama1979preprint",
+    "maldacena2018"
   ],
   "coordinates": [
     {

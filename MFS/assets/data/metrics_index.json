@@ -97,7 +97,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "3c9f765fc101ad87",
+    "version": "239c88c434e245cb",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -354,7 +354,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "7b76c6208503e99d",
+    "version": "4d2a4ac0a1c0444b",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -1630,7 +1630,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a45df5c494e73b59",
+    "version": "4a1e161f4afc9331",
     "diagrams": "8393e9b253125f33",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -2377,7 +2377,7 @@
       "static",
       "stationary"
     ],
-    "version": "b07f219c5d81d9ac",
+    "version": "d9ecb61f75942ef8",
     "diagrams": "fa020044695455d4",
     "conformal": "8b047d93d5d75c6c",
     "embedding": "0cc1bd857f4933e9"
@@ -3274,6 +3274,37 @@
     "embedding": "04c50f64f4cf864e"
   },
   {
+    "id": "eternal_traversable_wormhole",
+    "name": "Maldacena-Qi",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "no horizon",
+      "negative energy",
+      "energy condition violation",
+      "topological censorship",
+      "quantum field theory in curved spacetime",
+      "dilaton",
+      "dilaton gravity",
+      "lower-dimensional gravity",
+      "two-dimensional",
+      "anti-de Sitter",
+      "constant curvature",
+      "holography",
+      "AdS/CFT",
+      "exact solution",
+      "Lorentzian",
+      "idealized model",
+      "Einstein space",
+      "cosmological constant",
+      "negative cosmological constant",
+      "conformally flat",
+      "static",
+      "stationary"
+    ],
+    "version": "ccdcfda41b204a4d"
+  },
+  {
     "id": "btz_multi_holes_wormholes",
     "name": "Many Black Holes and Wormholes in Three Dimensions",
     "tags": [
@@ -3662,7 +3693,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d3be3460fc51bc27",
+    "version": "f60078088af78c26",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922",
@@ -3840,7 +3871,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "b4be39f51e8c5567",
+    "version": "4328ad15551af25c",
     "diagrams": "762c153757fcd27b",
     "conformal": "ad18bb59a6c85dec",
     "embedding": "d2cedaf6a4fa93cb",
@@ -5690,7 +5721,7 @@
       "conformally flat",
       "stationary"
     ],
-    "version": "74d404dbed939208",
+    "version": "8661750d18d418db",
     "diagrams": "20e4b54fd89e7fb9",
     "conformal": "f6b963bc340f323d",
     "embedding": "05b4e9f05b7ea873"

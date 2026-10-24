@@ -177,6 +177,11 @@
       "id": "maximally_supersymmetric_plane_wave",
       "kind": "family",
       "text": "A plane wave of ten dimensions, the Penrose limit of anti-de Sitter space of five dimensions times a 5-sphere along a light ray circling the sphere [blau2002penrose, berenstein2002]."
+    },
+    {
+      "id": "eternal_traversable_wormhole",
+      "kind": "family",
+      "text": "Anti-de Sitter space of two dimensions, whose two boundaries Maldacena and Qi coupled to each other to make a wormhole that stays open [maldacena2018]."
     }
   ],
   "references": [
@@ -231,7 +236,8 @@
     "mertens2023",
     "lin2004",
     "blau2002penrose",
-    "berenstein2002"
+    "berenstein2002",
+    "maldacena2018"
   ],
   "coordinates": [
     {

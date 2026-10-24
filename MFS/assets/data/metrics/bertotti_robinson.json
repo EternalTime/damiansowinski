@@ -129,6 +129,11 @@
       "id": "jackiw_teitelboim_black_hole",
       "kind": "family",
       "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions, whose metric is anti-de Sitter space of two dimensions with a dilaton that marks a horizon. With no horizon and its curvature radius set to $b$, its static chart is the plane of $t$ and $r$ of Bertotti and Robinson's static chart."
+    },
+    {
+      "id": "eternal_traversable_wormhole",
+      "kind": "family",
+      "text": "Global anti-de Sitter space of two dimensions held open as a wormhole by a coupling of its two boundaries [maldacena2018]. Times a sphere, such a throat joins two magnetically charged black holes in the wormhole of Maldacena, Milekhin, and Popov [maldacena2023]."
     }
   ],
   "references": [
@@ -160,7 +165,9 @@
     "horvath1977",
     "podolsky2025",
     "strominger1996",
-    "freund1980"
+    "freund1980",
+    "maldacena2018",
+    "maldacena2023"
   ],
   "coordinates": [
     {
