@@ -14187,6 +14187,74 @@ def melvin(ck, src):
     return views
 
 
+SWIRL = {"m": 1, "j": sp.Rational(1, 16)}   # the hole at j = 1/(16 m^2), its widest equatorial circle at r = 4m
+
+
+def swirling_universe_black_hole(ck, src):
+    """The plane z = 0 of the swirling universe at t = 0 in the cylindrical chart at j = 1, and the
+    equator of Astorino, Martelli and Vigano's hole at t = 0 with m = 1 and j = 1/16.
+
+    The universe's slice has g_rhorho = F and g_phiphi = rho^2/F, F = 1 + j^2 rho^4, the dragging
+    term vanishing on the moment, so its circles sit at rho/sqrt(F), which grows to 1/sqrt(2j) at
+    rho = 1/sqrt(j) and falls as 1/(j rho) beyond, while the distance out to them grows as j rho^3/3:
+    d(rho/sqrt F)/drho = (1 - j^2 rho^4)/F^(3/2) stays below sqrt(F), so the slice embeds everywhere,
+    a vase narrowing into a spike, drawn out to rho = 2/sqrt(j). The hole's equator has
+    g_rr = F/(1 - 2m/r) and circles of radius r/sqrt(F), F = 1 + j^2 r^4: Flamm's throat at r = 2m,
+    where 1/g_rr has its root, opening to the widest circle at r = 1/sqrt(j) = 4m and closing into
+    the same kind of spike, drawn out to r = 6m on both sheets of the slice through the bifurcation
+    sphere."""
+    sl = Slice(src, "swirling_universe_black_hole", "cylindrical", "\\rho", "\\phi", {"t": 0, "z": 0}, {"j": 1})
+    top, size = 2.0, 4.5
+    vase = Piece("universe", "sheet", sl, 0.0, top, 0.0, 1,
+                 (("axis", "the axis $\\rho = 0$"), ("edge", "the surface runs on, narrowing, to $\\rho \\to \\infty$")),
+                 [(0.5, "r", None), (1.0, "surface", "$\\rho = 1/\\sqrt{j}$"), (1.5, "r", None),
+                  (top, "r", "$2/\\sqrt{j}$")], size)
+    ck.isometry("Swirling universe, the plane z = 0", vase)
+    ck.radius("Swirling universe, the plane z = 0, rho/sqrt(1 + j^2 rho^4)", vase, lambda r: r / np.sqrt(1 + r ** 4), size)
+    surface = Surface([vase])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *vase.at(1.0), "$\\rho = 1/\\sqrt{j}$", dx=10)
+    ring_label(fig, [0, 0, 0], *vase.at(top), "$2/\\sqrt{j}$")
+    fig.legend("fill", "cover", "the plane $z = 0$ at $t = 0$, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $0.5$, $1.5$ and $2/\\sqrt{j}$")
+    fig.legend("line", "surface", "the widest circle, of radius $1/\\sqrt{2j}$, at $\\rho = 1/\\sqrt{j}$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("universe", "The swirling universe", "$1/\\sqrt{j}$", [surface], fig.done(),
+                  settings="$j = 1$, so that $1/\\sqrt{j}$ is the unit of every length.")]
+
+    sl = Slice(src, "swirling_universe_black_hole", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, SWIRL)
+    throat, = [r for r in sl.horizons() if r > 0]
+    ck.add("Swirling hole: the throat is the root r = 2m of 1/g_rr", abs(throat - 2.0), 1e-12)
+    top, size = 6.0, 18.0
+    radii = (3.0, 5.0)
+    near = Piece("exterior", "sheet", sl, throat, top, 0.0, 1,
+                 (("throat", "the throat $r = 2m$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", "the surface runs on, narrowing, to $r \\to \\infty$")),
+                 [(throat, "horizon", "$r = 2m$")] + [(r, "r", None) for r in radii]
+                 + [(4.0, "surface", "$r = 1/\\sqrt{j}$"), (top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, throat, top, 0.0, -1,
+                (("throat", "the throat $r = 2m$"), ("edge", "the surface runs on, narrowing, to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(4.0, "surface", None), (top, "r2", None)], size)
+    ck.join("Swirling hole, the two sheets at the throat", near, throat, far, throat)
+    for p in (near, far):
+        ck.isometry(f"Swirling hole, {p.id}", p)
+        ck.radius(f"Swirling hole, {p.id}, r/sqrt(1 + j^2 r^4)", p, lambda r: r / np.sqrt(1 + r ** 4 / 256), size)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(throat), "$r = 2m$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(4.0), "$r = 1/\\sqrt{j}$", dx=10)
+    fig.legend("fill", "cover", "the exterior $r > 2m$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $5$ and $6\\,m$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = 2m$, where the slice crosses the horizon")
+    fig.legend("line", "surface", "the widest circle, of radius $2\\sqrt{2}\\,m$, at $r = 1/\\sqrt{j} = 4m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("hole", "The black hole", "$m$", [surface], fig.done(),
+                      settings="$m = 1$, the unit of every length, and $j = 1/(16m^2)$, so that the widest circle "
+                               "of the equator sits at $r = 4m$."))
+    return views
+
+
 def kerr_melvin(ck, src):
     """The equatorial slice of constant t of Ernst and Wild's hole outside r_+, at a = 4m/5 and
     B = 1/(4m), where g_tphi drops out: rho = sqrt(g_phiphi) = k sqrt(P) = k sqrt(A/(H Sigma)), the
@@ -17334,6 +17402,7 @@ DRAWN = {
     "kastor_traschen": kastor_traschen,
     "melvin": melvin,
     "kerr_melvin": kerr_melvin,
+    "swirling_universe_black_hole": swirling_universe_black_hole,
     "senovilla": senovilla,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
@@ -18698,6 +18767,24 @@ CAPTIONS = {
         "widest circle, of radius $1/B$, at $r = 2/B$, and closes beyond it into a spike, as Melvin's plane does.",
         "The slice runs through the bifurcation sphere at $r_s$ into the other exterior, the same surface turned "
         "over. Where $B r_s \\ge 2$ the widest circle is the throat itself.",
+    ],
+    ("swirling_universe_black_hole", "universe"): [
+        "The plane $z = 0$ of the swirling universe at one moment ($j = 1$), drawn as a surface in flat space with "
+        "every distance along it the metric distance. On the moment the dragging term drops out, "
+        "$g_{\\rho\\rho} = 1 + j^2\\rho^4$, and the circle about the axis has radius $\\rho/\\sqrt{1 + j^2\\rho^4}$, "
+        "which grows to $1/\\sqrt{2j}$ at $\\rho = 1/\\sqrt{j}$ and shrinks as $1/(j\\rho)$ beyond it, while the "
+        "distance out to it grows as $j\\rho^3/3$.",
+        "The surface widens from the axis like a vase to its widest circle and then narrows into a spike of "
+        "unbounded length, drawn out to $\\rho = 2/\\sqrt{j}$, as Melvin's plane does.",
+    ],
+    ("swirling_universe_black_hole", "hole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the black hole in a swirling universe at the moment $t = 0$ "
+        "($j = 1/(16m^2)$), drawn as a surface in flat space. On it $g_{rr} = (1 + j^2r^4)/(1 - 2m/r)$ and the circle "
+        "of constant $r$ has radius $r/\\sqrt{1 + j^2r^4}$, so the surface stands vertical at Flamm's throat "
+        "$r = 2m$, opens to its widest circle, of radius $1/\\sqrt{2j}$, at $r = 1/\\sqrt{j}$, and closes beyond it "
+        "into a spike, as the plane of the swirling universe does.",
+        "The slice runs through the bifurcation sphere at $2m$ into the other exterior, the same surface turned "
+        "over. Where $4jm^2 \\ge 1$ the widest circle is the throat itself.",
     ],
     ("kerr_melvin", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Ernst and Wild's black hole at one moment of $t$ "

@@ -2225,6 +2225,17 @@ Minkowski space in the coordinates of a supertranslation, written in closed form
 - chart Bondi Gauge, Retarded: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -c^2du^2 - \dfrac{2r}{W}c\,du\,dr + 2\left(\partial_\theta\sigma\left(1 - \dfrac{\sigma}{W}\right) + 2\sigma\cot\theta\right)c\,du\,d\theta + \left(W + \sigma\right)^2d\theta^2 + \left(W - \sigma\right)^2\sin^2\theta\,d\phi^2$$
 - chart Bondi Gauge, Advanced: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -c^2dv^2 + \dfrac{2r}{W}c\,dv\,dr - 2\left(\partial_\theta\sigma\left(1 - \dfrac{\sigma}{W}\right) + 2\sigma\cot\theta\right)c\,dv\,d\theta + \left(W + \sigma\right)^2d\theta^2 + \left(W - \sigma\right)^2\sin^2\theta\,d\phi^2$$
 
+### Black Hole in a Swirling Universe
+
+Schwarzschild's black hole inside a vacuum universe whose frame dragging turns one way above its equatorial plane and the other way below it, the exact solution Marco Astorino, Riccardo Martelli and Adriano Viganò made in 2022 with a transformation of Ernst's equation. The hole keeps Schwarzschild's horizon, area and temperature, and two ergoregions run out along the axis to infinity.
+
+- id: `swirling_universe_black_hole`
+- tags: vacuum, stationary, axisymmetric, rotating, frame dragging, ergoregion, black hole, event horizon, horizon, Killing horizon, curvature singularity, black hole thermodynamics, Hawking temperature, not asymptotically flat, Petrov type I, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, mass
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/swirling_universe_black_hole.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \left(1 + j^2r^4\sin^4\theta\right)\left(-\left(1 - \dfrac{2m}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{2m}{r}} + r^2d\theta^2\right) + \dfrac{r^2\sin^2\theta}{1 + j^2r^4\sin^4\theta}\left(d\phi + 4j\left(r - 2m\right)\cos\theta\,c\,dt\right)^2$$
+- chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = \left(1 + j^2\rho^4\right)\left(-c^2dt^2 + d\rho^2 + dz^2\right) + \dfrac{\rho^2}{1 + j^2\rho^4}\left(d\phi + 4jz\,c\,dt\right)^2$$
+
 ### Szekeres Inhomogeneous Dust Cosmologies
 
 The dust cosmologies Peter Szekeres found in 1975, which in general have no Killing vector. Their shells of matter are spheres, planes, or pseudospheres that are not concentric, each evolving as a shell of the Tolman-Bondi model does, so the density carries a dipole that changes from shell to shell.

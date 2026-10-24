@@ -16314,6 +16314,117 @@ def melvin(ck, src):
     return views
 
 
+def swirling_universe_black_hole(ck, src):
+    """The swirling universe's half plane of fixed phi and z = 0, and the equator of Astorino, Martelli
+    and Vigano's black hole.
+
+    The metric on the universe's half plane is (1 + j^2 rho^4)(-c^2dt^2 + drho^2), the dragging term
+    vanishing at z = 0, and the factor changes no null direction, so p, q = arctan((ct -+ rho) sqrt j)
+    bring it into Minkowski's half diamond with the axis on X = 0; the affine parameter along a ray
+    grows as the integral of 1 + j^2 rho^4, without bound, so the far edges are the half plane's null
+    infinity. The hole's equator has (1 + j^2 r^4)(-(1 - 2m/r)c^2dt^2 + dr^2/(1 - 2m/r)), the dragging
+    term vanishing with cos(theta), conformal to Schwarzschild's plane of t and r, so Kruskal and
+    Szekeres's cells, the tower of the one root 2m, draw it, checked against the published metric at
+    j = 1/(16 m^2)."""
+    me = "swirling_universe_black_hole"
+    cyl = Plane(src, me, "cylindrical", ("t", "\\rho"), {"phi": "0", "z": "0"}, {"j": 1})
+    ck.chart("Swirling universe cylindrical", cyl, mink_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20), lambda t, r: (1, 0))
+    K = cyl.kretschmann
+    ck.finite("Swirling universe: the Kretschmann scalar is finite on the axis rho = 0",
+              K(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    ck.limit("Swirling universe: the Kretschmann scalar on the axis is -192 j^2", K(np.zeros(1), np.full(1, 1e-9)),
+             [-192.0], 1e-6)
+
+    hole = Plane(src, me, "spherical", ("t", "r"), EQUATOR, {"m": 1, "j": "1/16"})
+    T = Tower(1 - 2 / hole.x1, hole.x1, [2])
+    ck.chart("Swirling hole equator, exterior", hole, lambda t, r: T.pq("I", t, r),
+             ck.uniform(-15, 15), ck.uniform(2.002, 30), lambda t, r: (1, 0))
+    ck.chart("Swirling hole equator, black hole", hole, lambda t, r: T.pq("II", t, r),
+             ck.uniform(-15, 15), ck.uniform(0.02, 1.998), lambda t, r: (0, -1))
+    ck.chart("Swirling hole equator, white hole", hole, lambda t, r: T.pq("IV", t, r),
+             ck.uniform(-15, 15), ck.uniform(0.02, 1.998), lambda t, r: (0, 1))
+    ck.chart("Swirling hole equator, other exterior", hole, lambda t, r: T.pq("I'", t, r),
+             ck.uniform(-15, 15), ck.uniform(2.002, 30), lambda t, r: (-1, 0))
+    p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit("Swirling hole: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    KE = hole.kretschmann
+    ck.diverges("Swirling hole: the Kretschmann scalar diverges at r = 0", KE(0, 2e-2), KE(0, 2e-3))
+    ck.finite("Swirling hole: the Kretschmann scalar is finite at r = 2m", KE(np.zeros(3), np.array([1.998, 2, 2.002])))
+
+    views = []
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS, RS = (-4, -2, -1, 0, 1, 2, 4), (0.5, 2, 4)
+    universe = slices.moments(me, "universe")[0]
+    v = View("cylindrical", "Cylindrical", box, "cylindrical")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda r, t: mink_pq(t, r), RS, S_ALL)
+    grid(v, "surface", lambda r, t: mink_pq(t, r), (1,), S_ALL)
+    grid(v, "t", mink_pq, TS, S_POS)
+    triangle_edges(v, centre="$\\rho = 0$")
+    v.legend("cover", "the whole spacetime, which $t$ and $\\rho$ cover")
+    v.legend("r", "$\\rho$ constant, in units of $1/\\sqrt{j}$")
+    v.legend("surface", "$\\rho = 1/\\sqrt{j}$, where the circles about the axis are widest")
+    v.legend("t", "$ct$ constant")
+    v.legend("centre", "the axis $\\rho = 0$")
+    r = np.linspace(*universe.reach("cylindrical", "\\rho"), 2)
+    v.slice(universe, [mink_pq(0 * r, r)])
+    v.set(restriction="The half plane of fixed $\\phi$ and $z = 0$ only, totally geodesic, each point in the diagram "
+                      "a circle around the axis.",
+          settings="$j = 1$, the scale of $p = \\arctan((ct - \\rho)\\sqrt{j})$ and $q = \\arctan((ct + \\rho)\\sqrt{j})$.")
+    views.append(v)
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    t = spread(-np.inf, np.inf, 500, 9)
+    v = View("spherical", "Spherical", box, "spherical")
+    v.fill("region", hexagon)
+    v.fill("cover", exterior)
+    for rr in (2.5, 3, 6, 12):
+        v.curve("r", *T.pq("I", t, np.full_like(t, rr)))
+    v.curve("surface", *T.pq("I", t, np.full_like(t, 4.0)))
+    rr = spread(2, np.inf, 500, 14)
+    for tt in (-8, -4, -2, 0, 2, 4, 8):
+        v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+    v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                    [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+    v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+    v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+    for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+    v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+    v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+    for sx in (1, -1):
+        v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+        v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+        v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+        v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+    v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+    v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+    v.label_xt([-Q4, Q4], "$r = 2m$", "tr", "small", dx=-6, dy=2)
+    v.label_xt([HALF, -0.95], "exterior", cls="region")
+    v.label_xt([-HALF, 0], "exterior", cls="region")
+    v.label_xt([0, 1.15], "black hole", cls="region")
+    v.label_xt([0, -1.15], "white hole", cls="region")
+    v.legend("cover", "the region that $t$ and $r > 2m$ cover")
+    v.legend("r", "$r$ constant, at $2.5$, $3$, $6$ and $12\\,m$")
+    v.legend("surface", "$r = 1/\\sqrt{j}$, the widest circle of the equator")
+    v.legend("t", "$ct$ constant, in units of $m$")
+    v.legend("horizon", "the horizon $r = 2m$")
+    v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity of the plane, $\\mathscr{I}^\\pm$")
+    moment = slices.moments(me, "hole")[0]
+    lo, hi = moment.reach("spherical", "r")
+    rm = np.linspace(lo, hi, 2)
+    a, b = T.pq("I'", 0 * rm, rm[::-1]), T.pq("I", 0 * rm, rm)
+    v.slice(moment, [(np.concatenate([a[0], b[0]]), np.concatenate([a[1], b[1]]))])
+    v.set(restriction="The plane of $t$ and $r$ at $\\theta = \\pi/2$ and $\\phi = 0$ only, totally geodesic.",
+          settings="$m = 1$ and $j = 1/(16m^2)$; the drawing is the same for every $j$.")
+    views.append(v)
+    return views
+
+
 def senovilla(ck, src):
     """Senovilla's half plane of fixed phi and z, totally geodesic.
 
@@ -25702,7 +25813,7 @@ DRAWN = {
     "majumdar_papapetrou": majumdar_papapetrou,
     "kastor_traschen": kastor_traschen,
     "robinson_trautman": robinson_trautman,
-    "melvin": melvin, "senovilla": senovilla,
+    "melvin": melvin, "senovilla": senovilla, "swirling_universe_black_hole": swirling_universe_black_hole,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
     "israel_wilson_perjes": israel_wilson_perjes,
@@ -29305,6 +29416,23 @@ CAPTIONS = {
         "The same part of Minkowski's diamond ruled by the inertial coordinates $T$ and $x$ at $\\xi = \\zeta = 0$, with "
         "$p, q = \\arctan((cT \\mp x)/C)$. The right edge is the hyperbola $x^2 - c^2T^2 = C^2$ and the lower left "
         "edge the null line $x = -cT$.",
+    ],
+    ("swirling_universe_black_hole", "cylindrical"): [
+        "The half plane of $t$ and $\\rho$ of the swirling universe at fixed $\\phi$ and $z = 0$, totally geodesic. The "
+        "dragging term vanishes there, the metric on it is $(1 + j^2\\rho^4)(-c^2dt^2 + d\\rho^2)$, and a conformal "
+        "factor changes no null direction, so $p, q = \\arctan((ct \\mp \\rho)\\sqrt{j})$ bring it into Minkowski's "
+        "half diamond, with the regular axis $\\rho = 0$ on its left edge.",
+        "A light ray reaches $\\rho \\to \\infty$ only at an infinite value of its affine parameter, which grows as "
+        "$\\int(1 + j^2\\rho^4)\\,d\\rho$, so the far edges are the null infinity of the half plane, although the "
+        "circles about the axis shrink to zero there.",
+    ],
+    ("swirling_universe_black_hole", "spherical"): [
+        "The plane of $t$ and $r$ of the black hole in a swirling universe at $\\theta = \\pi/2$, totally geodesic. "
+        "The dragging term vanishes on the equator and the metric on the plane is $1 + j^2r^4$ times "
+        "Schwarzschild's, so Kruskal and Szekeres's extension draws it for every $j$: two exteriors, the black hole "
+        "above, the white hole below, and the curvature singularity $r = 0$ at the top and the bottom.",
+        "On the axis, $\\theta = 0$ or $\\pi$, the plane of $t$ and $r$ is Schwarzschild's exactly and has the same "
+        "drawing.",
     ],
     ("melvin", "cylindrical"): [
         "The half plane of $t$ and $\\rho$ of Melvin's universe at fixed $\\phi$ and $z$, totally geodesic. The metric "

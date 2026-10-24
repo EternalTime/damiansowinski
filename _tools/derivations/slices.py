@@ -3326,6 +3326,11 @@ FLAT = {
     ("melvin", "cylindrical", "radial"): lambda: one(
         "melvin", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="universe"),
     ("melvin", "ernst", "radial"): lambda: one("melvin", lambda m: along(0.0, *m.reach("ernst", "r")), view_id="ernst"),
+    # The swirling universe's plane z = 0 at t = 0 and the hole's equator at t = 0, each on its own chart's plane.
+    ("swirling_universe_black_hole", "cylindrical", "radial"): lambda: one(
+        "swirling_universe_black_hole", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="universe"),
+    ("swirling_universe_black_hole", "spherical", "radial"): lambda: one(
+        "swirling_universe_black_hole", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="hole"),
     # Levi-Civita's plane z = 0 at t = 0, read in Weyl's coordinates; in the Kasner form r is the
     # proper distance, r = rho^Sigma/Sigma with Sigma = 3/4 at sigma = 1/4.
     # The particle's cone, with Gott and Alpert's planet at its apex or without, is read in the conical
@@ -3695,6 +3700,8 @@ HIDDEN = {
        for view in ("axis", "ingoing", "outgoing")},
     ("kerr_taub_nut", "plebanski", "principal"): "the moment of constant t is a surface on which tau changes with sigma, the coordinate the drawing leaves out",
     ("kerr_melvin", "boyer_lindquist", "tube"): "the hole in a stronger field, B = 3/(4m), than the one whose equator is embedded",
+    **{("swirling_universe_black_hole", system, "ergo"): "the moment embedded is the plane through the equator, which meets this meridional plane only in the line drawn as the equatorial plane"
+       for system in ("spherical", "cylindrical")},
     ("frw", "comoving_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "comoving_spherical", "through"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "conformal_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",

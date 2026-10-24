@@ -11559,6 +11559,11 @@
           "id": "supertranslation_hair",
           "kind": "family",
           "text": "Flat space carried by a supertranslation. When the string of the C-metric snaps by making a pair of black holes, the spacetimes before and after differ by a finite superrotation, the partner of a supertranslation [strominger2017superrotations]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "family",
+          "text": "A black hole in a swirling universe. Set in that universe, the rotating C-metric loses both of its conical singularities, the spin of the hole against the swirl supplying the acceleration [astorino2022removal]."
         }
       ],
       "references": [
@@ -11593,7 +11598,8 @@
         "ovcharenko2026",
         "emparan2000branes2",
         "emparan2020qbtz",
-        "strominger2017superrotations"
+        "strominger2017superrotations",
+        "astorino2022removal"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -15417,6 +15423,11 @@
           "id": "belinski_zakharov",
           "kind": "family",
           "text": "The Bäcklund transformations behind the double Kerr solution coincide with the soliton transformations of Belinski and Zakharov [alekseev2010]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "family",
+          "text": "A black hole in a swirling universe. Two extremal Kerr holes set in that universe are held apart by the spin of each against the swirl, with no strut between them [astorino2025binary]."
         }
       ],
       "references": [
@@ -15447,7 +15458,8 @@
         "holst2016",
         "neugebauer1995",
         "neugebauer2003",
-        "alekseev2010"
+        "alekseev2010",
+        "astorino2025binary"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/double_kerr.json",
@@ -21723,6 +21735,11 @@
           "id": "vuorio_warped_ads",
           "kind": "family",
           "text": "Empty space of gravity in three dimensions with a mass for the graviton, whose light cones tip over as these do. Gödel's universe less its flat direction is one of its members, $m^2 = 2\\Omega^2$, a vacuum of that theory [reboucas2009, gurses2010]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "family",
+          "text": "Another universe that turns, a vacuum whose frame dragging runs one way above a plane and the other way below it [astorino2022swirling]."
         }
       ],
       "references": [
@@ -21754,7 +21771,8 @@
         "maitra1966",
         "chan2024",
         "reboucas2009",
-        "gurses2010"
+        "gurses2010",
+        "astorino2022swirling"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/godel.json",
@@ -29488,6 +29506,11 @@
           "id": "interstellar_wormhole",
           "kind": "programme",
           "text": "The wormhole of the same film, Interstellar, drawn by the same team with the same code as Gargantua [james2015, james2015lensing]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "family",
+          "text": "Schwarzschild's hole set in a universe that turns one way above the equator and the other way below it. Kerr's hole set there by the same transformation keeps a conical singularity on its axis [astorino2022swirling]."
         }
       ],
       "references": [
@@ -29557,7 +29580,8 @@
         "semerak2016",
         "podolsky2025",
         "herdeiro2014",
-        "james2015"
+        "james2015",
+        "astorino2022swirling"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -33873,6 +33897,11 @@
           "id": "maitra_dust",
           "kind": "family",
           "text": "Samaresh C. Maitra's dust of 1966, the same cylinder with the dust allowed to shear. Its circles about the axis stay spacelike at every radius, and near the axis its line element is van Stockum's at $R = 2a$ [maitra1966, chan2024]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "family",
+          "text": "Another universe that turns, a vacuum whose frame dragging runs one way above a plane and the other way below it [astorino2022swirling]."
         }
       ],
       "references": [
@@ -33895,7 +33924,8 @@
         "bonnor1977cloud",
         "neugebauer1995",
         "bonnor1979petrov",
-        "maitra1966"
+        "maitra1966",
+        "astorino2022swirling"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stockum_dust.json",
@@ -34197,6 +34227,11 @@
           "id": "ab_metrics",
           "kind": "special_case",
           "text": "Two of Ehlers and Kundt's static vacuum fields of type D are Levi-Civita's cylinder at one value of $\\sigma$ each: B III at $\\sigma = 1/4$ [podolsky2018], and A III, Taub's plane symmetric vacuum, at $\\sigma = -1/2$ [martins1996, wang1997]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "family",
+          "text": "A universe that turns one way above a plane and the other way below it, and far from its axis approaches a turning form of Levi-Civita's cylinder at $\\sigma = 1/4$ [astorino2022swirling]."
         }
       ],
       "references": [
@@ -34231,7 +34266,8 @@
         "bonnor1980",
         "bonnor1969light",
         "podolsky2018",
-        "martins1996"
+        "martins1996",
+        "astorino2022swirling"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json",
@@ -38071,6 +38107,11 @@
           "id": "kerr_bertotti_robinson",
           "kind": "family",
           "text": "A spinning black hole in the other uniform magnetic field, Bertotti and Robinson's. The two fields carry the same potential in geometries of different symmetry, cylindrical here and spherical there [astorino2025]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "family",
+          "text": "The turning counterpart of Melvin's universe, made out of flat space by Ehlers's transformation in the magnetic form Ernst gave Harrison's, with Schwarzschild's hole set inside it [astorino2022swirling]."
         }
       ],
       "references": [
@@ -38103,7 +38144,8 @@
         "fairhurst2001",
         "kastor2015",
         "rosen1962",
-        "astorino2025"
+        "astorino2025",
+        "astorino2022swirling"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
@@ -38815,6 +38857,11 @@
           "id": "black_to_white_hole",
           "kind": "composite",
           "text": "Inside Haggard and Rovelli's bouncing shell of light space is flat, before the bounce and after it [haggard2015fireworks]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "generalisation",
+          "text": "Flat space put through Ehlers's transformation in its magnetic form, which makes a vacuum universe that turns one way above a plane and the other way below it, with a black hole set inside [astorino2022swirling]."
         }
       ],
       "references": [
@@ -38898,7 +38945,8 @@
         "visser1998",
         "unruh1981",
         "compere2016vacua",
-        "haggard2015fireworks"
+        "haggard2015fireworks",
+        "astorino2022swirling"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -51372,6 +51420,11 @@
           "id": "black_to_white_hole",
           "kind": "composite",
           "text": "A shell of light falls into a black hole and comes back out of a white hole. Haggard and Rovelli cut both flaps from Schwarzschild's spacetime and put a quantum region between them [haggard2015fireworks]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "generalisation",
+          "text": "Schwarzschild's black hole set in a universe whose frame dragging turns one way above the equator and the other way below it. At $j = 0$ it is Schwarzschild's [astorino2022swirling]."
         }
       ],
       "references": [
@@ -51502,7 +51555,8 @@
         "unruh1981",
         "james2015",
         "compere2016final",
-        "haggard2015fireworks"
+        "haggard2015fireworks",
+        "astorino2022swirling"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -56409,6 +56463,254 @@
       ]
     },
     {
+      "id": "swirling_universe_black_hole",
+      "name": "Black Hole in a Swirling Universe",
+      "short_name": "Swirling Universe",
+      "description": "Schwarzschild's black hole inside a vacuum universe whose frame dragging turns one way above its equatorial plane and the other way below it, the exact solution Marco Astorino, Riccardo Martelli and Adriano Viganò made in 2022 with a transformation of Ernst's equation. The hole keeps Schwarzschild's horizon, area and temperature, and two ergoregions run out along the axis to infinity.",
+      "tags": [
+        "vacuum",
+        "stationary",
+        "axisymmetric",
+        "rotating",
+        "frame dragging",
+        "ergoregion",
+        "black hole",
+        "event horizon",
+        "horizon",
+        "Killing horizon",
+        "curvature singularity",
+        "black hole thermodynamics",
+        "Hawking temperature",
+        "not asymptotically flat",
+        "Petrov type I",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "mass"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass enters as the length $m = GM/c^2$, and the rotation parameter $j$ is an inverse area. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Switch the swirl off, $j = 0$, and the metric is Schwarzschild's, with the horizon at $r = 2m$."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "Melvin's magnetic universe, which Harrison's transformation makes out of flat space as Ehlers's makes the swirling universe, and into which Frederick Ernst set Schwarzschild's hole in 1976 [astorino2022swirling]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "Kerr's spinning hole, which Astorino, Martelli and Viganò set in the same universe. There its spin couples to the swirl differently above and below the equator, and a conical singularity on the axis remains [astorino2022swirling]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "family",
+          "text": "Ehlers's transformation in its other form turns Schwarzschild's metric into Taub-NUT space, and a double Wick rotation turns the swirling universe into Taub-NUT space with a flat base [astorino2022swirling]."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "family",
+          "text": "Zipoy and Voorhees's deformed mass, which the same transformation sets in the swirling universe [astorino2022swirling]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "With no hole and no swirl, $m = 0$ and $j = 0$, the metric is flat."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "family",
+          "text": "Far from its axis the swirling universe approaches a turning form of Levi-Civita's cylinder at $\\sigma = 1/4$ [astorino2022swirling]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "The rotating C-metric set in the swirling universe loses both of its conical singularities, the spin of the hole against the swirl supplying its acceleration [astorino2022removal]."
+        },
+        {
+          "id": "double_kerr",
+          "kind": "family",
+          "text": "Two Kerr holes on one axis. Set in a swirling universe, two extremal ones are held apart by the spin of each against the swirl, with no strut between them [astorino2025binary]."
+        },
+        {
+          "id": "godel",
+          "kind": "family",
+          "text": "Another universe that turns, Gödel's, filled with rotating dust and a cosmological constant."
+        },
+        {
+          "id": "stockum_dust",
+          "kind": "family",
+          "text": "Another universe that turns, van Stockum's cylinder of dust spinning about its axis."
+        }
+      ],
+      "references": [
+        "astorino2022swirling",
+        "gibbons2013",
+        "colleaux2025",
+        "moreira2024",
+        "astorino2022removal",
+        "astorino2025binary",
+        "capobianco2024",
+        "barrientos2024",
+        "dipinto2025"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/swirling_universe_black_hole.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 2m \\;\\text{(horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the hole as a length, $m = GM/c^2$; the horizon is at $r = 2m$"
+            },
+            {
+              "symbol": "j",
+              "description": "Rotation parameter of the swirling universe, an inverse area; at $j = 0$ the metric is Schwarzschild's"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\theta, \\phi)$ of Schwarzschild's chart, with $t$ carrying dimensions of time and $\\phi$ the azimuth at rest on the horizon. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 + j^2r^4\\sin^4\\theta\\right)\\left(-\\left(1 - \\dfrac{2m}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2d\\theta^2\\right) + \\dfrac{r^2\\sin^2\\theta}{1 + j^2r^4\\sin^4\\theta}\\left(d\\phi + 4j\\left(r - 2m\\right)\\cos\\theta\\,c\\,dt\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(r - 2m\\right)\\left(\\left(1 + j^2r^4\\sin^4\\theta\\right)^2 - 16j^2r^3\\left(r - 2m\\right)\\sin^2\\theta\\cos^2\\theta\\right)}{r\\left(1 + j^2r^4\\sin^4\\theta\\right)}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4j\\,r^2\\left(r - 2m\\right)\\sin^2\\theta\\cos\\theta}{1 + j^2r^4\\sin^4\\theta}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "\\dfrac{4j\\,r^2\\left(r - 2m\\right)\\sin^2\\theta\\cos\\theta}{1 + j^2r^4\\sin^4\\theta}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r\\left(1 + j^2r^4\\sin^4\\theta\\right)}{r - 2m}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\left(1 + j^2r^4\\sin^4\\theta\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\sin^2\\theta}{1 + j^2r^4\\sin^4\\theta}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{192j^8\\,r^{18}\\sin^{12}\\theta - 288j^8\\,r^{17}\\,m\\sin^{16}\\theta - 576j^8\\,r^{17}\\,m\\sin^{14}\\theta + 1008j^8\\,r^{16}\\,m^2\\sin^{16}\\theta - 2880j^6\\,r^{14}\\sin^8\\theta + 2592j^6\\,r^{13}\\,m\\sin^{12}\\theta + 9792j^6\\,r^{13}\\,m\\sin^{10}\\theta - 13440j^6\\,r^{12}\\,m^2\\sin^{12}\\theta + 2880j^4\\,r^{10}\\sin^4\\theta + 1440j^4\\,r^9\\,m\\sin^8\\theta - 12480j^4\\,r^9\\,m\\sin^6\\theta + 10080j^4\\,r^8\\,m^2\\sin^8\\theta - 192j^2\\,r^6 - 1440j^2\\,r^5\\,m\\sin^4\\theta + 1728j^2\\,r^5\\,m\\sin^2\\theta + 48m^2}{r^6\\left(1 + j^2r^4\\sin^4\\theta\\right)^6}"
+        },
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "j",
+              "description": "Rotation parameter of the swirling universe, an inverse area; at $j = 0$ the metric is flat"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\phi, z)$ of the swirling universe with no hole, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 + j^2\\rho^4\\right)\\left(-c^2dt^2 + d\\rho^2 + dz^2\\right) + \\dfrac{\\rho^2}{1 + j^2\\rho^4}\\left(d\\phi + 4jz\\,c\\,dt\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(1 + j^2\\rho^4\\right)^2 - 16j^2\\rho^2z^2}{1 + j^2\\rho^4}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4j\\,\\rho^2\\,z}{1 + j^2\\rho^4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "\\dfrac{4j\\,\\rho^2\\,z}{1 + j^2\\rho^4}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1 + j^2\\rho^4"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1 + j^2\\rho^4"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\rho^2}{1 + j^2\\rho^4}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{192j^2\\left(j^6\\rho^{12} - 15j^4\\rho^8 + 15j^2\\rho^4 - 1\\right)}{\\left(1 + j^2\\rho^4\\right)^6}"
+        }
+      ]
+    },
+    {
       "id": "szekeres",
       "name": "Szekeres Inhomogeneous Dust Cosmologies",
       "short_name": "Szekeres",
@@ -56765,6 +57067,11 @@
           "id": "brill_charged_taub_nut",
           "kind": "generalisation",
           "text": "Taub-NUT with a charge. Dieter Brill filled Taub's universe with an electromagnetic wave in 1964, and with charge enough, $r_q^2 > m^2 + l^2$, the horizons go and the spacetime is a wormhole [brill1964, clement2016]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "family",
+          "text": "Ehlers's transformation in its magnetic form sets Schwarzschild's hole in a swirling universe, which a double Wick rotation turns into Taub-NUT space with a flat base [astorino2022swirling]."
         }
       ],
       "references": [
@@ -56795,7 +57102,8 @@
         "page1978bolt",
         "ellis1974",
         "collins1974",
-        "clement2016"
+        "clement2016",
+        "astorino2022swirling"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
@@ -64347,6 +64655,11 @@
           "id": "bach_weyl_ring",
           "kind": "family",
           "text": "The Weyl field of a hoop about the axis, where Zipoy and Voorhees's is that of a rod along it."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "family",
+          "text": "Schwarzschild's hole in a swirling universe, made by a transformation that sets Zipoy and Voorhees's metric in that universe too [astorino2022swirling]."
         }
       ],
       "references": [
@@ -64373,7 +64686,8 @@
         "emparan2000",
         "memmen2021",
         "boshkayev2019",
-        "geroch1982"
+        "geroch1982",
+        "astorino2022swirling"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/zipoy_voorhees.json",

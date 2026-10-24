@@ -5078,7 +5078,11 @@
       "idealized model",
       "mass"
     ],
-    "version": "ab3ad23c45bb7a21"
+    "version": "ac0e9c03a4d49f7a",
+    "diagrams": "e6957591dd83230d",
+    "conformal": "bcf35826e01e4d80",
+    "embedding": "707a9b9f485a8c7c",
+    "curvature": "d54f9c60f5289057"
   },
   {
     "id": "szekeres",

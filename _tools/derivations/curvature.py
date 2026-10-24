@@ -6066,6 +6066,193 @@ def kerr(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- the black hole in a swirling universe
+
+SWIRL_REACH = 3                   # the universe's line runs over 0 <= sqrt(j) rho <= 3
+SWIRL_K = {"kind": "symlog", "from": -1e3, "to": 1e3, "linear": 1e-3}   # the colours and the axis of K, as Kerr's
+SWIRL_J = Fraction(1, 16)         # j in units of 1/m^2, as every drawing of the hole takes it
+SWIRL_HOLE_REACH = 6              # the map runs out to r sin theta = 6 m and |r cos theta| = 6 m
+SWIRL_CELLS = 20                  # the cells of the map to each m, across and up
+
+
+def swirling_universe_black_hole(ck, src):
+    """The swirling universe at j = 1, its Kretschmann scalar against rho, and Astorino, Martelli
+    and Vigano's black hole in it at m = 1 and j = 1/(16 m^2), its Kretschmann scalar over the
+    meridian half plane of r and theta.
+
+    The cylindrical chart publishes K as a function of rho alone, the same at every t, phi and z,
+    so its view is a line, K/j^2 against sqrt(j) rho from 0 to 3 on Kerr's signed logarithmic axis,
+    since K changes sign. The spherical chart publishes K as a function of r and theta, so its view
+    is a map with r sin theta across and r cos theta up, over 0 <= r sin theta <= 6m and
+    |r cos theta| <= 6m, the reach of the chart's spacetime diagram, in cells a twentieth of m on a
+    side, coloured on the same signed scale in units of 1/m^4. The horizon r = 2m, the zero of the
+    published g^rr on every ray, is marked as a semicircle and the singularity r = 0 as a point.
+    Both charts are vacuum and publish R = 0, so the figure is K alone, and each view belongs to its
+    own chart.
+
+    What the captions state is checked here: R vanishes in both charts; the universe's K is
+    192 j^2 (j^6 rho^12 - 15 j^4 rho^8 + 15 j^2 rho^4 - 1)/(1 + j^2 rho^4)^6, -192 j^2 on the axis,
+    vanishing at sqrt(j) rho = sqrt(2 - sqrt 3), 1 and sqrt(2 + sqrt 3) and nowhere else on the
+    line, and falling off as 192/j^4 rho^12; the hole's K at j = 0 is Schwarzschild's published
+    scalar and at m = 0 the universe's at rho = r sin theta; it is the same at theta and pi - theta;
+    on the axis it is 48 m^2/r^6 - 192 j^2, which at j = 1/(16 m^2) vanishes on the horizon; toward
+    r = 0 it grows as 48 m^2/r^6 from every direction; the horizon is at r = 2m on every ray; and
+    the clip stated is where |K| leaves the colours, on a grid four times as fine as the map's."""
+    me = "swirling_universe_black_hole"
+    K = nr_published(src, me, "cylindrical", "kretschmann", ["rho"], ["j"])
+    for system, coords, names in (("cylindrical", ["rho"], ["j"]), ("spherical", ["r", "theta"], ["m", "j"])):
+        ricci = nr_published(src, me, system, "ricci_scalar", coords, names)
+        ck(f"{me} {system} publishes R = 0", ricci.expr == 0, f"{ricci.expr}")
+    rho, j = K.coords[0], K.params[0]
+    F = 1 + j ** 2 * rho ** 4
+    ck(f"{me} K is 192 j^2 (j^6 rho^12 - 15 j^4 rho^8 + 15 j^2 rho^4 - 1)/(1 + j^2 rho^4)^6",
+       sp.cancel(K.expr - 192 * j ** 2 * (j ** 6 * rho ** 12 - 15 * j ** 4 * rho ** 8 + 15 * j ** 2 * rho ** 4 - 1) / F ** 6) == 0)
+    ck(f"{me} K on the axis is -192 j^2", sp.simplify(K.expr.subs(rho, 0) + 192 * j ** 2) == 0)
+    z = zeros(ck, f"{me} K", K, 0.0, SWIRL_REACH, [1.0])
+    expected = [math.sqrt(2 - math.sqrt(3)), 1.0, math.sqrt(2 + math.sqrt(3))]
+    ck(f"{me} K vanishes at sqrt(j) rho = sqrt(2 - sqrt 3), 1 and sqrt(2 + sqrt 3) alone",
+       len(z) == 3 and all(abs(u - v) < 1e-9 for u, v in zip(z, expected)), f"{z}")
+    far = [float(K.exact([v, 1.0])) * v ** 12 / 192 for v in (1e4, 1e6)]
+    ck(f"{me} K falls off as 192/j^4 rho^12 far out", all(abs(q - 1) < 1e-6 for q in far), f"{far}")
+    fine = np.linspace(0, SWIRL_REACH, 300001)
+    kv = K(fine, 1.0)
+    top = int(np.argmax(kv))
+    peak = (float(fine[top]), float(kv[top]))
+
+    x_axis = axis("$\\sqrt{j}\\,\\rho$", 0, SWIRL_REACH)
+    panels = [{"id": "K", "name": "$K/j^2$", "aspect": 2, "scale": SWIRL_K, "ticks": value_ticks(SWIRL_K)}]
+    shape_checks(ck, f"{me} line", [p["aspect"] for p in panels])
+    height = PLOT_W / panels[0]["aspect"]
+    curves = line_curves(ck, me, "K", "K", K, "\\rho", x_axis, SWIRL_K, height, {"j": 1.0})
+    up_, down_ = beyond(K, x_axis, SWIRL_K, [1.0])
+    ck(f"{me} K stays inside its panel", not up_ and not down_, f"{up_} {down_}")
+    edge = float(K.exact([SWIRL_REACH, 1.0]))
+    universe = {
+        "id": "universe", "label": "The swirling universe", "system": "cylindrical", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the swirling universe against $\\rho$ ($j = 1$), the same at every $t$, "
+            "$\\phi$, and $z$. The spacetime is a vacuum, so its Ricci scalar vanishes, and "
+            "$K = 192j^2(j^6\\rho^{12} - 15j^4\\rho^8 + 15j^2\\rho^4 - 1)/(1 + j^2\\rho^4)^6$.",
+            "On the axis $K = -192j^2$. It vanishes at $\\sqrt{j}\\,\\rho = \\sqrt{2 - \\sqrt{3}}$, $1$, and "
+            f"$\\sqrt{{2 + \\sqrt{{3}}}}$, which are ${z[0]:.4f}$, $1$, and ${z[2]:.4f}$, is greatest, "
+            f"${peak[1]:.1f}\\,j^2$, at $\\sqrt{{j}}\\,\\rho = {peak[0]:.3f}$, and far out falls off as "
+            "$192/j^4\\rho^{12}$.",
+        ],
+        "settings": "$j = 1$, so that $1/\\sqrt{j}$ is the unit of every length.",
+        "clip": ("We draw $K/j^2$ on a signed logarithmic scale, linear within $0.001$ of zero, from $-10^{3}$ to "
+                 f"$10^{{3}}$, and every value drawn lies within it, from $-192$ on the axis to ${tex_number(edge)}$ at "
+                 f"$\\sqrt{{j}}\\,\\rho = {SWIRL_REACH}$."),
+    }
+    return [universe, swirling_hole(ck, src, K)]
+
+
+def swirling_hole(ck, src, universe_K):
+    """The black hole in a swirling universe, the map of swirling_universe_black_hole()'s second view,
+    which its docstring describes, with the universe's own K, read from the cylindrical chart, to hold
+    it to."""
+    me = "swirling_universe_black_hole"
+    mv, jv = 1.0, float(SWIRL_J)
+    params = {"m": mv, "j": jv}
+    K = nr_published(src, me, "spherical", "kretschmann", ["r", "theta"], ["m", "j"])
+    grr = nr_published(src, me, "spherical", "inverse_metric_components", ["r", "theta"], ["m", "j"], ("r", "r"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    r, th = K.coords
+    m, j = K.params
+    ck(f"{me} the hole's K at j = 0 is Schwarzschild's published scalar",
+       sp.cancel(K.expr.subs(j, 0) - K_s.expr.subs({K_s.coords[0]: r, K_s.params[0]: 2 * m})) == 0)
+    s = sp.symbols("s", positive=True)
+    bare = sp.cancel(K.expr.subs(m, 0)).subs(sp.sin(th), s)
+    at = universe_K.expr.subs({universe_K.coords[0]: r * s, universe_K.params[0]: j})
+    ck(f"{me} the hole's K at m = 0 is the universe's at rho = r sin theta",
+       th not in bare.free_symbols and sp.cancel(bare - at) == 0)
+    ck(f"{me} the hole's K is the same at theta and pi - theta", sp.simplify(K.expr.subs(th, sp.pi - th) - K.expr) == 0)
+    axis_K = 48 * m ** 2 / r ** 6 - 192 * j ** 2
+    ck(f"{me} the hole's K on the axis is 48 m^2/r^6 - 192 j^2", sp.cancel(K.expr.subs(th, 0) - axis_K) == 0)
+    ck(f"{me} at j = 1/(16 m^2) the hole's K on the axis vanishes on the horizon r = 2m",
+       sp.simplify(axis_K.subs({j: sp.Rational(1, 16) / m ** 2, r: 2 * m})) == 0)
+    near = [float(K.exact([1e-8, angle, mv, jv])) * 1e-48 / 48 - 1 for angle in np.linspace(0, math.pi, 7)]
+    ck(f"{me} the hole's K grows as 48 m^2/r^6 toward r = 0 from every direction", max(map(abs, near)) < 1e-6,
+       f"worst {max(map(abs, near)):.1e}")
+    pole, equator = float(K.exact([2 * mv, 0.0, mv, jv])), float(K.exact([2 * mv, math.pi / 2, mv, jv]))
+    ck(f"{me} the hole's K is zero at the poles of the horizon and positive on its equator",
+       abs(pole) < 1e-14 and equator > 0, f"{pole}, {equator}")
+
+    x_axis = axis("$r\\sin\\theta/m$", 0, SWIRL_HOLE_REACH, 3)
+    y_axis = axis("$r\\cos\\theta/m$", -SWIRL_HOLE_REACH, SWIRL_HOLE_REACH)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, f"{me} map", [aspect])
+    scale = dict(SWIRL_K)
+    nx = round(SWIRL_CELLS * (x_axis["to"] - x_axis["from"]))
+    ny = round(SWIRL_CELLS * (y_axis["to"] - y_axis["from"]))
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [mv, jv], frame="meridian")
+    ck(f"{me} the hole's K is finite at every cell", np.all(np.isfinite(values)),
+       f"from {np.min(values):.3e} to {np.max(values):.3e}")
+    ck(f"{me} the map is the same above and below the equator", np.allclose(values, values[::-1], rtol=1e-9, atol=1e-15))
+    rng = np.random.default_rng(2022)
+    picks = {(int(i), int(jj)) for i, jj in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+    picks |= {(0, ny // 2 - 1), (0, ny // 2)} | {(i, jj) for i in (0, nx - 1) for jj in (0, ny - 1)}
+    picks = sorted(picks)
+    points = [[float(v) for v in meridian(xs[i], ys[jj])] + [mv, jv] for i, jj in picks]
+    agrees(ck, f"{me} map", K, points, [values[jj, i] for i, jj in picks])
+
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+    rays = []
+    for angle in np.linspace(0, math.pi, 13):
+        reach = min(SWIRL_HOLE_REACH / max(math.sin(angle), 1e-300), SWIRL_HOLE_REACH / max(abs(math.cos(angle)), 1e-300))
+        rays.append(zeros(ck, f"{me} g^rr at theta = {angle:.4f}", grr, 0.0, reach, [angle, mv, jv], n=4000))
+    ck(f"{me} the horizon is at r = 2m on every ray", all(len(zz) == 1 and abs(zz[0] - 2 * mv) < 1e-12 for zz in rays),
+       f"{rays[0]}")
+    rh = 2 * mv
+    n = math.ceil(math.pi / (2 * math.acos(1 - TOLERANCE / (rh * per_unit)))) + 1
+    sag = rh * per_unit * (1 - math.cos(math.pi / (n - 1) / 2))
+    ck(f"{me} the circle r = 2m strays from its chords by less than the tolerance", sag < TOLERANCE,
+       f"{sag:.4f} in {n} points")
+    horizon = [[float(rh * math.sin(a)) + 0.0, float(rh * math.cos(a)) + 0.0] for a in np.linspace(0, math.pi, n)]
+    flips = [float(grr(rh * (1 - 1e-7), float(meridian(px, py)[1]), mv, jv))
+             * float(grr(rh * (1 + 1e-7), float(meridian(px, py)[1]), mv, jv)) < 0 for px, py in horizon]
+    ck(f"{me} g^rr changes sign across every point of the horizon marked", all(flips), f"{len(flips)} points")
+
+    # Where |K| leaves the colours, on a grid four times as fine as the map's: only near r = 0, inside
+    # the radius where K on the equator, where it grows fastest toward the singularity, passes 10^3.
+    fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [mv, jv], frame="meridian")
+    FX, FY = np.meshgrid(fx, fy)
+    out_ = ~(np.abs(fine) <= SWIRL_K["to"])
+    d_clip = float(np.hypot(FX, FY)[out_].max())
+    ck(f"{me} |K| passes 10^3/m^4 only near r = 0, and only above it", np.all(fine[out_] > 0) and d_clip < 1.0,
+       f"within r = {d_clip:.4f}")
+    least = float(np.min(fine))
+    d_stated = math.ceil(d_clip * 100) / 100
+    rows = [[rounded(v) for v in row] for row in values]
+    return {
+        "id": "hole", "label": "The black hole", "system": "spherical", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": me, "system": "spherical", "scalar": "kretschmann", "x": "r", "y": "\\theta",
+                "frame": "meridian", "params": params, "nx": nx, "ny": ny, "cells": rows},
+        "marks": [{"class": "horizon", "points": horizon}, {"class": "singular", "at": [0.0, 0.0]}],
+        "legend": [["line", "horizon", "the horizon $r = 2m$, where $g^{rr} = 0$"],
+                   ["point", "singular", "$r = 0$, where $K$ diverges"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the black hole in a swirling universe over the half plane of $r$ and "
+            "$\\theta$, drawn as polar coordinates about the hole ($j = 1/(16m^2)$), the same at every $t$ and "
+            "$\\phi$. The spacetime is a vacuum, so its Ricci scalar vanishes. At $j = 0$ the scalar is "
+            "Schwarzschild's $48m^2/r^6$, the same in every direction, and at $m = 0$ it is that of the swirling "
+            "universe at $\\rho = r\\sin\\theta$.",
+            "On the axis $K = 48m^2/r^6 - 192j^2$, which tends far from the hole to the universe's $-192j^2$ and at "
+            "this $j$ vanishes on the horizon itself. On the horizon $K$ is zero at the poles and "
+            f"${equator:.3f}/m^4$ on the equator, and toward the singularity $r = 0$ "
+            "it grows as Schwarzschild's $48m^2/r^6$ from every direction.",
+        ],
+        "settings": "$m = 1$, the unit of every length, and $j = 1/(16m^2)$, so that the widest circle of the "
+                    "equator sits at $r = 4m$.",
+        "clip": ("We colour $K\\,m^4$ on a signed logarithmic scale, linear within $0.001$ of zero, from $-10^{3}$ "
+                 "to $10^{3}$, and give a value beyond it the colour of the end it passes: $K$ passes $10^{3}/m^4$ "
+                 f"only within $r = {d_stated:.2f}\\,m$ of the singularity, and is nowhere below "
+                 f"${least:.3f}/m^4$."),
+    }
+
+
 # ---------------------------------------------------------------- the Kerr-Taub-NUT black hole
 
 KTN_SPIN = Fraction(1)            # a in units of m, as every drawing of the black hole takes it
@@ -10884,6 +11071,7 @@ DRAWN = {
     "roberts": roberts,
     "schwarzschild": schwarzschild,
     "senovilla": senovilla,
+    "swirling_universe_black_hole": swirling_universe_black_hole,
     "simpson_visser": simpson_visser,
     "taub_nut": taub_nut,
     "topological_star": topological_star,
