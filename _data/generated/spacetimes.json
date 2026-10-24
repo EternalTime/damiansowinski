@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 189,
+  "count": 190,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -4860,6 +4860,11 @@
           "id": "hayward",
           "kind": "family",
           "text": "Hayward's minimal model of a black hole with no singularity at its centre [hayward2006]."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "family",
+          "text": "A universe on a wall in anti-de Sitter space of five dimensions, whose Friedmann equation carries a term in $\\rho^2$ with a plus sign [binetruy2000nonconventional]."
         }
       ],
       "references": [
@@ -4876,7 +4881,8 @@
         "lewandowski2023",
         "chinea1992",
         "simpson2019",
-        "hayward2006"
+        "hayward2006",
+        "binetruy2000nonconventional"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lqc_bounce.json",
@@ -9881,6 +9887,275 @@
           ],
           "ricci_scalar": "R = \\dfrac{r_s\\left(\\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right) - 6Z\\left(P - 2\\right)\\right)}{2R^3\\,Z}",
           "kretschmann": "K = \\dfrac{r_s^2\\left(12Z^2\\left(P^2 + 4\\right) - 4Z\\left(1 - Z\\right)P^2\\left(2Q - 1\\right)\\left(P + 2\\right) + \\left(1 - Z\\right)^2\\,P^2\\left(2Q - 1\\right)^2\\left(P + 2\\right)^2\\right)}{4R^6\\,Z^2}"
+        }
+      ]
+    },
+    {
+      "id": "brane_wall_universe",
+      "name": "Braneworld Cosmology",
+      "short_name": "Braneworld Cosmology",
+      "description": "A universe with three dimensions of space that is a wall in anti-de Sitter space of five, moving through the static black hole of that space, as Per Kraus and Daisuke Ida set it out in 1999. Those who live on the wall read its motion as the expansion of their universe, with a Friedmann equation that carries the square of the density and the black hole's mass as a term that falls off like radiation.",
+      "tags": [
+        "braneworld",
+        "brane",
+        "domain wall",
+        "thin shell",
+        "junction conditions",
+        "matched solution",
+        "higher dimensions",
+        "anti-de Sitter",
+        "negative cosmological constant",
+        "cosmological constant",
+        "reflection symmetry",
+        "black hole",
+        "horizon",
+        "event horizon",
+        "Birkhoff theorem",
+        "cosmology",
+        "expanding universe",
+        "FLRW",
+        "causal structure",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "five-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $G_5$ is Newton's constant in five dimensions. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "randall_sundrum",
+          "kind": "special_case",
+          "text": "Randall and Sundrum's wall at rest: no black hole, $\\mu = 0$, a flat space on the wall, $k = 0$, and no matter beside the tension, so that $a$ is a constant [kraus1999]."
+        },
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "The universe on the wall: the metric it carries is Friedmann's, $-c^2d\\tau^2 + a^2d\\Sigma_k^2$, with a Friedmann equation that gains a term in $\\rho^2$ and one in $\\mu/a^4$ [kraus1999, binetruy2000brane]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "Each side of the wall is a piece of this black hole one dimension up, with its sphere free to be flat or hyperbolic [kraus1999, birmingham1999]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "The same black holes in four dimensions. One dimension up, the flat and the hyperbolic ones border a wall whose space is flat or open [kraus1999, birmingham1999]."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "family",
+          "text": "A shell moving through a static vacuum, its motion set by Israel's junction conditions, as the wall's is [israel1966, kraus1999]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "Two copies of Schwarzschild's exterior glued along a thin shell at rest, by the junction conditions that move the wall [visser1989nuclphysb, israel1966]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "A thin wall with flat space on both sides, which accelerates outward as a bubble. Between two copies of anti-de Sitter space a wall carrying matter moves past a black hole [kraus1999]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "family",
+          "text": "Its Friedmann equation carries a term in $\\rho^2$ too, with a minus sign that turns a collapse into a bounce. On the wall the sign is a plus [singh2006, binetruy2000nonconventional]."
+        }
+      ],
+      "references": [
+        "randall1999a",
+        "randall1999b",
+        "kraus1999",
+        "ida2000",
+        "birmingham1999",
+        "bowcock2000",
+        "israel1966",
+        "binetruy2000brane",
+        "mukohyama2000global",
+        "binetruy2000nonconventional",
+        "mukohyama2000",
+        "shiromizu2000",
+        "visser1989nuclphysb",
+        "singh2006"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brane_wall_universe.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Bulk, One Side",
+          "coordinates": [
+            "t",
+            "r",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_h, a]",
+            "\\chi \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0",
+            "\\chi \\in [0, \\infty) \\;\\text{for}\\; k \\le 0",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = a \\;\\text{(the wall, where this side meets its mirror image)}",
+            "r = r_h \\;\\text{(the event horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of the anti-de Sitter space on either side of the wall, a length, with $R_{\\mu\\nu} = -4g_{\\mu\\nu}/\\ell^2$ off the wall"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Mass parameter of the black hole, an area, which for $k = 1$ is $8G_5M/3\\pi c^2$ with $M$ its mass"
+            },
+            {
+              "symbol": "k",
+              "description": "Curvature of space on the wall, $k \\in \\{-1, 0, +1\\}$"
+            },
+            {
+              "symbol": "a = a(t)",
+              "description": "Areal radius of the wall, a length, and the scale factor of the universe on it. With $\\tau$ the proper time on the wall, $\\rho$ the energy density of the matter on it, and $\\sigma = 3c^4/4\\pi G_5\\ell$ its tension, it moves as $\\left(da/d(c\\tau)\\right)^2 = a^2\\left(1 + \\rho/\\sigma\\right)^2/\\ell^2 - f(a)$ while $f(a)\\,dt/d\\tau = (a/\\ell)\\left(1 + \\rho/\\sigma\\right)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\chi, \\theta, \\phi)$ on one side of the wall, with $t$ the static time, carrying dimensions of time, $r$ the areal radius, a length, and $\\chi$ a comoving radius, a pure number. Here $f = k + r^2/\\ell^2 - \\mu/r^2$, and the horizon $r_h$ is its largest root. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}\\right)c^2dt^2 + \\dfrac{dr^2}{k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}} + r^2\\left(\\dfrac{d\\chi^2}{1 - k\\chi^2} + \\chi^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{r^2}{1 - k\\chi^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,\\chi^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,\\chi^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{72\\mu^2}{r^8} + \\dfrac{40}{\\ell^4}"
+        },
+        {
+          "id": "gaussian_normal",
+          "name": "Gaussian Normal, One Side",
+          "coordinates": [
+            "t",
+            "w",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "w \\in [0, \\infty)",
+            "\\chi \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0",
+            "\\chi \\in [0, \\infty) \\;\\text{for}\\; k \\le 0",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "w = 0 \\;\\text{(the wall, where this side meets its mirror image)}",
+            "N = 0 \\;\\text{(a coordinate singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of the anti-de Sitter space on either side of the wall, a length, with $R_{\\mu\\nu} = -4g_{\\mu\\nu}/\\ell^2$ off the wall"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Mass parameter of the black hole, an area, which for $k = 1$ is $8G_5M/3\\pi c^2$ with $M$ its mass"
+            },
+            {
+              "symbol": "k",
+              "description": "Curvature of space on the wall, $k \\in \\{-1, 0, +1\\}$"
+            },
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor of the universe on the wall, a length, the areal radius $A$ at $w = 0$"
+            },
+            {
+              "symbol": "Q = \\sqrt{1 + \\ell^2\\left(\\dfrac{\\dot{a}^2 + k}{a^2} - \\dfrac{\\mu}{a^4}\\right)}",
+              "description": "Junction factor: on the wall $Q = 1 + \\rho/\\sigma$, for $\\rho$ the energy density of the matter on it and $\\sigma = 3c^4/4\\pi G_5\\ell$ its tension, and squared it is the modified Friedmann equation"
+            },
+            {
+              "symbol": "A = a\\sqrt{\\cosh(2w/\\ell) + \\dfrac{\\ell^2\\left(\\dot{a}^2 + k\\right)}{2a^2}\\left(\\cosh(2w/\\ell) - 1\\right) - Q\\sinh(2w/\\ell)}",
+              "description": "Areal radius of the 3-space at the distance $w$ from the wall, the $r$ of the static chart"
+            },
+            {
+              "symbol": "N = \\dfrac{a}{A}\\left(\\cosh(2w/\\ell) + \\dfrac{\\ell^2\\ddot{a}}{2a}\\left(\\cosh(2w/\\ell) - 1\\right) - \\dfrac{2a^2 + \\ell^2\\left(\\dot{a}^2 + a\\ddot{a} + k\\right)}{2a^2Q}\\sinh(2w/\\ell)\\right)",
+              "description": "Lapse, $N = \\partial_tA/\\dot{a}$, equal to $1$ on the wall"
+            }
+          ],
+          "convention": "We use coordinates $(t, w, \\chi, \\theta, \\phi)$ on one side of the wall, with $t$ the proper time on the wall, carrying dimensions of time, $w$ the proper distance from it, a length, and $\\chi$ a comoving radius, a pure number. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -N^2c^2dt^2 + dw^2 + A^2\\left(\\dfrac{d\\chi^2}{1 - k\\chi^2} + \\chi^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-N^2"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{A^2}{1 - k\\chi^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "A^2\\,\\chi^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "A^2\\,\\chi^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{4N^4\\,A^4\\left(\\partial_w^2 N\\right)^2 + 12N^2\\,A^2\\left(\\partial_t^2 A\\right)^2 - 24N\\,A^2\\,\\partial_t^2 A\\,\\partial_t N\\,\\partial_t A - 24N^3\\,A^2\\,\\partial_t^2 A\\,\\partial_w N\\,\\partial_w A - 24N^4\\,A^2\\left(\\partial_t\\partial_w A\\right)^2 + 48N^3\\,A^2\\,\\partial_t\\partial_w A\\,\\partial_w N\\,\\partial_t A + 12N^6\\,A^2\\left(\\partial_w^2 A\\right)^2 + 12A^2\\left(\\partial_t N\\right)^2\\left(\\partial_t A\\right)^2 + 24N^2\\,A^2\\,\\partial_t N\\,\\partial_w N\\,\\partial_t A\\,\\partial_w A - 24N^2\\,A^2\\left(\\partial_w N\\right)^2\\left(\\partial_t A\\right)^2 + 12N^4\\,A^2\\left(\\partial_w N\\right)^2\\left(\\partial_w A\\right)^2 + 12N^2\\left(\\partial_t A\\right)^4 - 24N^4\\left(\\partial_t A\\right)^2\\left(\\partial_w A\\right)^2 + 12N^6\\left(\\partial_w A\\right)^4 + 24N^4\\,k\\left(\\partial_t A\\right)^2 - 24N^6\\,k\\left(\\partial_w A\\right)^2 + 12N^6\\,k^2}{N^6\\,A^4}"
         }
       ]
     },
@@ -20813,6 +21088,11 @@
           "id": "bardeen_perturbations",
           "kind": "generalisation",
           "text": "The Friedmann universe with two small potentials laid over it, $\\Phi$ in $g_{\\eta\\eta}$ and $\\Psi$ in the metric of space. At $\\Phi = \\Psi = 0$ its longitudinal gauge is Friedmann's metric in conformal time."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "family",
+          "text": "Put this universe on a wall in anti-de Sitter space of five dimensions and its Friedmann equation gains a term in $\\rho^2$ and one that falls off like radiation [binetruy2000brane, mukohyama2000]."
         }
       ],
       "references": [
@@ -20883,7 +21163,9 @@
         "caldwell2003",
         "chiba2005",
         "cai2014",
-        "ashtekar2006improved"
+        "ashtekar2006improved",
+        "binetruy2000brane",
+        "mukohyama2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -26081,6 +26363,11 @@
           "id": "black_to_white_hole",
           "kind": "family",
           "text": "The same collapse made of light, which Haggard and Rovelli let bounce and come back out through a white hole [haggard2015fireworks]."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "family",
+          "text": "The same junction conditions move a wall through the black hole of anti-de Sitter space in five dimensions, and the wall carries a universe [kraus1999]."
         }
       ],
       "references": [
@@ -26103,7 +26390,8 @@
         "hajicek1992",
         "visser1989nuclphysb",
         "visser2004",
-        "haggard2015fireworks"
+        "haggard2015fireworks",
+        "kraus1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_shell.json",
@@ -48473,6 +48761,11 @@
           "id": "lqc_bounce",
           "kind": "family",
           "text": "A universe whose Friedmann equation, from loop quantum cosmology, carries a term in $\\rho^2$ with a minus sign, where a universe on the brane has a plus [singh2006]."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "generalisation",
+          "text": "Set the wall moving past a black hole, with matter on it and a curved space if it likes, and those who live on it see their universe expand [kraus1999, ida2000]."
         }
       ],
       "references": [
@@ -48497,7 +48790,9 @@
         "horvath1977",
         "freund1980",
         "emparan2020qbtz",
-        "singh2006"
+        "singh2006",
+        "kraus1999",
+        "ida2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json",
@@ -52336,6 +52631,11 @@
           "id": "btz_shock_wave",
           "kind": "family",
           "text": "The BTZ black hole with a shock wave on its horizon. Shenker and Stanford put the same shock on this black hole's horizon too, and found the same scrambling time [shenker2014]."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "family",
+          "text": "One dimension up, a wall moving through this black hole carries a universe, and the wall's motion is that universe's expansion [kraus1999]."
         }
       ],
       "references": [
@@ -52365,7 +52665,8 @@
         "hawking1999rotation",
         "chamblin1999",
         "surya2001",
-        "shenker2014"
+        "shenker2014",
+        "kraus1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -60349,6 +60650,11 @@
           "id": "three_brane_throat",
           "kind": "family",
           "text": "A three-brane of string theory heated a little above its least mass has this black hole, in five dimensions, in its throat [maldacena1998]."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "family",
+          "text": "One dimension up, the same holes border a moving wall that carries a universe whose space has the curvature of the horizon's [kraus1999, birmingham1999]."
         }
       ],
       "references": [
@@ -60378,7 +60684,8 @@
         "cardoso2004",
         "hruska2019",
         "aminneborg1998",
-        "maldacena1998"
+        "maldacena1998",
+        "kraus1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",
@@ -62699,6 +63006,11 @@
           "id": "coleman_de_luccia",
           "kind": "family",
           "text": "A wall between two vacua of different energy, the skin of a bubble of new vacuum. It rides a hyperboloid too [coleman1980]."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "family",
+          "text": "A wall between two copies of anti-de Sitter space of five dimensions, carrying matter, moves past a black hole, and those who live on it see a universe expand [kraus1999]."
         }
       ],
       "references": [
@@ -62718,7 +63030,8 @@
         "saikawa2017",
         "harari1990",
         "randall1999a",
-        "coleman1980"
+        "coleman1980",
+        "kraus1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json",
@@ -63030,6 +63343,11 @@
           "id": "interstellar_wormhole",
           "kind": "family",
           "text": "A smooth cousin built for the film Interstellar, whose mouths flare into flat space over a length $M$. As $M \\to 0$ with no cylinder between the mouths, it becomes this wormhole with no mass [james2015, visser1989prd]."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "family",
+          "text": "Two copies of a black hole in anti-de Sitter space of five dimensions glued along a moving wall, each kept on the side where its radius falls away from the wall [kraus1999]."
         }
       ],
       "references": [
@@ -63055,7 +63373,8 @@
         "friedman1990",
         "damour2007",
         "danielson2021",
-        "james2015"
+        "james2015",
+        "kraus1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",

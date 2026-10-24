@@ -407,7 +407,7 @@
       "spherically symmetric",
       "quantum cosmology"
     ],
-    "version": "aaf1a58b46bab6be",
+    "version": "c0f72cf02ee7c5eb",
     "diagrams": "3db667c16a7e7f5b",
     "conformal": "ccbbac884fd12a06",
     "embedding": "10fc45eaf22d2da9"
@@ -879,6 +879,41 @@
     "conformal": "956299fadfc78f36",
     "embedding": "0147ab391063a7a6",
     "curvature": "e0fc95f39523b139"
+  },
+  {
+    "id": "brane_wall_universe",
+    "name": "Braneworld Cosmology",
+    "tags": [
+      "braneworld",
+      "brane",
+      "domain wall",
+      "thin shell",
+      "junction conditions",
+      "matched solution",
+      "higher dimensions",
+      "anti-de Sitter",
+      "negative cosmological constant",
+      "cosmological constant",
+      "reflection symmetry",
+      "black hole",
+      "horizon",
+      "event horizon",
+      "Birkhoff theorem",
+      "cosmology",
+      "expanding universe",
+      "FLRW",
+      "causal structure",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "five-dimensional",
+      "idealized model"
+    ],
+    "version": "ed4b9a4695a51cd0",
+    "diagrams": "16913809b57177fb",
+    "conformal": "ce3ca95a4083e894",
+    "embedding": "bedfefcf30c45163"
   },
   {
     "id": "brans_dicke_sphere",
@@ -1866,7 +1901,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "63dafb07878442c4",
+    "version": "2066be1fc2a8f512",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2309,7 +2344,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2a6a0c96c9d17722",
+    "version": "632094d8c7e08c76",
     "diagrams": "e28989ef92105e2d",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b"
@@ -4344,7 +4379,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "b355ab8fe55c603c",
+    "version": "545458dc0309b0f0",
     "diagrams": "f78be2d481dc49b2",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"
@@ -4696,7 +4731,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "f70cbf3676e31de8",
+    "version": "d995f3f674f1978c",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -5430,7 +5465,7 @@
       "Einstein space",
       "torus"
     ],
-    "version": "c0e41cd42d253912",
+    "version": "b15bd4c98a71e9ea",
     "diagrams": "70598c77af726b80",
     "conformal": "243a2de40edb7f43",
     "embedding": "930f06c7003fad35"
@@ -5642,7 +5677,7 @@
       "spherically symmetric",
       "black hole pair creation"
     ],
-    "version": "b2867bcba3b10709",
+    "version": "1e7e50c46d9b8e36",
     "diagrams": "d5e2884c8c7af71d",
     "conformal": "4d7dd21af4c45eda",
     "embedding": "93b27ed492458d6f"
@@ -5668,7 +5703,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e0ef111a336c3181",
+    "version": "4ca7972b1319ddec",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"
