@@ -3237,6 +3237,152 @@ MELVIN_GEODESICS = [
 
 
 CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
+
+
+# -- Schwarzschild's black hole in a swirling universe ------------------------------------
+
+SWIRL_CHARTS = ("spherical", "cylindrical")
+
+
+def swirling_universe_black_hole(system):
+    """Astorino, Martelli and Vigano's Schwarzschild black hole in a swirling universe,
+    Phys. Rev. D 106, 064014 (2022), arXiv:2205.13548: their metric with the constant omega_0
+    set to zero, so that the azimuth is at rest on the horizon, in Schwarzschild's coordinates,
+    and the universe with no hole in the cylindrical chart they write for it, the metric of
+    Gibbons, Mujtaba and Pope's appendix C with c = -j. Every value is printed
+    around F = 1 + j^2 r^4 sin^4(theta), or 1 + j^2 rho^4, and 1 - j^2 r^4 sin^4(theta), which
+    vanishes on the widest circle of the equator. swirling_check holds both charts to the
+    vacuum equations, to Schwarzschild's published metric at j = 0, to each other at m = 0,
+    and to the Kretschmann scalars of the source's appendix A and of Moreira, Herdeiro and
+    Crispino's section II; swirling_universe_black_hole.md beside this file is the derivation."""
+    if system == "spherical":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["m", "j"]
+        F = "\\left(1 + j^2r^4\\sin^4\\theta\\right)"
+
+        def line(c2, c1):
+            return (f"ds^2 = {F}\\left(-\\left(1 - \\dfrac{{2m}}{{r}}\\right){c2}dt^2 + \\dfrac{{dr^2}}{{1 - \\dfrac{{2m}}{{r}}}}"
+                    f" + r^2d\\theta^2\\right) + \\dfrac{{r^2\\sin^2\\theta}}{{1 + j^2r^4\\sin^4\\theta}}"
+                    f"\\left(d\\phi + 4j\\left(r - 2m\\right)\\cos\\theta\\,{c1}dt\\right)^2")
+        probe = vm.Reader(coords, parameters, ())
+        r, th = probe.symbol["r"], probe.symbol["\\theta"]
+        j, m = probe.parameters["j"], probe.parameters["m"]
+        s = sp.sin(th)
+        named = [(sp.Symbol("SP"), 1 + j ** 2 * r ** 4 * s ** 4, "1 + j^2r^4\\sin^4\\theta"),
+                 (sp.Symbol("SM"), 1 - j ** 2 * r ** 4 * s ** 4, "1 - j^2r^4\\sin^4\\theta")]
+        merges = [(1 + j * r ** 2 * s ** 2, 1 - j * r ** 2 * s ** 2, named[1][0])]
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]",
+                   "\\phi \\in [0, 2\\pi)", "r = 2m \\;\\text{(horizon)}"]
+        lead = [j, r, m, sp.cos(th), s]
+        # g_tt and g^phiphi grouped as Gibbons, Mujtaba and Pope group the universe's -g_00,
+        # around F^2 less the square of the dragging.
+        drag = F + "^2 - 16j^2r^3\\left(r - 2m\\right)\\sin^2\\theta\\cos^2\\theta"
+        components = {
+            "metric_components": {("t", "t"): "-\\dfrac{\\left(r - 2m\\right)\\left(" + drag + "\\right)}{r" + F + "}"},
+            "inverse_metric_components": {
+                ("\\phi", "\\phi"): "\\dfrac{" + drag + "}{r^2\\sin^2\\theta" + F + "}"},
+        }
+        extra = {}
+    else:
+        coords, parameters = ["t", "\\rho", "\\phi", "z"], ["j"]
+        F = "\\left(1 + j^2\\rho^4\\right)"
+
+        def line(c2, c1):
+            return (f"ds^2 = {F}\\left(-{c2}dt^2 + d\\rho^2 + dz^2\\right) + \\dfrac{{\\rho^2}}{{1 + j^2\\rho^4}}"
+                    f"\\left(d\\phi + 4jz\\,{c1}dt\\right)^2")
+        probe = vm.Reader(coords, parameters, ())
+        rho, j = probe.symbol["\\rho"], probe.parameters["j"]
+        named = [(sp.Symbol("SP"), 1 + j ** 2 * rho ** 4, "1 + j^2\\rho^4"),
+                 (sp.Symbol("SM"), 1 - j ** 2 * rho ** 4, "1 - j^2\\rho^4")]
+        merges = [(1 + j * rho ** 2, 1 - j * rho ** 2, named[1][0])]
+        domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "z \\in (-\\infty, \\infty)"]
+        lead = [j, rho, probe.symbol["z"]]
+        drag = "\\left(1 + j^2\\rho^4\\right)^2 - 16j^2\\rho^2z^2"
+        components = {
+            "metric_components": {("t", "t"): "-\\dfrac{" + drag + "}{1 + j^2\\rho^4}"},
+            "inverse_metric_components": {("\\phi", "\\phi"): "\\dfrac{" + drag + "}{\\rho^2" + F + "}"},
+        }
+        # Moreira, Herdeiro and Crispino's Kretschmann scalar of the universe with no hole.
+        extra = {"kretschmann": "\\dfrac{192j^2\\left(j^6\\rho^{12} - 15j^4\\rho^8 + 15j^2\\rho^4 - 1\\right)}"
+                                "{\\left(1 + j^2\\rho^4\\right)^6}"}
+    return {
+        "metric_id": "swirling_universe_black_hole",
+        "system": {"id": system, "name": "Spherical" if system == "spherical" else "Cylindrical", "coords": coords,
+                   "domains": domains, "parameters": parameters, "line_element": line("c^2", "c\\,")},
+        "chart_line_element": line("", ""),
+        "printer": {"lead": lead, "named": {p: text for p, _, text in named}},
+        "pretty": named_factors(named, merges),
+        "components": components,
+        **extra,
+        "check": lambda chart: swirling_check(chart, system),
+    }
+
+
+def swirling_check(chart, system):
+    """Each chart Ricci flat. The spherical chart is the published spherical chart of
+    schwarzschild at j = 0, with r_s = 2m, and its Kretschmann scalar is the one in the source's
+    appendix A, with x = cos(theta). The cylindrical chart is the spherical one at m = 0 pulled back
+    along rho = r sin(theta), z = r cos(theta), its g_tt is Gibbons, Mujtaba and Pope's
+    -[(1 + c^2 rho^4)^2 - 16 c^2 z^2 rho^2]/(1 + c^2 rho^4), and its Kretschmann scalar is Moreira,
+    Herdeiro and Crispino's 192 j^2 (j^6 rho^12 - 15 j^4 rho^8 + 15 j^2 rho^4 - 1)/(1 + j^2 rho^4)^6."""
+    g = chart.geo.g
+    ricci = chart.geo.ricci_ll()
+    for a in range(4):
+        for b in range(a, 4):
+            if vm.norm(vm._at(ricci, (a, b))) != 0:
+                raise AssertionError(f"swirling_universe_black_hole/{system}: R_{chart.coords_tex[a]}{chart.coords_tex[b]} "
+                                     "is not zero")
+    K = chart.geo.kretschmann()
+    j = chart.reader.parameters["j"]
+    if system == "spherical":
+        t, r, th, phi = chart.symbols
+        m = chart.reader.parameters["m"]
+        entry = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "spherical")
+        R = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        swap = {R.symbol[n]: chart.reader.symbol[n] for n in entry["coords"]}
+        swap[R.parameters["r_s"]] = 2 * m
+        values = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        for a in range(4):
+            for b in range(4):
+                text = values.get((chart.coords_tex[a], chart.coords_tex[b]), "0")
+                if vm.norm(R(text).subs(swap, simultaneous=True) - g[a, b].subs(j, 0)) != 0:
+                    raise AssertionError("swirling_universe_black_hole: at j = 0 the chart misses Schwarzschild's "
+                                         f"published metric in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+        x, s2 = sp.cos(th), sp.sin(th) ** 2
+        S = j ** 2 * r ** 4 * s2 ** 2
+        source = 48 / (r ** 6 * (1 + S) ** 6) * (
+            4 * j ** 2 * r ** 6 * (-1 + 15 * S - 15 * S ** 2 + S ** 3)
+            + 2 * j ** 2 * m * r ** 5 * s2 * (3 + 15 * x ** 2 - 5 * S * (23 + 3 * x ** 2)
+                                               + 3 * S ** 2 * (43 - 9 * x ** 2 + S * (x ** 2 - 3)))
+            + m ** 2 * (1 + 7 * S ** 2 * (30 - 40 * S + 3 * S ** 2)))
+        if vm.norm(K - source) != 0:
+            raise AssertionError("swirling_universe_black_hole: the Kretschmann scalar is not the source's")
+        return
+    t, rho, phi, z = chart.symbols
+    spec = swirling_universe_black_hole("spherical")
+    sphere = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    ts, r, th, phis = sphere.symbols
+    image = {rho: r * sp.sin(th), z: r * sp.cos(th), t: ts, phi: phis, j: sphere.reader.parameters["j"]}
+    jac = sp.zeros(4, 4)
+    jac[0, 0] = jac[2, 3] = 1
+    jac[1, 1], jac[1, 2] = sp.sin(th), r * sp.cos(th)
+    jac[3, 1], jac[3, 2] = sp.cos(th), -r * sp.sin(th)
+    pulled = jac.T * g.subs(image, simultaneous=True) * jac
+    flat = sphere.geo.g.subs(sphere.reader.parameters["m"], 0)
+    for a in range(4):
+        for b in range(a, 4):
+            if vm.norm(pulled[a, b] - flat[a, b]) != 0:
+                raise AssertionError("swirling_universe_black_hole: the cylindrical chart pulled back misses the "
+                                     f"spherical chart at m = 0 in slot {sphere.coords_tex[a]}{sphere.coords_tex[b]}")
+    F = 1 + j ** 2 * rho ** 4
+    if vm.norm(g[0, 0] + ((1 + j ** 2 * rho ** 4) ** 2 - 16 * j ** 2 * z ** 2 * rho ** 2) / F) != 0:
+        raise AssertionError("swirling_universe_black_hole: g_tt is not Gibbons, Mujtaba and Pope's")
+    if vm.norm(K - 192 * j ** 2 * (j ** 6 * rho ** 12 - 15 * j ** 4 * rho ** 8 + 15 * j ** 2 * rho ** 4 - 1) / F ** 6) != 0:
+        raise AssertionError("swirling_universe_black_hole: the Kretschmann scalar is not Moreira, Herdeiro and Crispino's")
+
+
+CHARTS["swirling_universe_black_hole"] = [lambda s=s: swirling_universe_black_hole(s) for s in SWIRL_CHARTS]
 CHARTS["elliptic_de_sitter"] = [lambda s=s: elliptic_de_sitter(s) for s in EDS_CHARTS]
 CHARTS["self_creating_universe"] = [lambda s=s: self_creating_universe(s) for s in SCU_CHARTS]
 CHARTS["universe_from_nothing"] = [lambda s=s: universe_from_nothing(s) for s in UFN_CHARTS]

@@ -344,6 +344,15 @@ DIMENSIONS = {
     ("melvin", "ernst"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "B": "1/L",
     },
+    # Astorino, Martelli and Vigano's Schwarzschild hole in a swirling universe: m = GM/c^2 is a
+    # length and the rotation parameter j an inverse area, so j r^2 and j rho^2 are pure numbers and
+    # the dragging 4j(r - 2m)cos(theta), 4jz in the universe with no hole, an inverse length.
+    ("swirling_universe_black_hole", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "j": "1/L**2",
+    },
+    ("swirling_universe_black_hole", "cylindrical"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "j": "1/L**2",
+    },
     # Ernst and Wild's Kerr hole in Melvin's universe: m = GM/c^2 and a are lengths and B an
     # inverse length; k, the value of H on the axis, H and the squared lapse N are pure numbers,
     # Sigma, Delta, F and P areas, A the square of an area, and the dragging rate omega an inverse
