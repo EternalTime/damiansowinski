@@ -12439,6 +12439,165 @@ def jackiw_teitelboim_check(chart, system):
 
 CHARTS["jackiw_teitelboim_black_hole"] = [lambda s=s: jackiw_teitelboim_black_hole(s) for s in JT_CHARTS]
 
+# -- Maldacena and Qi's eternal traversable wormhole ----------------------------------------
+
+ETW_CHARTS = ["global", "poincare", "thermal"]
+
+
+def eternal_traversable_wormhole(system):
+    """The eternal traversable wormhole of Maldacena and Qi, arXiv:1804.00491, anti-de Sitter space of
+    two dimensions with a static dilaton, in the three charts their section 2.1 prints, each L^2 times
+    theirs: the global strip, their (2.1), L^2 (-dt^2 + dsigma^2)/sin^2(sigma) on 0 < sigma < pi\\; and
+    the Poincare and Rindler or thermal charts of their (2.2), L^2 (-dt_P^2 + dz^2)/z^2 and
+    L^2 (-sinh^2(rho) dt_R^2 + drho^2). The dilaton is their (C.181) for free fermions,
+    phi_h (1 + (pi/2 - sigma) cot(sigma)) with phi_h = N eps (1 - eps)/4 pi and the constant c/24 pi
+    dropped, which is phi_h (1 + x arctan x) for the embedding coordinate x = cot(sigma).
+    eternal_traversable_wormhole_check holds every chart to R = -2/L^2, its dilaton to the sourced
+    dilaton equation with T_tt = T_sigmasigma = -phi_h in the global chart, and the Poincare and
+    thermal charts to being the global chart carried along their maps, metric and dilaton both.
+    eternal_traversable_wormhole.md beside this file is the derivation."""
+    parameters = ["L", "\\phi_h"]
+    if system == "global":
+        name, coords = "Global", ["t", "\\sigma"]
+        domains = ["t \\in (-\\infty, \\infty)", "\\sigma \\in (0, \\pi)",
+                   "\\sigma = 0, \\pi \\;\\text{(the two boundaries)}",
+                   "\\sigma = \\pi/2 \\;\\text{(where the dilaton is least)}"]
+
+        def line(c2):
+            return "ds^2 = \\dfrac{L^2}{\\sin^2\\sigma}\\left(-dt^2 + d\\sigma^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        L = probe.parameters["L"]
+        printer = {"lead": [L], "factors": [L], "flip": False}
+        pretty = sp.factor
+    elif system == "poincare":
+        name, coords = "Poincaré", ["t_P", "z"]
+        domains = ["t_P \\in (-\\infty, \\infty)", "z \\in (0, \\infty)", "z = 0 \\;\\text{(a boundary)}",
+                   "z^2 - t_P^2 = 1 \\;\\text{(where the dilaton is least)}"]
+
+        def line(c2):
+            return "ds^2 = \\dfrac{L^2}{z^2}\\left(-dt_P^2 + dz^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        L, z = probe.parameters["L"], probe.symbol["z"]
+        printer = {"lead": [z, L], "factors": [L, z], "flip": False}
+        pretty = sp.factor
+    else:
+        name, coords = "Thermal", ["t_R", "\\rho"]
+        domains = ["t_R \\in (-\\infty, \\infty)", "\\rho \\in (0, \\infty)",
+                   "\\rho = 0 \\;\\text{(the edge of the chart)}"]
+
+        def line(c2):
+            return "ds^2 = L^2\\left(-\\sinh^2\\rho\\,dt_R^2 + d\\rho^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        L, rho = probe.parameters["L"], probe.symbol["\\rho"]
+        printer = {"lead": [L], "factors": [L], "flip": False}
+        pretty = cp.hyperbolic(rho)
+    return {
+        "metric_id": "eternal_traversable_wormhole",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "components": {},
+        "ricci_scalar": "-\\dfrac{2}{L^2}",
+        "kretschmann": "\\dfrac{4}{L^4}",
+        "check": lambda chart: eternal_traversable_wormhole_check(chart, system),
+    }
+
+
+def eternal_traversable_wormhole_dilaton(system, a, b, phi_h):
+    """The dilaton of each chart over phi_h, phi_h (1 + x arctan x), with x = cot(sigma) in the global
+    chart, (1 + t_P^2 - z^2)/2z in the Poincare chart and sinh(rho) cosh(t_R) in the thermal chart, the
+    embedding coordinate X_1/L of each. In the global chart arctan(cot sigma) = pi/2 - sigma on
+    0 < sigma < pi, which is Maldacena and Qi's (C.181)."""
+    if system == "global":
+        return phi_h * (1 + (sp.pi / 2 - b) * sp.cot(b))
+    x = {"poincare": (1 + a ** 2 - b ** 2) / (2 * b), "thermal": sp.sinh(b) * sp.cosh(a)}[system]
+    return phi_h * (1 + x * sp.atan(x))
+
+
+def eternal_traversable_wormhole_check(chart, system):
+    """Every chart has R = -2/L^2, K = R^2 and a vanishing Einstein tensor, as in Jackiw-Teitelboim
+    gravity. The dilaton solves D_a D_b phi - g_ab D^2 phi + g_ab phi/L^2 = -T_ab, the metric's equation
+    of motion from Maldacena and Qi's action (2.5) with L written out, whose null component is their
+    (2.10), with the stress tensor T_tt = T_sigmasigma = -phi_h, T_tsigma = 0 of the global chart: the
+    negative energy on the strip of their (C.180), traceless and constant there. The Poincare and
+    thermal charts are the global chart carried along their maps, through the embedding
+    -Y_-1^2 - Y_0^2 + Y_1^2 = -L^2, where the global chart has Y_-1 = L cos t/sin sigma,
+    Y_0 = L sin t/sin sigma and Y_1 = L cot sigma: the Poincare chart's t_P +- z = tan((t +- sigma)/2),
+    Maldacena and Qi's (2.4) at the boundary sigma = 0, and the thermal chart's Y_-1 = L cosh rho,
+    Y_0 = L sinh rho sinh t_R and Y_1 = L sinh rho cosh t_R, so tanh t_R = sin t/cos sigma and
+    cosh rho = cos t/sin sigma on the wedge cos sigma > |sin t|. Each chart's metric, dilaton and
+    stress tensor are checked to be the global chart's pulled back, at a point of rational
+    coordinates to forty digits."""
+    a, b = chart.symbols
+    P = chart.reader.parameters
+    L, phi_h = P["L"], P["phi_h"]
+    g, ginv = chart.geo.g, chart.geo.ginv
+    if vm.norm(chart.geo.ricci_scalar() + 2 / L ** 2) != 0:
+        raise AssertionError(f"eternal_traversable_wormhole: R is not -2/L^2 in the {system} chart")
+    if vm.norm(chart.geo.kretschmann() - chart.geo.ricci_scalar() ** 2) != 0:
+        raise AssertionError(f"eternal_traversable_wormhole: K is not R^2 in the {system} chart")
+    for i in range(2):
+        for j in range(2):
+            if chart.geo.einstein_ll()[i][j] != 0:
+                raise AssertionError(f"eternal_traversable_wormhole: the Einstein tensor of the {system} "
+                                     "chart does not vanish")
+
+    def source(phi, symbols, metric, inverse, gamma):
+        """D_a D_b phi - g_ab D^2 phi + g_ab phi/L^2, which is -T_ab."""
+        d = [sp.diff(phi, s) for s in symbols]
+        hessian = sp.Matrix(2, 2, lambda i, j: sp.diff(phi, symbols[i], symbols[j])
+                            - sum(gamma[k][i][j] * d[k] for k in range(2)))
+        box = sum(inverse[i, j] * hessian[i, j] for i in range(2) for j in range(2))
+        return hessian - metric * box + metric * phi / L ** 2
+
+    phi = eternal_traversable_wormhole_dilaton(system, a, b, phi_h)
+    E = source(phi, chart.symbols, g, ginv, chart.geo.christoffel_ull())
+    trace = sum(ginv[i, j] * E[i, j] for i in range(2) for j in range(2))
+    # sympy leaves the thermal chart's trace, a sum of arctangents of sinh(rho) cosh(t_R), unsimplified,
+    # so a trace it cannot clear is taken at two points of rational coordinates to forty digits.
+    probes = [{a: sp.Rational(1, 3), b: sp.Rational(2, 5)}, {a: sp.Rational(-5, 4), b: sp.Rational(7, 3)}]
+    if sp.simplify(trace) != 0 and any(abs(sp.N(trace.subs({**at, L: sp.Rational(4, 3), phi_h: 2}), 40)) > 1e-30
+                                       for at in probes):
+        raise AssertionError(f"eternal_traversable_wormhole: the stress tensor of the {system} chart is not "
+                             "traceless")
+    if system == "global":
+        for i in range(2):
+            for j in range(2):
+                if sp.simplify(E[i, j] - (phi_h if i == j else 0)) != 0:
+                    raise AssertionError("eternal_traversable_wormhole: T_ab is not -phi_h delta_ab in slot "
+                                         f"{(i, j)} of the global chart")
+        return
+    # The map from the global chart, (t, sigma) = (T, S), into this one.
+    T, S = sp.symbols("ETWT ETWS", positive=True)
+    image = {
+        "poincare": ((sp.tan((T + S) / 2) + sp.tan((T - S) / 2)) / 2,
+                     (sp.tan((T + S) / 2) - sp.tan((T - S) / 2)) / 2),
+        "thermal": (sp.atanh(sp.sin(T) / sp.cos(S)), sp.acosh(sp.cos(T) / sp.sin(S))),
+    }[system]
+    J = sp.Matrix([[sp.diff(f, s) for s in (T, S)] for f in image])
+    here = dict(zip((a, b), image))
+    pulled = J.T * g.subs(here, simultaneous=True) * J
+    own = sp.diag(-1, 1) * L ** 2 / sp.sin(S) ** 2
+    carried = J.T * E.subs(here, simultaneous=True) * J
+    stress = sp.eye(2) * phi_h
+    dilaton = phi.subs(here, simultaneous=True) - eternal_traversable_wormhole_dilaton("global", T, S, phi_h)
+    # A point inside the Poincare patch, |t +- sigma| < pi, and the thermal wedge, cos sigma > |sin t|.
+    point = {T: sp.Rational(1, 7), S: sp.Rational(3, 5), L: sp.Rational(4, 3), phi_h: sp.Rational(5, 2)}
+    for i in range(2):
+        for j in range(2):
+            for what, gap in (("metric", pulled[i, j] - own[i, j]), ("stress tensor", carried[i, j] - stress[i, j])):
+                if abs(sp.N(gap.subs(point), 40)) > 1e-30:
+                    raise AssertionError(f"eternal_traversable_wormhole: the global chart carried into the "
+                                         f"{system} chart misses its {what} in slot {(i, j)}")
+    if abs(sp.N(dilaton.subs(point), 40)) > 1e-30:
+        raise AssertionError(f"eternal_traversable_wormhole: the global chart's dilaton carried into the {system} "
+                             "chart misses its own")
+
+
+CHARTS["eternal_traversable_wormhole"] = [lambda s=s: eternal_traversable_wormhole(s) for s in ETW_CHARTS]
+
 # -- Som and Raychaudhuri's rotating universe ---------------------------------------------
 
 SR_CHARTS = ("cylindrical", "cartesian")

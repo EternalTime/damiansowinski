@@ -303,6 +303,11 @@ DIMENSIONS = {
     ("jackiw_teitelboim_black_hole", "kruskal"): {"U": "1", "V": "1", "L": "L", "r_h": "L"},
     ("jackiw_teitelboim_black_hole", "global"): {"\\tau": "1", "\\sigma": "1", "L": "L", "r_h": "L"},
     ("jackiw_teitelboim_black_hole", "poincare"): {"T": "T", "z": "L", "L": "L", "r_h": "L"},
+    # Maldacena and Qi's eternal traversable wormhole: every chart is L^2 times theirs, so every
+    # coordinate is a number and L the one length; the dilaton's least value phi_h is a number.
+    ("eternal_traversable_wormhole", "global"): {"t": "1", "\\sigma": "1", "L": "L", "\\phi_h": "1"},
+    ("eternal_traversable_wormhole", "poincare"): {"t_P": "1", "z": "1", "L": "L", "\\phi_h": "1"},
+    ("eternal_traversable_wormhole", "thermal"): {"t_R": "1", "\\rho": "1", "L": "L", "\\phi_h": "1"},
     # The wave amplitude psi and gamma sit in exponentials and are dimensionless; the null chart's
     # u = ct - rho and v = ct + rho are lengths, as the Eddington-Finkelstein times of BTZ are.
     ("einstein_rosen_waves", "cylindrical"): {

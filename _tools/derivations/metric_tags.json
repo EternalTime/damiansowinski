@@ -4931,6 +4931,69 @@
   ],
   "sphere": null
  },
+ "eternal_traversable_wormhole/global": {
+  "stamp": "c88cba33ab4cb407",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "eternal_traversable_wormhole/poincare": {
+  "stamp": "f6da246c3f8dc631",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t_P",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "eternal_traversable_wormhole/thermal": {
+  "stamp": "2836de68adf73701",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t_R",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "exponential_metric/areal": {
   "stamp": "c3f9d0ce996db61e",
   "relations": {},
