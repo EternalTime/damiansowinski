@@ -7867,8 +7867,6 @@ def misner_brill_lindquist(ck, src):
     return [two]
 
 
-# ---------------------------------------------------------------- the extreme Kerr throat
-
 def morris_thorne(ck, src):
     """Both scalars through the throat in proper distance at the declared zero redshift.
 
@@ -7879,6 +7877,32 @@ def morris_thorne(ck, src):
     functions = {"Phi": "0", "r": "sqrt(l**2 + b_0**2)"}
     K = Published(src, name, "proper_radial", "kretschmann", ["l"], ["b_0"], functions=functions)
     R = Published(src, name, "proper_radial", "ricci_scalar", ["l"], ["b_0"], functions=functions)
+    l, b0 = K.coords[0], K.params[0]
+    closed_K = 12 * b0 ** 4 / (l ** 2 + b0 ** 2) ** 4
+    closed_R = -2 * b0 ** 2 / (l ** 2 + b0 ** 2) ** 2
+    for scalar, fn, closed, power, coefficient in (("K", K, closed_K, 8, 12 * b0 ** 4),
+                                                ("R", R, closed_R, 4, -2 * b0 ** 2)):
+        ck(f"{name} {scalar} reduces to its stated closed form", sp.simplify(fn.expr - closed) == 0)
+        ck(f"{name} {scalar} is even in proper distance", sp.simplify(fn.expr.subs(l, -l) - fn.expr) == 0)
+        ck(f"{name} {scalar} has the stated far field coefficient",
+           sp.simplify(sp.limit(fn.expr * l ** power, l, sp.oo) - coefficient) == 0)
+        areal = Published(src, name, "spherical", fn.field, ["r"], ["b_0"],
+                          functions={"Phi": "0", "b": "b_0**2/r"})
+        ck(f"{name} {scalar} agrees with the areal chart on both sides",
+           sp.simplify(areal.expr.subs(areal.coords[0], sp.sqrt(l ** 2 + b0 ** 2)) - fn.expr) == 0)
+    ck(f"{name} K at the throat is 12 in units of b_0^-4", float(K.exact([0, 1])) == 12)
+    ck(f"{name} R at the throat is -2 in units of b_0^-2", float(R.exact([0, 1])) == -2)
+    positive_l = np.linspace(1e-6, math.sqrt(24), SAMPLES)
+    ck(f"{name} K is positive and falls outward", np.all(K(positive_l, 1) > 0)
+       and np.all(np.diff(K(positive_l, 1)) < 0))
+    ck(f"{name} R is negative and rises outward", np.all(R(positive_l, 1) < 0)
+       and np.all(np.diff(R(positive_l, 1)) > 0))
+    gll = Published(src, name, "proper_radial", "inverse_metric_components", ["l"], ["b_0"],
+                    ("l", "l"), functions=functions)
+    gtt = Published(src, name, "proper_radial", "metric_components", ["l"], ["b_0"],
+                    ("t", "t"), functions=functions)
+    ck(f"{name} the lapse and inverse radial metric are nonzero throughout", gll.expr == 1 and gtt.expr == -1)
+    ck(f"{name} the drawn ends have areal radius 5 b_0", math.isclose(math.sqrt(24 + 1), 5))
     x_axis = axis("$l/b_0$", -math.sqrt(24), math.sqrt(24))
     scales = {"K": {"kind": "log", "from": 1e-5, "to": 1e2},
               "R": {"kind": "symlog", "from": -10, "to": 0, "linear": 1e-3}}
@@ -7904,13 +7928,17 @@ def morris_thorne(ck, src):
             "$K$ is greatest at the throat, $12/b_0^4$ at $l = 0$, and falls toward zero on both sides.",
             "$R$ is negative throughout, least at the throat, $-2/b_0^2$ at $l = 0$, "
             "and rises toward zero on both sides.",
+            "$K = 12b_0^4/(l^2 + b_0^2)^4$, falling as $12b_0^4/l^8$ far from the throat.",
+            "$R = -2b_0^2/(l^2 + b_0^2)^2$, falling in magnitude as $2b_0^2/l^4$ far from the throat.",
         ],
-        "ricci_sentences": [[2, 0]], "per_scalar": scalar_clips(k_clip, r_clip),
+        "ricci_sentences": [[2, 0], [4, 0]], "per_scalar": scalar_clips(k_clip, r_clip),
         "settings": "$b_0 = 1$, the throat radius and unit of length, with $|l| \\le \\sqrt{24}\\,b_0$.",
         "input": "$\\Phi = 0$ and $r(l) = \\sqrt{l^2 + b_0^2}$, equivalent to $b(r) = b_0^2/r$.",
         "clip": k_clip + " " + r_clip,
     }]
 
+
+# ---------------------------------------------------------------- the extreme Kerr throat
 
 def near_horizon_extreme_kerr(ck, src):
     """The throat's K against polar angle, unchanged along its other coordinates.

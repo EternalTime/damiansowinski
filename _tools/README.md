@@ -1134,6 +1134,12 @@ The tests hold the files on disk to the same closed forms without sympy, from th
 
 ### Which spacetimes
 
+The zero-redshift wormhole has one line view of its proper radial chart at $b_0 = 1$, with $l$ from $-\sqrt{24}\,b_0$ to $\sqrt{24}\,b_0$, the two sides out to the areal radius $5b_0$ of its embedding diagram.
+The declared profiles are $\Phi = 0$ and $r(l) = \sqrt{l^2 + b_0^2}$, equivalent to $b(r) = b_0^2/r$.
+It draws $K$ on a logarithmic axis from $10^{-5}$ to $10^2$ and $R$ on a signed one, linear within $0.001$ of zero, from $-10$ to $0$, with every value inside its panel.
+Its function checks both stored scalars against their closed forms in proper distance and the areal chart, their reflection symmetry, their throat extrema $12/b_0^4$ and $-2/b_0^2$, their outward monotonicity and far-field coefficients, and the nonvanishing lapse and inverse radial metric.
+The scalars depend on proper distance alone, so a line view contains their full spatial variation.
+
 `DRAWN` in the script names every spacetime, and `STATED` and `NOT_DRAWN` are empty: a spacetime put in `STATED` would have a file with no surface that says why, checked from the published metric before it is said, and one in `NOT_DRAWN` no file, and the script stops if a metric file is in none of the three or in more than one.
 The maximally supersymmetric plane wave is the plane of $x_1$ and $x_2$ of its Brinkmann chart at $\mu cu = 0$ to $3$ in units of $1/\mu$, flat at every $u$, with a ring of free particles at rest at $u = 0$ that stays a circle of radius $\cos(\mu cu)/\mu$, closes on the axis at $\mu cu = \pi/2$ and is back on its first circle at $\mu cu = \pi$, turned through half a circle, as the pp-wave's ring and Bonnor's beam's are drawn.
 Minkowski space is its equator from the spherical chart, the plane every other diagram is measured against, out to $r = 4\ell$ in any length $\ell$, and every slice of constant $t$ of its Cartesian chart is checked flat.

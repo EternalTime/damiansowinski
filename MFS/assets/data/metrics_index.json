@@ -3665,7 +3665,8 @@
     "version": "d3be3460fc51bc27",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
-    "embedding": "2fb2f35ad8d95922"
+    "embedding": "2fb2f35ad8d95922",
+    "curvature": "7c88e5a8ec23ef1a"
   },
   {
     "id": "wormhole_time_machine",
