@@ -11836,6 +11836,42 @@ def place_legends(ck, metric_id, view):
                and (reference is None or reference in opening), opening[-80:])
 
 
+# ---------------------------------------------------------------- inhomogeneous dust released from rest
+
+def tolman_bondi(ck, src):
+    """The collapsing cloud released from rest, over shell label and proper time.
+
+    The density at release is proportional to 1 - r^2 inside r_b = 1, with total mass
+    2GM/c^2 = r_b/2. Each shell follows the cycloid already declared as lw_r, with
+    k = 2M(r)/r^3, R = r lw_r(t sqrt(k), 1), and E = -k r^2/2.
+    The map ends at the first shell-focusing singularity, t = pi/sqrt(5)."""
+    name, system = "tolman_bondi", "comoving_synchronous"
+    k = "Piecewise(((5 - 3*r**2)/4, r < 1), (1/(2*r**3), True))"
+    functions = {"R": f"r*lw_r(t*sqrt({k}), 1)", "E": f"-r**2*({k})/2"}
+    K = Published(src, name, system, "kretschmann", ["r", "t"], [], functions=functions)
+    x_axis, y_axis = axis("$r/r_b$", 0, 1.5), axis("$ct/r_b$", 0, math.pi / math.sqrt(5))
+    nx, ny = 24, 24
+    _, _, values = cells(K, x_axis, y_axis, nx, ny, [])
+    scale = {"kind": "log", "from": 0.1, "to": 1e6}
+    shape_checks(ck, name, [1.5 / y_axis["to"]])
+    ck("tolman_bondi K is finite and positive in every cell", np.all(np.isfinite(values)) and np.all(values > 0))
+    return [{
+        "id": "collapse", "label": "the collapsing cloud", "kind": "map", "system": system,
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,r_b^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": name, "system": system, "scalar": "kretschmann", "x": "r", "y": "t",
+                "params": {}, "functions": functions, "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [{"class": "surface", "points": [[1.0, 0.0], [1.0, y_axis["to"]]]}],
+        "legend": [["line", "surface", "the surface of the cloud, $r = r_b$"]],
+        "caption": ["The Kretschmann scalar $K$ of the inhomogeneous dust cloud over the plane of $t$ and $r$, "
+                    "the same at every $\\theta$ and $\\phi$. Each shell falls from rest at $t = 0$."],
+        "settings": "$r_b = 1$, the unit of every length, and $2GM/c^2 = r_b/2$.",
+        "input": "Density at release proportional to $1 - r^2/r_b^2$, with $R(r,0) = r$ and $E = -GM(r)/c^2r$.",
+        "clip": "We colour $K\\,r_b^4$ logarithmically from $10^{-1}$ to $10^6$; values above the top take its colour.",
+    }]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -11889,6 +11925,7 @@ DRAWN = {
     "simpson_visser": simpson_visser,
     "taub_nut": taub_nut,
     "topological_star": topological_star,
+    "tolman_bondi": tolman_bondi,
     "tov": tov,
     "vaidya": vaidya,
     "van_den_broeck": van_den_broeck,
