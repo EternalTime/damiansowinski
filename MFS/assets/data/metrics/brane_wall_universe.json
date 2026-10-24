@@ -33,7 +33,48 @@
   "signature": "(-,+,+,+,+)",
   "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $G_5$ is Newton's constant in five dimensions. We keep factors of $c$ explicit.",
   "history": "Lisa Randall and Raman Sundrum's universe of 1999 is a wall with three dimensions of space in anti-de Sitter space of five, held at rest by a tension tuned against the cosmological constant on either side [randall1999a, randall1999b]. With matter on the wall, or a tension off that value, the junction conditions set the wall moving, with a speed that changes with its radius [kraus1999]. Per Kraus, at the Enrico Fermi Institute in Chicago, kept the space beside the wall static and solved for the wall's motion through it, and observers on the wall, he wrote, \"interpret the motion as cosmological expansion or contraction\" [kraus1999]. Kraus circulated the work in October 1999, and it was printed that December [kraus1999]. Daisuke Ida, at Kyoto University, set out the same construction on 1 December 1999 and dropped the mirror symmetry between the two sides of the wall [ida2000].¶On each side lies the black hole of anti-de Sitter space in five dimensions, $-f\\,c^2dt^2 + dr^2/f + r^2d\\Sigma_k^2$ with $f = k + r^2/\\ell^2 - \\mu/r^2$, where $d\\Sigma_k^2$ is a unit sphere, flat space, or a unit hyperbolic space for $k = 1$, $0$, or $-1$ [kraus1999, birmingham1999]. Kraus noted that these are the only solutions with the symmetries of a Friedmann universe, and that the five dimensional version of Birkhoff's theorem makes them static [kraus1999]. With $\\mu = 0$ they are anti-de Sitter space itself, and the hyperbolic one, among the black holes Danny Birmingham had studied in any number of dimensions, exists for masses down to $\\mu = -\\ell^2/4$ [kraus1999, birmingham1999]. The wall is the surface $r = a(\\tau)$, and as in Randall and Sundrum's construction $r$ falls away from it on both sides, so each side holds the horizon [kraus1999, randall1999b]. Peter Bowcock, Christos Charmousis, and Ruth Gregory proved in 2000 that with a cosmological constant in the bulk and the symmetries of a cosmology the space beside the wall can only be this one: \"The cosmology is indeed a boundary of a (class II) Schwarzschild-AdS spacetime, or a Minkowski (class I) spacetime\" [bowcock2000].¶Werner Israel's junction conditions of 1966 tie the jump in the wall's extrinsic curvature to the matter on it, and Kraus wrote them for a wall of tension $\\sigma$ carrying matter of energy density $\\rho$ [israel1966, kraus1999]. With the tension tuned to Randall and Sundrum's value, $\\sigma = 3c^4/4\\pi G_5\\ell$, where $G_5$ is Newton's constant in five dimensions, the scale factor $a$ obeys $H^2 = \\dfrac{8\\pi G_4}{3c^2}\\rho\\left(1 + \\dfrac{\\rho}{2\\sigma}\\right) - \\dfrac{kc^2}{a^2} + \\dfrac{\\mu c^2}{a^4}$, with $H = (da/d\\tau)/a$ and $G_4 = G_5/\\ell$ [kraus1999, binetruy2000brane, ida2000, mukohyama2000global]. While $\\rho$ is small beside $\\sigma$ the first term is Friedmann's, with $G_4$ for Newton's constant on the wall [kraus1999, binetruy2000brane]. At high density the term in $\\rho^2$ takes over, and a universe of radiation grows as $a \\propto \\tau^{1/4}$, where Friedmann's equation has $a \\propto \\tau^{1/2}$ [binetruy2000nonconventional, binetruy2000brane]. Pierre Binétruy, Cédric Deffayet, and David Langlois found that term in May 1999 for a wall in a fifth dimension with no cosmological constant, a cosmology in which \"the square of the Hubble parameter H depends quadratically on the cosmological (i.e. the brane) energy density\" [binetruy2000nonconventional].¶With Ulrich Ellwanger they added a cosmological constant in the bulk and found a first integral of Einstein's equations carrying a free constant $C$, \"whose influence corresponds to an effective radiation term\" [binetruy2000brane]. In the static picture that constant is the black hole's mass, the term in $\\mu/a^4$ [mukohyama2000global, ida2000]. Shinji Mukohyama, who solved the same equations in November 1999, called it \"dark radiation\", \"which is not real radiation but alters cosmological evolutions\" [mukohyama2000]. Tetsuya Shiromizu, Kei-ichi Maeda, and Misao Sasaki projected Einstein's equations onto the wall, where the five dimensional Weyl tensor enters as a source that \"carries information of the gravitational field outside the brane\" [shiromizu2000]. Ida traced the term to it: \"The origin of this term is now clarified, i.e., the electric (Coulomb) part of Weyl tensor in the five-dimensional back ground metric\" [ida2000]. Nucleosynthesis bounds the term as it bounds any extra radiation, which Binétruy, Deffayet, Ellwanger, and Langlois counted as extra relativistic degrees of freedom [binetruy2000brane].¶Binétruy, Deffayet, Ellwanger, and Langlois wrote the space beside the wall in Gaussian normal coordinates, with the wall at rest at $w = 0$, $w$ the proper distance from it, and the space there changing with time [binetruy2000brane]. Mukohyama, Shiromizu, and Maeda wrote down the change of coordinates that carries Kraus's solution into that one, and concluded that the two \"are exactly the same with each other\" [mukohyama2000global]. Their Gaussian normal coordinates reach past the event horizon of the black hole, and in some cases, they wrote, the coordinate \"goes through the wormhole and reaches another domain of communication\" [mukohyama2000global]. Bowcock, Charmousis, and Gregory showed that \"a fixed wall embedded in a non-static spacetime is strictly equivalent to a moving wall embedded in a static spacetime\", for any matter on the wall and for different cosmological constants on its two sides [bowcock2000].¶With the black hole in the bulk, gravity on the wall loses the four dimensional Lorentz invariance it has in Randall and Sundrum's space [kraus1999]. For a flat wall the horizon of the black hole is at $r_h = (\\ell^2\\mu)^{1/4}$, where Randall and Sundrum's space runs on down an infinite throat [kraus1999]. With a massless scalar field standing in for the graviton, waves along the wall travel at $c_{\\text{eff}} \\approx c\\left(1 - r_h^4/2\\ell^2a^2\\right)$, a shift that fades as the wall expands, and Kraus warned that the precise correction depends on where the space near the horizon is cut off [kraus1999]. Black holes of different masses on the two sides, in Ida's construction, add a term proportional to the square of the difference of the masses, which falls as $a^{-8}$ while the density on the wall is small beside its tension [ida2000]. Binétruy, Deffayet, Ellwanger, and Langlois found as well that a small mismatch between the tension and the cosmological constant of the bulk leaves an effective cosmological constant on the wall at late times [binetruy2000brane].",
-  "related": [],
+  "related": [
+    {
+      "id": "randall_sundrum",
+      "kind": "special_case",
+      "text": "Randall and Sundrum's wall at rest: no black hole, $\\mu = 0$, a flat space on the wall, $k = 0$, and no matter beside the tension, so that $a$ is a constant [kraus1999]."
+    },
+    {
+      "id": "frw",
+      "kind": "family",
+      "text": "The universe on the wall: the metric it carries is Friedmann's, $-c^2d\\tau^2 + a^2d\\Sigma_k^2$, with a Friedmann equation that gains a term in $\\rho^2$ and one in $\\mu/a^4$ [kraus1999, binetruy2000brane]."
+    },
+    {
+      "id": "schwarzschild_ads",
+      "kind": "family",
+      "text": "Each side of the wall is a piece of this black hole one dimension up, with its sphere free to be flat or hyperbolic [kraus1999, birmingham1999]."
+    },
+    {
+      "id": "topological_black_hole",
+      "kind": "family",
+      "text": "The same black holes in four dimensions. One dimension up, the flat and the hyperbolic ones border a wall whose space is flat or open [kraus1999, birmingham1999]."
+    },
+    {
+      "id": "israel_shell",
+      "kind": "family",
+      "text": "A shell moving through a static vacuum, its motion set by Israel's junction conditions, as the wall's is [israel1966, kraus1999]."
+    },
+    {
+      "id": "thin_shell_wormhole",
+      "kind": "family",
+      "text": "Two copies of Schwarzschild's exterior glued along a thin shell at rest, by the junction conditions that move the wall [visser1989nuclphysb, israel1966]."
+    },
+    {
+      "id": "domain_wall",
+      "kind": "family",
+      "text": "A thin wall with flat space on both sides, which accelerates outward as a bubble. Between two copies of anti-de Sitter space a wall carrying matter moves past a black hole [kraus1999]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "Its Friedmann equation carries a term in $\\rho^2$ too, with a minus sign that turns a collapse into a bounce. On the wall the sign is a plus [singh2006, binetruy2000nonconventional]."
+    }
+  ],
   "references": [
     "randall1999a",
     "randall1999b",
@@ -46,13 +87,31 @@
     "mukohyama2000global",
     "binetruy2000nonconventional",
     "mukohyama2000",
-    "shiromizu2000"
+    "shiromizu2000",
+    "visser1989nuclphysb",
+    "singh2006"
   ],
   "coordinates": [
     {
       "id": "static",
       "name": "Static Bulk, One Side",
-      "convention": "We use coordinates $(t, r, \\chi, \\theta, \\phi)$ on one side of the wall, with $t$ the static time, carrying dimensions of time, $r$ the areal radius, a length, and $\\chi$ a comoving radius, a pure number. Here $f = k + r^2/\\ell^2 - \\mu/r^2$, and the horizon $r_h$ is its largest root. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "coords": [
+        "t",
+        "r",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (r_h, a]",
+        "\\chi \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0",
+        "\\chi \\in [0, \\infty) \\;\\text{for}\\; k \\le 0",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r = a \\;\\text{(the wall, where this side meets its mirror image)}",
+        "r = r_h \\;\\text{(the event horizon)}"
+      ],
       "parameters": [
         {
           "symbol": "\\ell",
@@ -70,12 +129,2216 @@
           "symbol": "a = a(t)",
           "description": "Areal radius of the wall, a length, and the scale factor of the universe on it. With $\\tau$ the proper time on the wall, $\\rho$ the energy density of the matter on it, and $\\sigma = 3c^4/4\\pi G_5\\ell$ its tension, it moves as $\\left(da/d(c\\tau)\\right)^2 = a^2\\left(1 + \\rho/\\sigma\\right)^2/\\ell^2 - f(a)$ while $f(a)\\,dt/d\\tau = (a/\\ell)\\left(1 + \\rho/\\sigma\\right)$"
         }
+      ],
+      "convention": "We use coordinates $(t, r, \\chi, \\theta, \\phi)$ on one side of the wall, with $t$ the static time, carrying dimensions of time, $r$ the areal radius, a length, and $\\chi$ a comoving radius, a pure number. Here $f = k + r^2/\\ell^2 - \\mu/r^2$, and the horizon $r_h$ is its largest root. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -\\left(k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}\\right)c^2dt^2 + \\dfrac{dr^2}{k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}} + r^2\\left(\\dfrac{d\\chi^2}{1 - k\\chi^2} + \\chi^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}\\right)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\left(k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}\\right)^{-1}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{r^2}{1 - k\\chi^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2\\,\\chi^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2\\,\\chi^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}\\right)^{-1}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1 - k\\chi^2}{r^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2\\,\\chi^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{r^2\\,\\chi^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r^4 + \\ell^2\\,\\mu}{r\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r^4 + \\ell^2\\,\\mu}{r\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^4 + \\ell^2\\,\\mu}{r\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}{\\ell^2\\,r\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "r",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{k\\,\\chi}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\chi\\left(1 - k\\,\\chi^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\chi\\left(1 - k\\,\\chi^2\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^4 + \\ell^2\\,\\mu}{\\ell^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^4 + \\ell^2\\,\\mu}{\\ell^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r^4 + \\ell^2\\,\\mu}{\\ell^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,r\\left(r^4 + \\ell^2\\,\\mu\\right)}{\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{r}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "r",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{r}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r\\,\\chi^2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r\\,\\chi^2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r\\,\\chi^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\,\\chi^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r\\,\\chi^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r\\,\\chi^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{k\\,r^2\\,\\chi}{\\left(1 - k\\,\\chi^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r^2\\,\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "r^2\\,\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "r^2\\,\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r^2\\,\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "r^2\\,\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "r^2\\,\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r^2\\,\\chi^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r^2\\,\\chi^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r^2\\,\\chi^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^4 - 3\\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r^4 - 3\\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{r^4 + \\ell^2\\,\\mu}{\\ell^2\\,r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{r^4 + \\ell^2\\,\\mu}{\\ell^2\\,r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\chi",
+                  "r",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{r^4 + \\ell^2\\,\\mu}{\\ell^2\\,r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\chi",
+                  "\\chi",
+                  "r"
+                ],
+                "value": "\\dfrac{r^4 + \\ell^2\\,\\mu}{\\ell^2\\,r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(r^4 - 3\\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r^4 - 3\\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "r",
+                  "r",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{r^4 + \\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "r",
+                  "\\chi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^4 + \\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^4 + \\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^4 + \\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^4 + \\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^4 + \\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^4 - \\ell^2\\,\\mu}{\\ell^2\\,r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{r^4 - \\ell^2\\,\\mu}{\\ell^2\\,r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^4 - \\ell^2\\,\\mu}{\\ell^2\\,r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{r^4 - \\ell^2\\,\\mu}{\\ell^2\\,r^2\\left(1 - k\\,\\chi^2\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r^4 - 3\\ell^2\\,\\mu}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^4 - 3\\ell^2\\,\\mu}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^4 - 3\\ell^2\\,\\mu}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r^4 - 3\\ell^2\\,\\mu}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^4\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^4\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^4\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^4\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\chi",
+                  "r",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{r^4 + \\ell^2\\,\\mu}{\\left(1 - k\\,\\chi^2\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\chi",
+                  "\\chi",
+                  "r"
+                ],
+                "value": "\\dfrac{r^4 + \\ell^2\\,\\mu}{\\left(1 - k\\,\\chi^2\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "r",
+                  "r",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{r^4 + \\ell^2\\,\\mu}{\\left(1 - k\\,\\chi^2\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "r",
+                  "\\chi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^4 + \\ell^2\\,\\mu}{\\left(1 - k\\,\\chi^2\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^4\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^4\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^4\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^4\\left(r^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4r^4 + 4k\\,\\ell^2\\,r^2 - 4\\ell^2\\,\\mu}{\\ell^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{4r^2}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{4r^2}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4r^2\\,\\chi^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4r^2\\,\\chi^2\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4r^2}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{4r^4 + 4k\\,\\ell^2\\,r^2 - 4\\ell^2\\,\\mu}{\\ell^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{4 - 4k\\,\\chi^2}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2\\,r^2\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\csc^2\\theta}{\\ell^2\\,r^2\\,\\chi^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{20}{\\ell^2}",
+      "kretschmann": "K = \\dfrac{72\\mu^2}{r^8} + \\dfrac{40}{\\ell^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6r^4 + 6k\\,\\ell^2\\,r^2 - 6\\ell^2\\,\\mu}{\\ell^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{6r^2}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{6r^2}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6r^2\\,\\chi^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6r^2\\,\\chi^2\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6r^2}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{6r^4 + 6k\\,\\ell^2\\,r^2 - 6\\ell^2\\,\\mu}{\\ell^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{6 - 6k\\,\\chi^2}{\\ell^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6}{\\ell^2\\,r^2\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6\\csc^2\\theta}{\\ell^2\\,r^2\\,\\chi^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3\\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\mu}{r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu}{r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\chi",
+                  "r",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\mu}{r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\chi",
+                  "\\chi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\mu}{r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\mu}{r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\mu}{r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\mu}{r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\mu}{r^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "r",
+                  "r",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "r",
+                  "\\chi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,\\mu}{r^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{3\\mu}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\mu}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3\\mu}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\mu}{r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^4\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^4\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^4\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^4\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\chi",
+                  "r",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,\\mu}{\\left(1 - k\\,\\chi^2\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\chi",
+                  "\\chi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\ell^2\\,\\mu}{\\left(1 - k\\,\\chi^2\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "r",
+                  "r",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,\\mu}{\\left(1 - k\\,\\chi^2\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "r",
+                  "\\chi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,\\mu}{\\left(1 - k\\,\\chi^2\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,\\mu\\,\\chi^2}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\ell^2\\,\\mu\\,\\chi^2}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\,\\mu\\,\\chi^2}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,\\mu\\,\\chi^2}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,\\mu\\,\\chi^2\\sin^2\\theta}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\ell^2\\,\\mu\\,\\chi^2\\sin^2\\theta}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,\\mu\\,\\chi^2\\sin^2\\theta}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,\\mu\\,\\chi^2\\sin^2\\theta}{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\mu\\,\\chi^2\\sin^2\\theta}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\mu\\,\\chi^4\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\mu\\,\\chi^4\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\mu\\,\\chi^4\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\mu\\,\\chi^4\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2r^4 + 2\\ell^2\\,\\mu}{r\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{\\left(r^4 + \\ell^2\\,\\mu\\right)\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^4\\,r^5}\\dot{t}^2 - \\dfrac{r^4 + \\ell^2\\,\\mu}{r\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}\\dot{r}^2 - \\dfrac{r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu}{\\ell^2\\,r\\left(1 - k\\,\\chi^2\\right)}\\dot{\\chi}^2 - \\dfrac{\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)}{\\ell^2\\,r}\\dot{\\theta}^2 - \\dfrac{\\chi^2\\left(r^4 + k\\,\\ell^2\\,r^2 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\,r}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2}{r}\\dot{r}\\dot{\\chi} + \\dfrac{k\\,\\chi}{1 - k\\,\\chi^2}\\dot{\\chi}^2 - \\chi\\left(1 - k\\,\\chi^2\\right)\\dot{\\theta}^2 - \\chi\\left(1 - k\\,\\chi^2\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} + \\dfrac{2}{\\chi}\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + \\dfrac{2}{\\chi}\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
       ]
     },
     {
       "id": "gaussian_normal",
       "name": "Gaussian Normal, One Side",
-      "convention": "We use coordinates $(t, w, \\chi, \\theta, \\phi)$ on one side of the wall, with $t$ the proper time on the wall, $w$ the proper distance from it, a length, and $\\chi$ a comoving radius, a pure number. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "coords": [
+        "t",
+        "w",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "w \\in [0, \\infty)",
+        "\\chi \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0",
+        "\\chi \\in [0, \\infty) \\;\\text{for}\\; k \\le 0",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "w = 0 \\;\\text{(the wall, where this side meets its mirror image)}",
+        "N = 0 \\;\\text{(a coordinate singularity)}"
+      ],
       "parameters": [
         {
           "symbol": "\\ell",
@@ -105,6 +2368,2338 @@
           "symbol": "N = \\dfrac{a}{A}\\left(\\cosh(2w/\\ell) + \\dfrac{\\ell^2\\ddot{a}}{2a}\\left(\\cosh(2w/\\ell) - 1\\right) - \\dfrac{2a^2 + \\ell^2\\left(\\dot{a}^2 + a\\ddot{a} + k\\right)}{2a^2Q}\\sinh(2w/\\ell)\\right)",
           "description": "Lapse, $N = \\partial_tA/\\dot{a}$, equal to $1$ on the wall"
         }
+      ],
+      "convention": "We use coordinates $(t, w, \\chi, \\theta, \\phi)$ on one side of the wall, with $t$ the proper time on the wall, $w$ the proper distance from it, a length, and $\\chi$ a comoving radius, a pure number. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -N^2c^2dt^2 + dw^2 + A^2\\left(\\dfrac{d\\chi^2}{1 - k\\chi^2} + \\chi^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-N^2"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{A^2}{1 - k\\chi^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "A^2\\,\\chi^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "A^2\\,\\chi^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{N^2}"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1 - k\\chi^2}{A^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{A^2\\,\\chi^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{A^2\\,\\chi^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t N}{N}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{\\partial_w N}{N}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_w N}{N}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A\\,\\partial_t A}{N^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A\\,\\chi^2\\,\\partial_t A}{N^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{A\\,\\chi^2\\,\\partial_t A\\,\\sin^2\\theta}{N^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t"
+                ],
+                "value": "N\\,\\partial_w N"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A\\,\\partial_w A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_w A"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_w A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "w",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\partial_w A}{A}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "w"
+                ],
+                "value": "\\dfrac{\\partial_w A}{A}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_w A}{A}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "\\dfrac{\\partial_w A}{A}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_w A}{A}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "\\dfrac{\\partial_w A}{A}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{k\\,\\chi}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\chi\\left(1 - k\\,\\chi^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\chi\\left(1 - k\\,\\chi^2\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "-N\\,\\partial_t N"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-N\\,\\partial_w N"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "-N\\,\\partial_w N"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t"
+                ],
+                "value": "N\\,\\partial_w N"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A\\,\\partial_t A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A\\,\\partial_t A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\,\\partial_t A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_t A"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_t A"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_t A"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_t A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_t A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_t A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A\\,\\partial_w A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "w",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A\\,\\partial_w A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "w"
+                ],
+                "value": "\\dfrac{A\\,\\partial_w A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_w A"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_w A"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_w A"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_w A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_w A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_w A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A^2\\,k\\,\\chi}{\\left(1 - k\\,\\chi^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-A^2\\,\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "A^2\\,\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "A^2\\,\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-A^2\\,\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "A^2\\,\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "A^2\\,\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-A^2\\,\\chi^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "A^2\\,\\chi^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "A^2\\,\\chi^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{A^4 - 3\\ell^2\\,\\mu}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{A^4 - 3\\ell^2\\,\\mu}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A^4 + \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{A^4 + \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\chi",
+                  "w",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A^4 + \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\chi",
+                  "\\chi",
+                  "w"
+                ],
+                "value": "\\dfrac{A^4 + \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{N^2\\left(A^4 - 3\\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\left(A^4 - 3\\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{N^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{N^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{N^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "w",
+                  "w",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A^4 + \\ell^2\\,\\mu}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "w",
+                  "\\chi",
+                  "w"
+                ],
+                "value": "-\\dfrac{A^4 + \\ell^2\\,\\mu}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A^4 + \\ell^2\\,\\mu}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "-\\dfrac{A^4 + \\ell^2\\,\\mu}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{A^4 + \\ell^2\\,\\mu}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "-\\dfrac{A^4 + \\ell^2\\,\\mu}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A^4 - \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A^4 - \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{A^4 - \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A^4 - \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{N^2\\left(A^4 - 3\\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{N^2\\left(A^4 - 3\\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{N^2\\left(A^4 - 3\\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\left(A^4 - 3\\ell^2\\,\\mu\\right)}{A^4\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{N^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{N^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{N^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{N^2\\,\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{N^2\\,\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{N^2\\,\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\,\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{N^2\\,\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{N^2\\,\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{N^2\\,\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\,\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\chi",
+                  "w",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A^4 + \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\chi",
+                  "\\chi",
+                  "w"
+                ],
+                "value": "\\dfrac{A^4 + \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "w",
+                  "w",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A^4 + \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "w",
+                  "\\chi",
+                  "w"
+                ],
+                "value": "-\\dfrac{A^4 + \\ell^2\\,\\mu}{A^2\\,\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 + \\ell^2\\,\\mu\\right)\\sin^2\\theta}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^4\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^4\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^4\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^4\\left(A^4 - \\ell^2\\,\\mu\\right)\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4N^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{4A^2}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4A^2\\,\\chi^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4A^2\\,\\chi^2\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4}{N^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{4 - 4k\\,\\chi^2}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4}{A^2\\,\\ell^2\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\csc^2\\theta}{A^2\\,\\ell^2\\,\\chi^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{20}{\\ell^2}",
+      "kretschmann": "K = \\dfrac{4N^4\\,A^4\\left(\\partial_w^2 N\\right)^2 + 12N^2\\,A^2\\left(\\partial_t^2 A\\right)^2 - 24N\\,A^2\\,\\partial_t^2 A\\,\\partial_t N\\,\\partial_t A - 24N^3\\,A^2\\,\\partial_t^2 A\\,\\partial_w N\\,\\partial_w A - 24N^4\\,A^2\\left(\\partial_t\\partial_w A\\right)^2 + 48N^3\\,A^2\\,\\partial_t\\partial_w A\\,\\partial_w N\\,\\partial_t A + 12N^6\\,A^2\\left(\\partial_w^2 A\\right)^2 + 12A^2\\left(\\partial_t N\\right)^2\\left(\\partial_t A\\right)^2 + 24N^2\\,A^2\\,\\partial_t N\\,\\partial_w N\\,\\partial_t A\\,\\partial_w A - 24N^2\\,A^2\\left(\\partial_w N\\right)^2\\left(\\partial_t A\\right)^2 + 12N^4\\,A^2\\left(\\partial_w N\\right)^2\\left(\\partial_w A\\right)^2 + 12N^2\\left(\\partial_t A\\right)^4 - 24N^4\\left(\\partial_t A\\right)^2\\left(\\partial_w A\\right)^2 + 12N^6\\left(\\partial_w A\\right)^4 + 24N^4\\,k\\left(\\partial_t A\\right)^2 - 24N^6\\,k\\left(\\partial_w A\\right)^2 + 12N^6\\,k^2}{N^6\\,A^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6N^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{6A^2}{\\ell^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6A^2\\,\\chi^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6A^2\\,\\chi^2\\sin^2\\theta}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6}{N^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "\\dfrac{6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{6 - 6k\\,\\chi^2}{A^2\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6}{A^2\\,\\ell^2\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6\\csc^2\\theta}{A^2\\,\\ell^2\\,\\chi^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{2N^3\\,A^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{2N^3\\,A^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\chi",
+                  "w",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\chi",
+                  "\\chi",
+                  "w"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{2N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{2N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "w",
+                  "w",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "w",
+                  "\\chi",
+                  "w"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\,A^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\,A^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{2N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{2N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{2N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{2N\\,A^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\chi",
+                  "w",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\chi",
+                  "\\chi",
+                  "w"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "w",
+                  "w",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "w",
+                  "\\chi",
+                  "w"
+                ],
+                "value": "\\dfrac{N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\theta",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "w",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "w",
+                  "\\theta",
+                  "w"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "\\dfrac{\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A^2\\,\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A^2\\,\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A^2\\,\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A^2\\,\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{A^2\\,\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A^2\\,\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{A^2\\,\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A^2\\,\\chi^2\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{A^2\\,\\chi^4\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A^2\\,\\chi^4\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{A^2\\,\\chi^4\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A^2\\,\\chi^4\\left(N^2\\,A^2\\,\\partial_w^2 N + N\\,A\\,\\partial_t^2 A - N^3\\,A\\,\\partial_w^2 A - A\\,\\partial_t N\\,\\partial_t A - N^2\\,A\\,\\partial_w N\\,\\partial_w A - N\\left(\\partial_t A\\right)^2 + N^3\\left(\\partial_w A\\right)^2 - N^3\\,k\\right)\\sin^2\\theta}{6N^3}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{\\partial_t N}{N}\\dot{t}^2 + \\dfrac{2\\partial_w N}{N}\\dot{t}\\dot{w} + \\dfrac{A\\,\\partial_t A}{N^2\\left(1 - k\\,\\chi^2\\right)}\\dot{\\chi}^2 + \\dfrac{A\\,\\chi^2\\,\\partial_t A}{N^2}\\dot{\\theta}^2 + \\dfrac{A\\,\\chi^2\\,\\partial_t A\\,\\sin^2\\theta}{N^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{w} + N\\,\\partial_w N\\,\\dot{t}^2 - \\dfrac{A\\,\\partial_w A}{1 - k\\,\\chi^2}\\dot{\\chi}^2 - A\\,\\chi^2\\,\\partial_w A\\,\\dot{\\theta}^2 - A\\,\\chi^2\\,\\partial_w A\\,\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2\\partial_t A}{A}\\dot{t}\\dot{\\chi} + \\dfrac{2\\partial_w A}{A}\\dot{w}\\dot{\\chi} + \\dfrac{k\\,\\chi}{1 - k\\,\\chi^2}\\dot{\\chi}^2 - \\chi\\left(1 - k\\,\\chi^2\\right)\\dot{\\theta}^2 - \\chi\\left(1 - k\\,\\chi^2\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2\\partial_t A}{A}\\dot{t}\\dot{\\theta} + \\dfrac{2\\partial_w A}{A}\\dot{w}\\dot{\\theta} + \\dfrac{2}{\\chi}\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\partial_t A}{A}\\dot{t}\\dot{\\phi} + \\dfrac{2\\partial_w A}{A}\\dot{w}\\dot{\\phi} + \\dfrac{2}{\\chi}\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
       ]
     }
   ]

@@ -2725,6 +2725,11 @@
       "id": "interstellar_wormhole",
       "kind": "family",
       "text": "A smooth cousin built for the film Interstellar, whose mouths flare into flat space over a length $M$. As $M \\to 0$ with no cylinder between the mouths, it becomes this wormhole with no mass [james2015, visser1989prd]."
+    },
+    {
+      "id": "brane_wall_universe",
+      "kind": "family",
+      "text": "Two copies of a black hole in anti-de Sitter space of five dimensions glued along a moving wall, each kept on the side where its radius falls away from the wall [kraus1999]."
     }
   ],
   "references": [
@@ -2750,6 +2755,7 @@
     "friedman1990",
     "damour2007",
     "danielson2021",
-    "james2015"
+    "james2015",
+    "kraus1999"
   ]
 }

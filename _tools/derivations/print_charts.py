@@ -32879,6 +32879,172 @@ def lqc_bounce_check(chart, system):
 CHARTS["lqc_bounce"] = [lambda s=s: lqc_bounce(s) for s in LQC_CHARTS]
 
 
+# -- A universe on a wall moving past a black hole in five dimensions -------------------------
+
+BWU_CHARTS = ("static", "gaussian_normal")
+BWU_SPACE = ("\\left(\\dfrac{d\\chi^2}{1 - k\\chi^2} + \\chi^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)")
+BWU_DOMAINS = ["\\chi \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0", "\\chi \\in [0, \\infty) \\;\\text{for}\\; k \\le 0",
+               "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+BWU_COSH = "\\cosh(2w/\\ell)"
+BWU_SINH = "\\sinh(2w/\\ell)"
+BWU_GN_PARAMETERS = [
+    "\\ell", "\\mu", "k", "a = a(t)",
+    "Q = \\sqrt{1 + \\ell^2\\left(\\dfrac{\\dot{a}^2 + k}{a^2} - \\dfrac{\\mu}{a^4}\\right)}",
+    "A = a\\sqrt{" + BWU_COSH + " + \\dfrac{\\ell^2\\left(\\dot{a}^2 + k\\right)}{2a^2}\\left(" + BWU_COSH
+    + " - 1\\right) - Q" + BWU_SINH + "}",
+    "N = \\dfrac{a}{A}\\left(" + BWU_COSH + " + \\dfrac{\\ell^2\\ddot{a}}{2a}\\left(" + BWU_COSH + " - 1\\right) - "
+    "\\dfrac{2a^2 + \\ell^2\\left(\\dot{a}^2 + a\\ddot{a} + k\\right)}{2a^2Q}" + BWU_SINH + "\\right)",
+]
+
+
+def brane_wall_universe(system):
+    """The universe on a wall in anti-de Sitter space of five dimensions moving past a black hole,
+    with the mirror symmetry of Randall and Sundrum's wall, each side kept where r falls away from
+    the wall.
+
+    The static chart is Kraus's (8), JHEP 1999(12), 011, f = k + r^2/l^2 - mu/r^2 over a unit
+    3-space of curvature k, written d chi^2/(1 - k chi^2) + chi^2 dOmega^2 as Bowcock, Charmousis
+    and Gregory write it, Class. Quantum Grav. 17, 4745 (2000), their (2)\\; the wall is r = a(t),
+    which the chart declares and its domains bound.
+
+    The Gaussian normal chart is the solution of Binetruy, Deffayet, Ellwanger and Langlois,
+    Phys. Lett. B 477, 285 (2000), their (2), (24) and (26), in the closed form of Mukohyama,
+    Shiromizu and Maeda, Phys. Rev. D 62, 024028 (2000), their (23) and (26) with the lower
+    signs: A^2 = a^2 phi, the square of the areal radius of their (14), and the lapse
+    N = psi/sqrt(phi) = d_t A/a', which is BDEL's (38). The arXiv copy of MSM's (24) carries
+    1 + l^2(2H^2 + H' + K/a^2) where their (26) and the definition psi = phi + phi_t/2H carry
+    l^2/2\\; brane_wall_universe.md Step 3 derives the second. A, N and Q are names the chart
+    defines, held as functions while the tensors are built, so the metric and the Christoffel
+    symbols are written in them\\; the curvature is written as the bulk has it, the Weyl tensor of
+    the black hole, mu/A^4 times the 2-plane of t and w and the 3-space, beside -(g g - g g)/l^2,
+    once brane_wall_universe_check has held that form to the Riemann tensor of the chart written
+    out, component by component."""
+    if system == "static":
+        f = "\\left(k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}\\right)"
+        bare = "k + \\dfrac{r^2}{\\ell^2} - \\dfrac{\\mu}{r^2}"
+        coords, parameters = ["t", "r", "\\chi", "\\theta", "\\phi"], ["\\ell", "\\mu", "k", "a = a(t)"]
+
+        def line(c2):
+            return "ds^2 = -" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + BWU_SPACE
+        probe = vm.Reader(coords, parameters, ())
+        r, ell, mu, k = probe.symbol["r"], probe.parameters["ell"], probe.parameters["mu"], probe.parameters["k"]
+        return {
+            "metric_id": "brane_wall_universe",
+            "system": {"id": system, "name": "Static Bulk, One Side", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in (r_h, a]"] + BWU_DOMAINS
+                       + ["r = a \\;\\text{(the wall, where this side meets its mirror image)}",
+                          "r = r_h \\;\\text{(the event horizon)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"rising": [ell, mu, k], "lead": [ell, r, mu], "factors": [k, ell, r, mu, probe.symbol["\\chi"]],
+                        "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}",
+                                                 ("\\chi", "\\chi"): "\\dfrac{r^2}{1 - k\\chi^2}"},
+                           "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare,
+                                                         ("\\chi", "\\chi"): "\\dfrac{1 - k\\chi^2}{r^2}"}},
+            "ricci_scalar": "-\\dfrac{20}{\\ell^2}",
+            "kretschmann": "\\dfrac{72\\mu^2}{r^8} + \\dfrac{40}{\\ell^4}",
+            "check": lambda chart: brane_wall_universe_check(chart, system),
+        }
+    coords = ["t", "w", "\\chi", "\\theta", "\\phi"]
+
+    def line(c2):
+        return "ds^2 = -N^2" + c2 + "dt^2 + dw^2 + A^2" + BWU_SPACE
+    probe = vm.Reader(coords, BWU_GN_PARAMETERS, ())
+    D = sp.Derivative
+    t, w = probe.symbol["t"], probe.symbol["w"]
+    A, N = probe.parameters["A"], probe.parameters["N"]
+    ell, mu, k = probe.parameters["ell"], probe.parameters["mu"], probe.parameters["k"]
+    lead = [D(N, (t, 2)), D(N, t, w), D(N, (w, 2)), D(A, (t, 2)), D(A, t, w), D(A, (w, 2)),
+            D(N, t), D(N, w), D(A, t), D(A, w), N, A, ell, mu, k]
+    return {
+        "metric_id": "brane_wall_universe",
+        "system": {"id": system, "name": "Gaussian Normal, One Side", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "w \\in [0, \\infty)"] + BWU_DOMAINS
+                   + ["w = 0 \\;\\text{(the wall, where this side meets its mirror image)}",
+                      "N = 0 \\;\\text{(a coordinate singularity)}"],
+                   "parameters": BWU_GN_PARAMETERS, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "time": "t",
+        "printer": {"lead": lead, "rising": [ell, mu, k], "flip": False},
+        "components": {"metric_components": {("\\chi", "\\chi"): "\\dfrac{A^2}{1 - k\\chi^2}"},
+                       "inverse_metric_components": {("\\chi", "\\chi"): "\\dfrac{1 - k\\chi^2}{A^2}"}},
+        "ricci_scalar": "-\\dfrac{20}{\\ell^2}",
+        "check": lambda chart: brane_wall_universe_check(chart, system),
+    }
+
+
+def brane_wall_universe_bulk(chart):
+    """The Riemann tensor of the black hole of anti-de Sitter space in five dimensions in a chart
+    whose metric is -N^2 dt^2 + dw^2 + A^2 times a unit 3-space, fully lowered: the Weyl tensor
+    (mu/A^4) ((3/2) P.P - P.S + (1/2) S.S), with P the metric of the plane of t and w, S that of
+    the 3-space and . the Kulkarni-Nomizu product, beside -(g_ac g_bd - g_ad g_bc)/l^2."""
+    g, n = chart.geo.g, len(chart.symbols)
+    ell, mu = chart.reader.parameters["ell"], chart.reader.parameters["mu"]
+    A = chart.reader.parameters["A"]
+    P = sp.zeros(n)
+    P[0, 0], P[1, 1] = g[0, 0], g[1, 1]
+    S = g - P
+
+    def kn(h, q, a, b, c, d):
+        return h[a, c] * q[b, d] + h[b, d] * q[a, c] - h[a, d] * q[b, c] - h[b, c] * q[a, d]
+    out = [[[[0] * n for _ in range(n)] for _ in range(n)] for _ in range(n)]
+    for a, b, c, d in vm._indices(n, 4):
+        weyl = mu / A ** 4 * (sp.Rational(3, 2) * kn(P, P, a, b, c, d) - kn(P, S, a, b, c, d)
+                              + kn(S, S, a, b, c, d) / 2)
+        out[a][b][c][d] = vm.norm(weyl - (g[a, c] * g[b, d] - g[a, d] * g[b, c]) / ell ** 2)
+    return out
+
+
+def brane_wall_universe_check(chart, system):
+    """Both charts solve R_mu_nu = -(4/l^2) g_mu_nu, and the static chart's Kretschmann scalar is
+    the black hole's. In the Gaussian normal chart every component of the Riemann tensor, with A,
+    N and Q written out, is the bulk's form of brane_wall_universe_bulk, which then stands for it:
+    the chart's geometry takes that tensor, so the curvature is printed in A and N as the bulk
+    has it. The definitions are held at the wall as well, A = a, N = 1 and d_w A = -aQ/l there,
+    which with the junction conditions makes Q = 1 + rho/sigma."""
+    geo, reader = chart.geo, chart.reader
+    ell = reader.parameters["ell"]
+    ricci = geo.ricci_ll()
+    n = len(chart.symbols)
+    if system == "static":
+        for a in range(n):
+            for b in range(n):
+                if vm.norm(ricci[a][b] + 4 * geo.g[a, b] / ell ** 2) != 0:
+                    raise AssertionError("brane_wall_universe: the static chart is no Einstein space of radius l")
+        r, mu = chart.reader.symbol["r"], reader.parameters["mu"]
+        if vm.norm(geo.kretschmann() - 72 * mu ** 2 / r ** 8 - 40 / ell ** 4) != 0:
+            raise AssertionError("brane_wall_universe: the static chart's Kretschmann scalar is not the black hole's")
+        return
+    bulk = brane_wall_universe_bulk(chart)
+    riemann = geo.riemann_llll()
+    for index in vm._indices(n, 4):
+        if list(index[:2]) > list(index[2:]) or index[0] >= index[1] or index[2] >= index[3]:
+            continue
+        if vm.norm(reader.surface(vm._at(riemann, index) - vm._at(bulk, index))) != 0:
+            raise AssertionError(f"brane_wall_universe: the Gaussian normal chart's Riemann tensor misses the bulk's in "
+                                 f"slot {[chart.coords_tex[i] for i in index]}")
+    t, w = chart.symbols[:2]
+    a = reader.functions["a"][0]
+    A, N, Q = (reader.surface(reader.parameters[name]) for name in ("A", "N", "Q"))
+    at_wall = {w: 0}
+    for name, value, expected in (("A", A, a), ("N", N, 1), ("d_w A", sp.diff(A, w), -a * Q / ell),
+                                  ("N - d_t A/a'", N - sp.diff(A, t) / sp.diff(a, t), 0)):
+        value = value if name.startswith("N -") else value.subs(at_wall)
+        if vm.norm(value - expected) != 0:
+            raise AssertionError(f"brane_wall_universe: {name} is not {expected} in the Gaussian normal chart")
+    # The Weyl tensor and the Kretschmann scalar stay as the names have them, which the checker reads
+    # without writing the names out; written out, one Weyl component took over two minutes.
+    weyl, scalar = geo.weyl_llll(), geo.kretschmann()
+    onshell = vm.Geometry(geo.g, chart.symbols, geo.seconds)
+    onshell._cache.update({"riemann_llll": bulk, "riemann_ulll": onshell.raise_indices(bulk, 4, (0,)),
+                           "weyl_llll": weyl, "kretschmann": scalar})
+    chart.geo = onshell
+
+
+CHARTS["brane_wall_universe"] = [lambda s=s: brane_wall_universe(s) for s in BWU_CHARTS]
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec.get("chart_parameters", spec["system"]["parameters"]),

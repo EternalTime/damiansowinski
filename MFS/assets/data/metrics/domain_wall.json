@@ -55,6 +55,11 @@
       "id": "coleman_de_luccia",
       "kind": "family",
       "text": "A wall between two vacua of different energy, the skin of a bubble of new vacuum. It rides a hyperboloid too [coleman1980]."
+    },
+    {
+      "id": "brane_wall_universe",
+      "kind": "family",
+      "text": "A wall between two copies of anti-de Sitter space of five dimensions, carrying matter, moves past a black hole, and those who live on it see a universe expand [kraus1999]."
     }
   ],
   "references": [
@@ -74,7 +79,8 @@
     "saikawa2017",
     "harari1990",
     "randall1999a",
-    "coleman1980"
+    "coleman1980",
+    "kraus1999"
   ],
   "coordinates": [
     {

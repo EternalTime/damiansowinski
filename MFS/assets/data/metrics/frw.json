@@ -151,6 +151,11 @@
       "id": "bardeen_perturbations",
       "kind": "generalisation",
       "text": "The Friedmann universe with two small potentials laid over it, $\\Phi$ in $g_{\\eta\\eta}$ and $\\Psi$ in the metric of space. At $\\Phi = \\Psi = 0$ its longitudinal gauge is Friedmann's metric in conformal time."
+    },
+    {
+      "id": "brane_wall_universe",
+      "kind": "family",
+      "text": "Put this universe on a wall in anti-de Sitter space of five dimensions and its Friedmann equation gains a term in $\\rho^2$ and one that falls off like radiation [binetruy2000brane, mukohyama2000]."
     }
   ],
   "references": [
@@ -221,7 +226,9 @@
     "caldwell2003",
     "chiba2005",
     "cai2014",
-    "ashtekar2006improved"
+    "ashtekar2006improved",
+    "binetruy2000brane",
+    "mukohyama2000"
   ],
   "coordinates": [
     {

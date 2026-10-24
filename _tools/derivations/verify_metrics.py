@@ -2356,6 +2356,18 @@ DIMENSIONS = {
     ("black_to_white_hole", "lemaitre"): {
         "\\tau": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
     },
+    # The universe on a wall moving past a black hole in five dimensions: the anti-de Sitter radius
+    # ell and the areal radii r, a and A are lengths, mu an area, as r^2 f is, and the curvature k,
+    # the comoving radius chi, the junction factor Q and the lapse N pure numbers; w is the proper
+    # distance from the wall, a length.
+    ("brane_wall_universe", "static"): {
+        "t": "T", "r": "L", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L", "\\mu": "L**2", "k": "1",
+        "a": "L",
+    },
+    ("brane_wall_universe", "gaussian_normal"): {
+        "t": "T", "w": "L", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L", "\\mu": "L**2", "k": "1",
+        "a": "L", "Q": "1", "A": "L", "N": "1",
+    },
 }
 
 # What a field carries when every coordinate is a length; the indices supply the rest.

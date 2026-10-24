@@ -88,6 +88,11 @@
       "id": "three_brane_throat",
       "kind": "family",
       "text": "A three-brane of string theory heated a little above its least mass has this black hole, in five dimensions, in its throat [maldacena1998]."
+    },
+    {
+      "id": "brane_wall_universe",
+      "kind": "family",
+      "text": "One dimension up, the same holes border a moving wall that carries a universe whose space has the curvature of the horizon's [kraus1999, birmingham1999]."
     }
   ],
   "references": [
@@ -117,7 +122,8 @@
     "cardoso2004",
     "hruska2019",
     "aminneborg1998",
-    "maldacena1998"
+    "maldacena1998",
+    "kraus1999"
   ],
   "coordinates": [
     {

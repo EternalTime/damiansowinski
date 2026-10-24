@@ -70,6 +70,11 @@
       "id": "hayward",
       "kind": "family",
       "text": "Hayward's minimal model of a black hole with no singularity at its centre [hayward2006]."
+    },
+    {
+      "id": "brane_wall_universe",
+      "kind": "family",
+      "text": "A universe on a wall in anti-de Sitter space of five dimensions, whose Friedmann equation carries a term in $\\rho^2$ with a plus sign [binetruy2000nonconventional]."
     }
   ],
   "references": [
@@ -86,7 +91,8 @@
     "lewandowski2023",
     "chinea1992",
     "simpson2019",
-    "hayward2006"
+    "hayward2006",
+    "binetruy2000nonconventional"
   ],
   "coordinates": [
     {

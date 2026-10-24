@@ -83,6 +83,11 @@
       "id": "btz_shock_wave",
       "kind": "family",
       "text": "The BTZ black hole with a shock wave on its horizon. Shenker and Stanford put the same shock on this black hole's horizon too, and found the same scrambling time [shenker2014]."
+    },
+    {
+      "id": "brane_wall_universe",
+      "kind": "family",
+      "text": "One dimension up, a wall moving through this black hole carries a universe, and the wall's motion is that universe's expansion [kraus1999]."
     }
   ],
   "references": [
@@ -112,7 +117,8 @@
     "hawking1999rotation",
     "chamblin1999",
     "surya2001",
-    "shenker2014"
+    "shenker2014",
+    "kraus1999"
   ],
   "coordinates": [
     {

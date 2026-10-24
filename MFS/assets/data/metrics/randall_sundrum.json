@@ -85,6 +85,11 @@
       "id": "lqc_bounce",
       "kind": "family",
       "text": "A universe whose Friedmann equation, from loop quantum cosmology, carries a term in $\\rho^2$ with a minus sign, where a universe on the brane has a plus [singh2006]."
+    },
+    {
+      "id": "brane_wall_universe",
+      "kind": "generalisation",
+      "text": "Set the wall moving past a black hole, with matter on it and a curved space if it likes, and those who live on it see their universe expand [kraus1999, ida2000]."
     }
   ],
   "references": [
@@ -109,7 +114,9 @@
     "horvath1977",
     "freund1980",
     "emparan2020qbtz",
-    "singh2006"
+    "singh2006",
+    "kraus1999",
+    "ida2000"
   ],
   "coordinates": [
     {

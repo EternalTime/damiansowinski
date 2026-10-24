@@ -67,6 +67,11 @@
       "id": "black_to_white_hole",
       "kind": "family",
       "text": "The same collapse made of light, which Haggard and Rovelli let bounce and come back out through a white hole [haggard2015fireworks]."
+    },
+    {
+      "id": "brane_wall_universe",
+      "kind": "family",
+      "text": "The same junction conditions move a wall through the black hole of anti-de Sitter space in five dimensions, and the wall carries a universe [kraus1999]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "hajicek1992",
     "visser1989nuclphysb",
     "visser2004",
-    "haggard2015fireworks"
+    "haggard2015fireworks",
+    "kraus1999"
   ],
   "coordinates": [
     {
