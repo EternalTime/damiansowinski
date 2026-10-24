@@ -5431,7 +5431,8 @@
     "version": "47d7ba06b49c53f9",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
-    "embedding": "c64f1f900fa70a89"
+    "embedding": "c64f1f900fa70a89",
+    "curvature": "5f858349337f97f8"
   },
   {
     "id": "topological_black_hole",

@@ -11315,7 +11315,93 @@ def tov(ck, src):
     """
     solver = nr.tov_star()
     src.note("tov", "spherical", ["einstein_tensor"])
-    return []
+    mass, radius = solver.M, solver.R
+    functions = {"m": "tov_m(r)", "Phi": "tov_Phi(r)"}
+    K = Published(src, "tov", "spherical", "kretschmann", ["r"], [], functions=functions)
+    R = Published(src, "tov", "spherical", "ricci_scalar", ["r"], [], functions=functions)
+    grr = Published(src, "tov", "spherical", "inverse_metric_components", ["r"], [], ("r", "r"), functions)
+    x_axis = axis("$r$", 0, 3 * radius)
+    K_scale = {"kind": "log", "from": 1e-8, "to": 1e-2}
+    R_scale = {"kind": "symlog", "from": -1e-4, "to": 1e-1, "linear": 1e-5}
+    panels = [{"id": "K", "name": "$K$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu$", "aspect": 2, "scale": R_scale, "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "tov", [p["aspect"] for p in panels])
+    inner = (solver.r0, radius)
+    outer = (radius, x_axis["to"])
+    rho_c, p_c = solver.rho_c + solver.p_c, solver.p_c
+    centre_K = 64 * math.pi ** 2 * (5 * rho_c ** 2 + 6 * rho_c * p_c + 9 * p_c ** 2) / 3
+    centre_R = 8 * math.pi * (rho_c - 3 * p_c)
+    ck("tov the published K tends to the regular fluid's central value",
+       abs(float(K.exact([solver.r0])) / centre_K - 1) < 1e-12, f"{centre_K:.9g}")
+    ck("tov the published R tends to 8 pi (rho_c - 3 p_c) at the centre",
+       abs(float(R.exact([solver.r0])) / centre_R - 1) < 1e-12, f"{centre_R:.9g}")
+    probes = np.linspace(solver.r0, radius, SAMPLES)
+    pressure = np.maximum(solver.ivp.sol(probes)[2], 0)
+    pressure[-1] = 0.0
+    density, _ = solver.energy(pressure)
+    kv, rv = K(probes), R(probes)
+    ck("tov the published R is the fluid trace at every interior sample",
+       np.max(np.abs(rv - 8 * math.pi * (density - 3 * pressure))) < 1e-12 * centre_R)
+    ck("tov the independent angular field equation holds inside the star",
+       np.max(np.abs(solver.theta_theta(np.linspace(0.05 * radius, 0.95 * radius, 200)))) < 1e-7)
+    ck("tov K falls from the centre to the surface", np.all(np.diff(kv) < 0))
+    ck("tov R is positive inside and falls to zero at the surface",
+       np.all(rv[:-1] > 0) and np.all(np.diff(rv) < 0) and abs(rv[-1]) < 1e-14 * centre_R)
+    vacuum = np.linspace(radius, x_axis["to"], SAMPLES)
+    ck("tov the exterior K is 48 M^2/r^6", np.allclose(K(vacuum), 48 * mass ** 2 / vacuum ** 6, rtol=1e-13, atol=0))
+    ck("tov the exterior R vanishes", np.max(np.abs(R(vacuum))) < 1e-14 * centre_R)
+    ck("tov K is continuous at the surface", abs(float(K(radius)) * radius ** 6 / (48 * mass ** 2) - 1) < 1e-13)
+    ck("tov g^rr stays positive through the star and the exterior",
+       np.all(grr(np.linspace(solver.r0, x_axis["to"], SAMPLES)) > 0))
+    ck("tov the caption's mass and radius match the star", f"{mass:.2f}" == "1.40" and f"{radius:.2f}" == "9.59",
+       f"M = {mass:.9f}, R = {radius:.9f}")
+
+    curves = line_curves(ck, "tov interior", "K", "K", K, "r", x_axis, K_scale, PLOT_W / 2, {}, inner)
+    # R vanishes at and beyond the surface. Its cancellation error there is measured
+    # against the central curvature, since a relative error in a zero has no finite bound.
+    for region, within in (("interior", inner), ("exterior", outer)):
+        lines = sampled(ck, f"tov {region} R", R, x_axis, R_scale, PLOT_W / 2, [], within)
+        picked = spread(lines)
+        nonzero = [p for p in picked if abs(p[1]) > 1e-8 * centre_R]
+        agrees(ck, f"tov {region} R away from zero", R, [[x] for x, _ in nonzero], [v for _, v in nonzero])
+        error = max(abs(v - float(R.exact([x]))) for x, v in picked)
+        ck(f"tov {region} R agrees with its published formula in sixty digits at its zeros",
+           error < AGREE * centre_R, f"absolute error {error:.1e}")
+        curves += [curve_entry("R", "R", R, "r", {}, line) for line in lines]
+    curves += line_curves(ck, "tov exterior", "K", "K", K, "r", x_axis, K_scale, PLOT_W / 2, {}, outer)
+    ck("tov every interior value lies within its panel",
+       np.all((kv >= K_scale["from"]) & (kv <= K_scale["to"]))
+       and np.all((rv >= R_scale["from"]) & (rv <= R_scale["to"])))
+    ck("tov every exterior value lies within its panel",
+       float(K(x_axis["to"])) >= K_scale["from"])
+    K_clip = "We draw $K$ on a logarithmic scale from $10^{-8}$ to $10^{-2}$, and every value drawn lies within it."
+    R_clip = ("We draw $R^\\mu{}_\\mu$ on a signed logarithmic scale, linear within $10^{-5}$ of zero, "
+              "from $-10^{-4}$ to $10^{-1}$, and every value drawn lies within it.")
+    return [{
+        "id": "star", "label": "The star and its exterior", "system": "spherical", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                   ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the polytropic star against $r$ "
+            "($\\kappa = 100$, central $\\rho_0 = 1.28\\times10^{-3}$), the same at every $t$, $\\theta$, and $\\phi$. "
+            f"At the centre $K = {tex_number(centre_K)}$ is finite, and it falls through the surface "
+            f"$r = R = {radius:.2f}$ into the vacuum, where $K = 48M^2/r^6$. "
+            "The density and pressure fall to zero at the surface, and $K$ is continuous there.",
+            f"At the centre $R^\\mu{{}}_\\mu = {tex_number(centre_R)}$. "
+            "Inside the star $R^\\mu{}_\\mu = 8\\pi(\\rho - 3p)$ is positive and falls outward to zero at the surface. "
+            "It vanishes throughout the vacuum exterior. "
+            "The star has no horizon: $g^{rr} = 1 - 2m/r$ is positive from its centre outward.",
+        ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 2]],
+        "per_scalar": scalar_clips(K_clip, R_clip),
+        "settings": ("$G = c = M_\\odot = 1$, so lengths are in $GM_\\odot/c^2$, "
+                     f"$K$ in its inverse fourth power and $R^\\mu{{}}_\\mu$ in its inverse square; $M = {mass:.2f}$ "
+                     f"and the surface radius $R = {radius:.2f}$."),
+        "input": ("A polytrope, $p = \\kappa\\rho_0^2$ and $\\rho = \\rho_0 + p$, with rest mass density $\\rho_0$, "
+                  "energy density $\\rho$, $\\kappa = 100$ and central $\\rho_0 = 1.28\\times10^{-3}$."),
+        "clip": K_clip + " " + R_clip,
+    }]
 
 
 # ---------------------------------------------------------------- the two places of a figure
