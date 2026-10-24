@@ -4880,6 +4880,16 @@ DIAGRAMS = [
     Diagram("melvin", "ernst", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1, "B": "1/2"}, EQUATOR, orient="ingoing",
             lines=(("surface", "r", "4", "$r = 2/B$, the widest circle of the equator"),)),
+    # Astorino, Martelli and Vigano's hole in a swirling universe: on the equator the dragging vanishes
+    # and the plane of t and r is (1 + j^2 r^4) times Schwarzschild's, at j = 1/(16 m^2), where the
+    # widest circle of the equator is at r = 4m; and the swirling universe's plane z = 0, where the
+    # dragging vanishes too and the plane is conformally flat, at j = 1.
+    Diagram("swirling_universe_black_hole", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/m$", "$ct/m$", {"m": 1, "j": "1/16"}, EQUATOR, orient="ingoing",
+            lines=(("surface", "r", "4", "$r = 1/\\sqrt{j}$, the widest circle of the equator"),)),
+    Diagram("swirling_universe_black_hole", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
+            "$\\sqrt{j}\\,\\rho$", "$\\sqrt{j}\\,ct$", {"j": 1}, {"phi": "0", "z": "0"},
+            lines=(("surface", "r", "1", "$\\rho = 1/\\sqrt{j}$, where the circles about the axis are widest"),)),
     # Ernst and Wild's Kerr hole in Melvin's universe. The axis, whose plane of t and r is Kerr's
     # times the constant k, and the equator with the circles of phi divided out, whose plane is
     # Kerr's times H: the rays of both are Kerr's, and the field shows in the ergosurface. The
@@ -11515,6 +11525,26 @@ CAPTIONS = {
         "geodesics. The cones close at the horizon $r = r_s$, and inside it every cone points to $r = 0$, where the "
         "Kretschmann scalar diverges.",
     ],
+    ("swirling_universe_black_hole", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the black hole in a swirling universe "
+        "($j = 1/(16m^2)$). On the equator the dragging rate $d\\phi/d(ct) = -4j(r - 2m)\\cos\\theta$ vanishes, and "
+        "the metric on the plane is $1 + j^2r^4$ times Schwarzschild's, $-(1 - 2m/r)c^2dt^2 + dr^2/(1 - 2m/r)$, so the "
+        "factor drops out of the null condition and the rays are Schwarzschild's curves "
+        "$ct = \\pm(r + 2m\\ln|r/2m - 1|) + $ const.",
+        "Reflection in the equator together with $\\phi \\to -\\phi$ fixes the plane, so no Christoffel symbol turns "
+        "the rays out of it, and they are null geodesics. The cones close at the horizon $r = 2m$, and inside it every "
+        "cone points to $r = 0$, where the Kretschmann scalar diverges. The two ergoregions lie off the plane, one above "
+        "the hole and one below it, beside the axis.",
+    ],
+    ("swirling_universe_black_hole", "cylindrical", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of the swirling universe ($j = 1$). On it the dragging "
+        "rate $d\\phi/d(ct) = -4jz$ vanishes and the metric is $(1 + j^2\\rho^4)(-c^2dt^2 + d\\rho^2)$, whose factor "
+        "drops out of the null condition, so the rays are at 45°, each ingoing ray meeting an outgoing one on the axis "
+        "$\\rho = 0$.",
+        "Reflection in the plane together with $\\phi \\to -\\phi$ fixes it, so no Christoffel symbol turns the rays "
+        "out of it, and they are null geodesics; the Kretschmann scalar is finite everywhere on it. The dragging grows "
+        "with the height $|z|$, and the ergoregions lie above and below the plane, where $|4jz\\rho| > 1 + j^2\\rho^4$.",
+    ],
     ("kerr_melvin", "boyer_lindquist", "radial"): [
         "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$) of Ernst and Wild's black hole ($a = 4m/5$, "
         "$B = 1/(4m)$). On the axis $H = k$ and $A = (r^2 + a^2)^2$, so the metric on the plane is the constant $k$ "
@@ -16724,6 +16754,9 @@ CLOSED_FORMS = {
        for view in ("cell", "images")},
     ("melvin", "ernst", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
+    ("swirling_universe_black_hole", "spherical", "radial"):
+        (lambda t, r: t + _rstar(r, [2]), lambda t, r: t - _rstar(r, [2]), lambda t, r: np.abs(r - 2) > 0.1),
+    ("swirling_universe_black_hole", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("levi_civita", "weyl", "radial"):
         (lambda t, r: t + 4 * r ** 0.25, lambda t, r: t - 4 * r ** 0.25, lambda t, r: r > 0.01),
     ("levi_civita", "kasner", "radial"):

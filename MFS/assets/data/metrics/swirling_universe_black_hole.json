@@ -2,13 +2,101 @@
   "id": "swirling_universe_black_hole",
   "name": "Black Hole in a Swirling Universe",
   "short_name": "Swirling Universe",
-  "description": "",
-  "tags": [],
+  "description": "Schwarzschild's black hole inside a vacuum universe whose frame dragging turns one way above its equatorial plane and the other way below it, the exact solution Marco Astorino, Riccardo Martelli and Adriano Viganò made in 2022 with a transformation of Ernst's equation. The hole keeps Schwarzschild's horizon, area and temperature, and two ergoregions run out along the axis to infinity.",
+  "tags": [
+    "vacuum",
+    "stationary",
+    "axisymmetric",
+    "rotating",
+    "frame dragging",
+    "ergoregion",
+    "black hole",
+    "event horizon",
+    "horizon",
+    "Killing horizon",
+    "curvature singularity",
+    "black hole thermodynamics",
+    "Hawking temperature",
+    "not asymptotically flat",
+    "Petrov type I",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model",
+    "mass"
+  ],
   "signature": "(-,+,+,+)",
   "convention": "The mass enters as the length $m = GM/c^2$, and the rotation parameter $j$ is an inverse area. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
-  "history": "",
-  "related": [],
-  "references": [],
+  "history": "The vacuum field equations of a spacetime that is stationary and axisymmetric reduce to one equation for a single complex potential, as Frederick Ernst showed in 1968 [astorino2022swirling]. Its Lie point symmetries carry one solution into another: the transformation named for Jürgen Ehlers takes Schwarzschild's black hole to Taub-NUT space, and B. Kent Harrison's takes it to Reissner and Nordström's charged hole [astorino2022swirling]. Ernst found in 1976 that Harrison's transformation, applied to Schwarzschild's metric written with the roles of the time and the azimuth exchanged, sets the hole inside Melvin's magnetic universe [astorino2022swirling]. Ehlers's transformation in the same magnetic form was the one left untried, \"the last unexplored Lie point symmetry of the Ernst equations\" in the words of Marco Astorino, Riccardo Martelli and Adriano Viganò, who tried it in 2022 [astorino2022swirling].¶Acting on flat space, the transformation makes a vacuum universe whose frame dragging turns one way above the equatorial plane and the other way below it, \"a gravitational whirlpool\" that they named the swirling universe [astorino2022swirling]. Acting on Schwarzschild's metric, it sets a black hole of mass $m$ inside that universe, an exact vacuum solution with the one new parameter $j$ [astorino2022swirling]. The work grew out of Martelli's bachelor's thesis [astorino2022swirling]. The same construction puts any stationary, axisymmetric solution into the swirling universe, and they put Kerr's black hole and the Zipoy-Voorhees metric there as well [astorino2022swirling]. Kerr's hole there carries a conical singularity on the axis that no choice of its parameters removes, since the spin of the hole couples to the swirl differently in the two hemispheres [astorino2022swirling].¶G. W. Gibbons, A. H. Mujtaba and C. N. Pope had written the swirling universe down in 2013, made from flat space by an $SU(2,1)$ transformation, as the simple vacuum metric that the magnetised Reissner-Nordström black hole resembles near infinity [gibbons2013]. They recognised it as an analytic continuation of a Bianchi type II cosmology that Abraham Taub found in 1951, and found its ergoregion, where $|4jz\\rho| > 1 + j^2\\rho^4$ [gibbons2013]. Astorino, Martelli and Viganò found the universe of Petrov type D and in Kundt's class, and noted that Jerzy Plebański had called its parameter an \"anti-NUT\" parameter [astorino2022swirling]. A double Wick rotation, $t \\to i\\phi$ and $\\phi \\to i\\tau$, carries it to Taub-NUT space with a flat base, as the same rotation carries Melvin's universe to Reissner and Nordström's metric with a flat base [astorino2022swirling]. Aimeric Colléaux, Ivan Kolář and Tomáš Málek showed in 2025 that such rotations relate the symmetries themselves, so that a vacuum of the planar Taub-NUT type in any theory of gravity gives a swirling vacuum of that theory [colleaux2025].¶The hole's horizon sits at $r = 2m$ with Schwarzschild's area $16\\pi m^2$ for every $j$, and its mass $m$ and temperature $1/(8\\pi m)$ are Schwarzschild's too, in units with $G = c = 1$ [astorino2022swirling]. Its angular momentum vanishes though the spacetime turns, since the two hemispheres turn in opposite senses [astorino2022swirling, moreira2024]. The axis carries no conical singularity and no Misner string, and no closed timelike curve appears anywhere [astorino2022swirling]. The Weyl tensor is of Petrov type I, which puts the hole outside the Plebański-Demiański family [astorino2022swirling]. Near $r = 0$ the Kretschmann scalar grows as Schwarzschild's $48m^2/r^6$, and far out along the axis it tends to $-192j^2$, its value on the axis of the swirling universe with no hole [astorino2022swirling, moreira2024]. Two ergoregions reach out along the axis to infinity, one above the hole and one below it, and as $j$ grows the horizon stretches along the axis and narrows at its equator, where its Gaussian curvature turns negative once $jm^2 > 1/4$ [astorino2022swirling, moreira2024].¶Astorino set the accelerating Kerr black hole of the rotating C-metric in the swirling universe later in 2022 and removed both of its conical singularities, the spin of the hole against the swirl supplying the acceleration with no strut or string [astorino2022removal]. Astorino and Matilde Torresan held two extremal Kerr black holes apart in a swirling universe in 2025, the spin of each against the swirl balancing their attraction, with the geometry regular outside both horizons [astorino2025binary]. Rogério Capobianco, Betti Hartmann and Jutta Kunz separated the geodesic equations of the swirling universe and solved them in elementary and elliptic functions, and found that around the black hole they do not separate [capobianco2024]. Zeus S. Moreira, Carlos A. R. Herdeiro and Luís C. B. Crispino found one unstable light ring on each side of the equator, the two turning in opposite senses, and for an observer on the equator a shadow twisted between north and south [moreira2024]. José Barrientos, Adolfo Cisterna, Ivan Kolář, Keanu Müller, Marcelo Oyarzo and Konstantinos Pallikaris added a magnetic field in 2024, an electromagnetic swirling universe of type D with Melvin's universe among its limits [barrientos2024]. Andrea Di Pinto, Silke Klemm and Viganò set the dyonic Kerr-Newman black hole in a universe both magnetised and swirling in 2025, with the parameters for which it is regular outside its horizon [dipinto2025].",
+  "related": [
+    {
+      "id": "schwarzschild",
+      "kind": "special_case",
+      "text": "Switch the swirl off, $j = 0$, and the metric is Schwarzschild's, with the horizon at $r = 2m$."
+    },
+    {
+      "id": "melvin",
+      "kind": "family",
+      "text": "Melvin's magnetic universe, which Harrison's transformation makes out of flat space as Ehlers's makes the swirling universe, and into which Frederick Ernst set Schwarzschild's hole in 1976 [astorino2022swirling]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "Kerr's spinning hole, which Astorino, Martelli and Viganò set in the same universe. There its spin couples to the swirl differently above and below the equator, and a conical singularity on the axis remains [astorino2022swirling]."
+    },
+    {
+      "id": "taub_nut",
+      "kind": "family",
+      "text": "Ehlers's transformation in its other form turns Schwarzschild's metric into Taub-NUT space, and a double Wick rotation turns the swirling universe into Taub-NUT space with a flat base [astorino2022swirling]."
+    },
+    {
+      "id": "zipoy_voorhees",
+      "kind": "family",
+      "text": "Zipoy and Voorhees's deformed mass, which the same transformation sets in the swirling universe [astorino2022swirling]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "With no hole and no swirl, $m = 0$ and $j = 0$, the metric is flat."
+    },
+    {
+      "id": "levi_civita",
+      "kind": "family",
+      "text": "Far from its axis the swirling universe approaches a turning form of Levi-Civita's cylinder at $\\sigma = 1/4$ [astorino2022swirling]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "family",
+      "text": "The rotating C-metric set in the swirling universe loses both of its conical singularities, the spin of the hole against the swirl supplying its acceleration [astorino2022removal]."
+    },
+    {
+      "id": "double_kerr",
+      "kind": "family",
+      "text": "Two Kerr holes on one axis. Set in a swirling universe, two extremal ones are held apart by the spin of each against the swirl, with no strut between them [astorino2025binary]."
+    },
+    {
+      "id": "godel",
+      "kind": "family",
+      "text": "Another universe that turns, Gödel's, filled with rotating dust and a cosmological constant."
+    },
+    {
+      "id": "stockum_dust",
+      "kind": "family",
+      "text": "Another universe that turns, van Stockum's cylinder of dust spinning about its axis."
+    }
+  ],
+  "references": [
+    "astorino2022swirling",
+    "gibbons2013",
+    "colleaux2025",
+    "moreira2024",
+    "astorino2022removal",
+    "astorino2025binary",
+    "capobianco2024",
+    "barrientos2024",
+    "dipinto2025"
+  ],
   "coordinates": [
     {
       "id": "spherical",

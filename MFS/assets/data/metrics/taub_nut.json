@@ -96,6 +96,11 @@
       "id": "brill_charged_taub_nut",
       "kind": "generalisation",
       "text": "Taub-NUT with a charge. Dieter Brill filled Taub's universe with an electromagnetic wave in 1964, and with charge enough, $r_q^2 > m^2 + l^2$, the horizons go and the spacetime is a wormhole [brill1964, clement2016]."
+    },
+    {
+      "id": "swirling_universe_black_hole",
+      "kind": "family",
+      "text": "Ehlers's transformation in its magnetic form sets Schwarzschild's hole in a swirling universe, which a double Wick rotation turns into Taub-NUT space with a flat base [astorino2022swirling]."
     }
   ],
   "references": [
@@ -126,7 +131,8 @@
     "page1978bolt",
     "ellis1974",
     "collins1974",
-    "clement2016"
+    "clement2016",
+    "astorino2022swirling"
   ],
   "coordinates": [
     {

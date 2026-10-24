@@ -489,6 +489,11 @@
       "id": "black_to_white_hole",
       "kind": "composite",
       "text": "A shell of light falls into a black hole and comes back out of a white hole. Haggard and Rovelli cut both flaps from Schwarzschild's spacetime and put a quantum region between them [haggard2015fireworks]."
+    },
+    {
+      "id": "swirling_universe_black_hole",
+      "kind": "generalisation",
+      "text": "Schwarzschild's black hole set in a universe whose frame dragging turns one way above the equator and the other way below it. At $j = 0$ it is Schwarzschild's [astorino2022swirling]."
     }
   ],
   "references": [
@@ -619,7 +624,8 @@
     "unruh1981",
     "james2015",
     "compere2016final",
-    "haggard2015fireworks"
+    "haggard2015fireworks",
+    "astorino2022swirling"
   ],
   "coordinates": [
     {

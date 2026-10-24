@@ -1045,7 +1045,7 @@
       "stationary",
       "black hole pair creation"
     ],
-    "version": "6c5665e3891ae005",
+    "version": "32f05a17802b87b2",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef",
@@ -1408,7 +1408,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "278080747bf143de",
+    "version": "2efcd5507ecbd06c",
     "diagrams": "e80c22fa8faff2b6",
     "conformal": "9dae987db0ca1df8",
     "embedding": "7ebe08e359710241"
@@ -1943,7 +1943,7 @@
       "idealized model",
       "negative cosmological constant"
     ],
-    "version": "8fc3e4bff120e821",
+    "version": "4f62d57efec794df",
     "diagrams": "7bf82d9d4b9ce74d",
     "embedding": "05f185c5abaada89"
   },
@@ -2641,7 +2641,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "b9c943f24987e5e7",
+    "version": "7fecab9b0845dd89",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7",
@@ -3062,7 +3062,7 @@
       "idealized model",
       "rigid rotation"
     ],
-    "version": "ea3751573e173107",
+    "version": "2d83328aad2f11d2",
     "diagrams": "03d90ee0c12cbe63",
     "embedding": "f63088100c538d20"
   },
@@ -3105,7 +3105,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1a59c291d14da086",
+    "version": "e1c63070e2df51a5",
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841"
@@ -3470,7 +3470,7 @@
       "idealized model",
       "black hole pair creation"
     ],
-    "version": "6eb817a36c6a1664",
+    "version": "e506a6b050b784eb",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "edd5386c486f11df",
     "embedding": "86969fc37532f407",
@@ -3524,7 +3524,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "3a0170e3635693d5",
+    "version": "7b72a5a6957c5c49",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -4610,7 +4610,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "5e5aad02c6f8738c",
+    "version": "d70abc79dd63bc5a",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -5053,6 +5053,34 @@
     "embedding": "5b15cfdf325c286f"
   },
   {
+    "id": "swirling_universe_black_hole",
+    "name": "Swirling Universe",
+    "tags": [
+      "vacuum",
+      "stationary",
+      "axisymmetric",
+      "rotating",
+      "frame dragging",
+      "ergoregion",
+      "black hole",
+      "event horizon",
+      "horizon",
+      "Killing horizon",
+      "curvature singularity",
+      "black hole thermodynamics",
+      "Hawking temperature",
+      "not asymptotically flat",
+      "Petrov type I",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model",
+      "mass"
+    ],
+    "version": "ab3ad23c45bb7a21"
+  },
+  {
     "id": "szekeres",
     "name": "Szekeres",
     "tags": [
@@ -5098,7 +5126,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "efe37bfbf57f77ac",
+    "version": "40eea395e368777b",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078",
     "curvature": "67bff764e3e14927"
@@ -5753,7 +5781,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "aa208a0b58ffef7c",
+    "version": "9cdc5f938f030da7",
     "diagrams": "c383ba43920e5b0b",
     "conformal": "f06e536b192c099c",
     "embedding": "633fa78640daea0a",

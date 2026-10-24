@@ -283,6 +283,11 @@
       "id": "black_to_white_hole",
       "kind": "composite",
       "text": "Inside Haggard and Rovelli's bouncing shell of light space is flat, before the bounce and after it [haggard2015fireworks]."
+    },
+    {
+      "id": "swirling_universe_black_hole",
+      "kind": "generalisation",
+      "text": "Flat space put through Ehlers's transformation in its magnetic form, which makes a vacuum universe that turns one way above a plane and the other way below it, with a black hole set inside [astorino2022swirling]."
     }
   ],
   "references": [
@@ -366,7 +371,8 @@
     "visser1998",
     "unruh1981",
     "compere2016vacua",
-    "haggard2015fireworks"
+    "haggard2015fireworks",
+    "astorino2022swirling"
   ],
   "coordinates": [
     {

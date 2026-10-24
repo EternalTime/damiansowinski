@@ -73,6 +73,11 @@
       "id": "belinski_zakharov",
       "kind": "family",
       "text": "The Bäcklund transformations behind the double Kerr solution coincide with the soliton transformations of Belinski and Zakharov [alekseev2010]."
+    },
+    {
+      "id": "swirling_universe_black_hole",
+      "kind": "family",
+      "text": "A black hole in a swirling universe. Two extremal Kerr holes set in that universe are held apart by the spin of each against the swirl, with no strut between them [astorino2025binary]."
     }
   ],
   "references": [
@@ -103,7 +108,8 @@
     "holst2016",
     "neugebauer1995",
     "neugebauer2003",
-    "alekseev2010"
+    "alekseev2010",
+    "astorino2025binary"
   ],
   "coordinates": [
     {

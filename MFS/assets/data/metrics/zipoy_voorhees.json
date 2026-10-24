@@ -77,6 +77,11 @@
       "id": "bach_weyl_ring",
       "kind": "family",
       "text": "The Weyl field of a hoop about the axis, where Zipoy and Voorhees's is that of a rod along it."
+    },
+    {
+      "id": "swirling_universe_black_hole",
+      "kind": "family",
+      "text": "Schwarzschild's hole in a swirling universe, made by a transformation that sets Zipoy and Voorhees's metric in that universe too [astorino2022swirling]."
     }
   ],
   "references": [
@@ -103,7 +108,8 @@
     "emparan2000",
     "memmen2021",
     "boshkayev2019",
-    "geroch1982"
+    "geroch1982",
+    "astorino2022swirling"
   ],
   "coordinates": [
     {

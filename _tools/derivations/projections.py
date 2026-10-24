@@ -912,6 +912,118 @@ def ergo_tube(spec, half=12.0, n=1201):
     return fig.done(pad=0.03), SimpleNamespace(entry=entry)
 
 
+def swirl_ergo(spec, half, n=1201):
+    """The ergoregions of the swirling universe, with and without Astorino, Martelli and Vigano's
+    black hole, seen from the side with t and phi left out, the axis up the page, the half plane of
+    one phi on the right and of phi + pi on the left: r and theta as polar coordinates about the
+    centre in the spherical chart, rho and z as Cartesian ones in the cylindrical chart.
+
+    The published g_tt is evaluated on a grid of the half plane, outside the horizon where there is
+    one, the outer zero of the published g^rr, and the region where it is positive, where the time
+    translation is spacelike and nothing stays at fixed position, is filled; its edge, the
+    ergosurface, is the zero contour. Before anything is drawn the figure checks what its caption
+    says: g_tt is negative on the axis and on the equatorial plane all the way out and just outside
+    the horizon at every theta; it is the same at a height and at its mirror image below the plane;
+    the ergosurface is one curve above the plane and its mirror image below, each with both ends on
+    the top or bottom of the box, so the region above is one piece, apart from the horizon; and at a
+    fixed distance from the axis g_tt grows as the square of the height. In the cylindrical chart
+    the ergosurface is also checked against Gibbons, Mujtaba and Pope's |4jz rho| = 1 + j^2 rho^4,
+    lowest at rho = (3j^2)^(-1/4)."""
+    _, entry, reader = nr.load(spec.metric, spec.system)
+    spherical = spec.system == "spherical"
+    a_, b_ = (reader.symbol["r"], reader.symbol["\\theta"]) if spherical else (reader.symbol["\\rho"], reader.symbol["z"])
+    subs = {reader.c: 1}
+    subs.update({reader.parameters[k]: nr.number(v) for k, v in spec.params.items()})
+    numeric = lambda e: sp.lambdify((a_, b_), e.subs(subs), "numpy")
+    g = nr.published_matrix(reader, entry, "metric_components")
+    gi = nr.published_matrix(reader, entry, "inverse_metric_components")
+    t = entry["coords"].index("t")
+    g_tt = numeric(g[t, t])
+    if spherical:
+        grr_up = numeric(gi[1, 1])
+        horizon = root(lambda r: float(grr_up(r, 1.0)), 1.0, 3.0)
+        at = lambda X, Z: (np.hypot(X, Z), np.arctan2(X, Z))
+    else:
+        horizon = 0.0
+        at = lambda X, Z: (X, Z)
+    G_of = lambda X, Z: g_tt(*at(X, Z))
+    x = np.linspace(0.0, half, n)
+    z = np.linspace(-half, half, 2 * n - 1)
+    X, Z = np.meshgrid(x, z)
+    # A grid point on the horizon itself has g_tt = 0 to rounding, and is taken as inside it.
+    outside = np.hypot(X, Z) > horizon * (1 + 1e-6)
+    with np.errstate(all="ignore"):
+        G = np.where(outside, G_of(np.where(outside, X, 2 * horizon + 1), Z), -1.0)
+    # What the caption says, held before anything is drawn.
+    far = np.linspace(horizon * (1 + 1e-6) + 1e-9, 50 * half, 4001)
+    with np.errstate(all="ignore"):
+        axis_ok = np.all(G_of(np.zeros_like(far) + 1e-12, far) < 0) and np.all(G_of(np.zeros_like(far) + 1e-12, -far) < 0)
+        plane_ok = np.all(G_of(far, np.zeros_like(far)) < 0)
+    near = [G_of((horizon * 1.001 + 1e-9) * np.sin(th), (horizon * 1.001 + 1e-9) * np.cos(th))
+            for th in np.linspace(0.01, np.pi - 0.01, 99)] if spherical else [-1.0]
+    if not (axis_ok and plane_ok and max(near) < 0):
+        raise SystemExit(f"{key(spec)}: g_tt is not negative on the axis, on the equatorial plane and beside the horizon")
+    if not np.allclose(G, G[::-1], rtol=1e-9, atol=1e-9):
+        raise SystemExit(f"{key(spec)}: g_tt is not the same at a height and at its mirror image")
+    up = 1e3 * half
+    tube = lambda h: float(G_of(1.0, h))
+    if not (tube(up) > 0 and abs(tube(2 * up) / tube(up) - 4) < 1e-2):
+        raise SystemExit(f"{key(spec)}: g_tt does not grow as the square of the height beside the axis")
+    lines = contourpy.contour_generator(X, Z, G, name="serial").lines(0.0)
+    edge = lambda L: all(abs(abs(P[1]) - half) < 1e-9 for P in (L[0], L[-1]))
+    upper = [L for L in lines if L[:, 1].min() > 0]
+    lower = [L for L in lines if L[:, 1].max() < 0]
+    if not (len(lines) == 2 and len(upper) == 1 and len(lower) == 1 and all(edge(L) for L in lines)):
+        raise SystemExit(f"{key(spec)}: the ergosurface is not one curve above the plane and its mirror below, "
+                         f"but {len(lines)} curves")
+    lowest = np.hypot(*upper[0].T).min()
+    if spherical and not lowest > 1.2 * horizon:
+        raise SystemExit(f"{key(spec)}: the ergoregion reaches the horizon")
+    if not spherical:
+        j = float(nr.number(spec.params["j"]))
+        L = upper[0]
+        if np.abs(4 * j * L[:, 1] * L[:, 0] - 1 - j ** 2 * L[:, 0] ** 4).max() > 1e-2 * (1 + j ** 2 * half ** 4):
+            raise SystemExit(f"{key(spec)}: the ergosurface is not |4jz rho| = 1 + j^2 rho^4")
+        foot = L[np.argmin(L[:, 1])]
+        if abs(foot[0] - (3 * j ** 2) ** -0.25) > 2 * half / n:
+            raise SystemExit(f"{key(spec)}: the ergosurface is not lowest at rho = (3 j^2)^(-1/4)")
+    fig = Figure(spec.view, spec.label, Camera(-90, 90))
+    fig.flat()
+    page = lambda P: fig.camera.screen(np.column_stack([P[:, 0], P[:, 1], np.zeros(len(P))]))
+    mirror = lambda P: P * np.array([-1.0, 1.0])
+    fills = contourpy.contour_generator(X, Z, G, name="serial", fill_type=contourpy.FillType.OuterOffset).filled(0.0, 1e300)
+    for points, offsets in zip(*fills):
+        for k in range(len(offsets) - 1):
+            outer = points[offsets[k]:offsets[k + 1]]
+            for P in (outer, mirror(outer)):
+                fig.fill("double", page(nr.thin(P, 0.002)))
+    if spherical:
+        hole = np.linspace(0, 2 * np.pi, 361)
+        disc = np.column_stack([horizon * np.sin(hole), horizon * np.cos(hole)])
+        fig.fill("wedge", page(disc))
+    fig.line("axis", np.array([[0.0, -half, 0.0], [0.0, half, 0.0]]))
+    fig.line("floor", np.array([[-half, 0.0, 0.0], [half, 0.0, 0.0]]))
+    for L in lines:
+        for P in (L, mirror(L)):
+            fig.line("ergo", np.column_stack([P[:, 0], P[:, 1], np.zeros(len(P))]))
+    if spherical:
+        fig.line("horizon", np.column_stack([disc[:, 0], disc[:, 1], np.zeros(len(disc))]))
+        fig.label(np.array([0.0, half, 0.0]), "$\\theta = 0$", "b", cls="small", dy=-4)
+        fig.label(np.array([0.0, 0.0, 0.0]), "$r < 2m$", "c", cls="small")
+        fig.label(np.array([half, 0.0, 0.0]), "$\\theta = \\pi/2$", "r", cls="small", dx=-4, dy=-8)
+        fig.legend("fill", "double", "$g_{tt} > 0$, where nothing stays at fixed $r$, $\\theta$, and $\\phi$")
+        fig.legend("line", "horizon", "$r = 2m$, the horizon")
+        fig.legend("line", "floor", "the equatorial plane")
+    else:
+        fig.label(np.array([0.0, half, 0.0]), "$\\rho = 0$", "b", cls="small", dy=-4)
+        fig.label(np.array([half, 0.0, 0.0]), "$z = 0$", "r", cls="small", dx=-4, dy=-8)
+        fig.legend("fill", "double", "$g_{tt} > 0$, where nothing stays at fixed $\\rho$, $\\phi$, and $z$")
+        fig.legend("line", "floor", "the plane $z = 0$")
+    fig.legend("line", "ergo", "the ergosurface, $g_{tt} = 0$")
+    fig.legend("line", "axis", "the axis of rotation")
+    return fig.done(pad=0.03), SimpleNamespace(entry=entry)
+
+
 class ThroatSlice(Slice):
     """The equator of the extreme Kerr throat in Bardeen and Horowitz's global chart, (tau, y,
     phi), drawn polar with each circle of constant y at the radius 2 + arsinh(y)/sqrt 2 in units
@@ -1402,6 +1514,30 @@ CAPTIONS = {
         "moves toward $+\\phi$, and nothing can stay at fixed $\\phi$. On the equator $g_{tt}$ is negative from $r_E$ "
         "all the way out; the ergoregion returns off this plane, beside the axis.",
     ],
+    ("swirling_universe_black_hole", "spherical", "ergo"): [
+        "The meridional plane of the black hole in a swirling universe seen from the side, $t$ and $\\phi$ left out, "
+        "with $r$ and $\\theta$ as polar coordinates about the centre and the axis of rotation up the page, for "
+        "$j = 1/(16m^2)$. The shaded regions are the ergoregions, $g_{tt} > 0$, where $\\partial_t$ is spacelike and "
+        "nothing stays at fixed $r$, $\\theta$, and $\\phi$. There is one above the hole and its mirror image below, "
+        "each coming no nearer the centre than $r = 3.67\\,m$, clear of the horizon, and widening all the way to "
+        "infinity beside the axis.",
+        "The dragging rate $d\\phi/d(ct) = -4j(r - 2m)\\cos\\theta$ turns the upper region toward $-\\phi$ and the "
+        "lower one toward $+\\phi$, and at a fixed distance from the axis $g_{tt}$ grows as the square of the height. "
+        "The axis and the equatorial plane stay outside both, since $g_{tt} = -(1 - 2m/r)$ on the axis and "
+        "$-(1 + j^2r^4)(1 - 2m/r)$ on the equator. The azimuth is the one at rest on the horizon, where "
+        "$\\partial_t$ is null.",
+    ],
+    ("swirling_universe_black_hole", "cylindrical", "ergo"): [
+        "The plane of $\\rho$ and $z$ of the swirling universe seen from the side, $t$ and $\\phi$ left out, with the "
+        "axis of rotation up the page, for $j = 1$. The shaded regions are the ergoregions, where "
+        "$|4jz\\rho| > 1 + j^2\\rho^4$, so that $g_{tt} > 0$ and nothing stays at fixed $\\rho$, $\\phi$, and $z$, "
+        "one above the plane $z = 0$ and its mirror image below. Each is lowest at $\\rho = (3j^2)^{-1/4}$, at the "
+        "height $z = 3^{-3/4}/\\sqrt{j} = 0.439/\\sqrt{j}$, and higher up it spans a band of $\\rho$ that reaches "
+        "nearer the axis and farther from it.",
+        "The dragging rate $d\\phi/d(ct) = -4jz$ grows with the height and changes sign across the plane. The axis "
+        "and the plane stay outside the ergoregions, since $g_{tt} = -1$ on the axis and $-(1 + j^2\\rho^4)$ on the "
+        "plane.",
+    ],
     ("kerr_melvin", "boyer_lindquist", "tube"): [
         "The meridional plane of Ernst and Wild's black hole seen from the side, $t$ and $\\phi$ left out, with $r$ "
         "and $\\theta$ as polar coordinates about the centre and the axis of rotation up the page, for $a = 4m/5$ "
@@ -1595,6 +1731,12 @@ FIGURES = [
                lambda spec: ergoregion(spec, horizon_between=(1.3, 1.9), ergo_below=3.0), nr.KM, {"theta": "pi/2"}),
     Projection("kerr_melvin", "boyer_lindquist", "tube", "the ergoregion, from the side", ergo_tube, nr.KM_STRONG,
                {"t": "0", "phi": "0"}),
+    # The black hole in a swirling universe at j = 1/(16 m^2), as its flat view is drawn, in units of
+    # m, and the swirling universe at j = 1, in units of 1/sqrt(j).
+    Projection("swirling_universe_black_hole", "spherical", "ergo", "the ergoregions, from the side",
+               lambda spec: swirl_ergo(spec, 12.0), {"m": 1, "j": "1/16"}, {"t": "0", "phi": "0"}),
+    Projection("swirling_universe_black_hole", "cylindrical", "ergo", "the ergoregions, from the side",
+               lambda spec: swirl_ergo(spec, 3.0), {"j": 1}, {"t": "0", "phi": "0"}),
     # The throat of extreme Kerr on its equator, at r_0 = 1, as its flat views are drawn.
     Projection("near_horizon_extreme_kerr", "global", "dragging", "light cones on the equator", throat,
                {"r_0": 1}, {"theta": "pi/2"}),

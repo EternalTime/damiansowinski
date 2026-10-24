@@ -66,6 +66,11 @@
       "id": "maitra_dust",
       "kind": "family",
       "text": "Samaresh C. Maitra's dust of 1966, the same cylinder with the dust allowed to shear. Its circles about the axis stay spacelike at every radius, and near the axis its line element is van Stockum's at $R = 2a$ [maitra1966, chan2024]."
+    },
+    {
+      "id": "swirling_universe_black_hole",
+      "kind": "family",
+      "text": "Another universe that turns, a vacuum whose frame dragging runs one way above a plane and the other way below it [astorino2022swirling]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "bonnor1977cloud",
     "neugebauer1995",
     "bonnor1979petrov",
-    "maitra1966"
+    "maitra1966",
+    "astorino2022swirling"
   ],
   "coordinates": [
     {
