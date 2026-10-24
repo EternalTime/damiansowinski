@@ -4414,7 +4414,8 @@
     "version": "6e449049234f2f53",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
-    "embedding": "1f6d4a7541295881"
+    "embedding": "1f6d4a7541295881",
+    "curvature": "7fb323c4678fb366"
   },
   {
     "id": "reissner_nordstrom_ads",

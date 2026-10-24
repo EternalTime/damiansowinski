@@ -81,6 +81,7 @@ class Evaluator:
             fn = sp.lambdify(symbols, sp.powsimp(expr, combine="exp"), self.nr.numeric_modules(expr))
 
             def evaluate(*values, fn=fn):
+                values = tuple(np.asarray(v, dtype=float) for v in values)
                 with np.errstate(all="ignore"):
                     out = fn(*values)
                 shape = np.broadcast(*[np.asarray(v, dtype=float) for v in values]).shape
@@ -223,6 +224,9 @@ class CurvatureValues(unittest.TestCase):
                     # The charts the spacetime's own curves are drawn from, each at its parameters.
                     charts = {}
                     mapped = any("horizontal" in c for c in picture["curves"])
+                    transformed = mapped and all("horizontal" in c for c in picture["curves"])
+                    if transformed:
+                        mapped = False
                     for curve in picture["curves"]:
                         # A mapped radial profile marks the vacuum comparison's horizon, including
                         # its continuation inside the matter. It is not a zero of g^chi_chi.
@@ -241,6 +245,30 @@ class CurvatureValues(unittest.TestCase):
                                            [coordinate] + [c for c, _ in fixed], [p for p, _ in params],
                                            (coordinate, coordinate), dict(functions))
                         values = [v for _, v in fixed] + [v for _, v in params]
+                        if transformed:
+                            # Read the inverse metric along the plotted coordinate, so the
+                            # same zero and sign-change assertions apply on a transformed axis.
+                            horizontal = self.evaluate(metric, system, "horizontal",
+                                                       [coordinate] + [c for c, _ in fixed],
+                                                       [p for p, _ in params], functions=dict(functions),
+                                                       expression=curves[0]["horizontal"]["expression"])
+                            native = [v for c in curves for v in c["horizontal"]["values"]]
+                            low, high = min(native), max(native)
+                            increasing = float(horizontal(high, *values)) > float(horizontal(low, *values))
+
+                            def along_plot(xs, *settings, native_fn=fn, horizontal=horizontal,
+                                           low=low, high=high, increasing=increasing):
+                                left = np.full_like(np.asarray(xs, dtype=float), low)
+                                right = np.full_like(left, high)
+                                for _ in range(60):
+                                    middle = (left + right)/2
+                                    below = horizontal(middle, *settings) < xs
+                                    if not increasing:
+                                        below = ~below
+                                    left, right = np.where(below, middle, left), np.where(below, right, middle)
+                                return native_fn((left + right)/2, *settings)
+
+                            fn = along_plot
                         # A chart alone holds across the whole axis; a chart joined to another at a
                         # surface holds where its own curves are drawn.
                         lo, hi = view["x"]["from"], view["x"]["to"]

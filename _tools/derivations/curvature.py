@@ -9033,22 +9033,21 @@ def reissner_nordstrom_de_sitter(ck, src):
     return views
 
 
-# ---------------------------------------------------------------- Roberts's collapsing scalar field
-
-ROBERTS_VIEWS = (("disperses", Fraction(9, 10)), ("threshold", Fraction(1)), ("collapses", Fraction(2)))   # p, as every drawing takes it
-ROBERTS_REACH = {"disperses": 3, "threshold": 3, "collapses": 0.6}   # x from the first ray to 3, as the research list sets, and past the singularity at p = 2
-ROBERTS_EDGE = 1e-6               # K vanishes on the first ray x = 0, below a logarithmic axis, so its curves start here, under a pixel out
-ROBERTS_K = {"kind": "log", "from": 1e-6, "to": 1e4}                     # the axis of K l^4 e^(-4 tau) in every view
-ROBERTS_R = {"kind": "symlog", "from": -1e2, "to": 0, "linear": 1e-6}    # the axis of R^mu_mu l^2 e^(-2 tau) in every view
-
+# ---------------------------------------------------------------- the charged black hole
 
 def rn_metric(ck, src):
     """The charged hole's radial K at r_q = 12 r_s/25, beside Schwarzschild's.
 
     K depends on r alone and R vanishes, so a second coordinate repeats the profile.
     The horizontal declaration maps native radius to log10(r/r_s), with decade ticks
-    labelled by radius, and keeps every scalar value in its native units.
+    labelled by logarithmic radius, and keeps every scalar value in its native units.
     Both horizons are zeros of the stored inverse metric.
+
+    Checks prove the stored radial closed form, positivity and monotonic fall, R = 0,
+    the r^-8 central and r^-6 distant limits, the single crossing of the uncharged
+    curve, the minimum ratio 1/7 between the horizons, and finite K at both horizons.
+    Every retained value is evaluated again in sixty digits, and the thinned curve
+    is held to 0.05 drawing units across the logarithmic plane.
     """
     metric, system = "rn_metric", "spherical"
     params = {"r_s": 1.0, "r_q": 0.48}
@@ -9056,9 +9055,9 @@ def rn_metric(ck, src):
     R = nr_published(src, metric, system, "ricci_scalar", ["r"], list(params))
     grr = nr_published(src, metric, system, "inverse_metric_components", ["r"], list(params), ("r", "r"))
     reference = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
-    x = {"name": "$r/r_s$", "from": -2, "to": math.log10(2),
-         "ticks": [{"at": k, "label": decade(k)} for k in range(-2, 1)]
-                  + [{"at": math.log10(2), "label": "$2$"}]}
+    x = {"name": "$\\log_{10}(r/r_s)$", "from": -2, "to": math.log10(2),
+         "ticks": [{"at": k, "label": f"${k}$"} for k in range(-2, 1)]
+                  + [{"at": math.log10(2), "label": "$\\log_{10}2$"}]}
     scale = {"kind": "log", "from": 0.1, "to": 1e17}
     aspect = 1.25
     shape_checks(ck, metric, [aspect])
@@ -9071,6 +9070,12 @@ def rn_metric(ck, src):
         p0, p1 = span(scale)
         Y = PLOT_W/aspect*(1 - (position(scale, values) - p0)/(p1 - p0))
         keep = thinned(X, Y, TOLERANCE)
+        worst = 0.0
+        for a, b in zip(keep, keep[1:]):
+            dx, dy = X[b] - X[a], Y[b] - Y[a]
+            distance = np.abs(dy*(X[a:b + 1] - X[a]) - dx*(Y[a:b + 1] - Y[a]))/math.hypot(dx, dy)
+            worst = max(worst, float(np.max(distance)))
+        ck(f"{metric} {cls} stays within the drawn tolerance", worst <= TOLERANCE, f"{worst:.6f}")
         points = [[float(plotted[i]), float(values[i])] for i in keep]
         curve = curve_entry("K", cls, published, "r", settings, points)
         curve["horizontal"] = {"expression": "log(r/r_s)/log(10)",
@@ -9082,7 +9087,33 @@ def rn_metric(ck, src):
            np.all(np.isfinite(values)) and np.all(values >= scale["from"]) and np.all(values <= scale["to"]))
     horizons = zeros(ck, f"{metric} horizons", grr, .01, 2, list(params.values()))
     ck(f"{metric} R vanishes", R.expr == 0)
-    return [{"id": "radial", "kind": "line", "x": x,
+    r, (r_s, r_q) = K.coords[0], K.params
+    expected = 12*r_s**2/r**6 - 48*r_s*r_q**2/r**7 + 56*r_q**4/r**8
+    ck(f"{metric} K is the stored radial closed form", sp.simplify(K.expr - expected) == 0)
+    ck(f"{metric} K is positive for r > 0", sp.simplify(K.expr*r**8 -
+       (12*(r_s*r - 2*r_q**2)**2 + 8*r_q**4)) == 0)
+    ck(f"{metric} K decreases for r > 0", sp.simplify(sp.diff(K.expr, r)*r**9 +
+       8*(9*r_s**2*r**2 - 42*r_s*r_q**2*r + 56*r_q**4)) == 0 and 42**2 - 4*9*56 < 0)
+    ck(f"{metric} K grows as 56 r_q^4/r^8 at the centre", sp.limit(K.expr*r**8, r, 0) == 56*r_q**4)
+    ck(f"{metric} K approaches 12 r_s^2/r^6 far out", sp.limit(K.expr*r**6, r, sp.oo) == 12*r_s**2)
+    ratio = sp.cancel(K.expr/(12*r_s**2/r**6))
+    cross, least = 7*r_q**2/(6*r_s), 7*r_q**2/(3*r_s)
+    ck(f"{metric} K crosses the uncharged curve once", sp.factor(ratio - 1) ==
+       -2*r_q**2*(6*r*r_s - 7*r_q**2)/(3*r**2*r_s**2))
+    ck(f"{metric} the least ratio is 1/7", sp.simplify(ratio.subs(r, least) - sp.Rational(1, 7)) == 0
+       and sp.simplify(sp.diff(ratio, r).subs(r, least)) == 0
+       and sp.simplify(sp.diff(ratio, r, 2).subs(r, least) - 108*r_s**2/(343*r_q**4)) == 0)
+    ck(f"{metric} both horizons lie at the stated radii", len(horizons) == 2 and
+       np.allclose(horizons, [.36, .64], rtol=0, atol=1e-14), str(horizons))
+    held = {r_s: 1, r_q: sp.Rational(12, 25)}
+    crossing_radius, least_radius = float(cross.subs(held)), float(least.subs(held))
+    ck(f"{metric} crossing and least ratio round to 0.269 and 0.538",
+       f"{crossing_radius:.3f}" == "0.269" and f"{least_radius:.3f}" == "0.538",
+       f"crossing {crossing_radius}, least ratio {least_radius}")
+    ck(f"{metric} the least ratio is between the horizons", horizons[0] < least_radius < horizons[1])
+    ck(f"{metric} K is finite at both horizons", np.all(np.isfinite(K(np.array(horizons), *params.values()))),
+       str(K(np.array(horizons), *params.values())))
+    return [{"id": "radial", "label": "$r_q = 0.48\\,r_s$", "kind": "line", "x": x,
              "panels": [{"id": "K", "name": "$K\\,r_s^4$", "aspect": aspect,
                          "scale": scale, "ticks": every_second(scale)}],
              "curves": curves, "marks": [{"class": "horizon", "x": math.log10(h)} for h in horizons],
@@ -9091,10 +9122,26 @@ def rn_metric(ck, src):
                         ["line", "horizon", "the horizons $r_-$ and $r_+$, where $g^{rr} = 0$"]],
              "caption": ["The Kretschmann scalar $K$ of the charged black hole against the areal radius $r$ "
                          "($r_q = 0.48\\,r_s$), the same at every time and angle, "
-                         "beside Schwarzschild's of the same mass. Its Ricci scalar vanishes."],
-             "settings": "$r_s = 1$, the unit of every length, and $r_q = 0.48\\,r_s$.",
+                         "beside Schwarzschild's of the same mass. "
+                         "Toward the singularity at $r = 0$, $K$ grows as $56r_q^4/r^8$; "
+                         "far out it approaches Schwarzschild's $12r_s^2/r^6$. "
+                         "The Ricci scalar vanishes, since the electric field's stress tensor is traceless.",
+                         "$K$ falls at every radius and is finite at both horizons. "
+                         "It crosses Schwarzschild's curve at $r = 0.269\\,r_s$ and lies below it farther out. "
+                         "Their ratio is least, $1/7$, at $r = 0.538\\,r_s$, between the horizons."],
+             "settings": "$r_s = 1$, the unit of every length, and $r_q = 0.48\\,r_s$, "
+                         "so that $r_- = 0.36\\,r_s$ and $r_+ = 0.64\\,r_s$.",
              "clip": "Both axes are logarithmic, with $r/r_s$ from $10^{-2}$ to $2$ and "
                      "$K\\,r_s^4$ from $10^{-1}$ to $10^{17}$; every value drawn lies within the panel."}]
+
+
+# ---------------------------------------------------------------- Roberts's collapsing scalar field
+
+ROBERTS_VIEWS = (("disperses", Fraction(9, 10)), ("threshold", Fraction(1)), ("collapses", Fraction(2)))   # p, as every drawing takes it
+ROBERTS_REACH = {"disperses": 3, "threshold": 3, "collapses": 0.6}   # x from the first ray to 3, as the research list sets, and past the singularity at p = 2
+ROBERTS_EDGE = 1e-6               # K vanishes on the first ray x = 0, below a logarithmic axis, so its curves start here, under a pixel out
+ROBERTS_K = {"kind": "log", "from": 1e-6, "to": 1e4}                     # the axis of K l^4 e^(-4 tau) in every view
+ROBERTS_R = {"kind": "symlog", "from": -1e2, "to": 0, "linear": 1e-6}    # the axis of R^mu_mu l^2 e^(-2 tau) in every view
 
 
 def roberts(ck, src):
