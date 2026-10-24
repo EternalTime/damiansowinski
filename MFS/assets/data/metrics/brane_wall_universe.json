@@ -1,0 +1,111 @@
+{
+  "id": "brane_wall_universe",
+  "name": "Braneworld Cosmology",
+  "short_name": "Braneworld Cosmology",
+  "description": "A universe with three dimensions of space that is a wall in anti-de Sitter space of five, moving through the static black hole of that space, as Per Kraus and Daisuke Ida set it out in 1999. Those who live on the wall read its motion as the expansion of their universe, with a Friedmann equation that carries the square of the density and the black hole's mass as a term that falls off like radiation.",
+  "tags": [
+    "braneworld",
+    "brane",
+    "domain wall",
+    "thin shell",
+    "junction conditions",
+    "matched solution",
+    "higher dimensions",
+    "anti-de Sitter",
+    "negative cosmological constant",
+    "cosmological constant",
+    "reflection symmetry",
+    "black hole",
+    "horizon",
+    "event horizon",
+    "Birkhoff theorem",
+    "cosmology",
+    "expanding universe",
+    "FLRW",
+    "causal structure",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "five-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+,+)",
+  "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $G_5$ is Newton's constant in five dimensions. We keep factors of $c$ explicit.",
+  "history": "Lisa Randall and Raman Sundrum's universe of 1999 is a wall with three dimensions of space in anti-de Sitter space of five, held at rest by a tension tuned against the cosmological constant on either side [randall1999a, randall1999b]. With matter on the wall, or a tension off that value, the junction conditions set the wall moving, with a speed that changes with its radius [kraus1999]. Per Kraus, at the Enrico Fermi Institute in Chicago, kept the space beside the wall static and solved for the wall's motion through it, and observers on the wall, he wrote, \"interpret the motion as cosmological expansion or contraction\" [kraus1999]. Kraus circulated the work in October 1999, and it was printed that December [kraus1999]. Daisuke Ida, at Kyoto University, set out the same construction on 1 December 1999 and dropped the mirror symmetry between the two sides of the wall [ida2000].¶On each side lies the black hole of anti-de Sitter space in five dimensions, $-f\\,c^2dt^2 + dr^2/f + r^2d\\Sigma_k^2$ with $f = k + r^2/\\ell^2 - \\mu/r^2$, where $d\\Sigma_k^2$ is a unit sphere, flat space, or a unit hyperbolic space for $k = 1$, $0$, or $-1$ [kraus1999, birmingham1999]. Kraus noted that these are the only solutions with the symmetries of a Friedmann universe, and that the five dimensional version of Birkhoff's theorem makes them static [kraus1999]. With $\\mu = 0$ they are anti-de Sitter space itself, and the hyperbolic one, among the black holes Danny Birmingham had studied in any number of dimensions, exists for masses down to $\\mu = -\\ell^2/4$ [kraus1999, birmingham1999]. The wall is the surface $r = a(\\tau)$, and as in Randall and Sundrum's construction $r$ falls away from it on both sides, so each side holds the horizon [kraus1999, randall1999b]. Peter Bowcock, Christos Charmousis, and Ruth Gregory proved in 2000 that with a cosmological constant in the bulk and the symmetries of a cosmology the space beside the wall can only be this one: \"The cosmology is indeed a boundary of a (class II) Schwarzschild-AdS spacetime, or a Minkowski (class I) spacetime\" [bowcock2000].¶Werner Israel's junction conditions of 1966 tie the jump in the wall's extrinsic curvature to the matter on it, and Kraus wrote them for a wall of tension $\\sigma$ carrying matter of energy density $\\rho$ [israel1966, kraus1999]. With the tension tuned to Randall and Sundrum's value, $\\sigma = 3c^4/4\\pi G_5\\ell$, where $G_5$ is Newton's constant in five dimensions, the scale factor $a$ obeys $H^2 = \\dfrac{8\\pi G_4}{3c^2}\\rho\\left(1 + \\dfrac{\\rho}{2\\sigma}\\right) - \\dfrac{kc^2}{a^2} + \\dfrac{\\mu c^2}{a^4}$, with $H = (da/d\\tau)/a$ and $G_4 = G_5/\\ell$ [kraus1999, binetruy2000brane, ida2000, mukohyama2000global]. While $\\rho$ is small beside $\\sigma$ the first term is Friedmann's, with $G_4$ for Newton's constant on the wall [kraus1999, binetruy2000brane]. At high density the term in $\\rho^2$ takes over, and a universe of radiation grows as $a \\propto \\tau^{1/4}$, where Friedmann's equation has $a \\propto \\tau^{1/2}$ [binetruy2000nonconventional, binetruy2000brane]. Pierre Binétruy, Cédric Deffayet, and David Langlois found that term in May 1999 for a wall in a fifth dimension with no cosmological constant, a cosmology in which \"the square of the Hubble parameter H depends quadratically on the cosmological (i.e. the brane) energy density\" [binetruy2000nonconventional].¶With Ulrich Ellwanger they added a cosmological constant in the bulk and found a first integral of Einstein's equations carrying a free constant $C$, \"whose influence corresponds to an effective radiation term\" [binetruy2000brane]. In the static picture that constant is the black hole's mass, the term in $\\mu/a^4$ [mukohyama2000global, ida2000]. Shinji Mukohyama, who solved the same equations in November 1999, called it \"dark radiation\", \"which is not real radiation but alters cosmological evolutions\" [mukohyama2000]. Tetsuya Shiromizu, Kei-ichi Maeda, and Misao Sasaki projected Einstein's equations onto the wall, where the five dimensional Weyl tensor enters as a source that \"carries information of the gravitational field outside the brane\" [shiromizu2000]. Ida traced the term to it: \"The origin of this term is now clarified, i.e., the electric (Coulomb) part of Weyl tensor in the five-dimensional back ground metric\" [ida2000]. Nucleosynthesis bounds the term as it bounds any extra radiation, which Binétruy, Deffayet, Ellwanger, and Langlois counted as extra relativistic degrees of freedom [binetruy2000brane].¶Binétruy, Deffayet, Ellwanger, and Langlois wrote the space beside the wall in Gaussian normal coordinates, with the wall at rest at $w = 0$, $w$ the proper distance from it, and the space there changing with time [binetruy2000brane]. Mukohyama, Shiromizu, and Maeda wrote down the change of coordinates that carries Kraus's solution into that one, and concluded that the two \"are exactly the same with each other\" [mukohyama2000global]. Their Gaussian normal coordinates reach past the event horizon of the black hole, and in some cases, they wrote, the coordinate \"goes through the wormhole and reaches another domain of communication\" [mukohyama2000global]. Bowcock, Charmousis, and Gregory showed that \"a fixed wall embedded in a non-static spacetime is strictly equivalent to a moving wall embedded in a static spacetime\", for any matter on the wall and for different cosmological constants on its two sides [bowcock2000].¶With the black hole in the bulk, gravity on the wall loses the four dimensional Lorentz invariance it has in Randall and Sundrum's space [kraus1999]. For a flat wall the horizon of the black hole is at $r_h = (\\ell^2\\mu)^{1/4}$, where Randall and Sundrum's space runs on down an infinite throat [kraus1999]. With a massless scalar field standing in for the graviton, waves along the wall travel at $c_{\\text{eff}} \\approx c\\left(1 - r_h^4/2\\ell^2a^2\\right)$, a shift that fades as the wall expands, and Kraus warned that the precise correction depends on where the space near the horizon is cut off [kraus1999]. Black holes of different masses on the two sides, in Ida's construction, add a term proportional to the square of the difference of the masses, which falls as $a^{-8}$ while the density on the wall is small beside its tension [ida2000]. Binétruy, Deffayet, Ellwanger, and Langlois found as well that a small mismatch between the tension and the cosmological constant of the bulk leaves an effective cosmological constant on the wall at late times [binetruy2000brane].",
+  "related": [],
+  "references": [
+    "randall1999a",
+    "randall1999b",
+    "kraus1999",
+    "ida2000",
+    "birmingham1999",
+    "bowcock2000",
+    "israel1966",
+    "binetruy2000brane",
+    "mukohyama2000global",
+    "binetruy2000nonconventional",
+    "mukohyama2000",
+    "shiromizu2000"
+  ],
+  "coordinates": [
+    {
+      "id": "static",
+      "name": "Static Bulk, One Side",
+      "convention": "We use coordinates $(t, r, \\chi, \\theta, \\phi)$ on one side of the wall, with $t$ the static time, carrying dimensions of time, $r$ the areal radius, a length, and $\\chi$ a comoving radius, a pure number. Here $f = k + r^2/\\ell^2 - \\mu/r^2$, and the horizon $r_h$ is its largest root. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Radius of the anti-de Sitter space on either side of the wall, a length, with $R_{\\mu\\nu} = -4g_{\\mu\\nu}/\\ell^2$ off the wall"
+        },
+        {
+          "symbol": "\\mu",
+          "description": "Mass parameter of the black hole, an area, which for $k = 1$ is $8G_5M/3\\pi c^2$ with $M$ its mass"
+        },
+        {
+          "symbol": "k",
+          "description": "Curvature of space on the wall, $k \\in \\{-1, 0, +1\\}$"
+        },
+        {
+          "symbol": "a = a(t)",
+          "description": "Areal radius of the wall, a length, and the scale factor of the universe on it. With $\\tau$ the proper time on the wall, $\\rho$ the energy density of the matter on it, and $\\sigma = 3c^4/4\\pi G_5\\ell$ its tension, it moves as $\\left(da/d(c\\tau)\\right)^2 = a^2\\left(1 + \\rho/\\sigma\\right)^2/\\ell^2 - f(a)$ while $f(a)\\,dt/d\\tau = (a/\\ell)\\left(1 + \\rho/\\sigma\\right)$"
+        }
+      ]
+    },
+    {
+      "id": "gaussian_normal",
+      "name": "Gaussian Normal, One Side",
+      "convention": "We use coordinates $(t, w, \\chi, \\theta, \\phi)$ on one side of the wall, with $t$ the proper time on the wall, $w$ the proper distance from it, a length, and $\\chi$ a comoving radius, a pure number. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Radius of the anti-de Sitter space on either side of the wall, a length, with $R_{\\mu\\nu} = -4g_{\\mu\\nu}/\\ell^2$ off the wall"
+        },
+        {
+          "symbol": "\\mu",
+          "description": "Mass parameter of the black hole, an area, which for $k = 1$ is $8G_5M/3\\pi c^2$ with $M$ its mass"
+        },
+        {
+          "symbol": "k",
+          "description": "Curvature of space on the wall, $k \\in \\{-1, 0, +1\\}$"
+        },
+        {
+          "symbol": "a = a(t)",
+          "description": "Scale factor of the universe on the wall, a length, the areal radius $A$ at $w = 0$"
+        },
+        {
+          "symbol": "Q = \\sqrt{1 + \\ell^2\\left(\\dfrac{\\dot{a}^2 + k}{a^2} - \\dfrac{\\mu}{a^4}\\right)}",
+          "description": "Junction factor, with $Q = 1 + \\rho/\\sigma$ on the wall for $\\rho$ the energy density of the matter on it and $\\sigma = 3c^4/4\\pi G_5\\ell$ its tension, which is the modified Friedmann equation"
+        },
+        {
+          "symbol": "A = a\\sqrt{\\cosh(2w/\\ell) + \\dfrac{\\ell^2\\left(\\dot{a}^2 + k\\right)}{2a^2}\\left(\\cosh(2w/\\ell) - 1\\right) - Q\\sinh(2w/\\ell)}",
+          "description": "Areal radius of the 3-space at the distance $w$ from the wall, the $r$ of the static chart"
+        },
+        {
+          "symbol": "N = \\dfrac{a}{A}\\left(\\cosh(2w/\\ell) + \\dfrac{\\ell^2\\ddot{a}}{2a}\\left(\\cosh(2w/\\ell) - 1\\right) - \\dfrac{2a^2 + \\ell^2\\left(\\dot{a}^2 + a\\ddot{a} + k\\right)}{2a^2Q}\\sinh(2w/\\ell)\\right)",
+          "description": "Lapse, $N = \\partial_tA/\\dot{a}$, equal to $1$ on the wall"
+        }
+      ]
+    }
+  ]
+}
