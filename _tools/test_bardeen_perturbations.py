@@ -73,7 +73,7 @@ class Orders(unittest.TestCase):
         def geometry(open_terms):
             names = [f"F_{i}{j} = F_{i}{j}(\\eta,x,y,z)" for i in range(4) for j in range(i, 4)] if open_terms else []
             extra = {f"F_{i}{j}": 2 for i in range(4) for j in range(i, 4)} if open_terms else {}
-            reader = vm.Reader(coords, spec["system"]["parameters"] + names, (), kept=({**weights, **extra}, 1))
+            reader = vm.Reader(coords, spec["system"]["parameters"] + names, (), kept=({**weights, **extra}, 1, None))
             g = vm.metric_from_line_element(reader, spec["chart_line_element"], coords)
             symbols = [reader.symbol[name] for name in coords]
             for i in range(4):
