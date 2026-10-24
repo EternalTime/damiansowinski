@@ -397,6 +397,12 @@ REGIONS = {
 }
 
 # Where the charts cannot decide a tag and the entry's history and sources do.
+# Charts that hold names whose values are written out whole, as the checker writes them, and not
+# name by name: the names of a wall's Gaussian normal chart hold the free scale factor a(t) under
+# a root, and one component of its Ricci tensor written out name by name took 75 s and another 235 s,
+# where written out whole they took 0.4 s and 1.7 s.
+WHOLE = {("brane_wall_universe", "gaussian_normal")}
+
 OVERRULED = {
     ("small_universes", "spherically symmetric"): (
         False, "the hyperbolic chart is spherical about one observer, and so is the local geometry, but the "
@@ -427,6 +433,15 @@ OVERRULED = {
         False, "flat space inside and Kruskal's vacuum outside, but the thin shell of light between them "
                "is in no chart, and neither is the quantum region where the black hole turns white; the "
                "Lambert function hid the vacuum of the Kruskal chart until 3 October 2026"),
+    ("brane_wall_universe", "Einstein space"): (
+        False, "each chart is one side of the wall, where R_ab = -(4/l^2) g_ab, and the wall between the two "
+               "sides carries matter and its tension, so the spacetime is no Einstein space"),
+    ("brane_wall_universe", "stationary"): (
+        False, "each side is a piece of a static black hole, and the wall between them, at r = a, moves "
+               "through it, so the spacetime as a whole has no time translation"),
+    ("brane_wall_universe", "static"): (
+        False, "each side is a piece of a static black hole, and the wall between them, at r = a, moves "
+               "through it, so the spacetime as a whole has no time translation"),
     ("israel_shell", "stationary"): (
         False, "each side is static in its own chart, and the shell between them, at r = R, "
                "falls through both, so the spacetime as a whole has no time translation"),
@@ -532,14 +547,28 @@ def _witness(reader, symbols):
     def number(e):
         return sp.cancel(e.subs(trig).subs(at))
 
+    def frozen(e):
+        """e with each declared function the names are built from, as the scale factor a(t) of a
+        wall's Gaussian normal chart, and each of its derivatives given a rational value of its own,
+        since at one point they are independent numbers. They are set before the coordinates are,
+        which would leave them unevaluated, and left standing they made every value no number, so
+        that every value was written out in full."""
+        undefined = [x for x in e.atoms(sp.Derivative) | e.atoms(sp.core.function.AppliedUndef) if x not in held]
+        for x in sorted(undefined, key=sp.default_sort_key):
+            if x not in at:
+                at[x] = sp.Rational(rng.randint(11, 40), rng.randint(7, 10))
+        e = e.xreplace({x: at[x] for x in e.atoms(sp.Derivative) if x in at})
+        return e.xreplace({x: at[x] for x in e.atoms(sp.core.function.AppliedUndef) if x in at})
+
     def value(expression):
         atoms = expression.atoms(sp.Derivative) | (expression.atoms(sp.core.function.AppliedUndef) & held)
+        atoms = {x for x in atoms if x in held or (isinstance(x, sp.Derivative) and x.expr in held)}
         for atom in atoms - set(known):
             out = atom
             for _ in reader.held:
                 out = out.subs(reader.held).doit()
-            known[atom] = number(out)
-        out = expression.xreplace({a: known[a] for a in atoms})
+            known[atom] = number(frozen(out))
+        out = frozen(expression.xreplace({x: known[x] for x in atoms}))
         # Any symbol the definitions do not hold, as c or the rate of a turning azimuth, gets a
         # rational value of its own.
         for s in sorted(out.free_symbols - set(at), key=str):
@@ -758,8 +787,9 @@ def compute(metric_id, entry, seconds):
     n = len(coords)
 
     witness = _witness(reader, symbols) if vm.held_alone(reader) else None
-    # Such a chart's value is written out name by name, each put in canonical form on its own.
-    written = reader.written if witness is not None else reader.surface
+    # Such a chart's value is written out name by name, each put in canonical form on its own,
+    # unless WHOLE names the chart.
+    written = reader.written if witness is not None and (metric_id, entry["id"]) not in WHOLE else reader.surface
 
     def zero(expression):
         expression = sp.sympify(expression)

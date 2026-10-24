@@ -2224,6 +2224,60 @@
    "\\phi"
   ]
  },
+ "brane_wall_universe/gaussian_normal": {
+  "stamp": "38bcdb9b317ca164",
+  "relations": {},
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-4/ell**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "brane_wall_universe/static": {
+  "stamp": "a1b0755cae9b8412",
+  "relations": {},
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-4/ell**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "brans_dicke_sphere/harmonic": {
   "stamp": "399a7c6fd07c04f1",
   "relations": {},
