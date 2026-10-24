@@ -11117,6 +11117,12 @@ def ellis_bronnikov(ck, src):
     The range -3 to 3 ell and the unit ell = 1 are the radial spacetime diagram's.
     K is logarithmic from 10^-3 to 10^2; R is signed logarithmic from -10 to zero,
     linear within 10^-3. Both curves lie wholly inside their panels.
+
+    Checks hold every one of the 4001 samples of each curve to the stored scalar in sixty
+    digits, the throat to g_rr = 1 and the minimum sphere, and g^rr to being positive.
+    They also hold the scalars to their closed forms, their even symmetry, the finite
+    extrema 12/ell^4 and -2/ell^2 at r = 0, the monotone fall of K and rise of R outward,
+    R's negative sign, the far limits 12 ell^4/r^8 and -2 ell^2/r^4, and the unit scaling.
     """
     x_axis = axis("$r/\\ell$", -3, 3)
     K_scale = {"kind": "log", "from": 1e-3, "to": 1e2}
@@ -11128,11 +11134,48 @@ def ellis_bronnikov(ck, src):
     shape_checks(ck, "ellis_bronnikov", [p["aspect"] for p in panels])
     K = nr_published(src, "ellis_bronnikov", "spherical", "kretschmann", ["r"], ["ell"])
     R = nr_published(src, "ellis_bronnikov", "spherical", "ricci_scalar", ["r"], ["ell"])
+    grr = nr_published(src, "ellis_bronnikov", "spherical", "metric_components", ["r"], ["ell"], ("r", "r"))
+    inverse = nr_published(src, "ellis_bronnikov", "spherical", "inverse_metric_components", ["r"], ["ell"],
+                           ("r", "r"))
+    sphere = nr_published(src, "ellis_bronnikov", "spherical", "metric_components", ["r"], ["ell"],
+                          ("\\theta", "\\theta"))
+    r, ell = K.coords[0], K.params[0]
+    ck("ellis_bronnikov r is proper distance", grr.expr == 1)
+    ck("ellis_bronnikov has no horizon on either side", inverse.expr == 1)
+    ck("ellis_bronnikov the smallest sphere is the throat at r = 0",
+       sp.simplify(sphere.expr - r ** 2 - ell ** 2) == 0)
+    ck("ellis_bronnikov K is 12 ell^4/(r^2 + ell^2)^4",
+       sp.simplify(K.expr - 12 * ell ** 4 / (r ** 2 + ell ** 2) ** 4) == 0)
+    ck("ellis_bronnikov R is -2 ell^2/(r^2 + ell^2)^2",
+       sp.simplify(R.expr + 2 * ell ** 2 / (r ** 2 + ell ** 2) ** 2) == 0)
+    ck("ellis_bronnikov K at the throat is finite and greatest, 12/ell^4",
+       sp.simplify(K.expr.subs(r, 0) - 12 / ell ** 4) == 0
+       and float(K.exact([0, 1])) == 12)
+    ck("ellis_bronnikov R at the throat is least, -2/ell^2",
+       sp.simplify(R.expr.subs(r, 0) + 2 / ell ** 2) == 0
+       and float(R.exact([0, 1])) == -2)
+    ck("ellis_bronnikov K falls outward on either side",
+       sp.simplify(sp.diff(K.expr, r) + 96 * ell ** 4 * r / (r ** 2 + ell ** 2) ** 5) == 0)
+    ck("ellis_bronnikov R rises outward on either side",
+       sp.simplify(sp.diff(R.expr, r) - 8 * ell ** 2 * r / (r ** 2 + ell ** 2) ** 3) == 0)
+    xs = np.linspace(-3, 3, SAMPLES)
     curves = []
     for name, fn, scale in (("K", K, K_scale), ("R", R, R_scale)):
+        agrees(ck, f"ellis_bronnikov all {SAMPLES} {name} samples", fn,
+               [[x, 1] for x in xs], fn(xs, 1))
+        ck(f"ellis_bronnikov {name} is the same on both sides",
+           sp.simplify(fn.expr.subs(r, -r) - fn.expr) == 0)
+        ck(f"ellis_bronnikov {name} has the declared length scaling",
+           all(np.allclose(fn(xs * unit, unit) * unit ** (4 if name == "K" else 2), fn(xs, 1),
+                           rtol=1e-12, atol=0) for unit in (0.5, 2)))
         curves += line_curves(ck, "ellis_bronnikov", name, name, fn, "r", x_axis, scale,
                               PLOT_W / 2, {"ell": 1})
         ck(f"ellis_bronnikov {name} stays inside its panel", not any(beyond(fn, x_axis, scale, [1])))
+    ck("ellis_bronnikov R is negative at every finite r drawn", np.all(R(xs, 1) < 0))
+    ck("ellis_bronnikov K approaches 12 ell^4/r^8 far out",
+       sp.simplify(sp.limit(K.expr * r ** 8, r, sp.oo) - 12 * ell ** 4) == 0)
+    ck("ellis_bronnikov R approaches -2 ell^2/r^4 far out",
+       sp.simplify(sp.limit(R.expr * r ** 4, r, sp.oo) + 2 * ell ** 2) == 0)
     k_clip = ("We draw $K\\,\\ell^4$ on a logarithmic scale from $10^{-3}$ to $10^{2}$; "
               "every value drawn lies within it.")
     r_clip = ("We draw $R\\,\\ell^2$ on a signed logarithmic scale, linear within $10^{-3}$ of zero, "
@@ -11145,7 +11188,9 @@ def ellis_bronnikov(ck, src):
             "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the Ellis-Bronnikov wormhole against "
             "the proper distance $r$ ($\\ell = 1$), across both sides of the throat $r = 0$, the same at "
             "every $t$, $\\theta$, and $\\phi$. At the throat $K$ is finite and greatest, $12/\\ell^4$, "
-            "and falls symmetrically on either side, approaching $12\\ell^4/r^8$ far out.",
+            "and falls symmetrically on either side, approaching $12\\ell^4/r^8$ far out. "
+            "The general traversable wormhole has this geometry when its redshift vanishes and its "
+            "shape function is $\\ell^2$ divided by the areal radius.",
             "$R$ is negative at every $r$, least at the throat, $-2/\\ell^2$, and rises symmetrically "
             "toward zero on either side, approaching $-2\\ell^2/r^4$ far out.",
         ],

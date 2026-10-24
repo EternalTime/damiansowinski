@@ -1623,6 +1623,11 @@ It needs the environment of "The test environment" above and took 26 seconds for
 `--metric <metric_id>` redraws one spacetime, and `--verify` prints every check and writes nothing.
 A full run removes the file of a spacetime its table `DRAWN` does not list.
 
+The `ellis_bronnikov` figure plots both scalars against proper distance over $-3 \le r/\ell \le 3$ at $\ell = 1$, as its radial spacetime diagram does, with the two sides of the throat together.
+Its stored scalars depend on $r$ alone, so a line plot shows their whole variation.
+Its two panels use a logarithmic scale for $K\ell^4$ from $10^{-3}$ to $10^2$ and a signed logarithmic scale for $R\ell^2$ from $-10$ to zero, linear within $10^{-3}$; both curves lie within their panels.
+The generator checks every sampled value in sixty digits against the stored formula, the proper radial distance and the minimum sphere at the throat, the finite extrema $K = 12/\ell^4$ and $R = -2/\ell^2$ there, the symmetry of both curves, their monotone approach to zero, their length scaling, and the falloffs $12\ell^4/r^8$ and $-2\ell^2/r^4$.
+
 ### The three shapes
 
 A curvature figure has one or more views, each of one of three shapes.
