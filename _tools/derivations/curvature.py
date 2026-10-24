@@ -11189,8 +11189,8 @@ def ellis_bronnikov(ck, src):
             "the proper distance $r$ ($\\ell = 1$), across both sides of the throat $r = 0$, the same at "
             "every $t$, $\\theta$, and $\\phi$. At the throat $K$ is finite and greatest, $12/\\ell^4$, "
             "and falls symmetrically on either side, approaching $12\\ell^4/r^8$ far out. "
-            "The general traversable wormhole has this geometry when its redshift vanishes and its "
-            "shape function is $\\ell^2$ divided by the areal radius.",
+            "The Morris-Thorne wormhole has this same geometry when its redshift vanishes and its "
+            "shape function is $\\ell^2$ divided by the areal radius, so its figure draws these same curves.",
             "$R$ is negative at every $r$, least at the throat, $-2/\\ell^2$, and rises symmetrically "
             "toward zero on either side, approaching $-2\\ell^2/r^4$ far out.",
         ],
