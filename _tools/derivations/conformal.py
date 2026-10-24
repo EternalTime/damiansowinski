@@ -18200,6 +18200,136 @@ def jackiw_teitelboim_black_hole(ck, src):
     return views
 
 
+def eternal_traversable_wormhole(ck, src):
+    """Maldacena and Qi's eternal traversable wormhole at L = 1, drawn as its global chart itself,
+    T = t and X = sigma - pi/2, since L^2 (-dt^2 + dsigma^2)/sin^2(sigma) is flat space times a factor:
+    the whole strip between the two boundaries X = -pi/2 and pi/2, their Figure 2(a), over three
+    crossing times. The Poincare chart comes in by t +- sigma = 2 arctan(t_P +- z), so its patch is the
+    triangle |t +- sigma| < pi beside the boundary sigma = 0, their Figure 1(c); the thermal chart by
+    the embedding, Y_-1 = cosh(rho), Y_0 = sinh(rho) sinh(t_R) and Y_1 = sinh(rho) cosh(t_R), with
+    tan t = Y_0/Y_-1 and cot sigma = Y_1, so its wedge is the triangle |T| < -X, their Figure 1(b).
+    The dilaton is the same at every t, and the boundaries stay at constant sigma, their Figure 2(a)."""
+    P = {"L": 1, "phi_h": 1}
+    planes = {
+        "global": Plane(src, "eternal_traversable_wormhole", "global", ("t", "\\sigma"), None, P),
+        "poincare": Plane(src, "eternal_traversable_wormhole", "poincare", ("t_P", "z"), None, P),
+        "thermal": Plane(src, "eternal_traversable_wormhole", "thermal", ("t_R", "\\rho"), None, P),
+    }
+
+    def strip_pq(t, sigma):
+        T, X = np.asarray(t, dtype=float), np.asarray(sigma, dtype=float) - HALF
+        return (T - X) / 2, (T + X) / 2
+
+    def poincare(tp, z):
+        tp, z = np.asarray(tp, dtype=float), np.asarray(z, dtype=float)
+        return np.arctan(tp - z) + Q4, np.arctan(tp + z) - Q4
+
+    def thermal(tr, rho):
+        tr, rho = np.asarray(tr, dtype=float), np.asarray(rho, dtype=float)
+        t = np.arctan2(np.sinh(rho) * np.sinh(tr), np.cosh(rho))
+        sigma = HALF - np.arctan(np.sinh(rho) * np.cosh(tr))
+        return strip_pq(t, sigma)
+
+    ck.chart("eternal traversable wormhole, global chart", planes["global"], strip_pq,
+             ck.uniform(-6, 6), ck.uniform(0.05, PI - 0.05), lambda t, s: (1, 0))
+    ck.chart("eternal traversable wormhole, Poincare chart", planes["poincare"], poincare,
+             ck.uniform(-6, 6), ck.uniform(0.02, 8), lambda t, z: (1, 0))
+    ck.chart("eternal traversable wormhole, thermal chart", planes["thermal"], thermal,
+             ck.uniform(-4, 4), ck.uniform(0.02, 5), lambda t, r: (1, 0))
+    pp, qq = poincare(np.array([-2.0, 0.0, 2.0]), np.full(3, 1e-10))
+    ck.limit("eternal traversable wormhole: z -> 0 lands on the boundary X = -pi/2", qq - pp, [-HALF] * 3, 1e-8)
+    pp, qq = poincare(np.array([0.0]), np.array([1e10]))
+    ck.limit("eternal traversable wormhole: z -> infinity at t_P = 0 lands on the other boundary at T = 0",
+             point(pp[0], qq[0]), [HALF, 0], 1e-8)
+    pp, qq = thermal(np.array([3.0, 0.0, -3.0]), np.full(3, 1e-12))
+    ck.limit("eternal traversable wormhole: rho -> 0 lands on the middle of the strip at t = 0",
+             np.concatenate([pp, qq]), 0, 1e-8)
+    pp, qq = thermal(np.array([0.0]), np.array([30.0]))
+    ck.limit("eternal traversable wormhole: rho -> infinity at t_R = 0 lands on the boundary X = -pi/2",
+             qq - pp, [-HALF], 1e-8)
+    # One event, t = 0.4 at sigma = 0.9, in all three charts: t_P +- z = tan((t +- sigma)/2), and
+    # tanh(t_R) = sin(t)/cos(sigma), cosh(rho) = cos(t)/sin(sigma), inside the wedge cos(sigma) > |sin t|.
+    t0, s0 = 0.4, 0.9
+    here = strip_pq(t0, s0)
+    a, b = math.tan((t0 + s0) / 2), math.tan((t0 - s0) / 2)
+    for name, got in (("the Poincare chart", poincare((a + b) / 2, (a - b) / 2)),
+                      ("the thermal chart", thermal(math.atanh(math.sin(t0) / math.cos(s0)),
+                                                    math.acosh(math.cos(t0) / math.sin(s0))))):
+        ck.limit(f"eternal traversable wormhole: {name} puts the event of the global chart at one point",
+                 got, here, 1e-12)
+    ck.finite("eternal traversable wormhole: the Kretschmann scalar is finite everywhere",
+              planes["global"].kretschmann(ck.uniform(-3, 3, 50), ck.uniform(0.01, PI - 0.01, 50)))
+
+    views = []
+    T0, T1 = -1.1 * PI, 1.1 * PI
+    box = [-HALF - 0.55, HALF + 0.55, T0, T1]
+    whole = [[-HALF, T0], [HALF, T0], [HALF, T1], [-HALF, T1]]
+    patch = [[-HALF, PI], [HALF, 0], [-HALF, -PI]]
+    wedge = [[-HALF, HALF], [0, 0], [-HALF, -HALF]]
+    moment = slices.moments("eternal_traversable_wormhole")[0]
+    lo, hi = moment.reach("global", "\\sigma")
+    across = [strip_pq(np.zeros(2), np.array([lo, hi]))]
+
+    def edges(v):
+        v.fill("region", whole)
+        v.line("boundary", [[[-HALF, T0], [-HALF, T1]], [[HALF, T0], [HALF, T1]]])
+        v.line("throat", [[[0, T0], [0, T1]]])
+        v.line("event", [[[-HALF, -HALF], [HALF, HALF]], [[-HALF, HALF], [HALF, -HALF]]])
+        v.label_xt([-HALF, 2.4], "$\\sigma = 0$", "r", "small", dx=-6)
+        v.label_xt([HALF, 2.4], "$\\sigma = \\pi$", "l", "small", dx=6)
+        v.legend("boundary", "the two boundaries, timelike, coupled to each other")
+        v.legend("throat", "the middle of the wormhole, $\\sigma = \\pi/2$, where the dilaton is least")
+        v.legend("event", "the light rays through the middle at $t = 0$, each from one boundary to the other")
+
+    v = View("global", "Global", box, "global")
+    edges(v)
+    v.fill("cover", whole)
+    tt = np.linspace(T0, T1, 400)
+    for sg in (PI / 6, PI / 3, 2 * PI / 3, 5 * PI / 6):
+        v.curve("r", *strip_pq(tt, np.full_like(tt, sg)))
+    sig = np.linspace(0, PI, 200)
+    for t in (-PI, -PI / 2, PI / 2, PI):
+        v.curve("t", *strip_pq(np.full_like(sig, t), sig))
+    v.legend("cover", "the region that $t$ and $\\sigma$ cover, the whole strip")
+    v.legend("r", "$\\sigma$ constant, every $\\pi/6$")
+    v.legend("t", "$t$ constant, every $\\pi/2$")
+    views.append(v)
+
+    v = View("poincare", "Poincaré", box, "poincare")
+    edges(v)
+    v.fill("cover", patch)
+    TP = spread(-np.inf, np.inf, 600, 9)
+    for z in (0.25, 0.5, 2, 4):
+        v.curve("r", *poincare(TP, np.full_like(TP, z)))
+    zz = spread(0, np.inf, 600, 14)
+    for t in (-2, -1, 1, 2):
+        v.curve("t", *poincare(np.full_like(zz, float(t)), zz))
+    label_on(v, poincare(0.0, 2.0), "$z = 2$")
+    v.legend("cover", "the region that $t_P$ and $z$ cover, the Poincaré patch")
+    v.legend("r", "$z$ constant, at $1/4$, $1/2$, $2$ and $4$")
+    v.legend("t", "$t_P$ constant, at $\\pm 1$ and $\\pm 2$")
+    views.append(v)
+
+    v = View("thermal", "Thermal", box, "thermal")
+    edges(v)
+    v.fill("cover", wedge)
+    TR = spread(-np.inf, np.inf, 600, 9)
+    for rho in (0.5, 1, 2, 3):
+        v.curve("r", *thermal(TR, np.full_like(TR, rho)))
+    rr = spread(0, np.inf, 600, 14)
+    for t in (-2, -1, 1, 2):
+        v.curve("t", *thermal(np.full_like(rr, float(t)), rr))
+    label_on(v, thermal(0.0, 1.0), "$\\rho = 1$")
+    v.legend("cover", "the region that $t_R$ and $\\rho$ cover, the wedge beside $\\sigma = 0$")
+    v.legend("r", "$\\rho$ constant, at $1/2$, $1$, $2$ and $3$")
+    v.legend("t", "$t_R$ constant, at $\\pm 1$ and $\\pm 2$")
+    views.append(v)
+    for view in views:
+        view.set(settings="$L = 1$.", fade={"top": 0.7, "bottom": 0.7})
+        view.slice(moment, across)
+    return views
+
+
 def roberts(ck, src):
     """Roberts's collapsing scalar field, each point a 2-sphere, for its three outcomes, p = 9/10, 1
     and 2, one view for each in each of its five charts.
@@ -25590,6 +25720,7 @@ DRAWN = {
     "exponential_metric": exponential_metric,
     "witten_black_hole": witten_black_hole,
     "jackiw_teitelboim_black_hole": jackiw_teitelboim_black_hole,
+    "eternal_traversable_wormhole": eternal_traversable_wormhole,
     "roberts": roberts,
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
@@ -29327,6 +29458,31 @@ CAPTIONS = {
         "Eddington-Finkelstein coordinates $v$ and $r$ on it. They cover the exterior and the black hole "
         "together, and their lines of constant $v$ are ingoing light rays, which cross the horizon at 45° and "
         "end at $r = 0$.",
+    ],
+    ("eternal_traversable_wormhole", "global"): [
+        "The wormhole with the global chart's $t$ and $\\sigma$ on it, each point in the diagram a single event. "
+        "The drawing is the chart itself, $T = t$ and $X = \\sigma - \\pi/2$, since the metric "
+        "$L^2(-dt^2 + d\\sigma^2)/\\sin^2\\sigma$ is flat space times a factor, and the strip runs on above and "
+        "below.",
+        "The two boundaries are coupled to each other, the dilaton $\\phi = \\phi_h\\left(1 + (\\pi/2 - "
+        "\\sigma)\\cot\\sigma\\right)$ is the same at every $t$, and every event sends light to both. A light ray "
+        "leaving one boundary reaches the other after the time $\\pi$, and the rays through the middle at "
+        "$t = 0$ run corner to corner of the square $|T| < \\pi/2$.",
+    ],
+    ("eternal_traversable_wormhole", "poincare"): [
+        "The wormhole with the Poincaré chart's $t_P$ and $z$ on it, each point in the diagram a single event, "
+        "carried in by $t \\pm \\sigma = 2\\arctan(t_P \\pm z)$.",
+        "The chart covers the triangle $|t \\pm \\sigma| < \\pi$ beside the boundary $\\sigma = 0$, which is "
+        "$z = 0$, and its far corner is one event of the other boundary, $z \\to \\infty$. Each line of constant "
+        "$z$ runs between the corners $t = \\mp\\pi$ of the patch on $\\sigma = 0$, and the dilaton changes along it "
+        "with $t_P$.",
+    ],
+    ("eternal_traversable_wormhole", "thermal"): [
+        "The wormhole with the thermal chart's $t_R$ and $\\rho$ on it, each point in the diagram a single event, "
+        "carried in by $\\tanh t_R = \\sin t/\\cos\\sigma$ and $\\cosh\\rho = \\cos t/\\sin\\sigma$.",
+        "The chart covers the wedge $|T| < -X$ beside the boundary $\\sigma = 0$, the chart of the black hole of "
+        "the same gravity. Its edge $\\rho = 0$ is the two rays through the middle at $t = 0$, which cross on to "
+        "the other boundary.",
     ],
     ("jackiw_teitelboim_black_hole", "static"): [
         "The black hole of Jackiw and Teitelboim's gravity ($r_h = L$), each point in the diagram a single "
