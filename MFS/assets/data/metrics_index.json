@@ -3421,7 +3421,8 @@
     "version": "78c9cf9bc0d5f351",
     "diagrams": "b56d3fe3ca86d14a",
     "conformal": "43d2fa3533d022a9",
-    "embedding": "097ceae878d9ed12"
+    "embedding": "097ceae878d9ed12",
+    "curvature": "a051049b2e50dfe7"
   },
   {
     "id": "maximally_supersymmetric_plane_wave",

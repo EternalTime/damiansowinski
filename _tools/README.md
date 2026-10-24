@@ -1644,6 +1644,17 @@ The stored Ricci scalar vanishes for every $\sigma$.
 The generator checks the stored power law, its least radial exponent $3$ at $\sigma = 1/4$, where $K\rho_0^4 = 3/(4x^3)$ with $x = \rho/\rho_0$, the equality at $\sigma$ and $1/2 - \sigma$, the absence of $C$, the vanishing of every stored Riemann component at both flat values, and the absence of horizons.
 It evaluates all 4001 samples per frame again in sixty-digit arithmetic, checks every written point against the stored scalar, and holds every sampled value to the stated logarithmic limits.
 
+The `mass_inflation` figure is a radial line movie behind the outgoing shell, in the ingoing chart with the declared function `m = ori_mass_behind(v)` and the existing charge $r_q = 24m_0/25$ in units of the final exterior mass $m_0$.
+Its sixteen frames hold the interior advanced time at $v/m_0 = -10^{-k}$ for integer $k = 0, \ldots, 15$, approaching the Cauchy horizon at zero, over $0.1 \le r/m_0 \le 0.7$, a band within the shell in every frame and within the region of the existing spacetime diagram.
+Every frame stays inside the existing numerical shell table; no extrapolated profile is drawn.
+The movie advances uniformly in $-\log_{10}(-v/m_0)$, so each decade is visible for one step while each frame's label states its actual advanced time.
+The logarithmic scale $10^2 \le K m_0^4 \le 10^{14}$ contains every sampled and written value without clipping, and the panel is 1.25 times as wide as tall.
+The Ricci scalar vanishes.
+An evenly spaced map of native interior time cannot resolve the inflation layer over the radial range, so the movie uses the collection's existing line format; its radial shape changes as the charge term proportional to $r^{-8}$ gives way to the growing mass term $48m(v)^2/r^6$.
+At $r = 0.7m_0$, the scalar is $149/m_0^4$ at $v = -m_0$, $123/m_0^4$ at $v = -10^{-9}m_0$, and $7.31\times10^8/m_0^4$ at $v = -10^{-15}m_0$, a late rise through more than six orders of magnitude.
+The generator checks every one of the 4001 radial samples per frame in sixty-digit arithmetic with the numerical mass profile held, every retained point, the logarithmic limits, the shell domain and matching relation, the change in radial shape, the stated magnitudes, and the two asymptotic powers directly from the stored scalar.
+Each apparent horizon in the band is a sign change of the stored inverse metric, marked in its own frame.
+
 ### The three shapes
 
 A curvature figure has one or more views, each of one of three shapes.

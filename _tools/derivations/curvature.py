@@ -11642,7 +11642,7 @@ def levi_civita(ck, src):
 
 
 def mass_inflation(ck, src):
-    """Ori's interior radial K at geometrically spaced advanced times approaching zero.
+    """The interior radial K at geometrically spaced advanced times approaching zero.
 
     Use the existing shell solution and charge, with the interior advanced time held in
     each frame. The radial band 0.1 to 0.7 lies inside the shell throughout. Every sampled
@@ -11660,23 +11660,68 @@ def mass_inflation(ck, src):
     shell = ori.shell()
     params = {"r_q": float(Fraction(24, 25))}
     x_axis = axis("$r/m_0$", 0.1, 0.7)
-    scale = {"kind": "log", "from": 1e2, "to": 1e19}
+    scale = {"kind": "log", "from": 1e2, "to": 1e14}
     aspect = 1.25
     panel = {"id": "K", "name": "$K m_0^4$", "aspect": aspect, "scale": scale,
-             "ticks": [{"at": 10.0 ** k, "label": decade(k)} for k in range(2, 20, 3)]}
+             "ticks": [{"at": 10.0 ** k, "label": decade(k)} for k in range(2, 15, 2)]}
     shape_checks(ck, name, [aspect])
     ck(f"{name} publishes R = 0", R.expr == 0)
-    frames = []
-    for k in range(19):
+    radius, time = K.coords
+    charge = K.params[0]
+    mass = sp.Symbol("mass", positive=True)
+    algebraic = K.expr.xreplace({nr.DECLARED_FUNCTIONS["ori_mass_behind"](time): mass})
+    exact_K = sp.lambdify([radius, charge, mass], algebraic, "mpmath")
+    ck(f"{name} charge dominates as r approaches zero",
+       sp.simplify(sp.limit(algebraic * radius ** 8, radius, 0) - 56 * charge ** 4) == 0)
+    ck(f"{name} growing mass gives K asymptotic to 48 m^2/r^6 at fixed positive r",
+       sp.simplify(sp.limit(algebraic / mass ** 2, mass, sp.oo) - 48 / radius ** 6) == 0)
+    frames, radial_ratios, outer_values = [], [], []
+    samples = np.linspace(x_axis["from"], x_axis["to"], SAMPLES)
+    for k in range(16):
         v = -10.0 ** (-k)
         held = Held(K, {"v": v})
+        m = float(shell.mass_behind(v))
+        values = held(samples, *params.values())
+        with mpmath.workdps(60):
+            q60, m60 = mpmath.mpf(params["r_q"]), mpmath.mpf(m)
+            worst = max(float(abs(mpmath.mpf(float(value)) /
+                                  exact_K(mpmath.mpf(float(r)), q60, m60) - 1))
+                        for r, value in zip(samples, values))
+        ck(f"{name} v = {v:g} every sample agrees with the stored formula in sixty digits",
+           worst < AGREE, f"worst {worst:.2e} at {SAMPLES} samples, numerical mass held")
+        ck(f"{name} v = {v:g} all samples lie inside the stated logarithmic scale",
+           np.all(np.isfinite(values) & (values >= scale["from"]) & (values <= scale["to"])),
+           f"{np.min(values):.9g} to {np.max(values):.9g}")
+        ck(f"{name} v = {v:g} the whole curve lies behind the shell and inside its numerical table",
+           x_axis["to"] < float(shell.radius_behind(v))
+           and ori.V0 < float(shell.v1_at(v)) < ori.V_END)
         lines = sampled(ck, f"{name} v = {v:g}", held, x_axis, scale, PLOT_W / aspect,
                         list(params.values()))
         curves = [curve_entry("K", "K", held, "r", params, line) for line in lines]
+        with mpmath.workdps(60):
+            written_error = max(float(abs(mpmath.mpf(value) / exact_K(mpmath.mpf(r), q60, m60) - 1))
+                                for curve in curves for r, value in curve["points"])
+        ck(f"{name} v = {v:g} every written point agrees with the stored scalar",
+           written_error < AGREE, f"worst {written_error:.2e}")
         marks = [{"class": "horizon", "x": r} for r in
                  zeros(ck, f"{name} v = {v:g}", Held(grr, {"v": v}), 0.1, 0.7, list(params.values()))]
-        frames.append({"label": f"$v = -10^{{{-k}}}\\,m_0$", "value": v,
+        frames.append({"label": f"$v = -10^{{{-k}}}\\,m_0$", "value": float(k),
                        "curves": curves, "marks": marks})
+        radial_ratios.append(float(values[0] / values[-1]))
+        outer_values.append(float(values[-1]))
+    ck(f"{name} the movie changes radial shape rather than only amplitude",
+       radial_ratios[0] / radial_ratios[-1] > 100,
+       f"inner-to-outer K ratio changes from {radial_ratios[0]:.9g} to {radial_ratios[-1]:.9g}")
+    ck(f"{name} the caption's initial, intermediate and final magnitudes match the drawn endpoints",
+       f"{outer_values[0]:.0f}" == "149" and f"{outer_values[9]:.0f}" == "123"
+       and f"{outer_values[-1]:.3g}" == "7.31e+08",
+       f"K(0.7) = {outer_values[0]:.12g}, {outer_values[9]:.12g}, {outer_values[-1]:.12g}")
+    ck(f"{name} the late curve climbs through more than six orders of magnitude",
+       outer_values[-1] / outer_values[9] > 1e6
+       and all(b > a for a, b in zip(outer_values[9:], outer_values[10:])),
+       f"{math.log10(outer_values[-1] / outer_values[9]):.9g} orders")
+    ck(f"{name} the shell mass satisfies the matching relation", shell.consistent() < 1e-4,
+       f"relative residual {shell.consistent():.3e}")
     return [{
         "id": "interior", "label": "Behind the shell", "kind": "line", "system": "ingoing",
         "x": x_axis, "panels": [panel], "curves": [], "marks": [],
@@ -11684,21 +11729,22 @@ def mass_inflation(ck, src):
                    ["line", "horizon", "the apparent horizon, where $g^{rr} = 0$"]],
         "caption": [
             "The Kretschmann scalar $K$ behind Ori's outgoing shell against the areal radius $r$ "
-            "($r_q = 0.96\\,m_0$), at advanced times $v = -10^{-k}m_0$ for $k = 0, \\ldots, 18$. "
+            "($r_q = 0.96\\,m_0$), at advanced times $v = -10^{-k}m_0$ for integer $k$ from zero through fifteen. "
             "The interior advanced time $v$ approaches zero at the Cauchy horizon. "
             "The Ricci scalar vanishes.",
             "The scalar grows without bound as the Cauchy horizon is approached. "
-            "At $r = 0.7\\,m_0$ it rises through eleven orders of magnitude between "
-            "$v = -10^{-9}m_0$ and $v = -10^{-18}m_0$. "
+            "At $r = 0.7\\,m_0$, $K m_0^4 = 149$ at $v = -m_0$ and $123$ at $v = -10^{-9}m_0$, "
+            "then rises through more than six orders of magnitude to $7.31\\times10^8$ "
+            "at $v = -10^{-15}m_0$. "
             "The charge term dominates toward small $r$, where $K$ varies as $r^{-8}$; "
             "as the mass grows, $K$ approaches $48m(v)^2/r^6$ at fixed positive $r$.",
         ],
         "settings": "$m_0 = 1$, the final mass outside the shell and the unit of length, "
                     "with $r_q = 0.96\\,m_0$ and $0.1 \\le r/m_0 \\le 0.7$.",
         "input": nr.MI_BEHIND_INPUT,
-        "clip": "We draw $K m_0^4$ on a logarithmic scale from $10^2$ to $10^{19}$. "
+        "clip": "We draw $K m_0^4$ on a logarithmic scale from $10^2$ to $10^{14}$. "
                 "Every drawn value in every frame lies within these limits; no value is clipped.",
-        "movie": {"variable": "$v$", "seconds": 12, "frames": frames},
+        "movie": {"variable": "$-\\log_{10}(-v/m_0)$", "seconds": 12, "frames": frames},
     }]
 
 
